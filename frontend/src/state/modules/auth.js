@@ -1,8 +1,11 @@
-let timer
+import { firebaseAuth } from '../../config/firebase'
 export default {
   state() {
     return {
       userId: null,
+      name: null,
+      email: null,
+      photoURL: null,
       authToken: null
     };
   },
@@ -18,87 +21,33 @@ export default {
     }
   },
   actions: {
-    async login(context, payload) {
-      return context.dispatch('authenticate', {
-        ...payload,
-        mode: 'login'
-      });
+    login(_, payload) {
+      firebaseAuth().signInWithEmailAndPassword(payload.email, payload.password)
     },
-    async signUp(context, payload) {
-      return context.dispatch('authenticate', {
-        ...payload,
-        mode: 'signup'
-      });
+    signUp(_, payload) {
+      firebaseAuth().createUserWithEmailAndPassword(payload.email, payload.password)
     },
-    async authenticate(context, payload) {
-      let url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDrzrm45K_KXvbzgtginqRLGabrgYTaWWs`
-      if (payload.mode == "signup") {
-        url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDrzrm45K_KXvbzgtginqRLGabrgYTaWWs`
-      }
-      const response = await fetch(url
-        , {
-          method: 'POST',
-          body: JSON.stringify({
-            email: payload.email,
-            password: payload.password,
-            returnSecureToken: true
-          })
-        });
-      const responseData = await response.json()
-      if (!response.ok) {
-        let error = new Error(responseData.error.message || 'Sign Up error')
-        throw error
-      }
-
-      const expiresIn = +responseData.expiresIn * 1000;
-      const expirationDate = new Date().getTime() + expiresIn;
-
-      localStorage.setItem('token', responseData.idToken);
-      localStorage.setItem('userId', responseData.localId);
-      localStorage.setItem('tokenExpiration', expirationDate);
-
-      timer = setTimeout(() => {
-        context.dispatch('logout')
-      }, expiresIn)
-
-      context.commit('saveAuthData', {
-        userId: responseData.localId,
-        authToken: responseData.idToken
-      })
+    autoSignIn(context, payload) {
+      context.commit('saveAuthData', payload)
     },
-    logout(context) {
-      clearTimeout(timer)
+    async logout(context) {
+      await firebaseAuth().signOut()
       context.commit('saveAuthData', {
         userId: null,
+        name: null,
+        email: null,
+        photoURL: null,
         authToken: null
       })
-    },
-    tryLogin(context) {
-      
-      const token = localStorage.getItem('token');
-      const userId = localStorage.getItem('userId');
-      const tokenExpiration = localStorage.getItem('tokenExpiration');
-
-      const expiresIn = +tokenExpiration - new Date().getTime();
-      if (expiresIn < 0) {
-        return;
-      }
-      timer = setTimeout(function () {
-        context.dispatch('logout');
-      }, expiresIn);
-
-      if (token && userId) {
-        context.commit('saveAuthData', {
-          authToken: token,
-          userId: userId
-        });
-      }
-    },
+    }
   },
   mutations: {
     saveAuthData(state, payload) {
       state.userId = payload.userId;
       state.authToken = payload.authToken;
+      state.name = payload.name;
+      state.email = payload.email;
+      state.photoUrl = payload.photoURL
     }
   }
 }
