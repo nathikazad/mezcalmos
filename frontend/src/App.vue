@@ -5,10 +5,25 @@
 
 <script>
 import TheHeader from './components/layouts/TheHeader.vue';
-
+import { useQuery } from '@vue/apollo-composable';
+import gql from 'graphql-tag';
 export default {
   components: {
     TheHeader,
+  },
+  setup() {
+    const { result, loading } = useQuery(gql`
+      query AllPages {
+        Page {
+          users {
+            name
+            about
+          }
+        }
+      }
+    `);
+    console.log(result)
+    return { result, loading };
   },
   data() {
     return {
@@ -23,7 +38,6 @@ export default {
       console.log(e);
     }
   },
-
 };
 </script>
 
