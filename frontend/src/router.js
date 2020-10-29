@@ -7,7 +7,7 @@ import CoachContactPage from './pages/requests/CoachContact'
 import RequestsPage from './pages/requests/Requests'
 import UserAuth from './pages/auth/UserAuth'
 import NotFoundPage from './pages/NotFound'
-import store from './state/state.js';
+import store from './store/store';
 
 const router = createRouter({
     history: createWebHistory(),

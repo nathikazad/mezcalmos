@@ -1,11 +1,9 @@
 import { createApp } from 'vue';
 import App from './App.vue'
 import router from './router.js'
-import state from './state/state'
+import store from './store/store'
 
-import { firebaseListener } from './config/firebase';
-
-
+import  './config/firebase';
 
 import { InMemoryCache } from "apollo-cache-inmemory";
 import ApolloClient from "apollo-client";
@@ -19,11 +17,10 @@ import BaseBadge from './components/ui/BaseBadge'
 import BaseSpinner from './components/ui/BaseSpinner'
 import BaseDialog from './components/ui/BaseDialog'
 
-firebaseListener(authStatusChange);
 const app = createApp(App)
 // app.config.devtools = true
 app.use(router)
-app.use(state)
+app.use(store)
 
 
 // HELP: figure out a way to make this async which you can do in react
@@ -58,14 +55,3 @@ app.component('base-badge', BaseBadge)
 app.component('base-spinner', BaseSpinner)
 app.component('base-dialog', BaseDialog)
 app.mount('#app');
-
-
-function authStatusChange(user, token) {
-  state.dispatch('autoSignIn', {
-    userId: user.uid,
-    name: user.displayName,
-    email: user.email,
-    photoURL: user.photoURL,
-    authToken: token
-  })
-}

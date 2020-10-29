@@ -1,7 +1,8 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import 'firebase/functions'; 
+import 'firebase/functions';
 import 'firebase/database';
+import store from '../store/store'
 
 const config = {
   apiKey: "AIzaSyDrzrm45K_KXvbzgtginqRLGabrgYTaWWs",
@@ -15,23 +16,29 @@ const config = {
 
 firebase.initializeApp(config);
 
-export function firebaseListener(func) {
-  firebase.auth().onAuthStateChanged(async function (user) {
-    if (user) {
-      let token = await user.getIdToken()
-      let tokenResult = await user.getIdTokenResult()
-      let hasuraClaim = tokenResult.claims['https://hasura.io/jwt/claims']
-      if (!hasuraClaim) {
-        console.log("No hasura, retrying")
-        await firebase.functions().httpsCallable('addHasuraClaims')();
-        token = await user.getIdToken(true)
-      }
-      func(user, token)
+
+firebase.auth().onAuthStateChanged(async function (user) {
+  if (user) {
+    let token = await user.getIdToken()
+    let tokenResult = await user.getIdTokenResult()
+    let hasuraClaim = tokenResult.claims['https://hasura.io/jwt/claims']
+    if (!hasuraClaim) {
+      console.log("No hasura, retrying")
+      await firebase.functions().httpsCallable('addHasuraClaims')();
+      token = await user.getIdToken(true)
     }
-  }, function (error) {
-    console.log(error)
-  });
-}
+    store.dispatch('autoSignIn', {
+      userId: user.uid,
+      name: user.displayName,
+      email: user.email,
+      photoURL: user.photoURL,
+      authToken: token
+    })
+  }
+}, function (error) {
+  console.log(error)
+});
+
 
 export const ref = firebase.database().ref();
 export const firebaseAuth = firebase.auth;
