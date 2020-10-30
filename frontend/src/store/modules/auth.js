@@ -1,4 +1,6 @@
-import { firebaseAuth } from '../../config/firebase'
+import { firebaseAuth } from '@/config/firebase'
+import { apolloClient } from '@/config/apollo'
+import gql from 'graphql-tag'
 export default {
   state() {
     return {
@@ -27,8 +29,17 @@ export default {
     signUp(_, payload) {
       firebaseAuth().createUserWithEmailAndPassword(payload.email, payload.password)
     },
-    autoSignIn(context, payload) {
+    async autoSignIn(context, payload) {
       context.commit('saveAuthData', payload)
+      const {data} = await apolloClient.query({ query: gql`
+      query MyQuery {
+          users {
+            name
+          }
+        }
+    ` })
+    console.log(data)
+    
     },
     async logout(context) {
       await firebaseAuth().signOut()
@@ -42,7 +53,7 @@ export default {
     }
   },
   mutations: {
-    saveAuthData(state, payload) {
+    async saveAuthData(state, payload) {
       state.userId = payload.userId;
       state.authToken = payload.authToken;
       state.name = payload.name;

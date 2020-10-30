@@ -38,10 +38,23 @@
 <script>
 import CoachItem from '../../components/coaches/CoachItem';
 import CoachFilter from '../../components/coaches/CoachFilter';
+import { useQuery } from '@vue/apollo-composable';
+import gql from 'graphql-tag';
 export default {
   components: {
     CoachItem,
     CoachFilter,
+  },
+    setup() {
+    const { result, loading } = useQuery(gql`
+      query MyQuery {
+        loved_language {
+          name
+        }
+      }
+    `);
+    console.log(result)
+    return { result, loading };
   },
   data() {
     return {
