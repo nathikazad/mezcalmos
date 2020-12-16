@@ -1,6 +1,6 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
-import { GraphQLClient } from 'graphql-request'
+// import { GraphQLClient } from 'graphql-request'
 
 admin.initializeApp(functions.config().firebase);
 
@@ -40,29 +40,29 @@ exports.addHasuraClaims = functions.https.onCall(async (data, context) => {
   }
 });
 
-// from https://github.com/leoalves/hasura-firebase-auth
-exports.authorizedHasuraOperation = functions.https.onCall(async (data, context) => {
-  export const query = `
-    query
-    `
-  try {
-    // set from cli using 
-    // firebase functions:config:set hasura.host="HOST ADDRESS" hasura.adminSecret="ADMIN SECRET"
-    const client = new GraphQLClient(functions.config().hasura.host, {
-      headers: { 'x-hasura-admin-secret': functions.config().hasura.adminSecret }
-    })
-    const result = await client.request(query, {
-      // query variables
-      uid: context.auth.uid,
-    })
-    if (hasuraUser) {
-      return { status: "success", result: result }
-    } else {
-      throw new Error('Error running query')
-    }
+// // from https://github.com/leoalves/hasura-firebase-auth
+// exports.authorizedHasuraOperation = functions.https.onCall(async (data, context) => {
+//   export const query = `
+//     query
+//     `
+//   try {
+//     // set from cli using 
+//     // firebase functions:config:set hasura.host="HOST ADDRESS" hasura.adminSecret="ADMIN SECRET"
+//     const client = new GraphQLClient(functions.config().hasura.host, {
+//       headers: { 'x-hasura-admin-secret': functions.config().hasura.adminSecret }
+//     })
+//     const result = await client.request(query, {
+//       // query variables
+//       uid: context.auth.uid,
+//     })
+//     if (hasuraUser) {
+//       return { status: "success", result: result }
+//     } else {
+//       throw new Error('Error running query')
+//     }
 
-  } catch (error) {
-    console
-    return { status: "failure", message: error }
-  }
-});
+//   } catch (error) {
+//     console
+//     return { status: "failure", message: error }
+//   }
+// });

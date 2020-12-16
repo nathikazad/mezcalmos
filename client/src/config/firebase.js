@@ -4,17 +4,17 @@ import 'firebase/functions';
 import 'firebase/database';
 import store from '../store/store'
 
-const config = {
-  apiKey: "AIzaSyDrzrm45K_KXvbzgtginqRLGabrgYTaWWs",
-  authDomain: "vue-test-7606e.firebaseapp.com",
-  databaseURL: "https://vue-test-7606e.firebaseio.com",
-  projectId: "vue-test-7606e",
-  storageBucket: "vue-test-7606e.appspot.com",
-  messagingSenderId: "739626734679",
-  appId: "1:739626734679:web:f3be7362fd031c3304ff12"
-}
+const firebaseConfig = {
+  apiKey: "AIzaSyB9vaAB9ptXhpeRs_JjxODEyuA_eO0tYu0",
+  authDomain: "mezcalmos-31f1c.firebaseapp.com",
+  databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com",
+  projectId: "mezcalmos-31f1c",
+  storageBucket: "mezcalmos-31f1c.appspot.com",
+  messagingSenderId: "804036698204",
+  appId: "1:804036698204:web:39b22436cbb4ef633f8699"
+};
 
-firebase.initializeApp(config);
+firebase.initializeApp(firebaseConfig);
 
 
 firebase.auth().onAuthStateChanged(async function (user) {
@@ -27,6 +27,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
       await firebase.functions().httpsCallable('addHasuraClaims')();
       token = await user.getIdToken(true)
     }
+    console.log(token);
     store.dispatch('autoSignIn', {
       userId: user.uid,
       name: user.displayName,

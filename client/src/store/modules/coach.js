@@ -9,7 +9,7 @@ export default {
     async register(context, payload) {
       const token = context.rootGetters.authToken
       payload.id = context.rootGetters.userId
-      const response = await fetch(`https://vue-test-7606e.firebaseio.com/coaches/${payload.id}.json?auth=${token}`,{
+      const response = await fetch(`https://mezcalmos-31f1c-default-rtdb.firebaseio.com/coaches/${payload.id}.json?auth=${token}`,{
         method: 'PUT',
         body: JSON.stringify(payload)
       });
@@ -22,7 +22,7 @@ export default {
     },
     async loadCoaches(context) {
       console.log("loading coaches")
-      const response = await fetch(`https://vue-test-7606e.firebaseio.com/coaches.json`)
+      const response = await fetch(`https://mezcalmos-31f1c-default-rtdb.firebaseio.com/coaches.json`)
       const responseData = await response.json()
       if(!response.ok) {
         let error = new Error(responseData.message || 'Loading error')

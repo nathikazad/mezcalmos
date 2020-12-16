@@ -19,7 +19,7 @@ const authLink = setContext((_, { headers }) => {
 
 
 const httpLink = createHttpLink({
-  uri: `https://summary-ringtail-70.hasura.app/v1/graphql`,
+  uri: `https://mezcalmos.hasura.app/v1/graphql`,
 });
 
 const cache = new InMemoryCache();

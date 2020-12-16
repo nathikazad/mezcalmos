@@ -1,2 +1,3 @@
-backend/functions/node_modules/
+functions/node_modules/
+client/node_modules/
 .DS_Store

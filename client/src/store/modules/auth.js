@@ -23,23 +23,27 @@ export default {
     }
   },
   actions: {
-    login(_, payload) {
-      firebaseAuth().signInWithEmailAndPassword(payload.email, payload.password)
-    },
-    signUp(_, payload) {
-      firebaseAuth().createUserWithEmailAndPassword(payload.email, payload.password)
+    login() {
+      var provider = new firebaseAuth.FacebookAuthProvider();
+      // provider.setCustomParameters({
+      //   'display': 'popup'
+      // });
+      firebaseAuth().signInWithPopup(provider);
     },
     async autoSignIn(context, payload) {
       context.commit('saveAuthData', payload)
-      const {data} = await apolloClient.query({ query: gql`
-      query MyQuery {
-          users {
-            name
-          }
-        }
-    ` })
-    console.log(data)
-    
+      console.log("save auth data");
+      const { data } = await apolloClient.query({
+        query: gql`
+          query MyQuery {
+              users {
+                name
+              }
+            }
+        ` })
+      console.log("hasura query");
+      console.log(data)
+
     },
     async logout(context) {
       await firebaseAuth().signOut()
