@@ -5,8 +5,8 @@ import store from './store/store'
 
 import  './config/firebase';
 
-import { apolloClient } from "./config/apollo";
-import { DefaultApolloClient } from "@vue/apollo-composable";
+// import { apolloClient } from "./config/apollo";
+// import { DefaultApolloClient } from "@vue/apollo-composable";
 
 import BaseCard from './components/ui/BaseCard'
 import BaseButton from './components/ui/BaseButton'
@@ -17,7 +17,7 @@ import BaseDialog from './components/ui/BaseDialog'
 const app = createApp(App)
 app.use(router)
 app.use(store)
-app.provide(DefaultApolloClient, apolloClient)
+// app.provide(DefaultApolloClient, apolloClient)
 
 app.component('base-card', BaseCard)
 app.component('base-button', BaseButton)

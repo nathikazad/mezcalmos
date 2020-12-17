@@ -2,18 +2,15 @@
   <header>
     <nav>
       <h1>
-        <router-link to="/">Find a Coach</router-link>
+        <router-link to="/">Mezcalmos</router-link>
       </h1>
       <ul>
         <li>
-          <router-link to="/coaches">Coaches</router-link>
-        </li>
-        <li v-if="isLoggedIn">
-          <router-link to="/requests">Requests</router-link>
+          <router-link to="/orders">Orders</router-link>
         </li>
         <li>
           <base-button flat v-if="isLoggedIn" @click="logout">Logout</base-button>
-          <router-link v-else to="/auth">Login</router-link>
+          <base-button v-else @click="login">Login</base-button>
         </li>
       </ul>
     </nav>
@@ -31,6 +28,15 @@ export default {
     logout() {
       this.$store.dispatch('logout')
       this.$router.push('/coaches')
+    },
+    async login() {
+      try {
+        await this.$store.dispatch('login');
+        // this.$router.push('/')
+      } catch (e) {
+        this.error = e.message;
+        console.log(this.error)
+      }
     }
   }
 }

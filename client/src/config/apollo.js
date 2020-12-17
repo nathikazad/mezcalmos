@@ -11,8 +11,8 @@ const authLink = setContext((_, { headers }) => {
       ...headers
     }
   }; 
-  if (store.getters.authToken) {
-    returnValue.headers.authorization = `Bearer ${store.getters.authToken}`
+  if (store.getters.hasuraAuthToken) {
+    returnValue.headers.authorization = `Bearer ${store.getters.hasuraAuthToken}`
   } 
   return returnValue;
 });

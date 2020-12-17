@@ -5,6 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "deploy": "vue-cli-service build; firebase deploy --only hosting;",
     "lint": "vue-cli-service lint",
     "postinstall": "node scripts/vue-apollo-patch.js"
   },
