@@ -6,7 +6,6 @@ import TaxiViewPage from './pages/services/taxis/View'
 import TaxiRequestPage from './pages/services/taxis/Request'
 import GroceryViewPage from './pages/services/groceries/View'
 import GroceryRequestPage from './pages/services/groceries/Request'
-import AddItemPage from './pages/services/groceries/AddItem'
 
 import OrdersListPage from './pages/orders/List'
 import UserInformationPage from './pages/user/Information'
@@ -24,19 +23,9 @@ const router = createRouter({
     { path: '/services', component: ServicesListPage },
     { path: '/services/taxi/request', component: TaxiRequestPage },
     { path: '/services/grocery/request', component: GroceryRequestPage },
-    {
-      path: '/services/taxi/:orderId', component: TaxiViewPage, children: [
-        { path: 'messages', component: MessagesPage }
-      ],
-      meta: { requiresAuth: true }
-    },
-    {
-      path: '/services/grocery/:orderId', component: GroceryViewPage, children: [
-        { path: 'addItem', component: AddItemPage },
-        { path: 'messages', component: MessagesPage }
-      ],
-      meta: { requiresAuth: true }
-    },
+    { path: '/services/taxi/:orderId', component: TaxiViewPage, meta: { requiresAuth: true } },
+    { path: '/services/grocery/:orderId', component: GroceryViewPage, meta: { requiresAuth: true } },
+    { path: '/messages/:orderId', component: MessagesPage, meta: { requiresAuth: true } },
     { path: '/orders', component: OrdersListPage, meta: { requiresAuth: true } },
     { path: '/userinfo', component: UserInformationPage, meta: { requiresAuth: true } },
     { path: '/auth', component: LoginPage, meta: { requiresUnauth: true } },

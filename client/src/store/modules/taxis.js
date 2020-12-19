@@ -4,17 +4,27 @@ export default {
   state() {
     return {
       value: {},
-      errorMessage: null
+      orderId: null
     };
   },
   actions: {
-    async loadTaxi(context, payload) {
+    loadTaxi(context, payload) {
       // let userId = context.rootGetters.userId
-      console.log(payload);
-      let orderId  = payload.orderId
-      let order = (await firebaseDatabase().ref('/orders/' + orderId).once('value')).val()
-      // TODO: if unauthorized or wrong type of order redirect to home page
-      context.commit('loadTaxi', order)
+      let orderId  = payload.orderId;
+      firebaseDatabase().ref(`/orders/${orderId}`).on('value', async snapshot => {
+        let order = snapshot.val();
+        // TODO: if unauthorized or wrong type of order redirect to home page
+        if(order.taxiId){
+          order.taxiDriverName = (await firebaseDatabase().ref(`/users/${order.taxiId}/name`).once('value')).val()
+        }
+        context.commit('loadTaxi', {order:order, orderId:orderId})
+      });
+    },
+    async unloadTaxi(context) {
+      console.log("unloaded taxis")
+      let orderId = context.state.orderId
+      firebaseDatabase().ref(`/orders/${orderId}`).off()
+      context.commit('unloadTaxi')
     },
     async requestTaxi(_, payload) {
       // let userId = context.rootGetters.userId
@@ -26,8 +36,12 @@ export default {
   },
   mutations: {
     loadTaxi(state, payload){
-      console.log(payload)
-      state.value = payload
+      state.value = payload.order
+      state.orderId = payload.orderId
+    },
+    unloadTaxi(state){
+      state.value = null
+      state.orderId = null
     }
   },
   getters: {

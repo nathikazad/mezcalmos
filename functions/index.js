@@ -55,6 +55,45 @@ exports.requestTaxi = functions.https.onCall(async (data, context) => {
   return { status:"Success", orderId: orderRef.key}
 });
 
+exports.requestGrocery = functions.https.onCall(async (data, context) => {
+  console.log("Request Grocery cloud")
+  let payload = {}
+  if(!data.to || !data.items) {
+    return { status:"Error", errorMessage: "Required to, items location"}
+  }
+  // Check valid values for to
+  payload.to = data.to;
+  if(data.from) {
+    // Check valid values for from
+    payload.from = data.from;
+  }
+  payload.items = data.items
+  payload.notes = data.notes
+  payload.clientId = context.auth.uid;
+  payload.orderType = "grocery";
+  payload.status = "lookingForDeliverer";
+  payload.orderTime = (new Date()).toUTCString();
+  let orderRef = await admin.database().ref(`/orders`).push(payload);
+  await admin.database().ref(`/users/${context.auth.uid}/orders/${orderRef.key}`).set({
+    orderType: "grocery", status: "lookingForDeliverer", orderTime: payload.orderTime
+  });
+  return { status:"Success", orderId: orderRef.key}
+});
+
+exports.sendMessage = functions.https.onCall(async (data, context) => {
+  let newMessage = {}
+  if(!data.message || !data.orderId) {
+    return { status:"Error", errorMessage: "Required message and orderId field"}
+  }
+  // TODO: Check if user has permission to write
+  newMessage.senderId = context.auth.uid;
+  newMessage.message = data.message;
+  newMessage.time = (new Date()).toUTCString();
+  let orderRef = await admin.database().ref(`/orders/${data.orderId}/messages`).push(newMessage);
+  // TODO: add notification
+  return { status:"Success", orderId: orderRef.key}
+});
+
 // // from https://github.com/leoalves/hasura-firebase-auth
 // exports.authorizedHasuraOperation = functions.https.onCall(async (data, context) => {
 //   export const query = `

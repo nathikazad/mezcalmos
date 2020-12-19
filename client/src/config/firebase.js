@@ -19,6 +19,7 @@ firebase.initializeApp(firebaseConfig);
 firebase.functions().useEmulator("localhost", 5001);
 
 firebase.auth().onAuthStateChanged(async function (user) {
+  console.log("Sdf")
   if (user) {
     // let token = await user.getIdToken()
     // let tokenResult = await user.getIdTokenResult()
@@ -29,7 +30,6 @@ firebase.auth().onAuthStateChanged(async function (user) {
     //   token = await user.getIdToken(true)
     // }
     // console.log(token);
-    console.log(router.currentRoute.value)
     if(router.currentRoute.value.path == "/auth"){
       router.push({path:router.currentRoute.value.query.redirect})
     }
@@ -38,6 +38,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
       name: user.displayName,
       email: user.email,
       photoURL: user.photoURL,
+      loggedIn: true
       // hasuraAuthToken: token
     })
   }

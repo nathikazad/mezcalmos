@@ -27,7 +27,7 @@ export default {
   methods: {
     logout() {
       this.$store.dispatch('logout')
-      this.$router.push('/coaches')
+      this.$router.push('/services')
     },
     async login() {
       try {

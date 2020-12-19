@@ -33,7 +33,6 @@ export default {
   },
   async beforeCreate() {
     this.isLoaded = false;
-    console.log("beforeCreate");
     await this.$store.dispatch("orders/loadList");
     this.isLoaded = true;
   },

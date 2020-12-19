@@ -31,6 +31,7 @@ export default {
       context.commit('saveAuthData', payload)
     },
     async logout(context) {
+      console.log("Logging out")
       await firebaseAuth().signOut()
       context.commit('saveAuthData', {
         userId: null,
@@ -44,12 +45,14 @@ export default {
   },
   mutations: {
     async saveAuthData(state, payload) {
+      console.log("Save auth data out")
+      console.log(payload)
       state.userId = payload.userId;
       state.hasuraAuthToken = payload.hasuraAuthToken;
       state.name = payload.name;
       state.email = payload.email;
       state.photoUrl = payload.photoURL;
-      state.loggedIn = true;
+      state.loggedIn = payload.loggedIn;
     }
   }
 }

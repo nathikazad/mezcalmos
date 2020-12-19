@@ -4,15 +4,15 @@ export default {
   state() {
     return {
       messages: [],
-      firebaseListener: null
+      orderType: null,
+      orderId: null
     };
   },
   actions: {
     async sendMessage(context, payload) {
       // const token = context.rootGetters.authToken
-      payload.id = context.rootGetters.userId
-      let orderId = payload.orderId
-      let message = payload.messagesId
+      let orderId = context.state.orderId
+      let message = payload.message
       // cloud function to write timestamp and userid along with message
       let response = await firebaseFunctions().httpsCallable('sendMessage')({ orderId: orderId, message: message });
       return response;
@@ -20,31 +20,43 @@ export default {
     async loadMessages(context, payload) {
       console.log("loading messages")
       let orderId = payload.orderId
-      let messages = await firebaseDatabase().ref('/orders/' + orderId+'/messages').once('value')
-      // load last x messages
-      // create firebase listener for new messages
-      context.commit('loadMessages', messages)
+      firebaseDatabase().ref(`/orders/${orderId}`).on('value', async snapshot => {
+        let order = snapshot.val();
+        console.log(order);
+        // TODO: if unauthorized or wrong type of order redirect to home page
+        if(order.taxiId){
+          order.taxiDriverName = (await firebaseDatabase().ref(`/users/${order.taxiId}/name`).once('value')).val()
+        }
+        context.commit('loadMessages', {messages:order.messages, orderType:order.orderType, orderId:orderId})
+      });
     },
-    async removeMessages(context) {
-      // to be called before page is destroyed
-      // remove event listener
-      context.commit('emptyMessages')
+    async unloadMessages(context) {
+      console.log("unloaded messages")
+      let orderId = context.state.orderId
+      console.log(orderId)
+      firebaseDatabase().ref(`/orders/${orderId}`).off()
+      context.commit('unloadMessages')
     }
   },
   mutations: {
     loadMessages(state, payload) {
+      console.log("messages mutated")
       state.messages = payload.messages;
+      state.orderType = payload.orderType;
+      state.orderId = payload.orderId;
     },
-    addMessage(state, payload) {
-      state.messages[payload.key] = payload.message;
-    },
-    emptyMessages(state) {
+    unloadMessages(state) {
       state.messages = {}
+      state.orderType = null;
+      state.orderId = null;
     }
   },
   getters: {
-    messages(state) {
+    value(state) {
       return state.messages;
+    },
+    orderLink(state) {
+      return `/services/${state.orderType}/${state.orderId}`
     }
   }
 };
