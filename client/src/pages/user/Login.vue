@@ -1,14 +1,8 @@
 <template>
   <div>
-    <base-dialog :show="!!error" title="An error occured" @close="handleError"> 
-    <p>{{ error }}</p>
-    </base-dialog>
-    <base-dialog :show="isLoading" title="Authenticating..." fixed>
-      <base-spinner></base-spinner>
-    </base-dialog>
-    <base-card>
-      <base-button type="button" @click="submitForm">Sign In With Facebook</base-button>
-    </base-card>
+    
+      <button type="button" @click="submitForm">Sign In With Facebook</button>
+    
   </div>
 </template>
 
@@ -29,8 +23,15 @@ export default {
     async submitForm() {
       this.isLoading = true;
       try {
+        console.log("here")
+        
         await this.$store.dispatch('login');
-        this.$router.push({path:this.$router.currentRoute.value.query.redirect})
+        if(this.$route.query.redirect) {
+          this.$router.push({path:this.$route.query.redirect})
+        } else {
+          this.$router.push({path:"/"})
+        }
+        
       } catch (e) {
         this.error = e.message;
         console.log(this.error)

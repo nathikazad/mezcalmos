@@ -1,9 +1,11 @@
 <template>
-  <router-link :to="orderLink">Back to Order</router-link>
-  <h2>Messages</h2>
-  {{ messages }}
-  <input type="text" v-model="newMessage" />
-  <button v-if="newMessage != ''" @click="sendMessage">Send Message</button>
+  <div>
+    <router-link :to="orderLink">Back to Order</router-link>
+    <h2>Messages</h2>
+    {{ messages }}
+    <input type="text" v-model="newMessage" />
+    <button v-if="newMessage != ''" @click="sendMessage">Send Message</button>
+  </div>
 </template>
 
 <script>

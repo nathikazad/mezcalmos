@@ -6,11 +6,11 @@
       </h1>
       <ul>
         <li>
-          <router-link to="/orders">Orders</router-link>
+          <router-link v-if="isLoggedIn" to="/orders">Orders</router-link>
         </li>
         <li>
-          <base-button flat v-if="isLoggedIn" @click="logout">Logout</base-button>
-          <base-button v-else @click="login">Login</base-button>
+          <button v-if="isLoggedIn" @click="logout">Logout</button>
+          <button v-else v-on:click="login">Login</button>
         </li>
       </ul>
     </nav>
@@ -25,14 +25,22 @@ export default {
     }
   },
   methods: {
+    print() {
+      console.log(this.$store.getters.loggedIn)
+    },
     logout() {
       this.$store.dispatch('logout')
       this.$router.push('/services')
     },
     async login() {
       try {
+        console.log("login")
         await this.$store.dispatch('login');
-        // this.$router.push('/')
+        if(this.$route.query.redirect) {
+          this.$router.push({path:this.$route.query.redirect})
+        } else {
+          this.$router.push({path:"/"})
+        }
       } catch (e) {
         this.error = e.message;
         console.log(this.error)

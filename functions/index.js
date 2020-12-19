@@ -46,7 +46,7 @@ exports.requestTaxi = functions.https.onCall(async (data, context) => {
   }
   payload.clientId = context.auth.uid;
   payload.orderType = "taxi";
-  payload.status = "lookingForTaxi";
+  payload.status = "lookingForDriver";
   payload.orderTime = (new Date()).toUTCString();
   let orderRef = await admin.database().ref(`/orders`).push(payload);
   await admin.database().ref(`/users/${context.auth.uid}/orders/${orderRef.key}`).set({
@@ -71,7 +71,7 @@ exports.requestGrocery = functions.https.onCall(async (data, context) => {
   payload.notes = data.notes
   payload.clientId = context.auth.uid;
   payload.orderType = "grocery";
-  payload.status = "lookingForDeliverer";
+  payload.status = "lookingForDriver";
   payload.orderTime = (new Date()).toUTCString();
   let orderRef = await admin.database().ref(`/orders`).push(payload);
   await admin.database().ref(`/users/${context.auth.uid}/orders/${orderRef.key}`).set({

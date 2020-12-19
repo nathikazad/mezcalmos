@@ -14,8 +14,8 @@ export default {
       firebaseDatabase().ref(`/orders/${orderId}`).on('value', async snapshot => {
         let order = snapshot.val();
         // TODO: if unauthorized or wrong type of order redirect to home page
-        if(order.GroceryId){
-          order.GroceryDriverName = (await firebaseDatabase().ref(`/users/${order.GroceryId}/name`).once('value')).val()
+        if(order.driverId){
+          order.driverName = (await firebaseDatabase().ref(`/users/${order.GroceryId}/name`).once('value')).val()
         }
         context.commit('loadGrocery', {order:order, orderId:orderId})
       });

@@ -1,6 +1,5 @@
-import { createRouter, createWebHistory } from 'vue-router'
-
-
+import VueRouter from 'vue-router'
+import Vue from 'vue'
 import ServicesListPage from './pages/services/List'
 import TaxiViewPage from './pages/services/taxis/View'
 import TaxiRequestPage from './pages/services/taxis/Request'
@@ -16,8 +15,10 @@ import LoginPage from './pages/user/Login'
 import NotFoundPage from './pages/NotFound'
 import store from './store/store';
 
-const router = createRouter({
-  history: createWebHistory(),
+Vue.use(VueRouter)
+
+const router = new VueRouter({
+  mode: 'history',
   routes: [
     { path: '/', redirect: '/services' },
     { path: '/services', component: ServicesListPage },

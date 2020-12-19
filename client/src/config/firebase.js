@@ -19,7 +19,6 @@ firebase.initializeApp(firebaseConfig);
 firebase.functions().useEmulator("localhost", 5001);
 
 firebase.auth().onAuthStateChanged(async function (user) {
-  console.log("Sdf")
   if (user) {
     // let token = await user.getIdToken()
     // let tokenResult = await user.getIdTokenResult()
@@ -30,10 +29,8 @@ firebase.auth().onAuthStateChanged(async function (user) {
     //   token = await user.getIdToken(true)
     // }
     // console.log(token);
-    if(router.currentRoute.value.path == "/auth"){
-      router.push({path:router.currentRoute.value.query.redirect})
-    }
-    store.dispatch('autoSignIn', {
+
+    await store.dispatch('autoSignIn', {
       userId: user.uid,
       name: user.displayName,
       email: user.email,
@@ -41,6 +38,9 @@ firebase.auth().onAuthStateChanged(async function (user) {
       loggedIn: true
       // hasuraAuthToken: token
     })
+    if(router.currentRoute.path == "/auth"){
+      router.push({path:router.currentRoute.query.redirect})
+    }
   }
 }, function (error) {
   console.log(error)

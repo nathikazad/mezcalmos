@@ -1,19 +1,20 @@
 <template>
-  <h2>Buy Groceries</h2>
-  <h3>FROM</h3>
-  <pick-location v-model:location="from"></pick-location>
-  <h3>TO</h3>
-  <pick-location v-model:location="to"></pick-location>
-  <h3>Items</h3>
   <div>
-    {{items}}
+    <h2>Buy Groceries</h2>
+    <h3>FROM</h3>
+    <pick-location v-model="from"></pick-location>
+    <h3>TO</h3>
+    <pick-location v-model="to"></pick-location>
+    <h3>Items</h3>
+    <div>
+      {{items}}
+    </div>
+    <add-item v-on:new-item="addItem($event)"></add-item>
+    <h3>Notes</h3>
+    <input type="text" v-model="notes" /> <br/><br/>
+    <button v-if="isLoggedIn" @click="requestGrocery">Buy</button>
+    <button v-else @click="login">Sign in with Facebook to Buy</button><br />
   </div>
-  <add-item v-on:new-item="addItem($event)"></add-item>
-  <h3>Notes</h3>
-  <input type="text" v-model="notes" /> <br/><br/>
-  <button v-if="isLoggedIn" @click="requestGrocery">Buy</button>
-  <button v-else @click="login">Sign in with Facebook to Buy</button><br />
-
   <!-- testing -->
   <!-- <label>lat:&nbsp;{{ to.lat }}</label><br/>
   <label>long:&nbsp;{{ to.long }}</label><br/>

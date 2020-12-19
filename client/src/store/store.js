@@ -1,4 +1,5 @@
-import { createStore } from 'vuex';
+import Vuex from 'vuex'
+import Vue from 'vue'
 
 import authModule from './modules/auth';
 import taxisModule from './modules/taxis';
@@ -6,7 +7,9 @@ import groceriesModule from './modules/groceries'
 import ordersModule from './modules/orders';
 import messagesModule from './modules/messages'
 
-const store = createStore({
+Vue.use(Vuex)
+
+const store = new Vuex.Store({
   modules: {
     auth: authModule,
     taxis: taxisModule,
