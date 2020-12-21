@@ -1,0 +1,7 @@
+.text {
+    @include color-modifiers($attribute: 'color', $prefix: '_');
+}
+
+.bg {
+    @include color-modifiers($attribute: 'background', $prefix: '_');
+}

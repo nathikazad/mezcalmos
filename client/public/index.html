@@ -1,17 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title><%= htmlWebpackPlugin.options.title %></title>
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+  <title><%= htmlWebpackPlugin.options.title %></title>
+  <link rel="preload" href="fonts/Product Sans Bold Italic.ttf" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="fonts/Product Sans Bold.ttf" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="fonts/Product Sans Italic.ttf" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="fonts/Product Sans Regular.ttf" as="font" type="font/woff2" crossorigin />
+  <!-- Fonts -->
+  <link href="fonts/font.css" rel="stylesheet" type="text/css">
+  <script src="https://kit.fontawesome.com/your-code-number.js"></script>
+</head>
+
+<body>
+  <noscript>
+    <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
+      Please enable it to continue.</strong>
+  </noscript>
+  <div id="app"></div>
+  <!-- built files will be auto injected -->
+</body>
+
 </html>

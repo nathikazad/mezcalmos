@@ -16,34 +16,37 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-firebase.functions().useEmulator("localhost", 5001);
+firebase.functions().useEmulator("localhost", 5000);
 
 firebase.auth().onAuthStateChanged(async function (user) {
-  if (user) {
-    // let token = await user.getIdToken()
-    // let tokenResult = await user.getIdTokenResult()
-    // let hasuraClaim = tokenResult.claims['https://hasura.io/jwt/claims']
-    // if (!hasuraClaim) {
-    //   console.log("No hasura, retrying")
-    //   await firebase.functions().httpsCallable('addHasuraClaims')();
-    //   token = await user.getIdToken(true)
-    // }
-    // console.log(token);
-    console.log(router.currentRoute.value)
-    if(router.currentRoute.value.path == "/auth"){
-      router.push({path:router.currentRoute.value.query.redirect})
+    if (user) {
+      // let token = await user.getIdToken()
+      // let tokenResult = await user.getIdTokenResult()
+      // let hasuraClaim = tokenResult.claims['https://hasura.io/jwt/claims']
+      // if (!hasuraClaim) {
+      //   console.log("No hasura, retrying")
+      //   await firebase.functions().httpsCallable('addHasuraClaims')();
+      //   token = await user.getIdToken(true)
+      // }
+      // console.log(token);
+      console.log(router.currentRoute.value)
+      if (router.currentRoute.value.path == "/auth") {
+        router.push({
+          path: router.currentRoute.value.query.redirect
+        })
+      }
+      store.dispatch('autoSignIn', {
+        userId: user.uid,
+        name: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL,
+        // hasuraAuthToken: token
+      })
     }
-    store.dispatch('autoSignIn', {
-      userId: user.uid,
-      name: user.displayName,
-      email: user.email,
-      photoURL: user.photoURL,
-      // hasuraAuthToken: token
-    })
-  }
-}, function (error) {
-  console.log(error)
-});
+  },
+  function (error) {
+    console.log(error)
+  });
 
 
 export const ref = firebase.database().ref();

@@ -1,18 +1,19 @@
 <template>
   <header>
-    <nav>
-      <h1>
-        <router-link to="/">Mezcalmos</router-link>
-      </h1>
-      <ul>
-        <li>
-          <router-link to="/orders">Orders</router-link>
-        </li>
-        <li>
-          <base-button flat v-if="isLoggedIn" @click="logout">Logout</base-button>
-          <base-button v-else @click="login">Login</base-button>
-        </li>
-      </ul>
+    <nav class="container flex space_between align_center fill_height">
+      <div class="right_side">
+        <router-link to="/" class="flex align_center">
+          <base-button :mode="{ dark: true, bg_diagonal: true }"
+            >Men</base-button
+          >
+          <logo class="logo"></logo>
+          <h2 class="regular txt_center">
+            MEZ
+            <span>CALMOS</span>
+          </h2>
+        </router-link>
+      </div>
+      <div class="left_side"></div>
     </nav>
   </header>
 </template>
@@ -20,85 +21,42 @@
 <script>
 export default {
   computed: {
-    isLoggedIn(){
-      return this.$store.getters.loggedIn
-    }
+    isLoggedIn() {
+      return this.$store.getters.loggedIn;
+    },
   },
   methods: {
     logout() {
-      this.$store.dispatch('logout')
-      this.$router.push('/coaches')
+      this.$store.dispatch("logout");
+      this.$router.push("/coaches");
     },
     async login() {
       try {
-        await this.$store.dispatch('login');
+        await this.$store.dispatch("login");
         // this.$router.push('/')
       } catch (e) {
         this.error = e.message;
-        console.log(this.error)
+        console.log(this.error);
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 header {
   width: 100%;
   height: 5rem;
-  background-color: #3d008d;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
-
-header a {
-  text-decoration: none;
-  color: #f391e3;
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  border: 1px solid transparent;
+h2 {
+  color: map-get($colors, blackD);
+  span {
+    color: map-get($colors, brand);
+  }
 }
-
-a:active,
-a:hover,
-a.router-link-active {
-  border: 1px solid #f391e3;
-}
-
-h1 {
-  margin: 0;
-}
-
-h1 a {
-  color: white;
-  margin: 0;
-}
-
-h1 a:hover,
-h1 a:active,
-h1 a.router-link-active {
-  border-color: transparent;
-}
-
-header nav {
-  width: 90%;
-  margin: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-header ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-li {
-  margin: 0 0.5rem;
+.logo {
+  margin: 0 0.8rem;
+  height: 2rem;
+  width: auto;
 }
 </style>

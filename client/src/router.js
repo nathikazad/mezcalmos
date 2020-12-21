@@ -1,4 +1,7 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import {
+  createRouter,
+  createWebHistory
+} from 'vue-router'
 
 
 import ServicesListPage from './pages/services/List'
@@ -19,34 +22,86 @@ import store from './store/store';
 
 const router = createRouter({
   history: createWebHistory(),
-  routes: [
-    { path: '/', redirect: '/services' },
-    { path: '/services', component: ServicesListPage },
-    { path: '/services/taxi/request', component: TaxiRequestPage },
-    { path: '/services/grocery/request', component: GroceryRequestPage },
-    {
-      path: '/services/taxi/:orderId', component: TaxiViewPage, children: [
-        { path: 'messages', component: MessagesPage }
-      ],
-      meta: { requiresAuth: true }
+  routes: [{
+      path: '/',
+      redirect: '/services'
     },
     {
-      path: '/services/grocery/:orderId', component: GroceryViewPage, children: [
-        { path: 'addItem', component: AddItemPage },
-        { path: 'messages', component: MessagesPage }
-      ],
-      meta: { requiresAuth: true }
+      path: '/services',
+      component: ServicesListPage
     },
-    { path: '/orders', component: OrdersListPage, meta: { requiresAuth: true } },
-    { path: '/userinfo', component: UserInformationPage, meta: { requiresAuth: true } },
-    { path: '/auth', component: LoginPage, meta: { requiresUnauth: true } },
-    { path: '/:notFound(.*)', component: NotFoundPage }
+    {
+      path: '/services/taxi/request',
+      component: TaxiRequestPage
+    },
+    {
+      path: '/services/grocery/request',
+      component: GroceryRequestPage
+    },
+    {
+      path: '/services/taxi/:orderId',
+      component: TaxiViewPage,
+      children: [{
+        path: 'messages',
+        component: MessagesPage
+      }],
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/services/grocery/:orderId',
+      component: GroceryViewPage,
+      children: [{
+          path: 'addItem',
+          component: AddItemPage
+        },
+        {
+          path: 'messages',
+          component: MessagesPage
+        }
+      ],
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/orders',
+      component: OrdersListPage,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/userinfo',
+      component: UserInformationPage,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/auth',
+      component: LoginPage,
+      meta: {
+        requiresUnauth: true
+      },
+      name: 'login'
+    },
+    {
+      path: '/:notFound(.*)',
+      component: NotFoundPage
+    }
   ]
 })
 
 router.beforeEach(async function (to, from, next) {
   if (to.meta.requiresAuth && !store.getters.loggedIn) {
-    next({ path: '/auth', query: { redirect: to.path } });
+    next({
+      path: '/auth',
+      query: {
+        redirect: to.path
+      }
+    });
   } else if (to.meta.requiresUnauth && store.getters.loggedIn) {
     next('/services');
   } else {

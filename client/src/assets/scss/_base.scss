@@ -1,0 +1,79 @@
+.flex {
+    display: flex;
+}
+
+.wrap {
+    flex-wrap: wrap;
+}
+
+.center {
+    justify-content: center;
+}
+
+.space_between {
+    justify-content: space-between;
+}
+
+.space_around {
+    justify-content: space-around;
+}
+
+.start {
+    justify-content: flex-start;
+}
+
+.end {
+    justify-content: flex-end;
+}
+
+.align_center {
+    align-items: center;
+}
+
+.txt_center {
+    text-align: center;
+}
+
+.fill_width {
+    width: 100%
+}
+
+.fill_height {
+    height: 100%;
+}
+
+.container {
+    width: 728px !important;
+    margin: 0 auto;
+    
+}
+
+.btn {
+    box-shadow: 0 6px 10px rgba(35, 97, 241, 0.2);
+    border-radius: 4px;
+    border: none;
+    height: 3rem;
+    position: relative;
+    cursor: pointer;
+
+    &:hover::before {
+        content: "";
+        background: rgba(0, 0, 0, 0.13);
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 0;
+        border-radius: inherit;
+    }
+
+    span {
+        position: relative;
+        z-index: 2;
+    }
+}
+
+.black {
+    color: map-get($colors, black)
+}

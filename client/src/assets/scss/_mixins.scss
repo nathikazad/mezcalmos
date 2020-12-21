@@ -1,0 +1,75 @@
+@mixin media-min-width($width) {
+    @media (min-width: $width) {}
+}
+
+@mixin media-max-width($width) {
+    @media (max-width: $width) {}
+}
+
+@mixin media-min-height($height) {
+    @media (min-height: $height) {}
+}
+
+@mixin media-max-height($height) {
+    @media (max-height: $height) {}
+}
+
+//w-${var} class
+$sizer: 1%;
+$sizer-increment: 5;
+
+$sizers: ();
+
+@for $i from 1 through 20 {
+    $sizers: map-merge($sizers, ($i * $sizer-increment: $sizer * $i * $sizer-increment))
+}
+
+@each $prop,
+$abbrev in (width: w, height: h) {
+
+    @each $size,
+    $length in $sizers {
+        .#{$abbrev}-#{$size} {
+            #{$prop}: $length !important;
+        }
+    }
+}
+
+//t-${var} class
+$type: 0.1rem;
+$type-increment: 1;
+
+$types: ();
+
+@for $i from 1 through 30 {
+    $types: map-merge($types, ($i * $type-increment: $type * $i * $type-increment))
+}
+
+@each $prop,
+$abbrev in (font-size: t) {
+
+    @each $size,
+    $length in $types {
+        .#{$abbrev}-#{$size} {
+            #{$prop}: $length !important;
+        }
+    }
+}
+
+//colors modifier
+@mixin color-modifiers($attribute: 'color', $prefix: '-') {
+
+    @each $name,
+    $hex in $colors {
+        &#{$prefix}#{$name} {
+            #{$attribute}: $hex;
+        }
+    }
+
+    @each $name,
+    $hex in $gradients {
+        &#{$prefix}#{$name} {
+            #{$attribute}: $hex;
+        }
+    }
+}

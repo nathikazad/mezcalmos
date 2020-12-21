@@ -1,30 +1,38 @@
 <template>
-  <the-header></the-header>
-  <router-view></router-view>
+  <main>
+    <the-header v-show="routeName!='login'"></the-header>
+    <router-view class="container"></router-view>
+  </main>
 </template>
 
 <script>
-import TheHeader from './components/layouts/TheHeader.vue';
+import TheHeader from "./components/layouts/TheHeader.vue";
 export default {
   components: {
-    TheHeader,
+    TheHeader
+  },
+  computed: {
+    routeName() {
+      return this.$route.name;
+    }
   }
 };
 </script>
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
-* {
-  box-sizing: border-box;
-}
-
+<style lang="scss" >
+@import "assets/scss/_typography.scss";
+@import "assets/scss/_mixins.scss";
+@import "assets/scss/_base.scss";
+@import "assets/scss/_colors.scss";
 html {
-  font-family: 'Roboto', sans-serif;
+  font-family: $regular;
 }
 
 body {
   margin: 0;
-  max-width: 600px;
+  color: map-get($colors, blackL);
+}
+main {
+  width: 100%;
 }
 </style>
