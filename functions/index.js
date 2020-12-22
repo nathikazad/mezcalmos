@@ -9,6 +9,11 @@ admin.initializeApp({
 
 // On sign up.
 exports.processSignUp = functions.auth.user().onCreate(async user => {
+  await admin.database().ref(`/users/${user.uid}`).set(
+    {displayName:user.displayName,
+     photo:user.photoURL,
+     email:user.email,
+     fbuid:user.providerData[0].uid});
   return setHasura(user.uid);
 });
 
