@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router.js'
-import store from './store/store'
+import store from '../store/store'
 
-import  './config/firebase';
+import  '../config/firebase';
 
 // import { apolloClient } from "./config/apollo";
 // import { DefaultApolloClient } from "@vue/apollo-composable";

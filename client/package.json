@@ -3,12 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "serveVue": "vue-cli-service serve",
+    "build:drivers": "vue-cli-service build --dest ../dist/drivers src/drivers/main.js",
+    "build:public": "vue-cli-service build --dest ../dist/public src/public/main.js",
+    "serve:drivers": "vue-cli-service serve src/public/drivers.js",
+    "serve:public": "vue-cli-service serve src/public/main.js",
     "emulator": "firebase emulators:start --only functions",
-    "serve": "npm-run-all --parallel serveVue emulator",
-    "deploy": "vue-cli-service build; firebase deploy --only hosting;"
+    "serve:drivers:emulator": "npm-run-all --parallel serve:drivers emulator",
+    "serve:public:emulator": "npm-run-all --parallel serve:public emulator",
+    "deploy:drivers": "build:drivers; firebase deploy --only hosting target;",
+    "deploy:public": "build:public; firebase deploy --only hosting target;",
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "core-js": "^3.6.5",

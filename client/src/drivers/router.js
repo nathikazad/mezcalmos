@@ -13,7 +13,7 @@ import LoginPage from './pages/user/Login'
 
 
 import NotFoundPage from './pages/NotFound'
-import store from './store/store';
+import store from '@/store/store';
 
 Vue.use(VueRouter)
 

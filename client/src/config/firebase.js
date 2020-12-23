@@ -3,7 +3,7 @@ import 'firebase/auth';
 import 'firebase/functions';
 import 'firebase/database';
 import store from '../store/store'
-import router from '../router';
+import router from '../public/router';
 
 const firebaseConfig = {
   apiKey: "AIzaSyB9vaAB9ptXhpeRs_JjxODEyuA_eO0tYu0",
@@ -16,8 +16,11 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
+
+// TODO: detect if being served or deployed and add conditionally
 firebase.functions().useEmulator("localhost", 5001);
 
+// TODO: put this inside a function and call it with a callback
 firebase.auth().onAuthStateChanged(async function (user) {
   if (user) {
     // let token = await user.getIdToken()

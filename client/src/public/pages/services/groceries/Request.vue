@@ -22,8 +22,8 @@
 </template>
 
 <script>
-import PickLocation from "../../../components/map/GetLocation";
-import AddItem from "../../../components/services/groceries/AddItem";
+import PickLocation from "@/components/map/GetLocation";
+import AddItem from "@/components/services/groceries/AddItem";
 export default {
   components: {
     PickLocation,

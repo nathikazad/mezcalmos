@@ -6,4 +6,4 @@ service-account.json
 client/ui-debug.log
 database-debug.log
 ui-debug.log
-.vscode/
+dist
