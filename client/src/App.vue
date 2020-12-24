@@ -1,29 +1,53 @@
 <template>
-  <main>
-    <the-header v-show="routeName!='login'"></the-header>
-    <router-view class="container"></router-view>
+  <main :class="{ overlay: navDrawer }">
+    <transition name="slide-fade">
+      <nav-drawer v-if="navDrawer" class="navDrawer bg_white" @toggle="navDrawer = !navDrawer"></nav-drawer>
+    </transition>
+    <the-header v-show="routeName != 'login'" @toggle="navDrawer = !navDrawer"></the-header>
+    <router-view class="container outlet"></router-view>
   </main>
 </template>
 
 <script>
 import TheHeader from "./components/layouts/TheHeader.vue";
+import NavDrawer from "./components/layouts/navDrawer.vue";
 export default {
   components: {
-    TheHeader
+    TheHeader,
+    NavDrawer
   },
   computed: {
     routeName() {
       return this.$route.name;
     }
+  },
+  data() {
+    return {
+      f: "poop",
+      navDrawer: false
+    };
+  },
+  watch: {
+    $route: {
+      deep: true,
+      immediate: true,
+      handler: function(newVal, oldVal) {
+        console.log("updated route", newVal, " from ", oldVal);
+        this.navDrawer = false;
+      }
+    }
   }
 };
 </script>
 
-<style lang="scss" >
+<style lang="scss">
 @import "assets/scss/_typography.scss";
 @import "assets/scss/_mixins.scss";
 @import "assets/scss/_base.scss";
 @import "assets/scss/_colors.scss";
+* {
+  box-sizing: border-box;
+}
 html {
   font-family: $regular;
 }
@@ -34,5 +58,45 @@ body {
 }
 main {
   width: 100%;
+  min-height: 100vh;
+  position: relative;
+}
+.outlet {
+  min-height: calc(100vh - 5rem);
+  position: relative;
+  overflow: auto;
+}
+.navDrawer {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 80%;
+  z-index: 9;
+  padding: 0 1.25rem;
+}
+/* Enter and leave animations can use different */
+/* durations and timing functions.              */
+.slide-fade-enter-active {
+  transition: all 0.5s ease-out;
+}
+.slide-fade-leave-active {
+  transition: all 0.5s ease-in;
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(-100%);
+}
+/* Enter and leave animations can use different */
+/* durations and timing functions.              */
+.slide-down-fade-enter-active {
+  transition: all 0.5s ease-out;
+}
+.slide-down-fade-leave-active {
+  transition: all 0.5s ease-in;
+}
+.slide-down-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(-100%);
 }
 </style>

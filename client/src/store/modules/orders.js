@@ -21,7 +21,6 @@ export default {
     },
     getters: {
       list(state) {
-        console.log(state.list)
         return state.list;
       },
       hasOrders(state) {

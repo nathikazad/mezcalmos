@@ -1,13 +1,16 @@
 <template>
   <div>
     <h1 class="regular">All Services</h1>
-    <section class=" flex wrap">
-      <div class="panel flex align_center center fill_width wrap" id="taxi">
+    <section class="flex wrap">
+      <div
+        class="panel flex align_center center fill_width wrap bg_taxi"
+        id="taxi"
+      >
         <taxi class="icon"></taxi>
         <h4>Taxi</h4>
       </div>
       <div
-        class="panel flex align_center center fill_width wrap"
+        class="panel flex align_center center fill_width wrap bg_grocery"
         id="groceries"
       >
         <groceries class="icon"></groceries>
@@ -58,11 +61,5 @@ export default {
     height: 3rem;
     width: auto;
   }
-}
-#taxi {
-  background: rgba(252, 234, 77, 0.25);
-}
-#groceries {
-  background: #d4fff6;
 }
 </style>

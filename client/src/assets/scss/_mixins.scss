@@ -56,20 +56,64 @@ $abbrev in (font-size: t) {
     }
 }
 
+//m-${var} margin 
+// $margin: 0.1rem;
+// $margin-increment: 1;
+
+// $types: ();
+
+// @for $i from 1 through 30 {
+//     $types: map-merge($types, ($i * $type-increment: $type * $i * $type-increment))
+// }
+
+// @each $prop,
+// $abbrev in (font-size: t) {
+
+//     @each $size,
+//     $length in $types {
+//         .#{$abbrev}-#{$size} {
+//             #{$prop}: $length !important;
+//         }
+//     }
+// }
+
 //colors modifier
 @mixin color-modifiers($attribute: 'color', $prefix: '-') {
 
     @each $name,
     $hex in $colors {
         &#{$prefix}#{$name} {
-            #{$attribute}: $hex;
+            #{$attribute}: $hex !important;
         }
     }
 
     @each $name,
     $hex in $gradients {
         &#{$prefix}#{$name} {
-            #{$attribute}: $hex;
+            #{$attribute}: $hex !important;
         }
+    }
+}
+
+@mixin scrollbars($size, $foreground-color, $background-color: mix($foreground-color, white, 50%)) {
+
+    // For Google Chrome
+    &::-webkit-scrollbar {
+        width: $size;
+        height: $size;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: $foreground-color;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: $background-color;
+    }
+
+    // For Internet Explorer
+    & {
+        scrollbar-face-color: $foreground-color;
+        scrollbar-track-color: $background-color;
     }
 }

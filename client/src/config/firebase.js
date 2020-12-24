@@ -29,19 +29,20 @@ firebase.auth().onAuthStateChanged(async function (user) {
       //   token = await user.getIdToken(true)
       // }
       // console.log(token);
-      console.log(router.currentRoute.value)
-      if (router.currentRoute.value.path == "/auth") {
-        router.push({
-          path: router.currentRoute.value.query.redirect
-        })
-      }
-      store.dispatch('autoSignIn', {
+
+      await store.dispatch('autoSignIn', {
         userId: user.uid,
         name: user.displayName,
         email: user.email,
         photoURL: user.photoURL,
+        loggedIn: true
         // hasuraAuthToken: token
       })
+      if (router.currentRoute.path == "/auth") {
+        router.push({
+          path: router.currentRoute.query.redirect
+        })
+      }
     }
   },
   function (error) {

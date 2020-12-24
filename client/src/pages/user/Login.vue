@@ -1,5 +1,5 @@
 <template>
-  <div class="flex center align_center wrap">
+  <div class="flex center align_center wrap login">
     <div class="brand fill_width">
       <div class="circle flex center align_center">
         <logo :light="true" class="logo"></logo>
@@ -15,16 +15,49 @@
         <br />Facebook To
         <br />Make An Order
       </h1>
-      <button class="btn">
+      <button class="btn" @click="submitForm">
         <span>Facebook login</span>
       </button>
     </div>
   </div>
 </template>
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      isLoading: false,
+      error: null
+    };
+  },
+  computed: {},
+  methods: {
+    handleError() {
+      this.error = null;
+    },
+    async submitForm() {
+      this.isLoading = true;
+      try {
+        console.log("here");
+
+        await this.$store.dispatch("login");
+        if (this.$route.query.redirect) {
+          this.$router.push({ path: this.$route.query.redirect });
+        } else {
+          this.$router.push({ path: "/" });
+        }
+      } catch (e) {
+        this.error = e.message;
+        console.log(this.error);
+      }
+      this.isLoading = false;
+    }
+  }
+};
 </script>
 <style lang="scss" scoped>
+.login {
+  flex-direction: column;
+}
 .circle {
   width: 7.25rem;
   height: 7.25rem;

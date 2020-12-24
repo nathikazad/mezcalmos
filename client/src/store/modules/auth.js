@@ -8,7 +8,8 @@ export default {
       name: null,
       email: null,
       photoURL: null,
-      hasuraAuthToken: null
+      hasuraAuthToken: null,
+      loggedIn: false
     };
   },
   getters: {
@@ -28,9 +29,10 @@ export default {
       firebaseAuth().signInWithPopup(provider);
     },
     async autoSignIn(context, payload) {
-      context.commit('saveAuthData', payload)
+      await context.commit('saveAuthData', payload)
     },
     async logout(context) {
+      console.log("Logging out")
       await firebaseAuth().signOut()
       context.commit('saveAuthData', {
         userId: null,
@@ -49,7 +51,7 @@ export default {
       state.name = payload.name;
       state.email = payload.email;
       state.photoUrl = payload.photoURL;
-      state.loggedIn = true;
+      state.loggedIn = payload.loggedIn;
     }
   }
 }

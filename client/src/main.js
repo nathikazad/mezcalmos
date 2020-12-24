@@ -1,26 +1,69 @@
-import { createApp } from "vue";
+import Vue from "vue";
 import App from "./App.vue";
 import router from "./router.js";
 import store from "./store/store";
-
 import "./config/firebase";
+import {
+  library
+} from "@fortawesome/fontawesome-svg-core";
+import {
+  faEnvelope,
+  faShoppingCart,
+  faChevronLeft,
+  faSignInAlt,
+  faPowerOff,
+  faLocationArrow,
+  faUserCircle,
+  faPaperPlane,
+  faCalendarAlt,
+  faClock,
+  faRoute,
+  faTrash,
+  faLongArrowAltRight,
+  faPlus
+} from "@fortawesome/free-solid-svg-icons";
+import {
+  FontAwesomeIcon
+} from "@fortawesome/vue-fontawesome";
+
 // import { apolloClient } from "./config/apollo";
 // import { DefaultApolloClient } from "@vue/apollo-composable";
-
-import BaseCard from "./components/ui/BaseCard";
+library.add({
+  faEnvelope,
+  faShoppingCart,
+  faChevronLeft,
+  faSignInAlt,
+  faPowerOff,
+  faLocationArrow,
+  faUserCircle,
+  faPaperPlane,
+  faCalendarAlt,
+  faClock,
+  faRoute,
+  faTrash,
+  faLongArrowAltRight,
+  faPlus
+});
 import BaseButton from "./components/ui/BaseButton";
-import BaseBadge from "./components/ui/BaseBadge";
-import BaseSpinner from "./components/ui/BaseSpinner";
-import BaseDialog from "./components/ui/BaseDialog";
+import Panel from "./components/ui/panel";
+import Avatar from "./components/ui/avatar";
 import Logo from "./components/SVG/logo";
-const app = createApp(App);
-app.use(router);
-app.use(store);
+import "./registerServiceWorker";
+
 // app.provide(DefaultApolloClient, apolloClient)
-app.component("logo", Logo);
-app.component("base-card", BaseCard);
-app.component("base-button", BaseButton);
-app.component("base-badge", BaseBadge);
-app.component("base-spinner", BaseSpinner);
-app.component("base-dialog", BaseDialog);
-app.mount("#app");
+Vue.use(require("vue-moment"));
+Vue.component("fa", FontAwesomeIcon);
+
+Vue.component("logo", Logo);
+Vue.component("base-button", BaseButton);
+Vue.component("panel", Panel);
+Vue.component("avatar", Avatar);
+
+Vue.config.productionTip = false;
+// app.provide(DefaultApolloClient, apolloClient)
+
+new Vue({
+  render: (h) => h(App),
+  router,
+  store,
+}).$mount("#app");

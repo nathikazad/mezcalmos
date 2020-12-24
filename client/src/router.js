@@ -1,15 +1,11 @@
-import {
-  createRouter,
-  createWebHistory
-} from 'vue-router'
-
-
+import VueRouter from 'vue-router'
+import Vue from 'vue'
 import ServicesListPage from './pages/services/List'
 import TaxiViewPage from './pages/services/taxis/View'
 import TaxiRequestPage from './pages/services/taxis/Request'
 import GroceryViewPage from './pages/services/groceries/View'
 import GroceryRequestPage from './pages/services/groceries/Request'
-import AddItemPage from './pages/services/groceries/AddItem'
+import GroceryAddItemPage from './pages/services/groceries/AddItem'
 
 import OrdersListPage from './pages/orders/List'
 import UserInformationPage from './pages/user/Information'
@@ -20,15 +16,18 @@ import LoginPage from './pages/user/Login'
 import NotFoundPage from './pages/NotFound'
 import store from './store/store';
 
-const router = createRouter({
-  history: createWebHistory(),
+Vue.use(VueRouter)
+
+const router = new VueRouter({
+  mode: 'history',
   routes: [{
       path: '/',
       redirect: '/services'
     },
     {
       path: '/services',
-      component: ServicesListPage
+      component: ServicesListPage,
+      name: 'services'
     },
     {
       path: '/services/taxi/request',
@@ -41,10 +40,6 @@ const router = createRouter({
     {
       path: '/services/taxi/:orderId',
       component: TaxiViewPage,
-      children: [{
-        path: 'messages',
-        component: MessagesPage
-      }],
       meta: {
         requiresAuth: true
       }
@@ -52,15 +47,20 @@ const router = createRouter({
     {
       path: '/services/grocery/:orderId',
       component: GroceryViewPage,
-      children: [{
-          path: 'addItem',
-          component: AddItemPage
-        },
-        {
-          path: 'messages',
-          component: MessagesPage
-        }
-      ],
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/services/grocery/:orderId/add',
+      component: GroceryAddItemPage,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/messages/:orderId',
+      component: MessagesPage,
       meta: {
         requiresAuth: true
       }
