@@ -12,7 +12,7 @@
       <label>long:&nbsp;{{ orderDetails.to.long }}</label><br/>
       <label>address:&nbsp;{{ orderDetails.to.address }}</label><br/> 
       <h4>Status:&nbsp;{{ orderDetails.status }}</h4>
-      <div v-if="orderDetails.taxiId">
+      <div v-if="orderDetails.driverId">
         <label>Driver Name:&nbsp;{{ orderDetails.taxiDriverName }}</label>&nbsp;&nbsp;
         <router-link :to="messageLink">Message</router-link>
       </div>

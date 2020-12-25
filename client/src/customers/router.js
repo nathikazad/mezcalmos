@@ -7,13 +7,13 @@ import GroceryViewPage from './pages/services/groceries/View'
 import GroceryRequestPage from './pages/services/groceries/Request'
 
 import OrdersListPage from './pages/orders/List'
-import UserInformationPage from './pages/user/Information'
-import MessagesPage from './pages/messages/View'
-import LoginPage from './pages/user/Login'
+import UserInformationPage from '@/shared/pages/user/Information'
+import MessagesPage from '@/shared/pages/messages/View'
+import LoginPage from '@/shared/pages/user/Login'
 
 
 import NotFoundPage from './pages/NotFound'
-import store from '@/store/store';
+import store from '@/shared/store/store';
 
 Vue.use(VueRouter)
 

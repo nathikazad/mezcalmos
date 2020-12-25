@@ -1,4 +1,4 @@
-import { firebaseDatabase, firebaseFunctions } from '@/config/firebase'
+import { firebaseDatabase, firebaseFunctions } from '@/shared/config/firebase'
 export default {
   namespaced: true,
   state() {
@@ -8,41 +8,38 @@ export default {
     };
   },
   actions: {
-    loadGrocery(context, payload) {
+    loadTaxi(context, payload) {
       // let userId = context.rootGetters.userId
       let orderId  = payload.orderId;
       firebaseDatabase().ref(`/orders/${orderId}`).on('value', async snapshot => {
         let order = snapshot.val();
         // TODO: if unauthorized or wrong type of order redirect to home page
         if(order.driverId){
-          order.driverName = (await firebaseDatabase().ref(`/users/${order.GroceryId}/name`).once('value')).val()
+          order.driverName = (await firebaseDatabase().ref(`/users/${order.taxiId}/name`).once('value')).val()
         }
-        context.commit('loadGrocery', {order:order, orderId:orderId})
+        context.commit('loadTaxi', {order:order, orderId:orderId})
       });
     },
-    async unloadGrocery(context) {
-      console.log("unloaded Grocerys")
+    async unloadTaxi(context) {
+      console.log("unloaded taxis")
       let orderId = context.state.orderId
       firebaseDatabase().ref(`/orders/${orderId}`).off()
-      context.commit('unloadGrocery')
+      context.commit('unloadTaxi')
     },
-    async requestGrocery(_, payload) {
-      console.log("Requesting Grocery")
+    async requestTaxi(_, payload) {
+      // let userId = context.rootGetters.userId
       let from  = payload.from
       let to = payload.to
-      let items = payload.items
-      let notes = payload.notes
-      let response = await firebaseFunctions().httpsCallable('requestGrocery')({ from: from, to: to, notes: notes, items:items });
+      let response = await firebaseFunctions().httpsCallable('requestTaxi')({ from: from, to: to });
       return response;
     }
   },
   mutations: {
-    loadGrocery(state, payload){
-      console.log("Grocery mutated")
+    loadTaxi(state, payload){
       state.value = payload.order
       state.orderId = payload.orderId
     },
-    unloadGrocery(state){
+    unloadTaxi(state){
       state.value = null
       state.orderId = null
     }

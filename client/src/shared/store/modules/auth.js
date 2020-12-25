@@ -1,4 +1,4 @@
-import { firebaseAuth } from '@/config/firebase'
+import { firebaseAuth } from '@/shared/config/firebase'
 // import { apolloClient } from '@/config/apollo'
 // import gql from 'graphql-tag'
 export default {

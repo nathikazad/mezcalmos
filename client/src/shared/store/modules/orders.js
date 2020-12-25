@@ -1,4 +1,4 @@
-import { firebaseDatabase } from '@/config/firebase'
+import { firebaseDatabase } from '@/shared/config/firebase'
 export default {
     namespaced: true,
     state() {

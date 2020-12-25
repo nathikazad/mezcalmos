@@ -1,11 +1,14 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router.js'
-import store from '../store/store'
+import store from '@/shared/store/store'
 
-import { firebaseInit } from '@/config/firebase'
+import { firebaseInit } from '@/shared/config/firebase'
+// import { apolloClient } from "./config/apollo";
+// import { DefaultApolloClient } from "@vue/apollo-composable";
 
 Vue.config.productionTip = false
+// app.provide(DefaultApolloClient, apolloClient)
 
 async function firebaseCallback(user) {
   if (user) {
@@ -34,9 +37,6 @@ new Vue({
 }).$mount('#app')
 
 // HASURA STUFF 
-// import { apolloClient } from "./config/apollo";
-// import { DefaultApolloClient } from "@vue/apollo-composable";
-// app.provide(DefaultApolloClient, apolloClient)
 // let token = await user.getIdToken()
 // let tokenResult = await user.getIdTokenResult()
 // let hasuraClaim = tokenResult.claims['https://hasura.io/jwt/claims']
