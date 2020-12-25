@@ -61,3 +61,36 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+.fromTo {
+  height: 3.5rem;
+  border-radius: 4px;
+  position: relative;
+  .side {
+    padding: 0.8rem 1rem;
+    width: 50%;
+  }
+  .to {
+    padding-left: 2rem;
+  }
+  .from {
+    border-right: $border;
+  }
+  h5 {
+    margin: 0;
+  }
+  .input {
+    height: 1.1rem;
+    border: none;
+    padding: 0;
+  }
+}
+.float_btn {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  font-size: 1rem;
+  position: absolute;
+  left: calc(50% - .95rem);
+}
+</style>
