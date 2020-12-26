@@ -10,7 +10,7 @@ import TheHeader from '@/shared/components/layouts/TheHeader.vue';
 export default {
   components: {
     TheHeader,
-  },
+  }
 };
 </script>
 
