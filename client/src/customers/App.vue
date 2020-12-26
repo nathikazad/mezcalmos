@@ -22,12 +22,6 @@ export default {
       return this.$route.name;
     }
   },
-  data() {
-    return {
-      f: "poop",
-      navDrawer: false
-    };
-  },
   watch: {
     $route: {
       deep: true,
