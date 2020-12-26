@@ -8,3 +8,4 @@ database-debug.log
 ui-debug.log
 dist
 */firebase-debug.log
+.vscode
