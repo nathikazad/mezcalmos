@@ -1,26 +1,38 @@
 <template>
   <main :class="{ overlay: navDrawer }">
     <transition name="slide-fade">
-      <nav-drawer v-if="navDrawer" class="navDrawer bg_white" @toggle="navDrawer = !navDrawer"></nav-drawer>
+      <nav-drawer
+        v-if="navDrawer"
+        class="navDrawer bg_white"
+        @toggle="navDrawer = !navDrawer"
+      ></nav-drawer>
     </transition>
-    <the-header v-show="routeName != 'login'" @toggle="navDrawer = !navDrawer"></the-header>
+    <the-header
+      v-show="routeName != 'login'"
+      @toggle="navDrawer = !navDrawer"
+    ></the-header>
     <router-view class="container outlet"></router-view>
   </main>
 </template>
 
 <script>
-import TheHeader from '@/shared/components/layouts/TheHeader.vue';
+import TheHeader from "@/shared/components/layouts/TheHeader.vue";
 import NavDrawer from "@/shared/components/layouts/navDrawer.vue";
 
 export default {
   components: {
     TheHeader,
-    NavDrawer
+    NavDrawer,
+  },
+  data() {
+    return {
+      navDrawer: false,
+    };
   },
   computed: {
     routeName() {
       return this.$route.name;
-    }
+    },
   },
   watch: {
     $route: {
@@ -29,9 +41,9 @@ export default {
       handler: function(newVal, oldVal) {
         console.log("updated route", newVal, " from ", oldVal);
         this.navDrawer = false;
-      }
-    }
-  }
+      },
+    },
+  },
 };
 </script>
 

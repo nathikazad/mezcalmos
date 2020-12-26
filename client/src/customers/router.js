@@ -1,113 +1,116 @@
-import VueRouter from 'vue-router'
-import Vue from 'vue'
-import ServicesListPage from './pages/services/List'
-import TaxiViewPage from './pages/services/taxis/View'
-import TaxiRequestPage from './pages/services/taxis/Request'
-import GroceryViewPage from './pages/services/groceries/View'
-import GroceryRequestPage from './pages/services/groceries/Request'
-import GroceryAddItemPage from './pages/services/groceries/AddItem'
+import VueRouter from "vue-router";
+import Vue from "vue";
+import ServicesListPage from "./pages/services/List";
+import TaxiViewPage from "./pages/services/taxis/View";
+import TaxiRequestPage from "./pages/services/taxis/Request";
+import GroceryViewPage from "./pages/services/groceries/View";
+import GroceryRequestPage from "./pages/services/groceries/Request";
+import GroceryAddItemPage from "./pages/services/groceries/AddItem";
 
-import OrdersListPage from './pages/orders/List'
-import UserInformationPage from '@/shared/pages/user/Information'
-import MessagesPage from '@/shared/pages/messages/View'
-import LoginPage from '@/shared/pages/user/Login'
+import OrdersListPage from "./pages/orders/List";
+import UserInformationPage from "@/shared/pages/user/Information";
+import MessagesPage from "@/shared/pages/messages/View";
+import LoginPage from "@/shared/pages/user/Login";
 
+import NotFoundPage from "./pages/NotFound";
+import store from "@/shared/store/store";
 
-import NotFoundPage from './pages/NotFound'
-import store from '@/shared/store/store';
-
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const router = new VueRouter({
-  mode: 'history',
-  routes: [{
-      path: '/',
-      redirect: '/services'
+  mode: "history",
+  routes: [
+    {
+      path: "/",
+      redirect: "/services",
     },
     {
-      path: '/services',
+      path: "/services",
       component: ServicesListPage,
-      name: 'services'
+      name: "services",
     },
     {
-      path: '/services/taxi/request',
-      component: TaxiRequestPage
+      path: "/services/taxi/request",
+      component: TaxiRequestPage,
     },
     {
-      path: '/services/grocery/request',
-      component: GroceryRequestPage
+      path: "/services/grocery/request",
+      component: GroceryRequestPage,
     },
     {
-      path: '/services/taxi/:orderId',
+      path: "/services/taxi/:orderId",
       component: TaxiViewPage,
       meta: {
-        requiresAuth: true
-      }
+        requiresAuth: true,
+      },
     },
     {
-      path: '/services/grocery/:orderId',
+      path: "/services/grocery/:orderId",
       component: GroceryViewPage,
       meta: {
-        requiresAuth: true
-      }
+        requiresAuth: true,
+      },
     },
     {
-      path: '/services/grocery/:orderId/add',
+      path: "/services/grocery/:orderId/add",
       component: GroceryAddItemPage,
       meta: {
-        requiresAuth: true
-      }
+        requiresAuth: true,
+      },
     },
     {
-      path: '/messages/:orderId',
+      path: "/messages/:orderId",
       component: MessagesPage,
       meta: {
-        requiresAuth: true
-      }
+        requiresAuth: true,
+      },
     },
     {
-      path: '/orders',
+      path: "/orders",
       component: OrdersListPage,
       meta: {
-        requiresAuth: true
-      }
+        requiresAuth: true,
+      },
     },
     {
-      path: '/userinfo',
+      path: "/userinfo",
       component: UserInformationPage,
       meta: {
-        requiresAuth: true
-      }
+        requiresAuth: true,
+      },
     },
     {
-      path: '/auth',
+      path: "/auth",
       component: LoginPage,
       meta: {
-        requiresUnauth: true
+        requiresUnauth: true,
       },
-      name: 'login'
+      name: "login",
     },
     {
-      path: '/:notFound(.*)',
-      component: NotFoundPage
-    }
-  ]
-})
+      path: "/:notFound(.*)",
+      component: NotFoundPage,
+    },
+  ],
+});
 
-router.beforeEach(async function (to, from, next) {
+router.beforeEach(async function(to, from, next) {
+  console.log(to);
+
   if (to.meta.requiresAuth && !store.getters.loggedIn) {
     next({
-      path: '/auth',
+      path: "/auth",
       query: {
-        redirect: to.path
-      }
+        redirect: to.path,
+      },
     });
   } else if (to.meta.requiresUnauth && store.getters.loggedIn) {
-    next('/services');
+    next("/services");
   } else {
+    console.log('else');
+    
     next();
   }
 });
 
-
-export default router
+export default router;

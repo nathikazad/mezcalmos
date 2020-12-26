@@ -2,20 +2,24 @@
   <div>
     <h1 class="regular">All Services</h1>
     <section class="flex wrap">
-      <div
+      <router-link
+        tag="div"
+        to="/services/taxi/request"
         class="panel flex align_center center fill_width wrap bg_taxi"
         id="taxi"
       >
         <taxi class="icon"></taxi>
         <h4>Taxi</h4>
-      </div>
-      <div
+      </router-link>
+      <router-link
+        tag="div"
+        to="/services/grocery/request"
         class="panel flex align_center center fill_width wrap bg_grocery"
         id="groceries"
       >
         <groceries class="icon"></groceries>
         <h4>Groceries</h4>
-      </div>
+      </router-link>
     </section>
   </div>
 </template>
