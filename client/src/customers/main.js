@@ -9,7 +9,7 @@ import BaseButton from "@/shared/components/ui/BaseButton";
 import Panel from "@/shared/components/ui/panel";
 import Avatar from "@/shared/components/ui/avatar";
 import Logo from "@/shared/components/SVG/logo";
-import "@/registerServiceWorker";
+import "./registerServiceWorker";
 
 Vue.component("logo", Logo);
 Vue.component("base-button", BaseButton);

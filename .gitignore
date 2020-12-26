@@ -7,3 +7,4 @@ client/ui-debug.log
 database-debug.log
 ui-debug.log
 dist
+.vscode
