@@ -69,6 +69,22 @@
     cursor: pointer;
 }
 
+.column {
+    flex-direction: column;
+}
+
+.row {
+    flex-direction: row;
+}
+
+.flex_0 {
+    flex: 0;
+}
+
+.flex_1 {
+    flex: 1;
+}
+
 .container {
     width: 728px !important;
     margin: 0 auto;
@@ -80,6 +96,10 @@
     }
 
 
+}
+
+.elevate_0 {
+    box-shadow: none !important;
 }
 
 .elevate_1 {

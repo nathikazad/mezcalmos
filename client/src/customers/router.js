@@ -11,6 +11,7 @@ import OrdersListPage from "./pages/orders/List";
 import UserInformationPage from "@/shared/pages/user/Information";
 import MessagesPage from "@/shared/pages/messages/View";
 import LoginPage from "@/shared/pages/user/Login";
+import SavedLocation from './pages/saved/locations'
 
 import NotFoundPage from "./pages/NotFound";
 import store from "@/shared/store/store";
@@ -19,10 +20,13 @@ Vue.use(VueRouter);
 
 const router = new VueRouter({
   mode: "history",
-  routes: [
-    {
+  routes: [{
       path: "/",
       redirect: "/services",
+    },
+    {
+      path: "/saved/locations",
+      component: SavedLocation
     },
     {
       path: "/services",
@@ -94,7 +98,7 @@ const router = new VueRouter({
   ],
 });
 
-router.beforeEach(async function(to, from, next) {
+router.beforeEach(async function (to, from, next) {
   console.log(to);
 
   if (to.meta.requiresAuth && !store.getters.loggedIn) {
@@ -108,7 +112,7 @@ router.beforeEach(async function(to, from, next) {
     next("/services");
   } else {
     console.log('else');
-    
+
     next();
   }
 });

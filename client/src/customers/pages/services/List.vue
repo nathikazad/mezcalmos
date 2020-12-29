@@ -8,7 +8,7 @@
         class="panel flex align_center center fill_width wrap bg_taxi"
         id="taxi"
       >
-        <taxi class="icon"></taxi>
+        <taxiIcon class="icon"></taxiIcon>
         <h4>Taxi</h4>
       </router-link>
       <router-link
@@ -17,7 +17,7 @@
         class="panel flex align_center center fill_width wrap bg_grocery"
         id="groceries"
       >
-        <groceries class="icon"></groceries>
+        <groceriesIcon class="icon"></groceriesIcon>
         <h4>Groceries</h4>
       </router-link>
     </section>
@@ -25,12 +25,12 @@
 </template>
 
 <script>
-import taxi from "@/shared/components/SVG/taxi";
-import groceries from "@/shared/components/SVG/groceries";
+import taxiIcon from "@/shared/components/SVG/taxi";
+import groceriesIcon from "@/shared/components/SVG/groceries";
 export default {
   components: {
-    taxi,
-    groceries,
+    taxiIcon,
+    groceriesIcon,
   },
   data() {
     return {

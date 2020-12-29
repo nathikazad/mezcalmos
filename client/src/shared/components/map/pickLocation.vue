@@ -1,7 +1,7 @@
 <template>
-  <div class="flex">
-    <h1>Add Items</h1>
-    <div class="field" id="delveredTo">
+  <div>
+    <h1 class="regular">{{title}}</h1>
+    <div class="field" id="placeName" v-if="place.name!=undefined">
       <h3 class="bold flex space_between">
         <span>Name</span>
       </h3>
@@ -9,27 +9,21 @@
         type="text"
         class="input bg_secondary text_blackD"
         placeholder="Enter Name..."
-        v-model="item.name"
+        v-model="place.name"
       />
     </div>
     <div class="field" id="note">
       <h3 class="bold flex space_between">
-        <span>Notes</span>
+        <span>Address</span>
       </h3>
-      <textarea
-        type="text"
-        class="input bg_secondary text_blackD rows"
-        placeholder="Write Here..."
-        v-model="item.notes"
-      ></textarea>
+      <gmap-autocomplete @place_changed="setPlace" class="input bg_secondary text_blackD"></gmap-autocomplete>
+    </div>
+    <div class="map field fill_width">
+      <map-view :center="pos"></map-view>
     </div>
     <div class="field">
-      <base-button
-        class="fill_width"
-        :mode="{ dark: true, bg_diagonal: true }"
-        @click.native="emitAddEvent"
-      >
-        <span class="t-8"> <fa icon="plus"></fa>&nbsp; ADD ITEM </span>
+      <base-button class="fill_width" :mode="{ dark: true, bg_diagonal: true }">
+        <span class="t-8">PICK</span>
       </base-button>
     </div>
   </div>
@@ -37,27 +31,38 @@
 
 <script>
 export default {
+  props: {
+    place: {
+      type: Object
+    },
+    title: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
       item: { name: "", notes: "" },
+      pos: { lat: 30.2672, lng: -97.7431 }
     };
   },
   computed: {
     isLoggedIn() {
       return this.$store.getters.loggedIn;
-    },
+    }
   },
   methods: {
-    addItem(item) {
-      this.items.push(item);
-    },
-    emitAddEvent() {
-      this.$emit("addItem", this.item);
-    },
-  },
+    setPlace(place) {
+      console.log(place);
+      this.pos = {
+        lat: place.geometry.location.lat(),
+        lng: place.geometry.location.lng()
+      };
+    }
+  }
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .pill {
   border-radius: 6px !important;
   padding: 0.4rem 0.5rem;
@@ -78,7 +83,8 @@ export default {
     animation: rotation 1s infinite ease-in-out;
   }
 }
-.rows {
-  height: 16rem;
+.map {
+  height: 12rem;
+  position: relative;
 }
 </style>

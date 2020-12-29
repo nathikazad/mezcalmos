@@ -1,17 +1,17 @@
 <template>
   <div>
-    <h1>Taxi</h1>
+    <!-- pop up component -->
+    <pop-up v-if="pickLocation"></pop-up>
+    <!-- ******************pop up component ************************-->
+    <h1 class="regular">Taxi</h1>
     <div class="field relative locationPicker">
       <div class="fromTo flex space_between align_center bg_white elevate_2">
         <div class="from fill_height side">
           <h5>From</h5>
-          <input type="text" placeholder="Enter Address" class="input" />
+          <input type="text" placeholder="Enter Address" class="input" @focus="focused('From')" />
         </div>
-        <base-button
-          :mode="{ dark: true, bg_diagonal: true }"
-          class="float_btn "
-        >
-          <i class="fal fa-repeat icon "></i>
+        <base-button :mode="{ dark: true, bg_diagonal: true }" class="float_btn">
+          <i class="fal fa-repeat icon"></i>
         </base-button>
         <div class="to fill_height side">
           <h5>To</h5>
@@ -39,29 +39,32 @@
 
 <script>
 //import PickLocation from "../../../components/map/GetLocation";
+import popUp from "@/shared/components/ui/popUp";
 export default {
+  components: { popUp },
   data() {
     return {
+      pickLocation: false,
       from: {
         lat: 22.29924,
         long: 73.16584,
-        address: "Chick Tacos, 54 something avenue, Mexico",
+        address: "Chick Tacos, 54 something avenue, Mexico"
       },
       to: {
         lat: 22.29924,
         long: 73.16584,
-        address: "Chick Tacos, 54 something avenue, Mexico",
+        address: "Chick Tacos, 54 something avenue, Mexico"
       },
       directionsBorns: {
         start: { lat: 31, lng: -97 },
-        end: { lat: 31.55, lng: -97.7431 },
-      },
+        end: { lat: 31.55, lng: -97.7431 }
+      }
     };
   },
   computed: {
     isLoggedIn() {
       return this.$store.getters.loggedIn;
-    },
+    }
   },
   mounted() {
     setTimeout(() => {
@@ -71,18 +74,22 @@ export default {
     }, 2000);
   },
   methods: {
+    focused(title) {
+      console.log(title);
+      this.pickLocation = true;
+    },
     changeDirection(direction) {
       console.log(direction);
 
       if (direction.start) {
         this.directionsBorns.start = {
           lat: direction.start.lat(),
-          lng: direction.start.lng(),
+          lng: direction.start.lng()
         };
       } else if (direction.end) {
         this.directionsBorns.end = {
           lat: direction.end.lat(),
-          lng: direction.end.lng(),
+          lng: direction.end.lng()
         };
       }
     },
@@ -90,7 +97,7 @@ export default {
       let response = (
         await this.$store.dispatch("taxis/requestTaxi", {
           to: this.to,
-          from: this.from,
+          from: this.from
         })
       ).data;
       if (response.status == "Success") {
@@ -104,11 +111,11 @@ export default {
     },
     setDirctionsBorns(borns) {
       this.directionsBorns = borns;
-    },
-  },
+    }
+  }
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .fromTo {
   height: 3.5rem;
   border-radius: 4px;
@@ -146,7 +153,7 @@ export default {
 .map {
   position: absolute;
   height: calc(100% - 8.25rem);
-  width: 100%;
+  width: calc(100% - 2rem);
   top: 8.25rem;
   z-index: 0;
 }

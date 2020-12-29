@@ -127,7 +127,7 @@ export default {
   padding: 0.4rem 0.5rem;
 }
 .field {
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 .circle {
   width: 7.25rem;

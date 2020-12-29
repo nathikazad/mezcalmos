@@ -3,7 +3,9 @@ import App from "./App.vue";
 import router from "./router.js";
 import store from "@/shared/store/store";
 import * as VueGoogleMaps from "vue2-google-maps";
-import { firebaseInit } from "@/shared/config/firebase";
+import {
+  firebaseInit
+} from "@/shared/config/firebase";
 
 import BaseButton from "@/shared/components/ui/BaseButton";
 import Panel from "@/shared/components/ui/panel";
@@ -11,6 +13,7 @@ import Avatar from "@/shared/components/ui/avatar";
 import Logo from "@/shared/components/SVG/logo";
 import MapView from "@/shared/components/map/mapView";
 import Fa from "@/shared/components/ui/fa";
+import PickLocation from "@/shared/components/map/pickLocation";
 import "./registerServiceWorker";
 
 Vue.use(VueGoogleMaps, {
@@ -26,6 +29,7 @@ Vue.component("base-button", BaseButton);
 Vue.component("panel", Panel);
 Vue.component("avatar", Avatar);
 Vue.component("fa", Fa);
+Vue.component("pick-location", PickLocation);
 
 Vue.component("map-view", MapView);
 async function firebaseCallback(user) {
