@@ -12,12 +12,12 @@ const firebaseConfig = {
   messagingSenderId: "804036698204",
   appId: "1:804036698204:web:39b22436cbb4ef633f8699"
 };
+
 firebase.initializeApp(firebaseConfig);
 function firebaseInitFunction(fbCallback) {
-  console.log("from firebase")
+  console.log(process.env)
   // TODO: detect if being served or deployed and add conditionally
-  if (process.env.VUE_APP_EMULATOR == "true") {
-    console.log("emulator")
+  if (process.env.VUE_APP_EMULATOR && process.env.VUE_APP_EMULATOR == "true") {
     firebase.functions().useEmulator("localhost", 5001);
   }
   firebase.auth().onAuthStateChanged(fbCallback);

@@ -1,5 +1,23 @@
 {
   "projects": {
     "default": "mezcalmos-b48fd"
+  },
+  "targets": {
+    "mezcalmos-31f1c": {
+      "hosting": {
+        "drivers": [
+          "drivers-6b240"
+        ],
+        "customers": [
+          "mezcalmos-31f1c"
+        ],
+        "customersInTest": [
+          "customers-in-test"
+        ],
+        "driversInTest": [
+          "drivers-in-test"
+        ]
+      }
+    }
   }
 }
