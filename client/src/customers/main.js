@@ -43,7 +43,7 @@ async function firebaseCallback(user) {
       router.currentRoute.query.redirect
     ) {
       router.push({ path: router.currentRoute.query.redirect });
-    } else if(router.currentRoute.path == "/auth"){
+    } else if (router.currentRoute.path == "/auth") {
       router.push({ path: "/" });
     }
   }

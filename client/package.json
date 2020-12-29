@@ -4,16 +4,19 @@
   "private": true,
   "scripts": {
     "emulator": "firebase emulators:start --only functions",
-    "serve:drivers": "vue-cli-service serve src/drivers/main.js",
-    "stage:drivers": "vue-cli-service serve --mode staging src/drivers/main.js",
-    "emulate:drivers": "npm-run-all --parallel stage:drivers emulator",
+    "serve:drivers": "vue-cli-service serve src/drivers/main.js",   
+    "driversInEmulateMode": "vue-cli-service serve --mode emulate src/drivers/main.js",
+    "emulate:drivers": "npm-run-all --parallel driversInEmulateMode emulator",
     "build:drivers": "vue-cli-service build --dest ../dist/drivers src/drivers/main.js",
-    "deploy:drivers": "build:drivers; firebase deploy --only hosting target;",
-    "build:customers": "vue-cli-service build --dest ../dist/customers src/customers/main.js",
+    "deploy:drivers": "npm run build:drivers; firebase deploy --only hosting:drivers;",
+    "deploy:drivers:test": "npm run build:drivers; firebase deploy --only hosting:driversInTest;",
+    
     "serve:customers": "vue-cli-service serve src/customers/main.js",
-    "stage:customers": "vue-cli-service serve --mode staging src/customers/main.js",
-    "emulate:customers": "npm-run-all --parallel stage:customers emulator",
-    "deploy:customers": "build:customers; firebase deploy --only hosting target;",
+    "customersInEmulateMode": "vue-cli-service serve --mode emulate src/customers/main.js",
+    "emulate:customers": "npm-run-all --parallel customersInEmulateMode emulator",
+    "build:customers": "vue-cli-service build --dest ../dist/customers src/customers/main.js",
+    "deploy:customers": "npm run build:customers; firebase deploy --only hosting:customers;",
+    "deploy:customers:test": "npm run build:customers; firebase deploy --only hosting:customersInTest;",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {

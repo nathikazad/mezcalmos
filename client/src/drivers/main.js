@@ -17,10 +17,10 @@ async function firebaseCallback(user) {
       loggedIn: true
       // hasuraAuthToken: token
     })
-    if(router.currentRoute.path == "/auth" && router.currentRoute.query.redirect){
-      router.push({path:router.currentRoute.query.redirect})
-    } else {
-      router.push({path:"/"})
+    if (router.currentRoute.path == "/auth" && router.currentRoute.query.redirect) {
+      router.push({ path: router.currentRoute.query.redirect })
+    } else if (router.currentRoute.path == "/auth") {
+      router.push({ path: "/" })
     }
   }
 }
