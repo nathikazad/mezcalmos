@@ -50,20 +50,9 @@
       </base-button>
     </div>
 
-    <!-- <h2>Buy Groceries</h2>
-    <h3>FROM</h3>
-    <pick-location v-model="from"></pick-location>
-    <h3>TO</h3>
-    <pick-location v-model="to"></pick-location>
-    <h3>Items</h3>
-    <div>
-      {{items}}
-    </div>
-    <add-item v-on:new-item="addItem($event)"></add-item>
-    <h3>Notes</h3>
-    <input type="text" v-model="notes" /> <br/><br/>
+    <!-- TODO: check if logged in, if not link to login
     <button v-if="isLoggedIn" @click="requestGrocery">Buy</button>
-    <button v-else @click="login">Sign in with Facebook to Buy</button><br />-->
+    <button v-else @click="login">Sign in with Facebook to Buy</button><br />--> -->
   </div>
 </template>
 

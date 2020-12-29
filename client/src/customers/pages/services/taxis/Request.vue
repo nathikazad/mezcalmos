@@ -29,19 +29,12 @@
     </div>
   </div>
 
-  <!-- <h2>Request Taxi</h2>
-    <h3>FROM</h3>
-    <pick-location v-model="from"></pick-location>
-    <h3>TO</h3>
-    <pick-location v-model="to"></pick-location>
+  <!-- 
+    TODO: check if logged in, if not show login with facebook
 
     <button v-if="isLoggedIn" @click="requestTaxi">Get Taxi</button>
     <button v-else @click="login">Sign in with Facebook to Get Taxi</button
   ><br />-->
-  <!-- testing -->
-  <!-- <label>lat:&nbsp;{{ to.lat }}</label><br/>
-  <label>long:&nbsp;{{ to.long }}</label><br/>
-  <label>address:&nbsp;{{ to.address }}</label><br/>-->
 </template>
 
 <script>

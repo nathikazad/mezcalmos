@@ -39,10 +39,6 @@
 
 <script>
 export default {
-  // components: {
-  //   PickLocation,
-  //   AddItem
-  // },
   data() {
     return {
       item: { name: "", notes: "" }
