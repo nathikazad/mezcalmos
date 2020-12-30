@@ -1,0 +1,160 @@
+<template>
+  <div>
+    <!-- pop up component -->
+    <pop-up v-if="pickLocation"></pop-up>
+    <!-- ******************pop up component ************************-->
+    <h1 class="regular">Taxi</h1>
+    <div class="field relative locationPicker">
+      <div class="fromTo flex space_between align_center bg_white elevate_2">
+        <div class="from fill_height side">
+          <h5>From</h5>
+          <input type="text" placeholder="Enter Address" class="input" @focus="focused('From')" />
+        </div>
+        <base-button :mode="{ dark: true, bg_diagonal: true }" class="float_btn">
+          <i class="fal fa-repeat icon"></i>
+        </base-button>
+        <div class="to fill_height side">
+          <h5>To</h5>
+          <input type="text" placeholder="Enter Address" class="input" />
+        </div>
+      </div>
+    </div>
+    <div class="map">
+      <map-view
+        :center="{ lat: 30.2672, lng: -97.7431 }"
+        :directionsOrigin="directionsBorns.start"
+        :directionsDest="directionsBorns.end"
+        @directionsChanged="changeDirection($event)"
+      ></map-view>
+    </div>
+  </div>
+
+  <!-- 
+    TODO: check if logged in, if not show login with facebook
+
+    <button v-if="isLoggedIn" @click="requestTaxi">Get Taxi</button>
+    <button v-else @click="login">Sign in with Facebook to Get Taxi</button
+  ><br />-->
+</template>
+
+<script>
+//import PickLocation from "../../../components/map/GetLocation";
+import popUp from "@/shared/components/ui/popUp";
+export default {
+  components: { popUp },
+  data() {
+    return {
+      pickLocation: false,
+      from: {
+        lat: 22.29924,
+        long: 73.16584,
+        address: "Chick Tacos, 54 something avenue, Mexico"
+      },
+      to: {
+        lat: 22.29924,
+        long: 73.16584,
+        address: "Chick Tacos, 54 something avenue, Mexico"
+      },
+      directionsBorns: {
+        start: { lat: 31, lng: -97 },
+        end: { lat: 31.55, lng: -97.7431 }
+      }
+    };
+  },
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters.loggedIn;
+    }
+  },
+  mounted() {
+    setTimeout(() => {
+      console.log("timeOut");
+
+      this.directionsBorns.start = { lat: 41.5, lng: -87 };
+    }, 2000);
+  },
+  methods: {
+    focused(title) {
+      console.log(title);
+      this.pickLocation = true;
+    },
+    changeDirection(direction) {
+      console.log(direction);
+
+      if (direction.start) {
+        this.directionsBorns.start = {
+          lat: direction.start.lat(),
+          lng: direction.start.lng()
+        };
+      } else if (direction.end) {
+        this.directionsBorns.end = {
+          lat: direction.end.lat(),
+          lng: direction.end.lng()
+        };
+      }
+    },
+    async requestTaxi() {
+      let response = (
+        await this.$store.dispatch("taxis/requestTaxi", {
+          to: this.to,
+          from: this.from
+        })
+      ).data;
+      if (response.status == "Success") {
+        this.$router.push({ path: `${response.orderId}` });
+      } else {
+        this.errorMessage = response.errorMessage;
+      }
+    },
+    async login() {
+      await this.$store.dispatch("login");
+    },
+    setDirctionsBorns(borns) {
+      this.directionsBorns = borns;
+    }
+  }
+};
+</script>
+<style lang="scss" scoped>
+.fromTo {
+  height: 3.5rem;
+  border-radius: 4px;
+  position: relative;
+  .side {
+    padding: 0.8rem 1rem;
+    width: 50%;
+  }
+  .to {
+    padding-left: 2rem;
+  }
+  .from {
+    border-right: $border;
+  }
+  h5 {
+    margin: 0;
+  }
+  .input {
+    height: 1.1rem;
+    border: none;
+    padding: 0;
+  }
+}
+.float_btn {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  font-size: 1rem;
+  position: absolute;
+  left: calc(50% - 0.95rem);
+}
+.locationPicker {
+  z-index: 9;
+}
+.map {
+  position: absolute;
+  height: calc(100% - 8.25rem);
+  width: calc(100% - 2rem);
+  top: 8.25rem;
+  z-index: 0;
+}
+</style>

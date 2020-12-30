@@ -2,8 +2,13 @@ const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 // import { GraphQLClient } from 'graphql-request'
 
+let databaseURL = "https://mezcalmos-31f1c-default-rtdb.firebaseio.com"
+if(process.env.FUNCTIONS_EMULATOR == 'true'){
+  databaseURL = "https://mezcalmos-test.firebaseio.com"
+}
+
 admin.initializeApp({
-  databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com"
+  databaseURL: databaseURL
 });
 
 

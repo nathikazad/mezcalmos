@@ -1,31 +1,50 @@
 {
-  "name": "mezcalmos2",
+  "name": "mezcalmos",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "serveVue": "vue-cli-service serve",
     "emulator": "firebase emulators:start --only functions",
-    "serve": "npm-run-all --parallel serveVue emulator",
-    "deploy": "vue-cli-service build; firebase deploy --only hosting;"
+    "serve:drivers": "vue-cli-service serve src/drivers/main.js",   
+    "driversInEmulateMode": "vue-cli-service serve --mode emulate src/drivers/main.js",
+    "emulate:drivers": "npm-run-all --parallel driversInEmulateMode emulator",
+    "build:drivers": "vue-cli-service build --dest ../dist/drivers src/drivers/main.js",
+    "deploy:drivers": "npm run build:drivers; firebase deploy --only hosting:drivers;",
+    "deploy:drivers:test": "npm run build:drivers; firebase deploy --only hosting:driversInTest;",
+    
+    "serve:customers": "vue-cli-service serve src/customers/main.js",
+    "customersInEmulateMode": "vue-cli-service serve --mode emulate src/customers/main.js",
+    "emulate:customers": "npm-run-all --parallel customersInEmulateMode emulator",
+    "build:customers": "vue-cli-service build --dest ../dist/customers src/customers/main.js",
+    "deploy:customers": "npm run build:customers; firebase deploy --only hosting:customers;",
+    "deploy:customers:test": "npm run build:customers; firebase deploy --only hosting:customersInTest;",
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@fortawesome/free-regular-svg-icons": "^5.15.1",
+    "@fortawesome/free-solid-svg-icons": "^5.15.1",
+    "@fortawesome/vue-fontawesome": "^2.0.2",
     "core-js": "^3.6.5",
+    "node-sass": "^5.0.0",
+    "register-service-worker": "^1.7.1",
+    "sass-loader": "^10.1.0",
     "vue": "^2.6.11",
+    "vue-moment": "^4.1.0",
     "vue-router": "^3.4.9",
+    "vue2-google-maps": "^0.10.7",
     "vuex": "^3.6.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-pwa": "^4.5.9",
     "@vue/cli-service": "~4.5.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
-    "vue-template-compiler": "^2.6.11",
     "firebase": "^8.0.0",
-    "npm-run-all": "^4.1.5"
+    "npm-run-all": "^4.1.5",
+    "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
     "root": true,

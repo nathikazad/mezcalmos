@@ -1,4 +1,5 @@
 functions/node_modules/
+functions/firebase-debug.log
 client/node_modules/
 .DS_Store
 .firebase
@@ -6,4 +7,5 @@ service-account.json
 client/ui-debug.log
 database-debug.log
 ui-debug.log
-.vscode/
+dist
+.vscode
