@@ -1,11 +1,12 @@
 import Vuex from 'vuex'
 import Vue from 'vue'
 
-import authModule from './modules/auth';
+import authModule from '@/shared/store/auth';
+import messagesModule from '@/shared/store/messages'
+
 import taxisModule from './modules/taxis';
 import groceriesModule from './modules/groceries'
 import ordersModule from './modules/orders';
-import messagesModule from './modules/messages'
 
 Vue.use(Vuex)
 

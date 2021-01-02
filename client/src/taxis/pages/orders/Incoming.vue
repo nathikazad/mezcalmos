@@ -22,10 +22,10 @@ export default {
   },
   computed: {
     orders() {
-      return this.$store.getters["orders/list"];
+      return this.$store.getters["incomingOrders/list"];
     },
     hasOrders() {
-      return this.$store.getters["orders/hasOrders"];
+      return this.$store.getters["incomingOrders/hasOrders"];
     },
     linkToOrder() {
       return function (orderType, orderId) {
@@ -34,8 +34,10 @@ export default {
     },
   },
   async beforeCreate() {
+    console.log(this)
+    console.log("here")
     this.isLoaded = false;
-    await this.$store.dispatch("orders/loadList");
+    await this.$store.getters["incomingOrders/list"];
     this.isLoaded = true;
   },
 };

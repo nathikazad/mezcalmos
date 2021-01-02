@@ -5,8 +5,8 @@
   "targets": {
     "mezcalmos-31f1c": {
       "hosting": {
-        "drivers": [
-          "drivers-6b240"
+        "taxis": [
+          "taxis-5b8a1"
         ],
         "customers": [
           "mezcalmos-31f1c"
@@ -14,8 +14,8 @@
         "customersInTest": [
           "customers-in-test"
         ],
-        "driversInTest": [
-          "drivers-in-test"
+        "taxisInTest": [
+          "taxis-in-test"
         ]
       }
     }

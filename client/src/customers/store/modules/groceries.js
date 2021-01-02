@@ -8,38 +8,42 @@ export default {
     };
   },
   actions: {
-    loadTaxi(context, payload) {
-      // let userId = context.rootGetters.userId
+    loadGrocery(context, payload) {
+      // TODO: if loaded,then unload first
       let orderId  = payload.orderId;
       firebaseDatabase().ref(`/orders/${orderId}`).on('value', async snapshot => {
         let order = snapshot.val();
         // TODO: if unauthorized or wrong type of order redirect to home page
         if(order.driverId){
-          order.driverName = (await firebaseDatabase().ref(`/users/${order.taxiId}/name`).once('value')).val()
+          order.driverName = (await firebaseDatabase().ref(`/users/${order.GroceryId}/name`).once('value')).val()
         }
-        context.commit('loadTaxi', {order:order, orderId:orderId})
+        context.commit('loadGrocery', {order:order, orderId:orderId})
       });
     },
-    async unloadTaxi(context) {
-      console.log("unloaded taxis")
+    async unloadGrocery(context) {
+      // TODO check order is loaded
+      console.log("unloaded Grocerys")
       let orderId = context.state.orderId
       firebaseDatabase().ref(`/orders/${orderId}`).off()
-      context.commit('unloadTaxi')
+      context.commit('unloadGrocery')
     },
-    async requestTaxi(_, payload) {
-      // let userId = context.rootGetters.userId
+    async requestGrocery(_, payload) {
+      console.log("Requesting Grocery")
       let from  = payload.from
       let to = payload.to
-      let response = await firebaseFunctions().httpsCallable('requestTaxi')({ from: from, to: to });
+      let items = payload.items
+      let notes = payload.notes
+      let response = await firebaseFunctions().httpsCallable('requestGrocery')({ from: from, to: to, notes: notes, items:items });
       return response;
     }
   },
   mutations: {
-    loadTaxi(state, payload){
+    loadGrocery(state, payload){
+      console.log("Grocery mutated")
       state.value = payload.order
       state.orderId = payload.orderId
     },
-    unloadTaxi(state){
+    unloadGrocery(state){
       state.value = null
       state.orderId = null
     }

@@ -62,6 +62,7 @@ exports.requestTaxi = functions.https.onCall(async (data, context) => {
   await admin.database().ref(`/users/${context.auth.uid}/orders/${orderRef.key}`).set({
     orderType: "taxi", status: "lookingForTaxi", orderTime: payload.orderTime
   });
+  await admin.database().ref(`/openOrders/taxi/${orderRef.key}`).set(true);
   return { status:"Success", orderId: orderRef.key}
 });
 
@@ -87,6 +88,7 @@ exports.requestGrocery = functions.https.onCall(async (data, context) => {
   await admin.database().ref(`/users/${context.auth.uid}/orders/${orderRef.key}`).set({
     orderType: "grocery", status: "lookingForDeliverer", orderTime: payload.orderTime
   });
+  await admin.database().ref(`/openOrders/delivery/${orderRef.key}`).set({"type":"grocery"});
   return { status:"Success", orderId: orderRef.key}
 });
 

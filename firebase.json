@@ -12,8 +12,8 @@
       ]
     },
     {
-      "target": "drivers",
-      "public": "dist/drivers",
+      "target": "taxis",
+      "public": "dist/taxis",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "rewrites": [
         {
@@ -34,8 +34,8 @@
       ]
     },
     {
-      "target": "driversInTest",
-      "public": "dist/drivers",
+      "target": "taxisInTest",
+      "public": "dist/taxis",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "rewrites": [
         {

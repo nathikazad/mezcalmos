@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router.js'
-import store from '@/shared/store/store'
+import store from './store/store'
 
 import { firebaseInit } from '@/shared/config/firebase'
 // import { apolloClient } from "./config/apollo";

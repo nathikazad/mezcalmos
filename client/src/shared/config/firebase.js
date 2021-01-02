@@ -13,6 +13,10 @@ const firebaseConfig = {
   appId: "1:804036698204:web:39b22436cbb4ef633f8699"
 };
 
+if (process.env.VUE_APP_EMULATOR && process.env.VUE_APP_EMULATOR == "true") {
+  firebaseConfig.databaseURL = "https://mezcalmos-test.firebaseio.com"
+}
+
 firebase.initializeApp(firebaseConfig);
 function firebaseInitFunction(fbCallback) {
   console.log(process.env)

@@ -9,7 +9,6 @@ export default {
     actions: {
       async loadList(context) {
         let userId = context.rootGetters.userId
-        //create listener for new orders
         let orders = (await firebaseDatabase().ref(`users/${userId}/orders/`).once('value')).val();
         context.commit('loadOrders', orders)
       }
