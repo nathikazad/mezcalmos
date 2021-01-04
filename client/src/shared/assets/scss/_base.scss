@@ -85,6 +85,10 @@
     flex: 1;
 }
 
+.field {
+    margin-top: .5rem;
+}
+
 .container {
     width: 728px !important;
     margin: 0 auto;
@@ -121,7 +125,7 @@
 html {
     font-size: 16px;
 
-    @media (max-width: 480px) {
+    @media (max-width: 350px) {
         font-size: 14px;
     }
 }
@@ -140,6 +144,7 @@ html {
     border: none;
     height: 3rem;
     position: relative;
+    transition: .1s all;
     cursor: pointer;
 
     &:hover::before {
@@ -156,6 +161,14 @@ html {
 
     &:focus {
         outline: none;
+
+    }
+
+    &:active {
+
+        transform: translateY(-3px);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+
     }
 
     span {
@@ -178,4 +191,29 @@ html {
 
 .black {
     color: map-get($colors, black)
+}
+
+.is-valid {
+    input {
+        border: 1px solid map-get($map: $colors, $key:info);
+    }
+
+    span {
+        color: map-get($map: $colors, $key:info);
+    }
+}
+
+.is-invalid {
+
+    input,
+    textarea,
+    .btn {
+        border: 1px solid map-get($map: $colors, $key:error);
+    }
+
+    span {
+        color: map-get($map: $colors, $key:error);
+        font-size: .8rem;
+    }
+
 }

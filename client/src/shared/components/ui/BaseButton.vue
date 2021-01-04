@@ -16,24 +16,24 @@ export default {
   props: {
     mode: {
       type: Object,
-      required: false
+      required: false,
     },
     color: {
       type: String,
       required: false,
-      default: "dark"
+      default: "dark",
     },
     link: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     to: {
-      type: String,
+      type: [String, Object],
       required: false,
-      default: "/"
-    }
-  }
+      default: "/",
+    },
+  },
 };
 </script>
 

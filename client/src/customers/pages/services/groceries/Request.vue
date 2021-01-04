@@ -1,14 +1,44 @@
 <template>
   <div>
     <transition name="slide-fade">
-      <add-item v-if="addOpen" class="AddItem" @addItem="addItem($event)"></add-item>
+      <add-item v-if="addOpen" class="dialog" @addItem="addItem($event)"></add-item>
+    </transition>
+    <transition name="slide-fade">
+      <div class="dialog" v-if="pickLocation">
+        <input-location
+          slot="body"
+          :search.sync="search"
+          :saved.sync="saved"
+          :directionsBorns.sync="directionsBorns"
+          :to.sync="to"
+          :from.sync="from"
+          oneWay="to"
+        >
+          <div class="flex align_center space_between btnP" slot="action">
+            <base-button
+              class="w-45"
+              :mode="{ dark: true, bg_diagonal: true }"
+              @click.native="pickLocation=false"
+            >
+              <span class="t-8 regular">CONFIRM</span>
+            </base-button>
+            <base-button
+              class="w-45"
+              :mode="{ dark: true, bg_error: true }"
+              @click.native="pickLocation=false"
+            >
+              <span class="t-8 regular">CANCEL</span>
+            </base-button>
+          </div>
+        </input-location>
+      </div>
     </transition>
 
     <h1>Groceries</h1>
     <div>
       <h3 class="bold flex space_between">
         <span>Orders</span>
-        <span class="regular">{{items.length}} Items</span>
+        <span class="regular">{{ items.length }} Items</span>
       </h3>
       <panel :color="`bg_grocery`" v-for="(order, orderId) in items" :key="orderId">
         <span slot="name" class="t-10">{{ order.name }}</span>
@@ -21,28 +51,60 @@
     <div class="field">
       <base-button
         class="fill_width"
-        :mode="{ dark: true, bg_diagonal: true } "
-        @click.native="addOpen=true"
+        :mode="{ dark: true, bg_diagonal: true }"
+        :link="true"
+        :to="{
+          path: '/services/grocery/request',
+          query: { redirect: '/services/grocery/request' },
+        }"
       >
         <span class="t-8">
           <fa icon="plus"></fa>&nbsp; ADD ITEM
         </span>
       </base-button>
     </div>
-    <div class="field" id="note">
-      <h3 class="bold flex space_between">
-        <span>Notes</span>
-      </h3>
-      <textarea type="text" class="input bg_secondary text_blackD rows" placeholder="Write Here..."></textarea>
-    </div>
-    <div class="field" id="delveredTo">
-      <h3 class="bold flex space_between">
-        <span>Delivered To</span>
-      </h3>
-      <input type="text" class="input bg_secondary text_blackD" placeholder="Enter Address..." />
-    </div>
+    <ValidationObserver ref="observer" tag="form">
+      <div class="field" id="note">
+        <h3 class="bold flex space_between">
+          <span>Notes</span>
+        </h3>
+
+        <ValidationProvider rules="required" v-slot="{ errors, classes }">
+          <span :class="classes">
+            <textarea
+              type="text"
+              class="input bg_secondary text_blackD rows"
+              placeholder="Write Here..."
+              v-model="notes"
+            ></textarea>
+            <span>{{ errors[0] }}</span>
+          </span>
+        </ValidationProvider>
+      </div>
+      <div class="field" id="delveredTo">
+        <h3 class="bold flex space_between">
+          <span>Delivered To</span>
+        </h3>
+        <ValidationProvider rules="required" v-slot="{ errors, classes }">
+          <span :class="classes" @click="pickLocation=true">
+            <input
+              disabled="true"
+              type="text"
+              class="input bg_secondary text_blackD"
+              placeholder="Enter Address..."
+              v-model="fromTo"
+            />
+            <span>{{ errors[0] }}</span>
+          </span>
+        </ValidationProvider>
+      </div>
+    </ValidationObserver>
     <div class="field">
-      <base-button class="fill_width" :mode="{ dark: true, bg_diagonal: true }">
+      <base-button
+        class="fill_width"
+        :mode="{ dark: true, bg_diagonal: true }"
+        @click.native="requestGrocery()"
+      >
         <span class="t-8">
           ORDER NOW &nbsp;
           <fa icon="long-arrow-alt-right"></fa>
@@ -52,53 +114,110 @@
 
     <!-- TODO: check if logged in, if not link to login
     <button v-if="isLoggedIn" @click="requestGrocery">Buy</button>
-    <button v-else @click="login">Sign in with Facebook to Buy</button><br />--> -->
+    <button v-else @click="login">Sign in with Facebook to Buy</button><br />-->
   </div>
 </template>
 
 <script>
-// import PickLocation from "@/shared/components/map/GetLocation";
 import AddItem from "./AddItem";
 export default {
   components: {
     AddItem
   },
+
   data() {
     return {
+      items: [],
+      notes: "",
+      addOpen: false,
+      search: {
+        to: "",
+        from: "",
+        results: [],
+        searching: false,
+        origin: "to"
+      },
+      pickLocation: false,
+      directionsBorns: {
+        start: null,
+        end: null
+      },
+      saved: {
+        locations: [
+          {
+            description: "Home",
+            pos: { lat: () => 34.7667, lng: () => 10.7255 }
+          },
+          {
+            description: "Office",
+            pos: { lat: () => 34.7571, lng: () => 10.7715 }
+          }
+        ],
+        origin: "from",
+        opened: false
+      },
       from: {
         lat: 22.29924,
         long: 73.16584,
-        address: "Chick Tacos, 54 something avenue, Mexico"
+        address: "",
+        by: "search"
       },
       to: {
         lat: 22.29924,
         long: 73.16584,
-        address: "Chick Tacos, 54 something avenue, Mexico"
-      },
-      items: [],
-      notes: "",
-      addOpen: false
+        address: "",
+        by: "search"
+      }
     };
   },
   computed: {
     isLoggedIn() {
       return this.$store.getters.loggedIn;
+    },
+    fromTo() {
+      let fromTo = "";
+      if (this.from.address) {
+        fromTo += `from: ${this.from.address},`;
+      } else if (this.to.address) {
+        fromTo += `To:${this.to.address}`;
+      }
+      return fromTo;
+    }
+  },
+  watch: {
+    $route: {
+      deep: true,
+      immediate: true,
+      handler: function(newVal) {
+        if (newVal.query.redirect) {
+          console.log(newVal);
+          this.addOpen = true;
+        } else {
+          this.addOpen = false;
+        }
+      }
     }
   },
   methods: {
     async requestGrocery() {
-      let response = (
-        await this.$store.dispatch("groceries/requestGrocery", {
-          to: this.to,
-          from: this.from,
-          notes: this.notes,
-          items: this.items
-        })
-      ).data;
-      if (response.status == "Success") {
-        this.$router.push({ path: `${response.orderId}` });
-      } else {
-        this.errorMessage = response.errorMessage;
+      const valid = await this.$refs.observer.validate();
+
+      if (valid) {
+        let response = (
+          await this.$store.dispatch("groceries/requestGrocery", {
+            to: this.to,
+            from: this.from,
+            notes: this.notes,
+            items: this.items
+          })
+        ).data;
+        console.log(response);
+
+        if (response.status == "Success") {
+          this.$router.push({ path: `${response.orderId}` });
+        } else {
+          this.errorMessage = response.errorMessage;
+        }
       }
     },
     addItem(item) {
@@ -111,16 +230,17 @@ export default {
   }
 };
 </script>
-<style lang="scss">
-.AddItem {
+<style lang="scss" scoped>
+.dialog {
   position: absolute;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background: white;
   top: 0;
   left: 0;
   z-index: 9;
   padding: 1rem;
+  padding-top: 0;
 }
 .pill {
   border-radius: 6px !important;
@@ -143,6 +263,19 @@ export default {
   }
 }
 .rows {
-  height: 16rem;
+  height: 8rem;
+}
+::v-deep .map {
+  position: absolute;
+  height: calc(100% - 4.25rem);
+  width: calc(100% - 2rem);
+  top: 4.25rem;
+  z-index: 0;
+}
+.btnP {
+  position: absolute;
+  width: 100%;
+  z-index: 9;
+  bottom: 2rem;
 }
 </style>

@@ -1,16 +1,23 @@
 <template>
-  <div class="flex">
+  <div class="slide">
     <h1>Add Items</h1>
     <div class="field" id="delveredTo">
       <h3 class="bold flex space_between">
         <span>Name</span>
       </h3>
-      <input
-        type="text"
-        class="input bg_secondary text_blackD"
-        placeholder="Enter Name..."
-        v-model="item.name"
-      />
+      <ValidationObserver ref="observer" tag="form">
+        <ValidationProvider rules="required" v-slot="{ errors, classes }">
+          <span :class="classes">
+            <input
+              type="text"
+              class="input bg_secondary text_blackD"
+              placeholder="Enter Name..."
+              v-model="item.name"
+            />
+            <span>{{ errors[0] }}</span>
+          </span>
+        </ValidationProvider>
+      </ValidationObserver>
     </div>
     <div class="field" id="note">
       <h3 class="bold flex space_between">
@@ -50,9 +57,15 @@ export default {
   methods: {
     addItem(item) {
       this.items.push(item);
+      this.name = "";
+      this.notes = "";
     },
-    emitAddEvent() {
-      this.$emit("addItem", this.item);
+    async emitAddEvent() {
+      const valid = await this.$refs.observer.validate();
+
+      if (valid) {
+        this.$emit("addItem", this.item);
+      }
     },
   },
 };
@@ -62,9 +75,7 @@ export default {
   border-radius: 6px !important;
   padding: 0.4rem 0.5rem;
 }
-.field {
-  margin-top: 1rem;
-}
+
 .circle {
   width: 7.25rem;
   height: 7.25rem;
@@ -79,6 +90,6 @@ export default {
   }
 }
 .rows {
-  height: 16rem;
+  height: 8rem;
 }
 </style>

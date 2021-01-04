@@ -1,84 +1,105 @@
 <template>
-  <div id="taxiRequest">
-    <!-- pop up component -->
-    <pop-up v-if="pickLocation"></pop-up>
+  <div>
     <!-- ******************pop up component ************************-->
-    <h1 class="regular">Taxi</h1>
-    <input-location
-      :search.sync="search"
-      :saved.sync="saved"
-      :directionsBorns.sync="directionsBorns"
-      :to.sync="to"
-      :from.sync="from"
-    >
-      <div class="flex align_center center btnP" slot="action">
-        <base-button
-          class="w-80"
-          :mode="{ dark: true, bg_diagonal: true }"
-          @click.native="requestTaxi()"
-        >
-          <span class="t-8 regular">CONFIRM</span>
+
+    <div class="field relative locationPicker">
+      <div
+        class="fromTo flex space_between align_center bg_white elevate_2"
+        :class="{ focusedTo: focusedTo, focusedFrom: focusedFrom }"
+      >
+        <div class="from fill_height side">
+          <h5>From {{oneWay=='to'?'(Optional)':''}}</h5>
+          <input
+            type="text"
+            placeholder="Enter Address"
+            class="input"
+            @focus="focused('From')"
+            @blur="blured('From')"
+            v-model="from.address"
+            ref="from"
+          />
+        </div>
+        <base-button :mode="{ dark: true, bg_diagonal: true }" class="float_btn">
+          <i class="fal fa-repeat icon"></i>
         </base-button>
+        <div class="to fill_height side">
+          <h5>To {{oneWay=='from'?'(Optional)':''}}</h5>
+          <input
+            type="text"
+            placeholder="Enter Address"
+            class="input"
+            @focus="focused('To')"
+            @blur="blured('To')"
+            v-model="to.address"
+            ref="to"
+          />
+        </div>
       </div>
-    </input-location>
+      <!-- Drop down menu for saved locations-->
+      <div class="dropdown bg_white border elevate_2" v-if="saved.opened">
+        <h3
+          @click="pickedFromSaved(res)"
+          class="flex t-10 regular"
+          v-for="(res, index) in saved.locations"
+          :key="index"
+        >
+          <fa icon="map-marked-alt " class="icon text_primary"></fa>
+          {{ res.description }}
+        </h3>
+      </div>
+      <!-- Drop down menu for search-->
+      <div class="dropdown bg_white border elevate_2" v-if="search.searching">
+        <h3
+          @click="pickedLocation(res)"
+          class="flex t-10 regular"
+          v-for="(res, index) in search.results"
+          :key="index"
+        >
+          <fa icon="search " class="icon text_primary"></fa>
+          {{ res.description }}
+        </h3>
+      </div>
+    </div>
+    <div class="map">
+      <map-view
+        :center="center"
+        ref="map"
+        :directionsOrigin="directionsBorns.start"
+        :directionsDest="directionsBorns.end"
+      ></map-view>
+      <slot name="action"></slot>
+    </div>
   </div>
-
-  <!-- 
-    TODO: check if logged in, if not show login with facebook
-
-    <button v-if="isLoggedIn" @click="requestTaxi">Get Taxi</button>
-    <button v-else @click="login">Sign in with Facebook to Get Taxi</button
-  ><br />-->
 </template>
 
 <script>
-//import PickLocation from "../../../components/map/GetLocation";
-import popUp from "@/shared/components/ui/popUp";
 export default {
-  components: { popUp },
+  props: {
+    search: {
+      type: Object
+    },
+    saved: {
+      type: Object
+    },
+    directionsBorns: {
+      type: Object
+    },
+    oneWay: {
+      type: String
+    },
+    to: {
+      type: Object
+    },
+    from: {
+      type: Object
+    }
+  },
   data() {
     return {
       focusedFrom: false,
       focusedTo: false,
       pickLocation: false,
-      center: { lat: 30.2672, lng: -97.7431 },
-      from: {
-        lat: 22.29924,
-        long: 73.16584,
-        address: "",
-        by: "search"
-      },
-      to: {
-        lat: 22.29924,
-        long: 73.16584,
-        address: "",
-        by: "search"
-      },
-      search: {
-        to: "",
-        from: "",
-        results: [],
-        searching: false,
-        origin: "to"
-      },
-      directionsBorns: {
-        start: null,
-        end: null
-      },
-      saved: {
-        locations: [
-          {
-            description: "Home",
-            pos: { lat: () => 34.7667, lng: () => 10.7255 }
-          },
-          {
-            description: "Office",
-            pos: { lat: () => 34.7571, lng: () => 10.7715 }
-          }
-        ],
-        origin: "from",
-        opened: false
-      }
+      center: { lat: 30.2672, lng: -97.7431 }
     };
   },
   computed: {
@@ -94,13 +115,13 @@ export default {
     }, 2000);
   },
   watch: {
-    "search.to": {
+    "to.address": {
       deep: true,
       immediate: true,
       handler: function(newVal) {
         console.log(newVal);
 
-        if (newVal) {
+        if (newVal && this.to.by == "search") {
           this.saved.opened = false;
           this.search.searching = true;
 
@@ -116,12 +137,6 @@ export default {
                 console.log({ status });
               }
             );
-
-            // service.textSearch({ query: newVal }, (res) => {
-            //   console.log(res);
-
-            //
-            // });
           } else {
             this.search.results = [];
           }
@@ -131,11 +146,11 @@ export default {
         }
       }
     },
-    "search.from": {
+    "from.address": {
       deep: true,
 
       handler: function(newVal) {
-        if (newVal) {
+        if (newVal && this.from.by == "search") {
           this.saved.opened = false;
           this.search.searching = true;
 
@@ -151,12 +166,6 @@ export default {
                 console.log({ status });
               }
             );
-
-            // service.textSearch({ query: newVal }, (res) => {
-            //   console.log(res);
-
-            //
-            // });
           } else {
             this.search.results = [];
           }
@@ -180,7 +189,8 @@ export default {
     blured(title) {
       setTimeout(() => {
         this.search.searching = false;
-      }, 1000);
+        this.saved.opened = false;
+      }, 200);
       title == "From" ? (this.focusedFrom = false) : (this.focusedTo = false);
 
       this.search.origin = title.toLowerCase();
@@ -200,21 +210,7 @@ export default {
         };
       }
     },
-    async requestTaxi() {
-      let response = (
-        await this.$store.dispatch("taxis/requestTaxi", {
-          to: this.to,
-          from: this.from
-        })
-      ).data;
-      console.log(response);
 
-      if (response.status == "Success") {
-        this.$router.push({ path: `${response.orderId}` });
-      } else {
-        this.errorMessage = response.errorMessage;
-      }
-    },
     async login() {
       await this.$store.dispatch("login");
     },
@@ -222,20 +218,36 @@ export default {
       this.directionsBorns = borns;
     },
     async pickedLocation(place) {
+      console.log(this.map);
+
       let map = this.$refs["map"].$refs["marker-center"].$map;
-
       this.search[this.search.origin] = place.description;
-
+      this[this.search.origin].address = place.description;
+      this[this.search.origin].lat = place.pos.lat();
+      this[this.search.origin].long = place.pos.lng();
       var service = new window.google.maps.places.PlacesService(map);
       await service.getDetails({ placeId: place["place_id"] }, res => {
         this.center = res.geometry.location;
         this.search.searching = false;
+        this.$emit("changedDirection", {
+          origin: this.search.origin,
+          pos: res.geometry.location
+        });
+        this.$emit("centerChanged", res.geometry.location);
         this.changeDirection(this.search.origin, res.geometry.location);
       });
     },
     pickedFromSaved(place) {
       this.changeDirection(this.saved.origin, place.pos);
       this.center = place.pos;
+      this[this.saved.origin].address = place.description;
+      this[this.saved.origin].lat = place.pos.lat();
+      this[this.saved.origin].long = place.pos.lng();
+      this.$emit("changedDirection", {
+        origin: this.saved.origin,
+        pos: place.pos
+      });
+      this.$emit("centerChanged", place.pos);
       this.saved.opened = false;
     }
   }
@@ -317,18 +329,5 @@ export default {
 }
 .icon {
   margin-right: 1rem;
-}
-::v-deep .map {
-  position: absolute;
-  height: calc(100% - 6.25rem);
-  width: calc(100% - 2rem);
-  top: 6.25rem;
-  z-index: 0;
-}
-.btnP {
-  position: absolute;
-  width: 100%;
-  z-index: 9;
-  bottom: 2rem;
 }
 </style>

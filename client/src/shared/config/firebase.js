@@ -18,6 +18,7 @@ if (process.env.VUE_APP_EMULATOR && process.env.VUE_APP_EMULATOR == "true") {
 }
 
 firebase.initializeApp(firebaseConfig);
+
 function firebaseInitFunction(fbCallback) {
   console.log(process.env)
   // TODO: detect if being served or deployed and add conditionally

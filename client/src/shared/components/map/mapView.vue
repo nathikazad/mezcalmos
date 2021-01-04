@@ -6,7 +6,7 @@
     v-bind:options="mapOptions"
   >
     <DirectionsRenderer
-      v-if="directionsOrigin"
+      v-if="directionsOrigin && directionsDest"
       travelMode="DRIVING"
       :origin="directionsOrigin"
       :destination="directionsDest"
@@ -18,7 +18,23 @@
       :clickable="true"
       :icon="{ url: require('../../static/img/Bttn.png') }"
     />
-    <div v-for="(marker, index) in markers" :key="index">
+    <!-- from Icon marker -->
+    <GmapMarker
+      v-if="directionsOrigin "
+      :ref="`marker-center`"
+      :position="directionsOrigin"
+      :clickable="true"
+      :icon="{ url: require('../../static/img/userDefault.png') }"
+    />
+    <!-- to icon marker -->
+    <GmapMarker
+      v-if="directionsDest"
+      :ref="`marker-center`"
+      :position="directionsDest"
+      :clickable="true"
+      :icon="{ url: require('../../static/img/toIcon.png') }"
+    />
+    <!-- <div v-for="(marker, index) in markers" :key="index">
       <GmapMarker
         :ref="`marker${marker.type}${index}`"
         :position="marker.pos"
@@ -27,7 +43,7 @@
         :icon="{ url: require('../../static/img/Bttn.png') }"
         @dragend="dragging($event, index)"
       />
-    </div>
+    </div>-->
   </GmapMap>
 </template>
 <script>
