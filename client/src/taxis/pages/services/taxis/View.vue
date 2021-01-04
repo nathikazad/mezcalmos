@@ -12,10 +12,7 @@
       <label>long:&nbsp;{{ orderDetails.to.long }}</label><br/>
       <label>address:&nbsp;{{ orderDetails.to.address }}</label><br/> 
       <h4>Status:&nbsp;{{ orderDetails.status }}</h4>
-      <div v-if="orderDetails.taxiId">
-        <label>Driver Name:&nbsp;{{ orderDetails.taxiDriverName }}</label>&nbsp;&nbsp;
-        <router-link :to="messageLink">Message</router-link>
-      </div>
+      <button v-if="orderStatusLooking" @click="acceptOrder">Accept Order</button>
     </div>
   </div>
 </template>
@@ -24,23 +21,31 @@
 export default {
   computed: {
     orderDetails() {
-      return this.$store.getters["taxis/value"];
+      return this.$store.getters["order/getOrder"];
     },
     isLoaded() {
-      return this.$store.getters["taxis/value"] != null && Object.keys(this.$store.getters["taxis/value"]).length > 0;
+      return this.$store.getters["order/isLoaded"];
     },
     messageLink() {
       return `/messages/${this.$route.params.orderId}`;
+    },
+    orderStatusLooking() {
+      return this.$store.getters["order/getOrder"].status == "lookingForDriver"
     }
   },
   async beforeCreate() {
-    this.$store.dispatch("taxis/loadTaxi", {
+    this.$store.dispatch("order/loadOrder", {
       orderId: this.$route.params.orderId,
     });
   },
   async beforeUnmount() {
     console.log("before unmount")
-    await this.$store.dispatch("taxis/unloadTaxi");
+    await this.$store.dispatch("order/unloadOrder");
   },
+  methods: {
+    acceptOrder() {
+      this.$store.dispatch("order/acceptOrder")
+    },
+  }
 };
 </script>

@@ -31,7 +31,6 @@ const router = new VueRouter({
 })
 
 router.beforeEach(async function (to, from, next) {
-  console.log(store.getters.canTaxi)
   // TODO: check if currently in transit, if yes redirect to current transit page
   if (to.meta.requiresAuth && !store.getters.loggedIn) {
     next({ path: '/auth', query: { redirect: to.path } });

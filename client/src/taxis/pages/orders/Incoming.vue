@@ -1,12 +1,15 @@
 <template>
   <div>
+    <button v-if="isLooking" @click="turnOff">Off</button>
+    <button v-else @click="turnOn">On</button>
     <h2>Orders</h2>
     <div v-if="!isLoaded">Loading...</div>
     <ul v-else-if="hasOrders">
       <li v-for="(order, orderId) in orders" :key="orderId">
-        {{ order }}
-        {{ linkToOrder(order.orderType, orderId) }}
-        <router-link :to="linkToOrder(order.orderType, orderId)">Link</router-link>
+        <!-- {{ order }}  -->
+        <!-- TODO: show distance from current location and journey length -->
+        {{ linkToOrder(orderId) }}
+        <router-link :to="linkToOrder(orderId)">Link</router-link>
       </li>
     </ul>
     <h3 v-else>No orders found</h3>
@@ -28,14 +31,23 @@ export default {
       return this.$store.getters["incomingOrders/hasOrders"];
     },
     linkToOrder() {
-      return function (orderType, orderId) {
-        return `/services/${orderType}/${orderId}`;
+      return function (orderId) {
+        return `/incoming/${orderId}`;
       };
+    },
+    isLooking() {
+      return this.$store.getters["isLooking"];
+    }
+  },
+  methods: {
+    turnOn() {
+      this.$store.dispatch("turnOn")
+    },
+    turnOff() {
+      this.$store.dispatch("turnOff")
     },
   },
   async beforeCreate() {
-    console.log(this)
-    console.log("here")
     this.isLoaded = false;
     await this.$store.getters["incomingOrders/list"];
     this.isLoaded = true;

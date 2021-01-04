@@ -13,10 +13,11 @@ export default {
           let orders = snapshot.val()
           context.commit('saveIncoming', orders)
         });
-        // TODO: sort orders by distance
+        // TODO: sort orders by distance by getting from hasura
       },
-      stopListeningForIncoming() {
+      stopListeningForIncoming(context) {
         firebaseDatabase().ref(`openOrders/taxi`).off();
+        context.commit('saveIncoming', {})
       }
     },
     mutations: {

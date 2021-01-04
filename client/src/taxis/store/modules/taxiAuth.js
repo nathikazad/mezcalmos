@@ -31,19 +31,19 @@ export default {
       })
     },
     turnOn(context) {
-      // TODO: call look for orders listener from incoming
+      this.dispatch('incomingOrders/startListeningForIncoming')
       context.commit('setStatus', {
         status: "looking"
       })
     },
     turnOff(context) {
-      // TODO: call stop look for orders listener from incoming
+      this.dispatch('incomingOrders/stopListeningForIncoming')
       context.commit('setStatus', {
         status: "off"
       })
     },
     setToInTaxi(context) {
-      // TODO: call stop look for orders listener from incoming
+      this.dispatch('incomingOrders/stopListeningForIncoming')
       context.commit('setStatus', {
         status: "inTaxi"
       })
