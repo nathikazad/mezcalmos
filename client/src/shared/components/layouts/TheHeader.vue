@@ -28,18 +28,7 @@
         </router-link>
       </div>
       <div class="left_side">
-        <base-button
-          :mode="{
-            
-            bg_diagonal: true,
-            small: true,
-          }"
-          class="nav-btn text_primary bg_light elevate_1"
-          to="/message"
-          :link="true"
-        >
-          <fa icon="envelope" />
-        </base-button>
+        
         <base-button
           :mode="{
            
@@ -48,6 +37,10 @@
           }"
           class="nav-btn text_primary ml-2 bg_light elevate_1"
           :link="true"
+          :to="{
+          path: `/orders`,
+          query: { redirect: $route.path },
+        }"
         >
           <fa icon="shopping-cart" />
         </base-button>

@@ -3,7 +3,7 @@
     <h1>Groceries</h1>
     <h3 class="bold flex space_between">
       <span>Orders</span>
-      <span class="regular">3 Items</span>
+      <span class="regular">{{ orderDetails.items.length}} Item{{orderDetails.items.length>1?'s':''}}</span>
     </h3>
     <panel
       :color="`bg_${orderDetails.orderType}`"

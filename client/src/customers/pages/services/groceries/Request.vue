@@ -40,12 +40,18 @@
         <span>Orders</span>
         <span class="regular">{{ items.length }} Items</span>
       </h3>
-      <panel :color="`bg_grocery`" v-for="(order, orderId) in items" :key="orderId">
-        <span slot="name" class="t-10">{{ order.name }}</span>
-
-        <span slot="param" class="t-9 text_grey bg_white pill">
+      <panel :color="`bg_grocery`" v-for="(item, itemId) in items" :key="itemId">
+        <span slot="name" class="t-10">{{ item.name }}</span>
+        <base-button
+          slot="param"
+          :mode="{
+            small: true,
+          }"
+          @click.native="items.splice(itemId, 1)"
+          class="nav-btn text_primary ml-2 bg_secondary elevate_1"
+        >
           <fa icon="trash"></fa>
-        </span>
+        </base-button>
       </panel>
     </div>
     <div class="field">
@@ -222,7 +228,6 @@ export default {
     },
     addItem(item) {
       this.items.push(item);
-      this.addOpen = false;
     },
     async login() {
       await this.$store.dispatch("login");

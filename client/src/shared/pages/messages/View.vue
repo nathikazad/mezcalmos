@@ -32,14 +32,8 @@
       </div>
     </div>
     <div class="message_footer fit_container">
-      <div
-        class="message_input bg_secondary text_blackD flex align_center space_between "
-      >
-        <input
-          type="text"
-          v-model="newMessage"
-          @keyup.enter="sendMessageTest"
-        />
+      <div class="message_input bg_secondary text_blackD flex align_center space_between">
+        <input type="text" v-model="newMessage" @keyup.enter="sendMessageTest" />
         <base-button
           :mode="{ dark: true, bg_diagonal: true }"
           class="message_btn"
@@ -65,30 +59,30 @@ export default {
           text: "Hello",
           seen: "18:06",
           avatar:
-            "https://scontent.ftun11-1.fna.fbcdn.net/v/t1.0-9/107473085_10220372571378093_8626273449961856030_n.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=jN2qfU0I-z0AX-BsJ9G&_nc_ht=scontent.ftun11-1.fna&oh=c1ee5219e203f447022a8037b899cfc4&oe=60050203",
+            "https://scontent.ftun11-1.fna.fbcdn.net/v/t1.0-9/107473085_10220372571378093_8626273449961856030_n.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=jN2qfU0I-z0AX-BsJ9G&_nc_ht=scontent.ftun11-1.fna&oh=c1ee5219e203f447022a8037b899cfc4&oe=60050203"
         },
         {
           me: false,
           text: "Hi",
           seen: "18:06",
           avatar:
-            "https://scontent.ftun11-1.fna.fbcdn.net/v/t1.0-9/107473085_10220372571378093_8626273449961856030_n.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=jN2qfU0I-z0AX-BsJ9G&_nc_ht=scontent.ftun11-1.fna&oh=c1ee5219e203f447022a8037b899cfc4&oe=60050203",
+            "https://scontent.ftun11-1.fna.fbcdn.net/v/t1.0-9/107473085_10220372571378093_8626273449961856030_n.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=jN2qfU0I-z0AX-BsJ9G&_nc_ht=scontent.ftun11-1.fna&oh=c1ee5219e203f447022a8037b899cfc4&oe=60050203"
         },
         {
           me: false,
           text: "I am outside but i cant find your house",
           seen: "18:06",
           avatar:
-            "https://scontent.ftun11-1.fna.fbcdn.net/v/t1.0-9/107473085_10220372571378093_8626273449961856030_n.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=jN2qfU0I-z0AX-BsJ9G&_nc_ht=scontent.ftun11-1.fna&oh=c1ee5219e203f447022a8037b899cfc4&oe=60050203",
+            "https://scontent.ftun11-1.fna.fbcdn.net/v/t1.0-9/107473085_10220372571378093_8626273449961856030_n.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=jN2qfU0I-z0AX-BsJ9G&_nc_ht=scontent.ftun11-1.fna&oh=c1ee5219e203f447022a8037b899cfc4&oe=60050203"
         },
         {
           me: true,
           text: "I am coming...",
           seen: "18:06",
           avatar:
-            "https://scontent.ftun11-1.fna.fbcdn.net/v/t1.0-9/107473085_10220372571378093_8626273449961856030_n.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=jN2qfU0I-z0AX-BsJ9G&_nc_ht=scontent.ftun11-1.fna&oh=c1ee5219e203f447022a8037b899cfc4&oe=60050203",
-        },
-      ],
+            "https://scontent.ftun11-1.fna.fbcdn.net/v/t1.0-9/107473085_10220372571378093_8626273449961856030_n.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=jN2qfU0I-z0AX-BsJ9G&_nc_ht=scontent.ftun11-1.fna&oh=c1ee5219e203f447022a8037b899cfc4&oe=60050203"
+        }
+      ]
     };
   },
   computed: {
@@ -100,11 +94,11 @@ export default {
     },
     messages() {
       return this.$store.getters["messages/value"];
-    },
+    }
   },
   async beforeCreate() {
     await this.$store.dispatch("messages/loadMessages", {
-      orderId: this.$route.params.orderId,
+      orderId: this.$route.params.orderId
     });
   },
   async beforeUnmount() {
@@ -118,14 +112,14 @@ export default {
         text: this.newMessage,
         seen: "18:06",
         avatar:
-          "https://scontent.ftun11-1.fna.fbcdn.net/v/t1.0-9/107473085_10220372571378093_8626273449961856030_n.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=jN2qfU0I-z0AX-BsJ9G&_nc_ht=scontent.ftun11-1.fna&oh=c1ee5219e203f447022a8037b899cfc4&oe=60050203",
+          "https://scontent.ftun11-1.fna.fbcdn.net/v/t1.0-9/107473085_10220372571378093_8626273449961856030_n.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=jN2qfU0I-z0AX-BsJ9G&_nc_ht=scontent.ftun11-1.fna&oh=c1ee5219e203f447022a8037b899cfc4&oe=60050203"
       });
       this.newMessage = "";
     },
     async sendMessage() {
       let response = (
         await this.$store.dispatch("messages/sendMessage", {
-          message: this.newMessage,
+          message: this.newMessage
         })
       ).data;
       if (response.status == "Success") {
@@ -133,8 +127,8 @@ export default {
       } else {
         this.errorMessage = response.errorMessage;
       }
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
@@ -163,7 +157,7 @@ export default {
   .messages {
     height: calc(100% - 4.75rem);
     width: 100%;
-    overflow-y: scroll;
+    overflow-y: auto;
     padding: 1rem 0.5rem;
     .message {
       margin: 1.5rem 0;

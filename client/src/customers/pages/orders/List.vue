@@ -7,8 +7,14 @@
         <span>Orders</span>
         <span class="regular">{{orders?Object.keys(orders).length:0}} Items</span>
       </h3>
-      <router-link to="/services/grocery/-MOupwnywUJQtpv7dWtE" tag="div" class="pointer">
-        <panel :color="`bg_${order.orderType}`" v-for="(order, orderId) in orders" :key="orderId">
+      <router-link
+        :to="`/services/${order.orderType}/${orderId}`"
+        tag="div"
+        class="pointer"
+        v-for="(order, orderId) in orders"
+        :key="orderId"
+      >
+        <panel :color="`bg_${order.orderType}`">
           <span slot="name" class="t-10">{{ order.orderType }}</span>
           <span slot="param" class="t-8" v-if="order.status == 'delivered'">
             <fa icon="calendar-alt"></fa>

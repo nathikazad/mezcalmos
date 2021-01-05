@@ -10,6 +10,7 @@
         <div class="from fill_height side">
           <h5>From {{oneWay=='to'?'(Optional)':''}}</h5>
           <input
+            :disabled="disabled"
             type="text"
             placeholder="Enter Address"
             class="input"
@@ -25,6 +26,7 @@
         <div class="to fill_height side">
           <h5>To {{oneWay=='from'?'(Optional)':''}}</h5>
           <input
+            :disabled="disabled"
             type="text"
             placeholder="Enter Address"
             class="input"
@@ -36,7 +38,7 @@
         </div>
       </div>
       <!-- Drop down menu for saved locations-->
-      <div class="dropdown bg_white border elevate_2" v-if="saved.opened">
+      <div class="dropdown bg_white border elevate_2" v-if="deepFind(saved,'opened')">
         <h3
           @click="pickedFromSaved(res)"
           class="flex t-10 regular"
@@ -48,7 +50,7 @@
         </h3>
       </div>
       <!-- Drop down menu for search-->
-      <div class="dropdown bg_white border elevate_2" v-if="search.searching">
+      <div class="dropdown bg_white border elevate_2" v-if="deepFind(search,'searching')">
         <h3
           @click="pickedLocation(res)"
           class="flex t-10 regular"
@@ -92,6 +94,9 @@ export default {
     },
     from: {
       type: Object
+    },
+    disabled: {
+      type: Boolean
     }
   },
   data() {
@@ -99,7 +104,7 @@ export default {
       focusedFrom: false,
       focusedTo: false,
       pickLocation: false,
-      center: { lat: 30.2672, lng: -97.7431 }
+      center: this.directionsBorns.start || { lat: 30.2672, lng: -97.7431 }
     };
   },
   computed: {
@@ -107,17 +112,11 @@ export default {
       return this.$store.getters.loggedIn;
     }
   },
-  mounted() {
-    setTimeout(() => {
-      console.log("timeOut");
-
-      this.directionsBorns.start = { lat: 41.5, lng: -87 };
-    }, 2000);
-  },
+  mounted() {},
   watch: {
     "to.address": {
       deep: true,
-      immediate: true,
+
       handler: function(newVal) {
         console.log(newVal);
 

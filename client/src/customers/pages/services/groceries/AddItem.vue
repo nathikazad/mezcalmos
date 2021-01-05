@@ -36,7 +36,9 @@
         :mode="{ dark: true, bg_diagonal: true }"
         @click.native="emitAddEvent"
       >
-        <span class="t-8"> <fa icon="plus"></fa>&nbsp; ADD ITEM </span>
+        <span class="t-8">
+          <fa icon="plus"></fa>&nbsp; ADD ITEM
+        </span>
       </base-button>
     </div>
   </div>
@@ -46,13 +48,13 @@
 export default {
   data() {
     return {
-      item: { name: "", notes: "" },
+      item: { name: "", notes: "" }
     };
   },
   computed: {
     isLoggedIn() {
       return this.$store.getters.loggedIn;
-    },
+    }
   },
   methods: {
     addItem(item) {
@@ -65,9 +67,10 @@ export default {
 
       if (valid) {
         this.$emit("addItem", this.item);
+        this.$router.push("/services/grocery/request");
       }
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="scss">
