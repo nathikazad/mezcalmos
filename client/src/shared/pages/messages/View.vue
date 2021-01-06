@@ -29,20 +29,11 @@ export default {
       orderId: this.$route.params.orderId,
     });
   },
-  async beforeUnmount() {
-    console.log("before unmount")
-    await this.$store.dispatch("messages/unloadMessages");
-  },
   methods: {
     async sendMessage() {
-      let response = (await this.$store.dispatch("messages/sendMessage", {
+      this.$store.dispatch("messages/sendMessage", {
         message: this.newMessage
-      })).data;
-      if(response.status == "Success") {
-        this.newMessage = ""
-      } else {
-        this.errorMessage = response.errorMessage;
-      }
+      })
     }
   }
 }

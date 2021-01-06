@@ -1,49 +1,50 @@
-import { firebaseFunctions, firebaseDatabase } from '@/shared/config/firebase'
+import { firebaseDatabase } from '@/shared/config/firebase'
 export default {
   namespaced: true,
   state() {
     return {
-      messages: [],
-      orderType: null,
+      messages: null,
+      particpants: null,
       orderId: null
     };
   },
   actions: {
     async sendMessage(context, payload) {
-      // const token = context.rootGetters.authToken
       let orderId = context.state.orderId
-      let message = payload.message
-      // cloud function to write timestamp and userid along with message
-      let response = await firebaseFunctions().httpsCallable('sendMessage')({ orderId: orderId, message: message });
-      return response;
+      let newMessage = {message: payload.message,
+                        userId: context.rootGetters.userId}
+      console.log(orderId, newMessage)
+      // user can claim to be any user
+      firebaseDatabase().ref(`/chat/${orderId}/messages`).push(newMessage);
     },
     async loadMessages(context, payload) {
-      console.log("loading messages")
-      let orderId = payload.orderId
-      firebaseDatabase().ref(`/orders/${orderId}`).on('value', async snapshot => {
-        let order = snapshot.val();
-        console.log(order);
-        // TODO: if unauthorized or wrong type of order redirect to home page
-        if(order.taxiId){
-          order.taxiDriverName = (await firebaseDatabase().ref(`/users/${order.taxiId}/name`).once('value')).val()
-        }
-        context.commit('loadMessages', {messages:order.messages, orderType:order.orderType, orderId:orderId})
-      });
-    },
-    async unloadMessages(context) {
-      console.log("unloaded messages")
       let orderId = context.state.orderId
-      console.log(orderId)
-      firebaseDatabase().ref(`/orders/${orderId}`).off()
-      context.commit('unloadMessages')
+      if (orderId) {
+        if (orderId == payload.orderId){
+          return
+        } else {
+          firebaseDatabase().ref(`/chat/${context.state.orderId}`).off()
+          context.commit('unloadMessages')
+        }
+      }
+      orderId = payload.orderId
+      let orderType = (await firebaseDatabase().ref(`chat/${orderId}/orderType/`).once('value')).val();
+      context.commit('saveOrderId', {orderId: orderId, orderType: orderType})
+      firebaseDatabase().ref(`/chat/${orderId}`).on('value', async snapshot => {
+        let chat = snapshot.val();
+        // TODO: if unauthorized or wrong type of order redirect to home page
+        context.commit('saveMessages', {messages:chat.messages, particpants:chat.particpants})
+      });
     }
   },
   mutations: {
-    loadMessages(state, payload) {
-      console.log("messages mutated")
+    saveMessages(state, payload) {
       state.messages = payload.messages;
-      state.orderType = payload.orderType;
-      state.orderId = payload.orderId;
+      state.particpants = payload.particpants;
+    },
+    saveOrderId(state, payload) {
+      state.orderId = payload.orderId
+      state.orderType = payload.orderType
     },
     unloadMessages(state) {
       state.messages = {}

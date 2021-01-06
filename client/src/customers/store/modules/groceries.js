@@ -3,29 +3,27 @@ export default {
   namespaced: true,
   state() {
     return {
-      value: {},
+      value: null,
       orderId: null
     };
   },
   actions: {
     loadGrocery(context, payload) {
-      // TODO: if loaded,then unload first
-      let orderId  = payload.orderId;
-      firebaseDatabase().ref(`/orders/${orderId}`).on('value', async snapshot => {
+      let orderId = context.state.orderId
+      if (orderId) {
+        if (orderId == payload.orderId){
+          return
+        } else {
+          firebaseDatabase().ref(`/orders/grocery/${orderId}`).off()
+          context.commit('unloadGrocery')
+        }
+      }
+      orderId  = payload.orderId;
+      firebaseDatabase().ref(`/orders/grocery/${orderId}`).on('value', async snapshot => {
         let order = snapshot.val();
         // TODO: if unauthorized or wrong type of order redirect to home page
-        if(order.driverId){
-          order.driverName = (await firebaseDatabase().ref(`/users/${order.GroceryId}/name`).once('value')).val()
-        }
         context.commit('loadGrocery', {order:order, orderId:orderId})
       });
-    },
-    async unloadGrocery(context) {
-      // TODO check order is loaded
-      console.log("unloaded Grocerys")
-      let orderId = context.state.orderId
-      firebaseDatabase().ref(`/orders/${orderId}`).off()
-      context.commit('unloadGrocery')
     },
     async requestGrocery(_, payload) {
       console.log("Requesting Grocery")

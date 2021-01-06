@@ -32,23 +32,19 @@
 export default {
   computed: {
     orderDetails() {
-      return this.$store.getters["taxis/value"];
+      return this.$store.getters["groceries/value"];
     },
     isLoaded() {
-      return this.$store.getters["taxis/value"] != null && Object.keys(this.$store.getters["taxis/value"]).length > 0;
+      return this.$store.getters["groceries/value"] != null;
     },
     messageLink() {
       return `/messages/${this.$route.params.orderId}`;
     }
   },
   async beforeCreate() {
-    this.$store.dispatch("taxis/loadTaxi", {
+    this.$store.dispatch("groceries/loadGrocery", {
       orderId: this.$route.params.orderId,
     });
-  },
-  async beforeUnmount() {
-    console.log("before unmount")
-    await this.$store.dispatch("taxis/unloadTaxi");
-  },
+  }
 };
 </script>
