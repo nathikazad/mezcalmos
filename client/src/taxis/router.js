@@ -1,9 +1,9 @@
 import VueRouter from 'vue-router'
 import Vue from 'vue'
-import TaxiViewPage from './pages/services/taxis/View'
 
-import OrdersListPage from './pages/orders/List'
-import OrdersIncomingPage from './pages/orders/Incoming'
+import PastOrderstPage from './pages/orders/PastOrders'
+import IncomingOrdersPage from './pages/orders/Incoming'
+import TaxiViewPage from './pages/orders/View'
 import UserInformationPage from '@/shared/pages/user/Information'
 import MessagesPage from '@/shared/pages/messages/View'
 import LoginPage from '@/shared/pages/user/Login'
@@ -18,10 +18,10 @@ const router = new VueRouter({
   mode: 'history',
   routes: [
     { path: '/', redirect: '/incoming' },
-    { path: '/incoming', component: OrdersIncomingPage, meta: { requiresAuth: true }},
+    { path: '/incoming', component: IncomingOrdersPage, meta: { requiresAuth: true }},
     { path: '/incoming/:orderId', component: TaxiViewPage, meta: { requiresAuth: true } },
     { path: '/messages/:orderId', component: MessagesPage, meta: { requiresAuth: true } },
-    { path: '/past', component: OrdersListPage, meta: { requiresAuth: true } },
+    { path: '/past', component: PastOrderstPage, meta: { requiresAuth: true } },
     { path: '/past/:orderId', component: TaxiViewPage, meta: { requiresAuth: true } },
     { path: '/userinfo', component: UserInformationPage, meta: { requiresAuth: true } },
     { path: '/auth', component: LoginPage, meta: { requiresUnauth: true } },

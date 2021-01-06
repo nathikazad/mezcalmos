@@ -25,7 +25,8 @@ export default {
   actions: {
     async loadTaxiAuth(context) {
       let userId = context.rootGetters.userId
-      let canTaxi = (await firebaseDatabase().ref(`taxiDrivers/${userId}`).once('value')).val() != null;
+      console.log(userId)
+      let canTaxi = (await firebaseDatabase().ref(`taxiDrivers/${userId}/authorized`).once('value')).val() != null;
       context.commit('saveTaxiAuth', {
         canTaxi: canTaxi
       })
