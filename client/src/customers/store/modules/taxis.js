@@ -3,29 +3,28 @@ export default {
   namespaced: true,
   state() {
     return {
-      value: {},
+      value: null,
       orderId: null
     };
   },
   actions: {
     loadTaxi(context, payload) {
-      // TODO: if loaded,then unload first
-      let orderId  = payload.orderId;
-      firebaseDatabase().ref(`/orders/${orderId}`).on('value', async snapshot => {
-        let order = snapshot.val();
-        // TODO: if unauthorized or wrong type of order redirect to home page
-        if(order.driverId){
-          order.driverName = (await firebaseDatabase().ref(`/users/${order.taxiId}/name`).once('value')).val()
+      let orderId = context.state.orderId
+      if(orderId){
+        if (orderId == payload.orderId){
+          return
+        } else {
+          firebaseDatabase().ref(`/orders/taxi/${orderId}`).off()
+          context.commit('unloadTaxi')
         }
+      }
+      orderId  = payload.orderId;
+      firebaseDatabase().ref(`/orders/taxi/${orderId}`).on('value', async snapshot => {
+        let order = snapshot.val();
+        console.log(order)
+        // TODO: if unauthorized or wrong type of order redirect to home page
         context.commit('loadTaxi', {order:order, orderId:orderId})
       });
-    },
-    async unloadTaxi(context) {
-      // TODO check order is loaded
-      console.log("unloaded taxis")
-      let orderId = context.state.orderId
-      firebaseDatabase().ref(`/orders/${orderId}`).off()
-      context.commit('unloadTaxi')
     },
     async requestTaxi(_, payload) {
       // let userId = context.rootGetters.userId
