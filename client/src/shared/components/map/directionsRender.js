@@ -1,4 +1,6 @@
-import { MapElementFactory } from "vue2-google-maps";
+import {
+  MapElementFactory
+} from "vue2-google-maps";
 
 export default MapElementFactory({
   name: "directionsRenderer",
@@ -25,7 +27,9 @@ export default MapElementFactory({
 
   afterCreate(directionsRenderer) {
     directionsRenderer.constructor({
-      polylineOptions: { strokeColor: "#AC59FC" },
+      polylineOptions: {
+        strokeColor: "#AC59FC"
+      },
       markerOptions: {
         visible: false,
       },
@@ -33,31 +37,37 @@ export default MapElementFactory({
     console.log(directionsRenderer);
 
     let directionsService = new window.google.maps.DirectionsService();
-    console.log(this.origin);
+    console.log(this);
 
     this.$watch(
-      () => [this.origin, this.destination, this.travelMode],
-      () => {
-        let { origin, destination, travelMode } = this;
-        console.log("origin");
-
-        if (!origin || !destination || !travelMode) return;
-
-        directionsService.route(
-          {
+      () => [this.origin, this.destination, this.travelMode], {
+        deep: true,
+        immediate: true,
+        handler: () => {
+          let {
             origin,
             destination,
-            travelMode,
-          },
-          (response, status) => {
-            console.log(response);
-            var leg = response.routes[0].legs[0];
+            travelMode
+          } = this;
+          console.log("origin");
 
-            this.$emit("direction", leg);
-            if (status !== "OK") return;
-            directionsRenderer.setDirections(response);
-          }
-        );
+          if (!origin || !destination || !travelMode) return;
+
+          directionsService.route({
+              origin,
+              destination,
+              travelMode,
+            },
+            (response, status) => {
+              console.log(response);
+              var leg = response.routes[0].legs[0];
+
+              this.$emit("direction", leg);
+              if (status !== "OK") return;
+              directionsRenderer.setDirections(response);
+            }
+          );
+        }
       }
     );
   },

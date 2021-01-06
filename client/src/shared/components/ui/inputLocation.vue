@@ -222,8 +222,7 @@ export default {
       let map = this.$refs["map"].$refs["marker-center"].$map;
       this.search[this.search.origin] = place.description;
       this[this.search.origin].address = place.description;
-      this[this.search.origin].lat = place.pos.lat();
-      this[this.search.origin].long = place.pos.lng();
+
       var service = new window.google.maps.places.PlacesService(map);
       await service.getDetails({ placeId: place["place_id"] }, res => {
         this.center = res.geometry.location;
@@ -232,6 +231,8 @@ export default {
           origin: this.search.origin,
           pos: res.geometry.location
         });
+        this[this.search.origin].lat = res.geometry.location.lat();
+        this[this.search.origin].long = res.geometry.location.lng();
         this.$emit("centerChanged", res.geometry.location);
         this.changeDirection(this.search.origin, res.geometry.location);
       });

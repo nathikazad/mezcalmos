@@ -1,11 +1,12 @@
 <template>
-  <div class="userInfo flex space_around ">
+  <div class="userInfo flex space_around">
     <h1 class="regular txt_center">
       User
       <br />Information
     </h1>
     <div class="flex align_center center">
       <avatar
+        class="border"
         size="10rem"
         url="https://scontent.ftun11-1.fna.fbcdn.net/v/t1.0-9/107473085_10220372571378093_8626273449961856030_n.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=jN2qfU0I-z0AX-BsJ9G&_nc_ht=scontent.ftun11-1.fna&oh=c1ee5219e203f447022a8037b899cfc4&oe=60050203"
       ></avatar>
@@ -27,7 +28,16 @@
   </div>
 </template>
 <script>
-export default {};
+import { mapGetters } from "vuex";
+export default {
+  computed: {
+    ...mapGetters([
+      "auth"
+
+      // ...
+    ])
+  }
+};
 </script>
 <style lang="scss" scoped>
 .userInfo {
