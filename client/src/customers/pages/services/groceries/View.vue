@@ -3,7 +3,11 @@
     <h1>Groceries</h1>
     <h3 class="bold flex space_between">
       <span>Orders</span>
-      <span class="regular">{{ orderDetails.items.length}} Item{{orderDetails.items.length>1?'s':''}}</span>
+      <span class="regular"
+        >{{ orderDetails.items.length }} Item{{
+          orderDetails.items.length > 1 ? "s" : ""
+        }}</span
+      >
     </h3>
     <panel
       :color="`bg_${orderDetails.orderType}`"
@@ -35,7 +39,7 @@
       />
     </div>
     <!-- Searching fo Someone  Status-->
-    <div v-if="orderDetails.status=='lookingForDriver'">
+    <div v-if="orderDetails.status == 'lookingForDriver'">
       <div class="field flex center">
         <div class="circle flex center align_center">
           <logo :light="true" class="logo"></logo>
@@ -46,8 +50,10 @@
       </div>
     </div>
     <!-- Found Someone  Status-->
-    <div v-else-if="orderDetails.status=='onTheWay'">
-      <div class="field user_info flex align_center space_between bg_secondary border">
+    <div v-else-if="orderDetails.status == 'onTheWay'">
+      <div
+        class="field user_info flex align_center space_between bg_secondary border"
+      >
         <div class="flex">
           <avatar
             size="2.4rem"
@@ -61,8 +67,8 @@
         <div class="flex end">
           <base-button
             :mode="{
-            small: true,
-          }"
+              small: true,
+            }"
             class="nav-btn text_grey ml-2 bg_white elevate_1"
             :link="true"
           >
@@ -78,7 +84,9 @@
     </div>
     <!-- delivered  Status-->
     <div v-else>
-      <div class="field user_info flex align_center space_between bg_secondary border">
+      <div
+        class="field user_info flex align_center space_between bg_secondary border"
+      >
         <div class="flex">
           <avatar
             size="2.4rem"
@@ -92,8 +100,8 @@
         <div class="flex end">
           <base-button
             :mode="{
-            small: true,
-          }"
+              small: true,
+            }"
             class="nav-btn text_grey ml-2 bg_white elevate_1"
             :link="true"
           >
@@ -102,9 +110,7 @@
           <span slot="param" class="t-8 flex align_center wrap ml-2 end">
             <div class="w-60">
               <fa icon="calendar-alt"></fa>
-              &nbsp;{{
-              orderDetails.deliveryTime | moment("l")
-              }}
+              &nbsp;{{ orderDetails.deliveryTime | moment("l") }}
             </div>
             <div class="w-60">
               <fa icon="clock"></fa>
@@ -127,30 +133,23 @@
 export default {
   computed: {
     orderDetails() {
-      return this.$store.getters["taxis/value"];
+      return this.$store.getters["groceries/value"];
     },
     isLoaded() {
-      return (
-        this.$store.getters["taxis/value"] != null &&
-        Object.keys(this.$store.getters["taxis/value"]).length > 0
-      );
+      return this.$store.getters["groceries/value"] != null;
     },
     messageLink() {
       return `/messages/${this.$route.params.orderId}`;
-    }
+    },
   },
   async beforeCreate() {
-    this.$store.dispatch("taxis/loadTaxi", {
-      orderId: this.$route.params.orderId
+    this.$store.dispatch("groceries/loadGrocery", {
+      orderId: this.$route.params.orderId,
     });
   },
-  async beforeUnmount() {
-    console.log("before unmount");
-    await this.$store.dispatch("taxis/unloadTaxi");
-  }
 };
 </script>
-<style lang="scss"  scoped>
+<style lang="scss" scoped>
 .pill {
   border-radius: 6px !important;
   padding: 0.4rem 0.5rem;

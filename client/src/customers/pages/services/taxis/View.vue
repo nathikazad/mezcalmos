@@ -13,7 +13,7 @@
         <div
           class="flex align_center space_between btnP bg_white elevate_2"
           slot="action"
-          v-if="orderDetails.status=='lookingForDriver'"
+          v-if="orderDetails.status == 'lookingForDriver'"
         >
           <div class="w-70">
             <h5 class="text_grey regular t-9">Searching Available Taxi...</h5>
@@ -30,7 +30,7 @@
         <div
           class="flex align_center space_between btnP bg_white elevate_2"
           slot="action"
-          v-else-if="orderDetails.status=='onTheWay'"
+          v-else-if="orderDetails.status == 'onTheWay'"
         >
           <div class="w-70">
             <div class="flex align_center">
@@ -50,9 +50,9 @@
             @click.native="requestTaxi()"
             :link="true"
             :to="{
-          path: `/messages/${orderId}`,
-          query: { redirect: $route.path },
-        }"
+              path: `/messages/${orderId}`,
+              query: { redirect: $route.path },
+            }"
           >
             <span class="t-8 regular">Message</span>
           </base-button>
@@ -62,7 +62,6 @@
     <div v-else>
       <h3>Loading ...</h3>
     </div>
-   
   </div>
 </template>
 
@@ -73,13 +72,7 @@ export default {
       return this.$store.getters["taxis/value"];
     },
     isLoaded() {
-      return (
-        this.$store.getters["taxis/value"] != null &&
-        Object.keys(this.$store.getters["taxis/value"]).length > 0
-      );
-    },
-    orderId() {
-      return this.$route.params.orderId;
+      return this.$store.getters["taxis/value"] != null;
     },
     messageLink() {
       return `/messages/${this.$route.params.orderId}`;
@@ -87,34 +80,30 @@ export default {
     calculateBorns() {
       let borns = {
         start: null,
-        end: null
+        end: null,
       };
       console.log("order ", this.orderDetails);
 
       if (this.orderDetails) {
         borns.start = {
           lat: this.orderDetails.from.lat,
-          lng: this.orderDetails.from.long
+          lng: this.orderDetails.from.long,
         };
 
         borns.end = {
           lat: this.orderDetails.to.lat,
-          lng: this.orderDetails.to.long
+          lng: this.orderDetails.to.long,
         };
       }
       return borns;
-    }
+    },
   },
   mounted() {},
   async beforeCreate() {
     this.$store.dispatch("taxis/loadTaxi", {
-      orderId: this.$route.params.orderId
+      orderId: this.$route.params.orderId,
     });
   },
-  async beforeUnmount() {
-    console.log("before unmount");
-    await this.$store.dispatch("taxis/unloadTaxi");
-  }
 };
 </script>
 <style lang="scss" scoped>
