@@ -46,165 +46,53 @@ export default {
         lat: 22.29924,
         long: 73.16584,
         address: "",
-        by: "search"
+        by: "search",
       },
       to: {
         lat: 22.29924,
         long: 73.16584,
         address: "",
-        by: "search"
+        by: "search",
       },
       search: {
         to: "",
         from: "",
         results: [],
         searching: false,
-        origin: "to"
+        origin: "to",
       },
       directionsBorns: {
         start: null,
-        end: null
+        end: null,
       },
       saved: {
         locations: [
           {
             description: "Home",
-            pos: { lat: () => 34.7667, lng: () => 10.7255 }
+            pos: { lat: () => 34.7667, lng: () => 10.7255 },
           },
           {
             description: "Office",
-            pos: { lat: () => 34.7571, lng: () => 10.7715 }
-          }
+            pos: { lat: () => 34.7571, lng: () => 10.7715 },
+          },
         ],
         origin: "from",
-        opened: false
-      }
+        opened: false,
+      },
     };
   },
   computed: {
     isLoggedIn() {
       return this.$store.getters.loggedIn;
-    }
-  },
-  mounted() {
-    setTimeout(() => {
-      console.log("timeOut");
-
-      this.directionsBorns.start = { lat: 41.5, lng: -87 };
-    }, 2000);
-  },
-  watch: {
-    "search.to": {
-      deep: true,
-      immediate: true,
-      handler: function(newVal) {
-        console.log(newVal);
-
-        if (newVal) {
-          this.saved.opened = false;
-          this.search.searching = true;
-
-          if (newVal.length > 4) {
-            console.log(window.google.maps.places);
-
-            var service = new window.google.maps.places.AutocompleteService();
-            service.getQueryPredictions(
-              { input: newVal },
-              (predections, status) => {
-                console.log({ predections });
-                this.search.results = predections;
-                console.log({ status });
-              }
-            );
-
-            // service.textSearch({ query: newVal }, (res) => {
-            //   console.log(res);
-
-            //
-            // });
-          } else {
-            this.search.results = [];
-          }
-        } else {
-          this.search.searching = false;
-          this.search.results = [];
-        }
-      }
     },
-    "search.from": {
-      deep: true,
-
-      handler: function(newVal) {
-        if (newVal) {
-          this.saved.opened = false;
-          this.search.searching = true;
-
-          if (newVal.length > 4) {
-            console.log(window.google.maps.places);
-
-            var service = new window.google.maps.places.AutocompleteService();
-            service.getQueryPredictions(
-              { input: newVal },
-              (predections, status) => {
-                console.log({ predections });
-                this.search.results = predections;
-                console.log({ status });
-              }
-            );
-
-            // service.textSearch({ query: newVal }, (res) => {
-            //   console.log(res);
-
-            //
-            // });
-          } else {
-            this.search.results = [];
-          }
-        } else {
-          this.search.searching = false;
-          this.search.results = [];
-        }
-      }
-    }
   },
+
   methods: {
-    focused(title) {
-      console.log(title);
-
-      this.focusedFrom = title == "From";
-      this.focusedTo = title == "To";
-      this.search.origin = title.toLowerCase();
-      this.saved.opened = true;
-      this.saved.origin = title.toLowerCase();
-    },
-    blured(title) {
-      setTimeout(() => {
-        this.search.searching = false;
-      }, 1000);
-      title == "From" ? (this.focusedFrom = false) : (this.focusedTo = false);
-
-      this.search.origin = title.toLowerCase();
-    },
-    changeDirection(direction, pos) {
-      console.log(direction);
-
-      if (direction == "from") {
-        this.directionsBorns.start = {
-          lat: pos.lat(),
-          lng: pos.lng()
-        };
-      } else if (direction == "to") {
-        this.directionsBorns.end = {
-          lat: pos.lat(),
-          lng: pos.lng()
-        };
-      }
-    },
     async requestTaxi() {
       let response = (
         await this.$store.dispatch("taxis/requestTaxi", {
           to: this.to,
-          from: this.from
+          from: this.from,
         })
       ).data;
       console.log(response);
@@ -218,27 +106,7 @@ export default {
     async login() {
       await this.$store.dispatch("login");
     },
-    setDirctionsBorns(borns) {
-      this.directionsBorns = borns;
-    },
-    async pickedLocation(place) {
-      let map = this.$refs["map"].$refs["marker-center"].$map;
-
-      this.search[this.search.origin] = place.description;
-
-      var service = new window.google.maps.places.PlacesService(map);
-      await service.getDetails({ placeId: place["place_id"] }, res => {
-        this.center = res.geometry.location;
-        this.search.searching = false;
-        this.changeDirection(this.search.origin, res.geometry.location);
-      });
-    },
-    pickedFromSaved(place) {
-      this.changeDirection(this.saved.origin, place.pos);
-      this.center = place.pos;
-      this.saved.opened = false;
-    }
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>

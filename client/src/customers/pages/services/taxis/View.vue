@@ -13,7 +13,7 @@
         <div
           class="flex align_center space_between btnP bg_white elevate_2"
           slot="action"
-          v-if="orderDetails.status == 'lookingForDriver'"
+          v-if="orderDetails.status == 'lookingForTaxi'"
         >
           <div class="w-70">
             <h5 class="text_grey regular t-9">Searching Available Taxi...</h5>
@@ -82,7 +82,6 @@ export default {
         start: null,
         end: null,
       };
-      console.log("order ", this.orderDetails);
 
       if (this.orderDetails) {
         borns.start = {

@@ -1,4 +1,6 @@
-import { firebaseAuth } from '@/shared/config/firebase'
+import {
+  firebaseAuth
+} from '@/shared/config/firebase'
 // import { apolloClient } from '@/config/apollo'
 // import gql from 'graphql-tag'
 export default {
@@ -7,7 +9,7 @@ export default {
       userId: null,
       name: null,
       email: null,
-      photoURL: null,
+      photoUrl: null,
       hasuraAuthToken: null,
       loggedIn: false
     };
@@ -15,6 +17,14 @@ export default {
   getters: {
     userId(state) {
       return state.userId;
+    },
+    userInfo(state) {
+      return {
+        name: state.name,
+        email: state.email,
+        photo: state.photoUrl,
+        userId: state.userId
+      }
     },
     hasuraAuthToken(state) {
       return state.hasuraAuthToken;

@@ -8,7 +8,7 @@
         :class="{ focusedTo: focusedTo, focusedFrom: focusedFrom }"
       >
         <div class="from fill_height side">
-          <h5>From {{oneWay=='to'?'(Optional)':''}}</h5>
+          <h5>From {{ oneWay == "to" ? "(Optional)" : "" }}</h5>
           <input
             :disabled="disabled"
             type="text"
@@ -20,11 +20,14 @@
             ref="from"
           />
         </div>
-        <base-button :mode="{ dark: true, bg_diagonal: true }" class="float_btn">
+        <base-button
+          :mode="{ dark: true, bg_diagonal: true }"
+          class="float_btn"
+        >
           <i class="fal fa-repeat icon"></i>
         </base-button>
         <div class="to fill_height side">
-          <h5>To {{oneWay=='from'?'(Optional)':''}}</h5>
+          <h5>To {{ oneWay == "from" ? "(Optional)" : "" }}</h5>
           <input
             :disabled="disabled"
             type="text"
@@ -38,7 +41,10 @@
         </div>
       </div>
       <!-- Drop down menu for saved locations-->
-      <div class="dropdown bg_white border elevate_2" v-if="deepFind(saved,'opened')">
+      <div
+        class="dropdown bg_white border elevate_2"
+        v-if="deepFind(saved, 'opened')"
+      >
         <h3
           @click="pickedFromSaved(res)"
           class="flex t-10 regular"
@@ -50,16 +56,24 @@
         </h3>
       </div>
       <!-- Drop down menu for search-->
-      <div class="dropdown bg_white border elevate_2" v-if="deepFind(search,'searching')">
-        <h3
-          @click="pickedLocation(res)"
-          class="flex t-10 regular"
-          v-for="(res, index) in search.results"
-          :key="index"
-        >
-          <fa icon="search " class="icon text_primary"></fa>
-          {{ res.description }}
-        </h3>
+      <div
+        class="dropdown bg_white border elevate_2"
+        v-if="deepFind(search, 'searching')"
+      >
+        <span v-if="search.results.length">
+          <h3
+            @click="pickedLocation(res)"
+            v-for="(res, index) in search.results"
+            :key="index"
+             class="flex t-10 regular"
+          >
+            <fa icon="search " class="icon text_primary"></fa>
+            {{ res.description }}
+          </h3>
+        </span>
+        <div v-else>
+          <h3 class="flex t-10 regular">Searching...</h3>
+        </div>
       </div>
     </div>
     <div class="map">
@@ -78,39 +92,40 @@
 export default {
   props: {
     search: {
-      type: Object
+      type: Object,
     },
     saved: {
-      type: Object
+      type: Object,
     },
     directionsBorns: {
-      type: Object
+      type: Object,
     },
     oneWay: {
-      type: String
+      type: String,
     },
     to: {
-      type: Object
+      type: Object,
     },
     from: {
-      type: Object
+      type: Object,
     },
     disabled: {
-      type: Boolean
-    }
+      type: Boolean,
+    },
   },
   data() {
     return {
       focusedFrom: false,
       focusedTo: false,
       pickLocation: false,
-      center: this.directionsBorns.start || { lat: 30.2672, lng: -97.7431 }
+      center: this.directionsBorns.start || { lat: 30.2672, lng: -97.7431 },
+      delayer: null,
     };
   },
   computed: {
     isLoggedIn() {
       return this.$store.getters.loggedIn;
-    }
+    },
   },
   mounted() {},
   watch: {
@@ -118,32 +133,21 @@ export default {
       deep: true,
 
       handler: function(newVal) {
-        console.log(newVal);
-
         if (newVal && this.to.by == "search") {
           this.saved.opened = false;
           this.search.searching = true;
-
-          if (newVal.length > 4) {
-            console.log(window.google.maps.places);
-
+          clearTimeout(this.delayer);
+          this.delayer = setTimeout(() => {
             var service = new window.google.maps.places.AutocompleteService();
-            service.getQueryPredictions(
-              { input: newVal },
-              (predections, status) => {
-                console.log({ predections });
-                this.search.results = predections;
-                console.log({ status });
-              }
-            );
-          } else {
-            this.search.results = [];
-          }
+            service.getQueryPredictions({ input: newVal }, (predections) => {
+              this.search.results = predections;
+            });
+          }, 2000);
         } else {
           this.search.searching = false;
           this.search.results = [];
         }
-      }
+      },
     },
     "from.address": {
       deep: true,
@@ -152,33 +156,22 @@ export default {
         if (newVal && this.from.by == "search") {
           this.saved.opened = false;
           this.search.searching = true;
-
-          if (newVal.length > 4) {
-            console.log(window.google.maps.places);
-
+          clearTimeout(this.delayer);
+          this.delayer = setTimeout(() => {
             var service = new window.google.maps.places.AutocompleteService();
-            service.getQueryPredictions(
-              { input: newVal },
-              (predections, status) => {
-                console.log({ predections });
-                this.search.results = predections;
-                console.log({ status });
-              }
-            );
-          } else {
-            this.search.results = [];
-          }
+            service.getQueryPredictions({ input: newVal }, (predections) => {
+              this.search.results = predections;
+            });
+          }, 2000);
         } else {
           this.search.searching = false;
           this.search.results = [];
         }
-      }
-    }
+      },
+    },
   },
   methods: {
     focused(title) {
-      console.log(title);
-
       this.focusedFrom = title == "From";
       this.focusedTo = title == "To";
       this.search.origin = title.toLowerCase();
@@ -195,17 +188,15 @@ export default {
       this.search.origin = title.toLowerCase();
     },
     changeDirection(direction, pos) {
-      console.log(direction);
-
       if (direction == "from") {
         this.directionsBorns.start = {
           lat: pos.lat(),
-          lng: pos.lng()
+          lng: pos.lng(),
         };
       } else if (direction == "to") {
         this.directionsBorns.end = {
           lat: pos.lat(),
-          lng: pos.lng()
+          lng: pos.lng(),
         };
       }
     },
@@ -217,19 +208,17 @@ export default {
       this.directionsBorns = borns;
     },
     async pickedLocation(place) {
-      console.log(this.map);
-
       let map = this.$refs["map"].$refs["marker-center"].$map;
       this.search[this.search.origin] = place.description;
       this[this.search.origin].address = place.description;
 
       var service = new window.google.maps.places.PlacesService(map);
-      await service.getDetails({ placeId: place["place_id"] }, res => {
+      await service.getDetails({ placeId: place["place_id"] }, (res) => {
         this.center = res.geometry.location;
         this.search.searching = false;
         this.$emit("changedDirection", {
           origin: this.search.origin,
-          pos: res.geometry.location
+          pos: res.geometry.location,
         });
         this[this.search.origin].lat = res.geometry.location.lat();
         this[this.search.origin].long = res.geometry.location.lng();
@@ -245,12 +234,12 @@ export default {
       this[this.saved.origin].long = place.pos.lng();
       this.$emit("changedDirection", {
         origin: this.saved.origin,
-        pos: place.pos
+        pos: place.pos,
       });
       this.$emit("centerChanged", place.pos);
       this.saved.opened = false;
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>

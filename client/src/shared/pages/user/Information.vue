@@ -4,23 +4,27 @@
       User
       <br />Information
     </h1>
-    <div class="flex align_center center">
-      <avatar
-        class="border"
-        size="10rem"
-        url="https://scontent.ftun11-1.fna.fbcdn.net/v/t1.0-9/107473085_10220372571378093_8626273449961856030_n.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=jN2qfU0I-z0AX-BsJ9G&_nc_ht=scontent.ftun11-1.fna&oh=c1ee5219e203f447022a8037b899cfc4&oe=60050203"
-      ></avatar>
+    <div class="information">
+      <div class="flex align_center center">
+        <avatar class="border" size="10rem" :url="userInfo.photo"></avatar>
+      </div>
+      <h1 class="txt_center t-20">{{ userInfo.name }}</h1>
+      <h3 class="txt_center" v-if="userInfo.phone">
+        <fa icon="mobile"></fa>&nbsp; {{ userInfo.phone }}
+      </h3>
     </div>
-    <h1 class="txt_center">Jorge Doe</h1>
-    <h3 class="txt_center">
-      <fa icon="mobile"></fa>&nbsp; 406 874 5993
-    </h3>
     <div class="actions fill_width flex space_between">
-      <base-button class="w-45 elevate_1" :mode="{ dark: true, bg_diagonal: true }">
+      <base-button
+        class="w-45 elevate_1"
+        :mode="{ dark: true, bg_diagonal: true }"
+      >
         <fa icon="pencil-alt"></fa>&nbsp;&nbsp;
         <span class="t-8 regular">EDIT INFORMATION</span>
       </base-button>
-      <base-button class="w-45 elevate_1" :mode="{ dark: true, bg_error: true }">
+      <base-button
+        class="w-45 elevate_1"
+        :mode="{ dark: true, bg_error: true }"
+      >
         <fa icon="trash"></fa>&nbsp;&nbsp;
         <span class="t-8 regular">Delete Account</span>
       </base-button>
@@ -28,19 +32,22 @@
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
 export default {
   computed: {
-    ...mapGetters([
-      "auth"
-
-      // ...
-    ])
-  }
+    userInfo() {
+      return this.$store.getters["userInfo"];
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
 .userInfo {
   flex-direction: column;
+  .information{
+    flex: .5;
+    h1{
+      margin-top: 3rem;
+    }
+  }
 }
 </style>
