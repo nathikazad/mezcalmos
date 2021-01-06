@@ -15,7 +15,7 @@ export default {
           context.dispatch('unloadOrder')
         }
         let orderId = payload.orderId
-        firebaseDatabase().ref(`orders/${orderId}`).on('value', snapshot => {
+        firebaseDatabase().ref(`orders/taxi/${orderId}`).on('value', snapshot => {
           let order = snapshot.val()
           context.commit('saveOrder', {order: order, orderId: orderId});
           // TODO: if order status changes from isLooking to onTheWay and the driverId is not current driver then exit gracefully.
@@ -23,22 +23,21 @@ export default {
         // TODO: gracefully handle error read
       },
       unloadOrder(context) {
-        let userId = context.rootGetters.userId
         let orderId = context.state.orderId
         // TODO: check if order is loaded
-        firebaseDatabase().ref(`taxiDrivers/${userId}/orders/${orderId}`).off()
+        firebaseDatabase().ref(`orders/taxi/${orderId}`).off()
         context.commit('unloadOrder')
       },
       async acceptOrder(context) {
         // TODO: check if order is loaded
         let orderId = context.state.orderId
-        let response = await firebaseFunctions().httpsCallable('acceptOrder')({ orderId: orderId });
+        let response = await firebaseFunctions().httpsCallable('acceptTaxiOrder')({ orderId: orderId });
         return response;
       },
       async finishOrder(context) {
         // TODO: check if order is loaded
         let orderId = context.state.orderId
-        let response = await firebaseFunctions().httpsCallable('finishOrder')({ orderId: orderId });
+        let response = await firebaseFunctions().httpsCallable('finishTaxiOrder')({ orderId: orderId });
         return response;
       }
     },

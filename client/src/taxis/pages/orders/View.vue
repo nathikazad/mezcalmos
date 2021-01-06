@@ -30,7 +30,7 @@ export default {
       return `/messages/${this.$route.params.orderId}`;
     },
     orderStatusLooking() {
-      return this.$store.getters["order/getOrder"].status == "lookingForDriver"
+      return this.$store.getters["order/getOrder"].status == "lookingForTaxi"
     }
   },
   async beforeCreate() {
@@ -43,8 +43,9 @@ export default {
     await this.$store.dispatch("order/unloadOrder");
   },
   methods: {
-    acceptOrder() {
-      this.$store.dispatch("order/acceptOrder")
+    async acceptOrder() {
+      let response = await this.$store.dispatch("order/acceptOrder")
+      console.log(response)
     },
   }
 };
