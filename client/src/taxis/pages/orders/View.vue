@@ -12,6 +12,7 @@
       <label>long:&nbsp;{{ orderDetails.to.long }}</label><br/>
       <label>address:&nbsp;{{ orderDetails.to.address }}</label><br/> 
       <h4>Status:&nbsp;{{ orderDetails.status }}</h4>
+      <div> Customer:&nbsp; {{ orderDetails.customer }}</div>
       <button v-if="orderStatusLooking" @click="acceptOrder">Accept Order</button>
     </div>
   </div>

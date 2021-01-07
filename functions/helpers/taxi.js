@@ -26,7 +26,7 @@ async function request(admin, data, uid) {
     orderType: "taxi", status: "lookingForTaxi", orderTime: payload.orderTime
   });
   admin.database().ref(`/openOrders/taxi/${orderRef.key}`).set({from:payload.from, to:payload.to});
-  admin.database().ref(`/chat/${orderRef.key}/particpants/${uid}`).set({
+  admin.database().ref(`/chat/${orderRef.key}/participants/${uid}`).set({
     name: user.displayName.split(' ')[0],
     image: user.photo
   });
@@ -73,7 +73,7 @@ async function accept(admin, data, uid) {
     console.log(`${data.orderId} taxi request success`)
     admin.database().ref(`/taxiDrivers/${uid}/orders/${data.orderId}`).set(true);
     admin.database().ref(`/openOrders/taxi/${data.orderId}`).remove();
-    await admin.database().ref(`/chat/${data.orderId}/particpants/${uid}`).set({
+    await admin.database().ref(`/chat/${data.orderId}/participants/${uid}`).set({
       name: driver.displayName.split(' ')[0],
       image: driver.photo
     });
