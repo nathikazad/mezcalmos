@@ -24,7 +24,7 @@
     },
     {
       "target": "customersInTest",
-      "public": "dist/customers",
+      "public": "dist/customersTest",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "rewrites": [
         {
@@ -35,7 +35,7 @@
     },
     {
       "target": "taxisInTest",
-      "public": "dist/taxis",
+      "public": "dist/taxisTest",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "rewrites": [
         {

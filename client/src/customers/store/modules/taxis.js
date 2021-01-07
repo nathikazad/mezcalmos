@@ -1,4 +1,4 @@
-import { firebaseDatabase, firebaseFunctions } from '@/shared/config/firebase'
+import { firebaseDatabase, cloudCall } from '@/shared/config/firebase'
 export default {
   namespaced: true,
   state() {
@@ -30,7 +30,7 @@ export default {
       // let userId = context.rootGetters.userId
       let from  = payload.from
       let to = payload.to
-      let response = await firebaseFunctions().httpsCallable('requestTaxi')({ from: from, to: to });
+      let response = await cloudCall('requestTaxi', { from: from, to: to });
       return response;
     }
   },

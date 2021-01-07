@@ -3,21 +3,29 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+
     "emulator": "firebase emulators:start --only functions",
     "serve:customers": "vue-cli-service serve src/customers/main.js",
     "customersInEmulateMode": "vue-cli-service serve --mode emulate src/customers/main.js",
     "emulate:customers": "npm-run-all --parallel customersInEmulateMode emulator",
     "build:customers": "vue-cli-service build --dest ../dist/customers src/customers/main.js",
+    "build:customers:test": "vue-cli-service build --mode test --dest ../dist/customersTest src/customers/main.js",
     "deploy:customers": "npm run build:customers; firebase deploy --only hosting:customers;",
-    "deploy:customers:test": "npm run build:customers; firebase deploy --only hosting:customersInTest;",
-    "lint": "vue-cli-service lint",
-    "serve:taxis": "vue-cli-service serve src/taxis/main.js",
+    "deploy:customers:test": "npm run build:customers:test; firebase deploy --only hosting:customersInTest;",
+    
+    "serve:taxis": "vue-cli-service serve --port 8081 src/taxis/main.js",
     "taxisInEmulateMode": "vue-cli-service serve --mode emulate --port 8081 src/taxis/main.js",
     "emulate:taxis": "npm-run-all --parallel taxisInEmulateMode emulator",
     "build:taxis": "vue-cli-service build --dest ../dist/taxis src/taxis/main.js",
+    "build:taxis:test": "vue-cli-service build --mode test --dest ../dist/taxisTest src/taxis/main.js",
     "deploy:taxis": "npm run build:taxis; firebase deploy --only hosting:taxis;",
-    "deploy:taxis:test": "npm run build:taxis; firebase deploy --only hosting:taxisInTest;",
-    "emulate:all": "npm-run-all --parallel customersInEmulateMode taxisInEmulateMode emulator"
+    "deploy:taxis:test": "npm run build:taxis:test; firebase deploy --only hosting:taxisInTest;",
+    
+    "serve:all": "npm-run-all --parallel serve:taxis serve:customers",
+    "deploy:all": "npm run build:taxis; npm run build:customers; firebase deploy --only hosting:taxis,hosting:customers;",
+    "deploy:all:test": "npm run build:taxis:test; npm run build:customers:test; firebase deploy --only hosting:taxisInTest,hosting:customersInTest;",
+    "emulate:all": "npm-run-all --parallel customersInEmulateMode taxisInEmulateMode emulator",
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",

@@ -1,15 +1,19 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
-// import { GraphQLClient } from 'graphql-request'
 
-let databaseURL = "https://mezcalmos-31f1c-default-rtdb.firebaseio.com"
-if(process.env.FUNCTIONS_EMULATOR == 'true'){
-  databaseURL = "https://mezcalmos-test.firebaseio.com"
+
+function initializeFirebase(database) {
+  console.log("initializing db")
+  if (!database || database == "production") {
+    return admin.initializeApp({
+      databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com"
+    }, "production");
+  } else {
+    return admin.initializeApp({
+      databaseURL: "https://mezcalmos-test.firebaseio.com"
+    }, "test");
+  }
 }
-
-admin.initializeApp({
-  databaseURL: databaseURL
-});
 
 const grocery = require ("./helpers/grocery")
 const taxi = require ("./helpers/taxi")
@@ -17,7 +21,8 @@ const hasura = require ("./helpers/hasura");
 
 // On sign up.
 exports.processSignUp = functions.auth.user().onCreate(async user => {
-  await admin.database().ref(`/users/${user.uid}/info`).set(
+  let firebase = initializeFirebase();
+  await firebase.database().ref(`/users/${user.uid}/info`).set(
     {displayName:user.displayName,
      photo:user.photoURL,
      email:user.email,
@@ -26,33 +31,45 @@ exports.processSignUp = functions.auth.user().onCreate(async user => {
 });
 
 exports.addHasuraClaims = functions.https.onCall(async (data, context) => {
-  return hasura.setClaim(context.auth.uid);
+  let firebase = initializeFirebase();
+  return hasura.setClaim(firebase, context.auth.uid);
 });
 
 
 exports.requestTaxi = functions.https.onCall(async (data, context) => {
-  let response = await taxi.request(admin, data, context.auth.uid)
+  if(!context.auth) {
+    return { status:"Error", errorMessage: "User needs to be signed in"}
+  }
+  let firebase = initializeFirebase(data.database);
+  let response = await taxi.request(firebase, data, context.auth.uid)
   return response
 });
 
 exports.acceptTaxiOrder = functions.https.onCall(async (data, context) => {
-  let response = await taxi.accept(admin, data, context.auth.uid)
+  let firebase = initializeFirebase(data.database);
+  let response = await taxi.accept(firebase, data, context.auth.uid)
   return response
 });
 
 exports.startTaxiRide = functions.https.onCall(async (data, context) => {
-  let response = await taxi.start(admin, data, context.auth.uid)
+  let firebase = initializeFirebase(data.database);
+  let response = await taxi.start(firebase, data, context.auth.uid)
   return response
 });
 
 exports.finishTaxiRide = functions.https.onCall(async (data, context) => {
-  let response = await taxi.finish(admin, data, context.auth.uid)
+  let firebase = initializeFirebase(data.database);
+  let response = await taxi.finish(firebase, data, context.auth.uid)
   return response
 });
 
 
 exports.requestGrocery = functions.https.onCall(async (data, context) => {
-  let response = await grocery.request(admin, data, context.auth.uid)
+  if(!context.auth) {
+    return { status:"Error", errorMessage: "User needs to be signed in"}
+  }
+  let firebase = initializeFirebase(data.database);
+  let response = await grocery.request(firebase, data, context.auth.uid)
   return response
 });
 
