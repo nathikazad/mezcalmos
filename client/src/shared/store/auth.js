@@ -1,5 +1,6 @@
 import {
-  firebaseAuth
+  firebaseAuth,
+  firebaseDatabase
 } from '@/shared/config/firebase'
 // import { apolloClient } from '@/config/apollo'
 // import gql from 'graphql-tag'
@@ -7,9 +8,7 @@ export default {
   state() {
     return {
       userId: null,
-      name: null,
-      email: null,
-      photoUrl: null,
+      info: null,
       hasuraAuthToken: null,
       loggedIn: false
     };
@@ -19,12 +18,7 @@ export default {
       return state.userId;
     },
     userInfo(state) {
-      return {
-        name: state.name,
-        email: state.email,
-        photo: state.photoUrl,
-        userId: state.userId
-      }
+      return state.info
     },
     hasuraAuthToken(state) {
       return state.hasuraAuthToken;
@@ -39,29 +33,30 @@ export default {
       firebaseAuth().signInWithPopup(provider);
     },
     async autoSignIn(context, payload) {
-      await context.commit('saveAuthData', payload)
+      let info = (await firebaseDatabase().ref(`users/${payload.userId}/info/`).once('value')).val();
+      context.commit('saveUserInfo', info)
+      context.commit('saveAuthData', payload)
     },
     async logout(context) {
       console.log("Logging out")
       await firebaseAuth().signOut()
-      context.commit('saveAuthData', {
-        userId: null,
-        name: null,
-        email: null,
-        photoURL: null,
-        hasuraAuthToken: null,
-        loggedIn: false
-      })
+      context.commit('clearData')
     }
   },
   mutations: {
-    async saveAuthData(state, payload) {
+    saveAuthData(state, payload) {
       state.userId = payload.userId;
       state.hasuraAuthToken = payload.hasuraAuthToken;
-      state.name = payload.name;
-      state.email = payload.email;
-      state.photoUrl = payload.photoURL;
       state.loggedIn = payload.loggedIn;
+    },
+    saveUserInfo(state, payload) {
+      state.info = payload
+    },
+    clearData(state, ) {
+      state.userId = null;
+      state.hasuraAuthToken = null;
+      state.loggedIn = false;
+      state.info = null
     }
   }
 }
