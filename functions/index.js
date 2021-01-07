@@ -40,7 +40,12 @@ exports.acceptTaxiOrder = functions.https.onCall(async (data, context) => {
   return response
 });
 
-exports.finishTaxiOrder = functions.https.onCall(async (data, context) => {
+exports.startTaxiRide = functions.https.onCall(async (data, context) => {
+  let response = await taxi.start(admin, data, context.auth.uid)
+  return response
+});
+
+exports.finishTaxiRide = functions.https.onCall(async (data, context) => {
   let response = await taxi.finish(admin, data, context.auth.uid)
   return response
 });

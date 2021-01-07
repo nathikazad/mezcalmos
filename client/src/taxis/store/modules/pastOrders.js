@@ -9,14 +9,14 @@ export default {
       };
     },
     actions: {
-      async loadPastOrders(context) {
+      async loadList(context) {
         let userId = context.rootGetters.userId
         let orders = (await firebaseDatabase().ref(`taxiDrivers/${userId}/orders/`).once('value')).val();
         context.commit('saveOrders', orders)
       }
     },
     mutations: {
-      savePastOrders(state, payload){
+      saveOrders(state, payload){
         state.list = payload
       }
     },

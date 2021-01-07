@@ -20,6 +20,11 @@ const store = new Vuex.Store({
     incomingOrders: incomingOrdersModule,
     pastOrders: pastOrdersModule,
     messages: messagesModule
+  },
+  getters: {
+    appName() {
+      return "taxi"
+    }
   }
 });
 

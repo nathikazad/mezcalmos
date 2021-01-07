@@ -1,4 +1,4 @@
-module.exports = { request, accept }
+module.exports = { request, accept, start, finish }
 
 //possible statuses: lookingForTaxi, onTheWay, inTransit, droppedOff
 async function request(admin, data, uid) {
@@ -39,6 +39,7 @@ async function accept(admin, data, uid) {
   if(!data.orderId) {
     return { status:"Error", errorMessage: "Required orderId"}
   }
+
   let authorizedDriver = (await admin.database().ref(`/taxiDrivers/${uid}/authorized`).once('value')).val();
   if(!authorizedDriver) {
     return { status:"Error", errorMessage: "User is not an authorized"}
@@ -52,6 +53,7 @@ async function accept(admin, data, uid) {
 			if (order.status == "lookingForTaxi"){ 
 				console.log(`${data.orderId} lookingForTaxi`)        
         order.status = 'onTheWay';
+        order.acceptRideTime = (new Date()).toUTCString()
         order.driver = {
           id: uid,
           name: driver.displayName.split(' ')[0],
@@ -79,4 +81,44 @@ async function accept(admin, data, uid) {
     });
 		return { status:"Success" }; 
 	}
+}
+
+async function start(admin, data, uid) {
+  if(!data.orderId) {
+    return { status:"Error", errorMessage: "Required orderId"}
+  }
+  
+  let order = (await admin.database().ref(`/orders/taxi/${data.orderId}`).once('value')).val();
+  if (order.driver.id != uid) {
+    return { status:"Error", errorMessage: "Driver id is not "+order.driver.id}
+  }
+
+  if (order.status != "onTheWay") {
+    return { status:"Error", errorMessage: "Ride status is not onTheWay but "+order.status}
+  }
+
+  admin.database().ref(`/orders/taxi/${data.orderId}`).update({
+    status: "inTransit",
+    rideStartTime: (new Date()).toUTCString()
+  })
+}
+
+async function finish(admin, data, uid) {
+  if(!data.orderId) {
+    return { status:"Error", errorMessage: "Required orderId"}
+  }
+  
+  let order = (await admin.database().ref(`/orders/taxi/${data.orderId}`).once('value')).val();
+  if (order.driver.id != uid) {
+    return { status:"Error", errorMessage: "Driver id is not "+order.driver.id}
+  }
+
+  if (order.status != "inTransit") {
+    return { status:"Error", errorMessage: "Ride status is not inTransit but "+order.status}
+  }
+
+  admin.database().ref(`/orders/taxi/${data.orderId}`).update({
+    status: "droppedOff",
+    rideFinishTime: (new Date()).toUTCString()
+  })
 }
