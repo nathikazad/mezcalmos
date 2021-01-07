@@ -1,0 +1,219 @@
+.flex {
+    display: flex;
+}
+
+.wrap {
+    flex-wrap: wrap;
+}
+
+.center {
+    justify-content: center;
+}
+
+.space_between {
+    justify-content: space-between;
+}
+
+.space_around {
+    justify-content: space-around;
+}
+
+.start {
+    justify-content: flex-start;
+}
+
+.end {
+    justify-content: flex-end;
+}
+
+.align_center {
+    align-items: center;
+}
+
+.align_baseline {
+    align-items: baseline;
+}
+
+.txt_center {
+    text-align: center;
+}
+
+.txt_left {
+    text-align: left;
+}
+
+.txt_right {
+    text-align: right;
+}
+
+.fill_width {
+    width: 100%
+}
+
+.fill_height {
+    height: 100%;
+}
+
+.overlay::after {
+    content: "";
+    background: rgba(0, 0, 0, 0.83);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 5
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.column {
+    flex-direction: column;
+}
+
+.row {
+    flex-direction: row;
+}
+
+.flex_0 {
+    flex: 0;
+}
+
+.flex_1 {
+    flex: 1;
+}
+
+.field {
+    margin-top: .5rem;
+}
+
+.container {
+    width: 728px !important;
+    margin: 0 auto;
+
+    @media (max-width: 768px) {
+        width: 100% !important;
+        padding: 0 1rem;
+        overflow: auto;
+    }
+
+
+}
+
+.elevate_0 {
+    box-shadow: none !important;
+}
+
+.elevate_1 {
+    box-shadow: 0 2px 5px rgba(35, 97, 241, 0.2) !important;
+}
+
+.elevate_2 {
+    box-shadow: 0 6px 10px rgba(35, 97, 241, 0.2);
+}
+
+.fit_container {
+    width: calc(100% - 2rem) !important;
+}
+
+.relative {
+    position: relative;
+}
+
+html {
+    font-size: 16px;
+
+    @media (max-width: 350px) {
+        font-size: 14px;
+    }
+}
+
+.ml-2 {
+    margin-left: .6rem;
+}
+
+.border {
+    border: $border
+}
+
+.btn {
+    box-shadow: 0 6px 10px rgba(35, 97, 241, 0.2);
+    border-radius: 4px;
+    border: none;
+    height: 3rem;
+    position: relative;
+    transition: .1s all;
+    cursor: pointer;
+
+    &:hover::before {
+        content: "";
+        background: rgba(0, 0, 0, 0.13);
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 0;
+        border-radius: inherit;
+    }
+
+    &:focus {
+        outline: none;
+
+    }
+
+    &:active {
+
+        transform: translateY(-3px);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+
+    }
+
+    span {
+        position: relative;
+        z-index: 2;
+    }
+}
+
+.input {
+
+    height: 3rem;
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    border-radius: 4px;
+    border: $border;
+    padding: 1rem;
+}
+
+.black {
+    color: map-get($colors, black)
+}
+
+.is-valid {
+    input {
+        border: 1px solid map-get($map: $colors, $key:info);
+    }
+
+    span {
+        color: map-get($map: $colors, $key:info);
+    }
+}
+
+.is-invalid {
+
+    input,
+    textarea,
+    .btn {
+        border: 1px solid map-get($map: $colors, $key:error);
+    }
+
+    span {
+        color: map-get($map: $colors, $key:error);
+        font-size: .8rem;
+    }
+
+}

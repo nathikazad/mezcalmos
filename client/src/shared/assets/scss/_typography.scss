@@ -1,0 +1,74 @@
+.bold {
+    font-family: $bold;
+}
+
+.regular {
+    font-family: $regular;
+    font-weight: 400 !important;
+}
+
+.italic {
+    font-family: $italic;
+}
+
+.boldItalic {
+    font-family: $boldItalic;
+}
+
+h1 {
+    font-size: 2.8rem;
+    margin: 0;
+
+}
+
+h2 {
+    font-size: 2rem;
+    margin: 10px 0;
+
+}
+
+h3 {
+    font-size: 1.25rem;
+    margin: 10px 0;
+
+}
+
+h4 {
+    font-size: 1rem;
+    margin: 10px 0;
+
+}
+
+h5 {
+    font-size: .8rem;
+    margin: 10px 0;
+}
+
+@media (max-width: 375px) {
+    h1 {
+        font-size: 2.4rem;
+
+    }
+
+    h2 {
+        font-size: 1.6rem;
+
+
+    }
+
+    h3 {
+        font-size: 1.25rem;
+
+
+    }
+
+    h4 {
+        font-size: 1rem;
+
+
+    }
+}
+
+a {
+    text-decoration: none;
+}

@@ -1,0 +1,24 @@
+$colors: (primary: #5c7fff,
+  secondary: #f8f8f8,
+  grey: #a8a8a8,
+  blackD: #000f1c,
+  blackL: #1d1d1d,
+  fb: #3a559f,
+  brand: #6779fe,
+  white: #fff,
+  info: #4fa823,
+  grocery: #d4fff6,
+  taxi: rgba(252, 234, 77, 0.25),
+  violet:#AC59FC,
+  error:#FF0008);
+$gradients: (horizontal: linear-gradient(100deg, #5582ff 0%, #c54efc 100%) 0% 0%,
+  diagonal: linear-gradient(151deg, #5184ff 0%, #ce49fc 100%) 0% 0%,
+  light: linear-gradient(151deg,
+    rgba(81, 133, 255, 0.1) 0%,
+    rgba(207, 73, 252, 0.1) 100%) 0% 0%,
+);
+$border: 0.5px solid #ececec;
+$bold: "productSansBold";
+$regular: "productSans";
+$italic: "productSansItalic";
+$boldItalic: "productSansBoldItalic";

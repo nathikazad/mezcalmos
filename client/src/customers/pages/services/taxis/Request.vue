@@ -1,52 +1,126 @@
 <template>
-  <div>
-    <h2>Request Taxi</h2>
-    <h3>FROM</h3>
-    <pick-location v-model="from"></pick-location>
-    <h3>TO</h3>
-    <pick-location v-model="to"></pick-location>
+  <div id="taxiRequest">
+    <!-- pop up component -->
+    <pop-up v-if="pickLocation"></pop-up>
+    <!-- ******************pop up component ************************-->
+    <h1 class="regular">Taxi</h1>
+    <input-location
+      :search.sync="search"
+      :saved.sync="saved"
+      :directionsBorns.sync="directionsBorns"
+      :to.sync="to"
+      :from.sync="from"
+    >
+      <div class="flex align_center center btnP" slot="action">
+        <base-button
+          class="w-80"
+          :mode="{ dark: true, bg_diagonal: true }"
+          @click.native="requestTaxi()"
+        >
+          <span class="t-8 regular">CONFIRM</span>
+        </base-button>
+      </div>
+    </input-location>
+  </div>
+
+  <!-- 
+    TODO: check if logged in, if not show login with facebook
 
     <button v-if="isLoggedIn" @click="requestTaxi">Get Taxi</button>
-    <button v-else @click="login">Sign in with Facebook to Get Taxi</button><br />
-  </div>
-  <!-- testing -->
-  <!-- <label>lat:&nbsp;{{ to.lat }}</label><br/>
-  <label>long:&nbsp;{{ to.long }}</label><br/>
-  <label>address:&nbsp;{{ to.address }}</label><br/> -->
+    <button v-else @click="login">Sign in with Facebook to Get Taxi</button
+  ><br />-->
 </template>
 
 <script>
-import PickLocation from "@/shared/components/map/GetLocation";
+//import PickLocation from "../../../components/map/GetLocation";
+import popUp from "@/shared/components/ui/popUp";
 export default {
-  components: {
-    PickLocation,
-  },
+  components: { popUp },
   data() {
     return {
-      from: {lat:22.29924, long:73.16584, address:"Chick Tacos, 54 something avenue, Mexico"},
-      to: {lat:22.29924, long:73.16584, address:"Chick Tacos, 54 something avenue, Mexico"},
+      focusedFrom: false,
+      focusedTo: false,
+      pickLocation: false,
+      center: { lat: 30.2672, lng: -97.7431 },
+      from: {
+        lat: 22.29924,
+        long: 73.16584,
+        address: "",
+        by: "search",
+      },
+      to: {
+        lat: 22.29924,
+        long: 73.16584,
+        address: "",
+        by: "search",
+      },
+      search: {
+        to: "",
+        from: "",
+        results: [],
+        searching: false,
+        origin: "to",
+      },
+      directionsBorns: {
+        start: null,
+        end: null,
+      },
+      saved: {
+        locations: [
+          {
+            description: "Home",
+            pos: { lat: () => 34.7667, lng: () => 10.7255 },
+          },
+          {
+            description: "Office",
+            pos: { lat: () => 34.7571, lng: () => 10.7715 },
+          },
+        ],
+        origin: "from",
+        opened: false,
+      },
     };
   },
   computed: {
-    isLoggedIn(){
-      return this.$store.getters.loggedIn
-    }
+    isLoggedIn() {
+      return this.$store.getters.loggedIn;
+    },
   },
+
   methods: {
     async requestTaxi() {
-      let response = (await this.$store.dispatch("taxis/requestTaxi", {
-        to: this.to,
-        from: this.from
-      })).data;
-      if(response.status == "Success") {
-        this.$router.push({ path: `${response.orderId}`})
+      let response = (
+        await this.$store.dispatch("taxis/requestTaxi", {
+          to: this.to,
+          from: this.from,
+        })
+      ).data;
+      console.log(response);
+
+      if (response.status == "Success") {
+        this.$router.push({ path: `${response.orderId}` });
       } else {
         this.errorMessage = response.errorMessage;
       }
     },
     async login() {
-      await this.$store.dispatch('login');
-    }
+      await this.$store.dispatch("login");
+    },
   },
 };
 </script>
+<style lang="scss" scoped>
+::v-deep .map {
+  position: absolute;
+  height: calc(100% - 6.25rem);
+  width: calc(100% - 2rem);
+  top: 6.25rem;
+  z-index: 0;
+}
+.btnP {
+  position: absolute;
+  width: 100%;
+  z-index: 9;
+  bottom: 2rem;
+}
+</style>
