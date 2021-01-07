@@ -19,10 +19,9 @@ const router = new VueRouter({
   routes: [
     { path: '/', redirect: '/incoming' },
     { path: '/incoming', component: IncomingOrdersPage, meta: { requiresAuth: true }},
-    { path: '/incoming/:orderId', component: TaxiViewPage, meta: { requiresAuth: true } },
     { path: '/messages/:orderId', component: MessagesPage, meta: { requiresAuth: true } },
-    { path: '/past', component: PastOrderstPage, meta: { requiresAuth: true } },
-    { path: '/past/:orderId', component: TaxiViewPage, meta: { requiresAuth: true } },
+    { path: '/orders/:orderId', component: TaxiViewPage, meta: { requiresAuth: true } },
+    { path: '/orders', component: PastOrderstPage, meta: { requiresAuth: true } },
     { path: '/userinfo', component: UserInformationPage, meta: { requiresAuth: true } },
     { path: '/auth', component: LoginPage, meta: { requiresUnauth: true } },
     // TODO: how to taxi page

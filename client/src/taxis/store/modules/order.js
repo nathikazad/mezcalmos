@@ -28,16 +28,22 @@ export default {
         firebaseDatabase().ref(`orders/taxi/${orderId}`).off()
         context.commit('unloadOrder')
       },
-      async acceptOrder(context) {
+      async acceptRide(context) {
         // TODO: check if order is loaded
         let orderId = context.state.orderId
         let response = await firebaseFunctions().httpsCallable('acceptTaxiOrder')({ orderId: orderId });
         return response;
       },
-      async finishOrder(context) {
+      async startRide(context) {
         // TODO: check if order is loaded
         let orderId = context.state.orderId
-        let response = await firebaseFunctions().httpsCallable('finishTaxiOrder')({ orderId: orderId });
+        let response = await firebaseFunctions().httpsCallable('startTaxiRide')({ orderId: orderId });
+        return response;
+      },
+      async finishRide(context) {
+        // TODO: check if order is loaded
+        let orderId = context.state.orderId
+        let response = await firebaseFunctions().httpsCallable('finishTaxiRide')({ orderId: orderId });
         return response;
       }
     },
@@ -61,6 +67,17 @@ export default {
       orderId(state) {
         return state.orderId;
       },
-      
+      orderStatusLooking(state) {
+        return state.order.status == "lookingForTaxi"
+      },
+      orderStatusOnTheWay(state) {
+        return state.order.status == "onTheWay"
+      },
+      orderStatusInTransit(state) {
+        return state.order.status == "inTransit"
+      },
+      orderStatusDroppedOff(state) {
+        return state.order.status == "droppedOff"
+      }
     }
   };

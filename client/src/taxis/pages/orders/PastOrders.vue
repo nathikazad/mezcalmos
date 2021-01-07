@@ -4,9 +4,8 @@
     <div v-if="!isLoaded">Loading...</div>
     <ul v-else-if="hasOrders">
       <li v-for="(order, orderId) in orders" :key="orderId">
-        {{ order }}
-        {{ linkToOrder(order.orderType, orderId) }}
-        <router-link :to="linkToOrder(order.orderType, orderId)">Link</router-link>
+        {{ orderId }}
+        <router-link :to="linkToOrder(orderId)">Link</router-link>
       </li>
     </ul>
     <h3 v-else>No orders found</h3>
@@ -22,20 +21,20 @@ export default {
   },
   computed: {
     orders() {
-      return this.$store.getters["orders/list"];
+      return this.$store.getters["pastOrders/list"];
     },
     hasOrders() {
-      return this.$store.getters["orders/hasOrders"];
+      return this.$store.getters["pastOrders/hasOrders"];
     },
     linkToOrder() {
-      return function (orderType, orderId) {
-        return `/services/${orderType}/${orderId}`;
+      return function (orderId) {
+        return `/orders/${orderId}`;
       };
     },
   },
   async beforeCreate() {
     this.isLoaded = false;
-    await this.$store.dispatch("orders/loadList");
+    await this.$store.dispatch("pastOrders/loadList");
     this.isLoaded = true;
   },
 };

@@ -17,6 +17,11 @@ const store = new Vuex.Store({
     groceries: groceriesModule,
     orders: ordersModule,
     messages: messagesModule
+  },
+  getters: {
+    appName() {
+      return "customer"
+    }
   }
 });
 

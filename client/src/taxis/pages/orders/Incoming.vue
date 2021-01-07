@@ -34,7 +34,7 @@ export default {
     },
     linkToOrder() {
       return function (orderId) {
-        return `/incoming/${orderId}`;
+        return `orders/${orderId}`;
       };
     },
     isLooking() {

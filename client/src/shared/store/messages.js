@@ -12,7 +12,8 @@ export default {
     async sendMessage(context, payload) {
       let orderId = context.state.orderId
       let newMessage = {message: payload.message,
-                        userId: context.rootGetters.userId}
+                        userId: context.rootGetters.userId,
+                        timeStamp: (new Date()).toUTCString()}
       console.log(orderId, newMessage)
       // user can claim to be any user
       firebaseDatabase().ref(`/chat/${orderId}/messages`).push(newMessage);
@@ -56,8 +57,12 @@ export default {
     value(state) {
       return state.messages;
     },
-    orderLink(state) {
-      return `/services/${state.orderType}/${state.orderId}`
+    orderLink(state, _, _1, rootGetters) {
+      if (rootGetters.appName == "customer") {
+        return `/services/${state.orderType}/${state.orderId}`
+      } else {
+        return `/orders/${state.orderId}`
+      }
     }
   }
 };
