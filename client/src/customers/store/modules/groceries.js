@@ -1,4 +1,4 @@
-import { firebaseDatabase, firebaseFunctions } from '@/shared/config/firebase'
+import { firebaseDatabase, cloudCall } from '@/shared/config/firebase'
 export default {
   namespaced: true,
   state() {
@@ -31,7 +31,7 @@ export default {
       let to = payload.to
       let items = payload.items
       let notes = payload.notes
-      let response = await firebaseFunctions().httpsCallable('requestGrocery')({ from: from, to: to, notes: notes, items:items });
+      let response = await cloudCall('requestGrocery', { from: from, to: to, notes: notes, items:items });
       return response;
     }
   },

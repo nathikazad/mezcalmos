@@ -6,15 +6,16 @@ import 'firebase/database';
 const firebaseConfig = {
   apiKey: "AIzaSyB9vaAB9ptXhpeRs_JjxODEyuA_eO0tYu0",
   authDomain: "mezcalmos-31f1c.firebaseapp.com",
-  databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com",
   projectId: "mezcalmos-31f1c",
   storageBucket: "mezcalmos-31f1c.appspot.com",
   messagingSenderId: "804036698204",
   appId: "1:804036698204:web:39b22436cbb4ef633f8699"
 };
 
-if (process.env.VUE_APP_EMULATOR && process.env.VUE_APP_EMULATOR == "true") {
+if (process.env.VUE_APP_TEST_DB && process.env.VUE_APP_TEST_DB == "true") {
   firebaseConfig.databaseURL = "https://mezcalmos-test.firebaseio.com"
+} else {
+  firebaseConfig.databaseURL = "https://mezcalmos-31f1c-default-rtdb.firebaseio.com"
 }
 
 firebase.initializeApp(firebaseConfig);
@@ -28,8 +29,16 @@ function firebaseInitFunction(fbCallback) {
   firebase.auth().onAuthStateChanged(fbCallback);
 }
 
+export  function cloudCall(name, payload) {
+  if (process.env.VUE_APP_TEST_DB && process.env.VUE_APP_TEST_DB == "true") {
+    payload.database = "test"
+  } else {
+    payload.database = "production"
+  }
+  return firebase.functions().httpsCallable(name)(payload)
+}
+
 export const ref = firebase.database().ref();
 export const firebaseAuth = firebase.auth;
-export const firebaseFunctions = firebase.functions
 export const firebaseDatabase = firebase.database
 export const firebaseInit = firebaseInitFunction

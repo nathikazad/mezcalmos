@@ -1,5 +1,5 @@
 // for viewing new and old orders as well as finding all past orders
-import { firebaseDatabase, firebaseFunctions } from '@/shared/config/firebase'
+import { firebaseDatabase, cloudCall } from '@/shared/config/firebase'
 export default {
     namespaced: true,
     state() {
@@ -31,19 +31,19 @@ export default {
       async acceptRide(context) {
         // TODO: check if order is loaded
         let orderId = context.state.orderId
-        let response = await firebaseFunctions().httpsCallable('acceptTaxiOrder')({ orderId: orderId });
+        let response = await cloudCall('acceptTaxiOrder', { orderId: orderId });
         return response;
       },
       async startRide(context) {
         // TODO: check if order is loaded
         let orderId = context.state.orderId
-        let response = await firebaseFunctions().httpsCallable('startTaxiRide')({ orderId: orderId });
+        let response = await cloudCall('startTaxiRide', { orderId: orderId });
         return response;
       },
       async finishRide(context) {
         // TODO: check if order is loaded
         let orderId = context.state.orderId
-        let response = await firebaseFunctions().httpsCallable('finishTaxiRide')({ orderId: orderId });
+        let response = await cloudCall('finishTaxiRide', { orderId: orderId });
         return response;
       }
     },

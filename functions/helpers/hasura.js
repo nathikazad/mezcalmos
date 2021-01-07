@@ -1,7 +1,7 @@
 module.exports = { setClaim }
 
 
-async function setClaim(uid) {
+async function setClaim(firebase, uid) {
   try {
     const customClaims = {
       "https://hasura.io/jwt/claims": {
@@ -10,14 +10,14 @@ async function setClaim(uid) {
         "x-hasura-user-id": uid
       }
     };
-    await admin.auth().setCustomUserClaims(uid, customClaims)
+    await firebase.auth().setCustomUserClaims(uid, customClaims)
     return { status: "success", user: context.auth.uid }
   } catch (error) {
     console
     return { status: "failure", message: error }
   }
 }
-
+// import { GraphQLClient } from 'graphql-request'
 // // from https://github.com/leoalves/hasura-firebase-auth
 // exports.authorizedHasuraOperation = functions.https.onCall(async (data, context) => {
 //   export const query = `
