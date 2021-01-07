@@ -28,7 +28,7 @@ async function request(admin, data, uid) {
     orderType: "grocery", status: "lookingForDeliverer", orderTime: payload.orderTime
   });
   admin.database().ref(`/openOrders/delivery/${orderRef.key}`).set({from:payload.from, to:payload.to, deliveryType: "grocery"})
-  admin.database().ref(`/chat/${orderRef.key}/particpants/${uid}`).set({
+  admin.database().ref(`/chat/${orderRef.key}/participants/${uid}`).set({
     name: user.displayName.split(' ')[0],
     image: user.photo
   });
