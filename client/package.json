@@ -23,11 +23,20 @@
     "deploy:taxis": "npm run build:taxis; firebase deploy --only hosting:taxis;",
     "deploy:taxis:test": "npm run build:taxis:test; firebase deploy --only hosting:taxisInTest;",
     
-    "serve:all": "npm-run-all --parallel serve:taxis serve:customers",
-    "test:all": "npm-run-all --parallel test:taxis test:customers",
-    "deploy:all": "npm run build:taxis; npm run build:customers; firebase deploy --only hosting:taxis,hosting:customers;",
-    "deploy:all:test": "npm run build:taxis:test; npm run build:customers:test; firebase deploy --only hosting:taxisInTest,hosting:customersInTest;",
-    "emulate:all": "npm-run-all --parallel customersInEmulateMode taxisInEmulateMode emulator",
+    "serve:deliveries": "vue-cli-service serve --port 8082 src/deliveries/main.js",
+    "test:deliveries": "vue-cli-service serve --mode test --port 8082 src/deliveries/main.js",
+    "deliveriesInEmulateMode": "vue-cli-service serve --mode emulate --port 8082 src/deliveries/main.js",
+    "emulate:deliveries": "npm-run-all --parallel deliveriesInEmulateMode emulator",
+    "build:deliveries": "vue-cli-service build --dest ../dist/deliveries src/deliveries/main.js",
+    "build:deliveries:test": "vue-cli-service build --mode test --dest ../dist/deliveriesTest src/deliveries/main.js",
+    "deploy:deliveries": "npm run build:deliveries; firebase deploy --only hosting:deliveries;",
+    "deploy:deliveries:test": "npm run build:deliveries:test; firebase deploy --only hosting:deliveriesInTest;",
+
+    "serve:all": "npm-run-all --parallel serve:taxis serve:customers serve:deliveries",
+    "test:all": "npm-run-all --parallel test:taxis test:customers test:delveries",
+    "deploy:all": "npm run build:taxis; npm run build:customers; npm run build:deliveries; firebase deploy --only hosting:taxis,hosting:customers;",
+    "deploy:all:test": "npm run build:taxis:deliveries; npm run build:taxis:test; npm run build:customers:test; firebase deploy --only hosting:taxisInTest,hosting:customersInTest;",
+    "emulate:all": "npm-run-all --parallel deliveriesInEmulateMode customersInEmulateMode taxisInEmulateMode emulator",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
