@@ -12,17 +12,6 @@
       ]
     },
     {
-      "target": "taxis",
-      "public": "dist/taxis",
-      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-      "rewrites": [
-        {
-          "source": "**",
-          "destination": "/index.html"
-        }
-      ]
-    },
-    {
       "target": "customersInTest",
       "public": "dist/customersTest",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
@@ -34,8 +23,41 @@
       ]
     },
     {
+      "target": "taxis",
+      "public": "dist/taxis",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    },
+    {
       "target": "taxisInTest",
       "public": "dist/taxisTest",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    },
+    {
+      "target": "deliveries",
+      "public": "dist/deliveries",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    },
+    {
+      "target": "deliveriesInTest",
+      "public": "dist/deliveriesTest",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "rewrites": [
         {

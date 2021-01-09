@@ -16,6 +16,12 @@
         ],
         "taxisInTest": [
           "taxis-in-test"
+        ],
+        "deliveries": [
+          "deliveries-3f1da"
+        ],
+        "deliveriesInTest": [
+          "deliveries-in-test-ba13c"
         ]
       }
     }

@@ -78,3 +78,15 @@ exports.requestGrocery = functions.https.onCall(async (data, context) => {
   return response
 });
 
+exports.acceptGroceryOrder = functions.https.onCall(async (data, context) => {
+  let firebase = getFirebase(data.database);
+  let response = await grocery.accept(firebase, data, context.auth.uid)
+  return response
+});
+
+exports.finishGroceryOrder = functions.https.onCall(async (data, context) => {
+  let firebase = getFirebase(data.database);
+  let response = await grocery.finish(firebase, data, context.auth.uid)
+  return response
+});
+
