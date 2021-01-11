@@ -75,7 +75,7 @@ async function accept(firebase, data, uid) {
     console.log(`${data.orderId} taxi request success`)
     firebase.database().ref(`/taxiDrivers/${uid}/orders/${data.orderId}`).set(true);
     firebase.database().ref(`/openOrders/taxi/${data.orderId}`).remove();
-    await firebase.database().ref(`/chat/${data.orderId}/participants/${uid}`).set({
+    firebase.database().ref(`/chat/${data.orderId}/participants/${uid}`).set({
       name: driver.displayName.split(' ')[0],
       image: driver.photo
     });
