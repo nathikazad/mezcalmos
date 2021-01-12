@@ -1,4 +1,4 @@
-import { firebaseDatabase } from '@/shared/config/firebase'
+import { firebaseDatabase, cloudCall } from '@/shared/config/firebase'
 export default {
   namespaced: true,
   state() {
@@ -17,6 +17,7 @@ export default {
       console.log(orderId, newMessage)
       // user can claim to be any user
       firebaseDatabase().ref(`/chat/${orderId}/messages`).push(newMessage);
+      cloudCall('sendMessage', { message: payload.message });
     },
     async loadMessages(context, payload) {
       let orderId = context.state.orderId

@@ -1,17 +1,21 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 
+
 const productionFirebase = admin.initializeApp({
   databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com"
-}, "production");
+});
 
-const testFirebase = admin.initializeApp({
-  databaseURL: "https://mezcalmos-test.firebaseio.com"
-}, "test");
+let testFirebase;
+
+if (!process.env["FUNCTIONS_EMULATOR"]) {
+  testFirebase = admin.initializeApp({
+    databaseURL: "https://mezcalmos-test.firebaseio.com"
+  });
+}
 
 function getFirebase(database = "production") {
-  console.log("initializing db")
-  if (database == "production") {
+  if(database == "production") {
     return productionFirebase
   } else {
     return testFirebase
@@ -28,8 +32,8 @@ exports.processSignUp = functions.auth.user().onCreate(async user => {
   await firebase.database().ref(`/users/${user.uid}/info`).set(
     {displayName:user.displayName,
      photo:user.photoURL,
-     email:user.email,
-     fbuid:user.providerData[0].uid});
+     email:user.email});
+    //  fbuid:user.providerData[0].uid});
     let response = hasura.setClaim(user.uid);
   return response
 });
@@ -88,5 +92,9 @@ exports.finishGroceryOrder = functions.https.onCall(async (data, context) => {
   let firebase = getFirebase(data.database);
   let response = await grocery.finish(firebase, data, context.auth.uid)
   return response
-});
+}); 
 
+// exports.notifyMessageParticpants = functions.database.instance('mezcalmos-test').ref(
+//   '/chat/${orderId}/messages/${messageId}').onWrite((snap, context) => {
+//   console.log(snap)
+// })

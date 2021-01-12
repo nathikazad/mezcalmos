@@ -28,11 +28,13 @@ async function request(firebase, data, uid) {
     orderType: "grocery", status: "lookingForDriver", orderTime: payload.orderTime
   });
   firebase.database().ref(`/openOrders/delivery/${orderRef.key}`).set({from:payload.from, to:payload.to, deliveryType: "grocery"})
-  firebase.database().ref(`/chat/${orderRef.key}/participants/${uid}`).set({
-    name: user.displayName.split(' ')[0],
-    image: user.photo
-  });
-  firebase.database().ref(`/chat/${orderRef.key}/orderType`).set("grocery");
+  let chat = {
+    participants: {},
+    orderType: "taxi"
+  }
+  chat.participants[uid] = {name: user.displayName.split(' ')[0],
+      image: user.photo}
+  firebase.database().ref(`/chat/${orderRef.key}`).set(chat);
   return { status:"Success", orderId: orderRef.key}
 }
 
@@ -81,6 +83,7 @@ async function accept(firebase, data, uid) {
       name: driver.displayName.split(' ')[0],
       image: driver.photo
     });
+    // TODO: Send notification to customer
 		return { status:"Success" }; 
 	}
 }
@@ -104,4 +107,5 @@ async function finish(firebase, data, uid) {
     status: "droppedOff",
     rideFinishTime: (new Date()).toUTCString()
   })
+  // TODO: Send notification to customer
 }

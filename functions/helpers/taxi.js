@@ -26,11 +26,13 @@ async function request(firebase, data, uid) {
     orderType: "taxi", status: "lookingForTaxi", orderTime: payload.orderTime
   });
   firebase.database().ref(`/openOrders/taxi/${orderRef.key}`).set({from:payload.from, to:payload.to});
-  firebase.database().ref(`/chat/${orderRef.key}/participants/${uid}`).set({
-    name: user.displayName.split(' ')[0],
-    image: user.photo
-  });
-  firebase.database().ref(`/chat/${orderRef.key}/orderType`).set("taxi");
+  let chat = {
+    participants: {},
+    orderType: "taxi"
+  }
+  chat.participants[uid] = {name: user.displayName.split(' ')[0],
+      image: user.photo}
+  firebase.database().ref(`/chat/${orderRef.key}`).set(chat);
   return { status:"Success", orderId: orderRef.key}
 }
 
