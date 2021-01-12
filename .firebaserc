@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "mezcalmos-b48fd"
+    "default": "mezcalmos-31f1c"
   },
   "targets": {
     "mezcalmos-31f1c": {
@@ -11,16 +11,16 @@
         "customers": [
           "mezcalmos-31f1c"
         ],
-        "customersInTest": [
+        "customersTest": [
           "customers-in-test"
         ],
-        "taxisInTest": [
+        "taxisTest": [
           "taxis-in-test"
         ],
         "deliveries": [
           "deliveries-3f1da"
         ],
-        "deliveriesInTest": [
+        "deliveriesTest": [
           "deliveries-in-test-ba13c"
         ]
       }

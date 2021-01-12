@@ -12,7 +12,7 @@
       ]
     },
     {
-      "target": "customersInTest",
+      "target": "customersTest",
       "public": "dist/customersTest",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "rewrites": [
@@ -34,7 +34,7 @@
       ]
     },
     {
-      "target": "taxisInTest",
+      "target": "taxisTest",
       "public": "dist/taxisTest",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "rewrites": [
@@ -56,7 +56,7 @@
       ]
     },
     {
-      "target": "deliveriesInTest",
+      "target": "deliveriesTest",
       "public": "dist/deliveriesTest",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "rewrites": [
@@ -74,11 +74,17 @@
     "functions": {
       "port": 5001
     },
-    // "database": {
-    //   "port": 9000
-    // },
+    "database": {
+      "port": 9000
+    },
     "hosting": {
       "port": 5000
+    },
+    "auth": {
+      "port": 9099
+    },
+    "ui": {
+      "enabled": true
     }
   }
 }
