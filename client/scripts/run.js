@@ -3,17 +3,23 @@ const { execSync } = require('child_process');
 var argv = require('yargs/yargs')(process.argv.slice(2)).argv;
 // console.log(argv._.length)
 
+// export FIREBASE_DATABASE_EMULATOR_HOST="localhost:9000"
+// export FIREBASE_AUTH_EMULATOR_HOST="localhost:9099"
+
+
 if (argv.command == "emulate") {
   let fullCommand = "npx parallelshell \""
   let emulatorCommand = "firebase emulators:start ";
   if(argv.emulate == "all") {
     emulatorCommand += "--only functions,auth,database"
+    emulatorCommand += ` --export-on-exit=test/newDummyData\" `
+    emulatorCommand += "\"node test/loadData.js\" "
   } else if (argv.emulate == "onlyFunctions") {
-    emulatorCommand += "--only functions "
+    emulatorCommand += "--only functions\" "
   } else {
     console.log("Invalid emulate field "+argv.emulate+" can be all or onlyFunctions")
   }
-  emulatorCommand += "\" "
+  
   console.log(emulatorCommand)
   fullCommand += emulatorCommand
   let emulateModeSuffix = ""

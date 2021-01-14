@@ -22,9 +22,9 @@ firebase.initializeApp(firebaseConfig);
 if (process.env.VUE_APP_EMULATE == "true") {
   firebase.functions().useEmulator("localhost", 5001);
   firebase.auth().useEmulator('http://localhost:9099/');
-  if (process.env.VUE_APP_TEST_DB !=  "true") {
-    firebase.database().useEmulator("localhost", 9000);
-  }
+  firebase.database().useEmulator("localhost", 9000);
+} else if (process.env.VUE_APP_EMULATE_ONLY_FUNCTIONS == "true") {
+  firebase.functions().useEmulator("localhost", 5001);
 }
 
 function firebaseInitFunction(fbCallback) {
