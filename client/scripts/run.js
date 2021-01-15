@@ -1,31 +1,6 @@
 const { execSync } = require('child_process');
 
 var argv = require('yargs/yargs')(process.argv.slice(2)).argv;
-// console.log(argv._.length)
-
-// export FIREBASE_DATABASE_EMULATOR_HOST="localhost:9000"
-// export FIREBASE_AUTH_EMULATOR_HOST="localhost:9099"
-
-
-// if (argv.command == "emulate") {
-//   let fullCommand = "npx parallelshell "
-//   fullCommand += emulatorCommand
-//   let emulateModeSuffix = ""
-//   if (argv.emulate == "onlyFunctions") {
-//     emulateModeSuffix = "OnlyFunctions"
-//   }
-
-//   if (argv.app == "taxis" || argv.app == "all") {
-//     fullCommand += `\"vue-cli-service serve --mode emulate${emulateModeSuffix} --port 8081 src/taxis/main.js\" `
-//   }
-//   if (argv.app == "deliveries" || argv.app == "all") {
-//     fullCommand += `\"vue-cli-service serve --mode emulate${emulateModeSuffix} --port 8082 src/deliveries/main.js\" `
-//   }
-//   if (argv.app == "customers" || argv.app == "all") {
-//     fullCommand += `\"vue-cli-service serve --mode emulate${emulateModeSuffix} --port 8080 src/customers/main.js\" `
-//   }
-//   execSync(fullCommand, {stdio:[0, 1, 2]});
-// } else 
 if (argv.command == "deploy") {
   let fullCommand;
   let mode = ""
