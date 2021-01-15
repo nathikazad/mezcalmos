@@ -16,6 +16,8 @@ import {
 import {
   firebaseInit
 } from "@/shared/config/firebase";
+import VueHtml2Canvas from 'vue-html2canvas';
+
 
 
 import BaseButton from "@/shared/components/ui/BaseButton";
@@ -28,7 +30,8 @@ import PickLocation from "@/shared/components/map/pickLocation";
 import InputLocation from "@/shared/components/ui/inputLocation";
 import "./registerServiceWorker";
 import {
-  deepFind
+  deepFind,
+  print
 } from '@/shared/mixins/functions'
 Vue.use(VueGoogleMaps, {
   load: {
@@ -66,11 +69,16 @@ Vue.component("map-view", MapView);
 //Vue mixins
 Vue.mixin({
   methods: {
-    deepFind
+    deepFind,
+    print
   }
 })
+//Vue html2canvas configuration
+Vue.use(VueHtml2Canvas);
 //Firebase state changed function
 async function firebaseCallback(user) {
+  console.log(user);
+
   if (user) {
     await store.dispatch("autoSignIn", {
       userId: user.uid,

@@ -16,25 +16,72 @@ Vue.use(VueRouter)
 
 const router = new VueRouter({
   mode: 'history',
-  routes: [
-    { path: '/', redirect: '/incoming' },
-    { path: '/incoming', component: IncomingOrdersPage, meta: { requiresAuth: true }},
-    { path: '/messages/:orderId', component: MessagesPage, meta: { requiresAuth: true } },
-    { path: '/orders/:orderId', component: TaxiViewPage, meta: { requiresAuth: true } },
-    { path: '/orders', component: PastOrderstPage, meta: { requiresAuth: true } },
-    { path: '/userinfo', component: UserInformationPage, meta: { requiresAuth: true } },
-    { path: '/auth', component: LoginPage, meta: { requiresUnauth: true } },
+  routes: [{
+      path: '/',
+      redirect: '/incoming'
+    },
+    {
+      path: '/incoming',
+      component: IncomingOrdersPage,
+      meta: {
+        requiresAuth: true
+      },
+      name: 'services'
+    },
+    {
+      path: '/messages/:orderId',
+      component: MessagesPage,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/orders/:orderId',
+      component: TaxiViewPage,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/orders',
+      component: PastOrderstPage,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/userinfo',
+      component: UserInformationPage,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/auth',
+      component: LoginPage,
+      meta: {
+        requiresUnauth: true
+      }
+    },
     // TODO: how to taxi page
-    { path: '/:notFound(.*)', component: NotFoundPage }
+    {
+      path: '/:notFound(.*)',
+      component: NotFoundPage
+    }
   ]
 })
 
 router.beforeEach(async function (to, from, next) {
   // TODO: check if currently in transit, if yes redirect to current transit page
   if (to.meta.requiresAuth && !store.getters.loggedIn) {
-    next({ path: '/auth', query: { redirect: to.path } });
-  } else if (to.meta.requiresAuth && store.getters.loggedIn && 
-          !store.getters.canTaxi) {
+    next({
+      path: '/auth',
+      query: {
+        redirect: to.path
+      }
+    });
+  } else if (to.meta.requiresAuth && store.getters.loggedIn &&
+    !store.getters.canTaxi) {
     next('/howToTaxi');
   } else if (to.meta.requiresUnauth && store.getters.loggedIn) {
     next('/');

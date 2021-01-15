@@ -28,7 +28,6 @@
         </router-link>
       </div>
       <div class="left_side">
-        
         <base-button
           :mode="{
            
@@ -64,7 +63,7 @@ export default {
       if (route.name == "services") {
         return false;
       } else {
-        return route.query.redirect || "/services";
+        return route.query.redirect || { name: "services" };
       }
     }
   },
@@ -74,7 +73,7 @@ export default {
     },
     logout() {
       this.$store.dispatch("logout");
-      this.$router.push("/services");
+      this.$router.push({ name: "services" });
     }
   }
 };

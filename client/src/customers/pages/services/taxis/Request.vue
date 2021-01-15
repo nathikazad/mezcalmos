@@ -10,12 +10,24 @@
       :directionsBorns.sync="directionsBorns"
       :to.sync="to"
       :from.sync="from"
+      @setPos="setDistanceDuration($event)"
     >
       <div class="flex align_center center btnP" slot="action">
         <base-button
+          v-if="isLoggedIn"
           class="w-80"
           :mode="{ dark: true, bg_diagonal: true }"
           @click.native="requestTaxi()"
+        >
+          <span class="t-8 regular">CONFIRM</span>
+        </base-button>
+        <base-button
+          v-else
+          class="w-80"
+          :mode="{ dark: true, bg_diagonal: true }"
+          :link="true"
+          to="/auth?redirect=/services/taxi/request"
+          :loading="loading"
         >
           <span class="t-8 regular">CONFIRM</span>
         </base-button>
@@ -38,6 +50,9 @@ export default {
   components: { popUp },
   data() {
     return {
+      loading:false,
+      distance: null,
+      duration: null,
       focusedFrom: false,
       focusedTo: false,
       pickLocation: false,
@@ -46,57 +61,65 @@ export default {
         lat: 22.29924,
         long: 73.16584,
         address: "",
-        by: "search",
+        by: "search"
       },
       to: {
         lat: 22.29924,
         long: 73.16584,
         address: "",
-        by: "search",
+        by: "search"
       },
       search: {
         to: "",
         from: "",
         results: [],
         searching: false,
-        origin: "to",
+        origin: "to"
       },
       directionsBorns: {
         start: null,
-        end: null,
+        end: null
       },
       saved: {
         locations: [
           {
-            description: "Home",
+            description: "Rte, mahdia km 5 Sfax,Tunisia",
             pos: { lat: () => 34.7667, lng: () => 10.7255 },
+            name: "Home"
           },
           {
-            description: "Office",
+            description: "Rte, mahdia km 8.5 Sfax,Tunisia",
             pos: { lat: () => 34.7571, lng: () => 10.7715 },
-          },
+            name: "Office"
+          }
         ],
         origin: "from",
-        opened: false,
-      },
+        opened: false
+      }
     };
   },
   computed: {
     isLoggedIn() {
       return this.$store.getters.loggedIn;
-    },
+    }
   },
 
   methods: {
+    setDistanceDuration(pos) {
+      this.distance = pos.distance;
+      this.duration = pos.duration;
+    },
     async requestTaxi() {
+      this.loading=true
       let response = (
         await this.$store.dispatch("taxis/requestTaxi", {
           to: this.to,
           from: this.from,
+          distance: this.distance,
+          duration: this.duration
         })
       ).data;
-      console.log(response);
-
+      this.loading=false;
       if (response.status == "Success") {
         this.$router.push({ path: `${response.orderId}` });
       } else {
@@ -105,8 +128,8 @@ export default {
     },
     async login() {
       await this.$store.dispatch("login");
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

@@ -2,8 +2,76 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router.js'
 import store from './store/store'
+import * as VueGoogleMaps from "vue2-google-maps";
+import {
+  ValidationProvider,
+  ValidationObserver,
+  extend,
+  configure
+} from 'vee-validate';
+import {
+  required,
+  email
+} from 'vee-validate/dist/rules';
+import {
+  firebaseInit
+} from "@/shared/config/firebase";
 
-import { firebaseInit } from '@/shared/config/firebase'
+
+import BaseButton from "@/shared/components/ui/BaseButton";
+import Panel from "@/shared/components/ui/panel";
+import Avatar from "@/shared/components/ui/avatar";
+import Logo from "@/shared/components/SVG/logo";
+import MapView from "@/shared/components/map/mapView";
+import Fa from "@/shared/components/ui/fa";
+import PickLocation from "@/shared/components/map/pickLocation";
+import InputLocation from "@/shared/components/ui/inputLocation";
+import Switch from "@/shared/components/ui/switch";
+
+import {
+  deepFind
+} from '@/shared/mixins/functions'
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: "AIzaSyB9vaAB9ptXhpeRs_JjxODEyuA_eO0tYu0",
+    libraries: "places",
+  },
+
+  installComponents: true,
+});
+//Vue Components
+Vue.component("switcher", Switch);
+Vue.component("logo", Logo);
+Vue.component("base-button", BaseButton);
+Vue.component("panel", Panel);
+Vue.component("avatar", Avatar);
+Vue.component("fa", Fa);
+Vue.component("pick-location", PickLocation);
+Vue.component("input-location", InputLocation);
+// vee validate configuration
+configure({
+  classes: {
+    valid: 'is-valid',
+    invalid: 'is-invalid',
+
+  }
+})
+extend('email', email);
+
+extend('required', {
+  ...required,
+  message: 'This field is required'
+});
+Vue.component('ValidationProvider', ValidationProvider);
+Vue.component('ValidationObserver', ValidationObserver);
+Vue.component("map-view", MapView);
+//Vue mixins
+Vue.mixin({
+  methods: {
+    deepFind
+  }
+})
+
 
 Vue.config.productionTip = false
 
@@ -18,11 +86,15 @@ async function firebaseCallback(user) {
     })
     await store.dispatch('loadTaxiAuth');
     if (router.currentRoute.path == "/auth" && router.currentRoute.query.redirect) {
-      router.push({ path: router.currentRoute.query.redirect })
+      router.push({
+        path: router.currentRoute.query.redirect
+      })
     } else if (router.currentRoute.path == "/auth") {
-      router.push({ path: "/" })
+      router.push({
+        path: "/"
+      })
     }
-    
+
   }
 }
 

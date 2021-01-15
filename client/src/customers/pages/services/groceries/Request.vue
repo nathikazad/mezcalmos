@@ -57,6 +57,7 @@
     <div class="field">
       <base-button
         class="fill_width"
+        :class="{required:required}"
         :mode="{ dark: true, bg_diagonal: true }"
         :link="true"
         :to="{
@@ -75,17 +76,12 @@
           <span>Notes</span>
         </h3>
 
-        <ValidationProvider rules="required" v-slot="{ errors, classes }">
-          <span :class="classes">
-            <textarea
-              type="text"
-              class="input bg_secondary text_blackD rows"
-              placeholder="Write Here..."
-              v-model="notes"
-            ></textarea>
-            <span>{{ errors[0] }}</span>
-          </span>
-        </ValidationProvider>
+        <textarea
+          type="text"
+          class="input bg_secondary text_blackD rows"
+          placeholder="Write Here..."
+          v-model="notes"
+        ></textarea>
       </div>
       <div class="field" id="delveredTo">
         <h3 class="bold flex space_between">
@@ -107,9 +103,22 @@
     </ValidationObserver>
     <div class="field">
       <base-button
+        v-if="isLoggedIn"
         class="fill_width"
         :mode="{ dark: true, bg_diagonal: true }"
         @click.native="requestGrocery()"
+      >
+        <span class="t-8">
+          ORDER NOW &nbsp;
+          <fa icon="long-arrow-alt-right"></fa>
+        </span>
+      </base-button>
+      <base-button
+        v-else
+        class="fill_width"
+        :mode="{ dark: true, bg_diagonal: true }"
+        :link="true"
+        to="/auth?redirect=/services/grocery/request"
       >
         <span class="t-8">
           ORDER NOW &nbsp;
@@ -134,6 +143,7 @@ export default {
   data() {
     return {
       items: [],
+      required: false,
       notes: "",
       addOpen: false,
       search: {
@@ -151,20 +161,20 @@ export default {
       saved: {
         locations: [
           {
-            description: "Home",
-            pos: { lat: () => 34.7667, lng: () => 10.7255 }
+            description: "Rte, mahdia km 5 Sfax,Tunisia",
+            pos: { lat: () => 34.7667, lng: () => 10.7255 },
+            name: "Home"
           },
           {
-            description: "Office",
-            pos: { lat: () => 34.7571, lng: () => 10.7715 }
+            description: "Rte, mahdia km 8.5 Sfax,Tunisia",
+            pos: { lat: () => 34.7571, lng: () => 10.7715 },
+            name: "Office"
           }
         ],
         origin: "from",
         opened: false
       },
       from: {
-        lat: 22.29924,
-        long: 73.16584,
         address: "",
         by: "search"
       },
@@ -184,7 +194,8 @@ export default {
       let fromTo = "";
       if (this.from.address) {
         fromTo += `from: ${this.from.address},`;
-      } else if (this.to.address) {
+      }
+      if (this.to.address) {
         fromTo += `To:${this.to.address}`;
       }
       return fromTo;
@@ -209,20 +220,30 @@ export default {
       const valid = await this.$refs.observer.validate();
 
       if (valid) {
-        let response = (
-          await this.$store.dispatch("groceries/requestGrocery", {
+        if (this.items.length > 0) {
+          let data = {
             to: this.to,
-            from: this.from,
             notes: this.notes,
             items: this.items
-          })
-        ).data;
-        console.log(response);
+          };
+          if (this.from.address) {
+            data["from"] = this.from;
+          }
+          console.log({ data });
 
-        if (response.status == "Success") {
-          this.$router.push({ path: `${response.orderId}` });
+          let response = (
+            await this.$store.dispatch("groceries/requestGrocery", data)
+          ).data;
+          if (response.status == "Success") {
+            this.$router.push({ path: `${response.orderId}` });
+          } else {
+            this.errorMessage = response.errorMessage;
+          }
         } else {
-          this.errorMessage = response.errorMessage;
+          this.required = false;
+          setTimeout(() => {
+            this.required = true;
+          }, 200);
         }
       }
     },

@@ -5,8 +5,11 @@
     </span>
   </button>
   <router-link v-else :to="to" :class="mode" class="btn" tag="button">
-    <span>
+    <span v-if="!loading">
       <slot></slot>
+    </span>
+    <span v-else class="flex center">
+      <div class="load open"></div>
     </span>
   </router-link>
 </template>
@@ -16,24 +19,28 @@ export default {
   props: {
     mode: {
       type: Object,
-      required: false,
+      required: false
     },
     color: {
       type: String,
       required: false,
-      default: "dark",
+      default: "dark"
     },
     link: {
       type: Boolean,
       required: false,
-      default: false,
+      default: false
     },
     to: {
       type: [String, Object],
       required: false,
-      default: "/",
+      default: "/"
     },
-  },
+    loading:{
+      type:Boolean,
+      default:false
+    }
+  }
 };
 </script>
 
@@ -57,7 +64,36 @@ export default {
     background: white;
   }
 }
+.bg_light {
+  .load {
+    border: 2px solid map-get($map: $colors, $key: blackL) !important;
+  }
+}
 .small {
   height: 2rem;
+}
+.load {
+  width: 20px;
+  height: 20px;
+  border: 2px solid map-get($map: $colors, $key: white);
+  border-radius: 100%;
+}
+
+.open {
+  border-top: 2px solid transparent;
+  animation: load-animate infinite linear 1s;
+}
+
+@keyframes load-animate {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+    opacity: 0.35;
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>

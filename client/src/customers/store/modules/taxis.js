@@ -1,4 +1,7 @@
-import { firebaseDatabase, firebaseFunctions } from '@/shared/config/firebase'
+import {
+  firebaseDatabase,
+  firebaseFunctions
+} from '@/shared/config/firebase'
 export default {
   namespaced: true,
   state() {
@@ -10,36 +13,38 @@ export default {
   actions: {
     loadTaxi(context, payload) {
       let orderId = context.state.orderId
-      if(orderId){
-        if (orderId == payload.orderId){
+      if (orderId) {
+        if (orderId == payload.orderId) {
           return
         } else {
           firebaseDatabase().ref(`/orders/taxi/${orderId}`).off()
           context.commit('unloadTaxi')
         }
       }
-      orderId  = payload.orderId;
+      orderId = payload.orderId;
       firebaseDatabase().ref(`/orders/taxi/${orderId}`).on('value', async snapshot => {
         let order = snapshot.val();
         console.log(order)
         // TODO: if unauthorized or wrong type of order redirect to home page
-        context.commit('loadTaxi', {order:order, orderId:orderId})
+        context.commit('loadTaxi', {
+          order: order,
+          orderId: orderId
+        })
       });
     },
     async requestTaxi(_, payload) {
       // let userId = context.rootGetters.userId
-      let from  = payload.from
-      let to = payload.to
-      let response = await firebaseFunctions().httpsCallable('requestTaxi')({ from: from, to: to });
+
+      let response = await firebaseFunctions().httpsCallable('requestTaxi')(payload);
       return response;
     }
   },
   mutations: {
-    loadTaxi(state, payload){
+    loadTaxi(state, payload) {
       state.value = payload.order
       state.orderId = payload.orderId
     },
-    unloadTaxi(state){
+    unloadTaxi(state) {
       state.value = null
       state.orderId = null
     }

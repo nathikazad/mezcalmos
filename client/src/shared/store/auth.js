@@ -28,12 +28,18 @@ export default {
     }
   },
   actions: {
-    login() {
+    async login() {
       var provider = new firebaseAuth.FacebookAuthProvider();
-      firebaseAuth().signInWithPopup(provider);
+      await firebaseAuth().signInWithPopup(provider);
     },
     async autoSignIn(context, payload) {
-      let info = (await firebaseDatabase().ref(`users/${payload.userId}/info/`).once('value')).val();
+      let info = (await firebaseDatabase().ref(`users/${payload.userId}/info`).once('value')).val();
+
+      console.log({
+        info
+      }, {
+        payload
+      });
       context.commit('saveUserInfo', info)
       context.commit('saveAuthData', payload)
     },
@@ -50,6 +56,8 @@ export default {
       state.loggedIn = payload.loggedIn;
     },
     saveUserInfo(state, payload) {
+      console.log(payload);
+
       state.info = payload
     },
     clearData(state, ) {
