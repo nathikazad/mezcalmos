@@ -81,7 +81,7 @@ async function accept(firebase, data, uid) {
       acceptRideTime:order.acceptRideTime,
       status:order.status
     });
-    firebase.database().ref(`/users/${order.customer.id}/orders/${data.orderId}`).set({
+    firebase.database().ref(`/users/${order.customer.id}/orders/${data.orderId}`).update({
       driver:order.driver,
       acceptRideTime:order.acceptRideTime,
       status:order.status

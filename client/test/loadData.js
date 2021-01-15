@@ -48,12 +48,6 @@ async function createUser(user) {
 }
 
 async function loadData(){
-  const admin = require("firebase-admin");
-  let app = admin.initializeApp({
-    projectId: "mezcalmos-31f1c",
-    databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com"
-  });
-
   let rawData = fs.readFileSync('test/dummyData/database_export/mezcalmos-31f1c-default-rtdb.json', "utf8")
   let data = JSON.parse(rawData)
   let oldUsers = {}
@@ -61,6 +55,11 @@ async function loadData(){
     await createUser(data.users[key].info)
     oldUsers[data.users[key].info.email] = key
   }
+  const admin = require("firebase-admin");
+  let app = admin.initializeApp({
+    projectId: "mezcalmos-31f1c",
+    databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com"
+  });
   let userList = await admin.auth().listUsers(100)
   let newUsers = {}
   userList.users.forEach((userRecord) => {
@@ -79,16 +78,15 @@ function checkIfWebsiteIsUp(){
   var http = require('http');
   http.get('http://localhost:4000/', function (res) {
     http.get('http://localhost:8080/', function (res) {
-      console.log("Load Data: Emulator is up, starting to write data")
-      console.log("Load Data: Customer Website is up, starting to write data")
+      console.log("Load Data: Emulator and  Customer Website are up, starting to write data")
       loadData()
     }).on('error', function(e) {
       console.log("Load Data: Customer Website @ 8080 is not up yet")
-      setTimeout( checkIfWebsiteIsUp, 2500)
+      setTimeout( checkIfWebsiteIsUp, 10000)
     });;
   }).on('error', function(e) {
     console.log("Load Data: Emulator is not up yet")
-    setTimeout( checkIfWebsiteIsUp, 2500)
+    setTimeout( checkIfWebsiteIsUp, 10000)
   });
 }
 
