@@ -78,15 +78,21 @@ async function loadData(){
 function checkIfWebsiteIsUp(){
   var http = require('http');
   http.get('http://localhost:4000/', function (res) {
-    console.log("\nLoad Data: Website is up, starting to write data")
-    loadData()
+    http.get('http://localhost:8080/', function (res) {
+      console.log("Load Data: Emulator is up, starting to write data")
+      console.log("Load Data: Customer Website is up, starting to write data")
+      loadData()
+    }).on('error', function(e) {
+      console.log("Load Data: Customer Website @ 8080 is not up yet")
+      setTimeout( checkIfWebsiteIsUp, 2500)
+    });;
   }).on('error', function(e) {
-    console.log("\nLoad Data: Website is not up yet")
+    console.log("Load Data: Emulator is not up yet")
     setTimeout( checkIfWebsiteIsUp, 2500)
-  });;
+  });
 }
 
 checkIfWebsiteIsUp()
-console.log("\nLoad Data: Starting Up")
+console.log("Load Data: Starting Up")
 
 //add the export commands and see if it affects only functions mode
