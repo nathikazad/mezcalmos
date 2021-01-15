@@ -1,6 +1,6 @@
 module.exports = { request, accept, itemsPicked, finish }
 
-//possible statuses: lookingForDriver, onTheWay, droppedOff
+//possible statuses: lookingForDriver, onTheWayToStore, itemsPickedUp, droppedOff
 async function request(firebase, data, uid) {
 	let payload = {}
   if(!data.to || !data.items) {
@@ -27,10 +27,10 @@ async function request(firebase, data, uid) {
   firebase.database().ref(`/users/${uid}/orders/${orderRef.key}`).set({
     orderType: "grocery", status: "lookingForDriver", orderTime: payload.orderTime
   });
-  firebase.database().ref(`/openOrders/delivery/${orderRef.key}`).set({from:payload.from, to:payload.to, deliveryType: "grocery"})
+  firebase.database().ref(`/openOrders/delivery/${orderRef.key}`).set({from:payload.from, to:payload.to, customer:payload.customer, deliveryType: "grocery"})
   let chat = {
     participants: {},
-    orderType: "taxi"
+    orderType: "grocery"
   }
   chat.participants[uid] = {name: user.displayName.split(' ')[0],
       image: user.photo}
@@ -83,7 +83,7 @@ async function accept(firebase, data, uid) {
       status:order.status,
       orderType:"grocery"
     });
-    firebase.database().ref(`/users/${order.customer.id}/orders/${data.orderId}/status`).set({
+    firebase.database().ref(`/users/${order.customer.id}/orders/${data.orderId}`).set({
       driver:order.driver,
       acceptOrderTime:order.acceptOrderTime,
       status:order.status
@@ -125,7 +125,7 @@ async function itemsPicked(firebase, data, uid) {
     status: "itemsPickedUp",
     itemsPickedTime: (new Date()).toUTCString()
   }
-  firebase.database().ref(`/orders/taxi/${data.orderId}`).update(update)
+  firebase.database().ref(`/orders/grocery/${data.orderId}`).update(update)
   firebase.database().ref(`/users/${order.customer.id}/orders/${data.orderId}`).update(update);
   firebase.database().ref(`/deliveryDrivers/${order.driver.id}/orders/grocery/${data.orderId}`).update(update);
   
@@ -155,7 +155,7 @@ async function finish(firebase, data, uid) {
     status: "droppedOff",
     deliveryTime: (new Date()).toUTCString()
   }
-  firebase.database().ref(`/orders/taxi/${data.orderId}`).update(update)
+  firebase.database().ref(`/orders/grocery/${data.orderId}`).update(update)
   firebase.database().ref(`/users/${order.customer.id}/orders/${data.orderId}`).update(update);
   firebase.database().ref(`/deliveryDrivers/${order.driver.id}/orders/grocery/${data.orderId}`).update(update);
 

@@ -22,7 +22,8 @@
         <router-link v-if="!orderStatusLooking" :to="messageLink">Message</router-link>
       </div>
       <button v-if="orderStatusLooking" @click="acceptOrder">Accept Order</button>
-      <button v-else-if="orderStatusOnTheWay" @click="finishOrder">Finish Order</button>
+      <button v-else-if="orderStatusOnTheWay" @click="itemsPicked">Items Picked</button>
+      <button v-else-if="orderStatusItemsPickedUp" @click="finishOrder">Finish Order</button>
     </div>
   </div>
 </template>
@@ -49,6 +50,9 @@ export default {
     orderStatusOnTheWay() {
       return this.$store.getters["order/orderStatusOnTheWay"]
     },
+    orderStatusItemsPickedUp() {
+      return this.$store.getters["order/orderStatusItemsPickedUp"]
+    },
     orderStatusDroppedOff() {
       return this.$store.getters["order/orderStatusDroppedOff"]
     }
@@ -65,6 +69,10 @@ export default {
   methods: {
     async acceptOrder() {
       let response = await this.$store.dispatch("order/acceptOrder")
+      console.log(response)
+    },
+    async itemsPicked() {
+      let response = await this.$store.dispatch("order/itemsPicked")
       console.log(response)
     },
     async finishOrder() {

@@ -25,7 +25,7 @@ async function request(firebase, data, uid) {
   firebase.database().ref(`/users/${uid}/orders/${orderRef.key}`).set({
     orderType: "taxi", status: "lookingForTaxi", orderTime: payload.orderTime
   });
-  firebase.database().ref(`/openOrders/taxi/${orderRef.key}`).set({from:payload.from, to:payload.to});
+  firebase.database().ref(`/openOrders/taxi/${orderRef.key}`).set({from:payload.from, to:payload.to, customer:payload.customer});
   let chat = {
     participants: {},
     orderType: "taxi"
@@ -81,7 +81,7 @@ async function accept(firebase, data, uid) {
       acceptRideTime:order.acceptRideTime,
       status:order.status
     });
-    firebase.database().ref(`/users/${order.customer.id}/orders/${data.orderId}/status`).set({
+    firebase.database().ref(`/users/${order.customer.id}/orders/${data.orderId}`).set({
       driver:order.driver,
       acceptRideTime:order.acceptRideTime,
       status:order.status
