@@ -34,6 +34,12 @@ export default {
         let response = await cloudCall('acceptGroceryOrder', { orderId: orderId });
         return response;
       },
+      async itemsPicked(context) {
+        // TODO: check if order is loaded
+        let orderId = context.state.orderId
+        let response = await cloudCall('itemsPickedGroceryOrder', { orderId: orderId });
+        return response;
+      },
       async finishOrder(context) {
         // TODO: check if order is loaded
         let orderId = context.state.orderId
@@ -65,7 +71,10 @@ export default {
         return state.order.status == "lookingForDriver"
       },
       orderStatusOnTheWay(state) {
-        return state.order.status == "onTheWay"
+        return state.order.status == "onTheWayToStore"
+      },
+      orderStatusItemsPickedUp(state) {
+        return state.order.status == "itemsPickedUp"
       },
       orderStatusDroppedOff(state) {
         return state.order.status == "droppedOff"
