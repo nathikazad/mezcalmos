@@ -15,10 +15,12 @@ async function createUser(user) {
       const newPagePromise = new Promise(x => browser.once('targetcreated', target => x(target.page()))); 
       const popup = await newPagePromise;
       await popup.waitForSelector('#add-account-button button')
-      await popup.waitForTimeout(500)
+      await popup.waitForTimeout(2000)
       await popup.click('#add-account-button button')
+      await popup.waitForTimeout(2000)
       await popup.waitForSelector('#autogen-button')
       await popup.click('#autogen-button')
+  
       // await popup.waitForTimeout(500)
       await popup.evaluate((user) => {
         console.log(user)

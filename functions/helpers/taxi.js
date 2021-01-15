@@ -74,13 +74,30 @@ async function accept(firebase, data, uid) {
 		console.log(`${data.orderId} taxi request failure`)
 		return { status:"Error", reason:"Ride is not available, please try accepting another ride" };  
 	} else {
+    let order = response.snapshot.val()
     console.log(`${data.orderId} taxi request success`)
-    firebase.database().ref(`/taxiDrivers/${uid}/orders/${data.orderId}`).set(true);
+    firebase.database().ref(`/taxiDrivers/${uid}/orders/${data.orderId}`).set({
+      customer:order.customer,
+      acceptRideTime:order.acceptRideTime,
+      status:order.status
+    });
+    firebase.database().ref(`/users/${order.customer.id}/orders/${data.orderId}/status`).set({
+      driver:order.driver,
+      acceptRideTime:order.acceptRideTime,
+      status:order.status
+    });
     firebase.database().ref(`/openOrders/taxi/${data.orderId}`).remove();
     firebase.database().ref(`/chat/${data.orderId}/participants/${uid}`).set({
       name: driver.displayName.split(' ')[0],
       image: driver.photo
     });
+    firebase.database().ref(`/notifications/${order.customer.id}`).push({
+      notificationType: "orderStatusChange",
+      orderId: data.orderId,
+      status: order.status,
+      driver: order.driver,
+      time: order.acceptRideTime
+    })
 		return { status:"Success" }; 
 	}
 }
@@ -98,11 +115,20 @@ async function start(firebase, data, uid) {
   if (order.status != "onTheWay") {
     return { status:"Error", errorMessage: "Ride status is not onTheWay but "+order.status}
   }
-
-  firebase.database().ref(`/orders/taxi/${data.orderId}`).update({
+  let update = {
     status: "inTransit",
     rideStartTime: (new Date()).toUTCString()
-  })
+  }
+  firebase.database().ref(`/orders/taxi/${data.orderId}`).update(update)
+  firebase.database().ref(`/users/${order.customer.id}/orders/${data.orderId}`).update(update);
+  firebase.database().ref(`/taxiDrivers/${order.driver.id}/orders/${data.orderId}`).update(update);
+  
+  update.notificationType = "orderStatusChange"
+  update.orderId = data.orderId
+  update.time = update.rideStartTime
+  delete update.rideStartTime
+  firebase.database().ref(`/notifications/${order.customer.id}`).push(update)
+  return { status:"Success" }; 
 }
 
 async function finish(firebase, data, uid) {
@@ -119,8 +145,18 @@ async function finish(firebase, data, uid) {
     return { status:"Error", errorMessage: "Ride status is not inTransit but "+order.status}
   }
 
-  firebase.database().ref(`/orders/taxi/${data.orderId}`).update({
+  let update = {
     status: "droppedOff",
     rideFinishTime: (new Date()).toUTCString()
-  })
+  }
+  firebase.database().ref(`/orders/taxi/${data.orderId}`).update(update)
+  firebase.database().ref(`/users/${order.customer.id}/orders/${data.orderId}`).update(update);
+  firebase.database().ref(`/taxiDrivers/${order.driver.id}/orders/${data.orderId}`).update(update);
+  
+  update.notificationType = "orderStatusChange"
+  update.orderId = data.orderId
+  update.time = update.rideFinishTime
+  delete update.rideFinishTime
+  firebase.database().ref(`/notifications/${order.customer.id}`).push(update)
+  return { status:"Success" }; 
 }

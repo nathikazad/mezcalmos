@@ -4,15 +4,10 @@ const admin = require("firebase-admin");
 
 const productionFirebase = admin.initializeApp({
   databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com"
-});
-
-let testFirebase;
-
-if (!process.env["FUNCTIONS_EMULATOR"]) {
-  testFirebase = admin.initializeApp({
-    databaseURL: "https://mezcalmos-test.firebaseio.com"
-  });
-}
+}, "production");
+const testFirebase = admin.initializeApp({
+  databaseURL: "https://mezcalmos-test.firebaseio.com"
+}, "test")
 
 function getFirebase(database = "production") {
   if(database == "production") {
@@ -25,6 +20,7 @@ function getFirebase(database = "production") {
 const grocery = require ("./helpers/grocery")
 const taxi = require ("./helpers/taxi")
 const hasura = require ("./helpers/hasura");
+const message = require("./helpers/message");
 
 // On sign up.
 exports.processSignUp = functions.auth.user().onCreate(async user => {
@@ -88,13 +84,27 @@ exports.acceptGroceryOrder = functions.https.onCall(async (data, context) => {
   return response
 });
 
+exports.itemsPickedGroceryOrder = functions.https.onCall(async (data, context) => {
+  let firebase = getFirebase(data.database);
+  let response = await grocery.itemsPicked(firebase, data, context.auth.uid)
+  return response
+}); 
+
 exports.finishGroceryOrder = functions.https.onCall(async (data, context) => {
   let firebase = getFirebase(data.database);
   let response = await grocery.finish(firebase, data, context.auth.uid)
   return response
 }); 
 
-// exports.notifyMessageParticpants = functions.database.instance('mezcalmos-test').ref(
-//   '/chat/${orderId}/messages/${messageId}').onWrite((snap, context) => {
-//   console.log(snap)
-// })
+exports.notifyMessageParticipantsTest = functions.database.instance('mezcalmos-test').ref(
+  '/chat/{orderId}/messages/{messageId}').onWrite((snap, context) => {
+    let firebase = getFirebase('test');
+    message.notifyOthers(firebase, context.params, snap.after._data)
+})
+
+exports.notifyMessageParticipants = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
+  '/chat/{orderId}/messages/{messageId}').onWrite(async (snap, context) => {
+
+    let firebase = getFirebase();
+    message.notifyOthers(firebase, context.params, snap.after._data)
+})
