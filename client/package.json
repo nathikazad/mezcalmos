@@ -2,7 +2,6 @@
   "name": "mezcalmos",
   "version": "0.1.0",
   "private": true,
-
   "scripts": {
     "emulator": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 firebase emulators:start --export-on-exit=test/newDummyData",
     "emulator:onlyFunctions": "firebase emulators:start --only functions",
@@ -41,6 +40,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.1",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/vue-fontawesome": "^2.0.2",
+    "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "firebase-admin": "^9.4.2",
     "node-sass": "^5.0.0",
