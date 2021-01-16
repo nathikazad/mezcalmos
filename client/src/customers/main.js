@@ -75,6 +75,8 @@ Vue.mixin({
 })
 //Vue html2canvas configuration
 Vue.use(VueHtml2Canvas);
+//Vue moment configuration
+Vue.use(require('vue-moment'));
 //Firebase state changed function
 async function firebaseCallback(user) {
   console.log(user);

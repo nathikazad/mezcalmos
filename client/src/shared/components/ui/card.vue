@@ -2,10 +2,10 @@
   <div class="card flex align_center space_between">
     <div class="flex align_center">
       <slot name="image"></slot>
-      <div class="text">
+      <slot class="text" name="text">
         <slot name="cardTitle"></slot>
         <slot name="description" class="regular"></slot>
-      </div>
+      </slot>
     </div>
     <slot name="actions" class="flex"></slot>
   </div>

@@ -1,15 +1,15 @@
 <template>
   <button v-if="!link" :class="mode" class="btn">
-    <span>
-      <slot></slot>
-    </span>
-  </button>
-  <router-link v-else :to="to" :class="mode" class="btn" tag="button">
     <span v-if="!loading">
       <slot></slot>
     </span>
     <span v-else class="flex center">
       <div class="load open"></div>
+    </span>
+  </button>
+  <router-link v-else :to="to" :class="mode" class="btn" tag="button">
+    <span>
+      <slot></slot>
     </span>
   </router-link>
 </template>
@@ -19,28 +19,28 @@ export default {
   props: {
     mode: {
       type: Object,
-      required: false
+      required: false,
     },
     color: {
       type: String,
       required: false,
-      default: "dark"
+      default: "dark",
     },
     link: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     to: {
       type: [String, Object],
       required: false,
-      default: "/"
+      default: "/",
     },
-    loading:{
-      type:Boolean,
-      default:false
-    }
-  }
+    loading: {
+      type: Boolean,
+      default: false,
+    },
+  },
 };
 </script>
 

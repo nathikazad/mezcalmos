@@ -2,7 +2,7 @@
   <div>
     <div id="taxiRequest" v-if="orderDetails">
       <!-- ******************pop up component ************************-->
-      <h1 class="regular">{{orderDetails.customer.name}}</h1>
+      <h1 class="regular">{{ orderDetails.customer.name }}</h1>
       <input-location
         :disabled="true"
         :to="orderDetails.to"
@@ -19,17 +19,20 @@
             <div class="flex align_center">
               <avatar size="2.4rem" :url="orderDetails.customer.image"></avatar>
               <div class="user_name">
-                <h4 class="text_blackL">{{orderDetails.customer.name}}</h4>
+                <h4 class="text_blackL">{{ orderDetails.customer.name }}</h4>
                 <h5 class="regular text_grey">5km far</h5>
               </div>
             </div>
 
-            <div class="ride_details t-8">
+            <div
+              class="ride_details t-8"
+              v-if="deepFind(orderDetails, 'distance.text')"
+            >
               <fa icon="route"></fa>
-              {{deepFind(orderDetails,'distance.text')}}
+              {{ deepFind(orderDetails, "distance.text") }}
               <br />
               <fa icon="stopwatch"></fa>
-              {{deepFind(orderDetails,'duration.text')}}
+              {{ deepFind(orderDetails, "duration.text") }}
             </div>
           </div>
           <base-button
@@ -38,7 +41,7 @@
             @click.native="acceptRide()"
             :loading="loading"
           >
-            <span class="t-8 regular">Accept Order</span>
+            <span class="t-8 regular">Accept Order </span>
           </base-button>
         </div>
         <!-- On the way  Status-->
@@ -51,7 +54,7 @@
             class="w-30 elevate_1"
             :mode="{ dark: true, bg_info: true }"
             @click.native="startRide()"
-            :loading="true"
+            :loading="loading"
           >
             <span class="t-8 regular">Start Ride</span>
           </base-button>
@@ -92,7 +95,7 @@
             <div class="flex align_center">
               <avatar size="2.4rem" :url="orderDetails.customer.image"></avatar>
               <div class="user_name">
-                <h4 class="text_blackL">{{orderDetails.customer.name}}</h4>
+                <h4 class="text_blackL">{{ orderDetails.customer.name }}</h4>
                 <h5 class="regular text_grey">Dropped off</h5>
               </div>
             </div>
@@ -117,7 +120,7 @@
 export default {
   data() {
     return {
-      loading: true
+      loading: false,
     };
   },
   computed: {
@@ -140,18 +143,18 @@ export default {
     calculateBorns() {
       let borns = {
         start: null,
-        end: null
+        end: null,
       };
 
       if (this.orderDetails) {
         borns.start = {
           lat: this.orderDetails.from.lat,
-          lng: this.orderDetails.from.long
+          lng: this.orderDetails.from.long,
         };
 
         borns.end = {
           lat: this.orderDetails.to.lat,
-          lng: this.orderDetails.to.long
+          lng: this.orderDetails.to.long,
         };
       }
       return borns;
@@ -164,11 +167,11 @@ export default {
     },
     orderStatusDroppedOff() {
       return this.$store.getters["order/orderStatusDroppedOff"];
-    }
+    },
   },
   async beforeCreate() {
     this.$store.dispatch("order/loadOrder", {
-      orderId: this.$route.params.orderId
+      orderId: this.$route.params.orderId,
     });
   },
   async beforeUnmount() {
@@ -182,7 +185,7 @@ export default {
       let arrival = {
         pos: { lat: 34.25, lng: 31.58 },
         distance: 5000,
-        time: new Date(date.getTime() + 8 * 60000).getTime()
+        time: new Date(date.getTime() + 8 * 60000).getTime(),
       };
       console.log({ arrival });
       let response = await this.$store.dispatch("order/acceptRide", arrival);
@@ -200,8 +203,8 @@ export default {
       let response = await this.$store.dispatch("order/finishRide");
       console.log(response);
       this.loading = false;
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>

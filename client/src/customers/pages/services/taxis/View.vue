@@ -38,8 +38,11 @@
             <div class="flex align_center">
               <avatar size="2.4rem" :url="orderDetails.driver.image"></avatar>
               <div class="user_name">
-                <h4 class="text_blackL">{{orderDetails.driver.name}}</h4>
-                <h5 class="regular text_grey">Arrival In 30 Mins</h5>
+                <h4 class="text_blackL">{{ orderDetails.driver.name }}</h4>
+                <h5 class="regular text_grey">
+                  Arrival
+                  {{ orderDetails.driver.arrival.time | moment("from", "now") }}
+                </h5>
               </div>
             </div>
           </div>
@@ -65,7 +68,7 @@
             <div class="flex align_center">
               <avatar size="2.4rem" :url="orderDetails.driver.image"></avatar>
               <div class="user_name">
-                <h4 class="text_blackL">{{orderDetails.driver.name}}</h4>
+                <h4 class="text_blackL">{{ orderDetails.driver.name }}</h4>
                 <h5 class="regular text_grey">Ride started</h5>
               </div>
             </div>
@@ -88,7 +91,7 @@
             <div class="flex align_center">
               <avatar size="2.4rem" :url="orderDetails.driver.image"></avatar>
               <div class="user_name">
-                <h4 class="text_blackL">{{orderDetails.driver.name}}</h4>
+                <h4 class="text_blackL">{{ orderDetails.driver.name }}</h4>
                 <h5 class="regular text_grey">Dropped off</h5>
               </div>
             </div>
@@ -114,7 +117,7 @@
 export default {
   data() {
     return {
-      loading: false
+      loading: false,
     };
   },
   computed: {
@@ -130,34 +133,34 @@ export default {
     calculateBorns() {
       let borns = {
         start: null,
-        end: null
+        end: null,
       };
 
       if (this.orderDetails) {
         borns.start = {
           lat: this.orderDetails.from.lat,
-          lng: this.orderDetails.from.long
+          lng: this.orderDetails.from.long,
         };
 
         borns.end = {
           lat: this.orderDetails.to.lat,
-          lng: this.orderDetails.to.long
+          lng: this.orderDetails.to.long,
         };
       }
       return borns;
-    }
+    },
   },
   mounted() {},
   methods: {
     printMap() {
       this.$refs["inputLocation"].printMap();
-    }
+    },
   },
   async beforeCreate() {
     this.$store.dispatch("taxis/loadTaxi", {
-      orderId: this.$route.params.orderId
+      orderId: this.$route.params.orderId,
     });
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>
