@@ -1,6 +1,6 @@
 import {
   firebaseDatabase,
-  firebaseFunctions
+  cloudCall
 } from '@/shared/config/firebase'
 export default {
   namespaced: true,
@@ -34,8 +34,12 @@ export default {
     },
     async requestTaxi(_, payload) {
       // let userId = context.rootGetters.userId
-
-      let response = await firebaseFunctions().httpsCallable('requestTaxi')(payload);
+      let from = payload.from
+      let to = payload.to
+      let response = await cloudCall('requestTaxi', {
+        from: from,
+        to: to
+      });
       return response;
     }
   },

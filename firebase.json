@@ -12,6 +12,17 @@
       ]
     },
     {
+      "target": "customersTest",
+      "public": "dist/customersTest",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    },
+    {
       "target": "taxis",
       "public": "dist/taxis",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
@@ -23,8 +34,8 @@
       ]
     },
     {
-      "target": "customersInTest",
-      "public": "dist/customers",
+      "target": "taxisTest",
+      "public": "dist/taxisTest",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "rewrites": [
         {
@@ -34,8 +45,19 @@
       ]
     },
     {
-      "target": "taxisInTest",
-      "public": "dist/taxis",
+      "target": "deliveries",
+      "public": "dist/deliveries",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    },
+    {
+      "target": "deliveriesTest",
+      "public": "dist/deliveriesTest",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "rewrites": [
         {
@@ -52,11 +74,17 @@
     "functions": {
       "port": 5001
     },
-    // "database": {
-    //   "port": 9000
-    // },
+    "database": {
+      "port": 9000
+    },
     "hosting": {
       "port": 5000
+    },
+    "auth": {
+      "port": 9099
+    },
+    "ui": {
+      "enabled": true
     }
   }
 }

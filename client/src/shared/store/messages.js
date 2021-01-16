@@ -1,5 +1,6 @@
 import {
-  firebaseDatabase
+  firebaseDatabase,
+  cloudCall
 } from '@/shared/config/firebase'
 export default {
   namespaced: true,
@@ -16,11 +17,14 @@ export default {
       let newMessage = {
         message: payload.message,
         userId: context.rootGetters.userId,
-        timeStamp: (new Date()).toUTCString()
+        timestamp: (new Date()).toUTCString()
       }
       console.log(orderId, newMessage)
       // user can claim to be any user
       firebaseDatabase().ref(`/chat/${orderId}/messages`).push(newMessage);
+      cloudCall('sendMessage', {
+        message: payload.message
+      });
     },
     async loadMessages(context, payload) {
       let orderId = context.state.orderId

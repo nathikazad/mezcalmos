@@ -33,13 +33,7 @@ export default {
       await firebaseAuth().signInWithPopup(provider);
     },
     async autoSignIn(context, payload) {
-      let info = (await firebaseDatabase().ref(`users/${payload.userId}/info`).once('value')).val();
-
-      console.log({
-        info
-      }, {
-        payload
-      });
+      let info = (await firebaseDatabase().ref(`users/${payload.userId}/info/`).once('value')).val();
       context.commit('saveUserInfo', info)
       context.commit('saveAuthData', payload)
     },
@@ -56,8 +50,6 @@ export default {
       state.loggedIn = payload.loggedIn;
     },
     saveUserInfo(state, payload) {
-      console.log(payload);
-
       state.info = payload
     },
     clearData(state, ) {

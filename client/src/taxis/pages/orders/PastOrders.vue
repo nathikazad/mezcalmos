@@ -15,7 +15,7 @@
 
           <div slot="description">
             <span class="bold">From:&nbsp;</span>
-            {{ orderId}},
+            {{ orderId }},
           </div>
         </card>
       </router-link>
@@ -28,11 +28,11 @@
 import Card from "@/shared/components/ui/card";
 export default {
   components: {
-    Card
+    Card,
   },
   data() {
     return {
-      isLoaded: false
+      isLoaded: false,
     };
   },
   computed: {
@@ -46,13 +46,13 @@ export default {
       return function(orderId) {
         return `/orders/${orderId}`;
       };
-    }
+    },
   },
   async beforeCreate() {
     this.isLoaded = false;
     await this.$store.dispatch("pastOrders/loadList");
     this.isLoaded = true;
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>

@@ -6,7 +6,7 @@ module.exports = {
 }
 
 //possible statuses: lookingForTaxi, onTheWay, inTransit, droppedOff
-async function request(admin, data, uid) {
+async function request(firebase, data, uid) {
   let payload = {}
   if (!data.from) {
     return {
@@ -37,31 +37,33 @@ async function request(admin, data, uid) {
   payload.orderType = "taxi";
   payload.status = "lookingForTaxi";
   payload.orderTime = (new Date()).toUTCString();
-  let orderRef = await admin.database().ref(`/orders/taxi`).push(payload);
-  admin.database().ref(`/users/${uid}/orders/${orderRef.key}`).set({
+  let orderRef = await firebase.database().ref(`/orders/taxi`).push(payload);
+  firebase.database().ref(`/users/${uid}/orders/${orderRef.key}`).set({
     orderType: "taxi",
     status: "lookingForTaxi",
     orderTime: payload.orderTime
   });
-  admin.database().ref(`/openOrders/taxi/${orderRef.key}`).set({
+  firebase.database().ref(`/openOrders/taxi/${orderRef.key}`).set({
     from: payload.from,
     to: payload.to,
-    customer: payload.customer,
-    distance: payload.distance,
-    duration: payload.duration
+    customer: payload.customer
   });
-  admin.database().ref(`/chat/${orderRef.key}/participants/${uid}`).set({
+  let chat = {
+    participants: {},
+    orderType: "taxi"
+  }
+  chat.participants[uid] = {
     name: user.displayName.split(' ')[0],
     image: user.photo
-  });
-  admin.database().ref(`/chat/${orderRef.key}/orderType`).set("taxi");
+  }
+  firebase.database().ref(`/chat/${orderRef.key}`).set(chat);
   return {
     status: "Success",
     orderId: orderRef.key
   }
 }
 
-async function accept(admin, data, uid) {
+async function accept(firebase, data, uid) {
   // TODO: dont let user accept second taxi order
   if (!data.orderId) {
     return {
@@ -70,7 +72,7 @@ async function accept(admin, data, uid) {
     }
   }
 
-  let authorizedDriver = (await admin.database().ref(`/taxiDrivers/${uid}/authorized`).once('value')).val();
+  let authorizedDriver = (await firebase.database().ref(`/taxiDrivers/${uid}/authorized`).once('value')).val();
   if (!authorizedDriver) {
     return {
       status: "Error",
@@ -78,8 +80,8 @@ async function accept(admin, data, uid) {
     }
   }
 
-  let driver = (await admin.database().ref(`/users/${uid}/info`).once('value')).val();
-  let response = await admin.database().ref(`/orders/taxi/${data.orderId}`).transaction(function (order) {
+  let driver = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val();
+  let response = await firebase.database().ref(`/orders/taxi/${data.orderId}`).transaction(function (order) {
     console.log(order)
     if (order != null) {
       console.log(order.status)
@@ -91,7 +93,7 @@ async function accept(admin, data, uid) {
           id: uid,
           name: driver.displayName.split(' ')[0],
           image: driver.photo,
-          arrival:data.arrival
+          arrival: data.arrival
         }
         return order
       } else {
@@ -109,20 +111,37 @@ async function accept(admin, data, uid) {
       reason: "Ride is not available, please try accepting another ride"
     };
   } else {
+    let order = response.snapshot.val()
     console.log(`${data.orderId} taxi request success`)
-    admin.database().ref(`/taxiDrivers/${uid}/orders/${data.orderId}`).set(true);
-    admin.database().ref(`/openOrders/taxi/${data.orderId}`).remove();
-    await admin.database().ref(`/chat/${data.orderId}/participants/${uid}`).set({
+    firebase.database().ref(`/taxiDrivers/${uid}/orders/${data.orderId}`).set({
+      customer: order.customer,
+      acceptRideTime: order.acceptRideTime,
+      status: order.status
+    });
+    firebase.database().ref(`/users/${order.customer.id}/orders/${data.orderId}`).update({
+      driver: order.driver,
+      acceptRideTime: order.acceptRideTime,
+      status: order.status
+    });
+    firebase.database().ref(`/openOrders/taxi/${data.orderId}`).remove();
+    firebase.database().ref(`/chat/${data.orderId}/participants/${uid}`).set({
       name: driver.displayName.split(' ')[0],
       image: driver.photo
     });
+    firebase.database().ref(`/notifications/${order.customer.id}`).push({
+      notificationType: "orderStatusChange",
+      orderId: data.orderId,
+      status: order.status,
+      driver: order.driver,
+      time: order.acceptRideTime
+    })
     return {
       status: "Success"
     };
   }
 }
 
-async function start(admin, data, uid) {
+async function start(firebase, data, uid) {
   if (!data.orderId) {
     return {
       status: "Error",
@@ -130,7 +149,7 @@ async function start(admin, data, uid) {
     }
   }
 
-  let order = (await admin.database().ref(`/orders/taxi/${data.orderId}`).once('value')).val();
+  let order = (await firebase.database().ref(`/orders/taxi/${data.orderId}`).once('value')).val();
   if (order.driver.id != uid) {
     return {
       status: "Error",
@@ -144,14 +163,25 @@ async function start(admin, data, uid) {
       errorMessage: "Ride status is not onTheWay but " + order.status
     }
   }
-
-  admin.database().ref(`/orders/taxi/${data.orderId}`).update({
+  let update = {
     status: "inTransit",
     rideStartTime: (new Date()).toUTCString()
-  })
+  }
+  firebase.database().ref(`/orders/taxi/${data.orderId}`).update(update)
+  firebase.database().ref(`/users/${order.customer.id}/orders/${data.orderId}`).update(update);
+  firebase.database().ref(`/taxiDrivers/${order.driver.id}/orders/${data.orderId}`).update(update);
+
+  update.notificationType = "orderStatusChange"
+  update.orderId = data.orderId
+  update.time = update.rideStartTime
+  delete update.rideStartTime
+  firebase.database().ref(`/notifications/${order.customer.id}`).push(update)
+  return {
+    status: "Success"
+  };
 }
 
-async function finish(admin, data, uid) {
+async function finish(firebase, data, uid) {
   if (!data.orderId) {
     return {
       status: "Error",
@@ -159,7 +189,7 @@ async function finish(admin, data, uid) {
     }
   }
 
-  let order = (await admin.database().ref(`/orders/taxi/${data.orderId}`).once('value')).val();
+  let order = (await firebase.database().ref(`/orders/taxi/${data.orderId}`).once('value')).val();
   if (order.driver.id != uid) {
     return {
       status: "Error",
@@ -174,8 +204,20 @@ async function finish(admin, data, uid) {
     }
   }
 
-  admin.database().ref(`/orders/taxi/${data.orderId}`).update({
+  let update = {
     status: "droppedOff",
     rideFinishTime: (new Date()).toUTCString()
-  })
+  }
+  firebase.database().ref(`/orders/taxi/${data.orderId}`).update(update)
+  firebase.database().ref(`/users/${order.customer.id}/orders/${data.orderId}`).update(update);
+  firebase.database().ref(`/taxiDrivers/${order.driver.id}/orders/${data.orderId}`).update(update);
+
+  update.notificationType = "orderStatusChange"
+  update.orderId = data.orderId
+  update.time = update.rideFinishTime
+  delete update.rideFinishTime
+  firebase.database().ref(`/notifications/${order.customer.id}`).push(update)
+  return {
+    status: "Success"
+  };
 }
