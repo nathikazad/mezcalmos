@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
+const axios = require('axios');
 
 async function createUser(user) {
   while(true) {
@@ -38,6 +39,7 @@ async function createUser(user) {
         document.getElementById("profile-photo-input").value = photo
       }, user)
       await popup.click('#sign-in')
+      await popup.waitForTimeout(2000)
       // await browser.waitForTarget(() => false)
       await browser.close();
       break;
@@ -69,8 +71,10 @@ async function loadData(){
     rawData = rawData.replace(new RegExp(oldUsers[email],"g"), newUsers[email])
   }
   data = JSON.parse(rawData)
-  await admin.database().ref(`/`).set(data)
-  app.delete();
+  
+  
+  axios.put("http://localhost:9000/.json?ns=mezcalmos-31f1c-default-rtdb", data)
+  // app.delete();
   console.log("\nLoad Data: Finished")
 }
 
@@ -92,5 +96,4 @@ function checkIfWebsiteIsUp(){
 
 checkIfWebsiteIsUp()
 console.log("Load Data: Starting Up")
-
 //add the export commands and see if it affects only functions mode
