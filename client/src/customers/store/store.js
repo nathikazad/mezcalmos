@@ -7,6 +7,7 @@ import messagesModule from '@/shared/store/messages'
 import taxisModule from './modules/taxis';
 import groceriesModule from './modules/groceries'
 import ordersModule from './modules/orders';
+import savedLocationsModule from './modules/savedLocations';
 
 Vue.use(Vuex)
 
@@ -16,7 +17,8 @@ const store = new Vuex.Store({
     taxis: taxisModule,
     groceries: groceriesModule,
     orders: ordersModule,
-    messages: messagesModule
+    messages: messagesModule,
+    savedLocations: savedLocationsModule
   },
   getters: {
     appName() {
