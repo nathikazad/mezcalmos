@@ -104,14 +104,14 @@ exports.finishGroceryOrder = functions.https.onCall(async (data, context) => {
 });
 
 exports.notifyMessageParticipantsTest = functions.database.instance('mezcalmos-test').ref(
-  '/chat/{orderId}/messages/{messageId}').onWrite((snap, context) => {
+  '/chat/{orderId}/messages/{messageId}').onCreate((snap, context) => {
   let firebase = getFirebase('test');
-  message.notifyOthers(firebase, context.params, snap.after._data)
+  message.notifyOthers(firebase, context.params, snap.val())
 })
 
 exports.notifyMessageParticipants = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
-  '/chat/{orderId}/messages/{messageId}').onWrite(async (snap, context) => {
+  '/chat/{orderId}/messages/{messageId}').onCreate(async (snap, context) => {
 
   let firebase = getFirebase();
-  message.notifyOthers(firebase, context.params, snap.after._data)
+  message.notifyOthers(firebase, context.params, snap.val())
 })
