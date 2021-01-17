@@ -7,7 +7,7 @@
         v-if="openPicker"
         class="popUp"
         title="Add New Location"
-        :place="{name:'',address:''}"
+        :place="{ name: '', address: '' }"
       ></pick-location>
     </transition>
     <!--*************** End location picker component ****************-->
@@ -17,20 +17,31 @@
         <span>Locations</span>
         <span class="regular">3 Location</span>
       </h3>
-      <card class="bg_secondary border card">
+      <card
+        class="bg_secondary border card"
+        v-for="(location, index) in locations"
+        :key="index"
+      >
         <img src="@/shared/static/img/Map.png" slot="image" class="image" />
-        <div slot="cardTitle" class="bold">My Office</div>
-        <div slot="description">
-          3944 Coolidge Street,
-          <br />Miles City, MT 59301
+        <div slot="text" class="text_details">
+          <div slot="cardTitle" class="bold">{{ location.name }}</div>
+          <div slot="description">
+            {{ location.address }}
+          </div>
         </div>
         <div slot="actions">
-          <base-button :mode="{ dark: true, bg_white: true } " class="edit icon elevate_1">
+          <base-button
+            :mode="{ dark: true, bg_white: true }"
+            class="edit icon elevate_1"
+          >
             <span class="t-8 text_grey">
               <fa icon="pencil-alt"></fa>
             </span>
           </base-button>
-          <base-button :mode="{ dark: true, bg_white: true } " class="icon elevate_1">
+          <base-button
+            :mode="{ dark: true, bg_white: true }"
+            class="icon elevate_1"
+          >
             <span class="t-8 text_grey">
               <fa icon="trash"></fa>
             </span>
@@ -39,12 +50,10 @@
       </card>
       <base-button
         class="fill_width"
-        :mode="{ dark: true, bg_diagonal: true } "
-        @click.native="openPicker=true"
+        :mode="{ dark: true, bg_diagonal: true }"
+        @click.native="openPicker = true"
       >
-        <span class="t-8">
-          <fa icon="plus"></fa>&nbsp;Add New Location
-        </span>
+        <span class="t-8"> <fa icon="plus"></fa>&nbsp;Add New Location </span>
       </base-button>
     </div>
   </div>
@@ -53,23 +62,23 @@
 import Card from "../../../shared/components/ui/card";
 export default {
   components: {
-    Card
+    Card,
   },
   computed: {
     locations() {
       return this.$store.getters["savedLocations/locations"];
-    }
+    },
   },
   data() {
     return {
-      openPicker: false
+      openPicker: false,
     };
   },
   async beforeCreate() {
     this.isLoaded = false;
     await this.$store.dispatch("savedLocations/loadLocations");
     this.isLoaded = true;
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -97,5 +106,8 @@ export default {
   left: 0;
   z-index: 9;
   padding: 1rem;
+}
+.text_details{
+  margin-left: 1rem;
 }
 </style>

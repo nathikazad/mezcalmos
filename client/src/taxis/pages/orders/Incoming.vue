@@ -15,25 +15,35 @@
           :to="linkToOrder(orderId)"
           tag="div"
           class="pointer"
-          v-for="(order, orderId) in orders"
-          :key="orderId"
+          v-for="(orderId, key) in sortedOrderIds"
+          :key="key"
         >
           <card class="bg_secondary border card">
             <div slot="text" class="flex align_center">
               <div slot="cardTitle" class="bold">
-                <h4 class="text_blackL">{{ deepFind(order, "customer.name") }}</h4>
-                <h5 class="regular text_grey">5km far</h5>
+                <h4 class="text_blackL">
+                  {{ deepFind(orders[orderId], "customer.name") }}
+                </h4>
+                <h5 class="regular text_grey">{{(deepFind(orders[orderId], "customer.distance")/1000).toFixed(1)}}km far</h5>
               </div>
-              <div slot="description" class="text_grey text" v-if="order.routeInformation">
+              <div
+                slot="description"
+                class="text_grey text"
+                v-if="orders[orderId].routeInformation"
+              >
                 <fa icon="route"></fa>
-                <span
-                  class="text_blackL"
-                >&nbsp;{{ deepFind(order, "routeInformation.distance.text") }}</span>
+                <span class="text_blackL"
+                  >&nbsp;{{
+                    deepFind(orders[orderId], "routeInformation.distance.text")
+                  }}</span
+                >
                 <br />
                 <fa icon="stopwatch"></fa>
-                <span
-                  class="text_blackL"
-                >&nbsp;{{ deepFind(order, "routeInformation.duration.text") }}</span>
+                <span class="text_blackL"
+                  >&nbsp;{{
+                    deepFind(orders[orderId], "routeInformation.duration.text")
+                  }}</span
+                >
               </div>
             </div>
           </card>
@@ -49,15 +59,18 @@
 import Card from "@/shared/components/ui/card";
 export default {
   components: {
-    Card
+    Card,
   },
   data() {
     return {
       isLoaded: false,
-      on: false
+      on: false,
     };
   },
   computed: {
+    sortedOrderIds() {
+      return this.$store.getters["incomingOrders/sortedOrderIds"];
+    },
     orders() {
       return this.$store.getters["incomingOrders/list"];
     },
@@ -71,7 +84,7 @@ export default {
     },
     isLooking() {
       return this.$store.getters["isLooking"];
-    }
+    },
   },
   methods: {
     toggle() {
@@ -81,13 +94,13 @@ export default {
       } else {
         this.$store.dispatch("turnOff");
       }
-    }
+    },
   },
   async beforeCreate() {
     this.isLoaded = false;
     await this.$store.getters["incomingOrders/list"];
     this.isLoaded = true;
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>

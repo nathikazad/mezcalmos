@@ -57,6 +57,9 @@ export default {
     }
   },
   getters: {
+    sortedOrderIds(state) {
+      return state.sortedOrderIds;
+    },
     list(state) {
       return state.list;
     },

@@ -320,6 +320,6 @@ export default {
   }
 }
 .icon {
-  margin-right: 1rem;
+  margin-right: 0rem;
 }
 </style>
