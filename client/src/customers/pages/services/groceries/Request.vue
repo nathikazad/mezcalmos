@@ -13,6 +13,7 @@
           :to.sync="to"
           :from.sync="from"
           oneWay="to"
+          :fromUrl="deepFind(userInfo, 'photo')"
         >
           <div class="flex align_center space_between btnP" slot="action">
             <base-button
@@ -187,6 +188,9 @@ export default {
     };
   },
   computed: {
+    userInfo() {
+      return this.$store.getters["userInfo"];
+    },
     isLoggedIn() {
       return this.$store.getters.loggedIn;
     },

@@ -53,7 +53,11 @@ export default {
         { text: "User Information", icon: "user-circle", to: "/userinfo" },
         { text: "My Orders", icon: "shopping-cart", to: "/orders" },
         { text: "Message", icon: "envelope", to: "/services" },
-        { text: "Saved Location", icon: "location-arrow", to: "/services" }
+        {
+          text: "Saved Location",
+          icon: "location-arrow",
+          to: "/saved/locations"
+        }
       ]
     };
   },

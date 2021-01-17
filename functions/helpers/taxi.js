@@ -28,7 +28,7 @@ async function request(firebase, data, uid) {
     // Check valid values for to
     payload.duration = data.duration;
   }
-  let user = (await admin.database().ref(`/users/${uid}/info`).once('value')).val();
+  let user = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val();
   payload.customer = {
     id: uid,
     name: user.displayName.split(' ')[0],
@@ -46,7 +46,11 @@ async function request(firebase, data, uid) {
   firebase.database().ref(`/openOrders/taxi/${orderRef.key}`).set({
     from: payload.from,
     to: payload.to,
-    customer: payload.customer
+    customer: payload.customer,
+    routeInformation: {
+      duration: payload.duration,
+      distance: payload.distance
+    }
   });
   let chat = {
     participants: {},

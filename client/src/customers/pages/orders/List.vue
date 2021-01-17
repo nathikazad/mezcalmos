@@ -18,11 +18,11 @@
           <span slot="name" class="t-10">{{ orders[orderId].orderType }}</span>
           <span slot="param" class="t-8" v-if="orders[orderId].status == 'droppedOff'">
             <fa icon="calendar-alt"></fa>
-            &nbsp;{{ orders[orderId].deliveryTime | moment("l") }}
+            &nbsp;{{ orders[orderId].rideFinishTime | moment("l") }}
             &nbsp;
             <fa icon="clock"></fa>
             &nbsp;
-            {{ orders[orderId].deliveryTime | moment("LT") }}
+            {{ orders[orderId].rideFinishTime | moment("LT") }}
           </span>
           <span
             slot="param"
@@ -38,6 +38,7 @@
           >
             <fa icon="route"></fa>&nbsp;In Transit
           </span>
+
           <span slot="param" class="t-8 text_grey bg_white pill" v-else>
             <fa icon="search-location"></fa>&nbsp;Searching..
           </span>

@@ -74,6 +74,7 @@
         ref="map"
         :directionsOrigin="directionsBorns.start"
         :directionsDest="directionsBorns.end"
+        :fromUrl="fromUrl"
       ></map-view>
       <slot name="action"></slot>
     </div>
@@ -103,6 +104,9 @@ export default {
     },
     disabled: {
       type: Boolean
+    },
+    fromUrl: {
+      type: String
     }
   },
   data() {

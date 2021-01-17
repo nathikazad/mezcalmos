@@ -26,7 +26,10 @@ const router = new VueRouter({
     },
     {
       path: "/saved/locations",
-      component: SavedLocation
+      component: SavedLocation,
+      meta: {
+        requiresAuth: true,
+      },
     },
     {
       path: "/services",

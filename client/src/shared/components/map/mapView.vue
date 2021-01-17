@@ -55,6 +55,9 @@ export default {
     },
     directionsOrigin: {
       type: Object
+    },
+    fromUrl: {
+      type: String
     }
   },
   computed: {
@@ -77,7 +80,7 @@ export default {
 
       return {
         start: {
-          url: this.deepFind(this.userInfo, "photo"),
+          url: this.fromUrl,
           ...iconOptions
         },
         end: {
@@ -89,6 +92,10 @@ export default {
   },
   data() {
     return {
+      shape: {
+        coords: [1, 1, 1, 20, 18, 20, 18, 1],
+        type: "poly"
+      },
       mapOptions: {
         disableDefaultUI: true,
         styles: [

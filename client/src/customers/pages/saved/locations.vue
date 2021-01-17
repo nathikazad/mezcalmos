@@ -1,5 +1,5 @@
 <template>
-<!-- TODO: taskId #81774 make it dynamic -->
+  <!-- TODO: taskId #81774 make it dynamic -->
   <div>
     <!-- location picker component -->
     <transition name="slide-fade">
@@ -55,10 +55,20 @@ export default {
   components: {
     Card
   },
+  computed: {
+    locations() {
+      return this.$store.getters["savedLocations/locations"];
+    }
+  },
   data() {
     return {
       openPicker: false
     };
+  },
+  async beforeCreate() {
+    this.isLoaded = false;
+    await this.$store.dispatch("savedLocations/loadLocations");
+    this.isLoaded = true;
   }
 };
 </script>

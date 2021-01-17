@@ -34,6 +34,7 @@ export default {
     },
     async autoSignIn(context, payload) {
       let info = (await firebaseDatabase().ref(`users/${payload.userId}/info/`).once('value')).val();
+
       context.commit('saveUserInfo', info)
       context.commit('saveAuthData', payload)
     },

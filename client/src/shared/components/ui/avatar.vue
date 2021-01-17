@@ -14,7 +14,7 @@ export default {
   },
   computed: {
     background() {
-      return `url("${this.url}?type=large")`;
+      return `url("${this.url}")`;
     }
   }
 };

@@ -8,6 +8,7 @@
         :to="orderDetails.to"
         :from="orderDetails.from"
         :directionsBorns="calculateBorns"
+        :fromUrl="deepFind(orderDetails, 'customer.image')"
       >
         <!-- Searching fo Someone  Status-->
         <div
@@ -24,10 +25,7 @@
               </div>
             </div>
 
-            <div
-              class="ride_details t-8"
-              v-if="deepFind(orderDetails, 'distance.text')"
-            >
+            <div class="ride_details t-8" v-if="deepFind(orderDetails, 'distance.text')">
               <fa icon="route"></fa>
               {{ deepFind(orderDetails, "distance.text") }}
               <br />
@@ -41,7 +39,7 @@
             @click.native="acceptRide()"
             :loading="loading"
           >
-            <span class="t-8 regular">Accept Order </span>
+            <span class="t-8 regular">Accept Order</span>
           </base-button>
         </div>
         <!-- On the way  Status-->
@@ -120,7 +118,7 @@
 export default {
   data() {
     return {
-      loading: false,
+      loading: false
     };
   },
   computed: {
@@ -143,18 +141,18 @@ export default {
     calculateBorns() {
       let borns = {
         start: null,
-        end: null,
+        end: null
       };
 
       if (this.orderDetails) {
         borns.start = {
           lat: this.orderDetails.from.lat,
-          lng: this.orderDetails.from.long,
+          lng: this.orderDetails.from.long
         };
 
         borns.end = {
           lat: this.orderDetails.to.lat,
-          lng: this.orderDetails.to.long,
+          lng: this.orderDetails.to.long
         };
       }
       return borns;
@@ -167,11 +165,11 @@ export default {
     },
     orderStatusDroppedOff() {
       return this.$store.getters["order/orderStatusDroppedOff"];
-    },
+    }
   },
   async beforeCreate() {
     this.$store.dispatch("order/loadOrder", {
-      orderId: this.$route.params.orderId,
+      orderId: this.$route.params.orderId
     });
   },
   async beforeUnmount() {
@@ -185,7 +183,7 @@ export default {
       let arrival = {
         pos: { lat: 34.25, lng: 31.58 },
         distance: 5000,
-        time: new Date(date.getTime() + 8 * 60000).getTime(),
+        time: new Date(date.getTime() + 8 * 60000).getTime()
       };
       console.log({ arrival });
       let response = await this.$store.dispatch("order/acceptRide", arrival);
@@ -203,8 +201,8 @@ export default {
       let response = await this.$store.dispatch("order/finishRide");
       console.log(response);
       this.loading = false;
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

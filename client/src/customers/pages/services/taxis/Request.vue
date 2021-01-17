@@ -11,6 +11,7 @@
       :to.sync="to"
       :from.sync="from"
       @setPos="setDistanceDuration($event)"
+      :fromUrl="deepFind(userInfo, 'photo')"
     >
       <div class="flex align_center center btnP" slot="action">
         <base-button
@@ -18,6 +19,7 @@
           class="w-80"
           :mode="{ dark: true, bg_diagonal: true }"
           @click.native="requestTaxi()"
+          :loading="loading"
         >
           <span class="t-8 regular">CONFIRM</span>
         </base-button>
@@ -27,7 +29,6 @@
           :mode="{ dark: true, bg_diagonal: true }"
           :link="true"
           to="/auth?redirect=/services/taxi/request"
-          :loading="loading"
         >
           <span class="t-8 regular">CONFIRM</span>
         </base-button>
@@ -50,7 +51,7 @@ export default {
   components: { popUp },
   data() {
     return {
-      loading:false,
+      loading: false,
       distance: null,
       duration: null,
       focusedFrom: false,
@@ -101,6 +102,9 @@ export default {
   computed: {
     isLoggedIn() {
       return this.$store.getters.loggedIn;
+    },
+    userInfo() {
+      return this.$store.getters["userInfo"];
     }
   },
 
@@ -110,7 +114,7 @@ export default {
       this.duration = pos.duration;
     },
     async requestTaxi() {
-      this.loading=true
+      this.loading = true;
       let response = (
         await this.$store.dispatch("taxis/requestTaxi", {
           to: this.to,
@@ -119,7 +123,7 @@ export default {
           duration: this.duration
         })
       ).data;
-      this.loading=false;
+      this.loading = false;
       if (response.status == "Success") {
         this.$router.push({ path: `${response.orderId}` });
       } else {

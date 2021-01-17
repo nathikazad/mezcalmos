@@ -38,7 +38,9 @@ export default {
       let to = payload.to
       let response = await cloudCall('requestTaxi', {
         from: from,
-        to: to
+        to: to,
+        distance: payload.distance,
+        duration: payload.duration
       });
       return response;
     }

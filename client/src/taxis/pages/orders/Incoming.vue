@@ -19,23 +19,21 @@
           :key="orderId"
         >
           <card class="bg_secondary border card">
-            <div slot="text" class=" flex align_center ">
+            <div slot="text" class="flex align_center">
               <div slot="cardTitle" class="bold">
-                <h4 class="text_blackL">
-                  {{ deepFind(order, "customer.name") }}
-                </h4>
+                <h4 class="text_blackL">{{ deepFind(order, "customer.name") }}</h4>
                 <h5 class="regular text_grey">5km far</h5>
               </div>
-              <div slot="description" class="text_grey text">
+              <div slot="description" class="text_grey text" v-if="order.routeInformation">
                 <fa icon="route"></fa>
-                <span class="text_blackL"
-                  >&nbsp;{{ deepFind(order, "distance.text") }}</span
-                >
+                <span
+                  class="text_blackL"
+                >&nbsp;{{ deepFind(order, "routeInformation.distance.text") }}</span>
                 <br />
                 <fa icon="stopwatch"></fa>
-                <span class="text_blackL"
-                  >&nbsp;{{ deepFind(order, "duration.text") }}</span
-                >
+                <span
+                  class="text_blackL"
+                >&nbsp;{{ deepFind(order, "routeInformation.duration.text") }}</span>
               </div>
             </div>
           </card>
@@ -51,12 +49,12 @@
 import Card from "@/shared/components/ui/card";
 export default {
   components: {
-    Card,
+    Card
   },
   data() {
     return {
       isLoaded: false,
-      on: false,
+      on: false
     };
   },
   computed: {
@@ -73,7 +71,7 @@ export default {
     },
     isLooking() {
       return this.$store.getters["isLooking"];
-    },
+    }
   },
   methods: {
     toggle() {
@@ -83,13 +81,13 @@ export default {
       } else {
         this.$store.dispatch("turnOff");
       }
-    },
+    }
   },
   async beforeCreate() {
     this.isLoaded = false;
     await this.$store.getters["incomingOrders/list"];
     this.isLoaded = true;
-  },
+  }
 };
 </script>
 <style lang="scss" scoped>

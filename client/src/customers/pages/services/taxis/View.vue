@@ -9,6 +9,7 @@
         :from="orderDetails.from"
         :directionsBorns="calculateBorns"
         ref="inputLocation"
+        :fromUrl="deepFind(userInfo, 'photo')"
       >
         <!-- Searching fo Someone  Status-->
         <div
@@ -121,6 +122,9 @@ export default {
     };
   },
   computed: {
+    userInfo() {
+      return this.$store.getters["userInfo"];
+    },
     orderDetails() {
       return this.$store.getters["taxis/value"];
     },

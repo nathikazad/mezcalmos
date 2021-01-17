@@ -10,12 +10,20 @@
         v-for="(order, orderId) in orders"
         :key="orderId"
       >
-        <card class="bg_secondary border card">
-          <img src="@/shared/static/img/Map.png" slot="image" class="image" />
-
-          <div slot="description">
-            <span class="bold">From:&nbsp;</span>
-            {{ orderId }},
+        <card class="bg_secondary border card wrap">
+          <avatar size="2.4rem" :url="order.customer.image" slot="image"></avatar>
+          <div slot="text" class="card_text">
+            <div slot="cardTitle" class="bold">{{order.customer.name}}</div>
+            <div slot="description">
+              <span slot="param" class="t-8">
+                <fa icon="calendar-alt"></fa>
+                &nbsp;{{ orders[orderId].rideFinishTime | moment("l") }}
+                &nbsp;
+                <fa icon="clock"></fa>
+                &nbsp;
+                {{ orders[orderId].rideFinishTime | moment("LT") }}
+              </span>
+            </div>
           </div>
         </card>
       </router-link>
@@ -28,11 +36,11 @@
 import Card from "@/shared/components/ui/card";
 export default {
   components: {
-    Card,
+    Card
   },
   data() {
     return {
-      isLoaded: false,
+      isLoaded: false
     };
   },
   computed: {
@@ -46,13 +54,13 @@ export default {
       return function(orderId) {
         return `/orders/${orderId}`;
       };
-    },
+    }
   },
   async beforeCreate() {
     this.isLoaded = false;
     await this.$store.dispatch("pastOrders/loadList");
     this.isLoaded = true;
-  },
+  }
 };
 </script>
 <style lang="scss" scoped>
@@ -71,5 +79,8 @@ export default {
   border-radius: 4px;
   margin: 0.8rem 0;
   padding: 0.5rem;
+  .card_text{
+    margin-left: 1rem;
+  }
 }
 </style>
