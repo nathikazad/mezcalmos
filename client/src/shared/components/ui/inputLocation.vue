@@ -20,8 +20,11 @@
             ref="from"
           />
         </div>
-        <base-button :mode="{ dark: true, bg_diagonal: true }" class="float_btn">
-          <i class="fal fa-repeat icon"></i>
+        <base-button
+          :mode="{ dark: true, bg_diagonal: true }"
+          class="float_btn flex align_center center"
+        >
+          <logo class="icon_logo" :light="true"></logo>
         </base-button>
         <div class="to fill_height side">
           <h5>To {{ oneWay == "from" ? "(Optional)" : "" }}</h5>
@@ -42,7 +45,7 @@
         <h3
           @click="pickedFromSaved(res)"
           class="flex t-10 regular"
-          v-for="(res, index) in saved.locations"
+          v-for="(res, index) in savedLocations"
           :key="index"
         >
           <fa icon="map-marked-alt " class="icon text_primary"></fa>
@@ -75,6 +78,7 @@
         :directionsOrigin="directionsBorns.start"
         :directionsDest="directionsBorns.end"
         :fromUrl="fromUrl"
+        v-if="withMap"
       ></map-view>
       <slot name="action"></slot>
     </div>
@@ -107,6 +111,11 @@ export default {
     },
     fromUrl: {
       type: String
+    },
+
+    withMap: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -121,6 +130,9 @@ export default {
   computed: {
     isLoggedIn() {
       return this.$store.getters.loggedIn;
+    },
+    savedLocations() {
+      return this.$store.getters["savedLocations/locations"] || {};
     }
   },
   mounted() {},
@@ -138,7 +150,7 @@ export default {
             service.getQueryPredictions({ input: newVal }, predections => {
               this.search.results = predections;
             });
-          }, 2000);
+          }, 3000);
         } else {
           this.search.searching = false;
           this.search.results = [];
@@ -158,7 +170,7 @@ export default {
             service.getQueryPredictions({ input: newVal }, predections => {
               this.search.results = predections;
             });
-          }, 2000);
+          }, 3000);
         } else {
           this.search.searching = false;
           this.search.results = [];
@@ -192,6 +204,8 @@ export default {
     },
     changeDirection(direction, pos) {
       if (direction == "from") {
+        console.log({ pos }, { direction });
+
         this.directionsBorns.start = {
           lat: pos.lat(),
           lng: pos.lng()
@@ -230,18 +244,33 @@ export default {
       });
     },
     pickedFromSaved(place) {
-      this.changeDirection(this.saved.origin, place.pos);
-      this.center = place.pos;
-      this[this.saved.origin].address = place.description;
-      this[this.saved.origin].lat = place.pos.lat();
-      this[this.saved.origin].long = place.pos.lng();
+      let pos = {
+        lat: place.lat,
+        lng: place.long
+      };
+      this.changeDirection(this.saved.origin, {
+        lat: () => {
+          return parseInt(place.lat);
+        },
+        lng: () => {
+          return parseInt(place.lng);
+        }
+      });
+      this.center = pos;
+      this[this.saved.origin].address = place.address;
+      this[this.saved.origin].lat = place.lat;
+      this[this.saved.origin].long = place.lng;
       this.$emit("changedDirection", {
         origin: this.saved.origin,
-        pos: place.pos
+        pos: pos
       });
-      this.$emit("centerChanged", place.pos);
+      this.$emit("centerChanged", pos);
       this.saved.opened = false;
     }
+  },
+  async beforeCreate() {
+    let response = await this.$store.dispatch("savedLocations/loadLocations");
+    console.log(response);
   }
 };
 </script>
@@ -300,6 +329,11 @@ export default {
   position: absolute;
   left: calc(50% - 0.95rem);
   transition: 0.5s all;
+  ::v-deep span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 .locationPicker {
   z-index: 9;
@@ -320,6 +354,10 @@ export default {
   }
 }
 .icon {
+  margin-right: 0rem;
+}
+.icon_logo {
+  height: 1.4rem;
   margin-right: 0rem;
 }
 </style>

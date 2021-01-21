@@ -11,6 +11,8 @@ export default {
   actions: {
     loadLocations(context) {
       let userId = context.rootGetters.userId
+
+
       firebaseDatabase().ref(`/users/${userId}/savedLocations`).on('value', async snapshot => {
 
         let locations = snapshot.val();

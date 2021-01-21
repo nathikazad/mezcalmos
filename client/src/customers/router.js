@@ -39,6 +39,9 @@ const router = new VueRouter({
     {
       path: "/services/taxi/request",
       component: TaxiRequestPage,
+      meta: {
+        requiresAuth: true,
+      },
     },
     {
       path: "/services/grocery/request",
