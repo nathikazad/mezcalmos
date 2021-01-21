@@ -90,9 +90,9 @@ export default {
     toggle() {
       this.on = !this.on;
       if (this.on) {
-        this.$store.dispatch("turnOn");
+        this.$store.dispatch("startLooking");
       } else {
-        this.$store.dispatch("turnOff");
+        this.$store.dispatch("stopLooking");
       }
     },
   },

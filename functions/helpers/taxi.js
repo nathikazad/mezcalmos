@@ -68,24 +68,28 @@ async function request(firebase, data, uid) {
 }
 
 async function accept(firebase, data, uid) {
-  // TODO: dont let user accept second taxi order
-  if (!data.orderId) {
-    return {
-      status: "Error",
-      errorMessage: "Required orderId"
-    }
+  if(!data.orderId) {
+    return { status:"Error", errorMessage: "Required orderId"}
   }
 
-  let authorizedDriver = (await firebase.database().ref(`/taxiDrivers/${uid}/authorized`).once('value')).val();
-  if (!authorizedDriver) {
-    return {
-      status: "Error",
-      errorMessage: "User is not an authorized"
-    }
+  let driverState = (await firebase.database().ref(`/taxiDrivers/${uid}/state`).once('value')).val();
+  if(!driverState.authorized) {
+    return { status:"Error", errorMessage: "User is not an authorized driver"}
   }
 
-  let driver = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val();
-  let response = await firebase.database().ref(`/orders/taxi/${data.orderId}`).transaction(function (order) {
+  if(driverState.inTaxi) {
+    return { status:"Error", errorMessage: "Driver is already in another taxi"}
+  }
+
+  let order = (await firebase.database().ref(`/orders/taxi/${data.orderId}`).once('value')).val();
+  if(!order) {
+    return { status:"Error", errorMessage: "Order does not exist"}
+  }
+
+  
+
+  driver = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val();
+  let response = await firebase.database().ref(`/orders/taxi/${data.orderId}`).transaction(function(order) {
     console.log(order)
     if (order != null) {
       console.log(order.status)
@@ -122,6 +126,7 @@ async function accept(firebase, data, uid) {
       acceptRideTime: order.acceptRideTime,
       status: order.status
     });
+    firebase.database().ref(`/taxiDrivers/${uid}/state/inTaxi`).set(data.orderId)
     firebase.database().ref(`/users/${order.customer.id}/orders/${data.orderId}`).update({
       driver: order.driver,
       acceptRideTime: order.acceptRideTime,
@@ -215,7 +220,7 @@ async function finish(firebase, data, uid) {
   firebase.database().ref(`/orders/taxi/${data.orderId}`).update(update)
   firebase.database().ref(`/users/${order.customer.id}/orders/${data.orderId}`).update(update);
   firebase.database().ref(`/taxiDrivers/${order.driver.id}/orders/${data.orderId}`).update(update);
-
+  firebase.database().ref(`/taxiDrivers/${order.driver.id}/state/inTaxi`).remove()
   update.notificationType = "orderStatusChange"
   update.orderId = data.orderId
   update.time = update.rideFinishTime

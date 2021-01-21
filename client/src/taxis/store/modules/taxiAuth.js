@@ -5,7 +5,8 @@ export default {
   state() {
     return {
       canTaxi: false,
-      status: "off" //other possible status "looking" or "inTaxi",
+      isLooking: false,
+      currentTaxi: null
     };
   },
   getters: {
@@ -13,49 +14,66 @@ export default {
       return state.canTaxi;
     },
     isLooking(state) {
-      return state.status == "looking";
+      return state.isLooking;
     },
     isInTaxi(state) {
-      return state.status == "inTaxi";
+      return state.currentTaxi != null;
     },
-    isOff(state) {
-      return state.status == "off";
+    currentTaxi(state) {
+      return state.currentTaxi
     }
   },
   actions: {
     async loadTaxiAuth(context) {
       let userId = context.rootGetters.userId
-      console.log(userId)
-      let canTaxi = (await firebaseDatabase().ref(`taxiDrivers/${userId}/authorized`).once('value')).val() != null;
-      context.commit('saveTaxiAuth', {
-        canTaxi: canTaxi
-      })
+      let snapshot = await firebaseDatabase().ref(`taxiDrivers/${userId}/state`).once('value')
+      storeState(snapshot.val(), context)
+      firebaseDatabase().ref(`taxiDrivers/${userId}/state`).on('value', snapshot => {
+        storeState(snapshot.val(), context)
+      });
     },
-    turnOn(context) {
-      this.dispatch('incomingOrders/startListeningForIncoming')
-      context.commit('setStatus', {
-        status: "looking"
-      })
+    startLooking(context) {
+      let userId = context.rootGetters.userId
+      firebaseDatabase().ref(`taxiDrivers/${userId}/state/isLooking`).set(true);
     },
-    turnOff(context) {
-      this.dispatch('incomingOrders/stopListeningForIncoming')
-      context.commit('setStatus', {
-        status: "off"
-      })
-    },
-    setToInTaxi(context) {
-      this.dispatch('incomingOrders/stopListeningForIncoming')
-      context.commit('setStatus', {
-        status: "inTaxi"
-      })
+    stopLooking(context) {
+      let userId = context.rootGetters.userId
+      firebaseDatabase().ref(`taxiDrivers/${userId}/state/isLooking`).set(false);
     },
   },
   mutations: {
     saveTaxiAuth(state, payload) {
       state.canTaxi = payload.canTaxi;
     },
-    setStatus(state, payload) {
-      state.status = payload.status;
+    setTaxi(state, payload) {
+      state.currentTaxi = payload;
+    },
+    setIsLooking(state, payload) {
+      state.isLooking = payload;
     }
   }
+}
+
+function storeState(state, context) {
+  if(state.authorized){
+    context.commit('saveTaxiAuth', {canTaxi: true})
+  } else {
+    return
+  }
+  if(state.inTaxi){
+    context.commit('setTaxi', state.inTaxi)
+    context.dispatch('incomingOrders/stopListeningForIncoming')
+  } else {
+    context.commit('setTaxi', null)
+    if(state.isLooking) {
+      context.commit('setIsLooking', true)
+      context.dispatch('incomingOrders/startListeningForIncoming')
+    } else {
+      context.commit('setIsLooking', false)
+      console.log("stop listening")
+      context.dispatch('incomingOrders/stopListeningForIncoming')
+    }  
+  }
+  
+  
 }

@@ -17,10 +17,6 @@ Vue.use(VueRouter)
 const router = new VueRouter({
   mode: 'history',
   routes: [{
-      path: '/',
-      redirect: '/incoming'
-    },
-    {
       path: '/incoming',
       component: IncomingOrdersPage,
       meta: {
@@ -72,8 +68,13 @@ const router = new VueRouter({
 })
 
 router.beforeEach(async function (to, from, next) {
-  // TODO: check if currently in transit, if yes redirect to current transit page
-  if (to.meta.requiresAuth && !store.getters.loggedIn) {
+  if(to.path == "/") {
+    if (store.getters.isInTaxi) {
+      next(`/orders/${store.getters.currentTaxi}`);
+    } else {
+      next("/incoming")
+    }
+  }else if (to.meta.requiresAuth && !store.getters.loggedIn) {
     next({
       path: '/auth',
       query: {

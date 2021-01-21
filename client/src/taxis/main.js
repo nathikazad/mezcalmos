@@ -87,16 +87,18 @@ async function firebaseCallback(user) {
       loggedIn: true
     })
     await store.dispatch('loadTaxiAuth');
-    if (router.currentRoute.path == "/auth" && router.currentRoute.query.redirect) {
-      router.push({
-        path: router.currentRoute.query.redirect
-      })
-    } else if (router.currentRoute.path == "/auth") {
-      router.push({
-        path: "/"
-      })
+    if (router.currentRoute.path == "/auth"){
+      if(router.currentRoute.query.redirect) {
+        if(router.currentRoute.query.redirect == "/incoming" 
+          && store.getters.isInTaxi) {
+            router.push({ path: `/orders/${store.getters.currentTaxi}`});
+        } else {
+          router.push({ path: router.currentRoute.query.redirect })
+        }
+      } else {
+        router.push({ path: "/" })
+      }
     }
-
   }
 }
 
