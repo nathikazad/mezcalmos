@@ -54,6 +54,7 @@ async function request(firebase, data, uid) {
   });
   let chat = {
     participants: {},
+    chatType: "order",
     orderType: "taxi"
   }
   chat.participants[uid] = {
@@ -100,8 +101,7 @@ async function accept(firebase, data, uid) {
         order.driver = {
           id: uid,
           name: driver.displayName.split(' ')[0],
-          image: driver.photo,
-          arrival: data.arrival
+          image: driver.photo
         }
         return order
       } else {
@@ -137,6 +137,7 @@ async function accept(firebase, data, uid) {
       name: driver.displayName.split(' ')[0],
       image: driver.photo
     });
+
     firebase.database().ref(`/notifications/${order.customer.id}`).push({
       notificationType: "orderStatusChange",
       orderId: data.orderId,

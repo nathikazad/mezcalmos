@@ -42,7 +42,7 @@
                 <h4 class="text_blackL">{{ orderDetails.driver.name }}</h4>
                 <h5 class="regular text_grey">
                   Arrival
-                  {{ orderDetails.driver.arrival.time | moment("from", "now") }}
+                  {{ orderDetails.driver.position.timeToLocation | moment("from", "now") }}
                 </h5>
               </div>
             </div>

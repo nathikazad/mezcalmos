@@ -178,17 +178,21 @@ export default {
   },
   methods: {
     async acceptRide() {
-      let date = new Date();
       this.loading = true;
-      let arrival = {
-        pos: { lat: 34.25, lng: 31.58 },
-        distance: 5000,
-        time: new Date(date.getTime() + 8 * 60000).getTime()
-      };
-      console.log({ arrival });
-      let response = await this.$store.dispatch("order/acceptRide", arrival);
+      let response = await this.$store.dispatch("order/acceptRide");
       console.log(response);
       this.loading = false;
+    },
+    async updateDriverPosition(position) {
+      position = {
+        lat: 34.25, 
+        lng: 31.58,
+        distanceToLocation: 2.3,
+        timeToLocation: 1500,
+        estimatedArrivalTime: (new Date()).toUTCString(),
+        lastUpdateTime: (new Date()).toUTCString()
+      };
+      this.$store.dispatch("order/updateDriverPosition", position)
     },
     async startRide() {
       this.loading = true;

@@ -13,20 +13,18 @@ export default {
   },
   actions: {
     loadOrder(context, payload) {
-      // TODO: if id not null then call unload order
       if (context.getters.orderId != null) {
         context.dispatch('unloadOrder')
       }
       let orderId = payload.orderId
       firebaseDatabase().ref(`orders/taxi/${orderId}`).on('value', snapshot => {
         let order = snapshot.val()
+        // TODO: if order is null then reroute page
         context.commit('saveOrder', {
           order: order,
           orderId: orderId
         });
-        // TODO: if order status changes from isLooking to onTheWay and the driverId is not current driver then exit gracefully.
       });
-      // TODO: gracefully handle error read
     },
     unloadOrder(context) {
       let orderId = context.state.orderId
@@ -34,14 +32,28 @@ export default {
       firebaseDatabase().ref(`orders/taxi/${orderId}`).off()
       context.commit('unloadOrder')
     },
-    async acceptRide(context, arrival) {
+    async acceptRide(context) {
       // TODO: check if order is loaded
       let orderId = context.state.orderId
       let response = await cloudCall('acceptTaxiOrder', {
-        orderId: orderId,
-        arrival: arrival
+        orderId: orderId
       });
+      // For TESTING PURPOSE, remove this and add it to callback from gps update posittion
+      let position = {
+        lat: 34.25, 
+        lng: 31.58,
+        distanceToLocation: 2.3,
+        timeToLocation: 1500,
+        estimatedArrivalTime: (new Date()).toUTCString(),
+        lastUpdateTime: (new Date()).toUTCString()
+      };
+      context.dispatch('updateDriverPosition', position)
       return response;
+    },
+    updateDriverPosition(context, position) {
+      // TODO: check if order is loaded
+      let orderId = context.state.orderId
+      firebaseDatabase().ref(`orders/taxi/${orderId}/driver/position`).set(position);
     },
     async startRide(context) {
       // TODO: check if order is loaded

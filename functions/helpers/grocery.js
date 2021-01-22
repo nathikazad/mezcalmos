@@ -45,6 +45,7 @@ async function request(firebase, data, uid) {
   })
   let chat = {
     participants: {},
+    chatType: "order",
     orderType: "grocery"
   }
   chat.participants[uid] = {

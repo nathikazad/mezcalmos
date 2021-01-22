@@ -110,7 +110,7 @@ exports.notifyMessageParticipantsTest = functions.database.instance('mezcalmos-t
 })
 
 exports.notifyMessageParticipants = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
-  '/chat/{orderId}/messages/{messageId}').onCreate(async (snap, context) => {
+  '/chat/{chatId}/messages/{messageId}').onCreate(async (snap, context) => {
 
   let firebase = getFirebase();
   message.notifyOthers(firebase, context.params, snap.val())

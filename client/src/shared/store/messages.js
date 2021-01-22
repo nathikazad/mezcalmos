@@ -1,6 +1,5 @@
 import {
-  firebaseDatabase,
-  cloudCall
+  firebaseDatabase
 } from '@/shared/config/firebase'
 export default {
   namespaced: true,
@@ -8,13 +7,15 @@ export default {
     return {
       messages: null,
       participants: null,
-      orderId: null
+      orderId: null,
+      chatType: null
     };
   },
   actions: {
     async sendMessage(context, payload) {
       let orderId = context.state.orderId
       let newMessage = {
+        orderId: orderId,
         message: payload.message,
         userId: context.rootGetters.userId,
         timestamp: (new Date()).toUTCString()
@@ -22,9 +23,6 @@ export default {
       console.log(orderId, newMessage)
       // user can claim to be any user
       firebaseDatabase().ref(`/chat/${orderId}/messages`).push(newMessage);
-      cloudCall('sendMessage', {
-        message: payload.message
-      });
     },
     async loadMessages(context, payload) {
       let orderId = context.state.orderId
@@ -41,10 +39,11 @@ export default {
       }
       orderId = payload.orderId
 
-      let orderType = (await firebaseDatabase().ref(`chat/${orderId}/orderType/`).once('value')).val();
-      context.commit('saveOrderId', {
+      let chat = (await firebaseDatabase().ref(`chat/${orderId}/`).once('value')).val();
+      context.commit('saveChatInfo', {
         orderId: orderId,
-        orderType: orderType
+        orderType: chat.orderType,
+        chatType: chat.chatType
       })
       firebaseDatabase().ref(`/chat/${orderId}`).on('value', async snapshot => {
         let chat = snapshot.val();
@@ -53,7 +52,7 @@ export default {
         // TODO: if unauthorized or wrong type of order redirect to home page
         context.commit('saveMessages', {
           messages: chat.messages,
-          participants: chat.participants
+          participants: chat.participants,
         })
       });
     }
@@ -63,14 +62,16 @@ export default {
       state.messages = payload.messages;
       state.participants = payload.participants;
     },
-    saveOrderId(state, payload) {
+    saveChatInfo(state, payload) {
       state.orderId = payload.orderId
       state.orderType = payload.orderType
+      state.chatType = payload.chatType
     },
     unloadMessages(state) {
       state.messages = {}
       state.orderType = null;
       state.orderId = null;
+      state.chatType = null;
     }
   },
   getters: {
