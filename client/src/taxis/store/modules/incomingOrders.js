@@ -23,12 +23,10 @@ export default {
       firebaseDatabase().ref(`openOrders/taxi`).off();
       context.commit('saveIncoming', {})
     },
-    updateDistances(context, driverLocation) {
+    async updateDistances(context) {
       let orders = context.state.list
-      driverLocation = {
-        lat: 34.0522,
-        long: 118.2437
-      }
+      let driverLocation = await getCoords();
+      console.log(driverLocation)
       let distances = {}
       let sortedOrderIds = []
       for (let order in orders) {
@@ -85,3 +83,14 @@ function getDistanceFromLatLonInKm(from, to) {
 function deg2rad(deg) {
   return deg * (Math.PI / 180)
 }
+
+const getCoords = async () => {
+  const pos = await new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+
+  return {
+    long: pos.coords.longitude,
+    lat: pos.coords.latitude,
+  };
+};
