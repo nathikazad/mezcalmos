@@ -16,7 +16,6 @@ import {
 import {
   firebaseInit
 } from "@/shared/config/firebase";
-import VueHtml2Canvas from 'vue-html2canvas';
 
 
 
@@ -30,8 +29,8 @@ import PickLocation from "@/shared/components/map/pickLocation";
 import InputLocation from "@/shared/components/ui/inputLocation";
 import "./registerServiceWorker";
 import {
-  deepFind,
-  print
+  deepFind
+
 } from '@/shared/mixins/functions'
 Vue.use(VueGoogleMaps, {
   load: {
@@ -69,12 +68,11 @@ Vue.component("map-view", MapView);
 //Vue mixins
 Vue.mixin({
   methods: {
-    deepFind,
-    print
+    deepFind
+
   }
 })
-//Vue html2canvas configuration
-Vue.use(VueHtml2Canvas);
+
 //Vue moment configuration
 Vue.use(require('vue-moment'));
 //Firebase state changed function

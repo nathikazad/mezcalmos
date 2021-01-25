@@ -7,7 +7,7 @@
         <avatar size="2.4rem" :url="sender.image"></avatar>
         <div class="user_name">
           <h3>{{sender.name}}</h3>
-          <h5 class="text_info regular">Avilable</h5>
+          <h5 class="text_info regular">Available</h5>
         </div>
       </div>
       <div class="messages">
@@ -49,8 +49,7 @@
 export default {
   data() {
     return {
-      newMessage: "",
-      messagesTest: []
+      newMessage: ""
     };
   },
   computed: {
@@ -61,8 +60,6 @@ export default {
       return Object.keys(this.$store.getters["messages/value"]).length > 0;
     },
     userId() {
-      console.log(this.$store.getters["userId"]);
-
       return this.$store.getters["userId"];
     },
     sender() {
@@ -80,6 +77,7 @@ export default {
 
       return recipient;
     },
+
     messages() {
       return this.$store.getters["messages/value"];
     }
@@ -93,16 +91,7 @@ export default {
     me(id) {
       return id == this.userId;
     },
-    sendMessageTest() {
-      this.messagesTest.push({
-        me: true,
-        text: this.newMessage,
-        seen: "18:06",
-        avatar:
-          "https://scontent.ftun11-1.fna.fbcdn.net/v/t1.0-9/107473085_10220372571378093_8626273449961856030_n.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=jN2qfU0I-z0AX-BsJ9G&_nc_ht=scontent.ftun11-1.fna&oh=c1ee5219e203f447022a8037b899cfc4&oe=60050203"
-      });
-      this.newMessage = "";
-    },
+
     async sendMessage() {
       await this.$store
         .dispatch("messages/sendMessage", {

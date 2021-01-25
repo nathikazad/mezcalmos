@@ -6,10 +6,15 @@
           Incoming
           <br />Orders
         </span>
-        <switcher @click.native="toggle()" :open="on"></switcher>
+        <switcher @click.native="toggle()" :open="isLooking"></switcher>
       </h1>
 
       <div v-if="!isLoaded">Loading...</div>
+      <h3 v-else-if="isInTaxi">
+        Please finish
+        <router-link :to="currentOrderIdLink">your ride</router-link>
+        to accept new orders
+      </h3>
       <div v-else-if="hasOrders">
         <router-link
           :to="linkToOrder(orderId)"
@@ -19,12 +24,16 @@
           :key="key"
         >
           <card class="bg_secondary border card">
-            <div slot="text" class="flex align_center">
+            <div slot="text" class="flex align_center fill_width space_between">
               <div slot="cardTitle" class="bold">
                 <h4 class="text_blackL">
                   {{ deepFind(orders[orderId], "customer.name") }}
                 </h4>
-                <h5 class="regular text_grey">{{(deepFind(orders[orderId], "customer.distance")/1000).toFixed(1)}}km far</h5>
+                <h5 class="regular text_grey">
+                  {{
+                    deepFind(orders[orderId], "customer.distance").toFixed(1)
+                  }}km far
+                </h5>
               </div>
               <div
                 slot="description"
@@ -32,18 +41,18 @@
                 v-if="orders[orderId].routeInformation"
               >
                 <fa icon="route"></fa>
-                <span class="text_blackL"
-                  >&nbsp;{{
+                <span class="text_blackL">
+                  &nbsp;{{
                     deepFind(orders[orderId], "routeInformation.distance.text")
-                  }}</span
-                >
+                  }}
+                </span>
                 <br />
                 <fa icon="stopwatch"></fa>
-                <span class="text_blackL"
-                  >&nbsp;{{
+                <span class="text_blackL">
+                  &nbsp;{{
                     deepFind(orders[orderId], "routeInformation.duration.text")
-                  }}</span
-                >
+                  }}
+                </span>
               </div>
             </div>
           </card>
@@ -64,7 +73,6 @@ export default {
   data() {
     return {
       isLoaded: false,
-      on: false,
     };
   },
   computed: {
@@ -85,11 +93,16 @@ export default {
     isLooking() {
       return this.$store.getters["isLooking"];
     },
+    isInTaxi() {
+      return this.$store.getters["isInTaxi"];
+    },
+    currentOrderIdLink() {
+      return `orders/${this.$store.getters["currentOrderId"]}`;
+    },
   },
   methods: {
     toggle() {
-      this.on = !this.on;
-      if (this.on) {
+      if (!this.isLooking) {
         this.$store.dispatch("startLooking");
       } else {
         this.$store.dispatch("stopLooking");

@@ -40,9 +40,16 @@
               <avatar size="2.4rem" :url="orderDetails.driver.image"></avatar>
               <div class="user_name">
                 <h4 class="text_blackL">{{ orderDetails.driver.name }}</h4>
-                <h5 class="regular text_grey">
+                <h5
+                  class="regular text_grey"
+                  v-if="deepFind(orderDetails,'driver.position.timeToLocation')"
+                >
                   Arrival
-                  {{ orderDetails.driver.position.timeToLocation | moment("from", "now") }}
+                  {{ deepFind(orderDetails,'driver.position.timeToLocation') | moment("from", "now") }}
+                </h5>
+                <h5 class="regular text_grey" v-else>
+                  Arrival
+                  {{'TBD'}}
                 </h5>
               </div>
             </div>
@@ -100,7 +107,6 @@
           <base-button
             class="w-30 elevate_1"
             :mode="{ dark: true, bg_info: true }"
-            @click.native="printMap"
             :loading="loading"
           >
             <span class="t-8 regular">Review</span>
@@ -118,7 +124,7 @@
 export default {
   data() {
     return {
-      loading: false,
+      loading: false
     };
   },
   computed: {
@@ -137,34 +143,30 @@ export default {
     calculateBorns() {
       let borns = {
         start: null,
-        end: null,
+        end: null
       };
 
       if (this.orderDetails) {
         borns.start = {
           lat: this.orderDetails.from.lat,
-          lng: this.orderDetails.from.long,
+          lng: this.orderDetails.from.long
         };
 
         borns.end = {
           lat: this.orderDetails.to.lat,
-          lng: this.orderDetails.to.long,
+          lng: this.orderDetails.to.long
         };
       }
       return borns;
-    },
+    }
   },
   mounted() {},
-  methods: {
-    printMap() {
-      this.$refs["inputLocation"].printMap();
-    },
-  },
+  methods: {},
   async beforeCreate() {
     this.$store.dispatch("taxis/loadTaxi", {
-      orderId: this.$route.params.orderId,
+      orderId: this.$route.params.orderId
     });
-  },
+  }
 };
 </script>
 <style lang="scss" scoped>

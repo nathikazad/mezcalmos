@@ -41,7 +41,10 @@
         </div>
       </div>
       <!-- Drop down menu for saved locations-->
-      <div class="dropdown bg_white border elevate_2" v-if="deepFind(saved, 'opened')">
+      <div
+        class="dropdown bg_white border elevate_2"
+        v-if="deepFind(saved, 'opened')"
+      >
         <h3
           @click="pickedFromSaved(res)"
           class="flex t-10 regular"
@@ -53,7 +56,10 @@
         </h3>
       </div>
       <!-- Drop down menu for search-->
-      <div class="dropdown bg_white border elevate_2" v-if="deepFind(search, 'searching')">
+      <div
+        class="dropdown bg_white border elevate_2"
+        v-if="deepFind(search, 'searching')"
+      >
         <span v-if="search.results.length">
           <h3
             @click="pickedLocation(res)"
@@ -89,34 +95,37 @@
 export default {
   props: {
     search: {
-      type: Object
+      type: Object,
     },
     saved: {
-      type: Object
+      type: Object,
+      default() {
+        return { opened: false };
+      },
     },
     directionsBorns: {
-      type: Object
+      type: Object,
     },
     oneWay: {
-      type: String
+      type: String,
     },
     to: {
-      type: Object
+      type: Object,
     },
     from: {
-      type: Object
+      type: Object,
     },
     disabled: {
-      type: Boolean
+      type: Boolean,
     },
     fromUrl: {
-      type: String
+      type: String,
     },
 
     withMap: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   data() {
     return {
@@ -124,7 +133,7 @@ export default {
       focusedTo: false,
       pickLocation: false,
       center: this.directionsBorns.start || { lat: 30.2672, lng: -97.7431 },
-      delayer: null
+      delayer: null,
     };
   },
   computed: {
@@ -133,9 +142,24 @@ export default {
     },
     savedLocations() {
       return this.$store.getters["savedLocations/locations"] || {};
+    },
+  },
+  mounted() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        var location = {
+          lng: position.coords.longitude,
+          lat: position.coords.latitude,
+        };
+
+        if (!this.directionsBorns.start) {
+          this.$data.center = location;
+        }
+      });
+    } else {
+      console.log("Geo Location not supported by browser");
     }
   },
-  mounted() {},
   watch: {
     "to.address": {
       deep: true,
@@ -147,7 +171,7 @@ export default {
           clearTimeout(this.delayer);
           this.delayer = setTimeout(() => {
             var service = new window.google.maps.places.AutocompleteService();
-            service.getQueryPredictions({ input: newVal }, predections => {
+            service.getQueryPredictions({ input: newVal }, (predections) => {
               this.search.results = predections;
             });
           }, 3000);
@@ -155,7 +179,7 @@ export default {
           this.search.searching = false;
           this.search.results = [];
         }
-      }
+      },
     },
     "from.address": {
       deep: true,
@@ -167,7 +191,7 @@ export default {
           clearTimeout(this.delayer);
           this.delayer = setTimeout(() => {
             var service = new window.google.maps.places.AutocompleteService();
-            service.getQueryPredictions({ input: newVal }, predections => {
+            service.getQueryPredictions({ input: newVal }, (predections) => {
               this.search.results = predections;
             });
           }, 3000);
@@ -175,17 +199,14 @@ export default {
           this.search.searching = false;
           this.search.results = [];
         }
-      }
-    }
+      },
+    },
   },
   methods: {
     sendDirection(pos) {
       this.$emit("setPos", pos);
     },
-    async printMap() {
-      let output = await this.print(this, "map");
-      console.log(output);
-    },
+
     focused(title) {
       this.focusedFrom = title == "From";
       this.focusedTo = title == "To";
@@ -203,17 +224,16 @@ export default {
       this.search.origin = title.toLowerCase();
     },
     changeDirection(direction, pos) {
+      console.log({ lat: pos.lat(), lng: pos.lng() }, { direction });
       if (direction == "from") {
-        console.log({ pos }, { direction });
-
         this.directionsBorns.start = {
           lat: pos.lat(),
-          lng: pos.lng()
+          lng: pos.lng(),
         };
       } else if (direction == "to") {
         this.directionsBorns.end = {
           lat: pos.lat(),
-          lng: pos.lng()
+          lng: pos.lng(),
         };
       }
     },
@@ -230,12 +250,12 @@ export default {
       this[this.search.origin].address = place.description;
 
       var service = new window.google.maps.places.PlacesService(map);
-      await service.getDetails({ placeId: place["place_id"] }, res => {
+      await service.getDetails({ placeId: place["place_id"] }, (res) => {
         this.center = res.geometry.location;
         this.search.searching = false;
         this.$emit("changedDirection", {
           origin: this.search.origin,
-          pos: res.geometry.location
+          pos: res.geometry.location,
         });
         this[this.search.origin].lat = res.geometry.location.lat();
         this[this.search.origin].long = res.geometry.location.lng();
@@ -246,32 +266,32 @@ export default {
     pickedFromSaved(place) {
       let pos = {
         lat: place.lat,
-        lng: place.long
+        lng: place.long,
       };
       this.changeDirection(this.saved.origin, {
         lat: () => {
-          return parseInt(place.lat);
+          return pos.lat;
         },
         lng: () => {
-          return parseInt(place.lng);
-        }
+          return pos.lng;
+        },
       });
       this.center = pos;
       this[this.saved.origin].address = place.address;
       this[this.saved.origin].lat = place.lat;
-      this[this.saved.origin].long = place.lng;
+      this[this.saved.origin].long = place.long;
       this.$emit("changedDirection", {
         origin: this.saved.origin,
-        pos: pos
+        pos: pos,
       });
       this.$emit("centerChanged", pos);
       this.saved.opened = false;
-    }
+    },
   },
   async beforeCreate() {
     let response = await this.$store.dispatch("savedLocations/loadLocations");
     console.log(response);
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>

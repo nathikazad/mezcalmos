@@ -71,7 +71,6 @@ export default {
       name: "",
       loading: false,
       item: { name: "", notes: "" },
-      pos: { lat: 30.2672, lng: -97.7431 },
       saved: {
         address: "",
         results: [],
@@ -80,6 +79,30 @@ export default {
       },
       delayer: null
     };
+  },
+
+  mounted() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+        console.log(position);
+
+        var location = {
+          lng: position.coords.longitude,
+          lat: position.coords.latitude
+        };
+        console.log(this.$refs["map"]);
+
+        this.saved.pos = location;
+        setTimeout(async () => {
+          this.saved.address = await this.geocodedAddress(location);
+          setTimeout(() => {
+            this.saved.searching = false;
+          }, 100);
+        }, 200);
+      });
+    } else {
+      console.log("Geo Location not supported by browser");
+    }
   },
   computed: {
     isLoggedIn() {
@@ -121,13 +144,21 @@ export default {
       this.loading = false;
       this.$emit("close");
     },
+    geocodedAddress(location) {
+      let geocoder = new window.google.maps.Geocoder();
 
-    setPlace(place) {
-      console.log(place);
-      this.pos = {
-        lat: place.geometry.location.lat(),
-        lng: place.geometry.location.lng()
-      };
+      return new Promise(function(resolve, reject) {
+        geocoder.geocode({ location: location }, function(results, status) {
+          if (status === "OK") {
+            if (results[0]) {
+              resolve(results[0].formatted_address);
+            } else {
+              console.log(status);
+              reject("No results found");
+            }
+          }
+        });
+      });
     },
     async pickedLocation(place) {
       let map = this.$refs["map"].$refs["marker-center"].$map;

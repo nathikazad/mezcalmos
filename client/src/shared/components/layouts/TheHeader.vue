@@ -68,9 +68,6 @@ export default {
     }
   },
   methods: {
-    print() {
-      console.log(this.$store.getters.loggedIn);
-    },
     logout() {
       this.$store.dispatch("logout");
       this.$router.push({ name: "services" });

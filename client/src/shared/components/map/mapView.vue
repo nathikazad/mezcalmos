@@ -273,7 +273,7 @@ export default {
     };
   },
   mounted() {
-    console.log(this.directionsOrigin);
+   
   },
   methods: {
     dragging(event, index) {
@@ -298,7 +298,8 @@ export default {
         type: "direction",
         end: true
       });
-    }
+    },
+  
   }
 };
 </script>

@@ -160,18 +160,6 @@ export default {
         end: null
       },
       saved: {
-        locations: [
-          {
-            description: "Rte, mahdia km 5 Sfax,Tunisia",
-            pos: { lat: () => 34.7667, lng: () => 10.7255 },
-            name: "Home"
-          },
-          {
-            description: "Rte, mahdia km 8.5 Sfax,Tunisia",
-            pos: { lat: () => 34.7571, lng: () => 10.7715 },
-            name: "Office"
-          }
-        ],
         origin: "from",
         opened: false
       },
