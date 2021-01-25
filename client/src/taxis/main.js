@@ -91,7 +91,7 @@ async function firebaseCallback(user) {
       if(router.currentRoute.query.redirect) {
         if(router.currentRoute.query.redirect == "/incoming" 
           && store.getters.isInTaxi) {
-            router.push({ path: `/orders/${store.getters.currentTaxi}`});
+            router.push({ path: `/orders/${store.getters.currentOrderId}`});
         } else {
           router.push({ path: router.currentRoute.query.redirect })
         }

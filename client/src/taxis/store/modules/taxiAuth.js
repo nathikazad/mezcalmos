@@ -6,7 +6,8 @@ export default {
     return {
       canTaxi: false,
       isLooking: false,
-      currentTaxi: null
+      currentOrderId: null,
+      lastLocationUpdateTime: null
     };
   },
   getters: {
@@ -17,10 +18,10 @@ export default {
       return state.isLooking;
     },
     isInTaxi(state) {
-      return state.currentTaxi != null;
+      return state.currentOrderId != null;
     },
-    currentTaxi(state) {
-      return state.currentTaxi
+    currentOrderId(state) {
+      return state.currentOrderId
     }
   },
   actions: {
@@ -39,41 +40,41 @@ export default {
     stopLooking(context) {
       let userId = context.rootGetters.userId
       firebaseDatabase().ref(`taxiDrivers/${userId}/state/isLooking`).set(false);
-    },
+    }
   },
   mutations: {
     saveTaxiAuth(state, payload) {
       state.canTaxi = payload.canTaxi;
     },
     setTaxi(state, payload) {
-      state.currentTaxi = payload;
+      state.currentOrder = payload
     },
     setIsLooking(state, payload) {
       state.isLooking = payload;
+    },
+    setCurrentOrderId(state, payload) {
+      state.currentOrderId = payload;
     }
   }
 }
 
-function storeState(state, context) {
-  if(state.authorized){
+function storeState(newState, context) {
+  if(newState.authorized){
     context.commit('saveTaxiAuth', {canTaxi: true})
   } else {
     return
   }
-  if(state.inTaxi){
-    context.commit('setTaxi', state.inTaxi)
+  if(newState.inTaxi){
     context.dispatch('incomingOrders/stopListeningForIncoming')
+    context.commit('setCurrentOrderId', newState.inTaxi)
   } else {
-    context.commit('setTaxi', null)
-    if(state.isLooking) {
+    context.commit('setCurrentOrderId', null)
+    if(newState.isLooking) {
       context.commit('setIsLooking', true)
       context.dispatch('incomingOrders/startListeningForIncoming')
     } else {
       context.commit('setIsLooking', false)
-      console.log("stop listening")
       context.dispatch('incomingOrders/stopListeningForIncoming')
     }  
   }
-  
-  
 }

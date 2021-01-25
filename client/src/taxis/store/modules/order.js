@@ -38,22 +38,7 @@ export default {
       let response = await cloudCall('acceptTaxiOrder', {
         orderId: orderId
       });
-      // For TESTING PURPOSE, remove this and add it to callback from gps update posittion
-      let position = {
-        lat: 34.25, 
-        lng: 31.58,
-        distanceToLocation: 2.3,
-        timeToLocation: 1500,
-        estimatedArrivalTime: (new Date()).toUTCString(),
-        lastUpdateTime: (new Date()).toUTCString()
-      };
-      context.dispatch('updateDriverPosition', position)
       return response;
-    },
-    updateDriverPosition(context, position) {
-      // TODO: check if order is loaded
-      let orderId = context.state.orderId
-      firebaseDatabase().ref(`orders/taxi/${orderId}/driver/position`).set(position);
     },
     async startRide(context) {
       // TODO: check if order is loaded

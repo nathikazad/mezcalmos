@@ -183,17 +183,6 @@ export default {
       console.log(response);
       this.loading = false;
     },
-    async updateDriverPosition(position) {
-      position = {
-        lat: 34.25, 
-        lng: 31.58,
-        distanceToLocation: 2.3,
-        timeToLocation: 1500,
-        estimatedArrivalTime: (new Date()).toUTCString(),
-        lastUpdateTime: (new Date()).toUTCString()
-      };
-      this.$store.dispatch("order/updateDriverPosition", position)
-    },
     async startRide() {
       this.loading = true;
       let response = await this.$store.dispatch("order/startRide");
