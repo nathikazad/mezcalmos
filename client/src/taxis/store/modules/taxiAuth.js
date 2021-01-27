@@ -6,7 +6,7 @@ export default {
     return {
       canTaxi: false,
       isLooking: false,
-      currentOrderId: null,
+      currentOrder: {id:null, value:null},
       lastLocationUpdateTime: null
     };
   },
@@ -18,10 +18,10 @@ export default {
       return state.isLooking;
     },
     isInTaxi(state) {
-      return state.currentOrderId != null;
+      return state.currentOrder.id != null;
     },
     currentOrderId(state) {
-      return state.currentOrderId
+      return state.currentOrder.id
     }
   },
   actions: {
@@ -32,6 +32,43 @@ export default {
       firebaseDatabase().ref(`taxiDrivers/${userId}/state`).on('value', snapshot => {
         storeState(snapshot.val(), context)
       });
+      setTimeout(async function(){
+        let driverLocation = await getCoords();
+        let locationUpdate = {position:driverLocation, lastUpdateTime:(new Date()).toUTCString()}
+        firebaseDatabase().ref(`taxiDrivers/${userId}/location`).set(locationUpdate)
+        if(context.state.currentOrder.id){
+          let order = context.state.currentOrder.value
+          firebaseDatabase().ref(`orders/taxi/${context.state.currentOrder.id}/driver/location`).update(locationUpdate)
+          let origin
+          if(order.status == "onTheWay"){
+            origin = order.from
+          } else if (order.status == "inTransit") {
+            origin = order.to
+          } else {
+            return
+          }
+          
+          let directionsService = new window.google.maps.DirectionsService();
+          directionsService.route({
+            origin:{lat: driverLocation.lat, lng: driverLocation.long},
+            destination:{lat: origin.lat, lng: origin.long},
+            travelMode:"DRIVING",
+          },
+          (response, status) => {
+            if(status == "OK"){
+              let distance = response.routes[0].legs[0].distance
+              let duration = response.routes[0].legs[0].duration
+              let eta = new Date()
+              eta.setSeconds(eta.getSeconds() + duration.value);
+              firebaseDatabase().ref(`orders/taxi/${context.state.currentOrder.id}/driver/location`).update({
+                distanceToLocation: distance,
+                timeToLocation: duration,
+                estimatedArrivalTime: eta.toUTCString(),
+              })
+            }
+          })
+        }
+      }, 60000);
     },
     startLooking(context) {
       let userId = context.rootGetters.userId
@@ -52,8 +89,9 @@ export default {
     setIsLooking(state, payload) {
       state.isLooking = payload;
     },
-    setCurrentOrderId(state, payload) {
-      state.currentOrderId = payload;
+    setCurrentOrder(state, payload) {
+      state.currentOrder.id = payload.id;
+      state.currentOrder.value = payload.value;
     }
   }
 }
@@ -66,9 +104,11 @@ function storeState(newState, context) {
   }
   if(newState.inTaxi){
     context.dispatch('incomingOrders/stopListeningForIncoming')
-    context.commit('setCurrentOrderId', newState.inTaxi)
+    firebaseDatabase().ref(`orders/taxi/${newState.inTaxi}`).once('value', snapshot => {
+      context.commit('setCurrentOrder', {id:newState.inTaxi, value:snapshot.val()})
+    });
   } else {
-    context.commit('setCurrentOrderId', null)
+    context.commit('setCurrentOrder', {id:null,value:null})
     if(newState.isLooking) {
       context.commit('setIsLooking', true)
       context.dispatch('incomingOrders/startListeningForIncoming')
@@ -78,3 +118,14 @@ function storeState(newState, context) {
     }  
   }
 }
+
+const getCoords = async () => {
+  const pos = await new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+
+  return {
+    long: pos.coords.longitude,
+    lat: pos.coords.latitude,
+  };
+};

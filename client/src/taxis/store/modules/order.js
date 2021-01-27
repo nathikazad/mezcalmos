@@ -17,7 +17,7 @@ export default {
         context.dispatch('unloadOrder')
       }
       let orderId = payload.orderId
-      firebaseDatabase().ref(`orders/taxi/${orderId}`).on('value', snapshot => {
+      firebaseDatabase().ref(`orders/taxi/${orderId}`).once('value', snapshot => {
         let order = snapshot.val()
         // TODO: if order is null then reroute page
         context.commit('saveOrder', {
