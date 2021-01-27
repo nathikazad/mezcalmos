@@ -42,6 +42,12 @@ export default {
       console.log("Logging out")
       await firebaseAuth().signOut()
       context.commit('clearData')
+    },
+    getUserDefaultLocation() {
+      return {
+        lat: 15.8720,
+        long: 97.0767
+      }
     }
   },
   mutations: {
