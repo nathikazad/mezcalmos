@@ -99,6 +99,7 @@ async function firebaseCallback(user) {
         router.push({ path: "/" })
       }
     }
+    store.dispatch("notifications/loadNotificationsForTaxi");
   }
 }
 

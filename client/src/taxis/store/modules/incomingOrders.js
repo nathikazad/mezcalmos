@@ -32,9 +32,11 @@ export default {
       for (let order in orders) {
         distances[order] = getDistanceFromLatLonInKm(orders[order].from, driverLocation)
       }
+      console.log(distances)
       sortedOrderIds = Object.keys(distances).sort((id1, id2) => {
         return distances[id1] - distances[id2]
       })
+      console.log(sortedOrderIds)
       context.commit('saveDistances', {
         sortedOrderIds,
         distances

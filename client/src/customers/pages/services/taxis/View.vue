@@ -160,10 +160,11 @@ export default {
       return borns;
     }
   },
-  mounted() {},
-  methods: {},
   async beforeCreate() {
     this.$store.dispatch("taxis/loadTaxi", {
+      orderId: this.$route.params.orderId
+    });
+    this.$store.dispatch("notifications/clearOrderStatusNotifications", {
       orderId: this.$route.params.orderId
     });
   }

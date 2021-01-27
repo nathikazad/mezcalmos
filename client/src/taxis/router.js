@@ -29,7 +29,8 @@ const router = new VueRouter({
       component: MessagesPage,
       meta: {
         requiresAuth: true
-      }
+      },
+      name: "messages"
     },
     {
       path: '/orders/:orderId',

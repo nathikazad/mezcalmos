@@ -77,8 +77,6 @@ Vue.mixin({
 Vue.use(require('vue-moment'));
 //Firebase state changed function
 async function firebaseCallback(user) {
-  console.log(user);
-
   if (user) {
     await store.dispatch("autoSignIn", {
       userId: user.uid,
@@ -100,6 +98,7 @@ async function firebaseCallback(user) {
         path: "/"
       });
     }
+    store.dispatch("notifications/loadNotificationsForCustomer");
   }
 }
 

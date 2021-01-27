@@ -53,6 +53,7 @@ const router = new VueRouter({
       meta: {
         requiresAuth: true,
       },
+      name : "taxiView"
     },
     {
       path: "/services/grocery/:orderId",
@@ -60,6 +61,7 @@ const router = new VueRouter({
       meta: {
         requiresAuth: true,
       },
+      name: "groceryView"
     },
     {
       path: "/services/grocery/:orderId/add",
@@ -74,6 +76,7 @@ const router = new VueRouter({
       meta: {
         requiresAuth: true,
       },
+      name: "messages"
     },
     {
       path: "/orders",
@@ -105,7 +108,6 @@ const router = new VueRouter({
 });
 
 router.beforeEach(async function (to, from, next) {
-  console.log(to);
 
   if (to.meta.requiresAuth && !store.getters.loggedIn) {
     next({
@@ -117,8 +119,6 @@ router.beforeEach(async function (to, from, next) {
   } else if (to.meta.requiresUnauth && store.getters.loggedIn) {
     next("/services");
   } else {
-    console.log('else');
-
     next();
   }
 });

@@ -141,6 +141,7 @@ async function accept(firebase, data, uid) {
     firebase.database().ref(`/notifications/${order.customer.id}`).push({
       notificationType: "orderStatusChange",
       orderId: data.orderId,
+      orderType: order.orderType,
       status: order.status,
       driver: order.driver,
       time: order.acceptRideTime
@@ -182,6 +183,7 @@ async function start(firebase, data, uid) {
   firebase.database().ref(`/taxiDrivers/${order.driver.id}/orders/${data.orderId}`).update(update);
 
   update.notificationType = "orderStatusChange"
+  update.orderType = "taxi"
   update.orderId = data.orderId
   update.time = update.rideStartTime
   delete update.rideStartTime
@@ -224,6 +226,7 @@ async function finish(firebase, data, uid) {
   firebase.database().ref(`/taxiDrivers/${order.driver.id}/state/inTaxi`).remove()
   update.notificationType = "orderStatusChange"
   update.orderId = data.orderId
+  update.orderType = "taxi"
   update.time = update.rideFinishTime
   delete update.rideFinishTime
   firebase.database().ref(`/notifications/${order.customer.id}`).push(update)

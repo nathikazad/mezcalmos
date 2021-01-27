@@ -86,6 +86,9 @@ export default {
     await this.$store.dispatch("messages/loadMessages", {
       orderId: this.$route.params.orderId
     });
+    this.$store.dispatch("notifications/clearMessageNotifications", {
+      orderId: this.$route.params.orderId
+    });
   },
   methods: {
     me(id) {

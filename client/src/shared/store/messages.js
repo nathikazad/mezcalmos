@@ -1,6 +1,7 @@
 import {
   firebaseDatabase
 } from '@/shared/config/firebase'
+
 export default {
   namespaced: true,
   state() {
@@ -28,8 +29,6 @@ export default {
       let orderId = context.state.orderId
       console.log(orderId);
       if (orderId) {
-
-
         if (orderId == payload.orderId) {
           return
         } else {
@@ -47,14 +46,16 @@ export default {
       })
       firebaseDatabase().ref(`/chat/${orderId}`).on('value', async snapshot => {
         let chat = snapshot.val();
-        console.log(chat);
-
         // TODO: if unauthorized or wrong type of order redirect to home page
         context.commit('saveMessages', {
           messages: chat.messages,
           participants: chat.participants,
         })
+        context.dispatch("notifications/clearMessageNotifications", {
+          orderId: orderId
+        }, {root:true});
       });
+      
     }
   },
   mutations: {

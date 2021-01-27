@@ -128,6 +128,7 @@ async function accept(firebase, data, uid) {
     firebase.database().ref(`/notifications/${order.customer.id}`).push({
       notificationType: "orderStatusChange",
       orderId: data.orderId,
+      orderType: order.orderType,
       status: order.status,
       driver: order.driver,
       time: order.acceptOrderTime,
@@ -171,6 +172,7 @@ async function itemsPicked(firebase, data, uid) {
   firebase.database().ref(`/deliveryDrivers/${order.driver.id}/orders/grocery/${data.orderId}`).update(update);
 
   update.notificationType = "orderStatusChange"
+  update.orderType = "grocery"
   update.orderId = data.orderId
   update.time = update.itemsPickedTime
   delete update.itemsPickedTime
@@ -213,6 +215,7 @@ async function finish(firebase, data, uid) {
 
   update.notificationType = "orderStatusChange"
   update.orderId = data.orderId
+  update.orderType = "grocery"
   update.time = update.deliveryTime
   delete update.deliveryTime
   firebase.database().ref(`/notifications/${order.customer.id}`).push(update)
