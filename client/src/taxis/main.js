@@ -16,7 +16,9 @@ import {
 import {
   firebaseInit
 } from "@/shared/config/firebase";
-
+import {
+  gmapsConfig
+} from "@/shared/config/gmaps";
 
 import BaseButton from "@/shared/components/ui/BaseButton";
 import Panel from "@/shared/components/ui/panel";
@@ -31,14 +33,7 @@ import Switch from "@/shared/components/ui/switch";
 import {
   deepFind
 } from '@/shared/mixins/functions'
-Vue.use(VueGoogleMaps, {
-  load: {
-    key: "AIzaSyB9vaAB9ptXhpeRs_JjxODEyuA_eO0tYu0",
-    libraries: "places",
-  },
-
-  installComponents: true,
-});
+Vue.use(VueGoogleMaps, gmapsConfig);
 //Vue Components
 Vue.component("switcher", Switch);
 Vue.component("logo", Logo);
