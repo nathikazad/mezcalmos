@@ -78,3 +78,36 @@ decode.integers = function (value) {
   return values
 
 }
+export const displayNotification = (notif) => { //notif:{type:'YOU HAVE A NEW MESSAGE /orderCompletion..',msg:' Hi sir !'}
+  Notification.requestPermission(function (status) {
+    console.log('Notification permission status:', status);
+  });
+  if (Notification.permission === 'granted') {
+    navigator.serviceWorker.getRegistration()
+      .then(function (reg) {
+        if (reg == undefined) {
+          console.log("only works online")
+          return
+        }
+        var options = {
+          body: notif.msg,
+          icon: '/img/icons/mstile-150x150.png',
+          vibrate: [100, 50, 100],
+          data: {
+            dateOfArrival: Date.now(),
+            primaryKey: 1
+          },
+          actions: [{
+            action: 'close',
+            title: 'Close the notification',
+            icon: './static/img/xmark.png'
+          }]
+        }
+        reg.showNotification(notif.type, options)
+      })
+  } else {
+    console.log(navigator);
+
+  }
+
+}

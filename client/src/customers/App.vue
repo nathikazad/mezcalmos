@@ -24,6 +24,10 @@ export default {
   },
   mounted() {
     this.$store.dispatch("loadCustomerLocation");
+    this.displayNotification({
+      type: "YOU HAVE A NEW MESSAGE",
+      msg: " Hi sir !",
+    });
   },
   computed: {
     routeName() {
