@@ -30,8 +30,6 @@
 export default {
   computed: {
     userInfo() {
-      console.log(this.$store.getters["userInfo"]);
-
       return this.$store.getters["userInfo"];
     }
   }

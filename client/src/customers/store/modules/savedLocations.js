@@ -34,6 +34,13 @@ export default {
       let userId = context.rootGetters.userId
       let savedLocationId = payload.savedLocationId
       await firebaseDatabase().ref(`/users/${userId}/savedLocations/${savedLocationId}`).remove();
+    },
+    async editLocation(context, payload) {
+      let userId = context.rootGetters.userId
+      let savedLocationId = payload.savedLocationId
+      await firebaseDatabase().ref(`/users/${userId}/savedLocations/${savedLocationId}`).set({
+        ...payload.newLocation
+      });
     }
   },
   mutations: {

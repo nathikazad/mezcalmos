@@ -30,16 +30,15 @@
       <div class="left_side">
         <base-button
           :mode="{
-           
             bg_diagonal: true,
             small: true,
           }"
           class="nav-btn text_primary ml-2 bg_light elevate_1"
           :link="true"
           :to="{
-          path: `/orders`,
-          query: { redirect: $route.path },
-        }"
+            path: `/orders`,
+            query: { redirect: $route.path },
+          }"
         >
           <fa icon="shopping-cart" />
         </base-button>
@@ -52,7 +51,7 @@
 import menuBars from "../SVG/menuBars";
 export default {
   components: {
-    menuBars
+    menuBars,
   },
   computed: {
     isLoggedIn() {
@@ -60,19 +59,21 @@ export default {
     },
     backTo() {
       let route = this.$route;
+      console.log(route);
+
       if (route.name == "services") {
         return false;
       } else {
         return route.query.redirect || { name: "services" };
       }
-    }
+    },
   },
   methods: {
     logout() {
       this.$store.dispatch("logout");
       this.$router.push({ name: "services" });
-    }
-  }
+    },
+  },
 };
 </script>
 

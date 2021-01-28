@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="regular">{{title}}</h1>
+    <h1 class="regular">{{ title }}</h1>
     <div class="field" id="placeName">
       <h3 class="bold flex space_between">
         <span>Name</span>
@@ -17,6 +17,7 @@
         <span>Address</span>
       </h3>
       <input
+        @blur="blured()"
         type="text"
         placeholder="Enter Address"
         class="input bg_secondary text_blackD"
@@ -24,8 +25,11 @@
         ref="from"
       />
       <!-- Drop down menu for search-->
-      <div class="dropdown bg_white border elevate_2" v-if="deepFind(saved, 'searching')">
-        <span v-if="saved.results.length">
+      <div
+        class="dropdown bg_white border elevate_2"
+        v-if="deepFind(saved, 'searching')"
+      >
+        <span v-if="saved.results.length && saved.searching">
           <h3
             @click="pickedLocation(res)"
             v-for="(res, index) in saved.results"
@@ -63,32 +67,34 @@ export default {
   props: {
     title: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
+    editId: {
+      type: String,
+    },
   },
   data() {
     return {
       name: "",
       loading: false,
-      item: { name: "", notes: "" },
       saved: {
         address: "",
         results: [],
         searching: false,
-        pos: { lat: 30.2672, lng: -97.7431 }
+        pos: { lat: 30.2672, lng: -97.7431 },
       },
-      delayer: null
+      delayer: null,
     };
   },
 
   mounted() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(position => {
+    if (navigator.geolocation && !this.editId) {
+      navigator.geolocation.getCurrentPosition((position) => {
         console.log(position);
 
         var location = {
           lng: position.coords.longitude,
-          lat: position.coords.latitude
+          lat: position.coords.latitude,
         };
         console.log(this.$refs["map"]);
 
@@ -107,7 +113,7 @@ export default {
   computed: {
     isLoggedIn() {
       return this.$store.getters.loggedIn;
-    }
+    },
   },
   watch: {
     "saved.address": {
@@ -119,7 +125,7 @@ export default {
           clearTimeout(this.delayer);
           this.delayer = setTimeout(() => {
             var service = new window.google.maps.places.AutocompleteService();
-            service.getQueryPredictions({ input: newVal }, predections => {
+            service.getQueryPredictions({ input: newVal }, (predections) => {
               this.saved.results = predections;
               console.log(predections);
             });
@@ -128,19 +134,33 @@ export default {
           this.saved.searching = false;
           this.saved.results = [];
         }
-      }
-    }
+      },
+    },
   },
   methods: {
+    blured() {
+      setTimeout(() => {
+        this.saved.searching = false; 
+      }, 200);
+     
+    },
     async pickLocation() {
       let place = {
         name: this.name,
         lat: this.saved.pos.lat,
         long: this.saved.pos.lng,
-        address: this.saved.address
+        address: this.saved.address,
       };
       this.loading = true;
-      await this.$store.dispatch("savedLocations/saveLocation", place);
+      if (this.editId) {
+        await this.$store.dispatch("savedLocations/editLocation", {
+          savedLocationId: this.editId,
+          newLocation: place,
+        });
+      } else {
+        await this.$store.dispatch("savedLocations/saveLocation", place);
+      }
+
       this.loading = false;
       this.$emit("close");
     },
@@ -165,17 +185,17 @@ export default {
       this.saved.address = place.description;
 
       var service = new window.google.maps.places.PlacesService(map);
-      await service.getDetails({ placeId: place["place_id"] }, res => {
+      await service.getDetails({ placeId: place["place_id"] }, (res) => {
         this.saved.searching = false;
         console.log(res);
 
         this.saved.pos = {
           lat: res.geometry.location.lat(),
-          lng: res.geometry.location.lng()
+          lng: res.geometry.location.lng(),
         };
       });
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>

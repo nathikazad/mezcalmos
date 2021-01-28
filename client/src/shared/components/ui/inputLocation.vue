@@ -84,7 +84,7 @@
         :directionsOrigin="directionsBorns.start"
         :directionsDest="directionsBorns.end"
         :fromUrl="fromUrl"
-        v-if="withMap"
+        v-if="withMap && center.lat"
       ></map-view>
       <slot name="action"></slot>
     </div>
@@ -132,7 +132,7 @@ export default {
       focusedFrom: false,
       focusedTo: false,
       pickLocation: false,
-      center: this.directionsBorns.start || { lat: 30.2672, lng: -97.7431 },
+      center: this.directionsBorns.start || {},
       delayer: null,
     };
   },
@@ -143,15 +143,23 @@ export default {
     savedLocations() {
       return this.$store.getters["savedLocations/locations"] || {};
     },
+    userDefaultLocation() {
+      return this.$store.getters["getUserDefaultLocation"];
+    },
   },
   mounted() {
+    this.center = {
+      lat: this.deepFind(this.userDefaultLocation, "lat"),
+      lng: this.deepFind(this.userDefaultLocation, "long"),
+    };
+    console.log(this.center);
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         var location = {
           lng: position.coords.longitude,
           lat: position.coords.latitude,
         };
-
         if (!this.directionsBorns.start) {
           this.$data.center = location;
         }
@@ -171,9 +179,24 @@ export default {
           clearTimeout(this.delayer);
           this.delayer = setTimeout(() => {
             var service = new window.google.maps.places.AutocompleteService();
-            service.getQueryPredictions({ input: newVal }, (predections) => {
-              this.search.results = predections;
+            let location = new window.google.maps.LatLng(
+              this.center.lat,
+              this.center.lng
+            );
+            let circle = new window.google.maps.Circle({
+              radius: 5000,
+              center: location,
             });
+
+            service.getQueryPredictions(
+              {
+                input: newVal,
+                bounds: circle.getBounds(),
+              },
+              (predections) => {
+                this.search.results = predections;
+              }
+            );
           }, 3000);
         } else {
           this.search.searching = false;
@@ -191,9 +214,24 @@ export default {
           clearTimeout(this.delayer);
           this.delayer = setTimeout(() => {
             var service = new window.google.maps.places.AutocompleteService();
-            service.getQueryPredictions({ input: newVal }, (predections) => {
-              this.search.results = predections;
+            let location = new window.google.maps.LatLng(
+              this.center.lat,
+              this.center.lng
+            );
+            let circle = new window.google.maps.Circle({
+              radius: 5000,
+              center: location,
             });
+
+            service.getQueryPredictions(
+              {
+                input: newVal,
+                bounds: circle.getBounds(),
+              },
+              (predections) => {
+                this.search.results = predections;
+              }
+            );
           }, 3000);
         } else {
           this.search.searching = false;

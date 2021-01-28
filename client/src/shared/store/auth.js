@@ -29,7 +29,7 @@ export default {
     getUserDefaultLocation() {
       return {
         lat: 15.8720,
-        long: 97.0767
+        long: -97.0767
       }
     }
   },

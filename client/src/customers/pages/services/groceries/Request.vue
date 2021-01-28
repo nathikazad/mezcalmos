@@ -168,8 +168,7 @@ export default {
         by: "search"
       },
       to: {
-        lat: 22.29924,
-        long: 73.16584,
+        
         address: "",
         by: "search"
       }

@@ -57,34 +57,34 @@ export default {
       focusedFrom: false,
       focusedTo: false,
       pickLocation: false,
-      center: { lat: 30.2672, lng: -97.7431 },
+      center: this.userDefaultLocation,
       from: {
-        lat: 22.29924,
-        long: 73.16584,
+        lat: this.deepFind(this.userDefaultLocation, "lat"),
+        long: this.deepFind(this.userDefaultLocation, "long"),
         address: "",
-        by: "search"
+        by: "search",
       },
       to: {
-        lat: 22.29924,
-        long: 73.16584,
+        lat: this.deepFind(this.userDefaultLocation, "lat"),
+        long: this.deepFind(this.userDefaultLocation, "long"),
         address: "",
-        by: "search"
+        by: "search",
       },
       search: {
         to: "",
         from: "",
         results: [],
         searching: false,
-        origin: "to"
+        origin: "to",
       },
       directionsBorns: {
         start: null,
-        end: null
+        end: null,
       },
       saved: {
         origin: "from",
-        opened: false
-      }
+        opened: false,
+      },
     };
   },
   computed: {
@@ -93,7 +93,10 @@ export default {
     },
     userInfo() {
       return this.$store.getters["userInfo"];
-    }
+    },
+    userDefaultLocation() {
+      return this.$store.getters["auth/getUserDefaultLocation"];
+    },
   },
 
   methods: {
@@ -108,7 +111,7 @@ export default {
           to: this.to,
           from: this.from,
           distance: this.distance,
-          duration: this.duration
+          duration: this.duration,
         })
       ).data;
       this.loading = false;
@@ -120,8 +123,8 @@ export default {
     },
     async login() {
       await this.$store.dispatch("login");
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
