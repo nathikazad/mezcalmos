@@ -27,9 +27,7 @@ export default {
       });
     },
     unloadOrder(context) {
-      let orderId = context.state.orderId
       // TODO: check if order is loaded
-      firebaseDatabase().ref(`orders/taxi/${orderId}`).off()
       context.commit('unloadOrder')
     },
     async acceptRide(context) {
@@ -38,6 +36,7 @@ export default {
       let response = await cloudCall('acceptTaxiOrder', {
         orderId: orderId
       });
+      context.dispatch('updateDriverPosition', null, {root:true})
       return response;
     },
     async startRide(context) {
@@ -46,6 +45,7 @@ export default {
       let response = await cloudCall('startTaxiRide', {
         orderId: orderId
       });
+      context.dispatch('updateDriverPosition', null, {root:true})
       return response;
     },
     async finishRide(context) {
