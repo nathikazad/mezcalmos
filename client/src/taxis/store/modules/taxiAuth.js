@@ -1,4 +1,5 @@
 import { firebaseDatabase } from '@/shared/config/firebase'
+import { getCoords } from '@/shared/mixins/mapFunctions'
 // import { apolloClient } from '@/config/apollo'
 // import gql from 'graphql-tag'
 export default {
@@ -168,13 +169,4 @@ const updateRouteInformation = async (order, driverLocation) => {
   }
 }
 
-const getCoords = async () => {
-  const pos = await new Promise((resolve, reject) => {
-    navigator.geolocation.getCurrentPosition(resolve, reject);
-  });
 
-  return {
-    long: pos.coords.longitude,
-    lat: pos.coords.latitude,
-  };
-};
