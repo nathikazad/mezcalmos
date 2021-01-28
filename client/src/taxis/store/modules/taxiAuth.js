@@ -154,12 +154,14 @@ const updateRouteInformation = async (order, driverLocation) => {
         console.log("inside update ",response)
         let distance = response.routes[0].legs[0].distance
         let duration = response.routes[0].legs[0].duration
+        let polyline = response.routes[0].overview_polyline
         let eta = new Date()
         eta.setSeconds(eta.getSeconds() + duration.value);
         firebaseDatabase().ref(`orders/taxi/${order.id}/driver/location`).update({
           distanceToLocation: distance,
           timeToLocation: duration,
           estimatedArrivalTime: eta.toUTCString(),
+          polyline: polyline
         })
       }
     })
