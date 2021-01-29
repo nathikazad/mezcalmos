@@ -2,7 +2,7 @@ import {
   firebaseDatabase
 } from '@/shared/config/firebase'
 
-import { getCoords, getDistanceFromLatLonInKm } from '@/shared/mixins/mapFunctions'
+import { getDistanceFromLatLonInKm } from '@/shared/mixins/mapFunctions'
 export default {
   namespaced: true,
   state() {
@@ -27,8 +27,7 @@ export default {
     },
     async updateDistances(context) {
       let orders = context.state.list
-      let driverLocation = await getCoords();
-      console.log(driverLocation)
+      let driverLocation = context.rootGetters.driverLocation;
       let distances = {}
       let sortedOrderIds = []
       for (let order in orders) {

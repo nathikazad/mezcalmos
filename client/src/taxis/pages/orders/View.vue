@@ -21,7 +21,7 @@
               <avatar size="2.4rem" :url="orderDetails.customer.image"></avatar>
               <div class="user_name">
                 <h4 class="text_blackL">{{ orderDetails.customer.name }}</h4>
-                <h5 class="regular text_grey">5km far</h5>
+                <h5 class="regular text_grey">{{ orderDetails.customer.distance }}km far</h5>
               </div>
             </div>
 

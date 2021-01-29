@@ -1,14 +1,3 @@
-export async function getCoords() {
-  const pos = await new Promise((resolve, reject) => {
-    navigator.geolocation.getCurrentPosition(resolve, reject);
-  });
-
-  return {
-    long: pos.coords.longitude,
-    lat: pos.coords.latitude,
-  };
-}
-
 export function getDistanceFromLatLonInKm(from, to) {
   var R = 6371; // Radius of the earth in km
   var dLat = deg2rad(from.lat - to.lat); // deg2rad below

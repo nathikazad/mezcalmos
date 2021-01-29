@@ -1,5 +1,4 @@
 import { firebaseDatabase } from '@/shared/config/firebase'
-import { getCoords } from '@/shared/mixins/mapFunctions'
 // import { apolloClient } from '@/config/apollo'
 // import gql from 'graphql-tag'
 export default {
@@ -8,6 +7,7 @@ export default {
       canTaxi: false,
       isLooking: false,
       currentOrder: {id:null, value:null},
+      driverLocation: null,
       lastLocationUpdateTime: null
     };
   },
@@ -23,6 +23,9 @@ export default {
     },
     currentOrderId(state) {
       return state.currentOrder.id
+    },
+    driverLocation(state) {
+      return state.driverLocation
     }
   },
   actions: {
@@ -34,23 +37,15 @@ export default {
         storeState(snapshot.val(), context)
       });
       navigator.geolocation.watchPosition(function(position){
-        console.log("Inside Watch Position, ", position)
-        let currentTime    = new Date();
-        let lastUpdateTime = context.state.lastLocationUpdateTime
         let newPosition = {
           lat:position.coords.latitude, 
           long:position.coords.longitude
         }
-        if(lastUpdateTime){
-          var seconds = currentTime.getTime() - lastUpdateTime.getTime();
-          console.log("elapsed time", seconds)
-          if(seconds > 60000){
-            updateDriverPosition(context, newPosition)
-          }
-        } else {
-          updateDriverPosition(context, newPosition)
-        }
+        context.commit('setDriverPosition', newPosition)
       });
+      setInterval(function() {
+        updateDriverPosition(context)
+      }, 300 * 1000)
     },
     startLooking(context) {
       let userId = context.rootGetters.userId
@@ -83,8 +78,9 @@ export default {
         state.currentOrder.value.status = payload
       }
     },
-    setLastUpdateTime(state, payload) {
-      state.lastLocationUpdateTime = payload
+    setDriverPosition(state, payload) {
+      state.driverLocation = payload
+      state.lastLocationUpdateTime = new Date()
     }
   }
 }
@@ -118,16 +114,12 @@ function storeState(newState, context) {
   }
 }
 
-const updateDriverPosition = async (context, driverLocation = null) => {
-  console.log("Inside update driver position")
+const updateDriverPosition = async (context) => {
   let userId = context.rootGetters.userId
-  if(!driverLocation){
-    driverLocation = await getCoords();
-  }
-  let lastUpdateTime = new Date()
+  let driverLocation = context.state.driverLocation
+  let lastUpdateTime = context.state.lastLocationUpdateTime
   let locationUpdate = {position:driverLocation, lastUpdateTime:lastUpdateTime.toUTCString()}
   firebaseDatabase().ref(`taxiDrivers/${userId}/location`).set(locationUpdate)
-  context.commit('setLastUpdateTime', lastUpdateTime)
   if(context.state.currentOrder.id){
     firebaseDatabase().ref(`orders/taxi/${context.state.currentOrder.id}/driver/location`).update(locationUpdate)
     updateRouteInformation(context.state.currentOrder, driverLocation)

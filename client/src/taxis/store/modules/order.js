@@ -3,6 +3,8 @@ import {
   firebaseDatabase,
   cloudCall
 } from '@/shared/config/firebase'
+
+import { getDistanceFromLatLonInKm } from '@/shared/mixins/mapFunctions'
 export default {
   namespaced: true,
   state() {
@@ -19,7 +21,10 @@ export default {
       let orderId = payload.orderId
       firebaseDatabase().ref(`orders/taxi/${orderId}`).on('value', snapshot => {
         let order = snapshot.val()
-        // TODO: if order is null then reroute page
+        if(order.status == "lookingForTaxi") {
+          let driverLocation = context.rootGetters.driverLocation;
+          order.customer.distance = getDistanceFromLatLonInKm(order.from, driverLocation)
+        }
         context.commit('saveOrder', {
           order: order,
           orderId: orderId
