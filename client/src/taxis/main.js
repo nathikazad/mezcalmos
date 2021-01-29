@@ -29,12 +29,14 @@ import Fa from "@/shared/components/ui/fa";
 import PickLocation from "@/shared/components/map/pickLocation";
 import InputLocation from "@/shared/components/ui/inputLocation";
 import Switch from "@/shared/components/ui/switch";
+import GmapCustomMarker from 'vue2-gmap-custom-marker';
 
 import {
   deepFind
 } from '@/shared/mixins/functions'
 Vue.use(VueGoogleMaps, gmapsConfig);
 //Vue Components
+Vue.component("gmap-custom-marker", GmapCustomMarker);
 Vue.component("switcher", Switch);
 Vue.component("logo", Logo);
 Vue.component("base-button", BaseButton);
@@ -82,16 +84,22 @@ async function firebaseCallback(user) {
       loggedIn: true
     })
     await store.dispatch('loadTaxiAuth');
-    if (router.currentRoute.path == "/auth"){
-      if(router.currentRoute.query.redirect) {
-        if(router.currentRoute.query.redirect == "/incoming" 
-          && store.getters.isInTaxi) {
-            router.push({ path: `/orders/${store.getters.currentOrderId}`});
+    if (router.currentRoute.path == "/auth") {
+      if (router.currentRoute.query.redirect) {
+        if (router.currentRoute.query.redirect == "/incoming" &&
+          store.getters.isInTaxi) {
+          router.push({
+            path: `/orders/${store.getters.currentOrderId}`
+          });
         } else {
-          router.push({ path: router.currentRoute.query.redirect })
+          router.push({
+            path: router.currentRoute.query.redirect
+          })
         }
       } else {
-        router.push({ path: "/" })
+        router.push({
+          path: "/"
+        })
       }
     }
     store.dispatch("notifications/loadNotificationsForTaxi");

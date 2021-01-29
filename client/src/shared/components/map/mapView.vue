@@ -13,33 +13,31 @@
       :destination="directionsDest"
       @direction="emitDirectionPos($event)"
     />
-    <GmapMarker :ref="`marker-center`" :position="center" :clickable="true" :icon="icons.end" />
-    <!-- from Icon marker -->
     <GmapMarker
-      v-if="directionsOrigin"
+      :draggable="true"
       :ref="`marker-center`"
-      :position="directionsOrigin"
+      :position="center"
       :clickable="true"
-      :icon="icons.start"
+      :icon="icons.center"
+      v-if="!directionsOrigin"
     />
+    <!-- from Icon marker -->
+
+    <gmap-custom-marker
+      :marker="directionsOrigin"
+      v-if="directionsOrigin&&showMarker"
+      :ref="`marker-origin`"
+    >
+      <img :src="this.fromUrl" class="imageIcon border" />
+    </gmap-custom-marker>
     <!-- to icon marker -->
     <GmapMarker
       v-if="directionsDest"
-      :ref="`marker-center`"
+      :ref="`marker-dest`"
       :position="directionsDest"
       :clickable="true"
       :icon="icons.end"
     />
-    <!-- <div v-for="(marker, index) in markers" :key="index">
-      <GmapMarker
-        :ref="`marker${marker.type}${index}`"
-        :position="marker.pos"
-        :clickable="true"
-        :draggable="true"
-        :icon="{ url: require('../../static/img/Bttn.png') }"
-        @dragend="dragging($event, index)"
-      />
-    </div>-->
   </GmapMap>
 </template>
 <script>
@@ -86,12 +84,16 @@ export default {
         end: {
           url: require("../../static/img/Bttn.png"),
           ...iconOptions
+        },
+        center: {
+          url: require("../../static/img/currentPos.png")
         }
       };
     }
   },
   data() {
     return {
+      showMarker: true,
       shape: {
         coords: [1, 1, 1, 20, 18, 20, 18, 1],
         type: "poly"
@@ -272,10 +274,14 @@ export default {
       markers: []
     };
   },
-  mounted() {
-   
-  },
+  mounted() {},
   methods: {
+    reRenderMarker() {
+      this.showMarker = false;
+      setTimeout(() => {
+        this.showMarker = true;
+      }, 200);
+    },
     dragging(event, index) {
       let marker = this.markers[index];
       let start = marker.start ? marker.pos : null;
@@ -287,19 +293,18 @@ export default {
       });
     },
     emitDirectionPos(pos) {
+      console.log(this.$refs);
+      this.reRenderMarker();
       this.$emit("directionChanged", pos);
-      this.markers.push({
-        pos: pos.start_location,
-        type: "direction",
-        start: true
-      });
-      this.markers.push({
-        pos: pos.end_location,
-        type: "direction",
-        end: true
-      });
-    },
-  
+    }
   }
 };
 </script>
+<style lang="scss" scoped>
+.imageIcon {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: block;
+}
+</style>

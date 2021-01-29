@@ -30,9 +30,7 @@
                   {{ deepFind(orders[orderId], "customer.name") }}
                 </h4>
                 <h5 class="regular text_grey">
-                  {{
-                    deepFind(orders[orderId], "customer.distance").toFixed(1)
-                  }}km far
+                  {{ deepFind(orders[orderId], "customer.distance") }}km far
                 </h5>
               </div>
               <div

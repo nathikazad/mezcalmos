@@ -3,6 +3,8 @@ import App from "./App.vue";
 import router from "./router.js";
 import store from './store/store'
 import * as VueGoogleMaps from "vue2-google-maps";
+import GmapCustomMarker from 'vue2-gmap-custom-marker';
+
 import {
   ValidationProvider,
   ValidationObserver,
@@ -35,6 +37,8 @@ import {
 
 } from '@/shared/mixins/functions'
 Vue.use(VueGoogleMaps, gmapsConfig);
+Vue.component("gmap-custom-marker", GmapCustomMarker);
+
 //Vue Components
 Vue.component("logo", Logo);
 Vue.component("base-button", BaseButton);

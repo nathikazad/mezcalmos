@@ -1,5 +1,5 @@
 <template>
-  <button v-if="!link" :class="mode" class="btn">
+  <button v-if="!link" :class="mode" class="btn" :disabled="disabled">
     <span v-if="!loading">
       <slot></slot>
     </span>
@@ -40,6 +40,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
 };
 </script>
@@ -71,6 +75,9 @@ export default {
 }
 .small {
   height: 2rem;
+}
+.disabled{
+  background:map-get($map: $colors, $key: grey) !important;
 }
 .load {
   width: 20px;

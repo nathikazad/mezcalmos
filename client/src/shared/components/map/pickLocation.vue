@@ -25,10 +25,7 @@
         ref="from"
       />
       <!-- Drop down menu for search-->
-      <div
-        class="dropdown bg_white border elevate_2"
-        v-if="deepFind(saved, 'searching')"
-      >
+      <div class="dropdown bg_white border elevate_2" v-if="deepFind(saved, 'searching')">
         <span v-if="saved.results.length && saved.searching">
           <h3
             @click="pickedLocation(res)"
@@ -67,11 +64,11 @@ export default {
   props: {
     title: {
       type: String,
-      required: true,
+      required: true
     },
     editId: {
-      type: String,
-    },
+      type: String
+    }
   },
   data() {
     return {
@@ -81,22 +78,19 @@ export default {
         address: "",
         results: [],
         searching: false,
-        pos: { lat: 30.2672, lng: -97.7431 },
+        pos: { lat: 30.2672, lng: -97.7431 }
       },
-      delayer: null,
+      delayer: null
     };
   },
 
   mounted() {
     if (navigator.geolocation && !this.editId) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        console.log(position);
-
+      navigator.geolocation.getCurrentPosition(position => {
         var location = {
           lng: position.coords.longitude,
-          lat: position.coords.latitude,
+          lat: position.coords.latitude
         };
-        console.log(this.$refs["map"]);
 
         this.saved.pos = location;
         setTimeout(async () => {
@@ -113,7 +107,7 @@ export default {
   computed: {
     isLoggedIn() {
       return this.$store.getters.loggedIn;
-    },
+    }
   },
   watch: {
     "saved.address": {
@@ -123,46 +117,60 @@ export default {
         if (newVal) {
           this.saved.searching = true;
           clearTimeout(this.delayer);
+
           this.delayer = setTimeout(() => {
             var service = new window.google.maps.places.AutocompleteService();
-            service.getQueryPredictions({ input: newVal }, (predections) => {
-              this.saved.results = predections;
-              console.log(predections);
+            let location = new window.google.maps.LatLng(
+              this.saved.pos.lat,
+              this.saved.pos.lng
+            );
+            let circle = new window.google.maps.Circle({
+              radius: 5000,
+              center: location
             });
+
+            service.getQueryPredictions(
+              {
+                input: newVal,
+                bounds: circle.getBounds()
+              },
+              predections => {
+                this.saved.results = predections;
+              }
+            );
           }, 3000);
         } else {
           this.saved.searching = false;
           this.saved.results = [];
         }
-      },
-    },
+      }
+    }
   },
   methods: {
     blured() {
       setTimeout(() => {
-        this.saved.searching = false; 
+        this.saved.searching = false;
       }, 200);
-     
     },
     async pickLocation() {
       let place = {
         name: this.name,
         lat: this.saved.pos.lat,
         long: this.saved.pos.lng,
-        address: this.saved.address,
+        address: this.saved.address
       };
       this.loading = true;
       if (this.editId) {
         await this.$store.dispatch("savedLocations/editLocation", {
           savedLocationId: this.editId,
-          newLocation: place,
+          newLocation: place
         });
       } else {
         await this.$store.dispatch("savedLocations/saveLocation", place);
       }
 
       this.loading = false;
-      this.$emit("close");
+      this.$router.go(-1);
     },
     geocodedAddress(location) {
       let geocoder = new window.google.maps.Geocoder();
@@ -185,17 +193,17 @@ export default {
       this.saved.address = place.description;
 
       var service = new window.google.maps.places.PlacesService(map);
-      await service.getDetails({ placeId: place["place_id"] }, (res) => {
+      await service.getDetails({ placeId: place["place_id"] }, res => {
         this.saved.searching = false;
         console.log(res);
 
         this.saved.pos = {
           lat: res.geometry.location.lat(),
-          lng: res.geometry.location.lng(),
+          lng: res.geometry.location.lng()
         };
       });
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

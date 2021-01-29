@@ -17,11 +17,12 @@
         <base-button
           v-if="isLoggedIn"
           class="w-80"
-          :mode="{ dark: true, bg_diagonal: true }"
+          :mode="{ dark: true, bg_diagonal: true, disabled:disabled }"
           @click.native="requestTaxi()"
           :loading="loading"
+          :disabled="disabled"
         >
-          <span class="t-8 regular">CONFIRM</span>
+          <span class="t-8 regular">CONFIRM </span>
         </base-button>
         <base-button
           v-else
@@ -36,12 +37,7 @@
     </input-location>
   </div>
 
-  <!-- 
-    TODO: check if logged in, if not show login with facebook
-
-    <button v-if="isLoggedIn" @click="requestTaxi">Get Taxi</button>
-    <button v-else @click="login">Sign in with Facebook to Get Taxi</button
-  ><br />-->
+  
 </template>
 
 <script>
@@ -88,6 +84,9 @@ export default {
     };
   },
   computed: {
+    disabled(){
+      return !(this.from.address && this.to.address)
+    },
     isLoggedIn() {
       return this.$store.getters.loggedIn;
     },
@@ -105,7 +104,8 @@ export default {
       this.duration = pos.duration;
     },
     async requestTaxi() {
-      this.loading = true;
+      if (!this.disabled) {
+        this.loading = true;
       let response = (
         await this.$store.dispatch("taxis/requestTaxi", {
           to: this.to,
@@ -119,6 +119,7 @@ export default {
         this.$router.push({ path: `${response.orderId}` });
       } else {
         this.errorMessage = response.errorMessage;
+      }
       }
     },
     async login() {

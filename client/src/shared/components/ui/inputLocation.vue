@@ -222,7 +222,7 @@ export default {
               radius: 5000,
               center: location,
             });
-
+          
             service.getQueryPredictions(
               {
                 input: newVal,
@@ -249,7 +249,9 @@ export default {
       this.focusedFrom = title == "From";
       this.focusedTo = title == "To";
       this.search.origin = title.toLowerCase();
-      this.saved.opened = true;
+     if (Object.keys(this.savedLocations).length) {
+          this.saved.opened = true;
+        }
       this.saved.origin = title.toLowerCase();
     },
     blured(title) {

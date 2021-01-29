@@ -19,7 +19,7 @@ export default {
         context.dispatch('unloadOrder')
       }
       let orderId = payload.orderId
-      firebaseDatabase().ref(`orders/taxi/${orderId}`).on('value', snapshot => {
+      firebaseDatabase().ref(`orders/taxi/${orderId}`).on('value', async snapshot => {
         let order = snapshot.val()
         if(order.status == "lookingForTaxi") {
           let driverLocation = context.rootGetters.driverLocation;
@@ -27,7 +27,8 @@ export default {
         }
         context.commit('saveOrder', {
           order: order,
-          orderId: orderId
+          orderId: orderId,
+
         });
       });
     },
@@ -41,7 +42,9 @@ export default {
       let response = await cloudCall('acceptTaxiOrder', {
         orderId: orderId
       });
-      context.dispatch('updateDriverPosition', null, {root:true})
+      context.dispatch('updateDriverPosition', null, {
+        root: true
+      })
       return response;
     },
     async startRide(context) {
@@ -50,7 +53,9 @@ export default {
       let response = await cloudCall('startTaxiRide', {
         orderId: orderId
       });
-      context.dispatch('updateDriverPosition', null, {root:true})
+      context.dispatch('updateDriverPosition', null, {
+        root: true
+      })
       return response;
     },
     async finishRide(context) {
@@ -63,6 +68,9 @@ export default {
     }
   },
   mutations: {
+    saveDistance(state, payload) {
+      state.order.customer.distance = payload
+    },
     saveOrder(state, payload) {
       state.order = payload.order
       state.orderId = payload.orderId
