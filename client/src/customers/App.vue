@@ -29,6 +29,10 @@ export default {
       navDrawer: false,
     };
   },
+  mounted() {
+
+    this.$store.dispatch("loadCustomerLocation");
+  },
   computed: {
     routeName() {
       return this.$route.name;
@@ -42,7 +46,7 @@ export default {
         this.navDrawer = false;
       },
     },
-  }
+  },
 };
 </script>
 

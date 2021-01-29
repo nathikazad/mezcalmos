@@ -25,7 +25,10 @@
         ref="from"
       />
       <!-- Drop down menu for search-->
-      <div class="dropdown bg_white border elevate_2" v-if="deepFind(saved, 'searching')">
+      <div
+        class="dropdown bg_white border elevate_2"
+        v-if="deepFind(saved, 'searching')"
+      >
         <span v-if="saved.results.length && saved.searching">
           <h3
             @click="pickedLocation(res)"
@@ -44,7 +47,11 @@
     </div>
 
     <div class="map field fill_width">
-      <map-view :center="saved.pos" ref="map"></map-view>
+      <map-view
+        :center="saved.pos"
+        ref="map"
+        @markerDragged="saved.pos = $event"
+      ></map-view>
     </div>
     <div class="field">
       <base-button
@@ -64,11 +71,11 @@ export default {
   props: {
     title: {
       type: String,
-      required: true
+      required: true,
     },
     editId: {
-      type: String
-    }
+      type: String,
+    },
   },
   data() {
     return {
@@ -78,28 +85,21 @@ export default {
         address: "",
         results: [],
         searching: false,
-        pos: { lat: 30.2672, lng: -97.7431 }
+        pos: { lat: 30.2672, lng: -97.7431 },
       },
-      delayer: null
+      delayer: null,
     };
   },
 
   mounted() {
-    if (navigator.geolocation && !this.editId) {
-      navigator.geolocation.getCurrentPosition(position => {
-        var location = {
-          lng: position.coords.longitude,
-          lat: position.coords.latitude
-        };
-
-        this.saved.pos = location;
-        setTimeout(async () => {
-          this.saved.address = await this.geocodedAddress(location);
-          setTimeout(() => {
-            this.saved.searching = false;
-          }, 100);
-        }, 200);
-      });
+    if (this.customerLocation && !this.editId) {
+      this.saved.pos = this.customerLocation;
+      setTimeout(async () => {
+        this.saved.address = await this.geocodedAddress(this.customerLocation);
+        setTimeout(() => {
+          this.saved.searching = false;
+        }, 100);
+      }, 200);
     } else {
       console.log("Geo Location not supported by browser");
     }
@@ -107,7 +107,10 @@ export default {
   computed: {
     isLoggedIn() {
       return this.$store.getters.loggedIn;
-    }
+    },
+    customerLocation() {
+      return this.$store.getters.customerLocation;
+    },
   },
   watch: {
     "saved.address": {
@@ -126,15 +129,15 @@ export default {
             );
             let circle = new window.google.maps.Circle({
               radius: 5000,
-              center: location
+              center: location,
             });
 
             service.getQueryPredictions(
               {
                 input: newVal,
-                bounds: circle.getBounds()
+                bounds: circle.getBounds(),
               },
-              predections => {
+              (predections) => {
                 this.saved.results = predections;
               }
             );
@@ -143,8 +146,8 @@ export default {
           this.saved.searching = false;
           this.saved.results = [];
         }
-      }
-    }
+      },
+    },
   },
   methods: {
     blured() {
@@ -157,13 +160,13 @@ export default {
         name: this.name,
         lat: this.saved.pos.lat,
         long: this.saved.pos.lng,
-        address: this.saved.address
+        address: this.saved.address,
       };
       this.loading = true;
       if (this.editId) {
         await this.$store.dispatch("savedLocations/editLocation", {
           savedLocationId: this.editId,
-          newLocation: place
+          newLocation: place,
         });
       } else {
         await this.$store.dispatch("savedLocations/saveLocation", place);
@@ -172,38 +175,23 @@ export default {
       this.loading = false;
       this.$router.go(-1);
     },
-    geocodedAddress(location) {
-      let geocoder = new window.google.maps.Geocoder();
 
-      return new Promise(function(resolve, reject) {
-        geocoder.geocode({ location: location }, function(results, status) {
-          if (status === "OK") {
-            if (results[0]) {
-              resolve(results[0].formatted_address);
-            } else {
-              console.log(status);
-              reject("No results found");
-            }
-          }
-        });
-      });
-    },
     async pickedLocation(place) {
       let map = this.$refs["map"].$refs["marker-center"].$map;
       this.saved.address = place.description;
 
       var service = new window.google.maps.places.PlacesService(map);
-      await service.getDetails({ placeId: place["place_id"] }, res => {
+      await service.getDetails({ placeId: place["place_id"] }, (res) => {
         this.saved.searching = false;
         console.log(res);
 
         this.saved.pos = {
           lat: res.geometry.location.lat(),
-          lng: res.geometry.location.lng()
+          lng: res.geometry.location.lng(),
         };
       });
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>

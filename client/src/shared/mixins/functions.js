@@ -1,4 +1,3 @@
-
 export const deepFind = (obj, path) => {
   if (obj) {
     var paths = path.split('.'),
@@ -17,3 +16,21 @@ export const deepFind = (obj, path) => {
     return undefined;
   }
 };
+export const geocodedAddress = (location) => {
+  let geocoder = new window.google.maps.Geocoder();
+
+  return new Promise(function (resolve, reject) {
+    geocoder.geocode({
+      location: location
+    }, function (results, status) {
+      if (status === "OK") {
+        if (results[0]) {
+          resolve(results[0].formatted_address);
+        } else {
+          console.log(status);
+          reject("No results found");
+        }
+      }
+    });
+  });
+}

@@ -10,6 +10,7 @@
         :directionsBorns="calculateBorns"
         ref="inputLocation"
         :fromUrl="deepFind(userInfo, 'photo')"
+        :driverLocation="deepFind(orderDetails, 'driver.location')"
       >
         <!-- Searching fo Someone  Status-->
         <div
@@ -42,14 +43,24 @@
                 <h4 class="text_blackL">{{ orderDetails.driver.name }}</h4>
                 <h5
                   class="regular text_grey"
-                  v-if="deepFind(orderDetails,'driver.position.timeToLocation')"
+                  v-if="
+                    deepFind(
+                      orderDetails,
+                      'driver.location.estimatedArrivalTime'
+                    )
+                  "
                 >
                   Arrival
-                  {{ deepFind(orderDetails,'driver.position.timeToLocation') | moment("from", "now") }}
+                  {{
+                    deepFind(
+                      orderDetails,
+                      "driver.location.estimatedArrivalTime"
+                    ) | moment("from", "now")
+                  }}
                 </h5>
                 <h5 class="regular text_grey" v-else>
                   Arrival
-                  {{'TBD'}}
+                  {{ "TBD" }}
                 </h5>
               </div>
             </div>
@@ -124,7 +135,7 @@
 export default {
   data() {
     return {
-      loading: false
+      loading: false,
     };
   },
   computed: {
@@ -143,31 +154,31 @@ export default {
     calculateBorns() {
       let borns = {
         start: null,
-        end: null
+        end: null,
       };
 
       if (this.orderDetails) {
         borns.start = {
           lat: this.orderDetails.from.lat,
-          lng: this.orderDetails.from.long
+          lng: this.orderDetails.from.long,
         };
 
         borns.end = {
           lat: this.orderDetails.to.lat,
-          lng: this.orderDetails.to.long
+          lng: this.orderDetails.to.long,
         };
       }
       return borns;
-    }
+    },
   },
   async beforeCreate() {
     this.$store.dispatch("taxis/loadTaxi", {
-      orderId: this.$route.params.orderId
+      orderId: this.$route.params.orderId,
     });
     this.$store.dispatch("notifications/clearOrderStatusNotifications", {
-      orderId: this.$route.params.orderId
+      orderId: this.$route.params.orderId,
     });
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>

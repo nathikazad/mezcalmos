@@ -1,4 +1,6 @@
-import { firebaseDatabase } from '@/shared/config/firebase'
+import {
+  firebaseDatabase
+} from '@/shared/config/firebase'
 // import { apolloClient } from '@/config/apollo'
 // import gql from 'graphql-tag'
 export default {
@@ -6,7 +8,10 @@ export default {
     return {
       canTaxi: false,
       isLooking: false,
-      currentOrder: {id:null, value:null},
+      currentOrder: {
+        id: null,
+        value: null
+      },
       driverLocation: null,
       lastLocationUpdateTime: null
     };
@@ -36,14 +41,14 @@ export default {
       firebaseDatabase().ref(`taxiDrivers/${userId}/state`).on('value', snapshot => {
         storeState(snapshot.val(), context)
       });
-      navigator.geolocation.watchPosition(function(position){
+      navigator.geolocation.watchPosition(function (position) {
         let newPosition = {
-          lat:position.coords.latitude, 
-          long:position.coords.longitude
+          lat: position.coords.latitude,
+          long: position.coords.longitude
         }
         context.commit('setDriverPosition', newPosition)
       });
-      setInterval(function() {
+      setInterval(function () {
         updateDriverPosition(context)
       }, 300 * 1000)
     },
@@ -74,7 +79,7 @@ export default {
       state.currentOrder.value = payload.value;
     },
     setCurrentOrderStatus(state, payload) {
-      if(state.currentOrder.value){
+      if (state.currentOrder.value) {
         state.currentOrder.value.status = payload
       }
     },
@@ -86,31 +91,39 @@ export default {
 }
 
 function storeState(newState, context) {
-  if(newState.authorized){
-    context.commit('saveTaxiAuth', {canTaxi: true})
+  if (newState.authorized) {
+    context.commit('saveTaxiAuth', {
+      canTaxi: true
+    })
   } else {
     return
   }
-  if(newState.inTaxi){
+  if (newState.inTaxi) {
     context.dispatch('incomingOrders/stopListeningForIncoming')
     firebaseDatabase().ref(`orders/taxi/${newState.inTaxi}`).once('value', snapshot => {
-      context.commit('setCurrentOrder', {id:newState.inTaxi, value:snapshot.val()})
+      context.commit('setCurrentOrder', {
+        id: newState.inTaxi,
+        value: snapshot.val()
+      })
     });
     firebaseDatabase().ref(`orders/taxi/${newState.inTaxi}/status`).on('value', snapshot => {
       context.commit('setCurrentOrderStatus', snapshot.val())
     });
   } else {
-    if(context.state.currentOrder.id){
+    if (context.state.currentOrder.id) {
       firebaseDatabase().ref(`orders/taxi/${context.state.currentOrder.id}/status`).off()
     }
-    context.commit('setCurrentOrder', {id:null,value:null})
-    if(newState.isLooking) {
+    context.commit('setCurrentOrder', {
+      id: null,
+      value: null
+    })
+    if (newState.isLooking) {
       context.commit('setIsLooking', true)
       context.dispatch('incomingOrders/startListeningForIncoming')
     } else {
       context.commit('setIsLooking', false)
       context.dispatch('incomingOrders/stopListeningForIncoming')
-    }  
+    }
   }
 }
 
@@ -118,9 +131,12 @@ const updateDriverPosition = async (context) => {
   let userId = context.rootGetters.userId
   let driverLocation = context.state.driverLocation
   let lastUpdateTime = context.state.lastLocationUpdateTime
-  let locationUpdate = {position:driverLocation, lastUpdateTime:lastUpdateTime.toUTCString()}
+  let locationUpdate = {
+    position: driverLocation,
+    lastUpdateTime: lastUpdateTime.toUTCString()
+  }
   firebaseDatabase().ref(`taxiDrivers/${userId}/location`).set(locationUpdate)
-  if(context.state.currentOrder.id){
+  if (context.state.currentOrder.id) {
     firebaseDatabase().ref(`orders/taxi/${context.state.currentOrder.id}/driver/location`).update(locationUpdate)
     updateRouteInformation(context.state.currentOrder, driverLocation)
   }
@@ -128,37 +144,41 @@ const updateDriverPosition = async (context) => {
 
 const updateRouteInformation = async (order, driverLocation) => {
   let destination
-  if(order.value.status == "onTheWay"){
+  if (order.value.status == "onTheWay") {
     destination = order.value.from
   } else if (order.value.status == "inTransit") {
     destination = order.value.to
   } else {
     return
   }
-  if(window.google) {
+  if (window.google) {
     let directionsService = new window.google.maps.DirectionsService();
     directionsService.route({
-      origin:{lat: driverLocation.lat, lng: driverLocation.long},
-      destination:{lat: destination.lat, lng: destination.long},
-      travelMode:"DRIVING",
-    },
-    (response, status) => {
-      if(status == "OK"){
-        console.log("inside update ",response)
-        let distance = response.routes[0].legs[0].distance
-        let duration = response.routes[0].legs[0].duration
-        let polyline = response.routes[0].overview_polyline
-        let eta = new Date()
-        eta.setSeconds(eta.getSeconds() + duration.value);
-        firebaseDatabase().ref(`orders/taxi/${order.id}/driver/location`).update({
-          distanceToLocation: distance,
-          timeToLocation: duration,
-          estimatedArrivalTime: eta.toUTCString(),
-          polyline: polyline
-        })
-      }
-    })
+        origin: {
+          lat: driverLocation.lat,
+          lng: driverLocation.long
+        },
+        destination: {
+          lat: destination.lat,
+          lng: destination.long
+        },
+        travelMode: "DRIVING",
+      },
+      (response, status) => {
+        if (status == "OK") {
+          console.log("inside update ", response)
+          let distance = response.routes[0].legs[0].distance
+          let duration = response.routes[0].legs[0].duration
+          let polyline = response.routes[0].overview_polyline
+          let eta = new Date()
+          eta.setSeconds(eta.getSeconds() + duration.value);
+          firebaseDatabase().ref(`orders/taxi/${order.id}/driver/location`).update({
+            distanceToLocation: distance,
+            timeToLocation: duration,
+            estimatedArrivalTime: eta.toUTCString(),
+            polyline: polyline
+          })
+        }
+      })
   }
 }
-
-

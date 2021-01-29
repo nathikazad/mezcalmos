@@ -45,13 +45,17 @@
         class="dropdown bg_white border elevate_2"
         v-if="deepFind(saved, 'opened')"
       >
+        <h3 @click="pickCuerrentLocation()" class="flex t-10 regular">
+          <fa icon="crosshairs" class="icon text_primary"></fa>
+          Current location
+        </h3>
         <h3
           @click="pickedFromSaved(res)"
           class="flex t-10 regular"
           v-for="(res, index) in savedLocations"
           :key="index"
         >
-          <fa icon="map-marked-alt " class="icon text_primary"></fa>
+          <fa icon="search" class="icon text_primary"></fa>
           {{ res.name }}
         </h3>
       </div>
@@ -85,6 +89,7 @@
         :directionsDest="directionsBorns.end"
         :fromUrl="fromUrl"
         v-if="withMap && center.lat"
+        :driverLocation="driverLocation"
       ></map-view>
       <slot name="action"></slot>
     </div>
@@ -126,6 +131,9 @@ export default {
       type: Boolean,
       default: true,
     },
+    driverLocation: {
+      type: Object,
+    },
   },
   data() {
     return {
@@ -146,24 +154,21 @@ export default {
     userDefaultLocation() {
       return this.$store.getters["getUserDefaultLocation"];
     },
+    customerLocation() {
+      return this.$store.getters.customerLocation;
+    },
   },
   mounted() {
     this.center = {
       lat: this.deepFind(this.userDefaultLocation, "lat"),
       lng: this.deepFind(this.userDefaultLocation, "long"),
     };
-    console.log(this.center);
+    console.log(this.customerLocation);
 
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        var location = {
-          lng: position.coords.longitude,
-          lat: position.coords.latitude,
-        };
-        if (!this.directionsBorns.start) {
-          this.$data.center = location;
-        }
-      });
+      if (!this.directionsBorns.start) {
+        this.center = this.customerLocation;
+      }
     } else {
       console.log("Geo Location not supported by browser");
     }
@@ -222,7 +227,7 @@ export default {
               radius: 5000,
               center: location,
             });
-          
+
             service.getQueryPredictions(
               {
                 input: newVal,
@@ -249,9 +254,8 @@ export default {
       this.focusedFrom = title == "From";
       this.focusedTo = title == "To";
       this.search.origin = title.toLowerCase();
-     if (Object.keys(this.savedLocations).length) {
-          this.saved.opened = true;
-        }
+      this.saved.opened = true;
+
       this.saved.origin = title.toLowerCase();
     },
     blured(title) {
@@ -320,6 +324,30 @@ export default {
       this[this.saved.origin].address = place.address;
       this[this.saved.origin].lat = place.lat;
       this[this.saved.origin].long = place.long;
+      this.$emit("changedDirection", {
+        origin: this.saved.origin,
+        pos: pos,
+      });
+      this.$emit("centerChanged", pos);
+      this.saved.opened = false;
+    },
+    async pickCuerrentLocation() {
+      let pos = {
+        lat: this.customerLocation.lat,
+        lng: this.customerLocation.lng,
+      };
+      this.changeDirection(this.saved.origin, {
+        lat: () => {
+          return pos.lat;
+        },
+        lng: () => {
+          return pos.lng;
+        },
+      });
+      this.center = pos;
+      this[this.saved.origin].address = await this.geocodedAddress(pos);
+      this[this.saved.origin].lat = pos.lat;
+      this[this.saved.origin].long = pos.lng;
       this.$emit("changedDirection", {
         origin: this.saved.origin,
         pos: pos,
@@ -414,7 +442,7 @@ export default {
   }
 }
 .icon {
-  margin-right: 0rem;
+  margin-right: 0.5rem;
 }
 .icon_logo {
   height: 1.4rem;
