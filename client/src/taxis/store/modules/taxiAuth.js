@@ -47,6 +47,7 @@ export default {
           long: position.coords.longitude
         }
         context.commit('setDriverPosition', newPosition)
+        context.dispatch('incomingOrders/updateDistances')
       });
       setInterval(function () {
         updateDriverPosition(context)
