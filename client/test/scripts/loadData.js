@@ -107,8 +107,8 @@ function checkIfWebsiteIsUp() {
   });
 }
 
-if (process.argv.length == 3) {
-  dataFolderName = process.argv[2]
+if(process.argv.length == 3) {
+  dataFolderName = `../data/${process.argv[2]}`
 };
 
 
