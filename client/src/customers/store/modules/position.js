@@ -15,6 +15,7 @@ export default {
             console.log(context);
 
             navigator.geolocation.watchPosition(async function (position) {
+
                 let newPosition = {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude

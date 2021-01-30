@@ -22,7 +22,7 @@
           :loading="loading"
           :disabled="disabled"
         >
-          <span class="t-8 regular">CONFIRM </span>
+          <span class="t-8 regular">CONFIRM</span>
         </base-button>
         <base-button
           v-else
@@ -36,8 +36,6 @@
       </div>
     </input-location>
   </div>
-
-  
 </template>
 
 <script>
@@ -58,34 +56,34 @@ export default {
         lat: this.deepFind(this.userDefaultLocation, "lat"),
         long: this.deepFind(this.userDefaultLocation, "long"),
         address: "",
-        by: "search",
+        by: "search"
       },
       to: {
         lat: this.deepFind(this.userDefaultLocation, "lat"),
         long: this.deepFind(this.userDefaultLocation, "long"),
         address: "",
-        by: "search",
+        by: "search"
       },
       search: {
         to: "",
         from: "",
         results: [],
         searching: false,
-        origin: "to",
+        origin: "to"
       },
       directionsBorns: {
         start: null,
-        end: null,
+        end: null
       },
       saved: {
         origin: "from",
-        opened: false,
-      },
+        opened: false
+      }
     };
   },
   computed: {
-    disabled(){
-      return !(this.from.address && this.to.address)
+    disabled() {
+      return !(this.from.address && this.to.address);
     },
     isLoggedIn() {
       return this.$store.getters.loggedIn;
@@ -94,8 +92,8 @@ export default {
       return this.$store.getters["userInfo"];
     },
     userDefaultLocation() {
-      return this.$store.getters["auth/getUserDefaultLocation"];
-    },
+      return this.$store.getters["getUserDefaultLocation"];
+    }
   },
 
   methods: {
@@ -106,26 +104,26 @@ export default {
     async requestTaxi() {
       if (!this.disabled) {
         this.loading = true;
-      let response = (
-        await this.$store.dispatch("taxis/requestTaxi", {
-          to: this.to,
-          from: this.from,
-          distance: this.distance,
-          duration: this.duration,
-        })
-      ).data;
-      this.loading = false;
-      if (response.status == "Success") {
-        this.$router.push({ path: `${response.orderId}` });
-      } else {
-        this.errorMessage = response.errorMessage;
-      }
+        let response = (
+          await this.$store.dispatch("taxis/requestTaxi", {
+            to: this.to,
+            from: this.from,
+            distance: this.distance,
+            duration: this.duration
+          })
+        ).data;
+        this.loading = false;
+        if (response.status == "Success") {
+          this.$router.push({ path: `${response.orderId}` });
+        } else {
+          this.errorMessage = response.errorMessage;
+        }
       }
     },
     async login() {
       await this.$store.dispatch("login");
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

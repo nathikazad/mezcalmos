@@ -41,13 +41,9 @@
         </div>
       </div>
       <!-- Drop down menu for saved locations-->
-      <div
-        class="dropdown bg_white border elevate_2"
-        v-if="deepFind(saved, 'opened')"
-      >
+      <div class="dropdown bg_white border elevate_2" v-if="deepFind(saved, 'opened')">
         <h3 @click="pickCuerrentLocation()" class="flex t-10 regular">
-          <fa icon="crosshairs" class="icon text_primary"></fa>
-          Current location
+          <fa icon="crosshairs" class="icon text_primary"></fa>Current location
         </h3>
         <h3
           @click="pickedFromSaved(res)"
@@ -60,10 +56,7 @@
         </h3>
       </div>
       <!-- Drop down menu for search-->
-      <div
-        class="dropdown bg_white border elevate_2"
-        v-if="deepFind(search, 'searching')"
-      >
+      <div class="dropdown bg_white border elevate_2" v-if="deepFind(search, 'searching')">
         <span v-if="search.results.length">
           <h3
             @click="pickedLocation(res)"
@@ -100,40 +93,40 @@
 export default {
   props: {
     search: {
-      type: Object,
+      type: Object
     },
     saved: {
       type: Object,
       default() {
         return { opened: false };
-      },
+      }
     },
     directionsBorns: {
-      type: Object,
+      type: Object
     },
     oneWay: {
-      type: String,
+      type: String
     },
     to: {
-      type: Object,
+      type: Object
     },
     from: {
-      type: Object,
+      type: Object
     },
     disabled: {
-      type: Boolean,
+      type: Boolean
     },
     fromUrl: {
-      type: String,
+      type: String
     },
 
     withMap: {
       type: Boolean,
-      default: true,
+      default: true
     },
     driverLocation: {
-      type: Object,
-    },
+      type: Object
+    }
   },
   data() {
     return {
@@ -141,7 +134,7 @@ export default {
       focusedTo: false,
       pickLocation: false,
       center: this.directionsBorns.start || {},
-      delayer: null,
+      delayer: null
     };
   },
   computed: {
@@ -156,12 +149,12 @@ export default {
     },
     customerLocation() {
       return this.$store.getters.customerLocation;
-    },
+    }
   },
   mounted() {
     this.center = {
       lat: this.deepFind(this.userDefaultLocation, "lat"),
-      lng: this.deepFind(this.userDefaultLocation, "long"),
+      lng: this.deepFind(this.userDefaultLocation, "long")
     };
     console.log(this.customerLocation);
 
@@ -178,72 +171,76 @@ export default {
       deep: true,
 
       handler: function(newVal) {
-        if (newVal && this.to.by == "search") {
-          this.saved.opened = false;
-          this.search.searching = true;
-          clearTimeout(this.delayer);
-          this.delayer = setTimeout(() => {
-            var service = new window.google.maps.places.AutocompleteService();
-            let location = new window.google.maps.LatLng(
-              this.center.lat,
-              this.center.lng
-            );
-            let circle = new window.google.maps.Circle({
-              radius: 5000,
-              center: location,
-            });
+        if (this.search) {
+          if (newVal && this.to.by == "search") {
+            this.saved.opened = false;
+            this.search.searching = true;
+            clearTimeout(this.delayer);
+            this.delayer = setTimeout(() => {
+              var service = new window.google.maps.places.AutocompleteService();
+              let location = new window.google.maps.LatLng(
+                this.center.lat,
+                this.center.lng
+              );
+              let circle = new window.google.maps.Circle({
+                radius: 5000,
+                center: location
+              });
 
-            service.getQueryPredictions(
-              {
-                input: newVal,
-                bounds: circle.getBounds(),
-              },
-              (predections) => {
-                this.search.results = predections;
-              }
-            );
-          }, 3000);
-        } else {
-          this.search.searching = false;
-          this.search.results = [];
+              service.getQueryPredictions(
+                {
+                  input: newVal,
+                  bounds: circle.getBounds()
+                },
+                predections => {
+                  this.search.results = predections;
+                }
+              );
+            }, 3000);
+          } else {
+            this.search.searching = false;
+            this.search.results = [];
+          }
         }
-      },
+      }
     },
     "from.address": {
       deep: true,
 
       handler: function(newVal) {
-        if (newVal && this.from.by == "search") {
-          this.saved.opened = false;
-          this.search.searching = true;
-          clearTimeout(this.delayer);
-          this.delayer = setTimeout(() => {
-            var service = new window.google.maps.places.AutocompleteService();
-            let location = new window.google.maps.LatLng(
-              this.center.lat,
-              this.center.lng
-            );
-            let circle = new window.google.maps.Circle({
-              radius: 5000,
-              center: location,
-            });
+        if (this.search) {
+          if (newVal && this.from.by == "search") {
+            this.saved.opened = false;
+            this.search.searching = true;
+            clearTimeout(this.delayer);
+            this.delayer = setTimeout(() => {
+              var service = new window.google.maps.places.AutocompleteService();
+              let location = new window.google.maps.LatLng(
+                this.center.lat,
+                this.center.lng
+              );
+              let circle = new window.google.maps.Circle({
+                radius: 5000,
+                center: location
+              });
 
-            service.getQueryPredictions(
-              {
-                input: newVal,
-                bounds: circle.getBounds(),
-              },
-              (predections) => {
-                this.search.results = predections;
-              }
-            );
-          }, 3000);
-        } else {
-          this.search.searching = false;
-          this.search.results = [];
+              service.getQueryPredictions(
+                {
+                  input: newVal,
+                  bounds: circle.getBounds()
+                },
+                predections => {
+                  this.search.results = predections;
+                }
+              );
+            }, 3000);
+          } else {
+            this.search.searching = false;
+            this.search.results = [];
+          }
         }
-      },
-    },
+      }
+    }
   },
   methods: {
     sendDirection(pos) {
@@ -272,12 +269,12 @@ export default {
       if (direction == "from") {
         this.directionsBorns.start = {
           lat: pos.lat(),
-          lng: pos.lng(),
+          lng: pos.lng()
         };
       } else if (direction == "to") {
         this.directionsBorns.end = {
           lat: pos.lat(),
-          lng: pos.lng(),
+          lng: pos.lng()
         };
       }
     },
@@ -294,12 +291,12 @@ export default {
       this[this.search.origin].address = place.description;
 
       var service = new window.google.maps.places.PlacesService(map);
-      await service.getDetails({ placeId: place["place_id"] }, (res) => {
+      await service.getDetails({ placeId: place["place_id"] }, res => {
         this.center = res.geometry.location;
         this.search.searching = false;
         this.$emit("changedDirection", {
           origin: this.search.origin,
-          pos: res.geometry.location,
+          pos: res.geometry.location
         });
         this[this.search.origin].lat = res.geometry.location.lat();
         this[this.search.origin].long = res.geometry.location.lng();
@@ -310,7 +307,7 @@ export default {
     pickedFromSaved(place) {
       let pos = {
         lat: place.lat,
-        lng: place.long,
+        lng: place.long
       };
       this.changeDirection(this.saved.origin, {
         lat: () => {
@@ -318,7 +315,7 @@ export default {
         },
         lng: () => {
           return pos.lng;
-        },
+        }
       });
       this.center = pos;
       this[this.saved.origin].address = place.address;
@@ -326,7 +323,7 @@ export default {
       this[this.saved.origin].long = place.long;
       this.$emit("changedDirection", {
         origin: this.saved.origin,
-        pos: pos,
+        pos: pos
       });
       this.$emit("centerChanged", pos);
       this.saved.opened = false;
@@ -334,7 +331,7 @@ export default {
     async pickCuerrentLocation() {
       let pos = {
         lat: this.customerLocation.lat,
-        lng: this.customerLocation.lng,
+        lng: this.customerLocation.lng
       };
       this.changeDirection(this.saved.origin, {
         lat: () => {
@@ -342,24 +339,27 @@ export default {
         },
         lng: () => {
           return pos.lng;
-        },
+        }
       });
       this.center = pos;
+      this[this.saved.origin].by = "current";
       this[this.saved.origin].address = await this.geocodedAddress(pos);
       this[this.saved.origin].lat = pos.lat;
       this[this.saved.origin].long = pos.lng;
       this.$emit("changedDirection", {
         origin: this.saved.origin,
-        pos: pos,
+        pos: pos
       });
       this.$emit("centerChanged", pos);
       this.saved.opened = false;
-    },
+      this.search.searching = false;
+      this[this.saved.origin].by = "search";
+    }
   },
   async beforeCreate() {
     let response = await this.$store.dispatch("savedLocations/loadLocations");
     console.log(response);
-  },
+  }
 };
 </script>
 <style lang="scss" scoped>
