@@ -34,7 +34,8 @@ import InputLocation from "@/shared/components/ui/inputLocation";
 import "./registerServiceWorker";
 import {
   deepFind,
-  geocodedAddress
+  geocodedAddress,
+  decode
 
 } from '@/shared/mixins/functions'
 Vue.use(VueGoogleMaps, gmapsConfig);
@@ -69,7 +70,8 @@ Vue.component("map-view", MapView);
 Vue.mixin({
   methods: {
     deepFind,
-    geocodedAddress
+    geocodedAddress,
+    decode
 
   }
 })

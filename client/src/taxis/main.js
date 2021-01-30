@@ -32,7 +32,8 @@ import Switch from "@/shared/components/ui/switch";
 import GmapCustomMarker from 'vue2-gmap-custom-marker';
 
 import {
-  deepFind
+  deepFind,
+  decode
 } from '@/shared/mixins/functions'
 Vue.use(VueGoogleMaps, gmapsConfig);
 //Vue Components
@@ -65,7 +66,8 @@ Vue.component("map-view", MapView);
 //Vue mixins
 Vue.mixin({
   methods: {
-    deepFind
+    deepFind,
+    decode
   }
 })
 

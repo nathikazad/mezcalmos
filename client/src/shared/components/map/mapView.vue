@@ -31,23 +31,25 @@
     >
       <img :src="this.fromUrl" class="imageIcon border" />
     </gmap-custom-marker>
-    <!-- from Icon marker -->
+    <!-- Driver Icon marker -->
 
     <gmap-custom-marker
       :marker="{lat:deepFind(driverLocation, 'position.lat'),lng:deepFind(driverLocation, 'position.long')}"
       v-if="deepFind(driverLocation, 'position')"
       :ref="`marker-driver`"
     >
-      <img :src="require('../../static/img/driverCar.png')" class="driverIcon" />
+      <img :src="require('../../static/img/driverCar2.png')" class="driverIcon" />
     </gmap-custom-marker>
+    <gmap-polyline
+      v-if="deepFind(driverLocation, 'polyline')"
+      v-bind:path="decode(deepFind(driverLocation, 'polyline'))"
+      v-bind:options="{ strokeColor:'#C18DF3'}"
+    ></gmap-polyline>
     <!-- to icon marker -->
-    <GmapMarker
-      v-if="directionsDest"
-      :ref="`marker-center`"
-      :position="directionsDest"
-      :clickable="true"
-      :icon="icons.end"
-    />
+
+    <gmap-custom-marker :marker="directionsDest" v-if="directionsDest" :ref="`marker-center`">
+      <img :src="require('../../static/img/Bttn.png')" />
+    </gmap-custom-marker>
   </GmapMap>
 </template>
 <script>
@@ -318,7 +320,7 @@ export default {
   display: block;
 }
 .driverIcon {
-  width: 80px;
-  height: 88px;
+  width: auto;
+  height: auto;
 }
 </style>

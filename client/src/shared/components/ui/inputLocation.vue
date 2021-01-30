@@ -81,7 +81,7 @@
         :directionsOrigin="directionsBorns.start"
         :directionsDest="directionsBorns.end"
         :fromUrl="fromUrl"
-        v-if="withMap && center.lat"
+        v-if="withMap && center"
         :driverLocation="driverLocation"
       ></map-view>
       <slot name="action"></slot>
@@ -133,7 +133,7 @@ export default {
       focusedFrom: false,
       focusedTo: false,
       pickLocation: false,
-      center: this.directionsBorns.start || {},
+      center: this.directionsBorns.start || null,
       delayer: null
     };
   },
@@ -209,6 +209,8 @@ export default {
 
       handler: function(newVal) {
         if (this.search) {
+          console.log(this.from);
+
           if (newVal && this.from.by == "search") {
             this.saved.opened = false;
             this.search.searching = true;
@@ -353,7 +355,9 @@ export default {
       this.$emit("centerChanged", pos);
       this.saved.opened = false;
       this.search.searching = false;
-      this[this.saved.origin].by = "search";
+      setTimeout(() => {
+        this[this.saved.origin].by = "search";
+      }, 200);
     }
   },
   async beforeCreate() {
