@@ -51,6 +51,11 @@ export default {
       });
       setInterval(function () {
         updateDriverPosition(context)
+      }, 10 * 1000)
+      setInterval(function () {
+        if (context.state.currentOrder.id) {
+          updateRouteInformation(context.state.currentOrder, driverLocation)
+        }
       }, 300 * 1000)
     },
     startLooking(context) {
@@ -139,7 +144,6 @@ const updateDriverPosition = async (context) => {
   firebaseDatabase().ref(`taxiDrivers/${userId}/location`).set(locationUpdate)
   if (context.state.currentOrder.id) {
     firebaseDatabase().ref(`orders/taxi/${context.state.currentOrder.id}/driver/location`).update(locationUpdate)
-    updateRouteInformation(context.state.currentOrder, driverLocation)
   }
 }
 

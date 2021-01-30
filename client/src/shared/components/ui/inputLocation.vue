@@ -101,6 +101,7 @@ export default {
         return { opened: false };
       }
     },
+    
     directionsBorns: {
       type: Object
     },
@@ -133,7 +134,7 @@ export default {
       focusedFrom: false,
       focusedTo: false,
       pickLocation: false,
-      center: this.directionsBorns.start || null,
+     auxCenter:null,
       delayer: null
     };
   },
@@ -148,23 +149,23 @@ export default {
       return this.$store.getters["getUserDefaultLocation"];
     },
     customerLocation() {
-      return this.$store.getters.customerLocation;
-    }
-  },
-  mounted() {
-    this.center = {
+      return this.$store.getters.customerLocation|| {
       lat: this.deepFind(this.userDefaultLocation, "lat"),
       lng: this.deepFind(this.userDefaultLocation, "long")
     };
-    console.log(this.customerLocation);
-
-    if (navigator.geolocation) {
-      if (!this.directionsBorns.start) {
-        this.center = this.customerLocation;
+    },
+    center(){
+      if (this.auxCenter) {
+        return this.auxCenter
+      }else{
+ return  this.directionsBorns.start || this.customerLocation
       }
-    } else {
-      console.log("Geo Location not supported by browser");
+   
     }
+  },
+  mounted() {
+   
+   
   },
   watch: {
     "to.address": {
@@ -294,7 +295,7 @@ export default {
 
       var service = new window.google.maps.places.PlacesService(map);
       await service.getDetails({ placeId: place["place_id"] }, res => {
-        this.center = res.geometry.location;
+        this.auxCenter = res.geometry.location;
         this.search.searching = false;
         this.$emit("changedDirection", {
           origin: this.search.origin,
@@ -319,7 +320,7 @@ export default {
           return pos.lng;
         }
       });
-      this.center = pos;
+      this.auxCenter = pos;
       this[this.saved.origin].address = place.address;
       this[this.saved.origin].lat = place.lat;
       this[this.saved.origin].long = place.long;
@@ -343,7 +344,7 @@ export default {
           return pos.lng;
         }
       });
-      this.center = pos;
+      this.auxCenter = pos;
       this[this.saved.origin].by = "current";
       this[this.saved.origin].address = await this.geocodedAddress(pos);
       this[this.saved.origin].lat = pos.lat;
