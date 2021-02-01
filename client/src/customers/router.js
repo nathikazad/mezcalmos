@@ -34,7 +34,7 @@ const router = new VueRouter({
     {
       path: "/services",
       component: ServicesListPage,
-      name: "services",
+      name: "home",
     },
     {
       path: "/services/taxi/request",

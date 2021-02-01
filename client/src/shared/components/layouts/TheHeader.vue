@@ -60,10 +60,10 @@ export default {
     backTo() {
       let route = this.$route;
 
-      if (route.name == "services") {
+      if (route.name == "home") {
         return false;
       } else {
-        return route.query.redirect || { name: "services" };
+        return route.query.redirect || { name: "home" };
       }
     },
   },

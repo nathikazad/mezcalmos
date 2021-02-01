@@ -18,7 +18,7 @@ const router = new VueRouter({
   mode: 'history',
   routes: [
     { path: '/', redirect: '/incoming' },
-    { path: '/incoming', component: IncomingOrdersPage, meta: { requiresAuth: true }},
+    { path: '/incoming', component: IncomingOrdersPage, meta: { requiresAuth: true },  name: 'home'},
     { path: '/messages/:orderId', component: MessagesPage, meta: { requiresAuth: true } },
     { path: '/orders/:orderId', component: DeliveryViewPage, meta: { requiresAuth: true } },
     { path: '/orders', component: PastOrderstPage, meta: { requiresAuth: true } },

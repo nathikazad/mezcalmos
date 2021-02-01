@@ -22,7 +22,7 @@ const router = new VueRouter({
       meta: {
         requiresAuth: true
       },
-      name: 'services'
+      name: 'home'
     },
     {
       path: '/messages/:orderId',
