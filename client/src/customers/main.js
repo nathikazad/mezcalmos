@@ -3,6 +3,8 @@ import App from "./App.vue";
 import router from "./router.js";
 import store from './store/store'
 import * as VueGoogleMaps from "vue2-google-maps";
+import GmapCustomMarker from 'vue2-gmap-custom-marker';
+
 import {
   ValidationProvider,
   ValidationObserver,
@@ -16,6 +18,9 @@ import {
 import {
   firebaseInit
 } from "@/shared/config/firebase";
+import {
+  gmapsConfig
+} from "@/shared/config/gmaps";
 
 
 import BaseButton from "@/shared/components/ui/BaseButton";
@@ -28,16 +33,14 @@ import PickLocation from "@/shared/components/map/pickLocation";
 import InputLocation from "@/shared/components/ui/inputLocation";
 import "./registerServiceWorker";
 import {
-  deepFind
-} from '@/shared/mixins/functions'
-Vue.use(VueGoogleMaps, {
-  load: {
-    key: "AIzaSyB9vaAB9ptXhpeRs_JjxODEyuA_eO0tYu0",
-    libraries: "places",
-  },
+  deepFind,
+  geocodedAddress,
+  decode
 
-  installComponents: true,
-});
+} from '@/shared/mixins/functions'
+Vue.use(VueGoogleMaps, gmapsConfig);
+Vue.component("gmap-custom-marker", GmapCustomMarker);
+
 //Vue Components
 Vue.component("logo", Logo);
 Vue.component("base-button", BaseButton);
@@ -66,9 +69,15 @@ Vue.component("map-view", MapView);
 //Vue mixins
 Vue.mixin({
   methods: {
-    deepFind
+    deepFind,
+    geocodedAddress,
+    decode
+
   }
 })
+
+//Vue moment configuration
+Vue.use(require('vue-moment'));
 //Firebase state changed function
 async function firebaseCallback(user) {
   if (user) {
@@ -92,6 +101,7 @@ async function firebaseCallback(user) {
         path: "/"
       });
     }
+    store.dispatch("notifications/loadNotificationsForCustomer");
   }
 }
 

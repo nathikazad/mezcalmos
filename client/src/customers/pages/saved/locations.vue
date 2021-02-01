@@ -1,13 +1,15 @@
 <template>
-<!-- TODO: taskId #81774 make it dynamic -->
+  <!-- TODO: taskId #81774 make it dynamic -->
   <div>
     <!-- location picker component -->
     <transition name="slide-fade">
       <pick-location
         v-if="openPicker"
         class="popUp"
-        title="Add New Location"
-        :place="{name:'',address:''}"
+        :title="!editId?'Add New Location':'Edit Location'"
+        @close="openPicker = false"
+        :editId="editId"
+        ref="pickLocation"
       ></pick-location>
     </transition>
     <!--*************** End location picker component ****************-->
@@ -15,22 +17,40 @@
     <div class="field">
       <h3 class="bold flex space_between">
         <span>Locations</span>
-        <span class="regular">3 Location</span>
+        <span class="regular"
+          >{{ Object.keys(locations).length }} Location</span
+        >
       </h3>
-      <card class="bg_secondary border card">
+      <card
+        class="bg_secondary border card"
+        v-for="(location, index) in locations"
+        :key="index"
+      >
         <img src="@/shared/static/img/Map.png" slot="image" class="image" />
-        <div slot="cardTitle" class="bold">My Office</div>
-        <div slot="description">
-          3944 Coolidge Street,
-          <br />Miles City, MT 59301
+        <div slot="text" class="text_details">
+          <div slot="cardTitle" class="bold">{{ location.name }}</div>
+          <div slot="description">{{ location.address }}</div>
         </div>
-        <div slot="actions">
-          <base-button :mode="{ dark: true, bg_white: true } " class="edit icon elevate_1">
+        <div slot="actions" class="flex">
+          <base-button
+            :mode="{ dark: true, bg_white: true }"
+            class="edit icon elevate_1"
+            :link="true"
+            :to="{
+              path: '/saved/locations',
+              query: { editPlace: index, redirect: '/saved/locations' },
+            }"
+          >
             <span class="t-8 text_grey">
               <fa icon="pencil-alt"></fa>
             </span>
           </base-button>
-          <base-button :mode="{ dark: true, bg_white: true } " class="icon elevate_1">
+          <base-button
+            :mode="{ dark: true, bg_white: true }"
+            class="icon elevate_1"
+            :loading="loading"
+            @click.native="removeLocation(index)"
+          >
             <span class="t-8 text_grey">
               <fa icon="trash"></fa>
             </span>
@@ -39,12 +59,14 @@
       </card>
       <base-button
         class="fill_width"
-        :mode="{ dark: true, bg_diagonal: true } "
-        @click.native="openPicker=true"
+        :mode="{ dark: true, bg_diagonal: true }"
+        :link="true"
+        :to="{
+          path: '/saved/locations',
+          query: { newPlace: true, redirect: '/saved/locations' },
+        }"
       >
-        <span class="t-8">
-          <fa icon="plus"></fa>&nbsp;Add New Location
-        </span>
+        <span class="t-8"> <fa icon="plus"></fa>&nbsp;{{ actionText }} </span>
       </base-button>
     </div>
   </div>
@@ -53,13 +75,63 @@
 import Card from "../../../shared/components/ui/card";
 export default {
   components: {
-    Card
+    Card,
   },
+  watch: {
+    $route: {
+      deep: true,
+      immediate: true,
+      handler: function(newVal) {
+        if (newVal.query.newPlace) {
+          this.openPicker = true;
+        } else if (newVal.query.editPlace) {
+          this.openPicker = true;
+
+          this.editId = newVal.query.editPlace;
+          setTimeout(() => {
+            let pickLocation = this.$refs.pickLocation;
+            let place = this.locations[this.editId];
+            pickLocation.name = place.name;
+            pickLocation.saved.address = place.address;
+            pickLocation.saved.pos = { lat: place.lat, lng: place.long };
+            setTimeout(() => {
+              pickLocation.saved.searching = false;
+            }, 200);
+          }, 200);
+        } else {
+          this.openPicker = false;
+        }
+      },
+    },
+  },
+  computed: {
+    locations() {
+      return this.$store.getters["savedLocations/locations"] || {};
+    },
+  },
+
   data() {
     return {
-      openPicker: false
+      openPicker: false,
+      loading: false,
+      actionText: "Add New Location",
+      editId: "",
     };
-  }
+  },
+  methods: {
+    async removeLocation(id) {
+      this.loading = true;
+      await this.$store.dispatch("savedLocations/removeLocation", {
+        savedLocationId: id,
+      });
+      this.loading = false;
+    },
+  },
+  async beforeCreate() {
+    this.isLoaded = false;
+    await this.$store.dispatch("savedLocations/loadLocations");
+    this.isLoaded = true;
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -87,5 +159,8 @@ export default {
   left: 0;
   z-index: 9;
   padding: 1rem;
+}
+.text_details {
+  margin-left: 1rem;
 }
 </style>

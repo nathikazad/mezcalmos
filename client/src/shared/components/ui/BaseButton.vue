@@ -1,7 +1,10 @@
 <template>
-  <button v-if="!link" :class="mode" class="btn">
-    <span>
+  <button v-if="!link" :class="mode" class="btn" :disabled="disabled">
+    <span v-if="!loading">
       <slot></slot>
+    </span>
+    <span v-else class="flex center">
+      <div class="load open"></div>
     </span>
   </button>
   <router-link v-else :to="to" :class="mode" class="btn" tag="button">
@@ -33,6 +36,14 @@ export default {
       required: false,
       default: "/",
     },
+    loading: {
+      type: Boolean,
+      default: false,
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
 };
 </script>
@@ -57,7 +68,39 @@ export default {
     background: white;
   }
 }
+.bg_light {
+  .load {
+    border: 2px solid map-get($map: $colors, $key: blackL) !important;
+  }
+}
 .small {
   height: 2rem;
+}
+.disabled{
+  background:map-get($map: $colors, $key: grey) !important;
+}
+.load {
+  width: 20px;
+  height: 20px;
+  border: 2px solid map-get($map: $colors, $key: white);
+  border-radius: 100%;
+}
+
+.open {
+  border-top: 2px solid transparent;
+  animation: load-animate infinite linear 1s;
+}
+
+@keyframes load-animate {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+    opacity: 0.35;
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>

@@ -8,7 +8,7 @@ import taxiAuthModule from './modules/taxiAuth'
 import incomingOrdersModule from './modules/incomingOrders';
 import pastOrdersModule from './modules/pastOrders';
 import orderModule from './modules/order';
-
+import notificationsModule from './modules/notifications'
 
 Vue.use(Vuex)
 
@@ -19,7 +19,8 @@ const store = new Vuex.Store({
     order: orderModule,
     incomingOrders: incomingOrdersModule,
     pastOrders: pastOrdersModule,
-    messages: messagesModule
+    messages: messagesModule,
+    notifications: notificationsModule
   },
   getters: {
     appName() {

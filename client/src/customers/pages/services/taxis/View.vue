@@ -8,6 +8,9 @@
         :to="orderDetails.to"
         :from="orderDetails.from"
         :directionsBorns="calculateBorns"
+        ref="inputLocation"
+        :fromUrl="deepFind(userInfo, 'photo')"
+        :driverLocation="deepFind(orderDetails, 'driver.location')"
       >
         <!-- Searching fo Someone  Status-->
         <div
@@ -22,6 +25,7 @@
             class="w-30 elevate_1"
             :mode="{ dark: true, bg_error: true }"
             @click.native="requestTaxi()"
+            :loading="loading"
           >
             <span class="t-8 regular">Cancel</span>
           </base-button>
@@ -34,27 +38,89 @@
         >
           <div class="w-70">
             <div class="flex align_center">
-              <avatar
-                size="2.4rem"
-                url="https://scontent.ftun11-1.fna.fbcdn.net/v/t1.0-9/107473085_10220372571378093_8626273449961856030_n.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=jN2qfU0I-z0AX-BsJ9G&_nc_ht=scontent.ftun11-1.fna&oh=c1ee5219e203f447022a8037b899cfc4&oe=60050203"
-              ></avatar>
+              <avatar size="2.4rem" :url="orderDetails.driver.image"></avatar>
               <div class="user_name">
-                <h4 class="text_blackL">Yassine</h4>
-                <h5 class="regular text_grey">Arrival In 30 Mins</h5>
+                <h4 class="text_blackL">{{ orderDetails.driver.name }}</h4>
+                <h5
+                  class="regular text_grey"
+                  v-if="
+                    deepFind(
+                      orderDetails,
+                      'driver.location.estimatedArrivalTime'
+                    )
+                  "
+                >
+                  Arrival
+                  {{
+                    deepFind(
+                      orderDetails,
+                      "driver.location.estimatedArrivalTime"
+                    ) | moment("from", "now")
+                  }}
+                </h5>
+                <h5 class="regular text_grey" v-else>
+                  Arrival
+                  {{ "TBD" }}
+                </h5>
               </div>
             </div>
           </div>
           <base-button
             class="w-30 elevate_1"
             :mode="{ dark: true, bg_diagonal: true }"
-            @click.native="requestTaxi()"
             :link="true"
             :to="{
-              path: `/messages/${orderId}`,
+              path: messageLink,
               query: { redirect: $route.path },
             }"
           >
             <span class="t-8 regular">Message</span>
+          </base-button>
+        </div>
+        <!-- In Transit  Status-->
+        <div
+          class="flex align_center space_between btnP bg_white elevate_2"
+          slot="action"
+          v-else-if="orderDetails.status == 'inTransit'"
+        >
+          <div class="w-70">
+            <div class="flex align_center">
+              <avatar size="2.4rem" :url="orderDetails.driver.image"></avatar>
+              <div class="user_name">
+                <h4 class="text_blackL">{{ orderDetails.driver.name }}</h4>
+                <h5 class="regular text_grey">Ride started</h5>
+              </div>
+            </div>
+          </div>
+          <base-button
+            class="w-30 elevate_1"
+            :mode="{ dark: true, bg_error: true }"
+            :loading="loading"
+          >
+            <span class="t-8 regular">Report issue</span>
+          </base-button>
+        </div>
+        <!-- Droped off  Status-->
+        <div
+          class="flex align_center space_between btnP bg_white elevate_2"
+          slot="action"
+          v-else-if="orderDetails.status == 'droppedOff'"
+        >
+          <div class="w-70">
+            <div class="flex align_center">
+              <avatar size="2.4rem" :url="orderDetails.driver.image"></avatar>
+              <div class="user_name">
+                <h4 class="text_blackL">{{ orderDetails.driver.name }}</h4>
+                <h5 class="regular text_grey">Dropped off</h5>
+              </div>
+            </div>
+          </div>
+          <base-button
+            class="w-30 elevate_1"
+            :mode="{ dark: true, bg_info: true }"
+            :loading="loading"
+          >
+            <span class="t-8 regular">Review</span>
           </base-button>
         </div>
       </input-location>
@@ -67,7 +133,15 @@
 
 <script>
 export default {
+  data() {
+    return {
+      loading: false,
+    };
+  },
   computed: {
+    userInfo() {
+      return this.$store.getters["userInfo"];
+    },
     orderDetails() {
       return this.$store.getters["taxis/value"];
     },
@@ -97,9 +171,11 @@ export default {
       return borns;
     },
   },
-  mounted() {},
   async beforeCreate() {
     this.$store.dispatch("taxis/loadTaxi", {
+      orderId: this.$route.params.orderId,
+    });
+    this.$store.dispatch("notifications/clearOrderStatusNotifications", {
       orderId: this.$route.params.orderId,
     });
   },

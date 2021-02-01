@@ -18,11 +18,8 @@
     </div>
     <div class="user nav_body" v-else>
       <div class="identity flex center wrap">
-        <avatar
-          size="6.875rem"
-          url="https://scontent.ftun11-1.fna.fbcdn.net/v/t1.0-9/107473085_10220372571378093_8626273449961856030_n.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=jN2qfU0I-z0AX-BsJ9G&_nc_ht=scontent.ftun11-1.fna&oh=c1ee5219e203f447022a8037b899cfc4&oe=60050203"
-        ></avatar>
-        <h2 class="fill_width txt_center t-16 bold">Bouassida Yassine</h2>
+        <avatar size="6.875rem" :url="deepFind(userInfo,'photo')"></avatar>
+        <h2 class="fill_width txt_center t-16 bold">{{deepFind(userInfo,'displayName')}}</h2>
       </div>
       <div class="nav_links flex align_center start wrap">
         <router-link :to="link.to" class="text_blackD" v-for="(link, index) in links" :key="index">
@@ -45,6 +42,9 @@ export default {
   computed: {
     isLoggedIn() {
       return this.$store.getters.loggedIn;
+    },
+    userInfo() {
+      return this.$store.getters["userInfo"];
     }
   },
   data() {
@@ -53,7 +53,11 @@ export default {
         { text: "User Information", icon: "user-circle", to: "/userinfo" },
         { text: "My Orders", icon: "shopping-cart", to: "/orders" },
         { text: "Message", icon: "envelope", to: "/services" },
-        { text: "Saved Location", icon: "location-arrow", to: "/services" }
+        {
+          text: "Saved Location",
+          icon: "location-arrow",
+          to: "/saved/locations"
+        }
       ]
     };
   },
@@ -64,7 +68,6 @@ export default {
     },
     async login() {
       try {
-        console.log("login");
         await this.$store.dispatch("login");
         if (this.$route.query.redirect) {
           this.$router.push({ path: this.$route.query.redirect });
@@ -73,7 +76,6 @@ export default {
         }
       } catch (e) {
         this.error = e.message;
-        console.log(this.error);
       }
     }
   }

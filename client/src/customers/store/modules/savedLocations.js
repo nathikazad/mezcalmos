@@ -1,4 +1,6 @@
-import { firebaseDatabase } from '@/shared/config/firebase'
+import {
+  firebaseDatabase
+} from '@/shared/config/firebase'
 export default {
   namespaced: true,
   state() {
@@ -9,7 +11,10 @@ export default {
   actions: {
     loadLocations(context) {
       let userId = context.rootGetters.userId
+
+
       firebaseDatabase().ref(`/users/${userId}/savedLocations`).on('value', async snapshot => {
+
         let locations = snapshot.val();
         // TODO: if unauthorized or wrong type of order redirect to home page
         context.commit('saveLocations', locations)
@@ -18,20 +23,28 @@ export default {
     async saveLocation(context, payload) {
       let userId = context.rootGetters.userId
       let newLocation = {
-            name: payload.name,
-            lat: payload.lat,
-            long: payload.long,
-            address: payload.address}
+        name: payload.name,
+        lat: payload.lat,
+        long: payload.long,
+        address: payload.address
+      }
       await firebaseDatabase().ref(`/users/${userId}/savedLocations`).push(newLocation);
     },
-    async removeLocation(context, payload){
+    async removeLocation(context, payload) {
       let userId = context.rootGetters.userId
       let savedLocationId = payload.savedLocationId
       await firebaseDatabase().ref(`/users/${userId}/savedLocations/${savedLocationId}`).remove();
+    },
+    async editLocation(context, payload) {
+      let userId = context.rootGetters.userId
+      let savedLocationId = payload.savedLocationId
+      await firebaseDatabase().ref(`/users/${userId}/savedLocations/${savedLocationId}`).set({
+        ...payload.newLocation
+      });
     }
   },
   mutations: {
-    saveLocations(state, payload){
+    saveLocations(state, payload) {
       state.locations = payload
     }
   },

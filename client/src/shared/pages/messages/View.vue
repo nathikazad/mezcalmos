@@ -4,46 +4,37 @@
 
     <div class="messages_body fit_container">
       <div class="user_info flex align_center start bg_secondary border">
-        <avatar
-          size="2.4rem"
-          url="https://scontent.ftun11-1.fna.fbcdn.net/v/t1.0-9/107473085_10220372571378093_8626273449961856030_n.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=jN2qfU0I-z0AX-BsJ9G&_nc_ht=scontent.ftun11-1.fna&oh=c1ee5219e203f447022a8037b899cfc4&oe=60050203"
-        ></avatar>
+        <avatar size="2.4rem" :url="sender.image"></avatar>
         <div class="user_name">
-          <h3>Bouassida Yassine</h3>
-          <h5 class="text_info regular">Avilable</h5>
+          <h3>{{sender.name}}</h3>
+          <h5 class="text_info regular">Available</h5>
         </div>
       </div>
       <div class="messages">
-        <div v-for="(msg, index) in messagesTest" :key="index">
-          <div class="message flex align_baseline start other" v-if="!msg.me">
-            <avatar size="2.4rem" :url="msg.avatar"></avatar>
+        <div v-for="(msg, index) in messages" :key="index">
+          <div class="message flex align_baseline start other" v-if="!me(msg.userId)">
+            <avatar size="2.4rem" :url="sender.image"></avatar>
             <div class="bg_secondary msg_txt text_blackD">
-              <h5>{{ msg.text }}</h5>
+              <h5>{{ msg.message }}</h5>
             </div>
           </div>
 
           <div class="message flex align_baseline end me" v-else>
             <div class="bg_horizontal msg_txt text_white">
-              <h5>{{ msg.text }}</h5>
+              <h5>{{ msg.message }}</h5>
             </div>
-            <avatar size="2.4rem" :url="msg.avatar"></avatar>
+            <avatar size="2.4rem" :url="recipient.image"></avatar>
           </div>
         </div>
       </div>
     </div>
     <div class="message_footer fit_container">
-      <div
-        class="message_input bg_secondary text_blackD flex align_center space_between"
-      >
-        <input
-          type="text"
-          v-model="newMessage"
-          @keyup.enter="sendMessageTest"
-        />
+      <div class="message_input bg_secondary text_blackD flex align_center space_between">
+        <input type="text" v-model="newMessage" @keyup.enter="sendMessage" />
         <base-button
           :mode="{ dark: true, bg_diagonal: true }"
           class="message_btn"
-          @click.native="sendMessageTest"
+          @click.native="sendMessage"
         >
           <fa icon="paper-plane"></fa>
         </base-button>
@@ -58,37 +49,7 @@
 export default {
   data() {
     return {
-      newMessage: "",
-      messagesTest: [
-        {
-          me: true,
-          text: "Hello",
-          seen: "18:06",
-          avatar:
-            "https://scontent.ftun11-1.fna.fbcdn.net/v/t1.0-9/107473085_10220372571378093_8626273449961856030_n.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=jN2qfU0I-z0AX-BsJ9G&_nc_ht=scontent.ftun11-1.fna&oh=c1ee5219e203f447022a8037b899cfc4&oe=60050203",
-        },
-        {
-          me: false,
-          text: "Hi",
-          seen: "18:06",
-          avatar:
-            "https://scontent.ftun11-1.fna.fbcdn.net/v/t1.0-9/107473085_10220372571378093_8626273449961856030_n.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=jN2qfU0I-z0AX-BsJ9G&_nc_ht=scontent.ftun11-1.fna&oh=c1ee5219e203f447022a8037b899cfc4&oe=60050203",
-        },
-        {
-          me: false,
-          text: "I am outside but i cant find your house",
-          seen: "18:06",
-          avatar:
-            "https://scontent.ftun11-1.fna.fbcdn.net/v/t1.0-9/107473085_10220372571378093_8626273449961856030_n.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=jN2qfU0I-z0AX-BsJ9G&_nc_ht=scontent.ftun11-1.fna&oh=c1ee5219e203f447022a8037b899cfc4&oe=60050203",
-        },
-        {
-          me: true,
-          text: "I am coming...",
-          seen: "18:06",
-          avatar:
-            "https://scontent.ftun11-1.fna.fbcdn.net/v/t1.0-9/107473085_10220372571378093_8626273449961856030_n.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=jN2qfU0I-z0AX-BsJ9G&_nc_ht=scontent.ftun11-1.fna&oh=c1ee5219e203f447022a8037b899cfc4&oe=60050203",
-        },
-      ],
+      newMessage: ""
     };
   },
   computed: {
@@ -98,32 +59,52 @@ export default {
     isLoaded() {
       return Object.keys(this.$store.getters["messages/value"]).length > 0;
     },
+    userId() {
+      return this.$store.getters["userId"];
+    },
+    sender() {
+      let participants = this.$store.getters["messages/participants"];
+      if (participants) {
+        let senderKey = Object.keys(participants).find(key => {
+          return key != this.userId;
+        });
+        return participants[senderKey];
+      }
+      return null;
+    },
+    recipient() {
+      let recipient = this.$store.getters["messages/participants"][this.userId];
+
+      return recipient;
+    },
+
     messages() {
       return this.$store.getters["messages/value"];
-    },
+    }
   },
   async beforeCreate() {
     await this.$store.dispatch("messages/loadMessages", {
-      orderId: this.$route.params.orderId,
+      orderId: this.$route.params.orderId
+    });
+    this.$store.dispatch("notifications/clearMessageNotifications", {
+      orderId: this.$route.params.orderId
     });
   },
   methods: {
-    sendMessageTest() {
-      this.messagesTest.push({
-        me: true,
-        text: this.newMessage,
-        seen: "18:06",
-        avatar:
-          "https://scontent.ftun11-1.fna.fbcdn.net/v/t1.0-9/107473085_10220372571378093_8626273449961856030_n.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_ohc=jN2qfU0I-z0AX-BsJ9G&_nc_ht=scontent.ftun11-1.fna&oh=c1ee5219e203f447022a8037b899cfc4&oe=60050203",
-      });
-      this.newMessage = "";
+    me(id) {
+      return id == this.userId;
     },
+
     async sendMessage() {
-      this.$store.dispatch("messages/sendMessage", {
-        message: this.newMessage,
-      });
-    },
-  },
+      await this.$store
+        .dispatch("messages/sendMessage", {
+          message: this.newMessage
+        })
+        .then(() => {
+          this.newMessage = "";
+        });
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
@@ -172,7 +153,7 @@ export default {
     .me {
       .msg_txt {
         padding: 0 1rem;
-        margin-left: 1rem;
+        margin-right: 1rem;
         border-radius: 2rem 0rem 2rem 2rem;
       }
     }

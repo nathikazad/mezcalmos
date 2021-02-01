@@ -25,15 +25,22 @@ export default {
     },
     loggedIn(state) {
       return state.loggedIn;
+    },
+    getUserDefaultLocation() {
+      return {
+        lat: 15.8720,
+        long: -97.0767
+      }
     }
   },
   actions: {
-    login() {
+    async login() {
       var provider = new firebaseAuth.FacebookAuthProvider();
-      firebaseAuth().signInWithPopup(provider);
+      await firebaseAuth().signInWithPopup(provider);
     },
     async autoSignIn(context, payload) {
       let info = (await firebaseDatabase().ref(`users/${payload.userId}/info/`).once('value')).val();
+
       context.commit('saveUserInfo', info)
       context.commit('saveAuthData', payload)
     },
@@ -41,7 +48,8 @@ export default {
       console.log("Logging out")
       await firebaseAuth().signOut()
       context.commit('clearData')
-    }
+    },
+
   },
   mutations: {
     saveAuthData(state, payload) {

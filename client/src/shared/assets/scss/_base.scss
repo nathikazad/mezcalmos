@@ -175,6 +175,12 @@ html {
         position: relative;
         z-index: 2;
     }
+
+    &.required {
+        animation: bounce .3s 4 alternate;
+        box-shadow: 0 2px 10px rgba(207, 1, 1, 0.2);
+
+    }
 }
 
 .input {
@@ -216,4 +222,10 @@ html {
         font-size: .8rem;
     }
 
+}
+
+@keyframes bounce {
+    to {
+        transform: scale(1.05);
+    }
 }

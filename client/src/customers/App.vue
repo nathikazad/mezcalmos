@@ -29,6 +29,10 @@ export default {
       navDrawer: false,
     };
   },
+  mounted() {
+
+    this.$store.dispatch("loadCustomerLocation");
+  },
   computed: {
     routeName() {
       return this.$route.name;
@@ -38,8 +42,7 @@ export default {
     $route: {
       deep: true,
       immediate: true,
-      handler: function(newVal, oldVal) {
-        console.log("updated route", newVal, " from ", oldVal);
+      handler: function() {
         this.navDrawer = false;
       },
     },

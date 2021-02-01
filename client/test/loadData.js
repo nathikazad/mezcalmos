@@ -2,6 +2,8 @@ const puppeteer = require('puppeteer');
 const fs = require('fs');
 const axios = require('axios');
 
+let dataFolderName = "dummyData"
+
 async function createUser(user) {
   while(true) {
     try{
@@ -50,29 +52,40 @@ async function createUser(user) {
 }
 
 async function loadData(){
-  let rawData = fs.readFileSync('test/dummyData/database_export/mezcalmos-31f1c-default-rtdb.json', "utf8")
-  let data = JSON.parse(rawData)
-  let oldUsers = {}
-  for (let key in data.users) {
-    await createUser(data.users[key].info)
-    oldUsers[data.users[key].info.email] = key
-  }
+  //clear DB
+  await axios.put("http://localhost:9000/.json?ns=mezcalmos-31f1c-default-rtdb", {})
+  //clear Auth
   const admin = require("firebase-admin");
   let app = admin.initializeApp({
     projectId: "mezcalmos-31f1c",
     databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com"
   });
   let userList = await admin.auth().listUsers(100)
+  userList.users.forEach((userRecord) => {
+    admin.auth().deleteUser(userRecord.uid)
+  });
+  // Get test data
+  let rawData = fs.readFileSync(`test/${dataFolderName}/database_export/mezcalmos-31f1c-default-rtdb.json`, "utf8")
+  let data = JSON.parse(rawData)
+  // Create Users
+  let oldUsers = {}
+  for (let key in data.users) {
+    await createUser(data.users[key].info)
+    oldUsers[data.users[key].info.email] = key
+  }
+  // Get new users
+  userList = await admin.auth().listUsers(100)
   let newUsers = {}
   userList.users.forEach((userRecord) => {
     newUsers[userRecord.email] = userRecord.uid
   });
+  // Add new users to data
   for(let email in oldUsers){
     rawData = rawData.replace(new RegExp(oldUsers[email],"g"), newUsers[email])
   }
   data = JSON.parse(rawData)
   
-  
+  // Write data
   axios.put("http://localhost:9000/.json?ns=mezcalmos-31f1c-default-rtdb", data)
   // app.delete();
   console.log("\nLoad Data: Finished")
@@ -93,6 +106,11 @@ function checkIfWebsiteIsUp(){
     setTimeout( checkIfWebsiteIsUp, 10000)
   });
 }
+
+if(process.argv.length == 3) {
+  dataFolderName = process.argv[2]
+};
+
 
 checkIfWebsiteIsUp()
 console.log("Load Data: Starting Up")
