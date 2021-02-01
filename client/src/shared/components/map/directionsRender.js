@@ -34,10 +34,7 @@ export default MapElementFactory({
         visible: false,
       },
     });
-    console.log(directionsRenderer);
-
     let directionsService = new window.google.maps.DirectionsService();
-    console.log(this);
 
     this.$watch(
       () => [this.origin, this.destination, this.travelMode], {
@@ -49,7 +46,6 @@ export default MapElementFactory({
             destination,
             travelMode
           } = this;
-          console.log("origin");
 
           if (!origin || !destination || !travelMode) return;
 
@@ -59,7 +55,6 @@ export default MapElementFactory({
               travelMode,
             },
             (response, status) => {
-              console.log(response);
               var leg = response.routes[0].legs[0];
 
               this.$emit("direction", leg);

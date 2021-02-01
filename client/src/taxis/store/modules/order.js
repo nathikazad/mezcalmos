@@ -28,7 +28,6 @@ export default {
         context.commit('saveOrder', {
           order: order,
           orderId: orderId,
-
         });
       });
     },
@@ -39,31 +38,21 @@ export default {
     async acceptRide(context) {
       // TODO: check if order is loaded
       let orderId = context.state.orderId
-      let response = await cloudCall('acceptTaxiOrder', {
-        orderId: orderId
-      });
-      context.dispatch('updateDriverPosition', null, {
-        root: true
-      })
+      let response = await cloudCall('acceptTaxiOrder', {orderId: orderId});
+      context.dispatch('updateRouteInformation', null, {root: true})
       return response;
     },
     async startRide(context) {
       // TODO: check if order is loaded
       let orderId = context.state.orderId
-      let response = await cloudCall('startTaxiRide', {
-        orderId: orderId
-      });
-      context.dispatch('updateDriverPosition', null, {
-        root: true
-      })
+      let response = await cloudCall('startTaxiRide', {orderId: orderId});
+      context.dispatch('updateRouteInformation', null, {root: true})
       return response;
     },
     async finishRide(context) {
       // TODO: check if order is loaded
       let orderId = context.state.orderId
-      let response = await cloudCall('finishTaxiRide', {
-        orderId: orderId
-      });
+      let response = await cloudCall('finishTaxiRide', {orderId: orderId});
       return response;
     }
   },

@@ -27,7 +27,6 @@ export const geocodedAddress = (location) => {
         if (results[0]) {
           resolve(results[0].formatted_address);
         } else {
-          console.log(status);
           reject("No results found");
         }
       }

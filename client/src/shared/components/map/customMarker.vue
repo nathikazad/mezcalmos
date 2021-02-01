@@ -23,8 +23,6 @@ export default {
   },
   provide() {
     const self = this;
-console.log(this);
-
     return this.$mapPromise.then(map => {
       class Overlay extends google.maps.OverlayView {
         constructor(map) {

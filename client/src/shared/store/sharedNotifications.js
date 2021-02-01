@@ -33,8 +33,10 @@ export default {
       let userId = context.rootGetters.userId
       let orderId = payload.orderId
       let notificationType = "orderStatusChange"
-      for(let notificationId in context.state.notifications[orderId][notificationType]){
-        firebaseDatabase().ref(`/notifications/${userId}/${notificationId}`).remove()
+      if(context.state.notifications[orderId] && context.state.notifications[orderId][notificationType]){
+        for(let notificationId in context.state.notifications[orderId][notificationType]){
+          firebaseDatabase().ref(`/notifications/${userId}/${notificationId}`).remove()
+        }
       }
     },
     clearMessageNotifications(context, payload) {
@@ -43,7 +45,6 @@ export default {
       let notificationType = "newMessage"
       if(context.state.notifications[orderId] && context.state.notifications[orderId][notificationType]){
         for(let notificationId in context.state.notifications[orderId][notificationType]){
-          console.log("ref ",`/notifications/${userId}/${notificationId}`)
           firebaseDatabase().ref(`/notifications/${userId}/${notificationId}`).remove()
         }
       }

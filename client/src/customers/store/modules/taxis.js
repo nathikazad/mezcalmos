@@ -24,7 +24,6 @@ export default {
       orderId = payload.orderId;
       firebaseDatabase().ref(`/orders/taxi/${orderId}`).on('value', async snapshot => {
         let order = snapshot.val();
-        console.log(order)
         // TODO: if unauthorized or wrong type of order redirect to home page
         context.commit('loadTaxi', {
           order: order,

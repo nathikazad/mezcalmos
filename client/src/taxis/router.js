@@ -70,7 +70,6 @@ const router = new VueRouter({
 
 router.beforeEach(async function (to, from, next) {
   if(to.path == "/") {
-    console.log(store.getters.isInTaxi)
     if (store.getters.isInTaxi) {
       next(`/orders/${store.getters.currentOrderId}`);
     } else {

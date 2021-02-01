@@ -21,13 +21,11 @@ export default {
         userId: context.rootGetters.userId,
         timestamp: (new Date()).toUTCString()
       }
-      console.log(orderId, newMessage)
       // user can claim to be any user
       firebaseDatabase().ref(`/chat/${orderId}/messages`).push(newMessage);
     },
     async loadMessages(context, payload) {
       let orderId = context.state.orderId
-      console.log(orderId);
       if (orderId) {
         if (orderId == payload.orderId) {
           return

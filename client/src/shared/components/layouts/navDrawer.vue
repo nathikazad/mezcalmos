@@ -68,7 +68,6 @@ export default {
     },
     async login() {
       try {
-        console.log("login");
         await this.$store.dispatch("login");
         if (this.$route.query.redirect) {
           this.$router.push({ path: this.$route.query.redirect });
@@ -77,7 +76,6 @@ export default {
         }
       } catch (e) {
         this.error = e.message;
-        console.log(this.error);
       }
     }
   }

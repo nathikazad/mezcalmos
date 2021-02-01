@@ -26,7 +26,6 @@ export default {
       });
     },
     async requestGrocery(_, payload) {
-      console.log("Requesting Grocery")
       let from  = payload.from
       let to = payload.to
       let items = payload.items
@@ -37,7 +36,6 @@ export default {
   },
   mutations: {
     loadGrocery(state, payload){
-      console.log("Grocery mutated")
       state.value = payload.order
       state.orderId = payload.orderId
     },

@@ -4,7 +4,6 @@ import {
 } from '@/shared/config/firebase'
 import router from '../../router';
 sharedNotificationsModule.actions.loadNotificationsForCustomer = function(context) {
-  console.log("load notifications for taxi ")
   context.dispatch("loadNotifications", {router: router});
   let userId = context.rootGetters.userId
   firebaseDatabase().ref(`/notifications/${userId}`).on('child_added', async snapshot => {

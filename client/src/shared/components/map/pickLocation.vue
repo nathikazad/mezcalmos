@@ -183,7 +183,6 @@ export default {
       var service = new window.google.maps.places.PlacesService(map);
       await service.getDetails({ placeId: place["place_id"] }, (res) => {
         this.saved.searching = false;
-        console.log(res);
 
         this.saved.pos = {
           lat: res.geometry.location.lat(),

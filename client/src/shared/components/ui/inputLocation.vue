@@ -210,7 +210,6 @@ export default {
 
       handler: function(newVal) {
         if (this.search) {
-          console.log(this.from);
 
           if (newVal && this.from.by == "search") {
             this.saved.opened = false;
@@ -268,7 +267,6 @@ export default {
       this.search.origin = title.toLowerCase();
     },
     changeDirection(direction, pos) {
-      console.log({ lat: pos.lat(), lng: pos.lng() }, { direction });
       if (direction == "from") {
         this.directionsBorns.start = {
           lat: pos.lat(),
@@ -362,8 +360,9 @@ export default {
     }
   },
   async beforeCreate() {
-    let response = await this.$store.dispatch("savedLocations/loadLocations");
-    console.log(response);
+    if(!this.$options.propsData.disabled){
+      await this.$store.dispatch("savedLocations/loadLocations");
+    }
   }
 };
 </script>

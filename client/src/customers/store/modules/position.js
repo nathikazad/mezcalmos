@@ -12,8 +12,6 @@ export default {
     },
     actions: {
         async loadCustomerLocation(context) {
-            console.log(context);
-
             navigator.geolocation.watchPosition(async function (position) {
 
                 let newPosition = {

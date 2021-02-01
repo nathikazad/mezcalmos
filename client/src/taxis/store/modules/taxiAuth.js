@@ -52,11 +52,13 @@ export default {
       setInterval(function () {
         updateDriverPosition(context)
       }, 10 * 1000)
-      setInterval(function () {
-        if (context.state.currentOrder.id) {
-          updateRouteInformation(context.state.currentOrder, driverLocation)
-        }
-      }, 300 * 1000)
+      
+      setTimeout(function () {
+        updateRouteInformation(context)
+        setInterval(function () {
+          updateRouteInformation(context)
+        }, 300 * 1000)
+      }, 10 * 1000)
     },
     startLooking(context) {
       let userId = context.rootGetters.userId
@@ -66,8 +68,8 @@ export default {
       let userId = context.rootGetters.userId
       firebaseDatabase().ref(`taxiDrivers/${userId}/state/isLooking`).set(false);
     },
-    updateDriverPosition(context) {
-      updateDriverPosition(context)
+    updateRouteInformation(context) {
+      updateRouteInformation(context)
     }
   },
   mutations: {
@@ -134,6 +136,9 @@ function storeState(newState, context) {
 }
 
 const updateDriverPosition = async (context) => {
+  if(!context.state.driverLocation){
+    return
+  }
   let userId = context.rootGetters.userId
   let driverLocation = context.state.driverLocation
   let lastUpdateTime = context.state.lastLocationUpdateTime
@@ -147,7 +152,12 @@ const updateDriverPosition = async (context) => {
   }
 }
 
-const updateRouteInformation = async (order, driverLocation) => {
+const updateRouteInformation = async (context) => {
+  if(!context.state.currentOrder.id){
+    return;
+  } 
+  let order = context.state.currentOrder
+  let driverLocation = context.state.driverLocation
   let destination
   if (order.value.status == "onTheWay") {
     destination = order.value.from
@@ -171,7 +181,6 @@ const updateRouteInformation = async (order, driverLocation) => {
       },
       (response, status) => {
         if (status == "OK") {
-          console.log("inside update ", response)
           let distance = response.routes[0].legs[0].distance
           let duration = response.routes[0].legs[0].duration
           let polyline = response.routes[0].overview_polyline
@@ -185,5 +194,7 @@ const updateRouteInformation = async (order, driverLocation) => {
           })
         }
       })
+  } else {
+    console.log("google maps not loaded")
   }
 }

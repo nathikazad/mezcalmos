@@ -83,7 +83,6 @@ export default {
       immediate: true,
       handler: function(newVal) {
         if (newVal.query.newPlace) {
-          console.log(newVal);
           this.openPicker = true;
         } else if (newVal.query.editPlace) {
           this.openPicker = true;
@@ -91,7 +90,6 @@ export default {
           this.editId = newVal.query.editPlace;
           setTimeout(() => {
             let pickLocation = this.$refs.pickLocation;
-            console.log("pickLocation", pickLocation);
             let place = this.locations[this.editId];
             pickLocation.name = place.name;
             pickLocation.saved.address = place.address;

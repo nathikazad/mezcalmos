@@ -37,7 +37,6 @@ export default {
     async submitForm() {
       this.isLoading = true;
       try {
-        console.log("here");
 
         await this.$store.dispatch("login");
         if (this.$route.query.redirect) {
@@ -47,7 +46,6 @@ export default {
         }
       } catch (e) {
         this.error = e.message;
-        console.log(this.error);
       }
       this.isLoading = false;
     }

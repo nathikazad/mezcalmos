@@ -183,20 +183,17 @@ export default {
   methods: {
     async acceptRide() {
       this.loading = true;
-      let response = await this.$store.dispatch("order/acceptRide");
-      console.log(response);
+      await this.$store.dispatch("order/acceptRide");
       this.loading = false;
     },
     async startRide() {
       this.loading = true;
-      let response = await this.$store.dispatch("order/startRide");
-      console.log(response);
+      await this.$store.dispatch("order/startRide");
       this.loading = false;
     },
     async finishRide() {
       this.loading = true;
-      let response = await this.$store.dispatch("order/finishRide");
-      console.log(response);
+      await this.$store.dispatch("order/finishRide");
       this.loading = false;
     }
   }

@@ -63,21 +63,17 @@ export default {
     });
   },
   async beforeUnmount() {
-    console.log("before unmount")
     await this.$store.dispatch("order/unloadOrder");
   },
   methods: {
     async acceptOrder() {
-      let response = await this.$store.dispatch("order/acceptOrder")
-      console.log(response)
+      await this.$store.dispatch("order/acceptOrder")
     },
     async itemsPicked() {
-      let response = await this.$store.dispatch("order/itemsPicked")
-      console.log(response)
+      await this.$store.dispatch("order/itemsPicked")
     },
     async finishOrder() {
-      let response = await this.$store.dispatch("order/finishOrder")
-      console.log(response)
+      await this.$store.dispatch("order/finishOrder")
     }
   }
 };

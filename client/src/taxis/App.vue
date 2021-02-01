@@ -38,8 +38,8 @@ export default {
     $route: {
       deep: true,
       immediate: true,
-      handler: function(newVal, oldVal) {
-        console.log("updated route", newVal, " from ", oldVal);
+      handler: function() {
+        // console.log("updated route", newVal, " from ", oldVal);
         this.navDrawer = false;
       },
     },

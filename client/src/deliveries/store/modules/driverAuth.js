@@ -25,9 +25,7 @@ export default {
   actions: {
     async loadDriverAuth(context) {
       let userId = context.rootGetters.userId
-      console.log(userId)
       let canDeliver = (await firebaseDatabase().ref(`deliveryDrivers/${userId}/authorized`).once('value')).val() != null;
-      console.log("can deliver "+canDeliver)
       context.commit('saveDriverAuth', {
         canDeliver: canDeliver
       })

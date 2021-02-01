@@ -59,7 +59,6 @@ export default {
     },
     backTo() {
       let route = this.$route;
-      console.log(route);
 
       if (route.name == "services") {
         return false;

@@ -79,7 +79,6 @@ export default {
     },
     icons() {
       let iconOptions = {};
-      console.log(this.userInfo);
 
       if (window.google) {
         iconOptions = {
@@ -297,15 +296,13 @@ export default {
         this.showMarker = true;
       }, 200);
     },
-    dragend(event, index) {
-      console.log(event, index);
+    dragend(event) {
       this.$emit("markerDragged", {
         lat: event.latLng.lat(),
         lng: event.latLng.lng()
       });
     },
     emitDirectionPos(pos) {
-      console.log(this.$refs);
       this.reRenderMarker();
       this.$emit("directionChanged", pos);
     }

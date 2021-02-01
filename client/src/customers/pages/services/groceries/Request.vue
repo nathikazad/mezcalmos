@@ -198,7 +198,6 @@ export default {
       immediate: true,
       handler: function(newVal) {
         if (newVal.query.redirect) {
-          console.log(newVal);
           this.addOpen = true;
         } else {
           this.addOpen = false;
@@ -220,7 +219,6 @@ export default {
           if (this.from.address) {
             data["from"] = this.from;
           }
-          console.log({ data });
 
           let response = (
             await this.$store.dispatch("groceries/requestGrocery", data)

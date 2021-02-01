@@ -69,8 +69,6 @@ export default {
     },
     sortedOrders() {
       let orders = this.orders || {};
-      console.log(this.orders);
-
       return Object.keys(orders).reverse();
     },
     hasOrders() {
