@@ -1,16 +1,9 @@
 <template>
   <main :class="{ overlay: navDrawer }">
     <transition name="slide-fade">
-      <nav-drawer
-        v-if="navDrawer"
-        class="navDrawer bg_white"
-        @toggle="navDrawer = !navDrawer"
-      ></nav-drawer>
+      <nav-drawer v-if="navDrawer" class="navDrawer bg_white" @toggle="navDrawer = !navDrawer"></nav-drawer>
     </transition>
-    <the-header
-      v-show="routeName != 'login'"
-      @toggle="navDrawer = !navDrawer"
-    ></the-header>
+    <the-header v-show="routeName != 'login'" @toggle="navDrawer = !navDrawer"></the-header>
     <router-view class="container outlet"></router-view>
   </main>
 </template>
@@ -22,21 +15,20 @@ import NavDrawer from "@/shared/components/layouts/navDrawer.vue";
 export default {
   components: {
     TheHeader,
-    NavDrawer,
+    NavDrawer
   },
   data() {
     return {
-      navDrawer: false,
+      navDrawer: false
     };
   },
   mounted() {
-
     this.$store.dispatch("loadCustomerLocation");
   },
   computed: {
     routeName() {
       return this.$route.name;
-    },
+    }
   },
   watch: {
     $route: {
@@ -44,9 +36,9 @@ export default {
       immediate: true,
       handler: function() {
         this.navDrawer = false;
-      },
-    },
-  },
+      }
+    }
+  }
 };
 </script>
 
@@ -93,10 +85,7 @@ main {
 .slide-fade-leave-active {
   transition: all 0.5s ease-in;
 }
-.slide-fade-enter, .slide-fade-leave-to
-/* .slide-fade-leave-active below version 2.1.8 */ {
-  transform: translateX(-100%);
-}
+
 /* Enter and leave animations can use different */
 /* durations and timing functions.              */
 .slide-down-fade-enter-active {
@@ -105,8 +94,26 @@ main {
 .slide-down-fade-leave-active {
   transition: all 0.5s ease-in;
 }
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(-100%);
+}
 .slide-down-fade-enter, .slide-fade-leave-to
 /* .slide-fade-leave-active below version 2.1.8 */ {
   transform: translateX(-100%);
+}
+.slide-fade-reverse-enter-active {
+  transition: all 0.5s ease-out;
+}
+.slide-fade-reverse-leave-active {
+  transition: all 0.5s ease-in;
+}
+.slide-fade-reverse-enter, .slide-fade-reverse-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(100%);
+}
+.slide-down-fade-reverse-enter, .slide-fade-reverse-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(100%);
 }
 </style>
