@@ -1,6 +1,6 @@
 <template>
   <div class="card flex align_center space_between">
-    <div class="flex align_center fill_width">
+    <div class="flex align_center fill_width mainSlots">
       <slot name="image"></slot>
       <slot class="text " name="text">
         <slot name="cardTitle"></slot>

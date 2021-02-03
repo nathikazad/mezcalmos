@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router.js'
 import store from './store/store'
 import * as VueGoogleMaps from "vue2-google-maps";
+
 import {
   ValidationProvider,
   ValidationObserver,
@@ -30,6 +31,7 @@ import PickLocation from "@/shared/components/map/pickLocation";
 import InputLocation from "@/shared/components/ui/inputLocation";
 import Switch from "@/shared/components/ui/switch";
 import GmapCustomMarker from 'vue2-gmap-custom-marker';
+import Card from "@/shared/components/ui/card";
 
 import {
   deepFind,
@@ -37,6 +39,7 @@ import {
 } from '@/shared/mixins/functions'
 Vue.use(VueGoogleMaps, gmapsConfig);
 //Vue Components
+Vue.component("card", Card);
 Vue.component("gmap-custom-marker", GmapCustomMarker);
 Vue.component("switcher", Switch);
 Vue.component("logo", Logo);

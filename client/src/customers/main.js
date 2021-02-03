@@ -31,6 +31,9 @@ import MapView from "@/shared/components/map/mapView";
 import Fa from "@/shared/components/ui/fa";
 import PickLocation from "@/shared/components/map/pickLocation";
 import InputLocation from "@/shared/components/ui/inputLocation";
+import notificationBtn from "@/shared/components/ui/notification";
+import Card from "@/shared/components/ui/card";
+
 import "./registerServiceWorker";
 import {
   deepFind,
@@ -42,6 +45,9 @@ Vue.use(VueGoogleMaps, gmapsConfig);
 Vue.component("gmap-custom-marker", GmapCustomMarker);
 
 //Vue Components
+Vue.component("card", Card);
+
+Vue.component("notification-btn", notificationBtn);
 Vue.component("logo", Logo);
 Vue.component("base-button", BaseButton);
 Vue.component("panel", Panel);

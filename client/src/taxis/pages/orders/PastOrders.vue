@@ -39,11 +39,8 @@
 </template>
 
 <script>
-import Card from "@/shared/components/ui/card";
 export default {
-  components: {
-    Card,
-  },
+ 
   data() {
     return {
       isLoaded: false,

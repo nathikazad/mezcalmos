@@ -7,6 +7,7 @@ export default {
   state() {
     return {
       notifications: {},
+      notifictionsList: {}
     };
   },
   actions: {
@@ -15,18 +16,24 @@ export default {
       let userId = context.rootGetters.userId
       firebaseDatabase().ref(`/notifications/${userId}`).on('child_added', async snapshot => {
         let notification = snapshot.val();
-        if(notification.notificationType == "newMessage" 
-            && router.currentRoute.name == "messages"
-            && router.currentRoute.params.orderId == notification.orderId){
+        if (notification.notificationType == "newMessage" &&
+          router.currentRoute.name == "messages" &&
+          router.currentRoute.params.orderId == notification.orderId) {
           firebaseDatabase().ref(`/notifications/${userId}/${snapshot.key}`).remove()
         } else {
-          context.commit('saveNotification', {key:snapshot.key, notification:notification})
+          context.commit('saveNotification', {
+            key: snapshot.key,
+            notification: notification
+          })
         }
       });
 
       firebaseDatabase().ref(`/notifications/${userId}`).on('child_removed', async snapshot => {
         let notification = snapshot.val();
-        context.commit('removeNotification', {key:snapshot.key, notification:notification})
+        context.commit('removeNotification', {
+          key: snapshot.key,
+          notification: notification
+        })
       });
     },
     clearOrderStatusNotifications(context, payload) {
@@ -52,6 +59,10 @@ export default {
   },
   mutations: {
     saveNotification(state, payload) {
+      state.notifictionsList = {
+        ...state.notifictionsList,
+        [payload.key]: payload.notification
+      }
       let orderId = payload.notification.orderId
       let notificationType = payload.notification.notificationType
       state.notifications[orderId] = state.notifications[orderId] || {}
@@ -62,11 +73,18 @@ export default {
       let notificationType = payload.notification.notificationType
       let orderId = payload.notification.orderId
       delete state.notifications[orderId][notificationType][payload.key]
+      delete state.notifictionsList[payload.key]
+      state.notifictionsList = {
+        ...state.notifictionsList
+      }
     }
   },
   getters: {
     list(state) {
       return state.notifications;
+    },
+    list2(state) {
+      return state.notifictionsList;
     }
   }
 };

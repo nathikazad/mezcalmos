@@ -27,7 +27,9 @@
           </h2>
         </router-link>
       </div>
-      <div class="left_side">
+      <div class="left_side flex">
+        <notification-btn></notification-btn>
+
         <base-button
           :mode="{
             bg_diagonal: true,
@@ -51,7 +53,7 @@
 import menuBars from "../SVG/menuBars";
 export default {
   components: {
-    menuBars,
+    menuBars
   },
   computed: {
     isLoggedIn() {
@@ -65,14 +67,14 @@ export default {
       } else {
         return route.query.redirect || { name: "home" };
       }
-    },
+    }
   },
   methods: {
     logout() {
       this.$store.dispatch("logout");
       this.$router.push({ name: "services" });
-    },
-  },
+    }
+  }
 };
 </script>
 
