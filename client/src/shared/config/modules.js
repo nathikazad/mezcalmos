@@ -32,7 +32,8 @@ import Switch from "@/shared/components/ui/switch";
 import {
     deepFind,
     geocodedAddress,
-    decode
+    decode,
+    displayNotification
 
 } from '@/shared/mixins/functions'
 
@@ -75,7 +76,8 @@ export function initModules(Vue) {
         methods: {
             deepFind,
             geocodedAddress,
-            decode
+            decode,
+            displayNotification
 
         }
     })

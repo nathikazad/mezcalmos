@@ -3,7 +3,9 @@
 
 const prod = process.env.NODE_ENV === 'production'
 const test = process.env.NODE_ENV === 'test'
-const shouldSW = 'serviceWorker' in navigator && (prod || test)
+console.log((prod || test));
+
+const shouldSW = 'serviceWorker' in navigator //&& (prod || test)
 if (shouldSW) {
 
   navigator.serviceWorker.register(`${process.env.BASE_URL}sw.js`).then((result) => {

@@ -24,9 +24,13 @@ export default {
   },
   mounted() {
     this.$store.dispatch("loadCustomerLocation");
-    this.displayNotification({
-      type: "YOU HAVE A NEW MESSAGE",
-      msg: " Hi sir !",
+
+    const channel = new BroadcastChannel("sw-messages");
+    channel.postMessage({
+      msg: "getSubscription"
+    });
+    channel.addEventListener("message", event => {
+      console.log("Received", JSON.parse(event.data.subscription));
     });
   },
   computed: {
