@@ -11,6 +11,11 @@ export default {
     };
   },
   actions: {
+    saveUserSubscription(context, payload) {
+      let userId = context.rootGetters.userId
+      console.log(payload, userId);
+
+    },
     loadNotifications(context, payload) {
       let router = payload.router
       let userId = context.rootGetters.userId
@@ -40,8 +45,8 @@ export default {
       let userId = context.rootGetters.userId
       let orderId = payload.orderId
       let notificationType = "orderStatusChange"
-      if(context.state.notifications[orderId] && context.state.notifications[orderId][notificationType]){
-        for(let notificationId in context.state.notifications[orderId][notificationType]){
+      if (context.state.notifications[orderId] && context.state.notifications[orderId][notificationType]) {
+        for (let notificationId in context.state.notifications[orderId][notificationType]) {
           firebaseDatabase().ref(`/notifications/${userId}/${notificationId}`).remove()
         }
       }
@@ -50,8 +55,8 @@ export default {
       let userId = context.rootGetters.userId
       let orderId = payload.orderId
       let notificationType = "newMessage"
-      if(context.state.notifications[orderId] && context.state.notifications[orderId][notificationType]){
-        for(let notificationId in context.state.notifications[orderId][notificationType]){
+      if (context.state.notifications[orderId] && context.state.notifications[orderId][notificationType]) {
+        for (let notificationId in context.state.notifications[orderId][notificationType]) {
           firebaseDatabase().ref(`/notifications/${userId}/${notificationId}`).remove()
         }
       }
