@@ -60,7 +60,11 @@ export default {
           firebaseDatabase().ref(`/notifications/${userId}/${notificationId}`).remove()
         }
       }
-    }
+    },
+    saveUserNotificationInfo(context, payload) {
+      let userId = context.rootGetters.userId
+      firebaseDatabase().ref(`/users/${userId}/notificationInfo`).set(payload)
+    },
   },
   mutations: {
     saveNotification(state, payload) {
