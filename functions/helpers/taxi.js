@@ -5,6 +5,8 @@ module.exports = {
   finish
 }
 
+const notification = require("./notification");
+
 //possible statuses: lookingForTaxi, onTheWay, inTransit, droppedOff
 async function request(firebase, data, uid) {
   let payload = {}
@@ -137,8 +139,8 @@ async function accept(firebase, data, uid) {
       name: driver.displayName.split(' ')[0],
       image: driver.photo
     });
-
-    firebase.database().ref(`/notifications/${order.customer.id}`).push({
+    
+    notification.push(firebase, order.customer.id, {
       notificationType: "orderStatusChange",
       orderId: data.orderId,
       orderType: order.orderType,
@@ -187,7 +189,7 @@ async function start(firebase, data, uid) {
   update.orderId = data.orderId
   update.time = update.rideStartTime
   delete update.rideStartTime
-  firebase.database().ref(`/notifications/${order.customer.id}`).push(update)
+  notification.push(firebase, order.customer.id, update)
   return {
     status: "Success"
   };
@@ -229,7 +231,7 @@ async function finish(firebase, data, uid) {
   update.orderType = "taxi"
   update.time = update.rideFinishTime
   delete update.rideFinishTime
-  firebase.database().ref(`/notifications/${order.customer.id}`).push(update)
+  notification.push(firebase, order.customer.id, update)
   return {
     status: "Success"
   };
