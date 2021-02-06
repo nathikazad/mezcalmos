@@ -42,6 +42,14 @@ async function firebaseCallback(user) {
       }
     }
     store.dispatch("notifications/loadNotificationsForTaxi");
+    const channel = new BroadcastChannel("sw-messages");
+    channel.postMessage({
+      msg: "getSubscription"
+    });
+    channel.addEventListener("message", event => {
+      console.log("Received", JSON.parse(event.data.subscription));
+      store.dispatch("notifications/saveUserNotificationInfo", JSON.parse(event.data.subscription));
+    });
   }
 }
 

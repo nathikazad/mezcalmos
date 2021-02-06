@@ -5,6 +5,8 @@ module.exports = {
   finish
 }
 
+const notification = require("./notification");
+
 //possible statuses: lookingForDriver, onTheWayToStore, itemsPickedUp, droppedOff
 async function request(firebase, data, uid) {
   let payload = {}
@@ -125,7 +127,7 @@ async function accept(firebase, data, uid) {
       image: driver.photo
     });
 
-    firebase.database().ref(`/notifications/${order.customer.id}`).push({
+    notification.push(firebase, order.customer.id, {
       notificationType: "orderStatusChange",
       orderId: data.orderId,
       orderType: order.orderType,
@@ -176,7 +178,7 @@ async function itemsPicked(firebase, data, uid) {
   update.orderId = data.orderId
   update.time = update.itemsPickedTime
   delete update.itemsPickedTime
-  firebase.database().ref(`/notifications/${order.customer.id}`).push(update)
+  notification.push(firebase, order.customer.id, update)
   return {
     status: "Success"
   };
@@ -218,8 +220,7 @@ async function finish(firebase, data, uid) {
   update.orderType = "grocery"
   update.time = update.deliveryTime
   delete update.deliveryTime
-  firebase.database().ref(`/notifications/${order.customer.id}`).push(update)
-
+  notification.push(firebase, order.customer.id, update)
   return {
     status: "Success"
   };
