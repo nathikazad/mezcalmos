@@ -28,7 +28,11 @@
         </router-link>
       </div>
       <div class="left_side flex">
-        <notification-btn></notification-btn>
+        <notification-btn
+          v-if="notificationsNumber"
+          :notificationsNumber="notificationsNumber"
+          :notifications="notifications"
+        ></notification-btn>
 
         <base-button
           :mode="{
@@ -56,6 +60,12 @@ export default {
     menuBars
   },
   computed: {
+    notifications() {
+      return this.$store.getters["notifications/list2"];
+    },
+    notificationsNumber() {
+      return Object.keys(this.notifications).length;
+    },
     isLoggedIn() {
       return this.$store.getters.loggedIn;
     },

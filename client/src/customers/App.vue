@@ -67,6 +67,7 @@ main {
   min-height: calc(100vh - 5rem);
   position: relative;
   overflow: auto;
+  padding: 0 1rem;
 }
 .navDrawer {
   height: 100%;
