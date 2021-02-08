@@ -11,6 +11,10 @@ class BasicApp {
     this.userId = await auth.getUserId(this.page);
   }
 
+  async getUserInfo() {
+    return await auth.getUserInfo(this.page);
+  }
+
   async logout(user) {
     await auth.logout(this.page)
     this.userId = null;

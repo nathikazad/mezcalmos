@@ -5,8 +5,10 @@ module.exports = {
     await vuex.dispatch(page, "login")
     const newPagePromise = new Promise(x => browser.once('targetcreated', target => x(target.page()))); 
     const popup = await newPagePromise;
+    // console.log("waiting for add account button")
     await popup.waitForSelector('#add-account-button button')
-    await popup.waitForTimeout(2000)
+    await popup.waitForTimeout(3000)
+    // console.log("click button")
     await popup.click('#add-account-button button')
     await popup.waitForTimeout(2000)
     await popup.waitForSelector('#autogen-button')
@@ -34,5 +36,8 @@ module.exports = {
   getUserId: async (page, param) => {
     let userId =  await vuex.get(page, "userId")
     return userId
+  },
+  getUserInfo: async (page, param) => {
+    return await vuex.get(page, "userInfo")
   }
 }
