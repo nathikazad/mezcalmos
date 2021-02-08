@@ -1,8 +1,11 @@
 const CustomerApp = require("../classes/customerApp")
 const puppeteer = require('puppeteer');
+const Database = require("../classes/database");
+
+database = new Database()
 describe('Mezcalmos', () => {
   beforeAll(async () => {
-    // await page.goto('localhost:8080');
+    await database.reset()
   });
 
   it('Create user test', async () => {
@@ -18,9 +21,16 @@ describe('Mezcalmos', () => {
     await customerApp.createUser(customer)
 
     let userInfo = await customerApp.getUserInfo()
-    browser.close()
     expect(userInfo.displayName).toBe(customer.displayName);
     expect(userInfo.email).toBe(customer.email);
     expect(userInfo.photo).toBe(customer.photo);
+    
+    let userFromDb = await database.get(`users/${customerApp.userId}`)
+    
+    expect(userFromDb.info.displayName).toBe(customer.displayName);
+    expect(userFromDb.info.email).toBe(customer.email);
+    expect(userFromDb.info.photo).toBe(customer.photo);
+
+    browser.close()
   });
 });
