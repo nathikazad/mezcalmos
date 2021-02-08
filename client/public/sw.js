@@ -420,22 +420,53 @@ define("./sw.js", ["./workbox-81b571e3"], function (e) {
 });
 //# sourceMappingURL=sw.js.map
 self.addEventListener("push", (event) => {
-  console.log(event);
-  console.log({
-    self,
-  });
+  if (event.data) {
+    let message = JSON.parse(event.data.text())
+    console.log(message);
+    const title = message.notificationType;
+    const body = message.message;
+    const icon = "img/icons/mstile-150x150.png";
+    const tag = "simple push notif";
+    self.registration.showNotification(title, {
+      body: body,
+      icon: icon,
+      tag: tag,
+      requireInteraction: true,
+      timestamp: message.time,
+      actions: [{
+          action: 'like',
+          title: '👍Like'
+        },
+        {
+          action: 'reply',
+          title: '⤻ Reply'
+        }
+      ],
+
+      data: {
+        messageId: message.messageId,
+        orderId: message.orderId
+      }
+    });
+  } else {
+    console.log('has no data');
+
+  }
 
 
-  const title = "Yay a message .";
-  const body = "We have received a push message";
-  const icon = "img/icons/mstile-150x150.png";
-  const tag = "simple push notif";
-  self.registration.showNotification(title, {
-    body: body,
-    icon: icon,
-    tag: tag,
-  });
+
+
 });
+self.addEventListener('notificationclick', function (event) {
+  var orderId = event.notification.data.orderId;
+
+  event.notification.close();
+  if (event.action === 'reply') {
+    clients.openWindow("/messages/" + orderId);
+  } else {
+    clients.openWindow("/orders/" + orderId);
+  }
+}, false);
 self.addEventListener("activate", (event) => {
   // This will be called only once when the service worker is activated.
   self.clients.claim()

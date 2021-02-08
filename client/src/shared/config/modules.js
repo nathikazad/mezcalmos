@@ -1,5 +1,6 @@
 import * as VueGoogleMaps from "vue2-google-maps";
 import GmapCustomMarker from 'vue2-gmap-custom-marker';
+import "@/shared/config/registerServiceWorker";
 
 import {
     ValidationProvider,
@@ -25,7 +26,7 @@ import MapView from "@/shared/components/map/mapView";
 import Fa from "@/shared/components/ui/fa";
 import PickLocation from "@/shared/components/map/pickLocation";
 import InputLocation from "@/shared/components/ui/inputLocation";
-import notificationBtn from "@/shared/components/ui/notification";
+import notificationBtn from "@/shared/components/ui/notificationBtn";
 import Card from "@/shared/components/ui/card";
 import Switch from "@/shared/components/ui/switch";
 

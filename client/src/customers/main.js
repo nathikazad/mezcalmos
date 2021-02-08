@@ -5,7 +5,6 @@ import store from './store/store'
 import {
   firebaseInit
 } from "@/shared/config/firebase";
-import "./registerServiceWorker";
 import {
   initModules
 } from '@/shared/config/modules'

@@ -10,6 +10,7 @@ import GroceryAddItemPage from "./pages/services/groceries/AddItem";
 import OrdersListPage from "./pages/orders/List";
 import UserInformationPage from "@/shared/pages/user/Information";
 import MessagesPage from "@/shared/pages/messages/View";
+import NotificationsPage from "@/shared/pages/notification/view";
 import LoginPage from "@/shared/pages/user/Login";
 import SavedLocation from './pages/saved/locations'
 
@@ -53,7 +54,7 @@ const router = new VueRouter({
       meta: {
         requiresAuth: true,
       },
-      name : "taxiView"
+      name: "taxiView"
     },
     {
       path: "/services/grocery/:orderId",
@@ -99,6 +100,13 @@ const router = new VueRouter({
         requiresUnauth: true,
       },
       name: "login",
+    },
+    {
+      path: "/notifications",
+      component: NotificationsPage,
+      meta: {
+        requiresAuth: true,
+      },
     },
     {
       path: "/:notFound(.*)",

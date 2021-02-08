@@ -10,7 +10,7 @@
           <h5 class="text_info regular">Available</h5>
         </div>
       </div>
-      <div class="messages">
+      <div class="messages" id="messages">
         <div v-for="(msg, index) in messages" :key="index">
           <div class="message flex align_baseline start other" v-if="!me(msg.userId)">
             <avatar size="2.4rem" :url="sender.image"></avatar>
@@ -82,6 +82,11 @@ export default {
       return this.$store.getters["messages/value"];
     }
   },
+  mounted() {
+    setTimeout(() => {
+      this.scrollToBottom();
+    }, 200);
+  },
   async beforeCreate() {
     await this.$store.dispatch("messages/loadMessages", {
       orderId: this.$route.params.orderId
@@ -94,7 +99,11 @@ export default {
     me(id) {
       return id == this.userId;
     },
+    scrollToBottom() {
+      let messagesDiv = this.$el.querySelector("#messages");
 
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    },
     async sendMessage() {
       await this.$store
         .dispatch("messages/sendMessage", {

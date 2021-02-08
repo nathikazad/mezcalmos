@@ -6,6 +6,7 @@ import IncomingOrdersPage from './pages/orders/Incoming'
 import TaxiViewPage from './pages/orders/View'
 import UserInformationPage from '@/shared/pages/user/Information'
 import MessagesPage from '@/shared/pages/messages/View'
+import NotificationsPage from '@/shared/pages/notification/view'
 import LoginPage from '@/shared/pages/user/Login'
 
 
@@ -31,6 +32,13 @@ const router = new VueRouter({
         requiresAuth: true
       },
       name: "messages"
+    },
+    {
+      path: "/notifications",
+      component: NotificationsPage,
+      meta: {
+        requiresAuth: true,
+      },
     },
     {
       path: '/orders/:orderId',
@@ -64,18 +72,19 @@ const router = new VueRouter({
     {
       path: '/:notFound(.*)',
       component: NotFoundPage
-    }
+    },
+
   ]
 })
 
 router.beforeEach(async function (to, from, next) {
-  if(to.path == "/") {
+  if (to.path == "/") {
     if (store.getters.isInTaxi) {
       next(`/orders/${store.getters.currentOrderId}`);
     } else {
       next("/incoming")
     }
-  }else if (to.meta.requiresAuth && !store.getters.loggedIn) {
+  } else if (to.meta.requiresAuth && !store.getters.loggedIn) {
     next({
       path: '/auth',
       query: {
