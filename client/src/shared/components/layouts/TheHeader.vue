@@ -1,5 +1,34 @@
 <template>
   <header>
+    <transition name="slide-fade">
+      <alert
+        v-if="alert"
+        @close="redirectAlertTo($event,'close',alert)"
+        @click.native="redirectAlertTo($event,'redirect',alert)"
+      >
+        <div slot="sender" class="flex align_center" v-if="alert.sender">
+          <avatar size="2.4rem" :url="alert.sender.image" slot="image"></avatar>
+          <div class="card_text">
+            <div class="bold">{{ alert.sender.name }}</div>
+            <div>
+              <span slot="param" class="t-8">
+                {{
+                alert.message | formatMessage(30)
+                }}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div slot="sender" class="flex align_center" v-else>
+          <div class="card_text">
+            <div class="bold">Order status changed</div>
+            <div>
+              <span slot="param" class="t-8">{{ alert.status }}</span>
+            </div>
+          </div>
+        </div>
+      </alert>
+    </transition>
     <nav class="container flex space_between align_center fill_height">
       <div class="right_side flex align_center">
         <base-button
@@ -13,8 +42,7 @@
         <base-button
           :mode="{ dark: true, bg_diagonal: true }"
           class="nav-btn menu"
-          :link="true"
-          :to="backTo"
+          @click.native="backOneStep"
           v-else
         >
           <fa icon="chevron-left"></fa>
@@ -59,6 +87,11 @@ export default {
   components: {
     menuBars
   },
+  data() {
+    return {
+      alert: false
+    };
+  },
   computed: {
     notifications() {
       return this.$store.getters["notifications/list2"];
@@ -71,6 +104,7 @@ export default {
     },
     backTo() {
       let route = this.$route;
+      console.log(route);
 
       if (route.name == "home") {
         return false;
@@ -83,6 +117,44 @@ export default {
     logout() {
       this.$store.dispatch("logout");
       this.$router.push({ name: "services" });
+    },
+    redirectAlertTo(event, cmd, alert) {
+      if (event == undefined) {
+        this.alert = false;
+      } else {
+        if (alert.notificationType == "newMessage") {
+          this.$router.push(`/messages/${alert.orderId}`);
+        } else {
+          this.$router.push(`/services/${alert.orderType}/${alert.orderId}`);
+        }
+      }
+    },
+    backOneStep() {
+      let route = this.$route;
+      console.log(route);
+
+      if (route.name == "home") {
+        return;
+      } else {
+        this.$router.go(-1);
+      }
+    }
+  },
+  watch: {
+    notifications: {
+      deep: true,
+
+      handler: function(newVal, oldVal) {
+        if (Object.keys(newVal).length > Object.keys(oldVal).length) {
+          let lastId = Object.keys(newVal)[Object.keys(newVal).length - 1];
+          this.alert = this.notifications[lastId];
+          setTimeout(() => {
+            this.alert = false;
+          }, 3000);
+        } else {
+          this.alert = false;
+        }
+      }
     }
   }
 };

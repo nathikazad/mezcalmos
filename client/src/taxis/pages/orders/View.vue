@@ -65,7 +65,7 @@
             :link="true"
             :to="{
               path: messageLink,
-              query: { redirect: $route.path },
+              
             }"
           >
             <span class="t-8 regular">Message</span>
@@ -84,6 +84,17 @@
             :loading="loading"
           >
             <span class="t-8 regular">Finish Ride</span>
+          </base-button>
+          <base-button
+            class="w-30 elevate_1"
+            :mode="{ dark: true, bg_diagonal: true }"
+            :link="true"
+            :to="{
+              path: messageLink,
+             
+            }"
+          >
+            <span class="t-8 regular">Message</span>
           </base-button>
         </div>
         <!-- Finished ride  Status-->

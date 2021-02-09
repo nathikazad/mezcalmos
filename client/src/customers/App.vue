@@ -30,6 +30,7 @@ export default {
       return this.$route.name;
     }
   },
+
   watch: {
     $route: {
       deep: true,

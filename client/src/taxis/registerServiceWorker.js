@@ -8,7 +8,7 @@ console.log((prod || test));
 const shouldSW = 'serviceWorker' in navigator //&& (prod || test)
 if (shouldSW) {
 
-  navigator.serviceWorker.register(`${process.env.BASE_URL}sw.js`).then((result) => {
+  navigator.serviceWorker.register(`${process.env.BASE_URL}sw-taxi.js`).then((result) => {
     console.log("Service Worker Registered!", result)
   }).catch((err) => {
     console.log("Something went wrong with registration!", err)

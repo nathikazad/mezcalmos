@@ -8,7 +8,7 @@ import {
 import {
   initModules
 } from '@/shared/config/modules'
-
+import "./registerServiceWorker";
 //init modules
 initModules(Vue)
 //Firebase state changed function
@@ -35,7 +35,7 @@ async function firebaseCallback(user) {
       });
     }
     store.dispatch("notifications/loadNotificationsForCustomer");
-    const channel = new BroadcastChannel("sw-messages");
+    const channel = new BroadcastChannel("sw-customer-messages");
     channel.postMessage({
       msg: "getSubscription"
     });

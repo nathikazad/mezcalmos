@@ -1,24 +1,23 @@
 import * as VueGoogleMaps from "vue2-google-maps";
-import GmapCustomMarker from 'vue2-gmap-custom-marker';
-import "@/shared/config/registerServiceWorker";
+import GmapCustomMarker from "vue2-gmap-custom-marker";
 
 import {
     ValidationProvider,
     ValidationObserver,
     extend,
-    configure
-} from 'vee-validate';
+    configure,
+} from "vee-validate";
 import {
     required,
     email
-} from 'vee-validate/dist/rules';
+} from "vee-validate/dist/rules";
 
 import {
     gmapsConfig
 } from "@/shared/config/gmaps";
 
-
 import BaseButton from "@/shared/components/ui/BaseButton";
+import Alert from "@/shared/components/ui/alert";
 import Panel from "@/shared/components/ui/panel";
 import Avatar from "@/shared/components/ui/avatar";
 import Logo from "@/shared/components/SVG/logo";
@@ -34,18 +33,20 @@ import {
     deepFind,
     geocodedAddress,
     decode,
-    displayNotification
+    displayNotification,
+} from "@/shared/mixins/functions";
+import {
+    formatMessage
+} from "@/shared/filters/functions";
 
-} from '@/shared/mixins/functions'
-
-//init modules 
+//init modules
 export function initModules(Vue) {
-
     Vue.use(VueGoogleMaps, gmapsConfig);
     Vue.component("gmap-custom-marker", GmapCustomMarker);
 
     //Vue Components
     Vue.component("card", Card);
+    Vue.component("alert", Alert);
     Vue.component("switcher", Switch);
     Vue.component("notification-btn", notificationBtn);
     Vue.component("logo", Logo);
@@ -58,19 +59,18 @@ export function initModules(Vue) {
     // vee validate configuration
     configure({
         classes: {
-            valid: 'is-valid',
-            invalid: 'is-invalid',
-
-        }
-    })
-    extend('email', email);
-
-    extend('required', {
-        ...required,
-        message: 'This field is required'
+            valid: "is-valid",
+            invalid: "is-invalid",
+        },
     });
-    Vue.component('ValidationProvider', ValidationProvider);
-    Vue.component('ValidationObserver', ValidationObserver);
+    extend("email", email);
+
+    extend("required", {
+        ...required,
+        message: "This field is required",
+    });
+    Vue.component("ValidationProvider", ValidationProvider);
+    Vue.component("ValidationObserver", ValidationObserver);
     Vue.component("map-view", MapView);
     //Vue mixins
     Vue.mixin({
@@ -78,11 +78,12 @@ export function initModules(Vue) {
             deepFind,
             geocodedAddress,
             decode,
-            displayNotification
-
-        }
-    })
+            displayNotification,
+        },
+    });
+    //Vue filters
+    Vue.filter('formatMessage', formatMessage);
 
     //Vue moment configuration
-    Vue.use(require('vue-moment'));
+    Vue.use(require("vue-moment"));
 }
