@@ -45,7 +45,8 @@ const router = new VueRouter({
       component: TaxiViewPage,
       meta: {
         requiresAuth: true
-      }
+      },
+      name: "taxiView"
     },
     {
       path: '/orders',

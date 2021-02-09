@@ -3,12 +3,18 @@
     <h1 class="regular">Messages</h1>
 
     <div class="messages_body fit_container">
-      <div class="user_info flex align_center start bg_secondary border">
-        <avatar size="2.4rem" :url="sender.image"></avatar>
-        <div class="user_name">
-          <h3>{{sender.name}}</h3>
-          <h5 class="text_info regular">Available</h5>
+      <div class="user_info bg_secondary border flex align_center space_between">
+        <div class="flex align_center start" v-if="sender">
+          <avatar size="2.4rem" :url="sender.image"></avatar>
+          <div class="user_name">
+            <h3>{{sender.name}}</h3>
+            <h5 class="text_info regular">Available</h5>
+          </div>
         </div>
+        <router-link :to="{name:'taxiView'}" tag="h4">
+          order link
+          <fa icon="external-link"></fa>
+        </router-link>
       </div>
       <div class="messages" id="messages">
         <div v-for="(msg, index) in messages" :key="index">
@@ -111,6 +117,7 @@ export default {
         })
         .then(() => {
           this.newMessage = "";
+          this.scrollToBottom();
         });
     }
   }

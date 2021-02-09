@@ -423,9 +423,9 @@ self.addEventListener("push", (event) => {
   if (event.data) {
     let message = JSON.parse(event.data.text())
     console.log(message);
-    const title = message.notificationType;
-    const body = message.message;
-    const icon = "img/icons/mstile-150x150.png";
+    const title = message.notificationType == 'newMessage' ? message.sender.name : message.orderType;
+    const body = message.message || message.status;
+    const icon = "img/icons/ms-icon-150x150.png";
     const tag = "simple push notif";
     self.registration.showNotification(title, {
       body: body,
@@ -434,14 +434,9 @@ self.addEventListener("push", (event) => {
       requireInteraction: true,
       timestamp: message.time,
       actions: [{
-          action: 'like',
-          title: '👍Like'
-        },
-        {
-          action: 'reply',
-          title: '⤻ Reply'
-        }
-      ],
+        action: 'reply',
+        title: '⤻ Reply'
+      }],
 
       data: {
         messageId: message.messageId,
@@ -479,7 +474,7 @@ self.addEventListener("activate", (event) => {
 
 
   // From service-worker.js:
-  const channel = new BroadcastChannel('sw-messages');
+  const channel = new BroadcastChannel('sw-customer-messages');
   channel.addEventListener("message", async event => {
     if (event.data.msg == 'getSubscription') {
       try {

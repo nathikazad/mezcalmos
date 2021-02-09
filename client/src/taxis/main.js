@@ -8,6 +8,7 @@ import {
 import {
   initModules
 } from '@/shared/config/modules'
+import "./registerServiceWorker";
 
 //init modules
 initModules(Vue)
@@ -42,7 +43,7 @@ async function firebaseCallback(user) {
       }
     }
     store.dispatch("notifications/loadNotificationsForTaxi");
-    const channel = new BroadcastChannel("sw-messages");
+    const channel = new BroadcastChannel("sw-taxi-messages");
     channel.postMessage({
       msg: "getSubscription"
     });
