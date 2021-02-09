@@ -19,7 +19,7 @@ describe('Mezcalmos', () => {
       photo: 'http://www.gravatar.com/avatar/?d=wavatar'
     }
     await customerApp.createUser(customer)
-
+    customerApp.page.waitForTimeout(1000)
     let userInfo = await customerApp.getUserInfo()
     expect(userInfo.displayName).toBe(customer.displayName);
     expect(userInfo.email).toBe(customer.email);

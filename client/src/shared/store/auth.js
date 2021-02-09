@@ -57,6 +57,11 @@ export default {
         }
       })
       context.commit('saveAuthData', payload)
+      firebaseDatabase().ref(`users/${payload.userId}/info/`).on('value', function(snapshot) {
+        let info = snapshot.val()
+        context.commit('saveUserInfo', info)
+      });
+      
     },
     async logout(context) {
       firebaseDatabase().ref(`users/${context.state.userId}/info/`).off()
