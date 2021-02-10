@@ -3,7 +3,11 @@
     <transition name="slide-fade">
       <nav-drawer v-if="navDrawer" class="navDrawer bg_white" @toggle="navDrawer = !navDrawer"></nav-drawer>
     </transition>
-    <the-header v-show="routeName != 'login'" @toggle="navDrawer = !navDrawer"></the-header>
+    <the-header
+      v-show="routeName != 'login'"
+      @toggle="navDrawer = !navDrawer"
+      :showNavBtn="showNavBtn"
+    ></the-header>
     <router-view class="container outlet"></router-view>
   </main>
 </template>
@@ -25,6 +29,12 @@ export default {
   computed: {
     routeName() {
       return this.$route.name;
+    },
+    showNavBtn() {
+      //searching for the home page
+      return this.$store.getters.isInTaxi
+        ? this.routeName == "taxiView"
+        : this.routeName == "home";
     }
   },
   mounted() {

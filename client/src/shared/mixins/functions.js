@@ -79,6 +79,9 @@ decode.integers = function (value) {
 
 }
 export const displayNotification = (notif) => { //notif:{type:'YOU HAVE A NEW MESSAGE /orderCompletion..',msg:' Hi sir !'}
+  if (!notif) {
+    return;
+  }
   Notification.requestPermission(function (status) {
     console.log('Notification permission status:', status);
   });

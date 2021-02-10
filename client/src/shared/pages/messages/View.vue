@@ -18,7 +18,7 @@
       </div>
       <div class="messages" id="messages">
         <div v-for="(msg, index) in messages" :key="index">
-          <div class="message flex align_baseline start other" v-if="!me(msg.userId)">
+          <div class="message flex align_baseline start other" v-if="!me(msg.userId)&&sender">
             <avatar size="2.4rem" :url="sender.image"></avatar>
             <div class="bg_secondary msg_txt text_blackD">
               <h5>{{ msg.message }}</h5>

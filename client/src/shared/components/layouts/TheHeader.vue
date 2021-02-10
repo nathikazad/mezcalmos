@@ -35,7 +35,7 @@
           @click.native="$emit('toggle')"
           :mode="{ dark: true, bg_diagonal: true }"
           class="nav-btn menu"
-          v-if="!backTo"
+          v-show="showNavBtn"
         >
           <menu-bars></menu-bars>
         </base-button>
@@ -43,11 +43,11 @@
           :mode="{ dark: true, bg_diagonal: true }"
           class="nav-btn menu"
           @click.native="backOneStep"
-          v-else
+          v-show="!showNavBtn"
         >
           <fa icon="chevron-left"></fa>
         </base-button>
-        <router-link to="/" class="flex align_center">
+        <router-link :to="{name:'home'}" class="flex align_center">
           <logo class="logo"></logo>
           <h2 class="regular txt_center flex">
             MEZ
@@ -87,6 +87,11 @@ export default {
   components: {
     menuBars
   },
+  props: {
+    showNavBtn: {
+      type: Boolean
+    }
+  },
   data() {
     return {
       alert: false
@@ -101,16 +106,6 @@ export default {
     },
     isLoggedIn() {
       return this.$store.getters.loggedIn;
-    },
-    backTo() {
-      let route = this.$route;
-      console.log(route);
-
-      if (route.name == "home") {
-        return false;
-      } else {
-        return route.query.redirect || { name: "home" };
-      }
     }
   },
   methods: {
@@ -131,7 +126,6 @@ export default {
     },
     backOneStep() {
       let route = this.$route;
-      console.log(route);
 
       if (route.name == "home") {
         return;
