@@ -1,5 +1,5 @@
 
-const vuex = require("./vuex")
+const vuex = require("../vuex")
 module.exports = {
   createUser: async (browser, page, user) => {
     await vuex.dispatch(page, "login")

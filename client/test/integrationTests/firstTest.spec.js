@@ -1,4 +1,4 @@
-const CustomerApp = require("../classes/customerApp")
+const CustomerApp = require("../classes/apps/customerApp")
 const puppeteer = require('puppeteer');
 const Database = require("../classes/database");
 
