@@ -434,18 +434,15 @@ self.addEventListener("push", (event) => {
       requireInteraction: true,
       timestamp: message.time,
       actions: [{
-          action: 'like',
-          title: '👍Like'
-        },
-        {
-          action: 'reply',
-          title: '⤻ Reply'
-        }
-      ],
+        action: 'reply',
+        title: '⤻ Reply'
+      }],
 
       data: {
         messageId: message.messageId,
-        orderId: message.orderId
+        orderId: message.orderId,
+        orderType: message.orderType,
+        type: message.notificationType
       }
     });
   } else {
@@ -458,25 +455,21 @@ self.addEventListener("push", (event) => {
 
 });
 self.addEventListener('notificationclick', function (event) {
-  var orderId = event.notification.data.orderId;
+  var data = event.notification.data;
 
   event.notification.close();
-  if (event.action === 'reply') {
-    clients.openWindow("/messages/" + orderId);
-  } else {
-    clients.openWindow("/orders/" + orderId);
+
+  if (data) {
+    if (data.type == 'newMessage') {
+      clients.openWindow("/messages/" + data.orderId);
+    } else {
+      clients.openWindow("/orders/" + data.orderId);
+    }
   }
 }, false);
 self.addEventListener("activate", (event) => {
   // This will be called only once when the service worker is activated.
   self.clients.claim()
-  console.log(self);
-
-  console.log({
-    navigator
-  });
-
-
 
   // From service-worker.js:
   const channel = new BroadcastChannel('sw-taxi-messages');
