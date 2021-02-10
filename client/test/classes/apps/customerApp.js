@@ -1,4 +1,4 @@
-const vuex = require("../functions/vuex");
+const vuex = require("../../vuex/vuex");
 const BasicApp = require("./basicApp")
 class CustomerApp extends BasicApp {
   constructor(browser) {
