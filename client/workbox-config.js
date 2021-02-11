@@ -1,7 +1,7 @@
 module.exports = {
-  "globDirectory": "src/",
+  "globDirectory": "public/",
   "globPatterns": [
-    "**/*.{vue,js,scss,png,html}"
+    "**/*.{ttf,css,png,html,ico}"
   ],
-  "swDest": "public/sw.js"
-};
+  "swDest": "src/taxis/sw/sw-taxi.js"
+}; 

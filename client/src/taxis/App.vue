@@ -86,7 +86,7 @@ main {
   top: 0;
   left: 0;
   width: 80%;
-  z-index: 9;
+  z-index: 10;
   padding: 0 1.25rem;
 }
 /* Enter and leave animations can use different */

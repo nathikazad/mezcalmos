@@ -47,7 +47,7 @@
         >
           <fa icon="chevron-left"></fa>
         </base-button>
-        <router-link :to="{name:'home'}" class="flex align_center">
+        <router-link :to="{path:'/'}" class="flex align_center">
           <logo class="logo"></logo>
           <h2 class="regular txt_center flex">
             MEZ
