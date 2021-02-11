@@ -101,7 +101,7 @@ export default {
         return { opened: false };
       }
     },
-    
+
     directionsBorns: {
       type: Object
     },
@@ -134,7 +134,7 @@ export default {
       focusedFrom: false,
       focusedTo: false,
       pickLocation: false,
-     auxCenter:null,
+      auxCenter: null,
       delayer: null
     };
   },
@@ -149,24 +149,22 @@ export default {
       return this.$store.getters["getUserDefaultLocation"];
     },
     customerLocation() {
-      return this.$store.getters.customerLocation|| {
-      lat: this.deepFind(this.userDefaultLocation, "lat"),
-      lng: this.deepFind(this.userDefaultLocation, "long")
-    };
+      return (
+        this.$store.getters.customerLocation || {
+          lat: this.deepFind(this.userDefaultLocation, "lat"),
+          lng: this.deepFind(this.userDefaultLocation, "long")
+        }
+      );
     },
-    center(){
+    center() {
       if (this.auxCenter) {
-        return this.auxCenter
-      }else{
- return  this.directionsBorns.start || this.customerLocation
+        return this.auxCenter;
+      } else {
+        return this.directionsBorns.start || this.customerLocation;
       }
-   
     }
   },
-  mounted() {
-   
-   
-  },
+  mounted() {},
   watch: {
     "to.address": {
       deep: true,
@@ -210,7 +208,6 @@ export default {
 
       handler: function(newVal) {
         if (this.search) {
-
           if (newVal && this.from.by == "search") {
             this.saved.opened = false;
             this.search.searching = true;
@@ -360,7 +357,7 @@ export default {
     }
   },
   async beforeCreate() {
-    if(!this.$options.propsData.disabled){
+    if (!this.$options.propsData.disabled) {
       await this.$store.dispatch("savedLocations/loadLocations");
     }
   }
@@ -428,7 +425,7 @@ export default {
   }
 }
 .locationPicker {
-  z-index: 9;
+  z-index: 5;
 }
 .dropdown {
   position: absolute;
