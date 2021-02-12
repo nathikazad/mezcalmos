@@ -1,17 +1,14 @@
+const functions = require('firebase-functions');
 module.exports = {
   push
 }
 
 const webpush = require('web-push')
-// TODO: make config variables
-const vapidKeys = {
-  publicKey: 'BGnr9cpGF42t09PccsyzeJADS1UPmZ4I_QiSY4mmPMTYcsgn5m2BrkPFR4r6gs3KEzMGOXwukjBwhWQ26_ikpMw',
-  privateKey: 'tbCb1TWVDlnKjwoRmPedvWQ84L8epZGnSJpT0wfln0E',
-}
+const vapidKeys = functions.config().vapidkeys
 webpush.setVapidDetails(
   'http://www.mezcalmos.com',
-  vapidKeys.publicKey,
-  vapidKeys.privateKey
+  vapidKeys.public,
+  vapidKeys.private
 )
 
 async function push(firebase, userId, message) {
