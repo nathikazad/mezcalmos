@@ -54,7 +54,7 @@ export default {
   },
   computed: {
     notifications() {
-      return this.$store.getters["notifications/list2"];
+      return this.$store.getters["notifications/ungroupedList"];
     },
     notificationsNumber() {
       console.log(this.notifications);

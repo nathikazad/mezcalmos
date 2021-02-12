@@ -7,7 +7,7 @@ export default {
   state() {
     return {
       notifications: {},
-      notifictionsList: {}
+      ungroupedList: {}
     };
   },
   actions: {
@@ -68,8 +68,8 @@ export default {
   },
   mutations: {
     saveNotification(state, payload) {
-      state.notifictionsList = {
-        ...state.notifictionsList,
+      state.ungroupedList = {
+        ...state.ungroupedList,
         [payload.key]: payload.notification
       }
       let orderId = payload.notification.orderId
@@ -82,9 +82,9 @@ export default {
       let notificationType = payload.notification.notificationType
       let orderId = payload.notification.orderId
       delete state.notifications[orderId][notificationType][payload.key]
-      delete state.notifictionsList[payload.key]
-      state.notifictionsList = {
-        ...state.notifictionsList
+      delete state.ungroupedList[payload.key]
+      state.ungroupedList = {
+        ...state.ungroupedList
       }
     }
   },
@@ -92,8 +92,8 @@ export default {
     list(state) {
       return state.notifications;
     },
-    list2(state) {
-      return state.notifictionsList;
+    ungroupedList(state) {
+      return state.ungroupedList;
     }
   }
 };
