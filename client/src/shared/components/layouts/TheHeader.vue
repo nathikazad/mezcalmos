@@ -99,7 +99,7 @@ export default {
   },
   computed: {
     notifications() {
-      return this.$store.getters["notifications/list2"];
+      return this.$store.getters["notifications/ungroupedList"];
     },
     notificationsNumber() {
       return Object.keys(this.notifications).length;
