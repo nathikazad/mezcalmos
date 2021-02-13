@@ -104,7 +104,7 @@ exports.finishGroceryOrder = functions.https.onCall(async (data, context) => {
 });
 
 exports.notifyMessageParticipantsTest = functions.database.instance('mezcalmos-test').ref(
-  '/chat/{orderId}/messages/{messageId}').onCreate((snap, context) => {
+  '/chat/{chatId}/messages/{messageId}').onCreate((snap, context) => {
   let firebase = getFirebase('test');
   message.notifyOthers(firebase, context.params, snap.val())
 })

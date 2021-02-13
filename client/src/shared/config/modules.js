@@ -33,7 +33,7 @@ import {
     deepFind,
     geocodedAddress,
     decode,
-    displayNotification,
+
 } from "@/shared/mixins/functions";
 import {
     formatMessage
@@ -78,7 +78,7 @@ export function initModules(Vue) {
             deepFind,
             geocodedAddress,
             decode,
-            displayNotification,
+
         },
     });
     //Vue filters
