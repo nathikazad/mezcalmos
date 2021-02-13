@@ -23,3 +23,7 @@ pnpm-debug.log*
 *.sw?
 
 test/newDummyData
+public/sw/sw-customer.js.map
+public/sw/sw-taxi.js.map
+public/sw/workbox-81b571e3.js
+public/sw/workbox-81b571e3.js.map

@@ -8,7 +8,9 @@ import {
 import {
   initModules
 } from '@/shared/config/modules'
-
+import {
+  askForNotification
+} from '@/shared/mixins/functions'
 import "./registerServiceWorker";
 
 //init modules
@@ -44,23 +46,7 @@ async function firebaseCallback(user) {
       }
     }
     store.dispatch("notifications/loadNotificationsForTaxi");
-    Notification.requestPermission(function (status) {
-      console.log('Notification permission status:', Notification);
-      if (status === 'granted') {
-        navigator.serviceWorker.getRegistration()
-        const channel = new BroadcastChannel("sw-taxi-messages");
-        channel.postMessage({
-          msg: "getSubscription"
-        });
-        channel.addEventListener("message", event => {
-          if (!event.data.subscription) {
-            return;
-          }
-          console.log("Received", JSON.parse(event.data.subscription));
-          store.dispatch("notifications/saveUserNotificationInfo", JSON.parse(event.data.subscription));
-        });
-      }
-    });
+    askForNotification('taxi',store)
   }
 }
 

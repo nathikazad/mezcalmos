@@ -8,7 +8,9 @@ import {
 import {
   initModules
 } from '@/shared/config/modules'
-
+import {
+  askForNotification
+} from '@/shared/mixins/functions'
 import "./registerServiceWorker";
 //init modules
 initModules(Vue)
@@ -36,23 +38,7 @@ async function firebaseCallback(user) {
       });
     }
     store.dispatch("notifications/loadNotificationsForCustomer");
-    Notification.requestPermission(function (status) {
-      console.log('Notification permission status:', status);
-      if (status === 'granted') {
-        navigator.serviceWorker.getRegistration()
-        const channel = new BroadcastChannel("sw-customer-messages");
-        channel.postMessage({
-          msg: "getSubscription"
-        });
-        channel.addEventListener("message", event => {
-          if (!event.data.subscription) {
-            return;
-          }
-          console.log("Received", JSON.parse(event.data.subscription));
-          store.dispatch("notifications/saveUserNotificationInfo", JSON.parse(event.data.subscription));
-        });
-      }
-    });
+    askForNotification('customer', store)
 
 
 
