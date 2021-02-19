@@ -1,11 +1,13 @@
 <template>
   <div>
-    <h1>Orders</h1>
+    <h1>{{$t('customer.orders.title')}}</h1>
 
     <div v-if="hasOrders" class="orders">
       <h3 class="bold flex space_between">
-        <span>Orders</span>
-        <span class="regular">{{ orders ? Object.keys(orders).length : 0 }} Items</span>
+        <span>{{$t('customer.orders.title')}}</span>
+        <span
+          class="regular"
+        >{{ orders ? Object.keys(orders).length : 0 }} {{$tc('customer.orders.item',2)}}</span>
       </h3>
       <router-link
         :to="`/services/${orders[orderId].orderType}/${orderId}`"
@@ -29,18 +31,21 @@
             class="t-8 text_grey bg_white pill"
             v-else-if="orders[orderId].status == 'onTheWay'"
           >
-            <fa icon="route"></fa>&nbsp;On the way
+            <fa icon="route"></fa>
+            &nbsp;{{$t('customer.orders.onTheWay')}}
           </span>
           <span
             slot="param"
             class="t-8 text_grey bg_white pill"
             v-else-if="orders[orderId].status == 'inTransit'"
           >
-            <fa icon="route"></fa>&nbsp;In Transit
+            <fa icon="route"></fa>
+            &nbsp;{{$t('customer.orders.inTransit')}}
           </span>
 
           <span slot="param" class="t-8 text_grey bg_white pill" v-else>
-            <fa icon="search-location"></fa>&nbsp;Searching..
+            <fa icon="search-location"></fa>
+            &nbsp;{{$t('customer.orders.searching')}}..
           </span>
         </panel>
       </router-link>
@@ -52,7 +57,7 @@
         </router-link>
       </div>-->
     </div>
-    <h3 v-else>No orders found</h3>
+    <h3 v-else>{{$t('customer.orders.noOrders')}}</h3>
   </div>
 </template>
 

@@ -8,7 +8,8 @@
       @toggle="navDrawer = !navDrawer"
       :showNavBtn="showNavBtn"
     ></the-header>
-    <router-view class="container outlet"></router-view>
+
+    <router-view class="container outlet" :style="{minHeight:minHeight + 'px'}"></router-view>
   </main>
 </template>
 
@@ -23,7 +24,8 @@ export default {
   },
   data() {
     return {
-      navDrawer: false
+      navDrawer: false,
+      minHeight: 500
     };
   },
   computed: {
@@ -35,10 +37,23 @@ export default {
       return this.$store.getters.isInTaxi
         ? this.routeName == "taxiView"
         : this.routeName == "home";
+    },
+    minHeightPx() {
+      return this.minHeight;
     }
   },
   mounted() {
-    console.log(window.google);
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
+  },
+  destroyed: function() {
+    window.removeEventListener("resize", this.handleResize);
+  },
+  methods: {
+    handleResize() {
+      let innerHeight = window.innerHeight;
+      this.minHeight = innerHeight - 80;
+    }
   },
   watch: {
     $route: {

@@ -12,6 +12,9 @@ import {
   askForNotification
 } from '@/shared/mixins/functions'
 import "./registerServiceWorker";
+import {
+  i18n
+} from '@/shared/plugins/i18n'
 //init modules
 initModules(Vue)
 //Firebase state changed function
@@ -53,6 +56,7 @@ new Vue({
   render: (h) => h(App),
   router,
   store,
+  i18n
 }).$mount("#app");
 
 // HASURA STUFF

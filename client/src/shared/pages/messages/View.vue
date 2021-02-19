@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="regular">Messages</h1>
+    <h1 class="regular">{{$t('shared.messages.title')}}</h1>
 
     <div class="messages_body fit_container">
       <div class="user_info bg_secondary border flex align_center space_between">
@@ -8,11 +8,11 @@
           <avatar size="2.4rem" :url="sender.image"></avatar>
           <div class="user_name">
             <h3>{{sender.name}}</h3>
-            <h5 class="text_info regular">Available</h5>
+            <h5 class="text_info regular">{{$t('shared.messages.available')}}</h5>
           </div>
         </div>
         <router-link :to="{name:'taxiView'}" tag="h4">
-          order link
+          {{$t('shared.messages.orderLink')}}
           <fa icon="external-link"></fa>
         </router-link>
       </div>

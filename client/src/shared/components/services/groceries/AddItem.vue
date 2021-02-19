@@ -1,11 +1,11 @@
 <template>
   <div>
-    <h4> Add New Item </h4>
-    <label>Name</label>
+    <h4>{{$t('shared.addItem.title')}}</h4>
+    <label>{{$t('shared.addItem.name')}}</label>
     <input type="text" v-model="name" />
-    <label>Notes</label>
+    <label>{{$tc('shared.addItem.note',2)}}</label>
     <input type="text" v-model="notes" />
-    <button @click="addItem">Add Item</button>
+    <button @click="addItem">{{$t('shared.addItem.addItemBtn')}}</button>
   </div>
 </template>
 
@@ -20,7 +20,7 @@ export default {
       this.$emit("new-item", { name: this.name, notes: this.notes });
       this.name = "";
       this.notes = "";
-    },
-  },
+    }
+  }
 };
 </script>

@@ -8,13 +8,7 @@
     :class="{ light: light }"
   >
     <defs>
-      <linearGradient
-        id="a"
-        x1="0.5"
-        x2="0.5"
-        y2="1"
-        gradientUnits="objectBoundingBox"
-      >
+      <linearGradient id="a" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
         <stop offset="0" stop-color="#ca4bfc" />
         <stop offset="1" stop-color="#5781ff" />
       </linearGradient>
@@ -30,7 +24,7 @@
 </template>
 <script>
 export default {
-  props: ["light"],
+  props: ["light"]
 };
 </script>
 <style scoped>

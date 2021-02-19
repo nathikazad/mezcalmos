@@ -2,18 +2,15 @@
   <div>
     <div>
       <h1 class="flex space_between align_center">
-        <span>
-          Incoming
-          <br />Orders
-        </span>
+        <span v-html="$t('taxi.incomming.title')"></span>
         <switcher @click.native="toggle()" :open="isLooking"></switcher>
       </h1>
 
-      <div v-if="!isLoaded">Loading...</div>
+      <div v-if="!isLoaded">{{$t('taxi.incomming.loading')}}...</div>
       <h3 v-else-if="isInTaxi">
-        Please finish
-        <router-link :to="currentOrderIdLink">your ride</router-link>
-        to accept new orders
+        {{$tc('taxi.incomming.loading',1)}}
+        <router-link :to="currentOrderIdLink">{{$tc('taxi.incomming.loading',2)}}</router-link>
+        {{$tc('taxi.incomming.loading',3)}}
       </h3>
       <div v-else-if="hasOrders">
         <router-link
@@ -26,12 +23,10 @@
           <card class="bg_secondary border card">
             <div slot="text" class="flex align_center fill_width space_between">
               <div slot="cardTitle" class="bold">
-                <h4 class="text_blackL">
-                  {{ deepFind(orders[orderId], "customer.name") }}
-                </h4>
-                <h5 class="regular text_grey">
-                  {{ deepFind(orders[orderId], "customer.distance") }}km far
-                </h5>
+                <h4 class="text_blackL">{{ deepFind(orders[orderId], "customer.name") }}</h4>
+                <h5
+                  class="regular text_grey"
+                >{{ deepFind(orders[orderId], "customer.distance") }}km {{$t('taxi.incomming.far')}}</h5>
               </div>
               <div
                 slot="description"
@@ -41,14 +36,14 @@
                 <fa icon="route"></fa>
                 <span class="text_blackL">
                   &nbsp;{{
-                    deepFind(orders[orderId], "routeInformation.distance.text")
+                  deepFind(orders[orderId], "routeInformation.distance.text")
                   }}
                 </span>
                 <br />
                 <fa icon="stopwatch"></fa>
                 <span class="text_blackL">
                   &nbsp;{{
-                    deepFind(orders[orderId], "routeInformation.duration.text")
+                  deepFind(orders[orderId], "routeInformation.duration.text")
                   }}
                 </span>
               </div>
@@ -57,7 +52,7 @@
         </router-link>
       </div>
 
-      <h3 v-else>No orders found</h3>
+      <h3 v-else>{{$t('taxi.incomming.noOrders')}}</h3>
     </div>
   </div>
 </template>
@@ -66,11 +61,11 @@
 import Card from "@/shared/components/ui/card";
 export default {
   components: {
-    Card,
+    Card
   },
   data() {
     return {
-      isLoaded: false,
+      isLoaded: false
     };
   },
   computed: {
@@ -96,7 +91,7 @@ export default {
     },
     currentOrderIdLink() {
       return `orders/${this.$store.getters["currentOrderId"]}`;
-    },
+    }
   },
   methods: {
     toggle() {
@@ -105,13 +100,13 @@ export default {
       } else {
         this.$store.dispatch("stopLooking");
       }
-    },
+    }
   },
   async beforeCreate() {
     this.isLoaded = false;
     await this.$store.getters["incomingOrders/list"];
     this.isLoaded = true;
-  },
+  }
 };
 </script>
 <style lang="scss" scoped>

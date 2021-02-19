@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h2>Orders</h2>
-    <div v-if="!isLoaded">Loading...</div>
+    <h2>{{$t('taxi.orders.title')}}</h2>
+    <div v-if="!isLoaded">{{$t('taxi.incomming.loading')}}...</div>
     <div v-else-if="hasOrders">
       <router-link
         :to="linkToOrder(orderId)"
@@ -11,15 +11,9 @@
         :key="key"
       >
         <card class="bg_secondary border card wrap">
-          <avatar
-            size="2.4rem"
-            :url="orders[orderId].customer.image"
-            slot="image"
-          ></avatar>
+          <avatar size="2.4rem" :url="orders[orderId].customer.image" slot="image"></avatar>
           <div slot="text" class="card_text">
-            <div slot="cardTitle" class="bold">
-              {{ orders[orderId].customer.name }}
-            </div>
+            <div slot="cardTitle" class="bold">{{ orders[orderId].customer.name }}</div>
             <div slot="description">
               <span slot="param" class="t-8">
                 <fa icon="calendar-alt"></fa>
@@ -34,16 +28,15 @@
         </card>
       </router-link>
     </div>
-    <h3 v-else>No orders found</h3>
+    <h3 v-else>{{$t('taxi.incomming.noOrders')}}</h3>
   </div>
 </template>
 
 <script>
 export default {
- 
   data() {
     return {
-      isLoaded: false,
+      isLoaded: false
     };
   },
   computed: {
@@ -64,13 +57,13 @@ export default {
       return function(orderId) {
         return `/orders/${orderId}`;
       };
-    },
+    }
   },
   async beforeCreate() {
     this.isLoaded = false;
     await this.$store.dispatch("pastOrders/loadList");
     this.isLoaded = true;
-  },
+  }
 };
 </script>
 <style lang="scss" scoped>

@@ -283,7 +283,8 @@ export default {
 ::v-deep .map {
   position: absolute;
   height: calc(100% - 4.25rem);
-  width: calc(100% - 2rem);
+  width: 100%;
+  left: 0;
   top: 4.25rem;
   z-index: 0;
 }

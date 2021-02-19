@@ -1,5 +1,5 @@
 <template>
-  <main :class="{ overlay: navDrawer }">
+  <main :class="{ overlay: navDrawer  }">
     <transition name="slide-fade">
       <nav-drawer v-if="navDrawer" class="navDrawer bg_white" @toggle="navDrawer = !navDrawer"></nav-drawer>
     </transition>
@@ -8,7 +8,7 @@
       @toggle="navDrawer = !navDrawer"
       :showNavBtn="showNavBtn"
     ></the-header>
-    <router-view class="container outlet"></router-view>
+    <router-view class="container outlet" :style="{minHeight:minHeight + 'px'}"></router-view>
   </main>
 </template>
 
@@ -23,11 +23,14 @@ export default {
   },
   data() {
     return {
-      navDrawer: false
+      navDrawer: false,
+      minHeight: 500
     };
   },
   mounted() {
     this.$store.dispatch("loadCustomerLocation");
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
   },
   computed: {
     routeName() {
@@ -37,9 +40,20 @@ export default {
       //searching for the home page
 
       return this.routeName == "home";
+    },
+    minHeightPx() {
+      return this.minHeight;
     }
   },
-
+  destroyed: function() {
+    window.removeEventListener("resize", this.handleResize);
+  },
+  methods: {
+    handleResize() {
+      let innerHeight = window.innerHeight;
+      this.minHeight = innerHeight - 80;
+    }
+  },
   watch: {
     $route: {
       deep: true,
