@@ -8,7 +8,7 @@
         :class="{ focusedTo: focusedTo, focusedFrom: focusedFrom }"
       >
         <div class="from fill_height side">
-          <h5>From {{ oneWay == "to" ? "(Optional)" : "" }}</h5>
+          <h5>{{$t('shared.inputLocation.from')}} {{ oneWay == "to" ? `(${$t('shared.inputLocation.optional')})` : "" }}</h5>
           <input
             :disabled="disabled"
             type="text"
@@ -27,7 +27,7 @@
           <logo class="icon_logo" :light="true"></logo>
         </base-button>
         <div class="to fill_height side">
-          <h5>To {{ oneWay == "from" ? "(Optional)" : "" }}</h5>
+          <h5>{{$t('shared.inputLocation.to')}} {{ oneWay == "from" ? "(Optional)" : "" }}</h5>
           <input
             :disabled="disabled"
             type="text"
@@ -43,7 +43,8 @@
       <!-- Drop down menu for saved locations-->
       <div class="dropdown bg_white border elevate_2" v-if="deepFind(saved, 'opened')">
         <h3 @click="pickCuerrentLocation()" class="flex t-10 regular">
-          <fa icon="crosshairs" class="icon text_primary"></fa>Current location
+          <fa icon="crosshairs" class="icon text_primary"></fa>
+          {{$t('shared.inputLocation.currentLoc')}}
         </h3>
         <h3
           @click="pickedFromSaved(res)"
@@ -69,7 +70,7 @@
           </h3>
         </span>
         <div v-else>
-          <h3 class="flex t-10 regular">Searching...</h3>
+          <h3 class="flex t-10 regular">{{$t('shared.inputLocation.searching')}}...</h3>
         </div>
       </div>
     </div>

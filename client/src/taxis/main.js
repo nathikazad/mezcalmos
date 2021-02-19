@@ -12,7 +12,9 @@ import {
   askForNotification
 } from '@/shared/mixins/functions'
 import "./registerServiceWorker";
-
+import {
+  i18n
+} from '@/shared/plugins/i18n'
 //init modules
 initModules(Vue)
 Vue.config.productionTip = false
@@ -46,7 +48,7 @@ async function firebaseCallback(user) {
       }
     }
     store.dispatch("notifications/loadNotificationsForTaxi");
-    askForNotification('taxi',store)
+    askForNotification('taxi', store)
   }
 }
 
@@ -55,5 +57,6 @@ firebaseInit(firebaseCallback)
 new Vue({
   render: h => h(App),
   router,
-  store
+  store,
+  i18n
 }).$mount('#app')

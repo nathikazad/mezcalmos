@@ -41,6 +41,10 @@ import {
 
 //init modules
 export function initModules(Vue) {
+   
+
+    
+    //Vue google maps
     Vue.use(VueGoogleMaps, gmapsConfig);
     Vue.component("gmap-custom-marker", GmapCustomMarker);
 

@@ -2,7 +2,7 @@
   <div>
     <div id="taxiRequest" v-if="orderDetails">
       <!-- ******************pop up component ************************-->
-      <h1 class="regular">Taxi</h1>
+      <h1 class="regular">{{$t('customer.taxiView.taxi')}}</h1>
       <input-location
         :disabled="true"
         :to="orderDetails.to"
@@ -19,7 +19,7 @@
           v-if="orderDetails.status == 'lookingForTaxi'"
         >
           <div class="w-70">
-            <h5 class="text_grey regular t-9">Searching Available Taxi...</h5>
+            <h5 class="text_grey regular t-9">{{$t('customer.taxiView.searching')}}...</h5>
           </div>
           <base-button
             class="w-30 elevate_1"
@@ -27,7 +27,7 @@
             @click.native="requestTaxi()"
             :loading="loading"
           >
-            <span class="t-8 regular">Cancel</span>
+            <span class="t-8 regular">{{$t('customer.taxiView.cancel')}}</span>
           </base-button>
         </div>
         <!-- Found Someone  Status-->
@@ -50,7 +50,7 @@
                     )
                   "
                 >
-                  Arrival
+                  {{$t('customer.taxiView.arrival')}}
                   {{
                   deepFind(
                   orderDetails,
@@ -59,7 +59,7 @@
                   }}
                 </h5>
                 <h5 class="regular text_grey" v-else>
-                  Arrival
+                  {{$t('customer.taxiView.arrival')}}
                   {{ "TBD" }}
                 </h5>
               </div>
@@ -74,7 +74,7 @@
               
             }"
           >
-            <span class="t-8 regular">Message</span>
+            <span class="t-8 regular">{{$t('customer.taxiView.message')}}</span>
           </base-button>
         </div>
         <!-- In Transit  Status-->
@@ -88,7 +88,7 @@
               <avatar size="2.4rem" :url="orderDetails.driver.image"></avatar>
               <div class="user_name">
                 <h4 class="text_blackL">{{ orderDetails.driver.name }}</h4>
-                <h5 class="regular text_grey">Ride started</h5>
+                <h5 class="regular text_grey">{{$t('customer.taxiView.rideStarted')}}</h5>
               </div>
             </div>
           </div>
@@ -101,7 +101,7 @@
               
             }"
           >
-            <span class="t-8 regular">Message</span>
+            <span class="t-8 regular">{{$t('customer.taxiView.message')}}</span>
           </base-button>
         </div>
         <!-- Droped off  Status-->
@@ -115,7 +115,7 @@
               <avatar size="2.4rem" :url="orderDetails.driver.image"></avatar>
               <div class="user_name">
                 <h4 class="text_blackL">{{ orderDetails.driver.name }}</h4>
-                <h5 class="regular text_grey">Dropped off</h5>
+                <h5 class="regular text_grey">{{$t('customer.taxiView.droppedOf')}}</h5>
               </div>
             </div>
           </div>
@@ -124,13 +124,13 @@
             :mode="{ dark: true, bg_info: true }"
             :loading="loading"
           >
-            <span class="t-8 regular">Review</span>
+            <span class="t-8 regular">{{$t('customer.taxiView.review')}}</span>
           </base-button>
         </div>
       </input-location>
     </div>
     <div v-else>
-      <h3>Loading ...</h3>
+      <h3>{{$t('customer.taxiView.loading')}} ...</h3>
     </div>
   </div>
 </template>
@@ -186,31 +186,5 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-::v-deep .map {
-  position: absolute;
-  height: calc(100% - 6.25rem);
-  left: 0;
-  width: 100%;
-  top: 6.25rem;
-  z-index: 0;
-}
-.btnP {
-  position: absolute;
-  width: calc(100% - 2rem);
-  z-index: 9;
-  bottom: 2rem;
-  left: 1rem;
-  padding: 0.5rem;
-  border-radius: 4px;
-  &::v-deep .btn {
-    height: 2.3rem;
-  }
-  .user_name {
-    margin-left: 0.8rem;
-    h5,
-    h4 {
-      margin: 0;
-    }
-  }
-}
+@import "@/shared/assets/scss/_taxiView.scss";
 </style>

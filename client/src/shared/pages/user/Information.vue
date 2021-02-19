@@ -1,9 +1,6 @@
 <template>
   <div class="userInfo flex space_around">
-    <h1 class="regular txt_center">
-      User
-      <br />Information
-    </h1>
+    <h1 class="regular txt_center" v-html="$t('shared.userInfo.title')"></h1>
     <div class="information">
       <div class="flex align_center center">
         <avatar class="border" size="10rem" :url="deepFind(userInfo,'photo')"></avatar>
@@ -17,11 +14,11 @@
     <div class="actions fill_width flex space_between">
       <base-button class="w-45 elevate_1" :mode="{ dark: true, bg_diagonal: true }">
         <fa icon="pencil-alt"></fa>&nbsp;&nbsp;
-        <span class="t-8 regular">EDIT INFORMATION</span>
+        <span class="t-8 regular">{{$t('shared.userInfo.editBtn')}}</span>
       </base-button>
       <base-button class="w-45 elevate_1" :mode="{ dark: true, bg_error: true }">
         <fa icon="trash"></fa>&nbsp;&nbsp;
-        <span class="t-8 regular">Delete Account</span>
+        <span class="t-8 regular">{{$t('shared.userInfo.deleteBtn')}}</span>
       </base-button>
     </div>
   </div>

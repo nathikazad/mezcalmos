@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="regular">All Services</h1>
+    <h1 class="regular">{{$t('customer.home.services')}}</h1>
     <section class="flex wrap">
       <router-link
         tag="div"
@@ -9,7 +9,7 @@
         id="taxi"
       >
         <taxiIcon class="icon"></taxiIcon>
-        <h4>Taxi</h4>
+        <h4>{{$t('customer.home.taxi')}}</h4>
       </router-link>
       <router-link
         tag="div"
@@ -18,7 +18,7 @@
         id="groceries"
       >
         <groceriesIcon class="icon"></groceriesIcon>
-        <h4>Groceries</h4>
+        <h4>{{$t('customer.home.groceries')}}</h4>
       </router-link>
     </section>
   </div>
@@ -30,12 +30,12 @@ import groceriesIcon from "@/shared/components/SVG/groceries";
 export default {
   components: {
     taxiIcon,
-    groceriesIcon,
+    groceriesIcon
   },
   data() {
     return {
       isLoading: false,
-      error: null,
+      error: null
     };
   },
   computed: {
@@ -44,8 +44,8 @@ export default {
     },
     requestGrocery() {
       return "/services/grocery/request";
-    },
-  },
+    }
+  }
 };
 </script>
 

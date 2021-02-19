@@ -45,7 +45,6 @@ export default {
       context.commit('saveAuthData', payload)
     },
     async logout(context) {
-      console.log("Logging out")
       await firebaseAuth().signOut()
       context.commit('clearData')
     },
