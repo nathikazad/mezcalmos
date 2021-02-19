@@ -1,0 +1,109 @@
+{
+    "customer": {
+        "home": {
+            "taxi": "Taxi",
+            "groceries": "Groceries",
+            "services": "All Services"
+        },
+        "taxiView": {
+            "taxi": "Taxi",
+            "searching": "Searching Available Taxi",
+            "cancel": "Cancel",
+            "arrival": "Arrival",
+            "message": "Message",
+            "rideStarted": "Ride started",
+            "droppedOf": "Dropped off",
+            "review": "Review",
+            "loading": "Loading",
+            "confirm": "CONFIRM"
+        },
+        "savedLocations": {
+            "title": "Saved Locations",
+            "location": "Location|Locations"
+        },
+        "orders": {
+            "title": "Orders",
+            "item": "Item|Items",
+            "onTheWay": "On the way",
+            "inTransit": "In Transit",
+            "searching": "Searching",
+            "noOrders": "No orders found"
+        }
+    },
+    "taxi": {
+        "incomming": {
+            "title": " Incoming <br/>Orders",
+            "loading": "Loading",
+            "services": "All Services",
+            "isInTax":"Please finish|your ride|to accept new orders",
+            "far":"far",
+            "noOrders":"No orders found"
+        },
+        "taxiView": {
+            "taxi": "Taxi",
+            "searching": "Searching Available Taxi",
+            "acceptOrders":"Accept Order",
+            "startRide": "Start Ride",
+            "finishRide": "Finish Ride",
+            "message": "Message",
+            "droppedOf": "Dropped off",
+            "review": "Review",
+            "loading": "Loading"  
+        },
+       
+        "orders": {
+            "title": "Orders",
+            "item": "Item|Items",
+            "onTheWay": "On the way",
+            "inTransit": "In Transit",
+            "searching": "Searching",
+            "noOrders": "No orders found"
+        }
+    },
+    "shared": {
+        "login": {
+            "owner": " Login With  <br/> Facebook To <br/> Make An Order ",
+            "customer": " Login With  <br/> Facebook To <br/> Make An Order ",
+            "fbBtn": "Facebook login"
+        },
+        "messages": {
+            "title": "Messages",
+            "available": "Available",
+            "orderLink": "order link"
+        },
+        "notification": {
+            "title": "Notifications",
+            "today": "Today",
+            "yesterday": "Yesterday",
+            "older": "Older"
+        },
+        "userInfo": {
+            "title": " User <br/> Information ",
+            "editBtn": "EDIT INFORMATION",
+            "deleteBtn": "Delete Account"
+        },
+        "navDrawer": {
+            "userInfo": "User Information",
+            "myOrders": "My Orders",
+            "savedLocations": "Saved Locations",
+            "logout": "Logout",
+            "login": "Login"
+        },
+        "header": {
+            "alert": "Order status changed"
+        },
+        "addItem": {
+            "title": " Add New Item",
+            "name": "Name",
+            "note": "note|notes",
+            "addItemBtn": "Add Item"
+        },
+        "inputLocation": {
+            "from": "From",
+            "to": "To",
+            "optional": "Optional",
+            "currentLoc": "Current location",
+            "searching": "searching"
+        }
+    }
+}

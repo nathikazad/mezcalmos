@@ -51,6 +51,7 @@
     "sass-loader": "^10.1.0",
     "vee-validate": "^3.4.5",
     "vue": "^2.6.11",
+    "vue-i18n": "^8.22.4",
     "vue-moment": "^4.1.0",
     "vue-router": "^3.4.9",
     "vue2-gmap-custom-marker": "^6.0.0",

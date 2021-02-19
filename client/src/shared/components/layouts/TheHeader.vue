@@ -21,7 +21,7 @@
         </div>
         <div slot="sender" class="flex align_center" v-else>
           <div class="card_text">
-            <div class="bold">Order status changed</div>
+            <div class="bold">{{$t('shared.header.alert')}}</div>
             <div>
               <span slot="param" class="t-8">{{ alert.status }}</span>
             </div>

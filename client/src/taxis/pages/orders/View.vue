@@ -24,7 +24,7 @@
                 <h4 class="text_blackL">{{ orderDetails.customer.name }}</h4>
                 <h5
                   class="regular text_grey"
-                >{{ deepFind(orderDetails, "customer.distance") }}km far</h5>
+                >{{ deepFind(orderDetails, "customer.distance") }}km {{$t('taxi.incomming.far')}}</h5>
               </div>
             </div>
 
@@ -42,7 +42,7 @@
             @click.native="acceptRide()"
             :loading="loading"
           >
-            <span class="t-8 regular">Accept Order</span>
+            <span class="t-8 regular">{{$t('taxi.taxiView.acceptOrders')}}</span>
           </base-button>
         </div>
         <!-- On the way  Status-->
@@ -57,7 +57,7 @@
             @click.native="startRide()"
             :loading="loading"
           >
-            <span class="t-8 regular">Start Ride</span>
+            <span class="t-8 regular">{{$t('taxi.taxiView.startRide')}}</span>
           </base-button>
           <base-button
             class="w-30 elevate_1"
@@ -68,7 +68,7 @@
               
             }"
           >
-            <span class="t-8 regular">Message</span>
+            <span class="t-8 regular">{{$t('taxi.taxiView.message')}}</span>
           </base-button>
         </div>
         <!-- Finish ride  Status-->
@@ -83,7 +83,7 @@
             @click.native="finishRide()"
             :loading="loading"
           >
-            <span class="t-8 regular">Finish Ride</span>
+            <span class="t-8 regular">{{$t('taxi.taxiView.finishRide')}}</span>
           </base-button>
           <base-button
             class="w-30 elevate_1"
@@ -94,7 +94,7 @@
              
             }"
           >
-            <span class="t-8 regular">Message</span>
+            <span class="t-8 regular">{{$t('taxi.taxiView.message')}}</span>
           </base-button>
         </div>
         <!-- Finished ride  Status-->
@@ -108,7 +108,7 @@
               <avatar size="2.4rem" :url="orderDetails.customer.image"></avatar>
               <div class="user_name">
                 <h4 class="text_blackL">{{ orderDetails.customer.name }}</h4>
-                <h5 class="regular text_grey">Dropped off</h5>
+                <h5 class="regular text_grey">{{$t('taxi.taxiView.droppedOf')}}</h5>
               </div>
             </div>
           </div>
@@ -117,13 +117,13 @@
             :mode="{ dark: true, bg_info: true }"
             :loading="loading"
           >
-            <span class="t-8 regular">Review</span>
+            <span class="t-8 regular">{{$t('taxi.taxiView.review')}}</span>
           </base-button>
         </div>
       </input-location>
     </div>
     <div v-else>
-      <h3>Loading ...</h3>
+      <h3>{{$t('taxi.taxiView.loading')}} ...</h3>
     </div>
   </div>
 </template>
@@ -211,34 +211,20 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-::v-deep .map {
-  position: absolute;
-  height: calc(100% - 6.25rem);
-  left: 0;
-  width: 100%;
-  top: 6.25rem;
-  z-index: 0;
-}
+@import "@/shared/assets/scss/_taxiView.scss";
 .btnP {
-  position: absolute;
-  width: calc(100% - 2rem);
-  z-index: 9;
-  bottom: 2rem;
-  left: 1rem;
-  padding: 0.5rem;
-  border-radius: 4px;
-  &::v-deep .btn {
-    height: 2.3rem;
-  }
-  .user_name {
-    margin-left: 0.8rem;
-    h5,
-    h4 {
-      margin: 0;
+  @media (max-width: 400px) {
+    .w-70 {
+      width: 80% !important;
     }
-  }
-  .ride_details {
-    margin-left: 1rem;
+
+    .w-30 {
+      width: 20% !important;
+    }
+
+    .ride_details {
+      margin-left: 0.5rem;
+    }
   }
 }
 </style>

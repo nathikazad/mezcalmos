@@ -3,7 +3,7 @@
     <!-- pop up component -->
     <pop-up v-if="pickLocation"></pop-up>
     <!-- ******************pop up component ************************-->
-    <h1 class="regular">Taxi</h1>
+    <h1 class="regular">{{$t('customer.taxiView.taxi')}}</h1>
     <input-location
       :search.sync="search"
       :saved.sync="saved"
@@ -22,7 +22,7 @@
           :loading="loading"
           :disabled="disabled"
         >
-          <span class="t-8 regular">CONFIRM</span>
+          <span class="t-8 regular">{{$t('customer.taxiView.confirm')}}</span>
         </base-button>
         <base-button
           v-else
@@ -31,7 +31,7 @@
           :link="true"
           to="/auth?redirect=/services/taxi/request"
         >
-          <span class="t-8 regular">CONFIRM</span>
+          <span class="t-8 regular">{{$t('customer.taxiView.confirm')}}</span>
         </base-button>
       </div>
     </input-location>
@@ -130,7 +130,8 @@ export default {
 ::v-deep .map {
   position: absolute;
   height: calc(100% - 6.25rem);
-  width: calc(100% - 2rem);
+  width: 100%;
+  left: 0;
   top: 6.25rem;
   z-index: 0;
 }

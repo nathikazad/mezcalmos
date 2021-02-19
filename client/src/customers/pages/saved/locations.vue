@@ -13,12 +13,12 @@
       ></pick-location>
     </transition>
     <!--*************** End location picker component ****************-->
-    <h1 class="regular">Saved Locations</h1>
+    <h1 class="regular">{{$t('customer.savedLocations.title')}}</h1>
     <div class="field">
       <h3 class="bold flex space_between">
-        <span>Locations</span>
+        <span>{{$tc('customer.savedLocations.location',2)}}</span>
         <span class="regular"
-          >{{ Object.keys(locations).length }} Location</span
+          >{{ Object.keys(locations).length }} {{$tc('customer.savedLocations.location',1)}}</span
         >
       </h3>
       <card

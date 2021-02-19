@@ -10,13 +10,9 @@
       </h1>
     </div>
     <div class="login_action txt_center">
-      <h1 class="regular">
-        Login With
-        <br />Facebook To
-        <br />Make An Order
-      </h1>
+      <h1 class="regular" v-html="$t('shared.login.customer')"></h1>
       <button class="btn" @click="submitForm">
-        <span>Facebook login</span>
+        <span>{{$t('shared.login.fbBtn')}}</span>
       </button>
     </div>
   </div>
@@ -37,7 +33,6 @@ export default {
     async submitForm() {
       this.isLoading = true;
       try {
-
         await this.$store.dispatch("login");
         if (this.$route.query.redirect) {
           this.$router.push({ path: this.$route.query.redirect });

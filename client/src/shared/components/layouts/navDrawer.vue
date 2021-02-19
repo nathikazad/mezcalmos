@@ -12,7 +12,8 @@
     <div class="visitor nav_body flex align_center center" v-if="!isLoggedIn">
       <router-link to="/auth" class="text_blackD">
         <h2>
-          <fa icon="sign-in-alt"></fa>&nbsp;Login
+          <fa icon="sign-in-alt"></fa>
+          &nbsp;{{$t('shared.navDrawer.login')}}
         </h2>
       </router-link>
     </div>
@@ -30,9 +31,18 @@
         </router-link>
         <span class="text_blackD" @click="logout">
           <h4>
-            <fa icon="power-off" class="icon"></fa>&nbsp; Logout
+            <fa icon="power-off" class="icon"></fa>
+            &nbsp; {{$t('shared.navDrawer.logout')}}
           </h4>
         </span>
+
+        <h4 class="text_blackD fill_width">
+          <span :class="{'text_brand':LocalLang=='en'}" @click="changeLanguage('en')">EN</span> &nbsp;|&nbsp;
+          <span
+            :class="{'text_brand':LocalLang=='es'}"
+            @click="changeLanguage('es')"
+          >ES</span>
+        </h4>
       </div>
     </div>
   </div>
@@ -45,16 +55,26 @@ export default {
     },
     userInfo() {
       return this.$store.getters["userInfo"];
+    },
+    LocalLang() {
+      return this.$i18n.locale;
     }
   },
   data() {
     return {
       links: [
-        { text: "User Information", icon: "user-circle", to: "/userinfo" },
-        { text: "My Orders", icon: "shopping-cart", to: "/orders" },
-        { text: "Message", icon: "envelope", to: "/services" },
         {
-          text: "Saved Location",
+          text: this.$t("shared.navDrawer.userInfo"),
+          icon: "user-circle",
+          to: "/userinfo"
+        },
+        {
+          text: this.$t("shared.navDrawer.myOrders"),
+          icon: "shopping-cart",
+          to: "/orders"
+        },
+        {
+          text: this.$t("shared.navDrawer.savedLocations"),
           icon: "location-arrow",
           to: "/saved/locations"
         }
@@ -77,6 +97,9 @@ export default {
       } catch (e) {
         this.error = e.message;
       }
+    },
+    changeLanguage(lang) {
+      this.$i18n.locale = lang;
     }
   }
 };
