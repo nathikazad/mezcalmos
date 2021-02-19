@@ -22,7 +22,7 @@ pnpm-debug.log*
 *.sln
 *.sw?
 
-test/newDummyData
+test/data/newDummyData
 public/sw/sw-customer.js.map
 public/sw/sw-taxi.js.map
 public/sw/workbox-81b571e3.js

@@ -65,7 +65,7 @@ async function loadData(){
     admin.auth().deleteUser(userRecord.uid)
   });
   // Get test data
-  let rawData = fs.readFileSync(`test/${dataFolderName}/database_export/mezcalmos-31f1c-default-rtdb.json`, "utf8")
+  let rawData = fs.readFileSync(`test/data/${dataFolderName}/database_export/mezcalmos-31f1c-default-rtdb.json`, "utf8")
   let data = JSON.parse(rawData)
   // Create Users
   let oldUsers = {}
