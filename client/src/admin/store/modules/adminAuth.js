@@ -1,26 +1,25 @@
-// import { firebaseDatabase } from '@/shared/config/firebase'
+import { firebaseDatabase } from '@/shared/config/firebase'
 // import { apolloClient } from '@/config/apollo'
 // import gql from 'graphql-tag'
 export default {
   state() {
     return {
-      // canDeliver: false,
-      
+      isAuthorized: false,
     };
   },
   getters: {
-    // canDeliver(state) {
-    //   return state.canDeliver;
-    // }
+    isAdmin(state) {
+      return state.isAdmin;
+    }
   },
   actions: {
-    // async loadDriverAuth(context) {
-    //   let userId = context.rootGetters.userId
-    //   let canDeliver = (await firebaseDatabase().ref(`deliveryDrivers/${userId}/authorized`).once('value')).val() != null;
-    //   context.commit('saveDriverAuth', {
-    //     canDeliver: canDeliver
-    //   })
-    // },
+    async loadAdminAuth(context) {
+      let userId = context.rootGetters.userId
+      let isAdmin = (await firebaseDatabase().ref(`admins/${userId}/authorized`).once('value')).val() != null;
+      context.commit('saveIsAdmin', {
+        isAdmin: isAdmin
+      })
+    },
     // turnOn(context) {
     //   this.dispatch('incomingOrders/startListeningForIncoming')
     //   context.commit('setStatus', {
@@ -29,8 +28,8 @@ export default {
     // },
   },
   mutations: {
-    // saveDriverAuth(state, payload) {
-    //   state.canDeliver = payload.canDeliver;
-    // }
+    saveIsAdmin(state, payload) {
+      state.isAdmin = payload.isAdmin;
+    }
   }
 }
