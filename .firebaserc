@@ -22,6 +22,12 @@
         ],
         "deliveriesTest": [
           "deliveries-in-test-ba13c"
+        ],
+        "admin": [
+          "admins-51885"
+        ],
+        "adminTest": [
+          "admins-in-test"
         ]
       },
       "database": {

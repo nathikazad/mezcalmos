@@ -1,11 +1,11 @@
 const functions = require("firebase-functions");
-const admin = require("firebase-admin");
+const firebaseAdmin = require("firebase-admin");
 
 
-const productionFirebase = admin.initializeApp({
+const productionFirebase = firebaseAdmin.initializeApp({
   databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com"
 }, "production");
-const testFirebase = admin.initializeApp({
+const testFirebase = firebaseAdmin.initializeApp({
   databaseURL: "https://mezcalmos-test.firebaseio.com"
 }, "test")
 
@@ -21,6 +21,7 @@ const grocery = require("./helpers/grocery")
 const taxi = require("./helpers/taxi")
 const hasura = require("./helpers/hasura");
 const message = require("./helpers/message");
+const admin = require("./helpers/admin");
 
 // On sign up.
 exports.processSignUp = functions.auth.user().onCreate(async user => {
@@ -103,6 +104,20 @@ exports.finishGroceryOrder = functions.https.onCall(async (data, context) => {
   return response
 });
 
+exports.createAdminChat = functions.https.onCall(async (data, context) => {
+  let firebase = getFirebase(data.database);
+  data.userId = context.auth.uid
+  let response = await admin.createChat(firebase, data)
+  return response
+});
+
+exports.resolveAdminChat = functions.https.onCall(async (data, context) => {
+  let firebase = getFirebase(data.database);
+  data.userId = context.auth.uid
+  let response = await admin.resolve(firebase, data)
+  return response
+});
+
 exports.notifyMessageParticipantsTest = functions.database.instance('mezcalmos-test').ref(
   '/chat/{chatId}/messages/{messageId}').onCreate((snap, context) => {
   let firebase = getFirebase('test');
@@ -111,7 +126,6 @@ exports.notifyMessageParticipantsTest = functions.database.instance('mezcalmos-t
 
 exports.notifyMessageParticipants = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
   '/chat/{chatId}/messages/{messageId}').onCreate(async (snap, context) => {
-
   let firebase = getFirebase();
   message.notifyOthers(firebase, context.params, snap.val())
 })
