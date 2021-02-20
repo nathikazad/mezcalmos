@@ -13,8 +13,8 @@ if (argv.command == "deploy") {
     fullCommand = `vue-cli-service build ${mode} --dest ../dist/taxis${destSuffix} src/taxis/main.js`
     execSync(fullCommand, {stdio:[0, 1, 2]});
   }
-  if (argv.app == "deliveries" || argv.app == "all") {
-    fullCommand = `vue-cli-service build ${mode} --dest ../dist/deliveries${destSuffix} src/deliveries/main.js`
+  if (argv.app == "admin" || argv.app == "all") {
+    fullCommand = `vue-cli-service build ${mode} --dest ../dist/admin${destSuffix} src/admin/main.js`
     execSync(fullCommand, {stdio:[0, 1, 2]});
   }
   if (argv.app == "customers" || argv.app == "all") {
@@ -22,7 +22,7 @@ if (argv.command == "deploy") {
     execSync(fullCommand, {stdio:[0, 1, 2]});
   }
   if (argv.app == "all") {
-    fullCommand = `firebase deploy --only hosting:taxis${destSuffix},hosting:customers${destSuffix},hosting:deliveries${destSuffix}`
+    fullCommand = `firebase deploy --only hosting:taxis${destSuffix},hosting:customers${destSuffix},hosting:admin${destSuffix}`
   } else {
     fullCommand = `firebase deploy --only hosting:${argv.app}${destSuffix}`
   }
