@@ -9,7 +9,7 @@ import MessagesPage from '@/shared/pages/messages/View'
 import LoginPage from '@/shared/pages/user/Login'
 
 
-import NotFoundPage from './pages/NotFound'
+import NotFoundPage from '@/shared/pages/NotFound'
 import store from './store/store';
 
 Vue.use(VueRouter)

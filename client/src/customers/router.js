@@ -14,7 +14,7 @@ import NotificationsPage from "@/shared/pages/notification/view";
 import LoginPage from "@/shared/pages/user/Login";
 import SavedLocation from './pages/saved/locations'
 
-import NotFoundPage from './pages/NotFound'
+import NotFoundPage from '@/shared/pages/NotFound'
 import store from './store/store';
 
 Vue.use(VueRouter)
