@@ -224,6 +224,23 @@ html {
 
 }
 
+.logo {
+    .a {
+
+        fill: url(#logoGradient);
+    }
+}
+
+//for ios safari browsers
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+
+    select,
+    textarea,
+    input {
+        font-size: 16px !important;
+    }
+}
+
 @keyframes bounce {
     to {
         transform: scale(1.05);
