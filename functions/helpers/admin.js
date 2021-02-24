@@ -12,7 +12,7 @@ async function createChat(firebase, params) {
     }
   }
 
-  let currentChat = (await firebase.database().ref(`/adminChat/current/${params.userId}`).once()).val()
+  let currentChat = (await firebase.database().ref(`/adminChat/${params.userType}/current/${params.userId}`).once()).val()
   if(currentChat){
     return {
       status: "Error",
@@ -25,11 +25,11 @@ async function createChat(firebase, params) {
   chat.orderId = params.orderId
   chat.userType = params.userType
   chat.userId = params.userId
-  chat.parentChatId = params.parentChatId
-  let chatRef = await firebase.database().ref(`/adminChat/current/${chat.userId}`).push(chat);
+  chat.linkedChat = params.linkedChat
+  let chatRef = await firebase.database().ref(`/adminChat/${params.userType}/current/${chat.userId}`).push(chat);
 
-  if(params.parentChatId) {
-    await firebase.database().ref(`/adminChat/current/${params.parentChatId}/followupChats/${chatRef.key}`).set(chat.userId)
+  if(params.linkedChat) {
+    await firebase.database().ref(`/adminChat/${params.linkedChat.userType}/current/${params.linkedChat.chatId}/linkedChat`).set({userId:chat.userId, userType:chat.userType})
   }
   return {
     status: "Success",
@@ -38,20 +38,20 @@ async function createChat(firebase, params) {
 }
 
 async function resolve(firebase, params) {
-  if(!params.userId){
+  if(!params.userId || !params.userType){
     return {
       status: "Error",
-      errorMessage: "Required userId"
+      errorMessage: "Required userId and userType"
     }
   }
 
-  let currentChat = (await firebase.database().ref(`/adminChat/current/${params.userId}`).once()).val()
+  let currentChat = (await firebase.database().ref(`/adminChat/${params.userType}/current/${params.userId}`).once()).val()
   if(!currentChat){
     return {
       status: "Error",
       errorMessage: "Chat does not exist for user."
     }
   }
-  await firebase.database().ref(`/adminChat/current/${params.userId}`).delete()
-  await firebase.database().ref(`/adminChat/past/${params.userId}`).update(currentChat);
+  await firebase.database().ref(`/adminChat/${params.userType}/current/${params.userId}`).delete()
+  await firebase.database().ref(`/adminChat/${params.userType}/past/${params.userId}`).update(currentChat);
 }
