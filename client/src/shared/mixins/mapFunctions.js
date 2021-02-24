@@ -1,4 +1,7 @@
 export function getDistanceFromLatLonInKm(from, to) {
+  if(!from || !to || !from.lat || !to.lat || !from.long || !to.long){
+    return 0
+  }
   var R = 6371; // Radius of the earth in km
   var dLat = deg2rad(from.lat - to.lat); // deg2rad below
   var dLon = deg2rad(from.long - to.long);

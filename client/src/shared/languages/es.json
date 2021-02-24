@@ -2,108 +2,108 @@
     "customer": {
         "home": {
             "taxi": "Taxi",
-            "groceries": "El almacén",
+            "groceries": "Comestibles",
             "services": "Todos los servicios"
         },
         "taxiView": {
             "taxi": "Taxi",
-            "searching": "Buscando taxi disponible",
+            "searching": "Buscando taxi",
             "cancel": "Cancelar",
-            "arrival": "Arrival",
-            "message": "Message",
-            "rideStarted": "Ride started",
-            "droppedOf": "Dropped off",
-            "review": "Review",
-            "loading": "Loading",
-            "confirm": "CONFIRM"
+            "arrival": "Llegafa",
+            "message": "Envía Mensaje",
+            "rideStarted": "Paseo iniciado",
+            "droppedOf": "Dejado",
+            "review": "Revisar",
+            "loading": "Cargando",
+            "confirm": "Confirmar"
         },
         "savedLocations": {
-            "title": "Saved Locations",
-            "location": "Location|Locations"
+            "title": "Ubicaciones guardadas",
+            "location": "Ubicacion|Ubicaciones"
         },
         "orders": {
-            "title": "Orders",
-            "item": "Item|Items",
-            "onTheWay": "On the way",
-            "inTransit": "In Transit",
-            "searching": "Searching",
-            "noOrders": "No orders found"
+            "title": "Pedidos",
+            "item": "Artículo|Artículos",
+            "onTheWay": "En camino",
+            "inTransit": "En tránsito",
+            "searching": "Buscando",
+            "noOrders": "Sin pedidos"
         }
     },
     "taxi": {
-        "incomming": {
-            "title": " Incoming <br/>Orders",
-            "loading": "Loading",
-            "services": "All Services",
-            "isInTax": "Please finish|your ride|to accept new orders",
-            "far": "far",
-            "noOrders": "No orders found"
+        "incoming": {
+            "title": "Órdenes <br/>Entrantes",
+            "loading": "Cargando",
+            "services": "Todos los servicios",
+            "isInTax": "Por favor finalice | su viaje | para aceptar nuevos pedidos",
+            "far": "lejos",
+            "noOrders": "Sin pedidos"
         },
         "taxiView": {
             "taxi": "Taxi",
-            "searching": "Searching Available Taxi",
-            "acceptOrders": "Accept Order",
-            "startRide": "Start Ride",
-            "finishRide": "Finish Ride",
-            "message": "Message",
-            "droppedOf": "Dropped off",
-            "review": "Review",
-            "loading": "Loading"
+            "searching": "Buscando taxi",
+            "acceptOrders": "Aceptar orden",
+            "startRide": "Iniciar viaje",
+            "finishRide": "Terminar viaje",
+            "message": "Envía Mensaje",
+            "droppedOf": "Dejado",
+            "review": "Revisar",
+            "loading": "Cargando"
         },
 
         "orders": {
-            "title": "Orders",
-            "item": "Item|Items",
-            "onTheWay": "On the way",
-            "inTransit": "In Transit",
-            "searching": "Searching",
-            "noOrders": "No orders found"
+            "title": "Pedidos",
+            "item": "Artículo|Artículos",
+            "onTheWay": "En camino",
+            "inTransit": "En tránsito",
+            "searching": "Buscando",
+            "noOrders": "Sin pedidos"
         }
     },
     "shared": {
         "login": {
-            "owner": " Login With  <br/> Facebook To <br/> Make An Order ",
-            "customer": " Login With  <br/> Facebook To <br/> Make An Order ",
-            "fbBtn": "Facebook login"
+            "owner": " Inicie sesión con <br/> Facebook para <br/> hacer un pedido ",
+            "customer": " Inicie sesión con <br/> Facebook para <br/> hacer un pedido ",
+            "fbBtn": "Facebook iniciar"
         },
         "messages": {
-            "title": "Messages",
-            "available": "Available",
-            "orderLink": "order link"
+            "title": "Mensajes",
+            "available": "Disponible",
+            "orderLink": "Página de pedido"
         },
         "notification": {
-            "title": "Notifications",
-            "today": "Today",
-            "yesterday": "Yesterday",
-            "older": "Older"
+            "title": "Notificaciones",
+            "today": "Hoy",
+            "yesterday": "Ayer",
+            "older": "Antiguos"
         },
         "userInfo": {
-            "title": " User <br/> Information ",
-            "editBtn": "EDIT INFORMATION",
-            "deleteBtn": "Delete Account"
+            "title": " Información <br/> del usuario ",
+            "editBtn": "EDITAR INFORMACION",
+            "deleteBtn": "Borrar cuenta"
         },
         "navDrawer": {
-            "userInfo": "User Information",
-            "myOrders": "My Orders",
-            "savedLocations": "Saved Locations",
-            "logout": "Logout",
-            "login": "Login"
+            "userInfo": "Información del usuario",
+            "myOrders": "Mis Pedidos",
+            "savedLocations": "Ubicaciones guardadas",
+            "logout": "Cerrar sesión",
+            "login": "Iniciar sesión"
         },
         "header": {
-            "alert": "Order status changed"
+            "alert": "El estado del pedido cambió"
         },
         "addItem": {
-            "title": " Add New Item",
-            "name": "Name",
-            "note": "note|notes",
-            "addItemBtn": "Add Item"
+            "title": " Agregar artículo nuevo",
+            "name": "Nombre",
+            "note": "nota|notas",
+            "addItemBtn": "Agregar artículo"
         },
         "inputLocation": {
-            "from": "From",
-            "to": "To",
-            "optional": "Optional",
-            "currentLoc": "Current location",
-            "searching": "searching"
+            "from": "Desde",
+            "to": "Para",
+            "optional": "Opcional",
+            "currentLoc": "Ubicación Actual",
+            "searching": "Buscando"
         }
     }
 }

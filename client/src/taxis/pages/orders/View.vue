@@ -24,7 +24,7 @@
                 <h4 class="text_blackL">{{ orderDetails.customer.name }}</h4>
                 <h5
                   class="regular text_grey"
-                >{{ deepFind(orderDetails, "customer.distance") }}km {{$t('taxi.incomming.far')}}</h5>
+                >{{ deepFind(orderDetails, "customer.distance") }}km {{$t('taxi.incoming.far')}}</h5>
               </div>
             </div>
 

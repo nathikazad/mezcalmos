@@ -2,15 +2,15 @@
   <div>
     <div>
       <h1 class="flex space_between align_center">
-        <span v-html="$t('taxi.incomming.title')"></span>
+        <span v-html="$t('taxi.incoming.title')"></span>
         <switcher @click.native="toggle()" :open="isLooking"></switcher>
       </h1>
 
-      <div v-if="!isLoaded">{{$t('taxi.incomming.loading')}}...</div>
+      <div v-if="!isLoaded">{{$t('taxi.incoming.loading')}}...</div>
       <h3 v-else-if="isInTaxi">
-        {{$tc('taxi.incomming.loading',1)}}
-        <router-link :to="currentOrderIdLink">{{$tc('taxi.incomming.loading',2)}}</router-link>
-        {{$tc('taxi.incomming.loading',3)}}
+        {{$tc('taxi.incoming.loading',1)}}
+        <router-link :to="currentOrderIdLink">{{$tc('taxi.incoming.loading',2)}}</router-link>
+        {{$tc('taxi.incoming.loading',3)}}
       </h3>
       <div v-else-if="hasOrders">
         <router-link
@@ -26,7 +26,7 @@
                 <h4 class="text_blackL">{{ deepFind(orders[orderId], "customer.name") }}</h4>
                 <h5
                   class="regular text_grey"
-                >{{ deepFind(orders[orderId], "customer.distance") }}km {{$t('taxi.incomming.far')}}</h5>
+                >{{ deepFind(orders[orderId], "customer.distance") }}km {{$t('taxi.incoming.far')}}</h5>
               </div>
               <div
                 slot="description"
@@ -52,7 +52,7 @@
         </router-link>
       </div>
 
-      <h3 v-else>{{$t('taxi.incomming.noOrders')}}</h3>
+      <h3 v-else>{{$t('taxi.incoming.noOrders')}}</h3>
     </div>
   </div>
 </template>

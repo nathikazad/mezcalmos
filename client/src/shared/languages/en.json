@@ -31,7 +31,7 @@
         }
     },
     "taxi": {
-        "incomming": {
+        "incoming": {
             "title": " Incoming <br/>Orders",
             "loading": "Loading",
             "services": "All Services",
@@ -69,7 +69,7 @@
         "messages": {
             "title": "Messages",
             "available": "Available",
-            "orderLink": "order link"
+            "orderLink": "Order page"
         },
         "notification": {
             "title": "Notifications",

@@ -54,7 +54,7 @@ async function firebaseCallback(user) {
 
 firebaseInit(firebaseCallback)
 
-new Vue({
+window.app = new Vue({
   render: h => h(App),
   router,
   store,
