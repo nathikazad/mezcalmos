@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>{{$t('taxi.orders.title')}}</h2>
-    <div v-if="!isLoaded">{{$t('taxi.incomming.loading')}}...</div>
+    <div v-if="!isLoaded">{{$t('taxi.incoming.loading')}}...</div>
     <div v-else-if="hasOrders">
       <router-link
         :to="linkToOrder(orderId)"
@@ -28,7 +28,7 @@
         </card>
       </router-link>
     </div>
-    <h3 v-else>{{$t('taxi.incomming.noOrders')}}</h3>
+    <h3 v-else>{{$t('taxi.incoming.noOrders')}}</h3>
   </div>
 </template>
 

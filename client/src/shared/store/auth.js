@@ -2,6 +2,10 @@ import {
   firebaseAuth,
   firebaseDatabase
 } from '@/shared/config/firebase'
+
+import {
+  i18n
+} from '@/shared/plugins/i18n'
 // import { apolloClient } from '@/config/apollo'
 // import gql from 'graphql-tag'
 export default {
@@ -19,6 +23,9 @@ export default {
     },
     userInfo(state) {
       return state.info
+    },
+    userLanguage(state) {
+      return state.info.language
     },
     hasuraAuthToken(state) {
       return state.hasuraAuthToken;
@@ -39,16 +46,21 @@ export default {
       await firebaseAuth().signInWithPopup(provider);
     },
     async autoSignIn(context, payload) {
-      let info = (await firebaseDatabase().ref(`users/${payload.userId}/info/`).once('value')).val();
-
-      context.commit('saveUserInfo', info)
+      firebaseDatabase().ref(`users/${payload.userId}/info/`).on('value', function(snapshot) {
+        context.commit('saveUserInfo', snapshot.val())
+        i18n.locale = snapshot.val().language
+      })
       context.commit('saveAuthData', payload)
     },
     async logout(context) {
+      firebaseDatabase().ref(`users/${context.state.userId}/info/`).off()
       await firebaseAuth().signOut()
       context.commit('clearData')
     },
-
+    setLanguage(context, payload) {
+      firebaseDatabase().ref(`users/${context.state.userId}/info/language`).set(payload)
+      i18n.locale = payload
+    },
   },
   mutations: {
     saveAuthData(state, payload) {

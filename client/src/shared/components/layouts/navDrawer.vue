@@ -37,11 +37,8 @@
         </span>
 
         <h4 class="text_blackD fill_width">
-          <span :class="{'text_brand':LocalLang=='en'}" @click="changeLanguage('en')">EN</span> &nbsp;|&nbsp;
-          <span
-            :class="{'text_brand':LocalLang=='es'}"
-            @click="changeLanguage('es')"
-          >ES</span>
+          <span v-if="localLang=='es'" :class="{'text_brand':localLang=='en'}" @click="changeLanguage('en')">To English</span>
+          <span v-if="localLang=='en'" :class="{'text_brand':localLang=='es'}" @click="changeLanguage('es')">A Español</span>
         </h4>
       </div>
     </div>
@@ -56,8 +53,8 @@ export default {
     userInfo() {
       return this.$store.getters["userInfo"];
     },
-    LocalLang() {
-      return this.$i18n.locale;
+    localLang() {
+      return this.$store.getters["userLanguage"];
     }
   },
   data() {
@@ -99,7 +96,7 @@ export default {
       }
     },
     changeLanguage(lang) {
-      this.$i18n.locale = lang;
+      this.$store.dispatch("setLanguage", lang)
     }
   }
 };
