@@ -8,7 +8,7 @@ let existingLanguages = {
 export const defaultLocale = !existingLanguages[userLanguage] ? 'en' : userLanguage
 
 
-console.log(userLanguage);
+
 export const languages = {
     en: en,
     es: es,

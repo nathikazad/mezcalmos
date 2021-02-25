@@ -1,6 +1,12 @@
 <template>
   <div>
-    <h1 class="regular">{{$t('shared.messages.title')}}</h1>
+    <h1 class="regular flex space_between align_center">
+      {{$t('shared.messages.title')}}
+      <router-link :to="{name:'taxiView'}" tag="h4" class="externalLink pointer">
+        <fa icon="clipboard-list" class="icon_link"></fa>
+        {{$t('shared.messages.orderLink')}}
+      </router-link>
+    </h1>
 
     <div class="messages_body fit_container">
       <div class="user_info bg_secondary border flex align_center space_between">
@@ -11,10 +17,6 @@
             <h5 class="text_info regular">{{$t('shared.messages.available')}}</h5>
           </div>
         </div>
-        <router-link :to="{name:'taxiView'}" tag="h4">
-          {{$t('shared.messages.orderLink')}}
-          <fa icon="external-link"></fa>
-        </router-link>
       </div>
       <div class="messages" id="messages">
         <div v-for="(msg, index) in messages" :key="index">
@@ -185,6 +187,12 @@ export default {
       }
     }
   }
+}
+.externalLink {
+  margin-top: 25px;
+}
+.icon_link {
+  margin-right: 3px;
 }
 .message_footer {
   height: 4.375rem;

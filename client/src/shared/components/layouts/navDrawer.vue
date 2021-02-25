@@ -36,9 +36,23 @@
           </h4>
         </span>
 
-        <h4 class="text_blackD fill_width">
-          <span v-if="localLang=='es'" :class="{'text_brand':localLang=='en'}" @click="changeLanguage('en')">To English</span>
-          <span v-if="localLang=='en'" :class="{'text_brand':localLang=='es'}" @click="changeLanguage('es')">A Español</span>
+        <h4 class="text_blackD fill_width pointer">
+          <span
+            v-if="localLang=='es'"
+            :class="{'text_brand':localLang=='en'}"
+            @click="changeLanguage('en')"
+            class="flex align_center"
+          >
+            <img src="@/shared/static/united-states.png" alt="USA flag" class="flag" /> To English
+          </span>
+          <span
+            v-if="localLang=='en'"
+            :class="{'text_brand':localLang=='es'}"
+            @click="changeLanguage('es')"
+            class="flex align_center"
+          >
+            <img src="@/shared/static/mexico.png" alt="USA flag" class="flag" />A Español
+          </span>
         </h4>
       </div>
     </div>
@@ -55,11 +69,9 @@ export default {
     },
     localLang() {
       return this.$store.getters["userLanguage"];
-    }
-  },
-  data() {
-    return {
-      links: [
+    },
+    links() {
+      return [
         {
           text: this.$t("shared.navDrawer.userInfo"),
           icon: "user-circle",
@@ -75,9 +87,10 @@ export default {
           icon: "location-arrow",
           to: "/saved/locations"
         }
-      ]
-    };
+      ];
+    }
   },
+
   methods: {
     logout() {
       this.$store.dispatch("logout");
@@ -96,7 +109,7 @@ export default {
       }
     },
     changeLanguage(lang) {
-      this.$store.dispatch("setLanguage", lang)
+      this.$store.dispatch("setLanguage", lang);
     }
   }
 };
@@ -121,10 +134,15 @@ export default {
   margin: 10% 0;
 }
 .nav_links {
-  width: 10rem;
+  width: 14rem;
   margin: auto;
   .icon {
     margin-right: 15px;
+  }
+  .flag {
+    height: 1.3rem;
+    width: auto;
+    margin-right: 1rem;
   }
 }
 </style>
