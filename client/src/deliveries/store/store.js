@@ -23,7 +23,7 @@ const store = new Vuex.Store({
   },
   getters: {
     appName() {
-      return "taxi"
+      return "delivery"
     }
   }
 });

@@ -18,6 +18,6 @@ async function notifyOthers(firebase, params, message) {
       messageId: params.messageId,
       sender: senderInfo
     }
-    notification.push(firebase, participantId, payload)
+    notification.push(firebase, participantId, payload, chat.participants[participantId].particpantType)
   }
 }

@@ -71,7 +71,6 @@
           :link="true"
           :to="{
             path: `/orders`,
-            query: { redirect: $route.path },
           }"
         >
           <fa icon="shopping-cart" />
@@ -102,7 +101,7 @@ export default {
       return this.$store.getters["notifications/ungroupedList"];
     },
     notificationsNumber() {
-      return Object.keys(this.notifications).length;
+      return this.$store.getters["notifications/length"];
     },
     isLoggedIn() {
       return this.$store.getters.loggedIn;
@@ -125,10 +124,12 @@ export default {
       }
     },
     backOneStep() {
+      console.log("back one steep")
       let route = this.$route;
-
       if (route.name == "home") {
         return;
+      } else if (route.name == "notifications" || route.name == "orders"){
+        this.$router.push("/");
       } else {
         this.$router.go(-1);
       }

@@ -39,6 +39,7 @@ const router = new VueRouter({
       meta: {
         requiresAuth: true,
       },
+      name: "notifications"
     },
     {
       path: '/orders/:orderId',
@@ -53,7 +54,8 @@ const router = new VueRouter({
       component: PastOrderstPage,
       meta: {
         requiresAuth: true
-      }
+      },
+      name: "orders"
     },
     {
       path: '/userinfo',
@@ -97,6 +99,8 @@ router.beforeEach(async function (to, from, next) {
     next('/howToTaxi');
   } else if (to.meta.requiresUnauth && store.getters.loggedIn) {
     next('/');
+  } else if (to.path != "/" && to.name == "notifications" && store.getters["notifications/length"] == 0) {
+    next('/')
   } else {
     next();
   }

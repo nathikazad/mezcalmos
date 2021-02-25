@@ -85,6 +85,7 @@ const router = new VueRouter({
       meta: {
         requiresAuth: true,
       },
+      name: "orders"
     },
     {
       path: "/userinfo",
@@ -107,6 +108,7 @@ const router = new VueRouter({
       meta: {
         requiresAuth: true,
       },
+      name: "notifications"
     },
     {
       path: "/:notFound(.*)",
@@ -116,7 +118,6 @@ const router = new VueRouter({
 });
 
 router.beforeEach(async function (to, from, next) {
-
   if (to.meta.requiresAuth && !store.getters.loggedIn) {
     next({
       path: "/auth",
@@ -126,6 +127,8 @@ router.beforeEach(async function (to, from, next) {
     });
   } else if (to.meta.requiresUnauth && store.getters.loggedIn) {
     next("/services");
+  } else if (to.path != "/" && to.name == "notifications" && store.getters["notifications/length"] == 0) {
+    next("/")
   } else {
     next();
   }
