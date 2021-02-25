@@ -14,7 +14,8 @@ export default {
       userId: null,
       info: null,
       hasuraAuthToken: null,
-      loggedIn: false
+      loggedIn: false,
+      logoutCallbacks: [],
     };
   },
   getters: {
@@ -55,12 +56,16 @@ export default {
     async logout(context) {
       firebaseDatabase().ref(`users/${context.state.userId}/info/`).off()
       await firebaseAuth().signOut()
+      context.state.logoutCallbacks.forEach(cb => cb.func(...cb.args));
       context.commit('clearData')
     },
     setLanguage(context, payload) {
       firebaseDatabase().ref(`users/${context.state.userId}/info/language`).set(payload)
       i18n.locale = payload
     },
+    saveLogoutCallback(context, payload) {
+      context.commit('saveLogoutCallback', payload)
+    }
   },
   mutations: {
     saveAuthData(state, payload) {
@@ -71,12 +76,17 @@ export default {
     saveUserInfo(state, payload) {
       state.info = payload
     },
-    clearData(state, ) {
+    clearData(state) {
       state.userId = null;
       state.hasuraAuthToken = null;
       state.loggedIn = false;
       state.info = null
+      state.logoutCallbacks = []
+    },
+    saveLogoutCallback(state, payload) {
+      state.logoutCallbacks.push(payload)
     }
+
   }
 }
 

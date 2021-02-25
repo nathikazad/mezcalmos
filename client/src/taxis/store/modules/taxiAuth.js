@@ -41,7 +41,7 @@ export default {
       firebaseDatabase().ref(`taxiDrivers/${userId}/state`).on('value', snapshot => {
         storeState(snapshot.val(), context)
       });
-      navigator.geolocation.watchPosition(function (position) {
+      let navigatorWatchId = navigator.geolocation.watchPosition(function (position) {
         let newPosition = {
           lat: position.coords.latitude,
           long: position.coords.longitude
@@ -49,16 +49,27 @@ export default {
         context.commit('setDriverPosition', newPosition)
         context.dispatch('incomingOrders/updateDistances')
       });
-      setInterval(function () {
+      let updateDriverIntervalId = setInterval(function () {
         updateDriverPosition(context)
       }, 10 * 1000)
       
+      let updateRouteIntervalId = setInterval(function () {
+        updateRouteInformation(context)
+      }, 300 * 1000)
+
       setTimeout(function () {
         updateRouteInformation(context)
-        setInterval(function () {
-          updateRouteInformation(context)
-        }, 300 * 1000)
       }, 10 * 1000)
+
+      context.commit('saveLogoutCallback', {
+        func:function(userId, updateDriverIntervalId, navigatorWatchId, updateRouteIntervalId) {
+          firebaseDatabase().ref(`taxiDrivers/${userId}/state`).off()
+          clearInterval(updateDriverIntervalId);
+          clearInterval(updateRouteIntervalId);
+          navigator.geolocation.clearWatch(navigatorWatchId);
+        }, 
+        args: [userId, updateDriverIntervalId, navigatorWatchId, updateRouteIntervalId]
+      }, { root: true })
     },
     startLooking(context) {
       let userId = context.rootGetters.userId

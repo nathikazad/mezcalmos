@@ -11,14 +11,17 @@ export default {
   actions: {
     loadLocations(context) {
       let userId = context.rootGetters.userId
-
-
       firebaseDatabase().ref(`/users/${userId}/savedLocations`).on('value', async snapshot => {
-
         let locations = snapshot.val();
         // TODO: if unauthorized or wrong type of order redirect to home page
         context.commit('saveLocations', locations)
       });
+      context.commit('saveLogoutCallback', {
+        func:function(userId) {
+          firebaseDatabase().ref(`/users/${userId}/savedLocations`).off()
+        }, 
+        args: [userId]
+      }, { root: true })
     },
     async saveLocation(context, payload) {
       let userId = context.rootGetters.userId
