@@ -41,10 +41,8 @@ async function firebaseCallback(user) {
       });
     }
     store.dispatch("notifications/loadNotificationsForCustomer");
+    store.dispatch("savedLocations/loadLocations");
     askForNotification('customer', store)
-
-
-
   }
 }
 

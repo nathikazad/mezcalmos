@@ -16,7 +16,8 @@ export default {
   actions: {
     loadOrder(context, payload) {
       if (context.getters.orderId != null) {
-        context.dispatch('unloadOrder')
+        firebaseDatabase().ref(`orders/taxi/${context.getters.orderId}`).off()
+        context.commit('unloadOrder')
       }
       let orderId = payload.orderId
       firebaseDatabase().ref(`orders/taxi/${orderId}`).on('value', async snapshot => {
@@ -30,10 +31,6 @@ export default {
           orderId: orderId,
         });
       });
-    },
-    unloadOrder(context) {
-      // TODO: check if order is loaded
-      context.commit('unloadOrder')
     },
     async acceptRide(context) {
       // TODO: check if order is loaded

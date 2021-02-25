@@ -40,6 +40,13 @@ export default {
           notification: notification
         })
       });
+
+      context.commit('saveLogoutCallback', {
+        func:function(userId) {
+          firebaseDatabase().ref(`/notifications/${userId}`).off()
+        }, 
+        args: [userId]
+      }, { root: true })
     },
     clearOrderStatusNotifications(context, payload) {
       let userId = context.rootGetters.userId

@@ -356,11 +356,6 @@ export default {
         this[this.saved.origin].by = "search";
       }, 200);
     }
-  },
-  async beforeCreate() {
-    if (!this.$options.propsData.disabled) {
-      await this.$store.dispatch("savedLocations/loadLocations");
-    }
   }
 };
 </script>

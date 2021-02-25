@@ -126,12 +126,7 @@ export default {
       });
       this.loading = false;
     },
-  },
-  async beforeCreate() {
-    this.isLoaded = false;
-    await this.$store.dispatch("savedLocations/loadLocations");
-    this.isLoaded = true;
-  },
+  }
 };
 </script>
 <style lang="scss" scoped>
