@@ -5,7 +5,7 @@ import {
 
 import {
   i18n
-} from '@/shared/plugins/i18n'
+} from '@/shared/config/i18n'
 // import { apolloClient } from '@/config/apollo'
 // import gql from 'graphql-tag'
 export default {
@@ -54,7 +54,11 @@ export default {
           i18n.locale = lang
         } else {
           let browserLang = navigator.language.split('-')[0]
-          context.dispatch('setLanguage', browserLang)
+          let existingLanguages = {
+            'en': true,
+            'es': true
+        }
+          context.dispatch('setLanguage', !existingLanguages[browserLang] ? 'en' : browserLang)
         }
       })
       context.commit('saveAuthData', payload)

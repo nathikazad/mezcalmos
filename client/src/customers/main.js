@@ -14,7 +14,7 @@ import {
 import "./registerServiceWorker";
 import {
   i18n
-} from '@/shared/plugins/i18n'
+} from '@/shared/config/i18n'
 //init modules
 initModules(Vue)
 //Firebase state changed function

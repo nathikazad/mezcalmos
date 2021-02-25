@@ -37,13 +37,13 @@ import {
 } from "@/shared/mixins/functions";
 import {
     formatMessage
-} from "@/shared/filters/functions";
+} from "@/shared/mixins/filters";
 
 //init modules
 export function initModules(Vue) {
-   
 
-    
+
+
     //Vue google maps
     Vue.use(VueGoogleMaps, gmapsConfig);
     Vue.component("gmap-custom-marker", GmapCustomMarker);
