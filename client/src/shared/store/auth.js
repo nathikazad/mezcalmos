@@ -49,7 +49,13 @@ export default {
     async autoSignIn(context, payload) {
       firebaseDatabase().ref(`users/${payload.userId}/info/`).on('value', function(snapshot) {
         context.commit('saveUserInfo', snapshot.val())
-        i18n.locale = snapshot.val().language
+        let lang = snapshot.val().language
+        if(lang){
+          i18n.locale = lang
+        } else {
+          let browserLang = navigator.language.split('-')[0]
+          context.dispatch('setLanguage', browserLang)
+        }
       })
       context.commit('saveAuthData', payload)
     },

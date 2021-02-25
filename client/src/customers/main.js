@@ -50,7 +50,7 @@ firebaseInit(firebaseCallback);
 
 Vue.config.productionTip = false;
 
-new Vue({
+window.app = new Vue({
   render: (h) => h(App),
   router,
   store,

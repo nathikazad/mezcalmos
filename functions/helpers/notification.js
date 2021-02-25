@@ -11,8 +11,8 @@ webpush.setVapidDetails(
   vapidKeys.private
 )
 
-async function push(firebase, userId, message) {
-  firebase.database().ref(`/notifications/${userId}`).push(message)
+async function push(firebase, userId, message, particpantType = "customer") {
+  firebase.database().ref(`/notifications/${particpantType}/${userId}`).push(message)
   let subscription = (await firebase.database().ref(`/users/${userId}/notificationInfo`).once('value')).val();
 
   webpush.sendNotification(subscription, JSON.stringify(message))

@@ -7,7 +7,8 @@ export default {
   state() {
     return {
       notifications: {},
-      ungroupedList: {}
+      ungroupedList: {},
+      notificationCallbacks: []
     };
   },
   actions: {
@@ -19,21 +20,26 @@ export default {
     loadNotifications(context, payload) {
       let router = payload.router
       let userId = context.rootGetters.userId
-      firebaseDatabase().ref(`/notifications/${userId}`).on('child_added', async snapshot => {
-        let notification = snapshot.val();
+      let appName = context.rootGetters.appName
+      let notificationReference = `/notifications/${appName}/${userId}`
+      context.commit('saveNotificationCallback', function(notification, notificationKey, notificationReference){
         if (notification.notificationType == "newMessage" &&
           router.currentRoute.name == "messages" &&
           router.currentRoute.params.orderId == notification.orderId) {
-          firebaseDatabase().ref(`/notifications/${userId}/${snapshot.key}`).remove()
+          firebaseDatabase().ref(`${notificationReference}/${notificationKey}`).remove()
         } else {
           context.commit('saveNotification', {
-            key: snapshot.key,
+            key: notificationKey,
             notification: notification
           })
         }
+      })
+      firebaseDatabase().ref(notificationReference).on('child_added', async snapshot => {
+        let notification = snapshot.val();
+        context.state.notificationCallbacks.forEach(cb => cb(notification, snapshot.key, notificationReference))
       });
 
-      firebaseDatabase().ref(`/notifications/${userId}`).on('child_removed', async snapshot => {
+      firebaseDatabase().ref(notificationReference).on('child_removed', async snapshot => {
         let notification = snapshot.val();
         context.commit('removeNotification', {
           key: snapshot.key,
@@ -42,29 +48,34 @@ export default {
       });
 
       context.commit('saveLogoutCallback', {
-        func:function(userId) {
-          firebaseDatabase().ref(`/notifications/${userId}`).off()
+        func:function(userId, context) {
+          firebaseDatabase().ref(notificationReference).off()
+          context.commit('clearAll')
         }, 
-        args: [userId]
+        args: [userId, context]
       }, { root: true })
     },
     clearOrderStatusNotifications(context, payload) {
       let userId = context.rootGetters.userId
+      let appName = context.rootGetters.appName
+      let notificationReference = `/notifications/${appName}/${userId}`
       let orderId = payload.orderId
       let notificationType = "orderStatusChange"
       if (context.state.notifications[orderId] && context.state.notifications[orderId][notificationType]) {
         for (let notificationId in context.state.notifications[orderId][notificationType]) {
-          firebaseDatabase().ref(`/notifications/${userId}/${notificationId}`).remove()
+          firebaseDatabase().ref(`${notificationReference}/${notificationId}`).remove()
         }
       }
     },
     clearMessageNotifications(context, payload) {
       let userId = context.rootGetters.userId
+      let appName = context.rootGetters.appName
+      let notificationReference = `/notifications/${appName}/${userId}`
       let orderId = payload.orderId
       let notificationType = "newMessage"
       if (context.state.notifications[orderId] && context.state.notifications[orderId][notificationType]) {
         for (let notificationId in context.state.notifications[orderId][notificationType]) {
-          firebaseDatabase().ref(`/notifications/${userId}/${notificationId}`).remove()
+          firebaseDatabase().ref(`${notificationReference}/${notificationId}`).remove()
         }
       }
     },
@@ -93,6 +104,14 @@ export default {
       state.ungroupedList = {
         ...state.ungroupedList
       }
+    },
+    saveNotificationCallback(state, payload) {
+      state.notificationCallbacks.push(payload)
+    },
+    clearAll(state) {
+      state.notifications = {}
+      state.ungroupedList = {}
+      state.notificationCallbacks = []
     }
   },
   getters: {
@@ -101,6 +120,9 @@ export default {
     },
     ungroupedList(state) {
       return state.ungroupedList;
+    },
+    length(state) {
+      return Object.keys(state.ungroupedList).length
     }
   }
 };
