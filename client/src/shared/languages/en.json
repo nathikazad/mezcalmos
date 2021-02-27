@@ -35,22 +35,22 @@
             "title": " Incoming <br/>Orders",
             "loading": "Loading",
             "services": "All Services",
-            "isInTax":"Please finish|your ride|to accept new orders",
-            "far":"far",
-            "noOrders":"No orders found"
+            "isInTax": "Please finish|your ride|to accept new orders",
+            "far": "far",
+            "noOrders": "No orders found"
         },
         "taxiView": {
             "taxi": "Taxi",
             "searching": "Searching Available Taxi",
-            "acceptOrders":"Accept Order",
+            "acceptOrders": "Accept Order",
             "startRide": "Start Ride",
             "finishRide": "Finish Ride",
             "message": "Message",
             "droppedOf": "Dropped off",
             "review": "Review",
-            "loading": "Loading"  
+            "loading": "Loading"
         },
-       
+
         "orders": {
             "title": "Orders",
             "item": "Item|Items",
@@ -58,6 +58,13 @@
             "inTransit": "In Transit",
             "searching": "Searching",
             "noOrders": "No orders found"
+        },
+        "introduction": {
+            "howToTaxi": "Do You Want To Use <br/>The Mezcalmos App To <br/>Give Rides To Customers In <br/> <span class='text_blue'>Puerto Escondido?</span> ",
+            "signUpTaxi": "Click Sign Up, Show Us Proof <br/>Of Your Taxi Authorization <br/>And Start Giving Rides  <br/> Right Away ",
+            "confirmation": "Your Application Is Under <br/>Review. We Will Contact <br/>You Shortly",
+            "fbBtn": " Sign Up With Facebook",
+            "yes": "YES"
         }
     },
     "shared": {
