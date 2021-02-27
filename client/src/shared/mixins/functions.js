@@ -101,3 +101,12 @@ export const askForNotification = (origin, store) => { //notif:{type:'YOU HAVE A
     }
   });
 }
+
+export const getBrowserLanguage = () => {
+  let browserLang = navigator.language.split('-')[0]
+  let existingLanguages = {
+    'en': true,      
+    'es': true
+  }
+  return (!existingLanguages[browserLang] ? 'en' : browserLang)
+}
