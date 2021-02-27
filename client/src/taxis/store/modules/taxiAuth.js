@@ -37,7 +37,7 @@ export default {
     async loadTaxiAuth(context) {
       let userId = context.rootGetters.userId
       let snapshot = await firebaseDatabase().ref(`taxiDrivers/${userId}/state`).once('value')
-      storeState(snapshot.val(), context)
+      await storeState(snapshot.val(), context)
       firebaseDatabase().ref(`taxiDrivers/${userId}/state`).on('value', snapshot => {
         storeState(snapshot.val(), context)
       });
@@ -109,7 +109,7 @@ export default {
   }
 }
 
-function storeState(newState, context) {
+async function storeState(newState, context) {
   if (newState.authorized) {
     context.commit('saveTaxiAuth', {
       canTaxi: true
@@ -119,12 +119,11 @@ function storeState(newState, context) {
   }
   if (newState.inTaxi) {
     context.dispatch('incomingOrders/stopListeningForIncoming')
-    firebaseDatabase().ref(`orders/taxi/${newState.inTaxi}`).once('value', snapshot => {
-      context.commit('setCurrentOrder', {
-        id: newState.inTaxi,
-        value: snapshot.val()
-      })
-    });
+    let snapshot = await firebaseDatabase().ref(`orders/taxi/${newState.inTaxi}`).once('value')
+    context.commit('setCurrentOrder', {
+      id: newState.inTaxi,
+      value: snapshot.val()
+    })
     firebaseDatabase().ref(`orders/taxi/${newState.inTaxi}/status`).on('value', snapshot => {
       context.commit('setCurrentOrderStatus', snapshot.val())
     });

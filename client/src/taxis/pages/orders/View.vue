@@ -187,8 +187,12 @@ export default {
       orderId: this.$route.params.orderId
     });
   },
+  beforeRouteUpdate(to) {
+    this.$store.dispatch("order/loadOrder", {
+      orderId: to.params.orderId
+    });
+  },
   async beforeUnmount() {
-    console.log("before unmount");
     await this.$store.dispatch("order/unloadOrder");
   },
   methods: {

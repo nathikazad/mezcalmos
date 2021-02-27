@@ -6,6 +6,11 @@ import {
 import {
   i18n
 } from '@/shared/config/i18n'
+
+import {
+  getBrowserLanguage
+} from '@/shared/mixins/functions'
+
 // import { apolloClient } from '@/config/apollo'
 // import gql from 'graphql-tag'
 export default {
@@ -26,7 +31,7 @@ export default {
       return state.info
     },
     userLanguage(state) {
-      return state.info.language
+      return (state.info && state.info.language) || getBrowserLanguage()
     },
     hasuraAuthToken(state) {
       return state.hasuraAuthToken;
@@ -53,12 +58,7 @@ export default {
         if(lang){
           i18n.locale = lang
         } else {
-          let browserLang = navigator.language.split('-')[0]
-          let existingLanguages = {
-            'en': true,
-            'es': true
-        }
-          context.dispatch('setLanguage', !existingLanguages[browserLang] ? 'en' : browserLang)
+          context.dispatch('setLanguage', getBrowserLanguage())
         }
       })
       context.commit('saveAuthData', payload)

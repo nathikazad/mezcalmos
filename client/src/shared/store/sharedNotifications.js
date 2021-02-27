@@ -23,15 +23,16 @@ export default {
       let appName = context.rootGetters.appName
       let notificationReference = `/notifications/${appName}/${userId}`
       context.commit('saveNotificationCallback', function(notification, notificationKey, notificationReference){
-        if (notification.notificationType == "newMessage" &&
-          router.currentRoute.name == "messages" &&
+        if (notification.notificationType == "newMessage") {
+          if (router.currentRoute.name == "messages" &&
           router.currentRoute.params.orderId == notification.orderId) {
           firebaseDatabase().ref(`${notificationReference}/${notificationKey}`).remove()
-        } else {
-          context.commit('saveNotification', {
-            key: notificationKey,
-            notification: notification
-          })
+          } else {
+            context.commit('saveNotification', {
+              key: notificationKey,
+              notification: notification
+            })
+          }
         }
       })
       firebaseDatabase().ref(notificationReference).on('child_added', async snapshot => {
@@ -99,7 +100,11 @@ export default {
     removeNotification(state, payload) {
       let notificationType = payload.notification.notificationType
       let orderId = payload.notification.orderId
-      delete state.notifications[orderId][notificationType][payload.key]
+      if(state.notifications[orderId] && 
+        state.notifications[orderId][notificationType] && 
+        state.notifications[orderId][notificationType][payload.key]){
+          delete state.notifications[orderId][notificationType][payload.key]
+      }
       delete state.ungroupedList[payload.key]
       state.ungroupedList = {
         ...state.ungroupedList
