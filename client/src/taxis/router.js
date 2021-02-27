@@ -8,6 +8,9 @@ import UserInformationPage from '@/shared/pages/user/Information'
 import MessagesPage from '@/shared/pages/messages/View'
 import NotificationsPage from '@/shared/pages/notification/view'
 import LoginPage from '@/shared/pages/user/Login'
+import HowToTaxi from './pages/introduction/howToTaxi'
+import SignUpTaxi from './pages/introduction/signUpTaxi'
+import Confirmation from './pages/introduction/confirmation'
 
 
 import NotFoundPage from '@/shared/pages/NotFound'
@@ -72,6 +75,18 @@ const router = new VueRouter({
       }
     },
     // TODO: how to taxi page
+    {
+      path: '/howToTaxi',
+      component: HowToTaxi
+    },
+    {
+      path: '/signUpTaxi',
+      component: SignUpTaxi
+    },
+    {
+      path: '/confirmation',
+      component: Confirmation
+    },
     {
       path: '/:notFound(.*)',
       component: NotFoundPage
