@@ -1,8 +1,8 @@
 <template>
   <div class="dialog">
-    <h1>Notifications</h1>
+    <h1 class="regular">Notifications</h1>
     <div class="field" v-if="Object.keys(todaysNotifs).length">
-      <h3 class="bold flex space_between">
+      <h3 class="bold flex space_between t-10">
         <span>Today</span>
       </h3>
 

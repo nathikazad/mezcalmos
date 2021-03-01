@@ -15,30 +15,30 @@
     >
       <fa icon="bell" />
     </base-button>
-    <span class="badge bg_violet" v-if="notificationsNumber">{{notificationsNumber}}</span>
+    <span class="badge bg_error" v-if="notificationsNumber"></span>
   </div>
 </template>
 <script>
 export default {
-  props:{
-    notifications:{type:Object},
-    notificationsNumber:{type:Number}
-  },
-
+  props: {
+    notifications: { type: Object },
+    notificationsNumber: { type: Number }
+  }
 };
 </script>
 <style lang="scss" scoped>
 .badge {
   position: absolute;
-  width: 1rem;
-  height: 1rem;
+  width: 8px;
+  height: 8px;
+  border: 2px solid #f6efff;
   line-height: 1rem;
   border-radius: 50%;
   color: map-get($map: $colors, $key: white);
   font-size: 0.8rem;
   text-align: center;
-  top: -0.5rem;
-  right: -0.5rem;
+  top: 0.3rem;
+  right: 0.3rem;
 }
 .dialog {
   position: fixed;

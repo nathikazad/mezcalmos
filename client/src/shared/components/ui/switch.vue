@@ -18,10 +18,10 @@ export default {
 <style lang="scss" scoped>
 .switch {
   position: relative;
-  height: 2rem;
-  width: 5rem;
-  border-radius: 1rem;
-  padding: 0.5rem;
+  height: 3rem;
+  width: 6rem;
+  border-radius: 2rem;
+  padding: 0.5rem 0.7rem;
   &.closed {
     .on {
       z-index: 2;
@@ -39,7 +39,7 @@ export default {
   }
   .layer {
     position: absolute;
-    width: 50%;
+    width: 60%;
     height: 100%;
     border-radius: inherit;
     transition: all 1s;
