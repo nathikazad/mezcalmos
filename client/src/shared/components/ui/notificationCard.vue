@@ -1,38 +1,36 @@
 <template>
   <div>
     <!-- Message type -->
-    <card class="bg_white elevate_1 card wrap" v-if="notif.notificationType=='newMessage'">
+    <card2 class="bg_white border card wrap" v-if="notif.notificationType=='newMessage'">
       <avatar size="2.4rem" :url="notif.sender.image" slot="image"></avatar>
-      <div slot="text" class="card_text">
-        <div slot="cardTitle" class="bold">{{ notif.sender.name }}</div>
-        <div slot="description">
-          <span slot="param" class="t-8">{{ notif.message }}</span>
-        </div>
+
+      <div slot="title" class="bold">{{ notif.sender.name }}</div>
+      <div slot="desc">
+        <span slot="param" class="t-8">{{ notif.message }}</span>
       </div>
-      <div slot="actions" class="flex">
-        <span slot="param" class="t-8">
-          <fa icon="clock"></fa>
-          &nbsp;
-          {{ notif.time | moment("LT") }}
-        </span>
+      <span slot="aside" class="regular">
+        <fa icon="clock"></fa>
+        &nbsp;{{ notif.time | moment("LT") }}
+      </span>
+    </card2>
+    <!-- Order type -->
+    <card2 class="border card wrap" v-else-if="notif.notificationType=='orderStatusChange'">
+      <div
+        class="statusCircle flex align_center center"
+        slot="image"
+        :class="{[`bg_${statusFormatting(notif).bg}`]:true,[`text_${statusFormatting(notif).color}`]:true}"
+      >
+        <fa :icon="statusFormatting(notif).icon"></fa>
       </div>
-    </card>
-    <!-- Message type -->
-    <card class="elevate_1 card wrap" :class="{[`bg_${notif.orderType}`]:true}" v-else>
-      <div slot="text" class="card_text">
-        <div slot="cardTitle" class="bold">{{ notif.orderType }}</div>
-        <div slot="description">
-          <span slot="param" class="t-8">{{ notif.status }}</span>
-        </div>
+      <div slot="title" class="bold">{{ statusFormatting(notif).text }}</div>
+      <div slot="desc">
+        <span slot="param" class="t-8">{{ statusFormatting(notif).desc }}</span>
       </div>
-      <div slot="actions" class="flex">
-        <span slot="param" class="t-8">
-          <fa icon="clock"></fa>
-          &nbsp;
-          {{ notif.time | moment("LT") }}
-        </span>
-      </div>
-    </card>
+      <span slot="aside" class="regular">
+        <fa icon="clock"></fa>
+        &nbsp;{{ notif.time | moment("LT") }}
+      </span>
+    </card2>
   </div>
 </template>
 <script>
@@ -40,6 +38,41 @@ export default {
   props: {
     notif: {
       type: Object
+    }
+  },
+  methods: {
+    statusFormatting(notif) {
+      var returnvalue;
+      switch (notif.status) {
+        case "droppedOff":
+          returnvalue = {
+            bg: "light_green",
+            color: "green",
+            icon: "map-marker-check",
+            text: this.$t("taxi.taxiView.droppedOf"),
+            desc: "Your ride has ended"
+          };
+          break;
+        case "onTheWay":
+          returnvalue = {
+            bg: "light_violet",
+            color: "violet",
+            icon: "car-building",
+            text: this.$t("taxi.orders.onTheWay"),
+            desc: `${notif.driver.name} on the way now to pick you up`
+          };
+          break;
+        case "inTransit":
+          returnvalue = {
+            bg: "light_blue",
+            color: "primary",
+            icon: "route",
+            text: this.$t("taxi.orders.inTransit"),
+            desc: "Your ride has ended"
+          };
+          break;
+      }
+      return returnvalue;
     }
   }
 };
@@ -65,6 +98,12 @@ export default {
   }
   ::v-deep .mainSlots {
     width: 70% !important;
+  }
+  .statusCircle {
+    border-radius: 50%;
+    height: 2.4rem;
+    width: 2.4rem;
+    padding: 0.5rem;
   }
 }
 </style>

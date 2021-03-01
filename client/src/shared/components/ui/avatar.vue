@@ -1,5 +1,7 @@
 <template>
-  <div class="avatar" :style="{backgroundImage:background,width:size,height:size}"></div>
+  <div class="image_container">
+    <div class="avatar" :style="{backgroundImage:background,width:size,height:size}"></div>
+  </div>
 </template>
 <script>
 export default {
@@ -20,6 +22,10 @@ export default {
 };
 </script>
 <style lang="scss">
+.image_container {
+  background: map-get($map: $colors, $key: secondary);
+  border-radius: 50%;
+}
 .avatar {
   background-position: center center;
   background-size: cover;

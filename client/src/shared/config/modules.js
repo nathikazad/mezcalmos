@@ -16,6 +16,7 @@ import {
     gmapsConfig
 } from "@/shared/config/gmaps";
 
+import infoPanel from "@/shared/components/ui/infoPanel";
 import BaseButton from "@/shared/components/ui/BaseButton";
 import Alert from "@/shared/components/ui/alert";
 import Panel from "@/shared/components/ui/panel";
@@ -27,6 +28,7 @@ import PickLocation from "@/shared/components/map/pickLocation";
 import InputLocation from "@/shared/components/ui/inputLocation";
 import notificationBtn from "@/shared/components/ui/notificationBtn";
 import Card from "@/shared/components/ui/card";
+import Card2 from "@/shared/components/ui/card2";
 import Switch from "@/shared/components/ui/switch";
 
 import {
@@ -49,7 +51,9 @@ export function initModules(Vue) {
     Vue.component("gmap-custom-marker", GmapCustomMarker);
 
     //Vue Components
+    Vue.component("card2", Card2);
     Vue.component("card", Card);
+    Vue.component("infoPanel", infoPanel);
     Vue.component("alert", Alert);
     Vue.component("switcher", Switch);
     Vue.component("notification-btn", notificationBtn);
