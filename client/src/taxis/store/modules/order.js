@@ -77,16 +77,16 @@ export default {
       return state.orderId;
     },
     orderStatusLooking(state) {
-      return state.order && state.order.status == "lookingForTaxi"
+      return !!state.order && state.order.status == "lookingForTaxi"
     },
     orderStatusOnTheWay(state) {
-      return state.order &&  state.order.status == "onTheWay"
+      return !!state.order &&  state.order.status == "onTheWay"
     },
     orderStatusInTransit(state) {
-      return state.order &&  state.order.status == "inTransit"
+      return !!state.order &&  state.order.status == "inTransit"
     },
     orderStatusDroppedOff(state) {
-      return state.order &&  state.order.status == "droppedOff"
+      return !!state.order &&  state.order.status == "droppedOff"
     }
   }
 };
