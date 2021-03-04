@@ -12,7 +12,7 @@ async function createChat(firebase, params) {
     }
   }
 
-  let currentChat = (await firebase.database().ref(`/adminChat/${params.userType}/current/${params.userId}`).once()).val()
+  let currentChat = (await firebase.database().ref(`/adminChat/${params.userType}/current/${params.userId}`).once('value')).val()
   if(currentChat){
     return {
       status: "Error",
@@ -22,10 +22,11 @@ async function createChat(firebase, params) {
   
   let chat = {}
   chat.time = (new Date()).toUTCString()
-  chat.orderId = params.orderId
   chat.userType = params.userType
   chat.userId = params.userId
-  chat.linkedChat = params.linkedChat
+  chat.orderId = (!!params.orderId) ? params.orderId : null;
+  chat.linkedChat = (!!params.linkedChat) ? params.linkedChat : null;
+
   let chatRef = await firebase.database().ref(`/adminChat/${params.userType}/current/${chat.userId}`).push(chat);
 
   if(params.linkedChat) {
@@ -38,6 +39,8 @@ async function createChat(firebase, params) {
 }
 
 async function resolve(firebase, params) {
+  // check if admin
+
   if(!params.userId || !params.userType){
     return {
       status: "Error",

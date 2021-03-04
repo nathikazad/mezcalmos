@@ -42,6 +42,7 @@ async function firebaseCallback(user) {
     }
     store.dispatch("notifications/loadNotificationsForCustomer");
     store.dispatch("savedLocations/loadLocations");
+    store.dispatch("admin/loadAdmin");
     askForNotification('customer', store)
   }
 }
