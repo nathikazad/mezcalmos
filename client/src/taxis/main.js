@@ -30,7 +30,9 @@ async function firebaseCallback(user) {
     })
     store.dispatch("notifications/loadNotificationsForTaxi");
     await store.dispatch('loadTaxiAuth');
-    askForNotification('taxi', store)
+    askForNotification('taxi', store);
+    store.dispatch("admin/loadAdmin");
+    
     if(!store.getters.canTaxi) {
       if(router.currentRoute.path != "/howToTaxi"){
         router.push({ path: "/howToTaxi" })

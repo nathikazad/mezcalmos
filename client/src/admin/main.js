@@ -22,13 +22,12 @@ async function firebaseCallback(user) {
     } else if (router.currentRoute.path == "/auth") {
       router.push({ path: "/" })
     }
-    
   }
 }
 
 firebaseInit(firebaseCallback)
 
-window.App = new Vue({
+window.app = new Vue({
   render: h => h(App),
   router,
   store
