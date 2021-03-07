@@ -1,4 +1,5 @@
 import { firebaseDatabase } from '@/shared/config/firebase'
+import {sortOrdersByDate} from '@/shared/mixins/filters'
 export default {
     namespaced: true,
     state() {
@@ -26,6 +27,9 @@ export default {
       },
       list(state) {
         return state.list;
-      } 
+      },
+      dateSortedOrders(state) {
+        return sortOrdersByDate(state.list)
+      }
     }
   };
