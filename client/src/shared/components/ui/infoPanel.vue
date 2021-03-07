@@ -20,6 +20,7 @@ export default {
 <style lang="scss" scoped>
 ::v-deep svg {
   margin: 2rem 0;
+  height: 200px;
 }
 h4,
 h2 {

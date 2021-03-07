@@ -24,8 +24,28 @@
             <card2 class="bg_white border card wrap">
               <avatar size="2.4rem" :url="orders[orderId].customer.image" slot="image"></avatar>
               <div slot="title" class="bold">{{ orders[orderId].customer.name }}</div>
-              <div slot="desc" class="flex align_center">
-                <span class="t-7"><fa icon="map-marker"></fa> {{ orders[orderId].from.address | formatMessage(8) }}</span>
+              <div slot="desc" class="flex align_center desc_slot">
+                <span class="t-8 flex align_center fill_width">
+                  <fa icon="map-marker"></fa>
+                  <span
+                    :title="orders[orderId].from.address"
+                  >{{ orders[orderId].from.address | formatMessage(10) }}</span>
+                  <strong class="text_blackD t-10 point">.</strong>
+                  <span>
+                    <fa icon="map-pin"></fa>
+                    {{deepFind(orders[orderId], "customer.distance") }}km
+                  </span>
+                  <strong class="text_blackD t-10 point">.</strong>
+                  <span>
+                    <fa icon="route"></fa>
+                    {{deepFind(orders[orderId], "routeInformation.distance.text")}}
+                  </span>
+                  <strong class="text_blackD t-10 point">.</strong>
+                  <span>
+                    <fa icon="stopwatch"></fa>
+                    {{deepFind(orders[orderId], "routeInformation.duration.text")}}
+                  </span>
+                </span>
               </div>
             </card2>
           </router-link>
@@ -40,7 +60,7 @@
         </info-panel>
       </div>
       <div v-else>
-        <info-panel :title="'No Orders Found'" :desc="'There are no orders and to try again later'">
+        <info-panel :title="'Turn On Incoming Orders'" :desc="'Turn on to see new orders'">
           <incomingToggle slot="graphic"></incomingToggle>
         </info-panel>
       </div>
@@ -118,5 +138,11 @@ export default {
   border-radius: 4px;
   margin: 0.8rem 0;
   padding: 0.5rem;
+}
+.point {
+  margin: 0 0.3rem;
+}
+.desc_slot {
+  margin-top: 0.3jhrem;
 }
 </style>

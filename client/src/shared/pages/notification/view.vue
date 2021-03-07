@@ -1,9 +1,10 @@
 <template>
   <div class="dialog">
-    <h1 class="regular">Notifications</h1>
+    <h1 class="regular">{{$t('shared.notification.title')}}</h1>
     <div class="field" v-if="Object.keys(todaysNotifs).length">
       <h3 class="bold flex space_between t-10">
-        <span>Today</span>
+        <span>{{$t('shared.notification.today')}}</span>
+        <span>{{Object.keys(todaysNotifs).length}}&nbsp; {{$tc('shared.notification.item',2)}}</span>
       </h3>
 
       <router-link
@@ -18,7 +19,8 @@
     </div>
     <div class="field" v-if="Object.keys(yesterdayNotifs).length">
       <h3 class="bold flex space_between">
-        <span>Yesterday</span>
+        <span>{{$t('shared.notification.yesterday')}}</span>
+        <span>{{Object.keys(yesterdayNotifs).length}}&nbsp; {{$tc('shared.notification.item',2)}}</span>
       </h3>
       <router-link
         :to="notifLink(notif)"
@@ -32,7 +34,10 @@
     </div>
     <div class="field" v-if="Object.keys(olderNotifs).length">
       <h3 class="bold flex space_between">
-        <span>Older</span>
+        <span>{{$t('shared.notification.older')}}</span>
+        <span
+          class="regular"
+        >{{Object.keys(olderNotifs).length}} &nbsp; {{$tc('shared.notification.item',2)}}</span>
       </h3>
       <router-link
         :to="notifLink(notif)"

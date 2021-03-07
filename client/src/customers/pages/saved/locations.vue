@@ -17,15 +17,11 @@
     <div class="field">
       <h3 class="bold flex space_between">
         <span>{{$tc('customer.savedLocations.location',2)}}</span>
-        <span class="regular"
-          >{{ Object.keys(locations).length }} {{$tc('customer.savedLocations.location',1)}}</span
-        >
+        <span
+          class="regular"
+        >{{ Object.keys(locations).length }} {{$tc('customer.savedLocations.location',Object.keys(locations).length==1?1:2)}}</span>
       </h3>
-      <card
-        class="bg_secondary border card"
-        v-for="(location, index) in locations"
-        :key="index"
-      >
+      <card class="bg_secondary border card" v-for="(location, index) in locations" :key="index">
         <img src="@/shared/static/img/Map.png" slot="image" class="image" />
         <div slot="text" class="text_details">
           <div slot="cardTitle" class="bold">{{ location.name }}</div>
@@ -66,7 +62,10 @@
           query: { newPlace: true, redirect: '/saved/locations' },
         }"
       >
-        <span class="t-8"> <fa icon="plus"></fa>&nbsp;{{ actionText }} </span>
+        <span class="t-8">
+          <fa icon="plus"></fa>
+          &nbsp;{{ actionText }}
+        </span>
       </base-button>
     </div>
   </div>
@@ -75,7 +74,7 @@
 import Card from "../../../shared/components/ui/card";
 export default {
   components: {
-    Card,
+    Card
   },
   watch: {
     $route: {
@@ -101,13 +100,13 @@ export default {
         } else {
           this.openPicker = false;
         }
-      },
-    },
+      }
+    }
   },
   computed: {
     locations() {
       return this.$store.getters["savedLocations/locations"] || {};
-    },
+    }
   },
 
   data() {
@@ -115,17 +114,17 @@ export default {
       openPicker: false,
       loading: false,
       actionText: "Add New Location",
-      editId: "",
+      editId: ""
     };
   },
   methods: {
     async removeLocation(id) {
       this.loading = true;
       await this.$store.dispatch("savedLocations/removeLocation", {
-        savedLocationId: id,
+        savedLocationId: id
       });
       this.loading = false;
-    },
+    }
   }
 };
 </script>

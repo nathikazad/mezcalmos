@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>{{$t('taxi.orders.title')}}</h2>
+    <h1 class="regular">{{$t('taxi.orders.title')}}</h1>
     <div v-if="!isLoaded">{{$t('taxi.incoming.loading')}}...</div>
     <div v-else-if="hasOrders">
       <router-link
@@ -10,22 +10,28 @@
         v-for="(orderId, key) in sortedOrders"
         :key="key"
       >
-        <card class="bg_secondary border card wrap">
+        <card2 class="bg_white border card wrap">
           <avatar size="2.4rem" :url="orders[orderId].customer.image" slot="image"></avatar>
-          <div slot="text" class="card_text">
-            <div slot="cardTitle" class="bold">{{ orders[orderId].customer.name }}</div>
-            <div slot="description">
-              <span slot="param" class="t-8">
-                <fa icon="calendar-alt"></fa>
-                &nbsp;{{ orders[orderId].rideFinishTime | moment("l") }}
-                &nbsp;
-                <fa icon="clock"></fa>
-                &nbsp;
-                {{ orders[orderId].rideFinishTime | moment("LT") }}
-              </span>
-            </div>
+          <div slot="title" class="bold">{{ orders[orderId].customer.name }}</div>
+          <div slot="desc" class="t-8 flex align_center fill_width space_between">
+            <span>
+              <fa icon="map-marker"></fa>&nbsp;
+              <span
+                :title="orders[orderId].to.address"
+              >{{ orders[orderId].to.address | formatMessage(15) }}</span>
+            </span>
+            <strong class="text_blackD t-10 point">.</strong>
+            <span>
+              <fa icon="route"></fa>
+              {{deepFind(orders[orderId], "routeInformation.distance.text")}}
+            </span>
+            <strong class="text_blackD t-10 point">.</strong>
+            <span>
+              <fa icon="stopwatch"></fa>
+              {{deepFind(orders[orderId], "routeInformation.duration.text")}}
+            </span>
           </div>
-        </card>
+        </card2>
       </router-link>
     </div>
     <h3 v-else>{{$t('taxi.incoming.noOrders')}}</h3>
@@ -85,5 +91,8 @@ export default {
   .card_text {
     margin-left: 1rem;
   }
+}
+.point {
+  margin: 0 0.5rem;
 }
 </style>

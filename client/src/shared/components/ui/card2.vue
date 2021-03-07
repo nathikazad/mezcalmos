@@ -1,5 +1,5 @@
 <template>
-  <div class="card flex align_center space_between">
+  <div class="card flex align_center space_between wrap">
     <div class="flex align_center fill_width">
       <slot name="image"></slot>
       <div class="fill_width text">
@@ -14,6 +14,7 @@
         </h4>
       </div>
     </div>
+    <slot name="footer"></slot>
   </div>
 </template>
 <script>

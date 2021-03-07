@@ -43,7 +43,12 @@ async function request(firebase, data, uid) {
   firebase.database().ref(`/users/${uid}/orders/${orderRef.key}`).set({
     orderType: "taxi",
     status: "lookingForTaxi",
-    orderTime: payload.orderTime
+    orderTime: payload.orderTime,
+    routeInformation: {
+      duration: payload.duration,
+      distance: payload.distance
+    },
+    to: payload.to
   });
   firebase.database().ref(`/openOrders/taxi/${orderRef.key}`).set({
     from: payload.from,
@@ -72,28 +77,40 @@ async function request(firebase, data, uid) {
 }
 
 async function accept(firebase, data, uid) {
-  if(!data.orderId) {
-    return { status:"Error", errorMessage: "Required orderId"}
+  if (!data.orderId) {
+    return {
+      status: "Error",
+      errorMessage: "Required orderId"
+    }
   }
 
   let driverState = (await firebase.database().ref(`/taxiDrivers/${uid}/state`).once('value')).val();
-  if(!driverState.authorized) {
-    return { status:"Error", errorMessage: "User is not an authorized driver"}
+  if (!driverState.authorized) {
+    return {
+      status: "Error",
+      errorMessage: "User is not an authorized driver"
+    }
   }
 
-  if(driverState.inTaxi) {
-    return { status:"Error", errorMessage: "Driver is already in another taxi"}
+  if (driverState.inTaxi) {
+    return {
+      status: "Error",
+      errorMessage: "Driver is already in another taxi"
+    }
   }
 
   let order = (await firebase.database().ref(`/orders/taxi/${data.orderId}`).once('value')).val();
-  if(!order) {
-    return { status:"Error", errorMessage: "Order does not exist"}
+  if (!order) {
+    return {
+      status: "Error",
+      errorMessage: "Order does not exist"
+    }
   }
 
-  
+
 
   driver = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val();
-  let response = await firebase.database().ref(`/orders/taxi/${data.orderId}`).transaction(function(order) {
+  let response = await firebase.database().ref(`/orders/taxi/${data.orderId}`).transaction(function (order) {
     console.log(order)
     if (order != null) {
       console.log(order.status)
@@ -127,7 +144,12 @@ async function accept(firebase, data, uid) {
     firebase.database().ref(`/taxiDrivers/${uid}/orders/${data.orderId}`).set({
       customer: order.customer,
       acceptRideTime: order.acceptRideTime,
-      status: order.status
+      status: order.status,
+      routeInformation: {
+        duration: order.duration,
+        distance: order.distance
+      },
+      to: order.to
     });
     firebase.database().ref(`/taxiDrivers/${uid}/state/inTaxi`).set(data.orderId)
     firebase.database().ref(`/users/${order.customer.id}/orders/${data.orderId}`).update({
@@ -141,7 +163,7 @@ async function accept(firebase, data, uid) {
       image: driver.photo,
       particpantType: "taxi"
     });
-    
+
     notification.push(firebase, order.customer.id, {
       notificationType: "orderStatusChange",
       orderId: data.orderId,

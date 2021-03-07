@@ -1,13 +1,11 @@
 <template>
   <div>
-    <h1>{{$t('customer.orders.title')}}</h1>
+    <h1 class="regular">{{$t('customer.orders.title')}}</h1>
 
     <div v-if="hasOrders" class="orders">
       <h3 class="bold flex space_between">
         <span>{{$t('customer.orders.title')}}</span>
-        <span
-          class="regular"
-        >{{ orders ? Object.keys(orders).length : 0 }} {{$tc('customer.orders.item',2)}}</span>
+        
       </h3>
       <router-link
         :to="`/services/${orders[orderId].orderType}/${orderId}`"
@@ -16,46 +14,50 @@
         v-for="(orderId, key) in sortedOrders"
         :key="key"
       >
-        <panel :color="`bg_${orders[orderId].orderType}`">
-          <span slot="name" class="t-10">{{ orders[orderId].orderType }}</span>
-          <span slot="param" class="t-8" v-if="orders[orderId].status == 'droppedOff'">
-            <fa icon="calendar-alt"></fa>
-            &nbsp;{{ orders[orderId].rideFinishTime | moment("l") }}
-            &nbsp;
-            <fa icon="clock"></fa>
-            &nbsp;
-            {{ orders[orderId].rideFinishTime | moment("LT") }}
-          </span>
-          <span
-            slot="param"
-            class="t-8 text_grey bg_white pill"
-            v-else-if="orders[orderId].status == 'onTheWay'"
-          >
-            <fa icon="route"></fa>
-            &nbsp;{{$t('customer.orders.onTheWay')}}
-          </span>
-          <span
-            slot="param"
-            class="t-8 text_grey bg_white pill"
-            v-else-if="orders[orderId].status == 'inTransit'"
-          >
-            <fa icon="route"></fa>
-            &nbsp;{{$t('customer.orders.inTransit')}}
-          </span>
+        <card2 class="bg_white border card wrap">
+          <div slot="image" class="flex relative align_center">
+            <div
+              class="statusCircle flex align_center center"
+              :class="{[`bg_${orders[orderId].orderType}`]:true}"
+            >
+              <fa icon="taxi"></fa>
+            </div>
+            <avatar
+              size="1.5rem"
+              :url="orders[orderId].driver.image"
+              slot="image"
+              class="avatar_img"
+            ></avatar>
+          </div>
 
-          <span slot="param" class="t-8 text_grey bg_white pill" v-else>
-            <fa icon="search-location"></fa>
-            &nbsp;{{$t('customer.orders.searching')}}..
+          <div slot="title" class="bold">{{ orders[orderId].driver.name }}</div>
+          <div slot="desc" class="regular">{{ statusFormatting(orders[orderId]).text }}</div>
+          <span slot="aside" class="regular">
+            <fa icon="clock"></fa>
+            &nbsp;{{ orders[orderId].orderTime | moment("LT") }}
           </span>
-        </panel>
+          <div slot="footer" class="flex align_center fill_width card_footer">
+            <span class="t-8 flex align_center fill_width space_between">
+              <span>
+                <fa icon="map-marker"></fa>&nbsp;
+                <span
+                  :title="orders[orderId].to.address"
+                >{{ orders[orderId].to.address | formatMessage(25) }}</span>
+              </span>
+              <strong class="text_blackD t-10 point">.</strong>
+              <span>
+                <fa icon="route"></fa>
+                {{deepFind(orders[orderId], "routeInformation.distance.text")}}
+              </span>
+              <strong class="text_blackD t-10 point">.</strong>
+              <span>
+                <fa icon="stopwatch"></fa>
+                {{deepFind(orders[orderId], "routeInformation.duration.text")}}
+              </span>
+            </span>
+          </div>
+        </card2>
       </router-link>
-      <!-- <div v-for="(order, orderId) in orders" :key="orderId">
-        {{ order }}
-        {{ linkToOrder(order.orderType, orderId) }}
-        <router-link :to="linkToOrder(order.orderType, orderId)"
-          >Link
-        </router-link>
-      </div>-->
     </div>
     <h3 v-else>{{$t('customer.orders.noOrders')}}</h3>
   </div>
@@ -85,6 +87,41 @@ export default {
       };
     }
   },
+  methods: {
+    statusFormatting(notif) {
+      var returnvalue;
+      switch (notif.status) {
+        case "droppedOff":
+          returnvalue = {
+            bg: "light_green",
+            color: "green",
+            icon: "map-marker-check",
+            text: this.$t("taxi.taxiView.droppedOf"),
+            desc: "Your ride has ended"
+          };
+          break;
+        case "onTheWay":
+          returnvalue = {
+            bg: "light_violet",
+            color: "violet",
+            icon: "car-building",
+            text: this.$t("taxi.orders.onTheWay"),
+            desc: `${notif.driver.name} on the way now to pick you up`
+          };
+          break;
+        case "inTransit":
+          returnvalue = {
+            bg: "light_blue",
+            color: "primary",
+            icon: "route",
+            text: this.$t("taxi.orders.inTransit"),
+            desc: "Your ride has ended"
+          };
+          break;
+      }
+      return returnvalue;
+    }
+  },
   async beforeCreate() {
     this.isLoaded = false;
     await this.$store.dispatch("orders/loadList");
@@ -99,5 +136,27 @@ export default {
 .pill {
   padding: 0.5rem 0.8rem;
   border-radius: 2rem;
+}
+.card_footer {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #ececec;
+}
+.statusCircle {
+  border-radius: 50%;
+  height: 1.5rem;
+  width: 1.5rem;
+  padding: 0.5rem;
+  right: -0.1rem;
+  position: relative;
+}
+.avatar_img {
+  left: -0.1rem;
+  position: relative;
+
+  background: map-get($map: $colors, $key: blackL) !important;
+}
+.point {
+  margin: 0 0.5rem;
 }
 </style>

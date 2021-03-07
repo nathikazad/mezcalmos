@@ -8,7 +8,9 @@
       @toggle="navDrawer = !navDrawer"
       :showNavBtn="showNavBtn"
     ></the-header>
-    <router-view class="container outlet" :style="{minHeight:minHeight + 'px'}"></router-view>
+    <transition :name="transitionName">
+      <router-view class="container outlet" :style="{minHeight:minHeight + 'px'}"></router-view>
+    </transition>
   </main>
 </template>
 
@@ -24,9 +26,12 @@ export default {
   data() {
     return {
       navDrawer: false,
-      minHeight: 500
+      minHeight: 500,
+      lastRoute: "",
+      transitionName: ""
     };
   },
+
   mounted() {
     this.$store.dispatch("loadCustomerLocation");
     window.addEventListener("resize", this.handleResize);
@@ -57,8 +62,20 @@ export default {
   watch: {
     $route: {
       deep: true,
-      immediate: true,
-      handler: function() {
+      immediate: false,
+      handler: function(from, to) {
+        console.log(from);
+        console.log(to);
+        if (to.name == "taxiView" || to.name == "requestView") {
+          this.transitionName = "slide-fade";
+        } else if (from.name == "taxiView" || from.name == "requestView") {
+          this.transitionName = "slide-fade-reverse";
+        } else if (to.name == "orders" || to.name == "notifications") {
+          this.transitionName = "slide-down";
+        } else if (from.name == "orders" || from.name == "notifications") {
+          this.transitionName = "slide-down-reverse";
+        }
+        this.lastRoute = from.path;
         this.navDrawer = false;
       }
     }
@@ -104,41 +121,32 @@ main {
 }
 /* Enter and leave animations can use different */
 /* durations and timing functions.              */
-.slide-fade-enter-active {
+.slide-fade-enter-active,
+.slide-fade-reverse-enter-active,
+.slide-down-enter-active {
   transition: all 0.5s ease-out;
 }
-.slide-fade-leave-active {
-  transition: all 0.5s ease-in;
-}
-
-/* Enter and leave animations can use different */
-/* durations and timing functions.              */
-.slide-down-fade-enter-active {
-  transition: all 0.5s ease-out;
-}
-.slide-down-fade-leave-active {
-  transition: all 0.5s ease-in;
-}
-.slide-fade-enter, .slide-fade-leave-to
-/* .slide-fade-leave-active below version 2.1.8 */ {
-  transform: translateX(-100%);
-}
-.slide-down-fade-enter, .slide-fade-leave-to
-/* .slide-fade-leave-active below version 2.1.8 */ {
-  transform: translateX(-100%);
-}
-.slide-fade-reverse-enter-active {
-  transition: all 0.5s ease-out;
-}
-.slide-fade-reverse-leave-active {
+.slide-fade-reverse-leave-active,
+.slide-fade-leave-active,
+.slide-down-leave-active {
   transition: all 0.5s ease-in;
 }
 .slide-fade-reverse-enter, .slide-fade-reverse-leave-to
 /* .slide-fade-leave-active below version 2.1.8 */ {
   transform: translateX(100%);
 }
-.slide-down-fade-reverse-enter, .slide-fade-reverse-leave-to
+.slide-fade-enter, .slide-fade-leave-to
 /* .slide-fade-leave-active below version 2.1.8 */ {
-  transform: translateX(100%);
+  transform: translateX(-100%);
+}
+
+.slide-down-enter, .slide-down-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateY(100vh);
+}
+
+.slide-down-reverse-enter-to, .slide-down-reverse-leave
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateY(-100vh);
 }
 </style>

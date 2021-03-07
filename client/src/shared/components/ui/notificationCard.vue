@@ -14,7 +14,10 @@
       </span>
     </card2>
     <!-- Order type -->
-    <card2 class="border card wrap" v-else-if="notif.notificationType=='orderStatusChange'">
+    <card2
+      class="bg_white border card wrap" 
+      v-else-if="notif.notificationType=='orderStatusChange'"
+    >
       <div
         class="statusCircle flex align_center center"
         slot="image"

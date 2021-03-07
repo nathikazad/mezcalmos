@@ -11,7 +11,7 @@
             <h5 class="text_info regular">{{$t('shared.messages.available')}}</h5>
           </div>
         </div>
-        <router-link :to="{name:'taxiView'}" tag="h4" class="externalLink pointer text_brand">
+        <router-link :to="{name:'taxiView'}" tag="h4" class="externalLink pointer text_violet">
           <fa icon="clipboard-list" class="icon_link"></fa>
           {{$t('shared.messages.orderLink')}}
         </router-link>
@@ -176,10 +176,10 @@ export default {
   }
   .user_info {
     height: 4.75rem;
-    padding: 0.5rem;
+    padding: 0.5rem 1rem;
     margin: 0 -1rem;
     .user_name {
-      margin-left: 1rem;
+      margin-left: .5rem;
       > * {
         margin: 2.5px 0;
       }
