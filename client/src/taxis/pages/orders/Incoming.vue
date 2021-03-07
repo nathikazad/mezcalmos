@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <h1 class="flex space_between align_center">
+      <h1 class="flex space_between align_center regular">
         <span v-html="$t('taxi.incoming.title')"></span>
         <switcher @click.native="toggle()" :open="isLooking"></switcher>
       </h1>
