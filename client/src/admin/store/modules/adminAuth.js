@@ -4,7 +4,7 @@ import { firebaseDatabase } from '@/shared/config/firebase'
 export default {
   state() {
     return {
-      isAuthorized: false,
+      isAdmin: false,
     };
   },
   getters: {
@@ -15,21 +15,17 @@ export default {
   actions: {
     async loadAdminAuth(context) {
       let userId = context.rootGetters.userId
-      let isAdmin = (await firebaseDatabase().ref(`admins/${userId}/authorized`).once('value')).val() != null;
-      context.commit('saveIsAdmin', {
-        isAdmin: isAdmin
-      })
-    },
-    // turnOn(context) {
-    //   this.dispatch('incomingOrders/startListeningForIncoming')
-    //   context.commit('setStatus', {
-    //     status: "looking"
-    //   })
-    // },
+      let isAdmin = (await firebaseDatabase().ref(`admins/${userId}/authorized`).once('value')).val();
+      isAdmin = isAdmin != null && isAdmin == true 
+      context.commit('saveIsAdmin', isAdmin)
+      if(isAdmin) {
+        context.dispatch('messages/loadMessages')
+      }
+    }
   },
   mutations: {
     saveIsAdmin(state, payload) {
-      state.isAdmin = payload.isAdmin;
+      state.isAdmin = payload;
     }
   }
 }

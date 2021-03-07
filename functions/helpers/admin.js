@@ -19,11 +19,32 @@ async function createChat(firebase, params) {
       errorMessage: "Cannot be in two admin chats at the same time"
     }
   }
+
+  if(params.fromAdmin) {
+    let isAdmin = (await firebase.database().ref(`admins/${params.adminId}/authorized`).once('value')).val();
+    isAdmin = isAdmin != null && isAdmin == true 
+    if(!isAdmin) {
+      return {
+        status: "Error",
+        errorMessage: "Only admins can run this operation"
+      }
+    }
+  }
   
+  userInfo = (await firebase.database().ref(`/users/${params.userId}/info`).once('value')).val();
   let chat = {}
-  chat.time = (new Date()).toUTCString()
+  chat.createdTime = (new Date()).toUTCString()
+  if(params.fromAdmin){
+    chat.createdBy = "admin"
+  } else {
+    chat.createdBy = "user"
+  }
   chat.userType = params.userType
   chat.userId = params.userId
+  chat.userInfo = {
+    displayName: userInfo.displayName,
+    photo: userInfo.photo
+  }
   chat.orderId = (!!params.orderId) ? params.orderId : null;
   chat.linkedChat = (!!params.linkedChat) ? params.linkedChat : null;
 
@@ -39,7 +60,14 @@ async function createChat(firebase, params) {
 }
 
 async function resolve(firebase, params) {
-  // check if admin
+  let isAdmin = (await firebase.database().ref(`admins/${params.adminId}/authorized`).once('value')).val();
+  isAdmin = isAdmin != null && isAdmin == true 
+  if(!isAdmin) {
+    return {
+      status: "Error",
+      errorMessage: "Only admins can run this operation"
+    }
+  }
 
   if(!params.userId || !params.userType){
     return {
@@ -48,13 +76,16 @@ async function resolve(firebase, params) {
     }
   }
 
-  let currentChat = (await firebase.database().ref(`/adminChat/${params.userType}/current/${params.userId}`).once()).val()
+  let currentChat = (await firebase.database().ref(`/adminChat/${params.userType}/current/${params.userId}`).once('value')).val()
   if(!currentChat){
     return {
       status: "Error",
       errorMessage: "Chat does not exist for user."
     }
   }
-  await firebase.database().ref(`/adminChat/${params.userType}/current/${params.userId}`).delete()
+  let currentChatId = Object.keys(currentChat)[0]
+  currentChat[currentChatId].resolvedTime = (new Date()).toUTCString()
+  currentChat[currentChatId].resolvedAdmin = params.adminId
   await firebase.database().ref(`/adminChat/${params.userType}/past/${params.userId}`).update(currentChat);
+  await firebase.database().ref(`/adminChat/${params.userType}/current/${params.userId}`).remove()
 }
