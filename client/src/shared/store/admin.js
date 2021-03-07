@@ -36,12 +36,13 @@ export default {
       }
       let userId = context.rootGetters.userId
       let userType = context.rootGetters.appName
+      let chatId = Object.keys(context.state.chat)[0]
       let newMessage = {
         message: payload.message,
         userId: userId,
         timestamp: (new Date()).toUTCString()
       }
-      firebaseDatabase().ref(`adminChat/${userType}/current/${userId}/messages`).push(newMessage);
+      firebaseDatabase().ref(`adminChat/${userType}/current/${userId}/${chatId}/messages`).push(newMessage);
     }
   },
   mutations: {
