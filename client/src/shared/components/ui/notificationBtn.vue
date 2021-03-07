@@ -6,7 +6,7 @@
             bg_diagonal: true,
             small: true,
           }"
-      class="nav-btn text_primary ml-2 bg_light elevate_1"
+      class="nav-btn text_primary ml-2 bg_light elevate_0"
       :link="true"
       :to="{
             path: '/notifications',
@@ -29,16 +29,16 @@ export default {
 <style lang="scss" scoped>
 .badge {
   position: absolute;
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border: 2px solid #f6efff;
   line-height: 1rem;
   border-radius: 50%;
   color: map-get($map: $colors, $key: white);
   font-size: 0.8rem;
   text-align: center;
-  top: 0.3rem;
-  right: 0.3rem;
+  top: 0.45rem;
+  right: 0.4rem;
 }
 .dialog {
   position: fixed;
@@ -51,5 +51,8 @@ export default {
   padding: 1rem;
   padding-top: 0;
   z-index: 99999;
+}
+.nav-btn {
+  border-radius: 10px;
 }
 </style>

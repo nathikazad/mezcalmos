@@ -124,6 +124,7 @@
 
 html {
     font-size: 16px;
+    background: #FBFBFB;
 
     @media (max-width: 350px) {
         font-size: 14px;
@@ -137,6 +138,8 @@ html {
 .border {
     border: $border
 }
+
+
 
 .btn {
     box-shadow: 0 6px 10px rgba(35, 97, 241, 0.2);

@@ -67,13 +67,13 @@
             bg_diagonal: true,
             small: true,
           }"
-          class="nav-btn text_primary ml-2 bg_light elevate_1"
+          class="nav-btn text_primary ml-2 bg_light elevate_0"
           :link="true"
           :to="{
             path: `/orders`,
           }"
         >
-          <fa icon="shopping-cart" />
+          <fa icon="history" />
         </base-button>
       </div>
     </nav>
@@ -124,11 +124,11 @@ export default {
       }
     },
     backOneStep() {
-      console.log("back one steep")
+      console.log("back one steep");
       let route = this.$route;
       if (route.name == "home") {
         return;
-      } else if (route.name == "notifications" || route.name == "orders"){
+      } else if (route.name == "notifications" || route.name == "orders") {
         this.$router.push("/");
       } else {
         this.$router.go(-1);

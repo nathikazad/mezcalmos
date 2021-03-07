@@ -82,7 +82,8 @@
             "title": "Notifications",
             "today": "Today",
             "yesterday": "Yesterday",
-            "older": "Older"
+            "older": "Older",
+            "item": "Item|Items"
         },
         "userInfo": {
             "title": " User <br/> Information ",

@@ -222,10 +222,6 @@ export default {
       width: 80% !important;
     }
 
-    .w-30 {
-      width: 20% !important;
-    }
-
     .ride_details {
       margin-left: 0.5rem;
     }

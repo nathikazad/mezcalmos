@@ -10,12 +10,30 @@
       </base-button>
     </div>
     <div class="visitor nav_body flex align_center center" v-if="!isLoggedIn">
-      <router-link to="/auth" class="text_blackD">
-        <h2>
+      <router-link to="/auth" class="text_blackD fill_width" >
+        <h4>
           <fa icon="sign-in-alt"></fa>
           &nbsp;{{$t('shared.navDrawer.login')}}
-        </h2>
+        </h4>
       </router-link>
+      <h4 class="text_blackD fill_width pointer">
+        <span
+          v-if="localLang=='es'"
+          :class="{'text_brand':localLang=='en'}"
+          @click="changeLanguage('en')"
+          class="flex align_center"
+        >
+          <img src="@/shared/static/united-states.png" alt="USA flag" class="flag" /> To English
+        </span>
+        <span
+          v-if="localLang=='en'"
+          :class="{'text_brand':localLang=='es'}"
+          @click="changeLanguage('es')"
+          class="flex align_center"
+        >
+          <img src="@/shared/static/mexico.png" alt="USA flag" class="flag" />A Español
+        </span>
+      </h4>
     </div>
     <div class="user nav_body" v-else>
       <div class="identity flex center wrap">
@@ -136,13 +154,13 @@ export default {
 .nav_links {
   width: 14rem;
   margin: auto;
-  .icon {
-    margin-right: 15px;
-  }
-  .flag {
-    height: 1.3rem;
-    width: auto;
-    margin-right: 1rem;
-  }
+}
+.icon {
+  margin-right: 15px;
+}
+.flag {
+  height: 1.3rem;
+  width: auto;
+  margin-right: 1rem;
 }
 </style>

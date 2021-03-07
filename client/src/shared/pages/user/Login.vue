@@ -5,8 +5,7 @@
         <logo :light="true" class="logo"></logo>
       </div>
       <h1 class="regular txt_center">
-        MEZ
-        <span>CALMOS</span>
+        MEZ<span>CALMOS</span>
       </h1>
     </div>
     <div class="login_action txt_center">
