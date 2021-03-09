@@ -1,4 +1,4 @@
-module.exports = { notifyOthers }
+module.exports = { notifyOthers, notifyUser }
 
 const notification = require("./notification");
 
@@ -20,4 +20,14 @@ async function notifyOthers(firebase, params, message) {
     }
     notification.push(firebase, participantId, payload, chat.participants[participantId].particpantType)
   }
+}
+
+async function notifyUser(firebase, params, message) {
+  let payload = {
+    notificationType: "newAdminMessage",
+    message: message.message,
+    time: message.timestamp,
+    messageId: params.messageId
+  }
+  notification.push(firebase, params.userId, payload, params.userType)
 }

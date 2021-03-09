@@ -60,17 +60,17 @@ export default {
       let chatId = Object.keys(chatObject)[0]
       let newMessage = {
         message: payload.message,
-        userId: adminId,
+        adminId: adminId,
         timestamp: (new Date()).toUTCString()
       }
       firebaseDatabase().ref(`adminChat/${userType}/current/${userId}/${chatId}/messages`).push(newMessage);
-      if(!chatObject["adminInfo"] || !chatObject["adminInfo"][adminId]){
+      if(!chatObject["admins"] || !chatObject["admins"][adminId]){
         let info = context.rootGetters.userInfo
         let adminInfo = {
           displayName: info.displayName,
           photo: info.photo
         }
-        firebaseDatabase().ref(`adminChat/${userType}/current/${userId}/${chatId}/adminInfo/${adminId}`).set(adminInfo);
+        firebaseDatabase().ref(`adminChat/${userType}/current/${userId}/${chatId}/admins/${adminId}`).set(adminInfo);
       }
     }
   },

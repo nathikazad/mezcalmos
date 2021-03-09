@@ -78,6 +78,14 @@ const router = new VueRouter({
       name: "messages"
     },
     {
+      path: "/messageAdmin",
+      component: MessagesPage,
+      meta: {
+        requiresAuth: true,
+      },
+      name: "messageAdmin"
+    },
+    {
       path: "/orders",
       component: OrdersListPage,
       meta: {

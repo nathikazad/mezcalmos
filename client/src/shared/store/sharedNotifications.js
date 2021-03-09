@@ -29,6 +29,15 @@ export default {
               notification: notification
             })
           }
+        } else if (notification.notificationType == "newAdminMessage") {
+          if (router.currentRoute.name == "messageAdmin") {
+          firebaseDatabase().ref(`${notificationReference}/${notificationKey}`).remove()
+          } else {
+            context.commit('saveNotification', {
+              key: notificationKey,
+              notification: notification
+            })
+          }
         }
       })
       firebaseDatabase().ref(notificationReference).on('child_added', async snapshot => {
