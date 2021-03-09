@@ -1,36 +1,47 @@
-// import { firebaseDatabase } from '@/shared/config/firebase'
+import { firebaseDatabase } from '@/shared/config/firebase'
 // import { apolloClient } from '@/config/apollo'
 // import gql from 'graphql-tag'
 export default {
+  namespaced: true,
   state() {
     return {
-      // canDeliver: false,
-      
+      taxis: {}
     };
   },
   getters: {
-    // canDeliver(state) {
-    //   return state.canDeliver;
-    // }
+    list(state) {
+      var taxis = state.taxis;
+      return function (query) {
+        if(!query){
+          return taxis
+        }
+        let list = {}
+        for(let key in taxis) {
+          if(taxis[key].info.displayName.indexOf(query) >= 0){
+            list[key] = taxis[key]
+          } else if(taxis[key].info.email.indexOf(query) >= 0){
+            list[key] = taxis[key]
+          } else if (key.indexOf(query) >= 0) {
+            list[key] = taxis[key]
+          }
+        }
+        return list
+      };        
+    }
   },
   actions: {
-    // async loadDriverAuth(context) {
-    //   let userId = context.rootGetters.userId
-    //   let canDeliver = (await firebaseDatabase().ref(`deliveryDrivers/${userId}/authorized`).once('value')).val() != null;
-    //   context.commit('saveDriverAuth', {
-    //     canDeliver: canDeliver
-    //   })
-    // },
-    // turnOn(context) {
-    //   this.dispatch('incomingOrders/startListeningForIncoming')
-    //   context.commit('setStatus', {
-    //     status: "looking"
-    //   })
-    // },
+    async loadTaxis(context, payload) {
+      let users = (await firebaseDatabase().ref(`users`).once("value")).val()
+      let taxis = (await firebaseDatabase().ref(`taxiDrivers`).once("value")).val()
+      for(let key in taxis){
+        taxis[key].info = users[key].info
+      }
+      context.commit('saveTaxis', taxis)
+    }
   },
   mutations: {
-    // saveDriverAuth(state, payload) {
-    //   state.canDeliver = payload.canDeliver;
-    // }
+    saveTaxis(state, payload) {
+      state.taxis = payload;
+    }
   }
 }
