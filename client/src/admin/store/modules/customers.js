@@ -1,36 +1,43 @@
-// import { firebaseDatabase } from '@/shared/config/firebase'
+import { firebaseDatabase } from '@/shared/config/firebase'
 // import { apolloClient } from '@/config/apollo'
 // import gql from 'graphql-tag'
 export default {
+  namespaced: true,
   state() {
     return {
-      // canDeliver: false,
-      
+      customers: {}
     };
   },
   getters: {
-    // canDeliver(state) {
-    //   return state.canDeliver;
-    // }
+    list(state) {
+      var customers = state.customers;
+      return function (query) {
+        if(!query){
+          return customers
+        }
+        let list = {}
+        for(let key in customers) {
+          if(customers[key].info.displayName.indexOf(query) >= 0){
+            list[key] = customers[key]
+          } else if(customers[key].info.email.indexOf(query) >= 0){
+            list[key] = customers[key]
+          } else if (key.indexOf(query) >= 0) {
+            list[key] = customers[key]
+          }
+        }
+        return list
+      };        
+    }
   },
   actions: {
-    // async loadDriverAuth(context) {
-    //   let userId = context.rootGetters.userId
-    //   let canDeliver = (await firebaseDatabase().ref(`deliveryDrivers/${userId}/authorized`).once('value')).val() != null;
-    //   context.commit('saveDriverAuth', {
-    //     canDeliver: canDeliver
-    //   })
-    // },
-    // turnOn(context) {
-    //   this.dispatch('incomingOrders/startListeningForIncoming')
-    //   context.commit('setStatus', {
-    //     status: "looking"
-    //   })
-    // },
+    async loadCustomers(context, payload) {
+      let customers = (await firebaseDatabase().ref(`users`).once("value")).val()
+      context.commit('saveCustomers', customers)
+    }
   },
   mutations: {
-    // saveDriverAuth(state, payload) {
-    //   state.canDeliver = payload.canDeliver;
-    // }
+    saveCustomers(state, payload) {
+      state.customers = payload;
+    }
   }
 }

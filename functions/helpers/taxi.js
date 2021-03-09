@@ -157,6 +157,7 @@ async function accept(firebase, data, uid) {
       acceptRideTime: order.acceptRideTime,
       status: order.status
     });
+    firebase.database().ref(`/inProcessOrders/taxi/${data.orderId}`).set({driver: order.driver, customer: order.customer});
     firebase.database().ref(`/openOrders/taxi/${data.orderId}`).remove();
     firebase.database().ref(`/chat/${data.orderId}/participants/${uid}`).set({
       name: driver.displayName.split(' ')[0],
@@ -250,6 +251,7 @@ async function finish(firebase, data, uid) {
   firebase.database().ref(`/users/${order.customer.id}/orders/${data.orderId}`).update(update);
   firebase.database().ref(`/taxiDrivers/${order.driver.id}/orders/${data.orderId}`).update(update);
   firebase.database().ref(`/taxiDrivers/${order.driver.id}/state/inTaxi`).remove()
+  firebase.database().ref(`/inProcessOrders/taxi/${data.orderId}`).remove();
   update.notificationType = "orderStatusChange"
   update.orderId = data.orderId
   update.orderType = "taxi"
