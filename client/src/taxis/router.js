@@ -24,6 +24,8 @@ const router = new VueRouter({
     { path: '/', redirect: '/incoming' },
     { path: '/incoming', component: IncomingOrdersPage, 
       meta: { requiresAuth: true }, name: 'home' },
+    { path: "/messageAdmin", component: MessagesPage,
+      meta: { requiresAuth: true }, name: "messageAdmin" },
     { path: '/messages/:orderId', component: MessagesPage, 
       meta: { requiresAuth: true }, name: "messages" },
     { path: "/notifications", component: NotificationsPage,
@@ -39,7 +41,7 @@ const router = new VueRouter({
     { path: '/howToTaxi', component: HowToTaxi, name: "howToTaxi" },
     { path: '/signUpTaxi', component: SignUpTaxi },
     { path: '/confirmation', component: Confirmation, name: "applicationUnderReview"},
-    { path: '/:notFound(.*)', component: NotFoundPage },
+    { path: '/:notFound(.*)', component: NotFoundPage },    
   ]
 })
 

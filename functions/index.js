@@ -133,3 +133,15 @@ exports.notifyMessageParticipants = functions.database.instance('mezcalmos-31f1c
   let firebase = getFirebase();
   message.notifyOthers(firebase, context.params, snap.val())
 })
+
+exports.notifyMessageFromAdminTes = functions.database.instance('mezcalmos-test').ref(
+  'adminChat/{userType}/current/{userId}/{ticketId}/messages/{messageId}').onCreate((snap, context) => {
+  let firebase = getFirebase('test');
+  message.notifyUser(firebase, context.params, snap.val())
+})
+
+exports.notifyMessageFromAdmi = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
+  'adminChat/{userType}/current/{userId}/{ticketId}/messages/{messageId}').onCreate(async (snap, context) => {
+  let firebase = getFirebase();
+  message.notifyUser(firebase, context.params, snap.val())
+})
