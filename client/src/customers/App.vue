@@ -43,18 +43,11 @@ export default {
     this.$store.dispatch("loadCustomerLocation");
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
-    this.intervallPermession = setInterval(() => {
-      navigator.permissions.query({ name: "geolocation" }).then(permission => {
-        if (permission.state == "granted") {
-          this.showPermessionPanel = false;
-          clearInterval(this.intervallPermession);
-        } else {
-          this.showPermessionPanel = true;
-        }
-      });
-    }, 1000);
   },
   computed: {
+    locationEnabled() {
+      return this.$store.getters.locationEnabled;
+    },
     routeName() {
       return this.$route.name;
     },
@@ -101,6 +94,13 @@ export default {
         }
         this.lastRoute = from.path;
         this.navDrawer = false;
+      }
+    },
+    locationEnabled: {
+      deep: true,
+      immediate: true,
+      handler: function(newVal) {
+        this.showPermessionPanel = !newVal;
       }
     }
   }

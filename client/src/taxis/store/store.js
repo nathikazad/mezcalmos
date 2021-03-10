@@ -3,6 +3,7 @@ import Vue from 'vue'
 
 import authModule from '@/shared/store/auth';
 import messagesModule from '@/shared/store/messages'
+import positionModule from '@/shared/store/position';
 
 import taxiAuthModule from './modules/taxiAuth'
 import incomingOrdersModule from './modules/incomingOrders';
@@ -20,7 +21,8 @@ const store = new Vuex.Store({
     incomingOrders: incomingOrdersModule,
     pastOrders: pastOrdersModule,
     messages: messagesModule,
-    notifications: notificationsModule
+    notifications: notificationsModule,
+    position: positionModule
   },
   getters: {
     appName() {

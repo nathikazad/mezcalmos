@@ -34,11 +34,13 @@ export default {
       navDrawer: false,
       minHeight: 500,
       transitionName: "",
-      showPermessionPanel: false,
-      intervallPermession: null
+      showPermessionPanel: false
     };
   },
   computed: {
+    locationEnabled() {
+      return this.$store.getters.locationEnabled;
+    },
     routeName() {
       return this.$route.name;
     },
@@ -53,15 +55,9 @@ export default {
     }
   },
   mounted() {
+    this.$store.dispatch("loadCustomerLocation");
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
-    this.intervallPermession = setInterval(() => {
-      console.log("in intervall", navigator);
-
-      if (condition) {
-        
-      }
-    }, 1000);
   },
   destroyed: function() {
     window.removeEventListener("resize", this.handleResize);
@@ -96,6 +92,13 @@ export default {
           this.transitionName = "slide-fade-reverse";
         }
         this.navDrawer = false;
+      }
+    },
+    locationEnabled: {
+      deep: true,
+      immediate: true,
+      handler: function(newVal) {
+        this.showPermessionPanel = !newVal;
       }
     }
   }

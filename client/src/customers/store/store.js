@@ -5,7 +5,7 @@ import authModule from '@/shared/store/auth';
 import messagesModule from '@/shared/store/messages'
 
 import taxisModule from './modules/taxis';
-import positionModule from './modules/position';
+import positionModule from '@/shared/store/position';
 import groceriesModule from './modules/groceries'
 import ordersModule from './modules/orders';
 import savedLocationsModule from './modules/savedLocations';
