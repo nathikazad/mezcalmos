@@ -30,7 +30,7 @@ export default {
       return state.list && Object.keys(state.list).length > 0
     },
     dateSortedOrders(state) {
-      return sortOrdersByDate(state.list)
+      return sortOrdersByDate(state.list,'orderTime')
     }
   }
 };

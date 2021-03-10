@@ -10,7 +10,7 @@
       </base-button>
     </div>
     <div class="visitor nav_body flex align_center center" v-if="!isLoggedIn">
-      <router-link to="/auth" class="text_blackD fill_width" >
+      <router-link to="/auth" class="text_blackD fill_width">
         <h4>
           <fa icon="sign-in-alt"></fa>
           &nbsp;{{$t('shared.navDrawer.login')}}
@@ -41,8 +41,13 @@
         <h2 class="fill_width txt_center t-16 bold">{{deepFind(userInfo,'displayName')}}</h2>
       </div>
       <div class="nav_links flex align_center start wrap">
-        <router-link :to="link.to" class="text_blackD" v-for="(link, index) in links" :key="index">
-          <h4>
+        <router-link
+          :to="link.to"
+          class="text_blackD fill_width"
+          v-for="(link, index) in links"
+          :key="index"
+        >
+          <h4 class>
             <fa :icon="link.icon" class="icon"></fa>
             &nbsp; {{ link.text }}
           </h4>
@@ -79,6 +84,9 @@
 <script>
 export default {
   computed: {
+    appName() {
+      return this.$store.getters.appName;
+    },
     isLoggedIn() {
       return this.$store.getters.loggedIn;
     },
@@ -88,8 +96,9 @@ export default {
     localLang() {
       return this.$store.getters["userLanguage"];
     },
+
     links() {
-      return [
+      let routerArray = [
         {
           text: this.$t("shared.navDrawer.userInfo"),
           icon: "user-circle",
@@ -99,13 +108,17 @@ export default {
           text: this.$t("shared.navDrawer.myOrders"),
           icon: "shopping-cart",
           to: "/orders"
-        },
-        {
-          text: this.$t("shared.navDrawer.savedLocations"),
-          icon: "location-arrow",
-          to: "/saved/locations"
         }
       ];
+      if (this.appName == "customer") {
+        routerArray.push({
+          text: this.$t("shared.navDrawer.savedLocations"),
+          icon: "location-arrow",
+          to: "/saved/locations",
+          hideIn: "taxi"
+        });
+      }
+      return routerArray;
     }
   },
 

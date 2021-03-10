@@ -4,13 +4,14 @@
 const prod = process.env.NODE_ENV === 'production'
 const test = process.env.NODE_ENV === 'test'
 console.log((prod || test));
-console.log(process.env);
+console.log(navigator.serviceWorker);
 
 const shouldSW = 'serviceWorker' in navigator //&& (prod || test)
 if (shouldSW) {
 
-  navigator.serviceWorker.register(`${process.env.BASE_URL}sw/sw-customer.js`).then((result) => {
-    console.log("Service Worker Registered!", result)
+  navigator.serviceWorker.register(`${process.env.BASE_URL}sw/sw-customer.js`).then((registration) => {
+    console.log("Service Worker Registered!", registration)
+    registration.update();
   }).catch((err) => {
     console.log("Something went wrong with registration!", err)
   });

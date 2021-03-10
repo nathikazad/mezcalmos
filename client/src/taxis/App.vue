@@ -3,29 +3,39 @@
     <transition name="slide-fade">
       <nav-drawer v-if="navDrawer" class="navDrawer bg_white" @toggle="navDrawer = !navDrawer"></nav-drawer>
     </transition>
+    <transition name="slide-down">
+      <askForPermission v-if="showPermessionPanel" class="dialogPanel bg_white"></askForPermission>
+    </transition>
     <the-header
       v-show="routeName != 'login'"
       @toggle="navDrawer = !navDrawer"
       :showNavBtn="showNavBtn"
     ></the-header>
 
-    <router-view class="container outlet" :style="{minHeight:minHeight + 'px'}"></router-view>
+    <transition :name="transitionName">
+      <router-view class="container outlet" :style="{minHeight:minHeight + 'px'}"></router-view>
+    </transition>
   </main>
 </template>
 
 <script>
 import TheHeader from "@/shared/components/layouts/TheHeader.vue";
 import NavDrawer from "@/shared/components/layouts/navDrawer.vue";
+import askForPermission from "@/shared/components/layouts/askForPermission.vue";
 
 export default {
   components: {
     TheHeader,
-    NavDrawer
+    NavDrawer,
+    askForPermission
   },
   data() {
     return {
       navDrawer: false,
-      minHeight: 500
+      minHeight: 500,
+      transitionName: "",
+      showPermessionPanel: false,
+      intervallPermession: null
     };
   },
   computed: {
@@ -45,6 +55,13 @@ export default {
   mounted() {
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
+    this.intervallPermession = setInterval(() => {
+      console.log("in intervall", navigator);
+
+      if (condition) {
+        
+      }
+    }, 1000);
   },
   destroyed: function() {
     window.removeEventListener("resize", this.handleResize);
@@ -58,9 +75,26 @@ export default {
   watch: {
     $route: {
       deep: true,
-      immediate: true,
-      handler: function() {
-        // console.log("updated route", newVal, " from ", oldVal);
+      immediate: false,
+      handler: function(to, from) {
+        if (to.name == "orders" || to.name == "notifications") {
+          //scene3
+
+          this.transitionName = "slide-down";
+          if (from.name == "orders" || from.name == "notifications") {
+            //scene4
+            this.transitionName = "slide-down";
+          }
+        } else if (from.name == "orders" || from.name == "notifications") {
+          //scene5
+          this.transitionName = "slide-down";
+        } else if (to.name == "taxiView" || to.name == "requestView") {
+          //scene1
+          this.transitionName = "slide-fade";
+        } else if (from.name == "taxiView" || from.name == "requestView") {
+          //scene2
+          this.transitionName = "slide-fade-reverse";
+        }
         this.navDrawer = false;
       }
     }
@@ -104,28 +138,15 @@ main {
   z-index: 10;
   padding: 0 1.25rem;
 }
-/* Enter and leave animations can use different */
-/* durations and timing functions.              */
-.slide-fade-enter-active {
-  transition: all 0.5s ease-out;
-}
-.slide-fade-leave-active {
-  transition: all 0.5s ease-in;
-}
-.slide-fade-enter, .slide-fade-leave-to
-/* .slide-fade-leave-active below version 2.1.8 */ {
-  transform: translateX(-100%);
-}
-/* Enter and leave animations can use different */
-/* durations and timing functions.              */
-.slide-down-fade-enter-active {
-  transition: all 0.5s ease-out;
-}
-.slide-down-fade-leave-active {
-  transition: all 0.5s ease-in;
-}
-.slide-down-fade-enter, .slide-fade-leave-to
-/* .slide-fade-leave-active below version 2.1.8 */ {
-  transform: translateX(-100%);
+.dialogPanel {
+  position: absolute;
+  width: 100%;
+  height: calc(100% - 5rem);
+  background: white;
+  top: 5rem;
+  left: 0;
+  z-index: 9;
+  padding: 1rem;
+  padding-top: 0;
 }
 </style>

@@ -3,6 +3,9 @@
     <transition name="slide-fade">
       <nav-drawer v-if="navDrawer" class="navDrawer bg_white" @toggle="navDrawer = !navDrawer"></nav-drawer>
     </transition>
+    <transition name="slide-down">
+      <askForPermission v-if="showPermessionPanel" class="dialogPanel bg_white"></askForPermission>
+    </transition>
     <the-header
       v-show="routeName != 'login'"
       @toggle="navDrawer = !navDrawer"
@@ -17,18 +20,22 @@
 <script>
 import TheHeader from "@/shared/components/layouts/TheHeader.vue";
 import NavDrawer from "@/shared/components/layouts/navDrawer.vue";
+import askForPermission from "@/shared/components/layouts/askForPermission.vue";
 
 export default {
   components: {
     TheHeader,
-    NavDrawer
+    NavDrawer,
+    askForPermission
   },
   data() {
     return {
       navDrawer: false,
       minHeight: 500,
       lastRoute: "",
-      transitionName: ""
+      transitionName: "",
+      showPermessionPanel: false,
+      intervallPermession: null
     };
   },
 
@@ -36,6 +43,16 @@ export default {
     this.$store.dispatch("loadCustomerLocation");
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
+    this.intervallPermession = setInterval(() => {
+      navigator.permissions.query({ name: "geolocation" }).then(permission => {
+        if (permission.state == "granted") {
+          this.showPermessionPanel = false;
+          clearInterval(this.intervallPermession);
+        } else {
+          this.showPermessionPanel = true;
+        }
+      });
+    }, 1000);
   },
   computed: {
     routeName() {
@@ -63,17 +80,24 @@ export default {
     $route: {
       deep: true,
       immediate: false,
-      handler: function(from, to) {
-        console.log(from);
-        console.log(to);
-        if (to.name == "taxiView" || to.name == "requestView") {
+      handler: function(to, from) {
+        if (to.name == "orders" || to.name == "notifications") {
+          //scene3
+
+          this.transitionName = "slide-down";
+          if (from.name == "orders" || from.name == "notifications") {
+            //scene4
+            this.transitionName = "slide-down";
+          }
+        } else if (from.name == "orders" || from.name == "notifications") {
+          //scene5
+          this.transitionName = "slide-down";
+        } else if (to.name == "taxiView" || to.name == "requestView") {
+          //scene1
           this.transitionName = "slide-fade";
         } else if (from.name == "taxiView" || from.name == "requestView") {
+          //scene2
           this.transitionName = "slide-fade-reverse";
-        } else if (to.name == "orders" || to.name == "notifications") {
-          this.transitionName = "slide-down";
-        } else if (from.name == "orders" || from.name == "notifications") {
-          this.transitionName = "slide-down-reverse";
         }
         this.lastRoute = from.path;
         this.navDrawer = false;
@@ -119,34 +143,15 @@ main {
   z-index: 10;
   padding: 0 1.25rem;
 }
-/* Enter and leave animations can use different */
-/* durations and timing functions.              */
-.slide-fade-enter-active,
-.slide-fade-reverse-enter-active,
-.slide-down-enter-active {
-  transition: all 0.5s ease-out;
-}
-.slide-fade-reverse-leave-active,
-.slide-fade-leave-active,
-.slide-down-leave-active {
-  transition: all 0.5s ease-in;
-}
-.slide-fade-reverse-enter, .slide-fade-reverse-leave-to
-/* .slide-fade-leave-active below version 2.1.8 */ {
-  transform: translateX(100%);
-}
-.slide-fade-enter, .slide-fade-leave-to
-/* .slide-fade-leave-active below version 2.1.8 */ {
-  transform: translateX(-100%);
-}
-
-.slide-down-enter, .slide-down-leave-to
-/* .slide-fade-leave-active below version 2.1.8 */ {
-  transform: translateY(100vh);
-}
-
-.slide-down-reverse-enter-to, .slide-down-reverse-leave
-/* .slide-fade-leave-active below version 2.1.8 */ {
-  transform: translateY(-100vh);
+.dialogPanel {
+  position: absolute;
+  width: 100%;
+  height: calc(100% - 5rem);
+  background: white;
+  top: 5rem;
+  left: 0;
+  z-index: 9;
+  padding: 1rem;
+  padding-top: 0;
 }
 </style>
