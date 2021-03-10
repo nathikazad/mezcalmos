@@ -14,7 +14,7 @@ export default {
       },
       driverLocation: null,
       lastLocationUpdateTime: null,
-      locationEnabled: false
+
     };
   },
   getters: {
@@ -33,9 +33,7 @@ export default {
     driverLocation(state) {
       return state.driverLocation
     },
-    locationEnabled(state) {
-        return state.locationEnabled
-    }
+
   },
   actions: {
     async loadTaxiAuth(context) {
@@ -53,14 +51,12 @@ export default {
         console.log("driver position, ", newPosition)
         context.commit('setDriverPosition', newPosition)
         context.dispatch('incomingOrders/updateDistances')
-        context.commit('setLocationEnabled', true)
-      }, async function() {
-        context.commit('setLocationEnabled', false)
+
       });
       let updateDriverIntervalId = setInterval(function () {
         updateDriverPosition(context)
       }, 10 * 1000)
-      
+
       let updateRouteIntervalId = setInterval(function () {
         updateRouteInformation(context)
       }, 300 * 1000)
@@ -70,14 +66,16 @@ export default {
       }, 10 * 1000)
 
       context.commit('saveLogoutCallback', {
-        func:function(userId, updateDriverIntervalId, navigatorWatchId, updateRouteIntervalId) {
+        func: function (userId, updateDriverIntervalId, navigatorWatchId, updateRouteIntervalId) {
           firebaseDatabase().ref(`taxiDrivers/${userId}/state`).off()
           clearInterval(updateDriverIntervalId);
           clearInterval(updateRouteIntervalId);
           navigator.geolocation.clearWatch(navigatorWatchId);
-        }, 
+        },
         args: [userId, updateDriverIntervalId, navigatorWatchId, updateRouteIntervalId]
-      }, { root: true })
+      }, {
+        root: true
+      })
     },
     startLooking(context) {
       let userId = context.rootGetters.userId
@@ -114,10 +112,7 @@ export default {
       state.driverLocation = payload
       state.lastLocationUpdateTime = new Date()
     },
-    setLocationEnabled(state, payload) {
-      console.log("Location Enabled, ", payload)
-      state.locationEnabled = payload
-    }
+
   }
 }
 
@@ -158,7 +153,7 @@ async function storeState(newState, context) {
 }
 
 const updateDriverPosition = async (context) => {
-  if(!context.state.driverLocation){
+  if (!context.state.driverLocation) {
     return
   }
   let userId = context.rootGetters.userId
@@ -175,9 +170,9 @@ const updateDriverPosition = async (context) => {
 }
 
 const updateRouteInformation = async (context) => {
-  if(!context.state.currentOrder.id){
+  if (!context.state.currentOrder.id) {
     return;
-  } 
+  }
   let order = context.state.currentOrder
   let driverLocation = context.state.driverLocation
   let destination

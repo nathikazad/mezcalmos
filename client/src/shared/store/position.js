@@ -22,7 +22,7 @@ export default {
                 }
                 context.commit('setCustomerLocation', newPosition)
                 context.commit('setLocationEnabled', true)
-            }, async function() {
+            }, async function () {
                 context.commit('setLocationEnabled', false)
             });
 
