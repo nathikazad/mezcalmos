@@ -13,7 +13,8 @@ export default {
         value: null
       },
       driverLocation: null,
-      lastLocationUpdateTime: null
+      lastLocationUpdateTime: null,
+      locationEnabled: false
     };
   },
   getters: {
@@ -31,6 +32,9 @@ export default {
     },
     driverLocation(state) {
       return state.driverLocation
+    },
+    locationEnabled(state) {
+        return state.locationEnabled
     }
   },
   actions: {
@@ -46,8 +50,12 @@ export default {
           lat: position.coords.latitude,
           long: position.coords.longitude
         }
+        console.log("driver position, ", newPosition)
         context.commit('setDriverPosition', newPosition)
         context.dispatch('incomingOrders/updateDistances')
+        context.commit('setLocationEnabled', true)
+      }, async function() {
+        context.commit('setLocationEnabled', false)
       });
       let updateDriverIntervalId = setInterval(function () {
         updateDriverPosition(context)
@@ -105,6 +113,10 @@ export default {
     setDriverPosition(state, payload) {
       state.driverLocation = payload
       state.lastLocationUpdateTime = new Date()
+    },
+    setLocationEnabled(state, payload) {
+      console.log("Location Enabled, ", payload)
+      state.locationEnabled = payload
     }
   }
 }
