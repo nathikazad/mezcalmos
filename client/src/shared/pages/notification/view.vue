@@ -4,7 +4,9 @@
     <div class="field" v-if="Object.keys(todaysNotifs).length">
       <h3 class="bold flex space_between t-10">
         <span>{{$t('shared.notification.today')}}</span>
-        <span>{{Object.keys(todaysNotifs).length}}&nbsp; {{$tc('shared.notification.item',2)}}</span>
+        <span
+          class="regular"
+        >{{Object.keys(todaysNotifs).length}}&nbsp; {{$tc('shared.notification.item',2)}}</span>
       </h3>
 
       <router-link
@@ -18,9 +20,11 @@
       </router-link>
     </div>
     <div class="field" v-if="Object.keys(yesterdayNotifs).length">
-      <h3 class="bold flex space_between">
+      <h3 class="bold flex space_between t-10">
         <span>{{$t('shared.notification.yesterday')}}</span>
-        <span>{{Object.keys(yesterdayNotifs).length}}&nbsp; {{$tc('shared.notification.item',2)}}</span>
+        <span
+          class="regular"
+        >{{Object.keys(yesterdayNotifs).length}}&nbsp; {{$tc('shared.notification.item',2)}}</span>
       </h3>
       <router-link
         :to="notifLink(notif)"
@@ -33,7 +37,7 @@
       </router-link>
     </div>
     <div class="field" v-if="Object.keys(olderNotifs).length">
-      <h3 class="bold flex space_between">
+      <h3 class="bold flex space_between t-10">
         <span>{{$t('shared.notification.older')}}</span>
         <span
           class="regular"
@@ -71,24 +75,28 @@ export default {
     todaysNotifs() {
       let todayNotifs = {};
       let today = new Date();
-      Object.keys(this.notifications).map(key => {
-        let notifDate = new Date(this.notifications[key].time);
-        if (this.datesAreOnSameDay(today, notifDate)) {
-          todayNotifs[key] = this.notifications[key];
-        }
-      });
+      Object.keys(this.notifications)
+        .reverse()
+        .map(key => {
+          let notifDate = new Date(this.notifications[key].time);
+          if (this.datesAreOnSameDay(today, notifDate)) {
+            todayNotifs[key] = this.notifications[key];
+          }
+        });
       return todayNotifs;
     },
     yesterdayNotifs() {
       let yesterdayNotifs = {};
       let yesterday = new Date();
       yesterday.setDate(yesterday.getDate() + 1);
-      Object.keys(this.notifications).map(key => {
-        let notifDate = new Date(this.notifications[key].time);
-        if (this.datesAreOnSameDay(yesterday, notifDate)) {
-          yesterdayNotifs[key] = this.notifications[key];
-        }
-      });
+      Object.keys(this.notifications)
+        .reverse()
+        .map(key => {
+          let notifDate = new Date(this.notifications[key].time);
+          if (this.datesAreOnSameDay(yesterday, notifDate)) {
+            yesterdayNotifs[key] = this.notifications[key];
+          }
+        });
       return yesterdayNotifs;
     },
     olderNotifs() {
@@ -96,15 +104,17 @@ export default {
       let today = new Date();
       let yesterday = new Date();
       yesterday.setDate(yesterday.getDate() + 1);
-      Object.keys(this.notifications).map(key => {
-        let notifDate = new Date(this.notifications[key].time);
-        if (
-          !this.datesAreOnSameDay(yesterday, notifDate) &&
-          !this.datesAreOnSameDay(today, notifDate)
-        ) {
-          olderNotifs[key] = this.notifications[key];
-        }
-      });
+      Object.keys(this.notifications)
+        .reverse()
+        .map(key => {
+          let notifDate = new Date(this.notifications[key].time);
+          if (
+            !this.datesAreOnSameDay(yesterday, notifDate) &&
+            !this.datesAreOnSameDay(today, notifDate)
+          ) {
+            olderNotifs[key] = this.notifications[key];
+          }
+        });
       return olderNotifs;
     }
   },

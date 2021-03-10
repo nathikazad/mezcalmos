@@ -37,7 +37,8 @@
             "services": "Todos los servicios",
             "isInTax": "Por favor finalice | su viaje | para aceptar nuevos pedidos",
             "far": "lejos",
-            "noOrders": "Sin pedidos"
+            "noOrders": "No Hay Ordenes|Intentarlo más tarde",
+            "toggle": "Activar Pedidos Entrantes|Activar para ver nuevos pedidos"
         },
         "taxiView": {
             "taxi": "Taxi",

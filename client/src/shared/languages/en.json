@@ -37,7 +37,8 @@
             "services": "All Services",
             "isInTax": "Please finish|your ride|to accept new orders",
             "far": "far",
-            "noOrders": "No orders found"
+            "toggle": "Turn On Incoming Orders|Turn on to see new orders",
+            "noOrders": "No Orders Found|Try again later"
         },
         "taxiView": {
             "taxi": "Taxi",
@@ -56,7 +57,7 @@
             "item": "Item|Items",
             "onTheWay": "On the way",
             "inTransit": "In Transit",
-            "searching": "Searching",
+            "searching": "Searching for taxi",
             "noOrders": "No orders found"
         },
         "introduction": {
@@ -65,6 +66,11 @@
             "confirmation": "Your Application Is Under <br/>Review. We Will Contact <br/>You Shortly",
             "fbBtn": " Sign Up With Facebook",
             "yes": "YES"
+
+        },
+        "permissions": {
+            "askForNotif": "Location Service Turned Off|App cannot work without the location service|Enable location services from  your setting",
+            "permissionBtn": "Turn On Now"
         }
     },
     "shared": {

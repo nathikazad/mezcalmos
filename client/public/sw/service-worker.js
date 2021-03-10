@@ -208,6 +208,8 @@ const activateEventListener = function (self, swName) {
         // From service-worker.js:
         const channel = new BroadcastChannel(`sw-${swName}-messages`);
         channel.addEventListener("message", async event => {
+            console.log('service worker ', event);
+
             if (event.data.msg == 'getSubscription') {
                 try {
                     //init subscription

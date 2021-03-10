@@ -147,7 +147,7 @@ export default {
 .popUp {
   position: absolute;
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 5rem);
   background: white;
   top: 0;
   left: 0;

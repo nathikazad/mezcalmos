@@ -22,14 +22,22 @@ export default {
   width: 6rem;
   border-radius: 2rem;
   padding: 0.5rem 0.7rem;
+  .on {
+    margin-left: 0.25rem;
+  }
+  .off {
+    margin-right: 0.25rem;
+  }
   &.closed {
     .on {
       z-index: 2;
       color: map-get($map: $colors, $key: green) !important;
+      margin-left: 0.25rem;
     }
     .off {
       z-index: 2;
       color: map-get($map: $colors, $key: white) !important;
+      margin-right: 0.25rem;
     }
     .layer {
       background: map-get($map: $colors, $key: error);
@@ -39,7 +47,7 @@ export default {
   }
   .layer {
     position: absolute;
-    width: 60%;
+    width: 56%;
     height: 100%;
     border-radius: inherit;
     transition: all 1s;

@@ -249,3 +249,53 @@ html {
         transform: scale(1.05);
     }
 }
+
+/* Enter and leave animations can use different */
+/* durations and timing functions.              */
+.slide-fade-enter-active,
+.slide-fade-reverse-enter-active,
+.slide-down-reverse-enter-active,
+.slide-down-enter-active {
+    transition: all 0.5s ease-out;
+}
+
+.slide-fade-reverse-leave-active,
+.slide-down-reverse-leave-active,
+.slide-fade-leave-active,
+.slide-down-leave-active {
+    transition: all 0.5s ease-in;
+}
+
+.slide-fade-reverse-enter,
+.slide-fade-reverse-leave-to
+
+/* .slide-fade-leave-active below version 2.1.8 */
+    {
+    transform: translateX(100%);
+    opacity: 0;
+}
+
+.slide-fade-enter,
+.slide-fade-leave-to
+
+/* .slide-fade-leave-active below version 2.1.8 */
+    {
+    transform: translateX(-100%);
+    opacity: 0;
+}
+
+.slide-down-enter,
+.slide-down-leave-to
+
+/* .slide-fade-leave-active below version 2.1.8 */
+    {
+    transform: translateY(100%);
+}
+
+.slide-down-reverse-enter,
+.slide-down-reverse-leave-to
+
+/* .slide-fade-leave-active below version 2.1.8 */
+    {
+    transform: translateY(-100%);
+}

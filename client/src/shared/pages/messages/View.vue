@@ -11,7 +11,7 @@
             <h5 class="text_info regular">{{$t('shared.messages.available')}}</h5>
           </div>
         </div>
-        <router-link :to="{name:'taxiView'}" tag="h4" class="externalLink pointer text_violet">
+        <router-link :to="{name:'taxiView'}" tag="h4" class="externalLink pointer text_orderLink">
           <fa icon="clipboard-list" class="icon_link"></fa>
           {{$t('shared.messages.orderLink')}}
         </router-link>

@@ -53,14 +53,14 @@
 
         <info-panel
           v-else
-          :title="'No Orders Found'"
-          :desc="'There are no orders and to try again later'"
+          :title="$tc('taxi.incoming.noOrders',1)"
+          :desc="$tc('taxi.incoming.noOrders',2)"
         >
           <no-orders slot="graphic"></no-orders>
         </info-panel>
       </div>
       <div v-else>
-        <info-panel :title="'Turn On Incoming Orders'" :desc="'Turn on to see new orders'">
+        <info-panel :title="$tc('taxi.incoming.toggle',1)" :desc="$tc('taxi.incoming.toggle',2)">
           <incomingToggle slot="graphic"></incomingToggle>
         </info-panel>
       </div>

@@ -79,18 +79,21 @@ decode.integers = function (value) {
 
 }
 export const askForNotification = (origin, store) => { //notif:{type:'YOU HAVE A NEW MESSAGE /orderCompletion..',msg:' Hi sir !'}
-  
+
 
   Notification.requestPermission(function (status) {
 
     if (status === 'granted') {
+      console.log('granted',origin);
+
       navigator.serviceWorker.getRegistration()
       const channel = new BroadcastChannel(`sw-${origin}-messages`);
       channel.postMessage({
         msg: "getSubscription"
       });
       channel.addEventListener("message", event => {
-      
+        console.log(event);
+
         if (!event.data.subscription) {
           return;
         }
@@ -105,7 +108,7 @@ export const askForNotification = (origin, store) => { //notif:{type:'YOU HAVE A
 export const getBrowserLanguage = () => {
   let browserLang = navigator.language.split('-')[0]
   let existingLanguages = {
-    'en': true,      
+    'en': true,
     'es': true
   }
   return (!existingLanguages[browserLang] ? 'en' : browserLang)
