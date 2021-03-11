@@ -40,7 +40,7 @@ export default {
   },
 
   mounted() {
-    this.$store.dispatch("loadCustomerLocation");
+    this.$store.dispatch("loadUserLocation");
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
   },

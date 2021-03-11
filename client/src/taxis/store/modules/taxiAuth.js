@@ -14,7 +14,6 @@ export default {
       },
       driverLocation: null,
       lastLocationUpdateTime: null,
-
     };
   },
   getters: {
@@ -29,11 +28,7 @@ export default {
     },
     currentOrderId(state) {
       return state.currentOrder.id
-    },
-    driverLocation(state) {
-      return state.driverLocation
-    },
-
+    }
   },
   actions: {
     async loadTaxiAuth(context) {
@@ -43,16 +38,13 @@ export default {
       firebaseDatabase().ref(`taxiDrivers/${userId}/state`).on('value', snapshot => {
         storeState(snapshot.val(), context)
       });
-      let navigatorWatchId = navigator.geolocation.watchPosition(function (position) {
-        let newPosition = {
-          lat: position.coords.latitude,
-          long: position.coords.longitude
-        }
-        console.log("driver position, ", newPosition)
-        context.commit('setDriverPosition', newPosition)
-        context.dispatch('incomingOrders/updateDistances')
+      context.commit('saveWatchPositionCallback', {
+        func: function () {
+          context.dispatch('incomingOrders/updateDistances')
+        },
+        args: []
+      }, { root: true })
 
-      });
       let updateDriverIntervalId = setInterval(function () {
         updateDriverPosition(context)
       }, 10 * 1000)
@@ -66,16 +58,13 @@ export default {
       }, 10 * 1000)
 
       context.commit('saveLogoutCallback', {
-        func: function (userId, updateDriverIntervalId, navigatorWatchId, updateRouteIntervalId) {
+        func: function (userId, updateDriverIntervalId, updateRouteIntervalId) {
           firebaseDatabase().ref(`taxiDrivers/${userId}/state`).off()
           clearInterval(updateDriverIntervalId);
           clearInterval(updateRouteIntervalId);
-          navigator.geolocation.clearWatch(navigatorWatchId);
         },
-        args: [userId, updateDriverIntervalId, navigatorWatchId, updateRouteIntervalId]
-      }, {
-        root: true
-      })
+        args: [userId, updateDriverIntervalId, updateRouteIntervalId]
+      }, { root: true })
     },
     startLooking(context) {
       let userId = context.rootGetters.userId
@@ -107,12 +96,7 @@ export default {
       if (state.currentOrder.value) {
         state.currentOrder.value.status = payload
       }
-    },
-    setDriverPosition(state, payload) {
-      state.driverLocation = payload
-      state.lastLocationUpdateTime = new Date()
-    },
-
+    }
   }
 }
 
@@ -153,12 +137,12 @@ async function storeState(newState, context) {
 }
 
 const updateDriverPosition = async (context) => {
-  if (!context.state.driverLocation) {
+  let driverLocation = context.rootGetters.userLocation;
+  let lastUpdateTime = context.rootGetters.lastLocationUpdateTime
+  if (!driverLocation) {
     return
   }
   let userId = context.rootGetters.userId
-  let driverLocation = context.state.driverLocation
-  let lastUpdateTime = context.state.lastLocationUpdateTime
   let locationUpdate = {
     position: driverLocation,
     lastUpdateTime: lastUpdateTime.toUTCString()
@@ -174,7 +158,7 @@ const updateRouteInformation = async (context) => {
     return;
   }
   let order = context.state.currentOrder
-  let driverLocation = context.state.driverLocation
+  let driverLocation = context.rootGetters.userLocation;
   let destination
   if (order.value.status == "onTheWay") {
     destination = order.value.from

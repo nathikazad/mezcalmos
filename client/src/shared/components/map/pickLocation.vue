@@ -109,7 +109,7 @@ export default {
       return this.$store.getters.loggedIn;
     },
     customerLocation() {
-      return this.$store.getters.customerLocation;
+      return this.$store.getters.userLocation;
     },
   },
   watch: {

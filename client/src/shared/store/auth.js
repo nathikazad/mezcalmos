@@ -38,12 +38,6 @@ export default {
     },
     loggedIn(state) {
       return state.loggedIn;
-    },
-    getUserDefaultLocation() {
-      return {
-        lat: 15.8720,
-        long: -97.0767
-      }
     }
   },
   actions: {

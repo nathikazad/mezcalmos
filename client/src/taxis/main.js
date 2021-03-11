@@ -28,6 +28,8 @@ async function firebaseCallback(user) {
       photoURL: user.photoURL,
       loggedIn: true
     })
+    store.dispatch("loadUserLocation");
+    store.dispatch("notifications/loadNotificationsForTaxi");
     await store.dispatch('loadTaxiAuth');
     if (router.currentRoute.path == "/auth") {
       if (router.currentRoute.query.redirect) {
@@ -47,7 +49,6 @@ async function firebaseCallback(user) {
         })
       }
     }
-    store.dispatch("notifications/loadNotificationsForTaxi");
     askForNotification('taxi', store)
   }
 }

@@ -55,7 +55,6 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch("loadCustomerLocation");
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
   },
