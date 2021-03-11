@@ -151,7 +151,7 @@ export default {
     },
     customerLocation() {
       return (
-        this.$store.getters.customerLocation || {
+        this.$store.getters.userLocation || {
           lat: this.deepFind(this.userDefaultLocation, "lat"),
           lng: this.deepFind(this.userDefaultLocation, "long")
         }

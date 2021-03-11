@@ -27,7 +27,7 @@ export default {
     },
     async updateDistances(context) {
       let orders = context.state.list
-      let driverLocation = context.rootGetters.driverLocation;
+      let driverLocation = context.rootGetters.userLocation;
       let distances = {}
       let sortedOrderIds = []
       for (let order in orders) {

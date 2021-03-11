@@ -23,7 +23,7 @@ export default {
       firebaseDatabase().ref(`orders/taxi/${orderId}`).on('value', async snapshot => {
         let order = snapshot.val()
         if(order.status == "lookingForTaxi") {
-          let driverLocation = context.rootGetters.driverLocation;
+          let driverLocation = context.rootGetters.userLocation;
           order.customer.distance = getDistanceFromLatLonInKm(order.from, driverLocation)
         }
         context.commit('saveOrder', {
