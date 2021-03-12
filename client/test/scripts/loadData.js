@@ -3,7 +3,7 @@ const fs = require('fs');
 const axios = require('axios');
 const admin = require("firebase-admin");
 const puppeteer = require('puppeteer');
-const CustomerApp = require("../classes/customerApp")
+const CustomerApp = require("../classes/apps/customerApp")
 
 function checkIfWebsiteIsUp(){
   http.get('http://localhost:4000/', function (res) {
@@ -49,7 +49,7 @@ async function loadData(dataFolderName = "dummyData"){
   let oldUsers = {}
   const browser = await puppeteer.launch();
   for (let key in data.users) {
-    await createUser(data.users[key].info)
+    await createUser(browser, data.users[key].info)
     oldUsers[data.users[key].info.email] = key
   }
   await browser.close();
