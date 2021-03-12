@@ -21,6 +21,7 @@ export default {
       hasuraAuthToken: null,
       loggedIn: false,
       logoutCallbacks: [],
+      language: getBrowserLanguage()
     };
   },
   getters: {
@@ -31,7 +32,7 @@ export default {
       return state.info
     },
     userLanguage(state) {
-      return (state.info && state.info.language) || getBrowserLanguage()
+      return state.language 
     },
     hasuraAuthToken(state) {
       return state.hasuraAuthToken;
@@ -50,9 +51,9 @@ export default {
         context.commit('saveUserInfo', snapshot.val())
         let lang = snapshot.val().language
         if(lang){
-          i18n.locale = lang
+          context.commit('saveLanguage', payload)
         } else {
-          context.dispatch('setLanguage', getBrowserLanguage())
+          context.dispatch('setLanguage', context.language)
         }
       })
       context.commit('saveAuthData', payload)
@@ -64,8 +65,10 @@ export default {
       context.commit('clearData')
     },
     setLanguage(context, payload) {
-      firebaseDatabase().ref(`users/${context.state.userId}/info/language`).set(payload)
-      i18n.locale = payload
+      if(context.state.userId){
+        firebaseDatabase().ref(`users/${context.state.userId}/info/language`).set(payload)
+      }
+      context.commit('saveLanguage', payload)
     },
     saveLogoutCallback(context, payload) {
       context.commit('saveLogoutCallback', payload)
@@ -89,6 +92,10 @@ export default {
     },
     saveLogoutCallback(state, payload) {
       state.logoutCallbacks.push(payload)
+    },
+    saveLanguage(state, payload) {
+      state.language = payload
+      i18n.locale = payload
     }
 
   }
