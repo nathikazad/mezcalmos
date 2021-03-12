@@ -7,7 +7,8 @@ export default {
   state() {
     return {
       value: null,
-      orderId: null
+      orderId: null,
+      temporaryAddresseses:null
     };
   },
   actions: {
@@ -41,7 +42,11 @@ export default {
         distance: payload.distance,
         duration: payload.duration
       });
+      context.commit('saveTemporaryAddresses', null)
       return response;
+    }, 
+    saveAddress(_, payload){
+      context.commit('saveTemporaryAddresses', payload)
     }
   },
   mutations: {
@@ -52,11 +57,17 @@ export default {
     unloadTaxi(state) {
       state.value = null
       state.orderId = null
+    },
+    saveTemporaryAddresses(state, payload) {
+      state.temporaryAddresseses = payload
     }
   },
   getters: {
     value(state) {
       return state.value;
+    },
+    temporaryAddresses(state) {
+      return state.temporaryAddresses
     }
   }
 };
