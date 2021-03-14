@@ -8,7 +8,7 @@ export default {
     return {
       value: null,
       orderId: null,
-      temporaryAddresseses:null
+      temporaryAddresseses: null
     };
   },
   actions: {
@@ -34,6 +34,8 @@ export default {
     },
     async requestTaxi(_, payload) {
       // let userId = context.rootGetters.userId
+      console.log(payload);
+
       let from = payload.from
       let to = payload.to
       let response = await cloudCall('requestTaxi', {
@@ -42,11 +44,11 @@ export default {
         distance: payload.distance,
         duration: payload.duration
       });
-      context.commit('saveTemporaryAddresses', null)
+      _.commit('saveTemporaryAddresses', null)
       return response;
-    }, 
-    saveAddress(_, payload){
-      context.commit('saveTemporaryAddresses', payload)
+    },
+    saveAddress(_, payload) {
+      _.commit('saveTemporaryAddresses', payload)
     }
   },
   mutations: {
@@ -67,7 +69,7 @@ export default {
       return state.value;
     },
     temporaryAddresses(state) {
-      return state.temporaryAddresses
+      return state.temporaryAddresseses
     }
   }
 };

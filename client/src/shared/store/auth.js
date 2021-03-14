@@ -32,7 +32,7 @@ export default {
       return state.info
     },
     userLanguage(state) {
-      return state.language 
+      return state.language
     },
     hasuraAuthToken(state) {
       return state.hasuraAuthToken;
@@ -47,11 +47,11 @@ export default {
       await firebaseAuth().signInWithPopup(provider);
     },
     async autoSignIn(context, payload) {
-      firebaseDatabase().ref(`users/${payload.userId}/info/`).on('value', function(snapshot) {
+      firebaseDatabase().ref(`users/${payload.userId}/info/`).on('value', function (snapshot) {
         context.commit('saveUserInfo', snapshot.val())
         let lang = snapshot.val().language
-        if(lang){
-          context.commit('saveLanguage', payload)
+        if (lang) {
+          context.commit('saveLanguage', lang)
         } else {
           context.dispatch('setLanguage', context.language)
         }
@@ -65,7 +65,7 @@ export default {
       context.commit('clearData')
     },
     setLanguage(context, payload) {
-      if(context.state.userId){
+      if (context.state.userId) {
         firebaseDatabase().ref(`users/${context.state.userId}/info/language`).set(payload)
       }
       context.commit('saveLanguage', payload)

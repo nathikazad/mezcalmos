@@ -1,5 +1,5 @@
 <template>
-  <main :class="{ overlay: navDrawer }">
+  <main :class="{ overlay: navDrawer }" @click="closeNav" id="main">
     <transition name="slide-fade">
       <nav-drawer v-if="navDrawer" class="navDrawer bg_white" @toggle="navDrawer = !navDrawer"></nav-drawer>
     </transition>
@@ -54,6 +54,9 @@ export default {
       return this.minHeight;
     }
   },
+  created() {
+    this.$store.commit("setLocationEnabled", true);
+  },
   mounted() {
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
@@ -65,6 +68,11 @@ export default {
     handleResize() {
       let innerHeight = window.innerHeight;
       this.minHeight = innerHeight - 80;
+    },
+    closeNav(e) {
+      if (e.target.id == "main") {
+        this.navDrawer = false;
+      }
     }
   },
   watch: {

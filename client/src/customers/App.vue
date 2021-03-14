@@ -1,5 +1,5 @@
 <template>
-  <main :class="{ overlay: navDrawer  }">
+  <main :class="{ overlay: navDrawer  }" @click="closeNav" id="main">
     <transition name="slide-fade">
       <nav-drawer v-if="navDrawer" class="navDrawer bg_white" @toggle="navDrawer = !navDrawer"></nav-drawer>
     </transition>
@@ -58,6 +58,9 @@ export default {
     },
     minHeightPx() {
       return this.minHeight;
+    },
+    isLoggedIn() {
+      return this.$store.getters.loggedIn;
     }
   },
   destroyed: function() {
@@ -67,6 +70,11 @@ export default {
     handleResize() {
       let innerHeight = window.innerHeight;
       this.minHeight = innerHeight - 80;
+    },
+    closeNav(e) {
+      if (e.target.id == "main") {
+        this.navDrawer = false;
+      }
     }
   },
   watch: {
@@ -101,6 +109,32 @@ export default {
       immediate: true,
       handler: function(newVal) {
         this.showPermessionPanel = !newVal;
+      }
+    },
+    isLoggedIn: {
+      deep: true,
+      immediate: true,
+      handler: async function(loggedIn) {
+        console.log("loggedIn", loggedIn);
+
+        if (loggedIn) {
+          let temporaryAddresses = this.$store.getters[
+            "taxis/temporaryAddresses"
+          ];
+          if (temporaryAddresses) {
+            let response = await this.$store.dispatch(
+              "taxis/requestTaxi",
+              temporaryAddresses
+            );
+            console.log(response);
+
+            if (response.data.status == "Success") {
+              this.$router.push({
+                path: `/services/taxi/${response.data.orderId}`
+              });
+            }
+          }
+        }
       }
     }
   }

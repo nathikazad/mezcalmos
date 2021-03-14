@@ -29,7 +29,7 @@
       v-if="directionsOrigin && showMarker"
       :ref="`marker-center`"
     >
-      <img :src="this.fromUrl" class="imageIcon border" />
+      <img :src="this.fromUrl||icons.center.url" class="imageIcon border" />
     </gmap-custom-marker>
     <!-- Driver Icon marker -->
 
