@@ -9,13 +9,12 @@
         <fa icon="chevron-left"></fa>
       </base-button>
     </div>
-    <div class="visitor nav_body flex align_center center" v-if="!isLoggedIn">
-      <router-link to="/auth" class="text_blackD fill_width">
-        <h4>
-          <fa icon="sign-in-alt"></fa>
-          &nbsp;{{$t('shared.navDrawer.login')}}
-        </h4>
-      </router-link>
+    <div class="visitor nav_links nav_body flex align_center center" v-if="!isLoggedIn">
+      <h4 class="text_blackD fill_width t-10 pointer" @click="login">
+        <fa icon="sign-in-alt"></fa>
+        &nbsp;{{$t('shared.navDrawer.login')}}
+      </h4>
+
       <h4 class="text_blackD fill_width pointer">
         <span
           v-if="localLang=='es'"
@@ -123,22 +122,14 @@ export default {
   },
 
   methods: {
+    async login() {
+      await this.$store.dispatch("login");
+    },
     logout() {
       this.$store.dispatch("logout");
       this.$router.push("/services");
     },
-    async login() {
-      try {
-        await this.$store.dispatch("login");
-        if (this.$route.query.redirect) {
-          this.$router.push({ path: this.$route.query.redirect });
-        } else {
-          this.$router.push({ path: "/" });
-        }
-      } catch (e) {
-        this.error = e.message;
-      }
-    },
+
     changeLanguage(lang) {
       this.$store.dispatch("setLanguage", lang);
     }

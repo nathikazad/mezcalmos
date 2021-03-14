@@ -48,7 +48,7 @@
           <fa icon="chevron-left"></fa>
         </base-button>
         <router-link :to="{path:'/'}" class="flex align_center">
-          <logo class="logo"></logo>
+          <img src="@/shared/static/img/logo.svg" class="logo" alt />
           <h2 class="regular txt_center flex">
             MEZ
             <span>CALMOS</span>

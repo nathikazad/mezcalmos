@@ -103,12 +103,19 @@
         </router-link>
       </div>
     </div>
-    <h3 v-else>{{$t('customer.orders.noOrders')}}</h3>
+    <info-panel v-else :title="$tc('taxi.incoming.noOrders',1)">
+      <no-orders slot="graphic"></no-orders>
+    </info-panel>
   </div>
 </template>
 
 <script>
+import noOrders from "@/shared/components/SVG/noOrders";
+
 export default {
+  components: {
+    noOrders
+  },
   data() {
     return {
       isLoaded: false

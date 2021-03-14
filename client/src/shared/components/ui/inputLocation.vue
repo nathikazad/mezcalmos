@@ -150,12 +150,12 @@ export default {
       return this.$store.getters["getUserDefaultLocation"];
     },
     customerLocation() {
-      return (
-        this.$store.getters.userLocation || {
-          lat: this.deepFind(this.userDefaultLocation, "lat"),
-          lng: this.deepFind(this.userDefaultLocation, "long")
-        }
-      );
+      let currentLoc =
+        this.$store.getters.userLocation || this.userDefaultLocation;
+      return {
+        lat: this.deepFind(currentLoc, "lat"),
+        lng: this.deepFind(currentLoc, "long")
+      };
     },
     center() {
       if (this.auxCenter) {
@@ -171,8 +171,11 @@ export default {
       deep: true,
 
       handler: function(newVal) {
+        console.log("new val ", newVal);
+
         if (this.search) {
           if (newVal && this.to.by == "search") {
+            console.log("inside search  ", newVal);
             this.saved.opened = false;
             this.search.searching = true;
             clearTimeout(this.delayer);
@@ -382,6 +385,9 @@ export default {
     height: 1.1rem;
     border: none;
     padding: 0;
+    &:disabled {
+      color: map-get($colors, blackL);
+    }
   }
 }
 .focusedFrom {

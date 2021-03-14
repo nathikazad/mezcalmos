@@ -22,11 +22,11 @@ export default {
       let userId = context.rootGetters.userId
       let appName = context.rootGetters.appName
       let notificationReference = `/notifications/${appName}/${userId}`
-      context.commit('saveNotificationCallback', function(notification, notificationKey, notificationReference){
+      context.commit('saveNotificationCallback', function (notification, notificationKey, notificationReference) {
         if (notification.notificationType == "newMessage") {
           if (router.currentRoute.name == "messages" &&
-          router.currentRoute.params.orderId == notification.orderId) {
-          firebaseDatabase().ref(`${notificationReference}/${notificationKey}`).remove()
+            router.currentRoute.params.orderId == notification.orderId) {
+            firebaseDatabase().ref(`${notificationReference}/${notificationKey}`).remove()
           } else {
             context.commit('saveNotification', {
               key: notificationKey,
@@ -49,12 +49,14 @@ export default {
       });
 
       context.commit('saveLogoutCallback', {
-        func:function(userId, context) {
+        func: function (userId, context) {
           firebaseDatabase().ref(notificationReference).off()
           context.commit('clearAll')
-        }, 
+        },
         args: [userId, context]
-      }, { root: true })
+      }, {
+        root: true
+      })
     },
     clearOrderStatusNotifications(context, payload) {
       let userId = context.rootGetters.userId
@@ -80,6 +82,13 @@ export default {
         }
       }
     },
+    clearAllNotifications(context) {
+      let appName = context.rootGetters.appName;
+      let userId = context.rootGetters.userId;
+      let notificationReference = `/notifications/${appName}/${userId}`;
+      firebaseDatabase().ref(`${notificationReference}`).remove()
+
+    },
     saveUserNotificationInfo(context, payload) {
       let userId = context.rootGetters.userId
       firebaseDatabase().ref(`/users/${userId}/notificationInfo`).set(payload)
@@ -100,10 +109,10 @@ export default {
     removeNotification(state, payload) {
       let notificationType = payload.notification.notificationType
       let orderId = payload.notification.orderId
-      if(state.notifications[orderId] && 
-        state.notifications[orderId][notificationType] && 
-        state.notifications[orderId][notificationType][payload.key]){
-          delete state.notifications[orderId][notificationType][payload.key]
+      if (state.notifications[orderId] &&
+        state.notifications[orderId][notificationType] &&
+        state.notifications[orderId][notificationType][payload.key]) {
+        delete state.notifications[orderId][notificationType][payload.key]
       }
       delete state.ungroupedList[payload.key]
       state.ungroupedList = {
