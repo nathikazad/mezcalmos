@@ -3,12 +3,11 @@
     <h1 class="regular flex space_between align_center">{{$t('shared.messages.title')}}</h1>
 
     <div class="messages_body fit_container">
-      <div class="user_info bg_secondary border flex align_center space_between">
+      <div class="user_info bg_light_grey border flex align_center space_between">
         <div class="flex align_center start" v-if="sender">
           <avatar size="2.4rem" :url="sender.image"></avatar>
           <div class="user_name">
             <h3>{{sender.name}}</h3>
-            <h5 class="text_info regular">{{$t('shared.messages.available')}}</h5>
           </div>
         </div>
         <router-link :to="{name:'taxiView'}" tag="h4" class="externalLink pointer text_orderLink">
@@ -179,7 +178,7 @@ export default {
     padding: 0.5rem 1rem;
     margin: 0 -1rem;
     .user_name {
-      margin-left: .5rem;
+      margin-left: 0.5rem;
       > * {
         margin: 2.5px 0;
       }
@@ -214,6 +213,7 @@ export default {
       height: 2.8rem;
       border-radius: 50%;
       font-size: 1.2rem;
+      padding: 0;
     }
   }
 }

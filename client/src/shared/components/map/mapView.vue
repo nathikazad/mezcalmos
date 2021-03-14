@@ -38,7 +38,7 @@
       v-if="deepFind(driverLocation, 'position')"
       :ref="`marker-driver`"
     >
-      <img :src="require('../../static/img/driverCar2.png')" class="driverIcon" />
+      <img :src="require('../../static/img/driverCar.png')" class="driverIcon" />
     </gmap-custom-marker>
     <gmap-polyline
       v-if="deepFind(driverLocation, 'polyline')"
@@ -48,7 +48,7 @@
     <!-- to icon marker -->
 
     <gmap-custom-marker :marker="directionsDest" v-if="directionsDest" :ref="`marker-center`">
-      <img :src="require('../../static/img/Bttn.png')" />
+      <img :src="require('../../static/img/Bttn.png')" class="driverIcon" />
     </gmap-custom-marker>
   </GmapMap>
 </template>
@@ -294,7 +294,40 @@ export default {
       this.showMarker = false;
       setTimeout(() => {
         this.showMarker = true;
+        this.mapFit();
       }, 200);
+    },
+    mapFit() {
+      var mapMarkersList = [
+        "driverLocation",
+        "directionsDest",
+        "directionsOrigin"
+      ];
+      var bounds = new window.google.maps.LatLngBounds();
+      for (var i = 0, listLen = mapMarkersList.length; i < listLen; i++) {
+        let bound;
+        let marker = this[mapMarkersList[i]];
+        console.log(marker);
+
+        //check if variable exist in this
+        if (marker) {
+          //check if marker is driverLocation
+          if (marker.position) {
+            bound = new window.google.maps.LatLng(
+              marker.position.lat,
+              marker.position.long
+            );
+          } else {
+            bound = new window.google.maps.LatLng(marker.lat, marker.lng);
+          }
+
+          bounds.extend(bound);
+        }
+        //  And increase the bounds to take this point
+      }
+      let map = this.$refs["gmap"].$mapObject;
+      map.fitBounds(bounds);
+      console.log(map);
     },
     dragend(event) {
       this.$emit("markerDragged", {
@@ -318,6 +351,6 @@ export default {
 }
 .driverIcon {
   width: auto;
-  height: auto;
+  height: 30px;
 }
 </style>

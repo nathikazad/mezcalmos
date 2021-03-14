@@ -1,12 +1,22 @@
 <template>
   <div class="dialog">
     <h1 class="regular">{{$t('shared.notification.title')}}</h1>
-    <div class="field" v-if="Object.keys(todaysNotifs).length">
-      <h3 class="bold flex space_between t-10">
-        <span>{{$t('shared.notification.today')}}</span>
-        <span
-          class="regular"
-        >{{Object.keys(todaysNotifs).length}}&nbsp; {{$tc('shared.notification.item',2)}}</span>
+    <div class="field">
+      <h3
+        class="bold flex t-10 align_center"
+        :class="{end:!Object.keys(todaysNotifs).length,space_between:Object.keys(todaysNotifs).length}"
+      >
+        <span v-if="Object.keys(todaysNotifs).length">{{$t('shared.notification.today')}}</span>
+        <base-button
+          @click.native="clearNotifications"
+          :mode="{
+            bg_diagonal: true,
+            small: true,
+          }"
+          class="nav-btn text_primary ml-2 bg_light elevate_0"
+        >
+          <fa icon="broom"></fa>Clear
+        </base-button>
       </h3>
 
       <router-link
@@ -22,9 +32,6 @@
     <div class="field" v-if="Object.keys(yesterdayNotifs).length">
       <h3 class="bold flex space_between t-10">
         <span>{{$t('shared.notification.yesterday')}}</span>
-        <span
-          class="regular"
-        >{{Object.keys(yesterdayNotifs).length}}&nbsp; {{$tc('shared.notification.item',2)}}</span>
       </h3>
       <router-link
         :to="notifLink(notif)"
@@ -39,9 +46,6 @@
     <div class="field" v-if="Object.keys(olderNotifs).length">
       <h3 class="bold flex space_between t-10">
         <span>{{$t('shared.notification.older')}}</span>
-        <span
-          class="regular"
-        >{{Object.keys(olderNotifs).length}} &nbsp; {{$tc('shared.notification.item',2)}}</span>
       </h3>
       <router-link
         :to="notifLink(notif)"
@@ -119,6 +123,10 @@ export default {
     }
   },
   methods: {
+    clearNotifications() {
+      this.$store.dispatch("notifications/clearAllNotifications");
+      this.$router.go(-1);
+    },
     datesAreOnSameDay(first, second) {
       return (
         first.getFullYear() === second.getFullYear() &&
@@ -137,4 +145,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.nav-btn {
+  height: 2rem;
+  width: 5rem;
+  border-radius: 10px;
+}
 </style>

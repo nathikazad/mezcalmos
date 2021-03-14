@@ -27,9 +27,9 @@
         <base-button
           v-else
           class="w-80"
-          :mode="{ dark: true, bg_diagonal: true }"
-          :link="true"
-          to="/auth?redirect=/services/taxi/request"
+          :mode="{ dark: true, bg_diagonal: true, disabled:disabled  }"
+          @click.native="login()"
+          :disabled="disabled"
         >
           <span class="t-8 regular">{{$t('customer.taxiView.confirm')}}</span>
         </base-button>
