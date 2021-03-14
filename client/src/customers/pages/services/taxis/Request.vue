@@ -15,20 +15,10 @@
     >
       <div class="flex align_center center btnP" slot="action">
         <base-button
-          v-if="isLoggedIn"
           class="w-80"
           :mode="{ dark: true, bg_diagonal: true, disabled:disabled }"
           @click.native="requestTaxi()"
           :loading="loading"
-          :disabled="disabled"
-        >
-          <span class="t-8 regular">{{$t('customer.taxiView.confirm')}}</span>
-        </base-button>
-        <base-button
-          v-else
-          class="w-80"
-          :mode="{ dark: true, bg_diagonal: true, disabled:disabled  }"
-          @click.native="login()"
           :disabled="disabled"
         >
           <span class="t-8 regular">{{$t('customer.taxiView.confirm')}}</span>
@@ -103,25 +93,27 @@ export default {
     },
     async requestTaxi() {
       if (!this.disabled) {
-        this.loading = true;
-        let response = (
-          await this.$store.dispatch("taxis/requestTaxi", {
-            to: this.to,
-            from: this.from,
-            distance: this.distance,
-            duration: this.duration
-          })
-        ).data;
-        this.loading = false;
-        if (response.status == "Success") {
-          this.$router.push({ path: `${response.orderId}` });
+        let data = {
+          to: this.to,
+          from: this.from,
+          distance: this.distance,
+          duration: this.duration
+        };
+        if (this.isLoggedIn) {
+          this.loading = true;
+          let response = (await this.$store.dispatch("taxis/requestTaxi", data))
+            .data;
+          this.loading = false;
+          if (response.status == "Success") {
+            this.$router.push({ path: `${response.orderId}` });
+          } else {
+            this.errorMessage = response.errorMessage;
+          }
         } else {
-          this.errorMessage = response.errorMessage;
+          await this.$store.dispatch("taxis/saveAddress", data);
+          await this.$store.dispatch("login");
         }
       }
-    },
-    async login() {
-      await this.$store.dispatch("login");
     }
   }
 };
