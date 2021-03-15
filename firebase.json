@@ -67,9 +67,10 @@
       ]
     }
   ],
-  "database": {
-    "rules": "database.rules.json"
-  },
+  "database": [
+    {"target": "main", "rules": "database.rules.json"},
+    {"target": "test", "rules": "database.rules.json"}
+  ],
   "emulators": {
     "functions": {
       "port": 5001

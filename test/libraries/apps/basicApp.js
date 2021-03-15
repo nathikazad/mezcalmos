@@ -1,4 +1,4 @@
-const auth = require("../../vuex/modules/auth")
+const auth = require("./vuex/modules/auth")
 class BasicApp {
   constructor(browser) {
     this.browser = browser;
