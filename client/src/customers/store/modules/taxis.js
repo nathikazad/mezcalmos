@@ -32,9 +32,9 @@ export default {
         })
       });
     },
-    async requestTaxi(_, payload) {
+    async requestTaxi(context, payload) {
       // let userId = context.rootGetters.userId
-      console.log(payload);
+      //console.log(payload);
 
       let from = payload.from
       let to = payload.to
@@ -44,11 +44,11 @@ export default {
         distance: payload.distance,
         duration: payload.duration
       });
-      _.commit('saveTemporaryAddresses', null)
+      context.commit('saveTemporaryAddresses', null)
       return response;
     },
-    saveAddress(_, payload) {
-      _.commit('saveTemporaryAddresses', payload)
+    saveAddress(context, payload) {
+      context.commit('saveTemporaryAddresses', payload)
     }
   },
   mutations: {

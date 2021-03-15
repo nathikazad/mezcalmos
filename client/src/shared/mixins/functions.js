@@ -91,7 +91,7 @@ export const askForNotification = (origin, store) => { //notif:{type:'YOU HAVE A
         msg: "getSubscription"
       });
       channel.addEventListener("message", event => {
-        console.log(event);
+        //console.log(event);
 
         if (!event.data.subscription) {
           return;

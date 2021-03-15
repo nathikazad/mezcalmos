@@ -26,7 +26,7 @@ async function createUser(user) {
 
       // await popup.waitForTimeout(500)
       await popup.evaluate((user) => {
-        console.log(user)
+        //console.log(user)
         if (user.displayName) {
           document.getElementById("display-name-input").value = user.displayName
           document.getElementById("screen-name-input").value = user.displayName
@@ -46,7 +46,7 @@ async function createUser(user) {
       await browser.close();
       break;
     } catch (e) {
-      console.log("Create user error, trying again")
+      //console.log("Create user error, trying again")
     }
   }
 }
@@ -88,21 +88,21 @@ async function loadData() {
   // Write data
   axios.put("http://localhost:9000/.json?ns=mezcalmos-31f1c-default-rtdb", data)
   // app.delete();
-  console.log("\nLoad Data: Finished")
+  //console.log("\nLoad Data: Finished")
 }
 
 function checkIfWebsiteIsUp() {
   var http = require('http');
   http.get('http://localhost:4000/', function (res) {
     http.get('http://localhost:8080/', function (res) {
-      console.log("Load Data: Emulator and  Customer Website are up, starting to write data")
+      //console.log("Load Data: Emulator and  Customer Website are up, starting to write data")
       loadData()
     }).on('error', function (e) {
-      console.log("Load Data: Customer Website @ 8080 is not up yet")
+      //console.log("Load Data: Customer Website @ 8080 is not up yet")
       setTimeout(checkIfWebsiteIsUp, 10000)
     });;
   }).on('error', function (e) {
-    console.log("Load Data: Emulator is not up yet")
+    //console.log("Load Data: Emulator is not up yet")
     setTimeout(checkIfWebsiteIsUp, 10000)
   });
 }
@@ -113,5 +113,5 @@ if (process.argv.length == 3) {
 
 
 checkIfWebsiteIsUp()
-console.log("Load Data: Starting Up")
+//console.log("Load Data: Starting Up")
 //add the export commands and see if it affects only functions mode

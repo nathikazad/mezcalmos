@@ -326,7 +326,7 @@ export default {
       }
       let map = this.$refs["gmap"].$mapObject;
       map.fitBounds(bounds);
-      console.log(map);
+      //console.log(map);
     },
     dragend(event) {
       this.$emit("markerDragged", {

@@ -70,8 +70,8 @@ export default {
       return this.$store.getters["notifications/ungroupedList"];
     },
     notificationsNumber() {
-      console.log(this.notifications);
-      console.log(Object.keys(this.notifications));
+      //console.log(this.notifications);
+      //console.log(Object.keys(this.notifications));
 
       return Object.keys(this.notifications).length;
     },

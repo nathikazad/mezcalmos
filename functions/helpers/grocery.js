@@ -81,11 +81,11 @@ async function accept(firebase, data, uid) {
 
   let driver = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val();
   let response = await firebase.database().ref(`/orders/grocery/${data.orderId}`).transaction(function (order) {
-    console.log(order)
+    //console.log(order)
     if (order != null) {
-      console.log(order.status)
+      //console.log(order.status)
       if (order.status == "lookingForDriver") {
-        console.log(`${data.orderId} lookingForDriver`)
+        //console.log(`${data.orderId} lookingForDriver`)
         order.status = 'onTheWayToStore';
         order.acceptOrderTime = (new Date()).toUTCString()
         order.driver = {
@@ -95,7 +95,7 @@ async function accept(firebase, data, uid) {
         }
         return order
       } else {
-        console.log(`${data.orderId} status is not lookingForDriver but ${order.status}`)
+        //console.log(`${data.orderId} status is not lookingForDriver but ${order.status}`)
         return;
       }
     }
@@ -103,7 +103,7 @@ async function accept(firebase, data, uid) {
   })
 
   if (!response.committed) {
-    console.log(`${data.orderId} grocery request failure`)
+    //console.log(`${data.orderId} grocery request failure`)
     return {
       status: "Error",
       reason: "Ride is not available, please try accepting another ride"

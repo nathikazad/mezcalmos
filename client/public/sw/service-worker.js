@@ -170,7 +170,7 @@ const pushEventListener = function (self) {
     self.addEventListener("push", (event) => {
         if (event.data) {
             let message = JSON.parse(event.data.text())
-            console.log(message);
+            //console.log(message);
             const title = message.notificationType == 'newMessage' ? message.sender.name : message.orderType;
             const body = message.message || message.status;
             const icon = "../img/icons/ms-icon-150x150.png";
@@ -194,21 +194,21 @@ const pushEventListener = function (self) {
                 }
             });
         } else {
-            console.log('has no data');
+            //console.log('has no data');
 
         }
     });
 }
 const activateEventListener = function (self, swName) {
     self.addEventListener("activate", (event) => {
-        console.log(self);
+        //console.log(self);
 
         // This will be called only once when the service worker is activated.
         self.clients.claim()
         // From service-worker.js:
         const channel = new BroadcastChannel(`sw-${swName}-messages`);
         channel.addEventListener("message", async event => {
-            console.log('service worker ', event);
+            //console.log('service worker ', event);
 
             if (event.data.msg == 'getSubscription') {
                 try {
@@ -226,7 +226,7 @@ const activateEventListener = function (self, swName) {
                         subscription: JSON.stringify(subscription)
                     });
                 } catch (err) {
-                    console.log("Error", err);
+                    //console.log("Error", err);
                 }
             }
         });
