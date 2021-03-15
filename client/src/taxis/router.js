@@ -20,95 +20,39 @@ Vue.use(VueRouter)
 
 const router = new VueRouter({
   mode: 'history',
-  routes: [{
-      path: '/incoming',
-      component: IncomingOrdersPage,
-      meta: {
-        requiresAuth: true
-      },
-      name: 'home'
-    },
-    {
-      path: '/messages/:orderId',
-      component: MessagesPage,
-      meta: {
-        requiresAuth: true
-      },
-      name: "messages"
-    },
-    {
-      path: "/notifications",
-      component: NotificationsPage,
-      meta: {
-        requiresAuth: true,
-      },
-      name: "notifications"
-    },
-    {
-      path: '/orders/:orderId',
-      component: TaxiViewPage,
-      meta: {
-        requiresAuth: true
-      },
-      name: "taxiView"
-    },
-    {
-      path: '/orders',
-      component: PastOrderstPage,
-      meta: {
-        requiresAuth: true
-      },
-      name: "orders"
-    },
-    {
-      path: '/userinfo',
-      component: UserInformationPage,
-      meta: {
-        requiresAuth: true
-      }
-    },
-    {
-      path: '/auth',
-      component: LoginPage,
-      meta: {
-        requiresUnauth: true
-      }
-    },
-    // TODO: how to taxi page
-    {
-      path: '/howToTaxi',
-      component: HowToTaxi
-    },
-    {
-      path: '/signUpTaxi',
-      component: SignUpTaxi
-    },
-    {
-      path: '/confirmation',
-      component: Confirmation
-    },
-    {
-      path: '/:notFound(.*)',
-      component: NotFoundPage
-    },
-
+  routes: [
+    { path: '/incoming', component: IncomingOrdersPage, 
+      meta: { requiresAuth: true }, name: 'home' },
+    { path: '/messages/:orderId', component: MessagesPage, 
+      meta: { requiresAuth: true }, name: "messages" },
+    { path: "/notifications", component: NotificationsPage,
+      meta: { requiresAuth: true }, name: "notifications" },
+    { path: '/orders/:orderId', component: TaxiViewPage,
+      meta: { requiresAuth: true }, name: "taxiView" },
+    { path: '/orders', component: PastOrderstPage,
+      meta: { requiresAuth: true }, name: "orders" },
+    { path: '/userinfo', component: UserInformationPage,
+      meta: { requiresAuth: true } },
+    { path: '/auth', component: LoginPage,
+      meta: { requiresUnauth: true } },
+    { path: '/howToTaxi', component: HowToTaxi, name: "howToTaxi" },
+    { path: '/signUpTaxi', component: SignUpTaxi },
+    { path: '/confirmation', component: Confirmation, name: "applicationUnderReview"},
+    { path: '/:notFound(.*)', component: NotFoundPage },
   ]
 })
 
 router.beforeEach(async function (to, from, next) {
-  if (to.path == "/") {
+  if (to.meta.requiresAuth && !store.getters.loggedIn) {
+    next({ path: '/auth', query: { redirect: to.path }});
+  } else if (to.path == "/") {
     if (store.getters.isInTaxi) {
       next(`/orders/${store.getters.currentOrderId}`);
+    } else if (!store.getters.canTaxi) {
+      next('/howToTaxi');
     } else {
       next("/incoming")
-    }
-  } else if (to.meta.requiresAuth && !store.getters.loggedIn) {
-    next({
-      path: '/auth',
-      query: {
-        redirect: to.path
-      }
-    });
+    } 
   } else if (to.meta.requiresAuth && store.getters.loggedIn &&
     !store.getters.canTaxi) {
     next('/howToTaxi');

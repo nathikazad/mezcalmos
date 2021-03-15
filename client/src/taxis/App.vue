@@ -1,7 +1,7 @@
 <template>
   <main :class="{ overlay: navDrawer }" @click="closeNav" id="main">
     <transition name="slide-fade">
-      <nav-drawer v-if="navDrawer" class="navDrawer bg_white" @toggle="navDrawer = !navDrawer"></nav-drawer>
+      <nav-drawer v-if="navDrawer" class="navDrawer bg_white" @toggle="navDrawer = !navDrawer" @closeNavDrawer="navDrawer = false"></nav-drawer>
     </transition>
     <transition name="slide-down">
       <askForPermission v-if="showPermessionPanel" class="dialogPanel bg_white"></askForPermission>
@@ -46,9 +46,14 @@ export default {
     },
     showNavBtn() {
       //searching for the home page
-      return this.$store.getters.isInTaxi
-        ? this.routeName == "taxiView"
-        : this.routeName == "home";
+      if(this.$store.getters.isInTaxi){
+        return this.routeName == "taxiView"
+      } else if(this.routeName == "howToTaxi" || 
+        this.routeName == "applicationUnderReview") {
+        return true
+      } else {
+        return this.routeName == "home";
+      }
     },
     minHeightPx() {
       return this.minHeight;

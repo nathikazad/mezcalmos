@@ -47,7 +47,6 @@ export default {
           notification: notification
         })
       });
-
       context.commit('saveLogoutCallback', {
         func: function (userId, context) {
           firebaseDatabase().ref(notificationReference).off()

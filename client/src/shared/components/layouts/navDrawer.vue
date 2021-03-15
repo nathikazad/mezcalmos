@@ -124,10 +124,11 @@ export default {
   methods: {
     async login() {
       await this.$store.dispatch("login");
+      this.$emit('closeNavDrawer')
     },
     logout() {
       this.$store.dispatch("logout");
-      this.$router.push("/services");
+      this.$emit('closeNavDrawer')
     },
 
     changeLanguage(lang) {
