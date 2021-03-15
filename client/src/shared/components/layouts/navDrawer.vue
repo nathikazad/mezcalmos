@@ -124,11 +124,11 @@ export default {
   methods: {
     async login() {
       await this.$store.dispatch("login");
-      this.$emit('closeNavDrawer')
+      this.$emit("closeNavDrawer");
     },
     logout() {
       this.$store.dispatch("logout");
-      this.$emit('closeNavDrawer')
+      this.$emit("closeNavDrawer");
     },
 
     changeLanguage(lang) {
@@ -143,6 +143,7 @@ export default {
   height: 5rem;
 }
 .nav-btn {
+  padding: 0;
   height: 2rem;
   width: 2rem;
   border-radius: 10px;
