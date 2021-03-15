@@ -80,28 +80,28 @@ decode.integers = function (value) {
 }
 export const askForNotification = (origin, store) => { //notif:{type:'YOU HAVE A NEW MESSAGE /orderCompletion..',msg:' Hi sir !'}
 
+  try {
+    Notification.requestPermission(function (status) {
+      if (status === 'granted') {
+        navigator.serviceWorker.getRegistration()
+        const channel = new BroadcastChannel(`sw-${origin}-messages`);
+        channel.postMessage({
+          msg: "getSubscription"
+        });
+        channel.addEventListener("message", event => {
+          console.log(event);
 
-  Notification.requestPermission(function (status) {
-
-    if (status === 'granted') {
-
-      navigator.serviceWorker.getRegistration()
-      const channel = new BroadcastChannel(`sw-${origin}-messages`);
-      channel.postMessage({
-        msg: "getSubscription"
-      });
-      channel.addEventListener("message", event => {
-        //console.log(event);
-
-        if (!event.data.subscription) {
-          return;
-        }
-
-
-        store.dispatch("notifications/saveUserNotificationInfo", JSON.parse(event.data.subscription));
-      });
-    }
-  });
+          if (!event.data.subscription) {
+            return;
+          }
+          store.dispatch("notifications/saveUserNotificationInfo", JSON.parse(event.data.subscription));
+        });
+      }
+    });
+  } catch (e) {
+    console.log("Notifications not possible")
+    store.dispatch("notifications/saveUserNotificationInfo", null)
+  }
 }
 
 export const getBrowserLanguage = () => {

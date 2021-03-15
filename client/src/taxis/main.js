@@ -31,8 +31,11 @@ async function firebaseCallback(user) {
     store.dispatch("notifications/loadNotificationsForTaxi");
     await store.dispatch('loadTaxiAuth');
     askForNotification('taxi', store)
-    if(!store.getters.canTaxi){
-      router.push({ path: "/howToTaxi" })
+    if(!store.getters.canTaxi) {
+      if(router.currentRoute.path != "/howToTaxi"){
+        console.log(100)
+        router.push({ path: "/howToTaxi" })
+      }
     } else {
       store.dispatch("loadUserLocation");
       if (router.currentRoute.path == "/auth") {
@@ -44,10 +47,10 @@ async function firebaseCallback(user) {
             router.push({ path: router.currentRoute.query.redirect })
           }
         } else {
-          router.push({ path: "/" })
+          router.push("/incoming")
         }
       } else {
-        router.push({ path: "/" })
+        router.push("/incoming")
       }
     }
   } else if (router.currentRoute.path != "/howToTaxi") {
