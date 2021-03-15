@@ -60,9 +60,9 @@ export default {
     },
     async logout(context) {
       firebaseDatabase().ref(`users/${context.state.userId}/info/`).off()
-      await firebaseAuth().signOut()
       context.state.logoutCallbacks.forEach(cb => cb.func(...cb.args));
       context.commit('clearData')
+      await firebaseAuth().signOut()
     },
     setLanguage(context, payload) {
       if (context.state.userId) {
@@ -71,6 +71,7 @@ export default {
       context.commit('saveLanguage', payload)
     },
     saveLogoutCallback(context, payload) {
+      console.log(payload.args)
       context.commit('saveLogoutCallback', payload)
     }
   },

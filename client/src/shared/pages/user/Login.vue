@@ -33,11 +33,6 @@ export default {
       this.isLoading = true;
       try {
         await this.$store.dispatch("login");
-        if (this.$route.query.redirect) {
-          this.$router.push({ path: this.$route.query.redirect });
-        } else {
-          this.$router.push({ path: "/" });
-        }
       } catch (e) {
         this.error = e.message;
       }

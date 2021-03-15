@@ -8,10 +8,7 @@ export default {
     return {
       canTaxi: false,
       isLooking: false,
-      currentOrder: {
-        id: null,
-        value: null
-      },
+      currentOrder: { id: null, value: null },
       driverLocation: null,
       lastLocationUpdateTime: null,
     };
@@ -58,12 +55,13 @@ export default {
       }, 10 * 1000)
 
       context.commit('saveLogoutCallback', {
-        func: function (userId, updateDriverIntervalId, updateRouteIntervalId) {
+        func: function (userId, updateDriverIntervalId, updateRouteIntervalId, context) {
           firebaseDatabase().ref(`taxiDrivers/${userId}/state`).off()
           clearInterval(updateDriverIntervalId);
           clearInterval(updateRouteIntervalId);
+          context.commit('clearAll')
         },
-        args: [userId, updateDriverIntervalId, updateRouteIntervalId]
+        args: [userId, updateDriverIntervalId, updateRouteIntervalId, context]
       }, { root: true })
     },
     startLooking(context) {
@@ -96,12 +94,19 @@ export default {
       if (state.currentOrder.value) {
         state.currentOrder.value.status = payload
       }
+    },
+    clearAll(state){
+      state.canTaxi = false,
+      state.isLooking = false,
+      state.currentOrder = { id: null, value: null },
+      state.driverLocation = null,
+      state.lastLocationUpdateTime=  null
     }
   }
 }
 
 async function storeState(newState, context) {
-  if (newState.authorized) {
+  if (newState && newState.authorized) {
     context.commit('saveTaxiAuth', {
       canTaxi: true
     })

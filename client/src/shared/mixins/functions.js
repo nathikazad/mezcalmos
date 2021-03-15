@@ -84,7 +84,6 @@ export const askForNotification = (origin, store) => { //notif:{type:'YOU HAVE A
   Notification.requestPermission(function (status) {
 
     if (status === 'granted') {
-      console.log('granted',origin);
 
       navigator.serviceWorker.getRegistration()
       const channel = new BroadcastChannel(`sw-${origin}-messages`);
