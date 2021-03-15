@@ -71,7 +71,7 @@ export default {
       context.commit('saveLanguage', payload)
     },
     saveLogoutCallback(context, payload) {
-      console.log(payload.args)
+      //console.log(payload.args)
       context.commit('saveLogoutCallback', payload)
     }
   },
@@ -112,5 +112,5 @@ export default {
 //         }
 //       }
 //   ` })
-// console.log("hasura query");
-// console.log(data)
+// //console.log("hasura query");
+// //console.log(data)

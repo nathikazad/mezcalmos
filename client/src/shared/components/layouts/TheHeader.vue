@@ -124,7 +124,7 @@ export default {
       }
     },
     backOneStep() {
-      console.log("back one steep");
+      //console.log("back one steep");
       let route = this.$route;
       if (route.name == "home") {
         return;

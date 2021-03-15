@@ -37,9 +37,7 @@ export default {
                 "chrome://settings/content/siteDetails?site=http%3A%2F%2Flocalhost%3A8080"
               );
             } else {
-              navigator.geolocation.getCurrentPosition(function(pos) {
-                console.log(pos);
-              });
+              navigator.geolocation.getCurrentPosition(function() {});
             }
           });
       }

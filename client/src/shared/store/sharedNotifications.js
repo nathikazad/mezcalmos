@@ -12,11 +12,7 @@ export default {
     };
   },
   actions: {
-    saveUserSubscription(context, payload) {
-      let userId = context.rootGetters.userId
-      console.log(payload, userId);
-
-    },
+    
     loadNotifications(context, payload) {
       let router = payload.router
       let userId = context.rootGetters.userId

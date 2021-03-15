@@ -201,6 +201,6 @@ const updateRouteInformation = async (context) => {
         }
       })
   } else {
-    console.log("google maps not loaded")
+    //console.log("google maps not loaded")
   }
 }

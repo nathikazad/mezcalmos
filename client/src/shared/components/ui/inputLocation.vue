@@ -171,11 +171,11 @@ export default {
       deep: true,
 
       handler: function(newVal) {
-        console.log("new val ", newVal);
+        //console.log("new val ", newVal);
 
         if (this.search) {
           if (newVal && this.to.by == "search") {
-            console.log("inside search  ", newVal);
+            //console.log("inside search  ", newVal);
             this.saved.opened = false;
             this.search.searching = true;
             clearTimeout(this.delayer);

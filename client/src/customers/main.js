@@ -65,8 +65,8 @@ window.app = new Vue({
 // let tokenResult = await user.getIdTokenResult()
 // let hasuraClaim = tokenResult.claims['https://hasura.io/jwt/claims']
 // if (!hasuraClaim) {
-//   console.log("No hasura, retrying")
+//   //console.log("No hasura, retrying")
 //   await firebase.functions().httpsCallable('addHasuraClaims')();
 //   token = await user.getIdToken(true)
 // }
-// console.log(token);
+// //console.log(token);

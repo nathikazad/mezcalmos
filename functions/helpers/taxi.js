@@ -111,11 +111,11 @@ async function accept(firebase, data, uid) {
 
   driver = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val();
   let response = await firebase.database().ref(`/orders/taxi/${data.orderId}`).transaction(function (order) {
-    console.log(order)
+    //console.log(order)
     if (order != null) {
-      console.log(order.status)
+      //console.log(order.status)
       if (order.status == "lookingForTaxi") {
-        console.log(`${data.orderId} lookingForTaxi`)
+        //console.log(`${data.orderId} lookingForTaxi`)
         order.status = 'onTheWay';
         order.acceptRideTime = (new Date()).toUTCString()
         order.driver = {
@@ -125,7 +125,7 @@ async function accept(firebase, data, uid) {
         }
         return order
       } else {
-        console.log(`${data.orderId} status is not lookingForTaxi but ${order.status}`)
+        //console.log(`${data.orderId} status is not lookingForTaxi but ${order.status}`)
         return;
       }
     }
@@ -133,14 +133,14 @@ async function accept(firebase, data, uid) {
   })
 
   if (!response.committed) {
-    console.log(`${data.orderId} taxi request failure`)
+    //console.log(`${data.orderId} taxi request failure`)
     return {
       status: "Error",
       reason: "Ride is not available, please try accepting another ride"
     };
   } else {
     let order = response.snapshot.val()
-    console.log(`${data.orderId} taxi request success`)
+    //console.log(`${data.orderId} taxi request success`)
     firebase.database().ref(`/taxiDrivers/${uid}/orders/${data.orderId}`).set({
       customer: order.customer,
       acceptRideTime: order.acceptRideTime,

@@ -120,7 +120,7 @@ export default {
       deep: true,
       immediate: true,
       handler: async function(loggedIn) {
-        console.log("loggedIn", loggedIn);
+        //console.log("loggedIn", loggedIn);
 
         if (loggedIn) {
           let temporaryAddresses = this.$store.getters[
@@ -131,7 +131,7 @@ export default {
               "taxis/requestTaxi",
               temporaryAddresses
             );
-            console.log(response);
+            //console.log(response);
 
             if (response.data.status == "Success") {
               this.$router.push({
