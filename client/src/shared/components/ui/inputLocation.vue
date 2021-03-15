@@ -387,6 +387,8 @@ export default {
     padding: 0;
     &:disabled {
       color: map-get($colors, blackL);
+      opacity: 1 !important;
+      -webkit-text-fill-color: map-get($colors, blackL);
     }
   }
 }

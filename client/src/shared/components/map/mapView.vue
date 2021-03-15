@@ -307,7 +307,6 @@ export default {
       for (var i = 0, listLen = mapMarkersList.length; i < listLen; i++) {
         let bound;
         let marker = this[mapMarkersList[i]];
-        console.log(marker);
 
         //check if variable exist in this
         if (marker) {

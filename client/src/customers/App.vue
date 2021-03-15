@@ -1,7 +1,12 @@
 <template>
   <main :class="{ overlay: navDrawer  }" @click="closeNav" id="main">
     <transition name="slide-fade">
-      <nav-drawer v-if="navDrawer" class="navDrawer bg_white" @toggle="navDrawer = !navDrawer"></nav-drawer>
+      <nav-drawer
+        v-if="navDrawer"
+        class="navDrawer bg_white"
+        @toggle="navDrawer = !navDrawer"
+        @closeNavDrawer="navDrawer = false"
+      ></nav-drawer>
     </transition>
     <transition name="slide-down">
       <askForPermission v-if="showPermessionPanel" class="dialogPanel bg_white"></askForPermission>
