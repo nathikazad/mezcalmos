@@ -21,6 +21,7 @@ Vue.use(VueRouter)
 const router = new VueRouter({
   mode: 'history',
   routes: [
+    { path: '/', redirect: '/incoming' },
     { path: '/incoming', component: IncomingOrdersPage, 
       meta: { requiresAuth: true }, name: 'home' },
     { path: '/messages/:orderId', component: MessagesPage, 
@@ -43,16 +44,16 @@ const router = new VueRouter({
 })
 
 router.beforeEach(async function (to, from, next) {
-  if (to.meta.requiresAuth && !store.getters.loggedIn) {
-    next({ path: '/auth', query: { redirect: to.path }});
-  } else if (to.path == "/") {
-    if (store.getters.isInTaxi) {
+  if (to.path == "/incoming" ){
+    if (!store.getters.canTaxi && to.path != '/howToTaxi') {
+      next('/howToTaxi')
+    } else if (store.getters.isInTaxi && to.path != `/orders/${store.getters.currentOrderId}`) {
       next(`/orders/${store.getters.currentOrderId}`);
-    } else if (!store.getters.canTaxi) {
-      next('/howToTaxi');
     } else {
-      next("/incoming")
-    } 
+      next()
+    }
+  } else if (to.meta.requiresAuth && !store.getters.loggedIn) {
+    next({ path: '/auth', query: { redirect: to.path }});
   } else if (to.meta.requiresAuth && store.getters.loggedIn &&
     !store.getters.canTaxi) {
     next('/howToTaxi');
