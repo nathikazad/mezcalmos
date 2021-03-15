@@ -23,6 +23,14 @@
         "deliveriesTest": [
           "deliveries-in-test-ba13c"
         ]
+      },
+      "database": {
+        "main": [
+          "mezcalmos-31f1c"
+        ],
+        "test": [
+          "mezcalmos-31f1c-default-rtdb"
+        ]
       }
     }
   }

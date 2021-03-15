@@ -1,16 +1,22 @@
-const CustomerApp = require("../classes/apps/customerApp")
-const puppeteer = require('puppeteer');
-const Database = require("../classes/database");
 
-database = new Database()
+const puppeteer = require('puppeteer');
+const CustomerApp = require("../../libraries/apps/customerApp")
+const admin = require("firebase-admin");
+const helper = require("../../libraries/helpers")
+admin.initializeApp({
+  projectId: "mezcalmos-31f1c",
+  databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com"
+});
+
+
 describe('Mezcalmos', () => {
   beforeAll(async () => {
-    await database.reset()
+    await helper.clearDatabase(admin)
   });
 
   it('Create user test', async () => {
     jest.setTimeout(30000);
-    const browser = await puppeteer.launch({headless:false});
+    const browser = await puppeteer.launch({headless:true});
     let customerApp = new CustomerApp(browser)
     await customerApp.open()
     let customer = {
@@ -25,7 +31,7 @@ describe('Mezcalmos', () => {
     expect(userInfo.email).toBe(customer.email);
     expect(userInfo.photo).toBe(customer.photo);
     
-    let userFromDb = await database.get(`users/${customerApp.userId}`)
+    let userFromDb = (await admin.database().ref(`/users/${customerApp.userId}`).once('value')).val();
     
     expect(userFromDb.info.displayName).toBe(customer.displayName);
     expect(userFromDb.info.email).toBe(customer.email);
@@ -33,4 +39,8 @@ describe('Mezcalmos', () => {
 
     browser.close()
   });
+});
+
+afterAll(() => {
+  admin.app().delete()
 });

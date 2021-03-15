@@ -3,7 +3,12 @@ const fs = require('fs');
 const axios = require('axios');
 const admin = require("firebase-admin");
 const puppeteer = require('puppeteer');
-const CustomerApp = require("../classes/apps/customerApp")
+const CustomerApp = require("./libraries/apps/customerApp")
+const helper = require("./libraries/helpers")
+admin.initializeApp({
+  projectId: "mezcalmos-31f1c",
+  databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com"
+});
 
 function checkIfWebsiteIsUp(){
   http.get('http://localhost:4000/', function (res) {
@@ -32,18 +37,10 @@ console.log("Load Data: Starting Up")
 
 async function loadData(dataFolderName = "dummyData"){
   //clear DB
-  await axios.put("http://localhost:9000/.json?ns=mezcalmos-31f1c-default-rtdb", {})
-  //clear Auth
-  let app = admin.initializeApp({
-    projectId: "mezcalmos-31f1c",
-    databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com"
-  });
-  let userList = await admin.auth().listUsers(100)
-  userList.users.forEach((userRecord) => {
-    admin.auth().deleteUser(userRecord.uid)
-  });
+  await helper.clearDatabase(admin)
+
   // Get test data
-  let rawData = fs.readFileSync(`test/data/${dataFolderName}/database_export/mezcalmos-31f1c-default-rtdb.json`, "utf8")
+  let rawData = fs.readFileSync(`../test/data/${dataFolderName}/database_export/mezcalmos-31f1c-default-rtdb.json`, "utf8")
   let data = JSON.parse(rawData)
   // Create Users
   let oldUsers = {}
@@ -66,8 +63,8 @@ async function loadData(dataFolderName = "dummyData"){
   data = JSON.parse(rawData)
   
   // Write data
-  axios.put("http://localhost:9000/.json?ns=mezcalmos-31f1c-default-rtdb", data)
-  // app.delete();
+  await admin.database().ref(`/`).set(data);
+  admin.app().delete()
   console.log("\nLoad Data: Finished")
 }
 
