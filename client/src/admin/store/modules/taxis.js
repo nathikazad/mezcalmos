@@ -30,13 +30,16 @@ export default {
     }
   },
   actions: {
-    async loadTaxis(context, payload) {
+    async loadTaxis(context) {
       let users = (await firebaseDatabase().ref(`users`).once("value")).val()
       let taxis = (await firebaseDatabase().ref(`taxiDrivers`).once("value")).val()
       for(let key in taxis){
         taxis[key].info = users[key].info
       }
       context.commit('saveTaxis', taxis)
+    },
+    approveAuthorizationRequest(_, payload) {
+      cloudCall('approveAuthorizationRequest', {userType: "taxi", userId: payload.userId})
     }
   },
   mutations: {

@@ -45,9 +45,19 @@ const router = new VueRouter({
   ]
 })
 
+router.redirectAuthorizationPendingUsers = function () {
+  if(store.getters["admin/messageCount"] > 0) {
+    router.push('/messageAdmin')
+  } else {
+    router.push('/confirmation')
+  }
+}
+
 router.beforeEach(async function (to, from, next) {
   if (to.path == "/incoming" ){
-    if (!store.getters.canTaxi && to.path != '/howToTaxi') {
+    if (store.getters.authorizationPending){
+      router.redirectAuthorizationPendingUsers()
+    } else if (!store.getters.canTaxi && to.path != '/howToTaxi') {
       next('/howToTaxi')
     } else if (store.getters.isInTaxi && to.path != `/orders/${store.getters.currentOrderId}`) {
       next(`/orders/${store.getters.currentOrderId}`);
