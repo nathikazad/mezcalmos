@@ -33,7 +33,6 @@ async function firebaseCallback(user) {
     askForNotification('taxi', store)
     if(!store.getters.canTaxi) {
       if(router.currentRoute.path != "/howToTaxi"){
-        console.log(100)
         router.push({ path: "/howToTaxi" })
       }
     } else {
