@@ -1,6 +1,5 @@
 var http = require('http');
 const fs = require('fs');
-const axios = require('axios');
 const admin = require("firebase-admin");
 const puppeteer = require('puppeteer');
 const CustomerApp = require("./libraries/apps/customerApp")
