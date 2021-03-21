@@ -68,7 +68,7 @@ router.beforeEach(async function (to, from, next) {
   } else if (to.meta.requiresAuth && !store.getters.loggedIn) {
     next({ path: '/auth', query: { redirect: to.path }});
   } else if (to.meta.requiresAuth && store.getters.loggedIn &&
-    !store.getters.canTaxi) {
+    !store.getters.canTaxi && to.name != "messageAdmin") {
     next('/howToTaxi');
   } else if (to.meta.requiresUnauth && store.getters.loggedIn) {
     next('/');
