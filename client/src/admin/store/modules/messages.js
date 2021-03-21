@@ -1,9 +1,15 @@
-import { firebaseDatabase, cloudCall } from '@/shared/config/firebase'
+import {
+  firebaseDatabase,
+  cloudCall
+} from '@/shared/config/firebase'
 export default {
   namespaced: true,
   state() {
     return {
-      messages: {customer:{}, taxi: {}}
+      messages: {
+        customer: {},
+        taxi: {}
+      }
     };
   },
   getters: {
@@ -16,22 +22,36 @@ export default {
   },
   actions: {
     async loadMessages(context) {
-      
-      firebaseDatabase().ref(`adminChat/customer/current`).on('value', function(snapshot) {
-        context.commit('saveCustomerMessages', snapshot.val())
+      console.log(this);
+
+      firebaseDatabase().ref(`adminChat/customer/current`).on('value', function (snapshot) {
+        let currentCustomerMessages = {}
+        if (snapshot.val()) {
+          for (const customerId in snapshot.val()) {
+
+            let ticketId = Object.keys(snapshot.val()[customerId])[0];
+            let currentMessage = Object.values(snapshot.val()[customerId])[0]
+            currentMessage['ticketId'] = ticketId
+            currentCustomerMessages[customerId] = currentMessage
+
+          }
+        }
+        context.commit('saveCustomerMessages', currentCustomerMessages)
       })
 
-      firebaseDatabase().ref(`adminChat/taxi/current`).on('value', function(snapshot) {
+      firebaseDatabase().ref(`adminChat/taxi/current`).on('value', function (snapshot) {
         context.commit('saveTaxiMessages', snapshot.val())
       })
-      
+
       context.commit('saveLogoutCallback', {
-        func:function() {
+        func: function () {
           firebaseDatabase().ref(`adminChat/customer/current`).off()
           firebaseDatabase().ref(`adminChat/taxi/current`).off()
-        }, 
+        },
         args: []
-      }, { root: true })
+      }, {
+        root: true
+      })
     },
     async createTicket(_, payload) {
       let ticket = {
@@ -47,24 +67,27 @@ export default {
       let userId = payload.userId
       let userType = payload.userType
 
-      let response = await cloudCall('resolveAdminChat', { userType: userType, userId: userId });
+      let response = await cloudCall('resolveAdminChat', {
+        userType: userType,
+        userId: userId
+      });
       console.log(response)
       return response;
-      
+
     },
     messageUser(context, payload) {
       let adminId = context.rootGetters.userId
       let userId = payload.userId
       let userType = payload.userType
       let chatObject = context.state.messages[userType][userId]
-      let chatId = Object.keys(chatObject)[0]
+      let chatId = payload.ticketId
       let newMessage = {
         message: payload.message,
         adminId: adminId,
         timestamp: (new Date()).toUTCString()
       }
       firebaseDatabase().ref(`adminChat/${userType}/current/${userId}/${chatId}/messages`).push(newMessage);
-      if(!chatObject["admins"] || !chatObject["admins"][adminId]){
+      if (!chatObject["admins"] || !chatObject["admins"][adminId]) {
         let info = context.rootGetters.userInfo
         let adminInfo = {
           displayName: info.displayName,

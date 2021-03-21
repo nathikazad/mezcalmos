@@ -11,6 +11,7 @@
         &nbsp; {{ userInfo.phone }}
       </h3>
     </div>
+
     <div class="actions fill_width flex space_between">
       <base-button class="w-45 elevate_1" :mode="{ dark: true, bg_diagonal: true }">
         <fa icon="pencil-alt"></fa>&nbsp;&nbsp;
@@ -28,6 +29,14 @@ export default {
   computed: {
     userInfo() {
       return this.$store.getters["userInfo"];
+    }
+  },
+  methods: {
+    async createTicket() {
+      await this.$store.dispatch("admin/createTicket");
+    },
+    async messageAdmin() {
+      await this.$store.dispatch("admin/messageAdmin", { message: "hi" });
     }
   }
 };

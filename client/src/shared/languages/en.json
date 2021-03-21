@@ -101,7 +101,8 @@
             "myOrders": "My Orders",
             "savedLocations": "Saved Locations",
             "logout": "Logout",
-            "login": "Login"
+            "login": "Login",
+            "contactAdmin": "Contact Admin"
         },
         "header": {
             "alert": "Order status changed"

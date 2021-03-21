@@ -107,6 +107,11 @@ export default {
           text: this.$t("shared.navDrawer.myOrders"),
           icon: "shopping-cart",
           to: "/orders"
+        },
+        {
+          text: this.$t("shared.navDrawer.contactAdmin"),
+          icon: "id-card-alt",
+          to: "/contactAdmin"
         }
       ];
       if (this.appName == "customer") {

@@ -1,4 +1,6 @@
-import { firebaseDatabase } from '@/shared/config/firebase'
+import {
+  firebaseDatabase
+} from '@/shared/config/firebase'
 // import { apolloClient } from '@/config/apollo'
 // import gql from 'graphql-tag'
 export default {
@@ -15,10 +17,14 @@ export default {
   actions: {
     async loadAdminAuth(context) {
       let userId = context.rootGetters.userId
+      console.log(`admins/${userId}/authorized`);
+
       let isAdmin = (await firebaseDatabase().ref(`admins/${userId}/authorized`).once('value')).val();
-      isAdmin = isAdmin != null && isAdmin == true 
+      console.log('is admin ', isAdmin);
+
+      isAdmin = isAdmin != null && isAdmin == true
       context.commit('saveIsAdmin', isAdmin)
-      if(isAdmin) {
+      if (isAdmin) {
         context.dispatch('messages/loadMessages')
       }
     }

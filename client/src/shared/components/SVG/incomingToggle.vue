@@ -175,7 +175,7 @@ export default {};
 .f,
 .g {
   font-size: 12px;
-  font-family: ProductSans-Bold, Product Sans;
+  font-family: "productSansBold";
   font-weight: 700;
 }
 .h {
