@@ -1,6 +1,94 @@
 {
   "rules": {
-    ".read": "now < 1610517600000",  // 2021-1-13
-    ".write": "now < 1610517600000",  // 2021-1-13
+    ".read": "false",
+    ".write": "false",
+    "users": {
+      ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true",
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "false",
+        "notificationInfo": {
+          ".read": "$uid === auth.uid",
+          ".write": "$uid === auth.uid"
+        },
+        "info" : {
+          "language": {
+            ".read": "$uid === auth.uid",
+            ".write": "$uid === auth.uid"
+          }
+        }
+      }
+    },
+    "taxiDrivers": {
+      ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true",
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        "state": {
+          "isLooking": {
+            ".write": "$uid === auth.uid"
+          }
+        },
+        "location": {
+          ".write": "$uid === auth.uid"
+        }
+      }
+    },
+    "openOrders": {
+      ".read": "root.child('taxiDrivers/' + auth.uid + '/state/authorizationStatus').val() === 'authorized' || root.child('admins/' + auth.uid + '/authorized').val() === true"
+    },
+    "inProcessOrders": {
+      ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true"
+    },
+    "orders": {
+      ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true",
+      "$orderType": {
+        "$orderId": {
+          ".read": "root.child('orders/' + $orderType + '/' + $orderId + '/status').val() === 'lookingForTaxi' || root.child('orders/' + $orderType + '/' + $orderId + '/customer/id').val() === auth.uid || root.child('orders/' + $orderType + '/' + $orderId + '/driver/id').val() === auth.uid",
+          "driver": {
+            "location": {
+              ".write": "root.child('orders/' + $orderType + '/' + $orderId + '/driver/id').val() === auth.uid"
+            }
+          }
+        }
+      }
+    },
+    "notifications":{
+      "$userType": {
+        "$uid": {
+          ".write": "$uid === auth.uid",
+          ".read": "$uid === auth.uid"
+        }
+      }
+    },
+    "admins": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "false"
+      }
+    },
+    "adminChat": {
+      ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true",
+      ".write": "false",
+      "$userType": {
+        "current": {
+          "$uid": {
+            ".read": "$uid === auth.uid",
+            "$chatId": {
+              "messages": {
+                ".write": "$uid === auth.uid || root.child('admins/' + auth.uid + '/authorized').val() === true"
+              },
+              "admins": {
+                ".write": "root.child('admins/' + auth.uid + '/authorized').val() === true"
+              }
+            }
+          }
+        },
+        "past": {
+          "$uid": {
+            ".read": "$uid === auth.uid"
+          }
+        }
+      }
+    }
   }
 }

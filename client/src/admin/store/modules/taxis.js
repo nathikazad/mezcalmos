@@ -1,4 +1,4 @@
-import { firebaseDatabase } from '@/shared/config/firebase'
+import { firebaseDatabase, cloudCall } from '@/shared/config/firebase'
 // import { apolloClient } from '@/config/apollo'
 // import gql from 'graphql-tag'
 export default {
@@ -30,13 +30,17 @@ export default {
     }
   },
   actions: {
-    async loadTaxis(context, payload) {
+    async loadTaxis(context) {
       let users = (await firebaseDatabase().ref(`users`).once("value")).val()
       let taxis = (await firebaseDatabase().ref(`taxiDrivers`).once("value")).val()
       for(let key in taxis){
         taxis[key].info = users[key].info
       }
       context.commit('saveTaxis', taxis)
+    },
+    async approveAuthorizationRequest(_, payload) {
+      let response = await cloudCall('approveAuthorizationRequest', {userType: "taxi", userId: payload.userId})
+      return response
     }
   },
   mutations: {

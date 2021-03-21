@@ -29,6 +29,14 @@
         "adminTest": [
           "admins-in-test"
         ]
+      },
+      "database": {
+        "main": [
+          "mezcalmos-31f1c"
+        ],
+        "test": [
+          "mezcalmos-31f1c-default-rtdb"
+        ]
       }
     }
   }

@@ -1,12 +1,10 @@
-import {
-  firebaseDatabase
-} from '@/shared/config/firebase'
+import { firebaseDatabase } from '@/shared/config/firebase'
 // import { apolloClient } from '@/config/apollo'
 // import gql from 'graphql-tag'
 export default {
   state() {
     return {
-      canTaxi: false,
+      authorizationStatus: "none",
       isLooking: false,
       currentOrder: { id: null, value: null },
       driverLocation: null,
@@ -15,7 +13,10 @@ export default {
   },
   getters: {
     canTaxi(state) {
-      return state.canTaxi;
+      return state.authorizationStatus == "authorized";
+    },
+    authorizationPending(state) {
+      return state.authorizationStatus == "pending";
     },
     isLooking(state) {
       return state.isLooking;
@@ -38,8 +39,7 @@ export default {
       context.commit('saveWatchPositionCallback', {
         func: function () {
           context.dispatch('incomingOrders/updateDistances')
-        },
-        args: []
+        }, args: []
       }, { root: true })
 
       let updateDriverIntervalId = setInterval(function () {
@@ -78,10 +78,7 @@ export default {
   },
   mutations: {
     saveTaxiAuth(state, payload) {
-      state.canTaxi = payload.canTaxi;
-    },
-    setTaxi(state, payload) {
-      state.currentOrder = payload
+      state.authorizationStatus = payload;
     },
     setIsLooking(state, payload) {
       state.isLooking = payload;
@@ -96,21 +93,21 @@ export default {
       }
     },
     clearAll(state){
-      state.canTaxi = false,
-      state.isLooking = false,
-      state.currentOrder = { id: null, value: null },
-      state.driverLocation = null,
-      state.lastLocationUpdateTime=  null
+      state.authorizationStatus = "none"
+      state.isLooking = false
+      state.currentOrder = { id: null, value: null }
+      state.driverLocation = null
+      state.lastLocationUpdateTime =  null
     }
   }
 }
 
 async function storeState(newState, context) {
-  if (newState && newState.authorized) {
-    context.commit('saveTaxiAuth', {
-      canTaxi: true
-    })
-  } else {
+  if (!newState || !newState.authorizationStatus) {
+    return
+  }
+  context.commit('saveTaxiAuth', newState.authorizationStatus)
+  if (newState.authorizationStatus != "authorized" ) {
     return
   }
   if (newState.inTaxi) {

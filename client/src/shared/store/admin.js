@@ -13,8 +13,10 @@ export default {
     async loadAdmin(context) {
       let userId = context.rootGetters.userId
       let userType = context.rootGetters.appName
+      let chat = (await firebaseDatabase().ref(`adminChat/${userType}/current/${userId}`).once('value')).val()
+      saveMessages(context, chat)
       firebaseDatabase().ref(`adminChat/${userType}/current/${userId}`).on('value', function(snapshot) {
-        context.commit('saveChat', snapshot.val())
+        saveMessages(context, snapshot.val())
       })
       context.commit('saveLogoutCallback', {
         func:function(userId, userType, context) {
@@ -36,13 +38,18 @@ export default {
       }
       let userId = context.rootGetters.userId
       let userType = context.rootGetters.appName
-      let chatId = Object.keys(context.state.chat)[0]
+      let chatId = context.state.chat.chatId
       let newMessage = {
         message: payload.message,
         userId: userId,
         timestamp: (new Date()).toUTCString()
       }
       firebaseDatabase().ref(`adminChat/${userType}/current/${userId}/${chatId}/messages`).push(newMessage);
+    },
+    submitAuthorizationRequest(context) {
+      let userType = context.rootGetters.appName
+      if (userType == "customer") return
+      cloudCall('submitAuthorizationRequest', {userType: userType})
     }
   },
   mutations: {
@@ -53,6 +60,24 @@ export default {
   getters: {
     chat(state) {
       return state.chat;
+    },
+    messageCount(state) {
+      if(!state.chat || !state.chat.messages) {
+        return 0
+      }
+      return Object.keys(state.chat.messages).length
     }
   }
 };
+
+function saveMessages(context, chat) {
+  if(chat){
+    let chatId = Object.keys(chat)[0]
+    chat["chatId"] = chatId
+    chat = Object.assign({}, chat, chat[chatId]);
+    delete chat[chatId]
+    context.commit('saveChat', chat)
+  } else {
+    context.commit('saveChat', null)
+  }
+}

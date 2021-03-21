@@ -104,6 +104,21 @@ exports.finishGroceryOrder = functions.https.onCall(async (data, context) => {
   return response
 });
 
+
+exports.submitAuthorizationRequest = functions.https.onCall(async (data, context) => {
+  let firebase = getFirebase(data.database);
+  data.userId = context.auth.uid
+  let response = await admin.submitAuthorizationRequest(firebase, data)
+  return response
+});
+
+exports.approveAuthorizationRequest = functions.https.onCall(async (data, context) => {
+  let firebase = getFirebase(data.database);
+  data.adminId = context.auth.uid
+  let response = await admin.approveAuthorizationRequest(firebase, data)
+  return response
+});
+
 exports.createAdminChat = functions.https.onCall(async (data, context) => {
   let firebase = getFirebase(data.database);
   if(data.fromAdmin){

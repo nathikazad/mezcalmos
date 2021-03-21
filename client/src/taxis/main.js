@@ -28,27 +28,25 @@ async function firebaseCallback(user) {
       photoURL: user.photoURL,
       loggedIn: true
     })
-    store.dispatch("notifications/loadNotificationsForTaxi");
+    
     await store.dispatch('loadTaxiAuth');
-    askForNotification('taxi', store)
-    if(!store.getters.canTaxi){
-      router.push({ path: "/howToTaxi" })
-    } else {
+    askForNotification('taxi', store);
+    store.dispatch("notifications/loadNotificationsForTaxi");
+    await store.dispatch("admin/loadAdmin");
+    
+    if (store.getters.authorizationPending) {
+      router.redirectAuthorizationPendingUsers()
+    } else if(store.getters.canTaxi) {
       store.dispatch("loadUserLocation");
-      if (router.currentRoute.path == "/auth") {
-        if (router.currentRoute.query.redirect) {
-          if (router.currentRoute.query.redirect == "/incoming" &&
-            store.getters.isInTaxi) {
-            router.push({ path: `/orders/${store.getters.currentOrderId}` });
-          } else {
-            router.push({ path: router.currentRoute.query.redirect })
-          }
-        } else {
-          router.push({ path: "/" })
-        }
+      if (store.getters.isInTaxi) {
+        router.push({ path: `/orders/${store.getters.currentOrderId}` });
+      } else if (router.currentRoute.query.redirect) {
+        router.push({ path: router.currentRoute.query.redirect })
       } else {
-        router.push({ path: "/" })
+        router.push("/incoming")
       }
+    } else if(router.currentRoute.path != "/howToTaxi") {
+      router.push({ path: "/howToTaxi" })
     }
   } else if (router.currentRoute.path != "/howToTaxi") {
     router.push({ path: "/howToTaxi" })

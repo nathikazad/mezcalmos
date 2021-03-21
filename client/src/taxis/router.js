@@ -21,8 +21,11 @@ Vue.use(VueRouter)
 const router = new VueRouter({
   mode: 'history',
   routes: [
+    { path: '/', redirect: '/incoming' },
     { path: '/incoming', component: IncomingOrdersPage, 
       meta: { requiresAuth: true }, name: 'home' },
+    { path: "/messageAdmin", component: MessagesPage,
+      meta: { requiresAuth: true }, name: "messageAdmin" },
     { path: '/messages/:orderId', component: MessagesPage, 
       meta: { requiresAuth: true }, name: "messages" },
     { path: "/notifications", component: NotificationsPage,
@@ -38,23 +41,34 @@ const router = new VueRouter({
     { path: '/howToTaxi', component: HowToTaxi, name: "howToTaxi" },
     { path: '/signUpTaxi', component: SignUpTaxi },
     { path: '/confirmation', component: Confirmation, name: "applicationUnderReview"},
-    { path: '/:notFound(.*)', component: NotFoundPage },
+    { path: '/:notFound(.*)', component: NotFoundPage },    
   ]
 })
 
+router.redirectAuthorizationPendingUsers = function () {
+  if(store.getters["admin/messageCount"] > 0 
+      && router.currentRoute.path != '/messageAdmin') {
+    router.push('/messageAdmin')
+  } else if (router.currentRoute.path != '/confirmation') {
+    router.push('/confirmation')
+  }
+}
+
 router.beforeEach(async function (to, from, next) {
-  if (to.meta.requiresAuth && !store.getters.loggedIn) {
-    next({ path: '/auth', query: { redirect: to.path }});
-  } else if (to.path == "/") {
-    if (store.getters.isInTaxi) {
+  if (to.path == "/incoming" ){
+    if (store.getters.authorizationPending){
+      router.redirectAuthorizationPendingUsers()
+    } else if (!store.getters.canTaxi && to.path != '/howToTaxi') {
+      next('/howToTaxi')
+    } else if (store.getters.isInTaxi && to.path != `/orders/${store.getters.currentOrderId}`) {
       next(`/orders/${store.getters.currentOrderId}`);
-    } else if (!store.getters.canTaxi) {
-      next('/howToTaxi');
     } else {
-      next("/incoming")
-    } 
+      next()
+    }
+  } else if (to.meta.requiresAuth && !store.getters.loggedIn) {
+    next({ path: '/auth', query: { redirect: to.path }});
   } else if (to.meta.requiresAuth && store.getters.loggedIn &&
-    !store.getters.canTaxi) {
+    !store.getters.canTaxi && to.name != "messageAdmin") {
     next('/howToTaxi');
   } else if (to.meta.requiresUnauth && store.getters.loggedIn) {
     next('/');

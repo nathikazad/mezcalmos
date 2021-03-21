@@ -85,7 +85,7 @@ async function accept(firebase, data, uid) {
   }
 
   let driverState = (await firebase.database().ref(`/taxiDrivers/${uid}/state`).once('value')).val();
-  if (!driverState.authorized) {
+  if (driverState.authorizationStatus != "authorized") {
     return {
       status: "Error",
       errorMessage: "User is not an authorized driver"
