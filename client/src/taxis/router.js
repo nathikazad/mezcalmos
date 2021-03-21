@@ -46,9 +46,10 @@ const router = new VueRouter({
 })
 
 router.redirectAuthorizationPendingUsers = function () {
-  if(store.getters["admin/messageCount"] > 0) {
+  if(store.getters["admin/messageCount"] > 0 
+      && router.currentRoute.path != '/messageAdmin') {
     router.push('/messageAdmin')
-  } else {
+  } else if (router.currentRoute.path != '/confirmation') {
     router.push('/confirmation')
   }
 }

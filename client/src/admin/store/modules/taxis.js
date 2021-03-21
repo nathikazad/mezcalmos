@@ -1,4 +1,4 @@
-import { firebaseDatabase } from '@/shared/config/firebase'
+import { firebaseDatabase, cloudCall } from '@/shared/config/firebase'
 // import { apolloClient } from '@/config/apollo'
 // import gql from 'graphql-tag'
 export default {
@@ -38,8 +38,9 @@ export default {
       }
       context.commit('saveTaxis', taxis)
     },
-    approveAuthorizationRequest(_, payload) {
-      cloudCall('approveAuthorizationRequest', {userType: "taxi", userId: payload.userId})
+    async approveAuthorizationRequest(_, payload) {
+      let response = await cloudCall('approveAuthorizationRequest', {userType: "taxi", userId: payload.userId})
+      return response
     }
   },
   mutations: {

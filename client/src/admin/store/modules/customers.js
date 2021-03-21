@@ -30,7 +30,7 @@ export default {
     }
   },
   actions: {
-    async loadCustomers(context, payload) {
+    async loadCustomers(context) {
       let customers = (await firebaseDatabase().ref(`users`).once("value")).val()
       context.commit('saveCustomers', customers)
     }

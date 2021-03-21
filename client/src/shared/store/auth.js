@@ -53,7 +53,7 @@ export default {
         if (lang) {
           context.commit('saveLanguage', lang)
         } else {
-          context.dispatch('setLanguage', context.language)
+          context.dispatch('setLanguage', context.state.language)
         }
       })
       context.commit('saveAuthData', payload)

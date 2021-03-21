@@ -115,7 +115,7 @@ exports.submitAuthorizationRequest = functions.https.onCall(async (data, context
 exports.approveAuthorizationRequest = functions.https.onCall(async (data, context) => {
   let firebase = getFirebase(data.database);
   data.adminId = context.auth.uid
-  let response = await admin.submitAuthorizationRequest(firebase, data)
+  let response = await admin.approveAuthorizationRequest(firebase, data)
   return response
 });
 

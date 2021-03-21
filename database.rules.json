@@ -9,6 +9,47 @@
         "notificationInfo": {
           ".read": "$uid === auth.uid",
           ".write": "$uid === auth.uid"
+        },
+        "info" : {
+          "language": {
+            ".read": "$uid === auth.uid",
+            ".write": "$uid === auth.uid"
+          }
+        }
+      }
+    },
+    "taxiDrivers": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+      }
+    },
+    "admins": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "false"
+      }
+    },
+    "adminChat": {
+      ".read": "root.child('admins/' + auth.uid + '/authorized')",
+      ".write": "false",
+      "$userType": {
+        "current": {
+          "$uid": {
+            ".read": "$uid === auth.uid",
+            "$chatId": {
+              "messages": {
+                ".write": "$uid === auth.uid || root.child('admins/' + auth.uid + '/authorized')"
+              },
+              "admins": {
+                ".write": "root.child('admins/' + auth.uid + '/authorized')"
+              }
+            }
+          }
+        },
+        "past": {
+          "$uid": {
+            ".read": "$uid === auth.uid"
+          }
         }
       }
     }

@@ -80,7 +80,7 @@ async function submitAuthorizationRequest(firebase, params) {
     return { status: "Error", errorMessage: "Required userId and userType" }
   }
 
-  let taxiDriver = (await firebase.database().ref(`/taxiDriver/${params.userId}`).once('value')).val()
+  let taxiDriver = (await firebase.database().ref(`/taxiDrivers/${params.userId}`).once('value')).val()
   if(taxiDriver && taxiDriver.state) { 
     if(taxiDriver.state.authorizationStatus == "authorized"){
       return { status: "Error", errorMessage: "Taxi driver already authorized" }
@@ -88,7 +88,7 @@ async function submitAuthorizationRequest(firebase, params) {
       return { status: "Error", errorMessage: "Taxi driver request still pending" }
     }
   }
-  await firebase.database().ref(`/taxiDriver/${params.userId}/state/authorizationStatus`).set('pending')
+  await firebase.database().ref(`/taxiDrivers/${params.userId}/state/authorizationStatus`).set('pending')
   createChat(firebase, params)
 }
 
@@ -101,13 +101,13 @@ async function approveAuthorizationRequest(firebase, params) {
     return { status: "Error", errorMessage: "Required userId and userType" }
   }
 
-  let taxiDriver = (await firebase.database().ref(`/taxiDriver/${params.userId}`).once('value')).val()
+  let taxiDriver = (await firebase.database().ref(`/taxiDrivers/${params.userId}`).once('value')).val()
   
   if(taxiDriver && taxiDriver.state &&
         taxiDriver.state.authorizationStatus != "pending") {
     return { status: "Error", errorMessage: "Taxi driver has not requested for approval" }
   }
 
-  await firebase.database().ref(`/taxiDriver/${params.userId}/state/authorizationStatus`).set('authorized')
+  await firebase.database().ref(`/taxiDrivers/${params.userId}/state/authorizationStatus`).set('authorized')
   resolve(firebase, params)
 }
