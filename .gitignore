@@ -9,4 +9,4 @@ database-debug.log
 ui-debug.log
 dist
 .vscode
-../test/data/newDummyData
+test/data/newDummyData

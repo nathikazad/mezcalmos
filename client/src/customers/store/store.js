@@ -4,9 +4,10 @@ import Vue from 'vue'
 import authModule from '@/shared/store/auth';
 import messagesModule from '@/shared/store/messages'
 import adminModule from '@/shared/store/admin'
+import locationModule from '@/shared/store/location';
+import loggerModule from '@/shared/store/logger';
 
 import taxisModule from './modules/taxis';
-import locationModule from '@/shared/store/location';
 import groceriesModule from './modules/groceries'
 import ordersModule from './modules/orders';
 import savedLocationsModule from './modules/savedLocations';
@@ -24,7 +25,8 @@ const store = new Vuex.Store({
     messages: messagesModule,
     savedLocations: savedLocationsModule,
     notifications: notificationsModule,
-    admin: adminModule
+    admin: adminModule,
+    logger: loggerModule
   },
   getters: {
     appName() {
