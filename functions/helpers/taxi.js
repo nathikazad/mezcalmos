@@ -18,18 +18,12 @@ async function request(firebase, data, uid) {
   }
   // Check valid values for from
   payload.from = data.from;
-  if (data.to) {
-    // Check valid values for to
-    payload.to = data.to;
-  }
-  if (data.distance) {
-    // Check valid values for to
-    payload.distance = data.distance;
-  }
-  if (data.duration) {
-    // Check valid values for to
-    payload.duration = data.duration;
-  }
+  
+    
+  payload.to = (data.to) ? data.to : null
+  payload.distance = (data.distance) ? data.distance : 0
+  payload.duration = (data.duration) ? data.duration : 0
+  
   let user = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val();
   payload.customer = {
     id: uid,
@@ -85,7 +79,7 @@ async function accept(firebase, data, uid) {
   }
 
   let driverState = (await firebase.database().ref(`/taxiDrivers/${uid}/state`).once('value')).val();
-  if (driverState.authorizationStatus != "authorized") {
+  if (!driverState || driverState.authorizationStatus != "authorized") {
     return {
       status: "Error",
       errorMessage: "User is not an authorized driver"

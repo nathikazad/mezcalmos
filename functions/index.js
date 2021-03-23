@@ -56,6 +56,12 @@ exports.requestTaxi = functions.https.onCall(async (data, context) => {
 });
 
 exports.acceptTaxiOrder = functions.https.onCall(async (data, context) => {
+  if (!context.auth) {
+    return {
+      status: "Error",
+      errorMessage: "User needs to be signed in"
+    }
+  }
   let firebase = getFirebase(data.database);
   let response = await taxi.accept(firebase, data, context.auth.uid)
   return response

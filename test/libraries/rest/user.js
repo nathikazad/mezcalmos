@@ -15,10 +15,14 @@ class User {
   }
 
   async callFunction(functionName, data) {
-    let response = await axios.post(`${url}${functionName}`, data, this.config)
-    console.log(response)
+    let response = await axios.post(`${url}${functionName}`, {data:data}, this.config)
     return response.data
   }  
+
+  async setImage(admin, img){
+    let response = await admin.database().ref(`/users/${this.id}/info`).set({photo:img})
+    console.log(response)
+  }
 
 }
 

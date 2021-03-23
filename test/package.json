@@ -12,7 +12,8 @@
     "loadData": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 node ./loadData.js",
     "emulator:loadData": "npm-run-all --parallel emulator loadData",
     "browserTests": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 jest --verbose .tests/browserTests",
-    "apiTests": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 jest --verbose .tests/apiTests"
+    "apiTests": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 jest --verbose .tests/apiTests",
+    "test": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 jest --verbose"
   },
   "author": "",
   "license": "ISC",

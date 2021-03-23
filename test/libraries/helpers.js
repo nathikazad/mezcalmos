@@ -9,5 +9,9 @@ module.exports = {
       });
       await admin.database().ref("/").remove()
     }
+  },
+
+  expectUnauthorized: async (func) => {
+    await expect(func()).rejects.toThrow("Request failed with status code 401");
   }
 }

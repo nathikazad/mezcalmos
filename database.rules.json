@@ -43,7 +43,7 @@
       ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true",
       "$orderType": {
         "$orderId": {
-          ".read": "root.child('orders/' + $orderType + '/' + $orderId + '/status').val() === 'lookingForTaxi' || root.child('orders/' + $orderType + '/' + $orderId + '/customer/id').val() === auth.uid || root.child('orders/' + $orderType + '/' + $orderId + '/driver/id').val() === auth.uid",
+          ".read": "(root.child('orders/' + $orderType + '/' + $orderId + '/status').val() === 'lookingForTaxi' && root.child('taxiDrivers/' + auth.uid + '/state/authorizationStatus').val() === 'authorized') || root.child('orders/' + $orderType + '/' + $orderId + '/customer/id').val() === auth.uid || root.child('orders/' + $orderType + '/' + $orderId + '/driver/id').val() === auth.uid",
           "driver": {
             "location": {
               ".write": "root.child('orders/' + $orderType + '/' + $orderId + '/driver/id').val() === auth.uid"
@@ -52,7 +52,12 @@
         }
       }
     },
-    "notifications":{
+    "chat": {
+      "$orderId": {
+        ".read": "root.child('chat/' + $orderId + '/participants/' + auth.uid).exists()"
+      }
+    },
+    "notifications": {
       "$userType": {
         "$uid": {
           ".write": "$uid === auth.uid",
