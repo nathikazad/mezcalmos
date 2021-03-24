@@ -33,9 +33,7 @@ export default {
     NavDrawer,
     askForPermission
   },
-  beforeCreate() {
-    this.$store.dispatch("admin/loadAdmin");
-  },
+
   data() {
     return {
       navDrawer: false,

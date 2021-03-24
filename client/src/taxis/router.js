@@ -11,6 +11,7 @@ import LoginPage from '@/shared/pages/user/Login'
 import HowToTaxi from './pages/introduction/howToTaxi'
 import SignUpTaxi from './pages/introduction/signUpTaxi'
 import Confirmation from './pages/introduction/confirmation'
+import MessageAdmin from "@/shared/pages/contact/View";
 
 
 import NotFoundPage from '@/shared/pages/NotFound'
@@ -20,43 +21,106 @@ Vue.use(VueRouter)
 
 const router = new VueRouter({
   mode: 'history',
-  routes: [
-    { path: '/', redirect: '/incoming' },
-    { path: '/incoming', component: IncomingOrdersPage, 
-      meta: { requiresAuth: true }, name: 'home' },
-    { path: "/messageAdmin", component: MessagesPage,
-      meta: { requiresAuth: true }, name: "messageAdmin" },
-    { path: '/messages/:orderId', component: MessagesPage, 
-      meta: { requiresAuth: true }, name: "messages" },
-    { path: "/notifications", component: NotificationsPage,
-      meta: { requiresAuth: true }, name: "notifications" },
-    { path: '/orders/:orderId', component: TaxiViewPage,
-      meta: { requiresAuth: true }, name: "taxiView" },
-    { path: '/orders', component: PastOrderstPage,
-      meta: { requiresAuth: true }, name: "orders" },
-    { path: '/userinfo', component: UserInformationPage,
-      meta: { requiresAuth: true } },
-    { path: '/auth', component: LoginPage,
-      meta: { requiresUnauth: true } },
-    { path: '/howToTaxi', component: HowToTaxi, name: "howToTaxi" },
-    { path: '/signUpTaxi', component: SignUpTaxi },
-    { path: '/confirmation', component: Confirmation, name: "applicationUnderReview"},
-    { path: '/:notFound(.*)', component: NotFoundPage },    
+  routes: [{
+      path: '/',
+      redirect: '/incoming'
+    },
+    {
+      path: '/incoming',
+      component: IncomingOrdersPage,
+      meta: {
+        requiresAuth: true
+      },
+      name: 'home'
+    },
+    {
+      path: "/contactAdmin",
+      component: MessageAdmin,
+      meta: {
+        requiresAuth: true
+      },
+      name: "messageAdmin"
+    },
+    {
+      path: '/messages/:orderId',
+      component: MessagesPage,
+      meta: {
+        requiresAuth: true
+      },
+      name: "messages"
+    },
+    {
+      path: "/notifications",
+      component: NotificationsPage,
+      meta: {
+        requiresAuth: true
+      },
+      name: "notifications"
+    },
+    {
+      path: '/orders/:orderId',
+      component: TaxiViewPage,
+      meta: {
+        requiresAuth: true
+      },
+      name: "taxiView"
+    },
+    {
+      path: '/orders',
+      component: PastOrderstPage,
+      meta: {
+        requiresAuth: true
+      },
+      name: "orders"
+    },
+    {
+      path: '/userinfo',
+      component: UserInformationPage,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/auth',
+      component: LoginPage,
+      meta: {
+        requiresUnauth: true
+      }
+    },
+
+    {
+      path: '/howToTaxi',
+      component: HowToTaxi,
+      name: "howToTaxi"
+    },
+    {
+      path: '/signUpTaxi',
+      component: SignUpTaxi
+    },
+    {
+      path: '/confirmation',
+      component: Confirmation,
+      name: "applicationUnderReview"
+    },
+    {
+      path: '/:notFound(.*)',
+      component: NotFoundPage
+    },
   ]
 })
 
 router.redirectAuthorizationPendingUsers = function () {
-  if(store.getters["admin/messageCount"] > 0 
-      && router.currentRoute.path != '/messageAdmin') {
-    router.push('/messageAdmin')
+  if (store.getters["admin/messageCount"] > 0 &&
+    router.currentRoute.path != '/contactAdmin') {
+    router.push('/contactAdmin')
   } else if (router.currentRoute.path != '/confirmation') {
     router.push('/confirmation')
   }
 }
 
 router.beforeEach(async function (to, from, next) {
-  if (to.path == "/incoming" ){
-    if (store.getters.authorizationPending){
+  if (to.path == "/incoming") {
+    if (store.getters.authorizationPending) {
       router.redirectAuthorizationPendingUsers()
     } else if (!store.getters.canTaxi && to.path != '/howToTaxi') {
       next('/howToTaxi')
@@ -66,7 +130,12 @@ router.beforeEach(async function (to, from, next) {
       next()
     }
   } else if (to.meta.requiresAuth && !store.getters.loggedIn) {
-    next({ path: '/auth', query: { redirect: to.path }});
+    next({
+      path: '/auth',
+      query: {
+        redirect: to.path
+      }
+    });
   } else if (to.meta.requiresAuth && store.getters.loggedIn &&
     !store.getters.canTaxi && to.name != "messageAdmin") {
     next('/howToTaxi');

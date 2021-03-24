@@ -29,9 +29,19 @@
                   <v-list-item-content>
                     <v-list-item-title>{{deepFind(driver,'info.displayName')}}</v-list-item-title>
 
-                    <v-list-item-subtitle>
-                      Is
-                      <span class="info--text">Customer</span>
+                    <v-list-item-subtitle class="d-flex align-center justify-space-between">
+                      <v-chip
+                        class="ma-2 dark"
+                        :color="deepFind(driver,'state.authorizationStatus')=='pending'?'warning':'success'"
+                      >{{deepFind(driver,'state.authorizationStatus')}}</v-chip>
+                      <v-spacer></v-spacer>
+                      <div
+                        class="d-flex"
+                        v-if="deepFind(driver,'state.authorizationStatus')=='pending'"
+                      >
+                        <v-btn color="success" @click="acceptTaxi(id)">Accept</v-btn>
+                        <v-btn color="info ml-2">Message</v-btn>
+                      </div>
                     </v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
@@ -121,7 +131,7 @@ export default {
       return this.$store.getters["taxis/list"](this.query);
     },
     orders() {
-      if (this.selectedUser!=null) {
+      if (this.selectedUser != null) {
         return this.deepFind(
           Object.values(this.drivers),
           `${this.selectedUser}.orders`
@@ -131,7 +141,7 @@ export default {
       }
     },
     orderDetails() {
-      if (this.orders && this.selectedOrder) {
+      if (this.orders && this.selectedOrder != null) {
         return Object.values(this.orders)[this.selectedOrder];
       } else {
         return null;
@@ -145,9 +155,9 @@ export default {
       query: "",
       orderFields: [
         {
-          title: "From",
+          title: "Status",
           val: () => {
-            return this.deepFind(this.orderDetails, `routeInformation.address`);
+            return this.deepFind(this.orderDetails, `status`);
           }
         },
         {
@@ -208,9 +218,13 @@ export default {
     // await this.$store.dispatch("order/unloadOrder");
   },
   methods: {
-    // async acceptOrder() {
-    //   await this.$store.dispatch("order/acceptOrder")
-    // }
+    async acceptTaxi(id) {
+      let response = await this.$store.dispatch(
+        "taxis/approveAuthorizationRequest",
+        { userId: id }
+      );
+      console.log(response);
+    }
   }
 };
 </script>

@@ -8,15 +8,20 @@
     <div class="login_action txt_center">
       <h3 class="regular" v-html="$t('taxi.introduction.signUpTaxi')"></h3>
       <base-button
+        v-if="!isLoggedIn"
         class="fill_width elevate_1 btn"
         :mode="{ dark: true }"
-        :link="true"
-        :to="{
-              path: '/confirmation',
-             
-            }"
+        @click.native="login"
       >
         <span class="t-8 regular">{{$t('taxi.introduction.fbBtn')}}</span>
+      </base-button>
+      <base-button
+        v-else
+        class="fill_width elevate_1 btn"
+        :mode="{ dark: true, bg_diagonal: true }"
+        @click.native="sendRequest()"
+      >
+        <span class="t-8 regular">Continue</span>
       </base-button>
     </div>
   </div>
@@ -32,8 +37,23 @@ export default {
   },
   components: { Taxi2 },
   methods: {
+    isLoggedIn() {
+      return this.$store.getters.loggedIn;
+    },
+    async login() {
+      await this.$store.dispatch("login");
+      this.$emit("closeNavDrawer");
+    },
     handleError() {
       this.error = null;
+    },
+    async sendRequest() {
+      let response = await this.$store.dispatch(
+        "admin/submitAuthorizationRequest"
+      );
+      console.log(response);
+
+      this.$router.push("/confirmation");
     }
   }
 };

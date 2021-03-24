@@ -20,30 +20,31 @@
           </div>
           <v-list two-line flat>
             <v-list-item-group v-model="selectedUser" color="primary">
-              <template v-for="(customer,id) in customers">
+              <template v-for="(user,id) in users">
                 <v-list-item :key="id">
                   <v-list-item-avatar color="grey darken-1">
-                    <img :src="deepFind(customer,'userInfo.photo')" alt />
+                    <img :src="deepFind(user,'userInfo.photo')" alt />
                   </v-list-item-avatar>
 
                   <v-list-item-content>
-                    <v-list-item-title>{{deepFind(customer,'userInfo.displayName')}}</v-list-item-title>
+                    <v-list-item-title>{{deepFind(user,'userInfo.displayName')}}</v-list-item-title>
 
                     <v-list-item-subtitle>
                       Is
-                      <span class="info--text">{{deepFind(customer,'userType')}}</span>
+                      <span class="info--text">{{deepFind(user,'userType')}}</span>
                     </v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
 
                 <v-divider
-                  v-if="id !== Object.keys(customers)[Object.keys(customers).length-1]"
+                  v-if="id !== Object.keys(user)[Object.keys(user).length-1]"
                   :key="`divider-${id}`"
                   inset
                 ></v-divider>
               </template>
             </v-list-item-group>
           </v-list>
+          <v-divider></v-divider>
         </v-card>
       </v-col>
       <v-col cols="3">
@@ -61,7 +62,6 @@ export default {
   components: { chat },
   data() {
     return {
-      sections: ["Senders", "Messages", "Orders", "Order Details", "Driver "],
       query: "",
       selectedUser: null
     };
@@ -70,11 +70,22 @@ export default {
     customers() {
       return this.$store.getters["messages/listCustomerMessages"];
     },
+    taxis() {
+      return this.$store.getters["messages/listTaxiMessages"];
+    },
+    users() {
+      let users = {};
+      if (this.customers) {
+        users = { ...users, ...this.customers };
+      }
+      if (this.taxis) {
+        users = { ...users, ...this.taxis };
+      }
+      return users;
+    },
     selectedChat() {
-      console.log(this.customers, this.selectedUser);
-
-      if (this.customers && this.selectedUser != null) {
-        return Object.values(this.customers)[this.selectedUser];
+      if (this.users && this.selectedUser != null) {
+        return Object.values(this.users)[this.selectedUser];
       } else {
         return null;
       }

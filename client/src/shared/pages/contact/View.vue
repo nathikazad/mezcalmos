@@ -66,7 +66,6 @@ export default {
     },
     sender() {
       let chat = this.$store.getters["admin/chat"];
-     chat=chat?Object.values(chat)[0]:null
 
       if (this.deepFind(chat, "admins")) {
         let senderKey = Object.keys(this.deepFind(chat, "admins"));
@@ -78,7 +77,7 @@ export default {
       };
     },
     recipient() {
-      let recipient = this.chat ? Object.values(this.chat)[0].userInfo : null;
+      let recipient = this.chat ? this.chat.userInfo : null;
 
       return recipient;
     },
@@ -86,7 +85,7 @@ export default {
     messages() {
       let msgs = null;
       if (this.chat) {
-        msgs = Object.values(this.chat)[0].messages;
+        msgs = this.chat.messages;
       }
       return msgs;
     }

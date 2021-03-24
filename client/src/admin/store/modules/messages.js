@@ -22,10 +22,11 @@ export default {
   },
   actions: {
     async loadMessages(context) {
-      console.log(this);
+
 
       firebaseDatabase().ref(`adminChat/customer/current`).on('value', function (snapshot) {
         let currentCustomerMessages = {}
+
         if (snapshot.val()) {
           for (const customerId in snapshot.val()) {
 
@@ -40,7 +41,18 @@ export default {
       })
 
       firebaseDatabase().ref(`adminChat/taxi/current`).on('value', function (snapshot) {
-        context.commit('saveTaxiMessages', snapshot.val())
+        let currentTaxiMessages = {}
+        if (snapshot.val()) {
+          for (const taxiId in snapshot.val()) {
+
+            let ticketId = Object.keys(snapshot.val()[taxiId])[0];
+            let currentMessage = Object.values(snapshot.val()[taxiId])[0]
+            currentMessage['ticketId'] = ticketId
+            currentTaxiMessages[taxiId] = currentMessage
+
+          }
+        }
+        context.commit('saveTaxiMessages', currentTaxiMessages)
       })
 
       context.commit('saveLogoutCallback', {

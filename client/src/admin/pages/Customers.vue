@@ -131,7 +131,7 @@ export default {
       }
     },
     orderDetails() {
-      if (this.orders && this.selectedOrder) {
+      if (this.orders && this.selectedOrder != null) {
         return Object.values(this.orders)[this.selectedOrder];
       } else {
         return null;
@@ -145,9 +145,9 @@ export default {
       query: "",
       orderFields: [
         {
-          title: "From",
+          title: "Status",
           val: () => {
-            return this.deepFind(this.orderDetails, `routeInformation.address`);
+            return this.deepFind(this.orderDetails, `status`);
           }
         },
         {

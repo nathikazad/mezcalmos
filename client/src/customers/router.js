@@ -8,7 +8,7 @@ import GroceryRequestPage from "./pages/services/groceries/Request";
 import GroceryAddItemPage from "./pages/services/groceries/AddItem";
 
 import OrdersListPage from "./pages/orders/List";
-import MessageAdmin from "./pages/messages/View";
+import MessageAdmin from "@/shared/pages/contact/View";
 import UserInformationPage from "@/shared/pages/user/Information";
 import MessagesPage from "@/shared/pages/messages/View";
 import NotificationsPage from "@/shared/pages/notification/view";
