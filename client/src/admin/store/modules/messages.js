@@ -6,6 +6,7 @@ export default {
   namespaced: true,
   state() {
     return {
+      currentMessages: null,
       messages: {
         customer: {},
         taxi: {}
@@ -18,6 +19,9 @@ export default {
     },
     listTaxiMessages(state) {
       return state.messages["taxi"];
+    },
+    currentMessages(state) {
+      return state.currentMessages;
     },
   },
   actions: {
@@ -107,6 +111,22 @@ export default {
         }
         firebaseDatabase().ref(`adminChat/${userType}/current/${userId}/${chatId}/admins/${adminId}`).set(adminInfo);
       }
+    },
+    loadCurrentMessages(context, payload) {
+      let userId = payload.userId
+      let userType = payload.userType
+      firebaseDatabase().ref(`adminChat/${userType}/current/${userId}`).on('value', snapshot => {
+        let currentMessages = null;
+        if (snapshot.val()) {
+          let ticketId = Object.keys(snapshot.val())[0]
+          let messageObject = Object.values(snapshot.val())[0]
+          currentMessages = {
+            ...messageObject,
+            ticketId: ticketId
+          }
+        }
+        context.commit('saveCurrentMessages',currentMessages)
+      })
     }
   },
   mutations: {
@@ -115,6 +135,9 @@ export default {
     },
     saveTaxiMessages(state, payload) {
       state.messages["taxi"] = payload;
+    },
+    saveCurrentMessages(state, payload) {
+      state.currentMessages = payload;
     }
   }
 }

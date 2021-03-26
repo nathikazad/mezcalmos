@@ -137,6 +137,8 @@ export default {
     notifLink(notif) {
       if (notif.notificationType == "newMessage") {
         return `/messages/${notif.orderId}`;
+      } else if (notif.notificationType == "newAdminMessage") {
+        return `/contactAdmin`;
       } else {
         return `/services/${notif.orderType}/${notif.orderId}`;
       }

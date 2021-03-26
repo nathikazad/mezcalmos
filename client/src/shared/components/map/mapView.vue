@@ -288,7 +288,13 @@ export default {
       markers: []
     };
   },
-  mounted() {},
+  mounted() {
+    this.$store.dispatch("logger/log", {
+      userType: this.$store.getters.appName,
+      callType: "mapLoad",
+      route: this.$route.path
+    });
+  },
   methods: {
     reRenderMarker() {
       this.showMarker = false;

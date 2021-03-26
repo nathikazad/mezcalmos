@@ -6,10 +6,27 @@
         @close="redirectAlertTo($event,'close',alert)"
         @click.native="redirectAlertTo($event,'redirect',alert)"
       >
-        <div slot="sender" class="flex align_center" v-if="alert.sender">
+        <div slot="sender" class="flex align_center" v-if="alert.notificationType == 'newMessage'">
           <avatar size="2.4rem" :url="alert.sender.image" slot="image"></avatar>
           <div class="card_text">
             <div class="bold">{{ alert.sender.name }}</div>
+            <div>
+              <span slot="param" class="t-8">
+                {{
+                alert.message | formatMessage(30)
+                }}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          slot="sender"
+          class="flex align_center"
+          v-else-if="alert.notificationType == 'newAdminMessage'"
+        >
+          <avatar size="2.4rem" :url="require('@/shared/static/img/logo.png')" slot="image"></avatar>
+          <div class="card_text">
+            <div class="bold">{{ 'Mezcalmos' }}</div>
             <div>
               <span slot="param" class="t-8">
                 {{
@@ -118,6 +135,8 @@ export default {
       } else {
         if (alert.notificationType == "newMessage") {
           this.$router.push(`/messages/${alert.orderId}`);
+        } else if (alert.notificationType == "newAdminMessage") {
+          this.$router.push(`/contactAdmin`);
         } else {
           this.$router.push(`/services/${alert.orderType}/${alert.orderId}`);
         }

@@ -1,6 +1,19 @@
 <template>
   <div>
     <!-- Message type -->
+    <card2 class="bg_white border card wrap" v-if="notif.notificationType=='newAdminMessage'">
+      <avatar size="2.4rem" :url="require('@/shared/static/img/logo.png')" slot="image"></avatar>
+
+      <div slot="title" class="bold">{{ 'Mezcalmos' }}</div>
+      <div slot="desc">
+        <span slot="param" class="t-8">{{ notif.message }}</span>
+      </div>
+      <span slot="aside" class="regular">
+        <fa icon="clock"></fa>
+        &nbsp;{{ notif.time | moment("LT") }}
+      </span>
+    </card2>
+    <!-- Message type -->
     <card2 class="bg_white border card wrap" v-if="notif.notificationType=='newMessage'">
       <avatar size="2.4rem" :url="notif.sender.image" slot="image"></avatar>
 
@@ -15,7 +28,7 @@
     </card2>
     <!-- Order type -->
     <card2
-      class="bg_white border card wrap" 
+      class="bg_white border card wrap"
       v-else-if="notif.notificationType=='orderStatusChange'"
     >
       <div

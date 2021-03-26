@@ -48,7 +48,11 @@ export default MapElementFactory({
           } = this;
 
           if (!origin || !destination || !travelMode) return;
-
+          this.$store.dispatch("logger/log", {
+            userType: this.$store.getters.appName,
+            callType: "directions load",
+            route: this.$route.path
+          });
           directionsService.route({
               origin,
               destination,

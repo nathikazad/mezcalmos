@@ -134,6 +134,11 @@ export default {
                 this.saved.results = predections;
               }
             );
+            this.$store.dispatch("logger/log", {
+              userType: this.$store.getters.appName,
+              callType: "SearcForPlaces",
+              route: this.$route.path
+            });
           }, 3000);
         } else {
           this.saved.searching = false;

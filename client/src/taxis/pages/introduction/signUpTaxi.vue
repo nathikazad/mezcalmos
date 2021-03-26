@@ -35,11 +35,13 @@ export default {
       error: null
     };
   },
-  components: { Taxi2 },
-  methods: {
+  computed: {
     isLoggedIn() {
       return this.$store.getters.loggedIn;
-    },
+    }
+  },
+  components: { Taxi2 },
+  methods: {
     async login() {
       await this.$store.dispatch("login");
       this.$emit("closeNavDrawer");

@@ -1,7 +1,7 @@
 <template>
   <v-container class="py-8 px-6" fluid>
     <v-row>
-      <v-col cols="4">
+      <v-col cols="3">
         <!-- drivers list -->
         <v-card>
           <div class="d-flex justify-space-between align-center">
@@ -40,7 +40,7 @@
                         v-if="deepFind(driver,'state.authorizationStatus')=='pending'"
                       >
                         <v-btn color="success" @click="acceptTaxi(id)">Accept</v-btn>
-                        <v-btn color="info ml-2">Message</v-btn>
+                        <v-btn color="info ml-2" @click="LoadMessages(id)">Message</v-btn>
                       </div>
                     </v-list-item-subtitle>
                   </v-list-item-content>
@@ -56,8 +56,14 @@
           </v-list>
         </v-card>
       </v-col>
-      <v-col cols="4">
-        <!-- Orderssx list -->
+      <!-- chat component -->
+      <v-col cols="3" v-if="currentMessages">
+        <v-card>
+          <chat :chat="currentMessages"></chat>
+        </v-card>
+      </v-col>
+      <!-- Orderssx list -->
+      <v-col cols="3">
         <v-card v-if="orders">
           <div class="d-flex justify-space-between align-center">
             <v-subheader class="title bold">Orders</v-subheader>
@@ -93,7 +99,7 @@
         </v-card>
       </v-col>
       <!-- Orderssx Details -->
-      <v-col cols="4">
+      <v-col cols="3">
         <v-card v-if="orders">
           <div class="d-flex justify-space-between align-center">
             <v-subheader class="title bold">Order Details</v-subheader>
@@ -125,11 +131,18 @@
 </template>
 
 <script>
+import chat from "../components/chat";
+
 export default {
+  components: { chat },
   computed: {
+    currentMessages() {
+      return this.$store.getters["messages/currentMessages"];
+    },
     drivers() {
       return this.$store.getters["taxis/list"](this.query);
     },
+
     orders() {
       if (this.selectedUser != null) {
         return this.deepFind(
@@ -217,13 +230,37 @@ export default {
   beforeUnmount() {
     // await this.$store.dispatch("order/unloadOrder");
   },
+  watch: {
+    selectedUser: {
+      deep: true,
+      immediate: true,
+      handler: function(userIndex) {
+        if (userIndex != null) {
+          let userId = Object.keys(this.drivers)[userIndex];
+          this.$store.dispatch("messages/loadCurrentMessages", {
+            userId: userId,
+            userType: "taxi"
+          });
+        } else {
+          this.$store.dispatch("customers/loadCustomer", {
+            userId: null
+          });
+        }
+      }
+    }
+  },
   methods: {
+    async LoadMessages(id) {
+      this.$store.dispatch("messages/loadCurrentMessages", {
+        userId: id,
+        userType: "taxi"
+      });
+    },
     async acceptTaxi(id) {
-      let response = await this.$store.dispatch(
-        "taxis/approveAuthorizationRequest",
-        { userId: id }
-      );
-      console.log(response);
+      await this.$store.dispatch("taxis/approveAuthorizationRequest", {
+        userId: id
+      });
+      this.$store.dispatch("taxis/loadTaxis");
     }
   }
 };

@@ -46,8 +46,8 @@
           </v-list>
         </v-card>
       </v-col>
+      <!-- Orderssx list -->
       <v-col cols="4">
-        <!-- Orderssx list -->
         <v-card v-if="orders">
           <div class="d-flex justify-space-between align-center">
             <v-subheader class="title bold">Orders</v-subheader>
@@ -84,7 +84,7 @@
       </v-col>
       <!-- Orderssx Details -->
       <v-col cols="4">
-        <v-card v-if="orders">
+        <v-card v-if="orderDetails">
           <div class="d-flex justify-space-between align-center">
             <v-subheader class="title bold">Order Details</v-subheader>
           </div>

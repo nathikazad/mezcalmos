@@ -199,6 +199,11 @@ export default {
                   this.search.results = predections;
                 }
               );
+              this.$store.dispatch("logger/log", {
+                userType: this.$store.getters.appName,
+                callType: "SearcForPlaces",
+                route: this.$route.path
+              });
             }, 3000);
           } else {
             this.search.searching = false;
@@ -236,6 +241,11 @@ export default {
                   this.search.results = predections;
                 }
               );
+              this.$store.dispatch("logger/log", {
+                userType: this.$store.getters.appName,
+                callType: "SearcForPlaces",
+                route: this.$route.path
+              });
             }, 3000);
           } else {
             this.search.searching = false;

@@ -72,7 +72,7 @@ export default {
         return this.deepFind(chat, "admins")[senderKey];
       }
       return {
-        displayName: "MezCalmos",
+        displayName: "Mezcalmos",
         photo: require("@/shared/static/img/logo.png")
       };
     },

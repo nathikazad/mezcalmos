@@ -56,7 +56,7 @@
         </v-card>
       </v-col>
       <!-- Orderssx Details -->
-      <v-col cols="4" v-if="orderDetails">
+      <v-col cols="4" v-if="currentOrder.id">
         <v-card>
           <div class="d-flex justify-space-between align-center">
             <v-subheader class="title bold">Order Details</v-subheader>
@@ -67,9 +67,7 @@
                 <v-list-item-content>
                   <v-list-item-title>
                     {{field.title}} :
-                    <span
-                      class="info--text"
-                    >{{field.val(Object.keys(orders)[selectedOrder])}}</span>
+                    <span class="info--text">{{field.val(currentOrder.id)}}</span>
                   </v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
@@ -91,13 +89,13 @@ export default {
         {
           title: "From",
           val: () => {
-            return this.deepFind(this.orderDetails, `routeInformation.address`);
+            return this.deepFind(this.currentOrder.info, `fromfh.address`);
           }
         },
         {
           title: "To",
           val: () => {
-            return this.deepFind(this.orderDetails, `to.address`);
+            return this.deepFind(this.currentOrder.info, `to.address`);
           }
         },
         {
@@ -109,37 +107,31 @@ export default {
         {
           title: "Driver Id",
           val: () => {
-            return this.deepFind(this.orderDetails, `driver.id`);
+            return this.deepFind(this.currentOrder.info, `driver.id`);
           }
         },
         {
           title: "Pick up time",
           val: () => {
-            return this.deepFind(this.orderDetails, `rideStartTime`);
+            return this.deepFind(this.currentOrder.info, `rideStartTime`);
           }
         },
         {
           title: "Drop off time",
           val: () => {
-            return this.deepFind(this.orderDetails, `rideFinishTime`);
+            return this.deepFind(this.currentOrder.info, `rideFinishTime`);
           }
         },
         {
           title: "Duration",
           val: () => {
-            return this.deepFind(
-              this.orderDetails,
-              `routeInformation.duration.text`
-            );
+            return this.deepFind(this.currentOrder.info, `duration.text`);
           }
         },
         {
           title: "Distance",
           val: () => {
-            return this.deepFind(
-              this.orderDetails,
-              `routeInformation.distance.text`
-            );
+            return this.deepFind(this.currentOrder.info, `distance.text`);
           }
         }
       ]
@@ -155,11 +147,28 @@ export default {
         return null;
       }
     },
+    currentOrder() {
+      return this.$store.getters["orders/currentOrder"];
+    },
     orderDetails() {
       if (this.orders && this.selectedOrder != null) {
         return Object.values(this.orders)[this.selectedOrder];
       } else {
         return null;
+      }
+    }
+  },
+  watch: {
+    selectedOrder: {
+      deep: true,
+      immediate: true,
+      handler: function(orderIndex) {
+        if (orderIndex != null && this.orders) {
+          let orderId = Object.keys(this.orders)[orderIndex];
+          this.$store.dispatch("orders/loadTaxiOrder", orderId);
+        } else {
+          this.$store.dispatch("orders/loadTaxiOrder", null);
+        }
       }
     }
   },
