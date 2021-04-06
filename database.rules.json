@@ -8,12 +8,13 @@
         ".read": "$uid === auth.uid",
         ".write": "false",
         "notificationInfo": {
-          ".read": "$uid === auth.uid",
           ".write": "$uid === auth.uid"
         },
         "info" : {
           "language": {
-            ".read": "$uid === auth.uid",
+            ".write": "$uid === auth.uid"
+          },
+          "photo": {
             ".write": "$uid === auth.uid"
           }
         }
@@ -54,7 +55,12 @@
     },
     "chat": {
       "$orderId": {
-        ".read": "root.child('chat/' + $orderId + '/participants/' + auth.uid).exists()"
+        ".read": "root.child('chat/' + $orderId + '/participants/' + auth.uid).exists()",
+        "messages":{
+          "$messageId": {
+            ".write": "root.child('chat/' + $orderId + '/participants/' + auth.uid).exists()"
+          }
+        }
       }
     },
     "notifications": {

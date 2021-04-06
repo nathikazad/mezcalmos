@@ -17,6 +17,10 @@ class Database {
     await axios.post(`http://localhost:9000/${path}.json?ns=mezcalmos-31f1c-default-rtdb&auth=${this.idToken}`, data)
   }
 
+  async update(path, data) {
+    await axios.patch(`http://localhost:9000/${path}.json?ns=mezcalmos-31f1c-default-rtdb&auth=${this.idToken}`, data)
+  }
+
   async get(path) {
     // console.log(path, this.idToken)
     let response = await axios.get(`http://localhost:9000/${path}.json?ns=mezcalmos-31f1c-default-rtdb&auth=${this.idToken}`)

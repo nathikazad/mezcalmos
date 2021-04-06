@@ -9,8 +9,7 @@ admin.initializeApp({
 
 
 
-// describe('Mezcalmos', () => {
-//   it('Create user test', async () => {
+
 describe('Mezcalmos', () => {
   beforeAll(async () => {
     await helper.clearDatabase(admin)

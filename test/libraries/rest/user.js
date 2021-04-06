@@ -19,9 +19,12 @@ class User {
     return response.data
   }  
 
-  async setImage(admin, img){
-    let response = await admin.database().ref(`/users/${this.id}/info`).set({photo:img})
-    console.log(response)
+  async setImage(img){
+    await this.db.update(`/users/${this.id}/info`, {photo:img})
+  }
+
+  async sendMessage(orderId, newMessage){
+    await this.db.push(`/chat/${orderId}/messages`, newMessage)
   }
 
 }
