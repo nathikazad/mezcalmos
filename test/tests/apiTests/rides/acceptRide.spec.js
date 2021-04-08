@@ -23,7 +23,7 @@ let badUserData = {
   "email":"baduser@mezcalmos.com",
   "displayName":"Bad User",
   "password":"password",
-  "photo": "https://randomuser.me/api/portraits/men/71.jpg",
+  "photoURL": "https://randomuser.me/api/portraits/men/71.jpg",
   "returnSecureToken":true
 }
 
@@ -31,7 +31,7 @@ let driverData = {
   "email":"driver@mezcalmos.com",
   "displayName":"Driver One",
   "password":"password",
-  "photo": "https://randomuser.me/api/portraits/men/72.jpg",
+  "photoURL": "https://randomuser.me/api/portraits/men/72.jpg",
   "returnSecureToken":true
 }
 
@@ -83,7 +83,7 @@ describe('Mezcalmos', () => {
 
     // driver added to order, driver added to chat
     expect(order.driver.id).toBe(driver.id)
-    expect(order.driver.image).toBe(driverData.photo)
+    expect(order.driver.image).toBe(driverData.photoURL)
     expect(order.driver.name).toBe(driverData.displayName.split(' ')[0])
 
 
@@ -95,17 +95,17 @@ describe('Mezcalmos', () => {
     expect(driverOrder.to).toBe(tripData.to)
     expect(driverOrder.status).toBe("onTheWay")
     expect(driverOrder.customer.id).toBe(customer.id)
-    expect(driverOrder.customer.image).toBe(userData.photo)
+    expect(driverOrder.customer.image).toBe(userData.photoURL)
     expect(driverOrder.customer.name).toBe(userData.displayName.split(' ')[0])
 
     // taxi driver state changed to orderId
-    let driverStatus = await driver.db.get(`taxiDrivers/${driver.id}/state/inTaxi`)
+    let driverStatus = await driver.db.get(`taxiDrivers/${driver.id}/state/currentOrder`)
     expect(driverStatus).toBe(orderId)
 
     // updated customer node
     let customerOrder = await customer.db.get(`orders/taxi/${orderId}`)
     expect(customerOrder.driver.id).toBe(driver.id)
-    expect(customerOrder.driver.image).toBe(driverData.photo)
+    expect(customerOrder.driver.image).toBe(driverData.photoURL)
     expect(customerOrder.driver.name).toBe(driverData.displayName.split(' ')[0])
     expect(customerOrder.status).toBe("onTheWay")
 
@@ -118,7 +118,7 @@ describe('Mezcalmos', () => {
 
     // driver added to chat participants
     let chat = await driver.db.get(`chat/${orderId}`)
-    expect(chat.participants[driver.id].image).toBe(driverData.photo)
+    expect(chat.participants[driver.id].image).toBe(driverData.photoURL)
     expect(chat.participants[driver.id].name).toBe(driverData.displayName.split(' ')[0])
     expect(chat.participants[driver.id].particpantType).toBe("taxi")
 
@@ -128,7 +128,7 @@ describe('Mezcalmos', () => {
 
     let customerNotification = customerNotifications[Object.keys(customerNotifications)[0]]
     expect(customerNotification.driver.id).toBe(driver.id)
-    expect(customerNotification.driver.image).toBe(driverData.photo)
+    expect(customerNotification.driver.image).toBe(driverData.photoURL)
     expect(customerNotification.driver.name).toBe(driverData.displayName.split(' ')[0])
     expect(customerNotification.notificationType).toBe('orderStatusChange')
     expect(customerNotification.orderId).toBe(orderId)

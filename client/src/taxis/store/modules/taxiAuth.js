@@ -110,14 +110,14 @@ async function storeState(newState, context) {
   if (newState.authorizationStatus != "authorized" ) {
     return
   }
-  if (newState.inTaxi) {
+  if (newState.currentOrder) {
     context.dispatch('incomingOrders/stopListeningForIncoming')
-    let snapshot = await firebaseDatabase().ref(`orders/taxi/${newState.inTaxi}`).once('value')
+    let snapshot = await firebaseDatabase().ref(`orders/taxi/${newState.currentOrder}`).once('value')
     context.commit('setCurrentOrder', {
-      id: newState.inTaxi,
+      id: newState.currentOrder,
       value: snapshot.val()
     })
-    firebaseDatabase().ref(`orders/taxi/${newState.inTaxi}/status`).on('value', snapshot => {
+    firebaseDatabase().ref(`orders/taxi/${newState.currentOrder}/status`).on('value', snapshot => {
       context.commit('setCurrentOrderStatus', snapshot.val())
     });
   } else {

@@ -48,9 +48,9 @@ let customer, badUser, driver
 describe('Mezcalmos', () => {
   beforeAll(async () => {
     await helper.clearDatabase(admin)
-    customer = await auth.signUp(userData)
-    driver = await auth.signUp(driverData)
-    badUser = await auth.signUp(badUserData)
+    customer = await auth.signUp(admin, userData)
+    driver = await auth.signUp(admin, driverData)
+    badUser = await auth.signUp(admin, badUserData)
     await admin.database().ref(`/taxiDrivers/${driver.id}/state/authorizationStatus`).set('authorized')
   });
 
@@ -71,8 +71,10 @@ describe('Mezcalmos', () => {
     }
 
     await customer.sendMessage(orderId, newMessage)
+    await new Promise(res => setTimeout(() => {
+      res()
+    }, 200))
     let driverNotifications = await driver.db.get(`notifications/taxi/${driver.id}`)
-    // console.log(driverNotifications)
     expect(driverNotifications).not.toBeNull()
 
     let driverNotification = driverNotifications[Object.keys(driverNotifications)[0]]

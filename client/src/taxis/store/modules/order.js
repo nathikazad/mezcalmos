@@ -39,6 +39,17 @@ export default {
       context.dispatch('updateRouteInformation', null, {root: true})
       return response;
     },
+    async cancelRide(context, payload) {
+      let status = context.state.order.status
+      if(status != "onTheWay") {
+        console.log("Not possible to cancel")
+        return
+      }
+      let response = await cloudCall('cancelTaxiFromDriver', {
+        reason: payload.reason
+      })
+      return response
+    },
     async startRide(context) {
       // TODO: check if order is loaded
       let orderId = context.state.orderId

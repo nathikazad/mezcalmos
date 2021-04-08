@@ -47,6 +47,17 @@ export default {
       context.commit('saveTemporaryAddresses', null)
       return response;
     },
+    async cancelTaxi(context, payload) {
+      let status = context.state.value.status
+      if(status != "lookingForTaxi" || status != "onTheWay") {
+        console.log("Not possible to cancel")
+        return
+      }
+      let response = await cloudCall('cancelTaxiFromCustomer', {
+        reason: payload.reason
+      })
+      return response
+    },
     saveAddress(context, payload) {
       context.commit('saveTemporaryAddresses', payload)
     }
