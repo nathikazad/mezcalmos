@@ -73,7 +73,7 @@ export default {
   },
   computed: {
     disabled() {
-      return !(this.from.address && this.to.address);
+      return !(this.directionsBorns.start && this.directionsBorns.end);
     },
     isLoggedIn() {
       return this.$store.getters.loggedIn;

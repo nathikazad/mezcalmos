@@ -13,7 +13,7 @@
         :mode="{ dark: true }"
         @click.native="login"
       >
-        <span class="t-8 regular">{{$t('taxi.introduction.fbBtn')}}</span>
+        <span class="t-8 regular">{{$tc('taxi.introduction.fbBtn',1)}}</span>
       </base-button>
       <base-button
         v-else

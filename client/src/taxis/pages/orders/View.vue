@@ -2,7 +2,21 @@
   <div>
     <div id="taxiRequest" v-if="orderDetails">
       <!-- ******************pop up component ************************-->
-      <h1 class="regular">{{ orderDetails.customer.name }}</h1>
+      <h1 class="regular flex align_center space_between">
+        {{ orderDetails.customer.name }}
+        <span class="arrows"> 
+          <span
+          @click="precedentOrder"
+          v-if="precedentOrderId"
+          class="text_violet"
+        >
+          <fa icon="chevron-square-left"></fa>
+        </span>
+        <span class="text_violet" @click="nextOrder" v-if="nextOrderId">
+          <fa icon="chevron-square-right"></fa>
+        </span>
+        </span>
+      </h1>
       <input-location
         :disabled="true"
         :to="orderDetails.to"
@@ -112,13 +126,13 @@
               </div>
             </div>
           </div>
-          <base-button
+          <!-- <base-button
             class="w-30 elevate_1"
             :mode="{ dark: true, bg_info: true }"
             :loading="loading"
           >
             <span class="t-8 regular">{{$t('taxi.taxiView.review')}}</span>
-          </base-button>
+          </base-button>-->
         </div>
       </input-location>
     </div>
@@ -136,6 +150,27 @@ export default {
     };
   },
   computed: {
+    nextOrderId() {
+      let orderId = this.$route.params.orderId;
+      let orderIndex = this.sortedOrderIds.findIndex(id => {
+        return id == orderId;
+      });
+
+      let nextOrderId = this.sortedOrderIds[orderIndex + 1];
+      return nextOrderId;
+    },
+    precedentOrderId() {
+      let orderId = this.$route.params.orderId;
+      let orderIndex = this.sortedOrderIds.findIndex(id => {
+        return id == orderId;
+      });
+
+      let precedentOrderId = this.sortedOrderIds[orderIndex - 1];
+      return precedentOrderId;
+    },
+    sortedOrderIds() {
+      return this.$store.getters["incomingOrders/sortedOrderIds"];
+    },
     orderDetails() {
       return this.$store.getters["order/getOrder"];
     },
@@ -183,14 +218,17 @@ export default {
     }
   },
   async beforeCreate() {
+    console.log("before create");
+
     this.$store.dispatch("order/loadOrder", {
       orderId: this.$route.params.orderId
     });
   },
-  beforeRouteUpdate(to) {
+  beforeRouteUpdate(to, _, next) {
     this.$store.dispatch("order/loadOrder", {
       orderId: to.params.orderId
     });
+    next();
   },
   async beforeUnmount() {
     await this.$store.dispatch("order/unloadOrder");
@@ -210,12 +248,31 @@ export default {
       this.loading = true;
       await this.$store.dispatch("order/finishRide");
       this.loading = false;
+    },
+    nextOrder() {
+      if (this.nextOrderId) {
+        console.log(`/orders/${this.nextOrderId}`);
+        this.$router.push(`/orders/${this.nextOrderId}`);
+      }
+    },
+    precedentOrder() {
+      if (this.precedentOrderId) {
+        this.$router.replace({
+          name: "taxiView",
+          params: { orderId: this.precedentOrderId }
+        });
+      }
     }
   }
 };
 </script>
 <style lang="scss" scoped>
 @import "@/shared/assets/scss/_taxiView.scss";
+.arrows{
+  span{
+    margin: 0 .3rem;
+  }
+}
 .btnP {
   @media (max-width: 400px) {
     .w-70 {

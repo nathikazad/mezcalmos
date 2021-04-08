@@ -119,13 +119,13 @@
               </div>
             </div>
           </div>
-          <base-button
+          <!-- <base-button
             class="w-30 elevate_1"
             :mode="{ dark: true, bg_info: true }"
             :loading="loading"
           >
             <span class="t-8 regular">{{$t('customer.taxiView.review')}}</span>
-          </base-button>
+          </base-button>-->
         </div>
       </input-location>
     </div>
