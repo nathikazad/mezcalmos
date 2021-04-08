@@ -1,6 +1,8 @@
 import Vuex from 'vuex'
 import Vue from 'vue'
 
+import { firebaseDatabase } from '@/shared/config/firebase'
+
 import authModule from '@/shared/store/auth';
 import messagesModule from '@/shared/store/messages'
 import adminModule from '@/shared/store/admin'
@@ -31,8 +33,40 @@ const store = new Vuex.Store({
   getters: {
     appName() {
       return "customer"
+    },
+    currentOrderId(state) {
+      return state.currentOrderId
     }
+  },
+  state() {
+    return {
+      currentOrderId: null,
+    };
+  },
+  actions: {
+    async loadCurrentOrder(context) {
+      let userId = context.rootGetters.userId
+      let snapshot = await firebaseDatabase().ref(`users/${userId}/state/currentOrder`).once('value')
+      context.commit('saveCurrentOrderId', snapshot.val())
+      firebaseDatabase().ref(`users/${userId}/state/currentOrder`).on('value', snapshot => {
+        context.commit('saveCurrentOrderId', snapshot.val())
+      });
+
+      context.commit('saveLogoutCallback', {
+        func: function (context, userId) {
+          firebaseDatabase().ref(`users/${userId}/state/currentOrder`).off()
+          context.commit('saveCurrentOrderId', null)
+        },
+        args: [context, userId]
+      }, { root: true })
+    },
+  },
+  mutations: {
+    saveCurrentOrderId(state, payload) {
+      state.currentOrderId = payload;
+    },
   }
 });
+
 
 export default store;

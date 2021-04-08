@@ -28,22 +28,19 @@ async function firebaseCallback(user) {
       loggedIn: true,
       // hasuraAuthToken: token
     });
-    if (
-      router.currentRoute.path == "/auth" &&
-      router.currentRoute.query.redirect
-    ) {
-      router.push({
-        path: router.currentRoute.query.redirect
-      });
-    } else if (router.currentRoute.path == "/auth") {
-      router.push({
-        path: "/"
-      });
-    }
     store.dispatch("notifications/loadNotificationsForCustomer");
     store.dispatch("savedLocations/loadLocations");
     store.dispatch("admin/loadAdmin");
     askForNotification('customer', store)
+    await store.dispatch('loadCurrentOrder');
+    if ( router.currentRoute.path == "/auth" &&
+      router.currentRoute.query.redirect ) {
+      router.push({ path: router.currentRoute.query.redirect });
+    } else if (store.getters.currentOrderId ) {
+      router.push({ path: `/services/taxi/${store.getters.currentOrderId}` });
+    } else if (router.currentRoute.path == "/auth") {
+      router.push({ path: "/" });
+    }
   }
 }
 

@@ -177,6 +177,13 @@ async function accept(firebase, data, uid) {
     }
   }
 
+  if (order.customer.id == uid) {
+    return {
+      status: "Error",
+      errorMessage: "Driver and Customer cannot have same id"
+    }
+  }
+
 
 
   driver = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val();

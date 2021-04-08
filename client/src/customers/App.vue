@@ -58,9 +58,8 @@ export default {
       return this.$route.name;
     },
     showNavBtn() {
-      //searching for the home page
-
-      return this.routeName == "home";
+      return (this.routeName == "home" || 
+        (this.$store.getters.currentOrderId && this.routeName == "taxiView"));
     },
     minHeightPx() {
       return this.minHeight;
