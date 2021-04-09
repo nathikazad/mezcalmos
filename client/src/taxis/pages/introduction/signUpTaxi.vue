@@ -44,6 +44,9 @@ export default {
   methods: {
     async login() {
       await this.$store.dispatch("login");
+      console.log('submit called');
+      
+      await this.sendRequest()
       this.$emit("closeNavDrawer");
     },
     handleError() {

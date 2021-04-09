@@ -20,9 +20,25 @@ export default {
     };
   },
   components: { Taxi3 },
+  computed: {
+    adminMessagesCount() {
+      return this.$store.getters["admin/messageCount"];
+    }
+  },
   methods: {
     handleError() {
       this.error = null;
+    }
+  },
+  watch: {
+    adminMessagesCount: {
+      immediate: true,
+      deep: true,
+      handler: function(newVal) {
+        if (newVal > 0) {
+          this.$router.push("/");
+        }
+      }
     }
   }
 };

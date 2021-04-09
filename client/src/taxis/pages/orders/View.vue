@@ -1,24 +1,24 @@
 <template>
   <div>
+    <!-- ******************pop up component ************************-->
+    <pop-up
+      v-if="cancelPopUp"
+      @picked="cancelRide($event)"
+      :choiceList="choiceList"
+      @close="cancelPopUp=false"
+      :title="'Why you want to cancel the ride?' "
+      :icon="'times-circle'"
+    ></pop-up>
+    <!-- ******************pop up Warning Taxi taken ************************-->
+    <pop-up
+      v-if="cancelReport"
+      :choiceList="['Back to incomming']"
+      @picked="submitReposting($event)"
+      @close="cancelPopUp=false"
+      :title="reportTitle "
+      :icon="'do-not-enter'"
+    ></pop-up>
     <div id="taxiRequest" v-if="orderDetails">
-      <!-- ******************pop up component ************************-->
-      <pop-up
-        v-if="cancelPopUp"
-        @picked="cancelRide($event)"
-        :choiceList="choiceList"
-        @close="cancelPopUp=false"
-        :title="'Why you want to cancel the ride?' "
-        :icon="'times-circle'"
-      ></pop-up>
-      <!-- ******************pop up Warning Taxi taken ************************-->
-      <pop-up
-        v-if="cancelReport"
-        :choiceList="['Home']"
-        @picked="submitReposting($event)"
-        @close="cancelPopUp=false"
-        :title="reportTitle "
-        :icon="'do-not-enter'"
-      ></pop-up>
       <h1 class="regular flex align_center space_between">
         {{ orderDetails.customer.name }}
         <span class="arrows">
@@ -259,7 +259,7 @@ export default {
   watch: {
     orderDetails: {
       deep: true,
-      immediate: true,
+
       handler: function(newVal) {
         if (newVal) {
           if (newVal.status == "cancelled") {
@@ -273,9 +273,15 @@ export default {
               this.cancelReport = true;
               setTimeout(() => {
                 this.$router.push("/");
-              }, 3000);
+              }, 2000);
             }
           }
+        } else {
+          this.reportTitle = "Sorry to informe you this ride is taken";
+          this.cancelReport = true;
+          setTimeout(() => {
+            this.$router.push("/");
+          }, 2000);
         }
       }
     }
@@ -297,10 +303,8 @@ export default {
     await this.$store.dispatch("order/unloadOrder");
   },
   methods: {
-    submitReposting(cmd) {
-      if (cmd == "Home") {
-        this.$router.push("/");
-      }
+    submitReposting() {
+      this.$router.push("/");
     },
     async cancelRide(reason) {
       this.loading = true;

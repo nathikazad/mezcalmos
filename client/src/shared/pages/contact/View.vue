@@ -64,6 +64,10 @@ export default {
     userId() {
       return this.$store.getters["userId"];
     },
+    canTaxi() {
+      //specific for taxi authorization Pending
+      return this.$store.getters.canTaxi;
+    },
     sender() {
       let chat = this.$store.getters["admin/chat"];
 
@@ -88,6 +92,16 @@ export default {
         msgs = this.chat.messages;
       }
       return msgs;
+    }
+  },
+  watch: {
+    canTaxi: {
+      deep: true,
+      handler: function(newVal, oldVal) {
+        if (newVal && !oldVal) {
+          this.$router.push("/");
+        }
+      }
     }
   },
   mounted() {

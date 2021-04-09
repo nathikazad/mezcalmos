@@ -18,7 +18,11 @@
       >
         <span class="t-8 regular">{{$t('taxi.introduction.yes')}}</span>
       </base-button>
-      <h3 class="regular alreadyMember" v-html="$t('taxi.introduction.alreadyMember')"></h3>
+      <h3
+        v-if="!isLoggedIn"
+        class="regular alreadyMember"
+        v-html="$t('taxi.introduction.alreadyMember')"
+      ></h3>
       <base-button
         v-if="!isLoggedIn"
         class="fill_width elevate_1 btn fbBtn"
@@ -40,11 +44,25 @@ export default {
     };
   },
   computed: {
+    authorizationPending() {
+      return this.$store.getters.authorizationPending;
+    },
     isLoggedIn() {
       return this.$store.getters.loggedIn;
     }
   },
   components: { Taxi1 },
+  watch: {
+    authorizationPending: {
+      immediate: true,
+      deep: true,
+      handler: function(newVal) {
+        if (newVal) {
+          this.$router.push("/confirmation");
+        }
+      }
+    }
+  },
   methods: {
     handleError() {
       this.error = null;

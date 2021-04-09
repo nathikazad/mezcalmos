@@ -60,7 +60,7 @@ export default {
   }
   .popUp_body {
     width: 14rem;
-    height: 19.5rem;
+    height: auto;
     margin: auto;
     top: calc(50vh - 13.25rem);
     border-radius: 1rem;

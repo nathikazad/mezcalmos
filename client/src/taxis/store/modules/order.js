@@ -4,7 +4,9 @@ import {
   cloudCall
 } from '@/shared/config/firebase'
 
-import { getDistanceFromLatLonInKm } from '@/shared/mixins/mapFunctions'
+import {
+  getDistanceFromLatLonInKm
+} from '@/shared/mixins/mapFunctions'
 export default {
   namespaced: true,
   state() {
@@ -22,7 +24,9 @@ export default {
       let orderId = payload.orderId
       firebaseDatabase().ref(`orders/taxi/${orderId}`).on('value', async snapshot => {
         let order = snapshot.val()
-        if(order.status == "lookingForTaxi") {
+        console.log('order from taxi ', order);
+
+        if (order.status == "lookingForTaxi") {
           let driverLocation = context.rootGetters.userLocation;
           order.customer.distance = getDistanceFromLatLonInKm(order.from, driverLocation)
         }
@@ -30,18 +34,29 @@ export default {
           order: order,
           orderId: orderId,
         });
+      }, () => {
+
+        context.commit('saveOrder', {
+          order: null,
+          orderId: null,
+        })
       });
+
     },
     async acceptRide(context) {
       // TODO: check if order is loaded
       let orderId = context.state.orderId
-      let response = await cloudCall('acceptTaxiOrder', {orderId: orderId});
-      context.dispatch('updateRouteInformation', null, {root: true})
+      let response = await cloudCall('acceptTaxiOrder', {
+        orderId: orderId
+      });
+      context.dispatch('updateRouteInformation', null, {
+        root: true
+      })
       return response;
     },
     async cancelRide(context, payload) {
       let status = context.state.order.status
-      if(status != "onTheWay") {
+      if (status != "onTheWay") {
         console.log("Not possible to cancel")
         return
       }
@@ -53,14 +68,20 @@ export default {
     async startRide(context) {
       // TODO: check if order is loaded
       let orderId = context.state.orderId
-      let response = await cloudCall('startTaxiRide', {orderId: orderId});
-      context.dispatch('updateRouteInformation', null, {root: true})
+      let response = await cloudCall('startTaxiRide', {
+        orderId: orderId
+      });
+      context.dispatch('updateRouteInformation', null, {
+        root: true
+      })
       return response;
     },
     async finishRide(context) {
       // TODO: check if order is loaded
       let orderId = context.state.orderId
-      let response = await cloudCall('finishTaxiRide', {orderId: orderId});
+      let response = await cloudCall('finishTaxiRide', {
+        orderId: orderId
+      });
       return response;
     }
   },
@@ -91,13 +112,13 @@ export default {
       return !!state.order && state.order.status == "lookingForTaxi"
     },
     orderStatusOnTheWay(state) {
-      return !!state.order &&  state.order.status == "onTheWay"
+      return !!state.order && state.order.status == "onTheWay"
     },
     orderStatusInTransit(state) {
-      return !!state.order &&  state.order.status == "inTransit"
+      return !!state.order && state.order.status == "inTransit"
     },
     orderStatusDroppedOff(state) {
-      return !!state.order &&  state.order.status == "droppedOff"
+      return !!state.order && state.order.status == "droppedOff"
     }
   }
 };

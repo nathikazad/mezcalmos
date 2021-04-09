@@ -20,7 +20,9 @@ initModules(Vue)
 Vue.config.productionTip = false
 
 async function firebaseCallback(user) {
+
   if (user) {
+
     await store.dispatch('autoSignIn', {
       userId: user.uid,
       name: user.displayName,
@@ -28,28 +30,37 @@ async function firebaseCallback(user) {
       photoURL: user.photoURL,
       loggedIn: true
     })
-    
+
     await store.dispatch('loadTaxiAuth');
     askForNotification('taxi', store);
     store.dispatch("notifications/loadNotificationsForTaxi");
     await store.dispatch("admin/loadAdmin");
-    
+    console.log(' authorizationPending ', store.getters.authorizationPending);
+
     if (store.getters.authorizationPending) {
       router.redirectAuthorizationPendingUsers()
-    } else if(store.getters.canTaxi) {
+    } else if (store.getters.canTaxi) {
       store.dispatch("loadUserLocation");
       if (store.getters.isInTaxi) {
-        router.push({ path: `/orders/${store.getters.currentOrderId}` });
+        router.push({
+          path: `/orders/${store.getters.currentOrderId}`
+        });
       } else if (router.currentRoute.query.redirect) {
-        router.push({ path: router.currentRoute.query.redirect })
+        router.push({
+          path: router.currentRoute.query.redirect
+        })
       } else {
         router.push("/incoming")
       }
-    } else if(router.currentRoute.path != "/howToTaxi") {
-      router.push({ path: "/howToTaxi" })
+    } else if (router.currentRoute.path != "/howToTaxi") {
+      router.push({
+        path: "/howToTaxi"
+      })
     }
   } else if (router.currentRoute.path != "/howToTaxi") {
-    router.push({ path: "/howToTaxi" })
+    router.push({
+      path: "/howToTaxi"
+    })
   }
 }
 
