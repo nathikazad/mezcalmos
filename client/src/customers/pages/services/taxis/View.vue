@@ -1,7 +1,24 @@
 <template>
   <div>
     <div id="taxiRequest" v-if="orderDetails">
-      <!-- ******************pop up component ************************-->
+      <!-- ******************pop up Cancel ************************-->
+      <pop-up
+        v-if="cancelPopUp"
+        @picked="cancelRide($event)"
+        :choiceList="choiceList"
+        @close="cancelPopUp=false"
+        :title="'Why you want to cancel the ride?' "
+        :icon="'times-circle'"
+      ></pop-up>
+      <!-- ******************pop up Warning Taxi taken ************************-->
+      <pop-up
+        v-if="cancelReport"
+        :choiceList="['Cancel ride','Post again']"
+        @picked="submitReposting($event)"
+        @close="cancelPopUp=false"
+        :title="'Sorry to informe you the taxi cancelled the ride' "
+        :icon="'do-not-enter'"
+      ></pop-up>
       <h1 class="regular">{{$t('customer.taxiView.taxi')}}</h1>
       <input-location
         :disabled="true"
@@ -22,12 +39,15 @@
             <h5 class="text_grey regular t-9">{{$t('customer.taxiView.searching')}}...</h5>
           </div>
           <base-button
-            class="w-30 elevate_1"
-            :mode="{ dark: true, bg_error: true }"
-            @click.native="requestTaxi()"
+            class="elevate_1 nav-btn text_white"
+            :mode="{
+            bg_error: true,
+            small: true,
+          }"
+            @click.native="cancelPopUp=true"
             :loading="loading"
           >
-            <span class="t-8 regular">{{$t('customer.taxiView.cancel')}}</span>
+            <fa icon="times-circle" />
           </base-button>
         </div>
         <!-- Found Someone  Status-->
@@ -66,15 +86,15 @@
             </div>
           </div>
           <base-button
-            class="w-30 elevate_1"
-            :mode="{ dark: true, bg_diagonal: true }"
-            :link="true"
-            :to="{
-              path: messageLink,
-              
-            }"
+            class="elevate_1 nav-btn text_white"
+            :mode="{
+            bg_error: true,
+            small: true,
+          }"
+            @click.native="cancelPopUp=true"
+            :loading="loading"
           >
-            <span class="t-8 regular">{{$t('customer.taxiView.message')}}</span>
+            <fa icon="times-circle" />
           </base-button>
         </div>
         <!-- In Transit  Status-->
@@ -136,10 +156,18 @@
 </template>
 
 <script>
+import popUp from "@/shared/components/ui/popUp";
+
 export default {
+  components: {
+    popUp
+  },
   data() {
     return {
-      loading: false
+      loading: false,
+      cancelPopUp: false,
+      choiceList: ["No show", "Other"],
+      cancelReport: false
     };
   },
   computed: {
@@ -173,6 +201,59 @@ export default {
         };
       }
       return borns;
+    }
+  },
+  watch: {
+    orderDetails: {
+      deep: true,
+      immediate: true,
+      handler: function(newVal) {
+        if (newVal) {
+          if (newVal.status == "cancelled") {
+            this.cancelReport = true;
+          }
+        }
+      }
+    }
+  },
+  methods: {
+    async cancelRide(reason) {
+      this.loading = true;
+      this.cancelPopUp = false;
+      await this.$store.dispatch("taxis/cancelTaxi", reason);
+      this.$router.push({ name: "home" });
+      this.loading = false;
+    },
+
+    async requestTaxi(ride) {
+      let data = {
+        to: ride.to,
+        from: ride.from,
+        distance: ride.distance,
+        duration: ride.duration
+      };
+
+      this.loading = true;
+      let response = (await this.$store.dispatch("taxis/requestTaxi", data))
+        .data;
+      this.loading = false;
+
+      if (response.status == "Success") {
+        console.log(response);
+
+        this.$router.push({ path: `${response.orderId}` });
+        window.location.reload();
+      } else {
+        this.errorMessage = response.errorMessage;
+      }
+    },
+    async submitReposting(cmd) {
+      if (cmd == "Cancel ride") {
+        await this.cancelRide("taxi cancelled");
+        this.$router.push({ name: "home" });
+      } else {
+        this.requestTaxi(this.orderDetails);
+      }
     }
   },
   async beforeCreate() {

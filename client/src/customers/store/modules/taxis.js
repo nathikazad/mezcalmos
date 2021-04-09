@@ -49,7 +49,7 @@ export default {
     },
     async cancelTaxi(context, payload) {
       let status = context.state.value.status
-      if(status != "lookingForTaxi" || status != "onTheWay") {
+      if (status != "lookingForTaxi" && status != "onTheWay") {
         console.log("Not possible to cancel")
         return
       }

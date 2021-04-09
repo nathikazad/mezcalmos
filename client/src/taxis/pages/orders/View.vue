@@ -2,21 +2,35 @@
   <div>
     <div id="taxiRequest" v-if="orderDetails">
       <!-- ******************pop up component ************************-->
+      <pop-up
+        v-if="cancelPopUp"
+        @picked="cancelRide($event)"
+        :choiceList="choiceList"
+        @close="cancelPopUp=false"
+        :title="'Why you want to cancel the ride?' "
+        :icon="'times-circle'"
+      ></pop-up>
+      <!-- ******************pop up Warning Taxi taken ************************-->
+      <pop-up
+        v-if="cancelReport"
+        :choiceList="['Home']"
+        @picked="submitReposting($event)"
+        @close="cancelPopUp=false"
+        :title="reportTitle "
+        :icon="'do-not-enter'"
+      ></pop-up>
       <h1 class="regular flex align_center space_between">
         {{ orderDetails.customer.name }}
-        <span class="arrows"> 
-          <span
-          @click="precedentOrder"
-          v-if="precedentOrderId"
-          class="text_violet"
-        >
-          <fa icon="chevron-square-left"></fa>
-        </span>
-        <span class="text_violet" @click="nextOrder" v-if="nextOrderId">
-          <fa icon="chevron-square-right"></fa>
-        </span>
+        <span class="arrows">
+          <span @click="precedentOrder" v-if="precedentOrderId" class="text_violet">
+            <fa icon="chevron-square-left"></fa>
+          </span>
+          <span class="text_violet" @click="nextOrder" v-if="nextOrderId">
+            <fa icon="chevron-square-right"></fa>
+          </span>
         </span>
       </h1>
+
       <input-location
         :disabled="true"
         :to="orderDetails.to"
@@ -73,17 +87,34 @@
           >
             <span class="t-8 regular">{{$t('taxi.taxiView.startRide')}}</span>
           </base-button>
-          <base-button
-            class="w-30 elevate_1"
-            :mode="{ dark: true, bg_diagonal: true }"
-            :link="true"
-            :to="{
+
+          <span>
+            <base-button
+              class="dark bg_light elevate_1 nav-btn text_primary"
+              :mode="{
+            bg_diagonal: true,
+            small: true,
+          }"
+              :link="true"
+              :to="{
               path: messageLink,
               
             }"
-          >
-            <span class="t-8 regular">{{$t('taxi.taxiView.message')}}</span>
-          </base-button>
+            >
+              <fa icon="envelope" />
+            </base-button>
+            <base-button
+              class="elevate_1 nav-btn text_white"
+              :mode="{
+            bg_error: true,
+            small: true,
+          }"
+              @click.native="cancelPopUp=true"
+              :loading="loading"
+            >
+              <fa icon="times-circle" />
+            </base-button>
+          </span>
         </div>
         <!-- Finish ride  Status-->
         <div
@@ -143,10 +174,18 @@
 </template>
 
 <script>
+import popUp from "@/shared/components/ui/popUp";
 export default {
+  components: {
+    popUp
+  },
   data() {
     return {
-      loading: false
+      loading: false,
+      cancelPopUp: false,
+      choiceList: ["Other ride", "Traffic jam", "Other"],
+      cancelReport: false,
+      reportTitle: "Sorry to informe you the customer cancelled the ride"
     };
   },
   computed: {
@@ -217,6 +256,30 @@ export default {
       return this.$store.getters["order/orderStatusDroppedOff"];
     }
   },
+  watch: {
+    orderDetails: {
+      deep: true,
+      immediate: true,
+      handler: function(newVal) {
+        if (newVal) {
+          if (newVal.status == "cancelled") {
+            this.reportTitle =
+              "Sorry to informe you the customer cancelled the ride";
+            this.cancelReport = true;
+          } else if (newVal.status != "lookingForTaxi") {
+            let userId = this.$store.getters.userId;
+            if (userId != newVal.driver.id) {
+              this.reportTitle = "Sorry to informe you this ride is taken";
+              this.cancelReport = true;
+              setTimeout(() => {
+                this.$router.push("/");
+              }, 3000);
+            }
+          }
+        }
+      }
+    }
+  },
   async beforeCreate() {
     console.log("before create");
 
@@ -234,6 +297,24 @@ export default {
     await this.$store.dispatch("order/unloadOrder");
   },
   methods: {
+    submitReposting(cmd) {
+      if (cmd == "Home") {
+        this.$router.push("/");
+      }
+    },
+    async cancelRide(reason) {
+      this.loading = true;
+      this.cancelPopUp = false;
+      await this.$store.dispatch("order/cancelRide", reason);
+      if (this.precedentOrderId) {
+        this.precedentOrder();
+      } else if (this.nextOrderId) {
+        this.nextOrder();
+      } else {
+        this.$router.push("/incoming");
+      }
+      this.loading = false;
+    },
     async acceptRide() {
       this.loading = true;
       await this.$store.dispatch("order/acceptRide");
@@ -268,10 +349,16 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "@/shared/assets/scss/_taxiView.scss";
-.arrows{
-  span{
-    margin: 0 .3rem;
+.arrows {
+  span {
+    margin: 0 0.3rem;
   }
+}
+.nav-btn {
+  height: 2rem;
+  width: 2.5rem;
+  border-radius: 10px;
+  margin: 0 0.3rem;
 }
 .btnP {
   @media (max-width: 400px) {

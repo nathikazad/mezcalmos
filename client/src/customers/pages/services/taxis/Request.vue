@@ -93,6 +93,8 @@ export default {
     },
     async requestTaxi() {
       if (!this.disabled) {
+        console.log(data);
+
         let data = {
           to: this.to,
           from: this.from,
@@ -104,6 +106,8 @@ export default {
           let response = (await this.$store.dispatch("taxis/requestTaxi", data))
             .data;
           this.loading = false;
+          console.log(response);
+
           if (response.status == "Success") {
             this.$router.push({ path: `${response.orderId}` });
           } else {

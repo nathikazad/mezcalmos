@@ -15,6 +15,7 @@
           v-for="(orderId, key) in Object.keys(orders[date]).reverse()"
           :key="key"
         >
+          <!-- looking for taxi -->
           <card2
             class="bg_white border card wrap"
             v-if="orders[date][orderId].status=='lookingForTaxi'"
@@ -53,6 +54,47 @@
               </span>
             </div>
           </card2>
+          <!-- cancelled for taxi -->
+          <card2
+            class="bg_white border card wrap"
+            v-else-if="orders[date][orderId].status=='cancelled'"
+          >
+            <div
+              class="statusCircle searchCircle flex align_center center"
+              slot="image"
+              :class="{[`bg_${statusFormatting(orders[date][orderId]).bg}`]:true,[`text_${statusFormatting(orders[date][orderId]).color}`]:true}"
+            >
+              <fa :icon="statusFormatting(orders[date][orderId]).icon"></fa>
+            </div>
+            <div slot="title" class="bold">{{ statusFormatting(orders[date][orderId]).text }}</div>
+
+            <span slot="aside" class="regular">
+              <fa icon="clock"></fa>
+              &nbsp;{{ orders[date][orderId].orderTime | moment("LT") }}
+            </span>
+            <div slot="footer" class="flex align_center fill_width card_footer">
+              <span class="t-8 flex align_center fill_width space_between">
+                <span>
+                  <fa icon="map-marker"></fa>&nbsp;
+                  <span
+                    :title="orders[date][orderId].to.address"
+                  >{{ orders[date][orderId].to.address | formatMessage(23) }}</span>
+                </span>
+                <strong class="text_blackD t-10 point">.</strong>
+                <span>
+                  <fa icon="route"></fa>
+                  {{deepFind(orders[date][orderId], "routeInformation.distance.text")}}
+                </span>
+                <strong class="text_blackD t-10 point">.</strong>
+                <span>
+                  <fa icon="stopwatch"></fa>
+                  {{deepFind(orders[date][orderId], "routeInformation.duration.text")}}
+                </span>
+              </span>
+            </div>
+          </card2>
+          <!-- looking for taxi -->
+
           <card2 class="bg_white border card wrap" v-else>
             <div slot="image" class="flex relative align_center">
               <div
@@ -180,6 +222,15 @@ export default {
             color: "primary",
             icon: "search",
             text: this.$t("taxi.orders.searching"),
+            desc: "Your ride has ended"
+          };
+          break;
+        case "cancelled":
+          returnvalue = {
+            bg: "light_error",
+            color: "white",
+            icon: "ban",
+            text: "Cancelled Taxi",
             desc: "Your ride has ended"
           };
           break;
