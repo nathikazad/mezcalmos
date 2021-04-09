@@ -59,6 +59,18 @@
             "inTransit": "En tránsito",
             "searching": "Buscando",
             "noOrders": "Sin pedidos"
+        },
+        "introduction": {
+            "howToTaxi": "¿Desea utilizar <br/> la aplicación Mezcalmos para <br/> ofrecer transporte a los clientes en <br/> <span class = 'text_blue'> Puerto Escondido? </span> ",
+            "signUpTaxi": "Haga clic en Registrarse,<br/> muéstrenos la prueba de su autorización de taxi <br/> y comience a ofrecer viajes <br/> de inmediato ",
+            "confirmation": "Su solicitud está bajo revisión.<br/> Nos pondremos en contacto <br/> con usted en breve",
+            "fbBtn": " Registrate con Facebook",
+            "yes": "SI"
+
+        },
+        "permissions": {
+            "askForNotif": "Servicio de ubicación desactivado | La aplicación no puede funcionar sin el servicio de ubicación | Habilite los servicios de ubicación desde su configuración",
+            "permissionBtn": "Activar ahora"
         }
     },
     "shared": {
