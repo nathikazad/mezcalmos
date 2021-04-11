@@ -260,7 +260,8 @@ export default {
     orderDetails: {
       deep: true,
 
-      handler: function(newVal) {
+      handler: function(newVal, oldVal) {
+        console.log("watch ", newVal, oldVal, this.$route.path);
         if (newVal) {
           if (newVal.status == "cancelled") {
             this.reportTitle =
@@ -276,7 +277,17 @@ export default {
               }, 2000);
             }
           }
-        } else {
+        }
+      }
+    },
+    sortedOrderIds: {
+      deep: true,
+      handler: function(newVal) {
+        let orderId = this.$route.params.orderId;
+        let existOrder = newVal.find(id => {
+          return id == orderId;
+        });
+        if (!existOrder) {
           this.reportTitle = "Sorry to informe you this ride is taken";
           this.cancelReport = true;
           setTimeout(() => {
@@ -336,7 +347,6 @@ export default {
     },
     nextOrder() {
       if (this.nextOrderId) {
-        console.log(`/orders/${this.nextOrderId}`);
         this.$router.push(`/orders/${this.nextOrderId}`);
       }
     },
