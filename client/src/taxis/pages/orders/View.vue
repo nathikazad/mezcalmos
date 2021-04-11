@@ -21,7 +21,7 @@
     <div id="taxiRequest" v-if="orderDetails">
       <h1 class="regular flex align_center space_between">
         {{ orderDetails.customer.name }}
-        <span class="arrows">
+        <span class="arrows" v-if="!inTaxi">
           <span @click="precedentOrder" v-if="precedentOrderId" class="text_violet">
             <fa icon="chevron-square-left"></fa>
           </span>
@@ -189,6 +189,9 @@ export default {
     };
   },
   computed: {
+    inTaxi() {
+      return this.$store.getters.isInTaxi;
+    },
     nextOrderId() {
       let orderId = this.$route.params.orderId;
       let orderIndex = this.sortedOrderIds.findIndex(id => {
@@ -283,6 +286,8 @@ export default {
     sortedOrderIds: {
       deep: true,
       handler: function(newVal) {
+        console.log("sortedOrders watcher ", newVal);
+
         let orderId = this.$route.params.orderId;
         let existOrder = newVal.find(id => {
           return id == orderId;

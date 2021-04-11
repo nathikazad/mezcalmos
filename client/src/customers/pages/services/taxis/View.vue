@@ -86,6 +86,20 @@
             </div>
           </div>
           <base-button
+            class="dark bg_light elevate_1 nav-btn text_primary"
+            :mode="{
+            bg_diagonal: true,
+            small: true,
+          }"
+            :link="true"
+            :to="{
+              path: messageLink,
+              
+            }"
+          >
+            <fa icon="envelope" />
+          </base-button>
+          <base-button
             class="elevate_1 nav-btn text_white"
             :mode="{
             bg_error: true,

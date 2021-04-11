@@ -133,7 +133,7 @@ async function cancelTaxiFromCustomer(firebase, uid, data) {
     update.orderType = "taxi"
     update.time = update.rideFinishTime
     delete update.rideFinishTime
-    notification.push(firebase, order.driver.id, update)
+    notification.push(firebase, order.driver.id, update,'taxi')
   }
 
   if(data.createAnotherOrder) {
