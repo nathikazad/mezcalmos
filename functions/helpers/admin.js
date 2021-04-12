@@ -31,6 +31,8 @@ async function createChat(firebase, params) {
   } else {
     chat.createdBy = "user"
   }
+  
+  chat.type = (params.adminChatType) ? params.adminChatType : "general"
   chat.userType = params.userType
   chat.userId = params.userId
   chat.userInfo = {
@@ -89,6 +91,7 @@ async function submitAuthorizationRequest(firebase, params) {
     }
   }
   await firebase.database().ref(`/taxiDrivers/${params.userId}/state/authorizationStatus`).set('pending')
+  params.adminChatType = "authorizationRequest"
   createChat(firebase, params)
 }
 
