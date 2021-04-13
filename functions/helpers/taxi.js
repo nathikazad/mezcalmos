@@ -117,6 +117,7 @@ async function cancelTaxiFromCustomer(firebase, uid, data) {
   if(data.reason) {
     update.reason = data.reason
   }
+  update.cancelledBy = "customer"
 
   firebase.database().ref(`/orders/taxi/${orderId}`).update(update)
   firebase.database().ref(`/users/${order.customer.id}/orders/${orderId}`).update(update);
@@ -288,6 +289,8 @@ async function cancelTaxiFromDriver(firebase, uid, data) {
   if(data.reason){
     update.reason = data.reason
   }
+
+  update.cancelledBy = "driver"
 
   firebase.database().ref(`/orders/taxi/${orderId}`).update(update)
   firebase.database().ref(`/users/${order.customer.id}/orders/${orderId}`).update(update);
