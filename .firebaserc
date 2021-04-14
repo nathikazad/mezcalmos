@@ -32,10 +32,10 @@
       },
       "database": {
         "main": [
-          "mezcalmos-31f1c"
+          "mezcalmos-31f1c-default-rtdb"
         ],
         "test": [
-          "mezcalmos-31f1c-default-rtdb"
+          "mezcalmos-test"
         ]
       }
     }

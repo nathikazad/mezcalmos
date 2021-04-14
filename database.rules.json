@@ -6,7 +6,6 @@
       ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true",
       "$uid": {
         ".read": "$uid === auth.uid",
-        ".write": "false",
         "notificationInfo": {
           ".write": "$uid === auth.uid"
         },
@@ -17,6 +16,9 @@
           "photo": {
             ".write": "$uid === auth.uid"
           }
+        },
+        "savedLocations" : {
+          ".write": "$uid === auth.uid"
         }
       }
     },
