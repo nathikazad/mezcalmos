@@ -10,15 +10,50 @@
         </h3>
 
         <router-link
-          :to="linkToOrder(orderId)"
+          :to="linkToOrder(orderId,order)"
           tag="div"
           class="pointer"
           v-for="(order, orderId) in orders[date]"
           :key="orderId"
         >
-          <card2 class="bg_white border card wrap">
+          <card2 class="bg_white border card wrap" v-if="order.status!='cancelled'">
             <avatar size="2.4rem" :url="order.customer.image" slot="image"></avatar>
             <div slot="title" class="bold">{{ order.customer.name }}</div>
+            <span slot="aside" class="regular">
+              <fa icon="clock"></fa>
+              &nbsp;{{ order.acceptRideTime | moment("LT") }}
+            </span>
+            <div slot="desc" class="t-8 flex align_center fill_width space_between">
+              <span>
+                <fa icon="map-marker"></fa>&nbsp;
+                <span :title="order.to.address">{{ order.to.address | formatMessage(15) }}</span>
+              </span>
+              <strong class="text_blackD t-10 point">.</strong>
+              <span>
+                <fa icon="route"></fa>
+                {{deepFind(order, "routeInformation.distance.text")}}
+              </span>
+              <strong class="text_blackD t-10 point">.</strong>
+              <span>
+                <fa icon="stopwatch"></fa>
+                {{deepFind(order, "routeInformation.duration.text")}}
+              </span>
+            </div>
+          </card2>
+          <!-- order status is cancelled -->
+          <card2 class="bg_white border card wrap" v-else>
+            <div
+              class="statusCircle searchCircle flex align_center center"
+              slot="image"
+              :class="{[`bg_light_error`]:true,[`text_white`]:true}"
+            >
+              <fa icon="ban"></fa>
+            </div>
+            <div slot="title" class="bold">Cancelled</div>
+            <span slot="aside" class="regular">
+              <fa icon="clock"></fa>
+              &nbsp;{{ order.acceptRideTime | moment("LT") }}
+            </span>
             <div slot="desc" class="t-8 flex align_center fill_width space_between">
               <span>
                 <fa icon="map-marker"></fa>&nbsp;
@@ -58,9 +93,8 @@ export default {
   },
   computed: {
     orders() {
-      return this.$store.getters[
-        "pastOrders/dateSortedOrders"
-      ].dateSortedOrders;
+      return this.$store.getters["pastOrders/dateSortedOrders"]
+        .dateSortedOrders;
     },
 
     sortedDates() {
@@ -70,8 +104,12 @@ export default {
       return this.$store.getters["pastOrders/hasOrders"];
     },
     linkToOrder() {
-      return function(orderId) {
-        return `/orders/${orderId}`;
+      return function(orderId, order) {
+        if (order.status == "cancelled") {
+          return "/";
+        } else {
+          return `/orders/${orderId}`;
+        }
       };
     }
   },
@@ -104,5 +142,13 @@ export default {
 }
 .point {
   margin: 0 0.5rem;
+}
+.statusCircle {
+  border-radius: 50%;
+  height: 2.4rem;
+  width: 2.4rem;
+  padding: 0.5rem;
+  right: -0.1rem;
+  position: relative;
 }
 </style>

@@ -87,6 +87,15 @@ export default {
             desc: "Your ride has ended"
           };
           break;
+        case "cancelled":
+          returnvalue = {
+            bg: "light_error",
+            color: "white",
+            icon: "ban",
+            text: "Cancelled Taxi",
+            desc: "Your ride has ended"
+          };
+          break;
       }
       return returnvalue;
     }

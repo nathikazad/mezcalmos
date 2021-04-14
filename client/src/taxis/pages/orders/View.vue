@@ -238,13 +238,13 @@ export default {
 
       if (this.orderDetails) {
         borns.start = {
-          lat: this.orderDetails.from.lat,
-          lng: this.orderDetails.from.long
+          lat: this.latLngformat(this.orderDetails.from).lat,
+          lng: this.latLngformat(this.orderDetails.from).lng
         };
 
         borns.end = {
-          lat: this.orderDetails.to.lat,
-          lng: this.orderDetails.to.long
+          lat: this.latLngformat(this.orderDetails.to).lat,
+          lng: this.latLngformat(this.orderDetails.to).lng
         };
       }
       return borns;
@@ -264,36 +264,24 @@ export default {
       deep: true,
 
       handler: function(newVal, oldVal) {
-        console.log("watch ", newVal, oldVal, this.$route.path);
         if (newVal) {
+          //customer cancelled after ride accepted
+          console.log("newval", newVal);
+
           if (newVal.status == "cancelled") {
             this.reportTitle =
               "Sorry to informe you the customer cancelled the ride";
             this.cancelReport = true;
-          } else if (newVal.status != "lookingForTaxi") {
-            let userId = this.$store.getters.userId;
-            if (userId != newVal.driver.id) {
-              this.reportTitle = "Sorry to informe you this ride is taken";
-              this.cancelReport = true;
-              setTimeout(() => {
-                this.$router.push("/");
-              }, 2000);
-            }
+            setTimeout(() => {
+              this.$router.push("/");
+            }, 2000);
           }
-        }
-      }
-    },
-    sortedOrderIds: {
-      deep: true,
-      handler: function(newVal) {
-        console.log("sortedOrders watcher ", newVal);
+        } else if (oldVal) {
+          //The order taken before order accepted
+          //order cancelled before accepted
+          console.log("!newval&&oldVal", oldVal);
 
-        let orderId = this.$route.params.orderId;
-        let existOrder = newVal.find(id => {
-          return id == orderId;
-        });
-        if (!existOrder) {
-          this.reportTitle = "Sorry to informe you this ride is taken";
+          this.reportTitle = "Sorry to informe you this ride is unavailable";
           this.cancelReport = true;
           setTimeout(() => {
             this.$router.push("/");

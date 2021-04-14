@@ -139,6 +139,8 @@ export default {
         return `/messages/${notif.orderId}`;
       } else if (notif.notificationType == "newAdminMessage") {
         return `/contactAdmin`;
+      } else if (notif.status == "cancelled") {
+        return "/";
       } else {
         return `/services/${notif.orderType}/${notif.orderId}`;
       }

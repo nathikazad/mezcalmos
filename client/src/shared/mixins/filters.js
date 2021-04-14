@@ -9,6 +9,7 @@ export const formatMessage = (value, nbr) => {
 
 }
 
+
 export const sortOrdersByDate = (orders, timeParam) => {
     let newOrders = {}
     for (let key in orders) {

@@ -322,7 +322,7 @@ export default {
               marker.position.lat,
               marker.position.long
             );
-          } else {
+          } else if (marker.lat) {
             bound = new window.google.maps.LatLng(marker.lat, marker.lng);
           }
 

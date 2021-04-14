@@ -5,7 +5,7 @@ export default {
   },
   actions: {
     async log(_, payload) {
-      console.log("map log ", payload)
+     payload
     },
   },
 };

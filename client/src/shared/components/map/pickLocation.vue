@@ -86,9 +86,9 @@ export default {
 
   mounted() {
     if (this.customerLocation && !this.editId) {
-      this.saved.pos = this.customerLocation;
+      this.saved.pos = this.latLngformat(this.customerLocation);
       setTimeout(async () => {
-        this.saved.address = await this.geocodedAddress(this.customerLocation);
+        this.saved.address = await this.geocodedAddress(this.saved.pos);
         setTimeout(() => {
           this.saved.searching = false;
         }, 100);

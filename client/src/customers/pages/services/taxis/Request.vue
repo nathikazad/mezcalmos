@@ -16,12 +16,15 @@
       <div class="flex align_center center btnP" slot="action">
         <base-button
           class="w-80"
-          :mode="{ dark: true, bg_diagonal: true, disabled:disabled }"
+          :class="{bg_fb:!isLoggedIn}"
+          :mode="{ dark: true, bg_diagonal: isLoggedIn, disabled:disabled }"
           @click.native="requestTaxi()"
           :loading="loading"
           :disabled="disabled"
         >
-          <span class="t-8 regular">{{$t('customer.taxiView.confirm')}}</span>
+          <span
+            class="t-8 regular"
+          >{{isLoggedIn?$t('customer.taxiView.confirm'):$t('customer.taxiView.fbLogin')}}</span>
         </base-button>
       </div>
     </input-location>

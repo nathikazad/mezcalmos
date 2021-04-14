@@ -35,6 +35,7 @@ import {
     deepFind,
     geocodedAddress,
     decode,
+    latLngformat
 
 } from "@/shared/mixins/functions";
 import {
@@ -86,7 +87,7 @@ export function initModules(Vue) {
             deepFind,
             geocodedAddress,
             decode,
-
+            latLngformat
         },
     });
     //Vue filters

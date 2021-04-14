@@ -161,10 +161,15 @@ export default {
       handler: function(newVal, oldVal) {
         if (Object.keys(newVal).length > Object.keys(oldVal).length) {
           let lastId = Object.keys(newVal)[Object.keys(newVal).length - 1];
-          this.alert = this.notifications[lastId];
-          setTimeout(() => {
-            this.alert = false;
-          }, 3000);
+
+          let notifTime = new Date(this.notifications[lastId].time).getTime();
+
+          if (Date.now() - notifTime < 120000) {
+            this.alert = this.notifications[lastId];
+            setTimeout(() => {
+              this.alert = false;
+            }, 3000);
+          }
         } else {
           this.alert = false;
         }

@@ -112,3 +112,13 @@ export const getBrowserLanguage = () => {
   }
   return (!existingLanguages[browserLang] ? 'en' : browserLang)
 }
+export const latLngformat = (value) => {
+  if (!value) return null
+
+  if (value.long) {
+      value['lng'] = value.long
+      delete value.long
+  }
+  return value
+
+}

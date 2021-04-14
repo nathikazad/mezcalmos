@@ -15,7 +15,8 @@
             "droppedOf": "Dropped off",
             "review": "Review",
             "loading": "Loading",
-            "confirm": "CONFIRM"
+            "confirm": "CONFIRM",
+            "fbLogin":"LOGIN WITH FACEBOOK TO MAKE THIS ORDER"
         },
         "savedLocations": {
             "title": "Saved Locations",
