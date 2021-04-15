@@ -66,6 +66,9 @@ export default {
     NotificationCard
   },
   computed: {
+    appName() {
+      return this.$store.getters.appName;
+    },
     notifications() {
       return this.$store.getters["notifications/ungroupedList"];
     },
@@ -139,10 +142,10 @@ export default {
         return `/messages/${notif.orderId}`;
       } else if (notif.notificationType == "newAdminMessage") {
         return `/contactAdmin`;
-      } else if (notif.status == "cancelled") {
-        return "/";
-      } else {
+      } else if (this.appName == "customer") {
         return `/services/${notif.orderType}/${notif.orderId}`;
+      } else {
+        return `/orders/${notif.orderId}`;
       }
     }
   }

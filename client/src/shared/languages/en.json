@@ -16,7 +16,8 @@
             "review": "Review",
             "loading": "Loading",
             "confirm": "CONFIRM",
-            "fbLogin":"LOGIN WITH FACEBOOK TO MAKE THIS ORDER"
+            "cancelled": "CANCELLED",
+            "fbLogin": "LOGIN WITH FACEBOOK TO MAKE THIS ORDER"
         },
         "savedLocations": {
             "title": "Saved Locations",
@@ -66,7 +67,7 @@
             "signUpTaxi": "Click Sign Up, Show Us Proof <br/>Of Your Taxi Authorization <br/>And Start Giving Rides  <br/> Right Away ",
             "confirmation": "Your Application Is Under <br/>Review. We Will Contact <br/>You Shortly",
             "fbBtn": " Sign Up With Facebook|Login with Facebook",
-            "alreadyMember":"Already a member ?",
+            "alreadyMember": "Already a member ?",
             "yes": "YES"
 
         },

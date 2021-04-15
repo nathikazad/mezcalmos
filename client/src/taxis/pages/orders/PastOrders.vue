@@ -10,7 +10,7 @@
         </h3>
 
         <router-link
-          :to="linkToOrder(orderId,order)"
+          :to="linkToOrder(orderId)"
           tag="div"
           class="pointer"
           v-for="(order, orderId) in orders[date]"
@@ -104,12 +104,8 @@ export default {
       return this.$store.getters["pastOrders/hasOrders"];
     },
     linkToOrder() {
-      return function(orderId, order) {
-        if (order.status == "cancelled") {
-          return "/";
-        } else {
-          return `/orders/${orderId}`;
-        }
+      return function(orderId) {
+        return `/orders/${orderId}`;
       };
     }
   },

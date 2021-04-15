@@ -153,13 +153,22 @@
               </div>
             </div>
           </div>
-          <!-- <base-button
-            class="w-30 elevate_1"
-            :mode="{ dark: true, bg_info: true }"
-            :loading="loading"
-          >
-            <span class="t-8 regular">{{$t('customer.taxiView.review')}}</span>
-          </base-button>-->
+        </div>
+        <!-- Cancelled  Status-->
+        <div
+          class="flex align_center space_between btnP bg_white elevate_2"
+          slot="action"
+          v-else-if="orderDetails.status == 'cancelled'"
+        >
+          <div class="w-70">
+            <div class="flex align_center">
+              <avatar size="2.4rem" :url="orderDetails.driver.image" v-if="orderDetails.driver"></avatar>
+              <div class="user_name">
+                <h4 class="text_blackL" v-if="orderDetails.driver">{{ orderDetails.driver.name }}</h4>
+                <h5 class="regular text_grey">{{$t('customer.taxiView.cancelled')}}</h5>
+              </div>
+            </div>
+          </div>
         </div>
       </input-location>
     </div>
@@ -221,9 +230,9 @@ export default {
     orderDetails: {
       deep: true,
       immediate: true,
-      handler: function(newVal) {
+      handler: function(newVal, oldVal) {
         if (newVal) {
-          if (newVal.status == "cancelled") {
+          if (newVal.status == "cancelled" && oldVal) {
             this.cancelReport = true;
           }
         }
@@ -277,6 +286,14 @@ export default {
     this.$store.dispatch("notifications/clearOrderStatusNotifications", {
       orderId: this.$route.params.orderId
     });
+  },
+  async beforeRouteUpdate(to, _, next) {
+    console.log("route update ");
+
+    this.$store.dispatch("taxis/loadTaxi", {
+      orderId: to.params.orderId
+    });
+    next();
   }
 };
 </script>

@@ -21,7 +21,7 @@
     <div id="taxiRequest" v-if="orderDetails">
       <h1 class="regular flex align_center space_between">
         {{ orderDetails.customer.name }}
-        <span class="arrows" v-if="!inTaxi">
+        <span class="arrows" v-if="showArrows">
           <span @click="precedentOrder" v-if="precedentOrderId" class="text_violet">
             <fa icon="chevron-square-left"></fa>
           </span>
@@ -185,10 +185,18 @@ export default {
       cancelPopUp: false,
       choiceList: ["Other ride", "Traffic jam", "Other"],
       cancelReport: false,
-      reportTitle: "Sorry to informe you the customer cancelled the ride"
+      reportTitle: "Sorry to informe you the customer cancelled the ride",
+      sameInstance: false
     };
   },
   computed: {
+    showArrows() {
+      return (
+        !this.inTaxi &&
+        this.orderDetails.status != "droppedOff" &&
+        this.orderDetails.status != "cancelled"
+      );
+    },
     inTaxi() {
       return this.$store.getters.isInTaxi;
     },
@@ -268,9 +276,12 @@ export default {
           //customer cancelled after ride accepted
           console.log("newval", newVal);
 
-          if (newVal.status == "cancelled") {
+          if (
+            newVal.status == "cancelled" &&
+            this.deepFind(oldVal, "status") == "onTheWay"
+          ) {
             this.reportTitle =
-              "Sorry to informe you the customer cancelled the ride";
+              "Sorry to inform you the customer cancelled the ride";
             this.cancelReport = true;
             setTimeout(() => {
               this.$router.push("/");
@@ -279,26 +290,28 @@ export default {
         } else if (oldVal) {
           //The order taken before order accepted
           //order cancelled before accepted
-          console.log("!newval&&oldVal", oldVal);
-
-          this.reportTitle = "Sorry to informe you this ride is unavailable";
-          this.cancelReport = true;
-          setTimeout(() => {
-            this.$router.push("/");
-          }, 2000);
+          console.log("!newval&&oldVal", oldVal.customer.id);
+          if (!this.sameInstance) {
+            this.reportTitle = "Sorry to inform you this ride is unavailable";
+            this.cancelReport = true;
+            setTimeout(() => {
+              this.$router.push("/");
+            }, 2000);
+          }
+          this.sameInstance = false;
         }
       }
     }
   },
   async beforeCreate() {
-    console.log("before create");
-
+   
     this.$store.dispatch("order/loadOrder", {
       orderId: this.$route.params.orderId
     });
   },
-  beforeRouteUpdate(to, _, next) {
-    this.$store.dispatch("order/loadOrder", {
+  async beforeRouteUpdate(to, _, next) {
+    this.sameInstance = true;
+    await this.$store.dispatch("order/loadOrder", {
       orderId: to.params.orderId
     });
     next();
