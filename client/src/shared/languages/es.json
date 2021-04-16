@@ -12,7 +12,7 @@
             "arrival": "Llegara",
             "message": "Envía Mensaje",
             "rideStarted": "Paseo iniciado",
-            "droppedOf": "Dejado",
+            "droppedOff": "Dejado",
             "review": "Revisar",
             "loading": "Cargando",
             "confirm": "Confirmar"
@@ -47,7 +47,8 @@
             "startRide": "Iniciar viaje",
             "finishRide": "Terminar viaje",
             "message": "Envía Mensaje",
-            "droppedOf": "Dejado",
+            "droppedOff": "Dejado",
+            "droppedOffMessage": "Your ride has ended",
             "review": "Revisar",
             "loading": "Cargando"
         },
@@ -56,9 +57,14 @@
             "title": "Pedidos",
             "item": "Artículo|Artículos",
             "onTheWay": "En camino",
+            "onTheWayMessage": "está en camino ahora para recogerte",
             "inTransit": "En tránsito",
+            "inTransitMessage": "Tu viaje está en camino",
             "searching": "Buscando",
-            "noOrders": "Sin pedidos"
+            "searchingMessage": "Te van a emparejar con un taxi",
+            "noOrders": "Sin pedidos",
+            "cancelled": "Taxi cancelado",
+            "cancelledMessage": "Tu viaje ha sido cancelado"
         },
         "introduction": {
             "howToTaxi": "¿Desea utilizar <br/> la aplicación Mezcalmos para <br/> ofrecer transporte a los clientes en <br/> <span class = 'text_blue'> Puerto Escondido? </span> ",

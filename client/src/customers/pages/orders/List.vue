@@ -194,8 +194,8 @@ export default {
             bg: "light_green",
             color: "green",
             icon: "map-marker-check",
-            text: this.$t("taxi.taxiView.droppedOf"),
-            desc: "Your ride has ended"
+            text: this.$t("taxi.taxiView.droppedOff"),
+            desc: this.$t("taxi.taxiView.droppedOffMessage")
           };
           break;
         case "onTheWay":
@@ -204,7 +204,7 @@ export default {
             color: "violet",
             icon: "car-building",
             text: this.$t("taxi.orders.onTheWay"),
-            desc: `${notif.driver.name} on the way now to pick you up`
+            desc: `${notif.driver.name} ${this.$t("taxi.orders.onTheWayMessage")}`
           };
           break;
         case "inTransit":
@@ -213,7 +213,7 @@ export default {
             color: "primary",
             icon: "route",
             text: this.$t("taxi.orders.inTransit"),
-            desc: "Your ride has ended"
+            desc: this.$t("taxi.orders.inTransitMessage")
           };
           break;
         case "lookingForTaxi":
@@ -222,7 +222,7 @@ export default {
             color: "primary",
             icon: "search",
             text: this.$t("taxi.orders.searching"),
-            desc: "Your ride has ended"
+            desc: this.$t("taxi.orders.searchingMessage"), 
           };
           break;
         case "cancelled":
@@ -230,8 +230,8 @@ export default {
             bg: "light_error",
             color: "white",
             icon: "ban",
-            text: "Cancelled Taxi",
-            desc: "Your ride has ended"
+            text: this.$t("taxi.orders.cancelled") ,
+            desc: this.$t("taxi.orders.cancelledMessage")
           };
           break;
       }

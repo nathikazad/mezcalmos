@@ -12,7 +12,7 @@
             "arrival": "Arrival",
             "message": "Message",
             "rideStarted": "Ride started",
-            "droppedOf": "Dropped off",
+            "droppedOff": "Dropped off",
             "review": "Review",
             "loading": "Loading",
             "confirm": "CONFIRM",
@@ -49,7 +49,8 @@
             "startRide": "Start Ride",
             "finishRide": "Finish Ride",
             "message": "Message",
-            "droppedOf": "Dropped off",
+            "droppedOff": "Dropped off",
+            "droppedOffMessage": "Your ride has ended",
             "review": "Review",
             "loading": "Loading"
         },
@@ -58,9 +59,14 @@
             "title": "Orders",
             "item": "Item|Items",
             "onTheWay": "On the way",
+            "onTheWayMessage": "is on the way now to pick you up",
             "inTransit": "In Transit",
+            "inTransitMessage": "Your ride is on the way",
             "searching": "Searching for taxi",
-            "noOrders": "No orders found"
+            "searchingMessage": "You are being matched with a taxi",
+            "noOrders": "No orders found",
+            "cancelled": "Taxi Cancelled",
+            "cancelledMessage": "Your ride has been cancelled" 
         },
         "introduction": {
             "howToTaxi": "Do You Want To Use <br/>The Mezcalmos App To <br/>Give Rides To Customers In <br/> <span class='text_blue'>Puerto Escondido?</span> ",
