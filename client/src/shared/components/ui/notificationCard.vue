@@ -92,8 +92,8 @@ export default {
             bg: "light_error",
             color: "white",
             icon: "ban",
-            text: "Cancelled Taxi",
-            desc: "Your ride has ended"
+            text: this.$t("taxi.orders.cancelled"),
+            desc: this.$t("taxi.orders.cancelledMessage")
           };
           break;
       }
