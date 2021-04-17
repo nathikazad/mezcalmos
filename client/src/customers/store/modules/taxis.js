@@ -2,6 +2,9 @@ import {
   firebaseDatabase,
   cloudCall
 } from '@/shared/config/firebase'
+
+import { getDistanceFromLatLonInKm, puertoCoords } from '@/shared/mixins/mapFunctions'
+
 export default {
   namespaced: true,
   state() {
@@ -33,9 +36,14 @@ export default {
       });
     },
     async requestTaxi(context, payload) {
-      // let userId = context.rootGetters.userId
-      //console.log(payload);
-
+      if (getDistanceFromLatLonInKm(payload.from, puertoCoords) > 50 || 
+          getDistanceFromLatLonInKm(payload.to, puertoCoords) > 50) {
+        return {
+          status: "Error",
+          errorMessage: "Too Far",
+          i18nCode: "outOfPuerto"
+        }
+      }
       let from = payload.from
       let to = payload.to
       let response = await cloudCall('requestTaxi', {

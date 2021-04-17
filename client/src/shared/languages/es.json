@@ -67,9 +67,9 @@
             "cancelledMessage": "Tu viaje ha sido cancelado"
         },
         "introduction": {
-            "howToTaxi": "¿Desea utilizar <br/> la aplicación Mezcalmos para <br/> ofrecer transporte a los clientes en <br/> <span class = 'text_blue'> Puerto Escondido? </span> ",
-            "signUpTaxi": "Haga clic en Registrarse,<br/> muéstrenos la prueba de su autorización de taxi <br/> y comience a ofrecer viajes <br/> de inmediato ",
-            "confirmation": "Su solicitud está bajo revisión.<br/> Nos pondremos en contacto <br/> con usted en breve",
+            "howToTaxi": "¿Desea utilizar la aplicación Mezcalmos para ofrecer transporte a los clientes en <span class = 'text_blue'> Puerto Escondido? </span> ",
+            "signUpTaxi": "Haga clic en Registrarse, muéstrenos la prueba de su autorización de taxi y comience a ofrecer viajes de inmediato ",
+            "confirmation": "Su solicitud está bajo revisión. Nos pondremos en contacto con usted en breve",
             "fbBtn": " Registrate con Facebook",
             "yes": "SI"
 

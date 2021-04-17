@@ -69,9 +69,9 @@
             "cancelledMessage": "Your ride has been cancelled" 
         },
         "introduction": {
-            "howToTaxi": "Do You Want To Use <br/>The Mezcalmos App To <br/>Give Rides To Customers In <br/> <span class='text_blue'>Puerto Escondido?</span> ",
-            "signUpTaxi": "Click Sign Up, Show Us Proof <br/>Of Your Taxi Authorization <br/>And Start Giving Rides  <br/> Right Away ",
-            "confirmation": "Your Application Is Under <br/>Review. We Will Contact <br/>You Shortly",
+            "howToTaxi": "Do You Want To Use The Mezcalmos App To Give Rides To Customers In <span class='text_blue'>Puerto Escondido?</span> ",
+            "signUpTaxi": "Click Sign Up, Show Us Proof Of Your Taxi Authorization And Start Giving Rides Right Away ",
+            "confirmation": "Your Application Is Under Review. We Will Contact You Shortly",
             "fbBtn": " Sign Up With Facebook|Login with Facebook",
             "alreadyMember": "Already a member ?",
             "yes": "YES"

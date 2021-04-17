@@ -24,34 +24,22 @@ export default {
       let orderId = payload.orderId
       firebaseDatabase().ref(`orders/taxi/${orderId}`).on('value', async snapshot => {
         let order = snapshot.val()
-        console.log('order from taxi ', order);
-
+        console.log(order.to)
         if (order.status == "lookingForTaxi") {
           let driverLocation = context.rootGetters.userLocation;
           order.customer.distance = getDistanceFromLatLonInKm(order.from, driverLocation)
         }
-        context.commit('saveOrder', {
-          order: order,
-          orderId: orderId,
-        });
+        context.commit('saveOrder', { order: order, orderId: orderId });
       }, () => {
 
-        context.commit('saveOrder', {
-          order: null,
-          orderId: null,
-        })
+        context.commit('saveOrder', { order: null, orderId: null })
       });
 
     },
     async acceptRide(context) {
-      // TODO: check if order is loaded
       let orderId = context.state.orderId
-      let response = await cloudCall('acceptTaxiOrder', {
-        orderId: orderId
-      });
-      context.dispatch('updateRouteInformation', null, {
-        root: true
-      })
+      let response = await cloudCall('acceptTaxiOrder', { orderId: orderId });
+      context.dispatch('updateRouteInformation', null, { root: true })
       return response;
     },
     async cancelRide(context, payload) {
@@ -61,27 +49,37 @@ export default {
         return
       }
       let response = await cloudCall('cancelTaxiFromDriver', {
-        reason: payload.reason
+        reason: payload.reason 
       })
       return response
     },
     async startRide(context) {
-      // TODO: check if order is loaded
+      let driverLocation = context.rootGetters.userLocation;
+      let startLocation = context.state.order.from
+      if(getDistanceFromLatLonInKm(driverLocation, startLocation) > 0.5) {
+        return {
+          status: "Error",
+          errorMessage: "Too far",
+          i18nCode: "tooFarFromStartLocation"
+        }
+      }
       let orderId = context.state.orderId
-      let response = await cloudCall('startTaxiRide', {
-        orderId: orderId
-      });
-      context.dispatch('updateRouteInformation', null, {
-        root: true
-      })
+      let response = await cloudCall('startTaxiRide', { orderId: orderId });
+      context.dispatch('updateRouteInformation', null, { root: true })
       return response;
     },
     async finishRide(context) {
-      // TODO: check if order is loaded
+      let driverLocation = context.rootGetters.userLocation;
+      let endLocation = context.state.order.to
+      if(getDistanceFromLatLonInKm(driverLocation, endLocation) > 0.5) {
+        return {
+          status: "Error",
+          errorMessage: "Too far",
+          i18nCode: "tooFarFromStartLocation"
+        }
+      }
       let orderId = context.state.orderId
-      let response = await cloudCall('finishTaxiRide', {
-        orderId: orderId
-      });
+      let response = await cloudCall('finishTaxiRide', { orderId: orderId });
       return response;
     }
   },
