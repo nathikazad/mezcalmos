@@ -3,7 +3,7 @@
     <h1 class="regular txt_center" v-html="$t('shared.userInfo.title')"></h1>
     <div class="information">
       <div class="flex align_center center">
-        <avatar class="border" size="10rem" :url="deepFind(userInfo,'photo')"></avatar>
+        <avatar class="border" size="10rem" :url="deepFind(userInfo,'photo')+'?height=500'"></avatar>
       </div>
       <h1 class="txt_center t-20">{{ deepFind(userInfo,'displayName') }}</h1>
       <h3 class="txt_center" v-if="deepFind(userInfo,'phone')">

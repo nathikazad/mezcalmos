@@ -58,8 +58,10 @@ export default {
       return this.$route.name;
     },
     showNavBtn() {
-      return (this.routeName == "home" || 
-        (this.$store.getters.currentOrderId && this.routeName == "taxiView"));
+      return (
+        this.routeName == "home" ||
+        (this.$store.getters.currentOrderId && this.routeName == "taxiView")
+      );
     },
     minHeightPx() {
       return this.minHeight;
@@ -72,6 +74,17 @@ export default {
     window.removeEventListener("resize", this.handleResize);
   },
   methods: {
+    async postSavedAddress(tmpAddress) {
+      let response = await this.$store.dispatch(
+        "taxis/requestTaxi",
+        tmpAddress
+      );
+      if (response.data.status == "Success") {
+        this.$router.push({
+          path: `/services/taxi/${response.data.orderId}`
+        });
+      }
+    },
     handleResize() {
       let innerHeight = window.innerHeight;
       this.minHeight = innerHeight - 80;
@@ -114,32 +127,6 @@ export default {
       immediate: true,
       handler: function(newVal) {
         this.showPermessionPanel = !newVal;
-      }
-    },
-    isLoggedIn: {
-      deep: true,
-      immediate: true,
-      handler: async function(loggedIn) {
-        //console.log("loggedIn", loggedIn);
-
-        if (loggedIn) {
-          let temporaryAddresses = this.$store.getters[
-            "taxis/temporaryAddresses"
-          ];
-          if (temporaryAddresses) {
-            let response = await this.$store.dispatch(
-              "taxis/requestTaxi",
-              temporaryAddresses
-            );
-            //console.log(response);
-
-            if (response.data.status == "Success") {
-              this.$router.push({
-                path: `/services/taxi/${response.data.orderId}`
-              });
-            }
-          }
-        }
       }
     }
   }

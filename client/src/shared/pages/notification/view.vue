@@ -15,7 +15,7 @@
           }"
           class="nav-btn text_primary ml-2 bg_light elevate_0"
         >
-          <fa icon="broom"></fa>Clear
+          <fa icon="broom"></fa>{{$t('shared.notification.clear')}}
         </base-button>
       </h3>
 

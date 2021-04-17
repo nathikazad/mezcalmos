@@ -21,7 +21,8 @@
         },
         "savedLocations": {
             "title": "Saved Locations",
-            "location": "Location|Locations"
+            "location": "Location|Locations",
+            "addNewLoc": "Add New Location"
         },
         "orders": {
             "title": "Orders",
@@ -52,7 +53,8 @@
             "droppedOff": "Dropped off",
             "droppedOffMessage": "Your ride has ended",
             "review": "Review",
-            "loading": "Loading"
+            "loading": "Loading",
+            "cancelled": "CANCELLED"
         },
 
         "orders": {
@@ -98,7 +100,8 @@
             "today": "Today",
             "yesterday": "Yesterday",
             "older": "Older",
-            "item": "Item|Items"
+            "item": "Item|Items",
+            "clear": "clear"
         },
         "userInfo": {
             "title": " User <br/> Information ",

@@ -204,7 +204,7 @@ export default {
                 callType: "SearcForPlaces",
                 route: this.$route.path
               });
-            }, 3000);
+            }, 1000);
           } else {
             this.search.searching = false;
             this.search.results = [];
@@ -246,7 +246,7 @@ export default {
                 callType: "SearcForPlaces",
                 route: this.$route.path
               });
-            }, 3000);
+            }, 1000);
           } else {
             this.search.searching = false;
             this.search.results = [];

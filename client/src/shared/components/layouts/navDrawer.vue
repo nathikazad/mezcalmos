@@ -36,7 +36,7 @@
     </div>
     <div class="user nav_body" v-else>
       <div class="identity flex center wrap">
-        <avatar size="6.875rem" :url="deepFind(userInfo,'photo')"></avatar>
+        <avatar size="6.875rem" :url="deepFind(userInfo,'photo')+'?height=500'"></avatar>
         <h2 class="fill_width txt_center t-16 bold">{{deepFind(userInfo,'displayName')}}</h2>
       </div>
       <div class="nav_links flex align_center start wrap">

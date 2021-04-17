@@ -113,7 +113,7 @@ export default {
     return {
       openPicker: false,
       loading: false,
-      actionText: "Add New Location",
+      actionText:this.$t('customer.savedLocations.addNewLoc') ,
       editId: ""
     };
   },

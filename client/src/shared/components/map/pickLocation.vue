@@ -139,7 +139,7 @@ export default {
               callType: "SearcForPlaces",
               route: this.$route.path
             });
-          }, 3000);
+          }, 1000);
         } else {
           this.saved.searching = false;
           this.saved.results = [];

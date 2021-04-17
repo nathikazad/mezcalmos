@@ -20,7 +20,7 @@
           </div>
           <v-list two-line flat>
             <v-list-item-group v-model="selectedUser" color="primary">
-              <template v-for="(user,id) in users">
+              <template v-for="(user,id) in users" v-if="user.type=='general'">
                 <v-list-item :key="id">
                   <v-list-item-avatar color="grey darken-1">
                     <img :src="deepFind(user,'userInfo.photo')" alt />

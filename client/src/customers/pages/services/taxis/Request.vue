@@ -96,8 +96,6 @@ export default {
     },
     async requestTaxi() {
       if (!this.disabled) {
-        console.log(data);
-
         let data = {
           to: this.to,
           from: this.from,

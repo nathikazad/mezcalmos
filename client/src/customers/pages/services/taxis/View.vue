@@ -98,6 +98,7 @@
             }"
           >
             <fa icon="envelope" />
+            <span class="badge bg_error" v-if="orderMessages"></span>
           </base-button>
           <base-button
             class="elevate_1 nav-btn text_white"
@@ -127,15 +128,19 @@
             </div>
           </div>
           <base-button
-            class="w-30 elevate_1"
-            :mode="{ dark: true, bg_diagonal: true }"
+            class="dark bg_light elevate_1 nav-btn text_primary"
+            :mode="{
+            bg_diagonal: true,
+            small: true,
+          }"
             :link="true"
             :to="{
               path: messageLink,
               
             }"
           >
-            <span class="t-8 regular">{{$t('customer.taxiView.message')}}</span>
+            <fa icon="envelope" />
+            <span class="badge bg_error" v-if="orderMessages"></span>
           </base-button>
         </div>
         <!-- Droped off  Status-->
@@ -194,6 +199,21 @@ export default {
     };
   },
   computed: {
+    notifications() {
+      return this.$store.getters["notifications/ungroupedList"];
+    },
+    orderMessages() {
+      let orderId = this.$route.params.orderId;
+      if (this.notifications) {
+        return Object.values(this.notifications).find(notif => {
+          return (
+            notif.notificationType == "newMessage" && notif.orderId == orderId
+          );
+        });
+      } else {
+        return 0;
+      }
+    },
     userInfo() {
       return this.$store.getters["userInfo"];
     },
@@ -299,4 +319,17 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "@/shared/assets/scss/_taxiView.scss";
+.badge {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 2px solid #f6efff;
+  line-height: 1rem;
+  border-radius: 50%;
+  color: map-get($map: $colors, $key: white);
+  font-size: 0.8rem;
+  text-align: center;
+  top: -0.4rem;
+  right: -0.4rem;
+}
 </style>

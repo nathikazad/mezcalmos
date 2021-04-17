@@ -117,6 +117,9 @@ export default {
     },
     orderStatusDroppedOff(state) {
       return !!state.order && state.order.status == "droppedOff"
+    },
+    orderStatusCancelled(state) {
+      return !!state.order && state.order.status == "cancelled"
     }
   }
 };

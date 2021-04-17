@@ -8,11 +8,18 @@
 
 const shouldSW = 'serviceWorker' in navigator //&& (prod || test)
 if (shouldSW) {
+  navigator.serviceWorker.getRegistrations().then(async reg => {
+    if (reg && reg[0]) {
+      await reg[0].unregister()
+    }
 
-  navigator.serviceWorker.register(`${process.env.BASE_URL}sw/sw-customer.js`).then((registration) => {
-    //console.log("Service Worker Registered!", registration)
-    registration.update();
-  }).catch(() => {
-    //console.log("Something went wrong with registration!", err)
+    navigator.serviceWorker.register(`${process.env.BASE_URL}sw/sw-customer.js`).then((registration) => {
+      //console.log("Service Worker Registered!", registration)
+
+      registration.update();
+    }).catch(() => {
+      //console.log("Something went wrong with registration!", err)
+    });
   });
+
 }

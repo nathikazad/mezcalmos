@@ -102,6 +102,7 @@
             }"
             >
               <fa icon="envelope" />
+              <span class="badge bg_error" v-if="orderMessages"></span>
             </base-button>
             <base-button
               class="elevate_1 nav-btn text_white"
@@ -131,15 +132,19 @@
             <span class="t-8 regular">{{$t('taxi.taxiView.finishRide')}}</span>
           </base-button>
           <base-button
-            class="w-30 elevate_1"
-            :mode="{ dark: true, bg_diagonal: true }"
+            class="dark bg_light elevate_1 nav-btn text_primary"
+            :mode="{
+            bg_diagonal: true,
+            small: true,
+          }"
             :link="true"
             :to="{
               path: messageLink,
-             
+              
             }"
           >
-            <span class="t-8 regular">{{$t('taxi.taxiView.message')}}</span>
+            <fa icon="envelope" />
+            <span class="badge bg_error" v-if="orderMessages"></span>
           </base-button>
         </div>
         <!-- Finished ride  Status-->
@@ -157,13 +162,22 @@
               </div>
             </div>
           </div>
-          <!-- <base-button
-            class="w-30 elevate_1"
-            :mode="{ dark: true, bg_info: true }"
-            :loading="loading"
-          >
-            <span class="t-8 regular">{{$t('taxi.taxiView.review')}}</span>
-          </base-button>-->
+        </div>
+        <!-- Finished ride  Status-->
+        <div
+          class="flex align_center space_between btnP bg_white elevate_2"
+          slot="action"
+          v-else-if="orderStatusCancelled"
+        >
+          <div class="w-70">
+            <div class="flex align_center">
+              <avatar size="2.4rem" :url="orderDetails.customer.image"></avatar>
+              <div class="user_name">
+                <h4 class="text_blackL">{{ orderDetails.customer.name }}</h4>
+                <h5 class="regular text_grey">{{$t('taxi.taxiView.cancelled')}}</h5>
+              </div>
+            </div>
+          </div>
         </div>
       </input-location>
     </div>
@@ -190,6 +204,21 @@ export default {
     };
   },
   computed: {
+    notifications() {
+      return this.$store.getters["notifications/ungroupedList"];
+    },
+    orderMessages() {
+      let orderId = this.$route.params.orderId;
+      if (this.notifications) {
+        return Object.values(this.notifications).find(notif => {
+          return (
+            notif.notificationType == "newMessage" && notif.orderId == orderId
+          );
+        });
+      } else {
+        return 0;
+      }
+    },
     showArrows() {
       return (
         !this.inTaxi &&
@@ -265,6 +294,9 @@ export default {
     },
     orderStatusDroppedOff() {
       return this.$store.getters["order/orderStatusDroppedOff"];
+    },
+    orderStatusCancelled() {
+      return this.$store.getters["order/orderStatusCancelled"];
     }
   },
   watch: {
@@ -304,7 +336,6 @@ export default {
     }
   },
   async beforeCreate() {
-   
     this.$store.dispatch("order/loadOrder", {
       orderId: this.$route.params.orderId
     });
@@ -390,5 +421,18 @@ export default {
       margin-left: 0.5rem;
     }
   }
+}
+.badge {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 2px solid #f6efff;
+  line-height: 1rem;
+  border-radius: 50%;
+  color: map-get($map: $colors, $key: white);
+  font-size: 0.8rem;
+  text-align: center;
+  top: -0.4rem;
+  right: -0.4rem;
 }
 </style>
