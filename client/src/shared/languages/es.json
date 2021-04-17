@@ -15,11 +15,14 @@
             "droppedOff": "Dejado",
             "review": "Revisar",
             "loading": "Cargando",
-            "confirm": "Confirmar"
+            "confirm": "Confirmar",
+            "cancelled": "Cancellado",
+            "fbLogin": "Inicie sesión con Facebook para hacer este pedido"
         },
         "savedLocations": {
             "title": "Ubicaciones guardadas",
-            "location": "Ubicacion|Ubicaciones"
+            "location": "Ubicacion|Ubicaciones",
+            "addNewLoc": "Añadir nueva ubicación"
         },
         "orders": {
             "title": "Pedidos",
@@ -48,9 +51,10 @@
             "finishRide": "Terminar viaje",
             "message": "Envía Mensaje",
             "droppedOff": "Dejado",
-            "droppedOffMessage": "Your ride has ended",
+            "droppedOffMessage": "Tu viaje ha terminado",
             "review": "Revisar",
-            "loading": "Cargando"
+            "loading": "Cargando",
+            "cancelled": "Cancellado"
         },
 
         "orders": {
@@ -94,7 +98,9 @@
             "title": "Notificaciones",
             "today": "Hoy",
             "yesterday": "Ayer",
-            "older": "Antiguos"
+            "older": "Antiguos",
+            "item": "Artículo|Artículos",
+            "clear": "Borrar"
         },
         "userInfo": {
             "title": " Información <br/> del usuario ",
@@ -106,7 +112,8 @@
             "myOrders": "Mis Pedidos",
             "savedLocations": "Ubicaciones guardadas",
             "logout": "Cerrar sesión",
-            "login": "Iniciar sesión"
+            "login": "Iniciar sesión",
+            "contactAdmin": "Contactar admin"
         },
         "header": {
             "alert": "El estado del pedido cambió"

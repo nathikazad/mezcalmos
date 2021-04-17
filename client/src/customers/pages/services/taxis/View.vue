@@ -154,7 +154,7 @@
               <avatar size="2.4rem" :url="orderDetails.driver.image"></avatar>
               <div class="user_name">
                 <h4 class="text_blackL">{{ orderDetails.driver.name }}</h4>
-                <h5 class="regular text_grey">{{$t('customer.taxiView.droppedOf')}}</h5>
+                <h5 class="regular text_grey">{{$t('customer.taxiView.droppedOff')}}</h5>
               </div>
             </div>
           </div>

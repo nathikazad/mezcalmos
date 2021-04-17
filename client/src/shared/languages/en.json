@@ -16,8 +16,8 @@
             "review": "Review",
             "loading": "Loading",
             "confirm": "CONFIRM",
-            "cancelled": "CANCELLED",
-            "fbLogin": "LOGIN WITH FACEBOOK TO MAKE THIS ORDER"
+            "cancelled": "Cancelled",
+            "fbLogin": "Login With Facebook To Make This Order"
         },
         "savedLocations": {
             "title": "Saved Locations",
@@ -101,7 +101,7 @@
             "yesterday": "Yesterday",
             "older": "Older",
             "item": "Item|Items",
-            "clear": "clear"
+            "clear": "Clear"
         },
         "userInfo": {
             "title": " User <br/> Information ",
