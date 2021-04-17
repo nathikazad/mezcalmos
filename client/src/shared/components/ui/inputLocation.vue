@@ -154,7 +154,7 @@ export default {
         this.$store.getters.userLocation || this.userDefaultLocation;
       return {
         lat: this.deepFind(currentLoc, "lat"),
-        lng: this.deepFind(currentLoc, "long")
+        lng: this.deepFind(currentLoc, "lng")
       };
     },
     center() {
@@ -311,7 +311,7 @@ export default {
           pos: res.geometry.location
         });
         this[this.search.origin].lat = res.geometry.location.lat();
-        this[this.search.origin].long = res.geometry.location.lng();
+        this[this.search.origin].lng = res.geometry.location.lng();
         this.$emit("centerChanged", res.geometry.location);
         this.changeDirection(this.search.origin, res.geometry.location);
       });
@@ -319,7 +319,7 @@ export default {
     pickedFromSaved(place) {
       let pos = {
         lat: place.lat,
-        lng: place.long
+        lng: place.lng
       };
       this.changeDirection(this.saved.origin, {
         lat: () => {
@@ -332,7 +332,7 @@ export default {
       this.auxCenter = pos;
       this[this.saved.origin].address = place.address;
       this[this.saved.origin].lat = place.lat;
-      this[this.saved.origin].long = place.long;
+      this[this.saved.origin].lng = place.lng;
       this.$emit("changedDirection", {
         origin: this.saved.origin,
         pos: pos
@@ -357,7 +357,7 @@ export default {
       this[this.saved.origin].by = "current";
       this[this.saved.origin].address = await this.geocodedAddress(pos);
       this[this.saved.origin].lat = pos.lat;
-      this[this.saved.origin].long = pos.lng;
+      this[this.saved.origin].lng = pos.lng;
       this.$emit("changedDirection", {
         origin: this.saved.origin,
         pos: pos

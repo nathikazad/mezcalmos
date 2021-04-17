@@ -215,12 +215,12 @@ export default {
       if (this.orderDetails) {
         borns.start = {
           lat: this.orderDetails.from.lat,
-          lng: this.orderDetails.from.long
+          lng: this.orderDetails.from.lng
         };
 
         borns.end = {
           lat: this.orderDetails.to.lat,
-          lng: this.orderDetails.to.long
+          lng: this.orderDetails.to.lng
         };
       }
       return borns;

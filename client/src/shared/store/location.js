@@ -20,7 +20,7 @@ export default {
     getUserDefaultLocation() {
       return {
         lat: 15.8720,
-        long: -97.0767
+        lng: -97.0767
       }
     }
   },
@@ -29,7 +29,7 @@ export default {
       let navigatorWatchId = navigator.geolocation.watchPosition(async function (position) {
         let newPosition = {
           lat: position.coords.latitude,
-          long: position.coords.longitude
+          lng: position.coords.longitude
         }
         context.commit('setUserLocation', newPosition)
         context.state.watchPositionCallbacks.forEach(cb => cb.func(...cb.args));

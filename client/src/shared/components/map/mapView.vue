@@ -34,7 +34,7 @@
     <!-- Driver Icon marker -->
 
     <gmap-custom-marker
-      :marker="{lat:deepFind(driverLocation, 'position.lat'),lng:deepFind(driverLocation, 'position.long')}"
+      :marker="{lat:deepFind(driverLocation, 'position.lat'),lng:deepFind(driverLocation, 'position.lng')}"
       v-if="deepFind(driverLocation, 'position')"
       :ref="`marker-driver`"
     >
@@ -320,7 +320,7 @@ export default {
           if (marker.position) {
             bound = new window.google.maps.LatLng(
               marker.position.lat,
-              marker.position.long
+              marker.position.lng
             );
           } else if (marker.lat) {
             bound = new window.google.maps.LatLng(marker.lat, marker.lng);

@@ -47,13 +47,13 @@ export default {
       center: this.userDefaultLocation,
       from: {
         lat: this.deepFind(this.userDefaultLocation, "lat"),
-        long: this.deepFind(this.userDefaultLocation, "long"),
+        lng: this.deepFind(this.userDefaultLocation, "lng"),
         address: "",
         by: "search"
       },
       to: {
         lat: this.deepFind(this.userDefaultLocation, "lat"),
-        long: this.deepFind(this.userDefaultLocation, "long"),
+        lng: this.deepFind(this.userDefaultLocation, "lng"),
         address: "",
         by: "search"
       },

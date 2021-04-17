@@ -92,7 +92,7 @@ export default {
             let place = this.locations[this.editId];
             pickLocation.name = place.name;
             pickLocation.saved.address = place.address;
-            pickLocation.saved.pos = { lat: place.lat, lng: place.long };
+            pickLocation.saved.pos = { lat: place.lat, lng: place.lng };
             setTimeout(() => {
               pickLocation.saved.searching = false;
             }, 200);

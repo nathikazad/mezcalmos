@@ -246,13 +246,13 @@ export default {
 
       if (this.orderDetails) {
         borns.start = {
-          lat: this.latLngformat(this.orderDetails.from).lat,
-          lng: this.latLngformat(this.orderDetails.from).lng
+          lat: this.orderDetails.from.lat,
+          lng: this.orderDetails.from.lng
         };
 
         borns.end = {
-          lat: this.latLngformat(this.orderDetails.to).lat,
-          lng: this.latLngformat(this.orderDetails.to).lng
+          lat: this.orderDetails.to.lat,
+          lng: this.orderDetails.to.lng
         };
       }
       return borns;

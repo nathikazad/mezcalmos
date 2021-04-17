@@ -1,7 +1,7 @@
 <template>
   <li>
     <input type="text" v-model="locationCopy.lat">
-    <input type="text" v-model="locationCopy.long">
+    <input type="text" v-model="locationCopy.lng">
     <input type="text" v-model="locationCopy.address">
   </li>
 </template>

@@ -34,9 +34,7 @@ import Switch from "@/shared/components/ui/switch";
 import {
     deepFind,
     geocodedAddress,
-    decode,
-    latLngformat
-
+    decode
 } from "@/shared/mixins/functions";
 import {
     formatMessage
@@ -86,8 +84,7 @@ export function initModules(Vue) {
         methods: {
             deepFind,
             geocodedAddress,
-            decode,
-            latLngformat
+            decode
         },
     });
     //Vue filters

@@ -35,7 +35,6 @@ async function firebaseCallback(user) {
     askForNotification('taxi', store);
     store.dispatch("notifications/loadNotificationsForTaxi");
     await store.dispatch("admin/loadAdmin");
-    console.log(' authorizationPending ', store.getters.authorizationPending);
 
     if (store.getters.authorizationPending) {
       router.redirectAuthorizationPendingUsers()

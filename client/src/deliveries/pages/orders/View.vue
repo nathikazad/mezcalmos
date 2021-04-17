@@ -6,11 +6,11 @@
     <div v-if="isLoaded">
       <h3>FROM</h3>
       <label >lat:&nbsp;{{ orderDetails.from.lat }}</label><br/> 
-      <label>long:&nbsp;{{ orderDetails.from.long }}</label><br/>
+      <label>lng:&nbsp;{{ orderDetails.from.lng }}</label><br/>
       <label>address:&nbsp;{{ orderDetails.from.address }}</label><br/>
       <h3>TO</h3>
       <label>lat:&nbsp;{{ orderDetails.to.lat }}</label><br/>
-      <label>long:&nbsp;{{ orderDetails.to.long }}</label><br/>
+      <label>lng:&nbsp;{{ orderDetails.to.lng }}</label><br/>
       <label>address:&nbsp;{{ orderDetails.to.address }}</label><br/>
       <h3>Items</h3>
       <label>{{ orderDetails.items }}</label><br/>

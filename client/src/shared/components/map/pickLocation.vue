@@ -86,7 +86,7 @@ export default {
 
   mounted() {
     if (this.customerLocation && !this.editId) {
-      this.saved.pos = this.latLngformat(this.customerLocation);
+      this.saved.pos = this.customerLocation;
       setTimeout(async () => {
         this.saved.address = await this.geocodedAddress(this.saved.pos);
         setTimeout(() => {
@@ -157,7 +157,7 @@ export default {
       let place = {
         name: this.name,
         lat: this.saved.pos.lat,
-        long: this.saved.pos.lng,
+        lng: this.saved.pos.lng,
         address: this.saved.address
       };
       this.loading = true;

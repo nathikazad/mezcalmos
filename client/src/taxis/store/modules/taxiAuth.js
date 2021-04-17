@@ -48,7 +48,7 @@ export default {
 
       let updateRouteIntervalId = setInterval(function () {
         updateRouteInformation(context)
-      }, 300 * 1000)
+      }, 30 * 1000)
 
       setTimeout(function () {
         updateRouteInformation(context)
@@ -174,11 +174,11 @@ const updateRouteInformation = async (context) => {
     directionsService.route({
         origin: {
           lat: driverLocation.lat,
-          lng: driverLocation.long
+          lng: driverLocation.lng
         },
         destination: {
           lat: destination.lat,
-          lng: destination.long
+          lng: destination.lng
         },
         travelMode: "DRIVING",
       },

@@ -28,7 +28,7 @@ export default {
       let newLocation = {
         name: payload.name,
         lat: payload.lat,
-        long: payload.long,
+        lng: payload.lng,
         address: payload.address
       }
       await firebaseDatabase().ref(`/users/${userId}/savedLocations`).push(newLocation);
