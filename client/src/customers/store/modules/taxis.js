@@ -3,7 +3,10 @@ import {
   cloudCall
 } from '@/shared/config/firebase'
 
-import { getDistanceFromLatLonInKm, puertoCoords } from '@/shared/mixins/mapFunctions'
+import {
+  getDistanceFromLatLonInKm,
+  puertoCoords
+} from '@/shared/mixins/mapFunctions'
 
 export default {
   namespaced: true,
@@ -55,6 +58,8 @@ export default {
         duration: payload.duration
       });
       context.commit('saveTemporaryAddresses', null)
+      console.log(response);
+
       return response;
     },
     async cancelTaxi(context, payload) {

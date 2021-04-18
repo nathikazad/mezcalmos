@@ -13,7 +13,7 @@ if (shouldSW) {
       await reg[0].unregister()
     }
 
-    navigator.serviceWorker.register(`${process.env.BASE_URL}sw/sw-customer.js`).then((registration) => {
+    navigator.serviceWorker.register(`${process.env.BASE_URL}sw-customer.js`).then((registration) => {
       //console.log("Service Worker Registered!", registration)
 
       registration.update();

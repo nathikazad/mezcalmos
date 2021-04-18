@@ -86,9 +86,29 @@ export default {
     },
     userDefaultLocation() {
       return this.$store.getters["getUserDefaultLocation"];
+    },
+    temporaryAddresses() {
+      return this.$store.getters["taxis/temporaryAddresses"];
     }
   },
-
+  watch: {
+    temporaryAddresses: {
+      deep: true,
+      immediate: true,
+      handler: function(newVal) {
+        if (newVal) {
+          this.from = newVal.from;
+          this.to = newVal.to;
+          this.distance = newVal.distance;
+          this.duration = newVal.duration;
+          this.directionsBorns = {
+            start: { lat: newVal.from.lat, lng: newVal.from.lng },
+            end: { lat: newVal.to.lat, lng: newVal.to.lng }
+          };
+        }
+      }
+    }
+  },
   methods: {
     setDistanceDuration(pos) {
       this.distance = pos.distance;

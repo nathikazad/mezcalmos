@@ -1,6 +1,6 @@
-importScripts('./service-worker.js')
+importScripts('/sw/service-worker.js')
 
-cachingSetup(self, 'taxi');
+//cachingSetup(self, 'taxi');
 pushEventListener(self);
 activateEventListener(self, 'taxi');
 self.addEventListener('notificationclick', function (event) {

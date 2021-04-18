@@ -234,8 +234,50 @@ export default {
         start: null,
         end: null
       };
+      console.log(this.orderDetails);
 
       if (this.orderDetails) {
+        // if (this.orderDetails.status == "onTheWay") {
+        //   borns.start = {
+        //     lat: this.deepFind(
+        //       this.orderDetails,
+        //       "driver.location.position.lat"
+        //     ),
+        //     lng: this.deepFind(
+        //       this.orderDetails,
+        //       "driver.location.position.lng"
+        //     )
+        //   };
+        //   borns.end = {
+        //     lat: this.orderDetails.from.lat,
+        //     lng: this.orderDetails.from.lng
+        //   };
+        // } else if (this.orderDetails.status == "inTransit") {
+        //   borns.start = {
+        //     lat: this.deepFind(
+        //       this.orderDetails,
+        //       "driver.location.position.lat"
+        //     ),
+        //     lng: this.deepFind(
+        //       this.orderDetails,
+        //       "driver.location.position.lng"
+        //     )
+        //   };
+        //   borns.end = {
+        //     lat: this.orderDetails.to.lat,
+        //     lng: this.orderDetails.to.lng
+        //   };
+        // } else {
+        //   borns.start = {
+        //     lat: this.orderDetails.from.lat,
+        //     lng: this.orderDetails.from.lng
+        //   };
+
+        //   borns.end = {
+        //     lat: this.orderDetails.to.lat,
+        //     lng: this.orderDetails.to.lng
+        //   };
+        // }
         borns.start = {
           lat: this.orderDetails.from.lat,
           lng: this.orderDetails.from.lng
@@ -298,7 +340,9 @@ export default {
         await this.cancelRide("taxi cancelled");
         this.$router.push({ name: "home" });
       } else {
-        this.requestTaxi(this.orderDetails);
+        await this.$store.dispatch("taxis/saveAddress", this.orderDetails);
+        this.$router.push("/services/taxi/request");
+        //this.requestTaxi(this.orderDetails);
       }
     }
   },

@@ -329,9 +329,17 @@ export default {
           if (!this.sameInstance) {
             this.reportTitle = this.$t("taxi.cancelOrder.rideUnavailble");
             this.cancelReport = true;
-            setTimeout(() => {
-              this.$router.push("/");
-            }, 2000);
+            if (this.nextOrderId) {
+
+              setTimeout(() => {
+                this.cancelReport = false;
+                this.nextOrder();
+              }, 2000);
+            } else {
+              setTimeout(() => {
+                this.$router.push("/");
+              }, 2000);
+            }
           }
           this.sameInstance = false;
         }

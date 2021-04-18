@@ -73,8 +73,8 @@
             "otherRide": "Other ride",
             "trafficJam": "Traffic jam",
             "other": "Other",
-            "customerCancelled": "Sorry to informe you the taxi cancelled the ride",
-            "rideUnavailble": "Sorry to informe you the taxi cancelled the ride"
+            "customerCancelled": "Sorry to informe you the customer cancelled the ride",
+            "rideUnavailble": "Sorry to informe you the the ride is not availble any more"
         },
         "orders": {
             "title": "Orders",
