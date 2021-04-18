@@ -318,14 +318,13 @@ async function start(firebase, uid) {
       errorMessage: "Driver has not accepted any ride"
     }
   }
-
   let order = (await firebase.database().ref(`/orders/taxi/${orderId}`).once('value')).val();
   if (order == null) {
     return {
       status: "Error",
-      errorMessage: "System Error, driver's current order id does not match any order"
+      errorMessage: "Order id does not match any order"
     }
-  }
+  } 
 
 
   if (order.status != "onTheWay") {
@@ -353,20 +352,13 @@ async function start(firebase, uid) {
   };
 }
 
-async function finish(firebase, uid) {
-  let orderId = (await firebase.database().ref(`/taxiDrivers/${uid}/state/currentOrder`).once('value')).val();
-  if (orderId == null) {
-    return {
-      status: "Error",
-      errorMessage: "Driver has not accepted any ride"
-    }
-  }
-
+async function finish(firebase, orderId) {
+  console.log(`/orders/taxi/${orderId}`)
   let order = (await firebase.database().ref(`/orders/taxi/${orderId}`).once('value')).val();
   if (order == null) {
     return {
       status: "Error",
-      errorMessage: "System Error, driver's current order id does not match any order"
+      errorMessage: "Order id does not match any order"
     }
   }
 

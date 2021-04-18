@@ -32,6 +32,9 @@ function firebaseInitFunction(fbCallback) {
 }
 
 export  function cloudCall(name, payload) {
+  if(!payload) {
+    payload = {}
+  }
   if (process.env.VUE_APP_TEST_DB == "true") {
     payload.database = "test"
   } else {

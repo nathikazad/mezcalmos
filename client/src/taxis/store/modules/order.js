@@ -38,8 +38,11 @@ export default {
     },
     async acceptRide(context) {
       let orderId = context.state.orderId
-      let response = await cloudCall('acceptTaxiOrder', { orderId: orderId });
+      let response = (await cloudCall('acceptTaxiOrder', { orderId: orderId })).data;
       context.dispatch('updateRouteInformation', null, { root: true })
+      if(response.status == "Error") {
+        console.log(response.errorMessage)
+      }
       return response;
     },
     async cancelRide(context, payload) {
@@ -48,9 +51,10 @@ export default {
         console.log("Not possible to cancel")
         return
       }
-      let response = await cloudCall('cancelTaxiFromDriver', {
-        reason: payload.reason 
-      })
+      let response = (await cloudCall('cancelTaxiFromDriver', { reason: payload.reason })).data
+      if(response.status == "Error") {
+        console.log(response.errorMessage)
+      }
       return response
     },
     async startRide(context) {
@@ -63,9 +67,11 @@ export default {
           i18nCode: "tooFarFromStartLocation"
         }
       }
-      let orderId = context.state.orderId
-      let response = await cloudCall('startTaxiRide', { orderId: orderId });
+      let response = (await cloudCall('startTaxiRide')).data;
       context.dispatch('updateRouteInformation', null, { root: true })
+      if(response.status == "Error") {
+        console.log(response.errorMessage)
+      }
       return response;
     },
     async finishRide(context) {
@@ -78,8 +84,10 @@ export default {
           i18nCode: "tooFarFromStartLocation"
         }
       }
-      let orderId = context.state.orderId
-      let response = await cloudCall('finishTaxiRide', { orderId: orderId });
+      let response = (await cloudCall('finishTaxiRide')).data;
+      if(response.status == "Error") {
+        console.log(response.errorMessage)
+      }
       return response;
     }
   },

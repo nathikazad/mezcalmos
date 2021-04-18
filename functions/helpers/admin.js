@@ -2,7 +2,8 @@ module.exports = {
   createChat,
   resolve,
   submitAuthorizationRequest,
-  approveAuthorizationRequest
+  approveAuthorizationRequest,
+  checkAdmin
 }
 
 async function createChat(firebase, params) {

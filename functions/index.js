@@ -113,7 +113,19 @@ exports.finishTaxiRide = functions.https.onCall(async (data, context) => {
     }
   }
   let firebase = getFirebase(data.database);
-  let response = await taxi.finish(firebase, context.auth.uid)
+  let orderId
+  if(data.fromAdmin) {
+    let response = await admin.checkAdmin(firebase, {adminId:context.auth.uid})
+    if (response) return response
+    orderId = data.orderId
+  } else {
+    let driverId = context.auth.uid
+    orderId = (await firebase.database().ref(`/taxiDrivers/${driverId}/state/currentOrder`).once('value')).val();
+    if (orderId == null) {
+      return { status: "Error", errorMessage: "Driver has not accepted any ride" }
+    }
+  }
+  let response = await taxi.finish(firebase, orderId)
   return response
 });
 

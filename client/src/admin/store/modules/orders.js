@@ -1,6 +1,4 @@
-import {
-  firebaseDatabase
-} from '@/shared/config/firebase'
+import { firebaseDatabase, cloudCall } from '@/shared/config/firebase'
 // import { apolloClient } from '@/config/apollo'
 // import gql from 'graphql-tag'
 export default {
@@ -68,6 +66,13 @@ export default {
           value: snapshot.val()
         })
       })
+    },
+    async finishTaxiOrder(context, payload) {
+      let response = (await cloudCall('finishTaxiRide', {fromAdmin: true, orderId: payload.orderId})).data;
+      if(response.status == "Error") {
+        console.log(response.errorMessage)
+      }
+      return response
     }
   },
   mutations: {
