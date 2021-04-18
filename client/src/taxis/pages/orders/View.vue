@@ -6,13 +6,13 @@
       @picked="cancelRide($event)"
       :choiceList="choiceList"
       @close="cancelPopUp=false"
-      :title="'Why you want to cancel the ride?' "
+      :title="$t('taxi.cancelOrder.question') "
       :icon="'times-circle'"
     ></pop-up>
     <!-- ******************pop up Warning Taxi taken ************************-->
     <pop-up
       v-if="cancelReport"
-      :choiceList="['Back to incomming']"
+      :choiceList="[$t('taxi.cancelOrder.backToIncoming')]"
       @picked="submitReposting($event)"
       @close="cancelPopUp=false"
       :title="reportTitle "
@@ -197,9 +197,13 @@ export default {
     return {
       loading: false,
       cancelPopUp: false,
-      choiceList: ["Other ride", "Traffic jam", "Other"],
+      choiceList: [
+        this.$t("taxi.cancelOrder.otherRide"),
+        this.$t("taxi.cancelOrder.trafficJam"),
+        this.$t("taxi.cancelOrder.other")
+      ],
       cancelReport: false,
-      reportTitle: "Sorry to informe you the customer cancelled the ride",
+      reportTitle: this.$t("taxi.cancelOrder.customerCancelled"),
       sameInstance: false
     };
   },
@@ -312,8 +316,7 @@ export default {
             newVal.status == "cancelled" &&
             this.deepFind(oldVal, "status") == "onTheWay"
           ) {
-            this.reportTitle =
-              "Sorry to inform you the customer cancelled the ride";
+            this.reportTitle = this.$t("taxi.cancelOrder.customerCancelled");
             this.cancelReport = true;
             setTimeout(() => {
               this.$router.push("/");
@@ -324,7 +327,7 @@ export default {
           //order cancelled before accepted
           console.log("!newval&&oldVal", oldVal.customer.id);
           if (!this.sameInstance) {
-            this.reportTitle = "Sorry to inform you this ride is unavailable";
+            this.reportTitle = this.$t("taxi.cancelOrder.rideUnavailble");
             this.cancelReport = true;
             setTimeout(() => {
               this.$router.push("/");

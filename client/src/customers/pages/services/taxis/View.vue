@@ -7,16 +7,16 @@
         @picked="cancelRide($event)"
         :choiceList="choiceList"
         @close="cancelPopUp=false"
-        :title="'Why you want to cancel the ride?' "
+        :title="$t('customer.cancelOrder.question') "
         :icon="'times-circle'"
       ></pop-up>
       <!-- ******************pop up Warning Taxi taken ************************-->
       <pop-up
         v-if="cancelReport"
-        :choiceList="['Cancel ride','Post again']"
+        :choiceList="[$t('customer.cancelOrder.cancelRide'),$t('customer.cancelOrder.postAgain')]"
         @picked="submitReposting($event)"
         @close="cancelPopUp=false"
-        :title="'Sorry to informe you the taxi cancelled the ride' "
+        :title="$t('customer.cancelOrder.taxiCancelled')"
         :icon="'do-not-enter'"
       ></pop-up>
       <h1 class="regular">{{$t('customer.taxiView.taxi')}}</h1>
@@ -194,7 +194,10 @@ export default {
     return {
       loading: false,
       cancelPopUp: false,
-      choiceList: ["No show", "Other"],
+      choiceList: [
+        this.$t("customer.cancelOrder.noShow"),
+        this.$t("customer.cancelOrder.other")
+      ],
       cancelReport: false
     };
   },
@@ -291,7 +294,7 @@ export default {
       }
     },
     async submitReposting(cmd) {
-      if (cmd == "Cancel ride") {
+      if (cmd == this.$t("customer.cancelOrder.cancelRide")) {
         await this.cancelRide("taxi cancelled");
         this.$router.push({ name: "home" });
       } else {

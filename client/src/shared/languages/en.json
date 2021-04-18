@@ -19,10 +19,19 @@
             "cancelled": "Cancelled",
             "fbLogin": "Login With Facebook To Make This Order"
         },
+        "cancelOrder": {
+            "question": "Why you want to cancel the ride?",
+            "cancelRide": "Cancel ride",
+            "postAgain": "Post again",
+            "noShow": "No show",
+            "other": "Other",
+            "taxiCancelled": "Sorry to informe you the taxi cancelled the ride"
+        },
         "savedLocations": {
             "title": "Saved Locations",
             "location": "Location|Locations",
             "addNewLoc": "Add New Location"
+
         },
         "orders": {
             "title": "Orders",
@@ -56,7 +65,17 @@
             "loading": "Loading",
             "cancelled": "CANCELLED"
         },
-
+        "cancelOrder": {
+            "question": "Why you want to cancel the ride?",
+            "cancelRide": "Cancel ride",
+            "backToIncoming": "Back to incomming",
+            "noShow": "No show",
+            "otherRide": "Other ride",
+            "trafficJam": "Traffic jam",
+            "other": "Other",
+            "customerCancelled": "Sorry to informe you the taxi cancelled the ride",
+            "rideUnavailble": "Sorry to informe you the taxi cancelled the ride"
+        },
         "orders": {
             "title": "Orders",
             "item": "Item|Items",
@@ -68,7 +87,7 @@
             "searchingMessage": "You are being matched with a taxi",
             "noOrders": "No orders found",
             "cancelled": "Taxi Cancelled",
-            "cancelledMessage": "Your ride has been cancelled" 
+            "cancelledMessage": "Your ride has been cancelled"
         },
         "introduction": {
             "howToTaxi": "Do You Want To Use <br/>The Mezcalmos App To <br/>Give Rides To Customers In <br/> <span class='text_blue'>Puerto Escondido?</span> ",
