@@ -24,7 +24,6 @@ export default {
       let orderId = payload.orderId
       firebaseDatabase().ref(`orders/taxi/${orderId}`).on('value', async snapshot => {
         let order = snapshot.val()
-        console.log(order.to)
         if (order.status == "lookingForTaxi") {
           let driverLocation = context.rootGetters.userLocation;
           order.customer.distance = getDistanceFromLatLonInKm(order.from, driverLocation)
