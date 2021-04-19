@@ -13,6 +13,19 @@
       @setPos="setDistanceDuration($event)"
       :fromUrl="deepFind(userInfo, 'photo')"
     >
+      <!-- Alert statment -->
+      <div
+        class="flex align_center space_between alert_statment bg_white elevate_2"
+        slot="alert"
+        v-if="alertStatment"
+      >
+        <div class="fill_width">
+          <h5 class="text_blackL regular t-9">
+            <fa icon="ban" class="text_light_error"></fa>
+            {{$t(`customer.taxiView.${alertStatment}`)}}
+          </h5>
+        </div>
+      </div>
       <div class="flex align_center center btnP" slot="action">
         <base-button
           class="w-80"
@@ -45,6 +58,7 @@ export default {
       focusedTo: false,
       pickLocation: false,
       center: this.userDefaultLocation,
+      alertStatment: "",
       from: {
         lat: this.deepFind(this.userDefaultLocation, "lat"),
         lng: this.deepFind(this.userDefaultLocation, "lng"),
@@ -124,15 +138,17 @@ export default {
         };
         if (this.isLoggedIn) {
           this.loading = true;
-          let response = (await this.$store.dispatch("taxis/requestTaxi", data))
-            .data;
-          this.loading = false;
-          console.log(response);
+          let response = await this.$store.dispatch("taxis/requestTaxi", data);
 
-          if (response.status == "Success") {
-            this.$router.push({ path: `${response.orderId}` });
+          this.loading = false;
+
+          if (response.data.status == "Success") {
+            this.$router.push({ path: `${response.data.orderId}` });
           } else {
-            this.errorMessage = response.errorMessage;
+            this.alertStatment = response.data.i18nCode;
+            setTimeout(() => {
+              this.alertStatment = "";
+            }, 4000);
           }
         } else {
           await this.$store.dispatch("taxis/saveAddress", data);
@@ -157,5 +173,13 @@ export default {
   width: 100%;
   z-index: 9;
   bottom: 2rem;
+}
+.alert_statment {
+  position: absolute;
+  width: 80%;
+  padding: 1rem;
+  right: 10%;
+  bottom: 9rem;
+  text-align: center;
 }
 </style>

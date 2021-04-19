@@ -17,15 +17,17 @@
             "loading": "Loading",
             "confirm": "CONFIRM",
             "cancelled": "Cancelled",
-            "fbLogin": "Login With Facebook To Make This Order"
+            "fbLogin": "Login With Facebook To Make This Order",
+            "outOfPuerto": "You are far of puerto"
         },
         "cancelOrder": {
-            "question": "Why you want to cancel the ride?",
+            "question": "Why do you want to cancel the ride?",
             "cancelRide": "Cancel ride",
             "postAgain": "Post again",
             "noShow": "No show",
+            "mistake": "Mistake",
             "other": "Other",
-            "taxiCancelled": "Sorry to informe you the taxi cancelled the ride"
+            "taxiCancelled": "Sorry to inform you the taxi cancelled the ride."
         },
         "savedLocations": {
             "title": "Saved Locations",
@@ -63,17 +65,19 @@
             "droppedOffMessage": "Your ride has ended",
             "review": "Review",
             "loading": "Loading",
-            "cancelled": "CANCELLED"
+            "cancelled": "CANCELLED",
+            "tooFarFromStartLocation": "You are too far from start location",
+            "tooFarFromEndLocation": "You are too far from end location"
         },
         "cancelOrder": {
-            "question": "Why you want to cancel the ride?",
+            "question": "Why do you want to cancel the ride?",
             "cancelRide": "Cancel ride",
-            "backToIncoming": "Back to incomming",
+            "backToIncoming": "Back to incoming",
             "noShow": "No show",
             "otherRide": "Other ride",
             "trafficJam": "Traffic jam",
             "other": "Other",
-            "customerCancelled": "Sorry to informe you the customer cancelled the ride",
+            "customerCancelled": "Sorry to inform you the customer cancelled the ride.",
             "rideUnavailble": "Sorry to informe you the the ride is not availble any more"
         },
         "orders": {

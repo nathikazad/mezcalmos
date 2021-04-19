@@ -81,7 +81,7 @@ export default {
         let response =  {
           status: "Error",
           errorMessage: "Too far",
-          i18nCode: "tooFarFromStartLocation"
+          i18nCode: "tooFarFromEndLocation"
         }
         console.log(response)
         return response

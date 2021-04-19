@@ -38,7 +38,21 @@
         :directionsBorns="calculateBorns"
         :fromUrl="deepFind(orderDetails, 'customer.image')"
         :driverLocation="deepFind(orderDetails, 'driver.location')"
+        :status="deepFind(orderDetails,'status')"
       >
+        <!-- Alert statment -->
+        <div
+          class="flex align_center space_between alert_statment bg_white elevate_2"
+          slot="alert"
+          v-if="alertStatment"
+        >
+          <div class="fill_width">
+            <h5 class="text_blackL regular t-9">
+              <fa icon="ban" class="text_light_error"></fa>
+              {{$t(`taxi.taxiView.${alertStatment}`)}}
+            </h5>
+          </div>
+        </div>
         <!-- Searching fo Someone  Status-->
         <div
           class="flex align_center space_between btnP bg_white elevate_2"
@@ -204,7 +218,8 @@ export default {
       ],
       cancelReport: false,
       reportTitle: this.$t("taxi.cancelOrder.customerCancelled"),
-      sameInstance: false
+      sameInstance: false,
+      alertStatment: ""
     };
   },
   computed: {
@@ -330,7 +345,6 @@ export default {
             this.reportTitle = this.$t("taxi.cancelOrder.rideUnavailble");
             this.cancelReport = true;
             if (this.nextOrderId) {
-
               setTimeout(() => {
                 this.cancelReport = false;
                 this.nextOrder();
@@ -368,7 +382,7 @@ export default {
     async cancelRide(reason) {
       this.loading = true;
       this.cancelPopUp = false;
-      await this.$store.dispatch("order/cancelRide", reason);
+      await this.$store.dispatch("order/cancelRide", { reason: reason });
       if (this.precedentOrderId) {
         this.precedentOrder();
       } else if (this.nextOrderId) {
@@ -381,16 +395,31 @@ export default {
     async acceptRide() {
       this.loading = true;
       await this.$store.dispatch("order/acceptRide");
+
       this.loading = false;
     },
     async startRide() {
       this.loading = true;
-      await this.$store.dispatch("order/startRide");
+      let response = await this.$store.dispatch("order/startRide");
+      if (response.status == "Error") {
+        this.alertStatment = response.i18nCode;
+        setTimeout(() => {
+          this.alertStatment = "";
+        }, 4000);
+      }
       this.loading = false;
     },
     async finishRide() {
       this.loading = true;
-      await this.$store.dispatch("order/finishRide");
+      let response = await this.$store.dispatch("order/finishRide");
+      console.log(response);
+
+      if (response.status == "Error") {
+        this.alertStatment = response.i18nCode;
+        setTimeout(() => {
+          this.alertStatment = "";
+        }, 4000);
+      }
       this.loading = false;
     },
     nextOrder() {
@@ -445,5 +474,13 @@ export default {
   text-align: center;
   top: -0.4rem;
   right: -0.4rem;
+}
+.alert_statment {
+  position: absolute;
+  width: 80%;
+  padding: 1rem;
+  right: 10%;
+  bottom: 9rem;
+  text-align: center;
 }
 </style>

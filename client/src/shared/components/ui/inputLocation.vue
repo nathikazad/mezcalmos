@@ -84,8 +84,11 @@
         :fromUrl="fromUrl"
         v-if="withMap && center"
         :driverLocation="driverLocation"
+        :status="status"
       ></map-view>
+
       <slot name="action"></slot>
+      <slot name="alert"></slot>
     </div>
   </div>
 </template>
@@ -102,7 +105,7 @@ export default {
         return { opened: false };
       }
     },
-
+    status: { type: String },
     directionsBorns: {
       type: Object
     },

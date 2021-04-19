@@ -30,14 +30,6 @@ export default {
     userInfo() {
       return this.$store.getters["userInfo"];
     }
-  },
-  methods: {
-    async createTicket() {
-      await this.$store.dispatch("admin/createTicket");
-    },
-    async messageAdmin() {
-      await this.$store.dispatch("admin/messageAdmin", { message: "hi" });
-    }
   }
 };
 </script>

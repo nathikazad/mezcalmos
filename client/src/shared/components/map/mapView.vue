@@ -1,4 +1,4 @@
-<template>
+ <template>
   <GmapMap
     style="width: 100%; height: 100%; position: absolute; left:0; top:0"
     :center="center"
@@ -7,7 +7,7 @@
     ref="gmap"
   >
     <DirectionsRenderer
-      v-if="directionsOrigin && directionsDest"
+      v-if="directionsOrigin && directionsDest&&status!='inTransit'"
       travelMode="DRIVING"
       :origin="directionsOrigin"
       :destination="directionsDest"
@@ -26,7 +26,7 @@
 
     <gmap-custom-marker
       :marker="directionsOrigin"
-      v-if="directionsOrigin && showMarker"
+      v-if="directionsOrigin && showMarker&&status!='inTransit'"
       :ref="`marker-center`"
     >
       <img :src="this.fromUrl||icons.center.url" class="imageIcon border" />
@@ -35,13 +35,13 @@
 
     <gmap-custom-marker
       :marker="{lat:deepFind(driverLocation, 'position.lat'),lng:deepFind(driverLocation, 'position.lng')}"
-      v-if="deepFind(driverLocation, 'position')"
+      v-if="deepFind(driverLocation, 'position')&&status!='droppedOff'"
       :ref="`marker-driver`"
     >
       <img :src="require('../../static/img/driverCar.png')" class="driverIcon" />
     </gmap-custom-marker>
     <gmap-polyline
-      v-if="deepFind(driverLocation, 'polyline')"
+      v-if="deepFind(driverLocation, 'polyline') &&status!='droppedOff'"
       v-bind:path="decode(deepFind(driverLocation, 'polyline'))"
       v-bind:options="{ strokeColor:'#C18DF3'}"
     ></gmap-polyline>
@@ -57,6 +57,7 @@ import DirectionsRenderer from "../map/directionsRender";
 export default {
   components: { DirectionsRenderer },
   props: {
+    status: { type: String },
     center: {
       type: Object
     },
@@ -309,6 +310,12 @@ export default {
         "directionsDest",
         "directionsOrigin"
       ];
+      if (this.status == "onTheWay") {
+        mapMarkersList = ["driverLocation", "directionsOrigin"];
+      } else if (this.status == "inTransit") {
+        mapMarkersList = ["driverLocation", "directionsDest"];
+      }
+
       var bounds = new window.google.maps.LatLngBounds();
       for (var i = 0, listLen = mapMarkersList.length; i < listLen; i++) {
         let bound;
@@ -343,6 +350,16 @@ export default {
     emitDirectionPos(pos) {
       this.reRenderMarker();
       this.$emit("directionChanged", pos);
+    }
+  },
+  watch: {
+    driverLocation: {
+      deep: true,
+      handler: function() {
+        if (this.status == "inTransit") {
+          this.mapFit();
+        }
+      }
     }
   }
 };

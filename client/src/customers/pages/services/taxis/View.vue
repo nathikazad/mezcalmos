@@ -28,6 +28,7 @@
         ref="inputLocation"
         :fromUrl="deepFind(userInfo, 'photo')"
         :driverLocation="deepFind(orderDetails, 'driver.location')"
+        :status="deepFind(orderDetails,'status')"
       >
         <!-- Searching fo Someone  Status-->
         <div
@@ -196,6 +197,7 @@ export default {
       cancelPopUp: false,
       choiceList: [
         this.$t("customer.cancelOrder.noShow"),
+        this.$t("customer.cancelOrder.mistake"),
         this.$t("customer.cancelOrder.other")
       ],
       cancelReport: false
@@ -237,47 +239,6 @@ export default {
       console.log(this.orderDetails);
 
       if (this.orderDetails) {
-        // if (this.orderDetails.status == "onTheWay") {
-        //   borns.start = {
-        //     lat: this.deepFind(
-        //       this.orderDetails,
-        //       "driver.location.position.lat"
-        //     ),
-        //     lng: this.deepFind(
-        //       this.orderDetails,
-        //       "driver.location.position.lng"
-        //     )
-        //   };
-        //   borns.end = {
-        //     lat: this.orderDetails.from.lat,
-        //     lng: this.orderDetails.from.lng
-        //   };
-        // } else if (this.orderDetails.status == "inTransit") {
-        //   borns.start = {
-        //     lat: this.deepFind(
-        //       this.orderDetails,
-        //       "driver.location.position.lat"
-        //     ),
-        //     lng: this.deepFind(
-        //       this.orderDetails,
-        //       "driver.location.position.lng"
-        //     )
-        //   };
-        //   borns.end = {
-        //     lat: this.orderDetails.to.lat,
-        //     lng: this.orderDetails.to.lng
-        //   };
-        // } else {
-        //   borns.start = {
-        //     lat: this.orderDetails.from.lat,
-        //     lng: this.orderDetails.from.lng
-        //   };
-
-        //   borns.end = {
-        //     lat: this.orderDetails.to.lat,
-        //     lng: this.orderDetails.to.lng
-        //   };
-        // }
         borns.start = {
           lat: this.orderDetails.from.lat,
           lng: this.orderDetails.from.lng
@@ -308,7 +269,7 @@ export default {
     async cancelRide(reason) {
       this.loading = true;
       this.cancelPopUp = false;
-      await this.$store.dispatch("taxis/cancelTaxi", reason);
+      await this.$store.dispatch("taxis/cancelTaxi", { reason: reason });
       this.$router.push({ name: "home" });
       this.loading = false;
     },

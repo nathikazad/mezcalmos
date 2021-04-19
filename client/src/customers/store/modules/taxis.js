@@ -39,15 +39,18 @@ export default {
       });
     },
     async requestTaxi(context, payload) {
-      if (getDistanceFromLatLonInKm(payload.from, puertoCoords) > 50 || 
-          getDistanceFromLatLonInKm(payload.to, puertoCoords) > 50) {
-        let response = {
-          status: "Error",
-          errorMessage: "Too Far",
-          i18nCode: "outOfPuerto"
+
+      if (getDistanceFromLatLonInKm(payload.from, puertoCoords) > 50 ||
+        getDistanceFromLatLonInKm(payload.to, puertoCoords) > 50) {
+
+        return {
+          data: {
+            status: "Error",
+            errorMessage: "Too Far",
+            i18nCode: "outOfPuerto"
+          }
         }
-        console.log(response)
-        return response
+
       }
       let from = payload.from
       let to = payload.to
@@ -58,7 +61,6 @@ export default {
         duration: payload.duration
       });
       context.commit('saveTemporaryAddresses', null)
-      console.log(response);
 
       return response;
     },
