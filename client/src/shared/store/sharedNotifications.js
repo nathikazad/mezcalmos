@@ -31,7 +31,7 @@ export default {
           }
         } else if (notification.notificationType == "newAdminMessage") {
           if (router.currentRoute.name == "messageAdmin") {
-          firebaseDatabase().ref(`${notificationReference}/${notificationKey}`).remove()
+            firebaseDatabase().ref(`${notificationReference}/${notificationKey}`).remove()
           } else {
             context.commit('saveNotification', {
               key: notificationKey,
@@ -95,7 +95,13 @@ export default {
     },
     saveUserNotificationInfo(context, payload) {
       let userId = context.rootGetters.userId
-      firebaseDatabase().ref(`/users/${userId}/notificationInfo`).set(payload)
+      let appName = context.rootGetters.appName;
+      if (appName == "customer"){
+        firebaseDatabase().ref(`/users/${userId}/notificationInfo`).set(payload)
+      } else if (appName == "taxi") {
+        firebaseDatabase().ref(`/taxiDrivers/${userId}/notificationInfo`).set(payload)
+      }
+      
     },
   },
   mutations: {

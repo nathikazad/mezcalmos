@@ -30,7 +30,6 @@ export default {
         }
         context.commit('saveOrder', { order: order, orderId: orderId });
       }, () => {
-
         context.commit('saveOrder', { order: null, orderId: null })
       });
 
@@ -60,11 +59,13 @@ export default {
       let driverLocation = context.rootGetters.userLocation;
       let startLocation = context.state.order.from
       if(getDistanceFromLatLonInKm(driverLocation, startLocation) > 0.5) {
-        return {
+        let response =  {
           status: "Error",
           errorMessage: "Too far",
           i18nCode: "tooFarFromStartLocation"
         }
+        console.log(response)
+        return response
       }
       let response = (await cloudCall('startTaxiRide')).data;
       context.dispatch('updateRouteInformation', null, { root: true })
@@ -77,11 +78,13 @@ export default {
       let driverLocation = context.rootGetters.userLocation;
       let endLocation = context.state.order.to
       if(getDistanceFromLatLonInKm(driverLocation, endLocation) > 0.5) {
-        return {
+        let response =  {
           status: "Error",
           errorMessage: "Too far",
           i18nCode: "tooFarFromStartLocation"
         }
+        console.log(response)
+        return response
       }
       let response = (await cloudCall('finishTaxiRide')).data;
       if(response.status == "Error") {

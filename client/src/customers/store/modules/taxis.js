@@ -38,11 +38,13 @@ export default {
     async requestTaxi(context, payload) {
       if (getDistanceFromLatLonInKm(payload.from, puertoCoords) > 50 || 
           getDistanceFromLatLonInKm(payload.to, puertoCoords) > 50) {
-        return {
+        let response = {
           status: "Error",
           errorMessage: "Too Far",
           i18nCode: "outOfPuerto"
         }
+        console.log(response)
+        return response
       }
       let from = payload.from
       let to = payload.to

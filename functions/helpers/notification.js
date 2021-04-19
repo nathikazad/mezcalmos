@@ -13,7 +13,12 @@ webpush.setVapidDetails(
 
 async function push(firebase, userId, message, particpantType = "customer") {
   firebase.database().ref(`/notifications/${particpantType}/${userId}`).push(message)
-  let subscription = (await firebase.database().ref(`/users/${userId}/notificationInfo`).once('value')).val();
+  let subscription
+  if(particpantType == "customer") {
+    subscription = (await firebase.database().ref(`/users/${userId}/notificationInfo`).once('value')).val();
+  } else if(particpantType == "taxi") {
+    subscription = (await firebase.database().ref(`/taxiDrivers/${userId}/notificationInfo`).once('value')).val();
+  }
   if(subscription){
     webpush.sendNotification(subscription, JSON.stringify(message))
   }

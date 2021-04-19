@@ -1,3 +1,5 @@
+import { puertoCoords } from '@/shared/mixins/mapFunctions'
+
 export default {
   state() {
     return {
@@ -18,10 +20,7 @@ export default {
       return state.locationEnabled
     },
     getUserDefaultLocation() {
-      return {
-        lat: 15.8720,
-        lng: -97.0767
-      }
+      return puertoCoords
     }
   },
   actions: {
