@@ -26,6 +26,9 @@
       ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true",
       "$uid": {
         ".read": "$uid === auth.uid",
+        "notificationInfo": {
+          ".write": "$uid === auth.uid"
+        },
         "state": {
           "isLooking": {
             ".write": "$uid === auth.uid"

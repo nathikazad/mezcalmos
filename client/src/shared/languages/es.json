@@ -16,7 +16,7 @@
             "review": "Revisar",
             "loading": "Cargando",
             "confirm": "Confirmar",
-            "cancelled": "Cancellado",
+            "cancelled": "Cancelado",
             "fbLogin": "Inicie sesión con Facebook para hacer este pedido"
         },
         "cancelOrder": {
@@ -63,7 +63,7 @@
             "droppedOffMessage": "Tu viaje ha terminado",
             "review": "Revisar",
             "loading": "Cargando",
-            "cancelled": "Cancellado"
+            "cancelled": "Cancelado"
         },
         "cancelOrder": {
             "question": "Por qué quieres cancelar el viaje?",

@@ -107,8 +107,10 @@ export default {
       firebaseDatabase().ref(`${notificationReference}`).remove()
     },
     saveUserNotificationInfo(context, payload) {
+      
       let userId = context.rootGetters.userId
       let appName = context.rootGetters.appName;
+      console.log("Saving notification info, ", appName)
       if (appName == "customer"){
         firebaseDatabase().ref(`/users/${userId}/notificationInfo`).set(payload)
       } else if (appName == "taxi") {
