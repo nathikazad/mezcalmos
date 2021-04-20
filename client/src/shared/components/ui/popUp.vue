@@ -16,7 +16,7 @@
           :key="index"
           @click.native="$emit('picked',choice)"
         >
-          <span class="t-8">{{choice}}</span>
+          <span class="t-8">{{translatePath? $t(`${translatePath}.${choice}`):choice}}</span>
         </base-button>
       </div>
       <!-- <div class="popUp_actions field">
@@ -37,6 +37,9 @@ export default {
       type: String
     },
     icon: {
+      type: String
+    },
+    translatePath: {
       type: String
     }
   },

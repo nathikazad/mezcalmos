@@ -10,7 +10,7 @@ const urlB64ToUint8Array = (base64String) => {
     }
     return outputArray;
 };
-self.addEventListener('fetch', function(event) {})
+self.addEventListener('fetch', function (event) {})
 // const cachingSetup = function (self, swName) {
 //     if (!self.define) {
 //         const e = e => {
@@ -202,14 +202,14 @@ const pushEventListener = function (self) {
 }
 const activateEventListener = function (self, swName) {
     self.addEventListener("activate", (event) => {
-        //console.log(self);
+        console.log(self);
 
         // This will be called only once when the service worker is activated.
         self.clients.claim()
         // From service-worker.js:
         const channel = new BroadcastChannel(`sw-${swName}-messages`);
         channel.addEventListener("message", async event => {
-            //console.log('service worker ', event);
+            console.log('service worker ', event);
 
             if (event.data.msg == 'getSubscription') {
                 try {

@@ -6,6 +6,7 @@
         v-if="cancelPopUp"
         @picked="cancelRide($event)"
         :choiceList="choiceList"
+        translatePath="customer.cancelOrder"
         @close="cancelPopUp=false"
         :title="$t('customer.cancelOrder.question') "
         :icon="'times-circle'"
@@ -13,7 +14,8 @@
       <!-- ******************pop up Warning Taxi taken ************************-->
       <pop-up
         v-if="cancelReport"
-        :choiceList="[$t('customer.cancelOrder.cancelRide'),$t('customer.cancelOrder.postAgain')]"
+        :choiceList="['cancelRide','postAgain']"
+        translatePath="customer.cancelOrder"
         @picked="submitReposting($event)"
         @close="cancelPopUp=false"
         :title="$t('customer.cancelOrder.taxiCancelled')"
@@ -206,11 +208,7 @@ export default {
     return {
       loading: false,
       cancelPopUp: false,
-      choiceList: [
-        this.$t("customer.cancelOrder.noShow"),
-        this.$t("customer.cancelOrder.mistake"),
-        this.$t("customer.cancelOrder.other")
-      ],
+      choiceList: ["noShow", "mistake", "other"],
       cancelReport: false
     };
   },
@@ -279,7 +277,9 @@ export default {
     async cancelRide(reason) {
       this.loading = true;
       this.cancelPopUp = false;
-      await this.$store.dispatch("taxis/cancelTaxi", { reason: reason });
+      await this.$store.dispatch("taxis/cancelTaxi", {
+        reason: this.$t(`customer.cancelOrder.${reason}`, "EN")
+      });
       this.$router.push({ name: "home" });
       this.loading = false;
     },
@@ -307,7 +307,7 @@ export default {
       }
     },
     async submitReposting(cmd) {
-      if (cmd == this.$t("customer.cancelOrder.cancelRide")) {
+      if (cmd == "cancelRide") {
         await this.cancelRide("taxi cancelled");
         this.$router.push({ name: "home" });
       } else {

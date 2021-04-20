@@ -7,12 +7,14 @@
       :choiceList="choiceList"
       @close="cancelPopUp=false"
       :title="$t('taxi.cancelOrder.question') "
+      translatePath="taxi.cancelOrder"
       :icon="'times-circle'"
     ></pop-up>
     <!-- ******************pop up Warning Taxi taken ************************-->
     <pop-up
       v-if="cancelReport"
-      :choiceList="[$t('taxi.cancelOrder.backToIncoming')]"
+      :choiceList="['backToIncoming']"
+      translatePath="taxi.cancelOrder"
       @picked="submitReposting($event)"
       @close="cancelPopUp=false"
       :title="reportTitle "
@@ -222,11 +224,7 @@ export default {
     return {
       loading: false,
       cancelPopUp: false,
-      choiceList: [
-        this.$t("taxi.cancelOrder.otherRide"),
-        this.$t("taxi.cancelOrder.trafficJam"),
-        this.$t("taxi.cancelOrder.other")
-      ],
+      choiceList: ["otherRide", "trafficJam", "other"],
       cancelReport: false,
       reportTitle: this.$t("taxi.cancelOrder.customerCancelled"),
       sameInstance: false,
@@ -393,7 +391,9 @@ export default {
     async cancelRide(reason) {
       this.loading = true;
       this.cancelPopUp = false;
-      await this.$store.dispatch("order/cancelRide", { reason: reason });
+      await this.$store.dispatch("order/cancelRide", {
+        reason: this.$t(`taxi.cancelOrder.${reason}`, "EN")
+      });
       if (this.precedentOrderId) {
         this.precedentOrder();
       } else if (this.nextOrderId) {
