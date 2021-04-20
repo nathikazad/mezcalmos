@@ -54,25 +54,29 @@ export default {
       }
       let from = payload.from
       let to = payload.to
-      let response = await cloudCall('requestTaxi', {
+      let response = (await cloudCall('requestTaxi', {
         from: from,
         to: to,
         distance: payload.distance,
         duration: payload.duration
-      });
+      })).data;
+      if(response.status == "Error") {
+        console.log(response.errorMessage)
+      }
       context.commit('saveTemporaryAddresses', null)
 
       return response;
     },
     async cancelTaxi(context, payload) {
       let status = context.state.value.status
-      if (status != "lookingForTaxi" && status != "onTheWay") {
+      if (status != "lookingForTaxi" && status != "onTheWay" && status != "inTransit") {
         console.log("Not possible to cancel")
         return
       }
-      let response = await cloudCall('cancelTaxiFromCustomer', {
-        reason: payload.reason
-      })
+      let response = (await cloudCall('cancelTaxiFromCustomer', { reason: payload.reason})).data
+      if(response.status == "Error") {
+        console.log(response.errorMessage)
+      }
       return response
     },
     saveAddress(context, payload) {

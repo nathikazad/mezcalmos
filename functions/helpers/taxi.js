@@ -102,20 +102,20 @@ async function cancelTaxiFromCustomer(firebase, uid, data) {
     }
   }
 
-  if (order.status != "lookingForTaxi" && order.status != "onTheWay") {
+  if (order.status != "lookingForTaxi" && order.status != "onTheWay" && order.status != "inTransit") {
     return {
       status: "Error",
-      errorMessage: "Ride status is not in lookingForTaxi or onTheWay"
+      errorMessage: "Ride status is not in lookingForTaxi or onTheWay or inTransit"
     }
   }
 
-  firebase.database().ref(`/users/${order.customer.id}/state/currentOrder`).remove()
+  await firebase.database().ref(`/users/${order.customer.id}/state/currentOrder`).remove()
 
   if(order.status == "lookingForTaxi" ) {
     firebase.database().ref(`/openOrders/taxi/${orderId}`).remove();
     firebase.database().ref(`/orders/taxi/${orderId}`).remove()
     firebase.database().ref(`/users/${order.customer.id}/orders/${orderId}`).remove();
-  } else if (order.status == "onTheWay") {
+  } else if (order.status == "onTheWay" || order.status == "inTransit") {
     let update = {
       status: "cancelled",
       rideFinishTime: (new Date()).toUTCString(),
@@ -272,10 +272,10 @@ async function cancelTaxiFromDriver(firebase, uid, data) {
     }
   }
 
-  if (order.status != "onTheWay") {
+  if (order.status != "onTheWay" && order.status != "inTransit") {
     return {
       status: "Error",
-      errorMessage: "Ride status is not onTheWay"
+      errorMessage: "Ride status is not onTheWay or inTransit"
     }
   }
 

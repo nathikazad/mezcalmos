@@ -45,7 +45,7 @@ export default {
     },
     async cancelRide(context, payload) {
       let status = context.state.order.status
-      if (status != "onTheWay") {
+      if (status != "onTheWay" && status != "inTransit") {
         console.log("Not possible to cancel")
         return
       }

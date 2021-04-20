@@ -142,10 +142,10 @@ export default {
 
           this.loading = false;
 
-          if (response.data.status == "Success") {
-            this.$router.push({ path: `${response.data.orderId}` });
+          if (response.status == "Success") {
+            this.$router.push({ path: `${response.orderId}` });
           } else {
-            this.alertStatment = response.data.i18nCode;
+            this.alertStatment = response.i18nCode;
             setTimeout(() => {
               this.alertStatment = "";
             }, 4000);

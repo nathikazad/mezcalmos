@@ -143,6 +143,17 @@
             <fa icon="envelope" />
             <span class="badge bg_error" v-if="orderMessages"></span>
           </base-button>
+          <base-button
+            class="elevate_1 nav-btn text_white"
+            :mode="{
+            bg_error: true,
+            small: true,
+          }"
+            @click.native="cancelPopUp=true"
+            :loading="loading"
+          >
+            <fa icon="times-circle" />
+          </base-button>
         </div>
         <!-- Droped off  Status-->
         <div
@@ -236,7 +247,6 @@ export default {
         start: null,
         end: null
       };
-      console.log(this.orderDetails);
 
       if (this.orderDetails) {
         borns.start = {

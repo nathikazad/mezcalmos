@@ -48,6 +48,7 @@ const store = new Vuex.Store({
       let userId = context.rootGetters.userId
       let snapshot = await firebaseDatabase().ref(`users/${userId}/state/currentOrder`).once('value')
       context.commit('saveCurrentOrderId', snapshot.val())
+      firebaseDatabase().ref(`users/${userId}/state/currentOrder`).off()
       firebaseDatabase().ref(`users/${userId}/state/currentOrder`).on('value', snapshot => {
         context.commit('saveCurrentOrderId', snapshot.val())
       });

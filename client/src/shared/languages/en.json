@@ -65,7 +65,7 @@
             "droppedOffMessage": "Your ride has ended",
             "review": "Review",
             "loading": "Loading",
-            "cancelled": "CANCELLED",
+            "cancelled": "Cancelled",
             "tooFarFromStartLocation": "You are too far from start location",
             "tooFarFromEndLocation": "You are too far from end location"
         },
@@ -78,7 +78,7 @@
             "trafficJam": "Traffic jam",
             "other": "Other",
             "customerCancelled": "Sorry to inform you the customer cancelled the ride.",
-            "rideUnavailble": "Sorry to informe you the the ride is not availble any more"
+            "rideUnavailble": "Sorry to inform you the the ride is not availble any more"
         },
         "orders": {
             "title": "Orders",

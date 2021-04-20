@@ -169,7 +169,7 @@ const updateRouteInformation = async (context) => {
   } else {
     return
   }
-  if (window.google && driverLocation.lat && driverLocation.lng) {
+  if (window.google && driverLocation && driverLocation.lat && driverLocation.lng) {
     let directionsService = new window.google.maps.DirectionsService();
     directionsService.route({
         origin: {

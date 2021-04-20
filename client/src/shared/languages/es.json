@@ -19,6 +19,15 @@
             "cancelled": "Cancellado",
             "fbLogin": "Inicie sesión con Facebook para hacer este pedido"
         },
+        "cancelOrder": {
+            "question": "Por qué quieres cancelar el viaje?",
+            "cancelRide": "Cancelar viaje",
+            "postAgain": "Publica de nuevo",
+            "noShow": "No vino",
+            "mistake": "Error",
+            "other": "Otro",
+            "taxiCancelled": "Lamento informarle que el taxi canceló el viaje."
+        },
         "savedLocations": {
             "title": "Ubicaciones guardadas",
             "location": "Ubicacion|Ubicaciones",
@@ -56,7 +65,17 @@
             "loading": "Cargando",
             "cancelled": "Cancellado"
         },
-
+        "cancelOrder": {
+            "question": "Por qué quieres cancelar el viaje?",
+            "cancelRide": "Cancelar viaje",
+            "backToIncoming": "Volver a entrante",
+            "noShow": "No vino",
+            "otherRide": "Otro viaje",
+            "trafficJam": "Embotellamiento",
+            "other": "Otro",
+            "customerCancelled": "Lamento informarle que el cliente canceló el viaje.",
+            "rideUnavailble": "Lamento informarle que el viaje ya no está disponible."
+        },
         "orders": {
             "title": "Pedidos",
             "item": "Artículo|Artículos",
