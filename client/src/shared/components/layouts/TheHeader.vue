@@ -115,7 +115,7 @@ export default {
   },
   computed: {
     notifications() {
-      return this.$store.getters["notifications/ungroupedList"];
+      return this.$store.getters["notifications/list"];
     },
     notificationsNumber() {
       return this.$store.getters["notifications/length"];

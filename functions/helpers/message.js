@@ -23,11 +23,13 @@ async function notifyOthers(firebase, params, message) {
 }
 
 async function notifyUser(firebase, params, message) {
-  let payload = {
-    notificationType: "newAdminMessage",
-    message: message.message,
-    time: message.timestamp,
-    messageId: params.messageId
+  if(message.adminId) {
+    let payload = {
+      notificationType: "newAdminMessage",
+      message: message.message,
+      time: message.timestamp,
+      messageId: params.messageId
+    }
+    notification.push(firebase, params.userId, payload, params.userType)
   }
-  notification.push(firebase, params.userId, payload, params.userType)
 }

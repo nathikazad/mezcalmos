@@ -70,7 +70,7 @@ export default {
       return this.$store.getters.appName;
     },
     notifications() {
-      return this.$store.getters["notifications/ungroupedList"];
+      return this.$store.getters["notifications/list"];
     },
     notificationsNumber() {
       //console.log(this.notifications);

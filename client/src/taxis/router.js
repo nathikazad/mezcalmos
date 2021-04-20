@@ -26,7 +26,7 @@ const router = new VueRouter({
     { path: '/incoming', component: IncomingOrdersPage,
       meta: { requiresAuth: true }, name: 'home' },
     { path: "/contactAdmin", component: MessageAdmin,
-      meta: { requiresAuth: true }, name: "messageAdmin" },
+      meta: { requiresAuth: true }, name: "contactAdmin" },
     { path: '/messages/:orderId', component: MessagesPage,
       meta: { requiresAuth: true }, name: "messages" },
     { path: "/notifications", component: NotificationsPage,

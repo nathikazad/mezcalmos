@@ -224,7 +224,7 @@ export default {
   },
   computed: {
     notifications() {
-      return this.$store.getters["notifications/ungroupedList"];
+      return this.$store.getters["notifications/list"];
     },
     orderMessages() {
       let orderId = this.$route.params.orderId;

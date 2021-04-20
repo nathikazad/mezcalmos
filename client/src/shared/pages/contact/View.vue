@@ -50,6 +50,9 @@
 export default {
   async beforeCreate() {
     await this.$store.dispatch("admin/loadAdmin");
+    this.$store.dispatch("notifications/clearAdminNotifications", {
+      orderId: this.$route.params.orderId
+    });
   },
   data() {
     return {
