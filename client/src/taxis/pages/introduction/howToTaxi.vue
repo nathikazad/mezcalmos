@@ -92,7 +92,7 @@ export default {
 }
 .login_action {
   h3 {
-    margin: 2.5rem 0 !important;
+    margin: 1rem 0 !important;
     line-height: 1.8rem;
   }
   .btn {

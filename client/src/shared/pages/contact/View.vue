@@ -124,7 +124,6 @@ export default {
     },
     async sendMessage() {
       let response = await this.$store.dispatch("admin/createTicket");
-      console.log(response);
       if (response.data.status == "Success" || this.chat) {
         await this.$store
           .dispatch("admin/messageAdmin", {

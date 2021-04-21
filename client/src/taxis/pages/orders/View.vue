@@ -147,7 +147,8 @@
           >
             <span class="t-8 regular">{{$t('taxi.taxiView.finishRide')}}</span>
           </base-button>
-          <base-button
+          <span>
+            <base-button
             class="dark bg_light elevate_1 nav-btn text_primary"
             :mode="{
             bg_diagonal: true,
@@ -173,6 +174,7 @@
             >
               <fa icon="times-circle" />
             </base-button>
+          </span>
         </div>
         <!-- Finished ride  Status-->
         <div

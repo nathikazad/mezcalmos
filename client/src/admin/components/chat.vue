@@ -12,7 +12,7 @@
             <v-btn color="success" @click="resolveChat">resolve</v-btn>
           </v-card-title>
           <v-divider></v-divider>
-          <v-card-text class="flex-grow-1 overflow-y-auto">
+          <v-card-text class="flex-grow-1 overflow-y-auto" id="messages">
             <template v-for="(msg, i) in chat.messages">
               <div :class="{ 'd-flex flex-row-reverse': msg.adminId==userId }" :key="i">
                 <v-menu offset-y>
@@ -84,7 +84,17 @@ export default {
       return this.$store.getters.userId;
     }
   },
+  mounted() {
+    setTimeout(() => {
+      this.scrollToBottom();
+    }, 200);
+  },
   methods: {
+    scrollToBottom() {
+      let messagesDiv = this.$el.querySelector("#messages");
+
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    },
     async sendMsg() {
       let message = {
         userId: this.chat.userId,
@@ -93,6 +103,8 @@ export default {
         message: this.messageForm.message
       };
       await this.$store.dispatch("messages/messageUser", message);
+
+      this.scrollToBottom();
       this.messageForm.message = "";
     },
     searchPhoto(msg) {

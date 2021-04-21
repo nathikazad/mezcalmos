@@ -338,7 +338,10 @@ export default {
         //  And increase the bounds to take this point
       }
       let map = this.$refs["gmap"].$mapObject;
+
       map.fitBounds(bounds);
+      if (map.getZoom() > 16) map.setZoom(16);
+
       //console.log(map);
     },
     dragend(event) {
