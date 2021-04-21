@@ -3,6 +3,8 @@
     style="width: 100%; height: 100%; position: absolute; left:0; top:0"
     :center="center"
     :zoom="12"
+    @resize="clientGesture($event)"
+    @drag="clientGesture($event)"
     v-bind:options="mapOptions"
     ref="gmap"
   >
@@ -14,13 +16,11 @@
       @direction="emitDirectionPos($event)"
     />
     <GmapMarker
-      :draggable="true"
       :ref="`marker-center`"
       :position="center"
       :clickable="true"
       :icon="icons.center"
-      v-if="!directionsOrigin"
-      @dragend="dragend"
+      v-if="!directionsOrigin&&!pickingFromMap"
     />
     <!-- from Icon marker -->
 
@@ -72,6 +72,9 @@ export default {
     },
     driverLocation: {
       type: Object
+    },
+    pickingFromMap: {
+      type: Boolean
     }
   },
   computed: {
@@ -297,6 +300,16 @@ export default {
     });
   },
   methods: {
+    clientGesture() {
+      let map = this.$refs["gmap"].$mapObject;
+
+      if (map) {
+        this.$emit("centerChangedByClient", {
+          lat: map.center.lat(),
+          lng: map.center.lng()
+        });
+      }
+    },
     reRenderMarker() {
       this.showMarker = false;
       setTimeout(() => {
@@ -344,12 +357,7 @@ export default {
 
       //console.log(map);
     },
-    dragend(event) {
-      this.$emit("markerDragged", {
-        lat: event.latLng.lat(),
-        lng: event.latLng.lng()
-      });
-    },
+
     emitDirectionPos(pos) {
       this.reRenderMarker();
       this.$emit("directionChanged", pos);

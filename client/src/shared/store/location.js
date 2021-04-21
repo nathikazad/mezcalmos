@@ -1,4 +1,6 @@
-import { puertoCoords } from '@/shared/mixins/mapFunctions'
+import {
+  puertoCoords
+} from '@/shared/mixins/mapFunctions'
 
 export default {
   state() {
@@ -33,7 +35,10 @@ export default {
         context.commit('setUserLocation', newPosition)
         context.state.watchPositionCallbacks.forEach(cb => cb.func(...cb.args));
         context.commit('setLocationEnabled', true)
-      }, async function () {
+        console.log('success ', position);
+
+      }, async function (err) {
+        console.log('errror ', err);
         context.commit('setLocationEnabled', false)
       });
 
@@ -42,7 +47,9 @@ export default {
           navigator.geolocation.clearWatch(navigatorWatchId);
         },
         args: [navigatorWatchId]
-      }, { root: true })
+      }, {
+        root: true
+      })
     },
     saveWatchPositionCallback(context, payload) {
       context.commit('saveWatchPositionCallback', payload)

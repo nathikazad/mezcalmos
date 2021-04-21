@@ -1,7 +1,12 @@
 <template>
   <main :class="{ overlay: navDrawer }" @click="closeNav" id="main">
     <transition name="slide-fade">
-      <nav-drawer v-if="navDrawer" class="navDrawer bg_white" @toggle="navDrawer = !navDrawer" @closeNavDrawer="navDrawer = false"></nav-drawer>
+      <nav-drawer
+        v-if="navDrawer"
+        class="navDrawer bg_white"
+        @toggle="navDrawer = !navDrawer"
+        @closeNavDrawer="navDrawer = false"
+      ></nav-drawer>
     </transition>
     <transition name="slide-down">
       <askForPermission v-if="showPermessionPanel" class="dialogPanel bg_white"></askForPermission>
@@ -46,11 +51,13 @@ export default {
     },
     showNavBtn() {
       //searching for the home page
-      if(this.$store.getters.isInTaxi){
-        return this.routeName == "taxiView"
-      } else if(this.routeName == "howToTaxi" || 
-        this.routeName == "applicationUnderReview") {
-        return true
+      if (this.$store.getters.isInTaxi) {
+        return this.routeName == "taxiView";
+      } else if (
+        this.routeName == "howToTaxi" ||
+        this.routeName == "applicationUnderReview"
+      ) {
+        return true;
       } else {
         return this.routeName == "home";
       }
@@ -110,6 +117,8 @@ export default {
       deep: true,
       immediate: true,
       handler: function(newVal) {
+        console.log("locationEnabled", newVal);
+
         this.showPermessionPanel = !newVal;
       }
     }

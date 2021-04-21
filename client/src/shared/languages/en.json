@@ -19,6 +19,8 @@
             "cancelled": "Cancelled",
             "fbLogin": "Login With Facebook To Make This Order",
             "outOfPuerto": "You are far of puerto"
+           
+
         },
         "cancelOrder": {
             "question": "Why do you want to cancel the ride?",
@@ -153,7 +155,10 @@
             "to": "To",
             "optional": "Optional",
             "currentLoc": "Current location",
-            "searching": "Searching"
+            "searching": "Searching",
+            "pick": "PICK",
+            "pickFromMap": "Pick from map",
+            "mapPickerExplain": "Move the map to pick location"
         }
     }
 }

@@ -40,11 +40,16 @@
           />
         </div>
       </div>
+
       <!-- Drop down menu for saved locations-->
       <div class="dropdown bg_white border elevate_2" v-if="deepFind(saved, 'opened')">
         <h3 @click="pickCuerrentLocation()" class="flex t-10 regular">
           <fa icon="crosshairs" class="icon text_primary"></fa>
           {{$t('shared.inputLocation.currentLoc')}}
+        </h3>
+        <h3 @click="mapPicker=true" class="flex t-10 regular">
+          <fa icon="crosshairs" class="icon text_primary"></fa>
+          {{$t('shared.inputLocation.pickFromMap')}}
         </h3>
         <h3
           @click="pickedFromSaved(res)"
@@ -74,7 +79,37 @@
         </div>
       </div>
     </div>
-    <div class="map">
+    <!-- Pick from location-->
+    <base-button
+      v-if="mapPicker"
+      :mode="{ dark: true, bg_diagonal: true }"
+      class="pickerBtn w-90 flex align_center center"
+      @click.native="pickFromMap"
+    >
+      <span>{{$t('shared.inputLocation.pick')}}</span>
+    </base-button>
+    <div class="map" :class="{mapPickerOn:mapPicker}">
+      <!-- map picker explainer -->
+      <div
+        @click="pickerExplainer=false"
+        @touchstart="pickerExplainer=false"
+        class="overlay_explainer flex center align_center"
+        v-if="pickerExplainer&&mapPicker"
+      >
+        <h3 class="text_white">
+          <span>
+            <fa icon="arrows-alt"></fa>
+          </span>
+          &nbsp;
+          {{$t('shared.inputLocation.mapPickerExplain')}}
+        </h3>
+      </div>
+      <!-- map picker icon -->
+      <div class="map_picker flex align_center center" v-if="mapPicker">
+        <span class="text_violet">
+          <img src="@/shared/static/img/checkPin.png" />
+        </span>
+      </div>
       <map-view
         @directionChanged="sendDirection($event)"
         :center="center"
@@ -85,6 +120,8 @@
         v-if="withMap && center"
         :driverLocation="driverLocation"
         :status="status"
+        @centerChangedByClient="pickedLocFromMap=$event"
+        :pickingFromMap="mapPicker"
       ></map-view>
 
       <slot name="action"></slot>
@@ -139,7 +176,10 @@ export default {
       focusedTo: false,
       pickLocation: false,
       auxCenter: null,
-      delayer: null
+      delayer: null,
+      pickedLocFromMap: null,
+      mapPicker: false,
+      pickerExplainer: false
     };
   },
   computed: {
@@ -161,6 +201,9 @@ export default {
       };
     },
     center() {
+      // if (this.mapPicker && this.pickedLocFromMap) {
+      //   return this.pickedLocFromMap;
+      // }
       if (this.auxCenter) {
         return this.auxCenter;
       } else {
@@ -170,6 +213,16 @@ export default {
   },
   mounted() {},
   watch: {
+    mapPicker: {
+      deep: true,
+      handler: function(newVal) {
+        console.log(newVal);
+        if (newVal) {
+          this.auxCenter = this.customerLocation;
+          this.pickerExplainer = true;
+        }
+      }
+    },
     "to.address": {
       deep: true,
 
@@ -264,6 +317,8 @@ export default {
     },
 
     focused(title) {
+      this.mapPicker = false;
+      this.auxCenter = null;
       this.focusedFrom = title == "From";
       this.focusedTo = title == "To";
       this.search.origin = title.toLowerCase();
@@ -371,6 +426,35 @@ export default {
       setTimeout(() => {
         this[this.saved.origin].by = "search";
       }, 200);
+    },
+    async pickFromMap() {
+      let pos = {
+        lat: this.pickedLocFromMap.lat,
+        lng: this.pickedLocFromMap.lng
+      };
+      this.changeDirection(this.saved.origin, {
+        lat: () => {
+          return pos.lat;
+        },
+        lng: () => {
+          return pos.lng;
+        }
+      });
+      this.auxCenter = pos;
+      this[this.saved.origin].by = "current";
+      this[this.saved.origin].address = await this.geocodedAddress(pos);
+      this[this.saved.origin].lat = pos.lat;
+      this[this.saved.origin].lng = pos.lng;
+      this.$emit("changedDirection", {
+        origin: this.saved.origin,
+        pos: pos
+      });
+      this.$emit("centerChanged", pos);
+      this.mapPicker = false;
+      this.search.searching = false;
+      setTimeout(() => {
+        this[this.saved.origin].by = "search";
+      }, 200);
     }
   }
 };
@@ -433,7 +517,7 @@ export default {
   border-radius: 50%;
   font-size: 1rem;
   position: absolute;
-  left: calc(50% - 0.95rem);
+  left: calc(50% - 1rem);
   transition: 0.5s all;
   ::v-deep span {
     display: flex;
@@ -465,5 +549,33 @@ export default {
 .icon_logo {
   height: 1.4rem;
   margin-right: 0rem;
+}
+
+.map_picker {
+  position: absolute;
+  height: 50px;
+  width: 50px;
+
+  font-size: 2rem;
+
+  z-index: 99;
+  top: calc(50% - 25px);
+  right: calc(50% - 25px);
+}
+.pickerBtn {
+  position: absolute;
+  bottom: 2rem;
+  padding: 0.5rem;
+  z-index: 999;
+  right: 5%;
+}
+.overlay_explainer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  height: 100%;
 }
 </style>

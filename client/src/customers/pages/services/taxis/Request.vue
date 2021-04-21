@@ -141,11 +141,12 @@ export default {
           let response = await this.$store.dispatch("taxis/requestTaxi", data);
 
           this.loading = false;
+          console.log(response);
 
           if (response.status == "Success") {
             this.$router.push({ path: `${response.orderId}` });
           } else {
-            this.alertStatment = response.i18nCode;
+            this.alertStatment = response.data.i18nCode;
             setTimeout(() => {
               this.alertStatment = "";
             }, 4000);
