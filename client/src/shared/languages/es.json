@@ -32,7 +32,8 @@
         "savedLocations": {
             "title": "Ubicaciones guardadas",
             "location": "Ubicacion|Ubicaciones",
-            "addNewLoc": "Añadir Nueva Ubicación"
+            "addNewLoc": "Añadir Nueva Ubicación",
+            "editLocation": "Editar ubicación"
         },
         "orders": {
             "title": "Pedidos",
@@ -65,8 +66,8 @@
             "review": "Revisar",
             "loading": "Cargando",
             "cancelled": "Cancelado",
-            "tooFarFromStartLocation": "You are too far from start location",
-            "tooFarFromEndLocation": "You are too far from end location"
+            "tooFarFromStartLocation": "Estás demasiado lejos de la ubicación de inicio",
+            "tooFarFromEndLocation": "Estás demasiado lejos de la ubicación final"
         },
         "cancelOrder": {
             "question": "Por qué quieres cancelar el viaje?",
@@ -153,9 +154,22 @@
             "optional": "Opcional",
             "currentLoc": "Ubicación Actual",
             "searching": "Buscando",
-            "pick": "PICK",
-            "pickFromMap": "Pick from map",
-            "mapPickerExplain": "Move the map to pick location"
+            "pick": "ELIGE",
+            "pickFromMap": "Elige del mapa",
+            "mapPickerExplain": "Mueva el mapa para elegir la ubicación"
+        },
+        "pickLocation": {
+            "name": "Nombre",
+            "address": "Dirección",
+            "searching": "ELEGIR",
+            "pick": "ELIGE"
+
+        },
+        "placeHolders": {
+            "address": "Ingresa Dirección",
+            "name": "Ingresa Nombre",
+            "search": "Busca",
+            "writeHere": "Escriba aquí"
         }
     }
 }

@@ -11,7 +11,7 @@
             <input
               type="text"
               class="input bg_secondary text_blackD"
-              placeholder="Enter Name..."
+              :placeholder="$t('shared.placeHolders.name')+'...'"
               v-model="item.name"
             />
             <span>{{ errors[0] }}</span>
@@ -26,7 +26,7 @@
       <textarea
         type="text"
         class="input bg_secondary text_blackD rows"
-        placeholder="Write Here..."
+        :placeholder="$t('shared.placeHolders.writeHere')"
         v-model="item.notes"
       ></textarea>
     </div>

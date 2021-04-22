@@ -6,7 +6,7 @@
       <pick-location
         v-if="openPicker"
         class="popUp"
-        :title="!editId?'Add New Location':'Edit Location'"
+        :title="!editId?$t('customer.savedLocations.addNewLoc'):$t('customer.savedLocations.editLocation')"
         @close="openPicker = false"
         :editId="editId"
         ref="pickLocation"
@@ -113,7 +113,7 @@ export default {
     return {
       openPicker: false,
       loading: false,
-      actionText:this.$t('customer.savedLocations.addNewLoc') ,
+      actionText: this.$t("customer.savedLocations.addNewLoc"),
       editId: ""
     };
   },

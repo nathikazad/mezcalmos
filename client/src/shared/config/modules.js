@@ -44,6 +44,7 @@ import {
 export function initModules(Vue) {
 
 
+   
 
     //Vue google maps
     Vue.use(VueGoogleMaps, gmapsConfig);

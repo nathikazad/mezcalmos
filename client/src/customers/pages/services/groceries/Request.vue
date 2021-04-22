@@ -80,7 +80,7 @@
         <textarea
           type="text"
           class="input bg_secondary text_blackD rows"
-          placeholder="Write Here..."
+          :placeholder="$t('shared.placeHolders.writeHere')"
           v-model="notes"
         ></textarea>
       </div>
@@ -94,7 +94,7 @@
               disabled="true"
               type="text"
               class="input bg_secondary text_blackD"
-              placeholder="Enter Address..."
+              :placeholder="$t('shared.placeHolders.address')+'...'"
               v-model="fromTo"
             />
             <span>{{ errors[0] }}</span>
@@ -168,7 +168,6 @@ export default {
         by: "search"
       },
       to: {
-        
         address: "",
         by: "search"
       }

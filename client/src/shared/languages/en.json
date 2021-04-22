@@ -18,7 +18,7 @@
             "confirm": "CONFIRM",
             "cancelled": "Cancelled",
             "fbLogin": "Login With Facebook To Make This Order",
-            "outOfPuerto": "You are far of puerto"
+            "outOfPuerto": "Estas demasiado lejos de puerto"
         },
         "cancelOrder": {
             "question": "Why do you want to cancel the ride?",
@@ -32,7 +32,8 @@
         "savedLocations": {
             "title": "Saved Locations",
             "location": "Location|Locations",
-            "addNewLoc": "Add New Location"
+            "addNewLoc": "Add New Location",
+            "editLocation":"Edit Location"
 
         },
         "orders": {
@@ -157,6 +158,19 @@
             "pick": "PICK",
             "pickFromMap": "Pick from map",
             "mapPickerExplain": "Move the map to pick location"
+        },
+        "pickLocation":{
+            "name":"Name",
+            "address":"Address",
+            "searching":"Searching",
+            "pick":"PICK"
+           
+        },
+        "placeHolders":{
+            "address":"Enter Address",
+            "name":"Enter Name",
+            "search":"Search",
+            "writeHere":"Write here"
         }
     }
 }
