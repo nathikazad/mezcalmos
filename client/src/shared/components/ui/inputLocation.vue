@@ -428,33 +428,40 @@ export default {
       }, 200);
     },
     async pickFromMap() {
-      let pos = {
-        lat: this.pickedLocFromMap.lat,
-        lng: this.pickedLocFromMap.lng
-      };
-      this.changeDirection(this.saved.origin, {
-        lat: () => {
-          return pos.lat;
-        },
-        lng: () => {
-          return pos.lng;
-        }
-      });
-      this.auxCenter = pos;
-      this[this.saved.origin].by = "current";
-      this[this.saved.origin].address = await this.geocodedAddress(pos);
-      this[this.saved.origin].lat = pos.lat;
-      this[this.saved.origin].lng = pos.lng;
-      this.$emit("changedDirection", {
-        origin: this.saved.origin,
-        pos: pos
-      });
-      this.$emit("centerChanged", pos);
-      this.mapPicker = false;
-      this.search.searching = false;
-      setTimeout(() => {
-        this[this.saved.origin].by = "search";
-      }, 200);
+      if (!this.pickedLocFromMap) {
+        this.pickCuerrentLocation();
+        this.pickerExplainer = false;
+        this.mapPicker = false;
+        this.search.searching = false;
+      } else {
+        let pos = {
+          lat: this.pickedLocFromMap.lat,
+          lng: this.pickedLocFromMap.lng
+        };
+        this.changeDirection(this.saved.origin, {
+          lat: () => {
+            return pos.lat;
+          },
+          lng: () => {
+            return pos.lng;
+          }
+        });
+        this.auxCenter = pos;
+        this[this.saved.origin].by = "current";
+        this[this.saved.origin].address = await this.geocodedAddress(pos);
+        this[this.saved.origin].lat = pos.lat;
+        this[this.saved.origin].lng = pos.lng;
+        this.$emit("changedDirection", {
+          origin: this.saved.origin,
+          pos: pos
+        });
+        this.$emit("centerChanged", pos);
+        this.mapPicker = false;
+        this.search.searching = false;
+        setTimeout(() => {
+          this[this.saved.origin].by = "search";
+        }, 200);
+      }
     }
   }
 };
