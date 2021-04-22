@@ -3,23 +3,23 @@
     <h1 class="regular">{{ title }}</h1>
     <div class="field" id="placeName">
       <h3 class="bold flex space_between">
-        <span>Name</span>
+        <span>{{$t('shared.pickLocation.name')}}</span>
       </h3>
       <input
         type="text"
         class="input bg_secondary text_blackD"
-        placeholder="Enter Name..."
+        :placeholder="$t('shared.placeHolders.name')+'...'"
         v-model="name"
       />
     </div>
     <div class="field address_input relative" id="note">
       <h3 class="bold flex space_between">
-        <span>Address</span>
+        <span>{{$t('shared.pickLocation.address')}}</span>
       </h3>
       <input
         @blur="blured()"
         type="text"
-        placeholder="Enter Address"
+        :placeholder="$t('shared.placeHolders.address')"
         class="input bg_secondary text_blackD"
         v-model="saved.address"
         ref="from"
@@ -38,7 +38,7 @@
           </h3>
         </span>
         <div v-else>
-          <h3 class="flex t-10 regular">Searching...</h3>
+          <h3 class="flex t-10 regular">{{$t('shared.pickLocation.searching')}}...</h3>
         </div>
       </div>
     </div>
@@ -53,7 +53,7 @@
         :loading="loading"
         @click.native="pickLocation"
       >
-        <span class="t-8">PICK</span>
+        <span class="t-8">{{$t('shared.pickLocation.pick')}}</span>
       </base-button>
     </div>
   </div>

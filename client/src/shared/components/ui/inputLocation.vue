@@ -12,7 +12,7 @@
           <input
             :disabled="disabled"
             type="text"
-            placeholder="Enter Address"
+            :placeholder="$t('shared.placeHolders.address')"
             class="input"
             @focus="focused('From')"
             @blur="blured('From')"
@@ -31,7 +31,7 @@
           <input
             :disabled="disabled"
             type="text"
-            placeholder="Enter Address"
+            :placeholder="$t('shared.placeHolders.address')"
             class="input"
             @focus="focused('To')"
             @blur="blured('To')"

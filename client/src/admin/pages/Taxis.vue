@@ -13,7 +13,7 @@
                 hide-details
                 rounded
                 solo-inverted
-                placeholder="Search..."
+                :placeholder="$t('shared.placeHolders.search')+'...'"
                 v-model="query"
               ></v-text-field>
             </v-responsive>
@@ -74,7 +74,7 @@
                 hide-details
                 rounded
                 solo-inverted
-                placeholder="Search..."
+                :placeholder="$t('shared.placeHolders.search')+'...'"
                 v-model="query"
               ></v-text-field>
             </v-responsive>
