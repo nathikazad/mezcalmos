@@ -18,7 +18,7 @@
             "confirm": "CONFIRM",
             "cancelled": "Cancelled",
             "fbLogin": "Login With Facebook To Make This Order",
-            "outOfPuerto": "You are far of puerto"
+            "outOfPuerto": "Estas demasiado lejos de puerto"
         },
         "cancelOrder": {
             "question": "Why do you want to cancel the ride?",
@@ -66,8 +66,8 @@
             "review": "Review",
             "loading": "Loading",
             "cancelled": "Cancelled",
-            "tooFarFromStartLocation": "You are too far from start location",
-            "tooFarFromEndLocation": "You are too far from end location"
+            "tooFarFromStartLocation": "Estás demasiado lejos de la ubicación final",
+            "tooFarFromEndLocation": "Estás demasiado lejos de la ubicación final"
         },
         "cancelOrder": {
             "question": "Why do you want to cancel the ride?",
