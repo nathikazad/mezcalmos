@@ -182,9 +182,11 @@ async function accept(firebase, data, uid) {
       errorMessage: "Driver and Customer cannot have same id"
     }
   }
-
-
-
+  // let seconds = 1
+  // while (seconds % 10 != 0){
+  //   var d = new Date();
+  //   seconds = d.getSeconds()
+  // }
   driver = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val();
   let response = await firebase.database().ref(`/orders/taxi/${data.orderId}`).transaction(function (order) {
     //console.log(order)
@@ -212,7 +214,7 @@ async function accept(firebase, data, uid) {
     //console.log(`${data.orderId} taxi request failure`)
     return {
       status: "Error",
-      reason: "Ride is not available, please try accepting another ride"
+      errorMessage: "Ride is not available, please try accepting another ride"
     };
   } else {
     let order = response.snapshot.val()
@@ -295,7 +297,7 @@ async function cancelTaxiFromDriver(firebase, uid, data) {
   firebase.database().ref(`/users/${order.customer.id}/state/currentOrder`).remove()
 
   firebase.database().ref(`/taxiDrivers/${order.driver.id}/orders/${orderId}`).update(update);
-  firebase.database().ref(`/taxiDrivers/${order.driver.id}/state/currentOrder`).remove()
+  await firebase.database().ref(`/taxiDrivers/${order.driver.id}/state/currentOrder`).remove()
   firebase.database().ref(`/inProcessOrders/taxi/${orderId}`).remove();
   update.notificationType = "orderStatusChange"
   update.orderId = orderId

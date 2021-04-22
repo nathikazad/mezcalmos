@@ -17,7 +17,8 @@
             "loading": "Cargando",
             "confirm": "Confirmar",
             "cancelled": "Cancelado",
-            "fbLogin": "Inicie sesión con Facebook para hacer este pedido"
+            "fbLogin": "Inicie sesión con Facebook para hacer este pedido",
+            "outOfPuerto": "You are far of puerto"
         },
         "cancelOrder": {
             "question": "Por qué quieres cancelar el viaje?",
@@ -63,7 +64,9 @@
             "droppedOffMessage": "Tu viaje ha terminado",
             "review": "Revisar",
             "loading": "Cargando",
-            "cancelled": "Cancelado"
+            "cancelled": "Cancelado",
+            "tooFarFromStartLocation": "You are too far from start location",
+            "tooFarFromEndLocation": "You are too far from end location"
         },
         "cancelOrder": {
             "question": "Por qué quieres cancelar el viaje?",
@@ -149,7 +152,10 @@
             "to": "Para",
             "optional": "Opcional",
             "currentLoc": "Ubicación Actual",
-            "searching": "Buscando"
+            "searching": "Buscando",
+            "pick": "PICK",
+            "pickFromMap": "Pick from map",
+            "mapPickerExplain": "Move the map to pick location"
         }
     }
 }

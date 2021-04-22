@@ -19,8 +19,6 @@
             "cancelled": "Cancelled",
             "fbLogin": "Login With Facebook To Make This Order",
             "outOfPuerto": "You are far of puerto"
-           
-
         },
         "cancelOrder": {
             "question": "Why do you want to cancel the ride?",
@@ -80,7 +78,7 @@
             "trafficJam": "Traffic jam",
             "other": "Other",
             "customerCancelled": "Sorry to inform you the customer cancelled the ride.",
-            "rideUnavailble": "Sorry to inform you the the ride is not availble any more"
+            "rideUnavailble": "Sorry to inform you the the ride is not availble any more, taking you the next available ride"
         },
         "orders": {
             "title": "Orders",

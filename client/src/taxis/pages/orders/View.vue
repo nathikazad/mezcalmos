@@ -13,7 +13,7 @@
     <!-- ******************pop up Warning Taxi taken ************************-->
     <pop-up
       v-if="cancelReport"
-      :choiceList="['backToIncoming']"
+      :choiceList="[]"
       translatePath="taxi.cancelOrder"
       @picked="submitReposting($event)"
       @close="cancelPopUp=false"
@@ -230,7 +230,8 @@ export default {
       cancelReport: false,
       reportTitle: this.$t("taxi.cancelOrder.customerCancelled"),
       sameInstance: false,
-      alertStatment: ""
+      alertStatment: "",
+      cancelledByTaxi: false
     };
   },
   computed: {
@@ -334,10 +335,15 @@ export default {
       deep: true,
 
       handler: function(newVal, oldVal) {
+        console.log("inside handler", newVal, oldVal)
+        if(this.cancelledByTaxi){
+          // driver cancelled
+          this.cancelledByTaxi = false;
+          return
+        }
         if (newVal) {
           //customer cancelled after ride accepted
           console.log("newval", newVal);
-
           if (
             newVal.status == "cancelled" &&
             this.deepFind(oldVal, "status") == "onTheWay"
@@ -345,29 +351,24 @@ export default {
             this.reportTitle = this.$t("taxi.cancelOrder.customerCancelled");
             this.cancelReport = true;
             setTimeout(() => {
-              this.$router.push("/");
-            }, 2000);
+              this.nextAvailableOrder()
+            }, 4000);
           }
         } else if (oldVal) {
-          //The order taken before order accepted
-          //order cancelled before accepted
+          // The order taken before order accepted
+          // order cancelled before accepted
           console.log("!newval&&oldVal", oldVal.customer.id);
           if (!this.sameInstance) {
             this.reportTitle = this.$t("taxi.cancelOrder.rideUnavailble");
             this.cancelReport = true;
-            if (this.nextOrderId) {
-              setTimeout(() => {
-                this.cancelReport = false;
-                this.nextOrder();
-              }, 2000);
-            } else {
-              setTimeout(() => {
-                this.$router.push("/");
-              }, 2000);
-            }
+
+            setTimeout(() => {
+              this.nextAvailableOrder()
+            }, 4000);
           }
           this.sameInstance = false;
         }
+        
       }
     }
   },
@@ -393,16 +394,12 @@ export default {
     async cancelRide(reason) {
       this.loading = true;
       this.cancelPopUp = false;
+      this.cancelledByTaxi = true
       await this.$store.dispatch("order/cancelRide", {
         reason: this.$t(`taxi.cancelOrder.${reason}`, "EN")
       });
-      if (this.precedentOrderId) {
-        this.precedentOrder();
-      } else if (this.nextOrderId) {
-        this.nextOrder();
-      } else {
-        this.$router.push("/incoming");
-      }
+      this.cancelledByTaxi = true
+      // this.nextAvailableOrder()
       this.loading = false;
     },
     async acceptRide() {
@@ -447,6 +444,19 @@ export default {
           params: { orderId: this.precedentOrderId }
         });
       }
+    },
+    nextAvailableOrder() {
+      if (this.precedentOrderId) {
+        console.log("available precedent", this.precedentOrderId)
+        this.precedentOrder();
+      } else if (this.nextOrderId) {
+        console.log("available next", this.nextOrderId)
+        this.nextOrder();
+      } else {
+        console.log("available incoming")
+        this.$router.push("/incoming");
+      }
+      this.cancelReport = false
     }
   }
 };

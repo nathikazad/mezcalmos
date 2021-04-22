@@ -4,6 +4,7 @@ import {
   cloudCall
 } from '@/shared/config/firebase'
 
+import { deepFind } from '@/shared/mixins/functions'
 import {
   getDistanceFromLatLonInKm
 } from '@/shared/mixins/mapFunctions'
@@ -24,10 +25,10 @@ export default {
       let orderId = payload.orderId
       firebaseDatabase().ref(`orders/taxi/${orderId}`).on('value', async snapshot => {
         let order = snapshot.val()
-        if (order.status == "lookingForTaxi") {
+        if (deepFind(order,'status')=="lookingForTaxi") {
           let driverLocation = context.rootGetters.userLocation;
           order.customer.distance = getDistanceFromLatLonInKm(order.from, driverLocation)
-        }
+        } 
         context.commit('saveOrder', { order: order, orderId: orderId });
       }, () => {
         context.commit('saveOrder', { order: null, orderId: null })
