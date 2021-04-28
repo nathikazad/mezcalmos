@@ -67,8 +67,8 @@
             "review": "Review",
             "loading": "Loading",
             "cancelled": "Cancelled",
-            "tooFarFromStartLocation": "Estás demasiado lejos de la ubicación final",
-            "tooFarFromEndLocation": "Estás demasiado lejos de la ubicación final"
+            "tooFarFromStartLocation": "You are too far from start location",
+            "tooFarFromEndLocation": "You are too far from end location"
         },
         "cancelOrder": {
             "question": "Why do you want to cancel the ride?",
