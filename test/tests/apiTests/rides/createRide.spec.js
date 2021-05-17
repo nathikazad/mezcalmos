@@ -63,18 +63,21 @@ describe('Mezcalmos', () => {
     
     
     // Required from address
-    response = await customer.callFunction("requestTaxi",  "cats")
+    response = await customer.callFunction("requestTaxi", "cats")
     expect(response.result.status).toBe('Error')
     expect(response.result.errorMessage).toBe('Required from location')
 
 
-    let data = {
+    let data = { 
       from: "home"
     }
+
     response = await customer.callFunction("requestTaxi", data)
     expect(response.result.status).toBe('Success')
-
-    
+    //test preventing customer from creating another ride before this finishes
+    newRequest = await customer.callFunction("requestTaxi", tripData)
+    expect(newRequest.result.status).toBe('Error')
+    expect(newRequest.result.errorMessage).toBe("Customer is already in another taxi")
     response = await customer.callFunction("cancelTaxiFromCustomer", {})
     
     // ORDER TESTING
@@ -91,6 +94,7 @@ describe('Mezcalmos', () => {
     expect(order.to).toBe(tripData.to)
     expect(order.orderType).toBe('taxi')
     expect(order.status).toBe('lookingForTaxi')
+
     
     let customerOrder = await customer.db.get(`users/${customer.id}/orders/${orderId}`)
     expect(customerOrder).not.toBeNull()
@@ -100,8 +104,9 @@ describe('Mezcalmos', () => {
     expect(customerOrder.status).toBe('lookingForTaxi')
     expect(customerOrder.from).toBe(tripData.from)
     expect(customerOrder.to).toBe(tripData.to)
-
+    
     let customerCurrentOrderId = await customer.db.get(`users/${customer.id}/state/currentOrder`)
+    expect(customerCurrentOrderId).not.toBeNull()
     expect(customerCurrentOrderId).toBe(orderId)
     
 
@@ -112,12 +117,12 @@ describe('Mezcalmos', () => {
 
     // CHAT TESTING
     let chat = await customer.db.get(`chat/${orderId}`)
+    expect(chat).not.toBeNull()
     expect(chat.chatType).toBe("order")
     expect(chat.orderType).toBe("taxi")
     expect(chat.participants[customer.id].image).toBe(userData.photo)
     expect(chat.participants[customer.id].name).toBe(userData.displayName.split(' ')[0])
     expect(chat.participants[customer.id].particpantType).toBe("customer")
-
 
     // Bad user should not be able to access other customer's order's chat
     await helper.expectUnauthorized(async () => {
@@ -126,7 +131,7 @@ describe('Mezcalmos', () => {
 
     // OPEN ORDER TESTING
     let openOrder = await driver.db.get(`openOrders/taxi/${orderId}`)
-
+    expect(openOrder).not.toBeNull()
     expect(openOrder.customer.id).toBe(customer.id)
     expect(openOrder.customer.image).toBe(userData.photo)
     expect(openOrder.customer.name).toBe(userData.displayName.split(' ')[0])

@@ -299,6 +299,8 @@ async function cancelTaxiFromDriver(firebase, uid, data) {
   firebase.database().ref(`/taxiDrivers/${order.driver.id}/orders/${orderId}`).update(update);
   await firebase.database().ref(`/taxiDrivers/${order.driver.id}/state/currentOrder`).remove()
   firebase.database().ref(`/inProcessOrders/taxi/${orderId}`).remove();
+
+  update.cancelledBy = "driver"
   update.notificationType = "orderStatusChange"
   update.orderId = orderId
   update.orderType = "taxi"
@@ -313,6 +315,7 @@ async function cancelTaxiFromDriver(firebase, uid, data) {
 }
 
 async function start(firebase, uid) {
+  
   let orderId = (await firebase.database().ref(`/taxiDrivers/${uid}/state/currentOrder`).once('value')).val();
   if (orderId == null) {
     return {
@@ -320,6 +323,7 @@ async function start(firebase, uid) {
       errorMessage: "Driver has not accepted any ride"
     }
   }
+
   let order = (await firebase.database().ref(`/orders/taxi/${orderId}`).once('value')).val();
   if (order == null) {
     return {
@@ -327,8 +331,7 @@ async function start(firebase, uid) {
       errorMessage: "Order id does not match any order"
     }
   } 
-
-
+ 
   if (order.status != "onTheWay") {
     return {
       status: "Error",
