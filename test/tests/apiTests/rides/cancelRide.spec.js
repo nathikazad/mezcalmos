@@ -83,12 +83,15 @@ describe('Mezcalmos', () => {
 
   it('Cancel ride from customer while onTheWay', async () => {    
     let response = await customer.callFunction("requestTaxi", tripData)
-    console.log(response.result)
     expect(response.result.status).toBe('Success')
     
     let orderId = response.result.orderId
     response = await driver.callFunction("acceptTaxiOrder", {orderId: orderId})
     expect(response.result.status).toBe('Success')
+
+    //verify current order status 
+    let currentOrder = await driver.db.get(`orders/taxi/${orderId}`)
+    expect(currentOrder.status).toBe('onTheWay')
     
     // Cancel order
     response = await customer.callFunction("cancelTaxiFromCustomer", {orderId: orderId})
@@ -97,9 +100,38 @@ describe('Mezcalmos', () => {
     // currentOrder should be removed
     let customerCurrentOrderId = await customer.db.get(`users/${customer.id}/state/currentOrder`)
     expect(customerCurrentOrderId).toBeNull()
+
+    let driverCurrentOrderId = await driver.db.get(`taxiDrivers/${driver.id}/state/currentOrder`)
+    expect(driverCurrentOrderId).toBeNull()
+
+    //verify update order status
+    let orderAfterCancel = await driver.db.get(`orders/taxi/${orderId}`)
+    expect(orderAfterCancel.status).toBe('cancelled')
+
+    let customerOrderCancelled = await customer.db.get(`users/${customer.id}/orders/${orderId}`)
+    expect(customerOrderCancelled.status).toBe('cancelled')
+
+    let driverOrderCancelled = await driver.db.get(`taxiDrivers/${driver.id}/orders/${orderId}`)
+    expect(driverOrderCancelled.status).toBe('cancelled')
+  
+    //verify removing the order 
+    let driverCurrentOrder = await driver.db.get(`taxiDrivers/${driver.id}/state/currentOrder`)
+    expect(driverCurrentOrder).toBeNull();
+
+    let inProcessOrder = (await admin.database().ref(`inProcessOrders/taxi/${orderId}`).once('value')).val()
+    expect(inProcessOrder).toBeNull()
+
+    //verify notification update
+    let driverNotificationInfo = await driver.db.get(`/notifications/taxi/${driver.id}`)
+    // console.log(`driverNotificationInfo`, driverNotificationInfo)
+    let arrayNotifications = Object.entries(driverNotificationInfo)
+    let lastNotification = (arrayNotifications[arrayNotifications.length-1])[1]
+    expect(lastNotification.status).toBe('cancelled')
+    expect(lastNotification.cancelledBy).toBe('customer')
+
   })
 
-  it('Cannot cancel ride from customer while request is not made', async () => {
+  it('Cannot cancel ride from driver while request is not made', async () => {
     
     let response = await axios.post(`http://localhost:5001/mezcalmos-31f1c/us-central1/cancelTaxiFromDriver`, { data: "cats"})
     expect(response.data.result.status).toBe('Error')
@@ -114,16 +146,51 @@ describe('Mezcalmos', () => {
   it('Cancel ride from driver', async () => {
 
     response = await customer.callFunction("requestTaxi", tripData)
-    let orderId = response.result.orderId
 
+    let orderId = response.result.orderId
+    
     response = await driver.callFunction("acceptTaxiOrder", {orderId: orderId})
     expect(response.result.status).toBe('Success')
+
+    //verify order status
+    let order = await driver.db.get(`orders/taxi/${orderId}`)
+    expect(order.status).toBe('onTheWay')
     
     // Cancel order
     response = await driver.callFunction("cancelTaxiFromDriver", {orderId: orderId})
-    console.log(response)
     expect(response.result.status).toBe('Success')
 
+    //verify order status change after being cancelled
+    let orderAfterCancel = await driver.db.get(`orders/taxi/${orderId}`)
+    expect(orderAfterCancel.status).toBe('cancelled')
+
+    let customerOrderAfterCancel = await customer.db.get(`users/${order.customer.id}/orders/${orderId}`)
+    expect(customerOrderAfterCancel.status).toBe('cancelled')
+
+    // verify removing customer currentOrder 
+    let customerCurrentOrder = await customer.db.get(`users/${order.customer.id}/state/currentOrder`)
+    expect(customerCurrentOrder).toBeNull()
+
+    //verify taxiDrivers order status change 
+    let driverOrderAfterCancel = await driver.db.get(`taxiDrivers/${order.driver.id}/orders/${orderId}`)
+    expect(driverOrderAfterCancel.status).toBe('cancelled')
+
+    //verify removing order 
+    let driverCurrentOrder = await driver.db.get(`taxiDrivers/${order.driver.id}/state/currentOrder`)
+    expect(driverCurrentOrder).toBeNull()
+
+    let inProcessOrder =  (await admin.database().ref(`/inProcessOrders/taxi/${orderId}`).once('value')).val()
+    expect(inProcessOrder).toBeNull()
+    
+    //verify notification update
+    let customerNotificationsInfo = await customer.db.get(`notifications/customer/${order.customer.id}`)
+    let arrayNotifications = Object.entries(customerNotificationsInfo);
+    let notification = (arrayNotifications[arrayNotifications.length-1])[1];
+
+    expect(notification.status).toBe('cancelled')
+    expect(notification.cancelledBy).toBe('driver')
+
+    //verify removing current order
     let customerCurrentOrderId = await customer.db.get(`users/${customer.id}/state/currentOrder`)
     expect(customerCurrentOrderId).toBeNull()
 

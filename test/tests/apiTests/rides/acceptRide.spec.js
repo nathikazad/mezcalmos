@@ -35,6 +35,15 @@ let driverData = {
   "returnSecureToken":true
 }
 
+let badDriverData = {
+  "email":"baddriver@mezcalmos.com",
+  "displayName":"Bad Driver",
+  "password":"password",
+  "photoURL": "https://randomuser.me/api/portraits/men/73.jpg",
+  "returnSecureToken":true
+
+}
+
 let tripData = {
   from: "home",
   to: "office",
@@ -42,7 +51,7 @@ let tripData = {
   distance: 5
 }
 
-let customer, badUser, driver
+let customer, badUser, driver, badDriver
 
 
 describe('Mezcalmos', () => {
@@ -50,8 +59,10 @@ describe('Mezcalmos', () => {
     await helper.clearDatabase(admin)
     customer = await auth.signUp(admin, userData)
     driver = await auth.signUp(admin, driverData)
+    badDriver = await auth.signUp(admin, badDriverData)
     badUser = await auth.signUp(admin, badUserData)
     await admin.database().ref(`/taxiDrivers/${driver.id}/state/authorizationStatus`).set('authorized')
+    await admin.database().ref(`/taxiDrivers/${badDriver.id}/state/authorizationStatus`).set(`authorized`)
   });
 
   it('Accept ride test', async () => {
@@ -59,7 +70,6 @@ describe('Mezcalmos', () => {
     let response = await axios.post(`http://localhost:5001/mezcalmos-31f1c/us-central1/acceptTaxiOrder`, { data: "cats"})
     expect(response.data.result.status).toBe('Error')
     expect(response.data.result.errorMessage).toBe('User needs to be signed in')
-
 
     response = await customer.callFunction("requestTaxi", tripData)
     let orderId = response.result.orderId
@@ -76,16 +86,26 @@ describe('Mezcalmos', () => {
     //
     response = await driver.callFunction("acceptTaxiOrder", {orderId: orderId})
     expect(response.result.status).toBe('Success')
+    //not able to accept a new ride when driver is already on the first ride
+    let newRequest = await badUser.callFunction("requestTaxi", tripData)
+    let newOrderId = newRequest.result.orderId
+    let newResponse = await driver.callFunction("acceptTaxiOrder", {orderId: newOrderId})
+    // console.log('newResponse.result', newResponse.result);
+    expect(newResponse.result.status).toBe('Error')
+    expect(newResponse.result.errorMessage).toBe("Driver is already in another taxi")
+    // let orderCancel = await badUser.callFunction("cancelRideFromCustomer", {orderId: newOrderId})
+    // expect(orderCancel.result.status).toBe('Success')
+    // console.log('orderCancel.result', orderCancel.result);
 
     // Driver has access to order and status changed
     let order = await driver.db.get(`orders/taxi/${orderId}`)
     expect(order.status).toBe('onTheWay')
+    expect(order.customer.id).not.toBe(driver.id)
 
     // driver added to order, driver added to chat
     expect(order.driver.id).toBe(driver.id)
     expect(order.driver.image).toBe(driverData.photoURL)
     expect(order.driver.name).toBe(driverData.displayName.split(' ')[0])
-
 
     // added to taxi driver orders
     let driverOrder = await driver.db.get(`taxiDrivers/${driver.id}/orders/${orderId}`)
@@ -101,7 +121,11 @@ describe('Mezcalmos', () => {
     // taxi driver state changed to orderId
     let driverStatus = await driver.db.get(`taxiDrivers/${driver.id}/state/currentOrder`)
     expect(driverStatus).toBe(orderId)
-
+    // verify order status change
+    let orderStatus = (await admin.database().ref(`users/${order.customer.id}/orders/${orderId}`).once('value')).val()
+    expect(orderStatus.driver.id).toBe(order.driver.id)
+    expect(orderStatus.status).toBe(order.status)
+    expect(orderStatus.acceptRideTime).toBe(order.acceptRideTime)
     // updated customer node
     let customerOrder = await customer.db.get(`orders/taxi/${orderId}`)
     expect(customerOrder.driver.id).toBe(driver.id)
@@ -134,6 +158,24 @@ describe('Mezcalmos', () => {
     expect(customerNotification.orderId).toBe(orderId)
     expect(customerNotification.orderType).toBe('taxi')
     expect(customerNotification.status).toBe('onTheWay')
+
+    //cancelling the orders
+    response = await customer.callFunction("cancelTaxiFromCustomer", {orderId: orderId})
+    expect(response.result.status).toBe('Success')
+    response = await badUser.callFunction("cancelTaxiFromCustomer", {orderId: newOrderId})
+    expect(response.result.status).toBe('Success')
+
+    //Test when two drivers accept same ride
+    response = await customer.callFunction("requestTaxi", tripData)
+    expect(response.result.status).toBe('Success')
+    orderId = response.result.orderId
+
+    let driverResponse = await driver.callFunction("acceptTaxiOrder", {orderId: orderId})
+    let badDriverResponse = await badDriver.callFunction("acceptTaxiOrder", {orderId: orderId})
+    expect(driverResponse.result.status).toBe('Success')
+    expect(badDriverResponse.result.status).toBe('Error')
+    expect(badDriverResponse.result.errorMessage).toBe('Ride is not available, please try accepting another ride')
+
   })
 });
 
