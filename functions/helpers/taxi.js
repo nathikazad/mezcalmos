@@ -300,7 +300,7 @@ async function cancelTaxiFromDriver(firebase, uid, data) {
   await firebase.database().ref(`/taxiDrivers/${order.driver.id}/state/currentOrder`).remove()
   firebase.database().ref(`/inProcessOrders/taxi/${orderId}`).remove();
 
-  update.cancelledBy = "driver"
+  
   update.notificationType = "orderStatusChange"
   update.orderId = orderId
   update.orderType = "taxi"
