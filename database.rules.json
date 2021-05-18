@@ -76,6 +76,10 @@
         }
       }
     },
+    "pricePolicy": {
+      ".read": "true",
+      ".write": "false"
+    },
     "admins": {
       "$uid": {
         ".read": "$uid === auth.uid",

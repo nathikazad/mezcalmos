@@ -102,6 +102,16 @@ export default {
     },
     temporaryAddresses(state) {
       return state.temporaryAddresseses
+    },
+    estimatePrice() {
+      return async function (distance) {
+        let pricePolicy = (await firebaseDatabase().ref(`pricePolicy`).once('value')).val();
+        distance = parseInt(distance);
+        let perKmCost = parseInt(pricePolicy.perKmCost)
+        let minimumCost = parseInt(pricePolicy.minimumCost)
+        let estimate = distance * perKmCost
+        return estimate > minimumCost ? estimate : minimumCost;
+      }
     }
   }
 };
