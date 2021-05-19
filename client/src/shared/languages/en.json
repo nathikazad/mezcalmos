@@ -34,7 +34,7 @@
             "title": "Saved Locations",
             "location": "Location|Locations",
             "addNewLoc": "Add New Location",
-            "editLocation":"Edit Location"
+            "editLocation": "Edit Location"
 
         },
         "orders": {
@@ -130,11 +130,15 @@
         },
         "userInfo": {
             "title": " User <br/> Information ",
+            "editInfo": "Edit  <br/> Information",
             "editBtn": "EDIT INFORMATION",
-            "deleteBtn": "Delete Account"
+            "deleteBtn": "Delete Account",
+            "saveBtn": "SAVE YOUR CHANGES",
+            "editImgMsg": "Click on image to change it"
         },
         "navDrawer": {
             "userInfo": "User Information",
+
             "myOrders": "My Orders",
             "savedLocations": "Saved Locations",
             "logout": "Logout",
@@ -160,18 +164,21 @@
             "pickFromMap": "Pick from map",
             "mapPickerExplain": "Move the map to pick location"
         },
-        "pickLocation":{
-            "name":"Name",
-            "address":"Address",
-            "searching":"Searching",
-            "pick":"PICK"
-           
+        "pickLocation": {
+            "name": "Name",
+            "address": "Address",
+            "searching": "Searching",
+            "pick": "PICK"
+
         },
-        "placeHolders":{
-            "address":"Enter Address",
-            "name":"Enter Name",
-            "search":"Search",
-            "writeHere":"Write here"
+        "placeHolders": {
+            "address": "Enter Address",
+            "name": "Enter Name",
+            "search": "Search",
+            "writeHere": "Write here",
+            "displayName": "Enter Display Name",
+            "phone": "Enter Phone Number"
+
         }
     }
 }
