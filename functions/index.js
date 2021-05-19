@@ -17,23 +17,17 @@ function getFirebase(database = "production") {
   }
 }
 
-const grocery = require("./helpers/grocery")
+// const grocery = require("./helpers/grocery")
 const taxi = require("./helpers/taxi")
 const hasura = require("./helpers/hasura");
 const message = require("./helpers/message");
 const admin = require("./helpers/admin");
+const auth = require("./helpers/auth");
+const { user } = require("firebase-functions/lib/providers/auth");
 
 // On sign up.
 exports.processSignUp = functions.auth.user().onCreate(async user => {
-  let firebase = getFirebase();
-  await firebase.database().ref(`/users/${user.uid}/info`).set({
-    displayName: user.displayName,
-    photo: user.photoURL,
-    email: user.email
-  });
-  //  fbuid:user.providerData[0].uid});
-  let response = hasura.setClaim(user.uid);
-  return response
+  hasura.setClaim(user.uid);
 });
 
 exports.addHasuraClaims = functions.https.onCall(async (data, context) => {
@@ -216,3 +210,17 @@ exports.notifyMessageFromAdmin = functions.database.instance('mezcalmos-31f1c-de
   let firebase = getFirebase();
   message.notifyUser(firebase, context.params, snap.val())
 })
+
+
+exports.sendOTP = functions.https.onCall(async (data, context) => {
+  let firebase = getFirebase(data.database);
+  let response = await auth.sendOTP(firebase, data);
+  return response;
+});
+
+exports.confirmOTP = functions.https.onCall(async (data, context) => {
+  let firebase = getFirebase(data.database);
+  let response = await auth.confirmOTP(firebase, data);
+  return response;
+});
+

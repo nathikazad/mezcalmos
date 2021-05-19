@@ -1,6 +1,7 @@
 import {
   firebaseAuth,
-  firebaseDatabase
+  firebaseDatabase,
+  cloudCall
 } from '@/shared/config/firebase'
 
 import {
@@ -18,6 +19,7 @@ export default {
     return {
       userId: null,
       info: null,
+      phoneNumber: null,
       hasuraAuthToken: null,
       loggedIn: false,
       logoutCallbacks: [],
@@ -45,6 +47,19 @@ export default {
     async login() {
       var provider = new firebaseAuth.FacebookAuthProvider();
       await firebaseAuth().signInWithPopup(provider);
+    },
+    async sendOTP(context, payload) {
+      let resp = await cloudCall('sendOTP', { phoneNumber: payload.phoneNumber });
+      context.commit('savePhoneNumber', payload)
+      console.log(resp)
+    },
+    async confirmOTP(context, payload) {
+      let resp = await cloudCall('confirmOTP', 
+      { 
+        phoneNumber:context.state.phoneNumber ,
+        OTPCode: payload.OTPCode 
+      });
+      console.log(resp)
     },
     async autoSignIn(context, payload) {
       firebaseDatabase().ref(`users/${payload.userId}/info/`).on('value', function (snapshot) {
@@ -97,6 +112,9 @@ export default {
     saveLanguage(state, payload) {
       state.language = payload
       i18n.locale = payload
+    },
+    savePhoneNumber(state, payload) {
+      state.phoneNumber = payload.phoneNumber
     }
 
   }
