@@ -19,6 +19,10 @@
         },
         "savedLocations" : {
           ".write": "$uid === auth.uid"
+        },
+        "auth": {
+          ".read": "false",
+          ".write": "false"
         }
       }
     },

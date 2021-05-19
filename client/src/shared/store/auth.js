@@ -60,6 +60,9 @@ export default {
         OTPCode: payload.OTPCode 
       });
       console.log(resp)
+      if(resp.data.status == "Success") {
+        firebaseAuth().signInWithCustomToken(resp.data.token)
+      }
     },
     async autoSignIn(context, payload) {
       firebaseDatabase().ref(`users/${payload.userId}/info/`).on('value', function (snapshot) {
