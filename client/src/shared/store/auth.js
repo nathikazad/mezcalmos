@@ -49,7 +49,7 @@ export default {
       await firebaseAuth().signInWithPopup(provider);
     },
     async sendOTP(context, payload) {
-      let resp = await cloudCall('sendOTP', { phoneNumber: payload.phoneNumber });
+      let resp = await cloudCall('sendOTP', { phoneNumber: payload.phoneNumber, apiKey:payload.apiKey });
       context.commit('savePhoneNumber', payload)
       console.log(resp)
     },
