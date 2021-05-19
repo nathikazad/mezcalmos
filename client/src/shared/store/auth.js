@@ -73,6 +73,10 @@ export default {
     saveLogoutCallback(context, payload) {
       //console.log(payload.args)
       context.commit('saveLogoutCallback', payload)
+    },
+    async editUserProfile(context, payload) {
+      let response = await firebaseDatabase().ref(`users/${context.state.userId}/info`).update(payload)
+      return response;
     }
   },
   mutations: {
