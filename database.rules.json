@@ -9,15 +9,21 @@
         "notificationInfo": {
           ".write": "$uid === auth.uid"
         },
-        "info" : {
+        "info": {
           "language": {
             ".write": "$uid === auth.uid"
           },
           "photo": {
             ".write": "$uid === auth.uid"
+          },
+          "displayName": {
+            ".write": "$uid === auth.uid"
+          },
+          "phone": {
+            ".write": "$uid === auth.uid"
           }
         },
-        "savedLocations" : {
+        "savedLocations": {
           ".write": "$uid === auth.uid"
         }
       }
@@ -61,7 +67,7 @@
     "chat": {
       "$orderId": {
         ".read": "root.child('chat/' + $orderId + '/participants/' + auth.uid).exists()",
-        "messages":{
+        "messages": {
           "$messageId": {
             ".write": "root.child('chat/' + $orderId + '/participants/' + auth.uid).exists()"
           }
