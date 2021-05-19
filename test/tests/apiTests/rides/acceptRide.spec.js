@@ -35,13 +35,20 @@ let driverData = {
   "returnSecureToken":true
 }
 
-let badDriverData = {
-  "email":"baddriver@mezcalmos.com",
-  "displayName":"Bad Driver",
+let secondDriverData = {
+  "email":"secondDriver@mezcalmos.com",
+  "displayName":"Second Driver",
   "password":"password",
   "photoURL": "https://randomuser.me/api/portraits/men/73.jpg",
   "returnSecureToken":true
+}
 
+let thirdDriverData = {
+  "email":"thirdDriver@mezcalmos.com",
+  "displayName":"Third Driver",
+  "password":"password",
+  "photoURL": "https://randomuser.me/api/portraits/men/74.jpg",
+  "returnSecureToken":true
 }
 
 let tripData = {
@@ -51,7 +58,7 @@ let tripData = {
   distance: 5
 }
 
-let customer, badUser, driver, badDriver
+let customer, badUser, driver, secondDriver, thirdDriver
 
 
 describe('Mezcalmos', () => {
@@ -59,10 +66,12 @@ describe('Mezcalmos', () => {
     await helper.clearDatabase(admin)
     customer = await auth.signUp(admin, userData)
     driver = await auth.signUp(admin, driverData)
-    badDriver = await auth.signUp(admin, badDriverData)
+    secondDriver = await auth.signUp(admin, secondDriverData)
+    thirdDriver = await auth.signUp(admin, thirdDriverData)
     badUser = await auth.signUp(admin, badUserData)
     await admin.database().ref(`/taxiDrivers/${driver.id}/state/authorizationStatus`).set('authorized')
-    await admin.database().ref(`/taxiDrivers/${badDriver.id}/state/authorizationStatus`).set(`authorized`)
+    await admin.database().ref(`/taxiDrivers/${secondDriver.id}/state/authorizationStatus`).set(`authorized`)
+    await admin.database().ref(`/taxiDrivers/${thirdDriver.id}/state/authorizationStatus`).set(`authorized`)
   });
 
   it('Accept ride test', async () => {
@@ -86,21 +95,19 @@ describe('Mezcalmos', () => {
     //
     response = await driver.callFunction("acceptTaxiOrder", {orderId: orderId})
     expect(response.result.status).toBe('Success')
+
     //not able to accept a new ride when driver is already on the first ride
     let newRequest = await badUser.callFunction("requestTaxi", tripData)
     let newOrderId = newRequest.result.orderId
     let newResponse = await driver.callFunction("acceptTaxiOrder", {orderId: newOrderId})
-    // console.log('newResponse.result', newResponse.result);
+    
     expect(newResponse.result.status).toBe('Error')
     expect(newResponse.result.errorMessage).toBe("Driver is already in another taxi")
-    // let orderCancel = await badUser.callFunction("cancelRideFromCustomer", {orderId: newOrderId})
-    // expect(orderCancel.result.status).toBe('Success')
-    // console.log('orderCancel.result', orderCancel.result);
 
     // Driver has access to order and status changed
     let order = await driver.db.get(`orders/taxi/${orderId}`)
     expect(order.status).toBe('onTheWay')
-    expect(order.customer.id).not.toBe(driver.id)
+    expect(order.customer.id).toBe(customer.id)
 
     // driver added to order, driver added to chat
     expect(order.driver.id).toBe(driver.id)
@@ -165,16 +172,59 @@ describe('Mezcalmos', () => {
     response = await badUser.callFunction("cancelTaxiFromCustomer", {orderId: newOrderId})
     expect(response.result.status).toBe('Success')
 
-    //Test when two drivers accept same ride
+    //Test when three drivers are accepting one same ride
     response = await customer.callFunction("requestTaxi", tripData)
     expect(response.result.status).toBe('Success')
     orderId = response.result.orderId
+    
+    let driverResponse = driver.callFunction("acceptTaxiOrder", {orderId: orderId})
+    let secondDriverResponse = secondDriver.callFunction("acceptTaxiOrder", {orderId: orderId})
+    let thirdDriverResponse = thirdDriver.callFunction("acceptTaxiOrder", {orderId : orderId})
 
-    let driverResponse = await driver.callFunction("acceptTaxiOrder", {orderId: orderId})
-    let badDriverResponse = await badDriver.callFunction("acceptTaxiOrder", {orderId: orderId})
-    expect(driverResponse.result.status).toBe('Success')
-    expect(badDriverResponse.result.status).toBe('Error')
-    expect(badDriverResponse.result.errorMessage).toBe('Ride is not available, please try accepting another ride')
+    let data = await Promise.all([driverResponse, secondDriverResponse, thirdDriverResponse])
+    let firstPromise = data[0]
+    let secondPromise = data[1]
+    let thirdPromise = data[2]
+   
+    let acceptedCounter = 0
+    let rejectedCounter = 0
+    let acceptedResponse = []
+    let rejectedResponse = []
+
+    data.map( el => {
+      switch(el.result.status){
+      case 'Error':
+        rejectedCounter++ ;
+        rejectedResponse.push(el.result)
+         break;
+       case 'Success':
+         acceptedCounter++ ;
+         acceptedResponse.push(el.result)
+         break; 
+       }
+     })
+
+    console.log('acceptedCounter', acceptedCounter),
+    console.log('rejectedCounter', rejectedCounter)
+
+    // verify the number of rejected requests
+    expect(rejectedResponse).toHaveLength(2)
+
+    // verify rejected requests status and errorMessage
+    rejectedResponse.map(el => {
+      expect(el.status).toBe('Error')
+      expect(el.errorMessage).toBe('Ride is not available, please try accepting another ride')
+    })
+
+    //verify the number of accepted requests
+    expect(acceptedResponse).toHaveLength(1)
+    
+    //verify accepted requests status
+    acceptedResponse.map(el => {
+      expect(el.status).toBe('Success')
+    })
+    
+    
 
   })
 });
