@@ -1,3 +1,4 @@
+const axios = require('axios');
 module.exports = {
     sendOTP,
     confirmOTP
@@ -10,8 +11,6 @@ async function sendOTP(firebase, data) {
       errorMessage: "Required phone number"
     }
   }
-  // find phone number
-  // create user with phone number
   let user;
   try {
     user = await firebase.auth().getUserByPhoneNumber(data.phoneNumber);
@@ -28,9 +27,6 @@ async function sendOTP(firebase, data) {
     
   }
   
-  if(!user) {
-    
-  }
   let auth = (await firebase.database().ref(`users/${user.uid}/auth`).once('value')).val();
   if(auth && auth.lastCodeGeneratedTime) {
     let lastCodeGeneratedTime = new Date(auth.lastCodeGeneratedTime);
@@ -51,7 +47,32 @@ async function sendOTP(firebase, data) {
     codeGeneratedTime: new Date().toUTCString(),
     attempts: 0
   }
-  // send code and check for error
+  
+  const headers = {
+    'Content-Type': 'application/json',
+    'D360-API-KEY': data.apiKey
+  }
+
+  const message = {
+    "recipient_type": "individual",
+    "to": data.phoneNumber.replace('+',''),
+    "type": "text",
+    "text": {
+        "body": `Your one time OTP code is ${OTPCode}`
+    }
+  }
+  
+  try {
+    await axios.post("https://waba-sandbox.360dialog.io/v1/messages", message, {
+    headers: headers
+  })
+  } catch (error) {
+      return {
+        status: "Error",
+        errorMessage: `Message Send Error`
+      }
+  }
+
   firebase.database().ref(`users/${user.uid}/auth`).set(newCodeEntry)
 
   return {
