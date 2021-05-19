@@ -26,7 +26,7 @@ const auth = require("./helpers/auth");
 const { user } = require("firebase-functions/lib/providers/auth");
 
 // On sign up.
-exports.processSignUp = functions.auth.user().onCreate(async user => {
+exports.processSignUp = functions.auth.user().onCreate(user => {
   hasura.setClaim(user.uid);
 });
 

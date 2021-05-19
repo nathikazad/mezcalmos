@@ -10,10 +10,30 @@ async function sendOTP(firebase, data) {
       errorMessage: "Required phone number"
     }
   }
+  // find phone number
+  // create user with phone number
+  let user;
+  try {
+    user = await firebase.auth().getUserByPhoneNumber(data.phoneNumber);
+  } catch(e) {
+    if(e.errorInfo.code == "auth/user-not-found"){
+      user = await firebase.auth().createUser({phoneNumber: data.phoneNumber})
+      firebase.database().ref(`/users/${user.uid}/info/phoneNumber`).set(user.phoneNumber);
+    } else {
+      return {
+        status: "Error",
+        errorMessage: e.errorInfo.message
+      }
+    }
+    
+  }
   
-  let phoneNumberEntry = (await firebase.database().ref(`/auth/numbers/${data.phoneNumber}`).once('value')).val();
-  if(phoneNumberEntry && phoneNumberEntry.lastCodeGeneratedTime) {
-    let lastCodeGeneratedTime = new Date(phoneNumberEntry.lastCodeGeneratedTime);
+  if(!user) {
+    
+  }
+  let auth = (await firebase.database().ref(`users/${user.uid}/auth`).once('value')).val();
+  if(auth && auth.lastCodeGeneratedTime) {
+    let lastCodeGeneratedTime = new Date(auth.lastCodeGeneratedTime);
     let validTimeForNextCodeGeneration = new Date(lastCodeGeneratedTime.getTime() + 60*1000);
     if(Date.now() < validTimeForNextCodeGeneration) {
       let secondsLeft = parseInt((validTimeForNextCodeGeneration.getTime() - Date.now())/1000)
@@ -32,7 +52,7 @@ async function sendOTP(firebase, data) {
     attempts: 0
   }
   // send code and check for error
-  firebase.database().ref(`/auth/numbers/${data.phoneNumber}`).update(newCodeEntry)
+  firebase.database().ref(`users/${user.uid}/auth`).set(newCodeEntry)
 
   return {
     status: "Success"
@@ -41,79 +61,57 @@ async function sendOTP(firebase, data) {
 
 
 async function confirmOTP(firebase, data) {
-
-  // expirationTime: new Date(Date.now()+10*60*1000).toUTCString(),
   if (!data.phoneNumber || !data.OTPCode) {
     return {
         status: "Error",
         errorMessage: "Required phone number and OTPCode"
     }
   }
-
-  let phoneNumberEntry = (await firebase.database().ref(`/auth/numbers/${data.phoneNumber}`).once('value')).val();
-  if(!phoneNumberEntry || !phoneNumberEntry.OTPCode || !phoneNumberEntry.codeGeneratedTime) {
+  let user = await firebase.auth().getUserByPhoneNumber(data.phoneNumber);
+  // console.log(user)
+  if(!user) {
     return {
       status: "Error",
-      errorMessage: "Invalid OTP Code"
+      errorMessage: "Invalid OTP Code ph"
+    }
+  }
+  let auth = (await firebase.database().ref(`users/${user.uid}/auth`).once('value')).val();
+  if(!auth || !auth.OTPCode || !auth.codeGeneratedTime) {
+    return {
+      status: "Error",
+      errorMessage: "Invalid OTP Code ah"
     }
   }
 
-  if(parseInt(phoneNumberEntry.attempts) > 3) {
+  if(parseInt(auth.attempts) > 3) {
     return {
       status: "Error",
       errorMessage: "Exceeded number of tries"
     }
   }
 
-  firebase.database().ref(`/auth/numbers/${data.phoneNumber}/attempts`).set(parseInt(phoneNumberEntry.attempts+1))
-
-
+  firebase.database().ref(`users/${user.uid}/auth/attempts`).set(parseInt(auth.attempts+1))
   
-  let generatedTime = new Date(phoneNumberEntry.codeGeneratedTime)
+  let generatedTime = new Date(auth.codeGeneratedTime)
   let expirationTime = new Date(generatedTime.getTime() + 10 * 60 * 1000)
   if(Date.now() > expirationTime) {
     return {
       status: "Error",
-      errorMessage: "Invalid OTP Code"
+      errorMessage: "Invalid OTP Code ex"
     }
   }
 
-  if(phoneNumberEntry.OTPCode != data.OTPCode) {
+  if(auth.OTPCode != data.OTPCode) {
     return {
       status: "Error",
-      errorMessage: "Invalid OTP Code"
+      errorMessage: "Invalid OTP Code nm"
     }
   }
 
-  if(!phoneNumberEntry.userId){
-    let userRecord = await firebase.auth().createUser({phoneNumber: data.phoneNumber})
-    firebase.database().ref(`/auth/numbers/${data.phoneNumber}/userId`).set(userRecord.uid)
-    phoneNumberEntry.userId = userRecord.uid
-  } 
-
-  let customToken = await firebase.auth().createCustomToken(phoneNumberEntry.userId);
-
-  // let newCodeEntry = {
-  //   OTPCode: null,
-  //   codeGeneratedTime: null,
-  //   attempts: null
-  // }
-  // // send code and check for error
-  // firebase.database().ref(`/auth/numbers/${data.phoneNumber}`).update(newCodeEntry)
-
+  let customToken = await firebase.auth().createCustomToken(user.uid);
+  firebase.database().ref(`users/${user.uid}/auth`).remove()
 
   return {
     status: "Success", token: customToken
   }
 }
-    // confirmOTP {
-//   // check code maps
-//   // check not expired
-//   // check ip address matches
-//   // if new user
-//   //    create new user
-//   // else 
-//   //    use existing user
-//   // generate jwt token
-//   // send to front
-// }
