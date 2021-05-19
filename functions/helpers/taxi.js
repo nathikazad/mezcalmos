@@ -85,7 +85,8 @@ async function request(firebase, uid, data) {
   }
 }
 
-async function cancelTaxiFromCustomer(firebase, uid, data) {
+async function cancelTaxiFromCustomer(firebase, uid, data) { 
+
   let orderId = (await firebase.database().ref(`/users/${uid}/state/currentOrder`).once('value')).val();
   if (orderId == null) {
     return {
@@ -289,9 +290,7 @@ async function cancelTaxiFromDriver(firebase, uid, data) {
   if(data.reason){
     update.reason = data.reason
   }
-
   update.cancelledBy = "driver"
-
   firebase.database().ref(`/orders/taxi/${orderId}`).update(update)
   firebase.database().ref(`/users/${order.customer.id}/orders/${orderId}`).update(update);
   firebase.database().ref(`/users/${order.customer.id}/state/currentOrder`).remove()
