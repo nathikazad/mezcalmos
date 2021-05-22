@@ -26,8 +26,14 @@ const auth = require("./helpers/auth");
 const { user } = require("firebase-functions/lib/providers/auth");
 
 // On sign up.
-exports.processSignUp = functions.auth.user().onCreate(user => {
+exports.processSignUp = functions.auth.user().onCreate(async user => {
   hasura.setClaim(user.uid);
+  let firebase = getFirebase();
+  await firebase.database().ref(`/users/${user.uid}/info`).set({
+    displayName: user.displayName,
+    photo: user.photoURL,
+    email: user.email
+  });
 });
 
 exports.addHasuraClaims = functions.https.onCall(async (data, context) => {
