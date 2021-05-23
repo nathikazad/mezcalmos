@@ -93,14 +93,14 @@ async function confirmOTP(firebase, data) {
   if(!user) {
     return {
       status: "Error",
-      errorMessage: "Invalid OTP Code ph"
+      errorMessage: "Invalid OTP Code"
     }
   }
   let auth = (await firebase.database().ref(`users/${user.uid}/auth`).once('value')).val();
   if(!auth || !auth.OTPCode || !auth.codeGeneratedTime) {
     return {
       status: "Error",
-      errorMessage: "Invalid OTP Code ah"
+      errorMessage: "Invalid OTP Code"
     }
   }
 
@@ -118,18 +118,21 @@ async function confirmOTP(firebase, data) {
   if(Date.now() > expirationTime) {
     return {
       status: "Error",
-      errorMessage: "Invalid OTP Code ex"
+      errorMessage: "Invalid OTP Code"
     }
   }
 
   if(auth.OTPCode != data.OTPCode) {
     return {
       status: "Error",
-      errorMessage: "Invalid OTP Code nm"
+      errorMessage: "Invalid OTP Code"
     }
   }
 
-  let customToken = await firebase.auth().createCustomToken(user.uid);
+  let customToken;
+  if(data.inTestMode == null){
+    customToken = await firebase.auth().createCustomToken(user.uid);
+  }
   firebase.database().ref(`users/${user.uid}/auth`).remove()
 
   return {
