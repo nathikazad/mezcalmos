@@ -2,6 +2,15 @@
   <div id="taxiRequest">
     <!-- pop up component -->
     <pop-up v-if="pickLocation"></pop-up>
+    <!-- ******************Price estimate alert ************************-->
+    <pop-up
+      v-if="priceReport&&estimatedPrice"
+      :choiceList="['Ok']"
+      @picked="answerPopUp($event)"
+      @close="priceReport=false"
+      :title="` Estimated price for the ride is $ ${estimatedPrice}`"
+      :icon="'coins'"
+    ></pop-up>
     <!-- ******************pop up component ************************-->
     <h1 class="regular">{{$t('customer.taxiView.taxi')}}</h1>
     <input-location
@@ -26,6 +35,7 @@
           </h5>
         </div>
       </div>
+
       <div class="flex align_center center btnP" slot="action">
         <base-button
           class="w-80"
@@ -51,6 +61,7 @@ export default {
   components: { popUp },
   data() {
     return {
+      priceReport: false,
       loading: false,
       distance: null,
       duration: null,
@@ -85,7 +96,8 @@ export default {
       saved: {
         origin: "from",
         opened: false
-      }
+      },
+      estimatedPrice: 0
     };
   },
   computed: {
@@ -124,9 +136,15 @@ export default {
     }
   },
   methods: {
-    setDistanceDuration(pos) {
+    answerPopUp() {
+      this.priceReport = false;
+    },
+    async setDistanceDuration(pos) {
       this.distance = pos.distance;
       this.duration = pos.duration;
+      let estimatePrice = this.$store.getters["taxis/estimatePrice"];
+      this.estimatedPrice = await estimatePrice(pos.distance.value / 1000);
+      this.priceReport = true;
     },
     async requestTaxi() {
       if (!this.disabled) {
