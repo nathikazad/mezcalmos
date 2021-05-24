@@ -20,6 +20,8 @@ initModules(Vue)
 //Firebase state changed function
 async function firebaseCallback(user) {
   if (user) {
+    console.log(user);
+    
     await store.dispatch("autoSignIn", {
       userId: user.uid,
       name: user.displayName,

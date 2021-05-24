@@ -13,6 +13,7 @@ import UserInformationPage from "@/shared/pages/user/Information";
 import MessagesPage from "@/shared/pages/messages/View";
 import NotificationsPage from "@/shared/pages/notification/view";
 import LoginPage from "@/shared/pages/user/Login";
+import Validation from "@/shared/pages/user/validation";
 import SavedLocation from './pages/saved/locations'
 
 import NotFoundPage from '@/shared/pages/NotFound'
@@ -43,6 +44,8 @@ const router = new VueRouter({
       meta: { requiresAuth: true } },
     { path: "/auth", component: LoginPage,
       meta: { requiresUnauth: true }, name: "login" },
+    { path: "/validation", component: Validation,
+      meta: { requiresUnauth: true }, name: "validation" },
     { path: "/notifications", component: NotificationsPage,
       meta: { requiresAuth: true }, name: "notifications" },
     { path: "/contactAdmin", component: MessageAdmin,

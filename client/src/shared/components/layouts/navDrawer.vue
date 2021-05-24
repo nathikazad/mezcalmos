@@ -128,7 +128,8 @@ export default {
 
   methods: {
     async login() {
-      await this.$store.dispatch("login");
+      // await this.$store.dispatch("sendOTP");
+      this.$router.push("/auth");
       this.$emit("closeNavDrawer");
     },
     logout() {
