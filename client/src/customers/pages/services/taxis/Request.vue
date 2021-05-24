@@ -8,7 +8,7 @@
       :choiceList="['Ok']"
       @picked="answerPopUp($event)"
       @close="priceReport=false"
-      :title="` Estimated price for the ride is $ ${estimatedPrice}`"
+      :title="$t('customer.taxiView.priceEstimate')+estimatedPrice"
       :icon="'coins'"
     ></pop-up>
     <!-- ******************pop up component ************************-->
@@ -152,7 +152,8 @@ export default {
           to: this.to,
           from: this.from,
           distance: this.distance,
-          duration: this.duration
+          duration: this.duration,
+          estimatedPrice: this.estimatedPrice
         };
         if (this.isLoggedIn) {
           this.loading = true;

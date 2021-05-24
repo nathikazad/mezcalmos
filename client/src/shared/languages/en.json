@@ -18,7 +18,8 @@
             "confirm": "CONFIRM",
             "cancelled": "Cancelled",
             "fbLogin": "Login With Facebook To Make This Order",
-            "outOfPuerto": "Estas demasiado lejos de puerto"
+            "outOfPuerto": "You are too far out of puerto",
+            "priceEstimate": "Estimated price for the ride is $"
         },
         "cancelOrder": {
             "question": "Why do you want to cancel the ride?",

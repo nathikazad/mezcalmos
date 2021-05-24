@@ -18,7 +18,8 @@
             "confirm": "Confirmar",
             "cancelled": "Cancelado",
             "fbLogin": "Inicie sesión con Facebook para hacer este pedido",
-            "outOfPuerto": "You are far of puerto"
+            "outOfPuerto": "Estas demasiado lejos de puerto",
+            "priceEstimate": "El precio estimado del viaje es de $"
         },
         "cancelOrder": {
             "question": "Por qué quieres cancelar el viaje?",
@@ -99,7 +100,7 @@
             "confirmation": "Su solicitud está bajo revisión. Nos pondremos en contacto con usted en breve",
             "fbBtn": " Registrate con Facebook",
             "alreadyMember": "Ya eres un usuario?",
-            "yes": "YES"
+            "yes": "SI"
 
         },
         "permissions": {
