@@ -1,8 +1,8 @@
-const axios = require('axios');
 module.exports = {
     sendOTP,
     confirmOTP
   }
+const sender = require("./sender")
 
 async function sendOTP(firebase, data) {
   if (!data.phoneNumber) {
@@ -11,6 +11,17 @@ async function sendOTP(firebase, data) {
       errorMessage: "Required phone number"
     }
   }
+
+  if (!data.messageType && 
+      (data.messageType != "SMS" || data.messageType != "whatsApp")) {
+    return {
+      status: "Error",
+      errorMessage: "Required messageType and has to be SMS or whatsApp"
+    }
+  }
+
+  
+
   let user;
   try {
     user = await firebase.auth().getUserByPhoneNumber(data.phoneNumber);
@@ -41,38 +52,33 @@ async function sendOTP(firebase, data) {
   }
 
   let OTPCode = parseInt(Math.random()*1000000)
+  
+  let payload = {
+    message: `Your one time Mezcalmos OTP code is ${OTPCode}`,
+    phoneNumber: data.phoneNumber
+  }
+
+  if(data.language == "es"){
+    payload.message = `Su código OTP único de Mezcalmos es ${OTPCode}`
+  }
+
+  let response
+  if(data.messageType && data.messageType == "whatsApp"){
+    payload.apiKey = data.apiKey
+    response = await sender.sendWhatsApp(payload)
+  } else {
+    response = await sender.sendSMS(payload)
+  }
+
+  if(response) {
+    return response
+  }
 
   let newCodeEntry = {
     OTPCode: OTPCode,
     codeGeneratedTime: new Date().toUTCString(),
     attempts: 0
   }
-  
-  const headers = {
-    'Content-Type': 'application/json',
-    'D360-API-KEY': data.apiKey
-  }
-
-  const message = {
-    "recipient_type": "individual",
-    "to": data.phoneNumber.replace('+',''),
-    "type": "text",
-    "text": {
-        "body": `Your one time OTP code is ${OTPCode}`
-    }
-  }
-  
-  try {
-    await axios.post("https://waba-sandbox.360dialog.io/v1/messages", message, {
-    headers: headers
-  })
-  } catch (error) {
-      return {
-        status: "Error",
-        errorMessage: `Message Send Error`
-      }
-  }
-
   firebase.database().ref(`users/${user.uid}/auth`).set(newCodeEntry)
 
   return {
