@@ -39,7 +39,7 @@ export default {
       });
     },
     async requestTaxi(context, payload) {
-
+      console.log(payload)
       if (getDistanceFromLatLonInKm(payload.from, puertoCoords) > 50 ||
         getDistanceFromLatLonInKm(payload.to, puertoCoords) > 50) {
 
@@ -52,13 +52,13 @@ export default {
         }
 
       }
-      let from = payload.from
-      let to = payload.to
+
       let response = (await cloudCall('requestTaxi', {
-        from: from,
-        to: to,
+        from: payload.from,
+        to: payload.from,
         distance: payload.distance,
-        duration: payload.duration
+        duration: payload.duration,
+        estimatedPrice: payload.estimatedPrice
       })).data;
       if(response.status == "Error") {
         console.log(response.errorMessage)

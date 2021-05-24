@@ -23,19 +23,21 @@ async function request(firebase, uid, data) {
   }
   
   let payload = {}
-  if (!data.from) {
+  console.log(data)
+  if (!data.from || !data.to || !data.distance || !data.duration || !data.estimatedPrice) {
     return {
       status: "Error",
-      errorMessage: "Required from location"
+      errorMessage: "Required from, to, distance, duration and estimatedPrice"
     }
   }
   // Check valid values for from
   payload.from = data.from;
   
     
-  payload.to = (data.to) ? data.to : null
-  payload.distance = (data.distance) ? data.distance : 0
-  payload.duration = (data.duration) ? data.duration : 0
+  payload.to = data.to
+  payload.distance = data.distance
+  payload.duration = data.duration
+  payload.estimatedPrice = data.estimatedPrice
   
   let user = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val();
   payload.customer = {
@@ -53,7 +55,8 @@ async function request(firebase, uid, data) {
     orderTime: payload.orderTime,
     routeInformation: {
       duration: payload.duration,
-      distance: payload.distance
+      distance: payload.distance,
+      estimatedPrice: data.estimatedPrice
     },
     to: payload.to,
     from: payload.from
@@ -64,7 +67,8 @@ async function request(firebase, uid, data) {
     customer: payload.customer,
     routeInformation: {
       duration: payload.duration,
-      distance: payload.distance
+      distance: payload.distance,
+      estimatedPrice: data.estimatedPrice
     }
   });
   firebase.database().ref(`/users/${uid}/state/currentOrder`).set(orderRef.key);
