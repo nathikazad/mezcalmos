@@ -41,7 +41,7 @@ async function sendSMS(data) {
 
     try {
       await client.messages
-        .create({body: data.message, from: '+16304488781', to: data.phoneNumber.replace('+','')})
+        .create({body: data.message, from: '+16304488781', to: data.phoneNumber})
       } catch (error) {
         console.log(error)
         return {
