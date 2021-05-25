@@ -1,4 +1,6 @@
 const axios = require('axios');
+const functions = require('firebase-functions');
+
 module.exports = {
     sendSMS,
     sendWhatsApp
@@ -33,8 +35,8 @@ async function sendWhatsApp(data) {
 }
 
 async function sendSMS(data) {
-    const accountSid = functions.config().twilio.accountSid;
-    const authToken = functions.config().twilio.authToken;
+    const accountSid = functions.config().twilio.accountid;
+    const authToken = functions.config().twilio.authtoken;
     const client = require('twilio')(accountSid, authToken);
 
     try {
