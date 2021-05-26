@@ -136,7 +136,7 @@ async function confirmOTP(firebase, data) {
   }
 
   let customToken;
-  if(data.inTestMode == null){
+  if(process.env.FUNCTIONS_EMULATOR != true){
     customToken = await firebase.auth().createCustomToken(user.uid);
   }
   firebase.database().ref(`users/${user.uid}/auth`).remove()
