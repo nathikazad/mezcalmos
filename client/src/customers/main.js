@@ -43,7 +43,7 @@ async function firebaseCallback(user) {
       router.push({ path: router.currentRoute.query.redirect });
     } else if (store.getters.currentOrderId ) {
       router.push({ path: `/services/taxi/${store.getters.currentOrderId}` });
-    } else if (router.currentRoute.path == "/auth") {
+    } else if  (router.currentRoute.path == "/auth" || router.currentRoute.path == "/validation")  {
       router.push({ path: "/" });
     }
   }

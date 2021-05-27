@@ -9,11 +9,12 @@
       <h3 class="regular" v-html="$t('taxi.introduction.signUpTaxi')"></h3>
       <base-button
         v-if="!isLoggedIn"
-        class="fill_width elevate_1 btn"
+        class="fill_width elevate_1 btn bg_SMS"
         :mode="{ dark: true }"
-        @click.native="login"
+        :link="true"
+        to="/auth"
       >
-        <span class="t-8 regular">{{$tc('taxi.introduction.fbBtn',1)}}</span>
+        <span class="t-8 regular">{{$tc('taxi.introduction.logIn',1)}}</span>
       </base-button>
       <base-button
         v-else
@@ -44,9 +45,9 @@ export default {
   methods: {
     async login() {
       await this.$store.dispatch("login");
-      console.log('submit called');
-      
-      await this.sendRequest()
+      console.log("submit called");
+
+      await this.sendRequest();
       this.$emit("closeNavDrawer");
     },
     handleError() {

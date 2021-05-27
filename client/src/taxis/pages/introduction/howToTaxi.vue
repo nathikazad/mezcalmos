@@ -25,12 +25,12 @@
       ></h3>
       <base-button
         v-if="!isLoggedIn"
-        class="fill_width elevate_1 btn fbBtn"
+        class="w-90 elevate_1 bg_SMS"
         :link="true"
         to="/auth"
         :mode="{ dark: true }"
       >
-        <span class="t-8 regular">{{$tc('taxi.introduction.fbBtn',2)}}</span>
+        <span class="t-8 regular">{{$tc('taxi.introduction.logIn',2)}}</span>
       </base-button>
     </div>
   </div>
@@ -97,7 +97,6 @@ export default {
     line-height: 1.8rem;
   }
   .btn {
-    background: map-get($colors, fb);
     color: map-get($colors, white);
     width: 18.75rem;
   }

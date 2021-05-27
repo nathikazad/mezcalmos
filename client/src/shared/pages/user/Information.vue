@@ -2,7 +2,7 @@
   <div class="userInfo flex space_around">
     <h1
       class="regular txt_center"
-      v-html="!editPage?$t('shared.userInfo.title'):$t('shared.userInfo.editInfo')"
+      v-html="!editPage?$t('shared.userInfo.title'):(deepFind(userInfo,'displayName')?$t('shared.userInfo.editInfo'):$t('shared.userInfo.addInfo'))"
     ></h1>
     <div class="information" v-if="!editPage">
       <div class="flex align_center center">
@@ -19,11 +19,11 @@
     <div class="information" v-else>
       <div class="flex align_center center">
         <!-- hovered image upload -->
-        <div class="pointer">
+        <div class="pointer relative">
           <avatar
             class="border"
             size="10rem"
-            :url="previewImage||require('@/shared/static/img/clickToUpdate.png')"
+            :url="previewImage||userInfo.photo||require(`@/shared/static/img/${$t('shared.userInfo.clickToUploadImg')}.png`)"
             @click.native="clickOnUpload"
           ></avatar>
           <input
@@ -33,22 +33,25 @@
             id="fileUpload"
             @change="receivedImage($event)"
           />
+          <div
+            class="cameraIcon bg_white elevate_2 flex align_center center text_grey"
+            @click="clickOnUpload"
+          >
+            <fa icon="camera"></fa>
+          </div>
         </div>
       </div>
 
       <h5 class="txt_center">{{$t('shared.userInfo.editImgMsg')}}</h5>
 
-      <div class="text_field flex align_center space_between t-19">
-        <div class="icon_container">
-          <fa icon="user-circle"></fa>
-        </div>
-
+      <div class="text_field t-19">
+        <label class="t-10">{{$t('shared.userInfo.fullName')}}</label>
         <input
           type="text"
           class="input bg_secondary text_blackD"
           :placeholder="$t('shared.placeHolders.displayName')+'...'"
-          :value=" deepFind(userInfo,'displayName') "
-          @change="paramValueChanged($event,'displayName','required')"
+          :value=" deepFind(newProfile,'displayName') "
+          @input="paramValueChanged($event,'displayName','required')"
         />
       </div>
     </div>
@@ -58,9 +61,8 @@
         @click.native="editProfile"
         :loading="loading"
         class="w-100 elevate_1"
-        :mode="{ dark: true, bg_diagonal: true }"
+        :mode="{ dark: true, bg_diagonal: true,disabled:disabled }"
       >
-        <fa icon="save"></fa>&nbsp;&nbsp;
         <span class="t-8 regular">{{$t('shared.userInfo.saveBtn')}}</span>
       </base-button>
     </div>
@@ -100,6 +102,19 @@ export default {
     },
     appName() {
       return this.$store.getters.appName;
+    },
+    disabled() {
+      return !(
+        (this.uploadedImage || this.userInfo.photo) &&
+        this.newProfile["displayName"]
+      );
+    }
+  },
+  mounted() {
+    let userInfo = this.$store.getters["userInfo"];
+
+    if (userInfo) {
+      this.newProfile = { ...userInfo };
     }
   },
   watch: {
@@ -117,13 +132,10 @@ export default {
     paramValueChanged(e, param, required) {
       let newVal = e.target.value;
       if (required) {
-        if (newVal) {
-          this.newProfile[param] = newVal;
-        }
+        this.newProfile = { ...this.newProfile, [param]: newVal };
       } else {
         this.newProfile[param] = newVal;
       }
-      console.log(this.newProfile);
     },
     clickOnUpload() {
       let imageUploadInput = document.getElementById("fileUpload");
@@ -146,43 +158,53 @@ export default {
       }
     },
     async editProfile() {
-      console.log("edit");
+      if (!this.disabled) {
+        delete this.newProfile.email;
 
-      const image = this.uploadedImage;
-      this.loading = true;
-      if (this.uploadedImage) {
-        const storageRef = firebaseStorage()
-          .ref(`users/${this.userId}/avatar/${image.name}`)
-          .put(image);
-        storageRef.on(
-          "state_changed",
-          snapshot => {
-            this.uploadPercentage =
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          },
-          error => {
-            console.log(error.message);
-          },
-          () => {
-            this.uploadPercentage = 100;
-            storageRef.snapshot.ref.getDownloadURL().then(async url => {
-              this.newProfile["photo"] = url;
-              await this.$store.dispatch("editUserProfile", this.newProfile);
-              this.loading = false;
-              this.$router.go(-1);
-            });
-          }
-        );
-      } else {
-        await this.$store.dispatch("editUserProfile", this.newProfile);
-        this.loading = false;
-        this.$router.go(-1);
+        const image = this.uploadedImage;
+        this.loading = true;
+        if (this.uploadedImage) {
+          const storageRef = firebaseStorage()
+            .ref(`users/${this.userId}/avatar/${image.name}`)
+            .put(image);
+          storageRef.on(
+            "state_changed",
+            snapshot => {
+              this.uploadPercentage =
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            },
+            error => {
+              console.log(error.message);
+            },
+            () => {
+              this.uploadPercentage = 100;
+              storageRef.snapshot.ref.getDownloadURL().then(async url => {
+                this.newProfile["photo"] = url;
+                await this.$store.dispatch("editUserProfile", this.newProfile);
+                this.loading = false;
+                this.$router.go(-1);
+              });
+            }
+          );
+        } else {
+          await this.$store.dispatch("editUserProfile", this.newProfile);
+          this.loading = false;
+          this.$router.go(-1);
+        }
       }
     }
   }
 };
 </script>
 <style lang="scss" scoped>
+.cameraIcon {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  position: absolute;
+}
 .userInfo {
   flex-direction: column;
   .information {
@@ -193,15 +215,19 @@ export default {
   }
 }
 .text_field {
-  margin: 0.5rem 0;
+  margin: 2rem 0;
   .icon_container {
     width: 3rem;
     display: flex;
     justify-content: center;
   }
   input {
-    margin-left: 0.5rem;
-    width: calc(100% - 3rem);
+    margin-top: 0.5rem;
+    width: 100%;
+    &:focus {
+      border: $border;
+      border-color: map-get($map: $colors, $key: brand);
+    }
   }
 }
 </style>

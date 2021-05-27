@@ -17,7 +17,7 @@
             "loading": "Loading",
             "confirm": "CONFIRM",
             "cancelled": "Cancelled",
-            "fbLogin": "Login With Facebook To Make This Order",
+            "logIn": "Login To Make This Order",
             "outOfPuerto": "You are too far out of puerto",
             "priceEstimate": "Estimated price for the ride is $"
         },
@@ -99,7 +99,7 @@
             "howToTaxi": "Do You Want To Use <br/>The Mezcalmos App To <br/>Give Rides To Customers In <br/> <span class='text_blue'>Puerto Escondido?</span> ",
             "signUpTaxi": "Click Sign Up, Show Us Proof <br/>Of Your Taxi Authorization <br/>And Start Giving Rides  <br/> Right Away.",
             "confirmation": "Your Application Is Under Review. We Will Contact You Shortly",
-            "fbBtn": " Sign Up With Facebook|Login with Facebook",
+            "logIn": " Sign Up |Login",
             "alreadyMember": "Already a member?",
             "yes": "YES"
 
@@ -114,10 +114,17 @@
             "owner": "Login To <br/>  Make An Order ",
             "customer": "Login To <br/>  Make An Order ",
             "fbBtn": "LOGIN WITH FACEBOOK",
-            "loginWithSms":"LOGIN WITH SMS",
-            "whatsAppLogin":" LOGIN WITH WHATSAPP",
-            "verifyCountryCode":"Please verify your country code",
-            "verifyPhoneNumber":"Please verify your phone number"
+            "loginWithSms": "LOGIN WITH SMS",
+            "whatsAppLogin": " LOGIN WITH WHATSAPP",
+            "verifyCountryCode": "Please verify your country code",
+            "verifyPhoneNumber": "Please verify your phone number",
+            "OtpConfirmation": "OTP Code Confirmation",
+            "enterOtpCode": "Enter OTP Code Sent To",
+            "resend": "Resend",
+            "confirm": "Confirm",
+            "otpCode": "OTP Code",
+            "enterPhoneNumber": "Enter Phone Number To Recieve OTP Code",
+            "submit": "SUBMIT"
         },
         "messages": {
             "title": "Messages",
@@ -135,10 +142,13 @@
         "userInfo": {
             "title": " User <br/> Information ",
             "editInfo": "Edit  <br/> Information",
+            "addInfo": "Add  <br/> Information",
             "editBtn": "EDIT INFORMATION",
             "deleteBtn": "Delete Account",
-            "saveBtn": "SAVE YOUR CHANGES",
-            "editImgMsg": "Click on image to change it"
+            "saveBtn": "SAVE",
+            "editImgMsg": "Click on image to change it",
+            "fullName": "Full Name",
+            "clickToUploadImg": "clickToUpdate"
         },
         "navDrawer": {
             "userInfo": "User Information",

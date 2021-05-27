@@ -39,7 +39,7 @@
       <div class="flex align_center center btnP" slot="action">
         <base-button
           class="w-80"
-          :class="{bg_fb:!isLoggedIn}"
+          :class="{bg_SMS:!isLoggedIn}"
           :mode="{ dark: true, bg_diagonal: isLoggedIn, disabled:disabled }"
           @click.native="requestTaxi()"
           :loading="loading"
@@ -47,7 +47,7 @@
         >
           <span
             class="t-8 regular"
-          >{{isLoggedIn?$t('customer.taxiView.confirm'):$t('customer.taxiView.fbLogin')}}</span>
+          >{{isLoggedIn?$t('customer.taxiView.confirm'):$t('customer.taxiView.logIn')}}</span>
         </base-button>
       </div>
     </input-location>

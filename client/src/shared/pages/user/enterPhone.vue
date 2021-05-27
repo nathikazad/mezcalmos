@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h1 class="regular my-4">OTP Code</h1>
+    <h1 class="regular my-4">{{$t('shared.login.otpCode')}}</h1>
     <section class="bg_white border">
-      <h3 class="regular">Enter Phone Number To Recieve OTP Code</h3>
+      <h3 class="regular">{{$t('shared.login.enterPhoneNumber')}}</h3>
       <div class="sign_in_with_phone">
         <div class="text_field flex align_center t-19 space_between">
           <input
@@ -32,7 +32,7 @@
       :mode="{ dark: true, bg_diagonal: true,disabled:disabled }"
       class="float_btn flex align_center center fill_width bold"
       :loading="isLoading"
-    >SUBMIT</base-button>
+    >{{$t('shared.login.submit')}}</base-button>
   </div>
 </template>
 <script>

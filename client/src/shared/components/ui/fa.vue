@@ -1,6 +1,6 @@
 <template>
   <i :class="{ [`fa-${icon}`]: true }" class="fal" v-if="!solid"></i>
-  <i :class="{ [`fa-${icon}`]: true }" class="fas" v-else></i>
+  <i :class="{ [`fa-${icon}`]: true }" class="fab" v-else></i>
 </template>
 <script>
 export default {

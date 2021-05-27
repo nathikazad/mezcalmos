@@ -1,10 +1,10 @@
 <template>
   <div>
-    <h1 class="regular my-4">Phone number confirmation</h1>
+    <h1 class="regular my-4">{{$t('shared.login.OtpConfirmation')}}</h1>
 
     <section class="bg_white border">
       <h3 class="regular">
-        Enter OTP Code Sent To
+        {{$t('shared.login.enterOtpCode')}}
         <span class="text_SMS">{{phoneNumber}}</span>
       </h3>
       <div class="sign_in_with_phone">
@@ -21,7 +21,7 @@
             @input="checkDigit"
           />
         </div>
-        <u @click="loginWithPhoneNumber">Resend</u>
+        <u @click="loginWithPhoneNumber">{{$t('shared.login.resend')}}</u>
 
         <!-- <div id="recaptcha-container"></div> -->
       </div>
@@ -34,7 +34,7 @@
       :mode="{ dark: true, bg_whatsApp: true ,disabled:disabled}"
       class="float_btn flex align_center center fill_width"
       :loading="isLoading"
-    >Confirm</base-button>
+    >{{$t('shared.login.confirm')}}</base-button>
   </div>
 </template>
 <script>

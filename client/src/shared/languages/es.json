@@ -17,7 +17,7 @@
             "loading": "Cargando",
             "confirm": "Confirmar",
             "cancelled": "Cancelado",
-            "fbLogin": "Inicie sesión con Facebook para hacer este pedido",
+            "logIn": "Inicie sesión para hacer este pedido",
             "outOfPuerto": "Estas demasiado lejos de puerto",
             "priceEstimate": "El precio estimado del viaje es de $"
         },
@@ -98,7 +98,7 @@
             "howToTaxi": "¿Desea utilizar la aplicación<br/> Mezcalmos para ofrecer<br/> transporte a los clientes<br/> en <span class = 'text_blue'> Puerto Escondido? </span> ",
             "signUpTaxi": "Haga clic en Registrarse,<br/> muéstrenos la prueba de su<br/> autorización de taxi y comience<br/> a ofrecer viajes de inmediato.",
             "confirmation": "Su solicitud está bajo revisión. Nos pondremos en contacto con usted en breve",
-            "fbBtn": " Registrate con Facebook",
+            "logIn": " Registrate|iniciar sesión",
             "alreadyMember": "Ya eres un usuario?",
             "yes": "SI"
 
@@ -113,9 +113,17 @@
             "owner": " Inicie sesión con <br/> Facebook para <br/> hacer un pedido ",
             "customer": " Inicie sesión con <br/> Facebook para <br/> hacer un pedido ",
             "fbBtn": "Facebook iniciar",
-            "loginWithSms":"Iniciar con SMS",
+            "whatsAppLogin":" INICIAR CON WHATSAPP",
+            "loginWithSms":"INICIAR CON SMS",
             "verifyCountryCode":"Verifique el código de su país",
-            "verifyPhoneNumber":"Verifique su número de teléfono"
+            "verifyPhoneNumber":"Verifique su número de teléfono",
+            "OtpConfirmation":"Confirmación del código OTP",
+            "enterOtpCode":"Ingrese El Código OTP Enviado A",
+            "resend":"Reenviar",
+            "confirm":"Confirmar",
+            "otpCode":"OTP código",
+            "enterPhoneNumber":"Ingrese El Número De Teléfono Para Recibir El Código OTP",
+            "submit":"ENVIAR"
         },
         "messages": {
             "title": "Mensajes",
@@ -132,8 +140,13 @@
         },
         "userInfo": {
             "title": " Información <br/> del usuario ",
+            "editInfo": "Editar  <br/> Información",
             "editBtn": "EDITAR INFORMACION",
-            "deleteBtn": "Borrar cuenta"
+            "deleteBtn": "Borrar cuenta",
+            "saveBtn": "GUARDAR",
+            "editImgMsg": "Click on image to change it",
+            "fullName":"Nombre completo",
+            "clickToUploadImg":"clickToUpdateEs"
         },
         "navDrawer": {
             "userInfo": "Información del usuario",
