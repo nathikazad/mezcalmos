@@ -112,17 +112,17 @@
         "login": {
             "owner": " Inicie sesión con <br/> Facebook para <br/> hacer un pedido ",
             "customer": " Inicie sesión con <br/> Facebook para <br/> hacer un pedido ",
-            "fbBtn": "Facebook iniciar",
+            "fbBtn": "INICIAR CON FACEBOOK",
             "whatsAppLogin":" INICIAR CON WHATSAPP",
             "loginWithSms":"INICIAR CON SMS",
             "verifyCountryCode":"Verifique el código de su país",
             "verifyPhoneNumber":"Verifique su número de teléfono",
             "OtpConfirmation":"Confirmación del código OTP",
-            "enterOtpCode":"Ingrese El Código OTP Enviado A",
+            "enterOtpCode":"Ingrese el código OTP enviado a",
             "resend":"Reenviar",
             "confirm":"Confirmar",
             "otpCode":"OTP código",
-            "enterPhoneNumber":"Ingrese El Número De Teléfono Para Recibir El Código OTP",
+            "enterPhoneNumber":"Ingrese el número teléfono para recibir el código OTP",
             "submit":"ENVIAR"
         },
         "messages": {

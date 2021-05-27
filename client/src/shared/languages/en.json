@@ -119,11 +119,11 @@
             "verifyCountryCode": "Please verify your country code",
             "verifyPhoneNumber": "Please verify your phone number",
             "OtpConfirmation": "OTP Code Confirmation",
-            "enterOtpCode": "Enter OTP Code Sent To",
+            "enterOtpCode": "Enter OTP code sent to",
             "resend": "Resend",
             "confirm": "Confirm",
             "otpCode": "OTP Code",
-            "enterPhoneNumber": "Enter Phone Number To Recieve OTP Code",
+            "enterPhoneNumber": "Enter phone number to recieve OTP code",
             "submit": "SUBMIT"
         },
         "messages": {
