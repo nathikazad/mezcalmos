@@ -172,7 +172,7 @@ export default {
           }
         } else {
           await this.$store.dispatch("taxis/saveAddress", data);
-          await this.$store.dispatch("login");
+          await this.$router.push("/auth");
         }
       }
     }

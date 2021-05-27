@@ -10,6 +10,8 @@ import NotificationsPage from '@/shared/pages/notification/view'
 import LoginPage from '@/shared/pages/user/Login'
 import HowToTaxi from './pages/introduction/howToTaxi'
 import SignUpTaxi from './pages/introduction/signUpTaxi'
+import EnterPhone from "@/shared/pages/user/enterPhone";
+import Validation from "@/shared/pages/user/validation";
 import Confirmation from './pages/introduction/confirmation'
 import MessageAdmin from "@/shared/pages/contact/View";
 
@@ -38,7 +40,11 @@ const router = new VueRouter({
     { path: '/userinfo', component: UserInformationPage,
       meta: { requiresAuth: true } },
     { path: '/auth', component: LoginPage,
-      meta: { requiresUnauth: true } },
+      meta: { requiresUnauth: true } , name: "login"},
+      { path: "/validation", component: Validation,
+      meta: { requiresUnauth: true }, name: "validation" },
+    { path: "/enterNumber", component: EnterPhone,
+      meta: { requiresUnauth: true }, name: "enterPhone" },
     { path: '/howToTaxi', component: HowToTaxi, 
       name: "howToTaxi" },
     { path: '/signUpTaxi', component: SignUpTaxi },
@@ -49,6 +55,7 @@ const router = new VueRouter({
 })
 
 router.redirectAuthorizationPendingUsers = function () {
+  
   if (store.getters["admin/messageCount"] > 0 &&
     router.currentRoute.path != '/contactAdmin') {
     router.push('/contactAdmin')
