@@ -1,5 +1,6 @@
 import VueRouter from "vue-router";
 import Vue from "vue";
+import { deepFind } from '@/shared/mixins/functions'
 // import ServicesListPage from "./pages/services/List";
 import TaxiViewPage from "./pages/services/taxis/View";
 import TaxiRequestPage from "./pages/services/taxis/Request";
@@ -13,6 +14,7 @@ import UserInformationPage from "@/shared/pages/user/Information";
 import MessagesPage from "@/shared/pages/messages/View";
 import NotificationsPage from "@/shared/pages/notification/view";
 import LoginPage from "@/shared/pages/user/Login";
+import EnterPhone from "@/shared/pages/user/enterPhone";
 import Validation from "@/shared/pages/user/validation";
 import SavedLocation from './pages/saved/locations'
 
@@ -46,6 +48,8 @@ const router = new VueRouter({
       meta: { requiresUnauth: true }, name: "login" },
     { path: "/validation", component: Validation,
       meta: { requiresUnauth: true }, name: "validation" },
+    { path: "/enterNumber", component: EnterPhone,
+      meta: { requiresUnauth: true }, name: "enterPhone" },
     { path: "/notifications", component: NotificationsPage,
       meta: { requiresAuth: true }, name: "notifications" },
     { path: "/contactAdmin", component: MessageAdmin,
@@ -56,6 +60,10 @@ const router = new VueRouter({
 
 router.beforeEach(async function (to, from, next) {
   if (to.path == "/services/taxi/request") {
+    let userInfo=store.getters["userInfo"];
+    if (!deepFind(userInfo,'photo')||!deepFind(userInfo,'displayName')) {
+    next('/userinfo?edit=true')
+    }else
     if (store.getters.currentOrderId) {
       next(`/services/taxi/${store.getters.currentOrderId}`);
     } else {

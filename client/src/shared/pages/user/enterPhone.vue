@@ -1,43 +1,39 @@
 <template>
-  <div class="flex center align_center wrap login">
-    <div class="brand fill_width">
-      <div class="circle flex center align_center">
-        <logo :light="true" class="logo"></logo>
-      </div>
-      <h1 class="bold txt_center">
-        MEZ
-        <span class="logo_second">CALMOS</span>
-      </h1>
-    </div>
-    <div class="login_action txt_center">
-      <!-- <h1 class="regular" v-html="$t('shared.login.customer')"></h1> -->
-      <h1 class="regular" v-html="$t('shared.login.customer')"></h1>
+  <div>
+    <h1 class="regular my-4">OTP Code</h1>
+    <label class="bold mb-1">Enter Phone Number</label>
+    <section class="bg_white border">
+      <h3 class="regular">Enter Phone Number To Recieve OTP Code</h3>
+      <div class="sign_in_with_phone">
+        <div class="text_field flex align_center t-19 space_between">
+          <input
+            :class="{'error_input':!countryCodeValidator}"
+            type="text"
+            class="input bg_input text_blackD w-25 code_input"
+            placeholder="+52"
+            v-model="countryCode "
+            @input="checkCountryCode"
+          />
+          <input
+            :class="{'error_input':!phoneNumberValidator}"
+            type="text"
+            class="input bg_input text_blackD w-75 phone_input"
+            placeholder="123 456 7890 "
+            v-model="phoneNumber "
+            @input="checkPhoneNumber"
+          />
+        </div>
 
-      <button class="btn mb-1" @click="submitForm">
-        <span>
-          <fa :solid="true" icon="facebook-f"></fa>
-          {{$t('shared.login.fbBtn')}}
-        </span>
-      </button>
-      <!-- <base-button
-        :link="true"
-        to="/enterNumber?method=whatsApp"
-        :mode="{ dark: true, bg_whatsApp: true }"
-        class="float_btn flex mb-1 align_center center"
-      >
-        <fa :solid="true" icon="whatsapp"></fa>
-        {{$t('shared.login.whatsAppLogin')}}
-      </base-button>-->
-      <base-button
-        :link="true"
-        to="/enterNumber?method=SMS"
-        :mode="{ dark: true, bg_SMS: true }"
-        class="float_btn flex align_center center"
-      >
-        <fa icon="sms"></fa>
-        {{$t('shared.login.loginWithSms')}}
-      </base-button>
-    </div>
+        <!-- <div id="recaptcha-container"></div> -->
+        <div class="text_error txt_center alert_field" v-show="alertMessage">{{alertMessage}}</div>
+      </div>
+    </section>
+    <base-button
+      @click.native="loginWithPhoneNumber"
+      :mode="{ dark: true, bg_diagonal: true,disabled:disabled }"
+      class="float_btn flex align_center center fill_width bold"
+      :loading="isLoading"
+    >SUBMIT</base-button>
   </div>
 </template>
 <script>
@@ -54,7 +50,6 @@ export default {
       alertMessage: ""
     };
   },
-  created() {},
   computed: {
     disabled() {
       return !(
@@ -88,45 +83,50 @@ export default {
         this.alertMessage = "";
       }
     },
-    handleError() {
-      this.error = null;
-    },
     async loginWithPhoneNumber() {
       if (!this.disabled) {
         this.isLoading = true;
         // this.appVerifier.render().then(widgetId => {
 
         // });
+        let loginType = this.$route.query.method;
+       
+
         let response = await this.$store.dispatch("sendOTP", {
           apiKey: "999",
-          messageType: "SMS",
+          messageType: loginType,
           phoneNumber: this.countryCode.toString() + this.phoneNumber.toString()
         });
         if (response.status == "Error") {
           this.alertMessage = response.errorMessage;
         } else {
           this.isLoading = false;
-          this.$router.push("/validation");
+          this.$router.push(`/validation?method=${loginType}`);
         }
       }
-    },
-    async submitForm() {
-      this.isLoading = true;
-      try {
-        await this.$store.dispatch("login");
-      } catch (e) {
-        this.error = e.message;
-      }
-      this.isLoading = false;
     }
   }
 };
 </script>
 <style lang="scss" scoped>
+section {
+  padding: 1rem;
+  border-radius: 5px;
+  margin: 0.5rem 0 1rem 0;
+  h3 {
+    font-size: 1rem;
+  }
+}
+.my-4 {
+  margin: 1.8rem 0;
+}
 .mb-1 {
   margin-bottom: 0.8rem !important;
 }
-input {
+.phone_input {
+  margin: 0.5rem 0 1rem 0.5rem;
+}
+.code_input {
   margin: 0.5rem 0 1rem 0;
 }
 .logo_second {
@@ -163,7 +163,6 @@ input {
   }
 }
 .sign_in_with_phone {
-  width: 18.75rem;
   margin: auto;
   .text_field {
     .icon_container {
@@ -172,7 +171,6 @@ input {
       justify-content: center;
     }
     input {
-      margin-left: 0.5rem;
       width: 15.75rem;
     }
   }

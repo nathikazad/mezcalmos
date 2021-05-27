@@ -1,7 +1,7 @@
 module.exports = {
-    sendOTP,
-    confirmOTP
-  }
+  sendOTP,
+  confirmOTP
+}
 const sender = require("./sender")
 
 async function sendOTP(firebase, data) {
@@ -12,15 +12,15 @@ async function sendOTP(firebase, data) {
     }
   }
 
-  if (!data.messageType && 
-      (data.messageType != "SMS" || data.messageType != "whatsApp")) {
+  if (!data.messageType &&
+    (data.messageType != "SMS" || data.messageType != "whatsApp")) {
     return {
       status: "Error",
       errorMessage: "Required messageType and has to be SMS or whatsApp"
     }
   }
 
-  
+
 
   let user;
   try {
@@ -53,26 +53,27 @@ async function sendOTP(firebase, data) {
     }
   }
 
-  let OTPCode = parseInt(Math.random()*1000000)
-  
+  let OTPCode = parseInt(Math.random() * 1000000)
+  OTPCode = String(OTPCode).padStart(6, '0')
+
   let payload = {
     message: `Your one time Mezcalmos OTP code is ${OTPCode}`,
     phoneNumber: data.phoneNumber
   }
 
-  if(data.language == "es"){
+  if (data.language == "es") {
     payload.message = `Su código OTP único de Mezcalmos es ${OTPCode}`
   }
 
   let response
-  if(data.messageType && data.messageType == "whatsApp"){
+  if (data.messageType && data.messageType == "whatsApp") {
     payload.apiKey = data.apiKey
     response = await sender.sendWhatsApp(payload)
   } else {
     response = await sender.sendSMS(payload)
   }
 
-  if(response) {
+  if (response) {
     return response
   }
 

@@ -23,7 +23,7 @@
           <avatar
             class="border"
             size="10rem"
-            :url="previewImage||deepFind(userInfo,'photo')+'?height=500'"
+            :url="previewImage||require('@/shared/static/img/clickToUpdate.png')"
             @click.native="clickOnUpload"
           ></avatar>
           <input
@@ -54,25 +54,13 @@
           @change="paramValueChanged($event,'displayName','required')"
         />
       </div>
-      <div class="text_field flex align_center t-19 space_between">
-        <div class="icon_container">
-          <fa icon="mobile"></fa>
-        </div>&nbsp;
-        <input
-          type="number"
-          class="input bg_secondary text_blackD"
-          :placeholder="$t('shared.placeHolders.phone')+'...'"
-          :value=" deepFind(userInfo,'phone') "
-          @change="paramValueChanged($event,'phone')"
-        />
-      </div>
     </div>
     <!-- editable information form -->
     <div class="actions fill_width flex center" v-if="editPage">
       <base-button
         @click.native="editProfile"
         :loading="loading"
-        class="w-45 elevate_1"
+        class="w-100 elevate_1"
         :mode="{ dark: true, bg_diagonal: true }"
       >
         <fa icon="save"></fa>&nbsp;&nbsp;
@@ -82,17 +70,13 @@
     <!-- Default information Action Btn -->
     <div class="actions fill_width flex space_between" v-else>
       <base-button
-        class="w-45 elevate_1"
+        class="w-100 elevate_1"
         :mode="{ dark: true, bg_diagonal: true }"
         link
         to="?edit=true"
       >
         <fa icon="pencil-alt"></fa>&nbsp;&nbsp;
         <span class="t-8 regular">{{$t('shared.userInfo.editBtn')}}</span>
-      </base-button>
-      <base-button class="w-45 elevate_1" :mode="{ dark: true, bg_error: true }">
-        <fa icon="trash"></fa>&nbsp;&nbsp;
-        <span class="t-8 regular">{{$t('shared.userInfo.deleteBtn')}}</span>
       </base-button>
     </div>
   </div>

@@ -41,6 +41,9 @@ export default {
     },
     loggedIn(state) {
       return state.loggedIn;
+    },
+    phoneNumber(state){
+      return state.phoneNumber
     }
   },
   actions: {
@@ -55,7 +58,7 @@ export default {
         language: context.state.language,
         apiKey: payload.apiKey });
       context.commit('savePhoneNumber', payload)
-      console.log(resp)
+     return resp.data
     },
     async confirmOTP(context, payload) {
       let resp = await cloudCall('confirmOTP', 
@@ -63,10 +66,12 @@ export default {
         phoneNumber: context.state.phoneNumber,
         OTPCode: payload.OTPCode 
       });
-      console.log(resp)
+     
       if(resp.data.status == "Success") {
         firebaseAuth().signInWithCustomToken(resp.data.token)
+        
       }
+      return resp.data
     },
     async autoSignIn(context, payload) {
       firebaseDatabase().ref(`users/${payload.userId}/info/`).on('value', function (snapshot) {

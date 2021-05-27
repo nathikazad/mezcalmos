@@ -111,9 +111,13 @@
     },
     "shared": {
         "login": {
-            "owner": " Login With  <br/> Facebook To <br/> Make An Order ",
-            "customer": " Login With  <br/> Facebook To <br/> Make An Order ",
-            "fbBtn": "Facebook login"
+            "owner": "Login To <br/>  Make An Order ",
+            "customer": "Login To <br/>  Make An Order ",
+            "fbBtn": "LOGIN WITH FACEBOOK",
+            "loginWithSms":"LOGIN WITH SMS",
+            "whatsAppLogin":" LOGIN WITH WHATSAPP",
+            "verifyCountryCode":"Please verify your country code",
+            "verifyPhoneNumber":"Please verify your phone number"
         },
         "messages": {
             "title": "Messages",

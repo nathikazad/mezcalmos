@@ -26,8 +26,9 @@
       <base-button
         v-if="!isLoggedIn"
         class="fill_width elevate_1 btn fbBtn"
+        :link="true"
+        to="/auth"
         :mode="{ dark: true }"
-        @click.native="login"
       >
         <span class="t-8 regular">{{$tc('taxi.introduction.fbBtn',2)}}</span>
       </base-button>
