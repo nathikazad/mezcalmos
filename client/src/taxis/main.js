@@ -36,7 +36,10 @@ async function firebaseCallback(user) {
     store.dispatch("notifications/loadNotificationsForTaxi");
     await store.dispatch("admin/loadAdmin");
 
-    if (store.getters.authorizationPending) {
+    let dbUser = store.getters["userInfo"]
+    if (!dbUser || !dbUser.displayName || !dbUser.photo) {
+      router.push('/userinfo?edit=true');
+    } else if (store.getters.authorizationPending) {
       router.redirectAuthorizationPendingUsers()
     } else if (store.getters.canTaxi) {
       store.dispatch("loadUserLocation");

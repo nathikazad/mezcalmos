@@ -117,7 +117,7 @@ export default {
       deep: true,
       immediate: true,
       handler: function(newVal) {
-        console.log("locationEnabled", newVal);
+        // console.log("locationEnabled", newVal);
 
         this.showPermessionPanel = !newVal;
       }
