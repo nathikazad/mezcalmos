@@ -35,7 +35,7 @@ export default {
         context.commit('setUserLocation', newPosition)
         context.state.watchPositionCallbacks.forEach(cb => cb.func(...cb.args));
         context.commit('setLocationEnabled', true)
-        console.log('success ', position);
+        // console.log('success ', position);
 
       }, async function (err) {
         console.log('errror ', err);

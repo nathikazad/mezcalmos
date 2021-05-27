@@ -43,7 +43,7 @@ const router = new VueRouter({
     { path: "/orders", component: OrdersListPage,
       meta: { requiresAuth: true }, name: "orders" },
     { path: "/userinfo", component: UserInformationPage,
-      meta: { requiresAuth: true } },
+      meta: { requiresAuth: true }, name: "userinfo" },
     { path: "/auth", component: LoginPage,
       meta: { requiresUnauth: true }, name: "login" },
     { path: "/validation", component: Validation,
@@ -59,11 +59,13 @@ const router = new VueRouter({
 });
 
 router.beforeEach(async function (to, from, next) {
-  if (to.path == "/services/taxi/request") {
+  if(store.getters.loggedIn && to.name != "userinfo") {
     let userInfo=store.getters["userInfo"];
-    if (!deepFind(userInfo,'photo')||!deepFind(userInfo,'displayName')) {
-    next('/userinfo?edit=true')
-    }else
+    if (!deepFind(userInfo,'photo')||!deepFind(userInfo,'displayName'))
+      next('/userinfo?edit=true')
+  }
+
+  if (to.path == "/services/taxi/request") {
     if (store.getters.currentOrderId) {
       next(`/services/taxi/${store.getters.currentOrderId}`);
     } else {
@@ -72,7 +74,7 @@ router.beforeEach(async function (to, from, next) {
   } else if (to.meta.requiresAuth && !store.getters.loggedIn) {
     next({ path: "/auth", query: { redirect: to.path } });
   } else if (to.meta.requiresUnauth && store.getters.loggedIn) {
-    next("/services");
+    next("/services/taxi/request");
   } else if (to.path != "/" && to.name == "notifications" && store.getters["notifications/length"] == 0) {
     next("/")
   } else {
