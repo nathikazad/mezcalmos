@@ -35,7 +35,10 @@ async function firebaseCallback(user) {
     store.dispatch("admin/loadAdmin");
     askForNotification('customer', store)
     await store.dispatch('loadCurrentOrder');
-    if ( router.currentRoute.path == "/auth" &&
+    let dbUser = store.getters["userInfo"]
+    if (!dbUser || !dbUser.displayName || !dbUser.photo) {
+      router.push('/userinfo?edit=true');
+    } else if ( router.currentRoute.path == "/auth" &&
       router.currentRoute.query.redirect ) {
       router.push({ path: router.currentRoute.query.redirect });
     } else if (store.getters.currentOrderId ) {

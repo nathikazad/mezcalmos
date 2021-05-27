@@ -74,18 +74,10 @@ export default {
       return resp.data
     },
     async autoSignIn(context, payload) {
+      let snapshot = await firebaseDatabase().ref(`users/${payload.userId}/info/`).once('value');
+      storeUserInfo(context, snapshot)
       firebaseDatabase().ref(`users/${payload.userId}/info/`).on('value', function (snapshot) {
-      if (snapshot.val()) {
-        context.commit('saveUserInfo', snapshot.val())
-        console.log(snapshot.val());
-        
-        let lang = snapshot.val().language
-        if (lang) {
-          context.commit('saveLanguage', lang)
-        } else {
-          context.dispatch('setLanguage', context.state.language)
-        }
-      }
+        storeUserInfo(context, snapshot)
       })
       context.commit('saveAuthData', payload)
     },
@@ -140,6 +132,18 @@ export default {
   }
 }
 
+async function storeUserInfo(context, snapshot) {
+  if (snapshot.val()) {
+    context.commit('saveUserInfo', snapshot.val())
+    
+    let lang = snapshot.val().language
+    if (lang) {
+      context.commit('saveLanguage', lang)
+    } else {
+      context.dispatch('setLanguage', context.state.language)
+    }
+  }
+}
 
 // how to make hasura query
 // const { data } = await apolloClient.query({
