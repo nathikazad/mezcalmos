@@ -1,6 +1,6 @@
 import VueRouter from 'vue-router'
 import Vue from 'vue'
-
+import { deepFind } from '@/shared/mixins/functions'
 import PastOrderstPage from './pages/orders/PastOrders'
 import IncomingOrdersPage from './pages/orders/Incoming'
 import TaxiViewPage from './pages/orders/View'
@@ -38,7 +38,7 @@ const router = new VueRouter({
     { path: '/orders', component: PastOrderstPage,
       meta: { requiresAuth: true }, name: "orders" },
     { path: '/userinfo', component: UserInformationPage,
-      meta: { requiresAuth: true } },
+      meta: { requiresAuth: true }, name:"userinfo" },
     { path: '/auth', component: LoginPage,
       meta: { requiresUnauth: true } , name: "login"},
       { path: "/validation", component: Validation,
@@ -46,10 +46,11 @@ const router = new VueRouter({
     { path: "/enterNumber", component: EnterPhone,
       meta: { requiresUnauth: true }, name: "enterPhone" },
     { path: '/howToTaxi', component: HowToTaxi, 
-      name: "howToTaxi" },
-    { path: '/signUpTaxi', component: SignUpTaxi },
+      meta: { requiresCannotTaxi: true }, name: "howToTaxi" },
+    { path: '/signUpTaxi', component: SignUpTaxi,
+      meta: { requiresCannotTaxi: true } },
     { path: '/confirmation', component: Confirmation, 
-      name: "applicationUnderReview" },
+      meta: { requiresCannotTaxi: true }, name: "applicationUnderReview" },
     { path: '/:notFound(.*)', component: NotFoundPage },
   ]
 })
@@ -65,6 +66,11 @@ router.redirectAuthorizationPendingUsers = function () {
 }
 
 router.beforeEach(async function (to, from, next) {
+  if(store.getters.loggedIn && to.name != "userinfo") {
+    let userInfo=store.getters["userInfo"];
+    if (!deepFind(userInfo,'photo')||!deepFind(userInfo,'displayName'))
+      next('/userinfo?edit=true')
+  }
   if (to.path == "/incoming") {
     if (store.getters.authorizationPending) {
       router.redirectAuthorizationPendingUsers()
@@ -78,8 +84,10 @@ router.beforeEach(async function (to, from, next) {
   } else if (to.meta.requiresAuth && !store.getters.loggedIn) {
     next({ path: '/auth', query: { redirect: to.path } });
   } else if (to.meta.requiresAuth && store.getters.loggedIn &&
-    !store.getters.canTaxi && to.name != "messageAdmin") {
+    !store.getters.canTaxi && to.name != "messageAdmin" && to.name != "userinfo") {
     next('/howToTaxi');
+  } else if (to.meta.requiresCannotTaxi && store.getters.canTaxi) {
+    next('/');
   } else if (to.meta.requiresUnauth && store.getters.loggedIn) {
     next('/');
   } else if (to.path != "/" && to.name == "notifications" 

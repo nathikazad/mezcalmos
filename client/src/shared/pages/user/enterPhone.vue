@@ -1,7 +1,6 @@
 <template>
   <div>
     <h1 class="regular my-4">OTP Code</h1>
-    <label class="bold mb-1">Enter Phone Number</label>
     <section class="bg_white border">
       <h3 class="regular">Enter Phone Number To Recieve OTP Code</h3>
       <div class="sign_in_with_phone">

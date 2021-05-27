@@ -37,11 +37,8 @@
       </div>
 
       <h5 class="txt_center">{{$t('shared.userInfo.editImgMsg')}}</h5>
-      <h1
-        class="txt_center t-20"
-        v-if="appName !== 'customer'"
-      >{{ deepFind(userInfo,'displayName') }}</h1>
-      <div class="text_field flex align_center space_between t-19" v-else>
+
+      <div class="text_field flex align_center space_between t-19">
         <div class="icon_container">
           <fa icon="user-circle"></fa>
         </div>
