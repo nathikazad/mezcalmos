@@ -7,7 +7,7 @@
         <div class="text_field flex align_center t-19 space_between">
           <input
             :class="{'error_input':!countryCodeValidator}"
-            type="text"
+            type="tel"
             class="input bg_input text_blackD w-25 code_input"
             placeholder="+52"
             v-model="countryCode "
@@ -15,7 +15,7 @@
           />
           <input
             :class="{'error_input':!phoneNumberValidator}"
-            type="text"
+            type="number"
             class="input bg_input text_blackD w-75 phone_input"
             placeholder="123 456 7890 "
             v-model="phoneNumber "
@@ -27,6 +27,7 @@
         <div class="text_error txt_center alert_field" v-show="alertMessage">{{alertMessage}}</div>
       </div>
     </section>
+    <h6 class="text_blackL my-3">{{$t('shared.login.twilioNote')}}</h6>
     <base-button
       @click.native="loginWithPhoneNumber"
       :mode="{ dark: true, bg_diagonal: true,disabled:disabled }"
@@ -42,7 +43,7 @@ export default {
       isLoading: false,
       error: null,
       phoneNumber: null,
-      countryCode: null,
+      countryCode: "+52",
       appVerifier: "",
       countryCodeValidator: true,
       phoneNumberValidator: true,
@@ -61,6 +62,8 @@ export default {
   },
   methods: {
     checkCountryCode(e) {
+      console.log(e.target.value);
+
       if (e.target.value.length > 3) {
         e.target.nextElementSibling.focus();
       }
@@ -89,7 +92,6 @@ export default {
 
         // });
         let loginType = this.$route.query.method;
-       
 
         let response = await this.$store.dispatch("sendOTP", {
           apiKey: "999",
@@ -98,6 +100,10 @@ export default {
         });
         if (response.status == "Error") {
           this.alertMessage = response.errorMessage;
+          this.isLoading = false;
+          setTimeout(() => {
+            this.alertMessage = "";
+          }, 3000);
         } else {
           this.isLoading = false;
           this.$router.push(`/validation?method=${loginType}`);

@@ -30,6 +30,16 @@ import notificationBtn from "@/shared/components/ui/notificationBtn";
 import Card from "@/shared/components/ui/card";
 import Card2 from "@/shared/components/ui/card2";
 import Switch from "@/shared/components/ui/switch";
+import RoutePill from "@/shared/components/ui/routePill";
+import Price from "@/shared/components/ui/pill/price";
+import RouteInfo from "@/shared/components/ui/pill/routeInfo";
+import UserPart from "@/shared/components/ui/pill/userPart";
+import PaymentToggle from "@/shared/components/ui/pill/paymentToggle";
+import Looking from "@/shared/components/ui/rideStatus/looking";
+import OnTheWay from "@/shared/components/ui/rideStatus/onTheWay";
+import InTransit from "@/shared/components/ui/rideStatus/inTransit";
+import DroppedOff from "@/shared/components/ui/rideStatus/droppedOff";
+import Cancelled from "@/shared/components/ui/rideStatus/cancelled";
 
 import {
     deepFind,
@@ -44,13 +54,23 @@ import {
 export function initModules(Vue) {
 
 
-   
+
 
     //Vue google maps
     Vue.use(VueGoogleMaps, gmapsConfig);
     Vue.component("gmap-custom-marker", GmapCustomMarker);
 
     //Vue Components
+    Vue.component("cancelled", Cancelled);
+    Vue.component("droppedOff", DroppedOff);
+    Vue.component("inTransit", InTransit);
+    Vue.component("looking", Looking);
+    Vue.component("onTheWay", OnTheWay);
+    Vue.component("routePill", RoutePill);
+    Vue.component("paymentToggle", PaymentToggle);
+    Vue.component("userPart", UserPart);
+    Vue.component("routeInfo", RouteInfo);
+    Vue.component("price", Price);
     Vue.component("card2", Card2);
     Vue.component("card", Card);
     Vue.component("infoPanel", infoPanel);

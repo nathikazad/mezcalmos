@@ -124,7 +124,8 @@
             "confirm": "Confirm",
             "otpCode": "OTP Code",
             "enterPhoneNumber": "Enter phone number to recieve OTP code",
-            "submit": "SUBMIT"
+            "submit": "SUBMIT",
+            "twilioNote":"By continuing you will receive a verification code to your phone number by SMS. Message and data rates may apply."
         },
         "messages": {
             "title": "Messages",

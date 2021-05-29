@@ -4,15 +4,16 @@
     <pop-up v-if="pickLocation"></pop-up>
     <!-- ******************Price estimate alert ************************-->
     <pop-up
+      class="estimate_price_popUp"
       v-if="priceReport&&estimatedPrice"
       :choiceList="['Ok']"
       @picked="answerPopUp($event)"
       @close="priceReport=false"
       :title="$t('customer.taxiView.priceEstimate')+estimatedPrice"
-      :icon="'coins'"
+      :imgSrc="require('@/shared/static/img/money.svg')"
+      :light="false"
     ></pop-up>
     <!-- ******************pop up component ************************-->
-    <h1 class="regular">{{$t('customer.taxiView.taxi')}}</h1>
     <input-location
       :search.sync="search"
       :saved.sync="saved"
@@ -35,7 +36,33 @@
           </h5>
         </div>
       </div>
-
+      <div
+        v-if="showRideDetails"
+        slot="details"
+        class="request_details bg_white elevate_2 flex align_center space_between"
+      >
+        <div class="price bold t-12 w-35">${{Number.parseFloat(this.estimatedPrice).toFixed(2)}}</div>
+        <div class="route_and_payment flex align_center end w-70">
+          <div class="route_info t-8 w-40">
+            <div class="info_field">
+              <fa icon="route"></fa>
+              <span>{{distance.text}}</span>
+            </div>
+            <div class="info_field">
+              <fa icon="clock"></fa>
+              <span>{{duration.text}}</span>
+            </div>
+          </div>
+          <div class="payments_part flex align_center space_between w-60 fill_height bg_secondary">
+            <div class="cash flex align_center center w-50 fill_height pointer">
+              <img src="@/shared/static/img/money.svg" />
+            </div>
+            <div class="credit_card flex align_center center w-50 fill_height pointer">
+              <img src="@/shared/static/img/creditCard.svg" />
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="flex align_center center btnP" slot="action">
         <base-button
           class="w-80"
@@ -62,6 +89,7 @@ export default {
   data() {
     return {
       priceReport: false,
+      showRideDetails: false,
       loading: false,
       distance: null,
       duration: null,
@@ -144,6 +172,7 @@ export default {
       this.duration = pos.duration;
       let estimatePrice = this.$store.getters["taxis/estimatePrice"];
       this.estimatedPrice = await estimatePrice(pos.distance.value / 1000);
+      this.showRideDetails = true;
       this.priceReport = true;
     },
     async requestTaxi() {
@@ -155,6 +184,8 @@ export default {
           duration: this.duration,
           estimatedPrice: this.estimatedPrice
         };
+        console.log(data);
+
         if (this.isLoggedIn) {
           this.loading = true;
           let response = await this.$store.dispatch("taxis/requestTaxi", data);
@@ -180,19 +211,65 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+::v-deep .popUp_body {
+  padding: 2rem !important;
+}
 ::v-deep .map {
   position: absolute;
-  height: calc(100% - 6.25rem);
+  height: 100%;
   width: 100%;
   left: 0;
-  top: 6.25rem;
+  top: 0rem;
   z-index: 0;
+}
+.estimate_price_popUp {
+  ::v-deep button {
+    background: map-get($map: $colors, $key: info) !important;
+    color: map-get($map: $colors, $key: white) !important;
+  }
 }
 .btnP {
   position: absolute;
   width: 100%;
   z-index: 9;
   bottom: 2rem;
+}
+.request_details {
+  position: absolute;
+  width: 80%;
+  z-index: 10;
+  bottom: 6rem;
+  height: 3rem;
+  margin: 0 10%;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  .price {
+    border-right: $border;
+  }
+  .route_info {
+    margin: 0 0.5rem;
+    .info_field {
+      width: 100%;
+      text-align: right;
+      span {
+        margin-left: 0.2rem;
+      }
+    }
+  }
+  .payments_part {
+    border-radius: 5px;
+    height: 2.3rem;
+    .cash,
+    .credit_card {
+      border-radius: 5px;
+    }
+    .cash {
+      background: #8962d2;
+    }
+    .credit_card {
+      opacity: 0.3;
+    }
+  }
 }
 .alert_statment {
   position: absolute;

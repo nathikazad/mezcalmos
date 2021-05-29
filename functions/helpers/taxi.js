@@ -38,6 +38,7 @@ async function request(firebase, uid, data) {
   payload.distance = data.distance
   payload.duration = data.duration
   payload.estimatedPrice = data.estimatedPrice
+  console.log(payload);
   
   let user = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val();
   payload.customer = {

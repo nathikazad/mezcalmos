@@ -55,7 +55,7 @@ export default {
 
       let response = (await cloudCall('requestTaxi', {
         from: payload.from,
-        to: payload.from,
+        to: payload.to,
         distance: payload.distance,
         duration: payload.duration,
         estimatedPrice: payload.estimatedPrice
