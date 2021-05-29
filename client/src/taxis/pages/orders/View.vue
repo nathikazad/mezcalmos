@@ -21,7 +21,7 @@
       :icon="'do-not-enter'"
     ></pop-up>
     <div id="taxiRequest" v-if="orderDetails">
-      <h1 class="regular flex align_center space_between">
+      <!-- <h1 class="regular flex align_center space_between">
         {{ orderDetails.customer.name }}
         <span class="arrows" v-if="showArrows">
           <span @click="precedentOrder" v-if="precedentOrderId" class="text_violet">
@@ -31,8 +31,15 @@
             <fa icon="chevron-square-right"></fa>
           </span>
         </span>
-      </h1>
-
+      </h1>-->
+    <div  v-if="showArrows">
+        <div @click="nextOrder" v-if="nextOrderId" class="bg_white right_chevron chevron flex align_center center elevate_2">
+        <fa icon="chevron-right"></fa>
+      </div>
+      <div @click="precedentOrder" v-if="precedentOrderId" class="bg_white left_chevron chevron flex align_center center elevate_2">
+        <fa icon="chevron-left"></fa>
+      </div>
+    </div>
       <input-location
         :disabled="true"
         :to="orderDetails.to"
@@ -55,159 +62,59 @@
             </h5>
           </div>
         </div>
-        <!-- Searching fo Someone  Status-->
-        <div
-          class="flex align_center space_between btnP bg_white elevate_2"
-          slot="action"
+
+        <looking
           v-if="orderStatusLooking"
-        >
-          <div class="w-70 flex align_center">
-            <div class="flex align_center">
-              <avatar size="2.4rem" :url="orderDetails.customer.image"></avatar>
-              <div class="user_name">
-                <h4 class="text_blackL">{{ orderDetails.customer.name }}</h4>
-                <h5
-                  class="regular text_grey"
-                >{{ deepFind(orderDetails, "customer.distance") }}km {{$t('taxi.incoming.far')}}</h5>
-              </div>
-            </div>
-
-            <div class="ride_details t-8" v-if="deepFind(orderDetails, 'distance.text')">
-              <fa icon="route"></fa>
-              {{ deepFind(orderDetails, "distance.text") }}
-              <br />
-              <fa icon="stopwatch"></fa>
-              {{ deepFind(orderDetails, "duration.text") }}
-            </div>
-          </div>
-          <base-button
-            class="w-30 elevate_1"
-            :mode="{ dark: true, bg_info: true }"
-            @click.native="acceptRide()"
-            :loading="loading"
-          >
-            <span class="t-8 regular">{{$t('taxi.taxiView.acceptOrders')}}</span>
-          </base-button>
-        </div>
+          :loading="loading"
+          @acceptRide="acceptRide()"
+          :orderDetails="orderDetails"
+          type="taxi"
+          slot="details"
+          class="routePill"
+        ></looking>
         <!-- On the way  Status-->
-        <div
-          class="flex align_center space_between btnP bg_white elevate_2"
-          slot="action"
+        <onTheWay
+          :orderDetails="orderDetails"
+          type="taxi"
+          slot="details"
+          class="routePill"
+          :messageLink="messageLink"
+          :orderMessages="orderMessages"
+          @cancelPopUp="cancelPopUp=true"
+          @startRide="startRide"
           v-else-if="orderStatusOnTheWay"
-        >
-          <base-button
-            class="w-30 elevate_1"
-            :mode="{ dark: true, bg_info: true }"
-            @click.native="startRide()"
-            :loading="loading"
-          >
-            <span class="t-8 regular">{{$t('taxi.taxiView.startRide')}}</span>
-          </base-button>
+        ></onTheWay>
 
-          <span>
-            <base-button
-              class="dark bg_light elevate_1 nav-btn text_primary"
-              :mode="{
-            bg_diagonal: true,
-            small: true,
-          }"
-              :link="true"
-              :to="{
-              path: messageLink,
-              
-            }"
-            >
-              <fa icon="envelope" />
-              <span class="badge bg_error" v-if="orderMessages"></span>
-            </base-button>
-            <base-button
-              class="elevate_1 nav-btn text_white"
-              :mode="{
-            bg_error: true,
-            small: true,
-          }"
-              @click.native="cancelPopUp=true"
-              :loading="loading"
-            >
-              <fa icon="times-circle" />
-            </base-button>
-          </span>
-        </div>
         <!-- Finish ride  Status-->
-        <div
-          class="flex align_center space_between btnP bg_white elevate_2"
-          slot="action"
+        <inTransit
+          :orderDetails="orderDetails"
           v-else-if="orderStatusInTransit"
-        >
-          <base-button
-            class="w-30 elevate_1"
-            :mode="{ dark: true, bg_info: true }"
-            @click.native="finishRide()"
-            :loading="loading"
-          >
-            <span class="t-8 regular">{{$t('taxi.taxiView.finishRide')}}</span>
-          </base-button>
-          <span>
-            <base-button
-            class="dark bg_light elevate_1 nav-btn text_primary"
-            :mode="{
-            bg_diagonal: true,
-            small: true,
-          }"
-            :link="true"
-            :to="{
-              path: messageLink,
-              
-            }"
-          >
-            <fa icon="envelope" />
-            <span class="badge bg_error" v-if="orderMessages"></span>
-          </base-button>
-          <base-button
-              class="elevate_1 nav-btn text_white"
-              :mode="{
-            bg_error: true,
-            small: true,
-          }"
-              @click.native="cancelPopUp=true"
-              :loading="loading"
-            >
-              <fa icon="times-circle" />
-            </base-button>
-          </span>
-        </div>
+          type="taxi"
+          slot="details"
+          class="routePill"
+          :messageLink="messageLink"
+          :orderMessages="orderMessages"
+          @cancelPopUp="cancelPopUp=true"
+          @finishRide="finishRide"
+        ></inTransit>
+
         <!-- Finished ride  Status-->
-        <div
-          class="flex align_center space_between btnP bg_white elevate_2"
-          slot="action"
+        <droppedOff
           v-else-if="orderStatusDroppedOff"
-        >
-          <div class="w-70">
-            <div class="flex align_center">
-              <avatar size="2.4rem" :url="orderDetails.customer.image"></avatar>
-              <div class="user_name">
-                <h4 class="text_blackL">{{ orderDetails.customer.name }}</h4>
-                <h5 class="regular text_grey">{{$t('taxi.taxiView.droppedOff')}}</h5>
-              </div>
-            </div>
-          </div>
-        </div>
+          :orderDetails="orderDetails"
+          type="taxi"
+          slot="details"
+          class="routePill"
+        ></droppedOff>
+
         <!-- Finished ride  Status-->
-        <div
-          class="flex align_center space_between btnP bg_white elevate_2"
-          slot="action"
+        <cancelled
           v-else-if="orderStatusCancelled"
-        >
-          <div class="w-70">
-            <div class="flex align_center">
-              <avatar size="2.4rem" :url="orderDetails.customer.image"></avatar>
-              <div class="user_name">
-                <h4 class="text_blackL">{{ orderDetails.customer.name }}</h4>
-                <h5 class="regular text_grey">{{$t('taxi.taxiView.cancelled')}}</h5>
-              </div>
-            </div>
-          </div>
-        </div>
+          :orderDetails="orderDetails"
+          type="taxi"
+          slot="details"
+          class="routePill"
+        ></cancelled>
       </input-location>
     </div>
     <div v-else>
@@ -291,13 +198,7 @@ export default {
     messageLink() {
       return `/messages/${this.$route.params.orderId}`;
     },
-    orderStatusLooking() {
-      if (this.isLoaded) {
-        return this.$store.getters["order/orderStatusLooking"];
-      } else {
-        return false;
-      }
-    },
+
     calculateBorns() {
       let borns = {
         start: null,
@@ -317,6 +218,13 @@ export default {
       }
       return borns;
     },
+    orderStatusLooking() {
+      if (this.isLoaded) {
+        return this.$store.getters["order/orderStatusLooking"];
+      } else {
+        return false;
+      }
+    },
     orderStatusOnTheWay() {
       return this.$store.getters["order/orderStatusOnTheWay"];
     },
@@ -335,11 +243,11 @@ export default {
       deep: true,
 
       handler: function(newVal, oldVal) {
-        console.log("inside handler", newVal, oldVal)
-        if(this.cancelledByTaxi){
+        console.log("inside handler", newVal, oldVal);
+        if (this.cancelledByTaxi) {
           // driver cancelled
           this.cancelledByTaxi = false;
-          return
+          return;
         }
         if (newVal) {
           //customer cancelled after ride accepted
@@ -351,7 +259,7 @@ export default {
             this.reportTitle = this.$t("taxi.cancelOrder.customerCancelled");
             this.cancelReport = true;
             setTimeout(() => {
-              this.nextAvailableOrder()
+              this.nextAvailableOrder();
             }, 4000);
           }
         } else if (oldVal) {
@@ -363,12 +271,11 @@ export default {
             this.cancelReport = true;
 
             setTimeout(() => {
-              this.nextAvailableOrder()
+              this.nextAvailableOrder();
             }, 4000);
           }
           this.sameInstance = false;
         }
-        
       }
     }
   },
@@ -394,11 +301,11 @@ export default {
     async cancelRide(reason) {
       this.loading = true;
       this.cancelPopUp = false;
-      this.cancelledByTaxi = true
+      this.cancelledByTaxi = true;
       await this.$store.dispatch("order/cancelRide", {
         reason: this.$t(`taxi.cancelOrder.${reason}`, "EN")
       });
-      this.cancelledByTaxi = true
+      this.cancelledByTaxi = true;
       // this.nextAvailableOrder()
       this.loading = false;
     },
@@ -447,16 +354,16 @@ export default {
     },
     nextAvailableOrder() {
       if (this.precedentOrderId) {
-        console.log("available precedent", this.precedentOrderId)
+        console.log("available precedent", this.precedentOrderId);
         this.precedentOrder();
       } else if (this.nextOrderId) {
-        console.log("available next", this.nextOrderId)
+        console.log("available next", this.nextOrderId);
         this.nextOrder();
       } else {
-        console.log("available incoming")
+        console.log("available incoming");
         this.$router.push("/incoming");
       }
-      this.cancelReport = false
+      this.cancelReport = false;
     }
   }
 };
@@ -468,11 +375,36 @@ export default {
     margin: 0 0.3rem;
   }
 }
+.chevron{
+   height: 3rem;
+  width: 2rem;
+  position: absolute;
+  top: calc(50% - 1.5rem);
+  right: 0;
+  z-index: 99;
+}
+.right_chevron {
+  right: 0;
+    border-radius: 12px 0 0 12px;
+
+}
+.left_chevron {
+ left: 0;
+   border-radius:0 12px 12px 0;
+
+}
 .nav-btn {
   height: 2rem;
   width: 2.5rem;
   border-radius: 10px;
   margin: 0 0.3rem;
+}
+.routePill {
+  position: absolute;
+  width: calc(100% - 2rem) !important;
+  z-index: 9;
+  bottom: 2rem;
+  left: 1rem;
 }
 .btnP {
   @media (max-width: 400px) {

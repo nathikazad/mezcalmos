@@ -56,26 +56,7 @@ $abbrev in (font-size: t) {
     }
 }
 
-//m-${var} margin 
-// $margin: 0.1rem;
-// $margin-increment: 1;
 
-// $types: ();
-
-// @for $i from 1 through 30 {
-//     $types: map-merge($types, ($i * $type-increment: $type * $i * $type-increment))
-// }
-
-// @each $prop,
-// $abbrev in (font-size: t) {
-
-//     @each $size,
-//     $length in $types {
-//         .#{$abbrev}-#{$size} {
-//             #{$prop}: $length !important;
-//         }
-//     }
-// }
 
 //colors modifier
 @mixin color-modifiers($attribute: 'color', $prefix: '-') {
@@ -116,4 +97,78 @@ $abbrev in (font-size: t) {
         scrollbar-face-color: $foreground-color;
         scrollbar-track-color: $background-color;
     }
+}
+
+//padding, margin spacer vars 
+$spacer: 16;
+$max: 5;
+$zero: 0px;
+$one: unquote(($spacer * 0.25) + 'px');
+$two: unquote(($spacer * 0.5) + 'px');
+$three: unquote(($spacer) + 'px');
+$four: unquote(($spacer * 1.5) + 'px');
+$five: unquote(($spacer * 3) + 'px');
+
+$spaces: ($zero, $one, $two, $three, $four, $five); // Adjust this to include the pixel amounts you need.
+$sides: (x, y, all, top, bottom, left, right); // Leave this variable alone
+$index: 0;
+
+@each $space in $spaces {
+    @each $side in $sides {
+        @if $side==all {
+            .pa-#{$index} {
+                padding: #{$space} #{$space} !important;
+            }
+        }
+
+        @else if $side==x {
+            .px-#{$index} {
+                padding-left: #{$space} !important;
+                padding-right: #{$space} !important;
+            }
+        }
+
+        @else if $side==y {
+            .py-#{$index} {
+                padding-top: #{$space} !important;
+                padding-bottom: #{$space} !important;
+            }
+        }
+
+        @else {
+            .p#{str-slice($side, 0, 1)}-#{$index} {
+                padding-#{$side}: #{$space} !important;
+            }
+        }
+    }
+
+    @each $side in $sides {
+        @if $side==all {
+            .ma-#{$index} {
+                margin: #{$space} #{$space} !important;
+            }
+        }
+
+        @else if $side==x {
+            .mx-#{$index} {
+                margin-left: #{$space} !important;
+                margin-right: #{$space} !important;
+            }
+        }
+
+        @else if $side==y {
+            .my-#{$index} {
+                margin-top: #{$space} !important;
+                margin-bottom: #{$space} !important;
+            }
+        }
+
+        @else {
+            .m#{str-slice($side, 0, 1)}-#{$index} {
+                margin-#{$side}: #{$space} !important;
+            }
+        }
+    }
+
+    $index: $index+1;
 }

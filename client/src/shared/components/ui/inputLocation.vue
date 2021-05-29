@@ -124,6 +124,7 @@
         :pickingFromMap="mapPicker"
       ></map-view>
 
+      <slot name="details"></slot>
       <slot name="action"></slot>
       <slot name="alert"></slot>
     </div>

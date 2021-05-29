@@ -21,7 +21,6 @@
         :title="$t('customer.cancelOrder.taxiCancelled')"
         :icon="'do-not-enter'"
       ></pop-up>
-      <h1 class="regular">{{$t('customer.taxiView.taxi')}}</h1>
       <input-location
         :disabled="true"
         :to="orderDetails.to"
@@ -33,89 +32,39 @@
         :status="deepFind(orderDetails,'status')"
       >
         <!-- Searching fo Someone  Status-->
-        <div
-          class="flex align_center space_between btnP bg_white elevate_2"
-          slot="action"
+        <looking
           v-if="orderDetails.status == 'lookingForTaxi'"
-        >
-          <div class="w-70">
-            <h5 class="text_grey regular t-9">{{$t('customer.taxiView.searching')}}...</h5>
-          </div>
-          <base-button
-            class="elevate_1 nav-btn text_white"
-            :mode="{
-            bg_error: true,
-            small: true,
-          }"
-            @click.native="cancelPopUp=true"
-            :loading="loading"
-          >
-            <fa icon="times-circle" />
-          </base-button>
-        </div>
+          :loading="loading"
+          @cancelPopUp="cancelPopUp=true"
+          :orderDetails="orderDetails"
+          type="customer"
+          slot="details"
+          class="routePill"
+        ></looking>
+
         <!-- Found Someone  Status-->
-        <div
-          class="flex align_center space_between btnP bg_white elevate_2"
-          slot="action"
+        <onTheWay
           v-else-if="orderDetails.status == 'onTheWay'"
-        >
-          <div class="w-70">
-            <div class="flex align_center">
-              <avatar size="2.4rem" :url="orderDetails.driver.image"></avatar>
-              <div class="user_name">
-                <h4 class="text_blackL">{{ orderDetails.driver.name }}</h4>
-                <h5
-                  class="regular text_grey"
-                  v-if="
-                    deepFind(
-                      orderDetails,
-                      'driver.location.estimatedArrivalTime'
-                    )
-                  "
-                >
-                  {{$t('customer.taxiView.arrival')}}
-                  {{
-                  deepFind(
-                  orderDetails,
-                  "driver.location.estimatedArrivalTime"
-                  ) | moment("from", "now")
-                  }}
-                </h5>
-                <h5 class="regular text_grey" v-else>
-                  {{$t('customer.taxiView.arrival')}}
-                  {{ "TBD" }}
-                </h5>
-              </div>
-            </div>
-          </div>
-          <base-button
-            class="dark bg_light elevate_1 nav-btn text_primary"
-            :mode="{
-            bg_diagonal: true,
-            small: true,
-          }"
-            :link="true"
-            :to="{
-              path: messageLink,
-              
-            }"
-          >
-            <fa icon="envelope" />
-            <span class="badge bg_error" v-if="orderMessages"></span>
-          </base-button>
-          <base-button
-            class="elevate_1 nav-btn text_white"
-            :mode="{
-            bg_error: true,
-            small: true,
-          }"
-            @click.native="cancelPopUp=true"
-            :loading="loading"
-          >
-            <fa icon="times-circle" />
-          </base-button>
-        </div>
+          :orderDetails="orderDetails"
+          :messageLink="messageLink"
+          :orderMessages="orderMessages"
+          @cancelPopUp="cancelPopUp=true"
+          type="customer"
+          slot="details"
+          class="routePill"
+        ></onTheWay>
+
         <!-- In Transit  Status-->
+        <inTransit
+          :orderDetails="orderDetails"
+          type="customer"
+          slot="details"
+          class="routePill"
+          :messageLink="messageLink"
+          :orderMessages="orderMessages"
+          @cancelPopUp="cancelPopUp=true"
+          v-else-if="orderDetails.status == 'inTransit'"
+        ></inTransit>
         <div
           class="flex align_center space_between btnP bg_white elevate_2"
           slot="action"
@@ -158,37 +107,21 @@
           </base-button>
         </div>
         <!-- Droped off  Status-->
-        <div
-          class="flex align_center space_between btnP bg_white elevate_2"
-          slot="action"
+        <droppedOff
           v-else-if="orderDetails.status == 'droppedOff'"
-        >
-          <div class="w-70">
-            <div class="flex align_center">
-              <avatar size="2.4rem" :url="orderDetails.driver.image"></avatar>
-              <div class="user_name">
-                <h4 class="text_blackL">{{ orderDetails.driver.name }}</h4>
-                <h5 class="regular text_grey">{{$t('customer.taxiView.droppedOff')}}</h5>
-              </div>
-            </div>
-          </div>
-        </div>
+          :orderDetails="orderDetails"
+          type="customer"
+          slot="details"
+          class="routePill"
+        ></droppedOff>
         <!-- Cancelled  Status-->
-        <div
-          class="flex align_center space_between btnP bg_white elevate_2"
-          slot="action"
+        <cancelled
           v-else-if="orderDetails.status == 'cancelled'"
-        >
-          <div class="w-70">
-            <div class="flex align_center">
-              <avatar size="2.4rem" :url="orderDetails.driver.image" v-if="orderDetails.driver"></avatar>
-              <div class="user_name">
-                <h4 class="text_blackL" v-if="orderDetails.driver">{{ orderDetails.driver.name }}</h4>
-                <h5 class="regular text_grey">{{$t('customer.taxiView.cancelled')}}</h5>
-              </div>
-            </div>
-          </div>
-        </div>
+          :orderDetails="orderDetails"
+          type="customer"
+          slot="details"
+          class="routePill"
+        ></cancelled>
       </input-location>
     </div>
     <div v-else>
@@ -337,6 +270,13 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "@/shared/assets/scss/_taxiView.scss";
+.routePill {
+  position: absolute;
+  width: calc(100% - 2rem) !important;
+  z-index: 9;
+  bottom: 2rem;
+  left: 1rem;
+}
 .badge {
   position: absolute;
   width: 10px;

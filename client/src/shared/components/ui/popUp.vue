@@ -3,15 +3,18 @@
     <div class="overlay" @click="$emit('close')"></div>
     <div class="popUp_body bg_white">
       <div class="popUp_head">
-        <div class="icon t-22 txt_center">
+        <div class="icon t-22 txt_center" v-if="icon">
           <fa :icon="icon"></fa>
         </div>
-        <h4 class="text_blackL txt_center regular">{{title}}</h4>
+        <div class="icon imgSrc flex align_center center" v-else-if="imgSrc">
+          <img :src="imgSrc" />
+        </div>
+        <h4 class="text_blackL txt_center regular" v-html="title"></h4>
       </div>
       <div class="popUp_core field">
         <base-button
           class="fill_width bg_grey border text_blackL elevate_0 border btnP"
-          :mode="{ light: true }"
+          :mode="{ light: light }"
           v-for="(choice, index) in choiceList"
           :key="index"
           @click.native="$emit('picked',choice)"
@@ -40,6 +43,13 @@ export default {
       type: String
     },
     translatePath: {
+      type: String
+    },
+    light: {
+      type: Boolean,
+      default: true
+    },
+    imgSrc: {
       type: String
     }
   },
@@ -78,6 +88,12 @@ export default {
     position: absolute;
     bottom: 1rem;
     width: calc(100% - 2rem);
+  }
+  .imgSrc {
+    margin: 0 auto !important;
+    img {
+      height: 6rem;
+    }
   }
 }
 </style>

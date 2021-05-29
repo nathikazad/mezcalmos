@@ -12,7 +12,7 @@
           <input
             v-for="index in 6"
             :key="index"
-            type="text"
+            type="number"
             class="input bg_secondary text_blackD fill_width w-15"
             placeholder="#"
             v-model="OTPCode[index-1]"
@@ -21,7 +21,7 @@
             @input="checkDigit"
           />
         </div>
-        <u @click="loginWithPhoneNumber">{{$t('shared.login.resend')}}</u>
+        <div @click="loginWithPhoneNumber" class="pa-1 pointer">{{$t('shared.login.resend')}}</div>
 
         <!-- <div id="recaptcha-container"></div> -->
       </div>
@@ -68,7 +68,7 @@ export default {
     checkDigit(e) {
       if (
         e.target.value &&
-        this.deepFind(e, "target.nextElementSibling.tagName")
+        this.deepFind(e, "target.nextElementSibling.tagName") == "INPUT"
       ) {
         e.target.nextElementSibling.focus();
       }
@@ -83,6 +83,9 @@ export default {
         if (response.status == "Error") {
           this.alertMessage = response.errorMessage;
           this.isLoading = false;
+          setTimeout(() => {
+            this.alertMessage = "";
+          }, 3000);
         } else {
           // this.$router.push("/");
           this.isLoading = false;
@@ -92,7 +95,9 @@ export default {
       }
     },
     async loginWithPhoneNumber() {
-      if (!this.phoneNumber) {
+      console.log(this.phoneNumber);
+
+      if (this.phoneNumber) {
         this.isLoading = true;
 
         let loginType = this.$route.query.method;
@@ -102,6 +107,8 @@ export default {
           messageType: loginType,
           phoneNumber: this.phoneNumber
         });
+        console.log(response);
+
         if (response.status == "Error") {
           this.alertMessage = response.errorMessage;
         } else {

@@ -23,7 +23,7 @@
           <avatar
             class="border"
             size="10rem"
-            :url="previewImage||userInfo.photo||require(`@/shared/static/img/${$t('shared.userInfo.clickToUploadImg')}.png`)"
+            :url="previewImage||deepFind(userInfo,'photo')||require(`@/shared/static/img/${$t('shared.userInfo.clickToUploadImg')}.png`)"
             @click.native="clickOnUpload"
           ></avatar>
           <input
@@ -38,6 +38,9 @@
             @click="clickOnUpload"
           >
             <fa icon="camera"></fa>
+          </div>
+          <div class="show_percentage flex align_center center" v-if="showPercentage">
+            <span class="t-12 bold text_light_blue">{{uploadPercentage}}%</span>
           </div>
         </div>
       </div>
@@ -90,7 +93,8 @@ export default {
       editPage: false,
       newProfile: {},
       uploadPercentage: 0,
-      loading: false
+      loading: false,
+      showPercentage: false
     };
   },
   computed: {
@@ -105,7 +109,7 @@ export default {
     },
     disabled() {
       return !(
-        (this.uploadedImage || this.userInfo.photo) &&
+        (this.uploadedImage || this.deepFind(this.userInfo, "photo")) &&
         this.newProfile["displayName"]
       );
     }
@@ -159,10 +163,14 @@ export default {
     },
     async editProfile() {
       if (!this.disabled) {
-        delete this.newProfile.email;
+        let newProfile = {
+          displayName: this.newProfile.displayName,
+          photo: this.newProfile.photo
+        };
 
         const image = this.uploadedImage;
         this.loading = true;
+        this.showPercentage = true;
         if (this.uploadedImage) {
           const storageRef = firebaseStorage()
             .ref(`users/${this.userId}/avatar/${image.name}`)
@@ -170,24 +178,28 @@ export default {
           storageRef.on(
             "state_changed",
             snapshot => {
-              this.uploadPercentage =
-                (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              this.uploadPercentage = Math.trunc(
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+              );
             },
             error => {
               console.log(error.message);
+              this.showPercentage = false;
             },
             () => {
               this.uploadPercentage = 100;
               storageRef.snapshot.ref.getDownloadURL().then(async url => {
-                this.newProfile["photo"] = url;
-                await this.$store.dispatch("editUserProfile", this.newProfile);
+                newProfile["photo"] = url;
+                await this.$store.dispatch("editUserProfile", newProfile);
+                this.uploadPercentage = 0;
+                this.showPercentage = false;
                 this.loading = false;
                 this.$router.go(-1);
               });
             }
           );
         } else {
-          await this.$store.dispatch("editUserProfile", this.newProfile);
+          await this.$store.dispatch("editUserProfile", newProfile);
           this.loading = false;
           this.$router.go(-1);
         }
@@ -204,6 +216,17 @@ export default {
   bottom: 0.5rem;
   right: 0.5rem;
   position: absolute;
+  z-index: 3;
+}
+.show_percentage {
+  position: absolute;
+  width: 10rem;
+  height: 10rem;
+  top: 0;
+  left: 0;
+  background: #5e585885;
+  border-radius: 50%;
+  z-index: 2;
 }
 .userInfo {
   flex-direction: column;
