@@ -2,9 +2,9 @@
   <div class="flex center align_center wrap login">
     <div class="brand fill_width">
       <div class="circle flex center align_center">
-        <logo :light="true" class="logo"></logo>
+        <logo :light="false" class="logo"></logo>
       </div>
-      <h1 class="bold txt_center">
+      <h1 class="bold txt_center flex center">
         MEZ
         <span class="logo_second">CALMOS</span>
       </h1>
@@ -15,7 +15,7 @@
 
       <button class="btn mb-1" @click="submitForm">
         <span>
-          <fa :solid="true" icon="facebook-f"></fa>
+          <fa :solid="true" icon="facebook-f" class="mr-1"></fa>
           {{$t('shared.login.fbBtn')}}
         </span>
       </button>
@@ -34,7 +34,7 @@
         :mode="{ dark: true, bg_SMS: true }"
         class="float_btn flex align_center center"
       >
-        <fa icon="sms"></fa>
+        <fa icon="envelope" class="mr-1"></fa>
         {{$t('shared.login.loginWithSms')}}
       </base-button>
     </div>
@@ -129,9 +129,7 @@ export default {
 input {
   margin: 0.5rem 0 1rem 0;
 }
-.logo_second {
-  margin-left: -0.5rem;
-}
+
 .error_input {
   border: $border;
   border-color: map-get($map: $colors, $key: error);
@@ -146,11 +144,11 @@ input {
 .circle {
   width: 7.25rem;
   height: 7.25rem;
-  background: map-get($gradients, diagonal);
   border-radius: 50%;
   margin: 2rem auto;
+  background: transparent;
   .logo {
-    width: 4.25rem;
+    width: 100%;
     height: auto;
   }
 }

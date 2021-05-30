@@ -1,11 +1,11 @@
 <template>
-  <div class="payments_part flex align_center space_between w-90 fill_height bg_secondary">
+  <div class="payments_part flex align_center center w-90 fill_height bg_secondary">
     <div class="cash flex align_center center w-50 fill_height pointer">
       <img src="@/shared/static/img/money.svg" />
     </div>
-    <div class="credit_card flex align_center center w-50 fill_height pointer">
+    <!-- <div class="credit_card flex align_center center w-50 fill_height pointer">
       <img src="@/shared/static/img/creditCard.svg" />
-    </div>
+    </div>-->
   </div>
 </template>
 <script>
@@ -24,9 +24,7 @@ export default {
   .credit_card {
     border-radius: 5px;
   }
-  .cash {
-    background: #8962d2;
-  }
+
   .credit_card {
     opacity: 0.3;
   }

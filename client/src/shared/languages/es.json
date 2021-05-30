@@ -113,17 +113,19 @@
             "owner": " Inicie sesión con <br/> Facebook para <br/> hacer un pedido ",
             "customer": " Inicie sesión con <br/> Facebook para <br/> hacer un pedido ",
             "fbBtn": "INICIAR CON FACEBOOK",
-            "whatsAppLogin":" INICIAR CON WHATSAPP",
-            "loginWithSms":"INICIAR CON SMS",
-            "verifyCountryCode":"Verifique el código de su país",
-            "verifyPhoneNumber":"Verifique su número de teléfono",
-            "OtpConfirmation":"Confirmación del código OTP",
-            "enterOtpCode":"Ingrese el código OTP enviado a",
-            "resend":"Reenviar",
-            "confirm":"Confirmar",
-            "otpCode":"OTP código",
-            "enterPhoneNumber":"Ingrese el número teléfono para recibir el código OTP",
-            "submit":"ENVIAR"
+            "whatsAppLogin": " INICIAR CON WHATSAPP",
+            "loginWithSms": "INICIAR CON SMS",
+            "verifyCountryCode": "Verifique el código de su país",
+            "verifyPhoneNumber": "Verifique su número de teléfono",
+            "OtpConfirmation": "Confirmación del código OTP",
+            "enterOtpCode": "Ingrese el código OTP enviado a",
+            "resend": "Reenviar",
+            "confirm": "Confirmar",
+            "otpCode": "OTP código",
+            "enterPhoneNumber": "Ingrese el número teléfono para recibir el código OTP",
+            "submit": "ENVIAR",
+            "twilioNote": "Al continuar, recibirá un código de verificación a su número de teléfono por SMS. Se pueden aplicar tarifas por mensajes y datos."
+
         },
         "messages": {
             "title": "Mensajes",
@@ -145,8 +147,8 @@
             "deleteBtn": "Borrar cuenta",
             "saveBtn": "GUARDAR",
             "editImgMsg": "Click on image to change it",
-            "fullName":"Nombre completo",
-            "clickToUploadImg":"clickToUpdateEs"
+            "fullName": "Nombre completo",
+            "clickToUploadImg": "clickToUpdateEs"
         },
         "navDrawer": {
             "userInfo": "Información del usuario",
