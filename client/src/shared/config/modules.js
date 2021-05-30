@@ -40,6 +40,7 @@ import OnTheWay from "@/shared/components/ui/rideStatus/onTheWay";
 import InTransit from "@/shared/components/ui/rideStatus/inTransit";
 import DroppedOff from "@/shared/components/ui/rideStatus/droppedOff";
 import Cancelled from "@/shared/components/ui/rideStatus/cancelled";
+import EstimateRoute from "@/shared/components/ui/rideStatus/estimateRoute";
 
 import {
     deepFind,
@@ -61,6 +62,7 @@ export function initModules(Vue) {
     Vue.component("gmap-custom-marker", GmapCustomMarker);
 
     //Vue Components
+    Vue.component("estimateRoute", EstimateRoute);
     Vue.component("cancelled", Cancelled);
     Vue.component("droppedOff", DroppedOff);
     Vue.component("inTransit", InTransit);

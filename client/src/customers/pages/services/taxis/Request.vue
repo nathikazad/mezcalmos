@@ -3,7 +3,7 @@
     <!-- pop up component -->
     <pop-up v-if="pickLocation"></pop-up>
     <!-- ******************Price estimate alert ************************-->
-    <pop-up
+    <!-- <pop-up
       class="estimate_price_popUp"
       v-if="priceReport&&estimatedPrice"
       :choiceList="['Ok']"
@@ -12,7 +12,7 @@
       :title="$t('customer.taxiView.priceEstimate')+estimatedPrice"
       :imgSrc="require('@/shared/static/img/money.svg')"
       :light="false"
-    ></pop-up>
+    ></pop-up>-->
     <!-- ******************pop up component ************************-->
     <input-location
       :search.sync="search"
@@ -36,36 +36,18 @@
           </h5>
         </div>
       </div>
-      <div
+      <estimateRoute
         v-if="showRideDetails"
         slot="details"
-        class="request_details bg_white elevate_2 flex align_center space_between"
-      >
-        <div class="price bold t-12 w-35">${{Number.parseFloat(this.estimatedPrice).toFixed(2)}}</div>
-        <div class="route_and_payment flex align_center end w-70">
-          <div class="route_info t-8 w-40">
-            <div class="info_field">
-              <fa icon="route"></fa>
-              <span>{{distance.text}}</span>
-            </div>
-            <div class="info_field">
-              <fa icon="clock"></fa>
-              <span>{{duration.text}}</span>
-            </div>
-          </div>
-          <div class="payments_part flex align_center space_between w-60 fill_height bg_secondary">
-            <div class="cash flex align_center center w-50 fill_height pointer">
-              <img src="@/shared/static/img/money.svg" />
-            </div>
-            <div class="credit_card flex align_center center w-50 fill_height pointer">
-              <img src="@/shared/static/img/creditCard.svg" />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="flex align_center center btnP" slot="action">
+        class="routePill"
+        :distance="distance.text"
+        :duration="duration.text"
+        :price="Number.parseFloat(this.estimatedPrice).toFixed(2)"
+      ></estimateRoute>
+
+      <div class="flex align_center center btnP " slot="action">
         <base-button
-          class="w-80"
+          class="btnW"
           :class="{bg_SMS:!isLoggedIn}"
           :mode="{ dark: true, bg_diagonal: isLoggedIn, disabled:disabled }"
           @click.native="requestTaxi()"
@@ -88,7 +70,6 @@ export default {
   components: { popUp },
   data() {
     return {
-      priceReport: false,
       showRideDetails: false,
       loading: false,
       distance: null,
@@ -164,16 +145,12 @@ export default {
     }
   },
   methods: {
-    answerPopUp() {
-      this.priceReport = false;
-    },
     async setDistanceDuration(pos) {
       this.distance = pos.distance;
       this.duration = pos.duration;
       let estimatePrice = this.$store.getters["taxis/estimatePrice"];
       this.estimatedPrice = await estimatePrice(pos.distance.value / 1000);
       this.showRideDetails = true;
-      this.priceReport = true;
     },
     async requestTaxi() {
       if (!this.disabled) {
@@ -211,6 +188,16 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.routePill {
+  position: absolute;
+  width: calc(100% - 2rem) !important;
+  z-index: 9;
+  bottom: 5rem;
+  left: 1rem;
+}
+.btnW {
+  width: calc(100% - 2rem) !important;
+}
 ::v-deep .popUp_body {
   padding: 2rem !important;
 }

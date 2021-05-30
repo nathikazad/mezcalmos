@@ -131,6 +131,16 @@ export default {
     },
     orderStatusCancelled(state) {
       return !!state.order && state.order.status == "cancelled"
+    },
+    estimatePrice() {
+      return async function (distance) {
+        let pricePolicy = (await firebaseDatabase().ref(`pricePolicy`).once('value')).val();
+        distance = parseInt(distance);
+        let perKmCost = (pricePolicy && pricePolicy.perKmCost) ? parseInt(pricePolicy.perKmCost) : 0;
+        let minimumCost = (pricePolicy && pricePolicy.minimumCost) ? parseInt(pricePolicy.minimumCost) : 0
+        let estimate = distance * perKmCost
+        return estimate > minimumCost ? estimate : minimumCost;
+      }
     }
   }
 };

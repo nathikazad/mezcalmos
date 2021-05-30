@@ -24,6 +24,10 @@
             <card2 class="bg_white border card wrap">
               <avatar size="2.4rem" :url="orders[orderId].customer.image" slot="image"></avatar>
               <div slot="title" class="bold">{{ orders[orderId].customer.name }}</div>
+              <span slot="aside" class="bold align_center flex" v-if="ordersPrices[orderId]">
+                <img src="@/shared/static/img/money.svg" class="money_icon mr-1" />
+                &nbsp;{{ Number.parseFloat(ordersPrices[orderId]).toFixed(2)}}
+              </span>
               <div slot="desc" class="flex align_center desc_slot">
                 <span class="t-8 flex align_center fill_width">
                   <fa icon="map-marker"></fa>
@@ -78,7 +82,8 @@ export default {
   },
   data() {
     return {
-      isLoaded: false
+      isLoaded: false,
+      ordersPrices: {}
     };
   },
   computed: {
@@ -106,7 +111,20 @@ export default {
       return `orders/${this.$store.getters["currentOrderId"]}`;
     }
   },
+  mounted() {
+    this.estimatedPrices();
+  },
   methods: {
+    async estimatedPrices() {
+      for (const key in this.orders) {
+        const order = this.orders[key];
+        let estimatePrice = this.$store.getters["order/estimatePrice"];
+        let price = await estimatePrice(
+          order.routeInformation.distance.value / 1000
+        );
+        this.ordersPrices[key] = price;
+      }
+    },
     toggle() {
       if (!this.isLooking) {
         this.$store.dispatch("startLooking");
@@ -123,6 +141,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.money_icon {
+  width: 1.5rem;
+}
 .image {
   width: 3.75rem;
   height: 3.75rem;
