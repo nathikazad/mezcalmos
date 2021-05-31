@@ -93,8 +93,7 @@ export default {
         // });
         let loginType = this.$route.query.method;
 
-        let response = await this.$store.dispatch("sendOTP", {
-          apiKey: "999",
+        let response = await this.$store.dispatch("sendOTPForLogin", {
           messageType: loginType,
           phoneNumber: this.countryCode.toString() + this.phoneNumber.toString()
         });

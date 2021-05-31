@@ -1,6 +1,8 @@
 const functions = require('firebase-functions');
+const sender = require("./sender")
 module.exports = {
-  push
+  push,
+  notifyDriversNewRequest
 }
 
 const webpush = require('web-push')
@@ -22,5 +24,31 @@ async function push(firebase, userId, message, particpantType = "customer") {
   if(subscription){
     webpush.sendNotification(subscription, JSON.stringify(message))
   }
-  
+}
+
+async function notifyDriversNewRequest(firebase) {
+  drivers = (await firebase.database().ref(`/taxiDrivers`).once('value')).val();
+  for (let driverId in drivers){
+    let driver = drivers[driverId]
+    if(driver.state.isLooking) {
+      firebase.database().ref(`/users/${driverId}/info`).once('value', function(snapshot){
+        let userInfo = snapshot.val()
+        if(userInfo.phoneNumber && userInfo.phoneNumberType){
+          let payload = {
+            message: `There is a new ride request, see if you can accept it at wwww.meztaxi.com. To disable notifications turn off taxi mode.`,
+            phoneNumber: userInfo.phoneNumber
+          }
+          if (userInfo.language == "es") {
+            payload.message = `Hay una nueva orden de taxi, vea si puede aceptarla en wwwmeztaxi.com. Para parar las notificaciones, desactive el modo taxi`
+          }
+          if (userInfo.phoneNumberType == "whatsApp") {
+            sender.sendWhatsApp(payload)
+          } else if (userInfo.phoneNumberType == "SMS") {
+            sender.sendSMS(payload)
+          }
+        }
+      })
+      
+    }
+  }
 }

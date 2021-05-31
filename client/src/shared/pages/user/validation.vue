@@ -77,7 +77,7 @@ export default {
       if (this.OTPCode.join("").length == 6) {
         this.isLoading = true;
 
-        let response = await this.$store.dispatch("confirmOTP", {
+        let response = await this.$store.dispatch("signInUsingOTP", {
           OTPCode: this.OTPCode.join("")
         });
         if (response.status == "Error") {
@@ -102,8 +102,7 @@ export default {
 
         let loginType = this.$route.query.method;
 
-        let response = await this.$store.dispatch("sendOTP", {
-          apiKey: "999",
+        let response = await this.$store.dispatch("sendOTPForLogin", {
           messageType: loginType,
           phoneNumber: this.phoneNumber
         });

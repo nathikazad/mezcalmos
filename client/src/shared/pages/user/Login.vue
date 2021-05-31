@@ -97,8 +97,7 @@ export default {
         // this.appVerifier.render().then(widgetId => {
 
         // });
-        let response = await this.$store.dispatch("sendOTP", {
-          apiKey: "999",
+        let response = await this.$store.dispatch("sendOTPForLogin", {
           messageType: "SMS",
           phoneNumber: this.countryCode.toString() + this.phoneNumber.toString()
         });
