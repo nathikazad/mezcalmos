@@ -31,6 +31,12 @@ async function notifyDriversNewRequest(firebase) {
   for (let driverId in drivers){
     let driver = drivers[driverId]
     if(driver.state.isLooking) {
+      if(driver.notificationInfo){
+        webpush.sendNotification(driver.notificationInfo, JSON.stringify({
+          notificationType: "newOrder",
+        }))
+      }
+
       firebase.database().ref(`/users/${driverId}/info`).once('value', function(snapshot){
         let userInfo = snapshot.val()
         if(userInfo.phoneNumber && userInfo.phoneNumberType){
