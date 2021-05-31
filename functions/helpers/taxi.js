@@ -68,7 +68,8 @@ async function request(firebase, uid, data) {
       duration: payload.duration,
       distance: payload.distance,
       estimatedPrice: data.estimatedPrice
-    }
+    },
+    orderTime: payload.orderTime
   });
   firebase.database().ref(`/users/${uid}/state/currentOrder`).set(orderRef.key);
   let chat = {
@@ -140,6 +141,7 @@ async function cancelTaxiFromCustomer(firebase, uid, data) {
     notification.push(firebase, order.driver.id, update,'taxi')
   }
 
+  firebase.database().ref(`/chat/${orderId}`).remove()
   if(data.createAnotherOrder) {
     let response = await request(firebase, uid, order)
     return response
@@ -187,18 +189,10 @@ async function accept(firebase, data, uid) {
       errorMessage: "Driver and Customer cannot have same id"
     }
   }
-  // let seconds = 1
-  // while (seconds % 10 != 0){
-  //   var d = new Date();
-  //   seconds = d.getSeconds()
-  // }
   driver = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val();
   let response = await firebase.database().ref(`/orders/taxi/${data.orderId}`).transaction(function (order) {
-    //console.log(order)
     if (order != null) {
-      //console.log(order.status)
       if (order.status == "lookingForTaxi") {
-        //console.log(`${data.orderId} lookingForTaxi`)
         order.status = 'onTheWay';
         order.acceptRideTime = (new Date()).toUTCString()
         order.driver = {

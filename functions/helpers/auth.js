@@ -177,9 +177,6 @@ async function sendOTP(firebase, data, userId) {
   if (auth && auth.codeGeneratedTime) {
     let lastCodeGeneratedTime = new Date(auth.codeGeneratedTime);
     let validTimeForNextCodeGeneration = new Date(lastCodeGeneratedTime.getTime() + 60 * 1000);
-    console.log(Date.now())
-    console.log(validTimeForNextCodeGeneration)
-    console.log(Date.now() - validTimeForNextCodeGeneration)
     if (Date.now() < validTimeForNextCodeGeneration) {
       let secondsLeft = parseInt((validTimeForNextCodeGeneration.getTime() - Date.now()) / 1000)
       return {
