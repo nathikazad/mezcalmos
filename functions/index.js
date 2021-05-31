@@ -35,6 +35,17 @@ exports.processSignUp = functions.auth.user().onCreate(async user => {
     email: user.email
   });
 });
+exports.changeName = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
+  '/users/{userId}/info/displayName').onUpdate(async (snap, context) => {
+  let firebase = getFirebase();
+  await firebase.auth().updateUser(context.params.userId, {displayName: snap.after.val()})
+})
+
+exports.changePhoto = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
+  '/users/{userId}/info/photo').onUpdate(async (snap, context) => {
+  let firebase = getFirebase();
+  await firebase.auth().updateUser(context.params.userId, {photoURL: snap.after.val()})
+})
 
 exports.addHasuraClaims = functions.https.onCall(async (data, context) => {
   let firebase = getFirebase();
@@ -217,16 +228,39 @@ exports.notifyMessageFromAdmin = functions.database.instance('mezcalmos-31f1c-de
   message.notifyUser(firebase, context.params, snap.val())
 })
 
-
-exports.sendOTP = functions.https.onCall(async (data, context) => {
+exports.sendOTPForLogin = functions.https.onCall(async (data) => {
   let firebase = getFirebase(data.database);
-  let response = await auth.sendOTP(firebase, data);
+  let response = await auth.sendOTPForLogin(firebase, data);
   return response;
 });
 
-exports.confirmOTP = functions.https.onCall(async (data, context) => {
+exports.getAuthUsingOTP = functions.https.onCall(async (data) => {
   let firebase = getFirebase(data.database);
-  let response = await auth.confirmOTP(firebase, data);
+  let response = await auth.getAuthUsingOTP(firebase, data);
+  return response;
+});
+
+exports.sendOTPForNumberChange = functions.https.onCall(async (data, context) => {
+  if (!context.auth) {
+    return {
+      status: "Error",
+      errorMessage: "User needs to be signed in"
+    }
+  }
+  let firebase = getFirebase(data.database);
+  let response = await auth.sendOTPForNumberChange(firebase, data, context.auth.uid);
+  return response;
+});
+
+exports.confirmNumberChangeUsingOTP = functions.https.onCall(async (data, context) => {
+  if (!context.auth) {
+    return {
+      status: "Error",
+      errorMessage: "User needs to be signed in"
+    }
+  }
+  let firebase = getFirebase(data.database);
+  let response = await auth.confirmNumberChangeUsingOTP(firebase, data, context.auth.uid);
   return response;
 });
 

@@ -23,7 +23,6 @@ async function request(firebase, uid, data) {
   }
   
   let payload = {}
-  console.log(data)
   if (!data.from || !data.to || !data.distance || !data.duration || !data.estimatedPrice) {
     return {
       status: "Error",
@@ -38,7 +37,6 @@ async function request(firebase, uid, data) {
   payload.distance = data.distance
   payload.duration = data.duration
   payload.estimatedPrice = data.estimatedPrice
-  console.log(payload);
   
   let user = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val();
   payload.customer = {
@@ -84,6 +82,7 @@ async function request(firebase, uid, data) {
     particpantType: "customer"
   }
   firebase.database().ref(`/chat/${orderRef.key}`).set(chat);
+  notification.notifyDriversNewRequest(firebase);
   return {
     status: "Success",
     orderId: orderRef.key

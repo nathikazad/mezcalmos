@@ -51,17 +51,23 @@ export default {
       var provider = new firebaseAuth.FacebookAuthProvider();
       await firebaseAuth().signInWithPopup(provider);
     },
-    async sendOTP(context, payload) {
-      let resp = await cloudCall('sendOTP', { 
+    async sendOTPForLogin(context, payload) {
+      let resp = await cloudCall('sendOTPForLogin', { 
         phoneNumber: payload.phoneNumber, 
         messageType: payload.messageType,
         language: context.state.language,
         apiKey: payload.apiKey });
-      context.commit('savePhoneNumber', payload)
+      console.log(resp)
+      if(resp.data.status == "Success") {
+        context.commit('savePhoneNumber', payload)
+      } else {
+        console.log(resp.data)
+      }
+      
      return resp.data
     },
-    async confirmOTP(context, payload) {
-      let resp = await cloudCall('confirmOTP', 
+    async signInUsingOTP(context, payload) {
+      let resp = await cloudCall('getAuthUsingOTP', 
       { 
         phoneNumber: context.state.phoneNumber,
         OTPCode: payload.OTPCode 
@@ -69,7 +75,8 @@ export default {
      
       if(resp.data.status == "Success") {
         firebaseAuth().signInWithCustomToken(resp.data.token)
-        
+      } else {
+        console.log(resp.data)
       }
       return resp.data
     },
@@ -100,7 +107,34 @@ export default {
     async editUserProfile(context, payload) {
       let response = await firebaseDatabase().ref(`users/${context.state.userId}/info`).update(payload)
       return response;
-    }
+    },
+    async sendOTPForNumberChange(context, payload) {
+      let resp = await cloudCall('sendOTPForNumberChange', { 
+        phoneNumber: payload.phoneNumber, 
+        messageType: payload.messageType,
+        language: context.state.language,
+        apiKey: payload.apiKey });
+      if(resp.data.status == "Success") {
+        context.commit('savePhoneNumber', payload)
+      } else {
+        console.log(resp.data)
+      }
+      
+     return resp.data
+    },
+    async confirmNumberChangeUsingOTP(context, payload) {
+      let resp = await cloudCall('confirmNumberChangeUsingOTP', 
+      { 
+        phoneNumber: context.state.phoneNumber,
+        OTPCode: payload.OTPCode 
+      });
+     
+      if(resp.data.status != "Success") {
+        console.log(resp.data)
+      }
+
+      return resp.data
+    },
   },
   mutations: {
     saveAuthData(state, payload) {

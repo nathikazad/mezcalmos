@@ -7,7 +7,7 @@
         },
         "taxiView": {
             "taxi": "Taxi",
-            "searching": "Searching Available Taxi",
+            "searching": "Searching for Taxi",
             "cancel": "Cancel",
             "arrival": "Arrival",
             "message": "Message",
@@ -58,7 +58,7 @@
         },
         "taxiView": {
             "taxi": "Taxi",
-            "searching": "Searching Available Taxi",
+            "searching": "Searching for Taxi",
             "acceptOrders": "Accept Order",
             "startRide": "Start Ride",
             "finishRide": "Finish Ride",
