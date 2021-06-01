@@ -23,6 +23,9 @@ async function push(firebase, userId, message, particpantType = "customer") {
   }
   if(subscription){
     webpush.sendNotification(subscription, JSON.stringify(message))
+    .catch((e) => {
+      console.log("web push error ", particpantType, userId)
+    })
   }
 }
 
