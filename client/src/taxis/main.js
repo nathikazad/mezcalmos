@@ -11,10 +11,12 @@ import {
 import {
   askForNotification
 } from '@/shared/mixins/functions'
-import "./registerServiceWorker";
 import {
   i18n
 } from '@/shared/config/i18n'
+import {
+  registerServiceWorker
+} from "../shared/config/registerServiceWorker"
 //init modules
 initModules(Vue)
 Vue.config.productionTip = false
@@ -22,7 +24,9 @@ Vue.config.productionTip = false
 async function firebaseCallback(user) {
 
   if (user) {
-
+    registerServiceWorker('taxi').then(() => {
+      askForNotification('taxi', store);
+    });
     await store.dispatch('autoSignIn', {
       userId: user.uid,
       name: user.displayName,
@@ -32,7 +36,6 @@ async function firebaseCallback(user) {
     })
 
     await store.dispatch('loadTaxiAuth');
-    askForNotification('taxi', store);
     store.dispatch("notifications/loadNotificationsForTaxi");
     await store.dispatch("admin/loadAdmin");
 
