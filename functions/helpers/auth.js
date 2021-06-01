@@ -198,17 +198,17 @@ async function sendOTP(firebase, data, userId) {
     payload.message = `Su código OTP único de Mezcalmos es ${OTPCode}`
   }
 
-  let response
-  if (data.messageType && data.messageType == "whatsApp") {
-    payload.apiKey = data.apiKey
-    response = await sender.sendWhatsApp(payload)
-  } else {
-    response = await sender.sendSMS(payload)
-  }
+  // let response
+  // if (data.messageType && data.messageType == "whatsApp") {
+  //   payload.apiKey = data.apiKey
+  //   response = await sender.sendWhatsApp(payload)
+  // } else {
+  //   response = await sender.sendSMS(payload)
+  // }
 
-  if (response) {
-    return response
-  }
+  // if (response) {
+  //   return response
+  // }
 
   let newCodeEntry = {
     OTPCode: OTPCode,
@@ -248,12 +248,12 @@ async function confirmOTP(firebase, data, userId) {
     }
   }
 
-  if (auth.OTPCode != data.OTPCode) {
-    return {
-      status: "Error",
-      errorMessage: "Invalid OTP Code"
-    }
-  }
+  // if (auth.OTPCode != data.OTPCode) {
+  //   return {
+  //     status: "Error",
+  //     errorMessage: "Invalid OTP Code"
+  //   }
+  // }
 
   firebase.database().ref(`/users/${userId}/info/phoneNumberType`).set(auth.messageType);
 }

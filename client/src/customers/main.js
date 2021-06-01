@@ -11,7 +11,9 @@ import {
 import {
   askForNotification
 } from '@/shared/mixins/functions'
-import "./registerServiceWorker";
+import {
+  registerServiceWorker
+} from "../shared/config/registerServiceWorker"
 import {
   i18n
 } from '@/shared/config/i18n'
@@ -19,9 +21,10 @@ import {
 initModules(Vue)
 //Firebase state changed function
 async function firebaseCallback(user) {
+  registerServiceWorker('customer').then(() => {
+    askForNotification('customer', store);
+  });
   if (user) {
-    console.log(user);
-    
     await store.dispatch("autoSignIn", {
       userId: user.uid,
       name: user.displayName,
@@ -33,7 +36,7 @@ async function firebaseCallback(user) {
     store.dispatch("notifications/loadNotificationsForCustomer");
     store.dispatch("savedLocations/loadLocations");
     store.dispatch("admin/loadAdmin");
-    askForNotification('customer', store)
+    
     await store.dispatch('loadCurrentOrder');
     let dbUser = store.getters["userInfo"]
     if (!dbUser || !dbUser.displayName || !dbUser.photo) {
