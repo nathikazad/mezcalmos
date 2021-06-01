@@ -33,6 +33,7 @@
         to="/enterNumber?method=SMS"
         :mode="{ dark: true, bg_SMS: true }"
         class="float_btn flex align_center center"
+        v-if="isTaxi"
       >
         <fa icon="envelope" class="mr-1"></fa>
         {{$t('shared.login.loginWithSms')}}
@@ -63,6 +64,9 @@ export default {
         this.countryCodeValidator &&
         this.phoneNumberValidator
       );
+    },
+    isTaxi() {
+      return this.$store.getters.appName == "taxi"
     }
   },
   methods: {

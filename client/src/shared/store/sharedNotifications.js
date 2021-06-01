@@ -108,6 +108,9 @@ export default {
     },
     saveUserNotificationInfo(context, payload) {
       let userId = context.rootGetters.userId
+      if(!userId){
+        return
+      }
       let appName = context.rootGetters.appName;
       // console.log("Saving notification info, ", appName)
       if (appName == "customer"){
