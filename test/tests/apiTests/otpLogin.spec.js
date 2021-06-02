@@ -115,6 +115,7 @@ describe('Mezcalmos', () => {
           validTimeForNextCodeGeneration = validTimeForNextCodeGeneration.toUTCString()
           
           expect(authInfo.codeGeneratedTime).toBe(validTimeForNextCodeGeneration)
+          
 
     });
 });
