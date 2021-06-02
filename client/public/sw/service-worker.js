@@ -168,12 +168,12 @@ self.addEventListener('fetch', function (event) {})
 //     //# sourceMappingURL=sw-customer.js.map
 // }
 const pushEventListener = function (self) {
-    console.log("activating push listener")
+    // console.log("activating push listener")
     self.addEventListener("push", (event) => {
-        console.log("push event")
+        // console.log("push event")
         if (event.data) {
             let message = JSON.parse(event.data.text())
-            console.log(message);
+            // console.log(message);
             let title;
             if(message.notificationType == 'newMessage')
                 title = message.sender.name
@@ -209,10 +209,10 @@ const pushEventListener = function (self) {
     });
 }
 const createBroadcastChannel = function (self, swName) {
-  console.log("creating broadcast channel")
+//   console.log("creating broadcast channel")
   const channel = new BroadcastChannel(`sw-${swName}-messages`);
   channel.addEventListener("message", async event => {
-    console.log('service worker ', event);
+    // console.log('service worker ', event);
     // console.log("sw message recieved")
     if (event.data.msg == 'getSubscription') {
       // console.log("get subscription")
