@@ -2,13 +2,12 @@ const auth = require("../../libraries/rest/auth")
 const helper = require("../../libraries/helpers")
 const admin = require("firebase-admin");
 
+jest.setTimeout(60000)
+
 admin.initializeApp({
   projectId: "mezcalmos-31f1c",
   databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com"
 });
-
-
-
 
 describe('Mezcalmos', () => {
   beforeAll(async () => {

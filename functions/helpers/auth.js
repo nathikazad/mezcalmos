@@ -6,6 +6,7 @@ module.exports = {
 }
 const sender = require("./sender")
 
+
 async function sendOTPForLogin(firebase, data) {
   if (!data.phoneNumber) {
     return {
@@ -13,9 +14,9 @@ async function sendOTPForLogin(firebase, data) {
       errorMessage: "Required phone number"
     }
   }
-
-  if (!data.messageType &&
-    (data.messageType != "SMS" || data.messageType != "whatsApp")) {
+  // change logical operators
+  if (!data.messageType || 
+      (data.messageType != "SMS" &&  data.messageType != "whatsApp")) {
     return {
       status: "Error",
       errorMessage: "Required messageType and has to be SMS or whatsApp"
@@ -56,14 +57,31 @@ async function getAuthUsingOTP(firebase, data){
       errorMessage: "Required phone number and OTPCode"
     }
   }
-  let user = await firebase.auth().getUserByPhoneNumber(data.phoneNumber);
-  // console.log(user)
-  if (!user) {
-    return {
-      status: "Error",
-      errorMessage: "Invalid OTP Code"
+  let user
+  try{
+    user = await firebase.auth().getUserByPhoneNumber(data.phoneNumber)
+  }catch(e){
+    if(e.errorInfo.code == 'auth/user-not-found'){
+      return{
+        status: 'Error',
+        errorMessage: 'Invalid OTP Code'
+      }
+    }else{
+      return{
+        status: 'Error',
+        errorMessage: e.errorInfo.message
+      }
     }
   }
+ 
+  // let user = await firebase.auth().getUserByPhoneNumber(data.phoneNumber);
+  // // console.log(user)
+  //  if (!user) {
+  //  return {
+  //    status: "Error",
+  //    errorMessage: "Invalid OTP Code"
+  //    }
+  //  }
 
   let response = await confirmOTP(firebase, data, user.uid);
   if (response) {
@@ -101,7 +119,7 @@ async function sendOTPForNumberChange(firebase, data, userId) {
   let user;
   try {
     user = await firebase.auth().getUserByPhoneNumber(data.phoneNumber);
-    console.log(user)
+    //console.log(user)
     if (user){
       return {
         status: "Error",
@@ -244,7 +262,7 @@ async function confirmOTP(firebase, data, userId) {
   if (Date.now() > expirationTime) {
     return {
       status: "Error",
-      errorMessage: "Invalid OTP Code"
+      errorMessage: "Invalid OTP Code, time expired"
     }
   }
 

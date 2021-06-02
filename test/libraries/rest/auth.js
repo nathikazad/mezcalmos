@@ -1,5 +1,5 @@
 module.exports = {
-  signUp, whatsAppLogin
+  signUp, sendCodeLogin, getAuth
 }
 
 
@@ -33,8 +33,13 @@ async function signUp(admin, data) {
 //   }, {param});
 // },
 
-async function whatsAppLogin(data) {
-  let response = await callFunction('sendOTP', data)
+async function sendCodeLogin(data) {
+  let response = await callFunction('sendOTPForLogin', data)
+  return response
+}
+
+async function getAuth(data) {
+  let response = await callFunction('getAuthUsingOTP', data)
   return response
 }
 
