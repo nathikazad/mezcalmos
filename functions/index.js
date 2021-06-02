@@ -35,6 +35,7 @@ exports.processSignUp = functions.auth.user().onCreate(async user => {
     email: user.email
   });
 });
+
 exports.changeName = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
   '/users/{userId}/info/displayName').onUpdate(async (snap, context) => {
   let firebase = getFirebase();
@@ -52,7 +53,6 @@ exports.addHasuraClaims = functions.https.onCall(async (data, context) => {
   let response = hasura.setClaim(firebase, context.auth.uid);
   return response
 });
-
 
 exports.requestTaxi = functions.https.onCall(async (data, context) => {
   if (!context.auth) {
@@ -78,7 +78,6 @@ exports.acceptTaxiOrder = functions.https.onCall(async (data, context) => {
   return response
 });
 
-
 exports.startTaxiRide = functions.https.onCall(async (data, context) => {
   if (!context.auth) {
     return {
@@ -90,7 +89,6 @@ exports.startTaxiRide = functions.https.onCall(async (data, context) => {
   let response = await taxi.start(firebase, context.auth.uid)
   return response
 });
-
 
 exports.cancelTaxiFromCustomer = functions.https.onCall(async (data, context) => {
   if (!context.auth) {
