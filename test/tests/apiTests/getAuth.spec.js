@@ -1,6 +1,7 @@
 const auth = require("../../libraries/rest/auth")
 const helper = require("../../libraries/helpers")
 const admin = require("firebase-admin")
+const { expectUnauthorized } = require("../../libraries/helpers")
 
 
 jest.setTimeout(800000)
@@ -101,12 +102,24 @@ describe('Mezcalmos', () => {
          response = await auth.getAuth(data)
          expect(response.result.status).toBe('Error')
          expect(response.result.errorMessage).toBe("Invalid OTP Code")
+         //
+
+        //  data = {
+        //       //"messageType": "whatsApp",
+        //       "phoneNumber":"+12098628445",
+        //       "OTPCode": OTPCode,
+        //       "apiKey": "uHzCiX_sandbox"
+        //     }
+        //     response = await auth.getAuth(data)
+        //     console.log(response);
+
+         
 
     
     
         //Test when user exist but time for confirmation is expired:
     
-               //By using sleep function
+               //By using sleep function 
     
             data = {
               "messageType": "whatsApp",
@@ -132,10 +145,11 @@ describe('Mezcalmos', () => {
             let authObject = {
                 "OTPCode": "333333",
                 "attempts": "0",
+                "messageType": 'whatsApp',
                 "codeGeneratedTime": new Date(2021, 4, 30, 11, 20, 21, 22).toUTCString()
             }
             data = {
-               "messageType": 'whatsApp',
+              // "messageType": 'whatsApp',
                "phoneNumber": "+12054521583",
                "OTPCode": authObject.OTPCode,
                "apiKey": "uHzCiX_sandbox"
@@ -177,7 +191,7 @@ describe('Mezcalmos', () => {
             expect(response.result.status).toBe('Error')
             // expect(response.result.errorMessage).toBe("Exceeded number of tries")  
     
-            //Test when all conditions are respected:
+          //Test when all conditions are respected:
             let newDate = new Date(Date.now())
             let newCodeGeneratedTime = newDate.toUTCString()
             console.log(newCodeGeneratedTime);
@@ -185,34 +199,16 @@ describe('Mezcalmos', () => {
             admin.database().ref(`/users/${testUserId}/auth/codeGeneratedTime`).set(newCodeGeneratedTime);
            // send confirmation
             response = await auth.getAuth(data) 
-            console.log(response);
-           // expect(response.result.status).toBe('Success')
-        //    //verify removing auth object, after confirmation 
-        //     let lastAuthInfo = (await admin.database().ref(`users/${testUserId}/auth`).once('value')).val() 
-        //     expect(lastAuthInfo).toBeNull()
-        // we should require messageTYpe in data 
-           
+            expect(response.result.status).toBe('Success')  
+            
+            let userInfoConfirmed = (await admin.database().ref(`users/${testUserId}/info`).once('value')).val()
+            console.log(userInfoConfirmed);
+             let authInfoConfirmed = (await admin.database().ref(`users/${testUserId}/auth`).once('value')).val() 
+            // console.log(userInfo)
 
-            
-    
-            
-             
-              
-    
-    
-             
-              
-    
-              
-              
-    
-            
-            
-             
-           
-    
-           
-               
+            expect(userInfoConfirmed.phoneNumberType).toBe(authObject.messageType)
+            expect(authInfoConfirmed).toBeNull()
+                      
     })
 })
 afterAll(() => {

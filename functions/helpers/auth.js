@@ -278,6 +278,7 @@ async function confirmOTP(firebase, data, userId) {
       errorMessage: "Invalid OTP Code"
     }
   }
-
+  
   firebase.database().ref(`/users/${userId}/info/phoneNumberType`).set(auth.messageType);
+  
 }
