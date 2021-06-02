@@ -57,6 +57,7 @@ export default {
       context.commit('saveLogoutCallback', {
         func: function (userId, updateDriverIntervalId, updateRouteIntervalId, context) {
           firebaseDatabase().ref(`taxiDrivers/${userId}/state`).off()
+          firebaseDatabase().ref(`taxiDrivers/${userId}/state/isLooking`).set(false)
           clearInterval(updateDriverIntervalId);
           clearInterval(updateRouteIntervalId);
           context.commit('clearAll')
