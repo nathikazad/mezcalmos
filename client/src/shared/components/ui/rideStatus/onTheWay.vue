@@ -29,6 +29,7 @@
             bg_diagonal: true,
             small: true,
           }"
+          :loading="loading"
           :link="true"
           :to="{
               path: messageLink,

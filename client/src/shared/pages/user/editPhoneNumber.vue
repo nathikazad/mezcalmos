@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="regular my-4">{{$t('shared.login.otpCode')}}</h1>
+    <h1 class="regular my-4">{{$t('shared.userInfo.editPhoneNumber')}}</h1>
     <section class="bg_white border">
       <h3 class="regular">{{$t('shared.login.enterPhoneNumber')}}</h3>
       <div class="sign_in_with_phone">
@@ -27,10 +27,10 @@
         <div class="text_error txt_center alert_field" v-show="alertMessage">{{alertMessage}}</div>
       </div>
     </section>
-    
+
     <h6 class="text_blackL my-3">{{$t('shared.login.twilioNote')}}</h6>
     <base-button
-      @click.native="loginWithPhoneNumber"
+      @click.native="editPhoneNumber"
       :mode="{ dark: true, bg_diagonal: true,disabled:disabled }"
       class="float_btn flex align_center center fill_width bold"
       :loading="isLoading"
@@ -63,8 +63,6 @@ export default {
   },
   methods: {
     checkCountryCode(e) {
-      console.log(e.target.value);
-
       if (e.target.value.length > 3) {
         e.target.nextElementSibling.focus();
       }
@@ -86,7 +84,7 @@ export default {
         this.alertMessage = "";
       }
     },
-    async loginWithPhoneNumber() {
+    async editPhoneNumber() {
       if (!this.disabled) {
         this.isLoading = true;
         // this.appVerifier.render().then(widgetId => {
@@ -94,7 +92,7 @@ export default {
         // });
         let loginType = this.$route.query.method;
 
-        let response = await this.$store.dispatch("sendOTPForLogin", {
+        let response = await this.$store.dispatch("sendOTPForNumberChange", {
           messageType: loginType,
           phoneNumber: this.countryCode.toString() + this.phoneNumber.toString()
         });
@@ -106,7 +104,7 @@ export default {
           }, 3000);
         } else {
           this.isLoading = false;
-          this.$router.push(`/validation?method=${loginType}`);
+          this.$router.push(`/confirmNumber?method=${loginType}`);
         }
       }
     }

@@ -30,22 +30,22 @@
               </span>
               <div slot="desc" class="flex align_center desc_slot">
                 <span class="t-8 flex align_center fill_width">
-                  <fa icon="map-marker"></fa>
-                  <span
-                    :title="orders[orderId].from.address"
-                  >{{ orders[orderId].from.address | formatMessage(10) }}</span>
+                  <span :title="orders[orderId].from.address" class="grow2 ellipsis">
+                    <fa icon="map-marker"></fa>
+                    {{ orders[orderId].from.address}}
+                  </span>
                   <strong class="text_blackD t-10 point">.</strong>
-                  <span>
+                  <span class="shrink0">
                     <fa icon="map-pin"></fa>
                     {{deepFind(orders[orderId], "customer.distance") }}km
                   </span>
                   <strong class="text_blackD t-10 point">.</strong>
-                  <span>
+                  <span class="shrink0">
                     <fa icon="route"></fa>
                     {{deepFind(orders[orderId], "routeInformation.distance.text")}}
                   </span>
                   <strong class="text_blackD t-10 point">.</strong>
-                  <span>
+                  <span class="shrink0">
                     <fa icon="stopwatch"></fa>
                     {{deepFind(orders[orderId], "routeInformation.duration.text")}}
                   </span>

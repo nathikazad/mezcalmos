@@ -32,14 +32,22 @@
           </span>
         </span>
       </h1>-->
-    <div  v-if="showArrows">
-        <div @click="nextOrder" v-if="nextOrderId" class="bg_white right_chevron chevron flex align_center center elevate_2">
-        <fa icon="chevron-right"></fa>
+      <div v-if="showArrows">
+        <div
+          @click="nextOrder"
+          v-if="nextOrderId"
+          class="bg_white right_chevron chevron flex align_center center elevate_2"
+        >
+          <fa icon="chevron-right"></fa>
+        </div>
+        <div
+          @click="precedentOrder"
+          v-if="precedentOrderId"
+          class="bg_white left_chevron chevron flex align_center center elevate_2"
+        >
+          <fa icon="chevron-left"></fa>
+        </div>
       </div>
-      <div @click="precedentOrder" v-if="precedentOrderId" class="bg_white left_chevron chevron flex align_center center elevate_2">
-        <fa icon="chevron-left"></fa>
-      </div>
-    </div>
       <input-location
         :disabled="true"
         :to="orderDetails.to"
@@ -75,6 +83,7 @@
         <!-- On the way  Status-->
         <onTheWay
           :orderDetails="orderDetails"
+          :loading="loading"
           type="taxi"
           slot="details"
           class="routePill"
@@ -94,6 +103,7 @@
           class="routePill"
           :messageLink="messageLink"
           :orderMessages="orderMessages"
+          :loading="loading"
           @cancelPopUp="cancelPopUp=true"
           @finishRide="finishRide"
         ></inTransit>
@@ -102,6 +112,7 @@
         <droppedOff
           v-else-if="orderStatusDroppedOff"
           :orderDetails="orderDetails"
+          :loading="loading"
           type="taxi"
           slot="details"
           class="routePill"
@@ -307,7 +318,6 @@ export default {
       });
       this.cancelledByTaxi = true;
       // this.nextAvailableOrder()
-      this.loading = false;
     },
     async acceptRide() {
       this.loading = true;
@@ -375,8 +385,8 @@ export default {
     margin: 0 0.3rem;
   }
 }
-.chevron{
-   height: 3rem;
+.chevron {
+  height: 3rem;
   width: 2rem;
   position: absolute;
   top: calc(50% - 1.5rem);
@@ -385,13 +395,11 @@ export default {
 }
 .right_chevron {
   right: 0;
-    border-radius: 12px 0 0 12px;
-
+  border-radius: 12px 0 0 12px;
 }
 .left_chevron {
- left: 0;
-   border-radius:0 12px 12px 0;
-
+  left: 0;
+  border-radius: 0 12px 12px 0;
 }
 .nav-btn {
   height: 2rem;

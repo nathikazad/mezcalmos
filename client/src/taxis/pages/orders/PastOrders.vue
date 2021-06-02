@@ -20,6 +20,14 @@
             <avatar size="2.4rem" :url="order.customer.image" slot="image"></avatar>
             <div slot="title" class="bold">{{ order.customer.name }}</div>
             <span slot="aside" class="regular">
+              <span
+                class="bold align_center flex"
+                v-if="deepFind(orders[orderId], 'routeInformation.estimatedPrice')"
+              >
+                <img src="@/shared/static/img/money.svg" class="money_icon mr-1" />
+                &nbsp;{{ Number.parseFloat(deepFind(orders[orderId], 'routeInformation.estimatedPrice')).toFixed(2)}}
+              </span>
+              &nbsp;
               <fa icon="clock"></fa>
               &nbsp;{{ order.acceptRideTime | moment("LT") }}
             </span>
@@ -51,6 +59,13 @@
             </div>
             <div slot="title" class="bold">Cancelled</div>
             <span slot="aside" class="regular">
+              <span
+                class="bold align_center flex"
+                v-if="deepFind(orders[orderId], 'routeInformation.estimatedPrice')"
+              >
+                <img src="@/shared/static/img/money.svg" class="money_icon mr-1" />
+                &nbsp;{{ Number.parseFloat(deepFind(orders[orderId], 'routeInformation.estimatedPrice')).toFixed(2)}}
+              </span>
               <fa icon="clock"></fa>
               &nbsp;{{ order.acceptRideTime | moment("LT") }}
             </span>
@@ -117,6 +132,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.money_icon {
+  width: 1.5rem;
+}
 .image {
   width: 3.75rem;
   height: 3.75rem;

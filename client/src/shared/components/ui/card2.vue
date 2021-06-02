@@ -2,7 +2,7 @@
   <div class="card flex align_center space_between wrap">
     <div class="flex align_center fill_width">
       <slot name="image"></slot>
-      <div class="fill_width text">
+      <div class="fill_width text desc_part">
         <h3 class="flex align_center space_between fill_width t-10">
           <slot name="title"></slot>
           <span class="t-8">
@@ -29,6 +29,9 @@ export default {};
   h3,
   h4 {
     margin: 0;
+  }
+  .desc_part {
+    width: calc(100% - 2.5rem);
   }
 }
 </style>
