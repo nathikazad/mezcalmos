@@ -21,7 +21,7 @@
             @input="checkDigit"
           />
         </div>
-        <div @click="loginWithPhoneNumber" class="pa-1 pointer resend">{{$t('shared.login.resend')}}</div>
+        <div @click="editPhoneNumber" class="pa-1 pointer resend">{{$t('shared.login.resend')}}</div>
 
         <!-- <div id="recaptcha-container"></div> -->
       </div>
@@ -77,9 +77,12 @@ export default {
       if (this.OTPCode.join("").length == 6) {
         this.isLoading = true;
 
-        let response = await this.$store.dispatch("signInUsingOTP", {
-          OTPCode: this.OTPCode.join("")
-        });
+        let response = await this.$store.dispatch(
+          "confirmNumberChangeUsingOTP",
+          {
+            OTPCode: this.OTPCode.join("")
+          }
+        );
         if (response.status == "Error") {
           this.alertMessage = response.errorMessage;
           this.isLoading = false;
@@ -88,26 +91,25 @@ export default {
           }, 3000);
         } else {
           // this.$router.push("/");
+          this.$router.push("/userinfo");
           this.isLoading = false;
         }
       } else {
         this.alertMessage = "Please check code format";
       }
     },
-    async loginWithPhoneNumber() {
-      console.log(this.phoneNumber);
-
-      if (this.phoneNumber) {
+    async editPhoneNumber() {
+      if (!this.disabled) {
         this.isLoading = true;
+        // this.appVerifier.render().then(widgetId => {
 
+        // });
         let loginType = this.$route.query.method;
 
-        let response = await this.$store.dispatch("sendOTPForLogin", {
+        let response = await this.$store.dispatch("sendOTPForNumberChange", {
           messageType: loginType,
-          phoneNumber: this.phoneNumber
+          phoneNumber: this.countryCode.toString() + this.phoneNumber.toString()
         });
-        console.log(response);
-
         if (response.status == "Error") {
           this.alertMessage = response.errorMessage;
           this.isLoading = false;

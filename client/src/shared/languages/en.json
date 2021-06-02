@@ -125,7 +125,7 @@
             "otpCode": "OTP Code",
             "enterPhoneNumber": "Enter phone number to recieve OTP code",
             "submit": "SUBMIT",
-            "twilioNote":"By continuing you will receive a verification code to your phone number by SMS. Message and data rates may apply."
+            "twilioNote": "By continuing you will receive a verification code to your phone number by SMS. Message and data rates may apply."
         },
         "messages": {
             "title": "Messages",
@@ -143,13 +143,16 @@
         "userInfo": {
             "title": " User <br/> Information ",
             "editInfo": "Edit  <br/> Information",
+            "editPhoneNumber": "Change Phone Number",
             "addInfo": "Add  <br/> Information",
             "editBtn": "EDIT INFORMATION",
             "deleteBtn": "Delete Account",
             "saveBtn": "SAVE",
             "editImgMsg": "Click on image to change it",
             "fullName": "Full Name",
-            "clickToUploadImg": "clickToUpdate"
+            "phoneNumber": "Phone Number",
+            "clickToUploadImg": "clickToUpdate",
+            "addPhoneNumber":"Add phone number"
         },
         "navDrawer": {
             "userInfo": "User Information",
@@ -192,7 +195,8 @@
             "search": "Search",
             "writeHere": "Write here",
             "displayName": "Enter Display Name",
-            "phone": "Enter Phone Number"
+            "phone": "Enter Phone Number",
+            "phoneNumber":"+52123456.."
 
         }
     }

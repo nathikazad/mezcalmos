@@ -143,12 +143,16 @@
         "userInfo": {
             "title": " Información <br/> del usuario ",
             "editInfo": "Editar  <br/> Información",
+            "editPhoneNumber": "Cambiar número de teléfono",
+            "addInfo": "Agregar <br/> Información",
             "editBtn": "EDITAR INFORMACION",
             "deleteBtn": "Borrar cuenta",
             "saveBtn": "GUARDAR",
             "editImgMsg": "Click on image to change it",
             "fullName": "Nombre completo",
-            "clickToUploadImg": "clickToUpdateEs"
+            "phoneNumber": "Número de teléfono",
+            "clickToUploadImg": "clickToUpdateEs",
+            "addPhoneNumber":"Agregar el número de teléfono"
         },
         "navDrawer": {
             "userInfo": "Información del usuario",

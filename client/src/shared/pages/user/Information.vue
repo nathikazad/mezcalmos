@@ -10,9 +10,9 @@
       </div>
 
       <h1 class="txt_center t-20">{{ deepFind(userInfo,'displayName') }}</h1>
-      <h3 class="txt_center" v-if="deepFind(userInfo,'phone')">
+      <h3 class="txt_center" v-if="deepFind(userInfo,'phoneNumber')">
         <fa icon="mobile"></fa>
-        &nbsp; {{ userInfo.phone }}
+        &nbsp; {{ userInfo.phoneNumber }}
       </h3>
     </div>
     <!-- editable information form -->
@@ -47,7 +47,7 @@
 
       <h5 class="txt_center">{{$t('shared.userInfo.editImgMsg')}}</h5>
 
-      <div class="text_field t-19">
+      <div class="text_field t-19 mt-2 mb-2">
         <label class="t-10">{{$t('shared.userInfo.fullName')}}</label>
         <input
           type="text"
@@ -56,6 +56,27 @@
           :value=" deepFind(newProfile,'displayName') "
           @input="paramValueChanged($event,'displayName','required')"
         />
+      </div>
+
+      <div class="text_field t-19 relative my-3">
+        <h3 class="txt_center flex align_center center" v-if="deepFind(userInfo,'phoneNumber')">
+          <fa icon="mobile" class="mr-2"></fa>
+          &nbsp;{{deepFind(userInfo,'phoneNumber')}}&nbsp;
+          <router-link to="/updateNumber?method=SMS"
+            class="elevate_1 t-10  edit_circle text_grey flex align-center ml-2 center pa-2 pointer"
+          >
+            <fa icon="pencil-alt"></fa>
+          </router-link>
+        </h3>
+        <h3 class="txt_center flex align_center center" v-else>
+          <fa icon="mobile" class="mr-2"></fa>
+          &nbsp;{{$t('shared.userInfo.addPhoneNumber')}}&nbsp;
+          <router-link to="/updateNumber?method=SMS"
+            class="elevate_1 t-10  edit_circle text_grey flex align-center ml-2 center pa-2 pointer"
+          >
+            <fa icon="pencil-alt"></fa>
+          </router-link>
+        </h3>
       </div>
     </div>
     <!-- editable information form -->
@@ -217,6 +238,11 @@ export default {
   right: 0.5rem;
   position: absolute;
   z-index: 3;
+}
+.edit_circle {
+  height: 2rem;
+  width: 2rem;
+  border-radius: 50%;
 }
 .show_percentage {
   position: absolute;

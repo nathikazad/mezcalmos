@@ -14,6 +14,8 @@ import EnterPhone from "@/shared/pages/user/enterPhone";
 import Validation from "@/shared/pages/user/validation";
 import Confirmation from './pages/introduction/confirmation'
 import MessageAdmin from "@/shared/pages/contact/View";
+import EditPhoneNumber from "@/shared/pages/user/editPhoneNumber";
+import ConfirmPhoneNumber from "@/shared/pages/user/confirmePhoneNumber";
 
 
 import NotFoundPage from '@/shared/pages/NotFound'
@@ -39,6 +41,10 @@ const router = new VueRouter({
       meta: { requiresAuth: true }, name: "orders" },
     { path: '/userinfo', component: UserInformationPage,
       meta: { requiresAuth: true }, name:"userinfo" },
+    { path: '/updateNumber', component: EditPhoneNumber,
+      meta: { requiresAuth: true }, name:"updateNumber" },
+    { path: '/confirmNumber', component: ConfirmPhoneNumber,
+      meta: { requiresAuth: true }, name:"confirmNumber" },
     { path: '/auth', component: LoginPage,
       meta: { requiresUnauth: true } , name: "login"},
       { path: "/validation", component: Validation,

@@ -48,6 +48,7 @@
           :orderDetails="orderDetails"
           :messageLink="messageLink"
           :orderMessages="orderMessages"
+          :loading="loading"
           @cancelPopUp="cancelPopUp=true"
           type="customer"
           slot="details"
@@ -62,50 +63,11 @@
           class="routePill"
           :messageLink="messageLink"
           :orderMessages="orderMessages"
+          :loading="loading"
           @cancelPopUp="cancelPopUp=true"
           v-else-if="orderDetails.status == 'inTransit'"
         ></inTransit>
-        <div
-          class="flex align_center space_between btnP bg_white elevate_2"
-          slot="action"
-          v-else-if="orderDetails.status == 'inTransit'"
-        >
-          <div class="w-70">
-            <div class="flex align_center">
-              <avatar size="2.4rem" :url="orderDetails.driver.image"></avatar>
-              <div class="user_name">
-                <h4 class="text_blackL">{{ orderDetails.driver.name }}</h4>
-                <h5 class="regular text_grey">{{$t('customer.taxiView.rideStarted')}}</h5>
-              </div>
-            </div>
-          </div>
-          <base-button
-            class="dark bg_light elevate_1 nav-btn text_primary"
-            :mode="{
-            bg_diagonal: true,
-            small: true,
-          }"
-            :link="true"
-            :to="{
-              path: messageLink,
-              
-            }"
-          >
-            <fa icon="envelope" />
-            <span class="badge bg_error" v-if="orderMessages"></span>
-          </base-button>
-          <base-button
-            class="elevate_1 nav-btn text_white"
-            :mode="{
-            bg_error: true,
-            small: true,
-          }"
-            @click.native="cancelPopUp=true"
-            :loading="loading"
-          >
-            <fa icon="times-circle" />
-          </base-button>
-        </div>
+       
         <!-- Droped off  Status-->
         <droppedOff
           v-else-if="orderDetails.status == 'droppedOff'"
@@ -214,7 +176,6 @@ export default {
         reason: this.$t(`customer.cancelOrder.${reason}`, "EN")
       });
       this.$router.push({ name: "home" });
-      this.loading = false;
     },
 
     async requestTaxi(ride) {
