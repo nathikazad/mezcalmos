@@ -22,10 +22,10 @@
             <span slot="aside" class="regular">
               <span
                 class="bold align_center flex"
-                v-if="deepFind(orders[orderId], 'routeInformation.estimatedPrice')"
+                v-if="deepFind(orders[orderId], 'estimatedPrice')"
               >
                 <img src="@/shared/static/img/money.svg" class="money_icon mr-1" />
-                &nbsp;{{ Number.parseFloat(deepFind(orders[orderId], 'routeInformation.estimatedPrice')).toFixed(2)}}
+                &nbsp;{{ Number.parseFloat(deepFind(orders[orderId], 'estimatedPrice')).toFixed(2)}}
               </span>
               &nbsp;
               <fa icon="clock"></fa>
@@ -61,10 +61,10 @@
             <span slot="aside" class="regular">
               <span
                 class="bold align_center flex"
-                v-if="deepFind(orders[orderId], 'routeInformation.estimatedPrice')"
+                v-if="deepFind(orders[orderId], 'estimatedPrice')"
               >
                 <img src="@/shared/static/img/money.svg" class="money_icon mr-1" />
-                &nbsp;{{ Number.parseFloat(deepFind(orders[orderId], 'routeInformation.estimatedPrice')).toFixed(2)}}
+                &nbsp;{{ Number.parseFloat(deepFind(orders[orderId], 'estimatedPrice')).toFixed(2)}}
               </span>
               <fa icon="clock"></fa>
               &nbsp;{{ order.acceptRideTime | moment("LT") }}

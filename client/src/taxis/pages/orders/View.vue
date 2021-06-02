@@ -254,7 +254,7 @@ export default {
       deep: true,
 
       handler: function(newVal, oldVal) {
-        console.log("inside handler", newVal, oldVal);
+        // console.log("inside handler", newVal, oldVal);
         if (this.cancelledByTaxi) {
           // driver cancelled
           this.cancelledByTaxi = false;
@@ -262,7 +262,7 @@ export default {
         }
         if (newVal) {
           //customer cancelled after ride accepted
-          console.log("newval", newVal);
+          // console.log("newval", newVal);
           if (
             newVal.status == "cancelled" &&
             this.deepFind(oldVal, "status") == "onTheWay"

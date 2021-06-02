@@ -159,24 +159,25 @@ export default {
           from: this.from,
           distance: this.distance,
           duration: this.duration,
-          estimatedPrice: this.estimatedPrice
+          estimatedPrice: this.estimatedPrice,
+          paymentType: "cash"
         };
-        console.log(data);
 
         if (this.isLoggedIn) {
           this.loading = true;
           let response = await this.$store.dispatch("taxis/requestTaxi", data);
 
           this.loading = false;
-          console.log(response);
 
           if (response.status == "Success") {
             this.$router.push({ path: `${response.orderId}` });
           } else {
-            this.alertStatment = response.data.i18nCode;
-            setTimeout(() => {
-              this.alertStatment = "";
-            }, 4000);
+            if(response.data && response.data.i18nCode) {
+              this.alertStatment = response.data.i18nCode;
+              setTimeout(() => {
+                this.alertStatment = "";
+              }, 4000);
+            }
           }
         } else {
           await this.$store.dispatch("taxis/saveAddress", data);

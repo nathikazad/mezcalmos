@@ -81,7 +81,7 @@ decode.integers = function (value) {
 export const askForNotification = (origin, store) => { //notif:{type:'YOU HAVE A NEW MESSAGE /orderCompletion..',msg:' Hi sir !'}
 
   try {
-    console.log("Requesting permission")
+    // console.log("Requesting permission")
     Notification.requestPermission(function (status) {
       if (status === 'granted') {
         // console.log("Permission granted")

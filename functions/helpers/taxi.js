@@ -22,31 +22,32 @@ async function request(firebase, uid, data) {
     }
   }
   
-  let payload = {}
-  if (!data.from || !data.to || !data.distance || !data.duration || !data.estimatedPrice) {
+  if (!data.from || !data.to || !data.distance || !data.duration 
+    || !data.estimatedPrice || !data.paymentType) {
     return {
       status: "Error",
-      errorMessage: "Required from, to, distance, duration and estimatedPrice"
+      errorMessage: "Required from, to, distance, duration, estimatedPrice and paymentType"
     }
   }
-  // Check valid values for from
-  payload.from = data.from;
-  
-    
-  payload.to = data.to
-  payload.distance = data.distance
-  payload.duration = data.duration
-  payload.estimatedPrice = data.estimatedPrice
-  
   let user = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val();
-  payload.customer = {
-    id: uid,
-    name: user.displayName.split(' ')[0],
-    image: user.photo
+  
+  let payload = {
+    from: data.from,
+    to: data.to,
+    distance: data.distance,
+    duration: data.duration,
+    estimatedPrice: data.estimatedPrice,
+    customer: {
+      id: uid,
+      name: user.displayName.split(' ')[0],
+      image: user.photo
+    },
+    orderType: "taxi",
+    status: "lookingForTaxi",
+    orderTime: (new Date()).toUTCString(),
+    paymentType: data.paymentType
   }
-  payload.orderType = "taxi";
-  payload.status = "lookingForTaxi";
-  payload.orderTime = (new Date()).toUTCString();
+
   let orderRef = await firebase.database().ref(`/orders/taxi`).push(payload);
   firebase.database().ref(`/users/${uid}/orders/${orderRef.key}`).set({
     orderType: "taxi",
@@ -55,10 +56,12 @@ async function request(firebase, uid, data) {
     routeInformation: {
       duration: payload.duration,
       distance: payload.distance,
-      estimatedPrice: data.estimatedPrice
     },
+    estimatedPrice: payload.estimatedPrice,
+    paymentType: payload.paymentType,
     to: payload.to,
-    from: payload.from
+    from: payload.from,
+
   });
   firebase.database().ref(`/openOrders/taxi/${orderRef.key}`).set({
     from: payload.from,
@@ -67,9 +70,9 @@ async function request(firebase, uid, data) {
     routeInformation: {
       duration: payload.duration,
       distance: payload.distance,
-      estimatedPrice: data.estimatedPrice
     },
-    orderTime: payload.orderTime
+    estimatedPrice: payload.estimatedPrice,
+    paymentType: payload.paymentType
   });
   firebase.database().ref(`/users/${uid}/state/currentOrder`).set(orderRef.key);
   let chat = {
@@ -140,7 +143,6 @@ async function cancelTaxiFromCustomer(firebase, uid, data) {
     delete update.rideFinishTime
     notification.push(firebase, order.driver.id, update,'taxi')
   }
-
   firebase.database().ref(`/chat/${orderId}`).remove()
   if(data.createAnotherOrder) {
     let response = await request(firebase, uid, order)
@@ -189,6 +191,7 @@ async function accept(firebase, data, uid) {
       errorMessage: "Driver and Customer cannot have same id"
     }
   }
+
   driver = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val();
   let response = await firebase.database().ref(`/orders/taxi/${data.orderId}`).transaction(function (order) {
     if (order != null) {
@@ -202,7 +205,7 @@ async function accept(firebase, data, uid) {
         }
         return order
       } else {
-        //console.log(`${data.orderId} status is not lookingForTaxi but ${order.status}`)
+        console.log(`${data.orderId} status is not lookingForTaxi but ${order.status}`)
         return;
       }
     }
@@ -224,8 +227,10 @@ async function accept(firebase, data, uid) {
       status: order.status,
       routeInformation: {
         duration: order.duration,
-        distance: order.distance
+        distance: order.distance,
       },
+      estimatedPrice: order.estimatedPrice,
+      paymentType: order.paymentType,
       to: order.to
     });
     firebase.database().ref(`/taxiDrivers/${uid}/state/currentOrder`).set(data.orderId)
