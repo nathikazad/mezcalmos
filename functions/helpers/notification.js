@@ -43,13 +43,13 @@ async function notifyDriversNewRequest(firebase) {
             console.log("web push error ",driverId)
         })
       }
-      if(!driver.location || !driver.location.lastUpdateTime) {
-        return
-      }
+      // if(!driver.location || !driver.location.lastUpdateTime) {
+      //   return
+      // }
       
-      let lastUpdateTime = new Date(driver.location.lastUpdateTime)
-      let staleTime = new Date(Date.now() - 2 * 60 * 60 * 1000);
-      if (lastUpdateTime > staleTime) {
+      // let lastUpdateTime = new Date(driver.location.lastUpdateTime)
+      // let staleTime = new Date(Date.now() - 2 * 60 * 60 * 1000);
+      // if (lastUpdateTime > staleTime) {
         firebase.database().ref(`/users/${driverId}/info`).once('value', function(snapshot){
           let userInfo = snapshot.val()
           if(userInfo.phoneNumber && userInfo.phoneNumberType){
@@ -68,7 +68,7 @@ async function notifyDriversNewRequest(firebase) {
             }
           }
         })
-      }
+      // }
 
       
       
