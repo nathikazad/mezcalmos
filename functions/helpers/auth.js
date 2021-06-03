@@ -30,7 +30,7 @@ async function sendOTPForLogin(firebase, data) {
       user = await firebase.auth().createUser({
         phoneNumber: data.phoneNumber
       })
-      firebase.database().ref(`/users/${user.uid}/info/phoneNumber`).set(user.phoneNumber);
+      firebase.database().ref(`/users/${user.uid}/info/phoneNumber`).set(data.phoneNumber);
     } else {
       return {
         status: "Error",
@@ -175,7 +175,6 @@ async function confirmNumberChangeUsingOTP(firebase, data, userId){
 
 async function sendOTP(firebase, data, userId) {
   let auth = (await firebase.database().ref(`users/${userId}/auth`).once('value')).val();
-  console.log(auth)
   if (auth && auth.codeGeneratedTime) {
     let lastCodeGeneratedTime = new Date(auth.codeGeneratedTime);
     let validTimeForNextCodeGeneration = new Date(lastCodeGeneratedTime.getTime() + 60 * 1000);
