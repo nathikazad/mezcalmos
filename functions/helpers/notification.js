@@ -33,7 +33,7 @@ async function notifyDriversNewRequest(firebase) {
   drivers = (await firebase.database().ref(`/taxiDrivers`).once('value')).val();
   for (let driverId in drivers){
     let driver = drivers[driverId]
-    if(driver.state.isLooking && !driver.state.currentOrder) {
+    if(driver.state&& driver.state.isLooking && !driver.state.currentOrder) {
       if(driver.notificationInfo){
         
           webpush.sendNotification(driver.notificationInfo, JSON.stringify({
