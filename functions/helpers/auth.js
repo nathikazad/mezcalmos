@@ -56,9 +56,11 @@ async function getAuthUsingOTP(firebase, data){
       errorMessage: "Required phone number and OTPCode"
     }
   }
-  let user = await firebase.auth().getUserByPhoneNumber(data.phoneNumber);
-  // console.log(user)
-  if (!user) {
+  
+  let user;
+  try {
+    user = await firebase.auth().getUserByPhoneNumber(data.phoneNumber);
+  } catch (e) {
     return {
       status: "Error",
       errorMessage: "Invalid OTP Code"
