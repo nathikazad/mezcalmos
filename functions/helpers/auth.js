@@ -182,7 +182,7 @@ async function sendOTP(firebase, data, userId) {
       let secondsLeft = parseInt((validTimeForNextCodeGeneration.getTime() - Date.now()) / 1000)
       return {
         status: "Error",
-        errorMessage: `Cannot generate another code for ${secondsLeft} seconds`
+        errorMessage: (data.language == "es") ? `No puedes generar otro codigo para ${secondsLeft} segundos` : `Cannot generate another code for ${secondsLeft} seconds`,
       }
     }
   }
@@ -191,12 +191,8 @@ async function sendOTP(firebase, data, userId) {
   OTPCode = String(OTPCode).padStart(6, '0')
 
   let payload = {
-    message: `Your one time Mezcalmos OTP code is ${OTPCode}`,
+    message: (data.language == "es") ? `Su código OTP único de Mezcalmos es ${OTPCode}` : `Your one time Mezcalmos OTP code is ${OTPCode}`,
     phoneNumber: data.phoneNumber
-  }
-
-  if (data.language == "es") {
-    payload.message = `Su código OTP único de Mezcalmos es ${OTPCode}`
   }
 
   let response
