@@ -71,6 +71,7 @@ async function request(firebase, uid, data) {
       duration: payload.duration,
       distance: payload.distance,
     },
+    orderTime: payload.orderTime,
     estimatedPrice: payload.estimatedPrice,
     paymentType: payload.paymentType
   });
