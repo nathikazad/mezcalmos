@@ -58,7 +58,8 @@ export default {
         to: payload.to,
         distance: payload.distance,
         duration: payload.duration,
-        estimatedPrice: payload.estimatedPrice
+        estimatedPrice: payload.estimatedPrice,
+        paymentType: "cash"
       })).data;
       if(response.status == "Error") {
         console.log(response.errorMessage)
