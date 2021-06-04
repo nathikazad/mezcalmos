@@ -1,5 +1,6 @@
 module.exports = {
   request,
+  expireOrder,
   cancelTaxiFromCustomer,
   accept,
   start,
@@ -153,6 +154,25 @@ async function cancelTaxiFromCustomer(firebase, uid, data) {
       status: "Success"
     };
   }
+}
+
+function expireOrder(firebase, orderId, customerId) {
+  console.log(`Removing order ${orderId} of ${customerId}`)
+  firebase.database().ref(`/users/${customerId}/state/currentOrder`).remove()
+  firebase.database().ref(`/users/${customerId}/orders/${orderId}`).remove();
+  firebase.database().ref(`/openOrders/taxi/${orderId}`).remove();
+  firebase.database().ref(`/chat/${orderId}`).remove();
+  firebase.database().ref(`/orders/taxi/${orderId}/status`).set("expired")
+  setTimeout(function(){
+      firebase.database().ref(`/orders/taxi/${orderId}`).remove()
+  }, 1000);
+  notification.push(firebase, customerId, {
+    status: "expired",
+    notificationType: "orderStatusChange",
+    orderId: orderId,
+    orderType: "taxi",
+    rideFinishTime: (new Date()).toUTCString()
+  })
 }
 
 async function accept(firebase, data, uid) {
