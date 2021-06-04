@@ -5,6 +5,8 @@
   "scripts": {
     "emulator": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 firebase emulators:start --export-on-exit=../test/data/newDummyData",
     "emulator:onlyFunctions": "firebase emulators:start --only functions",
+    "supervisor": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 MEZC_API_KEYS='../functions/.runtimeconfig.json' node ../supervisor/index.js",
+    "supervisor:test": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 MEZC_API_KEYS='../functions/.runtimeconfig.json' node ../supervisor/index.js test",
     "loadData": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 node ../test/loadData.js",
     "serve:customers": "vue-cli-service serve src/customers/main.js",
     "test:customers": "vue-cli-service serve --mode test --port 8080 src/customers/main.js",
@@ -34,7 +36,8 @@
     "test:all": "npm-run-all --parallel test:taxis test:customers test:admin",
     "emulate:allApps": "npm-run-all --parallel emulate:taxis emulate:customers emulate:admin",
     "emulate:allApps:onlyFunctions": "npm-run-all --parallel emulate:taxis:onlyFunctions emulate:customers:onlyFunctions emulate:admin:onlyFunctions",
-    "emulate:all": "npm-run-all --parallel emulate:allApps emulator",
+    "emulate:all": "npm-run-all --parallel emulate:allApps emulator supervisor",
+    "emulate:all:supervisor:test": "npm-run-all --parallel emulate:allApps emulator supervisor:test",
     "emulate:all:wdata": "npm-run-all --parallel emulate:all emulator:loadData",
     "emulate:all:onlyFunctions": "npm-run-all --parallel emulate:allApps:onlyFunctions emulator:onlyFunctions",
     "deploy:all": "node scripts/run --command deploy --app all --mode production",
