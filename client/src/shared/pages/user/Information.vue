@@ -10,10 +10,28 @@
       </div>
 
       <h1 class="txt_center t-20">{{ deepFind(userInfo,'displayName') }}</h1>
-      <h3 class="txt_center" v-if="deepFind(userInfo,'phoneNumber')">
-        <fa icon="mobile"></fa>
-        &nbsp; {{ userInfo.phoneNumber }}
-      </h3>
+      <div class="text_field t-19 relative my-3">
+        <h3 class="txt_center flex align_center center" v-if="deepFind(userInfo,'phoneNumber')">
+          <fa icon="mobile" class="mr-2"></fa>
+          &nbsp;{{deepFind(userInfo,'phoneNumber')}}&nbsp;
+          <router-link
+            to="/updateNumber?method=SMS"
+            class="elevate_1 t-10 edit_circle text_grey flex align-center ml-2 center pa-2 pointer"
+          >
+            <fa icon="pencil-alt"></fa>
+          </router-link>
+        </h3>
+        <h3 class="txt_center flex align_center center" v-else>
+          <fa icon="mobile" class="mr-2"></fa>
+          &nbsp;{{$t('shared.userInfo.addPhoneNumber')}}&nbsp;
+          <router-link
+            to="/updateNumber?method=SMS"
+            class="elevate_1 t-10 edit_circle text_grey flex align-center ml-2 center pa-2 pointer"
+          >
+            <fa icon="pencil-alt"></fa>
+          </router-link>
+        </h3>
+      </div>
     </div>
     <!-- editable information form -->
     <div class="information" v-else>
@@ -62,8 +80,9 @@
         <h3 class="txt_center flex align_center center" v-if="deepFind(userInfo,'phoneNumber')">
           <fa icon="mobile" class="mr-2"></fa>
           &nbsp;{{deepFind(userInfo,'phoneNumber')}}&nbsp;
-          <router-link to="/updateNumber?method=SMS"
-            class="elevate_1 t-10  edit_circle text_grey flex align-center ml-2 center pa-2 pointer"
+          <router-link
+            to="/updateNumber?method=SMS"
+            class="elevate_1 t-10 edit_circle text_grey flex align-center ml-2 center pa-2 pointer"
           >
             <fa icon="pencil-alt"></fa>
           </router-link>
@@ -71,8 +90,9 @@
         <h3 class="txt_center flex align_center center" v-else>
           <fa icon="mobile" class="mr-2"></fa>
           &nbsp;{{$t('shared.userInfo.addPhoneNumber')}}&nbsp;
-          <router-link to="/updateNumber?method=SMS"
-            class="elevate_1 t-10  edit_circle text_grey flex align-center ml-2 center pa-2 pointer"
+          <router-link
+            to="/updateNumber?method=SMS"
+            class="elevate_1 t-10 edit_circle text_grey flex align-center ml-2 center pa-2 pointer"
           >
             <fa icon="pencil-alt"></fa>
           </router-link>
