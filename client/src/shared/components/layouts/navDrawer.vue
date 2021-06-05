@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-touch:swipe.left="swipeHandler" v-touch:moving="swipeHandler">
     <div class="nav_header flex align_center">
       <base-button
         @click.native="$emit('toggle')"
@@ -135,7 +135,10 @@ export default {
       this.$store.dispatch("logout");
       this.$emit("closeNavDrawer");
     },
-
+    swipeHandler(direction) {
+      console.log("swiping left", direction);
+      this.$emit("closeNavDrawer");
+    },
     changeLanguage(lang) {
       this.$store.dispatch("setLanguage", lang);
     }

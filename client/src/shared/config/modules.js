@@ -1,6 +1,6 @@
 import * as VueGoogleMaps from "vue2-google-maps";
 import GmapCustomMarker from "vue2-gmap-custom-marker";
-
+import Vue2TouchEvents from 'vue2-touch-events'
 import {
     ValidationProvider,
     ValidationObserver,
@@ -56,7 +56,8 @@ export function initModules(Vue) {
 
 
 
-
+    //vue touch events 
+    Vue.use(Vue2TouchEvents)
     //Vue google maps
     Vue.use(VueGoogleMaps, gmapsConfig);
     Vue.component("gmap-custom-marker", GmapCustomMarker);

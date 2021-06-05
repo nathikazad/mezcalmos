@@ -1,13 +1,37 @@
 <template>
   <div>
-    <h1 class="regular flex space_between align_center">{{$t('shared.messages.title')}}</h1>
+    <h1 class="regular flex space_between align_center">
+      {{$t('shared.messages.title')}}
+      <div class="flex">
+        <a
+          v-if="senderPhoneNumber"
+          :href="whatsappLink"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="ml-2 flex align_center center text_white bg_whatsApp whatsappLink"
+        >
+          <fa :solid="true" icon="whatsapp"></fa>
+        </a>
+        <a
+          v-if="senderPhoneNumber"
+          :href="'tel:'+senderPhoneNumber"
+          target="_blank"
+          class="ml-2 t-9 flex align_center center text_white bg_SMS whatsappLink"
+        >
+          <fa icon="phone-alt"></fa>
+        </a>
+      </div>
+    </h1>
 
     <div class="messages_body fit_container">
       <div class="user_info bg_light_grey border flex align_center space_between">
         <div class="flex align_center start" v-if="sender">
           <avatar size="2.4rem" :url="sender.image"></avatar>
-          <div class="user_name">
-            <h3>{{sender.name}}</h3>
+          <div class="user_name flex align_start">
+            <h3 class="flex align_center">
+              {{sender.name}}
+              <span class="regular ml-1" v-if="sender.taxiNumber">(sender.taxiNumber)</span>
+            </h3>
           </div>
         </div>
         <router-link :to="{name:'taxiView'}" tag="h4" class="externalLink pointer text_orderLink">
@@ -90,8 +114,10 @@ export default {
       return this.sender.phoneNumber;
     },
     whatsappLink() {
-      return `https://wa.me/${this.senderPhoneNumber}`
-    },
+      return this.senderPhoneNumber
+        ? `https://wa.me/${this.senderPhoneNumber}`
+        : "";
+    }
   },
   mounted() {
     setTimeout(() => {
@@ -194,6 +220,11 @@ export default {
 
 .icon_link {
   margin-right: 3px;
+}
+.whatsappLink {
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 50%;
 }
 .message_footer {
   height: 4.375rem;

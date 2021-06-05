@@ -5,8 +5,8 @@
       v-if="type=='customer'"
       slot="details"
       class="routePill w-100 mb-2"
-      :classes1="{'w-35':true,}"
-      :classes2="{'w-35':true,}"
+      :classes1="{'w-45':true,}"
+      :classes2="{'w-25':true,}"
       :classes3="{'w-30':true,}"
     >
       <userPart
@@ -15,6 +15,7 @@
         :avatar="orderDetails.driver.image"
         :name="orderDetails.driver.name"
         :extra="arrivalTime"
+        :taxiNumber="deepFind(orderDetails, 'driver.taxiNumber')"
       ></userPart>
 
       <price
