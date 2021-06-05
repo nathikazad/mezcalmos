@@ -12,7 +12,7 @@ let openOrdersTest = {}
 let openOrdersProduction = {}
 
 let checkOpenOrdersInterval = 60 //seconds
-let orderExpirationTime = 5 * 60 // seconds
+let orderExpirationLimit = 5 * 60 // seconds
 
 let idleTaxiInterval = 10 * 60 //seconds
 let offlineDriverTime = 3 * 60 * 60 //seconds
@@ -20,7 +20,7 @@ let offlineDriverTime = 3 * 60 * 60 //seconds
 if(process.argv[2] && process.argv[2] == "test") {
   console.log("Supervisor test mode")
   checkOpenOrdersInterval = 10 //seconds
-  orderExpirationTime = 30 // seconds
+  orderExpirationLimit = 30 // seconds
 
   idleTaxiInterval = 30 //seconds
   offlineDriverTime = 120 //seconds
@@ -43,7 +43,7 @@ function checkOpenOrders(firebase, openOrders){
   for(let orderId in openOrders) {
     if(openOrders[orderId].orderTime){
       let orderTime = new Date(openOrders[orderId].orderTime)
-      let orderExpirationTime = new Date(orderTime.getTime() + orderExpirationTime * 1000);
+      let orderExpirationTime = new Date(orderTime.getTime() + orderExpirationLimit * 1000);
       if (Date.now() > orderExpirationTime) {
         taxi.expireOrder(firebase, orderId, openOrders[orderId].customer.id);
       }

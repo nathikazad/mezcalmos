@@ -85,7 +85,8 @@ async function request(firebase, uid, data) {
   chat.participants[uid] = {
     name: user.displayName.split(' ')[0],
     image: user.photo,
-    particpantType: "customer"
+    particpantType: "customer",
+    phoneNumber: user.phoneNumber
   }
   firebase.database().ref(`/chat/${orderRef.key}`).set(chat);
   notification.notifyDriversNewRequest(firebase);
@@ -265,7 +266,8 @@ async function accept(firebase, data, uid) {
     firebase.database().ref(`/chat/${data.orderId}/participants/${uid}`).set({
       name: driver.displayName.split(' ')[0],
       image: driver.photo,
-      particpantType: "taxi"
+      particpantType: "taxi",
+      phoneNumber: driver.phoneNumber
     });
 
     notification.push(firebase, order.customer.id, {
