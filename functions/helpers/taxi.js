@@ -81,12 +81,11 @@ async function request(firebase, uid, data) {
     chatType: "order",
     orderType: "taxi"
   }
-  let phoneNumber = (user.phoneNumber) ? user.phoneNumber : null
   chat.participants[uid] = {
     name: user.displayName.split(' ')[0],
     image: user.photo,
     particpantType: "customer",
-    phoneNumber: phoneNumber
+    phoneNumber: (user.phoneNumber) ? user.phoneNumber : null
   }
   firebase.database().ref(`/chat/${orderRef.key}`).set(chat);
   notification.notifyDriversNewRequest(firebase);
@@ -223,7 +222,8 @@ async function accept(firebase, data, uid) {
         order.driver = {
           id: uid,
           name: driver.displayName.split(' ')[0],
-          image: driver.photo
+          image: driver.photo,
+          taxiNumber: (driver.taxiNumber) ? driver.taxiNumber : null
         }
         return order
       } else {
@@ -259,16 +259,17 @@ async function accept(firebase, data, uid) {
     firebase.database().ref(`/users/${order.customer.id}/orders/${data.orderId}`).update({
       driver: order.driver,
       acceptRideTime: order.acceptRideTime,
-      status: order.status
+      status: order.status,
+      taxiNumber: (driver.taxiNumber) ? driver.taxiNumber : null
     });
     firebase.database().ref(`/inProcessOrders/taxi/${data.orderId}`).set({driver: order.driver, customer: order.customer});
     firebase.database().ref(`/openOrders/taxi/${data.orderId}`).remove();
-    let phoneNumber = (driver.phoneNumber) ? driver.phoneNumber : null
     firebase.database().ref(`/chat/${data.orderId}/participants/${uid}`).set({
       name: driver.displayName.split(' ')[0],
       image: driver.photo,
       particpantType: "taxi",
-      phoneNumber: phoneNumber
+      phoneNumber: (driver.phoneNumber) ? driver.phoneNumber : null,
+      taxiNumber: (driver.taxiNumber) ? driver.taxiNumber : null
     });
 
     notification.push(firebase, order.customer.id, {
