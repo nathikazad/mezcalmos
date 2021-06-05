@@ -175,11 +175,11 @@ const pushEventListener = function (self) {
             let message = JSON.parse(event.data.text())
             // console.log(message);
             let title;
-            if(message.notificationType == 'newMessage')
+            if (message.notificationType == 'newMessage')
                 title = message.sender.name
-            else if(message.notificationType == 'newOrder')
+            else if (message.notificationType == 'newOrder')
                 title = "Nueva Orden"
-            else 
+            else
                 title = message.orderType;
             const body = message.message || message.status;
             const icon = "../img/icons/ms-icon-150x150.png";
@@ -189,6 +189,7 @@ const pushEventListener = function (self) {
                 icon: icon,
                 tag: tag,
                 requireInteraction: true,
+                renotify: true,
                 timestamp: message.time,
                 actions: [{
                     action: 'reply',
@@ -209,31 +210,31 @@ const pushEventListener = function (self) {
     });
 }
 const createBroadcastChannel = function (self, swName) {
-//   console.log("creating broadcast channel")
-  const channel = new BroadcastChannel(`sw-${swName}-messages`);
-  channel.addEventListener("message", async event => {
-    // console.log('service worker ', event);
-    // console.log("sw message recieved")
-    if (event.data.msg == 'getSubscription') {
-      // console.log("get subscription")
-      try {
-        //init subscription
-        const applicationServerKey = urlB64ToUint8Array(
-            "BGnr9cpGF42t09PccsyzeJADS1UPmZ4I_QiSY4mmPMTYcsgn5m2BrkPFR4r6gs3KEzMGOXwukjBwhWQ26_ikpMw"
-        );
-        const options = {
-            applicationServerKey,
-            userVisibleOnly: true
-        };
-        const subscription = await self.registration.pushManager.subscribe(options);
-        //send subscription to user side subscription
-        channel.postMessage({
-            subscription: JSON.stringify(subscription)
-        });
-        // console.log('subscription ',JSON.stringify(subscription))
-      } catch (err) {
-        console.log("Error", err);
-      }
-    }
-  });
+    //   console.log("creating broadcast channel")
+    const channel = new BroadcastChannel(`sw-${swName}-messages`);
+    channel.addEventListener("message", async event => {
+        // console.log('service worker ', event);
+        // console.log("sw message recieved")
+        if (event.data.msg == 'getSubscription') {
+            // console.log("get subscription")
+            try {
+                //init subscription
+                const applicationServerKey = urlB64ToUint8Array(
+                    "BGnr9cpGF42t09PccsyzeJADS1UPmZ4I_QiSY4mmPMTYcsgn5m2BrkPFR4r6gs3KEzMGOXwukjBwhWQ26_ikpMw"
+                );
+                const options = {
+                    applicationServerKey,
+                    userVisibleOnly: true
+                };
+                const subscription = await self.registration.pushManager.subscribe(options);
+                //send subscription to user side subscription
+                channel.postMessage({
+                    subscription: JSON.stringify(subscription)
+                });
+                // console.log('subscription ',JSON.stringify(subscription))
+            } catch (err) {
+                console.log("Error", err);
+            }
+        }
+    });
 }
