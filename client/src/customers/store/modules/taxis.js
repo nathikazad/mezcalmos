@@ -106,12 +106,11 @@ export default {
     },
     estimatePrice() {
       return async function (distance) {
-        console.log(distance)
         let pricePolicy = (await firebaseDatabase().ref(`pricePolicy`).once('value')).val();
         distance = parseFloat(distance);
         let perKmCost = (pricePolicy && pricePolicy.perKmCost) ? parseInt(pricePolicy.perKmCost) : 0;
         let minimumCost = (pricePolicy && pricePolicy.minimumCost) ? parseInt(pricePolicy.minimumCost) : 0
-        let estimate = distance * perKmCost
+        let estimate = parseInt(distance * perKmCost)
         return estimate > minimumCost ? estimate : minimumCost;
       }
     }
