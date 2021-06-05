@@ -30,7 +30,7 @@
           <div class="user_name flex align_start">
             <h3 class="flex align_center">
               {{sender.name}}
-              <span class="regular ml-1" v-if="sender.taxiNumber">(sender.taxiNumber)</span>
+              <span class="regular ml-1" v-if="sender.taxiNumber">({{sender.taxiNumber}})</span>
             </h3>
           </div>
         </div>
@@ -111,7 +111,7 @@ export default {
       return this.$store.getters["messages/value"];
     },
     senderPhoneNumber() {
-      return this.sender.phoneNumber;
+      return this.sender ? this.sender.phoneNumber : null;
     },
     whatsappLink() {
       return this.senderPhoneNumber
