@@ -54,7 +54,6 @@ function checkOpenOrders(firebase, openOrders){
 }
 
 setInterval(function(){
-  checkDriverStatus(testFirebase, openOrdersTest)
   testFirebase.database().ref(`/taxiDrivers`).once('value', function(snap) {
     checkDriverStatus(testFirebase, snap.val())
   });
@@ -70,9 +69,10 @@ function checkDriverStatus(firebase, drivers){
   for(let driverId in drivers) {
     let driver = drivers[driverId]
     if(!driver.state || !driver.state.isLooking)
-      return
+      continue
     if(!driver.location || !driver.location.lastUpdateTime) {
       setDriverOffline(firebase, driverId)
+      continue
     }
       
     let lastUpdateTime = new Date(driver.location.lastUpdateTime)

@@ -8,7 +8,6 @@ module.exports = {
   finish
 }
 
-const { database } = require("firebase-admin");
 const notification = require("./notification");
 
 //possible statuses: lookingForTaxi, onTheWay, inTransit, droppedOff
