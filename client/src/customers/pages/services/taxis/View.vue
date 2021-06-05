@@ -18,7 +18,7 @@
         translatePath="customer.cancelOrder"
         @picked="submitReposting($event)"
         @close="cancelPopUp=false"
-        :title="$t('customer.cancelOrder.taxiCancelled')"
+        :title="$t(`customer.cancelOrder.${popUpTitleI18n}`)"
         :icon="'do-not-enter'"
       ></pop-up>
       <input-location
@@ -67,7 +67,7 @@
           @cancelPopUp="cancelPopUp=true"
           v-else-if="orderDetails.status == 'inTransit'"
         ></inTransit>
-       
+
         <!-- Droped off  Status-->
         <droppedOff
           v-else-if="orderDetails.status == 'droppedOff'"
@@ -86,8 +86,9 @@
         ></cancelled>
       </input-location>
     </div>
-    <div v-else>
-      <h3>{{$t('customer.taxiView.loading')}} ...</h3>
+    <div v-else class="flex align_center center wrap">
+      <img class="w-80 mt-4" src="@/shared/static/img/noRide.svg" />
+      <p class="fill_width pa-3 text_grey txt_center">{{$t('customer.taxiView.noRide')}}</p>
     </div>
   </div>
 </template>
@@ -104,7 +105,8 @@ export default {
       loading: false,
       cancelPopUp: false,
       choiceList: ["noShow", "mistake", "other"],
-      cancelReport: false
+      cancelReport: false,
+      popUpTitleI18n: ""
     };
   },
   computed: {
@@ -161,8 +163,14 @@ export default {
       immediate: true,
       handler: function(newVal, oldVal) {
         if (newVal) {
-          if (newVal.status == "cancelled" && oldVal) {
-            this.cancelReport = true;
+          if (oldVal) {
+            if (newVal.status == "cancelled") {
+              this.popUpTitleI18n = "taxiCancelled";
+              this.cancelReport = true;
+            } else if (newVal.status == "expired") {
+              this.popUpTitleI18n = "orderExpired";
+              this.cancelReport = true;
+            }
           }
         }
       }

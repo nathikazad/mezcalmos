@@ -56,18 +56,15 @@ export default {
       }
       return response
     },
-    async startRide(context) {
+    async checkRideDistance(context){
       let driverLocation = context.rootGetters.userLocation;
       let startLocation = context.state.order.from
-      if(getDistanceFromLatLonInKm(driverLocation, startLocation) > 0.5) {
-        let response =  {
-          status: "Error",
-          errorMessage: "Too far",
-          i18nCode: "tooFarFromStartLocation"
-        }
-        console.log(response)
-        return response
-      }
+     
+        return await getDistanceFromLatLonInKm(driverLocation, startLocation) > 0.;
+      
+    },
+    async startRide(context) {
+     
       let response = (await cloudCall('startTaxiRide')).data;
       context.dispatch('updateRouteInformation', null, { root: true })
       if(response.status == "Error") {
@@ -75,18 +72,8 @@ export default {
       }
       return response;
     },
-    async finishRide(context) {
-      let driverLocation = context.rootGetters.userLocation;
-      let endLocation = context.state.order.to
-      if(getDistanceFromLatLonInKm(driverLocation, endLocation) > 0.5) {
-        let response =  {
-          status: "Error",
-          errorMessage: "Too far",
-          i18nCode: "tooFarFromEndLocation"
-        }
-        console.log(response)
-        return response
-      }
+    async finishRide() {
+      
       let response = (await cloudCall('finishTaxiRide')).data;
       if(response.status == "Error") {
         console.log(response.errorMessage)

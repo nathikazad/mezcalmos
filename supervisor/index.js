@@ -17,7 +17,7 @@ let orderExpirationLimit = 5 * 60 // seconds
 let idleTaxiInterval = 10 * 60 //seconds
 let offlineDriverTime = 3 * 60 * 60 //seconds
 
-if(process.argv[2] && process.argv[2] == "test") {
+if (process.argv[2] && process.argv[2] == "test") {
   console.log("Supervisor test mode")
   checkOpenOrdersInterval = 10 //seconds
   orderExpirationLimit = 30 // seconds
@@ -26,22 +26,22 @@ if(process.argv[2] && process.argv[2] == "test") {
   offlineDriverTime = 120 //seconds
 }
 
-testFirebase.database().ref(`/openOrders/taxi`).on('value', function(snap) {
+testFirebase.database().ref(`/openOrders/taxi`).on('value', function (snap) {
   openOrdersTest = snap.val()
 });
 
-productionFirebase.database().ref(`/openOrders/taxi`).on('value', function(snap) {
+productionFirebase.database().ref(`/openOrders/taxi`).on('value', function (snap) {
   openOrdersProduction = snap.val()
 });
 
-setInterval(function(){
+setInterval(function () {
   checkOpenOrders(testFirebase, openOrdersTest)
   checkOpenOrders(productionFirebase, openOrdersProduction)
 }, checkOpenOrdersInterval)
 
-function checkOpenOrders(firebase, openOrders){
-  for(let orderId in openOrders) {
-    if(openOrders[orderId].orderTime){
+function checkOpenOrders(firebase, openOrders) {
+  for (let orderId in openOrders) {
+    if (openOrders[orderId].orderTime) {
       let orderTime = new Date(openOrders[orderId].orderTime)
       let orderExpirationTime = new Date(orderTime.getTime() + orderExpirationLimit * 1000);
       if (Date.now() > orderExpirationTime) {
@@ -57,24 +57,27 @@ setInterval(function(){
   testFirebase.database().ref(`/taxiDrivers`).once('value', function(snap) {
     checkDriverStatus(testFirebase, snap.val())
   });
-  
-  productionFirebase.database().ref(`/taxiDrivers`).once('value', function(snap) {
+
+  productionFirebase.database().ref(`/taxiDrivers`).once('value', function (snap) {
     checkDriverStatus(productionFirebase, snap.val())
   });
-  
+
 }, idleTaxiInterval * 1000)
 
 
-function checkDriverStatus(firebase, drivers){
-  for(let driverId in drivers) {
+function checkDriverStatus(firebase, drivers) {
+  for (let driverId in drivers) {
     let driver = drivers[driverId]
-    if(!driver.state || !driver.state.isLooking)
-      continue
-    if(!driver.location || !driver.location.lastUpdateTime) {
+    if (!driver.state) {
+      return
+    }
+    if (!driver.state.isLooking)
+      return
+    if (!driver.location || !driver.location.lastUpdateTime) {
       setDriverOffline(firebase, driverId)
       continue
     }
-      
+
     let lastUpdateTime = new Date(driver.location.lastUpdateTime)
     let staleTime = new Date(Date.now() - offlineDriverTime * 1000);
     // console.log("stale time ", staleTime.toUTCString())
