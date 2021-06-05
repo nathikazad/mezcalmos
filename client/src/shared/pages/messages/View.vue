@@ -85,7 +85,13 @@ export default {
 
     messages() {
       return this.$store.getters["messages/value"];
-    }
+    },
+    senderPhoneNumber() {
+      return this.sender.phoneNumber;
+    },
+    whatsappLink() {
+      return `https://wa.me/${this.senderPhoneNumber}`
+    },
   },
   mounted() {
     setTimeout(() => {

@@ -83,9 +83,10 @@ export default {
     orderLink(state, _, _1, rootGetters) {
       if (rootGetters.appName == "customer") {
         return `/services/${state.orderType}/${state.orderId}`
-      } else {
+      } else if (rootGetters.appName == "taxi") {
         return `/orders/${state.orderId}`
       }
-    }
+      return null;
+    },
   }
 };
