@@ -15,6 +15,7 @@
         :avatar="orderDetails.driver.image"
         :name="orderDetails.driver.name"
         :extra="$t('customer.taxiView.rideStarted')"
+        :taxiNumber="deepFind(orderDetails, 'driver.taxiNumber')"
       ></userPart>
 
       <price

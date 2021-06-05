@@ -341,17 +341,18 @@ export default {
     },
     async checkRideDistance(method) {
       this.toFarQuestion = this.$t(`taxi.taxiView.tooFarFrom${method}`);
-      let farFromRide = await this.$store.dispatch("order/checkRideDistance");
-
+      let farFromRide = await this.$store.dispatch("order/checkRideDistance",method);
+      this.checkDistancePopUpAction = this[method];
       if (farFromRide) {
         this.checkDistancePopUp = true;
-        this.checkDistancePopUpAction = this[method];
       } else {
-        this[method]("Confirm");
+        this[method]("yes");
         this.checkDistancePopUp = false;
       }
     },
     async startRide(cmd) {
+      console.log(cmd);
+
       this.checkDistancePopUp = false;
       if (cmd == "yes") {
         this.loading = true;

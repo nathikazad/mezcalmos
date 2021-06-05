@@ -56,15 +56,15 @@ export default {
       }
       return response
     },
-    async checkRideDistance(context){
+    async checkRideDistance(context,cmd){
       let driverLocation = context.rootGetters.userLocation;
       let startLocation = context.state.order.from
-     
-        return await getDistanceFromLatLonInKm(driverLocation, startLocation) > 0.;
+      let endLocation = context.state.order.to
+        return getDistanceFromLatLonInKm(driverLocation, cmd=='startRide'?startLocation:endLocation) > 0.5
       
     },
     async startRide(context) {
-     
+
       let response = (await cloudCall('startTaxiRide')).data;
       context.dispatch('updateRouteInformation', null, { root: true })
       if(response.status == "Error") {
@@ -73,7 +73,6 @@ export default {
       return response;
     },
     async finishRide() {
-      
       let response = (await cloudCall('finishTaxiRide')).data;
       if(response.status == "Error") {
         console.log(response.errorMessage)
