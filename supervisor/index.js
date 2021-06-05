@@ -69,7 +69,7 @@ setInterval(function(){
 function checkDriverStatus(firebase, drivers){
   for(let driverId in drivers) {
     let driver = drivers[driverId]
-    if(!driver.state.isLooking)
+    if(!driver.state || !driver.state.isLooking)
       return
     if(!driver.location || !driver.location.lastUpdateTime) {
       setDriverOffline(firebase, driverId)
@@ -77,8 +77,8 @@ function checkDriverStatus(firebase, drivers){
       
     let lastUpdateTime = new Date(driver.location.lastUpdateTime)
     let staleTime = new Date(Date.now() - offlineDriverTime * 1000);
-    console.log("stale time ", staleTime.toUTCString())
-    console.log("lastUpdateTime time ", lastUpdateTime.toUTCString())
+    // console.log("stale time ", staleTime.toUTCString())
+    // console.log("lastUpdateTime time ", lastUpdateTime.toUTCString())
     if (lastUpdateTime < staleTime) {
       setDriverOffline(firebase, driverId)
     }
@@ -86,6 +86,6 @@ function checkDriverStatus(firebase, drivers){
 }
 
 function setDriverOffline(firebase, driverId){
-  console.log("Setting driver offline ", driverId)
+  // console.log("Setting driver offline ", driverId)
   firebase.database().ref(`/taxiDrivers/${driverId}/state/isLooking`).set(false)
 }
