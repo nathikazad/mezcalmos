@@ -2,6 +2,16 @@
   <div>
     <!-- ******************pop up component ************************-->
     <pop-up
+      v-if="checkDistancePopUp"
+      @picked="checkDistancePopUpAction($event)"
+      :choiceList="['yes','no']"
+      translatePath="taxi.taxiView"
+      @close="checkDistancePopUp=false"
+      :title="toFarQuestion"
+      :icon="'times-circle'"
+    ></pop-up>
+    <!-- ******************pop up component ************************-->
+    <pop-up
       v-if="cancelPopUp"
       @picked="cancelRide($event)"
       :choiceList="choiceList"
@@ -90,7 +100,7 @@
           :messageLink="messageLink"
           :orderMessages="orderMessages"
           @cancelPopUp="cancelPopUp=true"
-          @startRide="startRide"
+          @startRide="checkRideDistance('startRide')"
           v-else-if="orderStatusOnTheWay"
         ></onTheWay>
 
@@ -105,7 +115,7 @@
           :orderMessages="orderMessages"
           :loading="loading"
           @cancelPopUp="cancelPopUp=true"
-          @finishRide="finishRide"
+          @finishRide="checkRideDistance('finishRide')"
         ></inTransit>
 
         <!-- Finished ride  Status-->
@@ -128,8 +138,9 @@
         ></cancelled>
       </input-location>
     </div>
-    <div v-else>
-      <h3>{{$t('taxi.taxiView.loading')}} ...</h3>
+    <div v-else class="flex align_center center wrap">
+      <img class="w-80 mt-4" src="@/shared/static/img/noRide.svg" />
+      <p class="fill_width pa-3 text_grey txt_center">{{$t('customer.taxiView.noRide')}}</p>
     </div>
   </div>
 </template>
@@ -149,7 +160,10 @@ export default {
       reportTitle: this.$t("taxi.cancelOrder.customerCancelled"),
       sameInstance: false,
       alertStatment: "",
-      cancelledByTaxi: false
+      cancelledByTaxi: false,
+      checkDistancePopUp: false,
+      checkDistancePopUpAction: null,
+      toFarQuestion: ""
     };
   },
   computed: {
@@ -325,29 +339,47 @@ export default {
 
       this.loading = false;
     },
-    async startRide() {
-      this.loading = true;
-      let response = await this.$store.dispatch("order/startRide");
-      if (response.status == "Error") {
-        this.alertStatment = response.i18nCode;
-        setTimeout(() => {
-          this.alertStatment = "";
-        }, 4000);
-      }
-      this.loading = false;
-    },
-    async finishRide() {
-      this.loading = true;
-      let response = await this.$store.dispatch("order/finishRide");
-      console.log(response);
+    async checkRideDistance(method) {
+      this.toFarQuestion = this.$t(`taxi.taxiView.tooFarFrom${method}`);
+      let farFromRide = await this.$store.dispatch("order/checkRideDistance");
 
-      if (response.status == "Error") {
-        this.alertStatment = response.i18nCode;
-        setTimeout(() => {
-          this.alertStatment = "";
-        }, 4000);
+      if (farFromRide) {
+        this.checkDistancePopUp = true;
+        this.checkDistancePopUpAction = this[method];
+      } else {
+        this[method]("Confirm");
+        this.checkDistancePopUp = false;
       }
-      this.loading = false;
+    },
+    async startRide(cmd) {
+      this.checkDistancePopUp = false;
+      if (cmd == "yes") {
+        this.loading = true;
+
+        let response = await this.$store.dispatch("order/startRide");
+        if (response.status == "Error") {
+          this.alertStatment = response.i18nCode;
+          setTimeout(() => {
+            this.alertStatment = "";
+          }, 4000);
+        }
+        this.loading = false;
+      }
+    },
+    async finishRide(cmd) {
+      this.checkDistancePopUp = false;
+      if (cmd == "yes") {
+        this.loading = true;
+        let response = await this.$store.dispatch("order/finishRide");
+
+        if (response.status == "Error") {
+          this.alertStatment = response.i18nCode;
+          setTimeout(() => {
+            this.alertStatment = "";
+          }, 4000);
+        }
+        this.loading = false;
+      }
     },
     nextOrder() {
       if (this.nextOrderId) {

@@ -19,7 +19,8 @@
             "cancelled": "Cancelled",
             "logIn": "Login To Make This Order",
             "outOfPuerto": "You are too far out of puerto",
-            "priceEstimate": "Estimated price for the ride is $"
+            "priceEstimate": "Estimated price for the ride is $",
+            "noRide":"Sorry to inform you this ride does not exist anymore."
         },
         "cancelOrder": {
             "question": "Why do you want to cancel the ride?",
@@ -28,7 +29,8 @@
             "noShow": "No show",
             "mistake": "Mistake",
             "other": "Other",
-            "taxiCancelled": "Sorry to inform you the taxi cancelled the ride."
+            "taxiCancelled": "Sorry to inform you the taxi cancelled the ride.",
+            "orderExpired": "Sorry to inform your taxi request is expired."
         },
         "savedLocations": {
             "title": "Saved Locations",
@@ -68,8 +70,11 @@
             "review": "Review",
             "loading": "Loading",
             "cancelled": "Cancelled",
-            "tooFarFromStartLocation": "You are too far from start location",
-            "tooFarFromEndLocation": "You are too far from end location"
+            "tooFarFromstartRide": "Click start ride after the customer has reached your vehicle. Based on your GPS it seems you are still far from customer location, are you sure you still want to start the ride?",
+            "tooFarFromfinishRide": "Click Finish after the customer has exited your vehicle. Based on your GPS it seems you are still far from customer's end location, are you sure you still want to end the ride?",
+            "no":"No",
+            "yes":"Yes",
+            "noRide":"Sorry to inform you this ride does not exist anymore."
         },
         "cancelOrder": {
             "question": "Why do you want to cancel the ride?",

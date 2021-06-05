@@ -19,7 +19,8 @@
             "cancelled": "Cancelado",
             "logIn": "Inicie sesión para hacer este pedido",
             "outOfPuerto": "Estas demasiado lejos de puerto",
-            "priceEstimate": "El precio estimado del viaje es de $"
+            "priceEstimate": "El precio estimado del viaje es de $",
+            "noRide":"Lamento informarle que este viaje ya no existe."
         },
         "cancelOrder": {
             "question": "Por qué quieres cancelar el viaje?",
@@ -67,8 +68,11 @@
             "review": "Revisar",
             "loading": "Cargando",
             "cancelled": "Cancelado",
-            "tooFarFromStartLocation": "Estás demasiado lejos de la ubicación de inicio",
-            "tooFarFromEndLocation": "Estás demasiado lejos de la ubicación final"
+            "tooFarFromstartRide": "Haga clic en Iniciar viaje después de que el cliente haya llegado a su vehículo. Según su GPS, parece que todavía está lejos de la ubicación del cliente, está seguro de que aún desea comenzar el viaje?",
+            "tooFarFromfinishRide": "Haga clic en Terminar después de que el cliente haya salido de su vehículo. Según su GPS, parece que todavía está lejos de la ubicación final del cliente. Estás seguro de que aún desea terminar el viaje?",
+            "no": "No",
+            "yes": "Sí",
+            "noRide":"Lamento informarle que este viaje ya no existe."
         },
         "cancelOrder": {
             "question": "Por qué quieres cancelar el viaje?",
@@ -152,7 +156,7 @@
             "fullName": "Nombre completo",
             "phoneNumber": "Número de teléfono",
             "clickToUploadImg": "clickToUpdateEs",
-            "addPhoneNumber":"Agregar el número de teléfono"
+            "addPhoneNumber": "Agregar el número de teléfono"
         },
         "navDrawer": {
             "userInfo": "Información del usuario",
