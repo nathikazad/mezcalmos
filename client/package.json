@@ -36,7 +36,7 @@
     "test:all": "npm-run-all --parallel test:taxis test:customers test:admin",
     "emulate:allApps": "npm-run-all --parallel emulate:taxis emulate:customers emulate:admin",
     "emulate:allApps:onlyFunctions": "npm-run-all --parallel emulate:taxis:onlyFunctions emulate:customers:onlyFunctions emulate:admin:onlyFunctions",
-    "emulate:all": "npm-run-all --parallel emulate:allApps emulator ",
+    "emulate:all": "npm-run-all --parallel emulate:allApps emulator",
     "emulate:all:supervisor:test": "npm-run-all --parallel emulate:allApps emulator supervisor:test",
     "emulate:all:wdata": "npm-run-all --parallel emulate:all emulator:loadData",
     "emulate:all:onlyFunctions": "npm-run-all --parallel emulate:allApps:onlyFunctions emulator:onlyFunctions",
