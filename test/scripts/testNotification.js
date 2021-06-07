@@ -15,7 +15,6 @@ const authToken = config.twilio.authtoken;
 const client = require('twilio')(accountSid, authToken);
 const sender = require("../../functions/helpers/sender");
 const functions = require('firebase-functions');
-console.log(functions.config())
 webpush.setVapidDetails(
     'http://www.mezcalmos.com',
     config.vapidkeys.public,
@@ -36,33 +35,17 @@ async function main() {
     console.log("Driver Id Required")
     process.exit()
   }
-  webpush.sendNotification(driver.notificationInfo, JSON.stringify({
+
+  try {
+    await webpush.sendNotification(driver.notificationInfo, JSON.stringify({
       notificationType: "newOrder",
       message: "Hay una nueva orden de taxi, vea si puede aceptarla."
-    })).catch((e) => {
+    }))
+  } catch(e) {
       console.log(e)
       console.log("web push error ",driverId)
-  })
-
-  let snapshot = await firebase.database().ref(`/users/${driverId}/info`).once('value')
-  let userInfo = snapshot.val()
-  if(userInfo.phoneNumber && userInfo.phoneNumberType){
-    let payload = {
-      message: `Hay una nueva orden de taxi, vea si puede aceptarla en wwwmeztaxi.com. Para parar las notificaciones, desactive el modo taxi`,
-      phoneNumber: userInfo.phoneNumber
-    }
-
-    try {
-      await client.messages
-        .create({body: payload.message, from: '+16304488781', to: payload.phoneNumber})
-    } catch (error) {
-      console.log(error)
-      return {
-        status: "Error",
-        errorMessage: `Message Send Error`
-      }
-    }
   }
+
   process.exit()
 }
 
