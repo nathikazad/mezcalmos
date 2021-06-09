@@ -2,6 +2,7 @@
 */package-lock.json
 functions/.runtimeconfig.json
 */firebase-debug.log
+firebase-debug.log
 .DS_Store
 .firebase
 service_account.json

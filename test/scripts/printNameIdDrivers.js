@@ -21,12 +21,13 @@ async function main() {
     || driverId == "OwL4SMmebKfQRUMrflR9aVsK4jx2") {
       continue
     }
-    // if(users[driverId].info.taxiNumber) {
+    if(users[driverId].info.taxiNumber) {
+      continue
+    }
+    // if(drivers[driverId].state.isLooking)
     //   continue
-    // }
-    // if(drivers[driverId].notificationInfo)
-    //   continue
-    console.log(users[driverId].info.displayName)
+    // await firebase.database().ref(`/taxiDrivers/${driverId}/state/isLooking`).set(true)
+    console.log(users[driverId].info.displayName)//," ",driverId)
     total += 1
   }
   console.log(total)
