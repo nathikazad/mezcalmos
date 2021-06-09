@@ -28,12 +28,12 @@ async function main() {
     && displayName != "Prueba Valle "
     && displayName != "Nathik Azad"
     && displayName != "Magalí Ramirez") {
-      pool.push({nombre:displayName, total: total})
+      pool.push({nombre:displayName, total: total, id:driverId})
     }
   }
   pool = pool.sort((a, b) => b.total - a.total);
   for(let i in pool) {
-    console.log(`${parseInt(i)+1}. ${pool[i].nombre}   ${pool[i].total}`)
+    console.log(`${parseInt(i)+1}. ${pool[i].nombre}   ${pool[i].total}  ${pool[i].id}`)
   }
   // console.log(pool)
   process.exit()
