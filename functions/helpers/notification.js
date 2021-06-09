@@ -40,7 +40,6 @@ async function notifyDriversNewRequest(firebase) {
             notificationType: "newOrder",
             message: "Hay una nueva orden de taxi, vea si puede aceptarla."
           })).catch((e) => {
-            firebase.database().ref(`/taxiDrivers/${driverId}/notificationInfo`).remove()
             console.log("web push error ",driverId)
         })
       }
