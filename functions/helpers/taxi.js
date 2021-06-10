@@ -387,7 +387,6 @@ async function start(firebase, uid) {
 }
 
 async function finish(firebase, orderId) {
-  console.log(`/orders/taxi/${orderId}`)
   let order = (await firebase.database().ref(`/orders/taxi/${orderId}`).once('value')).val();
   if (order == null) {
     return {
@@ -413,6 +412,7 @@ async function finish(firebase, orderId) {
   firebase.database().ref(`/taxiDrivers/${order.driver.id}/state/currentOrder`).remove()
   firebase.database().ref(`/users/${order.customer.id}/state/currentOrder`).remove()
   firebase.database().ref(`/inProcessOrders/taxi/${orderId}`).remove();
+  firebase.database().ref(`/fulfilledOrders/${orderId}`).set(order)
   update.notificationType = "orderStatusChange"
   update.orderId = orderId
   update.orderType = "taxi"
