@@ -126,6 +126,7 @@ async function cancelTaxiFromCustomer(firebase, uid, data) {
     firebase.database().ref(`/openOrders/taxi/${orderId}`).remove();
     firebase.database().ref(`/orders/taxi/${orderId}`).remove()
     firebase.database().ref(`/users/${order.customer.id}/orders/${orderId}`).remove();
+    firebase.database().ref(`/unfulfilledOrders/${orderId}`).set({...order, reason:"cancelled"});
   } else if (order.status == "onTheWay" || order.status == "inTransit") {
     let update = {
       status: "cancelled",
@@ -166,6 +167,7 @@ function expireOrder(firebase, orderId, customerId) {
   setTimeout(function(){
       firebase.database().ref(`/orders/taxi/${orderId}`).remove()
   }, 1000);
+  firebase.database().ref(`/unfulfilledOrders/${orderId}`).set({...order, reason:"expired"});
   notification.push(firebase, customerId, {
     status: "expired",
     notificationType: "orderStatusChange",

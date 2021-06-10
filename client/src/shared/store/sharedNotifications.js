@@ -106,19 +106,19 @@ export default {
       let notificationReference = `/notifications/${appName}/${userId}`;
       firebaseDatabase().ref(`${notificationReference}`).remove()
     },
-    saveUserNotificationInfo(context, payload) {
+    async saveUserNotificationInfo(context, payload) {
       let userId = context.rootGetters.userId
       if(!userId){
         return
       }
       let appName = context.rootGetters.appName;
-      // console.log("Saving notification info, ", appName)
+      console.log("Saving notification info, ", userId, appName, payload)
       if (appName == "customer"){
-        firebaseDatabase().ref(`/users/${userId}/notificationInfo`).set(payload)
+        await firebaseDatabase().ref(`/users/${userId}/notificationInfo`).set(payload)
       } else if (appName == "taxi") {
-        firebaseDatabase().ref(`/taxiDrivers/${userId}/notificationInfo`).set(payload)
+        console.log(`/taxiDrivers/${userId}/notificationInfo`, payload)
+        await firebaseDatabase().ref(`/taxiDrivers/${userId}/notificationInfo`).set(payload)
       }
-      
     },
   },
   mutations: {

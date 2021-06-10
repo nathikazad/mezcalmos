@@ -84,7 +84,7 @@ export const askForNotification = (origin, store) => { //notif:{type:'YOU HAVE A
     // console.log("Requesting permission")
     Notification.requestPermission(function (status) {
       if (status === 'granted') {
-        // console.log("Permission granted")
+        console.log("Permission granted")
         navigator.serviceWorker.getRegistration()
         const channel = new BroadcastChannel(`sw-${origin}-messages`);
         channel.postMessage({
@@ -92,12 +92,12 @@ export const askForNotification = (origin, store) => { //notif:{type:'YOU HAVE A
         });
         channel.addEventListener("message", event => {
           // console.log(event);
-          // console.log("event ", event)
+          console.log("event ", event)
           if (!event.data.subscription) {
             return;
           }
           store.dispatch("notifications/saveUserNotificationInfo", JSON.parse(event.data.subscription));
-          // console.log(event.data.subscription)
+          console.log(event.data.subscription)
         });
       }
     });
