@@ -19,15 +19,18 @@ async function main() {
     || driverId == "6l5S9qNSrMSIkwZRcchUaP8bJsk2"
     || driverId == "FtvC1uz9i9QtXu5V142Ju1HZ9Ur1"
     || driverId == "OwL4SMmebKfQRUMrflR9aVsK4jx2") {
-      continue
+      console.log(users[driverId].info.displayName," ",driverId)
     }
-    if(users[driverId].info.taxiNumber) {
-      continue
-    }
+    // if(users[driverId].info.taxiNumber) {
+    //   continue
+    // }
+    // if(drivers[driverId].notificationInfo) {
+    //   continue
+    // }
     // if(drivers[driverId].state.isLooking)
     //   continue
     // await firebase.database().ref(`/taxiDrivers/${driverId}/state/isLooking`).set(true)
-    console.log(users[driverId].info.displayName)//," ",driverId)
+    // console.log(users[driverId].info.displayName)//," ",driverId)
     total += 1
   }
   console.log(total)

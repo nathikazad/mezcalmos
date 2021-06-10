@@ -24,9 +24,6 @@ Vue.config.productionTip = false
 async function firebaseCallback(user) {
 
   if (user) {
-    registerServiceWorker('taxi').then(() => {
-      askForNotification('taxi', store);
-    });
     await store.dispatch('autoSignIn', {
       userId: user.uid,
       name: user.displayName,
@@ -34,6 +31,10 @@ async function firebaseCallback(user) {
       photoURL: user.photoURL,
       loggedIn: true
     })
+    registerServiceWorker('taxi').then(() => {
+      askForNotification('taxi', store);
+    });
+    
 
     await store.dispatch('loadTaxiAuth');
     store.dispatch("notifications/loadNotificationsForTaxi");
