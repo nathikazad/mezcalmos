@@ -1,19 +1,17 @@
 const axios = require('axios');
 const functions = require('firebase-functions');
 
-//const accountSid = functions.config().twilio.accountid;
-//const authToken = functions.config().twilio.authtoken;
-
-// const accountSid = process.env.ACCOUNT_SID;
-// const authToken = process.env.AUTH_TOKEN;
-
-const accountSid = functions.config().TWILIO_ACCOUNT_SID;
-const authToken = functions.config().TWILIO_AUTH_TOKEN;
-const client = require('twilio')(accountSid, authToken);
-
-// const accountSid = process.env.TWILIO_ACCOUNT_SID;
-// const authToken = process.env.TWILIO_AUTH_TOKEN;
+// const accountSid = functions.config().twilio.accountid;
+// const authToken = functions.config().twilio.authtoken;
+const accountSid = process.env.ACCOUNT_SID;
+const authToken = process.env.AUTH_TOKEN;
 // const client = require('twilio')(accountSid, authToken);
+
+
+// const keys = require("./keys").keys();
+
+// const accountSid = functions.config().TWILIO_ACCOUNT_SID;
+
 
 module.exports = {
     sendSMS,
@@ -22,7 +20,6 @@ module.exports = {
 
 async function sendWhatsApp(data) {
   
-
     const headers = {
         'Content-Type': 'application/json',
         'D360-API-KEY': data.apiKey
@@ -38,16 +35,13 @@ async function sendWhatsApp(data) {
       }
 
       try {
-        await axios.post("https://waba-sandbox.360dialog.io/v1/messages", message, headers)
-      //   req = await axios.post("https://waba-sandbox.360dialog.io/v1/messages", message, {
-      //   headers: headers
-      // })
-      
-      } catch (e) {
-        console.log(e)
+
+       let response = await axios.post("https://waba-sandbox.360dialog.io/v1/messages", message, headers)
+      } catch (error) {
+        console.log(error)
           return {
             status: "Error",
-            errorMessage: e
+            errorMessage: error
           }
       }
 }

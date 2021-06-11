@@ -1,6 +1,7 @@
 module.exports = {
-  signUp, sendCodeLogin, getAuth
+  signUp, sendCodeLogin, getAuth, sendOtp
 }
+
 
 
 const axios = require('axios');
@@ -40,6 +41,10 @@ async function sendCodeLogin(data) {
 
 async function getAuth(data) {
   let response = await callFunction('getAuthUsingOTP', data)
+  return response
+}
+async function sendOtp(data){
+  let response = await callFunction('sendOTP', data)
   return response
 }
 

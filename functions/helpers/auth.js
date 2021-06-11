@@ -2,12 +2,18 @@ module.exports = {
   sendOTPForLogin,
   getAuthUsingOTP,
   sendOTPForNumberChange,
-  confirmNumberChangeUsingOTP
+  confirmNumberChangeUsingOTP,
+  sendOTP
 }
 const sender = require("./sender")
-
+const admin = require("firebase-admin");
+admin.initializeApp({
+  projectId: "mezcalmos-31f1c",
+  databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com"
+});
 
 async function sendOTPForLogin(firebase, data) {
+  //console.log("SFSD") 
   if (!data.phoneNumber) {
     return {
       status: "Error",
@@ -22,7 +28,7 @@ async function sendOTPForLogin(firebase, data) {
       errorMessage: "Required messageType and has to be SMS or whatsApp"
     }
   }
-
+  
   let user;
   try {
     user = await firebase.auth().getUserByPhoneNumber(data.phoneNumber);
@@ -39,6 +45,7 @@ async function sendOTPForLogin(firebase, data) {
       }
     }
   }
+  
   let response = await sendOTP(firebase, data, user.uid)
 
   if(response) {
@@ -48,6 +55,7 @@ async function sendOTPForLogin(firebase, data) {
   return {
     status: "Success"
   }
+    
 }
 
 async function getAuthUsingOTP(firebase, data){
@@ -57,16 +65,6 @@ async function getAuthUsingOTP(firebase, data){
       errorMessage: "Required phone number and OTPCode"
     }
   }
-<<<<<<< HEAD
-  
-  let user;
-  try {
-    user = await firebase.auth().getUserByPhoneNumber(data.phoneNumber);
-  } catch (e) {
-    return {
-      status: "Error",
-      errorMessage: "Invalid OTP Code"
-=======
   let user
   try{
     user = await firebase.auth().getUserByPhoneNumber(data.phoneNumber)
@@ -81,7 +79,6 @@ async function getAuthUsingOTP(firebase, data){
         status: 'Error',
         errorMessage: e.errorInfo.message
       }
->>>>>>> 3448345... test otp login and confirm
     }
   }
  
