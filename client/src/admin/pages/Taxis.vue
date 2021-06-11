@@ -261,6 +261,11 @@ export default {
         userId: id
       });
       this.$store.dispatch("taxis/loadTaxis");
+    },
+    async sendTestNotification(id) {
+      await this.$store.dispatch("taxis/sendTestNotification", {
+        userId: id
+      });
     }
   }
 };

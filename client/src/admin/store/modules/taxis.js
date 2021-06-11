@@ -52,6 +52,12 @@ export default {
         userId: payload.userId
       })
       return response
+    },
+    async sendTestNotification(_, payload) {
+      let response = await cloudCall('sendTestNotification', {
+        userId: payload.userId
+      })
+      return response
     }
   },
   mutations: {

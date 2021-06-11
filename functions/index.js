@@ -23,6 +23,7 @@ const hasura = require("./helpers/hasura");
 const message = require("./helpers/message");
 const admin = require("./helpers/admin");
 const auth = require("./helpers/auth");
+const notifications = require("./helpers/notification");
 const { user } = require("firebase-functions/lib/providers/auth");
 
 // On sign up.
@@ -262,3 +263,11 @@ exports.confirmNumberChangeUsingOTP = functions.https.onCall(async (data, contex
   return response;
 });
 
+exports.sendTestNotification = functions.https.onCall(async (data, context) => {
+  let firebase = getFirebase(data.database);
+  let response = await admin.checkAdmin(firebase, {adminId:context.auth.uid})
+  if (response) 
+    return response
+  response = await notifications.sendTest(firebase, data)
+  return response
+});
