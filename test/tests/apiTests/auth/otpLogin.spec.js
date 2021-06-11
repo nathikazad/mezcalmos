@@ -1,7 +1,8 @@
-const auth = require("../../libraries/rest/auth")
-const helper = require("../../libraries/helpers")
+const auth = require("../../../libraries/rest/auth")
+const helper = require("../../../libraries/helpers")
 const admin = require("firebase-admin");
-
+jest.mock('../../../../functions/helpers/sender')
+const sender = require('../../../../functions/helpers/sender')
 
 
 jest.setTimeout(70000)
@@ -27,22 +28,22 @@ describe('Mezcalmos', () => {
   
     it('Test sending code for login', async () => {
        //missing phone number
-      // let data = {
-      //   "messageType": "SMS",
-      //   "apiKey": "uHzCiX_sandbox"
-      // }
-      // let response = await auth.sendCodeLogin(data)
-      // expect(response.result.status).toBe('Error')
-      // expect(response.result.errorMessage).toBe("Required phone number")
+      let data = {
+        "messageType": "SMS",
+        "apiKey": "uHzCiX_sandbox"
+      }
+      let response = await auth.sendCodeLogin(data)
+      expect(response.result.status).toBe('Error')
+      expect(response.result.errorMessage).toBe("Required phone number")
 
 
-      // //wrong phone number
-      // data = {
-      //   "phoneNumber":"07",
-      //   "messageType": "SMS",
-      //   "apiKey": "uHzCiX_sandbox"
-      // }
-      // response = await auth.sendCodeLogin(data)
+      //wrong phone number
+      data = {
+        "phoneNumber":"07",
+        "messageType": "SMS",
+        "apiKey": "uHzCiX_sandbox"
+      }
+      response = await auth.sendCodeLogin(data)
       // expect(response.result.status).toBe('Error')
       // expect(response.result.errorMessage).toBe('The phone number must be a non-empty E.164 standard compliant identifier string.')
 
