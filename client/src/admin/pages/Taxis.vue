@@ -179,8 +179,10 @@ export default {
       return this.$store.getters["taxis/list"](this.query.toLowerCase());
     },
     selectedDriver() {
-      let drivers = this.$store.getters["taxis/list"]("");
-      return this.deepFind(Object.values(drivers), `${this.selectedUser}.info`);
+      return this.deepFind(
+        Object.values(this.drivers),
+        `${this.selectedUser}.info`
+      );
     },
     orders() {
       if (this.selectedUser != null) {
