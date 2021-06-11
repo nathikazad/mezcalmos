@@ -1,7 +1,7 @@
 <template>
   <v-container class="py-8 px-6" fluid>
     <v-row>
-      <v-col cols="4">
+      <v-col cols="12" class="col-lg-4">
         <!-- customers list -->
         <v-card>
           <div class="d-flex justify-space-between align-center">
@@ -47,7 +47,7 @@
         </v-card>
       </v-col>
       <!-- Orderssx list -->
-      <v-col cols="4">
+      <v-col cols="12" class="col-lg-4">
         <v-card v-if="orders">
           <div class="d-flex justify-space-between align-center">
             <v-subheader class="title bold">Orders</v-subheader>
@@ -83,7 +83,7 @@
         </v-card>
       </v-col>
       <!-- Orderssx Details -->
-      <v-col cols="4">
+      <v-col cols="12" class="col-lg-4">
         <v-card v-if="orderDetails">
           <div class="d-flex justify-space-between align-center">
             <v-subheader class="title bold">Order Details</v-subheader>

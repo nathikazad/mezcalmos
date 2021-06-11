@@ -4,6 +4,7 @@
     ".write": "false",
     "users": {
       ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true",
+
       "$uid": {
         ".read": "$uid === auth.uid",
         "notificationInfo": {
@@ -21,6 +22,9 @@
           },
           "phone": {
             ".write": "$uid === auth.uid"
+          },
+          "taxiNumber": {
+            ".write": "root.child('admins/' + auth.uid + '/authorized').val() === true"
           }
         },
         "savedLocations": {
