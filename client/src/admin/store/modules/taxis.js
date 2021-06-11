@@ -21,9 +21,7 @@ export default {
         }
         let list = {}
         for (let key in taxis) {
-          if (taxis[key].info.displayName.indexOf(query) >= 0) {
-            list[key] = taxis[key]
-          } else if (taxis[key].info.email.indexOf(query) >= 0) {
+          if (taxis[key].info.displayName.toLowerCase().indexOf(query) >= 0) {
             list[key] = taxis[key]
           } else if (key.indexOf(query) >= 0) {
             list[key] = taxis[key]
@@ -58,6 +56,10 @@ export default {
         userId: payload.userId
       })
       return response
+    },
+    async taxiChangeInfoParam(_, payload) {
+      let response = await firebaseDatabase().ref(`users/${payload.id}/info/${payload.param}`).set(payload.value)
+      return response;
     }
   },
   mutations: {

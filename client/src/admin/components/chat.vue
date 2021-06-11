@@ -9,7 +9,7 @@
             </v-avatar>
             {{chat.userInfo.displayName}}
             <v-spacer></v-spacer>
-            <v-btn color="success" @click="resolveChat">resolve</v-btn>
+            <!-- <v-btn color="success" @click="resolveChat">resolve</v-btn> -->
           </v-card-title>
           <v-divider></v-divider>
           <v-card-text class="flex-grow-1 overflow-y-auto" id="messages">

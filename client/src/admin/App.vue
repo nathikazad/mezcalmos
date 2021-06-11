@@ -1,35 +1,73 @@
 <template>
   <div>
-    <v-app id="inspire">
-      <v-app-bar app color="white" flat v-if="user">
-        <v-container class="py-0 fill-height">
-          <v-avatar class="mr-10" color="grey darken-1" size="50">
-            <img :src="user.photo" :alt="user.displayName" />
-          </v-avatar>
+    <div id="app">
+      <v-app id="inspire">
+        <v-layout row justify-center>
+          <v-app-bar dark color="blue-grey darken-1" class="hidden-sm-and-down px-2">
+            <v-toolbar-title>Desktop Menu</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-toolbar-items>
+              <v-btn
+                v-for="item in links"
+                :key="item.icon"
+                :to="item.path"
+                :title="item.name"
+                text
+              >{{ item.name }}</v-btn>
+            </v-toolbar-items>
+          </v-app-bar>
 
-          <v-btn
-            color="primary"
-            v-for="(link,index) in links"
-            :key="index"
-            link
-            text
-            :to="link.path"
-            class="mx-2"
-          >{{ link.name }}</v-btn>
+          <v-app-bar dark color="blue-grey darken-3" class="hidden-sm-and-up px-2">
+            <v-toolbar-title>Mobile Menu</v-toolbar-title>
+            <v-spacer></v-spacer>
 
-          <v-spacer></v-spacer>
+            <v-dialog
+              v-model="dialog"
+              fullscreen
+              hide-overlay
+              transition="dialog-bottom-transition"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-app-bar-nav-icon dark slot="activator" v-on="on" v-bind="attrs"></v-app-bar-nav-icon>
+              </template>
+              <v-card>
+                <v-toolbar text dark color="blue-grey darken-2">
+                  <v-toolbar-title>Mobile Menu</v-toolbar-title>
+                  <v-spacer></v-spacer>
+                  <v-btn icon @click.native="dialog = false">
+                    <v-icon>mdi-close</v-icon>
+                  </v-btn>
+                </v-toolbar>
 
-          <v-responsive max-width="260">
-            <v-text-field dense flat hide-details rounded solo-inverted></v-text-field>
-          </v-responsive>
-          <v-btn color="secondary" class="mx-2">Logout</v-btn>
-        </v-container>
-      </v-app-bar>
+                <v-list>
+                  <v-list-item
+                    v-for="(item, index) in links"
+                    :key="index"
+                    :to="item.path"
+                    @click="dialog=false"
+                  >
+                    <v-list-item-action>
+                      <v-icon v-if="item.icon">{{item.icon}}</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                      <v-list-item-title :title="item.name">{{ item.name }}</v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                </v-list>
+              </v-card>
+            </v-dialog>
+          </v-app-bar>
 
-      <v-main>
-        <router-view></router-view>
-      </v-main>
-    </v-app>
+          <v-container fluid>
+            <v-slide-y-transition mode="out-in">
+              <v-main>
+                <router-view></router-view>
+              </v-main>
+            </v-slide-y-transition>
+          </v-container>
+        </v-layout>
+      </v-app>
+    </div>
   </div>
 </template>
 
@@ -37,7 +75,7 @@
 // import TheHeader from '@/shared/components/layouts/TheHeader.vue';
 export default {
   data: () => ({
-    drawer: null,
+    dialog: false,
     links: [
       { icon: "mdi-inbox-arrow-down", name: "Messages", path: "/messages" },
       { icon: "mdi-send", name: "Customers", path: "/customers" },
@@ -51,6 +89,12 @@ export default {
   computed: {
     user() {
       return this.$store.getters.userInfo;
+    }
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch("logout");
+      this.$emit("closeNavDrawer");
     }
   }
 };

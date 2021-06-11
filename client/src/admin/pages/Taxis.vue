@@ -1,10 +1,10 @@
 <template>
   <v-container class="py-8 px-6" fluid>
     <v-row>
-      <v-col cols="3">
+      <v-col cols="12" class="col-lg-3">
         <!-- drivers list -->
         <v-card>
-          <div class="d-flex justify-space-between align-center">
+          <div class="d-flex justify-space-between align-center flex-wrap">
             <v-subheader class="title bold">Drivers</v-subheader>
             <v-responsive max-width="200" class="pr-2">
               <v-text-field
@@ -42,6 +42,9 @@
                         <v-btn color="success" @click="acceptTaxi(id)">Accept</v-btn>
                         <v-btn color="info ml-2" @click="LoadMessages(id)">Message</v-btn>
                       </div>
+                      <div class="d-flex" v-else>
+                        <v-btn color="success" @click="sendTestNotification(id)">Test Notifs</v-btn>
+                      </div>
                     </v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
@@ -56,14 +59,47 @@
           </v-list>
         </v-card>
       </v-col>
+      <!-- Driver details -->
+      <v-col cols="12" lg="3">
+        <v-card v-if="selectedDriver">
+          <div class="d-flex justify-space-between align-center">
+            <v-subheader class="title bold">Driver Details</v-subheader>
+          </div>
+          <v-list two-line flat>
+            <template v-for="(field,id) in userFields">
+              <v-list-item :key="id">
+                <v-list-item-content>
+                  <v-list-item-title>
+                    {{field.title}} :
+                    <span v-if="!field.editable" class="info--text">{{field.val()}}</span>
+                    <v-text-field
+                      v-else
+                      :value="field.val(selectedUser)"
+                      counter="25"
+                      hint="This field uses counter prop"
+                      @change="driverDataChanged($event,field.param,Object.keys(drivers)[selectedUser])"
+                    ></v-text-field>
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+
+              <v-divider
+                v-if="id !== Object.keys(drivers)[Object.keys(drivers).length-1]"
+                :key="`divider-${id}`"
+                inset
+              ></v-divider>
+            </template>
+          </v-list>
+        </v-card>
+      </v-col>
       <!-- chat component -->
-      <v-col cols="3" v-if="currentMessages">
+      <v-col cols="12" lg="3" v-if="currentMessages">
         <v-card>
           <chat :chat="currentMessages"></chat>
         </v-card>
       </v-col>
       <!-- Orderssx list -->
-      <v-col cols="3">
+      <v-col cols="12" lg="3">
         <v-card v-if="orders">
           <div class="d-flex justify-space-between align-center">
             <v-subheader class="title bold">Orders</v-subheader>
@@ -99,7 +135,7 @@
         </v-card>
       </v-col>
       <!-- Orderssx Details -->
-      <v-col cols="3">
+      <v-col cols="12" lg="3">
         <v-card v-if="orders">
           <div class="d-flex justify-space-between align-center">
             <v-subheader class="title bold">Order Details</v-subheader>
@@ -140,9 +176,12 @@ export default {
       return this.$store.getters["messages/currentMessages"];
     },
     drivers() {
-      return this.$store.getters["taxis/list"](this.query);
+      return this.$store.getters["taxis/list"](this.query.toLowerCase());
     },
-
+    selectedDriver() {
+      let drivers = this.$store.getters["taxis/list"]("");
+      return this.deepFind(Object.values(drivers), `${this.selectedUser}.info`);
+    },
     orders() {
       if (this.selectedUser != null) {
         return this.deepFind(
@@ -221,6 +260,37 @@ export default {
             );
           }
         }
+      ],
+      userFields: [
+        {
+          title: "Display Name",
+          param: "displayName",
+          val: () => {
+            return this.deepFind(this.selectedDriver, `displayName`);
+          }
+        },
+        {
+          title: "Phone",
+          param: "phoneNumber",
+          val: () => {
+            return this.deepFind(this.selectedDriver, `phoneNumber`);
+          }
+        },
+        {
+          title: "Taxi Number",
+          param: "taxiNumber",
+          editable: true,
+          val: () => {
+            return this.deepFind(this.selectedDriver, `taxiNumber`);
+          }
+        },
+        {
+          title: "Email",
+          param: "email",
+          val: () => {
+            return this.deepFind(this.selectedDriver, `email`);
+          }
+        }
       ]
     };
   },
@@ -250,6 +320,15 @@ export default {
     }
   },
   methods: {
+    async driverDataChanged(e, param, id) {
+      console.log(e, param, id);
+      await this.$store.dispatch("taxis/taxiChangeInfoParam", {
+        id,
+        param,
+        value: e
+      });
+      this.$store.dispatch("taxis/loadTaxis");
+    },
     async LoadMessages(id) {
       this.$store.dispatch("messages/loadCurrentMessages", {
         userId: id,
