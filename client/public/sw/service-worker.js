@@ -237,4 +237,5 @@ const createBroadcastChannel = function (self, swName) {
             }
         }
     });
+    return channel
 }
