@@ -12,3 +12,4 @@ ui-debug.log
 dist
 .vscode
 test/data/newDummyData
+service_account.json

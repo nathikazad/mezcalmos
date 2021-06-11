@@ -7,13 +7,8 @@ module.exports = {
 }
 const sender = require("./sender")
 const admin = require("firebase-admin");
-admin.initializeApp({
-  projectId: "mezcalmos-31f1c",
-  databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com"
-});
 
 async function sendOTPForLogin(firebase, data) {
-  //console.log("SFSD") 
   if (!data.phoneNumber) {
     return {
       status: "Error",
