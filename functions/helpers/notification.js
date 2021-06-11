@@ -3,7 +3,8 @@ const sender = require("./sender")
 const keys = require("./keys")
 module.exports = {
   push,
-  notifyDriversNewRequest
+  notifyDriversNewRequest,
+  sendTest
 }
 
 const webpush = require('web-push')
@@ -44,5 +45,24 @@ async function notifyDriversNewRequest(firebase) {
         })
       }
     }
+  }
+}
+
+async function sendTest(firebase, data) {
+  if(!data.userId){
+    return {
+      status: "Error",
+      errorMessage: "Need User Id"
+    }
+  }
+  let uid = data.userId
+  let driver = (await firebase.database().ref(`/taxiDrivers/${uid}`).once('value')).val();
+  if(driver.notificationInfo){     
+    webpush.sendNotification(driver.notificationInfo, JSON.stringify({
+      notificationType: "newOrder",
+      message: "Hay una nueva orden de taxi, vea si puede aceptarla."
+    })).catch((e) => {
+      console.log("web push error ",uid)
+    })
   }
 }
