@@ -13,9 +13,9 @@
     "emulator:loadData": "npm-run-all --parallel emulator loadData",
     "browserTests": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 jest --verbose .tests/browserTests",
     "apiTests": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 jest --verbose --runInBand .tests/apiTests",
-    "test": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 jest --verbose --runInBand",
+    "test": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 MEZC_API_KEYS='../functions/.runtimeconfig.json' jest --verbose --runInBand",
     
-    "autoTest": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 supervisor --no-restart-on exit -w tests,libraries -x jest"
+    "autoTest": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 MEZC_API_KEYS='../functions/.runtimeconfig.json' supervisor --no-restart-on exit -w tests,libraries -x jest"
   },
   "author": "",
   "license": "ISC",

@@ -1,17 +1,10 @@
 const axios = require('axios');
 const functions = require('firebase-functions');
 
-// const accountSid = functions.config().twilio.accountid;
-// const authToken = functions.config().twilio.authtoken;
-const accountSid = process.env.ACCOUNT_SID;
-const authToken = process.env.AUTH_TOKEN;
-// const client = require('twilio')(accountSid, authToken);
-
-
-// const keys = require("./keys").keys();
-
-// const accountSid = functions.config().TWILIO_ACCOUNT_SID;
-
+const keys = require("./keys").keys();
+const accountSid = keys.twilio.accountid;
+const authToken = keys.twilio.authtoken;
+const client = require('twilio')(accountSid, authToken);
 
 module.exports = {
     sendSMS,

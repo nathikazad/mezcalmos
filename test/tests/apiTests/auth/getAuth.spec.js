@@ -1,5 +1,5 @@
-const auth = require("../../libraries/rest/auth")
-const helper = require("../../libraries/helpers")
+const auth = require("../../../libraries/rest/auth")
+const helper = require("../../../libraries/helpers")
 const admin = require("firebase-admin")
 const axios = require('axios')
 
