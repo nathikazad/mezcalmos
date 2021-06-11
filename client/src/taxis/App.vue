@@ -68,6 +68,16 @@ export default {
   },
   created() {
     this.$store.commit("setLocationEnabled", true);
+    const channel = new BroadcastChannel(`sw-taxi-messages`);
+    channel.addEventListener("message", event => {
+      // console.log(event);
+      //console.log("event ", event);
+
+      if (event.data.focusUrl) {
+        this.$router.push(event.data.focusUrl);
+      }
+      // console.log(event.data.subscription)
+    });
   },
   mounted() {
     window.addEventListener("resize", this.handleResize);
