@@ -60,7 +60,7 @@ async function sendTest(firebase, data) {
   if(driver.notificationInfo){     
     webpush.sendNotification(driver.notificationInfo, JSON.stringify({
       notificationType: "newOrder",
-      message: "Hay una nueva orden de taxi, vea si puede aceptarla."
+      message: "Eso es una prueba, gracias."
     })).catch((e) => {
       console.log("web push error ",uid)
     })
