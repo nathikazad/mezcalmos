@@ -149,7 +149,13 @@ export default {
       this.distance = pos.distance;
       this.duration = pos.duration;
       let estimatePrice = this.$store.getters["taxis/estimatePrice"];
-      this.estimatedPrice = await estimatePrice(pos.distance.value / 1000);
+      let locations = {
+        from:
+          {lat: pos.start_location.lat(), lng: pos.start_location.lng()},
+        to:
+          {lat: pos.end_location.lat(), lng: pos.end_location.lng()},
+      }
+      this.estimatedPrice = await estimatePrice(pos.distance.value / 1000, locations);
       this.showRideDetails = true;
     },
     async requestTaxi() {

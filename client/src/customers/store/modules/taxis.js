@@ -5,7 +5,8 @@ import {
 
 import {
   getDistanceFromLatLonInKm,
-  puertoCoords
+  puertoCoords,
+  inRichPeopleCoords
 } from '@/shared/mixins/mapFunctions'
 
 export default {
@@ -105,10 +106,12 @@ export default {
       return state.temporaryAddresseses
     },
     estimatePrice() {
-      return async function (distance) {
+      return async function (distance, locations) {
         let pricePolicy = (await firebaseDatabase().ref(`pricePolicy`).once('value')).val();
         distance = parseFloat(distance);
         let perKmCost = (pricePolicy && pricePolicy.perKmCost) ? parseInt(pricePolicy.perKmCost) : 0;
+        if (inRichPeopleCoords(locations.from, locations.to))
+          perKmCost = pricePolicy.perKmCostRichPeople
         let minimumCost = (pricePolicy && pricePolicy.minimumCost) ? parseInt(pricePolicy.minimumCost) : 0
         let estimate = parseInt(distance * perKmCost)
         return estimate > minimumCost ? estimate : minimumCost;
