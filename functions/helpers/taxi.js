@@ -159,6 +159,7 @@ async function cancelTaxiFromCustomer(firebase, uid, data) {
 
 function expireOrder(firebase, orderId, customerId) {
   console.log(`Removing order ${orderId} of ${customerId}`)
+
   firebase.database().ref(`/users/${customerId}/state/currentOrder`).remove()
   firebase.database().ref(`/users/${customerId}/orders/${orderId}`).remove();
   firebase.database().ref(`/openOrders/taxi/${orderId}`).remove();
@@ -167,6 +168,7 @@ function expireOrder(firebase, orderId, customerId) {
   setTimeout(function(){
       firebase.database().ref(`/orders/taxi/${orderId}`).remove()
   }, 1000);
+  let order = (await firebase.database().ref(`/orders/taxi/${orderId}`).once('value')).val();
   firebase.database().ref(`/unfulfilledOrders/${orderId}`).set({...order, reason:"expired"});
   notification.push(firebase, customerId, {
     status: "expired",
