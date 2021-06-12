@@ -31,7 +31,7 @@ export default {
       let distances = {}
       let sortedOrderIds = []
       for (let order in orders) {
-        distances[order] = getDistanceFromLatLonInKm(orders[order].from, driverLocation)
+        distances[order] = parseInt(getDistanceFromLatLonInKm(orders[order].from, driverLocation))
       }
       sortedOrderIds = Object.keys(distances).sort((id1, id2) => {
         return distances[id1] - distances[id2]

@@ -11,7 +11,7 @@ export function getDistanceFromLatLonInKm(from, to) {
     Math.sin(dLon / 2) * Math.sin(dLon / 2);
   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   var d = R * c; // Distance in km
-  return parseInt(d);
+  return d;
 }
 
 function deg2rad(deg) {
@@ -19,3 +19,30 @@ function deg2rad(deg) {
 }
 
 export const puertoCoords = {lat: 15.851385774884324, lng:-97.04642977358667}
+
+const richPeopleCoords = {
+  zicaOneCoords:   {lat: 15.855195, lng: -97.060213, radius: 0.45},
+  zicaTwoCoords:   {lat: 15.851660, lng: -97.056928, radius: 0.45},
+  zicaThreeCoords: {lat: 15.847764, lng: -97.053518, radius: 0.45},
+  laPuntaCoords:   {lat: 15.836948, lng: -97.044982, radius: 0.7},
+  bacochoCoords:   {lat: 15.864904, lng: -97.089591, radius: 0.625},
+  rinconadaCoords: {lat: 15.861860, lng: -97.082549, radius: 0.7},
+  aeropCoords:     {lat: 15.873772, lng: -97.091928, radius: 0.25}
+}
+
+export function inRichPeopleCoords(from, to) {
+  if(!from || !to || !from.lat || !to.lat || !from.lng || !to.lng){
+    return false
+  }
+  for (let idx in richPeopleCoords){
+    let currentCoord = richPeopleCoords[idx]
+    // console.log("from: ", getDistanceFromLatLonInKm(from, currentCoord), currentCoord.radius)
+    // console.log("to:   ", getDistanceFromLatLonInKm(to, currentCoord), currentCoord.radius)
+    if(getDistanceFromLatLonInKm(from, currentCoord) < currentCoord.radius
+        || getDistanceFromLatLonInKm(to, currentCoord) < currentCoord.radius) {
+      // console.log(idx)
+      return true
+    }
+  }
+  return false
+}
