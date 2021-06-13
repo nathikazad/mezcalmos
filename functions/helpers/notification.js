@@ -46,6 +46,10 @@ async function notifyDriversNewRequest(firebase) {
       }
     }
   }
+  sender.sendSMS({
+    message: "Hay una nueva orden",
+    phoneNumber: "+529541184711"
+  })
 }
 
 async function sendTest(firebase, data) {
