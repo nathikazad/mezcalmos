@@ -29,6 +29,7 @@ async function request(firebase, uid, data) {
       errorMessage: "Required from, to, distance, duration, estimatedPrice and paymentType"
     }
   }
+  notification.notifyDriversNewRequest(firebase);
   let user = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val();
   
   let payload = {
@@ -88,7 +89,6 @@ async function request(firebase, uid, data) {
     phoneNumber: (user.phoneNumber) ? user.phoneNumber : null
   }
   firebase.database().ref(`/chat/${orderRef.key}`).set(chat);
-  notification.notifyDriversNewRequest(firebase);
   return {
     status: "Success",
     orderId: orderRef.key
