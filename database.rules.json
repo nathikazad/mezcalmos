@@ -27,6 +27,11 @@
             ".write": "root.child('admins/' + auth.uid + '/authorized').val() === true"
           }
         },
+        "invite": {
+          "code": {
+            ".write": "$uid === auth.uid"
+          }
+        },
         "savedLocations": {
           ".write": "$uid === auth.uid"
         },
