@@ -31,13 +31,17 @@ productionFirebase.database().ref(`/openOrders/taxi`).on('value', function (snap
 setInterval(function () {
   checkOpenOrders(testFirebase, openOrdersTest)
   checkOpenOrders(productionFirebase, openOrdersProduction)
-}, checkOpenOrdersInterval)
+}, checkOpenOrdersInterval * 1000)
 
 function checkOpenOrders(firebase, openOrders) {
   for (let orderId in openOrders) {
     if (openOrders[orderId].orderTime) {
       let orderTime = new Date(openOrders[orderId].orderTime)
       let orderExpirationTime = new Date(orderTime.getTime() + orderExpirationLimit * 1000);
+	console.log("ordertime ", orderTime.toUTCString())
+	console.log("currentime", (new Date()).toUTCString())
+	console.log("expirationtime", orderExpirationTime.toUTCString())
+	console.log()
       if (Date.now() > orderExpirationTime) {
         taxi.expireOrder(firebase, orderId, openOrders[orderId].customer.id);
       }
