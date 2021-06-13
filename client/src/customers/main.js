@@ -36,7 +36,7 @@ async function firebaseCallback(user) {
     store.dispatch("notifications/loadNotificationsForCustomer");
     store.dispatch("savedLocations/loadLocations");
     store.dispatch("admin/loadAdmin");
-    
+    store.dispatch("loadInviteCode");
     await store.dispatch('loadCurrentOrder');
     let dbUser = store.getters["userInfo"]
     if (!dbUser || !dbUser.displayName || !dbUser.photo) {

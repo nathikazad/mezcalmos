@@ -36,11 +36,15 @@ const store = new Vuex.Store({
     },
     currentOrderId(state) {
       return state.currentOrderId
+    },
+    inviteCodeAlreadySet(state) {
+      return state.inviteCode != null
     }
   },
   state() {
     return {
       currentOrderId: null,
+      inviteCode: "none"
     };
   },
   actions: {
@@ -61,11 +65,33 @@ const store = new Vuex.Store({
         args: [context, userId]
       }, { root: true })
     },
+    loadInviteCode(context) {
+      let userId = context.rootGetters.userId
+      firebaseDatabase().ref(`users/${userId}/invite/code`).on('value', snapshot => {
+        context.commit('saveInviteCode', snapshot.val())
+      });
+      context.commit('saveLogoutCallback', {
+        func: function (context, userId) {
+          firebaseDatabase().ref(`users/${userId}/invite/code`).off()
+          context.commit('saveInviteCode', null)
+        },
+        args: [context, userId]
+      }, { root: true })
+    },
+    saveInviteCode(context, payload) {
+      if(!payload)
+        payload = "none"
+      let userId = context.rootGetters.userId
+      firebaseDatabase().ref(`users/${userId}/invite/code`).set(payload);
+    }
   },
   mutations: {
     saveCurrentOrderId(state, payload) {
       state.currentOrderId = payload;
     },
+    saveInviteCode(state, payload) {
+      state.inviteCode = payload
+    }
   }
 });
 
