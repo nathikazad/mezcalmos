@@ -11,7 +11,7 @@
           <h5>{{$t('shared.inputLocation.from')}} {{ oneWay == "to" ? `(${$t('shared.inputLocation.optional')})` : "" }}</h5>
           <input
             :disabled="disabled"
-            type="text"
+            type="search"
             :placeholder="$t('shared.placeHolders.address')"
             class="input"
             @focus="focused('From')"
@@ -30,7 +30,7 @@
           <h5>{{$t('shared.inputLocation.to')}} {{ oneWay == "from" ? "(Optional)" : "" }}</h5>
           <input
             :disabled="disabled"
-            type="text"
+            type="search"
             :placeholder="$t('shared.placeHolders.address')"
             class="input"
             @focus="focused('To')"
@@ -404,7 +404,8 @@ export default {
         lat: this.customerLocation.lat,
         lng: this.customerLocation.lng
       };
-      this.changeDirection(this.saved.origin, {
+      const origin = this.saved.origin;
+      this.changeDirection(origin, {
         lat: () => {
           return pos.lat;
         },
@@ -413,19 +414,19 @@ export default {
         }
       });
       this.auxCenter = pos;
-      this[this.saved.origin].by = "current";
-      this[this.saved.origin].address = await this.geocodedAddress(pos);
-      this[this.saved.origin].lat = pos.lat;
-      this[this.saved.origin].lng = pos.lng;
+      this[origin].by = "current";
+      this[origin].address = await this.geocodedAddress(pos);
+      this[origin].lat = pos.lat;
+      this[origin].lng = pos.lng;
       this.$emit("changedDirection", {
-        origin: this.saved.origin,
+        origin: origin,
         pos: pos
       });
       this.$emit("centerChanged", pos);
       this.saved.opened = false;
       this.search.searching = false;
       setTimeout(() => {
-        this[this.saved.origin].by = "search";
+        this[origin].by = "search";
       }, 200);
     },
     async pickFromMap() {
@@ -494,6 +495,10 @@ export default {
       color: map-get($colors, blackL);
       opacity: 1 !important;
       -webkit-text-fill-color: map-get($colors, blackL);
+    }
+    &::-webkit-search-cancel-button {
+      position: relative;
+      right: 20px;
     }
   }
 }
