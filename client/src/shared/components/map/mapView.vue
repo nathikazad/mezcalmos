@@ -302,7 +302,6 @@ export default {
   methods: {
     clientGesture() {
       let map = this.$refs["gmap"].$mapObject;
-
       if (map) {
         this.$emit("centerChangedByClient", {
           lat: map.center.lat(),
@@ -353,6 +352,8 @@ export default {
       let map = this.$refs["gmap"].$mapObject;
 
       map.fitBounds(bounds);
+      map.setZoom(map.getZoom() - 1);
+
       if (map.getZoom() > 16) map.setZoom(16);
 
       //console.log(map);
@@ -368,6 +369,14 @@ export default {
       deep: true,
       handler: function() {
         if (this.status == "inTransit") {
+          this.mapFit();
+        }
+      }
+    },
+    directionsOrigin: {
+      deep: true,
+      handler: function(newVal) {
+        if (newVal) {
           this.mapFit();
         }
       }
