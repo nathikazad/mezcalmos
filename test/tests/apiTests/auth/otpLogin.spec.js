@@ -1,9 +1,8 @@
-const auth = require("../../../libraries/rest/auth")
 const helper = require("../../../libraries/helpers")
 const admin = require("firebase-admin");
 jest.mock('../../../../functions/helpers/sender')
 const sender = require('../../../../functions/helpers/sender')
-
+const auth = require('../../../../functions/helpers/auth')
 
 jest.setTimeout(70000)
 
@@ -28,22 +27,29 @@ describe('Mezcalmos', () => {
   
     it('Test sending code for login', async () => {
        //missing phone number
-      let data = {
-        "messageType": "SMS",
-        "apiKey": "uHzCiX_sandbox"
-      }
-      let response = await auth.sendCodeLogin(data)
-      expect(response.result.status).toBe('Error')
-      expect(response.result.errorMessage).toBe("Required phone number")
+      // let data = {
+      //   "messageType": "SMS",
+      //   "apiKey": "uHzCiX_sandbox"
+      // }
+      // let response = await auth.sendCodeLogin(data)
+      // expect(response.result.status).toBe('Error')
+      // expect(response.result.errorMessage).toBe("Required phone number")
 
+      sender.sendSMS.mockImplementation( () => {
+        return{
+          status: 'Error',
+          errorMessage: 'Something is wrong'
+        };
+      }) 
 
       //wrong phone number
       data = {
-        "phoneNumber":"07",
+        "phoneNumber":"+12098628445",
         "messageType": "SMS",
         "apiKey": "uHzCiX_sandbox"
       }
-      response = await auth.sendCodeLogin(data)
+      response = await auth.sendOTPForLogin(admin, data)
+      console.log(response)
       // expect(response.result.status).toBe('Error')
       // expect(response.result.errorMessage).toBe('The phone number must be a non-empty E.164 standard compliant identifier string.')
 
@@ -68,18 +74,18 @@ describe('Mezcalmos', () => {
 
       //new user's phone number
           //verify that no user is created yet
-          let users = (await admin.database().ref(`/users`).once('value')).val()
-          expect(users).toBeNull()
-          // send function:
-          data = {
-              "messageType": "SMS",
-              "phoneNumber":"+21654521583",
-              "apiKey": "uHzCiX_sandbox"
-          }
-         response = await auth.sendCodeLogin(data)    
-         console.log(response.result);
+        //   let users = (await admin.database().ref(`/users`).once('value')).val()
+        //   expect(users).toBeNull()
+        //   // send function:
+        //   data = {
+        //       "messageType": "SMS",
+        //       "phoneNumber":"+21654521583",
+        //       "apiKey": "uHzCiX_sandbox"
+        //   }
+        //  response = await auth.sendCodeLogin(data)    
+        //  console.log(response.result);
       
-         expect(response.result.status).toBe('Success')
+        //  expect(response.result.status).toBe('Success')
           //mocking the sender 
 
           //users = (await admin.database().ref(`/users`).once('value')).val()
