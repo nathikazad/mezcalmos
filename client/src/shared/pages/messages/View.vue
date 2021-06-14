@@ -8,7 +8,7 @@
           :href="whatsappLink"
           target="_blank"
           rel="noopener noreferrer"
-          class="ml-2 flex align_center center text_white bg_whatsApp whatsappLink"
+          class="ml-2 flex align_center center text_white bg_whatsApp whatsappLink taxiLink"
         >
           <fa :solid="true" icon="whatsapp"></fa>
         </a>
@@ -16,7 +16,7 @@
           v-if="senderPhoneNumber"
           :href="'tel:'+senderPhoneNumber"
           target="_blank"
-          class="ml-2 t-9 flex align_center center text_white bg_SMS whatsappLink"
+          class="ml-2 t-9 flex align_center center text_white bg_SMS smsLink taxiLink"
         >
           <fa icon="phone-alt"></fa>
         </a>
@@ -221,10 +221,13 @@ export default {
 .icon_link {
   margin-right: 3px;
 }
-.whatsappLink {
-  width: 1.8rem;
-  height: 1.8rem;
-  border-radius: 50%;
+.taxiLink {
+  width: 2rem;
+  height: 2rem;
+  border-radius: .5rem;
+}
+.whatsappLink{
+  font-size: 1.2rem;
 }
 .message_footer {
   height: 4.375rem;

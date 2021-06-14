@@ -5,8 +5,8 @@
       v-if="type=='customer'"
       slot="details"
       class="routePill w-100 mb-2"
-      :classes1="{'w-45':true,}"
-      :classes2="{'w-25':true,}"
+      :classes1="{'w-55':true,}"
+      :classes2="{'w-15':true,}"
       :classes3="{'w-30':true,}"
     >
       <userPart
@@ -19,7 +19,7 @@
       ></userPart>
 
       <price
-        class="flex align_center"
+        class="flex align_center customerPrice"
         slot="part2"
         :price="deepFind(orderDetails, 'estimatedPrice')"
       ></price>
@@ -153,5 +153,11 @@ export default {
   text-align: center;
   top: -0.4rem;
   right: -0.4rem;
+}
+.customerPrice {
+  width: 100%;
+  ::v-deep .price {
+    font-size: 0.7rem !important;
+  }
 }
 </style>
