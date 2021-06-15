@@ -21,8 +21,8 @@
             <div slot="title" class="bold">{{ order.customer.name }}</div>
             <span slot="aside" class="regular flex">
               <span class="bold align_center flex mr-2" v-if="deepFind(order, 'estimatedPrice')">
-                <img src="@/shared/static/img/money.svg" class="money_icon mr-1" />
-                &nbsp;{{ Number.parseFloat(deepFind(order, 'estimatedPrice')).toFixed(2)}}
+                <!-- <img src="@/shared/static/img/money.svg" class="money_icon mr-1" />
+                &nbsp;{{ Number.parseFloat(deepFind(order, 'estimatedPrice')).toFixed(2)}} -->
               </span>
               &nbsp;
               <span>
@@ -59,8 +59,8 @@
             <div slot="title" class="bold">Cancelled</div>
             <span slot="aside" class="regular flex">
               <span class="bold align_center flex mr-2" v-if="deepFind(order, 'estimatedPrice')">
-                <img src="@/shared/static/img/money.svg" class="money_icon mr-1" />
-                &nbsp;{{ Number.parseFloat(deepFind(order, 'estimatedPrice')).toFixed(2)}}
+                <!-- <img src="@/shared/static/img/money.svg" class="money_icon mr-1" /> -->
+                <!-- &nbsp;{{ Number.parseFloat(deepFind(order, 'estimatedPrice')).toFixed(2)}} -->
               </span>
               &nbsp;
               <span>
