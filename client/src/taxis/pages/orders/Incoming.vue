@@ -24,10 +24,10 @@
             <card2 class="bg_white border card wrap">
               <avatar size="2.4rem" :url="orders[orderId].customer.image" slot="image"></avatar>
               <div slot="title" class="bold">{{ orders[orderId].customer.name }}</div>
-              <span slot="aside" class="bold align_center flex" v-if="deepFind(orders[orderId], 'estimatedPrice')">
+              <!-- <span slot="aside" class="bold align_center flex" v-if="deepFind(orders[orderId], 'estimatedPrice')">
                 <img src="@/shared/static/img/money.svg" class="money_icon mr-1" />
                 &nbsp;{{ Number.parseFloat(deepFind(orders[orderId], 'estimatedPrice')).toFixed(2)}}
-              </span>
+              </span> -->
               <div slot="desc" class="flex align_center desc_slot">
                 <span class="t-8 flex align_center fill_width">
                   <span :title="orders[orderId].from.address" class="grow2 ellipsis">

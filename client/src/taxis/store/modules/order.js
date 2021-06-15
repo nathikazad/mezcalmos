@@ -27,7 +27,7 @@ export default {
         let order = snapshot.val()
         if (deepFind(order,'status')=="lookingForTaxi") {
           let driverLocation = context.rootGetters.userLocation;
-          order.customer.distance = getDistanceFromLatLonInKm(order.from, driverLocation)
+          order.customer.distance = parseInt(getDistanceFromLatLonInKm(order.from, driverLocation))
         } 
         context.commit('saveOrder', { order: order, orderId: orderId });
       }, () => {

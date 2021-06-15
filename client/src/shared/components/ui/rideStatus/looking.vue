@@ -5,18 +5,18 @@
       <route-pill
         slot="details"
         class="routePill w-100 mb-2"
-        :classes1="{'w-40':true,}"
-        :classes2="{'w-40':true,}"
-        :classes3="{'w-20':true,}"
+        :classes1="{'w-60':true,}"
+        :classes2="{'none':true,}"
+        :classes3="{'w-40':true,}"
       >
         <userPart class="flex align_center" slot="part1" :extra="$t('customer.taxiView.searching')"></userPart>
 
-        <price
+        <!-- <price
           class="flex align_center"
           slot="part2"
           :price="deepFind(orderDetails, 'estimatedPrice')"
           :cash="true"
-        ></price>
+        ></price>-->
 
         <div class="flex align_center" slot="part3">
           <routeInfo
@@ -41,24 +41,24 @@
       <route-pill
         slot="details"
         class="routePill w-100 mb-2"
-        :classes1="{'w-40':true,}"
-        :classes2="{'w-40':true,}"
-        :classes3="{'w-20':true,}"
+        :classes1="{'w-60':true,}"
+        :classes2="{'none':true,}"
+        :classes3="{'w-40':true,}"
       >
         <userPart
           class="flex align_center"
           slot="part1"
           :avatar="orderDetails.customer.image"
           :name="orderDetails.customer.name"
-          :extra="deepFind(orderDetails, 'customer.distance')+'km' +$t('taxi.incoming.far')"
+          :extra="deepFind(orderDetails, 'customer.distance')+' km ' +$t('taxi.incoming.far')"
         ></userPart>
 
-        <price
+        <!-- <price
           class="flex align_center"
           slot="part2"
           :price="deepFind(orderDetails, 'estimatedPrice')"
           :cash="true"
-        ></price>
+        ></price>-->
 
         <div class="flex align_center" slot="part3">
           <routeInfo
