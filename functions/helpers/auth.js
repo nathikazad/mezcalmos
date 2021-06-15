@@ -36,7 +36,7 @@ async function sendOTPForLogin(firebase, data) {
     } else {
       return {
         status: "Error",
-        errorMessage: e.errorInfo.message
+        errorMessage: e.errorInfo.message,
       }
     }
   }
@@ -110,9 +110,9 @@ async function sendOTPForNumberChange(firebase, data, userId) {
       errorMessage: "Required phone number"
     }
   }
-
-  if (!data.messageType &&
-    (data.messageType != "SMS" || data.messageType != "whatsApp")) {
+  // change logical operators
+  if (!data.messageType ||
+    (data.messageType != "SMS" && data.messageType != "whatsApp")) {
     return {
       status: "Error",
       errorMessage: "Required messageType and has to be SMS or whatsApp"
@@ -131,6 +131,12 @@ async function sendOTPForNumberChange(firebase, data, userId) {
     }
   } catch (e) {
     // TODO if error other user not found return smtn else
+    if(e.errorInfo.code == 'auth/invalid-phone-number'){
+      return{
+        status: "Error",
+        errorMessage: "Invalid phone number"
+      }
+    }
   }
 
   let response = await sendOTP(firebase, data, userId)
@@ -260,7 +266,7 @@ async function confirmOTP(firebase, data, userId) {
   if (Date.now() > expirationTime) {
     return {
       status: "Error",
-      errorMessage: "Invalid OTP Code, time expired"
+      errorMessage: "Invalid OTP Code"
     }
   }
 

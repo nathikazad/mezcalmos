@@ -1,189 +1,140 @@
-//const auth = require("../../libraries/rest/auth")
-const auth = require('../../../functions/helpers/auth')
-const helper = require("../../libraries/helpers")
+const auth = require('../../../../functions/helpers/auth')
+const helper = require('../../../libraries/helpers')
 const admin = require("firebase-admin");
-
-jest.mock('../../../functions/helpers/sender')
-const sender = require('../../../functions/helpers/sender')
-
+jest.mock('../../../../functions/helpers/sender')
+const sender = require('../../../../functions/helpers/sender')
 
 admin.initializeApp({
     projectId: "mezcalmos-31f1c",
     databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com"
-});
+  });
+  describe( 'Mezcalmos', () => {
+    beforeAll(async () => {
+        await helper.clearDatabase(admin)
+      });
 
+      it('Test sendWhatsApp', async () => {
+        // no language is required
+        let  data = {
+             "messageType": "SMS",
+             "phoneNumber":"+21654521583",
+             "apiKey": "uHzCiX_sandbox"
+        }
+        let response = await auth.sendOTPForLogin(admin, data)    
+        //console.log(response);
+        expect(response.status).toBe('Success')
+        users = (await admin.database().ref(`/users`).once('value')).val()
+        let snap = (await admin.database().ref(`/`).once('value')).val()
+        let userId = Object.keys(snap.users)[0]
 
-describe('Mezcalmos', () => {
-  beforeAll(async () => {
-      await helper.clearDatabase(admin)
-    });
+        let authInfo = (await admin.database().ref(`users/${userId}/auth`).once('value')).val()
+        let userInfo = (await admin.database().ref(`users/${userId}/info`).once('value')).val()
+        let OTPCode = authInfo.OTPCode
 
-  it('Test when the sendSMS should not be called', async () => {
-    
-    let authObject = {
-      "OTPCode": "333333",
-      "attempts": "0",
-      "messageType": 'whatsApp',
-      "codeGeneratedTime": new Date(2021, 5, 9, 11, 20, 21, 22).toUTCString()
-    }  
-    let data = {
-     "messageType": 'whatsApp',
-     "language": 'es',
-     "phoneNumber": "+12056521583",
-     "apiKey": "uHzCiX_sandbox"
-    }
-    let testUser = await admin.auth().createUser({
-      phoneNumber: data.phoneNumber
-    })   
-    let testUserId = testUser.uid  
-   admin.database().ref(`/users/${testUserId}/auth`).set(authObject);
-   admin.database().ref(`/users/${testUserId}/info/phoneNumber`).set(testUser.phoneNumber)  
-   let response = await auth.sendOTP(admin, data, testUserId) //the function will generate a new entry code
-   let authObjectAfterSending = (await admin.database().ref(`users/${testUserId}/auth`).once('value')).val() 
-   let OTPCode = authObjectAfterSending.OTPCode
-   let payload = {
-    'message': `Su código OTP único de Mezcalmos es ${OTPCode}`,
-    'phoneNumber': data.phoneNumber,
-    'apiKey': data.apiKey
-   }
-   expect(sender.sendSMS).toHaveBeenCalledTimes(0);
+        //verify that sender module is being mocked
 
-  })
+        expect(sender.sendWhatsApp).not.toHaveBeenCalled()
+        expect(sender.sendSMS).toHaveBeenCalledTimes(1)
 
-  it('Test sending SMS', async () => {
+        //verification
+        let payload = {
+              'message': `Your one time Mezcalmos OTP code is ${OTPCode}`,
+              'phoneNumber': data.phoneNumber,
+              //'apiKey': data.apiKey
+              
+        }
+        expect(sender.sendSMS).toHaveBeenCalledTimes(1)
+        expect(sender.sendSMS).toHaveBeenCalledWith(payload)
+       
+        let call = {...sender.sendSMS.mock.calls[0]}
+        expect(call[0].message).toBe(payload.message),
+        expect(call[0].phoneNumber).toBe(payload.phoneNumber),
+
+        //removing the user: 
+
+        admin.database().ref(`/users/${userId}`).remove()
+
+      }) 
+
+      it('Test sendWhatsApp when language is required', async () => {
+
+        let data = {
+          "language": 'es',
+          "messageType": "SMS",
+          "phoneNumber":"+21655521583",
+          "apiKey": "uHzCiX_sandbox"
+        }
+        let response = await auth.sendOTPForLogin(admin, data)    
+        //console.log(response);
+        expect(response.status).toBe('Success')
+        let users = (await admin.database().ref(`/users`).once('value')).val()
       
-    let authObject = {
-        "OTPCode": "333333",
-        "attempts": "0",
-        "messageType": 'SMS',
-        "codeGeneratedTime": new Date(2021, 5, 9, 11, 20, 21, 22).toUTCString()
-    }  
-    let data = {
-       "messageType": 'SMS',
-       "phoneNumber": "+12054521583",
-       "apiKey": "uHzCiX_sandbox"
-    }
-    let testUser = await admin.auth().createUser({
-       phoneNumber: data.phoneNumber
-    })   
-    let testUserId = testUser.uid  
-     admin.database().ref(`/users/${testUserId}/auth`).set(authObject);
-     admin.database().ref(`/users/${testUserId}/info/phoneNumber`).set(testUser.phoneNumber)  
-    let response = await auth.sendOTP(admin, data, testUserId) //the function will generate a new entry code
-    let authObjectAfterSending = (await admin.database().ref(`users/${testUserId}/auth`).once('value')).val() 
-    let OTPCode = authObjectAfterSending.OTPCode
-    let payload = {
-      'message': `Your one time Mezcalmos OTP code is ${OTPCode}`,
-      'phoneNumber': data.phoneNumber,
-      //'apiKey': data.apiKey
-    }
-    expect(sender.sendSMS).toHaveBeenCalledTimes(1);
-    
-    expect(sender.sendSMS).toHaveBeenCalledWith(payload)
+        let userId = Object.keys(users)[0]
+        
 
-    let call = {...sender.sendSMS.mock.calls[0]}
-    expect(call[0].message).toBe(payload.message)
-    expect(call[0].phoneNumber).toBe(payload.phoneNumber)
-   
+        let authInfo = (await admin.database().ref(`users/${userId}/auth`).once('value')).val()
+        let userInfo = (await admin.database().ref(`users/${userId}/info`).once('value')).val()
+        let OTPCode = authInfo.OTPCode
 
-          
+        //verify that sender module is being mocked
+
+        expect(sender.sendWhatsApp).not.toHaveBeenCalled()
+        expect(sender.sendSMS).toHaveBeenCalledTimes(2)
+
+        //verification
+        let payload = {
+           'message': `Su código OTP único de Mezcalmos es ${OTPCode}`,
+           'phoneNumber': data.phoneNumber,
+           //'apiKey': data.apiKey
+        } 
+     
+        expect(sender.sendSMS).toHaveBeenCalledWith(payload)
+        let call = {...sender.sendSMS.mock.calls[1]}
+        expect(call[0].message).toBe(payload.message)
+        // expect(call[0].apiKey).toBe(payload.apiKey)
+        expect(call[0].phoneNumber).toBe(payload.phoneNumber)
+
+        //removing the user: 
+        admin.database().ref(`/users/${userId}`).remove()
+      })
+
+    it('Test when there is an error', async () => {
+      // make mock throw error
+      sender.sendSMS.mockImplementation( () => {
+        return{
+          status: 'Error',
+          errorMessage: 'Something is wrong'
+        };
+      }) 
+      let  data = {
+        "messageType": "SMS",
+        "phoneNumber":"+21656521583",
+        "apiKey": "uHzCiX_sandbox"
+      }
+      let response = await auth.sendOTPForLogin(admin, data) 
+      expect(response.status).toBe('Error')   
+      expect(response.errorMessage).toBe('Something is wrong')
+
+      expect(sender.sendWhatsApp).not.toHaveBeenCalled()
+      expect(sender.sendSMS).toHaveBeenCalledTimes(3)
+
+      let users = (await admin.database().ref(`/users`).once('value')).val()
+      let userId = Object.keys(users)[0]
+      let authInfo = (await admin.database().ref(`users/${userId}/auth`).once('value')).val()
+      let userInfo = (await admin.database().ref(`users/${userId}/info`).once('value')).val()
+
+      // verify the auth object and the user info:
+      expect(authInfo).toBeNull()
+      expect(userInfo.phoneNumber).toBe(data.phoneNumber)
+
+      // verify the parameter called into sendSMS function:
+      let call = {...sender.sendSMS.mock.calls[2]}
+      console.log(call);
+      expect(call[0].phoneNumber).toBe(data.phoneNumber)
+      
+    })
+
   })
-
-  it('Test sendSMS when language is required', async () => {
-   
-    let authObject = {
-      "OTPCode": "333333",
-      "attempts": "0",
-      "messageType": 'SMS',
-      "codeGeneratedTime": new Date(2021, 5, 9, 11, 20, 21, 22).toUTCString()
-   }  
-    let data = {
-     "messageType": 'SMS',
-     "language": 'es',
-     "phoneNumber": "+12055521583",
-     "apiKey": "uHzCiX_sandbox"
-    }
-    let testUser = await admin.auth().createUser({
-     phoneNumber: data.phoneNumber
-    })   
-    let testUserId = testUser.uid  
-    admin.database().ref(`/users/${testUserId}/auth`).set(authObject);
-    admin.database().ref(`/users/${testUserId}/info/phoneNumber`).set(testUser.phoneNumber)  
-    let response = await auth.sendOTP(admin, data, testUserId) //the function will generate a new entry code
-    let authObjectAfterSending = (await admin.database().ref(`users/${testUserId}/auth`).once('value')).val() 
-    let OTPCode = authObjectAfterSending.OTPCode
-    let payload = {
-    'message': `Su código OTP único de Mezcalmos es ${OTPCode}`,
-    'phoneNumber': data.phoneNumber,
-    //'apiKey': data.apiKey
-    }
-    expect(sender.sendSMS).toHaveBeenCalledTimes(2);
-    expect(sender.sendSMS).toHaveBeenCalledWith(payload)
-  
-    let call = {...sender.sendSMS.mock.calls[1]}
-    expect(call[0].message).toBe(payload.message)
-    expect(call[0].phoneNumber).toBe(payload.phoneNumber)
-  })
-
-  it('Test in case there is an error', async () => {
-    // make mock throw error
-    sender.sendSMS.mockImplementation( () => {
-      return{
-        status: 'Error',
-        errorMessage: 'Something is wrong'
-      };
-    }) 
-    let authObject = {
-      "OTPCode": "333333",
-      "attempts": "0",
-      "codeGeneratedTime": new Date(2021, 5, 9, 11, 20, 21, 22).toUTCString(),
-      "messageType": 'SMS'
-    }  
-    let data = {
-     "messageType": 'SMS',
-     "phoneNumber": "+12057521583",
-     "apiKey": "uHzCiX_sandbox"
-    }
-    let testUser = await admin.auth().createUser({
-     phoneNumber: data.phoneNumber
-    })   
-    let testUserId = testUser.uid  
-    admin.database().ref(`/users/${testUserId}/auth`).set(authObject);
-    admin.database().ref(`/users/${testUserId}/info/phoneNumber`).set(testUser.phoneNumber)  
-    // send OTP
-    let response = await auth.sendOTP(admin, data, testUserId) //the function will generate an error
-    // console.log('response ', response);
-
-    // verify that it receives an error
-    expect(sender.sendSMS).toHaveReturned()
-    expect(sender.sendSMS).toHaveBeenCalledTimes(3)
-    expect(JSON.stringify(response)).toBe(JSON.stringify({
-      status: 'Error',
-      errorMessage: 'Something is wrong'
-    }))
-    // the auth object does not change after sending the function
-    let authObjectAfterSending = (await admin.database().ref(`users/${testUserId}/auth`).once('value')).val()
-    expect(JSON.stringify(authObjectAfterSending)).toBe(JSON.stringify(authObject))
-   //
-    let OTPCode = authObjectAfterSending.OTPCode
-    payload = {
-      'message': `Your one time Mezcalmos OTP code is ${OTPCode}`,
-      'phoneNumber': data.phoneNumber,
-      // 'apiKey': data.apiKey
-    }
-    let call = {...sender.sendSMS.mock.calls[2]}
-    
-   //verify that the OTPCode had changed while calling the function
-   expect(sender.sendSMS).not.toHaveBeenCalledWith(payload)
-   expect(call[0].message).not.toBe(payload.message)
-   //verification
-   
-   expect(call[0].phoneNumber).toBe(payload.phoneNumber)
-   
-  })
-
-})
-
-afterAll(() => {
+  afterAll(() => {
     admin.app().delete()
-});
+  });
