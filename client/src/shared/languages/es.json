@@ -5,6 +5,11 @@
             "groceries": "Comestibles",
             "services": "Todos los servicios"
         },
+        "inviteCode":{
+            "inviteCodQuestion": "Tienes un código de invitación?",
+            "no": "No",
+            "confirm": "Confirmar"
+        },
         "taxiView": {
             "taxi": "Taxi",
             "searching": "Buscando taxi",

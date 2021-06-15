@@ -29,7 +29,7 @@ async function request(firebase, uid, data) {
       errorMessage: "Required from, to, distance, duration, estimatedPrice and paymentType"
     }
   }
-  notification.notifyDriversNewRequest(firebase);
+  notification.notifyDriversNewRequest(firebase, data.from.address.split(',')[0]);
   let user = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val();
   
   let payload = {
