@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="non_refreshable">
     <!-- ******************pop up component ************************-->
     <pop-up
       v-if="checkDistancePopUp"
@@ -341,7 +341,10 @@ export default {
     },
     async checkRideDistance(method) {
       this.toFarQuestion = this.$t(`taxi.taxiView.tooFarFrom${method}`);
-      let farFromRide = await this.$store.dispatch("order/checkRideDistance",method);
+      let farFromRide = await this.$store.dispatch(
+        "order/checkRideDistance",
+        method
+      );
       this.checkDistancePopUpAction = this[method];
       if (farFromRide) {
         this.checkDistancePopUp = true;

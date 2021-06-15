@@ -131,8 +131,11 @@ export default {
       this.$router.push("/auth");
       this.$emit("closeNavDrawer");
     },
-    logout() {
-      this.$store.dispatch("logout");
+    async logout() {
+      await this.$store.dispatch("logout");
+      if (this.appName == "customer") {
+        await this.$store.dispatch("saveInviteCode", null);
+      }
       this.$emit("closeNavDrawer");
     },
     swipeHandler(direction) {

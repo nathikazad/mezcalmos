@@ -157,7 +157,7 @@ export default {
 .customerPrice {
   width: 100%;
   ::v-deep .price {
-    font-size: 0.7rem !important;
+    font-size: 0.8rem !important;
   }
 }
 </style>

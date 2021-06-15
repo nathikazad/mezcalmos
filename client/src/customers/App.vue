@@ -11,6 +11,9 @@
     <transition name="slide-down">
       <askForPermission v-if="showPermessionPanel" class="dialogPanel bg_white"></askForPermission>
     </transition>
+    <transition name="slide-down">
+      <inviteCode v-if="!inviteCodeAlreadySet" class="dialogPanel bg_white"></inviteCode>
+    </transition>
     <the-header
       v-show="routeName != 'login'"
       @toggle="navDrawer = !navDrawer"
@@ -26,12 +29,14 @@
 import TheHeader from "@/shared/components/layouts/TheHeader.vue";
 import NavDrawer from "@/shared/components/layouts/navDrawer.vue";
 import askForPermission from "@/shared/components/layouts/askForPermission.vue";
+import inviteCode from "@/shared/components/ui/inviteCode.vue";
 
 export default {
   components: {
     TheHeader,
     NavDrawer,
-    askForPermission
+    askForPermission,
+    inviteCode
   },
 
   data() {
@@ -41,7 +46,8 @@ export default {
       lastRoute: "",
       transitionName: "",
       showPermessionPanel: false,
-      intervallPermession: null
+      intervallPermession: null,
+      inviteCodePopUp: false
     };
   },
 
@@ -68,12 +74,16 @@ export default {
     },
     isLoggedIn() {
       return this.$store.getters.loggedIn;
+    },
+    inviteCodeAlreadySet() {
+      return this.$store.getters.inviteCodeAlreadySet;
     }
   },
   destroyed: function() {
     window.removeEventListener("resize", this.handleResize);
   },
   methods: {
+   
     async postSavedAddress(tmpAddress) {
       let response = await this.$store.dispatch(
         "taxis/requestTaxi",

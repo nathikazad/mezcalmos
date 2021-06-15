@@ -498,7 +498,8 @@ export default {
     }
     &::-webkit-search-cancel-button {
       position: relative;
-      right: 20px;
+      right: 10px;
+      margin-left: 1rem;
     }
   }
 }

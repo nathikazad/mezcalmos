@@ -4,6 +4,12 @@
             "taxi": "Taxi",
             "groceries": "Groceries",
             "services": "All Services"
+           
+        },
+        "inviteCode":{
+            "inviteCodQuestion": "Do You Have An Invite Code?",
+            "close": "Close",
+            "confirm": "Confirm"
         },
         "taxiView": {
             "taxi": "Taxi",
@@ -20,7 +26,7 @@
             "logIn": "Login To Make This Order",
             "outOfPuerto": "You are too far out of puerto",
             "priceEstimate": "Estimated price for the ride is $",
-            "noRide":"Sorry to inform you this ride does not exist anymore."
+            "noRide": "Sorry to inform you this ride does not exist anymore."
         },
         "cancelOrder": {
             "question": "Why do you want to cancel the ride?",
@@ -72,9 +78,9 @@
             "cancelled": "Cancelled",
             "tooFarFromstartRide": "Click start ride after the customer has reached your vehicle. Based on your GPS it seems you are still far from customer location, are you sure you still want to start the ride?",
             "tooFarFromfinishRide": "Click Finish after the customer has exited your vehicle. Based on your GPS it seems you are still far from customer's end location, are you sure you still want to end the ride?",
-            "no":"No",
-            "yes":"Yes",
-            "noRide":"Sorry to inform you this ride does not exist anymore."
+            "no": "No",
+            "yes": "Yes",
+            "noRide": "Sorry to inform you this ride does not exist anymore."
         },
         "cancelOrder": {
             "question": "Why do you want to cancel the ride?",
@@ -157,7 +163,7 @@
             "fullName": "Full Name",
             "phoneNumber": "Phone Number",
             "clickToUploadImg": "clickToUpdate",
-            "addPhoneNumber":"Add phone number"
+            "addPhoneNumber": "Add phone number"
         },
         "navDrawer": {
             "userInfo": "User Information",
@@ -201,7 +207,7 @@
             "writeHere": "Write here",
             "displayName": "Enter Display Name",
             "phone": "Enter Phone Number",
-            "phoneNumber":"+52123456.."
+            "phoneNumber": "+52123456.."
 
         }
     }
