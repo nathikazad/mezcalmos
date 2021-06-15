@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="non_refreshable">
     <div id="taxiRequest" v-if="orderDetails">
       <!-- ******************pop up Cancel ************************-->
       <pop-up

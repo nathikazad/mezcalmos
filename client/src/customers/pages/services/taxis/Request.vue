@@ -1,5 +1,5 @@
 <template>
-  <div id="taxiRequest">
+  <div id="taxiRequest" class="non_refreshable">
     <!-- pop up component -->
     <pop-up v-if="pickLocation"></pop-up>
     <!-- ******************Price estimate alert ************************-->
