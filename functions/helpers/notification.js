@@ -33,15 +33,22 @@ async function push(firebase, userId, message, particpantType = "customer") {
 
 async function notifyDriversNewRequest(firebase, address) {
   drivers = (await firebase.database().ref(`/taxiDrivers`).once('value')).val();
+  let i = 1;
+  let j = 0;
   for (let driverId in drivers){
     let driver = drivers[driverId]
     if(driver.state && driver.state.isLooking && !driver.state.currentOrder) {
-      if(driver.notificationInfo){     
-          webpush.sendNotification(driver.notificationInfo, JSON.stringify({
-            notificationType: "newOrder",
-            message: `Hay una nueva orden de taxi de ${address}, vea si puede aceptarla.`          })).catch((e) => {
-            console.log("web push error ",driverId)
+      if(driver.notificationInfo) {   
+        console.log(i)  
+        webpush.sendNotification(driver.notificationInfo, JSON.stringify({
+          notificationType: "newOrder",
+          message: `Hay una nueva orden de taxi de ${address}, vea si puede aceptarla.`
+        })).catch((e) => {
+          functions.logger.error(`web push error, ${driverId}`, e);
+          j = j + 1;
+          console.log("no of errors ",j)
         })
+        i = i + 1;
       }
     }
   }
@@ -50,6 +57,7 @@ async function notifyDriversNewRequest(firebase, address) {
   for (let driverId in drivers){
     let driver = drivers[driverId]
     let user = users[driverId]
+    
     if(driver.state && driver.state.isLooking && !driver.state.currentOrder) {
       if(user.info.iphone && user.info.phoneNumber){     
         sender.sendSMS({
