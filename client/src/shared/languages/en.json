@@ -4,11 +4,10 @@
             "taxi": "Taxi",
             "groceries": "Groceries",
             "services": "All Services"
-           
         },
         "inviteCode":{
             "inviteCodQuestion": "Do You Have An Invite Code?",
-            "close": "Close",
+            "no": "No",
             "confirm": "Confirm"
         },
         "taxiView": {

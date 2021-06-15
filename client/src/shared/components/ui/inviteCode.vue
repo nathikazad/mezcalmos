@@ -30,13 +30,13 @@
         :mode="{ dark: true, bg_error: true }"
         class="float_btn flex align_center center w-45"
         :loading="isLoading"
-      >{{'Cancel'}}</base-button>
+      >{{$t('customer.inviteCode.no')}}</base-button>
       <base-button
         @click.native="respondToInviteCode('yes')"
         :mode="{ dark: true, bg_whatsApp: true ,disabled:disabled}"
         class="float_btn flex align_center center w-45"
         :loading="isLoading"
-      >{{$t('shared.login.confirm')}}</base-button>
+      >{{$t('customer.inviteCode.confirm')}}</base-button>
     </div>
   </div>
 </template>

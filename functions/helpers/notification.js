@@ -31,7 +31,7 @@ async function push(firebase, userId, message, particpantType = "customer") {
   }
 }
 
-async function notifyDriversNewRequest(firebase) {
+async function notifyDriversNewRequest(firebase, address) {
   drivers = (await firebase.database().ref(`/taxiDrivers`).once('value')).val();
   for (let driverId in drivers){
     let driver = drivers[driverId]
@@ -39,17 +39,28 @@ async function notifyDriversNewRequest(firebase) {
       if(driver.notificationInfo){     
           webpush.sendNotification(driver.notificationInfo, JSON.stringify({
             notificationType: "newOrder",
-            message: "Hay una nueva orden de taxi, vea si puede aceptarla."
-          })).catch((e) => {
+            message: `Hay una nueva orden de taxi de ${address}, vea si puede aceptarla.`          })).catch((e) => {
             console.log("web push error ",driverId)
         })
       }
     }
   }
-  sender.sendSMS({
-    message: "Hay una nueva orden",
-    phoneNumber: "+529541184711"
-  })
+
+  users = (await firebase.database().ref(`/users`).once('value')).val();
+  for (let driverId in drivers){
+    let driver = drivers[driverId]
+    let user = users[driverId]
+    if(driver.state && driver.state.isLooking && !driver.state.currentOrder) {
+      if(user.info.iphone && user.info.phoneNumber){     
+        sender.sendSMS({
+          message: `Hay una nueva orden de ${address}`,
+          phoneNumber: user.info.phoneNumber
+        }).catch(function(e){
+          console.log(e)
+        })
+      }
+    }
+  }
 }
 
 async function sendTest(firebase, data) {
