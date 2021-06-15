@@ -21,9 +21,7 @@ import {
 initModules(Vue)
 //Firebase state changed function
 async function firebaseCallback(user) {
-  registerServiceWorker('customer').then(() => {
-    askForNotification('customer', store);
-  });
+ 
   if (user) {
     await store.dispatch("autoSignIn", {
       userId: user.uid,
@@ -32,6 +30,9 @@ async function firebaseCallback(user) {
       photoURL: user.photoURL,
       loggedIn: true,
       // hasuraAuthToken: token
+    });
+    registerServiceWorker('customer').then(() => {
+      askForNotification('customer', store);
     });
     store.dispatch("notifications/loadNotificationsForCustomer");
     store.dispatch("savedLocations/loadLocations");

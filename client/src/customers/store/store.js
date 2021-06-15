@@ -82,7 +82,11 @@ const store = new Vuex.Store({
       if(!payload)
         payload = "none"
       let userId = context.rootGetters.userId
-      firebaseDatabase().ref(`users/${userId}/invite/code`).set(payload);
+      if (!userId) {
+        context.commit('saveInviteCode', 'none')
+      }else{
+        firebaseDatabase().ref(`users/${userId}/invite/code`).set(payload);
+      }
     }
   },
   mutations: {

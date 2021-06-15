@@ -28,9 +28,9 @@
         <div class="flex align_center start" v-if="sender">
           <avatar size="2.4rem" :url="sender.image"></avatar>
           <div class="user_name flex align_start">
-            <h3 class="flex align_center">
-              {{sender.name}}
-              <span class="regular ml-1" v-if="sender.taxiNumber">({{sender.taxiNumber}})</span>
+            <h3>
+              <div>{{sender.name}}</div>
+              <span class="regular ml-1" v-if="sender.taxiNumber">{{sender.taxiNumber}}</span>
             </h3>
           </div>
         </div>
@@ -224,9 +224,9 @@ export default {
 .taxiLink {
   width: 2rem;
   height: 2rem;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
 }
-.whatsappLink{
+.whatsappLink {
   font-size: 1.2rem;
 }
 .message_footer {
