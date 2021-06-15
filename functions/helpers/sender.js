@@ -50,7 +50,6 @@ async function sendSMS(data) {
           errorMessage: `Message Send Error`
         }
     }
-
 }
 
 
