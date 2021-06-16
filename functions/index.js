@@ -271,3 +271,28 @@ exports.sendTestNotification = functions.https.onCall(async (data, context) => {
   response = await notifications.sendTest(firebase, data)
   return response
 });
+
+exports.notifyPromoterFromTestCustomer = functions.database.instance('mezcalmos-test').ref(
+  'users/{userId}/invite/code').onCreate((snap, context) => {
+  let firebase = getFirebase('test');
+  notifications.notifyPromoterOfCustomerReferral(firebase, context.params, snap.val())
+})
+
+
+exports.notifyPromoterFromAdminCustomer = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
+  'users/{userId}/invite/code').onCreate(async (snap, context) => {
+  let firebase = getFirebase();
+  notifications.notifyPromoterOfCustomerReferral(firebase, context.params, snap.val())
+})
+
+exports.notifyPromoterFromTestDriver = functions.database.instance('mezcalmos-test').ref(
+  'taxiDrivers/{userId}/invite/code').onCreate((snap, context) => {
+  let firebase = getFirebase('test');
+  notifications.notifyPromoterOfDriverReferral(firebase, context.params, snap.val())
+})
+
+exports.notifyPromoterFromAdminDriver = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
+  'taxiDrivers/{userId}/invite/code').onCreate(async (snap, context) => {
+  let firebase = getFirebase();
+  notifications.notifyPromoterOfDriverReferral(firebase, context.params, snap.val())
+})
