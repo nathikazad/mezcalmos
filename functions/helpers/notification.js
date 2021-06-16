@@ -5,8 +5,10 @@ module.exports = {
   push,
   notifyDriversNewRequest,
   sendTest,
-  notifyPromoterOfConversion,
-  notifyPromoterOfReferral
+  notifyPromoterOfCustomerConversion,
+  notifyPromoterOfDriverConversion,
+  notifyPromoterOfCustomerReferral,
+  notifyPromoterOfDriverReferral
 }
 
 const webpush = require('web-push')
@@ -73,21 +75,43 @@ async function notifyDriversNewRequest(firebase, address) {
   }
 }
 
-async function notifyPromoterOfConversion(customerName, promoter) {
+async function notifyPromoterOfCustomerConversion(customerName, promoter) {
   sender.sendSMS({
-    message: `Hola, ${promoter.name}, tu referido ${customerName} ya ha hecho tres viajes, por lo tanto has ganado 50 pesos más. Ahora tienes un total de ${promoter.totalCustomerInvites} referidos, ${promoter.totalCustomerConversions} conversiones y ${promoter.totalPesosEarned} pesos ganados. Recógelo cuando quieras contactando a Alejandro @ 954-118-4711`,
+    message: `Hola, ${promoter.name}, tu referido cliente ${customerName} ya ha hecho tres viajes, por lo tanto has ganado 50 pesos más. Ahora tienes un total de ${promoter.totalCustomerInvites} referidos de clientes, ${promoter.totalCustomerConversions} conversiones y ${promoter.totalPesosEarned} pesos ganados. Recógelo cuando quieras contactando a Alejandro @ 954-118-4711`,
     phoneNumber: promoter.phoneNumber
   }).catch(function(e){
     console.log("notifyPromoterOfConversion error", e)
   })
 }
 
-async function notifyPromoterOfReferral(firebase, params, code) {
+async function notifyPromoterOfDriverConversion(driverName, promoter) {
+  sender.sendSMS({
+    message: `Hola, ${promoter.name}, tu referido chofer ${driverName} ya ha hecho cinco viajes, por lo tanto has ganado 200 pesos más. Ahora tienes un total de ${promoter.totalDriverInvites} referidos de chofers, ${promoter.totalDriverConversions} conversiones y ${promoter.totalPesosEarned} pesos ganados. Recógelo cuando quieras contactando a Alejandro @ 954-118-4711`,
+    phoneNumber: promoter.phoneNumber
+  }).catch(function(e){
+    console.log("notifyPromoterOfConversion error", e)
+  })
+}
+
+async function notifyPromoterOfCustomerReferral(firebase, params, code) {
   code = code.toLowerCase()
   let promoter = (await firebase.database().ref(`/promoters/${code}`).once('value')).val();
-  let user = (await firebase.database().ref(`/user/${params.userId}`).once('value')).val();
+  console.log(params)
+  let user = (await firebase.database().ref(`/users/${params.userId}/info`).once('value')).val();
   sender.sendSMS({
-    message: `Hola, ${promoter.name}, tu referido ${user.name} se ha registrado con su código de referencia, lo mantendremos informado cuando completen tres viajes. Si tienes perguntas puedes contatar Alejandro @ 954-118-4711`,
+    message: `Hola, ${promoter.name}, tu referido cliente ${user.displayName} se ha registrado con su código de referencia, lo mantendremos informado cuando completen tres viajes y ganas 50 pesos. Si tienes perguntas puedes contatar Alejandro @ 954-118-4711`,
+    phoneNumber: promoter.phoneNumber
+  }).catch(function(e){
+    console.log("notifyPromoterOfConversion error", e)
+  })
+}
+
+async function notifyPromoterOfDriverReferral(firebase, params, code) {
+  code = code.toLowerCase()
+  let promoter = (await firebase.database().ref(`/promoters/${code}`).once('value')).val();
+  let user = (await firebase.database().ref(`/users/${params.userId}/info`).once('value')).val();
+  sender.sendSMS({
+    message: `Hola, ${promoter.name}, tu referido chofer ${user.displayName} se ha registrado con su código de referencia, lo mantendremos informado cuando completen seis viajes y ganas 200 pesos. Si tienes perguntas puedes contatar Alejandro @ 954-118-4711`,
     phoneNumber: promoter.phoneNumber
   }).catch(function(e){
     console.log("notifyPromoterOfConversion error", e)
