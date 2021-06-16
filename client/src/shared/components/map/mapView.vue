@@ -376,7 +376,7 @@ export default {
     directionsOrigin: {
       deep: true,
       handler: function(newVal) {
-        if (newVal) {
+        if (newVal.lat && newVal.lng) {
           this.mapFit();
         }
       }
