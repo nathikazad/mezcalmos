@@ -8,7 +8,9 @@ module.exports = {
   finish
 }
 
+const { notifyPromoterFromTest } = require("..");
 const notification = require("./notification");
+const promoters = require("./promoters");
 
 //possible statuses: lookingForTaxi, onTheWay, inTransit, droppedOff
 async function request(firebase, uid, data) {
@@ -423,6 +425,11 @@ async function finish(firebase, orderId) {
   update.time = update.rideFinishTime
   delete update.rideFinishTime
   notification.push(firebase, order.customer.id, update)
+
+
+  promoters.checkCustomerIncentives(firebase, order.customer, order.driver)
+  promoters.checkDriverIncentives(firebase, order.customer, order.driver)
+
   return {
     status: "Success"
   };
