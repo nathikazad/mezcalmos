@@ -55,6 +55,11 @@
         },
         "location": {
           ".write": "$uid === auth.uid"
+        },
+        "invite": {
+          "code": {
+            ".write": "$uid === auth.uid"
+          }
         }
       }
     },

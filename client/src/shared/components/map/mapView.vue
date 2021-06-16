@@ -336,7 +336,7 @@ export default {
         //check if variable exist in this
         if (marker) {
           //check if marker is driverLocation
-          if (marker.position) {
+          if (marker.position&&marker.position.lat) {
             bound = new window.google.maps.LatLng(
               marker.position.lat,
               marker.position.lng

@@ -11,6 +11,12 @@
     <transition name="slide-down">
       <askForPermission v-if="showPermessionPanel" class="dialogPanel bg_white"></askForPermission>
     </transition>
+    <transition name="slide-down">
+      <inviteCode
+        v-if="!inviteCodeAlreadySet&&deepFind(userInfo,'displayName')"
+        class="dialogPanel bg_white"
+      ></inviteCode>
+    </transition>
     <the-header
       v-show="routeName != 'login'"
       @toggle="navDrawer = !navDrawer"
@@ -27,12 +33,14 @@
 import TheHeader from "@/shared/components/layouts/TheHeader.vue";
 import NavDrawer from "@/shared/components/layouts/navDrawer.vue";
 import askForPermission from "@/shared/components/layouts/askForPermission.vue";
+import inviteCode from "@/shared/components/ui/inviteCode.vue";
 
 export default {
   components: {
     TheHeader,
     NavDrawer,
-    askForPermission
+    askForPermission,
+    inviteCode
   },
   data() {
     return {
@@ -48,6 +56,12 @@ export default {
     },
     routeName() {
       return this.$route.name;
+    },
+    userInfo() {
+      return this.$store.getters.userInfo;
+    },
+    inviteCodeAlreadySet() {
+      return this.$store.getters.inviteCodeAlreadySet;
     },
     showNavBtn() {
       //searching for the home page

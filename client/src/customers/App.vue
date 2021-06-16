@@ -12,7 +12,7 @@
       <askForPermission v-if="showPermessionPanel" class="dialogPanel bg_white"></askForPermission>
     </transition>
     <transition name="slide-down">
-      <inviteCode v-if="!inviteCodeAlreadySet" class="dialogPanel bg_white"></inviteCode>
+      <inviteCode v-if="!inviteCodeAlreadySet&&deepFind(userInfo,'displayName')" class="dialogPanel bg_white"></inviteCode>
     </transition>
     <the-header
       v-show="routeName != 'login'"
@@ -75,6 +75,9 @@ export default {
     isLoggedIn() {
       return this.$store.getters.loggedIn;
     },
+    userInfo() {
+      return this.$store.getters.userInfo;
+    },
     inviteCodeAlreadySet() {
       return this.$store.getters.inviteCodeAlreadySet;
     }
@@ -83,7 +86,6 @@ export default {
     window.removeEventListener("resize", this.handleResize);
   },
   methods: {
-   
     async postSavedAddress(tmpAddress) {
       let response = await this.$store.dispatch(
         "taxis/requestTaxi",
