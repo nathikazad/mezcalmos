@@ -23,7 +23,8 @@ export default {
       hasuraAuthToken: null,
       loggedIn: false,
       logoutCallbacks: [],
-      language: getBrowserLanguage()
+      language: getBrowserLanguage(),
+      inviteCode: "none"
     };
   },
   getters: {
@@ -44,6 +45,9 @@ export default {
     },
     phoneNumber(state){
       return state.phoneNumber
+    },
+    inviteCodeAlreadySet(state) {
+      return state.inviteCode != null
     }
   },
   actions: {
@@ -135,6 +139,43 @@ export default {
 
       return resp.data
     },
+    loadInviteCode(context) {
+      let userId = context.rootGetters.userId
+      let nodeName
+      if (context.rootGetters.appName == "customer") {
+        nodeName = "users"
+      } else if (context.rootGetters.appName == "taxi") {
+        nodeName = "taxiDrivers"
+      }
+
+      firebaseDatabase().ref(`${nodeName}/${userId}/invite/code`).on('value', snapshot => {
+        context.commit('saveInviteCode', snapshot.val())
+      });
+      context.commit('saveLogoutCallback', {
+        func: function (context, userId, nodeName) {
+          firebaseDatabase().ref(`${nodeName}/${userId}/invite/code`).off()
+          context.commit('saveInviteCode', null)
+        },
+        args: [context, userId, nodeName]
+      }, { root: true })
+    },
+    saveInviteCode(context, payload) {
+      if(!payload)
+        payload = "none"
+      let userId = context.rootGetters.userId
+      let nodeName
+      if (context.rootGetters.appName == "customer") {
+        nodeName = "users"
+      } else if (context.rootGetters.appName == "taxi") {
+        nodeName = "taxiDrivers"
+      }
+
+      if (!userId) {
+        context.commit('saveInviteCode', 'none')
+      }else{
+        firebaseDatabase().ref(`${nodeName}/${userId}/invite/code`).set(payload);
+      }
+    }
   },
   mutations: {
     saveAuthData(state, payload) {
@@ -161,6 +202,9 @@ export default {
     },
     savePhoneNumber(state, payload) {
       state.phoneNumber = payload.phoneNumber
+    },
+    saveInviteCode(state, payload) {
+      state.inviteCode = payload
     }
 
   }
