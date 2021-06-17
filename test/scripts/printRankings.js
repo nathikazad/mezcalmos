@@ -14,10 +14,14 @@ async function main() {
     let total = 0;
     for(let orderId in driver.orders) {
       let order = driver.orders[orderId]
-      // let rideStartTime = 
-      if (order.status == "droppedOff") {
+
+      let startTime = new Date("Mon, 14 Jun 2021 05:00:00 GMT")
+      let endTime = new Date("Thur, 17 Jun 2021 05:00:00 GMT")
+      let orderTime = new Date(order.acceptRideTime)
+      if(orderTime > startTime && orderTime < endTime && order.status == "droppedOff"){
         total += 1
       }
+        
       
       // console.log('\t '+driver.orders[orderId].acceptRideTime)
       // console.log('\t '+driver.orders[orderId].customer.name)
@@ -26,14 +30,13 @@ async function main() {
     let displayName = users[driverId].info.displayName
     if(total && displayName != "Alejandro Valle" 
     && displayName != "Prueba Valle "
-    && displayName != "Nathik Azad"
-    && displayName != "Magalí Ramirez") {
+    && displayName != "Nathik Azad") {
       pool.push({nombre:displayName, total: total, id:driverId})
     }
   }
   pool = pool.sort((a, b) => b.total - a.total);
   for(let i in pool) {
-    console.log(`${parseInt(i)+1}. ${pool[i].nombre}   ${pool[i].total}  ${pool[i].id}`)
+    console.log(`${parseInt(i)+1}. ${pool[i].nombre}   ${pool[i].total}`)//  ${pool[i].id}`)
   }
   // console.log(pool)
   process.exit()
