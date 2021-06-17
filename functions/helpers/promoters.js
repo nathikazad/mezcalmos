@@ -7,7 +7,7 @@ const notification = require("./notification");
 function checkCustomerIncentives(firebase, customer, driver){
   firebase.database().ref(`/users/${customer.id}/invite`).once('value', function(snapshot) {
     let invite = snapshot.val()
-    if(invite && invite.code && invite.code != "null") {
+    if(invite && invite.code && invite.code != "none") {
       invite.code = invite.code.toLowerCase()
       if(invite.ordersCount == null) {
         firebase.database().ref(`/users/${customer.id}/invite/ordersCount`).set(1)
@@ -35,7 +35,9 @@ function checkCustomerIncentives(firebase, customer, driver){
           }).then(function(response) {
             if (response.committed) {
               let promoter = response.snapshot.val() 
-              if(promoter.phoneNumber && promoter.name && customer.name) {
+              if(!promoter.name)
+                promoter.name = ""
+              if(promoter.phoneNumber && customer.name) {
                 notification.notifyPromoterOfCustomerConversion(customer.name, promoter);
               }
             }
@@ -49,7 +51,7 @@ function checkCustomerIncentives(firebase, customer, driver){
 function checkDriverIncentives(firebase, customer, driver){
   firebase.database().ref(`/taxiDrivers/${driver.id}/invite`).once('value', function(snapshot) {
     let invite = snapshot.val()
-    if(invite && invite.code && invite.code != "null") {
+    if(invite && invite.code && invite.code != "none") {
       invite.code = invite.code.toLowerCase()
       if(invite.ordersCount == null) {
         firebase.database().ref(`/taxiDrivers/${driver.id}/invite/ordersCount`).set(1)
@@ -77,7 +79,9 @@ function checkDriverIncentives(firebase, customer, driver){
           }).then(function(response) {
             if (response.committed) {
               let promoter = response.snapshot.val()
-              if(promoter.phoneNumber && promoter.name && driver.name) {
+              if(!promoter.name)
+                promoter.name = ""
+              if(promoter.phoneNumber && driver.name) {
                 notification.notifyPromoterOfDriverConversion(driver.name, promoter);
               }
             } 
