@@ -279,7 +279,7 @@ exports.notifyPromoterFromTestCustomer = functions.database.instance('mezcalmos-
 })
 
 
-exports.notifyPromoterFromAdminCustomer = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
+exports.notifyPromoterOfCustomer = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
   'users/{userId}/invite/code').onCreate(async (snap, context) => {
   let firebase = getFirebase();
   notifications.notifyPromoterOfCustomerReferral(firebase, context.params, snap.val())
@@ -291,7 +291,7 @@ exports.notifyPromoterFromTestDriver = functions.database.instance('mezcalmos-te
   notifications.notifyPromoterOfDriverReferral(firebase, context.params, snap.val())
 })
 
-exports.notifyPromoterFromAdminDriver = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
+exports.notifyPromoterOfDriver = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
   'taxiDrivers/{userId}/invite/code').onCreate(async (snap, context) => {
   let firebase = getFirebase();
   notifications.notifyPromoterOfDriverReferral(firebase, context.params, snap.val())
