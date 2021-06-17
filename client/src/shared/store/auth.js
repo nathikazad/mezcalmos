@@ -162,6 +162,7 @@ export default {
     saveInviteCode(context, payload) {
       if(!payload)
         payload = "none"
+      payload = payload.toLowerCase()
       let userId = context.rootGetters.userId
       let nodeName
       if (context.rootGetters.appName == "customer") {
