@@ -18,22 +18,26 @@ function checkCustomerIncentives(firebase, customer, driver){
         firebase.database().ref(`/users/${customer.id}/invite/drivers`).push(driver)
         firebase.database().ref(`/users/${customer.id}/invite/ordersCount`).set(invite.ordersCount)
         if (invite.ordersCount == 3) {
-          firebase.database().ref(`/promoters/${invite.code}`).once('value', function(snapshot) {
-            let promoter = checkPromoter(snapshot.val())
-            if(!promoter["customers"][customer.id]) {
-              promoter["customers"][customer.id] = {invited: true}
-              promoter.totalCustomerInvites = parseInt(promoter.totalCustomerInvites) + 1
+          firebase.database().ref(`/promoters/${invite.code}`).transaction(function (promoter) {
+            if (promoter != null) {
+              promoter = checkPromoter(promoter)
+              if(!promoter["customers"][customer.id]) {
+                promoter["customers"][customer.id] = {invited: true}
+                promoter.totalCustomerInvites = parseInt(promoter.totalCustomerInvites) + 1
+              }
+              promoter["customers"][customer.id].converted = true;
+              promoter["customers"][customer.id].drivers = {...invite.drivers, "last":driver};
+              promoter.totalCustomerConversions = parseInt(promoter.totalCustomerConversions) + 1
+              promoter.totalPesosEarned = parseInt(promoter.totalPesosEarned) + 50
+              promoter.balance = parseInt(promoter.balance) + 50
             }
-            promoter["customers"][customer.id].converted = true;
-            promoter["customers"][customer.id].drivers = {...invite.drivers, "last":driver};
-            promoter.totalCustomerConversions = parseInt(promoter.totalCustomerConversions) + 1
-            promoter.totalPesosEarned = parseInt(promoter.totalPesosEarned) + 50
-            promoter.balance = parseInt(promoter.balance) + 50
-            console.log(8, promoter)
-            firebase.database().ref(`/promoters/${invite.code}`).update(promoter)
-            if(promoter.phoneNumber && promoter.name && customer.name) {
-              console.log(9, promoter)
-              notification.notifyPromoterOfCustomerConversion(customer.name, promoter);
+            return promoter
+          }).then(function(response) {
+            if (response.committed) {
+              let promoter = response.snapshot.val() 
+              if(promoter.phoneNumber && promoter.name && customer.name) {
+                notification.notifyPromoterOfCustomerConversion(customer.name, promoter);
+              }
             }
           })
         }
@@ -56,21 +60,27 @@ function checkDriverIncentives(firebase, customer, driver){
         firebase.database().ref(`/taxiDrivers/${driver.id}/invite/customers`).push(customer)
         firebase.database().ref(`/taxiDrivers/${driver.id}/invite/ordersCount`).set(invite.ordersCount)
         if (invite.ordersCount == 6) {
-          firebase.database().ref(`/promoters/${invite.code}`).once('value', function(snapshot) {
-            let promoter = checkPromoter(snapshot.val())
-            if(!promoter["drivers"][driver.id]) {
-              promoter["drivers"][driver.id] = {invited: true}
-              promoter.totalDriverInvites = parseInt(promoter.totalDriverInvites) + 1
+          firebase.database().ref(`/promoters/${invite.code}`).transaction(function (promoter) {
+            if (promoter != null) {
+              promoter = checkPromoter(promoter)
+              if(!promoter["drivers"][driver.id]) {
+                promoter["drivers"][driver.id] = {invited: true}
+                promoter.totalDriverInvites = parseInt(promoter.totalDriverInvites) + 1
+              }
+              promoter["drivers"][driver.id].converted = true;
+              promoter["drivers"][driver.id].customers = {...invite.customers, "last":customer};
+              promoter.totalDriverConversions = parseInt(promoter.totalDriverConversions) + 1
+              promoter.totalPesosEarned = parseInt(promoter.totalPesosEarned) + 200
+              promoter.balance = parseInt(promoter.balance) + 200 
             }
-            promoter["drivers"][driver.id].converted = true;
-            promoter["drivers"][driver.id].drivers = {...invite.customers, "last":customer};
-            promoter.totalDriverConversions = parseInt(promoter.totalDriverConversions) + 1
-            promoter.totalPesosEarned = parseInt(promoter.totalPesosEarned) + 200
-            promoter.balance = parseInt(promoter.balance) + 200
-            firebase.database().ref(`/promoters/${invite.code}`).update(promoter)
-            if(promoter.phoneNumber && promoter.name && driver.name) {
-              notification.notifyPromoterOfDriverConversion(driver.name, promoter);
-            }
+            return promoter;
+          }).then(function(response) {
+            if (response.committed) {
+              let promoter = response.snapshot.val()
+              if(promoter.phoneNumber && promoter.name && driver.name) {
+                notification.notifyPromoterOfDriverConversion(driver.name, promoter);
+              }
+            } 
           })
         }
       }

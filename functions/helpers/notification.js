@@ -96,10 +96,16 @@ async function notifyPromoterOfDriverConversion(driverName, promoter) {
 async function notifyPromoterOfCustomerReferral(firebase, params, code) {
   code = code.toLowerCase()
   let promoter = (await firebase.database().ref(`/promoters/${code}`).once('value')).val();
-  console.log(params)
+  if(!promoter || !promoter.phoneNumber) {
+    return
+  }
+  if(!promoter.name) {
+    promoter.name = ""
+  }
   let user = (await firebase.database().ref(`/users/${params.userId}/info`).once('value')).val();
+  firebase.database().ref(`/promoters/${code}/customers/${params.userId}`).update({invite:true, name:user.displayName});
   sender.sendSMS({
-    message: `Hola, ${promoter.name}, tu referido cliente ${user.displayName} se ha registrado con su código de referencia, lo mantendremos informado cuando completen tres viajes y ganas 50 pesos. Si tienes perguntas puedes contatar Alejandro @ 954-118-4711`,
+    message: `Hola ${promoter.name}, tu referido cliente ${user.displayName} se ha registrado con su código de referencia, lo mantendremos informado cuando completen tres viajes y ganas 50 pesos. Si tienes perguntas puedes contatar Alejandro @ 954-118-4711`,
     phoneNumber: promoter.phoneNumber
   }).catch(function(e){
     console.log("notifyPromoterOfConversion error", e)
@@ -109,9 +115,16 @@ async function notifyPromoterOfCustomerReferral(firebase, params, code) {
 async function notifyPromoterOfDriverReferral(firebase, params, code) {
   code = code.toLowerCase()
   let promoter = (await firebase.database().ref(`/promoters/${code}`).once('value')).val();
+  if(!promoter || !promoter.phoneNumber) {
+    return
+  }
+  if(!promoter.name) {
+    promoter.name = ""
+  }
   let user = (await firebase.database().ref(`/users/${params.userId}/info`).once('value')).val();
+  firebase.database().ref(`/promoters/${code}/drivers/${params.userId}`).update({invite:true, name:user.displayName});
   sender.sendSMS({
-    message: `Hola, ${promoter.name}, tu referido chofer ${user.displayName} se ha registrado con su código de referencia, lo mantendremos informado cuando completen seis viajes y ganas 200 pesos. Si tienes perguntas puedes contatar Alejandro @ 954-118-4711`,
+    message: `Hola ${promoter.name}, tu referido chofer ${user.displayName} se ha registrado con su código de referencia, lo mantendremos informado cuando completen seis viajes y ganas 200 pesos. Si tienes perguntas puedes contatar Alejandro @ 954-118-4711`,
     phoneNumber: promoter.phoneNumber
   }).catch(function(e){
     console.log("notifyPromoterOfConversion error", e)
