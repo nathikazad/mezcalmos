@@ -217,7 +217,7 @@ export default {
     mapPicker: {
       deep: true,
       handler: function(newVal) {
-        console.log(newVal);
+        // console.log(newVal);
         if (newVal) {
           this.auxCenter = this.customerLocation;
           this.pickerExplainer = true;

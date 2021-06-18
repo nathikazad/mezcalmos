@@ -40,7 +40,7 @@ export default {
       });
     },
     async requestTaxi(context, payload) {
-      console.log(payload)
+      // console.log(payload)
       if (getDistanceFromLatLonInKm(payload.from, puertoCoords) > 50 ||
         getDistanceFromLatLonInKm(payload.to, puertoCoords) > 200) {
 
