@@ -6,7 +6,19 @@ function keys() {
   if(Object.keys(keys).length > 0)
     return keys
   if(!process.env.MEZC_API_KEYS)
-    throw "Need API Key file set as MEZC_API_KEYS"
+    return {
+      "vapidkeys": {
+        "public": "dummy",
+        "private": "dummy"
+      },
+      "twilio": {
+        "accountid": "dummy",
+        "authtoken": "dummy"
+      },
+      "stripe": {
+        "secretkey": "sk_dummy"
+      }
+    }
   var fs = require('fs');
   keys = JSON.parse(fs.readFileSync(process.env.MEZC_API_KEYS, 'utf8'));
   return keys
