@@ -8,7 +8,8 @@ module.exports = {
   notifyPromoterOfCustomerConversion,
   notifyPromoterOfDriverConversion,
   notifyPromoterOfCustomerReferral,
-  notifyPromoterOfDriverReferral
+  notifyPromoterOfDriverReferral,
+  notifyPromoterOfSignup
 }
 
 const webpush = require('web-push')
@@ -145,6 +146,25 @@ async function notifyPromoterOfDriverReferral(firebase, params, code) {
     functions.logger.error("notifyPromoterOfDriverReferral error", e)
   }
 }
+
+async function notifyPromoterOfSignup(firebase, params, promoter) {
+  if(!params.inviteCode || params.inviteCode == "none") {
+    return
+  }
+  if(!promoter || !promoter.phoneNumber)
+    return
+  if(!promoter.name)
+    promoter.name = ""
+  try {
+    await sender.sendSMS({
+      message: `Hola ${promoter.name}, gracias por registrarte como promotor. Si los clientes se registran en www.mezc.co con tu código ${params.inviteCode}, cuando terminen 3 viajes, se le recompensará con 50 pesos. Le notificaremos cuando alguien se registre o hace tres viajes usando tu código de promoción. Si tienes perguntas puedes contatar Alejandro @ 954-118-4711`,
+      phoneNumber: promoter.phoneNumber
+    })
+  } catch(e) {
+    functions.logger.error("notifyPromoterOfDriverReferral error", e)
+  }
+}
+
 
 async function sendTest(firebase, data) {
   if(!data.userId){

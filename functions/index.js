@@ -296,3 +296,9 @@ exports.notifyPromoterOfDriver = functions.database.instance('mezcalmos-31f1c-de
   let firebase = getFirebase();
   await notifications.notifyPromoterOfDriverReferral(firebase, context.params, snap.val())
 })
+
+exports.notifyPromoterOfSignUp = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
+  'promoters/{inviteCode}').onCreate(async (snap, context) => {
+  let firebase = getFirebase();
+  await notifications.notifyPromoterOfSignup(firebase, context.params, snap.val())
+})
