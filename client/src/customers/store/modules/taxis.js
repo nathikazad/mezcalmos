@@ -40,7 +40,6 @@ export default {
       });
     },
     async requestTaxi(context, payload) {
-      // console.log(payload)
       if (getDistanceFromLatLonInKm(payload.from, puertoCoords) > 50 ||
         getDistanceFromLatLonInKm(payload.to, puertoCoords) > 200) {
 
@@ -60,9 +59,10 @@ export default {
         distance: payload.distance,
         duration: payload.duration,
         estimatedPrice: payload.estimatedPrice,
-        paymentType: "cash"
+        paymentType: "cash",
+        polyline: payload.polyline
       })).data;
-      if(response.status == "Error") {
+      if (response.status == "Error") {
         console.log(response.errorMessage)
       }
       context.commit('saveTemporaryAddresses', null)
@@ -75,8 +75,10 @@ export default {
         console.log("Not possible to cancel")
         return
       }
-      let response = (await cloudCall('cancelTaxiFromCustomer', { reason: payload.reason})).data
-      if(response.status == "Error") {
+      let response = (await cloudCall('cancelTaxiFromCustomer', {
+        reason: payload.reason
+      })).data
+      if (response.status == "Error") {
         console.log(response.errorMessage)
       }
       return response

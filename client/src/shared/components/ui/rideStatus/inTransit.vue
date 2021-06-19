@@ -78,6 +78,18 @@
       ></price>-->
 
       <div class="flex align_center center w-90" slot="part3">
+        <!-- Button for navigate -->
+        <base-button
+          class="elevate_1 nav-btn text_brand mr-2"
+          :mode="{
+            bg_light_blue: true,
+            small: true,
+          }"
+          @click.native="navigateTo()"
+          :loading="loading"
+        >
+          <fa icon="location-arrow" />
+        </base-button>
         <base-button
           class="dark bg_light elevate_1 nav-btn text_primary mr-2"
           :mode="{
@@ -131,6 +143,12 @@ export default {
               )
             ).fromNow()
         : this.$t("customer.taxiView.arrival") + "TBD";
+    }
+  },
+   methods: {
+    navigateTo() {
+      let url = `https://www.google.com/maps/place/${this.orderDetails.from.lat},${this.orderDetails.from.lng}`;
+      window.open(url);
     }
   }
 };

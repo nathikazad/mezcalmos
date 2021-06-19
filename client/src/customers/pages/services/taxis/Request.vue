@@ -45,7 +45,7 @@
         :price="Number.parseFloat(this.estimatedPrice).toFixed(2)"
       ></estimateRoute>
 
-      <div class="flex align_center center btnP " slot="action">
+      <div class="flex align_center center btnP" slot="action">
         <base-button
           class="btnW"
           :class="{bg_SMS:!isLoggedIn}"
@@ -74,6 +74,7 @@ export default {
       loading: false,
       distance: null,
       duration: null,
+      polyline: null,
       focusedFrom: false,
       focusedTo: false,
       pickLocation: false,
@@ -146,16 +147,21 @@ export default {
   },
   methods: {
     async setDistanceDuration(pos) {
-      this.distance = pos.distance;
-      this.duration = pos.duration;
+      this.polyline = pos.polyline;
+      this.distance = pos.leg.distance;
+      this.duration = pos.leg.duration;
       let estimatePrice = this.$store.getters["taxis/estimatePrice"];
       let locations = {
-        from:
-          {lat: pos.start_location.lat(), lng: pos.start_location.lng()},
-        to:
-          {lat: pos.end_location.lat(), lng: pos.end_location.lng()},
-      }
-      this.estimatedPrice = await estimatePrice(pos.distance.value / 1000, locations);
+        from: {
+          lat: pos.leg.start_location.lat(),
+          lng: pos.leg.start_location.lng()
+        },
+        to: { lat: pos.leg.end_location.lat(), lng: pos.leg.end_location.lng() }
+      };
+      this.estimatedPrice = await estimatePrice(
+        pos.leg.distance.value / 1000,
+        locations
+      );
       this.showRideDetails = true;
     },
     async requestTaxi() {
@@ -165,6 +171,7 @@ export default {
           from: this.from,
           distance: this.distance,
           duration: this.duration,
+          polyline: this.polyline,
           estimatedPrice: this.estimatedPrice,
           paymentType: "cash"
         };
@@ -178,7 +185,7 @@ export default {
           if (response.status == "Success") {
             this.$router.push({ path: `${response.orderId}` });
           } else {
-            if(response.data && response.data.i18nCode) {
+            if (response.data && response.data.i18nCode) {
               this.alertStatment = response.data.i18nCode;
               setTimeout(() => {
                 this.alertStatment = "";

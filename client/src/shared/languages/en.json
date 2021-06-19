@@ -5,7 +5,7 @@
             "groceries": "Groceries",
             "services": "All Services"
         },
-        "inviteCode":{
+        "inviteCode": {
             "inviteCodQuestion": "Do You Have An Invite Code?",
             "no": "No",
             "confirm": "Confirm"
@@ -190,7 +190,7 @@
             "searching": "Searching",
             "pick": "PICK",
             "pickFromMap": "Pick from map",
-            "mapPickerExplain": "Move the map to pick location"
+            "mapPickerExplain": "Move the map to pick location|You can move the map if your current position is not precise"
         },
         "pickLocation": {
             "name": "Name",

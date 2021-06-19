@@ -14,6 +14,7 @@ const promoters = require("./promoters");
 
 //possible statuses: lookingForTaxi, onTheWay, inTransit, droppedOff
 async function request(firebase, uid, data) {
+
   // TODO: prevent user from sending another request before this finishes
   let customerCurrentOrder = (await firebase.database().ref(`/users/${uid}/state/currentOrder`).once('value')).val();
 
@@ -25,10 +26,10 @@ async function request(firebase, uid, data) {
   }
   
   if (!data.from || !data.to || !data.distance || !data.duration 
-    || !data.estimatedPrice || !data.paymentType) {
+    || !data.estimatedPrice || !data.paymentType||!data.polyline) {
     return {
       status: "Error",
-      errorMessage: "Required from, to, distance, duration, estimatedPrice and paymentType"
+      errorMessage: "Required from, to, distance, duration, estimatedPrice, polyline and paymentType"
     }
   }
   notification.notifyDriversNewRequest(firebase, data.from.address.split(',')[0]);
@@ -39,6 +40,7 @@ async function request(firebase, uid, data) {
     to: data.to,
     distance: data.distance,
     duration: data.duration,
+    polyline:data.polyline,
     estimatedPrice: data.estimatedPrice,
     customer: {
       id: uid,
@@ -59,6 +61,7 @@ async function request(firebase, uid, data) {
     routeInformation: {
       duration: payload.duration,
       distance: payload.distance,
+      polyline:payload.polyline,
     },
     estimatedPrice: payload.estimatedPrice,
     paymentType: payload.paymentType,

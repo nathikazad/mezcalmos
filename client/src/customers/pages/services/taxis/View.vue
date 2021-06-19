@@ -30,6 +30,7 @@
         :fromUrl="deepFind(userInfo, 'photo')"
         :driverLocation="deepFind(orderDetails, 'driver.location')"
         :status="deepFind(orderDetails,'status')"
+        :polyline="deepFind(orderDetails,'polyline')"
       >
         <!-- Searching fo Someone  Status-->
         <looking
