@@ -222,7 +222,7 @@ export default {
       handler: function(newVal) {
         // console.log(newVal);
         if (newVal) {
-          this.auxCenter = this.customerLocation;
+          //this.auxCenter = this.customerLocation;
           this.pickerExplainer = true;
         }
       }
@@ -378,6 +378,7 @@ export default {
         this.$refs["map"].mapZoomIn();
         this.mapPickerExplainIndex = 2;
         this.mapPicker = true;
+
         this.pickedLocFromMap = {
           lat: res.geometry.location.lat(),
           lng: res.geometry.location.lng()
