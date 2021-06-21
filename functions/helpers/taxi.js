@@ -126,7 +126,11 @@ async function cancelTaxiFromCustomer(firebase, uid, data) {
 
   if(order.status == "lookingForTaxi" ) {
     firebase.database().ref(`/openOrders/taxi/${orderId}`).remove();
-    firebase.database().ref(`/orders/taxi/${orderId}`).remove()
+    firebase.database().ref(`/orders/taxi/${orderId}`).update({
+      status: "cancelled",
+      rideFinishTime: (new Date()).toUTCString(),
+      cancelledBy: "customer"
+    })
     firebase.database().ref(`/users/${order.customer.id}/orders/${orderId}`).remove();
     firebase.database().ref(`/unfulfilledOrders/${orderId}`).set({...order, reason:"cancelled"});
   } else if (order.status == "onTheWay" || order.status == "inTransit") {
@@ -166,10 +170,10 @@ function expireOrder(firebase, orderId, customerId) {
   firebase.database().ref(`/users/${customerId}/orders/${orderId}`).remove();
   firebase.database().ref(`/openOrders/taxi/${orderId}`).remove();
   firebase.database().ref(`/chat/${orderId}`).remove();
-  firebase.database().ref(`/orders/taxi/${orderId}/status`).set("expired")
-  setTimeout(function(){
-      firebase.database().ref(`/orders/taxi/${orderId}`).remove()
-  }, 1000);
+  firebase.database().ref(`/orders/taxi/${orderId}`).update({
+    status: "expired",
+    rideFinishTime: (new Date()).toUTCString(),
+  })
   firebase.database().ref(`/orders/taxi/${orderId}`).once('value', function(snap) {
     let order = snap.val()
     firebase.database().ref(`/unfulfilledOrders/${orderId}`).set({...order, reason:"expired"});
