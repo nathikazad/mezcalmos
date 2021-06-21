@@ -13,3 +13,4 @@ dist
 .vscode
 test/data/newDummyData
 service_account.json
+test/scripts/data

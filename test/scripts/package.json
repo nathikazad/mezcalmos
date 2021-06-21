@@ -9,8 +9,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "deepfind": "^2.0.1",
     "firebase-admin": "^9.9.0",
     "firebase-functions": "^3.14.1",
+    "graphql": "^15.5.0",
+    "graphql-request": "^3.4.0",
     "twilio": "^3.63.1",
     "web-push": "^3.4.4"
   }
