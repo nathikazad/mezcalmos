@@ -1,0 +1,8 @@
++ Set all firebase functions' names as constants on /constants.
++ Use FutureBuilder > with ListView inside (for orders listing).
++ Add a Database helper :
+	|_ so we easily CRUD data
++ Add a Firebase Function helper :
+	|_ so we can only specify the func key (on constants) and it will be called.
+
+
