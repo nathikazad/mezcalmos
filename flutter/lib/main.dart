@@ -18,7 +18,15 @@ Future<void> main() async {
   const startPoint = bool.hasEnvironment('APP_SP') ? String.fromEnvironment('APP_SP') : null;
   print('SP -> ${startPoint.toString()}');
 
-  final String _host = Platform.isAndroid ? lanhost : localhost;
+  String _host = localhost;
+
+  try {
+    if ( Platform.isAndroid || Platform.isIOS) _host = lanhost;
+  } 
+  catch (e) 
+  {
+    print("+ Using http://localhost as host.");
+  }
 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
