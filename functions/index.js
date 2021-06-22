@@ -18,7 +18,7 @@ function getFirebase(database = "production") {
 }
 
 // const grocery = require("./helpers/grocery")
-const taxi = require("./helpers/taxi")
+
 const hasura = require("./helpers/hasura");
 const message = require("./helpers/message");
 const admin = require("./helpers/admin");
@@ -31,7 +31,7 @@ exports.processSignUp = functions.auth.user().onCreate(async user => {
   hasura.setClaim(user.uid);
   let firebase = getFirebase();
   if(!user.photoURL)
-    user.photoURL = 'none'
+    user.photoURL = 'https://www.mezcalmos.com/img/logo.71b44398.svg'
 
   await firebase.database().ref(`/users/${user.uid}/info`).update({
     displayName: user.displayName,
@@ -66,7 +66,8 @@ exports.requestTaxi = functions.https.onCall(async (data, context) => {
     }
   }
   let firebase = getFirebase(data.database);
-  let response = await taxi.request(firebase, context.auth.uid, data)
+  const request = require("./helpers/taxi/request")
+  let response = await request(firebase, context.auth.uid, data)
   return response
 });
 
@@ -78,7 +79,8 @@ exports.acceptTaxiOrder = functions.https.onCall(async (data, context) => {
     }
   }
   let firebase = getFirebase(data.database);
-  let response = await taxi.accept(firebase, data, context.auth.uid)
+  const accept = require("./helpers/taxi/accept")
+  let response = await accept(firebase, context.auth.uid, data)
   return response
 });
 
@@ -90,7 +92,8 @@ exports.startTaxiRide = functions.https.onCall(async (data, context) => {
     }
   }
   let firebase = getFirebase(data.database);
-  let response = await taxi.start(firebase, context.auth.uid)
+  const start = require("./helpers/taxi/start")
+  let response = await start(firebase, context.auth.uid)
   return response
 });
 
@@ -102,7 +105,8 @@ exports.cancelTaxiFromCustomer = functions.https.onCall(async (data, context) =>
     }
   }
   let firebase = getFirebase(data.database);
-  let response = await taxi.cancelTaxiFromCustomer(firebase, context.auth.uid, data)
+  const cancelTaxiFromCustomer = require("./helpers/taxi/cancelTaxiFromCustomer")
+  let response = await cancelTaxiFromCustomer(firebase, context.auth.uid, data)
   return response
 });
 
@@ -114,7 +118,8 @@ exports.cancelTaxiFromDriver = functions.https.onCall(async (data, context) => {
     }
   }
   let firebase = getFirebase(data.database);
-  let response = await taxi.cancelTaxiFromDriver(firebase, context.auth.uid, data)
+  const cancelTaxiFromDriver = require("./helpers/taxi/cancelTaxiFromDriver")
+  let response = await cancelTaxiFromDriver(firebase, context.auth.uid, data)
   return response
 });
 
@@ -138,7 +143,8 @@ exports.finishTaxiRide = functions.https.onCall(async (data, context) => {
       return { status: "Error", errorMessage: "Driver has not accepted any ride" }
     }
   }
-  let response = await taxi.finish(firebase, orderId)
+  const finish = require("./helpers/taxi/finish")
+  let response = await finish(firebase, orderId)
   return response
 });
 

@@ -219,15 +219,23 @@ describe('Mezcalmos', () => {
 
     // // we have four accept requests
 
-
+    
     let driverResponse = driver.callFunction("acceptTaxiOrder", {orderId: orderId})
-    let secondDriverResponse = secondDriver.callFunction("acceptTaxiOrder", {orderId: orderId})
-    let thirdDriverResponse = thirdDriver.callFunction("acceptTaxiOrder", {orderId : orderId})
-    let fourthDriverResponse = fourthDriver.callFunction("acceptTaxiOrder", {orderId : orderId})
+    let secondDriverResponse = driver.callFunction("acceptTaxiOrder", {orderId: orderId})
+    let thirdDriverResponse = driver.callFunction("acceptTaxiOrder", {orderId : orderId})
+    let fourthDriverResponse = driver.callFunction("acceptTaxiOrder", {orderId : orderId})
    
-     let cancel = customer.callFunction('cancelTaxiFromCustomer', {})
+    let cancel = customer.callFunction('cancelTaxiFromCustomer', {})
 
-     let data = await Promise.all([driverResponse, secondDriverResponse, thirdDriverResponse, fourthDriverResponse, cancel])
+    const expireOrder = require('../../../../functions/helpers/taxi/expire')
+    let expireResponse =  new Promise(resolve => {
+      console.log("start timeout", Date.now()%60000)
+      setTimeout(resolve, 10000-Date.now()%10000);
+     }).then(function() {
+      console.log("end timeout", Date.now()%60000)
+      return expireOrder(admin, orderId, customer.id) 
+    });
+    let data = await Promise.all([driverResponse, secondDriverResponse, thirdDriverResponse, fourthDriverResponse, cancel, expireResponse])
 
 
     let acceptedCounter = 0
@@ -236,6 +244,10 @@ describe('Mezcalmos', () => {
     let rejectedResponse = []
 
     data.map( el => {
+      if(el.status)
+        el.result = {status:el.status}
+      if(el.errorMessage)
+        el.result.errorMessage = el.errorMessage
       switch(el.result.status){
       case 'Error':
         rejectedCounter++ ;
