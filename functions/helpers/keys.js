@@ -8,11 +8,11 @@ function keys() {
   if(!process.env.MEZC_API_KEYS)
     return {
       "vapidkeys": {
-        "public": "dummy",
-        "private": "dummy"
+        "public": "BAV5jTZmkERfU-EoeD5TsGuzOhcWXUlNrrh8dkaKGSt92x6eyGCCQYFM4Us_U8vEZ7HRIYqvVjUhUx7ROcL5Hso",
+        "private": "LsQNDKic2ZBSUnXlbMqoUI07eEYRuIjIdvj1pg7h33g"
       },
       "twilio": {
-        "accountid": "dummy",
+        "accountid": "ACbfdce78851a77c16f0fa37a7",
         "authtoken": "dummy"
       },
       "stripe": {
