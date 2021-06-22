@@ -44,7 +44,6 @@ let tripData = {
 
 let customer, badUser, driver
 
-
 describe('Mezcalmos', () => {
   beforeAll(async () => {
     await helper.clearDatabase(admin)

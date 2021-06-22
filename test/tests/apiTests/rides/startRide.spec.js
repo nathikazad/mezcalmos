@@ -3,7 +3,6 @@ const auth = require("../../../libraries/rest/auth");
 const helper = require("../../../libraries/helpers");
 const admin = require("firebase-admin");
 
-
 admin.initializeApp({
     projectId: "mezcalmos-31f1c",
     databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com"
@@ -34,12 +33,20 @@ let driverData = {
     "returnSecureToken":true
   }
   
+// let tripData = {
+//     from: "home",
+//     to: "office",
+//     duration: 10,
+//     distance: 5
+//   } 
 let tripData = {
-    from: "home",
-    to: "office",
-    duration: 10,
-    distance: 5
-  }  
+  from: "home",
+  to: "office",
+  duration: 10,
+  distance: 5,
+  estimatedPrice: '2$',
+  //paymentType: 'Paypal'
+} 
 
 let customer, driver, badUser
 
@@ -66,6 +73,7 @@ describe('Mezcalmos', () => {
     
     // test when there is an order which is not accepted yet
      response = await customer.callFunction('requestTaxi', tripData);
+     console.log(response);
      expect(response.result.status).toBe('Success')
 
      let orderId = response.result.orderId

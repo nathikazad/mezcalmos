@@ -31,7 +31,16 @@ async function request(firebase, uid, data) {
       errorMessage: "Required from, to, distance, duration, estimatedPrice and paymentType"
     }
   }
-  notification.notifyDriversNewRequest(firebase, data.from.address.split(',')[0]);
+  // add try
+  let request
+  try{
+    //request = await notification.notifyDriversNewRequest(firebase, data.from.address.split(',')[0]);
+    request = await notification.notifyDriversNewRequest(firebase, data.from.split(',')[0]);
+  }
+  catch(e){
+    console.log(e)
+  }
+  
   let user = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val();
   
   let payload = {
@@ -67,6 +76,7 @@ async function request(firebase, uid, data) {
 
   });
   firebase.database().ref(`/openOrders/taxi/${orderRef.key}`).set({
+   // status: 'lookingForTaxi',
     from: payload.from,
     to: payload.to,
     customer: payload.customer,
@@ -98,7 +108,6 @@ async function request(firebase, uid, data) {
 }
 
 async function cancelTaxiFromCustomer(firebase, uid, data) { 
-
   let orderId = (await firebase.database().ref(`/users/${uid}/state/currentOrder`).once('value')).val();
   if (orderId == null) {
     return {
@@ -106,16 +115,41 @@ async function cancelTaxiFromCustomer(firebase, uid, data) {
       errorMessage: "Customer has not requested for any ride"
     }
   }
-
-  let order = (await firebase.database().ref(`/orders/taxi/${orderId}`).once('value')).val();
-  if (order == null) {
-    return {
-      status: "Error",
-      errorMessage: "System Error, customer's current order id does not match any order"
+  while(true){
+    let time = Date.now()
+    time = time%10000
+    time = time/100
+    if(time == 0)
+      break
+  }
+  let response = await firebase.database().ref(`/orders/taxi/${orderId}`).transaction(function(order){
+    if(order != null){
+      if(order.lock == null){
+        if(order.status == "lookingForTaxi" ){
+          order.rideStarted = false
+        } else if (order.status == "onTheWay" || order.status == "inTransit") {
+          order.rideStarted = true
+          order.rideFinishTime = (new Date()).toUTCString()
+        } else{
+          return order
+        }
+        order.status = "cancelled"
+        order.cancelledBy = "customer"
+        order.reason = (data.reason) ? data.reason : null
+        order.lock = true
+        return order
+      }
+    }
+    return order
+  })
+  if(!response.committed){
+    return{
+      status: 'Error',
+      errorMessage: 'Ride is not available '
     }
   }
-
-  if (order.status != "lookingForTaxi" && order.status != "onTheWay" && order.status != "inTransit") {
+  let order = response.snapshot.val()
+  if (order.status != "cancelled") {
     return {
       status: "Error",
       errorMessage: "Ride status is not in lookingForTaxi or onTheWay or inTransit"
@@ -124,19 +158,16 @@ async function cancelTaxiFromCustomer(firebase, uid, data) {
 
   await firebase.database().ref(`/users/${order.customer.id}/state/currentOrder`).remove()
 
-  if(order.status == "lookingForTaxi" ) {
+  if(order.rideStarted == false ) {
     firebase.database().ref(`/openOrders/taxi/${orderId}`).remove();
-    firebase.database().ref(`/orders/taxi/${orderId}`).remove()
     firebase.database().ref(`/users/${order.customer.id}/orders/${orderId}`).remove();
     firebase.database().ref(`/unfulfilledOrders/${orderId}`).set({...order, reason:"cancelled"});
-  } else if (order.status == "onTheWay" || order.status == "inTransit") {
+  } else {
     let update = {
       status: "cancelled",
       rideFinishTime: (new Date()).toUTCString(),
       cancelledBy: "customer"
     }
-    update.reason = (data.reason) ? data.reason : null
-    firebase.database().ref(`/orders/taxi/${orderId}`).update(update)
     firebase.database().ref(`/users/${order.customer.id}/orders/${orderId}`).update(update);
     firebase.database().ref(`/taxiDrivers/${order.driver.id}/orders/${orderId}`).update(update);
     firebase.database().ref(`/taxiDrivers/${order.driver.id}/state/currentOrder`).remove()
@@ -149,13 +180,10 @@ async function cancelTaxiFromCustomer(firebase, uid, data) {
     notification.push(firebase, order.driver.id, update,'taxi')
   }
   firebase.database().ref(`/chat/${orderId}`).remove()
-  if(data.createAnotherOrder) {
-    let response = await request(firebase, uid, order)
-    return response
-  } else {
-    return {
-      status: "Success"
-    };
+  firebase.database().ref(`orders/taxi/${orderId}/lock`).remove()
+  return{
+    status: "Success",
+    message: 'Cancelled'
   }
 }
 
@@ -181,6 +209,9 @@ function expireOrder(firebase, orderId, customerId) {
     orderType: "taxi",
     rideFinishTime: (new Date()).toUTCString()
   })
+  return {
+    status: "Success"
+  };
 }
 
 async function accept(firebase, data, uid) {
@@ -222,23 +253,33 @@ async function accept(firebase, data, uid) {
   }
 
   driver = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val();
+  while(true){
+    let time = Date.now()
+    time = time%10000
+    time = time/100
+    if(time == 2)
+      break
+  }
   let response = await firebase.database().ref(`/orders/taxi/${data.orderId}`).transaction(function (order) {
     if (order != null) {
-      if (order.status == "lookingForTaxi") {
-        order.status = 'onTheWay';
-        order.acceptRideTime = (new Date()).toUTCString()
-        order.driver = {
-          id: uid,
-          name: driver.displayName.split(' ')[0],
-          image: driver.photo,
-          taxiNumber: (driver.taxiNumber) ? driver.taxiNumber : null
+       if(order.lock == null){
+        if (order.status == "lookingForTaxi" ) {
+          order.lock = true,
+          order.status = 'onTheWay';
+          order.acceptRideTime = (new Date()).toUTCString()
+          order.driver = {
+            id: uid,
+            name: driver.displayName.split(' ')[0],
+            image: driver.photo,
+            taxiNumber: (driver.taxiNumber) ? driver.taxiNumber : null,
+          }
+          return order
+        } else {
+          console.log(`${data.orderId} status is not lookingForTaxi but ${order.status}`)
+          return;
         }
-        return order
-      } else {
-        console.log(`${data.orderId} status is not lookingForTaxi but ${order.status}`)
-        return;
-      }
-    }
+       }
+    } 
     return order;
   })
 
@@ -288,6 +329,7 @@ async function accept(firebase, data, uid) {
       driver: order.driver,
       time: order.acceptRideTime
     })
+    firebase.database().ref(`orders/taxi/${data.orderId}/lock`).remove()
     return {
       status: "Success"
     };

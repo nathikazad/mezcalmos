@@ -30,6 +30,9 @@ const { user } = require("firebase-functions/lib/providers/auth");
 exports.processSignUp = functions.auth.user().onCreate(async user => {
   hasura.setClaim(user.uid);
   let firebase = getFirebase();
+  if(!user.photoURL)
+    user.photoURL = 'none'
+
   await firebase.database().ref(`/users/${user.uid}/info`).update({
     displayName: user.displayName,
     photo: user.photoURL,
@@ -170,7 +173,6 @@ exports.finishTaxiRide = functions.https.onCall(async (data, context) => {
 //   return response
 // });
 
-
 exports.submitAuthorizationRequest = functions.https.onCall(async (data, context) => {
   let firebase = getFirebase(data.database);
   data.userId = context.auth.uid
@@ -272,6 +274,8 @@ exports.sendTestNotification = functions.https.onCall(async (data, context) => {
   return response
 });
 
+
+
 exports.notifyPromoterFromTestCustomer = functions.database.instance('mezcalmos-test').ref(
   'users/{userId}/invite/code').onCreate(async (snap, context) => {
   let firebase = getFirebase('test');
@@ -296,3 +300,4 @@ exports.notifyPromoterOfDriver = functions.database.instance('mezcalmos-31f1c-de
   let firebase = getFirebase();
   await notifications.notifyPromoterOfDriverReferral(firebase, context.params, snap.val())
 })
+
