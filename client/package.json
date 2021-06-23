@@ -42,7 +42,7 @@
     "emulate:all:onlyFunctions": "npm-run-all --parallel emulate:allApps:onlyFunctions emulator:onlyFunctions",
     "deploy:all": "node scripts/run --command deploy --app all --mode production",
     "deploy:all:test": "node scripts/run --command deploy --app all --mode test",
-    "emulator:loadDataForFlutter": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 firebase emulators:start --export-on-exit=../test/data/newDummyData --import=../test/data/flutterDummyData",
+    "emulator:loadDataForFlutter": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=http://127.0.0.1:9000 FIREBASE_AUTH_EMULATOR_HOST=http://127.0.0.1:9099 firebase emulators:start --export-on-exit=../test/data/newDummyData --import=../test/data/flutterDummyData",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
