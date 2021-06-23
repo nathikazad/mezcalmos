@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/helpers/databaseHelper.dart';
 import 'package:mezcalmos/TaxiApp/models/Order.dart';
 
@@ -12,47 +15,77 @@ class OrderController extends GetxController {
   AuthController _authController  = Get.find<AuthController>(); // since it's already injected .
   DatabaseHelper _databaseHelper  = Get.find<DatabaseHelper>(); // Already Injected in main function
 
+  // Storing all the needed Listeners here
+  List<StreamSubscription<Event>> _listeners = <StreamSubscription<Event>>[]; 
+  
+  
+  @override
+  void onInit() async {
+    super.onInit();
 
-  // testing Function
-  void _InitialFill()
-  { 
-      print("------------------------ INIT -----------------");
-    _databaseHelper.firebaseDatabase.reference().child('users').once().then((DataSnapshot snapshot) {
-        Map<dynamic, dynamic> values = snapshot.value;
-        values.forEach((key, value) {
-          print( "Key[${key}] = ${value.toString()}");
-        });
+    // uhm .. well let's just attach some listeners..
+    // READ : it's better to keep them like that , becauce that way we can update orders, which is an observale list.
+    
+    if (_authController.user != null) {
+      
+      _listeners.addAll([
+
+        // Added Order!
+        _databaseHelper
+        .firebaseDatabase
+        .reference()
+        .child(taxiOpenOrdersNode)
+        .onChildAdded
+        .listen((event) => orders.add(Order.fromSnapshot(event.snapshot))),
+
+        // Removed Order
+        _databaseHelper
+        .firebaseDatabase
+        .reference()
+        .child(taxiOpenOrdersNode)
+        .onChildRemoved
+        .listen((event) => orders.removeWhere((element) => element.id == event.snapshot.key)),
+
+        //changed Order
+        _databaseHelper
+        .firebaseDatabase
+        .reference()
+        .child(taxiOpenOrdersNode)
+        .onChildChanged
+        .listen((event) {
+          orders[
+            orders
+            .indexOf(
+              orders
+              .singleWhere(
+                (element) => element.id == event.snapshot.key
+              )
+            )
+          ] = Order.fromSnapshot(event.snapshot);
+        }),
+
+      ]);
+
+      print("Attached Listeners on taxiOpenOrdersNode : ${_listeners.length}");
+    }
+  }
+
+
+  // I added this to avoid possible dangling pointers ...
+  Future<void> _dettahListeners() async
+  {
+    _listeners.forEach((sub) async { 
+      await sub
+      .cancel()
+      .whenComplete(() => print("A listener was disposed on orderController::dettahListeners !"))
+      .catchError((er) => print("Failed Cancelling a listner on orderController::dettahListeners !"));
     });
-
   }
 
   @override
-  void onInit() {
-    super.onInit();
-
-    // testing ... still
-    _InitialFill();
-
-
-    // uhm .. well let's just attach some listeners..
-
-    // Added Order!
-    _databaseHelper.firebaseDatabase.reference().child('openOrders/taxi').onChildAdded.listen((event) {
-      orders.add(Order.fromSnapshot(event.snapshot));
-    });
-
-    // Removed Order
-    _databaseHelper.firebaseDatabase.reference().child('openOrders/taxi').onChildRemoved.listen((event) {
-      orders.removeWhere((element) => element.id == event.snapshot.key);
-    });
-
-    //changed Order
-    _databaseHelper.firebaseDatabase.reference().child('openOrders/taxi').onChildChanged.listen((event) {
-      Order _orderChanged = orders.singleWhere((element) => element.id == event.snapshot.key);
-      orders[orders.indexOf(_orderChanged)] = Order.fromSnapshot(event.snapshot);
-    });
-
+  Future<void> dispose() async {
+    super.dispose();
+    print("Disposing the OrderController and Revoking all the ::taxiOpenOrdersNode:: Listners !");
+    await _dettahListeners();
   }
-
-
 }
