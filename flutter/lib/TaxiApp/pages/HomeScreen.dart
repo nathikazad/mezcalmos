@@ -1,19 +1,15 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
-import 'package:mezcalmos/TaxiApp/models/Order.dart';
-import 'package:mezcalmos/TaxiApp/services/ApiService.dart';
 
 class HomeScreen extends GetWidget<AuthController> {
 
   @override
   Widget build(BuildContext context) 
   {
-    OrderController _orderController = Get.put(OrderController());
-    ApiService _api  = Get.put(ApiService());
+    // Injecting OrderController at this Node.
+    OrderController _orderController  = Get.put(OrderController());
 
     return Scaffold(
 
@@ -24,12 +20,13 @@ class HomeScreen extends GetWidget<AuthController> {
         ],
       ),
       body: Container(height : double.infinity , child: Center(
+        
+        // Putting OBX here since, we're using length of orders , which will be changing
+        child: Obx(() => ListView.builder(itemCount:  _orderController.orders.length, itemBuilder: (ctx , i){
 
-        child: ListView.builder(itemCount:  _orderController.orders.length , itemBuilder: (ctx , i) {
-
-          return Text(_orderController.orders[i].id ,  style: TextStyle(color: Colors.primaries[Random().nextInt(Colors.primaries.length)]));
-
-        }),
+          return Text(_orderController.orders[i].id);
+          
+        },)),
 
       )),
       
