@@ -1,13 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 
 class AuthController extends GetxController {
 
   FirebaseAuth  _auth  = FirebaseAuth.instance;
   Rxn<User>     _user  = Rxn<User>();
 
-  User? get user => _user.value;
-  dynamic get auth => _auth.app;
+  User? get user    => _user.value;
+  FirebaseAuth get auth  => _auth;
 
   
   @override
@@ -26,7 +27,6 @@ class AuthController extends GetxController {
       } 
       catch (e) 
       {
-        
         Get.snackbar("Error creating your account!" , e.toString() , snackPosition: SnackPosition.BOTTOM);
       }
   }
@@ -48,8 +48,13 @@ class AuthController extends GetxController {
 
   Future<void> signOut() async
   {
-      try {
+      try 
+      {
+        
+        OrderController refController = Get.find<OrderController>();
+        await refController.dispose();
         await _auth.signOut();
+
       } 
       catch (e) 
       {
