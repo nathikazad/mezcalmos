@@ -4,13 +4,13 @@ import 'package:firebase_database/firebase_database.dart';
 class Order {
   
   String id;
-  Map<String , String> customer;
-  double estimatedPrice;
-  Map<String , dynamic> from;
-  Map<String , dynamic> to;
+  Map<dynamic , dynamic> customer;
+  num estimatedPrice;
+  Map<dynamic , dynamic> from;
+  Map<dynamic , dynamic> to;
   String orderTime;
   String paymentType;
-  Map<String , Map<String, dynamic>> routeInformation;
+  Map<dynamic , dynamic> routeInformation; // Map<String , Map<String, dynamic>> 
 
   Order(
     this.id,
