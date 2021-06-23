@@ -1,0 +1,138 @@
+{
+  "rules": {
+    ".read": "false",
+    ".write": "false",
+    "users": {
+      ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true",
+
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        "notificationInfo": {
+          ".write": "$uid === auth.uid"
+        },
+        "info": {
+          "language": {
+            ".write": "$uid === auth.uid"
+          },
+          "photo": {
+            ".write": "$uid === auth.uid"
+          },
+          "displayName": {
+            ".write": "$uid === auth.uid"
+          },
+          "phone": {
+            ".write": "$uid === auth.uid"
+          },
+          "taxiNumber": {
+            ".write": "root.child('admins/' + auth.uid + '/authorized').val() === true"
+          }
+        },
+        "invite": {
+          "code": {
+            ".write": "$uid === auth.uid"
+          }
+        },
+        "savedLocations": {
+          ".write": "$uid === auth.uid"
+        },
+        "auth": {
+          ".read": "false",
+          ".write": "false"
+        }
+      }
+    },
+    "taxiDrivers": {
+      ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true",
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        "notificationInfo": {
+          ".write": "$uid === auth.uid"
+        },
+        "state": {
+          "isLooking": {
+            ".write": "$uid === auth.uid"
+          }
+        },
+        "location": {
+          ".write": "$uid === auth.uid"
+        },
+        "invite": {
+          "code": {
+            ".write": "$uid === auth.uid"
+          }
+        }
+      }
+    },
+    "openOrders": {
+      ".read": "root.child('taxiDrivers/' + auth.uid + '/state/authorizationStatus').val() === 'authorized' || root.child('admins/' + auth.uid + '/authorized').val() === true"
+    },
+    "inProcessOrders": {
+      ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true"
+    },
+    "orders": {
+      ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true",
+      "$orderType": {
+        "$orderId": {
+          ".read": "(root.child('orders/' + $orderType + '/' + $orderId + '/status').val() === 'lookingForTaxi' && root.child('taxiDrivers/' + auth.uid + '/state/authorizationStatus').val() === 'authorized') || root.child('orders/' + $orderType + '/' + $orderId + '/customer/id').val() === auth.uid || root.child('orders/' + $orderType + '/' + $orderId + '/driver/id').val() === auth.uid",
+          "driver": {
+            "location": {
+              ".write": "root.child('orders/' + $orderType + '/' + $orderId + '/driver/id').val() === auth.uid"
+            }
+          }
+        }
+      }
+    },
+    "chat": {
+      "$orderId": {
+        ".read": "root.child('chat/' + $orderId + '/participants/' + auth.uid).exists()",
+        "messages": {
+          "$messageId": {
+            ".write": "root.child('chat/' + $orderId + '/participants/' + auth.uid).exists()"
+          }
+        }
+      }
+    },
+    "notifications": {
+      "$userType": {
+        "$uid": {
+          ".write": "$uid === auth.uid",
+          ".read": "$uid === auth.uid"
+        }
+      }
+    },
+    "pricePolicy": {
+      ".read": "true",
+      ".write": "false"
+    },
+    "admins": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "false"
+      }
+    },
+    "adminChat": {
+      ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true",
+      ".write": "false",
+      "$userType": {
+        "current": {
+          "$uid": {
+            ".read": "$uid === auth.uid",
+            "$chatId": {
+              "messages": {
+                ".write": "$uid === auth.uid || root.child('admins/' + auth.uid + '/authorized').val() === true"
+              },
+              "admins": {
+                ".write": "root.child('admins/' + auth.uid + '/authorized').val() === true"
+              }
+            }
+          }
+        },
+        "past": {
+          "$uid": {
+            ".read": "$uid === auth.uid"
+          }
+        }
+      }
+    }
+  }
+}
