@@ -24,6 +24,7 @@ class HomeScreen extends GetWidget<AuthController> {
         // Putting OBX here since, we're using length of orders , which will be changing
         child: Obx(() => ListView.builder(itemCount:  _orderController.orders.length, itemBuilder: (ctx , i){
 
+          print(" List Len >>>>>>>>>>>... "+_orderController.orders.length.toString());
           return Text(_orderController.orders[i].id);
           
         },)),
