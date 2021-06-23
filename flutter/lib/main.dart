@@ -6,11 +6,11 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:mezcalmos/Shared/bindings/authBinding.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/TaxiApp/helpers/databaseHelper.dart';
 import 'package:mezcalmos/TaxiApp/routes/SimpleRouter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:mezcalmos/TaxiApp/services/database.dart';
 
 // TODO :  singing in, view orders, accept orders 
 
