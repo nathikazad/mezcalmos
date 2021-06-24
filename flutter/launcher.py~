@@ -1,5 +1,3 @@
-#!/usr/bin/python3
-
 from sys import argv , platform
 exec_           = lambda c:__import__("os").system(c)
 get_lan_ip      = lambda: __import__("socket").gethostbyname(socket.gethostname())
