@@ -14,6 +14,7 @@ const String kMainRoute                 = '/';
 const String kSplashRoute               = '/splash';
 const String kSignInRoute               = '/sign_in';
 const String kSignUpRoute               = '/sign_up';
+const String kOtpRoute                  = '/sign_in_otp';
 
 
 // GetX based Router (For navigating)
