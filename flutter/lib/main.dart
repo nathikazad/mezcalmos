@@ -17,17 +17,21 @@ import 'package:get_storage/get_storage.dart';
 
 Future<void> main() async {
   
-  const startPoint = bool.hasEnvironment('APP_SP') ? String.fromEnvironment('APP_SP') : null;
+  const startPoint  = bool.hasEnvironment('APP_SP') ? String.fromEnvironment('APP_SP') : null;
+  const _host        = bool.hasEnvironment('HOST') ? String.fromEnvironment('HOST') : localhost;
+
   print('SP -> ${startPoint.toString()}');
 
-  String _host = localhost;
-
-  try {
-    if ( Platform.isAndroid || Platform.isIOS) _host = lanhost; // IP on LOCAL AREA NETWORK
+  try 
+  {
+    if ((Platform.isAndroid || Platform.isIOS) && _host == localhost)
+    {
+      throw new Exception("[!] Error > When building for Android/IOS , Please make sure to pass Your Firebase host Machine's IP !");
+    } 
   } 
   catch (e)
   {
-    print("+ Using http://localhost/ as host.");
+    print(e);
   }
 
   WidgetsFlutterBinding.ensureInitialized();
