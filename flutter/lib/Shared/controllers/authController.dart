@@ -37,31 +37,27 @@ class AuthController extends GetxController {
 
   Future<void> signIn(String email , String password) async
   {
-      
-      try 
+    await _auth.signInWithEmailAndPassword(email: email, password: password)
+      .timeout(Duration(seconds: 5), onTimeout: () => Future.error(Exception("Timed out , Check your Internet.")))
+      .then((value)
       {
-        await _auth.signInWithEmailAndPassword(email: email, password: password)
-        .timeout(Duration(seconds: 5), onTimeout: () => Future.error(Exception("Timed out , Check your Internet.")))
-        .then((value)
-        {
-          Get.snackbar(
-            "Welcome Back :D",
-            "Hello ${value.user?.displayName}, We are glad you're back!",
-            colorText: Colors.white,
-            backgroundColor: Colors.black87,
-            snackPosition: SnackPosition.BOTTOM,
-            snackStyle:  SnackStyle.FLOATING
-          );
-          
-          TaxiInjectionHelper.toInjectAtSignIn();
-        });
-      } 
-      catch (e) 
-      {
-        Get.snackbar("Failed to Sign you in!" , e.toString() , snackPosition: SnackPosition.BOTTOM);
-      }
-  }
-
+        Get.snackbar(
+          "Welcome Back :D",
+          "Hello ${value.user?.displayName}, We are glad you're back!",
+          colorText: Colors.white,
+          backgroundColor: Colors.black87,
+          snackPosition: SnackPosition.BOTTOM,
+          snackStyle:  SnackStyle.FLOATING
+        );
+        
+        TaxiInjectionHelper.toInjectAtSignIn();
+      }, onError: ((Object e, StackTrace stackTrace) {
+          Get.snackbar("Failed to Sign you in!" , e.toString() , snackPosition: SnackPosition.BOTTOM);
+        }
+      )
+    );
+    
+  } 
 
   Future<void> signOut() async
   {
