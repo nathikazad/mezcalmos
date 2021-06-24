@@ -11,8 +11,7 @@ lanhost         = False
 # Default NT (win) #################
 _clear_ = "cls"
 ####################################
-
-if not platform.startswith('win') and self.os != 'nt':
+if not platform.startswith('win') and platform != 'nt':
     print("[OS] Running on none Windows OS!")
     _clear_ = "clear"
 else :
