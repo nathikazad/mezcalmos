@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
+import 'package:mezcalmos/TaxiApp/helpers/InjectionHelper.dart';
+import 'package:mezcalmos/TaxiApp/routes/SimpleRouter.dart';
 
 class AuthController extends GetxController {
 
@@ -37,7 +40,21 @@ class AuthController extends GetxController {
       
       try 
       {
-        await _auth.signInWithEmailAndPassword(email: email, password: password).timeout(Duration(seconds: 5), onTimeout: () => Future.error(Exception("Timed out , Check your Internet.")));
+        await _auth.signInWithEmailAndPassword(email: email, password: password)
+        .timeout(Duration(seconds: 5), onTimeout: () => Future.error(Exception("Timed out , Check your Internet.")))
+        .then((value)
+        {
+          Get.snackbar(
+            "Welcome Back :D",
+            "Hello ${value.user?.displayName}, We are glad you're back!",
+            colorText: Colors.white,
+            backgroundColor: Colors.black87,
+            snackPosition: SnackPosition.BOTTOM,
+            snackStyle:  SnackStyle.FLOATING
+          );
+          
+          TaxiInjectionHelper.toInjectAtSignIn();
+        });
       } 
       catch (e) 
       {
@@ -50,11 +67,8 @@ class AuthController extends GetxController {
   {
       try 
       {
-        
-        OrderController refController = Get.find<OrderController>();
-        await refController.dispose();
         await _auth.signOut();
-
+        TaxiInjectionHelper.revokeListenersOnSignOut();
       } 
       catch (e) 
       {
