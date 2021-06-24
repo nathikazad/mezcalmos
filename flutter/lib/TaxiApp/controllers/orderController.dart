@@ -22,7 +22,7 @@ class OrderController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-
+    print("--------------------> OrderController Initialized !");
     // uhm .. well let's just attach some listeners..
     // READ : it's better to keep them like that , becauce that way we can update orders, which is an observale list.
     
@@ -72,7 +72,7 @@ class OrderController extends GetxController {
 
 
   // I added this to avoid possible dangling pointers ...
-  Future<void> _dettahListeners() async
+  void dettahListeners()
   {
     _listeners.forEach((sub) async { 
       await sub
@@ -83,9 +83,8 @@ class OrderController extends GetxController {
   }
 
   @override
-  Future<void> dispose() async {
+  void dispose()  {
     super.dispose();
-    print("Disposing the OrderController and Revoking all the ::taxiOpenOrdersNode:: Listners !");
-    await _dettahListeners();
+    print("--------------------> OrderController Auto Disposed !");
   }
 }
