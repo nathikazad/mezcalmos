@@ -74,12 +74,12 @@ class OrderController extends GetxController {
   // I added this to avoid possible dangling pointers ...
   void dettahListeners()
   {
-    _listeners.forEach((sub) async { 
-      await sub
+    _listeners.forEach((sub) =>
+      sub
       .cancel()
-      .whenComplete(() => print("A listener was disposed on orderController::dettahListeners !"))
-      .catchError((er) => print("Failed Cancelling a listner on orderController::dettahListeners !"));
-    });
+      .then((value) => print("A listener was disposed on orderController::dettahListeners !"))
+      .catchError((err) => print("Error happend while trying to dispose orderController::dettahListeners !"))
+    );
   }
 
   @override
