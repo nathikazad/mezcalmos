@@ -74,8 +74,8 @@ class MainApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Fiction2Mission',
-      theme: ThemeData(primaryColor: Colors.black , visualDensity: VisualDensity.adaptivePlatformDensity),
-      
+      theme: ThemeData(primaryColor: Colors.white , visualDensity: VisualDensity.adaptivePlatformDensity),
+      color: Colors.white,
       getPages: XRouter.mainRoutes,
 
       initialRoute: kSplashRoute,
