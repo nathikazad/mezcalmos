@@ -1,8 +1,13 @@
-+ Set all firebase functions' names as constants on /constants.
-+ Use FutureBuilder > with ListView inside (for orders listing).
-+ Add a Database helper :
+[Done] Set all firebase functions' names as constants on /constants.
+[Done] Use FutureBuilder > with ListView inside (for orders listing).
+[Done] Add a Database helper :
 	|_ so we easily CRUD data
-+ Add a Firebase Function helper :
+[Done] Add a Firebase Function helper :
 	|_ so we can only specify the func key (on constants) and it will be called.
-
-
+[Done] Create the SwitchToogle(on-off).
+[Done] Make openOrders Screen adabtable as much as possible!
+[Done] Fetch openTaxiOrders o the UI!
++ Make and test realtime changes on openedOrders Screen!
++ Implement the Logic on/off on click!
++ Implement the logic of onTap/onLongTap/onDoubleTap ...etc on openedOrders listed!
++ implement the side menu Click (Open n close).
