@@ -1,8 +1,14 @@
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawer.dart';
 import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 
 class TaxiInjectionHelper
 {
+  // it would be much easier if we maintain the toInjectAt(x) Functions in the SameDependency Orders
+  
+  static void toInjectAtWrapper()
+  {
+  }
 
   static void toInjectAtSignIn()
   {
@@ -10,7 +16,17 @@ class TaxiInjectionHelper
     print("toInjectAtSignIn -> called");
   }
 
+  static void toInjectAtHome()
+  {
+    Get.lazyPut(() => SideMenuDraweController() , fenix: true);
+    Get.lazyPut(() => OrderController() , fenix: true);
+  }
 
+
+
+
+
+  // Listeners Revoking in case needed !
   static void revokeListenersOnSignOut()
   {
     print("revokeListenersOnSignOut -> called");
@@ -18,4 +34,5 @@ class TaxiInjectionHelper
     Get.find<OrderController>().dettahListeners();
     print("Disposing the OrderController and Revoking all the ::taxiOpenOrdersNode:: Listners !");
   }
+
 }
