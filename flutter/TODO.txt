@@ -7,7 +7,12 @@
 [Done] Create the SwitchToogle(on-off).
 [Done] Make openOrders Screen adabtable as much as possible!
 [Done] Fetch openTaxiOrders o the UI!
-+ Make and test realtime changes on openedOrders Screen!
+[Done] Make and test realtime changes on openedOrders Screen!
 + Implement the Logic on/off on click!
 + Implement the logic of onTap/onLongTap/onDoubleTap ...etc on openedOrders listed!
-+ implement the side menu Click (Open n close).
+[Done] implement the side menu Click (Open n close).
++ Change To Spanish / To English depending on Lang Controller In SireMenu!
++ Implemet Language Controller.
++ Add Condition Check on Language in global.dart Strings!
++ Add the Left-top button in SideMenu to close the Menu aka drawer Using : SideMenuDraweController.closeMenu()
++ Change Text("0 km") in openedOrder , I hardcoded it , cuz i didn't know where it come from!
