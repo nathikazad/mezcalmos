@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/controllers/sideMenuDrawer.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 
 class TaxiInjectionHelper
