@@ -1,14 +1,15 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/widgets/NoScrollGlowBehaviour.dart';
 
 class MezcalmosSharedWidgets {
 
   static Image logo({double size = 20}) => Image.asset(aLogoPath , height: size, width: size, fit:  BoxFit.contain,);
 
-  static RichText mezcalmos({double textSize = nDefaultMezcalmosTextSize}) =>  RichText
+  static RichText mezcalmos({double textSize = nDefaultMezcalmosTextSize , bool isBold = false}) =>  RichText
   (
     text: TextSpan(
       style: TextStyle(
@@ -18,10 +19,17 @@ class MezcalmosSharedWidgets {
     ),
 
     children: <TextSpan>[
-      const TextSpan(text: tMez),
-      const TextSpan(
+      TextSpan(
+        text: tMez,
+        style: TextStyle(
+          fontWeight: isBold ? FontWeight.bold: FontWeight.normal,
+        ),
+
+      ),
+      TextSpan(
         text: tCalmos,
         style: TextStyle(
+          fontWeight: isBold ? FontWeight.bold: FontWeight.normal,
           color: Color.fromARGB(255, 103, 122, 253),
         ),
       ),
@@ -29,12 +37,21 @@ class MezcalmosSharedWidgets {
   ));
 
 
-  static PreferredSizeWidget mezcalmosAppBar()
+  static Widget MezcalmosNoGlowScrollConfiguration (Widget child)
+  {
+    return ScrollConfiguration(
+      behavior: NoScrollGlowBehaviour(testCaller: "MezcalmosNoGlowScrollConfiguration"),
+      child: child,
+    );
+  }
+
+
+  static AppBar mezcalmosAppBar(Function openDrawer)
   {
 
     return AppBar(
 
-      automaticallyImplyLeading: false,
+      // automaticallyImplyLeading: false,
       centerTitle: true,
       toolbarHeight: 100,
       // leadingWidth: 55,
@@ -44,7 +61,7 @@ class MezcalmosSharedWidgets {
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          logo(size:40),
+          logo(size:getSizeRelativeToScreen(20, Get.height, Get.width)),
           Container(
             padding: const EdgeInsets.only(left:15), child: mezcalmos()
           )        
@@ -82,7 +99,10 @@ class MezcalmosSharedWidgets {
       leading: Transform.scale(
           scale: 0.8,
           child: GestureDetector(
-            onTap: () => print("Clicked menu !"),
+            onTap: () {
+              print("Taped Drawer btn !");
+              openDrawer();
+            },
             child: Container(
               margin: EdgeInsets.only(top: 25, left: 10, bottom: 25),
               decoration: BoxDecoration(
