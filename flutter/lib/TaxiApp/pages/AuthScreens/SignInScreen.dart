@@ -32,10 +32,10 @@ class SignIn extends GetWidget<AuthController> {
                 children: [
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 100),
-                    child: MezcalmosSharedWidgets.logo(),
+                    child: MezcalmosSharedWidgets.logo(size:getSizeRelativeToScreen(80 , sh, sw)),
                   ),
                   SizedBox(height:getSizeRelativeToScreen(25 , sh, sw)),
-                  MezcalmosSharedWidgets.mezcalmos(textSize: getSizeRelativeToScreen(25 , sh, sw)),
+                  MezcalmosSharedWidgets.mezcalmos(textSize: getSizeRelativeToScreen(25 , sh, sw) , isBold:true),
                   SizedBox(height: getSizeRelativeToScreen(20 , sh, sw),),
                   Flexible(
 
