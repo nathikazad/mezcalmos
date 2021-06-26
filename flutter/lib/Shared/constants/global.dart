@@ -26,7 +26,12 @@ const String tMezcalmos                 = "MEZCALMOS";
 const String tConnectMessage            = "Connect using Facebook or using OTP !";
 const String tFacebookSigning           = "Sign in with Facebook";
 const String tSmsSigning                = "Sign in with SMS";
+const String tDefaultUserName           = "Unknown";
+const String tDisconnect                = "Disconnect";
+const String tIncommingOrders           = "Incomming Orders";
+const String tDefaultCustomerName       = "Unknown";
 
 // ----------------- Assets Strings ----------------- //
 
 const String aLogoPath                  = "assets/images/logo.png";
+const String aDefaultAvatar             = "assets/images/defaultAvatar.png";
