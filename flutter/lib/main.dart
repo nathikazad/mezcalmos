@@ -39,12 +39,6 @@ Future<void> main() async {
 
   FirebaseApp _app              = await Firebase.initializeApp();
   FirebaseDatabase firebaseDb   = FirebaseDatabase(app: _app , databaseURL: _host+dbRoot);
-
-    //   print("1 HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
-    // DataSnapshot snap = await firebaseDb.reference().child('users').once().asStream().first;
-    // print(snap.value);
-    //   print("2 HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
-
   await FirebaseAuth.instance.useEmulator(_host+authPort);
   FirebaseFunctions.instance.useFunctionsEmulator(origin: _host+functionPort);
   await GetStorage.init();
