@@ -5,8 +5,8 @@
       v-if="type=='customer'"
       slot="details"
       class="routePill w-100 mb-2"
-      :classes1="{'w-100':true,}"
-      :classes2="{'none':true,}"
+      :classes1="{'w-60':true,}"
+      :classes2="{'w-40':true,}"
       :classes3="{'none':true,}"
     >
       <userPart
@@ -18,20 +18,20 @@
         :taxiNumber="deepFind(orderDetails, 'driver.taxiNumber')"
       ></userPart>
 
-      <!-- <price
+      <price
         class="flex align_center"
         slot="part2"
         :price="deepFind(orderDetails, 'estimatedPrice')"
         :cash="true"
-      ></price>-->
+      ></price>
     </route-pill>
     <!-- Taxi side -->
     <route-pill
       v-if="type=='taxi'"
       slot="details"
       class="routePill w-100 mb-2"
-      :classes1="{'w-100':true,}"
-      :classes2="{'none':true,}"
+      :classes1="{'w-60':true,}"
+      :classes2="{'w-40':true,}"
       :classes3="{'none':true,}"
     >
       <userPart
@@ -42,12 +42,12 @@
         :extra="$t('taxi.taxiView.cancelled')"
       ></userPart>
 
-      <!-- <price
+      <price
         class="flex align_center start"
         slot="part2"
         :price="deepFind(orderDetails, 'estimatedPrice')"
         :cash="true"
-      ></price>-->
+      ></price>
     </route-pill>
   </div>
 </template>

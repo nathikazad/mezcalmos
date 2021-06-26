@@ -38,6 +38,7 @@
           :loading="loading"
           @cancelPopUp="cancelPopUp=true"
           :orderDetails="orderDetails"
+          :orderId="$route.params.orderId"
           type="customer"
           slot="details"
           class="routePill"

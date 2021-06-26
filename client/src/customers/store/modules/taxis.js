@@ -5,8 +5,8 @@ import {
 
 import {
   getDistanceFromLatLonInKm,
-  puertoCoords,
-  inRichPeopleCoords
+  puertoCoords
+
 } from '@/shared/mixins/mapFunctions'
 
 export default {
@@ -69,6 +69,31 @@ export default {
 
       return response;
     },
+    async increaseTaxiPrice(_, payload) {
+      let orderId = payload.orderId
+      let calcEstimated = (estimated) => {
+        if (estimated) {
+
+          estimated += 5
+        }
+        return estimated
+      }
+      await firebaseDatabase().ref(`/orders/taxi/${orderId}/estimatedPrice`).transaction(calcEstimated)
+      await firebaseDatabase().ref(`/openOrders/taxi/${orderId}/estimatedPrice`).transaction(calcEstimated)
+    },
+    async reduceTaxiPrice(_, payload) {
+      let orderId = payload.orderId
+      let calcEstimated = (estimated) => {
+        if (estimated) {
+
+          estimated -= 5
+        }
+        return estimated
+      }
+      await firebaseDatabase().ref(`/orders/taxi/${orderId}/estimatedPrice`).transaction(calcEstimated)
+      await firebaseDatabase().ref(`/openOrders/taxi/${orderId}/estimatedPrice`).transaction(calcEstimated)
+
+    },
     async cancelTaxi(context, payload) {
       let status = context.state.value.status
       if (status != "lookingForTaxi" && status != "onTheWay" && status != "inTransit") {
@@ -108,12 +133,11 @@ export default {
       return state.temporaryAddresseses
     },
     estimatePrice() {
-      return async function (distance, locations) {
+      return async function (distance) {
         let pricePolicy = (await firebaseDatabase().ref(`pricePolicy`).once('value')).val();
         distance = parseFloat(distance);
         let perKmCost = (pricePolicy && pricePolicy.perKmCost) ? parseInt(pricePolicy.perKmCost) : 0;
-        if (inRichPeopleCoords(locations.from, locations.to))
-          perKmCost = pricePolicy.perKmCostRichPeople
+
         let minimumCost = (pricePolicy && pricePolicy.minimumCost) ? parseInt(pricePolicy.minimumCost) : 0
         let estimate = parseInt(distance * perKmCost)
         return estimate > minimumCost ? estimate : minimumCost;

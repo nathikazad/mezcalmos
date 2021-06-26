@@ -64,7 +64,16 @@
       }
     },
     "openOrders": {
-      ".read": "root.child('taxiDrivers/' + auth.uid + '/state/authorizationStatus').val() === 'authorized' || root.child('admins/' + auth.uid + '/authorized').val() === true"
+      ".read": "root.child('taxiDrivers/' + auth.uid + '/state/authorizationStatus').val() === 'authorized' || root.child('admins/' + auth.uid + '/authorized').val() === true",
+      "$orderType": {
+        "$orderId": {
+
+          "estimatedPrice": {
+            ".read": "root.child('openOrders/' + $orderType + '/' + $orderId + '/customer/id').val() === auth.uid ",
+            ".write": "root.child('openOrders/' + $orderType + '/' + $orderId + '/customer/id').val() === auth.uid "
+          }
+        }
+      }
     },
     "inProcessOrders": {
       ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true"
@@ -78,6 +87,10 @@
             "location": {
               ".write": "root.child('orders/' + $orderType + '/' + $orderId + '/driver/id').val() === auth.uid"
             }
+          },
+          "estimatedPrice": {
+
+            ".write": "root.child('orders/' + $orderType + '/' + $orderId + '/customer/id').val() === auth.uid && root.child('orders/' + $orderType + '/' + $orderId + '/status').val() === 'lookingForTaxi'"
           }
         }
       }
