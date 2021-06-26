@@ -12,7 +12,7 @@ const String functionPort               = ":5001";
 
 // ----------------- TEST STRINGS ----------------- //
 
-const String tEmailTestValue            = "driver.one@mezcalmos.com";
+const String tEmailTestValue            = "taxi.two@mezcalmos.com";
 const String tEmailTestPassword         = "password";
 
 // ----------------- Costants Numbers ----------------- //

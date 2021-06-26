@@ -4,8 +4,8 @@ import 'package:firebase_database/firebase_database.dart';
 class Order {
   
   String id;
-  Map<dynamic , dynamic> customer;
-  num estimatedPrice;
+  String? customer;
+  num? estimatedPrice;
   Map<dynamic , dynamic> from;
   Map<dynamic , dynamic> to;
   String orderTime;
@@ -26,19 +26,19 @@ class Order {
   );
 
   // Get props as list.
-  List<Object> get props => [id, customer, estimatedPrice, from, to, orderTime, paymentType, routeInformation];
+  List<Object> get props => [id, from, to, orderTime, paymentType, routeInformation];
 
   // Removed parse from json , Since we will be working with Snapshots
-  Order.fromSnapshot(DataSnapshot snapshot) :
+  Order.fromJson(dynamic key, dynamic value) :
 
-    id                  = snapshot.key ?? "",
-    customer            = snapshot.value['customer'],
-    estimatedPrice      = snapshot.value['estimatedPrice'],
-    from                = snapshot.value['from'],
-    to                  = snapshot.value['to'],
-    orderTime           = snapshot.value['orderTime'],
-    paymentType         = snapshot.value['paymentType'],
-    routeInformation    = snapshot.value['routeInformation'];
+    id                  = key,
+    customer            = value['customer'],
+    estimatedPrice      = value['estimatedPrice'],
+    from                = value['from'],
+    to                  = value['to'],
+    orderTime           = value['orderTime'],
+    paymentType         = value['paymentType'],
+    routeInformation    = value['routeInformation'];
 
 
   // Added for Debugging Perposes - Don't delete for now

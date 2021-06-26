@@ -1,27 +1,16 @@
 
 
 class TaxiDriver {
-
-  // we might use some ModelHelpers Afterwards (Serialization) for easy access .
-  final String  id;
-  final String  fname;
-  final String  lname;
-  final image;
-
-  bool    authorizationStatus;
+  bool    isAuthorized;
   bool    isLooking;
-  dynamic currentOrder;
+  String? currentOrder;
   dynamic driverLocation;
   dynamic lastLocationUpdateTime; 
 
 
   TaxiDriver(
-    this.id, 
-    this.fname, 
-    this.lname, 
-    this.image,
 
-    this.authorizationStatus,
+    this.isAuthorized,
     this.isLooking,
     this.currentOrder,
     this.driverLocation,
@@ -31,30 +20,18 @@ class TaxiDriver {
 
 
   // Parse Json comming from the server
-  TaxiDriver.fromJson(Map<String, dynamic> json) :
-
-    id                      = json['id'],
-    fname                   = json['fname'],
-    lname                   = json['lname'],
-    image                   = json['image'],
-
-    authorizationStatus     = json['authorizationStatus'],
-    isLooking               = json['isLooking'],
-    currentOrder            = json['currentOrder'],
-    driverLocation          = json['driverLocation'],
-    lastLocationUpdateTime  = json['lastLocationUpdateTime'];
+  TaxiDriver.fromJson(dynamic value)
+      : isAuthorized = value['state']['authorizationStatus'] == "authorized",
+        isLooking = value['state']['isLooking'] == "true",
+        currentOrder = value['state']['currentOrder'],
+        driverLocation = value['driverLocation'],
+        lastLocationUpdateTime = value['lastLocationUpdateTime'];
 
 
 
   // Added for Debugging Perposes - Don't delete for now
-  Map<String, dynamic> toJson() =>  {
-
-    "id"                      : id,
-    "fname"                   : fname,
-    "lname"                   : lname,
-    "image"                   : image,
-    
-    "authorizationStatus"     : authorizationStatus,
+  Map<String, dynamic> toJson() => {    
+    "authorizationStatus": isAuthorized,
     "isLooking"               : isLooking,
     "currentOrder"            : currentOrder,
     "driverLocation"          : driverLocation,
