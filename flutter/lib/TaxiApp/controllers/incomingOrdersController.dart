@@ -3,6 +3,7 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/helpers/databaseHelper.dart';
 import 'package:mezcalmos/TaxiApp/models/Order.dart';
@@ -12,10 +13,12 @@ class IncomingOrdersController extends GetxController {
   RxList<Order> orders            =  <Order>[].obs; // this is observable which will be constaintly changing in realtime .
   AuthController _authController  = Get.find<AuthController>(); // since it's already injected .
   DatabaseHelper _databaseHelper  = Get.find<DatabaseHelper>(); // Already Injected in main function
+  RxBool _waitingResponse         = RxBool(false);
 
   // Storing all the needed Listeners here
   List<StreamSubscription<Event>> _listeners = <StreamSubscription<Event>>[]; 
   
+  dynamic get waitingResponse => _waitingResponse.value;
   
   @override
   void onInit() async {
@@ -81,15 +84,19 @@ class IncomingOrdersController extends GetxController {
   }
 
   Future<void> acceptTaxi(String orderId) async {
-    Get.snackbar("Notice ~" , "Accepting the taxi request ...");
+
     HttpsCallable acceptTaxiFunction =
         FirebaseFunctions.instance.httpsCallable('acceptTaxiOrder');
     try {
+      _waitingResponse.value = true;
       HttpsCallableResult response =
           await acceptTaxiFunction.call(<String, dynamic>{'orderId': orderId});
+          _waitingResponse.value = false;
       print("Accept Taxi Response");
       print(response.data);
     } catch (e) {
+    _waitingResponse.value = false;
+      mezcalmosSnackBar( "Notice ~" , "Failed to accept the taxi order :( ");
       print("Exception happend in acceptTaxi : $e");
     }
   }
