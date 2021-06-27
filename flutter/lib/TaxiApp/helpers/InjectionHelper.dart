@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
-import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
+// import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 
 class TaxiInjectionHelper
 {
@@ -19,7 +19,7 @@ class TaxiInjectionHelper
   static void toInjectAtHome()
   {
     Get.lazyPut(() => SideMenuDraweController() , fenix: true);
-    Get.lazyPut(() => OrderController() , fenix: true);
+    // Get.lazyPut(() => OrderController() , fenix: true);
   }
 
 
@@ -31,7 +31,7 @@ class TaxiInjectionHelper
   {
     print("revokeListenersOnSignOut -> called");
 
-    Get.find<OrderController>().dettahListeners();
+    // Get.find<OrderController>().dettahListeners();
     print("Disposing the OrderController and Revoking all the ::taxiOpenOrdersNode:: Listners !");
   }
 

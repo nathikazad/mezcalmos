@@ -41,7 +41,7 @@ class MezcalmosSideMenu extends GetWidget<AuthController> {
               width: double.infinity,
               child : CircleAvatar(
                 child: ClipOval(
-                  child: controller.user?.photoURL == null ? Image.asset(aDefaultAvatar) :  Image.network(controller.user!.photoURL!),
+                  child: controller.user?.image == null ? Image.asset(aDefaultAvatar) :  Image.network(controller.user!.image),
                 ),
                 backgroundColor: Colors.grey.shade100, //Color.fromARGB(255, 222, 222, 222),
                 radius: 1,

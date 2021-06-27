@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -8,9 +7,8 @@ import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/helpers/databaseHelper.dart';
 import 'package:mezcalmos/TaxiApp/models/Order.dart';
 
-
-class OrderController extends GetxController {
-
+class IncomingOrdersController extends GetxController {
+ 
   RxList<Order> orders            =  <Order>[].obs; // this is observable which will be constaintly changing in realtime .
   AuthController _authController  = Get.find<AuthController>(); // since it's already injected .
   DatabaseHelper _databaseHelper  = Get.find<DatabaseHelper>(); // Already Injected in main function
@@ -82,57 +80,23 @@ class OrderController extends GetxController {
     );
   }
 
-  void acceptTaxi(String orderId) async {
-    HttpsCallable acceptTaxiFunction = FirebaseFunctions.instance.httpsCallable('acceptTaxiOrder');
+  Future<void> acceptTaxi(String orderId) async {
+    Get.snackbar("Notice ~" , "Accepting the taxi request ...");
+    HttpsCallable acceptTaxiFunction =
+        FirebaseFunctions.instance.httpsCallable('acceptTaxiOrder');
     try {
-      HttpsCallableResult response = await acceptTaxiFunction.call(<String, dynamic>{
-        'orderId': orderId
-      });
+      HttpsCallableResult response =
+          await acceptTaxiFunction.call(<String, dynamic>{'orderId': orderId});
       print("Accept Taxi Response");
       print(response.data);
     } catch (e) {
-      // ...
-    }
-  }
-
-  void cancelTaxi(String reason) async {
-    HttpsCallable cancelTaxiFunction = FirebaseFunctions.instance.httpsCallable('cancelTaxiFromDriver');
-    try {
-      HttpsCallableResult response = await cancelTaxiFunction.call(<String, dynamic>{
-        'reason': reason
-      });
-      print("Cancel Taxi Response");
-      print(response.data);
-    } catch (e) {
-      // ...
-    }
-  }
-
-  void startRide() async {
-    HttpsCallable startRideFunction = FirebaseFunctions.instance.httpsCallable('startTaxiRide');
-    try {
-      HttpsCallableResult response = await startRideFunction.call();
-      print("Start Taxi Response");
-      print(response.data);
-    } catch (e) {
-      // ...
-    }
-  }
-
-  void finishRide() async {
-    HttpsCallable finishRideFunction = FirebaseFunctions.instance.httpsCallable('finishTaxiRide');
-    try {
-      HttpsCallableResult response = await finishRideFunction.call();
-      print("Finish Taxi Response");
-      print(response.data);
-    } catch (e) {
-      // ...
+      print("Exception happend in acceptTaxi : $e");
     }
   }
 
   @override
   void dispose()  {
     super.dispose();
-    print("--------------------> OrderController Auto Disposed !");
+    print("--------------------> OrderController Auto");
   }
 }

@@ -21,7 +21,7 @@ Future<void> main() async {
   const _host        = bool.hasEnvironment('HOST') ? String.fromEnvironment('HOST') : localhost;
 
   print('SP -> ${startPoint.toString()}');
-  print('host  -> ${_host}');
+  print('host  -> $_host');
 
   try 
   {

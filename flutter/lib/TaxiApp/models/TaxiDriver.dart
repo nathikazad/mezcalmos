@@ -1,27 +1,18 @@
 
 
+import 'package:firebase_database/firebase_database.dart';
+
 class TaxiDriver {
-
-  // we might use some ModelHelpers Afterwards (Serialization) for easy access .
-  final String  id;
-  final String  fname;
-  final String  lname;
-  final image;
-
-  bool    authorizationStatus;
+  bool    isAuthorized;
   bool    isLooking;
-  dynamic currentOrder;
+  String? currentOrder;
   dynamic driverLocation;
   dynamic lastLocationUpdateTime; 
 
 
   TaxiDriver(
-    this.id, 
-    this.fname, 
-    this.lname, 
-    this.image,
 
-    this.authorizationStatus,
+    this.isAuthorized,
     this.isLooking,
     this.currentOrder,
     this.driverLocation,
@@ -31,35 +22,29 @@ class TaxiDriver {
 
 
   // Parse Json comming from the server
-  TaxiDriver.fromJson(Map<String, dynamic> json) :
+  TaxiDriver.fromJson(dynamic value)
+      : isAuthorized = value['state']['authorizationStatus'] == "authorized",
+        isLooking = value['state']['isLooking'] == true,
+        currentOrder = value['state']['currentOrder'],
+        driverLocation = value['location']['position'],
+        lastLocationUpdateTime = value['location']['lastUpdateTime'];
 
-    id                      = json['id'],
-    fname                   = json['fname'],
-    lname                   = json['lname'],
-    image                   = json['image'],
 
-    authorizationStatus     = json['authorizationStatus'],
-    isLooking               = json['isLooking'],
-    currentOrder            = json['currentOrder'],
-    driverLocation          = json['driverLocation'],
-    lastLocationUpdateTime  = json['lastLocationUpdateTime'];
-
+  TaxiDriver.fromSnapshot(DataSnapshot snapshot) :
+    isAuthorized = snapshot.value['state']['authorizationStatus'] == "authorized",
+    isLooking = snapshot.value['state']['isLooking'] == true,
+    currentOrder = snapshot.value['state']['currentOrder'],
+    driverLocation = snapshot.value['location']['position'],
+    lastLocationUpdateTime = snapshot.value['location']['lastUpdateTime'];
 
 
   // Added for Debugging Perposes - Don't delete for now
-  Map<String, dynamic> toJson() =>  {
-
-    "id"                      : id,
-    "fname"                   : fname,
-    "lname"                   : lname,
-    "image"                   : image,
-    
-    "authorizationStatus"     : authorizationStatus,
+  Map<String, dynamic> toJson() => {    
+    "authorizationStatus": isAuthorized,
     "isLooking"               : isLooking,
     "currentOrder"            : currentOrder,
     "driverLocation"          : driverLocation,
     "lastLocationUpdateTime"  : lastLocationUpdateTime
-
   };
   
 
