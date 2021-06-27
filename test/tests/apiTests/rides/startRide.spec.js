@@ -33,20 +33,15 @@ let driverData = {
     "returnSecureToken":true
   }
   
-// let tripData = {
-//     from: "home",
-//     to: "office",
-//     duration: 10,
-//     distance: 5
-//   } 
-let tripData = {
-  from: "home",
-  to: "office",
-  duration: 10,
-  distance: 5,
-  estimatedPrice: '2$',
-  //paymentType: 'Paypal'
-} 
+
+  let tripData = {
+    'from': "home",
+    'to': "office",
+    'duration': 10,
+    'distance': 5,
+    'estimatedPrice': '2$',
+    'paymentType': 'Paypal'
+  }
 
 let customer, driver, badUser
 
@@ -73,7 +68,6 @@ describe('Mezcalmos', () => {
     
     // test when there is an order which is not accepted yet
      response = await customer.callFunction('requestTaxi', tripData);
-     console.log(response);
      expect(response.result.status).toBe('Success')
 
      let orderId = response.result.orderId

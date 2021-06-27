@@ -36,10 +36,12 @@ let driverData = {
 }
 
 let tripData = {
-  from: "home",
-  to: "office",
-  duration: 10,
-  distance: 5
+  'from': "home",
+  'to': "office",
+  'duration': 10,
+  'distance': 5,
+  'estimatedPrice': '2$',
+  'paymentType': 'Paypal'
 }
 
 let customer, badUser, driver
@@ -60,19 +62,15 @@ describe('Mezcalmos', () => {
     expect(response.data.result.status).toBe('Error')
     expect(response.data.result.errorMessage).toBe('User needs to be signed in')
     
-    
-    // Required from address
+    // Required information
     response = await customer.callFunction("requestTaxi", "cats")
     expect(response.result.status).toBe('Error')
-    expect(response.result.errorMessage).toBe('Required from location')
-
-
-    let data = { 
-      from: "home"
-    }
-
-    response = await customer.callFunction("requestTaxi", data)
+    expect(response.result.errorMessage).toBe("Required from, to, distance, duration, estimatedPrice and paymentType")
+    
+    //Request a ride
+    response = await customer.callFunction("requestTaxi", tripData)
     expect(response.result.status).toBe('Success')
+    
     //test preventing customer from creating another ride before this finishes
     newRequest = await customer.callFunction("requestTaxi", tripData)
     expect(newRequest.result.status).toBe('Error')
@@ -146,7 +144,7 @@ describe('Mezcalmos', () => {
     await helper.expectUnauthorized(async () => {
       await badUser.db.get(`openOrders/taxi/${orderId}`)
     })
-  });
+   });
 })
 
 afterAll(() => {

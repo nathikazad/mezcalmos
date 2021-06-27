@@ -13,20 +13,77 @@ async function start(firebase, uid) {
     }
   }
 
-  let order = (await firebase.database().ref(`/orders/taxi/${orderId}`).once('value')).val();
-  if (order == null) {
+  let order = (await firebase.database().ref(`orders/taxi/${orderId}`).once('value')).val()
+  if(order == null){
     return {
       status: "Error",
       errorMessage: "Order id does not match any order"
     }
-  } 
- 
-  if (order.status != "onTheWay") {
+  }
+
+  if(order.status != 'onTheWay'){
     return {
-      status: "Error",
-      errorMessage: "Ride status is not onTheWay but " + order.status
+      status: 'Error',
+      errorMessage: 'Ride status is not onTheWay but ' + order.status
+    }
+  } 
+
+  let response = await firebase.database().ref(`orders/taxi/${orderId}`).transaction(function(order){
+    // if(order == null){
+    //   return {
+    //     status: "Error",
+    //     errorMessage: "Order id does not match any order"
+    //   }
+    // } else{
+    if(order != null){
+      if(order.lock == null){
+        order.lock = true
+        // if(order.status != 'onTheWay'){
+        //   return {
+        //     status: 'Error',
+        //     errorMessage: 'Ride status is not onTheWay but ' + order.status
+        //   }
+        // } 
+      } else {
+        console.log('attempt to start ride');
+        return
+        
+      }
+    }
+      return order
+  })
+    
+
+  // let response = await firebase.database().ref(`/orders/taxi/${orderId}`).transaction(function(order){
+  //   if (order == null) {
+  //     return {
+  //       status: "Error",
+  //       errorMessage: "Order id does not match any order"
+  //     }
+  //   } 
+  //   if(order.lock == null ){
+  //     order.lock = true
+  //     if(order.status != 'onTheWay'){
+  //       return{
+  //         status: 'Error',
+  //         errorMessage: 'Ride status in not onTheWay but ' + order.status
+  //       }
+  //     }
+  //   } 
+  //   else {
+  //     return
+  //   }
+  //   return order
+  // })
+
+  if(!response.committed){
+    return{
+      status: 'Error',
+      errorMessage: 'attempt to start but locked'
     }
   }
+  order = response.snapshot.val()
+
   let update = {
     status: "inTransit",
     rideStartTime: (new Date()).toUTCString()
@@ -41,7 +98,9 @@ async function start(firebase, uid) {
   update.time = update.rideStartTime
   delete update.rideStartTime
   notification.push(firebase, order.customer.id, update)
+  firebase.database().ref(`/orders/taxi/${orderId}/lock`).remove()
   return {
-    status: "Success"
+    status: "Success",
+    message: "started"
   };
 }

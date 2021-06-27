@@ -35,11 +35,14 @@ let driverData = {
   "returnSecureToken":true
 }
 
+
 let tripData = {
-  from: "home",
-  to: "office",
-  duration: 10,
-  distance: 5
+  'from': "home",
+  'to': "office",
+  'duration': 10,
+  'distance': 5,
+  'estimatedPrice': '2$',
+  'paymentType': 'Paypal'
 }
 
 let customer, badUser, driver

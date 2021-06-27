@@ -14,7 +14,7 @@ async function request(firebase, uid, data) {
       errorMessage: "Customer is already in another taxi"
     }
   }
-  
+ 
   if (!data.from || !data.to || !data.distance || !data.duration 
     || !data.estimatedPrice || !data.paymentType) {
     return {
@@ -22,78 +22,104 @@ async function request(firebase, uid, data) {
       errorMessage: "Required from, to, distance, duration, estimatedPrice and paymentType"
     }
   }
-  // add try
-  let request
+
+  response = await firebase.database().ref(`users/${uid}`).transaction(function(control){
+    if(control != null){
+      if(control.lock == null){
+        control.lock = true
+      } else{
+        return
+      }
+    } 
+    return control
+  })
+
+  if(!response.committed){
+    return{
+      status: 'Error',
+      errorMessage: 'can not request double'
+    }
+  }
+
   try{
-    //request = await notification.notifyDriversNewRequest(firebase, data.from.address.split(',')[0]);
-    request = await notification.notifyDriversNewRequest(firebase, data.from.split(',')[0]);
+    //notification.notifyDriversNewRequest(firebase, data.from.address.split(',')[0]);
+    notification.notifyDriversNewRequest(firebase, data.from.split(',')[0]);
+  }catch(e){
+    console.log(e);
   }
-  catch(e){
-    console.log(e)
-  }
-  
+  // control = response.snapshot.val()
+  // let user
+  // if(control != null){
+  //   user = control.info
+  // } else {
+  //   user = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val();
+  // }
+ 
   let user = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val();
   
-  let payload = {
-    from: data.from,
-    to: data.to,
-    distance: data.distance,
-    duration: data.duration,
-    estimatedPrice: data.estimatedPrice,
-    customer: {
-      id: uid,
+    let payload = {
+      from: data.from,
+      to: data.to,
+      distance: data.distance,
+      duration: data.duration,
+      estimatedPrice: data.estimatedPrice,
+      customer: {
+        id: uid,
+        name: user.displayName.split(' ')[0],
+        image: user.photo
+      },
+      orderType: "taxi",
+      status: "lookingForTaxi",
+      orderTime: (new Date()).toUTCString(),
+      paymentType: data.paymentType
+    }
+  
+    let orderRef = await firebase.database().ref(`/orders/taxi`).push(payload);
+    firebase.database().ref(`/users/${uid}/orders/${orderRef.key}`).set({
+      orderType: "taxi",
+      status: "lookingForTaxi",
+      orderTime: payload.orderTime,
+      routeInformation: {
+        duration: payload.duration,
+        distance: payload.distance,
+      },
+      estimatedPrice: payload.estimatedPrice,
+      paymentType: payload.paymentType,
+      to: payload.to,
+      from: payload.from,
+  
+    });
+    firebase.database().ref(`/openOrders/taxi/${orderRef.key}`).set({
+      from: payload.from,
+      to: payload.to,
+      customer: payload.customer,
+      routeInformation: {
+        duration: payload.duration,
+        distance: payload.distance,
+      },
+      orderTime: payload.orderTime,
+      estimatedPrice: payload.estimatedPrice,
+      paymentType: payload.paymentType
+    });
+    firebase.database().ref(`/users/${uid}/state/currentOrder`).set(orderRef.key);
+    let chat = {
+      participants: {},
+      chatType: "order",
+      orderType: "taxi"
+    }
+    chat.participants[uid] = {
       name: user.displayName.split(' ')[0],
-      image: user.photo
-    },
-    orderType: "taxi",
-    status: "lookingForTaxi",
-    orderTime: (new Date()).toUTCString(),
-    paymentType: data.paymentType
-  }
-
-  let orderRef = await firebase.database().ref(`/orders/taxi`).push(payload);
-  firebase.database().ref(`/users/${uid}/orders/${orderRef.key}`).set({
-    orderType: "taxi",
-    status: "lookingForTaxi",
-    orderTime: payload.orderTime,
-    routeInformation: {
-      duration: payload.duration,
-      distance: payload.distance,
-    },
-    estimatedPrice: payload.estimatedPrice,
-    paymentType: payload.paymentType,
-    to: payload.to,
-    from: payload.from,
-
-  });
-  firebase.database().ref(`/openOrders/taxi/${orderRef.key}`).set({
-   // status: 'lookingForTaxi',
-    from: payload.from,
-    to: payload.to,
-    customer: payload.customer,
-    routeInformation: {
-      duration: payload.duration,
-      distance: payload.distance,
-    },
-    orderTime: payload.orderTime,
-    estimatedPrice: payload.estimatedPrice,
-    paymentType: payload.paymentType
-  });
-  firebase.database().ref(`/users/${uid}/state/currentOrder`).set(orderRef.key);
-  let chat = {
-    participants: {},
-    chatType: "order",
-    orderType: "taxi"
-  }
-  chat.participants[uid] = {
-    name: user.displayName.split(' ')[0],
-    image: user.photo,
-    particpantType: "customer",
-    phoneNumber: (user.phoneNumber) ? user.phoneNumber : null
-  }
-  firebase.database().ref(`/chat/${orderRef.key}`).set(chat);
-  return {
-    status: "Success",
-    orderId: orderRef.key
-  }
+      image: user.photo,
+      particpantType: "customer",
+      phoneNumber: (user.phoneNumber) ? user.phoneNumber : null
+    }
+    firebase.database().ref(`/chat/${orderRef.key}`).set(chat);
+    firebase.database().ref(`users/${uid}/lock`).remove()
+    return {
+      status: "Success",
+      orderId: orderRef.key
+    }
 }
+  
+
+  
