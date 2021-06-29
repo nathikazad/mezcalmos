@@ -69,7 +69,7 @@ _currentOrderListener = _databaseHelper.firebaseDatabase
       _waitingResponse.value = true;
       HttpsCallableResult response = await startRideFunction.call();
       mezcalmosSnackBar("Notice ~" , "Ride started !");
-    _waitingResponse.value = false;
+      _waitingResponse.value = false;
       print("Start Taxi Response");
       print(response.data);
     } catch (e) {
