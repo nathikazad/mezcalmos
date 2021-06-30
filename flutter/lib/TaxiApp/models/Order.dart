@@ -3,7 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 
 class Order {
   
-  String id;
+  dynamic id;
   dynamic customer;
   dynamic estimatedPrice;
   dynamic from;
@@ -24,8 +24,8 @@ class Order {
 
 
   Order(
-    this.id,
     {
+      required this.id,
       required this.customer, 
       required this.estimatedPrice, 
       required this.from, 
@@ -48,7 +48,10 @@ class Order {
   // Get props as list.
   List<Object> get props => [id, from, to, orderTime, paymentType, routeInformation];
 
- Order.fromSnapshot(DataSnapshot snapshot) :
+  // Empty Order Constructor!
+  Order.empty();
+
+  Order.fromSnapshot(DataSnapshot snapshot) :
     id                  = snapshot.key ?? "",
     driver              = snapshot.value['driver'],
     distance            = snapshot.value['distance'],
