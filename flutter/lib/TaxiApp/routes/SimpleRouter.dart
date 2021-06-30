@@ -1,12 +1,7 @@
 import 'package:get/get.dart'; // getX
 import 'package:mezcalmos/TaxiApp/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/TaxiApp/pages/AuthScreens/SignUpScreen.dart';
-import 'package:mezcalmos/TaxiApp/pages/AuthScreens/UnauthorizedScreen.dart';
-import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingListScreen.dart';
-
-// Widgets 
-// import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/ListOrdersScreen.dart';
-import 'package:mezcalmos/TaxiApp/pages/Orders/CurrentOrderScreen.dart';
+import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen.dart';
 import 'package:mezcalmos/TaxiApp/pages/SplashScreen.dart';
 import 'package:mezcalmos/TaxiApp/pages/TaxiWrapper.dart';
 
@@ -19,9 +14,19 @@ const String kSignInRoute               = '/sign_in';
 const String kSignUpRoute               = '/sign_up';
 const String kOtpRoute                  = '/sign_in_otp';
 const String kTaxiWrapperRoute          = '/taxi_wrapper';
-const String kIncomingOrdersRoute       = '/incoming_orders';
-const String kCurrentOrderRoute         = '/current_order';
-const String kUnauthorizedRoute         = '/unauthorized';
+const String kSelectedIcommingOrder     = '/selected_incomming_order';
+// No need these :
+
+// const String kIncomingOrdersRoute       = '/incoming_orders';
+// const String kCurrentOrderRoute         = '/current_order';
+// const String kUnauthorizedRoute         = '/unauthorized';
+
+// since they're not actual Routes , 
+// You can see them as the following : 
+// the mainRoute  is : taxi_wrapper 
+//                     |__scaffold's body :  incoming_orders | current_order | unauthorized
+//
+// what goes in the Scaffold's body is depending on what's Rx<TaxiAuthController::dynamicScreen>'s value.
 
 
 // GetX based Router (For navigating)
@@ -31,11 +36,9 @@ class XRouter {
     GetPage(name: kMainRoute, page: () => TaxiWrapper()),
     GetPage(name: kSplashRoute, page: () => SplashScreen()),
     GetPage(name: kTaxiWrapperRoute, page: () => TaxiWrapper()),
-    GetPage(name: kIncomingOrdersRoute, page: () => IncomingOrdersScreen()),
-    GetPage(name: kCurrentOrderRoute  , page: () => CurrentOrderScreen()),
+    GetPage(name: kSelectedIcommingOrder, page: () => IncommingOrderScreenView()),
     GetPage(name: kSignInRoute, page: () => SignIn()),
     GetPage(name: kSignUpRoute, page: () => SignUp()),
-    GetPage(name: kUnauthorizedRoute, page: () => UnauthorizedScreen())
   ];
 
 }
