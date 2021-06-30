@@ -5,6 +5,7 @@ import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MezcalmosSwitch.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
+import 'package:mezcalmos/TaxiApp/routes/SimpleRouter.dart';
 
 class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
   @override
@@ -65,11 +66,11 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                     itemCount:  controller.orders.length,
                     itemBuilder: (ctx , i)
                     {
-                      // return Text(controller.orders[i].id);
                       return GestureDetector(
                         onTap: () async {
                             print("Clicked on order::${controller.orders[i].id}");
-                            await controller.acceptTaxi(controller.orders[i].id);
+                            controller.setSelectedIncommingOrder(controller.orders[i]);
+                            Get.toNamed(kSelectedIcommingOrder);
                         },
                         child: Container(
                           color: Colors.transparent,
