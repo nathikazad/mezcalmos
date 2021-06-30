@@ -21,7 +21,8 @@ import 'package:get_storage/get_storage.dart';
 Future<void> main() async {
   
   const startPoint  = bool.hasEnvironment('APP_SP') ? String.fromEnvironment('APP_SP') : null;
-  const _host        = bool.hasEnvironment('HOST') ? String.fromEnvironment('HOST') : localhost;
+  const _host       = bool.hasEnvironment('HOST') ? String.fromEnvironment('HOST') : localhost;
+  const _db         = bool.hasEnvironment('DB') ? String.fromEnvironment('DB') : 'production';
 
   print('SP -> ${startPoint.toString()}');
   print('host  -> $_host');
@@ -47,13 +48,14 @@ Future<void> main() async {
   
   if (await GetStorage.init()) 
   {
+
     print("[ GET STORAGE ] INITIALIZED !");
     // Loading map asset !
     await rootBundle.loadString(map_style_asset).then((jsonString) => GetStorage().write('map_style', jsonString));
   }
   else print("[ GET STORAGE ] FAILED TO INITIALIZE !");
    
-  Get.put(DatabaseHelper(firebaseDb , _app , _host+dbRoot )); // we can specify after if we have many Databases ..
+  Get.put(DatabaseHelper(_host+dbRoot, _db , firebaseDatabase:  firebaseDb ,fapp:  _app)); // we can specify after if we have many Databases ..
 
   switch (startPoint) 
   {
