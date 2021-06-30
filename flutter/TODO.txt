@@ -11,9 +11,14 @@
 + Implement the Logic on/off on click!
 + Implement the logic of onTap/onLongTap/onDoubleTap ...etc on openedOrders listed!
 [Done] implement the side menu Click (Open n close).
-+ Change To Spanish / To English depending on Lang Controller In SireMenu!
++ Implement Language Controller get from > Map
++ Change To Spanish / To English depending on Lang Controller In SideMenu!
 + Implemet Language Controller.
 + Add Condition Check on Language in global.dart Strings!
 + Add the Left-top button in SideMenu to close the Menu aka drawer Using : SideMenuDraweController.closeMenu()
-+ Change Text("0 km") in openedOrder , I hardcoded it , cuz i didn't know where it come from!
++ Change Text("0 km") in openedOrder , I hardcoded it , cuz i didn't know where it comes from!
 + Make everything inside InjectionHelper class .
++ Tite spacing + ON / OFF toggle capitalize!
++ Implement Theme Controller.
++ Add Option to set database=test/prod during the launch.
++ Implement SettingsController
