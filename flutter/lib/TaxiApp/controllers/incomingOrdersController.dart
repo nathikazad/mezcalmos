@@ -1,12 +1,15 @@
 import 'dart:async';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/helpers/databaseHelper.dart';
 import 'package:mezcalmos/TaxiApp/models/Order.dart';
+import 'package:mezcalmos/TaxiApp/routes/SimpleRouter.dart';
 
 class IncomingOrdersController extends GetxController {
  
@@ -14,11 +17,18 @@ class IncomingOrdersController extends GetxController {
   AuthController _authController  = Get.find<AuthController>(); // since it's already injected .
   DatabaseHelper _databaseHelper  = Get.find<DatabaseHelper>(); // Already Injected in main function
   RxBool _waitingResponse         = RxBool(false);
+  Rx<Order> _selectedIncommingOrder = Order.empty().obs;
 
   // Storing all the needed Listeners here
   List<StreamSubscription<Event>> _listeners = <StreamSubscription<Event>>[]; 
   
   dynamic get waitingResponse => _waitingResponse.value;
+  void setSelectedIncommingOrder(Order selectedOrder) 
+  {
+    _selectedIncommingOrder.value = selectedOrder;
+  }
+
+  Order get selectedIncommingOrder => _selectedIncommingOrder.value;
   
   @override
   void onInit() async {
@@ -45,7 +55,19 @@ class IncomingOrdersController extends GetxController {
         .reference()
         .child(taxiOpenOrdersNode)
         .onChildRemoved
-        .listen((event) => orders.removeWhere((element) => element.id == event.snapshot.key)),
+        .listen((event) async
+          {
+            // This is why GetX guys XD!
+            if(event.snapshot.key == _selectedIncommingOrder.value.id)
+            {
+              _selectedIncommingOrder.value = new Order.empty();
+              if (Get.currentRoute == kSelectedIcommingOrder) await MezcalmosSharedWidgets.mezcalmosDialog(55 , Get.height , Get.width);
+              Get.back(closeOverlays: true);
+            }
+            
+            orders.removeWhere((element) => element.id == event.snapshot.key);
+          }
+        ),
 
         //changed Order
         _databaseHelper
@@ -92,6 +114,7 @@ class IncomingOrdersController extends GetxController {
       HttpsCallableResult response =
           await acceptTaxiFunction.call(<String, dynamic>{'orderId': orderId});
           _waitingResponse.value = false;
+          _selectedIncommingOrder.value = new Order.empty();
       print("Accept Taxi Response");
       print(response.data);
     } catch (e) {
