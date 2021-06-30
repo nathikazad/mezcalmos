@@ -20,5 +20,5 @@
 + Make everything inside InjectionHelper class .
 + Tite spacing + ON / OFF toggle capitalize!
 + Implement Theme Controller.
-+ Add Option to set database=test/prod during the launch.
+[Done] Add Option to set database=test/prod during the launch.
 + Implement SettingsController
