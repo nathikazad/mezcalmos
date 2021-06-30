@@ -1,0 +1,1 @@
+const String tOrderIsNotAvailableAnymore = "No longer available"; 
