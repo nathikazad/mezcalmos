@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/NoScrollGlowBehaviour.dart';
+import 'package:mezcalmos/TaxiApp/constants/taxiConstants.dart';
 
 class MezcalmosSharedWidgets {
 
@@ -132,4 +133,27 @@ class MezcalmosSharedWidgets {
 
   } 
   
+
+
+  static Future<void> mezcalmosDialog(double val , double sh , double sw) async => await Get.defaultDialog(
+
+    backgroundColor: Colors.grey.shade100,
+    title: '',
+    content: Flex
+    (
+      direction: Axis.vertical,
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      
+      children: [
+        
+        Flexible( fit: FlexFit.loose ,child: Icon(Icons.error , color: Colors.redAccent.shade200, size: getSizeRelativeToScreen(val, sh, sw),)),
+        Flexible( fit: FlexFit.loose ,child: SizedBox(height: 20,)),
+        Flexible( fit: FlexFit.loose ,child: Text(tOrderIsNotAvailableAnymore))
+
+      ], 
+    ),
+  );
+
 }
