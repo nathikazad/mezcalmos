@@ -6,8 +6,11 @@ class DatabaseHelper {
   late final FirebaseDatabase firebaseDatabase;
   late final FirebaseApp firebaseApp;
   final String dbUrl;
+  final String _dbType;
 
-  DatabaseHelper(FirebaseDatabase? firebaseDatabase , FirebaseApp? fapp , this.dbUrl)
+  get dbType => _dbType;
+
+  DatabaseHelper(this.dbUrl ,   this._dbType, {FirebaseDatabase? firebaseDatabase , FirebaseApp? fapp })
   {
     this.firebaseApp      = fapp ?? Firebase.apps.first;
     this.firebaseDatabase = firebaseDatabase ?? FirebaseDatabase(app: this.firebaseApp , databaseURL: this.dbUrl);
