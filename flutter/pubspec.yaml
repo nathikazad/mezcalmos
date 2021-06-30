@@ -36,6 +36,8 @@ dependencies:
   cloud_functions: ^1.0.7
   get_storage: ^2.0.2
   equatable: ^2.0.3
+  flutter_polyline_points: ^1.0.0
+  google_maps_flutter: ^2.0.6
 
 dev_dependencies:
   flutter_test:
@@ -56,6 +58,7 @@ flutter:
   assets:
     - assets/images/
     - assets/fonts/
+    - assets/json/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
