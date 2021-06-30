@@ -47,32 +47,38 @@ _currentOrderListener = _databaseHelper.firebaseDatabase
   Future<void> cancelTaxi(String reason) async {
     HttpsCallable cancelTaxiFunction =
         FirebaseFunctions.instance.httpsCallable('cancelTaxiFromDriver');
-    try {
+
+    try 
+    {
       _waitingResponse.value = true;
       HttpsCallableResult response =
-          await cancelTaxiFunction.call(<String, dynamic>{'reason': reason});
+          await cancelTaxiFunction.call(<String, dynamic>{'reason': reason  , 'database':'production'});
       mezcalmosSnackBar("Notice ~" , "Ride Has been canceled !");
       _waitingResponse.value = false;
 
       print("Cancel Taxi Response");
       print(response.data);
+
     } catch (e) {
       mezcalmosSnackBar("Notice ~" , "Failed to Cancel the Taxi Request :( ");
       _waitingResponse.value = false;
       print("Exception happend in cancelTaxi : $e");    }
   }
 
+
   Future<void> startRide() async {
     HttpsCallable startRideFunction =
         FirebaseFunctions.instance.httpsCallable('startTaxiRide');
-    try {
+    try 
+    {
       _waitingResponse.value = true;
-      HttpsCallableResult response = await startRideFunction.call();
+      HttpsCallableResult response = await startRideFunction.call(<String, dynamic>{'database':'production'});
       mezcalmosSnackBar("Notice ~" , "Ride started !");
     _waitingResponse.value = false;
       print("Start Taxi Response");
       print(response.data);
-    } catch (e) {
+    } 
+    catch (e) {
       mezcalmosSnackBar("Notice ~" , "Failed to Start The ride :( ");
       _waitingResponse.value = false;
       print("Exception happend in startRide : $e");
@@ -84,7 +90,7 @@ _currentOrderListener = _databaseHelper.firebaseDatabase
         FirebaseFunctions.instance.httpsCallable('finishTaxiRide');
     try {
     _waitingResponse.value = true;
-      HttpsCallableResult response = await finishRideFunction.call();
+      HttpsCallableResult response = await finishRideFunction.call(<String, dynamic>{'database':'production'});
       mezcalmosSnackBar("Notice ~" , "Ride is finished successfully :D ");
       _waitingResponse.value = false;
       print("Finish Taxi Response");
