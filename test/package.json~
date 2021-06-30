@@ -1,0 +1,30 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "loadData.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "emulator": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 firebase emulators:start --export-on-exit=test/data/newDummyData",
+    "emulator:onlyFunctions": "firebase emulators:start --only functions",
+    "loadData": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 node ./loadData.js",
+    "emulator:loadData": "npm-run-all --parallel emulator loadData",
+    "emulator:loadDataForFlutter": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=127.0.0.1:9000 FIREBASE_AUTH_EMULATOR_HOST=127.0.0.1:9099 firebase emulators:start --export-on-exit=../test/data/newDummyData --import=../test/data/flutterDummyData",
+    "browserTests": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 jest --verbose .tests/browserTests",
+    "apiTests": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 jest --verbose --runInBand .tests/apiTests",
+    "test": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 jest --verbose --runInBand",
+    
+    "autoTest": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 supervisor --no-restart-on exit -w tests,libraries -x jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "cross-env": "^7.0.3",
+    "firebase-admin": "^9.5.0",
+    "jest": "^26.6.3",
+    "puppeteer": "^8.0.0"
+  }
+}

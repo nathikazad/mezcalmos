@@ -15,11 +15,11 @@ import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingListScreen
 // import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 
 class TaxiAuthController extends GetxController {
-
-  Rxn<TaxiDriver> _model          = Rxn<TaxiDriver>();
-  DatabaseHelper _databaseHelper  = Get.find<DatabaseHelper>();
-  AuthController _authController  = Get.find<AuthController>();
-  Rx<Widget> _dynamicScreen       = (Center(child: CircularProgressIndicator()) as Widget).obs; 
+  Rxn<TaxiDriver> _model = Rxn<TaxiDriver>();
+  DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
+  AuthController _authController = Get.find<AuthController>();
+  Rx<Widget> _dynamicScreen =
+      (Center(child: CircularProgressIndicator()) as Widget).obs;
 
   String? get currentOrderId => _model.value?.currentOrder ?? null;
   dynamic get authorizedTaxi => _model.value?.isAuthorized ?? false;
@@ -35,15 +35,14 @@ class TaxiAuthController extends GetxController {
       - CurrentOrder
   */
 
-  Widget _getScreen() => authorizedTaxi == true ? (currentOrderId != null ? CurrentOrderScreen() : IncomingOrdersScreen())
-    : UnauthorizedScreen();
-
-  
+  Widget _getScreen() => authorizedTaxi == true
+      ? (currentOrderId != null ? CurrentOrderScreen() : IncomingOrdersScreen())
+      : UnauthorizedScreen();
 
   @override
   void onInit() async {
     super.onInit();
-    
+
     // Injecting all our TaxiOrderControllers here
     Get.lazyPut(() => CurrentOrderController());
     Get.lazyPut(() => IncomingOrdersController());
@@ -59,11 +58,32 @@ class TaxiAuthController extends GetxController {
           .child(taxiAuthNode(_authController.user?.uid ?? ''))
           .onValue
           .listen((event) {
-            _model.value = TaxiDriver.fromSnapshot(event.snapshot);
-            // our magical Trick :p
-            _dynamicScreen.value = _getScreen();
+        _model.value = TaxiDriver.fromSnapshot(event.snapshot);
+        // our magical Trick :p
+        _dynamicScreen.value = _getScreen();
       });
     }
+  }
+
+  void turnOff() {
+    _databaseHelper.firebaseDatabase
+        .reference()
+        .child(taxiAuthNode(_authController.user?.uid ?? ''))
+        .set(true);
+  }
+
+  void turnOn() {
+    _databaseHelper.firebaseDatabase
+        .reference()
+        .child(taxiAuthNode(_authController.user?.uid ?? ''))
+        .set(false);
+  }
+
+  void toggleOnOff() {
+    _databaseHelper.firebaseDatabase
+        .reference()
+        .child(taxiAuthNode(_authController.user?.uid ?? ''))
+        .set(_model.value!.isLooking == true ? false : true);
   }
 
   void detachListeners() {

@@ -6,3 +6,7 @@ String taxiAuthNode(String? uid) {
 String orderId(String? orderId) {
   return 'orders/taxi/$orderId';
 }
+
+String userId(String? userId) {
+  return 'users/$userId';
+}
