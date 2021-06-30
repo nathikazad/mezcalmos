@@ -28,53 +28,19 @@ async function start(firebase, uid) {
     }
   } 
 
-  let response = await firebase.database().ref(`orders/taxi/${orderId}`).transaction(function(order){
-    // if(order == null){
-    //   return {
-    //     status: "Error",
-    //     errorMessage: "Order id does not match any order"
-    //   }
-    // } else{
-    if(order != null){
-      if(order.lock == null){
-        order.lock = true
-        // if(order.status != 'onTheWay'){
-        //   return {
-        //     status: 'Error',
-        //     errorMessage: 'Ride status is not onTheWay but ' + order.status
-        //   }
-        // } 
-      } else {
-        console.log('attempt to start ride');
-        return
-        
-      }
-    }
-      return order
-  })
+  let response = await firebase.database().ref(`/orders/taxi/${orderId}`).transaction(function(order){
+    if(order != null) {
+     if(order.lock == true){
+       return
+     } else{
+       order.lock = true
+       return order
+     }
+   }
+   return order
+ })
     
 
-  // let response = await firebase.database().ref(`/orders/taxi/${orderId}`).transaction(function(order){
-  //   if (order == null) {
-  //     return {
-  //       status: "Error",
-  //       errorMessage: "Order id does not match any order"
-  //     }
-  //   } 
-  //   if(order.lock == null ){
-  //     order.lock = true
-  //     if(order.status != 'onTheWay'){
-  //       return{
-  //         status: 'Error',
-  //         errorMessage: 'Ride status in not onTheWay but ' + order.status
-  //       }
-  //     }
-  //   } 
-  //   else {
-  //     return
-  //   }
-  //   return order
-  // })
 
   if(!response.committed){
     return{
@@ -83,6 +49,14 @@ async function start(firebase, uid) {
     }
   }
   order = response.snapshot.val()
+
+  if(order.status != 'onTheWay'){
+    firebase.database().ref(`/orders/taxi/${orderId}/lock`).remove()
+    return{
+      status: 'Error',
+      errorMessage: 'Ride status in not onTheWay but ' + order.status
+    }
+  }
 
   let update = {
     status: "inTransit",

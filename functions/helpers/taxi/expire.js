@@ -4,48 +4,43 @@ module.exports = ( firebase, orderId, customerId ) => { return expireOrder(fireb
 
 async function expireOrder(firebase, orderId, customerId) {
 
-  let order = (await firebase.database().ref(`/orders/taxi/${orderId}`).once('value')).val();
+  
+  let response = await firebase.database().ref(`/orders/taxi/${orderId}`).transaction(function(order){
+    if(order != null) {
+     if(order.lock == true){
+       return
+     } else{
+       order.lock = true
+       return order
+     }
+   }
+   return order
+ })
 
-  if (order == null) {
-    return {
-      status: "Error",
-      errorMessage: "Order id does not match any order"
-    }
-  }
-  let response = await firebase.database().ref(`orders/taxi/${orderId}`).transaction(function(order){
-    if(order != null ){
-      if(order.lock == null){
-        order.lock = true
-      } else{
-        console.log('attempt to expire');
-        return
-      }
-    }
-    return order
-  })
   if(!response.committed){
     return {
       status: 'Error',
       errorMessage: 'attempt to expire but locked'
     }
   }
-  order = response.snapshot.val()
-  console.log(`Removing order ${orderId} of ${customerId}`)
-
-  if(order.status == 'onTheWay' || order.status == 'inTransit'){
-    await firebase.database().ref(`/taxiDrivers/${order.driver.id}/orders/${orderId}`).remove()
-    await firebase.database().ref(`/taxiDrivers/${order.driver.id}/state/currentOrder`).remove()
+  let order = response.snapshot.val();
+  if(order.status != "lookingForTaxi") {
+    await firebase.database().ref(`orders/taxi/${orderId}/lock`).remove()
+    return {
+      status: 'Error',
+      errorMessage: 'cannot expire because order status is not lookingForTaxi'
+    }
   }
-   await firebase.database().ref(`/inProcessOrders/taxi/${orderId}`).remove()
-   await firebase.database().ref(`/users/${customerId}/state/currentOrder`).remove()
-   await firebase.database().ref(`/users/${customerId}/orders/${orderId}`).remove();
-   await firebase.database().ref(`/openOrders/taxi/${orderId}`).remove();
-   await firebase.database().ref(`/chat/${orderId}`).remove();
-   await firebase.database().ref(`/orders/taxi/${orderId}`).update({
+  console.log(`Removing order ${orderId} of ${customerId}`)
+  firebase.database().ref(`/users/${customerId}/state/currentOrder`).remove()
+  firebase.database().ref(`/users/${customerId}/orders/${orderId}`).remove();
+  firebase.database().ref(`/openOrders/taxi/${orderId}`).remove();
+  firebase.database().ref(`/chat/${orderId}`).remove();
+  firebase.database().ref(`/orders/taxi/${orderId}`).update({
     status: "expired",
     rideFinishTime: (new Date()).toUTCString(),
   })
-  await firebase.database().ref(`/orders/taxi/${orderId}`).once('value', function(snap) {
+  firebase.database().ref(`/orders/taxi/${orderId}`).once('value', function(snap) {
     let order = snap.val()
     firebase.database().ref(`/unfulfilledOrders/${orderId}`).set({...order, reason:"expired"});
   })

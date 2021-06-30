@@ -3,19 +3,13 @@ const promoters = require('../promoters');
 const notification = require("../notification");
 module.exports = ( firebase, uid, data ) => { return finish(firebase, uid, data) }
 
-async function finish(firebase, orderId) {
+async function finish(firebase, uid) {
   
-  let order =  (await firebase.database().ref(`/orders/taxi/${orderId}`).once('value')).val();
-  if (order == null) {
+  let orderId = (await firebase.database().ref(`/taxiDrivers/${uid}/state/currentOrder`).once('value')).val();
+  if (orderId == null) {
     return {
       status: "Error",
-      errorMessage: "Order id does not match any order"
-    }
-  }
-  if (order.status != "inTransit") {
-    return {
-      status: "Error",
-      errorMessage: "Ride status is not inTransit but " + order.status
+      errorMessage: "Driver has not accepted any ride"
     }
   }
 
@@ -39,6 +33,14 @@ async function finish(firebase, orderId) {
 
   order = response.snapshot.val()
   
+  if (order.status != "inTransit") {
+    firebase.database().ref(`orders/taxi/${orderId}/lock`).remove()
+    return {
+      status: "Error",
+      errorMessage: "Ride status is not inTransit but " + order.status
+    }
+  }
+
   let update = {
     status: "droppedOff",
     rideFinishTime: (new Date()).toUTCString()

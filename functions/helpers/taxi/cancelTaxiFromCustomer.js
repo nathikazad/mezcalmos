@@ -11,36 +11,17 @@ async function cancelTaxiFromCustomer(firebase, uid, data) {
     }
   }
 
-  let order = (await firebase.database().ref(`/orders/taxi/${orderId}`).once('value')).val();
-  if (order == null) {
-    return {
-      status: "Error",
-      errorMessage: "System Error, customer's current order id does not match any order"
-    }
-  }
-
-  if (order.status != "lookingForTaxi" && order.status != "onTheWay" && order.status != "inTransit")  {
-    return {
-      status: "Error",
-      errorMessage: "Ride status is not in lookingForTaxi or onTheWay or inTransit"
-    }
-  } 
-
-  let response = await firebase.database().ref(`orders/taxi/${orderId}`).transaction(function(order){
-    if(order != null){
-      if(order.lock == null){
-        order.lock = true
-        
-      }else{
-        console.log('attempt to cancel from customer');
-        return
-      }
-      
-    }
-    return order
-   
-  })
-  
+  let response = await firebase.database().ref(`/orders/taxi/${orderId}`).transaction(function(order){
+    if(order != null) {
+     if(order.lock == true){
+       return
+     } else{
+       order.lock = true
+       return order
+     }
+   }
+   return order
+ })
   if(!response.committed){
     return{
       status: 'Error',
@@ -48,26 +29,27 @@ async function cancelTaxiFromCustomer(firebase, uid, data) {
     }
   } 
 
-  order = response.snapshot.val()
+  let order = response.snapshot.val();
+  if (!order  || (order.status != "lookingForTaxi" && order.status != "onTheWay" && order.status != "inTransit"))  {
+    await firebase.database().ref(`orders/taxi/${orderId}/lock`).remove()
+    return {
+      status: "Error",
+      errorMessage: `Ride status is not in lookingForTaxi or onTheWay or inTransit but ${order.status}`
+    }
+  } 
 
   await firebase.database().ref(`/users/${order.customer.id}/state/currentOrder`).remove()
-
+  let update = {
+    status: "cancelled",
+    rideFinishTime: (new Date()).toUTCString(),
+    cancelledBy: "customer"
+  }
+  update.reason = (data.reason) ? data.reason : null
   if(order.status == "lookingForTaxi" ) {
     firebase.database().ref(`/openOrders/taxi/${orderId}`).remove();
-    firebase.database().ref(`/orders/taxi/${orderId}`).update({
-      status: "cancelled",
-      rideFinishTime: (new Date()).toUTCString(),
-      cancelledBy: "customer"
-    })
+    firebase.database().ref(`/orders/taxi/${orderId}`).update(update)
     firebase.database().ref(`/users/${order.customer.id}/orders/${orderId}`).remove();
-    firebase.database().ref(`/unfulfilledOrders/${orderId}`).set({...order, reason:"cancelled"});
   } else if (order.status == "onTheWay" || order.status == "inTransit") {
-    let update = {
-      status: "cancelled",
-      rideFinishTime: (new Date()).toUTCString(),
-      cancelledBy: "customer"
-    }
-    update.reason = (data.reason) ? data.reason : null
     firebase.database().ref(`/orders/taxi/${orderId}`).update(update)
     firebase.database().ref(`/users/${order.customer.id}/orders/${orderId}`).update(update);
     firebase.database().ref(`/taxiDrivers/${order.driver.id}/orders/${orderId}`).update(update);
@@ -82,14 +64,8 @@ async function cancelTaxiFromCustomer(firebase, uid, data) {
   }
   firebase.database().ref(`/chat/${orderId}`).remove()
   await firebase.database().ref(`orders/taxi/${orderId}/lock`).remove()
-  if(data.createAnotherOrder) {
-    let response = await request(firebase, uid, order)
-    return response
-  } else {
-    
-    return {
-      status: "Success", 
-      message: 'cancelled by customer'
-    };
-  }
+  return {
+    status: "Success", 
+    message: 'cancelled by customer'
+  };
 }
