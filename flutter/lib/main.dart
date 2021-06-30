@@ -4,8 +4,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/services.dart';
 import 'package:mezcalmos/Shared/bindings/authBinding.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/helpers/databaseHelper.dart';
 import 'package:mezcalmos/TaxiApp/routes/SimpleRouter.dart';
 import 'package:flutter/material.dart';
@@ -41,8 +44,15 @@ Future<void> main() async {
   FirebaseDatabase firebaseDb   = FirebaseDatabase(app: _app , databaseURL: _host+dbRoot);
   await FirebaseAuth.instance.useEmulator(_host+authPort);
   FirebaseFunctions.instance.useFunctionsEmulator(origin: _host+functionPort);
-  await GetStorage.init();
-
+  
+  if (await GetStorage.init()) 
+  {
+    print("[ GET STORAGE ] INITIALIZED !");
+    // Loading map asset !
+    await rootBundle.loadString(map_style_asset).then((jsonString) => GetStorage().write('map_style', jsonString));
+  }
+  else print("[ GET STORAGE ] FAILED TO INITIALIZE !");
+   
   Get.put(DatabaseHelper(firebaseDb , _app , _host+dbRoot )); // we can specify after if we have many Databases ..
 
   switch (startPoint) 
@@ -62,6 +72,7 @@ Future<void> main() async {
 // Main Start Point
 class MainApp extends StatelessWidget {
 
+
   @override
   Widget build(BuildContext context) {
 
@@ -71,13 +82,15 @@ class MainApp extends StatelessWidget {
       theme: ThemeData(primaryColor: Colors.white , visualDensity: VisualDensity.adaptivePlatformDensity),
       color: Colors.white,
       getPages: XRouter.mainRoutes,
-
+      enableLog: true,
+      logWriterCallback:  mezcalmosLogger,
       initialRoute: kSplashRoute,
       initialBinding: AuthBinding() ,
     );
   }
 
 }
+
 
 // Delivery Start Point
 class DeliveryApp extends StatelessWidget {
