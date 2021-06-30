@@ -52,7 +52,7 @@ _currentOrderListener = _databaseHelper.firebaseDatabase
     {
       _waitingResponse.value = true;
       HttpsCallableResult response =
-          await cancelTaxiFunction.call(<String, dynamic>{'reason': reason  , 'database':'production'});
+          await cancelTaxiFunction.call(<String, dynamic>{'reason': reason  , 'database':_databaseHelper.dbType});
       mezcalmosSnackBar("Notice ~" , "Ride Has been canceled !");
       _waitingResponse.value = false;
 
@@ -72,7 +72,7 @@ _currentOrderListener = _databaseHelper.firebaseDatabase
     try 
     {
       _waitingResponse.value = true;
-      HttpsCallableResult response = await startRideFunction.call(<String, dynamic>{'database':'production'});
+      HttpsCallableResult response = await startRideFunction.call(<String, dynamic>{'database':_databaseHelper.dbType});
       mezcalmosSnackBar("Notice ~" , "Ride started !");
       _waitingResponse.value = false;
       print("Start Taxi Response");
@@ -90,7 +90,7 @@ _currentOrderListener = _databaseHelper.firebaseDatabase
         FirebaseFunctions.instance.httpsCallable('finishTaxiRide');
     try {
     _waitingResponse.value = true;
-      HttpsCallableResult response = await finishRideFunction.call(<String, dynamic>{'database':'production'});
+      HttpsCallableResult response = await finishRideFunction.call(<String, dynamic>{'database':_databaseHelper.dbType});
       mezcalmosSnackBar("Notice ~" , "Ride is finished successfully :D ");
       _waitingResponse.value = false;
       print("Finish Taxi Response");
