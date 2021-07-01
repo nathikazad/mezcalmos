@@ -97,7 +97,7 @@ class IncomingOrdersController extends GetxController {
 
 
   // I added this to avoid possible dangling pointers ...
-  void dettahListeners()
+  void detachListeners()
   {
     _listeners.forEach((sub) =>
       sub

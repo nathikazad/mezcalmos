@@ -53,7 +53,7 @@
 	<key>FacebookAppID</key>
 	<string>394067681830405</string>
 	<key>FacebookDisplayName</key>
-	<string>{your-app-name}</string>
+	<string>Mezcalmos</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 	<string>fbapi</string>

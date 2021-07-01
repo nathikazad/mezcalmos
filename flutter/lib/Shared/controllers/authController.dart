@@ -135,12 +135,22 @@ class AuthController extends GetxController {
 
   Future<void> signOut() async {
     try {
+      detachListeners();
       await _auth.signOut();
       TaxiInjectionHelper.revokeListenersOnSignOut();
     } catch (e) {
       Get.snackbar("Failed to Sign you out!", e.toString(),
           snackPosition: SnackPosition.BOTTOM);
     }
+  }
+
+  void detachListeners() {
+    _userInfoListener
+        .cancel()
+        .then((value) => print(
+            "A listener was disposed on authController::detachListeners !"))
+        .catchError((err) => print(
+            "Error happend while trying to dispose authController::detachListeners !"));
   }
 
   @override
