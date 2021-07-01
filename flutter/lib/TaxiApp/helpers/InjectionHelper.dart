@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
-// import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
+import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
+import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 
 class TaxiInjectionHelper
 {
@@ -31,8 +32,9 @@ class TaxiInjectionHelper
   {
     print("revokeListenersOnSignOut -> called");
 
-    // Get.find<OrderController>().dettahListeners();
-    print("Disposing the OrderController and Revoking all the ::taxiOpenOrdersNode:: Listners !");
+    Get.find<IncomingOrdersController>().detachListeners();
+    Get.find<TaxiAuthController>().detachListeners();
+    print("Revoking all the ::taxiOpenOrdersNode:: Listners !");
   }
 
 }

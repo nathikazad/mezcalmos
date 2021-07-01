@@ -2,7 +2,7 @@
 
 _VERSION_       = "1.0.1 - 30/06/2021 08:39:39"
 
-from sys import argv , platform, winver
+from sys import argv , platform
 import socket
 
 exec_           = lambda c:__import__("os").system(c)
