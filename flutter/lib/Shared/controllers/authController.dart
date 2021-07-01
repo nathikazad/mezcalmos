@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
-// import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -121,17 +121,17 @@ class AuthController extends GetxController {
 
   // flutter_facebook_auth Package causes a conflict with GetStorage !
 
-  // Future<void> signInWithFacebook() async {
-  //   // Trigger the sign-in flow
-  //   final LoginResult result = await FacebookAuth.instance.login();
+  Future<void> signInWithFacebook() async {
+    // Trigger the sign-in flow
+    final LoginResult result = await FacebookAuth.instance.login();
 
-  //   // Create a credential from the access token
-  //   final facebookAuthCredential =
-  //       fireAuth.FacebookAuthProvider.credential(result.accessToken!.token);
+    // Create a credential from the access token
+    final facebookAuthCredential =
+        fireAuth.FacebookAuthProvider.credential(result.accessToken!.token);
 
-  //   // Once signed in, return the UserCredential
-  //   fireAuth.FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
-  // }
+    // Once signed in, return the UserCredential
+    fireAuth.FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+  }
 
   Future<void> signOut() async {
     try {

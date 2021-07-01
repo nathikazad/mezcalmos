@@ -38,6 +38,8 @@ dependencies:
   equatable: ^2.0.3
   flutter_polyline_points: ^1.0.0
   google_maps_flutter: ^2.0.6
+  image_downloader: ^0.30.0
+  flutter_facebook_auth: ^3.5.0
 
 dev_dependencies:
   flutter_test:

@@ -22,3 +22,4 @@
 + Implement Theme Controller.
 [Done] Add Option to set database=test/prod during the launch.
 + Implement SettingsController
++ Fix Delay that makes the LoginPage pushed to stack and (show n pop) when user first enters to app while already logged in.

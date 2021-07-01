@@ -71,7 +71,8 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                             icon:  BitmapDescriptor.fromBytes(snapshot.data.bodyBytes),
 
                             visible: true,
-                            position: LatLng(controller.selectedIncommingOrder?.from['lat'], controller.selectedIncommingOrder?.from['lng'])
+                            position: LatLng(controller.selectedIncommingOrder?.from['lat'], controller.selectedIncommingOrder?.from['lng']),
+                            
                           ),
 
                           Marker(

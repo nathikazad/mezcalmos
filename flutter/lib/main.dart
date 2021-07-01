@@ -38,8 +38,11 @@ Future<bool> setup(String _host , String _db) async
   // Global Injections !
   Get.put(DatabaseHelper(_host+dbRoot, _db , firebaseDatabase:  firebaseDb ,fapp:  _app)); // we can specify after if we have many Databases ..
   
-  if (await GetStorage.init()) 
+  
+  // GetStorage
+  if (await GetStorage.init())
   {
+
     print("[ GET STORAGE ] INITIALIZED !");
     // Loading map asset !
     await rootBundle.loadString(map_style_asset).then((jsonString) => GetStorage().write('map_style', jsonString));
@@ -97,7 +100,6 @@ class StartPoint extends StatelessWidget
 
   StartPoint(this._app , this._host, this._db);
 
-  
   @override
   Widget build(BuildContext context) 
   {
