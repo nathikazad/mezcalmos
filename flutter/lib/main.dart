@@ -31,13 +31,14 @@ Future<bool> setup(String _host , String _db) async
 {
 
   FirebaseApp _app              = await Firebase.initializeApp();
-  FirebaseDatabase firebaseDb   = FirebaseDatabase(app: _app , databaseURL: _host+dbRoot);
+  FirebaseDatabase firebaseDb   = FirebaseDatabase(app: _app , databaseURL: _host+dbRoot );
+
   await FirebaseAuth.instance.useEmulator(_host+authPort);
   FirebaseFunctions.instance.useFunctionsEmulator(origin: _host+functionPort);
   
   // Global Injections !
   Get.put(DatabaseHelper(_host+dbRoot, _db , firebaseDatabase:  firebaseDb ,fapp:  _app)); // we can specify after if we have many Databases ..
-  
+
   
   // GetStorage
   if (await GetStorage.init())

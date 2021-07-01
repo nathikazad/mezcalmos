@@ -4,6 +4,7 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/helpers/InjectionHelper.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/models/User.dart';
@@ -124,13 +125,21 @@ class AuthController extends GetxController {
   Future<void> signInWithFacebook() async {
     // Trigger the sign-in flow
     final LoginResult result = await FacebookAuth.instance.login();
+    print(" FB AUTH STATUS +++++++++++++++++++++ ${result.status.toString()}");
 
-    // Create a credential from the access token
-    final facebookAuthCredential =
-        fireAuth.FacebookAuthProvider.credential(result.accessToken!.token);
+    if (result.status == LoginStatus.failed) 
+    {
+      mezcalmosSnackBar("Notice ~", "Failed SignIn with Facebook !");  
+    }
+    else 
+    {
+      // Create a credential from the access token
+      final facebookAuthCredential =
+          fireAuth.FacebookAuthProvider.credential(result.accessToken!.token);
 
-    // Once signed in, return the UserCredential
-    fireAuth.FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+      // Once signed in, return the UserCredential
+      fireAuth.FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+    }
   }
 
   Future<void> signOut() async {

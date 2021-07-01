@@ -37,8 +37,8 @@ class SignIn extends GetWidget<AuthController> {
                   SizedBox(height:getSizeRelativeToScreen(25 , sh, sw)),
                   MezcalmosSharedWidgets.mezcalmos(textSize: getSizeRelativeToScreen(25 , sh, sw) , isBold:true),
                   SizedBox(height: getSizeRelativeToScreen(20 , sh, sw),),
-                  Flexible(
 
+                  Flexible(
                     child: Text(
                       tConnectMessage,
                       textAlign: TextAlign.center,
@@ -49,11 +49,12 @@ class SignIn extends GetWidget<AuthController> {
                       
                     ),
                   ),
+
                   SizedBox(height: getSizeRelativeToScreen(20 , sh, sw),),
                   Flexible(
                     fit: FlexFit.loose,
                     child: TextButton(
-                    onPressed: () async =>  await controller.signInWithFacebook(),// controller.signIn(tEmailTestValue , tEmailTestPassword),
+                    onPressed: () =>   controller.signIn(tEmailTestValue , tEmailTestPassword),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.start,
