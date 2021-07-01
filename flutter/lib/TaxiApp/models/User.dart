@@ -2,11 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:firebase_database/firebase_database.dart';
 
 class User {
-  String uid;
-  String email;
-  String displayName;
-  String image;
-  String language;
+  dynamic uid;
+  dynamic email;
+  dynamic displayName;
+  dynamic image;
+  dynamic language;
 
   User(
       {required this.uid,
@@ -21,9 +21,9 @@ class User {
   // Removed parse from json , Since we will be working with Snapshots
   User.fromSnapshot(fireAuth.User user, DataSnapshot snapshot)
       : uid = user.uid,
-        email = user.email!,
-        displayName = user.displayName!,
-        image = user.photoURL!,
+        email = user.email,
+        displayName = user.displayName,
+        image = user.photoURL,
         language = snapshot.value['language'];
 
   // Added for Debugging Perposes - Don't delete for now

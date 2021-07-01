@@ -1,4 +1,4 @@
-package com.example.mezcalmos
+package com.meztaxi.driver
 
 import io.flutter.embedding.android.FlutterActivity
 

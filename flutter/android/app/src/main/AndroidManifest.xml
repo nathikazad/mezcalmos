@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.mezcalmos">
+    package="com.meztaxi.driver">
+
    <application
         android:label="mezcalmos"
         android:icon="@mipmap/ic_launcher">

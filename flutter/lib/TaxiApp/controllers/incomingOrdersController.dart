@@ -17,21 +17,23 @@ class IncomingOrdersController extends GetxController {
   AuthController _authController  = Get.find<AuthController>(); // since it's already injected .
   DatabaseHelper _databaseHelper  = Get.find<DatabaseHelper>(); // Already Injected in main function
   RxBool _waitingResponse         = RxBool(false);
-  Rx<Order> _selectedIncommingOrder = Order.empty().obs;
+  Rx<Order?> _selectedIncommingOrder = Order.empty().obs;
 
   // Storing all the needed Listeners here
   List<StreamSubscription<Event>> _listeners = <StreamSubscription<Event>>[]; 
   
   dynamic get waitingResponse => _waitingResponse.value;
-  void setSelectedIncommingOrder(Order selectedOrder) 
-  {
-    _selectedIncommingOrder.value = selectedOrder;
-  }
 
-  Order get selectedIncommingOrder => _selectedIncommingOrder.value;
+
+  Order? get selectedIncommingOrder => _selectedIncommingOrder.value;
+  void set selectedIncommingOrder(Order? selectedOrder) =>  _selectedIncommingOrder.value = selectedOrder;
+
+
   
   @override
   void onInit() async {
+    // _selectedIncommingOrder.value = null;
+
     super.onInit();
     print("--------------------> OrderController Initialized !");
     // uhm .. well let's just attach some listeners..
@@ -58,9 +60,9 @@ class IncomingOrdersController extends GetxController {
         .listen((event) async
           {
             // This is why GetX guys XD!
-            if(event.snapshot.key == _selectedIncommingOrder.value.id)
+            if(event.snapshot.key == _selectedIncommingOrder.value?.id)
             {
-              _selectedIncommingOrder.value = new Order.empty();
+              _selectedIncommingOrder.value = null;
               if (Get.currentRoute == kSelectedIcommingOrder) await MezcalmosSharedWidgets.mezcalmosDialog(55 , Get.height , Get.width);
               Get.back(closeOverlays: true);
             }

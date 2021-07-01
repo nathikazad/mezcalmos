@@ -41,7 +41,7 @@ class Order {
       required this. orderType,
       required this. rideFinishTime,
       required this. rideStartTime,
-      required this. status
+      required this. status,
     }
   );
 

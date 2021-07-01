@@ -1,4 +1,5 @@
 import 'package:get/get.dart'; // getX
+import 'package:mezcalmos/Shared/bindings/SettingsBinding.dart';
 import 'package:mezcalmos/TaxiApp/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/TaxiApp/pages/AuthScreens/SignUpScreen.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen.dart';
@@ -30,11 +31,13 @@ const String kSelectedIcommingOrder     = '/selected_incomming_order';
 
 
 // GetX based Router (For navigating)
-class XRouter {
+class XRouter 
+{
 
-  static dynamic mainRoutes = [
+  static dynamic mainRoutes = 
+  [
     GetPage(name: kMainRoute, page: () => TaxiWrapper()),
-    GetPage(name: kSplashRoute, page: () => SplashScreen()),
+    GetPage(name: kSplashRoute, page: () => SplashScreen() , binding: SettingsBinding()),
     GetPage(name: kTaxiWrapperRoute, page: () => TaxiWrapper()),
     GetPage(name: kSelectedIcommingOrder, page: () => IncommingOrderScreenView()),
     GetPage(name: kSignInRoute, page: () => SignIn()),

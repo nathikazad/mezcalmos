@@ -69,7 +69,7 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                       return GestureDetector(
                         onTap: () async {
                             print("Clicked on order::${controller.orders[i].id}");
-                            controller.setSelectedIncommingOrder(controller.orders[i]);
+                            controller.selectedIncommingOrder = controller.orders[i];
                             Get.toNamed(kSelectedIcommingOrder);
                         },
                         child: Container(

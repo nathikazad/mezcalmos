@@ -1,10 +1,11 @@
 import 'dart:async';
+import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MezcalmosSideMenu.dart';
@@ -16,13 +17,33 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
   
   Completer<GoogleMapController> _controller = Completer();
-
+  SideMenuDraweController _sideMenuDraweController = Get.find<SideMenuDraweController>();
   @override
   Widget build(BuildContext context) 
   {
-final _stroage = GetStorage();
+    final _stroage = GetStorage();
+    PolylinePoints polylinePoints = PolylinePoints();
+
+    List<LatLng> pLineCoords = <LatLng>[];
+    Set<Polyline> polyLineSet = {};
+
+    List<PointLatLng> res = polylinePoints.decodePolyline(controller.selectedIncommingOrder?.routeInformation['polyline']);
+    res.forEach((PointLatLng point) => pLineCoords.add(LatLng(point.latitude , point.longitude)));
+    polyLineSet.add( Polyline(
+
+      color: Colors.blueAccent,
+      polylineId: PolylineId(controller.selectedIncommingOrder?.id),
+      jointType: JointType.round,
+      points: pLineCoords,
+      width: 5,
+      startCap: Cap.roundCap,
+      endCap: Cap.roundCap,
+      geodesic: true,
+
+    ));
+
     return Scaffold(
-        appBar: MezcalmosSharedWidgets.mezcalmosAppBar(() => Get.find<SideMenuDraweController>().openMenu()),
+        appBar: MezcalmosSharedWidgets.mezcalmosAppBar(() => _sideMenuDraweController.openMenu()),
         drawer: MezcalmosSideMenu(),
 
         body: Stack(
@@ -30,19 +51,61 @@ final _stroage = GetStorage();
           children: [
 
 
-              GoogleMap(
-                zoomControlsEnabled: false,
-                compassEnabled: false,
-                mapType: MapType.normal,
-                initialCameraPosition: CameraPosition(
-                  bearing: 192.8334901395799,
-                  target: LatLng(37.43296265331129, -122.08832357078792),
-                  tilt: 59.440717697143555,
-                  zoom: 14.151926040649414
-                ),
-                onMapCreated: (GoogleMapController controller) {
-                controller.setMapStyle(_stroage.read('map_style'));
-                _controller.complete(controller);
+            FutureBuilder(
+              future: http.get(Uri.parse(controller.selectedIncommingOrder?.customer['image'])),
+              builder: (ctx , AsyncSnapshot snapshot)
+              {
+                if (snapshot.connectionState == ConnectionState.done) 
+                {
+                  return 
+                  Container(
+                    child: GoogleMap(
+                      markers: 
+                      {
+                          Marker(
+                            infoWindow: InfoWindow(
+                              title: "Ride from : ",
+                              snippet : controller.selectedIncommingOrder?.to['address']
+                            ),
+                            markerId: MarkerId("from"),
+                            icon:  BitmapDescriptor.fromBytes(snapshot.data.bodyBytes),
+
+                            visible: true,
+                            position: LatLng(controller.selectedIncommingOrder?.from['lat'], controller.selectedIncommingOrder?.from['lng'])
+                          ),
+
+                          Marker(
+                            infoWindow: InfoWindow(
+                              title: "Ride to : ",
+                              snippet : controller.selectedIncommingOrder?.to['address']
+                            ),
+                            markerId: MarkerId("to"),
+                            icon:  BitmapDescriptor.defaultMarker,
+                            visible: true,
+                            position: LatLng(controller.selectedIncommingOrder?.to['lat'], controller.selectedIncommingOrder?.to['lng'])
+                          ),                  
+                      },
+                        
+                      polylines:polyLineSet,
+                      zoomControlsEnabled: false,
+                      compassEnabled: false,
+                      mapType: MapType.normal,
+                      initialCameraPosition: CameraPosition
+                      (
+                        bearing: 192.8334901395799,
+                        target: LatLng(controller.selectedIncommingOrder?.from['lat'], controller.selectedIncommingOrder?.from['lng']),
+                        tilt: 59.440717697143555,
+                        zoom: 15.151926040649414
+                      ),
+                      onMapCreated: (GoogleMapController controller) 
+                      {
+                        controller.setMapStyle(_stroage.read('map_style'));
+                        _controller.complete(controller);
+                      },
+                    ),
+                  );  
+                }
+                else return Center(child: CircularProgressIndicator());
               },
             ),
 
@@ -75,7 +138,7 @@ final _stroage = GetStorage();
                       left: 10,
                       child: CircleAvatar(
                         child: ClipOval(
-                          child: controller.selectedIncommingOrder.customer['image'] == null ? Image.asset(aDefaultAvatar) :  Image.network(controller.selectedIncommingOrder.customer['image']),
+                          child: controller.selectedIncommingOrder?.customer['image'] == null ? Image.asset(aDefaultAvatar) :  Image.network(controller.selectedIncommingOrder?.customer['image']),
                         ),
                         backgroundColor: Colors.grey.shade200,
                       ),
@@ -86,7 +149,7 @@ final _stroage = GetStorage();
                       top: 10,
 
                       child: Text(
-                        controller.selectedIncommingOrder.customer['name'] ?? "Customer",
+                        controller.selectedIncommingOrder?.customer['name'] ?? "Customer",
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w600,
@@ -99,7 +162,7 @@ final _stroage = GetStorage();
                       bottom: 10,
 
                       child: Text(
-                        "${controller.selectedIncommingOrder.routeInformation['distance']['text'] ?? '? km' } far", 
+                        "${controller.selectedIncommingOrder?.routeInformation['distance']['text'] ?? '? km' } far", 
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -121,7 +184,7 @@ final _stroage = GetStorage();
 
                     Positioned(
                       bottom: 15,
-                      right: 60,
+                      right: 70,
                       child: Icon(
                         Icons.alt_route_rounded,
                         size: 16,
@@ -132,7 +195,7 @@ final _stroage = GetStorage();
                       bottom: 13,
                       right: 10,
                       child: Text(
-                        "${controller.selectedIncommingOrder.routeInformation['distance']['text'] ?? '? km' }",
+                        "${controller.selectedIncommingOrder?.routeInformation['distance']['text'] ?? '? km' }",
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
@@ -143,7 +206,7 @@ final _stroage = GetStorage();
 
                    Positioned(
                       top: 15,
-                      right: 60,
+                      right: 70,
                       child: Icon(
                         Icons.timer_rounded,
                         size: 16,
@@ -154,7 +217,7 @@ final _stroage = GetStorage();
                       top: 13,
                       right: 10,
                       child: Text(
-                        "${controller.selectedIncommingOrder.routeInformation['duration']['text'] ?? '? mins' }",
+                        "${controller.selectedIncommingOrder?.routeInformation['duration']['text'] ?? '? mins' }",
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
@@ -176,7 +239,7 @@ final _stroage = GetStorage();
                   fixedSize: MaterialStateProperty.all(Size(getSizeRelativeToScreen(180, Get.height, Get.width), getSizeRelativeToScreen(20, Get.height, Get.width))) ,
                   backgroundColor: MaterialStateProperty.all(Color.fromARGB(255, 78, 168, 35)),
                 ),
-                onPressed: () async => await controller.acceptTaxi(controller.selectedIncommingOrder.id),
+                onPressed: () async => await controller.acceptTaxi(controller.selectedIncommingOrder?.id),
                 child: Text(
                   "Accept Order",
                   style: TextStyle(
