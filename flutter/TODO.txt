@@ -8,18 +8,18 @@
 [Done] Make openOrders Screen adabtable as much as possible!
 [Done] Fetch openTaxiOrders o the UI!
 [Done] Make and test realtime changes on openedOrders Screen!
-+ Implement the Logic on/off on click!
-+ Implement the logic of onTap/onLongTap/onDoubleTap ...etc on openedOrders listed!
+[PRIORITY] Implement the Logic on/off on click!
+[Done] Implement the logic of onTap/onLongTap/onDoubleTap ...etc on openedOrders listed!
 [Done] implement the side menu Click (Open n close).
-+ Implement Language Controller get from > Map
-+ Change To Spanish / To English depending on Lang Controller In SideMenu!
-+ Implemet Language Controller.
-+ Add Condition Check on Language in global.dart Strings!
-+ Add the Left-top button in SideMenu to close the Menu aka drawer Using : SideMenuDraweController.closeMenu()
-+ Change Text("0 km") in openedOrder , I hardcoded it , cuz i didn't know where it comes from!
-+ Make everything inside InjectionHelper class .
-+ Tite spacing + ON / OFF toggle capitalize!
-+ Implement Theme Controller.
+[ONGOING] Implement Language Controller get from > Map
+[ONGOING] Change To Spanish / To English depending on Lang Controller In SideMenu!
+[ONGOING] Implemet Language Controller.
+[ARCHIVED] Add the Left-top button in SideMenu to close the Menu aka drawer Using : SideMenuDraweController.closeMenu()
+[PRIORITY] Change Text("0 km") in openedOrder , I hardcoded it , cuz i didn't know where it comes from!
+[ONGOING] Make everything inside InjectionHelper class .
+[PRIORITY] Tite spacing + ON / OFF toggle capitalize!
+[ONGOING] Implement Theme Controller.
 [Done] Add Option to set database=test/prod during the launch.
-+ Implement SettingsController
-+ Fix Delay that makes the LoginPage pushed to stack and (show n pop) when user first enters to app while already logged in.
+[Done] Implement SettingsController
+[Done] Fix Delay that makes the LoginPage pushed to stack and (show n pop) when user first enters to app while already logged in.
+[PRIORITY] OTP Screens!

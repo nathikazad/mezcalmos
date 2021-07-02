@@ -43,7 +43,8 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
       body: Stack(
         alignment: Alignment.topCenter,
         children: [
-          Obx(() => controller.waitingResponse
+          Obx(() => controller.waitingResponse ||
+                  controller.selectedIncommingOrder?.id == null
               ? Center(child: CircularProgressIndicator())
               : Container(
                   child: GoogleMap(
