@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 class MezcalmosSwitch extends StatefulWidget {
+  final initialPosition;
   final List<String> values;
   final ValueChanged onToggleCallback;
   final Color backgroundColor;
-  @required Color buttonColor;
-  @required Color textColor;
+  @required
+  Color buttonColor;
+  @required
+  Color textColor;
 
   MezcalmosSwitch({
+    required this.initialPosition,
     required this.values,
     required this.onToggleCallback,
     this.backgroundColor = const Color(0xFFe7e7e8),
@@ -21,14 +24,18 @@ class MezcalmosSwitch extends StatefulWidget {
 }
 
 class _MezcalmosSwitchState extends State<MezcalmosSwitch> {
-  bool initialPosition = true;
+  bool initialPosition = false;
 
-  // Color offColorUnselected = Colors.red;
-  // Color onColorUnselected = Colors.green;
+  @override
+  void initState() {
+    initialPosition = widget.initialPosition;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Colors.transparent,
       width: Get.width * 0.31,
       height: Get.width * 0.13,
       // margin: EdgeInsets.all(0),
@@ -45,12 +52,13 @@ class _MezcalmosSwitchState extends State<MezcalmosSwitch> {
               widget.onToggleCallback(index);
               // I missed the old setState hhhh
               setState(() {
-                if (initialPosition) widget.buttonColor = Colors.green;
-                else widget.buttonColor = Colors.red;
+                if (initialPosition)
+                  widget.buttonColor = Colors.green;
+                else
+                  widget.buttonColor = Colors.red;
               });
             },
             child: Container(
-
               width: Get.width * 0.31,
               height: Get.width * 0.13,
               decoration: ShapeDecoration(
@@ -69,14 +77,13 @@ class _MezcalmosSwitchState extends State<MezcalmosSwitch> {
                     widget.values[index],
                     style: TextStyle(
                       fontFamily: 'Rubik',
-                      fontSize: Get.width * 0.045,
+                      fontSize: Get.width * 0.040,
                       fontWeight: FontWeight.bold,
-                      color:  index == 0 ? Colors.green : Colors.red,
+                      color: index == 0 ? Colors.green : Colors.red,
                     ),
                   ),
                 ),
               ),
-              
             ),
           ),
           AnimatedAlign(
@@ -98,7 +105,7 @@ class _MezcalmosSwitchState extends State<MezcalmosSwitch> {
                 initialPosition ? widget.values[0] : widget.values[1],
                 style: TextStyle(
                   fontFamily: 'Rubik',
-                  fontSize: Get.width * 0.045,
+                  fontSize: Get.width * 0.040,
                   color: widget.textColor,
                   fontWeight: FontWeight.bold,
                 ),

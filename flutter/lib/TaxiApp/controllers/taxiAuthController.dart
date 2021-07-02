@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
@@ -68,23 +69,33 @@ class TaxiAuthController extends GetxController {
   void turnOff() {
     _databaseHelper.firebaseDatabase
         .reference()
-        .child(taxiAuthNode(_authController.user?.uid ?? ''))
-        .set(true);
+        .child(taxiIsLookingField(_authController.user?.uid))
+        .set(false)
+        .catchError((err) {
+      print("Error turning [ isLooking = false ] -> $err");
+      mezcalmosSnackBar("Error ~", "Failed turning it off!");
+    });
   }
 
   void turnOn() {
     _databaseHelper.firebaseDatabase
         .reference()
-        .child(taxiAuthNode(_authController.user?.uid ?? ''))
-        .set(false);
+        .child(taxiIsLookingField(_authController.user?.uid))
+        .set(true)
+        .catchError((err) {
+      print("Error turning [ isLooking = true ] -> $err");
+      mezcalmosSnackBar("Error ~", "Failed turning it on!");
+    });
   }
 
-  void toggleOnOff() {
-    _databaseHelper.firebaseDatabase
-        .reference()
-        .child(taxiAuthNode(_authController.user?.uid ?? ''))
-        .set(_model.value!.isLooking == true ? false : true);
-  }
+  // this is not needed !
+
+  // void toggleOnOff() {
+  //   _databaseHelper.firebaseDatabase
+  //       .reference()
+  //       .child(taxiAuthNode(_authController.user?.uid ?? ''))
+  //       .set(_model.value!.isLooking == true ? false : true);
+  // }
 
   void detachListeners() {
     _taxiAuthListener

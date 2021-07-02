@@ -26,13 +26,13 @@ class MezcalmosSharedWidgets {
           TextSpan(
             text: tMez,
             style: TextStyle(
-              fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+              fontWeight: isBold ? FontWeight.bold : FontWeight.w500,
             ),
           ),
           TextSpan(
             text: tCalmos,
             style: TextStyle(
-              fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+              fontWeight: isBold ? FontWeight.bold : FontWeight.w500,
               color: Color.fromARGB(255, 103, 122, 253),
             ),
           ),
@@ -58,7 +58,7 @@ class MezcalmosSharedWidgets {
           child: Icon(
             Icons.arrow_back_ios,
             color: Colors.white,
-            size: 20,
+            size: getSizeRelativeToScreen(50, Get.width, Get.height),
           ),
         );
         break;
@@ -66,7 +66,7 @@ class MezcalmosSharedWidgets {
         btn_icon = Icon(
           Icons.menu,
           color: Colors.white,
-          size: 20,
+          size: getSizeRelativeToScreen(50, Get.width, Get.height),
         );
         break;
     }
@@ -74,17 +74,26 @@ class MezcalmosSharedWidgets {
     return AppBar(
       // automaticallyImplyLeading: false,
       centerTitle: true,
-      toolbarHeight: 100,
+      toolbarHeight: getSizeRelativeToScreen(45, Get.height, Get.width),
       // leadingWidth: 55,
       // toolbarHeight: 65,
       backgroundColor: Colors.white,
       elevation: 0,
       title: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          logo(size: getSizeRelativeToScreen(20, Get.height, Get.width)),
-          Container(
-              padding: const EdgeInsets.only(left: 15), child: mezcalmos())
+          Padding(
+            padding: EdgeInsets.only(
+                left: getSizeRelativeToScreen(5, Get.height, Get.width)),
+            child:
+                logo(size: getSizeRelativeToScreen(20, Get.height, Get.width)),
+          ),
+          Padding(
+              padding: EdgeInsets.only(
+                  left: getSizeRelativeToScreen(5, Get.height, Get.width)),
+              child: mezcalmos())
         ],
       ),
 
@@ -124,7 +133,10 @@ class MezcalmosSharedWidgets {
             onTapFunction();
           },
           child: Container(
-            margin: EdgeInsets.only(top: 25, left: 10, bottom: 25),
+            margin: EdgeInsets.only(
+                top: getSizeRelativeToScreen(11, Get.height, Get.width),
+                left: getSizeRelativeToScreen(5, Get.height, Get.width),
+                bottom: getSizeRelativeToScreen(11, Get.height, Get.width)),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(10)),
               boxShadow: [

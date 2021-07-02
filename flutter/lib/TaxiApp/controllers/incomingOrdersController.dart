@@ -7,6 +7,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
+import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/TaxiApp/models/Order.dart';
@@ -39,11 +40,11 @@ class IncomingOrdersController extends GetxController {
   Future<void> loadBitmapDescriptors() async {
     _customerLocationMarker = await BitmapDescriptor.fromAssetImage(
         ImageConfiguration(size: Size(20, 20)),
-        'assets/images/customer_lcoation.png');
+        custommer_location_marker_asset);
 
     _customerDestinationMarker = await BitmapDescriptor.fromAssetImage(
         ImageConfiguration(size: Size(20, 20)),
-        'assets/images/customer_destination.png');
+        custommer_destination_marker_asset);
   }
 
   @override
