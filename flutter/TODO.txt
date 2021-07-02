@@ -23,3 +23,4 @@
 [Done] Implement SettingsController
 [Done] Fix Delay that makes the LoginPage pushed to stack and (show n pop) when user first enters to app while already logged in.
 [PRIORITY] OTP Screens!
+[PRIORITY] CurrentOrder Screens!
