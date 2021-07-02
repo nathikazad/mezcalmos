@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io' show Platform;
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:mezcalmos/CustomerApp/main.dart';
 import 'package:mezcalmos/DeliveryApp/main.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
@@ -16,45 +18,26 @@ import 'package:mezcalmos/TaxiApp/main.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:mezcalmos/TaxiApp/pages/SplashScreen.dart';
 
-// TODO :  singing in, view orders, accept orders
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
 
-Future<bool> setup(String _host, String _db) async {
-  FirebaseApp _app = await Firebase.initializeApp();
-  FirebaseDatabase firebaseDb =
-      FirebaseDatabase(app: _app, databaseURL: _host + dbRoot);
-
-  await FirebaseAuth.instance.useEmulator(_host + authPort);
-  FirebaseFunctions.instance.useFunctionsEmulator(origin: _host + functionPort);
-
-  // Global Injections !
-  Get.put(DatabaseHelper(_host + dbRoot, _db,
-      firebaseDatabase: firebaseDb,
-      fapp: _app)); // we can specify after if we have many Databases ..
-
-  // GetStorage
-  if (await GetStorage.init()) {
-    print("[ GET STORAGE ] INITIALIZED !");
-    // Loading map asset !
-    await rootBundle
-        .loadString(map_style_asset)
-        .then((jsonString) => GetStorage().write('map_style', jsonString));
-    return true;
-  } else
-    print("[ GET STORAGE ] FAILED TO INITIALIZE !");
-  return false;
-}
-
-Future<void> main() async {
   const startPoint =
       bool.hasEnvironment('APP_SP') ? String.fromEnvironment('APP_SP') : null;
   const _host =
       bool.hasEnvironment('HOST') ? String.fromEnvironment('HOST') : localhost;
   const _db =
-      bool.hasEnvironment('DB') ? String.fromEnvironment('DB') : 'production';
+      bool.hasEnvironment('DB') ? String.fromEnvironment('DB') : defaultDb;
+
+  const _launch_mode = bool.hasEnvironment('LMODE')
+      ? String.fromEnvironment('LMODE')
+      : defaultLaunchMode;
 
   print('SP -> ${startPoint.toString()}');
   print('host  -> $_host');
+  print('db  -> $_db');
+  print('mode  -> $_launch_mode');
 
   try {
     if ((Platform.isAndroid || Platform.isIOS) && _host == localhost) {
@@ -65,64 +48,126 @@ Future<void> main() async {
     print(e);
   }
 
-  // WidgetsFlutterBinding.ensureInitialized();
-
   switch (startPoint) {
     case 'delivery':
-      return runApp(StartPoint(DeliveryApp(), _host, _db));
+      return runApp(SPoint(DeliveryApp(), _host, _db, _launch_mode));
 
     case 'customer':
-      return runApp(StartPoint(CustomerApp(), _host, _db));
+      return runApp(SPoint(CustomerApp(), _host, _db, _launch_mode));
 
     default:
-      return runApp(StartPoint(TaxiApp(), _host, _db));
+      return runApp(SPoint(TaxiApp(), _host, _db, _launch_mode));
   }
 }
 
-class StartPoint extends StatelessWidget {
+class SPoint extends StatefulWidget {
   final Widget _app;
   final String _host;
   final String _db;
+  final String _launch_mode;
+  SPoint(this._app, this._host, this._db, this._launch_mode);
 
-  StartPoint(this._app, this._host, this._db);
+  @override
+  _SPointState createState() => _SPointState();
+}
+
+class _SPointState extends State<SPoint> {
+  bool _initialized = false;
+  bool _error = false;
+  bool timerDone = false;
+
+  late SettingsController _settingsController;
+
+  void initializeSetup() async {
+    try {
+      FirebaseApp _app = await Firebase.initializeApp();
+      late FirebaseDatabase firebaseDb;
+
+      if (widget._launch_mode == "prod") {
+        firebaseDb = FirebaseDatabase(app: _app);
+      } else if (widget._launch_mode == "dev") {
+        firebaseDb =
+            FirebaseDatabase(app: _app, databaseURL: widget._host + dbRoot);
+        await FirebaseAuth.instance.useEmulator(widget._host + authPort);
+        FirebaseFunctions.instance
+            .useFunctionsEmulator(origin: widget._host + functionPort);
+      }
+      // staging
+      else {
+        firebaseDb =
+            FirebaseDatabase(app: _app, databaseURL: widget._host + dbRoot);
+      }
+
+      // Global Injections !
+      Get.put(DatabaseHelper(widget._host + dbRoot, widget._db,
+          firebaseDatabase: firebaseDb,
+          fapp: _app)); // we can specify after if we have many Databases ..
+
+      // GetStorage
+      if (await GetStorage.init()) {
+        print("[ GET STORAGE ] INITIALIZED !");
+        await GetStorage().write("lmod", widget._launch_mode);
+
+        // Loading map asset !
+        await rootBundle
+            .loadString(map_style_asset)
+            .then((jsonString) => GetStorage().write('map_style', jsonString));
+      } else
+        print("[ GET STORAGE ] FAILED TO INITIALIZE !");
+
+      setState(() {
+        _initialized = true;
+      });
+    } catch (e) {
+      setState(() {
+        _error = true;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    // INjecting this here cuz we will need it For language / them ... etc
+    _settingsController =
+        Get.put<SettingsController>(SettingsController(), permanent: true);
+
+    initializeSetup();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    // StartPoint Injections
-    SettingsController _settingsCtrl =
-        Get.put<SettingsController>(SettingsController(), permanent: true);
+    if (_error) {
+      mezcalmosSnackBar("Error", "Server connection failed !");
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          body: Center(
+            child: Icon(Icons.signal_wifi_bad,
+                color: Colors.red.shade200,
+                size: getSizeRelativeToScreen(50, Get.height, Get.width)),
+          ),
+        ),
+      );
+    }
 
-    return FutureBuilder(
-      future: setup(_host, _db),
-      builder: (ctx, snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.waiting:
-            return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              home: Scaffold(
-                body: Center(child: CircularProgressIndicator()),
-              ),
-            );
-          default:
-            if (snapshot.hasError) {
-              mezcalmosSnackBar("Error", "Server connection failed !");
-              return MaterialApp(
-                debugShowCheckedModeBanner: false,
-                home: Scaffold(
-                  body: Center(
-                    child: Icon(Icons.signal_wifi_bad,
-                        color: Colors.red.shade200,
-                        size:
-                            getSizeRelativeToScreen(50, Get.height, Get.width)),
-                  ),
-                ),
-              );
-            } else {
-              _settingsCtrl.isAppInitialized = true;
-              return _app;
-            }
-        }
-      },
-    );
+    // Show a CircularIndicator until setup is full done and initialized !
+    if (!_initialized) {
+      return SplashScreen();
+    }
+
+    Get.put<AuthController>(AuthController(), permanent: true);
+
+    Timer(
+        Duration(seconds: nSplashScreenTimer),
+        () => setState(() {
+              timerDone = true;
+            }));
+
+    // if there is no errors and Initialization is done , we inject Auth right away to not cause the Delay on the wrapper!
+    if (timerDone)
+      return widget._app;
+    else
+      return SplashScreen();
   }
 }

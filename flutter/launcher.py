@@ -12,6 +12,7 @@ class Launcher(object):
         self._ip_dart_define    = "HOST"
         self._db_dart_define    = "DB"
         self._sp_dart_define    = "APP_SP"
+        self._lmode_dart_define = "LMODE"
         self.build_output_dir   = '.launcher_output'
 
         self.__exec__           = lambda c:__import__("os").system(c)
@@ -21,7 +22,7 @@ class Launcher(object):
         self.web                = False
         self.db                 = 'production'
         self.pub_get            = False
-        
+        self.launch_mode        = "dev"
         self.os                 = "Windows OS"
         self.isWin              = True
         self.ios_build_path     = ""
@@ -92,6 +93,7 @@ class Launcher(object):
                     |_ and your Server is exposed / accessible to network (0.0.0.0:PORT) 
 
         --db=[default=production]   : The database passed to cloud functions , default is production.
+        --lmode=[default=dev]        : can be > prod|stage
         """);
 
     def __get_release_files__(self , ios , android):
@@ -117,8 +119,9 @@ class Launcher(object):
                 raise Exception("[EXCEPTION] --lan is set to true , but got invalid LAN IP address !\n\t|_ Try to `vim /etc/hosts` and comment line : [127.0.0.1 `your_host_name`] ?")
 
             print(f'[IP] {self.get_lan_ip() if _lanhost.__len__() > 0 else "http://127.0.0.1"}')
-            print(f"[DB] Using {self.db} Database\n");
-            self.__exec__(f"flutter run {_web}--dart-define={self._sp_dart_define}={self.app}  --dart-define={self._db_dart_define}={self.db}{_lanhost}")
+            print(f"[DB] Using {self.db} Database");
+            print(f"[LM] Launching on {self.launch_mode} Mode.\n");
+            self.__exec__(f"flutter run {_web}--dart-define={self._sp_dart_define}={self.app} --dart-define={self._lmode_dart_define}={self.launch_mode} --dart-define={self._db_dart_define}={self.db}{_lanhost}")
         except KeyboardInterrupt:
             print("\nExiting ... done !")
         except Exception as ex:
@@ -163,7 +166,7 @@ class Launcher(object):
 
         
         if(self.args.__len__() == 1):
-            return
+            return 
         else:
             for arg in self.args[1:]:
                 if arg.startswith('--app='):
@@ -176,6 +179,9 @@ class Launcher(object):
                     self.db      =  arg.split('=')[1]
                 elif arg.startswith('--pub='):
                     self.pub_get =  True if arg.split('=')[1] == "true" else False
+                elif arg.startswith('--lmode='):
+                    self.launch_mode = arg.split('=')[1]
+
                 else:
                     print(f"Invalid Argument : {arg}\n")
                     self.usage()

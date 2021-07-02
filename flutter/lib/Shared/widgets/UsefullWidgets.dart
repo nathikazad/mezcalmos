@@ -7,51 +7,71 @@ import 'package:mezcalmos/Shared/widgets/NoScrollGlowBehaviour.dart';
 import 'package:mezcalmos/TaxiApp/constants/taxiConstants.dart';
 
 class MezcalmosSharedWidgets {
+  static Image logo({double size = 20}) => Image.asset(
+        aLogoPath,
+        height: size,
+        width: size,
+        fit: BoxFit.contain,
+      );
 
-  static Image logo({double size = 20}) => Image.asset(aLogoPath , height: size, width: size, fit:  BoxFit.contain,);
-
-  static RichText mezcalmos({double textSize = nDefaultMezcalmosTextSize , bool isBold = false}) =>  RichText
-  (
-    text: TextSpan(
-      style: TextStyle(
-        color: Colors.black,
-        fontSize: textSize,
-        fontWeight: FontWeight.w400
-    ),
-
-    children: <TextSpan>[
-      TextSpan(
-        text: tMez,
+  static RichText mezcalmos(
+          {double textSize = nDefaultMezcalmosTextSize, bool isBold = false}) =>
+      RichText(
+          text: TextSpan(
         style: TextStyle(
-          fontWeight: isBold ? FontWeight.bold: FontWeight.normal,
-        ),
+            color: Colors.black,
+            fontSize: textSize,
+            fontWeight: FontWeight.w400),
+        children: <TextSpan>[
+          TextSpan(
+            text: tMez,
+            style: TextStyle(
+              fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+            ),
+          ),
+          TextSpan(
+            text: tCalmos,
+            style: TextStyle(
+              fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+              color: Color.fromARGB(255, 103, 122, 253),
+            ),
+          ),
+        ],
+      ));
 
-      ),
-      TextSpan(
-        text: tCalmos,
-        style: TextStyle(
-          fontWeight: isBold ? FontWeight.bold: FontWeight.normal,
-          color: Color.fromARGB(255, 103, 122, 253),
-        ),
-      ),
-    ],
-  ));
-
-
-  static Widget MezcalmosNoGlowScrollConfiguration (Widget child)
-  {
+  static Widget MezcalmosNoGlowScrollConfiguration(Widget child) {
     return ScrollConfiguration(
-      behavior: NoScrollGlowBehaviour(testCaller: "MezcalmosNoGlowScrollConfiguration"),
+      behavior: NoScrollGlowBehaviour(
+          testCaller: "MezcalmosNoGlowScrollConfiguration"),
       child: child,
     );
   }
 
+  static AppBar mezcalmosAppBar(String btnType, Function onTapFunction) {
+    Widget btn_icon;
 
-  static AppBar mezcalmosAppBar(Function openDrawer)
-  {
+    switch (btnType) {
+      case "back":
+        btn_icon = Padding(
+          padding: EdgeInsets.only(
+              left: getSizeRelativeToScreen(4, Get.height, Get.width)),
+          child: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.white,
+            size: 20,
+          ),
+        );
+        break;
+      default:
+        btn_icon = Icon(
+          Icons.menu,
+          color: Colors.white,
+          size: 20,
+        );
+        break;
+    }
 
     return AppBar(
-
       // automaticallyImplyLeading: false,
       centerTitle: true,
       toolbarHeight: 100,
@@ -62,16 +82,15 @@ class MezcalmosSharedWidgets {
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          logo(size:getSizeRelativeToScreen(20, Get.height, Get.width)),
+          logo(size: getSizeRelativeToScreen(20, Get.height, Get.width)),
           Container(
-            padding: const EdgeInsets.only(left:15), child: mezcalmos()
-          )        
+              padding: const EdgeInsets.only(left: 15), child: mezcalmos())
         ],
       ),
-      
+
       // actions: [
       //   Transform.scale(
-      //     scale: 0.85, 
+      //     scale: 0.85,
       //     child: GestureDetector(
       //       onTap: () => print("Clicked back btn!"),
       //       child: Container(
@@ -98,62 +117,61 @@ class MezcalmosSharedWidgets {
       // ],
 
       leading: Transform.scale(
-          scale: 0.8,
-          child: GestureDetector(
-            onTap: () {
-              print("Taped Drawer btn !");
-              openDrawer();
-            },
-            child: Container(
-              margin: EdgeInsets.only(top: 25, left: 10, bottom: 25),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Color.fromARGB(255, 216, 225, 249),
-                    spreadRadius: 0,
-                    blurRadius: 7,
-                    offset: Offset(0, 7), // changes position of shadow
-                  ),
-                ],
-                gradient: LinearGradient(
-                colors: [
-                  Color.fromARGB(255, 97, 127, 255),
-                  Color.fromARGB(255, 198, 90, 252),
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight
+        scale: 0.8,
+        child: GestureDetector(
+          onTap: () {
+            print("Taped Drawer btn !");
+            onTapFunction();
+          },
+          child: Container(
+            margin: EdgeInsets.only(top: 25, left: 10, bottom: 25),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+              boxShadow: [
+                BoxShadow(
+                  color: Color.fromARGB(255, 216, 225, 249),
+                  spreadRadius: 0,
+                  blurRadius: 7,
+                  offset: Offset(0, 7), // changes position of shadow
                 ),
-              ),
-              child: Icon(Icons.menu , color: Colors.white , size: 20,),
+              ],
+              gradient: LinearGradient(colors: [
+                Color.fromARGB(255, 97, 127, 255),
+                Color.fromARGB(255, 198, 90, 252),
+              ], begin: Alignment.topLeft, end: Alignment.bottomRight),
             ),
+            child: btn_icon,
           ),
-        ) ,
+        ),
+      ),
     );
+  }
 
-  } 
-  
-
-
-  static Future<void> mezcalmosDialog(double val , double sh , double sw) async => await Get.defaultDialog(
-
-    backgroundColor: Colors.grey.shade100,
-    title: '',
-    content: Flex
-    (
-      direction: Axis.vertical,
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisSize: MainAxisSize.min,
-      
-      children: [
-        
-        Flexible( fit: FlexFit.loose ,child: Icon(Icons.error , color: Colors.redAccent.shade200, size: getSizeRelativeToScreen(val, sh, sw),)),
-        Flexible( fit: FlexFit.loose ,child: SizedBox(height: 20,)),
-        Flexible( fit: FlexFit.loose ,child: Text(tOrderIsNotAvailableAnymore))
-
-      ], 
-    ),
-  );
-
+  static Future<void> mezcalmosDialog(double val, double sh, double sw) async =>
+      await Get.defaultDialog(
+        backgroundColor: Colors.grey.shade100,
+        title: '',
+        content: Flex(
+          direction: Axis.vertical,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Flexible(
+                fit: FlexFit.loose,
+                child: Icon(
+                  Icons.error,
+                  color: Colors.redAccent.shade200,
+                  size: getSizeRelativeToScreen(val, sh, sw),
+                )),
+            Flexible(
+                fit: FlexFit.loose,
+                child: SizedBox(
+                  height: 20,
+                )),
+            Flexible(
+                fit: FlexFit.loose, child: Text(tOrderIsNotAvailableAnymore))
+          ],
+        ),
+      );
 }

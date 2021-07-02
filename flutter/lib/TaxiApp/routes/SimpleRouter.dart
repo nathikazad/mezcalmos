@@ -1,17 +1,20 @@
 import 'package:get/get.dart'; // getX
+import 'package:mezcalmos/Shared/bindings/authBinding.dart';
 import 'package:mezcalmos/Shared/bindings/settingsBinding.dart';
 import 'package:mezcalmos/TaxiApp/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/TaxiApp/pages/AuthScreens/SignUpScreen.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen.dart';
 import 'package:mezcalmos/TaxiApp/pages/SplashScreen.dart';
 import 'package:mezcalmos/TaxiApp/pages/TaxiWrapper.dart';
+import 'package:mezcalmos/TaxiApp/pages/Wrapper.dart';
 
 // Routes Keys.
-const String kMainRoute = '/';
+
 const String kSplashRoute = '/splash';
 const String kSignInRoute = '/sign_in';
 const String kSignUpRoute = '/sign_up';
 const String kOtpRoute = '/sign_in_otp';
+const String kMainAuthWrapperRoute = '/auth_wrapper';
 const String kTaxiWrapperRoute = '/taxi_wrapper';
 const String kSelectedIcommingOrder = '/selected_incomming_order';
 // No need these :
@@ -30,7 +33,7 @@ const String kSelectedIcommingOrder = '/selected_incomming_order';
 // GetX based Router (For navigating)
 class XRouter {
   static dynamic mainRoutes = [
-    GetPage(name: kMainRoute, page: () => TaxiWrapper()),
+    GetPage(name: kMainAuthWrapperRoute, page: () => Wrapper()),
     GetPage(
         name: kSplashRoute,
         page: () => SplashScreen(),

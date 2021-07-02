@@ -7,11 +7,9 @@ import 'package:mezcalmos/Shared/widgets/MezcalmosSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 
-
-class TaxiWrapper extends GetWidget<TaxiAuthController> 
-{
-
-  SideMenuDraweController   _sideMenuDrawerController = Get.find<SideMenuDraweController>();
+class TaxiWrapper extends GetWidget<TaxiAuthController> {
+  SideMenuDraweController _sideMenuDrawerController =
+      Get.find<SideMenuDraweController>();
   AuthController _authController = Get.find<AuthController>();
 
   @override
@@ -20,8 +18,8 @@ class TaxiWrapper extends GetWidget<TaxiAuthController>
       key: _sideMenuDrawerController.scaffoldKey,
       drawer: MezcalmosSideMenu(),
       backgroundColor: Colors.white,
-      appBar: MezcalmosSharedWidgets.mezcalmosAppBar(_sideMenuDrawerController.openMenu),
-      
+      appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
+          "menu", _sideMenuDrawerController.openMenu),
       body: Obx(() => controller.dynamicScreen),
     );
   }

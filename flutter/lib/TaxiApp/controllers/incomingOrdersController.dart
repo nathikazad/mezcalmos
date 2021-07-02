@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/painting.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
@@ -19,9 +21,14 @@ class IncomingOrdersController extends GetxController {
       Get.find<DatabaseHelper>(); // Already Injected in main function
   RxBool _waitingResponse = RxBool(false);
   Rx<Order?> _selectedIncommingOrder = Order.empty().obs;
+  late BitmapDescriptor _customerLocationMarker;
+  late BitmapDescriptor _customerDestinationMarker;
 
   // Storing all the needed Listeners here
   List<StreamSubscription<Event>> _listeners = <StreamSubscription<Event>>[];
+
+  BitmapDescriptor get custommetLocationMarker => _customerLocationMarker;
+  BitmapDescriptor get custommetDestinationMarker => _customerDestinationMarker;
 
   dynamic get waitingResponse => _waitingResponse.value;
 
@@ -29,12 +36,25 @@ class IncomingOrdersController extends GetxController {
   void set selectedIncommingOrder(Order? selectedOrder) =>
       _selectedIncommingOrder.value = selectedOrder;
 
+  Future<void> loadBitmapDescriptors() async {
+    _customerLocationMarker = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(size: Size(20, 20)),
+        'assets/images/customer_lcoation.png');
+
+    _customerDestinationMarker = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(size: Size(20, 20)),
+        'assets/images/customer_destination.png');
+  }
+
   @override
   void onInit() async {
     // _selectedIncommingOrder.value = null;
 
     super.onInit();
+
     print("--------------------> OrderController Initialized !");
+    await loadBitmapDescriptors();
+
     // uhm .. well let's just attach some listeners..
     // READ : it's better to keep them like that , becauce that way we can update orders, which is an observale list.
 
@@ -100,6 +120,8 @@ class IncomingOrdersController extends GetxController {
           await acceptTaxiFunction.call(<String, dynamic>{'orderId': orderId});
       _waitingResponse.value = false;
       _selectedIncommingOrder.value = new Order.empty();
+      Get.back(closeOverlays: true);
+      mezcalmosSnackBar("Notice ~", "A new Order has been accpeted !");
       print("Accept Taxi Response");
       print(response.data);
     } catch (e) {
