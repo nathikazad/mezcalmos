@@ -112,6 +112,9 @@ class Launcher(object):
             self.__checks__()
             _web        = "-d chrome " if self.web else ""
             _lanhost    = f" --dart-define={self._ip_dart_define}={self.get_lan_ip()} " if self.lanhost else ""
+            __dec_ip__  = self.get_lan_ip()
+            if self.lanhost and not __dec_ip__.startswith('http://192'):
+                raise Exception("[EXCEPTION] --lan is set to true , but got invalid LAN IP address !\n\t|_ Try to `vim /etc/hosts` and comment line : [127.0.0.1 `your_host_name`] ?")
 
             print(f'[IP] {self.get_lan_ip() if _lanhost.__len__() > 0 else "http://127.0.0.1"}')
             print(f"[DB] Using {self.db} Database\n");
@@ -122,6 +125,7 @@ class Launcher(object):
             print(f"\n[!] Exception happend :  {ex.__str__()}" , end='')
             print(f"\n\t|__ Line :  {ex.__traceback__.tb_lineno} ", end='')
             self.TraceBack(ex.__traceback__.tb_next)
+            print('\n')
 
 
     def TraceBack(self, tb_next):

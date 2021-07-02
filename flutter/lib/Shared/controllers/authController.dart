@@ -9,7 +9,7 @@ import 'package:mezcalmos/TaxiApp/helpers/InjectionHelper.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/models/User.dart';
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:mezcalmos/TaxiApp/helpers/databaseHelper.dart';
+import 'package:mezcalmos/TaxiApp/helpers/DatabaseHelper.dart';
 
 class AuthController extends GetxController {
   fireAuth.FirebaseAuth _auth = fireAuth.FirebaseAuth.instance;
@@ -127,18 +127,16 @@ class AuthController extends GetxController {
     final LoginResult result = await FacebookAuth.instance.login();
     print(" FB AUTH STATUS +++++++++++++++++++++ ${result.status.toString()}");
 
-    if (result.status == LoginStatus.failed) 
-    {
-      mezcalmosSnackBar("Notice ~", "Failed SignIn with Facebook !");  
-    }
-    else 
-    {
+    if (result.status == LoginStatus.failed) {
+      mezcalmosSnackBar("Notice ~", "Failed SignIn with Facebook !");
+    } else {
       // Create a credential from the access token
       final facebookAuthCredential =
           fireAuth.FacebookAuthProvider.credential(result.accessToken!.token);
 
       // Once signed in, return the UserCredential
-      fireAuth.FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+      fireAuth.FirebaseAuth.instance
+          .signInWithCredential(facebookAuthCredential);
     }
   }
 

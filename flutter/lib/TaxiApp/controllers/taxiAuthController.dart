@@ -7,7 +7,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
-import 'package:mezcalmos/TaxiApp/helpers/databaseHelper.dart';
+import 'package:mezcalmos/TaxiApp/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/TaxiApp/models/TaxiDriver.dart';
 import 'package:mezcalmos/TaxiApp/pages/AuthScreens/UnauthorizedScreen.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/CurrentOrderScreen.dart';
