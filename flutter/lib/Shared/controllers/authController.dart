@@ -23,6 +23,27 @@ class AuthController extends GetxController {
 
   late StreamSubscription<Event> _userInfoListener;
 
+  // # REGION ------------- OTP Code ---------------
+  RxInt _timeBetweenResending = 0.obs;
+  int get timeBetweenResending => _timeBetweenResending.value;
+
+  void resendOtpTimerActivate() {
+    _timeBetweenResending.value = 60;
+    const second = const Duration(seconds: 1);
+    Timer.periodic(
+      second,
+      (Timer __t) {
+        print(
+            "OTP Code resending available after $timeBetweenResending Seconds !");
+        if (_timeBetweenResending.value == 0)
+          __t.cancel();
+        else
+          _timeBetweenResending.value--;
+      },
+    );
+  }
+  //------------------------------------------------
+
   @override
   void onInit() {
     super.onInit();
@@ -82,11 +103,11 @@ class AuthController extends GetxController {
         FirebaseFunctions.instance.httpsCallable('sendOTPForLogin');
     try {
       // _waitingResponse.value = true;
-      HttpsCallableResult response =
-          await sendOTPForLoginFunction.call(<String, dynamic>{
+      HttpsCallableResult response = await sendOTPForLoginFunction
+          .call(<String, dynamic>{
         'phoneNumber': phoneNumber,
         'messageType': 'SMS',
-        'language': _user.value!.language
+        'language': 'en'
       });
       // mezcalmosSnackBar("Notice ~", "OTP message has been sent !");
       // _waitingResponse.value = false;
@@ -100,7 +121,7 @@ class AuthController extends GetxController {
     }
   }
 
-  Future<void> signInUsingOTP(String phoneNumber, String otpCode) async {
+  Future<bool> signInUsingOTP(String phoneNumber, String otpCode) async {
     HttpsCallable getAuthUsingOTPFunction =
         FirebaseFunctions.instance.httpsCallable('getAuthUsingOTP');
     try {
@@ -111,12 +132,14 @@ class AuthController extends GetxController {
       // _waitingResponse.value = false;
       print("GetAuthUsingOTP Response");
       print(response.data);
-      fireAuth.FirebaseAuth.instance
+      await fireAuth.FirebaseAuth.instance
           .signInWithCustomToken(response.data["token"]);
+      return Future.value(true);
     } catch (e) {
       // mezcalmosSnackBar("Notice ~", "Failed to send OTP message :( ");
       // _waitingResponse.value = false;
       print("Exception happend in GetAuthUsingOTP : $e");
+      return Future.value(false);
     }
   }
 

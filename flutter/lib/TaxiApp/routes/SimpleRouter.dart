@@ -1,6 +1,8 @@
 import 'package:get/get.dart'; // getX
 import 'package:mezcalmos/Shared/bindings/authBinding.dart';
 import 'package:mezcalmos/Shared/bindings/settingsBinding.dart';
+import 'package:mezcalmos/Shared/bindings/smsBinding.dart';
+import 'package:mezcalmos/TaxiApp/pages/AuthScreens/SMS/OtpScreen.dart';
 import 'package:mezcalmos/TaxiApp/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/TaxiApp/pages/AuthScreens/SignUpScreen.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen.dart';
@@ -17,6 +19,7 @@ const String kOtpRoute = '/sign_in_otp';
 const String kMainAuthWrapperRoute = '/auth_wrapper';
 const String kTaxiWrapperRoute = '/taxi_wrapper';
 const String kSelectedIcommingOrder = '/selected_incomming_order';
+
 // No need these :
 
 // const String kIncomingOrdersRoute       = '/incoming_orders';
@@ -42,6 +45,7 @@ class XRouter {
     GetPage(
         name: kSelectedIcommingOrder, page: () => IncommingOrderScreenView()),
     GetPage(name: kSignInRoute, page: () => SignIn()),
+    GetPage(name: kOtpRoute, page: () => OtpScreen(), binding: SmsBinding()),
     GetPage(name: kSignUpRoute, page: () => SignUp()),
   ];
 }

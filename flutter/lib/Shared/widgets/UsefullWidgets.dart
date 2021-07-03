@@ -47,7 +47,8 @@ class MezcalmosSharedWidgets {
     );
   }
 
-  static AppBar mezcalmosAppBar(String btnType, Function onTapFunction) {
+  static AppBar mezcalmosAppBar(String btnType, Function onTapFunction,
+      {dynamic bgColor = Colors.white}) {
     Widget btn_icon;
 
     switch (btnType) {
@@ -77,7 +78,7 @@ class MezcalmosSharedWidgets {
       toolbarHeight: getSizeRelativeToScreen(45, Get.height, Get.width),
       // leadingWidth: 55,
       // toolbarHeight: 65,
-      backgroundColor: Colors.white,
+      backgroundColor: bgColor,
       elevation: 0,
       title: Row(
         mainAxisSize: MainAxisSize.max,
