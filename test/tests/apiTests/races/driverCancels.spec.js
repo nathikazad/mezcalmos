@@ -122,14 +122,13 @@ describe('Mezcalmos', () => {
 
     await driver.callFunction('acceptTaxiOrder', data)
 
-
     let promiseArray = []
     for (let i = 0; i < 10; i++) {
       promiseArray.push(randomDelay(100, () => driver.callFunction('cancelTaxiFromDriver', {})))
     }
     
     promises = await Promise.all(promiseArray)
-
+   // console.log(promises);
 
     let acceptedCounter = 0
     let rejectedCounter = 0
@@ -138,10 +137,7 @@ describe('Mezcalmos', () => {
 
     
     promises.map(el => {
-      if(el.result){
-        el.status = el.result.status
-      }
-      switch(el.status){
+      switch(el.result.status){
       case 'Error':
         rejectedCounter++,
         rejectedResponse.push(el)
@@ -153,19 +149,19 @@ describe('Mezcalmos', () => {
         break ; 
       }
     })
-
-    acceptedResponse = acceptedResponse [0]
+   
     let requestsNumber = promises.length
 
     expect(acceptedCounter).toEqual(1)
     expect(rejectedCounter).toEqual(requestsNumber-acceptedCounter)
+
+    acceptedResponse = acceptedResponse [0]
+    expect(acceptedResponse.result.status).toBe('Success')
+    rejectedResponse.map(el => expect(el.result.status).toBe('Error'))
     
     let orderLock = (await admin.database().ref(`/orders/taxi/${orderId}/lock`).once('value')).val()
     expect(orderLock).toEqual(null)
   })
-
-
-  
 
 })
 

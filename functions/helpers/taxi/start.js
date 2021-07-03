@@ -21,12 +21,12 @@ async function start(firebase, uid) {
     }
   }
 
-  if(order.status != 'onTheWay'){
-    return {
-      status: 'Error',
-      errorMessage: 'Ride status is not onTheWay but ' + order.status
-    }
-  } 
+  // if(order.status != 'onTheWay'){
+  //   return {
+  //     status: 'Error',
+  //     errorMessage: 'Ride status is not onTheWay but ' + order.status
+  //   }
+  // } 
 
   let response = await firebase.database().ref(`/orders/taxi/${orderId}`).transaction(function(order){
     if(order != null) {

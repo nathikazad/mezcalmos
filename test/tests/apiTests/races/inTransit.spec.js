@@ -108,73 +108,79 @@ describe('Mezcalmos', () => {
 
   
 
-  //  it('Test race condition while order-status is IN TRANSIT', async () => {
-  //   //create ride
-  //   response = await thirdCustomer.callFunction("requestTaxi", tripData)
-  //   //console.log('intrans res',response);
-  //   expect(response.result.status).toBe('Success')
+   it('Test race condition while order-status is IN TRANSIT', async () => {
+    //create ride
+    response = await customer.callFunction("requestTaxi", tripData)
+    expect(response.result.status).toBe('Success')
 
-  //   orderId = response.result.orderId
-  //   order = (await admin.database().ref(`users/${thirdCustomer.id}/orders/${orderId}`).once('value')).val()
-  //   expect(order.status).toBe('lookingForTaxi')
+    orderId = response.result.orderId
+    order = (await admin.database().ref(`users/${customer.id}/orders/${orderId}`).once('value')).val()
+    expect(order.status).toBe('lookingForTaxi')
 
 
-  //   data = {
-  //   orderId: orderId
-  //   } 
-  //    // accept ride
-  //   accept = await secondDriver.callFunction('acceptTaxiOrder', data)
-  //   expect(accept.result.status).toBe('Success')
+    data = {
+    orderId: orderId
+    } 
+     // accept ride
+    accept = await driver.callFunction('acceptTaxiOrder', data)
+    expect(accept.result.status).toBe('Success')
 
-  //   let orderAccepted = (await admin.database().ref(`orders/taxi/${orderId}`).once('value')).val()
-  //   expect(orderAccepted.status).toBe('onTheWay')
-  //   // start ride
-  //   start = await secondDriver.callFunction('startTaxiRide', {})
-  //   expect(start.result.status).toBe('Success')
+    let orderAccepted = (await admin.database().ref(`orders/taxi/${orderId}`).once('value')).val()
+    expect(orderAccepted.status).toBe('onTheWay')
+    // start ride
+    start = await driver.callFunction('startTaxiRide', {})
+    expect(start.result.status).toBe('Success')
 
-  //   let orderStarted = (await admin.database().ref(`orders/taxi/${orderId}`).once('value')).val()
-  //   expect(orderStarted.status).toBe('inTransit')
+    let orderStarted = (await admin.database().ref(`orders/taxi/${orderId}`).once('value')).val()
+    expect(orderStarted.status).toBe('inTransit')
+
+    let promiseArray = []
+    for (let i = 0; i < 10; i++) {
+      promiseArray.push(randomDelay(100, () => driver.callFunction('cancelTaxiFromDriver', data)))
+      promiseArray.push(randomDelay(600, () => driver.callFunction('cancelTaxiFromCustomer', {})))
+      promiseArray.push(randomDelay(0, () => expireOrder(admin, orderId, customer.id)))
+      promiseArray.push(randomDelay(100, () => driver.callFunction('finishTaxiRide', {})))
+    }
     
+    promises = await Promise.all(promiseArray)
+   // console.log(promises);
+    
+    let acceptedCounter = 0
+    let rejectedCounter = 0
+    let acceptedResponse =  []
+    let rejectedResponse =  []
 
-  //   cancelByDriver = secondDriver.callFunction('cancelTaxiFromDriver', data)
-  //   cancelByCustomer = thirdCustomer.callFunction('cancelTaxiFromCustomer', {})
-  //   expire = expireOrder(admin, orderId, customer.id)
-  //   let finish = secondDriver.callFunction('finishTaxiRide', {})
-  //   promises = await Promise.all([cancelByDriver, cancelByCustomer, expire , finish])
-  //  //console.log('promises', promises);
-  //   let acceptedCounter = 0
-  //   let rejectedCounter = 0
-  //   let acceptedResponse =  []
-  //   let rejectedResponse =  []
+    promises.map(el => {
+    if(el.result){
+    el.status = el.result.status
+    }
+    switch(el.status){
+    case 'Error':
+    rejectedCounter++,
+    rejectedResponse.push(el)
+    break;
 
-  //   promises.map(el => {
-  //   if(el.result){
-  //   el.status = el.result.status
-  //   }
-  //   switch(el.status){
-  //   case 'Error':
-  //   rejectedCounter++,
-  //   rejectedResponse.push(el)
-  //   break;
+    case 'Success':
+    acceptedCounter++,
+    acceptedResponse.push(el)
+    break ; 
+    }
+    })
 
-  //   case 'Success':
-  //   acceptedCounter++,
-  //   acceptedResponse.push(el)
-  //   break ; 
-  //   }
-  //   })
+    acceptedResponse = acceptedResponse [0]
+    let requestsNumber = promises.length
 
-  //   acceptedResponse = acceptedResponse [0]
-  //   let requestsNumber = promises.length
+    expect(acceptedCounter).toEqual(1)
+    expect(rejectedCounter).toEqual(requestsNumber-1)
+    expect(acceptedResponse.status).toBe('Success')
 
-  //   expect(acceptedCounter).toEqual(1)
-  //   expect(rejectedCounter).toEqual(requestsNumber-1)
-  //   expect(acceptedResponse.status).toBe('Success')
+    rejectedResponse.map( el => {
+    expect(el.status).toBe('Error')
+    })
 
-  //   rejectedResponse.map( el => {
-  //   expect(el.status).toBe('Error')
-  //   })
-  // }) 
+    orderLock = (await admin.database().ref(`orders/taxi/${orderId}/lock`).once('value')).val()
+    expect(orderLock).toBeNull()
+  }) 
 
 })
 

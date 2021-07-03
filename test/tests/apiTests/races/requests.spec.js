@@ -96,24 +96,24 @@ describe('Mezcalmos', () => {
   beforeAll(async () => {
     await helper.clearDatabase(admin)
     customer = await auth.signUp(admin, userData)
-    secondCustomer = await auth.signUp(admin, secondUserData)
-    thirdCustomer = await auth.signUp(admin, thirdUserData)
+    // secondCustomer = await auth.signUp(admin, secondUserData)
+    // thirdCustomer = await auth.signUp(admin, thirdUserData)
     driver = await auth.signUp(admin, driverData)
-    secondDriver = await auth.signUp(admin, secondDriverData)
-    thirdDriver = await auth.signUp(admin, thirdDriverData)
+    // secondDriver = await auth.signUp(admin, secondDriverData)
+    // thirdDriver = await auth.signUp(admin, thirdDriverData)
     await admin.database().ref(`/taxiDrivers/${driver.id}/state/authorizationStatus`).set('authorized')
-    await admin.database().ref(`/taxiDrivers/${secondDriver.id}/state/authorizationStatus`).set('authorized')
-    await admin.database().ref(`/taxiDrivers/${thirdDriver.id}/state/authorizationStatus`).set('authorized')
+    // await admin.database().ref(`/taxiDrivers/${secondDriver.id}/state/authorizationStatus`).set('authorized')
+    // await admin.database().ref(`/taxiDrivers/${thirdDriver.id}/state/authorizationStatus`).set('authorized')
   })
 
   it('Test multiple requests', async () => {
-
+    
     let promiseArray = []
     for (let i = 0; i < 10; i++) {
-      promiseArray.push(customer.callFunction('requestTaxi', tripData))
+      promiseArray.push(randomDelay(100, () => customer.callFunction('requestTaxi', tripData)))
     }
-    
     promises = await Promise.all(promiseArray)
+    //console.log(promises);
 
     let acceptedCounter = 0
     let rejectedCounter = 0
@@ -121,10 +121,10 @@ describe('Mezcalmos', () => {
     let rejectedResponse =  []
 
     promises.map(el => {
-      if(el.result){
-        el.status = el.result.status
-      }
-      switch(el.status){
+      // if(el.result){
+      //   el.status = el.result.status
+      // }
+      switch(el.result.status){
       case 'Error':
         rejectedCounter++,
         rejectedResponse.push(el)
@@ -136,12 +136,15 @@ describe('Mezcalmos', () => {
         break ; 
       }
     })
-
     
-    acceptedResponse = acceptedResponse[0]
     let requestsNumber = promises.length
     expect(acceptedCounter).toEqual(1)
     expect(rejectedCounter).toEqual(requestsNumber-1)
+
+    acceptedResponse = acceptedResponse[0]
+    expect(acceptedResponse.result.status).toBe('Success')
+    rejectedResponse.map(el => expect(el.result.status).toBe('Error'))
+
     // when setting locks have to make sure lock is always returned(meaning: removed) otherwise no future requests will work and user will get locked out forever, this is the big risk of using locks. Have to be 100% certain that its not possible.
     let customerLock = (await admin.database().ref(`/users/${customer.id}/lock`).once('value')).val()
     expect(customerLock).toEqual(null)

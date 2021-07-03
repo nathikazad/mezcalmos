@@ -182,10 +182,10 @@ describe('Mezcalmos', () => {
 
     
     promises.map(el => {
-      if(el.result){
-        el.status = el.result.status
-      }
-      switch(el.status){
+      // if(el.result){
+      //   el.status = el.result.status
+      // }
+      switch(el.result.status){
       case 'Error':
         rejectedCounter++,
         rejectedResponse.push(el)
@@ -198,12 +198,16 @@ describe('Mezcalmos', () => {
       }
     })
 
-    acceptedResponse = acceptedResponse [0]
+  
     let requestsNumber = promises.length
 
     // expect(acceptedCounter).toBeLessThanOrEqual(2)
     expect(acceptedCounter).toEqual(1)
     expect(rejectedCounter).toEqual(requestsNumber-acceptedCounter)
+
+    acceptedResponse = acceptedResponse [0]
+    expect(acceptedResponse.result.status).toBe('Success')
+    rejectedResponse.map(el => expect(el.result.status).toBe('Error'))
     
     let orderLock = (await admin.database().ref(`/orders/taxi/${orderId}/lock`).once('value')).val()
     expect(orderLock).toEqual(null)

@@ -96,39 +96,40 @@ describe('Mezcalmos', () => {
   beforeEach(async () => {
     await helper.clearDatabase(admin)
     customer = await auth.signUp(admin, userData)
-    secondCustomer = await auth.signUp(admin, secondUserData)
-    thirdCustomer = await auth.signUp(admin, thirdUserData)
+    // secondCustomer = await auth.signUp(admin, secondUserData)
+    // thirdCustomer = await auth.signUp(admin, thirdUserData)
     driver = await auth.signUp(admin, driverData)
-    secondDriver = await auth.signUp(admin, secondDriverData)
-    thirdDriver = await auth.signUp(admin, thirdDriverData)
+    // secondDriver = await auth.signUp(admin, secondDriverData)
+    // thirdDriver = await auth.signUp(admin, thirdDriverData)
     await admin.database().ref(`/taxiDrivers/${driver.id}/state/authorizationStatus`).set('authorized')
-    await admin.database().ref(`/taxiDrivers/${secondDriver.id}/state/authorizationStatus`).set('authorized')
-    await admin.database().ref(`/taxiDrivers/${thirdDriver.id}/state/authorizationStatus`).set('authorized')
+    // await admin.database().ref(`/taxiDrivers/${secondDriver.id}/state/authorizationStatus`).set('authorized')
+    // await admin.database().ref(`/taxiDrivers/${thirdDriver.id}/state/authorizationStatus`).set('authorized')
   })
 
   
   it('Test accept, cancel, expire race conditions after order is accepted', async () => {
     // create ride
-    response = await secondCustomer.callFunction("requestTaxi", tripData)
-    orderId = response.result.orderId
-    order = (await admin.database().ref(`users/${secondCustomer.id}/orders/${orderId}`).once('value')).val()
+   let response = await customer.callFunction("requestTaxi", tripData)
+   let orderId = response.result.orderId
+   let order = (await admin.database().ref(`users/${customer.id}/orders/${orderId}`).once('value')).val()
     
     expect(response.result.status).toBe('Success')
     expect(order.status).toBe('lookingForTaxi')
 
-    data = {
+    let data = {
       orderId: orderId
     } 
 
     let promiseArray = []
     for (let i = 0; i < 10; i++) {
-      promiseArray.push(randomDelay(100, () => driver.callFunction('acceptTaxiOrder', data)))
-      promiseArray.push(randomDelay(100, () => secondCustomer.callFunction('cancelTaxiFromCustomer', {})))
-      promiseArray.push(fixedAndRandomDelay(500, 200,  () => expireOrder(admin, orderId, customer.id)))
+      promiseArray.push(randomDelay(10, () => driver.callFunction('acceptTaxiOrder', data)))
+      promiseArray.push(randomDelay(10, () => customer.callFunction('cancelTaxiFromCustomer', {})))
+      promiseArray.push(randomDelay(10, () => expireOrder(admin, orderId, customer.id)))
     }
     
     promises = await Promise.all(promiseArray)
-
+    // //console.log(promises);
+                  
     let acceptedCounter = 0
     let rejectedCounter = 0
     let acceptedResponse =  []
@@ -152,16 +153,32 @@ describe('Mezcalmos', () => {
       }
     })
 
-    acceptedResponse = acceptedResponse [0]
+    
     let requestsNumber = promises.length
-
     expect(acceptedCounter).toBeGreaterThanOrEqual(1)
     expect(acceptedCounter).toBeLessThanOrEqual(2)
     expect(rejectedCounter).toEqual(requestsNumber-acceptedCounter)
-    
+
+    acceptedResponse.map(el => expect(el.status).toBe('Success'))
+    rejectedResponse.map(el => expect(el.status).toBe('Error'))
+    orderAfterActions = (await admin.database().ref(`orders/taxi/${orderId}`).once('value')).val()
+    if(acceptedCounter == 1){
+      //verify that the ride has never been accepted
+      expect(orderAfterActions).not.toHaveProperty('acceptRideTime')
+    }
+    if(acceptedCounter == 2){
+      //verify that the ride has been accepted
+      expect(orderAfterActions).toHaveProperty('acceptRideTime')
+      // verify that the ride has been cancelled
+      expect(orderAfterActions.status).toBe('cancelled')   
+      
+      expect(orderAfterActions).toHaveProperty('rideFinishTime')
+    }
+
     let orderLock = (await admin.database().ref(`/orders/taxi/${orderId}/lock`).once('value')).val()
     expect(orderLock).toEqual(null)
   })
+
 })
 
 afterAll(() => {

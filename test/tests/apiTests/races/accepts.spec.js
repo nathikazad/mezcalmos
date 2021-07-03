@@ -123,7 +123,7 @@ describe('Mezcalmos', () => {
 
     let promiseArray = []
     for (let i = 0; i < 10; i++) {
-      promiseArray.push(driver.callFunction('acceptTaxiOrder', data))
+      promiseArray.push(randomDelay(100, () => driver.callFunction('acceptTaxiOrder', data)))
     }
     
     promises = await Promise.all(promiseArray)

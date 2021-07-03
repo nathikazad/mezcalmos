@@ -67,7 +67,7 @@ describe('Mezcalmos', () => {
     expect(response.result.errorMessage).toBe('Customer has not requested for any ride')
   })
 
-  it('Cancel ride from customer while lookingForTaxi', async () => {
+  it('Cancel ride from customer while it is lookingForTaxi', async () => {
 
     response = await customer.callFunction("requestTaxi", tripData)
       //console.log(response)
@@ -94,16 +94,10 @@ describe('Mezcalmos', () => {
 
      //verify updating order
     let orderAfterCancel =  (await admin.database().ref(`orders/taxi/${orderId}`).once('value')).val()
-    //expect(orderAfterCancel).toBeNull() 
+    
     expect(orderAfterCancel.status).toBe('cancelled')
     expect(orderAfterCancel.cancelledBy).toBe('customer')
     expect(orderAfterCancel).toHaveProperty('rideFinishTime')
-
-    //verify unfulfilled Orders
-    let unfulfilledOrder = (await admin.database().ref(`unfulfilledOrders/${orderId}`).once('value')).val()
-    //console.log(unfulfilledOrder);
-    expect(unfulfilledOrder.status).toBe(order.status)
-    expect(unfulfilledOrder.reason).toBe('cancelled')
 
     //verify removing chat
     let chat = (await admin.database().ref(`chat/${orderId}`).once('value')).val()
@@ -197,6 +191,7 @@ describe('Mezcalmos', () => {
      expect(notification.reason).toBe(order.reason)
     
   })
+
   it('Test cancel ride from customer while order is inTransit', async () => {
     //create a ride
     let response = await customer.callFunction("requestTaxi", tripData)

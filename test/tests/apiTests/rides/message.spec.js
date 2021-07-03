@@ -73,7 +73,7 @@ describe('Mezcalmos', () => {
     }
 
     response = await customer.sendMessage(orderId, newMessage)
-    console.log(response.result);
+    //console.log(response);
     await new Promise(res => setTimeout(() => {
       res()
     }, 200))
@@ -88,7 +88,6 @@ describe('Mezcalmos', () => {
     expect(driverNotification.sender.id).toBe(customer.id)
     expect(driverNotification.sender.image).toBe(userData.photo)
     expect(driverNotification.sender.name).toBe(userData.displayName.split(' ')[0])
-    
   })
 });
 

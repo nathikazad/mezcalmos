@@ -152,12 +152,14 @@ describe('Mezcalmos', () => {
       }
     })
 
-    acceptedResponse = acceptedResponse [0]
     let requestsNumber = promises.length
 
     expect(acceptedCounter).toBeGreaterThanOrEqual(1)
     expect(acceptedCounter).toBeLessThanOrEqual(2)
     expect(rejectedCounter).toEqual(requestsNumber-acceptedCounter)
+
+    acceptedResponse.map(el => expect(el.status).toBe('Success'))
+    rejectedResponse.map(el => expect(el.status).toBe('Error'))
     
     let orderLock = (await admin.database().ref(`/orders/taxi/${orderId}/lock`).once('value')).val()
     expect(orderLock).toEqual(null)

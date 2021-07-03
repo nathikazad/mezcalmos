@@ -96,27 +96,27 @@ describe('Mezcalmos', () => {
   beforeAll(async () => {
     await helper.clearDatabase(admin)
     customer = await auth.signUp(admin, userData)
-    secondCustomer = await auth.signUp(admin, secondUserData)
-    thirdCustomer = await auth.signUp(admin, thirdUserData)
+    // secondCustomer = await auth.signUp(admin, secondUserData)
+    // thirdCustomer = await auth.signUp(admin, thirdUserData)
     driver = await auth.signUp(admin, driverData)
-    secondDriver = await auth.signUp(admin, secondDriverData)
-    thirdDriver = await auth.signUp(admin, thirdDriverData)
+    // secondDriver = await auth.signUp(admin, secondDriverData)
+    // thirdDriver = await auth.signUp(admin, thirdDriverData)
     await admin.database().ref(`/taxiDrivers/${driver.id}/state/authorizationStatus`).set('authorized')
-    await admin.database().ref(`/taxiDrivers/${secondDriver.id}/state/authorizationStatus`).set('authorized')
-    await admin.database().ref(`/taxiDrivers/${thirdDriver.id}/state/authorizationStatus`).set('authorized')
+    // await admin.database().ref(`/taxiDrivers/${secondDriver.id}/state/authorizationStatus`).set('authorized')
+    // await admin.database().ref(`/taxiDrivers/${thirdDriver.id}/state/authorizationStatus`).set('authorized')
   })
 
   it('Test race conditions while order-status is ON THE WAY', async () => {
-    // create ride
-    for (let j = 0; j < 4; j++) {
-      response = await customer.callFunction("requestTaxi", tripData)
+    
+      let response = await customer.callFunction("requestTaxi", tripData)
       //console.log('response',response);
-      orderId = response.result.orderId
-      order = (await admin.database().ref(`users/${customer.id}/orders/${orderId}`).once('value')).val()
-      expect(response.result.status).toBe('Success')
+      let  orderId = response.result.orderId
+      let order = (await admin.database().ref(`users/${customer.id}/orders/${orderId}`).once('value')).val()
 
+      expect(response.result.status).toBe('Success')
       expect(order.status).toBe('lookingForTaxi')
-      data = {
+
+      let data = {
         orderId: orderId
       } 
       // accept ride
@@ -126,7 +126,8 @@ describe('Mezcalmos', () => {
       order = (await admin.database().ref(`orders/taxi/${orderId}`).once('value')).val()
       expect(order.status).toBe('onTheWay')
 
-      let promiseArray = []
+      let promiseArray = [] 
+
       for (let i = 0; i < 5; i++) {
         promiseArray.push(randomDelay(250, () => driver.callFunction('cancelTaxiFromDriver', data)))
         promiseArray.push(randomDelay(250, () => customer.callFunction('cancelTaxiFromCustomer', {})))
@@ -134,8 +135,8 @@ describe('Mezcalmos', () => {
       }
       
       promises = await Promise.all(promiseArray)
+     // console.log('promises', promises);
 
-      //console.log('promises', promises);
       let acceptedCounter = 0
       let rejectedCounter = 0
       let acceptedResponse =  []
@@ -145,7 +146,7 @@ describe('Mezcalmos', () => {
         if(el.result){
           el.status = el.result.status
         }
-        console.log(el)
+        //console.log(el)
         switch(el.status){
         case 'Error':
           rejectedCounter++,
@@ -156,30 +157,38 @@ describe('Mezcalmos', () => {
           acceptedCounter++,
           acceptedResponse.push(el)
           break ; 
+
         }
       })
 
-      acceptedResponse = acceptedResponse [0]
-      let requestsNumber = promises.length
+      let requestsNumber = promises.length      
+      expect(acceptedCounter).toBeGreaterThanOrEqual(1)
+      expect(acceptedCounter).toBeLessThanOrEqual(2)
+      expect(rejectedCounter).toEqual(requestsNumber-acceptedCounter)
 
-      expect(acceptedCounter).toEqual(1)
-      expect(rejectedCounter).toEqual(requestsNumber-1)
-      expect(acceptedResponse.status).toBe('Success')
-
-      rejectedResponse.map( el => {
-      expect(el.status).toBe('Error')
+      order= (await admin.database().ref(`orders/taxi/${orderId}`).once('value')).val()
+      if(acceptedCounter == 1){
+        //verify that the ride has been cancelled before getting started
+        expect(order).not.toHaveProperty('rideStartTime')
+        expect(order.status).toBe('cancelled')
+      }
+      if(acceptedCounter == 2){
+        //Verify that the order has started, then has been cancelled
+        expect(order).toHaveProperty('rideStartTime')
+        expect(order).toHaveProperty('rideFinishTime')
+        expect(order.status).toBe('cancelled') 
+      }
+      acceptedResponse.map(el => {
+        expect(el.status).toBe('Success')
       })
-      console.log()
-      console.log()
-      console.log()
-      console.log()
-      console.log()
-      console.log()
-      console.log()
-      console.log()
-    }
-  })
+      rejectedResponse.map( el => {
+        expect(el.status).toBe('Error')
+      })
 
+      orderLock = (await admin.database().ref(`orders/taxi/${orderId}/lock`).once('value')).val()
+      expect(orderLock).toBeNull()
+
+  })
 })
 
 afterAll(() => {
