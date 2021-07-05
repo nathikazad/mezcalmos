@@ -40,7 +40,7 @@ async function request(firebase, uid, data) {
     to: data.to,
     distance: data.distance,
     duration: data.duration,
-    polyline:data.polyline,
+    polyline: data.polyline,
     estimatedPrice: data.estimatedPrice,
     customer: {
       id: uid,
@@ -50,37 +50,17 @@ async function request(firebase, uid, data) {
     orderType: "taxi",
     status: "lookingForTaxi",
     orderTime: (new Date()).toUTCString(),
-    paymentType: data.paymentType
+    paymentType: data.paymentType,
+    routeInformation: {
+      duration: data.duration,
+      distance: data.distance,
+      polyline: data.polyline,
+    }
   }
 
   let orderRef = await firebase.database().ref(`/orders/taxi`).push(payload);
-  firebase.database().ref(`/users/${uid}/orders/${orderRef.key}`).set({
-    orderType: "taxi",
-    status: "lookingForTaxi",
-    orderTime: payload.orderTime,
-    routeInformation: {
-      duration: payload.duration,
-      distance: payload.distance,
-      polyline:payload.polyline,
-    },
-    estimatedPrice: payload.estimatedPrice,
-    paymentType: payload.paymentType,
-    to: payload.to,
-    from: payload.from,
-
-  });
-  firebase.database().ref(`/openOrders/taxi/${orderRef.key}`).set({
-    from: payload.from,
-    to: payload.to,
-    customer: payload.customer,
-    routeInformation: {
-      duration: payload.duration,
-      distance: payload.distance,
-    },
-    orderTime: payload.orderTime,
-    estimatedPrice: payload.estimatedPrice,
-    paymentType: payload.paymentType
-  });
+  firebase.database().ref(`/users/${uid}/orders/${orderRef.key}`).set(payload);
+  firebase.database().ref(`/openOrders/taxi/${orderRef.key}`).set(payload);
   firebase.database().ref(`/users/${uid}/state/currentOrder`).set(orderRef.key);
   let chat = {
     participants: {},
@@ -257,27 +237,17 @@ async function accept(firebase, data, uid) {
     };
   } else {
     let order = response.snapshot.val()
-    //console.log(`${data.orderId} taxi request success`)
-    firebase.database().ref(`/taxiDrivers/${uid}/orders/${data.orderId}`).set({
-      customer: order.customer,
-      acceptRideTime: order.acceptRideTime,
-      status: order.status,
-      routeInformation: {
-        duration: order.duration,
-        distance: order.distance,
-      },
-      estimatedPrice: order.estimatedPrice,
-      paymentType: order.paymentType,
-      to: order.to
-    });
-    firebase.database().ref(`/taxiDrivers/${uid}/state/currentOrder`).set(data.orderId)
-    firebase.database().ref(`/users/${order.customer.id}/orders/${data.orderId}`).update({
+    let payload = {...order, 
       driver: order.driver,
       acceptRideTime: order.acceptRideTime,
       status: order.status,
       taxiNumber: (driver.taxiNumber) ? driver.taxiNumber : null
-    });
-    firebase.database().ref(`/inProcessOrders/taxi/${data.orderId}`).set({driver: order.driver, customer: order.customer});
+    }
+    //console.log(`${data.orderId} taxi request success`)
+    firebase.database().ref(`/taxiDrivers/${uid}/orders/${data.orderId}`).set(payload);
+    firebase.database().ref(`/taxiDrivers/${uid}/state/currentOrder`).set(data.orderId)
+    firebase.database().ref(`/users/${order.customer.id}/orders/${data.orderId}`).update(payload);
+    firebase.database().ref(`/inProcessOrders/taxi/${data.orderId}`).set(payload);
     firebase.database().ref(`/openOrders/taxi/${data.orderId}`).remove();
     firebase.database().ref(`/chat/${data.orderId}/participants/${uid}`).set({
       name: driver.displayName.split(' ')[0],
