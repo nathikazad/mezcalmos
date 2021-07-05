@@ -29,12 +29,10 @@ class SignIn extends GetWidget<AuthController> {
             children: [
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 100),
-                child: MezcalmosSharedWidgets.logo(
-                    size: getSizeRelativeToScreen(80, sh, sw)),
+                child: MezcalmosSharedWidgets.logo(size: getSizeRelativeToScreen(80, sh, sw)),
               ),
               SizedBox(height: getSizeRelativeToScreen(25, sh, sw)),
-              MezcalmosSharedWidgets.mezcalmos(
-                  textSize: getSizeRelativeToScreen(25, sh, sw), isBold: true),
+              MezcalmosSharedWidgets.mezcalmos(textSize: getSizeRelativeToScreen(25, sh, sw), isBold: true),
               SizedBox(
                 height: getSizeRelativeToScreen(20, sh, sw),
               ),
@@ -54,35 +52,20 @@ class SignIn extends GetWidget<AuthController> {
               Flexible(
                   fit: FlexFit.loose,
                   child: TextButton(
-                    onPressed: () async => lmode == "prod"
-                        ? await controller.signInWithFacebook()
-                        : await controller.signIn(tEmailTestValue,
-                            tEmailTestPassword), //controller.signInWithFacebook(),//
+                    onPressed: () async => lmode == "prod" ? await controller.signInWithFacebook() : await controller.signIn(tEmailTestValue, tEmailTestPassword), //controller.signInWithFacebook(),//
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Icon(Icons.facebook),
-                        Text(lmode == "prod"
-                            ? tFacebookSigning
-                            : "test mode login")
-                      ],
+                      children: [Icon(Icons.facebook), Text(lmode == "prod" ? tFacebookSigning : "test mode login")],
                     ),
 
                     style: ButtonStyle(
                       // padding:  MaterialStateProperty.<EdgeInsetsGeometry>(EdgeInsets.symmetric(horizontal: 10)),
-                      textStyle: MaterialStateProperty.all<TextStyle>(
-                          new TextStyle(
-                              fontSize: getSizeRelativeToScreen(10, sh, sw),
-                              fontWeight: FontWeight.bold)),
-                      fixedSize: MaterialStateProperty.all<Size>(new Size(
-                          getSizeRelativeToScreen(150, sh, sw),
-                          getSizeRelativeToScreen(25, sh, sw))),
+                      textStyle: MaterialStateProperty.all<TextStyle>(new TextStyle(fontSize: getSizeRelativeToScreen(10, sh, sw), fontWeight: FontWeight.bold)),
+                      fixedSize: MaterialStateProperty.all<Size>(new Size(getSizeRelativeToScreen(150, sh, sw), getSizeRelativeToScreen(25, sh, sw))),
                       elevation: MaterialStateProperty.all<double>(2),
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromARGB(255, 58, 85, 159)),
-                      foregroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 58, 85, 159)),
+                      foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
                     ),
                   )),
               SizedBox(
@@ -98,18 +81,11 @@ class SignIn extends GetWidget<AuthController> {
                       children: [Icon(Icons.email_outlined), Text(tSmsSigning)],
                     ),
                     style: ButtonStyle(
-                      textStyle: MaterialStateProperty.all<TextStyle>(
-                          new TextStyle(
-                              fontSize: getSizeRelativeToScreen(10, sh, sw),
-                              fontWeight: FontWeight.bold)),
-                      fixedSize: MaterialStateProperty.all<Size>(new Size(
-                          getSizeRelativeToScreen(150, sh, sw),
-                          getSizeRelativeToScreen(25, sh, sw))),
+                      textStyle: MaterialStateProperty.all<TextStyle>(new TextStyle(fontSize: getSizeRelativeToScreen(10, sh, sw), fontWeight: FontWeight.bold)),
+                      fixedSize: MaterialStateProperty.all<Size>(new Size(getSizeRelativeToScreen(150, sh, sw), getSizeRelativeToScreen(25, sh, sw))),
                       elevation: MaterialStateProperty.all<double>(2),
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromARGB(255, 92, 127, 255)),
-                      foregroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 92, 127, 255)),
+                      foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
                     ),
                   )),
             ],

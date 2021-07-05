@@ -18,8 +18,9 @@ class AuthController extends GetxController {
   User? get user => _user.value;
   fireAuth.FirebaseAuth get auth => _auth;
 
-  DatabaseHelper _databaseHelper =
-      Get.find<DatabaseHelper>(); // Already Injected in main function
+  // RxInt _isWaitingRresponse = 0.obs;
+
+  DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>(); // Already Injected in main function
 
   late StreamSubscription<Event> _userInfoListener;
 
@@ -33,8 +34,7 @@ class AuthController extends GetxController {
     Timer.periodic(
       second,
       (Timer __t) {
-        print(
-            "OTP Code resending available after $timeBetweenResending Seconds !");
+        print("OTP Code resending available after $timeBetweenResending Seconds !");
         if (_timeBetweenResending.value == 0)
           __t.cancel();
         else
@@ -53,15 +53,9 @@ class AuthController extends GetxController {
         print('User is currently signed out!');
         _user.value = null;
       } else {
-        _userInfoListener = _databaseHelper.firebaseDatabase
-            .reference()
-            .child(userId(user.uid))
-            .onValue
-            .listen((event) {
-          print(
-              "AuthController::onValue Invoked >> ${event.snapshot.key} : ${event.snapshot.value}");
-          print(
-              "++++++++++++++++++++++++++++++++++++++++++++++\n\n${event.snapshot.value}\n\n++++++++++++++++++++++++++++++++");
+        _userInfoListener = _databaseHelper.firebaseDatabase.reference().child(userId(user.uid)).onValue.listen((event) {
+          print("AuthController::onValue Invoked >> ${event.snapshot.key} : ${event.snapshot.value}");
+          print("++++++++++++++++++++++++++++++++++++++++++++++\n\n${event.snapshot.value}\n\n++++++++++++++++++++++++++++++++");
           _user.value = User.fromSnapshot(user, event.snapshot);
         });
       }
@@ -70,70 +64,48 @@ class AuthController extends GetxController {
 
   Future<void> signUp(String email, String password) async {
     try {
-      await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
+      await _auth.createUserWithEmailAndPassword(email: email, password: password);
       Get.back();
     } catch (e) {
-      Get.snackbar("Error creating your account!", e.toString(),
-          snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar("Error creating your account!", e.toString(), snackPosition: SnackPosition.BOTTOM);
     }
   }
 
   Future<void> signIn(String email, String password) async {
-    await _auth
-        .signInWithEmailAndPassword(email: email, password: password)
-        .timeout(Duration(seconds: 5),
-            onTimeout: () =>
-                Future.error(Exception("Timed out , Check your Internet.")))
-        .then((value) {
-      Get.snackbar("Welcome Back :D",
-          "Hello ${value.user?.displayName}, We are glad you're back!",
-          colorText: Colors.white,
-          backgroundColor: Colors.black87,
-          snackPosition: SnackPosition.BOTTOM,
-          snackStyle: SnackStyle.FLOATING);
+    await _auth.signInWithEmailAndPassword(email: email, password: password).timeout(Duration(seconds: 5), onTimeout: () => Future.error(Exception("Timed out , Check your Internet."))).then((value) {
+      Get.snackbar("Welcome Back :D", "Hello ${value.user?.displayName}, We are glad you're back!",
+          colorText: Colors.white, backgroundColor: Colors.black87, snackPosition: SnackPosition.BOTTOM, snackStyle: SnackStyle.FLOATING);
     }, onError: ((Object e, StackTrace stackTrace) {
-      Get.snackbar("Failed to Sign you in!", e.toString(),
-          snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar("Failed to Sign you in!", e.toString(), snackPosition: SnackPosition.BOTTOM);
     }));
   }
 
-  Future<void> sendOTPForLogin(String phoneNumber) async {
-    HttpsCallable sendOTPForLoginFunction =
-        FirebaseFunctions.instance.httpsCallable('sendOTPForLogin');
+  dynamic sendOTPForLogin(String phoneNumber) async {
+    HttpsCallable sendOTPForLoginFunction = FirebaseFunctions.instance.httpsCallable('sendOTPForLogin');
+    HttpsCallableResult? response;
     try {
       // _waitingResponse.value = true;
-      HttpsCallableResult response = await sendOTPForLoginFunction
-          .call(<String, dynamic>{
-        'phoneNumber': phoneNumber,
-        'messageType': 'SMS',
-        'language': 'en'
-      });
-      // mezcalmosSnackBar("Notice ~", "OTP message has been sent !");
-      // _waitingResponse.value = false;
-
-      print("Send Otp For Login Response");
-      print(response.data);
+      response = await sendOTPForLoginFunction.call(<String, dynamic>{'phoneNumber': phoneNumber, 'messageType': 'SMS', 'language': 'en', 'database': 'test'});
+      mezcalmosSnackBar("Notice ~", "OTP message has been sent !");
     } catch (e) {
       // mezcalmosSnackBar("Notice ~", "Failed to send OTP message :( ");
       // _waitingResponse.value = false;
-      print("Exception happend in sendOTPForLogin : $e");
+      print("Exception happend in sendOTPForLogin : $e"); // i
     }
+    return response!.data;
   }
 
   Future<bool> signInUsingOTP(String phoneNumber, String otpCode) async {
-    HttpsCallable getAuthUsingOTPFunction =
-        FirebaseFunctions.instance.httpsCallable('getAuthUsingOTP');
+    print("$phoneNumber < phone ------ otp > ${otpCode}");
+    HttpsCallable getAuthUsingOTPFunction = FirebaseFunctions.instance.httpsCallable('getAuthUsingOTP');
     try {
       // _waitingResponse.value = true;
-      HttpsCallableResult response = await getAuthUsingOTPFunction.call(
-          <String, dynamic>{'phoneNumber': phoneNumber, 'OTPCode': otpCode});
+      HttpsCallableResult response = await getAuthUsingOTPFunction.call(<String, dynamic>{'phoneNumber': phoneNumber, 'OTPCode': otpCode, 'database': 'test'});
       // mezcalmosSnackBar("Notice ~", "OTP message has been sent !");
       // _waitingResponse.value = false;
       print("GetAuthUsingOTP Response");
-      print(response.data);
-      await fireAuth.FirebaseAuth.instance
-          .signInWithCustomToken(response.data["token"]);
+      print("################################ DATA ###############################\n\n${response.data}\n\n");
+      await fireAuth.FirebaseAuth.instance.signInWithCustomToken(response.data["token"]);
       return Future.value(true);
     } catch (e) {
       // mezcalmosSnackBar("Notice ~", "Failed to send OTP message :( ");
@@ -145,7 +117,7 @@ class AuthController extends GetxController {
 
   // flutter_facebook_auth Package causes a conflict with GetStorage !
 
-  Future<void> signInWithFacebook() async {
+  Future signInWithFacebook() async {
     // Trigger the sign-in flow
     final LoginResult result = await FacebookAuth.instance.login();
     print(" FB AUTH STATUS +++++++++++++++++++++ ${result.status.toString()}");
@@ -154,12 +126,10 @@ class AuthController extends GetxController {
       mezcalmosSnackBar("Notice ~", "Failed SignIn with Facebook !");
     } else {
       // Create a credential from the access token
-      final facebookAuthCredential =
-          fireAuth.FacebookAuthProvider.credential(result.accessToken!.token);
+      final facebookAuthCredential = fireAuth.FacebookAuthProvider.credential(result.accessToken!.token);
 
       // Once signed in, return the UserCredential
-      fireAuth.FirebaseAuth.instance
-          .signInWithCredential(facebookAuthCredential);
+      fireAuth.FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
     }
   }
 
@@ -169,18 +139,15 @@ class AuthController extends GetxController {
       await _auth.signOut();
       TaxiInjectionHelper.revokeListenersOnSignOut();
     } catch (e) {
-      Get.snackbar("Failed to Sign you out!", e.toString(),
-          snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar("Failed to Sign you out!", e.toString(), snackPosition: SnackPosition.BOTTOM);
     }
   }
 
   void detachListeners() {
     _userInfoListener
         .cancel()
-        .then((value) => print(
-            "A listener was disposed on authController::detachListeners !"))
-        .catchError((err) => print(
-            "Error happend while trying to dispose authController::detachListeners !"));
+        .then((value) => print("A listener was disposed on authController::detachListeners !"))
+        .catchError((err) => print("Error happend while trying to dispose authController::detachListeners !"));
   }
 
   @override

@@ -22,10 +22,10 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
     List<LatLng> pLineCoords = <LatLng>[];
     Set<Polyline> polyLineSet = {};
 
-    List<PointLatLng> res = polylinePoints.decodePolyline(
-        controller.selectedIncommingOrder?.routeInformation['polyline']);
-    res.forEach((PointLatLng point) =>
-        pLineCoords.add(LatLng(point.latitude, point.longitude)));
+    print("&&&&&&&&&&&&&&&&&&&&&&&&&&  ${controller.selectedIncommingOrder?.toJson()}");
+    List<PointLatLng> res = polylinePoints.decodePolyline(controller.selectedIncommingOrder?.routeInformation['polyline']);
+    res.forEach((PointLatLng point) => pLineCoords.add(LatLng(point.latitude, point.longitude)));
+
     polyLineSet.add(Polyline(
       color: Colors.blueAccent,
       polylineId: PolylineId(controller.selectedIncommingOrder?.id),
@@ -38,40 +38,28 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
     ));
 
     return Scaffold(
-      appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
-          "back", () => Get.back(closeOverlays: true)),
+      appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back(closeOverlays: true)),
       body: Stack(
         alignment: Alignment.topCenter,
         children: [
-          Obx(() => controller.waitingResponse ||
-                  controller.selectedIncommingOrder?.id == null
+          Obx(() => controller.waitingResponse || controller.selectedIncommingOrder?.id == null
               ? Center(child: CircularProgressIndicator())
               : Container(
                   child: GoogleMap(
                     markers: {
                       Marker(
-                        infoWindow: InfoWindow(
-                            title: "Ride from : ",
-                            snippet: controller
-                                .selectedIncommingOrder?.to['address']),
+                        infoWindow: InfoWindow(title: "Ride from : ", snippet: controller.selectedIncommingOrder?.to['address']),
                         markerId: MarkerId("from"),
                         icon: controller.custommetLocationMarker,
                         visible: true,
-                        position: LatLng(
-                            controller.selectedIncommingOrder?.from['lat'],
-                            controller.selectedIncommingOrder?.from['lng']),
+                        position: LatLng(controller.selectedIncommingOrder?.from['lat'], controller.selectedIncommingOrder?.from['lng']),
                       ),
                       Marker(
-                          infoWindow: InfoWindow(
-                              title: "Ride to : ",
-                              snippet: controller
-                                  .selectedIncommingOrder?.to['address']),
+                          infoWindow: InfoWindow(title: "Ride to : ", snippet: controller.selectedIncommingOrder?.to['address']),
                           markerId: MarkerId("to"),
                           icon: controller.custommetDestinationMarker,
                           visible: true,
-                          position: LatLng(
-                              controller.selectedIncommingOrder?.to['lat'],
-                              controller.selectedIncommingOrder?.to['lng'])),
+                          position: LatLng(controller.selectedIncommingOrder?.to['lat'], controller.selectedIncommingOrder?.to['lng'])),
                     },
                     polylines: polyLineSet,
                     zoomControlsEnabled: false,
@@ -79,9 +67,7 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                     mapType: MapType.normal,
                     initialCameraPosition: CameraPosition(
                         bearing: 192.8334901395799,
-                        target: LatLng(
-                            controller.selectedIncommingOrder?.from['lat'],
-                            controller.selectedIncommingOrder?.from['lng']),
+                        target: LatLng(controller.selectedIncommingOrder?.from['lat'], controller.selectedIncommingOrder?.from['lng']),
                         tilt: 59.440717697143555,
                         zoom: 15.151926040649414),
                     onMapCreated: (GoogleMapController controller) {
@@ -90,21 +76,21 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                     },
                   ),
                 )),
+          // -  SIze of the Bundle ~  18mb
+          // -  Performance >>   ~8-12  routes that are aready on stack
+
+          // Much cleaner code
+          // easy to read
+          // easy manage
+
           Positioned(
               bottom: 90,
               child: Container(
                 height: getSizeRelativeToScreen(30, Get.height, Get.width),
                 width: getSizeRelativeToScreen(180, Get.height, Get.width),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(5),
-                    boxShadow: <BoxShadow>[
-                      BoxShadow(
-                          color: Color.fromARGB(255, 216, 225, 249),
-                          spreadRadius: 0,
-                          blurRadius: 7,
-                          offset: Offset(0, 7)),
-                    ]),
+                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(5), boxShadow: <BoxShadow>[
+                  BoxShadow(color: Color.fromARGB(255, 216, 225, 249), spreadRadius: 0, blurRadius: 7, offset: Offset(0, 7)),
+                ]),
                 child: Stack(
                   alignment: Alignment.centerLeft,
                   children: [
@@ -112,12 +98,7 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                       left: 10,
                       child: CircleAvatar(
                         child: ClipOval(
-                          child: controller.selectedIncommingOrder
-                                      ?.customer['image'] ==
-                                  null
-                              ? Image.asset(aDefaultAvatar)
-                              : Image.network(controller
-                                  .selectedIncommingOrder?.customer['image']),
+                          child: controller.selectedIncommingOrder?.customer['image'] == null ? Image.asset(aDefaultAvatar) : Image.network(controller.selectedIncommingOrder?.customer['image']),
                         ),
                         backgroundColor: Colors.grey.shade200,
                       ),
@@ -126,8 +107,7 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                       left: 60,
                       top: 10,
                       child: Text(
-                        controller.selectedIncommingOrder?.customer['name'] ??
-                            "Customer",
+                        controller.selectedIncommingOrder?.customer['name'] ?? "Customer",
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w600,
@@ -139,18 +119,13 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                       bottom: 10,
                       child: Text(
                         "${controller.selectedIncommingOrder?.routeInformation['distance']['text'] ?? '? km'} far",
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey),
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey),
                       ),
                     ),
                     Positioned(
                         bottom: 10,
                         top: 10,
-                        right: getSizeRelativeToScreen(
-                                180, Get.height, Get.width) /
-                            3,
+                        right: getSizeRelativeToScreen(180, Get.height, Get.width) / 3,
                         child: VerticalDivider(
                           width: 1,
                           color: Colors.grey,
@@ -168,10 +143,7 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                       right: 10,
                       child: Text(
                         "${controller.selectedIncommingOrder?.routeInformation['distance']['text'] ?? '? km'}",
-                        style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black),
+                        style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black),
                       ),
                     ),
                     Positioned(
@@ -186,10 +158,7 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                       right: 10,
                       child: Text(
                         "${controller.selectedIncommingOrder?.routeInformation['duration']['text'] ?? '? mins'}",
-                        style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black),
+                        style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black),
                       ),
                     ),
                   ],
@@ -199,14 +168,10 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
               bottom: 35,
               child: TextButton(
                 style: ButtonStyle(
-                  fixedSize: MaterialStateProperty.all(Size(
-                      getSizeRelativeToScreen(180, Get.height, Get.width),
-                      getSizeRelativeToScreen(20, Get.height, Get.width))),
-                  backgroundColor: MaterialStateProperty.all(
-                      Color.fromARGB(255, 78, 168, 35)),
+                  fixedSize: MaterialStateProperty.all(Size(getSizeRelativeToScreen(180, Get.height, Get.width), getSizeRelativeToScreen(20, Get.height, Get.width))),
+                  backgroundColor: MaterialStateProperty.all(Color.fromARGB(255, 78, 168, 35)),
                 ),
-                onPressed: () async => await controller
-                    .acceptTaxi(controller.selectedIncommingOrder?.id),
+                onPressed: () async => await controller.acceptTaxi(controller.selectedIncommingOrder?.id),
                 child: Text(
                   "Accept Order",
                   style: TextStyle(
@@ -220,16 +185,9 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
             child: Container(
               height: getSizeRelativeToScreen(30, Get.height, Get.width),
               width: getSizeRelativeToScreen(180, Get.height, Get.width),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(5),
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                        color: Color.fromARGB(255, 216, 225, 249),
-                        spreadRadius: 0,
-                        blurRadius: 7,
-                        offset: Offset(0, 7)),
-                  ]),
+              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(5), boxShadow: <BoxShadow>[
+                BoxShadow(color: Color.fromARGB(255, 216, 225, 249), spreadRadius: 0, blurRadius: 7, offset: Offset(0, 7)),
+              ]),
               child: Stack(
                 // direction: Axis.horizontal,
                 // mainAxisAlignment: MainAxisAlignment.center,
@@ -241,18 +199,13 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                     thickness: 1,
                   ),
                   Container(
-                    padding: EdgeInsets.all(
-                        getSizeRelativeToScreen(2.5, Get.height, Get.width)),
+                    padding: EdgeInsets.all(getSizeRelativeToScreen(2.5, Get.height, Get.width)),
                     height: getSizeRelativeToScreen(20, Get.height, Get.width),
                     width: getSizeRelativeToScreen(20, Get.height, Get.width),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       boxShadow: <BoxShadow>[
-                        BoxShadow(
-                            color: Color.fromARGB(255, 216, 225, 249),
-                            spreadRadius: 0,
-                            blurRadius: 5,
-                            offset: Offset(0, 7)),
+                        BoxShadow(color: Color.fromARGB(255, 216, 225, 249), spreadRadius: 0, blurRadius: 5, offset: Offset(0, 7)),
                       ],
                       gradient: LinearGradient(colors: [
                         Color.fromARGB(255, 97, 127, 255),
@@ -278,14 +231,9 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                     left: 25,
                     top: 30,
                     child: GestureDetector(
-                      onTap: () => mezcalmosSnackBar("From",
-                          controller.selectedIncommingOrder?.from['address']),
+                      onTap: () => mezcalmosSnackBar("From", controller.selectedIncommingOrder?.from['address']),
                       child: Text(
-                        (controller.selectedIncommingOrder?.from['address']
-                                    .toString()
-                                    .substring(0, 13) ??
-                                "..........") +
-                            " ..", //13+..
+                        (controller.selectedIncommingOrder?.from['address'].toString().substring(0, 13) ?? "..........") + " ..", //13+..
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -294,9 +242,7 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                     ),
                   ),
                   Positioned(
-                    left: (getSizeRelativeToScreen(180, Get.height, Get.width) /
-                            2) +
-                        40,
+                    left: (getSizeRelativeToScreen(180, Get.height, Get.width) / 2) + 40,
                     top: 13,
                     child: Text(
                       "to",
@@ -307,19 +253,12 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                     ),
                   ),
                   Positioned(
-                    left: (getSizeRelativeToScreen(180, Get.height, Get.width) /
-                            2) +
-                        40,
+                    left: (getSizeRelativeToScreen(180, Get.height, Get.width) / 2) + 40,
                     top: 30,
                     child: GestureDetector(
-                      onTap: () => mezcalmosSnackBar("Destination",
-                          controller.selectedIncommingOrder?.to['address']),
+                      onTap: () => mezcalmosSnackBar("Destination", controller.selectedIncommingOrder?.to['address']),
                       child: Text(
-                        (controller.selectedIncommingOrder?.to['address']
-                                    .toString()
-                                    .substring(0, 13) ??
-                                "..........") +
-                            " ..", //13+..
+                        (controller.selectedIncommingOrder?.to['address'].toString().substring(0, 13) ?? "..........") + " ..", //13+..
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -336,8 +275,6 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
     );
   }
 }
-
-
 
 //
 // Order expired

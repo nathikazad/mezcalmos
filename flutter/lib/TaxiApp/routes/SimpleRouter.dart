@@ -1,8 +1,8 @@
 import 'package:get/get.dart'; // getX
-import 'package:mezcalmos/Shared/bindings/authBinding.dart';
 import 'package:mezcalmos/Shared/bindings/settingsBinding.dart';
 import 'package:mezcalmos/Shared/bindings/smsBinding.dart';
-import 'package:mezcalmos/TaxiApp/pages/AuthScreens/SMS/OtpScreen.dart';
+import 'package:mezcalmos/TaxiApp/pages/AuthScreens/SMS/OtpConfirmationScreen.dart';
+import 'package:mezcalmos/TaxiApp/pages/AuthScreens/SMS/PhoneNumberScreen.dart';
 import 'package:mezcalmos/TaxiApp/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/TaxiApp/pages/AuthScreens/SignUpScreen.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen.dart';
@@ -16,6 +16,7 @@ const String kSplashRoute = '/splash';
 const String kSignInRoute = '/sign_in';
 const String kSignUpRoute = '/sign_up';
 const String kOtpRoute = '/sign_in_otp';
+const String kOtpConfirmRoute = '/sign_in_otp_confirm';
 const String kMainAuthWrapperRoute = '/auth_wrapper';
 const String kTaxiWrapperRoute = '/taxi_wrapper';
 const String kSelectedIcommingOrder = '/selected_incomming_order';
@@ -37,15 +38,12 @@ const String kSelectedIcommingOrder = '/selected_incomming_order';
 class XRouter {
   static dynamic mainRoutes = [
     GetPage(name: kMainAuthWrapperRoute, page: () => Wrapper()),
-    GetPage(
-        name: kSplashRoute,
-        page: () => SplashScreen(),
-        binding: SettingsBinding()),
+    GetPage(name: kSplashRoute, page: () => SplashScreen(), binding: SettingsBinding()),
     GetPage(name: kTaxiWrapperRoute, page: () => TaxiWrapper()),
-    GetPage(
-        name: kSelectedIcommingOrder, page: () => IncommingOrderScreenView()),
+    GetPage(name: kSelectedIcommingOrder, page: () => IncommingOrderScreenView()),
     GetPage(name: kSignInRoute, page: () => SignIn()),
-    GetPage(name: kOtpRoute, page: () => OtpScreen(), binding: SmsBinding()),
+    GetPage(name: kOtpRoute, page: () => PhoneNumberScreen(), binding: SmsBinding()),
+    GetPage(name: kOtpConfirmRoute, page: () => OtpConfirmationScreen()),
     GetPage(name: kSignUpRoute, page: () => SignUp()),
   ];
 }

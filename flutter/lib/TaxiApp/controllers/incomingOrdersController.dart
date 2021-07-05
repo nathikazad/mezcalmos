@@ -14,12 +14,9 @@ import 'package:mezcalmos/TaxiApp/models/Order.dart';
 import 'package:mezcalmos/TaxiApp/routes/SimpleRouter.dart';
 
 class IncomingOrdersController extends GetxController {
-  RxList<Order> orders = <Order>[]
-      .obs; // this is observable which will be constaintly changing in realtime .
-  AuthController _authController =
-      Get.find<AuthController>(); // since it's already injected .
-  DatabaseHelper _databaseHelper =
-      Get.find<DatabaseHelper>(); // Already Injected in main function
+  RxList<Order> orders = <Order>[].obs; // this is observable which will be constaintly changing in realtime .
+  AuthController _authController = Get.find<AuthController>(); // since it's already injected .
+  DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>(); // Already Injected in main function
   RxBool _waitingResponse = RxBool(false);
   Rx<Order?> _selectedIncommingOrder = Order.empty().obs;
   late BitmapDescriptor _customerLocationMarker;
@@ -34,17 +31,12 @@ class IncomingOrdersController extends GetxController {
   dynamic get waitingResponse => _waitingResponse.value;
 
   Order? get selectedIncommingOrder => _selectedIncommingOrder.value;
-  void set selectedIncommingOrder(Order? selectedOrder) =>
-      _selectedIncommingOrder.value = selectedOrder;
+  set selectedIncommingOrder(Order? selectedOrder) => _selectedIncommingOrder.value = selectedOrder;
 
   Future<void> loadBitmapDescriptors() async {
-    _customerLocationMarker = await BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(size: Size(20, 20)),
-        custommer_location_marker_asset);
+    _customerLocationMarker = await BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(20, 20)), custommer_location_marker_asset);
 
-    _customerDestinationMarker = await BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(size: Size(20, 20)),
-        custommer_destination_marker_asset);
+    _customerDestinationMarker = await BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(20, 20)), custommer_destination_marker_asset);
   }
 
   @override
@@ -62,24 +54,14 @@ class IncomingOrdersController extends GetxController {
     if (_authController.user != null) {
       _listeners.addAll([
         // Added Order!
-        _databaseHelper.firebaseDatabase
-            .reference()
-            .child(taxiOpenOrdersNode)
-            .onChildAdded
-            .listen((event) => orders.add(Order.fromSnapshot(event.snapshot))),
+        _databaseHelper.firebaseDatabase.reference().child(taxiOpenOrdersNode).onChildAdded.listen((event) => orders.add(Order.fromSnapshot(event.snapshot))),
 
         // Removed Order
-        _databaseHelper.firebaseDatabase
-            .reference()
-            .child(taxiOpenOrdersNode)
-            .onChildRemoved
-            .listen((event) async {
+        _databaseHelper.firebaseDatabase.reference().child(taxiOpenOrdersNode).onChildRemoved.listen((event) async {
           // This is why GetX guys XD!
           if (event.snapshot.key == _selectedIncommingOrder.value?.id) {
             _selectedIncommingOrder.value = null;
-            if (Get.currentRoute == kSelectedIcommingOrder)
-              await MezcalmosSharedWidgets.mezcalmosDialog(
-                  55, Get.height, Get.width);
+            if (Get.currentRoute == kSelectedIcommingOrder) await MezcalmosSharedWidgets.mezcalmosDialog(55, Get.height, Get.width);
             Get.back(closeOverlays: true);
           }
 
@@ -87,14 +69,8 @@ class IncomingOrdersController extends GetxController {
         }),
 
         //changed Order
-        _databaseHelper.firebaseDatabase
-            .reference()
-            .child(taxiOpenOrdersNode)
-            .onChildChanged
-            .listen((event) {
-          orders[orders.indexOf(orders.singleWhere(
-                  (element) => element.id == event.snapshot.key))] =
-              Order.fromSnapshot(event.snapshot);
+        _databaseHelper.firebaseDatabase.reference().child(taxiOpenOrdersNode).onChildChanged.listen((event) {
+          orders[orders.indexOf(orders.singleWhere((element) => element.id == event.snapshot.key))] = Order.fromSnapshot(event.snapshot);
         }),
       ]);
 
@@ -106,19 +82,15 @@ class IncomingOrdersController extends GetxController {
   void detachListeners() {
     _listeners.forEach((sub) => sub
         .cancel()
-        .then((value) => print(
-            "A listener was disposed on orderController::dettahListeners !"))
-        .catchError((err) => print(
-            "Error happend while trying to dispose orderController::dettahListeners !")));
+        .then((value) => print("A listener was disposed on orderController::dettahListeners !"))
+        .catchError((err) => print("Error happend while trying to dispose orderController::dettahListeners !")));
   }
 
   Future<void> acceptTaxi(String orderId) async {
-    HttpsCallable acceptTaxiFunction =
-        FirebaseFunctions.instance.httpsCallable('acceptTaxiOrder');
+    HttpsCallable acceptTaxiFunction = FirebaseFunctions.instance.httpsCallable('acceptTaxiOrder');
     try {
       _waitingResponse.value = true;
-      HttpsCallableResult response =
-          await acceptTaxiFunction.call(<String, dynamic>{'orderId': orderId});
+      HttpsCallableResult response = await acceptTaxiFunction.call(<String, dynamic>{'orderId': orderId, "database": "test"});
       _waitingResponse.value = false;
       _selectedIncommingOrder.value = new Order.empty();
       Get.back(closeOverlays: true);

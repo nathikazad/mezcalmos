@@ -19,10 +19,9 @@ class TaxiAuthController extends GetxController {
   Rxn<TaxiDriver> _model = Rxn<TaxiDriver>();
   DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
   AuthController _authController = Get.find<AuthController>();
-  Rx<Widget> _dynamicScreen =
-      (Center(child: CircularProgressIndicator()) as Widget).obs;
+  Rx<Widget> _dynamicScreen = (Center(child: CircularProgressIndicator()) as Widget).obs;
 
-  String? get currentOrderId => _model.value?.currentOrder ?? null;
+  dynamic get currentOrderId => _model.value?.currentOrder ?? null;
   dynamic get authorizedTaxi => _model.value?.isAuthorized ?? false;
   bool? get isLooking => _model.value?.isLooking ?? false;
   Widget get dynamicScreen => _dynamicScreen.value;
@@ -36,9 +35,7 @@ class TaxiAuthController extends GetxController {
       - CurrentOrder
   */
 
-  Widget _getScreen() => authorizedTaxi == true
-      ? (currentOrderId != null ? CurrentOrderScreen() : IncomingOrdersScreen())
-      : UnauthorizedScreen();
+  Widget _getScreen() => authorizedTaxi == true ? (_model.value?.currentOrder != null ? CurrentOrderScreen() : IncomingOrdersScreen()) : UnauthorizedScreen();
 
   @override
   void onInit() async {
@@ -54,12 +51,9 @@ class TaxiAuthController extends GetxController {
     print("currentOrderId from TaxiAuthController >> ${currentOrderId}");
 
     if (_authController.user != null) {
-      _taxiAuthListener = _databaseHelper.firebaseDatabase
-          .reference()
-          .child(taxiAuthNode(_authController.user?.uid ?? ''))
-          .onValue
-          .listen((event) {
-        _model.value = TaxiDriver.fromSnapshot(event.snapshot);
+      _taxiAuthListener = _databaseHelper.firebaseDatabase.reference().child(taxiAuthNode(_authController.user?.uid ?? '')).onValue.listen((event) {
+        _model.value = event.snapshot.value != null ? TaxiDriver.fromSnapshot(event.snapshot) : TaxiDriver(false, false, null, null, null);
+
         // our magical Trick :p
         _dynamicScreen.value = _getScreen();
       });
@@ -67,22 +61,14 @@ class TaxiAuthController extends GetxController {
   }
 
   void turnOff() {
-    _databaseHelper.firebaseDatabase
-        .reference()
-        .child(taxiIsLookingField(_authController.user?.uid))
-        .set(false)
-        .catchError((err) {
+    _databaseHelper.firebaseDatabase.reference().child(taxiIsLookingField(_authController.user?.uid)).set(false).catchError((err) {
       print("Error turning [ isLooking = false ] -> $err");
       mezcalmosSnackBar("Error ~", "Failed turning it off!");
     });
   }
 
   void turnOn() {
-    _databaseHelper.firebaseDatabase
-        .reference()
-        .child(taxiIsLookingField(_authController.user?.uid))
-        .set(true)
-        .catchError((err) {
+    _databaseHelper.firebaseDatabase.reference().child(taxiIsLookingField(_authController.user?.uid)).set(true).catchError((err) {
       print("Error turning [ isLooking = true ] -> $err");
       mezcalmosSnackBar("Error ~", "Failed turning it on!");
     });
@@ -100,10 +86,8 @@ class TaxiAuthController extends GetxController {
   void detachListeners() {
     _taxiAuthListener
         .cancel()
-        .then((value) => print(
-            "A listener was disposed on TaxiAuthController::detachListeners !"))
-        .catchError((err) => print(
-            "Error happend while trying to dispose TaxiAuthController::detachListeners !"));
+        .then((value) => print("A listener was disposed on TaxiAuthController::detachListeners !"))
+        .catchError((err) => print("Error happend while trying to dispose TaxiAuthController::detachListeners !"));
   }
 
   @override

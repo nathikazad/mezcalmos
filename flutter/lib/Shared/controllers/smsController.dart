@@ -18,8 +18,7 @@ class SmsController extends GetxController {
   String get otpCode => _otpCode.value;
   set otpCode(String val) => _otpCode.value = val;
 
-  DatabaseHelper _databaseHelper =
-      Get.find<DatabaseHelper>(); // Already Injected in main function
+  DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>(); // Already Injected in main function
 
   @override
   void dispose() {

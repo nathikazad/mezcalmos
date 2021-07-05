@@ -23,16 +23,11 @@ import 'package:mezcalmos/TaxiApp/pages/SplashScreen.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  const startPoint =
-      bool.hasEnvironment('APP_SP') ? String.fromEnvironment('APP_SP') : null;
-  const _host =
-      bool.hasEnvironment('HOST') ? String.fromEnvironment('HOST') : localhost;
-  const _db =
-      bool.hasEnvironment('DB') ? String.fromEnvironment('DB') : defaultDb;
+  const startPoint = bool.hasEnvironment('APP_SP') ? String.fromEnvironment('APP_SP') : null;
+  const _host = bool.hasEnvironment('HOST') ? String.fromEnvironment('HOST') : localhost;
+  const _db = bool.hasEnvironment('DB') ? String.fromEnvironment('DB') : defaultDb;
 
-  const _launch_mode = bool.hasEnvironment('LMODE')
-      ? String.fromEnvironment('LMODE')
-      : defaultLaunchMode;
+  const _launch_mode = bool.hasEnvironment('LMODE') ? String.fromEnvironment('LMODE') : defaultLaunchMode;
 
   print('SP -> ${startPoint.toString()}');
   print('host  -> $_host');
@@ -41,8 +36,7 @@ void main() {
 
   try {
     if ((Platform.isAndroid || Platform.isIOS) && _host == localhost) {
-      throw new Exception(
-          "[!] Error > When building for Android/IOS , Please make sure to pass Your Firebase host Machine's IP !");
+      throw new Exception("[!] Error > When building for Android/IOS , Please make sure to pass Your Firebase host Machine's IP !");
     }
   } catch (e) {
     print(e);
@@ -65,6 +59,7 @@ class SPoint extends StatefulWidget {
   final String _host;
   final String _db;
   final String _launch_mode;
+
   SPoint(this._app, this._host, this._db, this._launch_mode);
 
   @override
@@ -86,22 +81,19 @@ class _SPointState extends State<SPoint> {
       if (widget._launch_mode == "prod") {
         firebaseDb = FirebaseDatabase(app: _app);
       } else if (widget._launch_mode == "dev") {
-        firebaseDb =
-            FirebaseDatabase(app: _app, databaseURL: widget._host + dbRoot);
+        // Firebase !
+        firebaseDb = FirebaseDatabase(app: _app, databaseURL: widget._host + dbRoot);
         await FirebaseAuth.instance.useEmulator(widget._host + authPort);
-        FirebaseFunctions.instance
-            .useFunctionsEmulator(origin: widget._host + functionPort);
+        FirebaseFunctions.instance.useFunctionsEmulator(origin: widget._host + functionPort);
       }
       // staging
       else {
-        firebaseDb =
-            FirebaseDatabase(app: _app, databaseURL: widget._host + dbRoot);
+        // firebaseDb = FirebaseDatabase(app: _app, databaseURL: widget._host + dbRoot);
+        firebaseDb = FirebaseDatabase(app: _app, databaseURL: stagingDb);
       }
 
       // Global Injections !
-      Get.put(DatabaseHelper(widget._host + dbRoot, widget._db,
-          firebaseDatabase: firebaseDb,
-          fapp: _app)); // we can specify after if we have many Databases ..
+      Get.put(DatabaseHelper(widget._host + dbRoot, widget._db, firebaseDatabase: firebaseDb, fapp: _app)); // we can specify after if we have many Databases ..
 
       // GetStorage
       if (await GetStorage.init()) {
@@ -109,9 +101,7 @@ class _SPointState extends State<SPoint> {
         await GetStorage().write("lmod", widget._launch_mode);
 
         // Loading map asset !
-        await rootBundle
-            .loadString(map_style_asset)
-            .then((jsonString) => GetStorage().write('map_style', jsonString));
+        await rootBundle.loadString(map_style_asset).then((jsonString) => GetStorage().write('map_style', jsonString));
       } else
         print("[ GET STORAGE ] FAILED TO INITIALIZE !");
 
@@ -128,8 +118,7 @@ class _SPointState extends State<SPoint> {
   @override
   void initState() {
     // INjecting this here cuz we will need it For language / them ... etc
-    _settingsController =
-        Get.put<SettingsController>(SettingsController(), permanent: true);
+    _settingsController = Get.put<SettingsController>(SettingsController(), permanent: true);
 
     initializeSetup();
     super.initState();
@@ -143,9 +132,7 @@ class _SPointState extends State<SPoint> {
         debugShowCheckedModeBanner: false,
         home: Scaffold(
           body: Center(
-            child: Icon(Icons.signal_wifi_bad,
-                color: Colors.red.shade200,
-                size: getSizeRelativeToScreen(50, Get.height, Get.width)),
+            child: Icon(Icons.signal_wifi_bad, color: Colors.red.shade200, size: getSizeRelativeToScreen(50, Get.height, Get.width)),
           ),
         ),
       );
