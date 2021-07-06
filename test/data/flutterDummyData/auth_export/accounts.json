@@ -2,160 +2,136 @@
   "kind": "identitytoolkit#DownloadAccountResponse",
   "users": [
     {
-      "localId": "8SaT1OCTPnmQF9cHaPc4HcKNO0Tk",
-      "createdAt": "1624297975508",
-      "lastLoginAt": "1624298141498",
-      "displayName": "Admin One",
-      "photoUrl": "https://randomuser.me/api/portraits/men/75.jpg",
-      "screenName": "Admin One",
-      "email": "admin@mezcalmos.com",
-      "emailVerified": true,
-      "salt": "fakeSalts8T2ZCugYpYA83699UNG",
-      "passwordHash": "fakeHash:salt=fakeSalts8T2ZCugYpYA83699UNG:password=password",
-      "passwordUpdatedAt": 1624297122634,
-      "validSince": "1624297122",
-      "providerUserInfo": [
-        {
-          "providerId": "password",
-          "rawId": "admin@mezcalmos.com",
-          "federatedId": "admin@mezcalmos.com",
-          "displayName": "Admin One",
-          "photoUrl": "https://randomuser.me/api/portraits/men/75.jpg",
-          "email": "admin@mezcalmos.com",
-          "screenName": "Admin One"
-        }
-      ],
-      "lastRefreshAt": "2021-06-21T17:55:41.499Z"
-    },
-    {
-      "localId": "IZPoSlFrpgq0vemeTwDF7MfNmMnF",
-      "createdAt": "1624298001114",
-      "lastLoginAt": "1624298001114",
-      "displayName": "Customer Three",
-      "photoUrl": "https://randomuser.me/api/portraits/men/71.jpg",
-      "screenName": "Customer Three",
-      "email": "customer.three@mezcalmos.com",
-      "emailVerified": true,
-      "salt": "fakeSalts8T2ZCugYpYA83699UNG",
-      "passwordHash": "fakeHash:salt=fakeSalts8T2ZCugYpYA83699UNG:password=password",
-      "passwordUpdatedAt": 1624297122634,
-      "validSince": "1624297122",
-      "providerUserInfo": [
-        {
-          "providerId": "password",
-          "rawId": "customer.three@mezcalmos.com",
-          "federatedId": "customer.three@mezcalmos.com",
-          "displayName": "Customer Three",
-          "photoUrl": "https://randomuser.me/api/portraits/men/71.jpg",
-          "email": "customer.three@mezcalmos.com",
-          "screenName": "Customer Three"
-        }
-      ],
-      "lastRefreshAt": "2021-06-21T17:53:21.119Z"
-    },
-    {
-      "localId": "War9fxvd8NTY375t2qrXJX6KRyF0",
-      "createdAt": "1624297984248",
-      "lastLoginAt": "1624298360905",
-      "displayName": "Customer One",
-      "photoUrl": "https://randomuser.me/api/portraits/men/70.jpg",
-      "screenName": "Customer One",
-      "email": "customer.one@mezcalmos.com",
-      "emailVerified": true,
-      "salt": "fakeSalts8T2ZCugYpYA83699UNG",
-      "passwordHash": "fakeHash:salt=fakeSalts8T2ZCugYpYA83699UNG:password=password",
-      "passwordUpdatedAt": 1624297122634,
-      "validSince": "1624297122",
-      "providerUserInfo": [
-        {
-          "providerId": "password",
-          "rawId": "customer.one@mezcalmos.com",
-          "federatedId": "customer.one@mezcalmos.com",
-          "displayName": "Customer One",
-          "photoUrl": "https://randomuser.me/api/portraits/men/70.jpg",
-          "email": "customer.one@mezcalmos.com",
-          "screenName": "Customer One"
-        }
-      ],
-      "lastRefreshAt": "2021-06-21T17:59:20.905Z"
-    },
-    {
-      "localId": "mCV9KobLk0OdqHqiNkErcCJiYdEX",
-      "createdAt": "1624297967190",
-      "lastLoginAt": "1624298339417",
-      "displayName": "Taxi One",
-      "photoUrl": "https://randomuser.me/api/portraits/men/74.jpg",
-      "screenName": "Taxi One",
-      "email": "driver.one@mezcalmos.com",
-      "emailVerified": true,
-      "salt": "fakeSalts8T2ZCugYpYA83699UNG",
-      "passwordHash": "fakeHash:salt=fakeSalts8T2ZCugYpYA83699UNG:password=password",
-      "passwordUpdatedAt": 1624297122634,
-      "validSince": "1624297122",
-      "providerUserInfo": [
-        {
-          "providerId": "password",
-          "rawId": "driver.one@mezcalmos.com",
-          "federatedId": "driver.one@mezcalmos.com",
-          "displayName": "Taxi One",
-          "photoUrl": "https://randomuser.me/api/portraits/men/74.jpg",
-          "email": "driver.one@mezcalmos.com",
-          "screenName": "Taxi One"
-        }
-      ],
-      "lastRefreshAt": "2021-06-21T17:58:59.417Z"
-    },
-    {
-      "localId": "wRNjIkN5saEWPDFV9CDDgv3ovItw",
-      "createdAt": "1624298266421",
-      "lastLoginAt": "1624298266420",
+      "localId": "O7jcgQ0UcQbMDRKYRbTjZRLgMnTz",
+      "createdAt": "1625603553071",
+      "lastLoginAt": "1625603675394",
       "displayName": "CustTwo",
       "photoUrl": "https://randomuser.me/api/portraits/men/65.jpg",
       "screenName": "CustTwo",
       "email": "customer.two@mezcalmos.com",
       "emailVerified": true,
-      "salt": "fakeSalts8T2ZCugYpYA83699UNG",
-      "passwordHash": "fakeHash:salt=fakeSalts8T2ZCugYpYA83699UNG:password=password",
-      "passwordUpdatedAt": 1624297122634,
-      "validSince": "1624297122",
       "providerUserInfo": [
         {
-          "providerId": "password",
-          "rawId": "customer.two@mezcalmos.com",
-          "federatedId": "customer.two@mezcalmos.com",
+          "providerId": "facebook.com",
+          "rawId": "1069257421501030795405152462351953104596",
+          "federatedId": "1069257421501030795405152462351953104596",
           "displayName": "CustTwo",
           "photoUrl": "https://randomuser.me/api/portraits/men/65.jpg",
           "email": "customer.two@mezcalmos.com",
           "screenName": "CustTwo"
         }
       ],
-      "lastRefreshAt": "2021-06-21T17:57:46.431Z"
+      "lastRefreshAt": "2021-07-06T20:34:35.394Z"
     },
     {
-      "localId": "xFHI2bNdfibq30ylqfCscDt1IeTk",
-      "createdAt": "1624297992536",
-      "lastLoginAt": "1624298200483",
+      "localId": "PBcTv6zSy1FUT7C3EOaFj1Rw8dct",
+      "createdAt": "1625603561139",
+      "lastLoginAt": "1625603664395",
       "displayName": "Taxi Two",
       "photoUrl": "https://randomuser.me/api/portraits/men/79.jpg",
       "screenName": "Taxi Two",
       "email": "taxi.two@mezcalmos.com",
       "emailVerified": true,
-      "salt": "fakeSalts8T2ZCugYpYA83699UNG",
-      "passwordHash": "fakeHash:salt=fakeSalts8T2ZCugYpYA83699UNG:password=password",
-      "passwordUpdatedAt": 1624297122634,
-      "validSince": "1624297122",
       "providerUserInfo": [
         {
-          "providerId": "password",
-          "rawId": "taxi.two@mezcalmos.com",
-          "federatedId": "taxi.two@mezcalmos.com",
+          "providerId": "facebook.com",
+          "rawId": "7637860117005923025146195724778489672609",
+          "federatedId": "7637860117005923025146195724778489672609",
           "displayName": "Taxi Two",
           "photoUrl": "https://randomuser.me/api/portraits/men/79.jpg",
           "email": "taxi.two@mezcalmos.com",
           "screenName": "Taxi Two"
         }
       ],
-      "lastRefreshAt": "2021-06-21T17:56:40.483Z"
+      "lastRefreshAt": "2021-07-06T20:34:24.396Z"
+    },
+    {
+      "localId": "S4mN56Yf2YeSLbWRzgAOuRJ7HAI8",
+      "createdAt": "1625603536983",
+      "lastLoginAt": "1625603783338",
+      "displayName": "Customer One",
+      "photoUrl": "https://randomuser.me/api/portraits/men/70.jpg",
+      "screenName": "Customer One",
+      "email": "customer.one@mezcalmos.com",
+      "emailVerified": true,
+      "providerUserInfo": [
+        {
+          "providerId": "facebook.com",
+          "rawId": "1040901973431820086547433270077356836089",
+          "federatedId": "1040901973431820086547433270077356836089",
+          "displayName": "Customer One",
+          "photoUrl": "https://randomuser.me/api/portraits/men/70.jpg",
+          "email": "customer.one@mezcalmos.com",
+          "screenName": "Customer One"
+        }
+      ],
+      "lastRefreshAt": "2021-07-06T20:36:23.339Z"
+    },
+    {
+      "localId": "T8AByBxlwcS321zFp8um19fzPwns",
+      "createdAt": "1625603544957",
+      "lastLoginAt": "1625603744981",
+      "displayName": "Taxi One",
+      "photoUrl": "https://randomuser.me/api/portraits/men/74.jpg",
+      "screenName": "Taxi One",
+      "email": "taxi.one@mezcalmos.com",
+      "emailVerified": true,
+      "providerUserInfo": [
+        {
+          "providerId": "facebook.com",
+          "rawId": "1964548100368388451292101809702337711500",
+          "federatedId": "1964548100368388451292101809702337711500",
+          "displayName": "Taxi One",
+          "photoUrl": "https://randomuser.me/api/portraits/men/74.jpg",
+          "email": "taxi.one@mezcalmos.com",
+          "screenName": "Taxi One"
+        }
+      ],
+      "lastRefreshAt": "2021-07-06T20:35:44.981Z"
+    },
+    {
+      "localId": "soJ5WrpYtQ2R2ssZNMYBYNBVNyZ9",
+      "createdAt": "1625603520994",
+      "lastLoginAt": "1625603520994",
+      "displayName": "Admin One",
+      "photoUrl": "https://randomuser.me/api/portraits/men/75.jpg",
+      "screenName": "Admin One",
+      "email": "admin@mezcalmos.com",
+      "emailVerified": true,
+      "providerUserInfo": [
+        {
+          "providerId": "facebook.com",
+          "rawId": "8709384993980806329746503868732716981343",
+          "federatedId": "8709384993980806329746503868732716981343",
+          "displayName": "Admin One",
+          "photoUrl": "https://randomuser.me/api/portraits/men/75.jpg",
+          "email": "admin@mezcalmos.com",
+          "screenName": "Admin One"
+        }
+      ],
+      "lastRefreshAt": "2021-07-06T20:32:01.013Z"
+    },
+    {
+      "localId": "zOTdxx6Hr3Hc2hkkZa7LX7slnFo3",
+      "createdAt": "1625603529018",
+      "lastLoginAt": "1625603529018",
+      "displayName": "Customer Three",
+      "photoUrl": "https://randomuser.me/api/portraits/men/71.jpg",
+      "screenName": "Customer Three",
+      "email": "customer.three@mezcalmos.com",
+      "emailVerified": true,
+      "providerUserInfo": [
+        {
+          "providerId": "facebook.com",
+          "rawId": "2034135311804197479433897228074981736668",
+          "federatedId": "2034135311804197479433897228074981736668",
+          "displayName": "Customer Three",
+          "photoUrl": "https://randomuser.me/api/portraits/men/71.jpg",
+          "email": "customer.three@mezcalmos.com",
+          "screenName": "Customer Three"
+        }
+      ],
+      "lastRefreshAt": "2021-07-06T20:32:09.022Z"
     }
   ]
 }
