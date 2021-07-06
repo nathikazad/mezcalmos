@@ -8,12 +8,7 @@ class User {
   dynamic image;
   dynamic language;
 
-  User(
-      {required this.uid,
-      required this.email,
-      required this.displayName,
-      required this.image,
-      required this.language});
+  User({required this.uid, required this.email, required this.displayName, required this.image, required this.language});
 
   // Get props as list.
   List<Object> get props => [uid, email, displayName, image];
@@ -24,15 +19,8 @@ class User {
         email = user.email,
         displayName = user.displayName,
         image = user.photoURL,
-        language = snapshot.value['language'];
+        language = snapshot.value == null ? "en" : snapshot.value['language'];
 
   // Added for Debugging Perposes - Don't delete for now
-  Map<String, dynamic> toJson() =>
-      {
-        "uid": uid,
-        "email": email,
-        "displayName": displayName,
-        "image": image,
-        "language": language
-      };
+  Map<String, dynamic> toJson() => {"uid": uid, "email": email, "displayName": displayName, "image": image, "language": language};
 }

@@ -73,7 +73,7 @@ class _SPointState extends State<SPoint> {
 
   late SettingsController _settingsController;
 
-  void initializeSetup() async {
+  initializeSetup() async {
     try {
       FirebaseApp _app = await Firebase.initializeApp();
       late FirebaseDatabase firebaseDb;

@@ -1,8 +1,8 @@
 import 'package:firebase_database/firebase_database.dart';
 
 class TaxiDriver {
-  bool isAuthorized;
-  bool isLooking;
+  bool? isAuthorized;
+  bool? isLooking;
   dynamic currentOrder;
   dynamic driverLocation;
   dynamic lastLocationUpdateTime;
@@ -14,6 +14,8 @@ class TaxiDriver {
     this.driverLocation,
     this.lastLocationUpdateTime,
   );
+
+  TaxiDriver.empty();
 
   // Parse Json comming from the server
   // TaxiDriver.fromJson(dynamic value)

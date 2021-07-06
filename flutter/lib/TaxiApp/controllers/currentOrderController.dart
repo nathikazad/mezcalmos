@@ -12,56 +12,38 @@ import 'package:mezcalmos/TaxiApp/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/TaxiApp/models/Order.dart';
 
 class CurrentOrderController extends GetxController {
-  Rxn<Order> _model = Rxn<Order>();
+  Rx<Order> _model = Order.empty().obs;
   RxBool _waitingResponse = RxBool(false);
 
   TaxiAuthController _taxiAuthController = Get.find<TaxiAuthController>(); // since it's already injected .
   DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>(); // Already Injected in main function
 
-  late BitmapDescriptor _customerLocationMarker;
-  late BitmapDescriptor _customerDestinationMarker;
-
-  // Storing all the needed Listeners here
-  BitmapDescriptor get custommetLocationMarker => _customerLocationMarker;
-  BitmapDescriptor get custommetDestinationMarker => _customerDestinationMarker;
-
   Order? get value => _model.value;
-  dynamic get id => _model.value?.id;
+  dynamic get id => _model.value.id;
   dynamic get waitingResponse => _waitingResponse.value;
 
   late StreamSubscription<Event> _currentOrderListener;
 
-  Future<void> loadBitmapDescriptors() async {
-    _customerLocationMarker = await BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(20, 20)), custommer_location_marker_asset);
-
-    _customerDestinationMarker = await BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(20, 20)), custommer_destination_marker_asset);
-  }
-
   @override
   void onInit() {
     super.onInit();
-    _waitingResponse.value = true;
-    loadBitmapDescriptors().then((_) {
-      print("--------------------> CurrentOrderController Initialized !");
-      _currentOrderListener = _databaseHelper.firebaseDatabase.reference().child(orderId(_taxiAuthController.currentOrderId)).onValue.listen((event) {
-        print("CurrentOrderController::onValue Invoked >> ${event.snapshot.key} : ${event.snapshot.value}");
-        _model.value = Order.fromSnapshot(event.snapshot);
-      });
+    print("--------------------> CurrentOrderController Initialized !");
+    _currentOrderListener = _databaseHelper.firebaseDatabase.reference().child(orderId(_taxiAuthController.currentOrderId)).onValue.listen((event) {
+      print("CurrentOrderController::onValue Invoked >> ${event.snapshot.key} : ${event.snapshot.value}");
+      _model.value = Order.fromSnapshot(event.snapshot);
     });
-    _waitingResponse.value = false;
   }
 
   Future<void> cancelTaxi(String reason) async {
     HttpsCallable cancelTaxiFunction = FirebaseFunctions.instance.httpsCallable('cancelTaxiFromDriver');
-
+    print("Cancel Taxi Called");
     try {
       _waitingResponse.value = true;
       HttpsCallableResult response = await cancelTaxiFunction.call(<String, dynamic>{'reason': reason, 'database': _databaseHelper.dbType});
-      mezcalmosSnackBar("Notice ~", "Ride Has been canceled !");
-      _waitingResponse.value = false;
+      dynamic _res = responseStatusChecker(response.data);
 
-      print("Cancel Taxi Response");
-      print(response.data);
+      _res == null ? throw Exception("Manually thrown Exception - Reason -> Response.data was null !") : mezcalmosSnackBar("Notice ~", _res);
+      _waitingResponse.value = false;
     } catch (e) {
       mezcalmosSnackBar("Notice ~", "Failed to Cancel the Taxi Request :( ");
       _waitingResponse.value = false;
@@ -71,13 +53,14 @@ class CurrentOrderController extends GetxController {
 
   Future<void> startRide() async {
     HttpsCallable startRideFunction = FirebaseFunctions.instance.httpsCallable('startTaxiRide');
+    print("Start Taxi Called");
     try {
       _waitingResponse.value = true;
       HttpsCallableResult response = await startRideFunction.call(<String, dynamic>{'database': _databaseHelper.dbType});
-      mezcalmosSnackBar("Notice ~", "Ride started !");
+      dynamic _res = responseStatusChecker(response.data);
+
+      _res == null ? throw Exception("Manually thrown Exception - Reason -> Response.data was null !") : mezcalmosSnackBar("Notice ~", _res);
       _waitingResponse.value = false;
-      print("Start Taxi Response");
-      print(response.data);
     } catch (e) {
       mezcalmosSnackBar("Notice ~", "Failed to Start The ride :( ");
       _waitingResponse.value = false;
@@ -87,13 +70,14 @@ class CurrentOrderController extends GetxController {
 
   Future<void> finishRide() async {
     HttpsCallable finishRideFunction = FirebaseFunctions.instance.httpsCallable('finishTaxiRide');
+    print("Finish Taxi Called");
     try {
       _waitingResponse.value = true;
       HttpsCallableResult response = await finishRideFunction.call(<String, dynamic>{'database': _databaseHelper.dbType});
-      mezcalmosSnackBar("Notice ~", "Ride is finished successfully :D ");
+      dynamic _res = responseStatusChecker(response.data);
+
+      _res == null ? throw Exception("Manually thrown Exception - Reason -> Response.data was null !") : mezcalmosSnackBar("Notice ~", _res);
       _waitingResponse.value = false;
-      print("Finish Taxi Response");
-      print(response.data);
     } catch (e) {
       mezcalmosSnackBar("Notice ~", "Failed to finish The ride :( ");
       _waitingResponse.value = false;

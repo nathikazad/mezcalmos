@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/controllers/smsController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/routes/SimpleRouter.dart';
 
 class PhoneNumberScreen extends GetView<AuthController> {
-  SmsController _smsController = Get.find<SmsController>();
   TextEditingController _prefixTextFieldController = TextEditingController();
   TextEditingController _numberTextFieldController = TextEditingController();
 
@@ -108,12 +106,13 @@ class PhoneNumberScreen extends GetView<AuthController> {
                             if (!phone.startsWith('+')) phone = "+" + phone;
                             print(phone);
                             if (phone.isPhoneNumber) {
-                              _smsController.phoneNumber = phone;
                               dynamic response = await controller.sendOTPForLogin(phone);
                               print("++++++++++++ response >>> $response");
-                              if (response['status'] == "Success") {
+                              if (response == null) {
+                                mezcalmosSnackBar("Error", "Null response !");
+                              } else if (response['status'] == "Success") {
                                 mezcalmosSnackBar("Notice ~", "OTP Sent code to : $phone");
-                                Get.toNamed(kOtpConfirmRoute);
+                                Get.toNamed(kOtpConfirmRoute, arguments: phone);
                               } else {
                                 mezcalmosSnackBar('Error', response['errorMessage']);
                               }

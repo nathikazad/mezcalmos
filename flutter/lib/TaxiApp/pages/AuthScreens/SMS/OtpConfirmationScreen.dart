@@ -4,18 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/controllers/smsController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
+import 'package:mezcalmos/TaxiApp/routes/SimpleRouter.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OtpConfirmationScreen extends GetView<AuthController> {
   @override
   Widget build(BuildContext context) {
     TextEditingController _otpCodeTextController = TextEditingController();
-    SmsController _smsController = Get.find<SmsController>();
-
     RxBool canConfirmOtp = false.obs;
+    String otpCode = "";
 
     return Scaffold(
         resizeToAvoidBottomInset: false,
@@ -52,7 +51,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                               children: <TextSpan>[
                                 new TextSpan(text: "Enter the OTP code sent to ", style: TextStyle(color: Colors.black87)),
                                 new TextSpan(
-                                  text: _smsController.phoneNumber,
+                                  text: Get.arguments,
                                   style: TextStyle(color: Colors.blue),
                                 )
                               ],
@@ -75,12 +74,12 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                             length: 6,
                             // backgroundColor: Colors.grey.shade200,
                             onChanged: (s) {
-                              _smsController.otpCode = s;
+                              otpCode = s;
                               if (s.length != 6)
                                 canConfirmOtp.value = false;
                               else {
                                 canConfirmOtp.value = true;
-                                _smsController.otpCode = s;
+                                otpCode = s;
                               }
                             },
 
@@ -109,8 +108,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                                         // resend code !
                                         canConfirmOtp.value = false;
                                         _otpCodeTextController.clear();
-
-                                        await controller.sendOTPForLogin(_smsController.phoneNumber);
+                                        await controller.sendOTPForLogin(Get.arguments);
                                       }
                                     : null,
                                 child: Text(
@@ -133,15 +131,8 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                   Obx(() => TextButton(
                         onPressed: canConfirmOtp.value
                             ? () async {
-                                print("${_smsController.phoneNumber} -------------- ${_smsController.otpCode} ");
-                                bool res = await controller.signInUsingOTP(_smsController.phoneNumber, _smsController.otpCode);
-                                // controller.resendOtpTimerActivate();
-
-                                if (res) {
-                                  Get.back(closeOverlays: true);
-                                } else {
-                                  mezcalmosSnackBar("Error", "OTP Code confirmation failed :(");
-                                }
+                                print("${Get.arguments} -------------- $otpCode ");
+                                await controller.signInUsingOTP(Get.arguments, otpCode);
                               }
                             : null,
                         child: Text(

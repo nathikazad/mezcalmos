@@ -52,11 +52,11 @@ class SignIn extends GetWidget<AuthController> {
               Flexible(
                   fit: FlexFit.loose,
                   child: TextButton(
-                    onPressed: () async => lmode == "prod" ? await controller.signInWithFacebook() : await controller.signIn(tEmailTestValue, tEmailTestPassword), //controller.signInWithFacebook(),//
+                    onPressed: () async => lmode != "dev" ? await controller.signInWithFacebook() : await controller.signIn(tEmailTestValue, tEmailTestPassword), //controller.signInWithFacebook(),//
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [Icon(Icons.facebook), Text(lmode == "prod" ? tFacebookSigning : "test mode login")],
+                      children: [Icon(Icons.facebook), Text(lmode != "dev" ? tFacebookSigning : "test mode login")],
                     ),
 
                     style: ButtonStyle(

@@ -16,14 +16,14 @@ import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingListScreen
 // import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 
 class TaxiAuthController extends GetxController {
-  Rxn<TaxiDriver> _model = Rxn<TaxiDriver>();
+  Rx<TaxiDriver> _model = TaxiDriver.empty().obs;
   DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
   AuthController _authController = Get.find<AuthController>();
   Rx<Widget> _dynamicScreen = (Center(child: CircularProgressIndicator()) as Widget).obs;
 
-  dynamic get currentOrderId => _model.value?.currentOrder ?? null;
-  dynamic get authorizedTaxi => _model.value?.isAuthorized ?? false;
-  bool? get isLooking => _model.value?.isLooking ?? false;
+  dynamic get currentOrderId => _model.value.currentOrder ?? null;
+  dynamic get authorizedTaxi => _model.value.isAuthorized ?? false;
+  bool get isLooking => _model.value.isLooking ?? false;
   Widget get dynamicScreen => _dynamicScreen.value;
 
   late StreamSubscription<Event> _taxiAuthListener;
@@ -35,7 +35,7 @@ class TaxiAuthController extends GetxController {
       - CurrentOrder
   */
 
-  Widget _getScreen() => authorizedTaxi == true ? (_model.value?.currentOrder != null ? CurrentOrderScreen() : IncomingOrdersScreen()) : UnauthorizedScreen();
+  Widget _getScreen() => authorizedTaxi == true ? (_model.value.currentOrder != null ? CurrentOrderScreen() : IncomingOrdersScreen()) : UnauthorizedScreen();
 
   @override
   void onInit() async {
@@ -57,6 +57,7 @@ class TaxiAuthController extends GetxController {
         // our magical Trick :p
         _dynamicScreen.value = _getScreen();
       });
+      print("/////////////////////////////////////////////${_model.value.toJson()}////////////////////////////////////////////////////");
     }
   }
 

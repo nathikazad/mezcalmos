@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/widgets/MezcalmosGoogleMap.dart';
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
 
 class CurrentOrderScreen extends GetView<CurrentOrderController> {
@@ -14,77 +14,105 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
 
   @override
   Widget build(BuildContext context) {
-    final _stroage = GetStorage();
-    PolylinePoints polylinePoints = PolylinePoints();
-
-    List<LatLng> pLineCoords = <LatLng>[];
-    Set<Polyline> polyLineSet = {};
-
-    List<PointLatLng> res = polylinePoints.decodePolyline(controller.value?.polyline ?? "");
-    res.forEach((PointLatLng point) => pLineCoords.add(LatLng(point.latitude, point.longitude)));
-    polyLineSet.add(Polyline(
-      color: Colors.blueAccent,
-      polylineId: PolylineId(controller.value?.id),
-      jointType: JointType.round,
-      points: pLineCoords,
-      width: 5,
-      startCap: Cap.roundCap,
-      endCap: Cap.roundCap,
-      geodesic: true,
-    ));
-
     return Stack(
       alignment: Alignment.topCenter,
       children: [
-        Obx(() => controller.waitingResponse || controller.value?.id == null
-            ? Center(child: CircularProgressIndicator())
-            : Container(
-                child: GoogleMap(
-                  markers: {
-                    Marker(
-                      infoWindow: InfoWindow(title: "Ride from : ", snippet: controller.value?.to['address']),
-                      markerId: MarkerId("from"),
-                      icon: controller.custommetLocationMarker,
-                      visible: true,
-                      position: LatLng(controller.value?.from['lat'], controller.value?.from['lng']),
+        Obx(() => controller.waitingResponse || controller.value?.id == null ? Center(child: CircularProgressIndicator()) : OrderGoogleMap(controller.value!)),
+        Positioned(
+            bottom: 35,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 5),
+              height: getSizeRelativeToScreen(30, Get.height, Get.width),
+              width: getSizeRelativeToScreen(180, Get.height, Get.width),
+              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(5), boxShadow: <BoxShadow>[
+                BoxShadow(color: Color.fromARGB(255, 216, 225, 249), spreadRadius: 0, blurRadius: 7, offset: Offset(0, 7)),
+              ]),
+              child: Flex(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                direction: Axis.horizontal,
+                children: [
+                  Flexible(
+                    flex: 1,
+                    child: TextButton(
+                      style: ButtonStyle(
+                        fixedSize: MaterialStateProperty.all(Size(getSizeRelativeToScreen(120, Get.height, Get.width), getSizeRelativeToScreen(20, Get.height, Get.width))),
+                        backgroundColor: MaterialStateProperty.all(Color.fromARGB(255, 78, 168, 35)),
+                      ),
+                      onPressed: () async => null,
+                      child: Text(
+                        "Start Ride",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
                     ),
-                    Marker(
-                        infoWindow: InfoWindow(title: "Ride to : ", snippet: controller.value?.to['address']),
-                        markerId: MarkerId("to"),
-                        icon: controller.custommetDestinationMarker,
-                        visible: true,
-                        position: LatLng(controller.value?.to['lat'], controller.value?.to['lng'])),
-                  },
-                  polylines: polyLineSet,
-                  zoomControlsEnabled: false,
-                  compassEnabled: false,
-                  mapType: MapType.normal,
-                  initialCameraPosition:
-                      CameraPosition(bearing: 192.8334901395799, target: LatLng(controller.value?.from['lat'], controller.value?.from['lng']), tilt: 59.440717697143555, zoom: 15.151926040649414),
-                  onMapCreated: (GoogleMapController controller) {
-                    controller.setMapStyle(_stroage.read('map_style'));
-                    _controller.complete(controller);
-                  },
-                ),
-              )),
-
-        // Positioned(
-        //     bottom: 35,
-        //     child: TextButton(
-        //       style: ButtonStyle(
-        //         fixedSize: MaterialStateProperty.all(Size(getSizeRelativeToScreen(180, Get.height, Get.width), getSizeRelativeToScreen(20, Get.height, Get.width))),
-        //         backgroundColor: MaterialStateProperty.all(Color.fromARGB(255, 78, 168, 35)),
-        //       ),
-        //       onPressed: () async => await controller.startRide(),
-        //       child: Text(
-        //         "Accept Order",
-        //         style: TextStyle(
-        //           color: Colors.white,
-        //           fontWeight: FontWeight.w700,
-        //         ),
-        //       ),
-        //     )),
-
+                  ),
+                  Flexible(flex: 1, child: Text("\$50", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 21))),
+                  Flexible(
+                      flex: 2,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          GestureDetector(
+                            child: Container(
+                              height: getSizeRelativeToScreen(20, Get.height, Get.width),
+                              width: 38,
+                              decoration: BoxDecoration(
+                                color: Colors.blue.shade50,
+                                borderRadius: BorderRadius.circular(5),
+                                // boxShadow: <BoxShadow>[BoxShadow(color: Color.fromARGB(255, 216, 225, 249), spreadRadius: 0, blurRadius: 1, offset: Offset(0, 5))],
+                              ),
+                              child: Center(
+                                child: Icon(
+                                  CupertinoIcons.location_fill,
+                                  color: Colors.blue.shade200,
+                                  size: 25,
+                                ),
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            child: Container(
+                              height: getSizeRelativeToScreen(20, Get.height, Get.width),
+                              width: 38,
+                              decoration: BoxDecoration(
+                                color: Colors.blueGrey.shade50,
+                                borderRadius: BorderRadius.circular(5),
+                                // boxShadow: <BoxShadow>[BoxShadow(color: Color.fromARGB(255, 216, 225, 249), spreadRadius: 0, blurRadius: 1, offset: Offset(0, 5))],
+                              ),
+                              child: Center(
+                                child: Icon(
+                                  CupertinoIcons.mail,
+                                  color: Colors.blue.shade200,
+                                  size: 25,
+                                ),
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            child: Container(
+                              height: getSizeRelativeToScreen(20, Get.height, Get.width),
+                              width: 38,
+                              decoration: BoxDecoration(
+                                color: Colors.red.shade100,
+                                borderRadius: BorderRadius.circular(5),
+                                // boxShadow: <BoxShadow>[BoxShadow(color: Color.fromARGB(255, 216, 225, 249), spreadRadius: 0, blurRadius: 1, offset: Offset(0, 5))],
+                              ),
+                              child: Center(
+                                child: Icon(
+                                  CupertinoIcons.clear_circled,
+                                  color: Colors.red.shade300,
+                                  size: 25,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ))
+                ],
+              ),
+            )),
         Positioned(
           top: 10,
           child: Container(
@@ -138,7 +166,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                   child: GestureDetector(
                     onTap: () => mezcalmosSnackBar("From", controller.value?.from['address']),
                     child: Text(
-                      (controller.value?.from['address'].toString().substring(0, 13) ?? "..........") + " ..", //13+..
+                      (controller.value?.from?['address'].toString().substring(0, 13) ?? "..........") + " ..", //13+..
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
@@ -163,7 +191,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                   child: GestureDetector(
                     onTap: () => mezcalmosSnackBar("Destination", controller.value?.to['address']),
                     child: Text(
-                      (controller.value?.to['address'].toString().substring(0, 13) ?? "..........") + " ..", //13+..
+                      (controller.value?.to?['address'].toString().substring(0, 13) ?? "..........") + " ..", //13+..
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,

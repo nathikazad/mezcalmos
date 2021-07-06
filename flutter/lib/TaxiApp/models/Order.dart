@@ -19,33 +19,33 @@ class Order {
   dynamic rideFinishTime;
   dynamic rideStartTime;
   dynamic status;
-  dynamic polyline;
+  String polyline;
 
-  Order({
-    required this.id,
-    required this.customer,
-    required this.estimatedPrice,
-    required this.from,
-    required this.to,
-    required this.orderTime,
-    required this.paymentType,
-    required this.routeInformation,
-    // added
-    required this.driver,
-    required this.distance,
-    required this.duration,
-    required this.acceptRideTime,
-    required this.orderType,
-    required this.rideFinishTime,
-    required this.rideStartTime,
-    required this.status,
-  });
+  Order(
+      {required this.id,
+      required this.customer,
+      required this.estimatedPrice,
+      required this.from,
+      required this.to,
+      required this.orderTime,
+      required this.paymentType,
+      required this.routeInformation,
+      // added
+      required this.driver,
+      required this.distance,
+      required this.duration,
+      required this.acceptRideTime,
+      required this.orderType,
+      required this.rideFinishTime,
+      required this.rideStartTime,
+      required this.status,
+      required this.polyline});
 
   // Get props as list.
   List<Object> get props => [id, from, to, orderTime, paymentType, routeInformation];
 
   // Empty Order Constructor!
-  Order.empty();
+  Order.empty({this.polyline = ""});
 
   Order.fromSnapshot(DataSnapshot snapshot)
       : id = snapshot.key ?? "",
@@ -63,7 +63,8 @@ class Order {
         to = snapshot.value['to'],
         orderTime = snapshot.value['orderTime'],
         paymentType = snapshot.value['paymentType'],
-        routeInformation = snapshot.value['routeInformation'];
+        routeInformation = snapshot.value['routeInformation'],
+        polyline = snapshot.value['polyline'] ?? "";
 
   Order.fromJson(dynamic key, dynamic value)
       : id = key,
@@ -73,9 +74,10 @@ class Order {
         to = value['to'],
         orderTime = value['orderTime'],
         paymentType = value['paymentType'],
-        routeInformation = value['routeInformation'];
+        routeInformation = value['routeInformation'],
+        polyline = value['polyline'] ?? "";
 
   // Added for Debugging Perposes - Don't delete for now
   Map<String, dynamic> toJson() =>
-      {"customer": customer, "estimatedPrice": estimatedPrice, "from": from, "to": to, "orderTime": orderTime, "paymentType": paymentType, "routeInformation": routeInformation};
+      {"customer": customer, "estimatedPrice": estimatedPrice, "from": from, "to": to, "orderTime": orderTime, "paymentType": paymentType, "polyline": polyline, "routeInformation": routeInformation};
 }

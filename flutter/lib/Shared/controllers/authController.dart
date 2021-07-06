@@ -10,6 +10,7 @@ import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/models/User.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:mezcalmos/TaxiApp/helpers/DatabaseHelper.dart';
+import 'package:mezcalmos/TaxiApp/routes/SimpleRouter.dart';
 
 class AuthController extends GetxController {
   fireAuth.FirebaseAuth _auth = fireAuth.FirebaseAuth.instance;
@@ -95,8 +96,8 @@ class AuthController extends GetxController {
     return response!.data;
   }
 
-  Future<bool> signInUsingOTP(String phoneNumber, String otpCode) async {
-    print("$phoneNumber < phone ------ otp > ${otpCode}");
+  Future<void> signInUsingOTP(String phoneNumber, String otpCode) async {
+    print("$phoneNumber  < phone ------ otp > $otpCode");
     HttpsCallable getAuthUsingOTPFunction = FirebaseFunctions.instance.httpsCallable('getAuthUsingOTP');
     try {
       // _waitingResponse.value = true;
@@ -106,12 +107,11 @@ class AuthController extends GetxController {
       print("GetAuthUsingOTP Response");
       print("################################ DATA ###############################\n\n${response.data}\n\n");
       await fireAuth.FirebaseAuth.instance.signInWithCustomToken(response.data["token"]);
-      return Future.value(true);
+      await Get.offAllNamed(kMainAuthWrapperRoute);
     } catch (e) {
-      // mezcalmosSnackBar("Notice ~", "Failed to send OTP message :( ");
-      // _waitingResponse.value = false;
+      mezcalmosSnackBar("Error", "OTP Code confirmation failed :(");
+
       print("Exception happend in GetAuthUsingOTP : $e");
-      return Future.value(false);
     }
   }
 

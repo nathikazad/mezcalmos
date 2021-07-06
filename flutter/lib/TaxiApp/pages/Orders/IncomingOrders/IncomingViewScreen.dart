@@ -1,88 +1,20 @@
-import 'dart:async';
-import 'package:http/http.dart' as http;
-
 import 'package:flutter/material.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/widgets/MezcalmosGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
-  Completer<GoogleMapController> _controller = Completer();
-
   @override
   Widget build(BuildContext context) {
-    final _stroage = GetStorage();
-    PolylinePoints polylinePoints = PolylinePoints();
-
-    List<LatLng> pLineCoords = <LatLng>[];
-    Set<Polyline> polyLineSet = {};
-
-    print("&&&&&&&&&&&&&&&&&&&&&&&&&&  ${controller.selectedIncommingOrder?.toJson()}");
-    List<PointLatLng> res = polylinePoints.decodePolyline(controller.selectedIncommingOrder?.routeInformation['polyline']);
-    res.forEach((PointLatLng point) => pLineCoords.add(LatLng(point.latitude, point.longitude)));
-
-    polyLineSet.add(Polyline(
-      color: Colors.blueAccent,
-      polylineId: PolylineId(controller.selectedIncommingOrder?.id),
-      jointType: JointType.round,
-      points: pLineCoords,
-      width: 5,
-      startCap: Cap.roundCap,
-      endCap: Cap.roundCap,
-      geodesic: true,
-    ));
-
     return Scaffold(
       appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back(closeOverlays: true)),
       body: Stack(
         alignment: Alignment.topCenter,
         children: [
-          Obx(() => controller.waitingResponse || controller.selectedIncommingOrder?.id == null
-              ? Center(child: CircularProgressIndicator())
-              : Container(
-                  child: GoogleMap(
-                    markers: {
-                      Marker(
-                        infoWindow: InfoWindow(title: "Ride from : ", snippet: controller.selectedIncommingOrder?.to['address']),
-                        markerId: MarkerId("from"),
-                        icon: controller.custommetLocationMarker,
-                        visible: true,
-                        position: LatLng(controller.selectedIncommingOrder?.from['lat'], controller.selectedIncommingOrder?.from['lng']),
-                      ),
-                      Marker(
-                          infoWindow: InfoWindow(title: "Ride to : ", snippet: controller.selectedIncommingOrder?.to['address']),
-                          markerId: MarkerId("to"),
-                          icon: controller.custommetDestinationMarker,
-                          visible: true,
-                          position: LatLng(controller.selectedIncommingOrder?.to['lat'], controller.selectedIncommingOrder?.to['lng'])),
-                    },
-                    polylines: polyLineSet,
-                    zoomControlsEnabled: false,
-                    compassEnabled: false,
-                    mapType: MapType.normal,
-                    initialCameraPosition: CameraPosition(
-                        bearing: 192.8334901395799,
-                        target: LatLng(controller.selectedIncommingOrder?.from['lat'], controller.selectedIncommingOrder?.from['lng']),
-                        tilt: 59.440717697143555,
-                        zoom: 15.151926040649414),
-                    onMapCreated: (GoogleMapController controller) {
-                      controller.setMapStyle(_stroage.read('map_style'));
-                      _controller.complete(controller);
-                    },
-                  ),
-                )),
-          // -  SIze of the Bundle ~  18mb
-          // -  Performance >>   ~8-12  routes that are aready on stack
-
-          // Much cleaner code
-          // easy to read
-          // easy manage
-
+          Obx(() => controller.waitingResponse || controller.selectedIncommingOrder?.id == null ? Center(child: CircularProgressIndicator()) : OrderGoogleMap(controller.selectedIncommingOrder!)),
           Positioned(
               bottom: 90,
               child: Container(
