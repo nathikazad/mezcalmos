@@ -2,14 +2,14 @@
   "adminChat": {
     "taxi": {
       "past": {
-        "xFHI2bNdfibq30ylqfCscDt1IeTk": {
+        "PBcTv6zSy1FUT7C3EOaFj1Rw8dct": {
           "-McjheDsjvWUPBKmJob9": {
             "createdBy": "user",
             "createdTime": "Mon, 21 Jun 2021 17:55:36 GMT",
-            "resolvedAdmin": "8SaT1OCTPnmQF9cHaPc4HcKNO0Tk",
+            "resolvedAdmin": "soJ5WrpYtQ2R2ssZNMYBYNBVNyZ9",
             "resolvedTime": "Mon, 21 Jun 2021 17:56:28 GMT",
             "type": "authorizationRequest",
-            "userId": "xFHI2bNdfibq30ylqfCscDt1IeTk",
+            "userId": "PBcTv6zSy1FUT7C3EOaFj1Rw8dct",
             "userInfo": {
               "displayName": "Taxi Two",
               "photo": "https://randomuser.me/api/portraits/men/79.jpg"
@@ -21,7 +21,7 @@
     }
   },
   "admins": {
-    "8SaT1OCTPnmQF9cHaPc4HcKNO0Tk": {
+    "soJ5WrpYtQ2R2ssZNMYBYNBVNyZ9": {
       "authorized": true
     }
   },
@@ -30,12 +30,12 @@
       "chatType": "order",
       "orderType": "taxi",
       "participants": {
-        "War9fxvd8NTY375t2qrXJX6KRyF0": {
+        "S4mN56Yf2YeSLbWRzgAOuRJ7HAI8": {
           "image": "https://randomuser.me/api/portraits/men/70.jpg",
           "name": "Customer",
           "particpantType": "customer"
         },
-        "mCV9KobLk0OdqHqiNkErcCJiYdEX": {
+        "T8AByBxlwcS321zFp8um19fzPwns": {
           "image": "https://randomuser.me/api/portraits/men/74.jpg",
           "name": "Taxi",
           "particpantType": "taxi"
@@ -46,7 +46,7 @@
       "chatType": "order",
       "orderType": "taxi",
       "participants": {
-        "IZPoSlFrpgq0vemeTwDF7MfNmMnF": {
+        "zOTdxx6Hr3Hc2hkkZa7LX7slnFo3": {
           "image": "https://randomuser.me/api/portraits/men/71.jpg",
           "name": "Customer",
           "particpantType": "customer"
@@ -57,23 +57,50 @@
       "chatType": "order",
       "orderType": "taxi",
       "participants": {
-        "wRNjIkN5saEWPDFV9CDDgv3ovItw": {
+        "O7jcgQ0UcQbMDRKYRbTjZRLgMnTz": {
           "image": "https://randomuser.me/api/portraits/men/65.jpg",
           "name": "CustTwo",
           "particpantType": "customer"
         },
-        "xFHI2bNdfibq30ylqfCscDt1IeTk": {
+        "PBcTv6zSy1FUT7C3EOaFj1Rw8dct": {
           "image": "https://randomuser.me/api/portraits/men/79.jpg",
           "name": "Taxi",
           "particpantType": "taxi"
         }
       }
     },
-    "-Mcji_otFlm1VLhkttDA": {
+    "-MdxWeMwoso7oMqeStpY": {
       "chatType": "order",
       "orderType": "taxi",
       "participants": {
-        "War9fxvd8NTY375t2qrXJX6KRyF0": {
+        "T8AByBxlwcS321zFp8um19fzPwns": {
+          "image": "https://randomuser.me/api/portraits/men/74.jpg",
+          "name": "Taxi",
+          "particpantType": "customer"
+        }
+      }
+    },
+    "-MdxX1JQZr1J-tk10g9w": {
+      "chatType": "order",
+      "orderType": "taxi",
+      "participants": {
+        "O7jcgQ0UcQbMDRKYRbTjZRLgMnTz": {
+          "image": "https://randomuser.me/api/portraits/men/65.jpg",
+          "name": "CustTwo",
+          "particpantType": "customer"
+        },
+        "PBcTv6zSy1FUT7C3EOaFj1Rw8dct": {
+          "image": "https://randomuser.me/api/portraits/men/79.jpg",
+          "name": "Taxi",
+          "particpantType": "taxi"
+        }
+      }
+    },
+    "-MdxXQrjMmYGAAAUfNoe": {
+      "chatType": "order",
+      "orderType": "taxi",
+      "participants": {
+        "S4mN56Yf2YeSLbWRzgAOuRJ7HAI8": {
           "image": "https://randomuser.me/api/portraits/men/70.jpg",
           "name": "Customer",
           "particpantType": "customer"
@@ -83,16 +110,69 @@
   },
   "inProcessOrders": {
     "taxi": {
-      "-McjiEzp5I99HCmIxTd7": {
+      "-MdxX1JQZr1J-tk10g9w": {
+        "acceptRideTime": "Tue, 06 Jul 2021 20:35:30 GMT",
         "customer": {
-          "id": "wRNjIkN5saEWPDFV9CDDgv3ovItw",
+          "id": "O7jcgQ0UcQbMDRKYRbTjZRLgMnTz",
           "image": "https://randomuser.me/api/portraits/men/65.jpg",
           "name": "CustTwo"
         },
+        "distance": {
+          "text": "5.9 km",
+          "value": 5922
+        },
         "driver": {
-          "id": "xFHI2bNdfibq30ylqfCscDt1IeTk",
+          "id": "PBcTv6zSy1FUT7C3EOaFj1Rw8dct",
           "image": "https://randomuser.me/api/portraits/men/79.jpg",
           "name": "Taxi"
+        },
+        "duration": {
+          "text": "14 mins",
+          "value": 851
+        },
+        "estimatedPrice": 118,
+        "from": {
+          "address": "Boulevard Benito Juárez 1, Seccion C, Local 11, Rinconada, 71983 Puerto Escondido, Oax., Mexico",
+          "by": "search",
+          "lat": 15.8616003,
+          "lng": -97.0782013
+        },
+        "orderTime": "Tue, 06 Jul 2021 20:35:12 GMT",
+        "orderType": "taxi",
+        "paymentType": "cash",
+        "polyline": "}~x_BxqooQIiEQwHP}@Tw@Fa@d@mFF_BESHWP_APoAPm@LWnAyA\\e@BOHeAB_Be@L]iDQoBo@kGOc@GIUUWOQIq@EcAqL_@_Fk@eHEgBNwB\\iB|AkEl@gAr@u@f@_@^Oj@QZId@SbCy@|CmAjBcAvDmCvBgBlBaBtPoNnDyCvBgBvBmBdFeEbHeGbJsHhFkExDeD|F{E|EaEvBiBRJZLzBVdBX~Fp@nCb@rAP`O|@hCLhEPdBBD?",
+        "routeInformation": {
+          "distance": {
+            "text": "5.9 km",
+            "value": 5922
+          },
+          "duration": {
+            "text": "14 mins",
+            "value": 851
+          },
+          "polyline": "}~x_BxqooQIiEQwHP}@Tw@Fa@d@mFF_BESHWP_APoAPm@LWnAyA\\e@BOHeAB_Be@L]iDQoBo@kGOc@GIUUWOQIq@EcAqL_@_Fk@eHEgBNwB\\iB|AkEl@gAr@u@f@_@^Oj@QZId@SbCy@|CmAjBcAvDmCvBgBlBaBtPoNnDyCvBgBvBmBdFeEbHeGbJsHhFkExDeD|F{E|EaEvBiBRJZLzBVdBX~Fp@nCb@rAP`O|@hCLhEPdBBD?"
+        },
+        "status": "onTheWay",
+        "to": {
+          "address": "Alejandro Cárdenas Peralta S/N, Brisas de Zicatela, 70934 Brisas de Zicatela, Oax., Mexico",
+          "by": "search",
+          "lat": 15.8333863,
+          "lng": -97.0445716
+        }
+      }
+    }
+  },
+  "notifications": {
+    "customer": {
+      "O7jcgQ0UcQbMDRKYRbTjZRLgMnTz": {
+        "-MdxWlHR-1YZs6ZEZ21-": {
+          "cancelledBy": "driver",
+          "notificationType": "orderStatusChange",
+          "orderId": "-McjiEzp5I99HCmIxTd7",
+          "orderType": "taxi",
+          "reason": "Other",
+          "status": "cancelled",
+          "time": "Tue, 06 Jul 2021 20:34:02 GMT"
         }
       }
     }
@@ -101,7 +181,7 @@
     "taxi": {
       "-McjgOAiBh8Nbr8T0sy6": {
         "customer": {
-          "id": "IZPoSlFrpgq0vemeTwDF7MfNmMnF",
+          "id": "zOTdxx6Hr3Hc2hkkZa7LX7slnFo3",
           "image": "https://randomuser.me/api/portraits/men/71.jpg",
           "name": "Customer"
         },
@@ -132,37 +212,92 @@
           "lng": -97.0458113
         }
       },
-      "-Mcji_otFlm1VLhkttDA": {
+      "-MdxWeMwoso7oMqeStpY": {
         "customer": {
-          "id": "War9fxvd8NTY375t2qrXJX6KRyF0",
+          "id": "T8AByBxlwcS321zFp8um19fzPwns",
+          "image": "https://randomuser.me/api/portraits/men/74.jpg",
+          "name": "Taxi"
+        },
+        "distance": {
+          "text": "4.4 km",
+          "value": 4368
+        },
+        "duration": {
+          "text": "11 mins",
+          "value": 647
+        },
+        "estimatedPrice": 87,
+        "from": {
+          "address": "Infraganti 23B, Lazaro Cardenas, 70934 Brisas de Zicatela, Oax., Mexico",
+          "by": "search",
+          "lat": 15.850683399999998,
+          "lng": -97.046274
+        },
+        "orderTime": "Tue, 06 Jul 2021 20:33:34 GMT",
+        "orderType": "taxi",
+        "paymentType": "cash",
+        "polyline": "gyv_BfkioQj@U`CzFv@lBdBjEFNiGjF}F|EgB~AcCnBi@d@mCvBwGxF{FzEgGbFwB|A}@h@iBbA{CnAaDfA_@PqA`@WN{@|@o@bASh@_AfCe@dBQ~@KfBBrBj@fHz@|Jf@tGNhBBt@IxBIbAETe@zAy@fBwBnEuB`EOo@s@RKB_BVyDTi@JQDWPcEjEqAjB[RkB\\g@Bg@@cBMc@HeAj@",
+        "routeInformation": {
+          "distance": {
+            "text": "4.4 km",
+            "value": 4368
+          },
+          "duration": {
+            "text": "11 mins",
+            "value": 647
+          },
+          "polyline": "gyv_BfkioQj@U`CzFv@lBdBjEFNiGjF}F|EgB~AcCnBi@d@mCvBwGxF{FzEgGbFwB|A}@h@iBbA{CnAaDfA_@PqA`@WN{@|@o@bASh@_AfCe@dBQ~@KfBBrBj@fHz@|Jf@tGNhBBt@IxBIbAETe@zAy@fBwBnEuB`EOo@s@RKB_BVyDTi@JQDWPcEjEqAjB[RkB\\g@Bg@@cBMc@HeAj@"
+        },
+        "status": "lookingForTaxi",
+        "to": {
+          "address": "Agua Zarca 436, Agua Marina, 71984 Puerto Escondido, Oax., Mexico",
+          "by": "search",
+          "lat": 15.8692153,
+          "lng": -97.0745647
+        }
+      },
+      "-MdxXQrjMmYGAAAUfNoe": {
+        "customer": {
+          "id": "S4mN56Yf2YeSLbWRzgAOuRJ7HAI8",
           "image": "https://randomuser.me/api/portraits/men/70.jpg",
           "name": "Customer"
         },
-        "estimatedPrice": 40,
-        "from": {
-          "address": "Agua Marina 204, Agua Marina, 71984 Puerto Escondido, Oax., México",
-          "by": "search",
-          "lat": 15.8705199,
-          "lng": -97.0769057
+        "distance": {
+          "text": "2.7 km",
+          "value": 2654
         },
-        "orderTime": "Mon, 21 Jun 2021 17:59:40 GMT",
+        "duration": {
+          "text": "8 mins",
+          "value": 455
+        },
+        "estimatedPrice": 53,
+        "from": {
+          "address": "Infraganti 23B, Lazaro Cardenas, 70934 Brisas de Zicatela, Oax., Mexico",
+          "by": "search",
+          "lat": 15.8506666,
+          "lng": -97.0462977
+        },
+        "orderTime": "Tue, 06 Jul 2021 20:36:56 GMT",
+        "orderType": "taxi",
         "paymentType": "cash",
+        "polyline": "eyv_BfkioQh@U`CzFv@lBdBjEPXv@o@jByA~G_GbDmClEsDrCaCpK_JjK}ItAeAzAsApDyCHL?r@?n@Ab@CvAA~AAdAjBHdETfAHvDVtERbCH",
         "routeInformation": {
           "distance": {
-            "text": "1.9 km",
-            "value": 1862
+            "text": "2.7 km",
+            "value": 2654
           },
           "duration": {
-            "text": "7 mins",
-            "value": 429
+            "text": "8 mins",
+            "value": 455
           },
-          "polyline": "cuz_B|iooQf@iBBe@EcBOkD[kIi@qLhBc@{@yEdDMxDs@pNiClNiCsAeIq@}C"
+          "polyline": "eyv_BfkioQh@U`CzFv@lBdBjEPXv@o@jByA~G_GbDmClEsDrCaCpK_JjK}ItAeAzAsApDyCHL?r@?n@Ab@CvAA~AAdAjBHdETfAHvDVtERbCH"
         },
+        "status": "lookingForTaxi",
         "to": {
-          "address": "Primera Nte. 563, Reforma, 71994 Puerto Escondido, Oax., México",
+          "address": "Guerrero 111, Brisas de Zicatela, 70934 Brisas de Zicatela, Oax., Mexico",
           "by": "search",
-          "lat": 15.864376,
-          "lng": -97.0656384
+          "lat": 15.8336944,
+          "lng": -97.0424994
         }
       }
     }
@@ -172,7 +307,7 @@
       "-MbDVGiEJP_PAHkhy02V": {
         "acceptRideTime": "Wed, 02 Jun 2021 20:54:12 GMT",
         "customer": {
-          "id": "War9fxvd8NTY375t2qrXJX6KRyF0",
+          "id": "S4mN56Yf2YeSLbWRzgAOuRJ7HAI8",
           "image": "https://randomuser.me/api/portraits/men/70.jpg",
           "name": "Customer"
         },
@@ -181,7 +316,7 @@
           "value": 2652
         },
         "driver": {
-          "id": "mCV9KobLk0OdqHqiNkErcCJiYdEX",
+          "id": "T8AByBxlwcS321zFp8um19fzPwns",
           "image": "https://randomuser.me/api/portraits/men/74.jpg",
           "location": {
             "distanceToLocation": {
@@ -228,7 +363,7 @@
       },
       "-McjgOAiBh8Nbr8T0sy6": {
         "customer": {
-          "id": "IZPoSlFrpgq0vemeTwDF7MfNmMnF",
+          "id": "zOTdxx6Hr3Hc2hkkZa7LX7slnFo3",
           "image": "https://randomuser.me/api/portraits/men/71.jpg",
           "name": "Customer"
         },
@@ -241,7 +376,6 @@
           "value": 802
         },
         "estimatedPrice": 40,
-        "polyline": "cpz_B~eooQfBqGbAcDP_AvAuFrCi@tF_A`Du@hDo@hGeAz@QJHxBmEh@kAt@cCHg@NaB@cBa@oFiAwMw@{JEgBNwB\\iBh@_Br@kBl@gAr@u@f@_@^Oj@QZIbBm@bFmBjBcAvDmCnDyClB_B|KkJtBgBnDyCRQIMe@uA[mAWqAMsBUaEIaA]_BiAuEqB_IMg@",
         "from": {
           "address": "Agua Zarca 257, Granjas del Pescador, 71984 Puerto Escondido, Oax., Mexico",
           "by": "search",
@@ -251,6 +385,7 @@
         "orderTime": "Mon, 21 Jun 2021 17:50:04 GMT",
         "orderType": "taxi",
         "paymentType": "cash",
+        "polyline": "cpz_B~eooQfBqGbAcDP_AvAuFrCi@tF_A`Du@hDo@hGeAz@QJHxBmEh@kAt@cCHg@NaB@cBa@oFiAwMw@{JEgBNwB\\iBh@_Br@kBl@gAr@u@f@_@^Oj@QZIbBm@bFmBjBcAvDmCnDyClB_B|KkJtBgBnDyCRQIMe@uA[mAWqAMsBUaEIaA]_BiAuEqB_IMg@",
         "status": "lookingForTaxi",
         "to": {
           "address": "José Azueta 1030, Lazaro Cardenas, 70934 Brisas de Zicatela, Oax., Mexico",
@@ -261,8 +396,9 @@
       },
       "-McjiEzp5I99HCmIxTd7": {
         "acceptRideTime": "Mon, 21 Jun 2021 17:58:44 GMT",
+        "cancelledBy": "driver",
         "customer": {
-          "id": "wRNjIkN5saEWPDFV9CDDgv3ovItw",
+          "id": "O7jcgQ0UcQbMDRKYRbTjZRLgMnTz",
           "image": "https://randomuser.me/api/portraits/men/65.jpg",
           "name": "CustTwo"
         },
@@ -271,7 +407,7 @@
           "value": 4361
         },
         "driver": {
-          "id": "xFHI2bNdfibq30ylqfCscDt1IeTk",
+          "id": "PBcTv6zSy1FUT7C3EOaFj1Rw8dct",
           "image": "https://randomuser.me/api/portraits/men/79.jpg",
           "location": {
             "lastUpdateTime": "Mon, 21 Jun 2021 17:55:03 GMT",
@@ -296,7 +432,9 @@
         "orderTime": "Mon, 21 Jun 2021 17:58:11 GMT",
         "orderType": "taxi",
         "paymentType": "cash",
-        "status": "onTheWay",
+        "reason": "Other",
+        "rideFinishTime": "Tue, 06 Jul 2021 20:34:02 GMT",
+        "status": "cancelled",
         "to": {
           "address": "Aeropuerto Internacional De Puerto Escondido, Costera, Aeropuerto, Puerto Escondido, Oaxaca, Mexico",
           "by": "search",
@@ -305,8 +443,9 @@
         }
       },
       "-Mcji_otFlm1VLhkttDA": {
+        "cancelledBy": "customer",
         "customer": {
-          "id": "War9fxvd8NTY375t2qrXJX6KRyF0",
+          "id": "S4mN56Yf2YeSLbWRzgAOuRJ7HAI8",
           "image": "https://randomuser.me/api/portraits/men/70.jpg",
           "name": "Customer"
         },
@@ -328,12 +467,158 @@
         "orderTime": "Mon, 21 Jun 2021 17:59:40 GMT",
         "orderType": "taxi",
         "paymentType": "cash",
-        "status": "lookingForTaxi",
+        "rideFinishTime": "Tue, 06 Jul 2021 20:36:31 GMT",
+        "status": "cancelled",
         "to": {
           "address": "El Cafecito, Rinconada, Puerto Escondido, Oaxaca, Mexico",
           "by": "search",
           "lat": 15.8616003,
           "lng": -97.0782013
+        }
+      },
+      "-MdxWeMwoso7oMqeStpY": {
+        "customer": {
+          "id": "T8AByBxlwcS321zFp8um19fzPwns",
+          "image": "https://randomuser.me/api/portraits/men/74.jpg",
+          "name": "Taxi"
+        },
+        "distance": {
+          "text": "4.4 km",
+          "value": 4368
+        },
+        "duration": {
+          "text": "11 mins",
+          "value": 647
+        },
+        "estimatedPrice": 87,
+        "from": {
+          "address": "Infraganti 23B, Lazaro Cardenas, 70934 Brisas de Zicatela, Oax., Mexico",
+          "by": "search",
+          "lat": 15.850683399999998,
+          "lng": -97.046274
+        },
+        "orderTime": "Tue, 06 Jul 2021 20:33:34 GMT",
+        "orderType": "taxi",
+        "paymentType": "cash",
+        "polyline": "gyv_BfkioQj@U`CzFv@lBdBjEFNiGjF}F|EgB~AcCnBi@d@mCvBwGxF{FzEgGbFwB|A}@h@iBbA{CnAaDfA_@PqA`@WN{@|@o@bASh@_AfCe@dBQ~@KfBBrBj@fHz@|Jf@tGNhBBt@IxBIbAETe@zAy@fBwBnEuB`EOo@s@RKB_BVyDTi@JQDWPcEjEqAjB[RkB\\g@Bg@@cBMc@HeAj@",
+        "routeInformation": {
+          "distance": {
+            "text": "4.4 km",
+            "value": 4368
+          },
+          "duration": {
+            "text": "11 mins",
+            "value": 647
+          },
+          "polyline": "gyv_BfkioQj@U`CzFv@lBdBjEFNiGjF}F|EgB~AcCnBi@d@mCvBwGxF{FzEgGbFwB|A}@h@iBbA{CnAaDfA_@PqA`@WN{@|@o@bASh@_AfCe@dBQ~@KfBBrBj@fHz@|Jf@tGNhBBt@IxBIbAETe@zAy@fBwBnEuB`EOo@s@RKB_BVyDTi@JQDWPcEjEqAjB[RkB\\g@Bg@@cBMc@HeAj@"
+        },
+        "status": "lookingForTaxi",
+        "to": {
+          "address": "Agua Zarca 436, Agua Marina, 71984 Puerto Escondido, Oax., Mexico",
+          "by": "search",
+          "lat": 15.8692153,
+          "lng": -97.0745647
+        }
+      },
+      "-MdxX1JQZr1J-tk10g9w": {
+        "acceptRideTime": "Tue, 06 Jul 2021 20:35:30 GMT",
+        "customer": {
+          "id": "O7jcgQ0UcQbMDRKYRbTjZRLgMnTz",
+          "image": "https://randomuser.me/api/portraits/men/65.jpg",
+          "name": "CustTwo"
+        },
+        "distance": {
+          "text": "5.9 km",
+          "value": 5922
+        },
+        "driver": {
+          "id": "PBcTv6zSy1FUT7C3EOaFj1Rw8dct",
+          "image": "https://randomuser.me/api/portraits/men/79.jpg",
+          "location": {
+            "lastUpdateTime": "Tue, 06 Jul 2021 20:35:19 GMT",
+            "position": {
+              "lat": 15.8506938,
+              "lng": -97.0462798
+            }
+          },
+          "name": "Taxi"
+        },
+        "duration": {
+          "text": "14 mins",
+          "value": 851
+        },
+        "estimatedPrice": 118,
+        "from": {
+          "address": "Boulevard Benito Juárez 1, Seccion C, Local 11, Rinconada, 71983 Puerto Escondido, Oax., Mexico",
+          "by": "search",
+          "lat": 15.8616003,
+          "lng": -97.0782013
+        },
+        "orderTime": "Tue, 06 Jul 2021 20:35:12 GMT",
+        "orderType": "taxi",
+        "paymentType": "cash",
+        "polyline": "}~x_BxqooQIiEQwHP}@Tw@Fa@d@mFF_BESHWP_APoAPm@LWnAyA\\e@BOHeAB_Be@L]iDQoBo@kGOc@GIUUWOQIq@EcAqL_@_Fk@eHEgBNwB\\iB|AkEl@gAr@u@f@_@^Oj@QZId@SbCy@|CmAjBcAvDmCvBgBlBaBtPoNnDyCvBgBvBmBdFeEbHeGbJsHhFkExDeD|F{E|EaEvBiBRJZLzBVdBX~Fp@nCb@rAP`O|@hCLhEPdBBD?",
+        "routeInformation": {
+          "distance": {
+            "text": "5.9 km",
+            "value": 5922
+          },
+          "duration": {
+            "text": "14 mins",
+            "value": 851
+          },
+          "polyline": "}~x_BxqooQIiEQwHP}@Tw@Fa@d@mFF_BESHWP_APoAPm@LWnAyA\\e@BOHeAB_Be@L]iDQoBo@kGOc@GIUUWOQIq@EcAqL_@_Fk@eHEgBNwB\\iB|AkEl@gAr@u@f@_@^Oj@QZId@SbCy@|CmAjBcAvDmCvBgBlBaBtPoNnDyCvBgBvBmBdFeEbHeGbJsHhFkExDeD|F{E|EaEvBiBRJZLzBVdBX~Fp@nCb@rAP`O|@hCLhEPdBBD?"
+        },
+        "status": "onTheWay",
+        "to": {
+          "address": "Alejandro Cárdenas Peralta S/N, Brisas de Zicatela, 70934 Brisas de Zicatela, Oax., Mexico",
+          "by": "search",
+          "lat": 15.8333863,
+          "lng": -97.0445716
+        }
+      },
+      "-MdxXQrjMmYGAAAUfNoe": {
+        "customer": {
+          "id": "S4mN56Yf2YeSLbWRzgAOuRJ7HAI8",
+          "image": "https://randomuser.me/api/portraits/men/70.jpg",
+          "name": "Customer"
+        },
+        "distance": {
+          "text": "2.7 km",
+          "value": 2654
+        },
+        "duration": {
+          "text": "8 mins",
+          "value": 455
+        },
+        "estimatedPrice": 53,
+        "from": {
+          "address": "Infraganti 23B, Lazaro Cardenas, 70934 Brisas de Zicatela, Oax., Mexico",
+          "by": "search",
+          "lat": 15.8506666,
+          "lng": -97.0462977
+        },
+        "orderTime": "Tue, 06 Jul 2021 20:36:56 GMT",
+        "orderType": "taxi",
+        "paymentType": "cash",
+        "polyline": "eyv_BfkioQh@U`CzFv@lBdBjEPXv@o@jByA~G_GbDmClEsDrCaCpK_JjK}ItAeAzAsApDyCHL?r@?n@Ab@CvAA~AAdAjBHdETfAHvDVtERbCH",
+        "routeInformation": {
+          "distance": {
+            "text": "2.7 km",
+            "value": 2654
+          },
+          "duration": {
+            "text": "8 mins",
+            "value": 455
+          },
+          "polyline": "eyv_BfkioQh@U`CzFv@lBdBjEPXv@o@jByA~G_GbDmClEsDrCaCpK_JjK}ItAeAzAsApDyCHL?r@?n@Ab@CvAA~AAdAjBHdETfAHvDVtERbCH"
+        },
+        "status": "lookingForTaxi",
+        "to": {
+          "address": "Guerrero 111, Brisas de Zicatela, 70934 Brisas de Zicatela, Oax., Mexico",
+          "by": "search",
+          "lat": 15.8336944,
+          "lng": -97.0424994
         }
       }
     }
@@ -342,16 +627,184 @@
     "minimumCost": 40,
     "perKmCost": 20
   },
+  "taxiCancelledOrders": {
+    "-McjiEzp5I99HCmIxTd7": {
+      "acceptRideTime": "Mon, 21 Jun 2021 17:58:44 GMT",
+      "customer": {
+        "id": "O7jcgQ0UcQbMDRKYRbTjZRLgMnTz",
+        "image": "https://randomuser.me/api/portraits/men/65.jpg",
+        "name": "CustTwo"
+      },
+      "distance": {
+        "text": "4.4 km",
+        "value": 4361
+      },
+      "driver": {
+        "id": "PBcTv6zSy1FUT7C3EOaFj1Rw8dct",
+        "image": "https://randomuser.me/api/portraits/men/79.jpg",
+        "location": {
+          "lastUpdateTime": "Mon, 21 Jun 2021 17:55:03 GMT",
+          "position": {
+            "lat": 15.850639399999999,
+            "lng": -97.0462907
+          }
+        },
+        "name": "Taxi"
+      },
+      "duration": {
+        "text": "12 mins",
+        "value": 734
+      },
+      "estimatedPrice": 40,
+      "from": {
+        "address": "Cristo Rey 181, Reforma, 71994 Puerto Escondido, Oax., Mexico",
+        "by": "search",
+        "lat": 15.8707897710344,
+        "lng": -97.06313679601757
+      },
+      "orderTime": "Mon, 21 Jun 2021 17:58:11 GMT",
+      "orderType": "taxi",
+      "paymentType": "cash",
+      "status": "onTheWay",
+      "to": {
+        "address": "Aeropuerto Internacional De Puerto Escondido, Costera, Aeropuerto, Puerto Escondido, Oaxaca, Mexico",
+        "by": "search",
+        "lat": 15.8744355,
+        "lng": -97.0918734
+      }
+    }
+  },
   "taxiDrivers": {
-    "mCV9KobLk0OdqHqiNkErcCJiYdEX": {
+    "CMuzfW4Jp1vpzUEYvz8al0mT0KbG": {
       "invite": {
         "code": "none"
       },
       "location": {
-        "lastUpdateTime": "Mon, 21 Jun 2021 17:59:46 GMT",
+        "lastUpdateTime": "Tue, 06 Jul 2021 20:33:40 GMT",
         "position": {
-          "lat": 15.850639399999999,
-          "lng": -97.0462907
+          "lat": 15.8506993,
+          "lng": -97.04627909999999
+        }
+      },
+      "state": {
+        "isLooking": false
+      }
+    },
+    "PBcTv6zSy1FUT7C3EOaFj1Rw8dct": {
+      "invite": {
+        "code": "none"
+      },
+      "location": {
+        "lastUpdateTime": "Tue, 06 Jul 2021 20:35:19 GMT",
+        "position": {
+          "lat": 15.8506938,
+          "lng": -97.0462798
+        }
+      },
+      "notificationInfo": {
+        "endpoint": "https://fcm.googleapis.com/fcm/send/cahi3bIOJPg:APA91bEKDG-_yxsf2WZK_yYqVajMxvzEK6IUnPqn3vIXUmSa6KFMr7AIengfh-yKLAh77gHweZxeI8FVkfHek6pHts9g_gLlfI6hLYcu2PB9_3JJ_aUK9sig4m9dEncc-s11vMk4LBA5",
+        "keys": {
+          "auth": "xneNC7DknLJneO1_-yi1lg",
+          "p256dh": "BKedY26d6riQaVqhfY2UFqsQ3x9Ob2AzvwLQYeoS57sCv1PyiEEXWhUU1JsFMnV3ZMwypi94CE-xgwE2hPOC5kA"
+        }
+      },
+      "orders": {
+        "-McjiEzp5I99HCmIxTd7": {
+          "acceptRideTime": "Mon, 21 Jun 2021 17:58:44 GMT",
+          "cancelledBy": "driver",
+          "customer": {
+            "id": "O7jcgQ0UcQbMDRKYRbTjZRLgMnTz",
+            "image": "https://randomuser.me/api/portraits/men/65.jpg",
+            "name": "CustTwo"
+          },
+          "estimatedPrice": 40,
+          "paymentType": "cash",
+          "reason": "Other",
+          "rideFinishTime": "Tue, 06 Jul 2021 20:34:02 GMT",
+          "routeInformation": {
+            "distance": {
+              "text": "4.4 km",
+              "value": 4361
+            },
+            "duration": {
+              "text": "12 mins",
+              "value": 734
+            }
+          },
+          "status": "cancelled",
+          "to": {
+            "address": "Aeropuerto Internacional De Puerto Escondido, Costera, Aeropuerto, Puerto Escondido, Oaxaca, Mexico",
+            "by": "search",
+            "lat": 15.8744355,
+            "lng": -97.0918734
+          }
+        },
+        "-MdxX1JQZr1J-tk10g9w": {
+          "acceptRideTime": "Tue, 06 Jul 2021 20:35:30 GMT",
+          "customer": {
+            "id": "O7jcgQ0UcQbMDRKYRbTjZRLgMnTz",
+            "image": "https://randomuser.me/api/portraits/men/65.jpg",
+            "name": "CustTwo"
+          },
+          "distance": {
+            "text": "5.9 km",
+            "value": 5922
+          },
+          "driver": {
+            "id": "PBcTv6zSy1FUT7C3EOaFj1Rw8dct",
+            "image": "https://randomuser.me/api/portraits/men/79.jpg",
+            "name": "Taxi"
+          },
+          "duration": {
+            "text": "14 mins",
+            "value": 851
+          },
+          "estimatedPrice": 118,
+          "from": {
+            "address": "Boulevard Benito Juárez 1, Seccion C, Local 11, Rinconada, 71983 Puerto Escondido, Oax., Mexico",
+            "by": "search",
+            "lat": 15.8616003,
+            "lng": -97.0782013
+          },
+          "orderTime": "Tue, 06 Jul 2021 20:35:12 GMT",
+          "orderType": "taxi",
+          "paymentType": "cash",
+          "polyline": "}~x_BxqooQIiEQwHP}@Tw@Fa@d@mFF_BESHWP_APoAPm@LWnAyA\\e@BOHeAB_Be@L]iDQoBo@kGOc@GIUUWOQIq@EcAqL_@_Fk@eHEgBNwB\\iB|AkEl@gAr@u@f@_@^Oj@QZId@SbCy@|CmAjBcAvDmCvBgBlBaBtPoNnDyCvBgBvBmBdFeEbHeGbJsHhFkExDeD|F{E|EaEvBiBRJZLzBVdBX~Fp@nCb@rAP`O|@hCLhEPdBBD?",
+          "routeInformation": {
+            "distance": {
+              "text": "5.9 km",
+              "value": 5922
+            },
+            "duration": {
+              "text": "14 mins",
+              "value": 851
+            },
+            "polyline": "}~x_BxqooQIiEQwHP}@Tw@Fa@d@mFF_BESHWP_APoAPm@LWnAyA\\e@BOHeAB_Be@L]iDQoBo@kGOc@GIUUWOQIq@EcAqL_@_Fk@eHEgBNwB\\iB|AkEl@gAr@u@f@_@^Oj@QZId@SbCy@|CmAjBcAvDmCvBgBlBaBtPoNnDyCvBgBvBmBdFeEbHeGbJsHhFkExDeD|F{E|EaEvBiBRJZLzBVdBX~Fp@nCb@rAP`O|@hCLhEPdBBD?"
+          },
+          "status": "onTheWay",
+          "to": {
+            "address": "Alejandro Cárdenas Peralta S/N, Brisas de Zicatela, 70934 Brisas de Zicatela, Oax., Mexico",
+            "by": "search",
+            "lat": 15.8333863,
+            "lng": -97.0445716
+          }
+        }
+      },
+      "state": {
+        "authorizationStatus": "authorized",
+        "currentOrder": "-MdxX1JQZr1J-tk10g9w",
+        "isLooking": false
+      }
+    },
+    "T8AByBxlwcS321zFp8um19fzPwns": {
+      "invite": {
+        "code": "none"
+      },
+      "location": {
+        "lastUpdateTime": "Tue, 06 Jul 2021 20:37:24 GMT",
+        "position": {
+          "lat": 15.8506666,
+          "lng": -97.0462977
         }
       },
       "notificationInfo": {
@@ -365,7 +818,7 @@
         "-MbDVGiEJP_PAHkhy02V": {
           "acceptRideTime": "Wed, 02 Jun 2021 20:54:12 GMT",
           "customer": {
-            "id": "War9fxvd8NTY375t2qrXJX6KRyF0",
+            "id": "S4mN56Yf2YeSLbWRzgAOuRJ7HAI8",
             "image": "https://randomuser.me/api/portraits/men/70.jpg",
             "name": "Customer"
           },
@@ -396,65 +849,12 @@
         "authorizationStatus": "authorized",
         "isLooking": true
       }
-    },
-    "xFHI2bNdfibq30ylqfCscDt1IeTk": {
-      "invite": {
-        "code": "none"
-      },
-      "location": {
-        "lastUpdateTime": "Mon, 21 Jun 2021 17:55:03 GMT",
-        "position": {
-          "lat": 15.850639399999999,
-          "lng": -97.0462907
-        }
-      },
-      "notificationInfo": {
-        "endpoint": "https://fcm.googleapis.com/fcm/send/cahi3bIOJPg:APA91bEKDG-_yxsf2WZK_yYqVajMxvzEK6IUnPqn3vIXUmSa6KFMr7AIengfh-yKLAh77gHweZxeI8FVkfHek6pHts9g_gLlfI6hLYcu2PB9_3JJ_aUK9sig4m9dEncc-s11vMk4LBA5",
-        "keys": {
-          "auth": "xneNC7DknLJneO1_-yi1lg",
-          "p256dh": "BKedY26d6riQaVqhfY2UFqsQ3x9Ob2AzvwLQYeoS57sCv1PyiEEXWhUU1JsFMnV3ZMwypi94CE-xgwE2hPOC5kA"
-        }
-      },
-      "orders": {
-        "-McjiEzp5I99HCmIxTd7": {
-          "acceptRideTime": "Mon, 21 Jun 2021 17:58:44 GMT",
-          "customer": {
-            "id": "wRNjIkN5saEWPDFV9CDDgv3ovItw",
-            "image": "https://randomuser.me/api/portraits/men/65.jpg",
-            "name": "CustTwo"
-          },
-          "estimatedPrice": 40,
-          "paymentType": "cash",
-          "routeInformation": {
-            "distance": {
-              "text": "4.4 km",
-              "value": 4361
-            },
-            "duration": {
-              "text": "12 mins",
-              "value": 734
-            }
-          },
-          "status": "onTheWay",
-          "to": {
-            "address": "Aeropuerto Internacional De Puerto Escondido, Costera, Aeropuerto, Puerto Escondido, Oaxaca, Mexico",
-            "by": "search",
-            "lat": 15.8744355,
-            "lng": -97.0918734
-          }
-        }
-      },
-      "state": {
-        "authorizationStatus": "authorized",
-        "currentOrder": "-McjiEzp5I99HCmIxTd7",
-        "isLooking": false
-      }
     }
   },
   "unfulfilledOrders": {
     "-McjfmRJzEpbf_yqPfhf": {
       "customer": {
-        "id": "xFHI2bNdfibq30ylqfCscDt1IeTk",
+        "id": "PBcTv6zSy1FUT7C3EOaFj1Rw8dct",
         "image": "https://randomuser.me/api/portraits/men/79.jpg",
         "name": "Taxi"
       },
@@ -484,10 +884,348 @@
         "lat": 15.846122645891628,
         "lng": -97.04636564993042
       }
+    },
+    "-Mcji_otFlm1VLhkttDA": {
+      "customer": {
+        "id": "S4mN56Yf2YeSLbWRzgAOuRJ7HAI8",
+        "image": "https://randomuser.me/api/portraits/men/70.jpg",
+        "name": "Customer"
+      },
+      "distance": {
+        "text": "2.2 km",
+        "value": 2221
+      },
+      "duration": {
+        "text": "6 mins",
+        "value": 365
+      },
+      "estimatedPrice": 40,
+      "from": {
+        "address": "Calle Séptima Nte. 63, Juárez, 71980 Puerto Escondido, Oax., Mexico",
+        "by": "search",
+        "lat": 15.86726125436873,
+        "lng": -97.07462070534697
+      },
+      "orderTime": "Mon, 21 Jun 2021 17:59:40 GMT",
+      "orderType": "taxi",
+      "paymentType": "cash",
+      "reason": "cancelled",
+      "status": "lookingForTaxi",
+      "to": {
+        "address": "El Cafecito, Rinconada, Puerto Escondido, Oaxaca, Mexico",
+        "by": "search",
+        "lat": 15.8616003,
+        "lng": -97.0782013
+      }
     }
   },
   "users": {
-    "8SaT1OCTPnmQF9cHaPc4HcKNO0Tk": {
+    "O7jcgQ0UcQbMDRKYRbTjZRLgMnTz": {
+      "info": {
+        "displayName": "CustTwo",
+        "email": "customer.two@mezcalmos.com",
+        "language": "en",
+        "photo": "https://randomuser.me/api/portraits/men/65.jpg"
+      },
+      "invite": {
+        "code": "none"
+      },
+      "notificationInfo": {
+        "endpoint": "https://fcm.googleapis.com/fcm/send/fmPcLXEshGY:APA91bH_d-X8tauclZHVeR-pEeLERMCMOsxWrFyVdW7HNbJ4nxi3-nLiYC17qm8Qd7TpzPx2p5l6pcLsdhQCHmogxe9Yd_bVLJFHtVw4mc5pkV00OX-81z2cnRzTMx4FYASlKfNl_ubb",
+        "keys": {
+          "auth": "UmbqG5lSjT3ixaswAKzr1A",
+          "p256dh": "BBJadOavVx8Sd9w-9nepAbwSno0sSmOWy_GnkHVhmrbZDS4XJ90chO9ES9O0un-tw-f9Uy5rVc19i_Y4UnoGD08"
+        }
+      },
+      "orders": {
+        "-McjiEzp5I99HCmIxTd7": {
+          "acceptRideTime": "Mon, 21 Jun 2021 17:58:44 GMT",
+          "cancelledBy": "driver",
+          "driver": {
+            "id": "PBcTv6zSy1FUT7C3EOaFj1Rw8dct",
+            "image": "https://randomuser.me/api/portraits/men/79.jpg",
+            "name": "Taxi"
+          },
+          "estimatedPrice": 40,
+          "from": {
+            "address": "Cristo Rey 181, Reforma, 71994 Puerto Escondido, Oax., Mexico",
+            "by": "search",
+            "lat": 15.8707897710344,
+            "lng": -97.06313679601757
+          },
+          "orderTime": "Mon, 21 Jun 2021 17:58:11 GMT",
+          "orderType": "taxi",
+          "paymentType": "cash",
+          "reason": "Other",
+          "rideFinishTime": "Tue, 06 Jul 2021 20:34:02 GMT",
+          "routeInformation": {
+            "distance": {
+              "text": "4.4 km",
+              "value": 4361
+            },
+            "duration": {
+              "text": "12 mins",
+              "value": 734
+            }
+          },
+          "status": "cancelled",
+          "to": {
+            "address": "Aeropuerto Internacional De Puerto Escondido, Costera, Aeropuerto, Puerto Escondido, Oaxaca, Mexico",
+            "by": "search",
+            "lat": 15.8744355,
+            "lng": -97.0918734
+          }
+        },
+        "-MdxX1JQZr1J-tk10g9w": {
+          "acceptRideTime": "Tue, 06 Jul 2021 20:35:30 GMT",
+          "customer": {
+            "id": "O7jcgQ0UcQbMDRKYRbTjZRLgMnTz",
+            "image": "https://randomuser.me/api/portraits/men/65.jpg",
+            "name": "CustTwo"
+          },
+          "distance": {
+            "text": "5.9 km",
+            "value": 5922
+          },
+          "driver": {
+            "id": "PBcTv6zSy1FUT7C3EOaFj1Rw8dct",
+            "image": "https://randomuser.me/api/portraits/men/79.jpg",
+            "name": "Taxi"
+          },
+          "duration": {
+            "text": "14 mins",
+            "value": 851
+          },
+          "estimatedPrice": 118,
+          "from": {
+            "address": "Boulevard Benito Juárez 1, Seccion C, Local 11, Rinconada, 71983 Puerto Escondido, Oax., Mexico",
+            "by": "search",
+            "lat": 15.8616003,
+            "lng": -97.0782013
+          },
+          "orderTime": "Tue, 06 Jul 2021 20:35:12 GMT",
+          "orderType": "taxi",
+          "paymentType": "cash",
+          "polyline": "}~x_BxqooQIiEQwHP}@Tw@Fa@d@mFF_BESHWP_APoAPm@LWnAyA\\e@BOHeAB_Be@L]iDQoBo@kGOc@GIUUWOQIq@EcAqL_@_Fk@eHEgBNwB\\iB|AkEl@gAr@u@f@_@^Oj@QZId@SbCy@|CmAjBcAvDmCvBgBlBaBtPoNnDyCvBgBvBmBdFeEbHeGbJsHhFkExDeD|F{E|EaEvBiBRJZLzBVdBX~Fp@nCb@rAP`O|@hCLhEPdBBD?",
+          "routeInformation": {
+            "distance": {
+              "text": "5.9 km",
+              "value": 5922
+            },
+            "duration": {
+              "text": "14 mins",
+              "value": 851
+            },
+            "polyline": "}~x_BxqooQIiEQwHP}@Tw@Fa@d@mFF_BESHWP_APoAPm@LWnAyA\\e@BOHeAB_Be@L]iDQoBo@kGOc@GIUUWOQIq@EcAqL_@_Fk@eHEgBNwB\\iB|AkEl@gAr@u@f@_@^Oj@QZId@SbCy@|CmAjBcAvDmCvBgBlBaBtPoNnDyCvBgBvBmBdFeEbHeGbJsHhFkExDeD|F{E|EaEvBiBRJZLzBVdBX~Fp@nCb@rAP`O|@hCLhEPdBBD?"
+          },
+          "status": "onTheWay",
+          "to": {
+            "address": "Alejandro Cárdenas Peralta S/N, Brisas de Zicatela, 70934 Brisas de Zicatela, Oax., Mexico",
+            "by": "search",
+            "lat": 15.8333863,
+            "lng": -97.0445716
+          }
+        }
+      },
+      "state": {
+        "currentOrder": "-MdxX1JQZr1J-tk10g9w"
+      }
+    },
+    "PBcTv6zSy1FUT7C3EOaFj1Rw8dct": {
+      "info": {
+        "displayName": "Taxi Two",
+        "email": "taxi.two@mezcalmos.com",
+        "language": "en",
+        "photo": "https://randomuser.me/api/portraits/men/79.jpg"
+      },
+      "invite": {
+        "code": "none"
+      },
+      "notificationInfo": {
+        "endpoint": "https://fcm.googleapis.com/fcm/send/fmPcLXEshGY:APA91bH_d-X8tauclZHVeR-pEeLERMCMOsxWrFyVdW7HNbJ4nxi3-nLiYC17qm8Qd7TpzPx2p5l6pcLsdhQCHmogxe9Yd_bVLJFHtVw4mc5pkV00OX-81z2cnRzTMx4FYASlKfNl_ubb",
+        "keys": {
+          "auth": "UmbqG5lSjT3ixaswAKzr1A",
+          "p256dh": "BBJadOavVx8Sd9w-9nepAbwSno0sSmOWy_GnkHVhmrbZDS4XJ90chO9ES9O0un-tw-f9Uy5rVc19i_Y4UnoGD08"
+        }
+      }
+    },
+    "S4mN56Yf2YeSLbWRzgAOuRJ7HAI8": {
+      "info": {
+        "displayName": "Customer One",
+        "email": "customer.one@mezcalmos.com",
+        "language": "en",
+        "photo": "https://randomuser.me/api/portraits/men/70.jpg"
+      },
+      "invite": {
+        "code": "none"
+      },
+      "notificationInfo": {
+        "endpoint": "https://fcm.googleapis.com/fcm/send/fmPcLXEshGY:APA91bH_d-X8tauclZHVeR-pEeLERMCMOsxWrFyVdW7HNbJ4nxi3-nLiYC17qm8Qd7TpzPx2p5l6pcLsdhQCHmogxe9Yd_bVLJFHtVw4mc5pkV00OX-81z2cnRzTMx4FYASlKfNl_ubb",
+        "keys": {
+          "auth": "UmbqG5lSjT3ixaswAKzr1A",
+          "p256dh": "BBJadOavVx8Sd9w-9nepAbwSno0sSmOWy_GnkHVhmrbZDS4XJ90chO9ES9O0un-tw-f9Uy5rVc19i_Y4UnoGD08"
+        }
+      },
+      "orders": {
+        "-MbDVGiEJP_PAHkhy02V": {
+          "acceptRideTime": "Wed, 02 Jun 2021 20:54:12 GMT",
+          "driver": {
+            "id": "T8AByBxlwcS321zFp8um19fzPwns",
+            "image": "https://randomuser.me/api/portraits/men/74.jpg",
+            "name": "Taxi"
+          },
+          "estimatedPrice": 53.040000000000006,
+          "from": {
+            "address": "Infraganti 23B, Lazaro Cardenas, 70934 Brisas de Zicatela, Oax., Mexico",
+            "by": "search",
+            "lat": 15.850659999999998,
+            "lng": -97.04626259999999
+          },
+          "orderTime": "Wed, 02 Jun 2021 20:53:58 GMT",
+          "orderType": "taxi",
+          "paymentType": "cash",
+          "rideFinishTime": "Wed, 02 Jun 2021 20:54:35 GMT",
+          "rideStartTime": "Wed, 02 Jun 2021 20:54:25 GMT",
+          "routeInformation": {
+            "distance": {
+              "text": "2.7 km",
+              "value": 2652
+            },
+            "duration": {
+              "text": "8 mins",
+              "value": 453
+            }
+          },
+          "status": "droppedOff",
+          "to": {
+            "address": "Brisas de Zicatela, Oaxaca, Mexico",
+            "by": "search",
+            "lat": 15.8336944,
+            "lng": -97.0424994
+          }
+        },
+        "-MdxXQrjMmYGAAAUfNoe": {
+          "customer": {
+            "id": "S4mN56Yf2YeSLbWRzgAOuRJ7HAI8",
+            "image": "https://randomuser.me/api/portraits/men/70.jpg",
+            "name": "Customer"
+          },
+          "distance": {
+            "text": "2.7 km",
+            "value": 2654
+          },
+          "duration": {
+            "text": "8 mins",
+            "value": 455
+          },
+          "estimatedPrice": 53,
+          "from": {
+            "address": "Infraganti 23B, Lazaro Cardenas, 70934 Brisas de Zicatela, Oax., Mexico",
+            "by": "search",
+            "lat": 15.8506666,
+            "lng": -97.0462977
+          },
+          "orderTime": "Tue, 06 Jul 2021 20:36:56 GMT",
+          "orderType": "taxi",
+          "paymentType": "cash",
+          "polyline": "eyv_BfkioQh@U`CzFv@lBdBjEPXv@o@jByA~G_GbDmClEsDrCaCpK_JjK}ItAeAzAsApDyCHL?r@?n@Ab@CvAA~AAdAjBHdETfAHvDVtERbCH",
+          "routeInformation": {
+            "distance": {
+              "text": "2.7 km",
+              "value": 2654
+            },
+            "duration": {
+              "text": "8 mins",
+              "value": 455
+            },
+            "polyline": "eyv_BfkioQh@U`CzFv@lBdBjEPXv@o@jByA~G_GbDmClEsDrCaCpK_JjK}ItAeAzAsApDyCHL?r@?n@Ab@CvAA~AAdAjBHdETfAHvDVtERbCH"
+          },
+          "status": "lookingForTaxi",
+          "to": {
+            "address": "Guerrero 111, Brisas de Zicatela, 70934 Brisas de Zicatela, Oax., Mexico",
+            "by": "search",
+            "lat": 15.8336944,
+            "lng": -97.0424994
+          }
+        }
+      },
+      "state": {
+        "currentOrder": "-MdxXQrjMmYGAAAUfNoe"
+      }
+    },
+    "T8AByBxlwcS321zFp8um19fzPwns": {
+      "info": {
+        "displayName": "Taxi One",
+        "email": "taxi.one@mezcalmos.com",
+        "language": "en",
+        "photo": "https://randomuser.me/api/portraits/men/74.jpg"
+      },
+      "invite": {
+        "code": "none"
+      },
+      "notificationInfo": {
+        "endpoint": "https://fcm.googleapis.com/fcm/send/fmPcLXEshGY:APA91bH_d-X8tauclZHVeR-pEeLERMCMOsxWrFyVdW7HNbJ4nxi3-nLiYC17qm8Qd7TpzPx2p5l6pcLsdhQCHmogxe9Yd_bVLJFHtVw4mc5pkV00OX-81z2cnRzTMx4FYASlKfNl_ubb",
+        "keys": {
+          "auth": "UmbqG5lSjT3ixaswAKzr1A",
+          "p256dh": "BBJadOavVx8Sd9w-9nepAbwSno0sSmOWy_GnkHVhmrbZDS4XJ90chO9ES9O0un-tw-f9Uy5rVc19i_Y4UnoGD08"
+        }
+      },
+      "orders": {
+        "-MdxWeMwoso7oMqeStpY": {
+          "customer": {
+            "id": "T8AByBxlwcS321zFp8um19fzPwns",
+            "image": "https://randomuser.me/api/portraits/men/74.jpg",
+            "name": "Taxi"
+          },
+          "distance": {
+            "text": "4.4 km",
+            "value": 4368
+          },
+          "duration": {
+            "text": "11 mins",
+            "value": 647
+          },
+          "estimatedPrice": 87,
+          "from": {
+            "address": "Infraganti 23B, Lazaro Cardenas, 70934 Brisas de Zicatela, Oax., Mexico",
+            "by": "search",
+            "lat": 15.850683399999998,
+            "lng": -97.046274
+          },
+          "orderTime": "Tue, 06 Jul 2021 20:33:34 GMT",
+          "orderType": "taxi",
+          "paymentType": "cash",
+          "polyline": "gyv_BfkioQj@U`CzFv@lBdBjEFNiGjF}F|EgB~AcCnBi@d@mCvBwGxF{FzEgGbFwB|A}@h@iBbA{CnAaDfA_@PqA`@WN{@|@o@bASh@_AfCe@dBQ~@KfBBrBj@fHz@|Jf@tGNhBBt@IxBIbAETe@zAy@fBwBnEuB`EOo@s@RKB_BVyDTi@JQDWPcEjEqAjB[RkB\\g@Bg@@cBMc@HeAj@",
+          "routeInformation": {
+            "distance": {
+              "text": "4.4 km",
+              "value": 4368
+            },
+            "duration": {
+              "text": "11 mins",
+              "value": 647
+            },
+            "polyline": "gyv_BfkioQj@U`CzFv@lBdBjEFNiGjF}F|EgB~AcCnBi@d@mCvBwGxF{FzEgGbFwB|A}@h@iBbA{CnAaDfA_@PqA`@WN{@|@o@bASh@_AfCe@dBQ~@KfBBrBj@fHz@|Jf@tGNhBBt@IxBIbAETe@zAy@fBwBnEuB`EOo@s@RKB_BVyDTi@JQDWPcEjEqAjB[RkB\\g@Bg@@cBMc@HeAj@"
+          },
+          "status": "lookingForTaxi",
+          "to": {
+            "address": "Agua Zarca 436, Agua Marina, 71984 Puerto Escondido, Oax., Mexico",
+            "by": "search",
+            "lat": 15.8692153,
+            "lng": -97.0745647
+          }
+        }
+      },
+      "state": {
+        "currentOrder": "-MdxWeMwoso7oMqeStpY"
+      }
+    },
+    "iRBzE1zE1MvaxqEG758e9cKPSDmJ": {
+      "invite": {
+        "code": "none"
+      }
+    },
+    "soJ5WrpYtQ2R2ssZNMYBYNBVNyZ9": {
       "info": {
         "displayName": "Admin One",
         "email": "admin@mezcalmos.com",
@@ -495,7 +1233,7 @@
         "photo": "https://randomuser.me/api/portraits/men/75.jpg"
       }
     },
-    "IZPoSlFrpgq0vemeTwDF7MfNmMnF": {
+    "zOTdxx6Hr3Hc2hkkZa7LX7slnFo3": {
       "info": {
         "displayName": "Customer Three",
         "email": "customer.three@mezcalmos.com",
@@ -545,179 +1283,6 @@
       },
       "state": {
         "currentOrder": "-McjgOAiBh8Nbr8T0sy6"
-      }
-    },
-    "War9fxvd8NTY375t2qrXJX6KRyF0": {
-      "info": {
-        "displayName": "Customer One",
-        "email": "customer.one@mezcalmos.com",
-        "language": "en",
-        "photo": "https://randomuser.me/api/portraits/men/70.jpg"
-      },
-      "invite": {
-        "code": "none"
-      },
-      "notificationInfo": {
-        "endpoint": "https://fcm.googleapis.com/fcm/send/fmPcLXEshGY:APA91bH_d-X8tauclZHVeR-pEeLERMCMOsxWrFyVdW7HNbJ4nxi3-nLiYC17qm8Qd7TpzPx2p5l6pcLsdhQCHmogxe9Yd_bVLJFHtVw4mc5pkV00OX-81z2cnRzTMx4FYASlKfNl_ubb",
-        "keys": {
-          "auth": "UmbqG5lSjT3ixaswAKzr1A",
-          "p256dh": "BBJadOavVx8Sd9w-9nepAbwSno0sSmOWy_GnkHVhmrbZDS4XJ90chO9ES9O0un-tw-f9Uy5rVc19i_Y4UnoGD08"
-        }
-      },
-      "orders": {
-        "-MbDVGiEJP_PAHkhy02V": {
-          "acceptRideTime": "Wed, 02 Jun 2021 20:54:12 GMT",
-          "driver": {
-            "id": "mCV9KobLk0OdqHqiNkErcCJiYdEX",
-            "image": "https://randomuser.me/api/portraits/men/74.jpg",
-            "name": "Taxi"
-          },
-          "estimatedPrice": 53.040000000000006,
-          "from": {
-            "address": "Infraganti 23B, Lazaro Cardenas, 70934 Brisas de Zicatela, Oax., Mexico",
-            "by": "search",
-            "lat": 15.850659999999998,
-            "lng": -97.04626259999999
-          },
-          "orderTime": "Wed, 02 Jun 2021 20:53:58 GMT",
-          "orderType": "taxi",
-          "paymentType": "cash",
-          "rideFinishTime": "Wed, 02 Jun 2021 20:54:35 GMT",
-          "rideStartTime": "Wed, 02 Jun 2021 20:54:25 GMT",
-          "routeInformation": {
-            "distance": {
-              "text": "2.7 km",
-              "value": 2652
-            },
-            "duration": {
-              "text": "8 mins",
-              "value": 453
-            }
-          },
-          "status": "droppedOff",
-          "to": {
-            "address": "Brisas de Zicatela, Oaxaca, Mexico",
-            "by": "search",
-            "lat": 15.8336944,
-            "lng": -97.0424994
-          }
-        },
-        "-Mcji_otFlm1VLhkttDA": {
-          "estimatedPrice": 40,
-          "from": {
-            "address": "Calle Séptima Nte. 63, Juárez, 71980 Puerto Escondido, Oax., Mexico",
-            "by": "search",
-            "lat": 15.86726125436873,
-            "lng": -97.07462070534697
-          },
-          "orderTime": "Mon, 21 Jun 2021 17:59:40 GMT",
-          "orderType": "taxi",
-          "paymentType": "cash",
-          "routeInformation": {
-            "distance": {
-              "text": "2.2 km",
-              "value": 2221
-            },
-            "duration": {
-              "text": "6 mins",
-              "value": 365
-            }
-          },
-          "status": "lookingForTaxi",
-          "to": {
-            "address": "El Cafecito, Rinconada, Puerto Escondido, Oaxaca, Mexico",
-            "by": "search",
-            "lat": 15.8616003,
-            "lng": -97.0782013
-          }
-        }
-      },
-      "state": {
-        "currentOrder": "-Mcji_otFlm1VLhkttDA"
-      }
-    },
-    "mCV9KobLk0OdqHqiNkErcCJiYdEX": {
-      "info": {
-        "displayName": "Taxi One",
-        "email": "driver.one@mezcalmos.com",
-        "language": "en",
-        "photo": "https://randomuser.me/api/portraits/men/74.jpg"
-      }
-    },
-    "wRNjIkN5saEWPDFV9CDDgv3ovItw": {
-      "info": {
-        "displayName": "CustTwo",
-        "email": "customer.two@mezcalmos.com",
-        "language": "en",
-        "photo": "https://randomuser.me/api/portraits/men/65.jpg"
-      },
-      "invite": {
-        "code": "none"
-      },
-      "notificationInfo": {
-        "endpoint": "https://fcm.googleapis.com/fcm/send/fmPcLXEshGY:APA91bH_d-X8tauclZHVeR-pEeLERMCMOsxWrFyVdW7HNbJ4nxi3-nLiYC17qm8Qd7TpzPx2p5l6pcLsdhQCHmogxe9Yd_bVLJFHtVw4mc5pkV00OX-81z2cnRzTMx4FYASlKfNl_ubb",
-        "keys": {
-          "auth": "UmbqG5lSjT3ixaswAKzr1A",
-          "p256dh": "BBJadOavVx8Sd9w-9nepAbwSno0sSmOWy_GnkHVhmrbZDS4XJ90chO9ES9O0un-tw-f9Uy5rVc19i_Y4UnoGD08"
-        }
-      },
-      "orders": {
-        "-McjiEzp5I99HCmIxTd7": {
-          "acceptRideTime": "Mon, 21 Jun 2021 17:58:44 GMT",
-          "driver": {
-            "id": "xFHI2bNdfibq30ylqfCscDt1IeTk",
-            "image": "https://randomuser.me/api/portraits/men/79.jpg",
-            "name": "Taxi"
-          },
-          "estimatedPrice": 40,
-          "from": {
-            "address": "Cristo Rey 181, Reforma, 71994 Puerto Escondido, Oax., Mexico",
-            "by": "search",
-            "lat": 15.8707897710344,
-            "lng": -97.06313679601757
-          },
-          "orderTime": "Mon, 21 Jun 2021 17:58:11 GMT",
-          "orderType": "taxi",
-          "paymentType": "cash",
-          "routeInformation": {
-            "distance": {
-              "text": "4.4 km",
-              "value": 4361
-            },
-            "duration": {
-              "text": "12 mins",
-              "value": 734
-            }
-          },
-          "status": "onTheWay",
-          "to": {
-            "address": "Aeropuerto Internacional De Puerto Escondido, Costera, Aeropuerto, Puerto Escondido, Oaxaca, Mexico",
-            "by": "search",
-            "lat": 15.8744355,
-            "lng": -97.0918734
-          }
-        }
-      },
-      "state": {
-        "currentOrder": "-McjiEzp5I99HCmIxTd7"
-      }
-    },
-    "xFHI2bNdfibq30ylqfCscDt1IeTk": {
-      "info": {
-        "displayName": "Taxi Two",
-        "email": "taxi.two@mezcalmos.com",
-        "language": "en",
-        "photo": "https://randomuser.me/api/portraits/men/79.jpg"
-      },
-      "invite": {
-        "code": "none"
-      },
-      "notificationInfo": {
-        "endpoint": "https://fcm.googleapis.com/fcm/send/fmPcLXEshGY:APA91bH_d-X8tauclZHVeR-pEeLERMCMOsxWrFyVdW7HNbJ4nxi3-nLiYC17qm8Qd7TpzPx2p5l6pcLsdhQCHmogxe9Yd_bVLJFHtVw4mc5pkV00OX-81z2cnRzTMx4FYASlKfNl_ubb",
-        "keys": {
-          "auth": "UmbqG5lSjT3ixaswAKzr1A",
-          "p256dh": "BBJadOavVx8Sd9w-9nepAbwSno0sSmOWy_GnkHVhmrbZDS4XJ90chO9ES9O0un-tw-f9Uy5rVc19i_Y4UnoGD08"
-        }
       }
     }
   }
