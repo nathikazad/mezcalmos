@@ -52,22 +52,6 @@ let userData = {
   "password":"password",
   "returnSecureToken":true
 }
-let secondUserData = {
-  "email":"customertwo@mezcalmos.com",
-  "displayName":"Customer Two",
-  "photo": "https://randomuser.me/api/portraits/men/72.jpg",
-  "photoURL": "https://randomuser.me/api/portraits/men/72.jpg",
-  "password":"password",
-  "returnSecureToken":true
-}
-let thirdUserData = {
-  "email":"customerthree@mezcalmos.com",
-  "displayName":"Customer Three",
-  "photo": "https://randomuser.me/api/portraits/men/73.jpg",
-  "photoURL": "https://randomuser.me/api/portraits/men/73.jpg",
-  "password":"password",
-  "returnSecureToken":true
-}
 
 let driverData = {
   "email":"driver@mezcalmos.com",
@@ -76,41 +60,24 @@ let driverData = {
   "photoURL": "https://randomuser.me/api/portraits/men/74.jpg",
   "returnSecureToken":true
 }
-let secondDriverData = {
-  "email":"secondDriver@mezcalmos.com",
-  "displayName":"Driver Two",
-  "password":"password",
-  "photoURL": "https://randomuser.me/api/portraits/men/75.jpg",
-  "returnSecureToken":true
-}
-let thirdDriverData = {
-  "email":"thirdDriver@mezcalmos.com",
-  "displayName":"Driver Three",
-  "password":"password",
-  "photoURL": "https://randomuser.me/api/portraits/men/76.jpg",
-  "returnSecureToken":true
-}
 
-let customer, secondCustomer, thirdCustomer, driver, secondDriver, thirdDriver
+
+let customer, driver
 describe('Mezcalmos', () => {
   beforeEach(async () => {
     await helper.clearDatabase(admin)
     customer = await auth.signUp(admin, userData)
-    secondCustomer = await auth.signUp(admin, secondUserData)
-    thirdCustomer = await auth.signUp(admin, thirdUserData)
     driver = await auth.signUp(admin, driverData)
-    secondDriver = await auth.signUp(admin, secondDriverData)
-    thirdDriver = await auth.signUp(admin, thirdDriverData)
+  
     await admin.database().ref(`/taxiDrivers/${driver.id}/state/authorizationStatus`).set('authorized')
-    await admin.database().ref(`/taxiDrivers/${secondDriver.id}/state/authorizationStatus`).set('authorized')
-    await admin.database().ref(`/taxiDrivers/${thirdDriver.id}/state/authorizationStatus`).set('authorized')
+   
   })
 
-  it('Test expire race conditions after order is accepted', async () => {
+  it('Test expire race conditions after order status is LookingForTaxi', async () => {
     // create ride
-    response = await secondCustomer.callFunction("requestTaxi", tripData)
+    response = await customer.callFunction("requestTaxi", tripData)
     orderId = response.result.orderId
-    order = (await admin.database().ref(`users/${secondCustomer.id}/orders/${orderId}`).once('value')).val()
+    order = (await admin.database().ref(`users/${customer.id}/orders/${orderId}`).once('value')).val()
     
     expect(response.result.status).toBe('Success')
     expect(order.status).toBe('lookingForTaxi')
@@ -121,7 +88,7 @@ describe('Mezcalmos', () => {
     
     let promiseArray = []
     for (let i = 0; i < 5; i++) {
-      promiseArray.push(randomDelay(0, () => expireOrder(admin, orderId, customer.id)))
+      promiseArray.push(randomDelay(100, () => expireOrder(admin, orderId, customer.id)))
       promiseArray.push(randomDelay(500, () => expireOrder(admin, orderId, customer.id)))
     }
     

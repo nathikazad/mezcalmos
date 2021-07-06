@@ -239,7 +239,6 @@ describe('Mezcalmos', () => {
   }) 
 
 })
-
 afterAll(() => {
   admin.app().delete()
 })

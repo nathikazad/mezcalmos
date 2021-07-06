@@ -111,9 +111,10 @@ describe('Mezcalmos', () => {
     expect(response.result.status).toBe('Error')
     expect(response.result.errorMessage).toBe('User is not an authorized driver')
     
-  
+    // accept order by driver
     response = await driver.callFunction("acceptTaxiOrder", {orderId: orderId})
     expect(response.result.status).toBe('Success')
+
 
     //not able to accept a new ride when driver is already on the first ride
     let newRequest = await badUser.callFunction("requestTaxi", tripData)
@@ -189,6 +190,10 @@ describe('Mezcalmos', () => {
     expect(customerNotification.orderType).toBe('taxi')
     expect(customerNotification.status).toBe('onTheWay')
 
+    //verify lock
+    orderLock = (await admin.database().ref(`orders/taxi/${orderId}/lock`).once('value')).val()
+    expect(orderLock).toBeNull()
+
     //cancelling the orders
      response = await customer.callFunction("cancelTaxiFromCustomer", {orderId: orderId})
      expect(response.result.status).toBe('Success')
@@ -231,11 +236,7 @@ describe('Mezcalmos', () => {
      })
 
     let length = data.length 
-    // console.log('acceptedCounter', acceptedCounter),
-    // console.log('rejectedCounter', rejectedCounter)
-    // console.log('accepted response', acceptedResponse);
-    // console.log('rejected responses',rejectedResponse)
-
+   
     expect(acceptedCounter).toEqual(1)
     expect(acceptedResponse).toHaveLength(1)
     expect(acceptedResponse[0].result.status).toBe('Success')
@@ -282,10 +283,6 @@ describe('Mezcalmos', () => {
        }
      })
 
-    // console.log('acceptedCounter', acceptedCounter),
-    // console.log('rejectedCounter', rejectedCounter)
-    // console.log('accepted response', acceptedResponse);
-    // console.log('rejected responses',rejectedResponse)
 
     expect(acceptedCounter).toEqual(1)
     expect(acceptedResponse).toHaveLength(1)
@@ -296,6 +293,8 @@ describe('Mezcalmos', () => {
     expect(rejectedResponse[0].status).toBe('Error')
     expect(rejectedResponse[1].status).toBe('Error')
     
+    orderLock = (await admin.database().ref(`orders/taxi/${orderId}/lock`).once('value')).val()
+    expect(orderLock).toBeNull()
 
 
   })

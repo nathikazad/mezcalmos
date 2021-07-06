@@ -107,11 +107,11 @@ describe('Mezcalmos', () => {
   })
 
 
-  it('Test customer and driver cancel race conditions after order is accepted', async () => {
+  it('Test customer and driver cancel race conditions before and after order is accepted', async () => {
     // create ride
-    response = await secondCustomer.callFunction("requestTaxi", tripData)
+    response = await customer.callFunction("requestTaxi", tripData)
     orderId = response.result.orderId
-    order = (await admin.database().ref(`users/${secondCustomer.id}/orders/${orderId}`).once('value')).val()
+    order = (await admin.database().ref(`users/${customer.id}/orders/${orderId}`).once('value')).val()
     
     expect(response.result.status).toBe('Success')
     expect(order.status).toBe('lookingForTaxi')
@@ -123,11 +123,12 @@ describe('Mezcalmos', () => {
     let promiseArray = []
     for (let i = 0; i < 5; i++) {
       promiseArray.push(randomDelay(100, () => driver.callFunction('acceptTaxiOrder', data)))
-      promiseArray.push(randomDelay(600, () => secondCustomer.callFunction('cancelTaxiFromCustomer', {})))
+      promiseArray.push(randomDelay(600, () => customer.callFunction('cancelTaxiFromCustomer', {})))
       promiseArray.push(randomDelay(400, () => driver.callFunction('cancelTaxiFromDriver', {})))
     }
     
     promises = await Promise.all(promiseArray)
+    //console.log(promises);
 
     let acceptedCounter = 0
     let rejectedCounter = 0
@@ -160,6 +161,21 @@ describe('Mezcalmos', () => {
 
     acceptedResponse.map(el => expect(el.status).toBe('Success'))
     rejectedResponse.map(el => expect(el.status).toBe('Error'))
+    
+    order = (await admin.database().ref(`orders/taxi/${orderId}`).once('value')).val()
+    if(acceptedCounter == 1){
+      //order has not been accepted, but cancelled by customer
+      expect(order).not.toHaveProperty('acceptRideTime')
+      expect(order.status).toBe('cancelled')
+      expect(order.cancelledBy).toBe('customer')
+    }
+    if(acceptedCounter == 2){
+      //verify that the order has been accepted
+     expect(order).toHaveProperty('acceptRideTime')
+     // verify that the order is cancelled 
+     expect(order.status).toBe('cancelled')
+     expect(order).toHaveProperty('cancelledBy')
+    }
     
     let orderLock = (await admin.database().ref(`/orders/taxi/${orderId}/lock`).once('value')).val()
     expect(orderLock).toEqual(null)

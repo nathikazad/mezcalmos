@@ -108,6 +108,7 @@ describe('Mezcalmos', () => {
 
      let orderFinished = await customer.db.get(`orders/taxi/${orderId}`)
      expect(orderFinished.status).toBe('droppedOff')
+     
       
      let customerOrderFinished = await customer.db.get(`users/${order.customer.id}/orders/${orderId}`)
      expect(customerOrderFinished.status).toBe('droppedOff') 
@@ -130,6 +131,9 @@ describe('Mezcalmos', () => {
      notification = (arrayNotifications[arrayNotifications.length-1])[1]
      expect(notification.status).toBe('droppedOff')
      expect(notification.notificationType).toBe('orderStatusChange')
+
+     orderLock = (await admin.database().ref(`orders/taxi/${orderId}/lock`).once('value')).val()
+     expect(orderLock).toBeNull()
     })
 
     

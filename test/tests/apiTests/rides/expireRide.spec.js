@@ -82,7 +82,7 @@ admin.initializeApp({
      await admin.database().ref(`/taxiDrivers/${thirdDriver.id}/state/authorizationStatus`).set('authorized')
     })
 
-      it('Test expire when there is no order', async () => {
+      it('can not expire when there is no order', async () => {
         let orderId = 'cats'
         response = await expireOrder(admin, orderId, customer.id)
         expect(response.status).toBe('Error')
@@ -171,6 +171,7 @@ admin.initializeApp({
        // send expiration
        response = await expireOrder(admin, orderId, customer.id)
        expect(response.status).toBe('Error')
+       expect(response.errorMessage).toBe('cannot expire because order status is not lookingForTaxi')
 
        orderLock = (await admin.database().ref(`orders/taxi/${orderId}/lock`).once('value')).val()
        expect(orderLock).toBeNull()
@@ -193,7 +194,9 @@ admin.initializeApp({
        
        // send expiration
        response = await expireOrder(admin, orderId, customer.id)
+       
        expect(response.status).toBe('Error')
+       expect(response.errorMessage).toBe('cannot expire because order status is not lookingForTaxi')
        
        orderLock = (await admin.database().ref(`orders/taxi/${orderId}/lock`).once('value')).val()
        expect(orderLock).toBeNull()

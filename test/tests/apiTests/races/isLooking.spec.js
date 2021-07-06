@@ -163,17 +163,20 @@ describe('Mezcalmos', () => {
     rejectedResponse.map(el => expect(el.status).toBe('Error'))
     orderAfterActions = (await admin.database().ref(`orders/taxi/${orderId}`).once('value')).val()
     if(acceptedCounter == 1){
-      //verify that the ride has never been accepted
+      //verify that the ride is not accepted
       expect(orderAfterActions).not.toHaveProperty('acceptRideTime')
+      // verify that the ride is cancelled or expired
+      let status = orderAfterActions.status
+      expect( status == 'cancelled' || status == 'expired').toBeTruthy()
     }
     if(acceptedCounter == 2){
       //verify that the ride has been accepted
       expect(orderAfterActions).toHaveProperty('acceptRideTime')
-      // verify that the ride has been cancelled
+      // verify that the ride has been cancelled and not expired
       expect(orderAfterActions.status).toBe('cancelled')   
-      
       expect(orderAfterActions).toHaveProperty('rideFinishTime')
     }
+
 
     let orderLock = (await admin.database().ref(`/orders/taxi/${orderId}/lock`).once('value')).val()
     expect(orderLock).toEqual(null)

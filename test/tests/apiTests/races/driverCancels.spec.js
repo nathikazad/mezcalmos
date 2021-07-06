@@ -52,19 +52,12 @@ let userData = {
   "password":"password",
   "returnSecureToken":true
 }
+
 let secondUserData = {
   "email":"customertwo@mezcalmos.com",
   "displayName":"Customer Two",
   "photo": "https://randomuser.me/api/portraits/men/72.jpg",
   "photoURL": "https://randomuser.me/api/portraits/men/72.jpg",
-  "password":"password",
-  "returnSecureToken":true
-}
-let thirdUserData = {
-  "email":"customerthree@mezcalmos.com",
-  "displayName":"Customer Three",
-  "photo": "https://randomuser.me/api/portraits/men/73.jpg",
-  "photoURL": "https://randomuser.me/api/portraits/men/73.jpg",
   "password":"password",
   "returnSecureToken":true
 }
@@ -76,6 +69,7 @@ let driverData = {
   "photoURL": "https://randomuser.me/api/portraits/men/74.jpg",
   "returnSecureToken":true
 }
+
 let secondDriverData = {
   "email":"secondDriver@mezcalmos.com",
   "displayName":"Driver Two",
@@ -83,35 +77,30 @@ let secondDriverData = {
   "photoURL": "https://randomuser.me/api/portraits/men/75.jpg",
   "returnSecureToken":true
 }
-let thirdDriverData = {
-  "email":"thirdDriver@mezcalmos.com",
-  "displayName":"Driver Three",
-  "password":"password",
-  "photoURL": "https://randomuser.me/api/portraits/men/76.jpg",
-  "returnSecureToken":true
-}
 
-let customer, secondCustomer, thirdCustomer, driver, secondDriver, thirdDriver
+
+let customer, secondCustomer, driver, secondDriver
 describe('Mezcalmos', () => {
   beforeAll(async () => {
     await helper.clearDatabase(admin)
     customer = await auth.signUp(admin, userData)
     secondCustomer = await auth.signUp(admin, secondUserData)
-    thirdCustomer = await auth.signUp(admin, thirdUserData)
+
     driver = await auth.signUp(admin, driverData)
     secondDriver = await auth.signUp(admin, secondDriverData)
-    thirdDriver = await auth.signUp(admin, thirdDriverData)
+   
     await admin.database().ref(`/taxiDrivers/${driver.id}/state/authorizationStatus`).set('authorized')
     await admin.database().ref(`/taxiDrivers/${secondDriver.id}/state/authorizationStatus`).set('authorized')
-    await admin.database().ref(`/taxiDrivers/${thirdDriver.id}/state/authorizationStatus`).set('authorized')
+    
+    
   })
 
   
-  it('driver cancel race conditions after order is accepted', async () => {
+  it('driver cancel race conditions when order status is onTheWay', async () => {
     // create ride
-    response = await secondCustomer.callFunction("requestTaxi", tripData)
+    response = await customer.callFunction("requestTaxi", tripData)
     orderId = response.result.orderId
-    order = (await admin.database().ref(`users/${secondCustomer.id}/orders/${orderId}`).once('value')).val()
+    order = (await admin.database().ref(`users/${customer.id}/orders/${orderId}`).once('value')).val()
     
     expect(response.result.status).toBe('Success')
     expect(order.status).toBe('lookingForTaxi')
@@ -119,8 +108,10 @@ describe('Mezcalmos', () => {
     data = {
       orderId: orderId
     } 
-
+    // accept ride from driver
     await driver.callFunction('acceptTaxiOrder', data)
+    let orderAccepted = (await admin.database().ref(`orders/taxi/${orderId}`).once('value')).val()
+    expect(orderAccepted.status).toBe('onTheWay')
 
     let promiseArray = []
     for (let i = 0; i < 10; i++) {
@@ -163,6 +154,67 @@ describe('Mezcalmos', () => {
     expect(orderLock).toEqual(null)
   })
 
+  it('driver cancel race conditions when order status is inTransit', async () => {
+    // create ride
+    response = await secondCustomer.callFunction("requestTaxi", tripData)
+    orderId = response.result.orderId
+    order = (await admin.database().ref(`users/${secondCustomer.id}/orders/${orderId}`).once('value')).val()
+    
+    expect(response.result.status).toBe('Success')
+    expect(order.status).toBe('lookingForTaxi')
+
+    data = {
+      orderId: orderId
+    } 
+    // accept ride from driver
+    await secondDriver.callFunction('acceptTaxiOrder', data)
+    let orderAccepted = (await admin.database().ref(`orders/taxi/${orderId}`).once('value')).val()
+    expect(orderAccepted.status).toBe('onTheWay')
+
+    //start ride
+    await secondDriver.callFunction('startTaxiRide', {})
+    let orderStarted = (await admin.database().ref(`orders/taxi/${orderId}`).once('value')).val()
+    expect(orderStarted.status).toBe('inTransit')
+
+    let promiseArray = []
+    for (let i = 0; i < 10; i++) {
+      promiseArray.push(randomDelay(100, () => secondDriver.callFunction('cancelTaxiFromDriver', {})))
+    }
+    
+    promises = await Promise.all(promiseArray)
+   // console.log(promises);
+
+    let acceptedCounter = 0
+    let rejectedCounter = 0
+    let acceptedResponse =  []
+    let rejectedResponse =  []
+
+    
+    promises.map(el => {
+      switch(el.result.status){
+      case 'Error':
+        rejectedCounter++,
+        rejectedResponse.push(el)
+        break;
+
+      case 'Success':
+        acceptedCounter++,
+        acceptedResponse.push(el)
+        break ; 
+      }
+    })
+   
+    let requestsNumber = promises.length
+    expect(acceptedCounter).toEqual(1)
+    expect(rejectedCounter).toEqual(requestsNumber-acceptedCounter)
+
+    acceptedResponse = acceptedResponse [0]
+    expect(acceptedResponse.result.status).toBe('Success')
+    rejectedResponse.map(el => expect(el.result.status).toBe('Error'))
+    
+    let orderLock = (await admin.database().ref(`/orders/taxi/${orderId}/lock`).once('value')).val()
+    expect(orderLock).toEqual(null)
+  })
 })
 
 afterAll(() => {

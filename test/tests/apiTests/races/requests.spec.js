@@ -96,7 +96,7 @@ describe('Mezcalmos', () => {
   beforeAll(async () => {
     await helper.clearDatabase(admin)
     customer = await auth.signUp(admin, userData)
-    // secondCustomer = await auth.signUp(admin, secondUserData)
+    secondCustomer = await auth.signUp(admin, secondUserData)
     // thirdCustomer = await auth.signUp(admin, thirdUserData)
     driver = await auth.signUp(admin, driverData)
     // secondDriver = await auth.signUp(admin, secondDriverData)

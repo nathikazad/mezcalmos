@@ -137,6 +137,10 @@ describe('Mezcalmos', () => {
     expect(openOrder.from).toBe(tripData.from)
     expect(openOrder.to).toBe(tripData.to)
 
+    //verify lock order
+    orderLock = (await admin.database().ref(`orders/taxi/${orderId}/lock`).once('value')).val()
+    expect(orderLock).toBeNull()
+
     await helper.expectUnauthorized(async () => {
       await customer.db.get(`openOrders/taxi/${orderId}`)
     })

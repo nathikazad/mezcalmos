@@ -110,6 +110,9 @@ describe('Mezcalmos', () => {
 
      expect(notification.status).toBe('inTransit')
      expect(notification.notificationType).toBe('orderStatusChange')
+
+     orderLock = (await admin.database().ref(`orders/taxi/${orderId}/lock`).once('value')).val()
+    expect(orderLock).toBeNull()
     
     })
   

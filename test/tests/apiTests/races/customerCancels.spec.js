@@ -106,11 +106,12 @@ describe('Mezcalmos', () => {
     await admin.database().ref(`/taxiDrivers/${thirdDriver.id}/state/authorizationStatus`).set('authorized')
   })
 
-  it('Test customer cancel race conditions before order is accepted', async () => {
+  it('Test customer cancel race conditions when order status is LookingForTaxi', async () => {
     // create ride
-     response = await customer.callFunction("requestTaxi", tripData)
-     orderId = response.result.orderId
-     order = (await admin.database().ref(`users/${customer.id}/orders/${orderId}`).once('value')).val()
+    response = await customer.callFunction("requestTaxi", tripData)
+    orderId = response.result.orderId
+    order = (await admin.database().ref(`users/${customer.id}/orders/${orderId}`).once('value')).val()
+    
     expect(response.result.status).toBe('Success')
     expect(order.status).toBe('lookingForTaxi')
 
@@ -155,7 +156,7 @@ describe('Mezcalmos', () => {
     expect(orderLock).toEqual(null)
   })
 
-  it('Test customer cancel race conditions after order is accepted', async () => {
+  it('Test customer cancel race conditions when order status is onTheWay', async () => {
     // create ride
     response = await secondCustomer.callFunction("requestTaxi", tripData)
     orderId = response.result.orderId
@@ -168,6 +169,9 @@ describe('Mezcalmos', () => {
     } 
 
     await driver.callFunction('acceptTaxiOrder', data)
+    let orderAccepted = (await admin.database().ref(`orders/taxi/${orderId}`).once('value')).val()
+    expect(orderAccepted.status).toBe('onTheWay')
+
     let promiseArray = []
     for (let i = 0; i < 10; i++) {
       promiseArray.push(randomDelay(600, () => secondCustomer.callFunction('cancelTaxiFromCustomer', {})))
@@ -205,6 +209,71 @@ describe('Mezcalmos', () => {
     expect(acceptedCounter).toEqual(1)
     expect(rejectedCounter).toEqual(requestsNumber-acceptedCounter)
 
+    acceptedResponse = acceptedResponse [0]
+    expect(acceptedResponse.result.status).toBe('Success')
+    rejectedResponse.map(el => expect(el.result.status).toBe('Error'))
+    
+    let orderLock = (await admin.database().ref(`/orders/taxi/${orderId}/lock`).once('value')).val()
+    expect(orderLock).toEqual(null)
+  })
+
+  it('Test customer cancel race conditions when order status is inTransit', async () => {
+    // create ride
+    response = await thirdCustomer.callFunction("requestTaxi", tripData)
+    orderId = response.result.orderId
+    order = (await admin.database().ref(`users/${thirdCustomer.id}/orders/${orderId}`).once('value')).val()
+    expect(response.result.status).toBe('Success')
+    expect(order.status).toBe('lookingForTaxi')
+  
+    data = {
+      orderId: orderId
+    } 
+  
+    await secondDriver.callFunction('acceptTaxiOrder', data)
+    let orderAccepted = (await admin.database().ref(`orders/taxi/${orderId}`).once('value')).val()
+    expect(orderAccepted.status).toBe('onTheWay')
+  
+    await secondDriver.callFunction('startTaxiRide', {})
+    let orderStarted = (await admin.database().ref(`orders/taxi/${orderId}`).once('value')).val()
+    expect(orderStarted.status).toBe('inTransit')
+  
+    let promiseArray = []
+    for (let i = 0; i < 10; i++) {
+      promiseArray.push(randomDelay(600, () => thirdCustomer.callFunction('cancelTaxiFromCustomer', {})))
+    }
+    
+    promises = await Promise.all(promiseArray)
+  
+    let acceptedCounter = 0
+    let rejectedCounter = 0
+    let acceptedResponse =  []
+    let rejectedResponse =  []
+  
+    
+    promises.map(el => {
+      // if(el.result){
+      //   el.status = el.result.status
+      // }
+      switch(el.result.status){
+      case 'Error':
+        rejectedCounter++,
+        rejectedResponse.push(el)
+        break;
+  
+      case 'Success':
+        acceptedCounter++,
+        acceptedResponse.push(el)
+        break ; 
+      }
+    })
+  
+  
+    let requestsNumber = promises.length
+  
+    // expect(acceptedCounter).toBeLessThanOrEqual(2)
+    expect(acceptedCounter).toEqual(1)
+    expect(rejectedCounter).toEqual(requestsNumber-acceptedCounter)
+  
     acceptedResponse = acceptedResponse [0]
     expect(acceptedResponse.result.status).toBe('Success')
     rejectedResponse.map(el => expect(el.result.status).toBe('Error'))
