@@ -57,6 +57,10 @@
     align-items: baseline;
 }
 
+.align_start {
+    align-items: start;
+}
+
 .txt_center {
     text-align: center;
 }
@@ -143,6 +147,9 @@
 
 .relative {
     position: relative;
+}
+.absolute {
+    position: absolute;
 }
 
 html {

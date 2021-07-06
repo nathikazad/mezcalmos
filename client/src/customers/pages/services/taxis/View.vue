@@ -30,6 +30,7 @@
         :fromUrl="deepFind(userInfo, 'photo')"
         :driverLocation="deepFind(orderDetails, 'driver.location')"
         :status="deepFind(orderDetails,'status')"
+        :polyline="deepFind(orderDetails,'polyline')"
       >
         <!-- Searching fo Someone  Status-->
         <looking
@@ -37,6 +38,7 @@
           :loading="loading"
           @cancelPopUp="cancelPopUp=true"
           :orderDetails="orderDetails"
+          :orderId="$route.params.orderId"
           type="customer"
           slot="details"
           class="routePill"

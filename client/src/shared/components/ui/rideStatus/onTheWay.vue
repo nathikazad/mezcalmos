@@ -5,8 +5,8 @@
       v-if="type=='customer'"
       slot="details"
       class="routePill w-100 mb-2"
-      :classes1="{'w-70':true,}"
-      :classes2="{'none':true,}"
+      :classes1="{'w-50':true,}"
+      :classes2="{'w-15':true,}"
       :classes3="{'w-30':true,}"
     >
       <userPart
@@ -18,11 +18,11 @@
         :taxiNumber="deepFind(orderDetails, 'driver.taxiNumber')"
       ></userPart>
 
-      <!-- <price
+      <price
         class="flex align_center customerPrice"
         slot="part2"
         :price="deepFind(orderDetails, 'estimatedPrice')"
-      ></price> -->
+      ></price>
       <div class="flex align_center center w-90" slot="part3">
         <base-button
           class="dark bg_light elevate_1 nav-btn text_primary mr-2"
@@ -58,8 +58,8 @@
       v-if="type=='taxi'"
       slot="details"
       class="routePill w-100 mb-2"
-      :classes1="{'w-55':true,}"
-      :classes2="{'none':true,}"
+      :classes1="{'w-35':true,}"
+      :classes2="{'w-20':true,}"
       :classes3="{'w-45':true,}"
     >
       <base-button
@@ -71,14 +71,26 @@
       >
         <span class="t-8 regular">{{$t('taxi.taxiView.startRide')}}</span>
       </base-button>
-      <!-- <price
+      <price
         class="flex align_center"
         slot="part2"
         :price="deepFind(orderDetails, 'estimatedPrice')"
-        :cash="true"
-      ></price> -->
+      ></price>
 
       <div class="flex align_center center w-90" slot="part3">
+        <!-- Button for navigate -->
+        <base-button
+          class="elevate_1 nav-btn text_brand mr-2"
+          :mode="{
+            bg_light_blue: true,
+            small: true,
+          }"
+          @click.native="navigateTo()"
+          :loading="loading"
+        >
+          <fa icon="location-arrow" />
+        </base-button>
+        <!-- Button for Message -->
         <base-button
           class="dark bg_light elevate_1 nav-btn text_primary mr-2"
           :mode="{
@@ -133,6 +145,12 @@ export default {
               )
             ).fromNow()
         : this.$t("customer.taxiView.arrival") + "TBD";
+    }
+  },
+  methods: {
+    navigateTo() {
+      let url = `https://www.google.com/maps/place/${this.orderDetails.from.lat},${this.orderDetails.from.lng}`;
+      window.open(url);
     }
   }
 };

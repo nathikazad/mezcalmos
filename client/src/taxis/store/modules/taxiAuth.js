@@ -46,23 +46,14 @@ export default {
         updateDriverPosition(context)
       }, 10 * 1000)
 
-      let updateRouteIntervalId = setInterval(function () {
-        updateRouteInformation(context)
-      }, 30 * 1000)
-
-      setTimeout(function () {
-        updateRouteInformation(context)
-      }, 10 * 1000)
-
       context.commit('saveLogoutCallback', {
-        func: function (userId, updateDriverIntervalId, updateRouteIntervalId, context) {
+        func: function (userId, updateDriverIntervalId, context) {
           firebaseDatabase().ref(`taxiDrivers/${userId}/state`).off()
           firebaseDatabase().ref(`taxiDrivers/${userId}/state/isLooking`).set(false)
           clearInterval(updateDriverIntervalId);
-          clearInterval(updateRouteIntervalId);
           context.commit('clearAll')
         },
-        args: [userId, updateDriverIntervalId, updateRouteIntervalId, context]
+        args: [userId, updateDriverIntervalId, context]
       }, { root: true })
     },
     startLooking(context) {

@@ -13,8 +13,14 @@
       travelMode="DRIVING"
       :origin="directionsOrigin"
       :destination="directionsDest"
+      :rendredOnce="rendredOnce"
       @direction="emitDirectionPos($event)"
     />
+    <gmap-polyline
+      v-if="polyline"
+      v-bind:path="decode(polyline)"
+      v-bind:options="{ strokeColor:'#C18DF3'}"
+    ></gmap-polyline>
     <GmapMarker
       :ref="`marker-center`"
       :position="center"
@@ -75,6 +81,9 @@ export default {
     },
     pickingFromMap: {
       type: Boolean
+    },
+    polyline: {
+      type: String
     }
   },
   computed: {
@@ -289,7 +298,8 @@ export default {
           }
         ]
       },
-      markers: []
+      markers: [],
+      rendredOnce: false
     };
   },
   mounted() {
@@ -300,6 +310,11 @@ export default {
     });
   },
   methods: {
+    mapZoomIn() {
+      let map = this.$refs["gmap"].$mapObject;
+
+      map.setZoom(16);
+    },
     clientGesture() {
       let map = this.$refs["gmap"].$mapObject;
       if (map) {
@@ -336,7 +351,7 @@ export default {
         //check if variable exist in this
         if (marker) {
           //check if marker is driverLocation
-          if (marker.position&&marker.position.lat) {
+          if (marker.position && marker.position.lat) {
             bound = new window.google.maps.LatLng(
               marker.position.lat,
               marker.position.lng
@@ -359,9 +374,10 @@ export default {
       //console.log(map);
     },
 
-    emitDirectionPos(pos) {
+    emitDirectionPos(direction) {
       this.reRenderMarker();
-      this.$emit("directionChanged", pos);
+      this.$emit("directionChanged", direction);
+      this.rendredOnce = true;
     }
   },
   watch: {
@@ -376,8 +392,23 @@ export default {
     directionsOrigin: {
       deep: true,
       handler: function(newVal) {
+        console.log("direction origin ", newVal);
+
         if (newVal.lat && newVal.lng) {
           this.mapFit();
+        }
+      }
+    },
+    polyline: {
+      immediate: true,
+      deep: true,
+      handler: function(newVal) {
+        console.log(newVal);
+
+        if (newVal) {
+          setTimeout(() => {
+            this.mapFit();
+          }, 2000);
         }
       }
     }

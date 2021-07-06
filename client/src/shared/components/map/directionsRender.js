@@ -23,8 +23,15 @@ export default MapElementFactory({
     travelMode: {
       type: String,
     },
+    rendredOnce: {
+      type: Boolean
+    }
   },
-
+  computed: {
+    isRequest() {
+      return this.$route.path == '/services/taxi/request'
+    }
+  },
   afterCreate(directionsRenderer) {
     directionsRenderer.constructor({
       polylineOptions: {
@@ -37,17 +44,19 @@ export default MapElementFactory({
     let directionsService = new window.google.maps.DirectionsService();
 
     this.$watch(
-      () => [this.origin, this.destination, this.travelMode], {
+      () => [this.origin, this.destination, this.travelMode, this.isRequest], {
         deep: true,
         immediate: true,
         handler: () => {
           let {
             origin,
             destination,
-            travelMode
+            travelMode,
+
+            isRequest
           } = this;
 
-          if (!origin || !destination || !travelMode) return;
+          if (!origin || !destination || !travelMode || !isRequest) return;
           this.$store.dispatch("logger/log", {
             userType: this.$store.getters.appName,
             callType: "directions load",
@@ -61,7 +70,10 @@ export default MapElementFactory({
             (response, status) => {
               var leg = response.routes[0].legs[0];
 
-              this.$emit("direction", leg);
+              this.$emit("direction", {
+                leg,
+                polyline: response.routes[0].overview_polyline
+              });
               if (status !== "OK") return;
               directionsRenderer.setDirections(response);
             }
