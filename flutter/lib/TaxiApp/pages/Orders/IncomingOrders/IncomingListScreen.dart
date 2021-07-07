@@ -137,7 +137,7 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                                     32, sw, sh)),
                                             Text(
                                               controller
-                                                      .orders[i].from['address']
+                                                      .orders[i].from.address
                                                       .toString()
                                                       .substring(0, 10) +
                                                   "... ",
