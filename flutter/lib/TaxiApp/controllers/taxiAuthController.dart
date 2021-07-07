@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/messagingController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
@@ -22,7 +23,7 @@ class TaxiAuthController extends GetxController {
   Rx<Widget> _dynamicScreen = (Center(child: CircularProgressIndicator()) as Widget).obs;
   Rx<Position> _currentLocation = Position.fromMap(<dynamic, dynamic>{"latitude": 15.851385, "longitude": -97.046429}).obs;
   RxBool _locationEnabled = false.obs;
-
+ MessagingController _messagingController = Get.find<MessagingController>();
   dynamic get currentOrderId => _model.value.currentOrder ?? null;
   dynamic get authorizedTaxi => _model.value.isAuthorized ?? false;
   bool get isLooking => _model.value.isLooking ?? false;
@@ -54,10 +55,18 @@ class TaxiAuthController extends GetxController {
     print("User from TaxiAuthController >> ${_authController.user?.uid}");
     print("authorizedTaxi from TaxiAuthController >> ${authorizedTaxi}");
     print("currentOrderId from TaxiAuthController >> ${currentOrderId}");
+    print("TaxiAuthController  Messaging Token>> ${await _messagingController.getToken()}");
 
     if (_authController.user != null) {
-      _taxiAuthListener = _databaseHelper.firebaseDatabase.reference().child(taxiAuthNode(_authController.user?.uid ?? '')).onValue.listen((event) {
-        _model.value = event.snapshot.value != null ? TaxiDriver.fromSnapshot(event.snapshot) : TaxiDriver(false, false, null, null, null);
+       _databaseHelper.firebaseDatabase.reference().child('${taxiAuthNode(_authController.user?.uid ?? '')}/notificationInfo/fcmKey').set(await _messagingController.getToken());
+      _taxiAuthListener = _databaseHelper.firebaseDatabase
+          .reference()
+          .child(taxiAuthNode(_authController.user?.uid ?? ''))
+          .onValue
+          .listen((event) {
+        _model.value = event.snapshot.value != null
+            ? TaxiDriver.fromSnapshot(event.snapshot)
+            : TaxiDriver(false, false, null, null, null);
         // our magical Trick :p
         _dynamicScreen.value = _getScreen();
       });

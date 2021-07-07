@@ -19,6 +19,15 @@ webpush.setVapidDetails(
   vapidKeys.public,
   vapidKeys.private
 )
+const sendWithFcm= async(firebase,message,notifKey)=>{
+  const sentMessage = {
+    data: message,
+    token: notifKey
+  };
+let fcmResp= await firebase.messaging().send(sentMessage)
+console.log(fcmResp);
+
+}
 
 async function push(firebase, userId, message, particpantType = "customer") {
   firebase.database().ref(`/notifications/${particpantType}/${userId}`).push(message)
@@ -29,10 +38,15 @@ async function push(firebase, userId, message, particpantType = "customer") {
     subscription = (await firebase.database().ref(`/taxiDrivers/${userId}/notificationInfo`).once('value')).val();
   }
   if(subscription){
-    webpush.sendNotification(subscription, JSON.stringify(message))
+    if (subscription.webPush) {
+      webpush.sendNotification(subscription.webPush, JSON.stringify(message)) 
     .catch((e) => {
       functions.logger.error(`web push error, ${particpantType} ${userId}`, e);
     })
+    }
+    if (subscription.fcmKey) {
+      sendWithFcm(firebase,message,subscription.fcmKey)
+    }
   }
 }
 
@@ -42,12 +56,22 @@ async function notifyDriversNewRequest(firebase, address) {
     let driver = drivers[driverId]
     if(driver.state && driver.state.isLooking && !driver.state.currentOrder) {
       if(driver.notificationInfo) {   
-        webpush.sendNotification(driver.notificationInfo, JSON.stringify({
-          notificationType: "newOrder",
-          message: `Hay una nueva orden de taxi de ${address}, vea si puede aceptarla.`
-        })).catch((e) => {
-          functions.logger.error(`notify drivers web push error, ${driverId}`, e);
-        })
+        if (driver.notificationInfo.webPush) {
+          webpush.sendNotification(driver.notificationInfo.webPush, JSON.stringify({
+            notificationType: "newOrder",
+            message: `Hay una nueva orden de taxi de ${address}, vea si puede aceptarla.`
+          })).catch((e) => {
+            functions.logger.error(`notify drivers web push error, ${driverId}`, e);
+          })
+        }
+        
+        if (driver.notificationInfo.fcmKey) {
+          let message={
+            title: "newOrder",
+            message: `Hay una nueva orden de taxi de ${address}, vea si puede aceptarla.`
+          };
+          sendWithFcm(firebase,message,driver.notificationInfo.fcmKey)
+        }
       }
     }
   }

@@ -10,6 +10,7 @@ import 'package:mezcalmos/CustomerApp/main.dart';
 import 'package:mezcalmos/DeliveryApp/main.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/messagingController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
@@ -34,13 +35,13 @@ void main() {
   print('db  -> $_db');
   print('mode  -> $_launch_mode');
 
-  try {
-    if ((Platform.isAndroid || Platform.isIOS) && _host == localhost) {
-      throw new Exception("[!] Error > When building for Android/IOS , Please make sure to pass Your Firebase host Machine's IP !");
-    }
-  } catch (e) {
-    print(e);
-  }
+  // try {
+  //   if ((Platform.isAndroid || Platform.isIOS) && _host == localhost) {
+  //     throw new Exception("[!] Error > When building for Android/IOS , Please make sure to pass Your Firebase host Machine's IP !");
+  //   }
+  // } catch (e) {
+  //   print(e);
+  // }
 
   switch (startPoint) {
     case 'delivery':
@@ -76,6 +77,7 @@ class _SPointState extends State<SPoint> {
   initializeSetup() async {
     try {
       FirebaseApp _app = await Firebase.initializeApp();
+
       late FirebaseDatabase firebaseDb;
 
       if (widget._launch_mode == "prod") {
@@ -88,7 +90,6 @@ class _SPointState extends State<SPoint> {
       }
       // staging
       else {
-        // firebaseDb = FirebaseDatabase(app: _app, databaseURL: widget._host + dbRoot);
         firebaseDb = FirebaseDatabase(app: _app, databaseURL: stagingDb);
       }
 
@@ -144,6 +145,7 @@ class _SPointState extends State<SPoint> {
     }
 
     Get.put<AuthController>(AuthController(), permanent: true);
+    Get.put<MessagingController>(MessagingController(), permanent: true);
 
     Timer(
         Duration(seconds: nSplashScreenTimer),

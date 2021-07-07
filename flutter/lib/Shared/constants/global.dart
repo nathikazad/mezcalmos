@@ -31,7 +31,7 @@ const String tFacebookSigning = "Sign in with Facebook";
 const String tSmsSigning = "Sign in with SMS";
 const String tDefaultUserName = "Unknown";
 const String tDisconnect = "Logout";
-const String tIncommingOrders = "Ordenes Entrantes";
+const String tIncommingOrders = "Incoming Orders";
 const String tDefaultCustomerName = "Unknown";
 
 // ----------------- Assets Strings ----------------- //

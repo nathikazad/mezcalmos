@@ -38,8 +38,8 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                       style: TextStyle(
                           // fontSize: getSizeRelativeToScreen(70, sw, sh),
                           fontSize: 38.5,
-                          // fontWeight: FontWeight.w400,
-                          fontFamily: 'psb'),
+                           fontWeight: FontWeight.w400,
+                          fontFamily: 'psr'),
                     ),
                   ),
                 ),
