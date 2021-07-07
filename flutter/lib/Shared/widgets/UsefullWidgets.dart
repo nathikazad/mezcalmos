@@ -14,19 +14,14 @@ class MezcalmosSharedWidgets {
         fit: BoxFit.contain,
       );
 
-  static RichText mezcalmos(
-          {double textSize = nDefaultMezcalmosTextSize, bool isBold = false}) =>
-      RichText(
+  static RichText mezcalmos({double textSize = nDefaultMezcalmosTextSize, bool isBold = false}) => RichText(
           text: TextSpan(
-        style: TextStyle(
-            color: Colors.black,
-            fontSize: textSize,
-            fontWeight: FontWeight.w400),
+        style: TextStyle(color: Colors.black, fontSize: textSize, fontWeight: FontWeight.w400),
         children: <TextSpan>[
           TextSpan(
             text: tMez,
             style: TextStyle(
-              fontWeight: isBold ? FontWeight.bold : FontWeight.w500,
+              fontWeight: isBold ? FontWeight.bold : FontWeight.w300,
             ),
           ),
           TextSpan(
@@ -41,21 +36,18 @@ class MezcalmosSharedWidgets {
 
   static Widget MezcalmosNoGlowScrollConfiguration(Widget child) {
     return ScrollConfiguration(
-      behavior: NoScrollGlowBehaviour(
-          testCaller: "MezcalmosNoGlowScrollConfiguration"),
+      behavior: NoScrollGlowBehaviour(testCaller: "MezcalmosNoGlowScrollConfiguration"),
       child: child,
     );
   }
 
-  static AppBar mezcalmosAppBar(String btnType, Function onTapFunction,
-      {dynamic bgColor = Colors.white}) {
+  static AppBar mezcalmosAppBar(String btnType, Function onTapFunction, {dynamic bgColor = Colors.white}) {
     Widget btn_icon;
 
     switch (btnType) {
       case "back":
         btn_icon = Padding(
-          padding: EdgeInsets.only(
-              left: getSizeRelativeToScreen(4, Get.height, Get.width)),
+          padding: EdgeInsets.only(left: getSizeRelativeToScreen(4, Get.height, Get.width)),
           child: Icon(
             Icons.arrow_back_ios,
             color: Colors.white,
@@ -78,7 +70,8 @@ class MezcalmosSharedWidgets {
       toolbarHeight: getSizeRelativeToScreen(45, Get.height, Get.width),
       // leadingWidth: 55,
       // toolbarHeight: 65,
-      backgroundColor: bgColor,
+      // backgroundColor: bgColor,
+      // backgroundColor: Colors.red,
       elevation: 0,
       title: Row(
         mainAxisSize: MainAxisSize.max,
@@ -86,15 +79,10 @@ class MezcalmosSharedWidgets {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
-            padding: EdgeInsets.only(
-                left: getSizeRelativeToScreen(5, Get.height, Get.width)),
-            child:
-                logo(size: getSizeRelativeToScreen(20, Get.height, Get.width)),
+            padding: EdgeInsets.only(left: getSizeRelativeToScreen(5, Get.height, Get.width)),
+            child: logo(size: getSizeRelativeToScreen(20, Get.height, Get.width)),
           ),
-          Padding(
-              padding: EdgeInsets.only(
-                  left: getSizeRelativeToScreen(5, Get.height, Get.width)),
-              child: mezcalmos())
+          Padding(padding: EdgeInsets.only(left: getSizeRelativeToScreen(5, Get.height, Get.width)), child: mezcalmos())
         ],
       ),
 
@@ -126,42 +114,36 @@ class MezcalmosSharedWidgets {
       //   ),
       // ],
 
-      leading: Transform.scale(
-        scale: 0.8,
-        child: GestureDetector(
-          onTap: () {
-            print("Taped Drawer btn !");
-            onTapFunction();
-          },
-          child: Container(
-            margin: EdgeInsets.only(
-                top: getSizeRelativeToScreen(11, Get.height, Get.width),
-                left: getSizeRelativeToScreen(5, Get.height, Get.width),
-                bottom: getSizeRelativeToScreen(11, Get.height, Get.width)),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-              boxShadow: [
-                BoxShadow(
-                  color: Color.fromARGB(255, 216, 225, 249),
-                  spreadRadius: 0,
-                  blurRadius: 7,
-                  offset: Offset(0, 7), // changes position of shadow
-                ),
-              ],
-              gradient: LinearGradient(colors: [
-                Color.fromARGB(255, 97, 127, 255),
-                Color.fromARGB(255, 198, 90, 252),
-              ], begin: Alignment.topLeft, end: Alignment.bottomRight),
-            ),
-            child: btn_icon,
+      leading: GestureDetector(
+        onTap: () {
+          print("Taped Drawer btn !");
+          onTapFunction();
+        },
+        child: Container(
+          margin: EdgeInsets.only(
+              top: getSizeRelativeToScreen(11, Get.height, Get.width), left: getSizeRelativeToScreen(5, Get.height, Get.width), bottom: getSizeRelativeToScreen(11, Get.height, Get.width)),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                color: Color.fromARGB(255, 216, 225, 249),
+                spreadRadius: 0,
+                blurRadius: 7,
+                offset: Offset(0, 7), // changes position of shadow
+              ),
+            ],
+            gradient: LinearGradient(colors: [
+              Color.fromARGB(255, 97, 127, 255),
+              Color.fromARGB(255, 198, 90, 252),
+            ], begin: Alignment.topLeft, end: Alignment.bottomRight),
           ),
+          child: btn_icon,
         ),
       ),
     );
   }
 
-  static Future<void> mezcalmosDialog(double val, double sh, double sw) async =>
-      await Get.defaultDialog(
+  static Future<void> mezcalmosDialog(double val, double sh, double sw) async => await Get.defaultDialog(
         backgroundColor: Colors.grey.shade100,
         title: '',
         content: Flex(
@@ -182,8 +164,7 @@ class MezcalmosSharedWidgets {
                 child: SizedBox(
                   height: 20,
                 )),
-            Flexible(
-                fit: FlexFit.loose, child: Text(tOrderIsNotAvailableAnymore))
+            Flexible(fit: FlexFit.loose, child: Text(tOrderIsNotAvailableAnymore))
           ],
         ),
       );

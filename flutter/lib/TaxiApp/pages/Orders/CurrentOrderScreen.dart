@@ -35,7 +35,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                     child: TextButton(
                       style: ButtonStyle(
                         fixedSize: MaterialStateProperty.all(Size(getSizeRelativeToScreen(120, Get.height, Get.width), getSizeRelativeToScreen(20, Get.height, Get.width))),
-                        backgroundColor: MaterialStateProperty.all(Color.fromARGB(255, 78, 168, 35)),
+                        backgroundColor: MaterialStateProperty.all(Color.fromARGB(255, 79, 168, 35)),
                       ),
                       onPressed: () async => null,
                       child: Text(

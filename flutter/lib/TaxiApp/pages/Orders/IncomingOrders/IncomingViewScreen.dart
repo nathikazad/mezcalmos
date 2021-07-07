@@ -101,7 +101,7 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
               child: TextButton(
                 style: ButtonStyle(
                   fixedSize: MaterialStateProperty.all(Size(getSizeRelativeToScreen(180, Get.height, Get.width), getSizeRelativeToScreen(20, Get.height, Get.width))),
-                  backgroundColor: MaterialStateProperty.all(Color.fromARGB(255, 78, 168, 35)),
+                  backgroundColor: MaterialStateProperty.all(Color.fromARGB(255, 79, 168, 35)),
                 ),
                 onPressed: () async => await controller.acceptTaxi(controller.selectedIncommingOrder?.id),
                 child: Text(

@@ -4,14 +4,11 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
-
 class MezcalmosSideMenu extends GetWidget<AuthController> {
-
   @override
   Widget build(BuildContext context) {
-
-    final sw    = MediaQuery.of(context).size.width;
-    final sh    = MediaQuery.of(context).size.height;
+    final sw = MediaQuery.of(context).size.width;
+    final sh = MediaQuery.of(context).size.height;
 
     return SafeArea(
       child: Drawer(
@@ -36,30 +33,26 @@ class MezcalmosSideMenu extends GetWidget<AuthController> {
               // width: 1,
             ),
             Container(
-              margin: EdgeInsets.only(top: getSizeRelativeToScreen(200, sw, sh), bottom: getSizeRelativeToScreen(20, sw, sh)),
-              height: getSizeRelativeToScreen(300, sw, sh),
-              width: double.infinity,
-              child : CircleAvatar(
-                child: ClipOval(
-                  child: controller.user?.image == null ? Image.asset(aDefaultAvatar) :  Image.network(controller.user!.image),
-                ),
-                backgroundColor: Colors.grey.shade100, //Color.fromARGB(255, 222, 222, 222),
-                radius: 1,
-              )
-            ),
+                margin: EdgeInsets.only(top: getSizeRelativeToScreen(200, sw, sh), bottom: getSizeRelativeToScreen(20, sw, sh)),
+                height: getSizeRelativeToScreen(300, sw, sh),
+                width: double.infinity,
+                child: CircleAvatar(
+                  radius: 30.0,
+                  child: ClipOval(
+                    child: controller.user?.image == null ? Image.asset(aDefaultAvatar) : Image.network(controller.user!.image),
+                  ),
+                  backgroundColor: Colors.grey.shade100, //Color.fromARGB(255, 222, 222, 222),
+                  // radius: 1,
+                )),
 
             Flexible(
               child: Text(
                 controller.user?.displayName ?? tDefaultUserName,
                 textAlign: TextAlign.center,
-                style: TextStyle(
-
-                  fontWeight: FontWeight.bold,
-                  fontSize: getSizeRelativeToScreen(55, sw, sh)
-                ),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: getSizeRelativeToScreen(55, sw, sh)),
               ),
             ),
-            
+
             SizedBox(height: getSizeRelativeToScreen(80, sw, sh)),
             Container(
               height: 222,
@@ -67,15 +60,13 @@ class MezcalmosSideMenu extends GetWidget<AuthController> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                
                 children: [
-                  
                   Padding(
                     padding: EdgeInsets.all(getSizeRelativeToScreen(25.0, sw, sh)),
                     child: GestureDetector(
                       onTap: () async => await controller.signOut(),
                       child: Row(
-                        mainAxisAlignment : MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Icon(Icons.power_settings_new_rounded),
@@ -85,13 +76,12 @@ class MezcalmosSideMenu extends GetWidget<AuthController> {
                       ),
                     ),
                   ),
-
                   Padding(
                     padding: EdgeInsets.all(getSizeRelativeToScreen(25.0, sw, sh)),
                     child: GestureDetector(
                       onTap: () => print("Clicked To Spanish!!"),
                       child: Row(
-                        mainAxisAlignment : MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Icon(Icons.language),
@@ -101,12 +91,9 @@ class MezcalmosSideMenu extends GetWidget<AuthController> {
                       ),
                     ),
                   )
-
                 ],
-
               ),
             ),
-            
           ],
         ),
       ),
