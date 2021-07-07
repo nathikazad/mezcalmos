@@ -68,6 +68,7 @@ class OrderGoogleMapState extends State<OrderGoogleMap> {
     return !mapReady
         ? Center(child: CircularProgressIndicator())
         : GoogleMap(
+            buildingsEnabled: false,
             markers: {
               Marker(
                 infoWindow: InfoWindow(title: "Ride from : ", snippet: widget.currentOrder.to['address']),
@@ -86,7 +87,7 @@ class OrderGoogleMapState extends State<OrderGoogleMap> {
             polylines: polyLineSet,
             zoomControlsEnabled: false,
             compassEnabled: false,
-            mapType: MapType.normal,
+            mapType: MapType.none,
             initialCameraPosition:
                 CameraPosition(bearing: 192.8334901395799, target: LatLng(widget.currentOrder.from['lat'], widget.currentOrder.from['lng']), tilt: 59.440717697143555, zoom: 15.151926040649414),
             onMapCreated: (GoogleMapController controller) {
