@@ -71,6 +71,9 @@ class OrderGoogleMapState extends State<OrderGoogleMap> {
             buildingsEnabled: false,
             markers: {
               Marker(
+                draggable: false,
+                flat: true,
+                anchor: Offset(0.5, 1),
                 infoWindow: InfoWindow(title: "Ride from : ", snippet: widget.currentOrder.to['address']),
                 markerId: MarkerId("from"),
                 icon: customerLocationMarker,
@@ -78,6 +81,9 @@ class OrderGoogleMapState extends State<OrderGoogleMap> {
                 position: LatLng(widget.currentOrder.from['lat'], widget.currentOrder.from['lng']),
               ),
               Marker(
+                  draggable: false,
+                  flat: true,
+                  anchor: Offset(0.5, 1),
                   infoWindow: InfoWindow(title: "Ride to : ", snippet: widget.currentOrder.to['address']),
                   markerId: MarkerId("to"),
                   icon: customerDestinationMarker,
@@ -87,9 +93,11 @@ class OrderGoogleMapState extends State<OrderGoogleMap> {
             polylines: polyLineSet,
             zoomControlsEnabled: false,
             compassEnabled: false,
-            mapType: MapType.none,
+            mapType: MapType.normal,
+            tiltGesturesEnabled: true,
             initialCameraPosition:
-                CameraPosition(bearing: 192.8334901395799, target: LatLng(widget.currentOrder.from['lat'], widget.currentOrder.from['lng']), tilt: 59.440717697143555, zoom: 15.151926040649414),
+                // CameraPosition(bearing: 192.8334901395799, target: LatLng(widget.currentOrder.from['lat'], widget.currentOrder.from['lng']), tilt: 59.440717697143555, zoom: 15.151926040649414),
+                CameraPosition(target: LatLng(widget.currentOrder.from['lat'], widget.currentOrder.from['lng']), tilt: 9.440717697143555, zoom: 15.151926040649414),
             onMapCreated: (GoogleMapController controller) {
               controller.setMapStyle(GetStorage().read('map_style'));
               _gMapCompleter.complete(controller);
