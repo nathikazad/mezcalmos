@@ -205,9 +205,10 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                     left: 25,
                     top: 30,
                     child: GestureDetector(
-                      onTap: () => mezcalmosSnackBar("From", controller.selectedIncommingOrder?.from['address']),
+                      onTap: () => mezcalmosSnackBar("From", controller.selectedIncommingOrder?.from.address ?? ""),
                       child: Text(
-                        (controller.selectedIncommingOrder?.from['address'].toString().substring(0, 13) ?? "..........") + " ..", //13+..
+                        (controller.selectedIncommingOrder?.from.address
+                                    .toString().substring(0, 13) ?? "..........") + " ..", //13+..
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -230,9 +231,10 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                     left: (getSizeRelativeToScreen(180, Get.height, Get.width) / 2) + 40,
                     top: 30,
                     child: GestureDetector(
-                      onTap: () => mezcalmosSnackBar("Destination", controller.selectedIncommingOrder?.to['address']),
+                      onTap: () => mezcalmosSnackBar("Destination", controller.selectedIncommingOrder?.to.address ?? ""),
                       child: Text(
-                        (controller.selectedIncommingOrder?.to['address'].toString().substring(0, 13) ?? "..........") + " ..", //13+..
+                        (controller.selectedIncommingOrder?.to.address
+                                    .toString().substring(0, 13) ?? "..........") + " ..", //13+..
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,

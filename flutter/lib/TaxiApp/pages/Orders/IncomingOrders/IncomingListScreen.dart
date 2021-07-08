@@ -149,7 +149,7 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                             children: <Widget>[
                                               Icon(Icons.location_on_outlined, size: getSizeRelativeToScreen(32, sw, sh)),
                                               Text(
-                                                controller.orders[i].from['address'].toString().substring(0, 10) + "... ",
+                                                controller.orders[i].from.address.substring(0, 10) + "... ",
                                                 overflow: TextOverflow.ellipsis,
                                                 maxLines: 1,
                                                 softWrap: false,

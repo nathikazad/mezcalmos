@@ -13,20 +13,28 @@ import 'package:mezcalmos/TaxiApp/models/TaxiDriver.dart';
 import 'package:mezcalmos/TaxiApp/pages/AuthScreens/UnauthorizedScreen.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/CurrentOrderScreen.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingListScreen.dart';
-// import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
+import 'package:geolocator/geolocator.dart';
 
 class TaxiAuthController extends GetxController {
   Rx<TaxiDriver> _model = TaxiDriver.empty().obs;
   DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
   AuthController _authController = Get.find<AuthController>();
-  Rx<Widget> _dynamicScreen = (Center(child: CircularProgressIndicator()) as Widget).obs;
+  Rx<Widget> _dynamicScreen =
+      (Center(child: CircularProgressIndicator()) as Widget).obs;
+  Rx<Position> _currentLocation = Position.fromMap(
+      <dynamic, dynamic>{"latitude": 15.851385, "longitude": -97.046429}).obs;
+  RxBool _locationEnabled = false.obs;
 
   dynamic get currentOrderId => _model.value.currentOrder ?? null;
   dynamic get authorizedTaxi => _model.value.isAuthorized ?? false;
   bool get isLooking => _model.value.isLooking ?? false;
   Widget get dynamicScreen => _dynamicScreen.value;
+  Position get currentLocation => _currentLocation.value;
+  bool get locationEnabled => _locationEnabled.value;
+  Rx<Position> get currentLocationRx => _currentLocation;
 
   late StreamSubscription<Event> _taxiAuthListener;
+  late StreamSubscription<Position> _locationListener;
 
   /*
     GetScreen function basically will return on of the 3 right Screens :
@@ -35,7 +43,11 @@ class TaxiAuthController extends GetxController {
       - CurrentOrder
   */
 
-  Widget _getScreen() => authorizedTaxi == true ? (_model.value.currentOrder != null ? CurrentOrderScreen() : IncomingOrdersScreen()) : UnauthorizedScreen();
+  Widget _getScreen() => authorizedTaxi == true
+      ? (_model.value.currentOrder != null
+          ? CurrentOrderScreen()
+          : IncomingOrdersScreen())
+      : UnauthorizedScreen();
 
   @override
   void onInit() async {
@@ -49,45 +61,114 @@ class TaxiAuthController extends GetxController {
     print("currentOrderId from TaxiAuthController >> ${currentOrderId}");
 
     if (_authController.user != null) {
-      _taxiAuthListener = _databaseHelper.firebaseDatabase.reference().child(taxiAuthNode(_authController.user?.uid ?? '')).onValue.listen((event) {
-        _model.value = event.snapshot.value != null ? TaxiDriver.fromSnapshot(event.snapshot) : TaxiDriver(false, false, null, null, null);
-
+      _taxiAuthListener = _databaseHelper.firebaseDatabase
+          .reference()
+          .child(taxiAuthNode(_authController.user?.uid ?? ''))
+          .onValue
+          .listen((event) {
+        _model.value = event.snapshot.value != null
+            ? TaxiDriver.fromSnapshot(event.snapshot)
+            : TaxiDriver(false, false, null, null, null);
         // our magical Trick :p
         _dynamicScreen.value = _getScreen();
       });
       print("/////////////////////////////////////////////${_model.value.toJson()}////////////////////////////////////////////////////");
+      _listenForLocation();
     }
     super.onInit();
   }
 
+  void _listenForLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Test if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Location services are not enabled don't continue
+      // accessing the position and request users of the
+      // App to enable the location services.
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        // Permissions are denied, next time you could try
+        // requesting permissions again (this is also where
+        // Android's shouldShowRequestPermissionRationale
+        // returned true. According to Android guidelines
+        // your App should show an explanatory UI now.
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      return Future.error('Location permissions are permanently denied, we cannot request permissions.');
+    }
+    _locationEnabled.value = true;
+    _locationListener =
+        Geolocator.getPositionStream().listen((Position position) {
+      _currentLocation.value = position;
+      Map<String, dynamic> positionUpdate = <String, dynamic>{
+        "lastUpdateTime": DateTime.now().toUtc().toString(),
+        "position": <String, dynamic>{
+          "lat": position.latitude,
+          "lng": position.longitude
+        }
+      };
+      // print(positionUpdate);
+      _databaseHelper.firebaseDatabase
+          .reference()
+          .child(taxiAuthNode(_authController.user?.uid ?? ''))
+          .child('location')
+          .set(positionUpdate);
+      if (_model.value.currentOrder != null) {
+        _databaseHelper.firebaseDatabase
+          .reference()
+          .child(orderId(_model.value.currentOrder))
+          .child('driver/location')
+          .set(positionUpdate);
+      }
+    //   print(position == null
+    //       ? 'Unknown'
+    //       : position.latitude.toString() +
+    //           ', ' +
+    //           position.longitude.toString());
+    });
+  }
+
   void turnOff() {
-    _databaseHelper.firebaseDatabase.reference().child(taxiIsLookingField(_authController.user?.uid)).set(false).catchError((err) {
+    _databaseHelper.firebaseDatabase
+        .reference()
+        .child(taxiIsLookingField(_authController.user?.uid))
+        .set(false)
+        .catchError((err) {
       print("Error turning [ isLooking = false ] -> $err");
       mezcalmosSnackBar("Error ~", "Failed turning it off!");
     });
   }
 
   void turnOn() {
-    _databaseHelper.firebaseDatabase.reference().child(taxiIsLookingField(_authController.user?.uid)).set(true).catchError((err) {
+    _databaseHelper.firebaseDatabase
+        .reference()
+        .child(taxiIsLookingField(_authController.user?.uid))
+        .set(true)
+        .catchError((err) {
       print("Error turning [ isLooking = true ] -> $err");
       mezcalmosSnackBar("Error ~", "Failed turning it on!");
     });
   }
 
-  // this is not needed !
-
-  // void toggleOnOff() {
-  //   _databaseHelper.firebaseDatabase
-  //       .reference()
-  //       .child(taxiAuthNode(_authController.user?.uid ?? ''))
-  //       .set(_model.value!.isLooking == true ? false : true);
-  // }
-
   void detachListeners() {
     _taxiAuthListener
         .cancel()
-        .then((value) => print("A listener was disposed on TaxiAuthController::detachListeners !"))
-        .catchError((err) => print("Error happend while trying to dispose TaxiAuthController::detachListeners !"));
+        .then((value) => print(
+            "A listener was disposed on TaxiAuthController::detachListeners !"))
+        .catchError((err) => print(
+            "Error happend while trying to dispose TaxiAuthController::detachListeners !"));
   }
 
   @override
