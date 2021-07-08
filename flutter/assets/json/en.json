@@ -1,0 +1,213 @@
+{
+    "customer": {
+        "home": {
+            "taxi": "Taxi",
+            "groceries": "Groceries",
+            "services": "All Services"
+        },
+        "inviteCode": {
+            "inviteCodQuestion": "Do You Have An Invite Code?",
+            "no": "No",
+            "confirm": "Confirm"
+        },
+        "taxiView": {
+            "taxi": "Taxi",
+            "searching": "Searching for Taxi",
+            "cancel": "Cancel",
+            "arrival": "Arrival",
+            "message": "Message",
+            "rideStarted": "Ride started",
+            "droppedOff": "Dropped off",
+            "review": "Review",
+            "loading": "Loading",
+            "confirm": "CONFIRM",
+            "cancelled": "Cancelled",
+            "logIn": "Login To Make This Order",
+            "outOfPuerto": "You are too far out of puerto",
+            "priceEstimate": "Estimated price for the ride is $",
+            "noRide": "Sorry to inform you this ride does not exist anymore."
+        },
+        "cancelOrder": {
+            "question": "Why do you want to cancel the ride?",
+            "cancelRide": "Cancel ride",
+            "postAgain": "Post again",
+            "noShow": "No show",
+            "mistake": "Mistake",
+            "other": "Other",
+            "taxiCancelled": "Sorry to inform you the taxi cancelled the ride.",
+            "orderExpired": "Sorry to inform your taxi request is expired."
+        },
+        "savedLocations": {
+            "title": "Saved Locations",
+            "location": "Location|Locations",
+            "addNewLoc": "Add New Location",
+            "editLocation": "Edit Location"
+
+        },
+        "orders": {
+            "title": "Orders",
+            "item": "Item|Items",
+            "onTheWay": "On the way",
+            "inTransit": "In Transit",
+            "searching": "Searching",
+            "noOrders": "No orders found"
+        }
+    },
+    "taxi": {
+        "incoming": {
+            "title": " Incoming <br/>Orders",
+            "loading": "Loading",
+            "services": "All Services",
+            "isInTax": "Please finish|your ride|to accept new orders",
+            "far": "far",
+            "toggle": "Turn On Incoming Orders|Turn on to see new orders",
+            "noOrders": "No Orders Found|Try again later"
+        },
+        "taxiView": {
+            "taxi": "Taxi",
+            "searching": "Searching for Taxi",
+            "acceptOrders": "Accept Order",
+            "startRide": "Start Ride",
+            "finishRide": "Finish Ride",
+            "message": "Message",
+            "droppedOff": "Dropped off",
+            "droppedOffMessage": "Your ride has ended",
+            "review": "Review",
+            "loading": "Loading",
+            "cancelled": "Cancelled",
+            "tooFarFromstartRide": "Click start ride after the customer has reached your vehicle. Based on your GPS it seems you are still far from customer location, are you sure you still want to start the ride?",
+            "tooFarFromfinishRide": "Click Finish after the customer has exited your vehicle. Based on your GPS it seems you are still far from customer's end location, are you sure you still want to end the ride?",
+            "no": "No",
+            "yes": "Yes",
+            "noRide": "Sorry to inform you this ride does not exist anymore."
+        },
+        "cancelOrder": {
+            "question": "Why do you want to cancel the ride?",
+            "cancelRide": "Cancel ride",
+            "backToIncoming": "Back to incoming",
+            "noShow": "No show",
+            "otherRide": "Other ride",
+            "trafficJam": "Traffic jam",
+            "other": "Other",
+            "customerCancelled": "Sorry to inform you the customer cancelled the ride.",
+            "rideUnavailble": "Sorry to inform you the the ride is not availble any more, taking you the next available ride"
+        },
+        "orders": {
+            "title": "Orders",
+            "item": "Item|Items",
+            "onTheWay": "On the way",
+            "onTheWayMessage": "is on the way now to pick you up",
+            "inTransit": "In Transit",
+            "inTransitMessage": "Your ride is on the way",
+            "searching": "Searching for taxi",
+            "searchingMessage": "You are being matched with a taxi",
+            "noOrders": "No orders found",
+            "cancelled": "Taxi Cancelled",
+            "cancelledMessage": "Your ride has been cancelled"
+        },
+        "introduction": {
+            "howToTaxi": "Do You Want To Use <br/>The Mezcalmos App To <br/>Give Rides To Customers In <br/> <span class='text_blue'>Puerto Escondido?</span> ",
+            "signUpTaxi": "Click Sign Up, Show Us Proof <br/>Of Your Taxi Authorization <br/>And Start Giving Rides  <br/> Right Away.",
+            "confirmation": "Your Application Is Under Review. We Will Contact You Shortly",
+            "logIn": " Sign Up |Login",
+            "alreadyMember": "Already a member?",
+            "yes": "YES"
+
+        },
+        "permissions": {
+            "askForNotif": "Location Service Turned Off|App cannot work without the location service|Enable location services from  your setting",
+            "permissionBtn": "Turn On Now"
+        }
+    },
+    "shared": {
+        "login": {
+            "owner": "Login To <br/>  Make An Order ",
+            "customer": "Login To <br/>  Make An Order ",
+            "fbBtn": "LOGIN WITH FACEBOOK",
+            "loginWithSms": "LOGIN WITH SMS",
+            "whatsAppLogin": " LOGIN WITH WHATSAPP",
+            "verifyCountryCode": "Please verify your country code",
+            "verifyPhoneNumber": "Please verify your phone number",
+            "OtpConfirmation": "OTP Code Confirmation",
+            "enterOtpCode": "Enter OTP code sent to",
+            "resend": "Resend",
+            "confirm": "Confirm",
+            "otpCode": "OTP Code",
+            "enterPhoneNumber": "Enter phone number to recieve OTP code",
+            "submit": "SUBMIT",
+            "twilioNote": "By continuing you will receive a verification code to your phone number by SMS. Message and data rates may apply."
+        },
+        "messages": {
+            "title": "Messages",
+            "available": "Available",
+            "orderLink": "Order page"
+        },
+        "notification": {
+            "title": "Notifications",
+            "today": "Today",
+            "yesterday": "Yesterday",
+            "older": "Older",
+            "item": "Item|Items",
+            "clear": "Clear"
+        },
+        "userInfo": {
+            "title": " User <br/> Information ",
+            "editInfo": "Edit  <br/> Information",
+            "editPhoneNumber": "Change Phone Number",
+            "addInfo": "Add  <br/> Information",
+            "editBtn": "EDIT INFORMATION",
+            "deleteBtn": "Delete Account",
+            "saveBtn": "SAVE",
+            "editImgMsg": "Click on image to change it",
+            "fullName": "Full Name",
+            "phoneNumber": "Phone Number",
+            "clickToUploadImg": "clickToUpdate",
+            "addPhoneNumber": "Add phone number"
+        },
+        "navDrawer": {
+            "userInfo": "User Information",
+
+            "myOrders": "My Orders",
+            "savedLocations": "Saved Locations",
+            "logout": "Logout",
+            "login": "Login",
+            "contactAdmin": "Contact Admin"
+        },
+        "header": {
+            "alert": "Order status changed"
+        },
+        "addItem": {
+            "title": " Add New Item",
+            "name": "Name",
+            "note": "note|notes",
+            "addItemBtn": "Add Item"
+        },
+        "inputLocation": {
+            "from": "From",
+            "to": "To",
+            "optional": "Optional",
+            "currentLoc": "Current location",
+            "searching": "Searching",
+            "pick": "PICK",
+            "pickFromMap": "Pick from map",
+            "mapPickerExplain": "Move the map to pick location|You can move the map if position is not precise"
+        },
+        "pickLocation": {
+            "name": "Name",
+            "address": "Address",
+            "searching": "Searching",
+            "pick": "PICK"
+
+        },
+        "placeHolders": {
+            "address": "Enter Address",
+            "name": "Enter Name",
+            "search": "Search",
+            "writeHere": "Write here",
+            "displayName": "Enter Display Name",
+            "phone": "Enter Phone Number",
+            "phoneNumber": "+52123456.."
+
+        }
+    }
+}

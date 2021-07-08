@@ -1,0 +1,207 @@
+{
+    "customer": {
+        "home": {
+            "taxi": "Taxi",
+            "groceries": "Comestibles",
+            "services": "Todos los servicios"
+        },
+        "inviteCode":{
+            "inviteCodQuestion": "Tienes un código de invitación?",
+            "no": "No",
+            "confirm": "Confirmar"
+        },
+        "taxiView": {
+            "taxi": "Taxi",
+            "searching": "Buscando taxi",
+            "cancel": "Cancelar",
+            "arrival": "Llegara",
+            "message": "Envía Mensaje",
+            "rideStarted": "Paseo iniciado",
+            "droppedOff": "Dejado",
+            "review": "Revisar",
+            "loading": "Cargando",
+            "confirm": "Confirmar",
+            "cancelled": "Cancelado",
+            "logIn": "Inicie sesión para hacer este pedido",
+            "outOfPuerto": "Estas demasiado lejos de puerto",
+            "priceEstimate": "El precio estimado del viaje es de $",
+            "noRide":"Lamento informarle que este viaje ya no existe."
+        },
+        "cancelOrder": {
+            "question": "Por qué quieres cancelar el viaje?",
+            "cancelRide": "Cancelar viaje",
+            "postAgain": "Publica de nuevo",
+            "noShow": "No vino",
+            "mistake": "Error",
+            "other": "Otro",
+            "taxiCancelled": "Lamento informarle que el taxi canceló el viaje."
+        },
+        "savedLocations": {
+            "title": "Ubicaciones guardadas",
+            "location": "Ubicacion|Ubicaciones",
+            "addNewLoc": "Añadir Nueva Ubicación",
+            "editLocation": "Editar ubicación"
+        },
+        "orders": {
+            "title": "Pedidos",
+            "item": "Artículo|Artículos",
+            "onTheWay": "En camino",
+            "inTransit": "En tránsito",
+            "searching": "Buscando",
+            "noOrders": "Sin pedidos"
+        }
+    },
+    "taxi": {
+        "incoming": {
+            "title": "Órdenes <br/>Entrantes",
+            "loading": "Cargando",
+            "services": "Todos los servicios",
+            "isInTax": "Por favor finalice | su viaje | para aceptar nuevos pedidos",
+            "far": "lejos",
+            "noOrders": "No Hay Ordenes|Intentarlo más tarde",
+            "toggle": "Activar Pedidos Entrantes|Activar para ver nuevos pedidos"
+        },
+        "taxiView": {
+            "taxi": "Taxi",
+            "searching": "Buscando taxi",
+            "acceptOrders": "Aceptar orden",
+            "startRide": "Iniciar viaje",
+            "finishRide": "Terminar viaje",
+            "message": "Envía Mensaje",
+            "droppedOff": "Dejado",
+            "droppedOffMessage": "Tu viaje ha terminado",
+            "review": "Revisar",
+            "loading": "Cargando",
+            "cancelled": "Cancelado",
+            "tooFarFromstartRide": "Haga clic en Iniciar viaje después de que el cliente haya llegado a su vehículo. Según su GPS, parece que todavía está lejos de la ubicación del cliente, está seguro de que aún desea comenzar el viaje?",
+            "tooFarFromfinishRide": "Haga clic en Terminar después de que el cliente haya salido de su vehículo. Según su GPS, parece que todavía está lejos de la ubicación final del cliente. Estás seguro de que aún desea terminar el viaje?",
+            "no": "No",
+            "yes": "Sí",
+            "noRide":"Lamento informarle que este viaje ya no existe."
+        },
+        "cancelOrder": {
+            "question": "Por qué quieres cancelar el viaje?",
+            "cancelRide": "Cancelar viaje",
+            "backToIncoming": "Volver a entrante",
+            "noShow": "No vino",
+            "otherRide": "Otro viaje",
+            "trafficJam": "Embotellamiento",
+            "other": "Otro",
+            "customerCancelled": "Lamento informarle que el cliente canceló el viaje.",
+            "rideUnavailble": "Lamento informarle que el viaje ya no está disponible."
+        },
+        "orders": {
+            "title": "Pedidos",
+            "item": "Artículo|Artículos",
+            "onTheWay": "En camino",
+            "onTheWayMessage": "está en camino ahora para recogerte",
+            "inTransit": "En tránsito",
+            "inTransitMessage": "Tu viaje está en camino",
+            "searching": "Buscando",
+            "searchingMessage": "Te van a emparejar con un taxi",
+            "noOrders": "Sin pedidos",
+            "cancelled": "Taxi cancelado",
+            "cancelledMessage": "Tu viaje ha sido cancelado"
+        },
+        "introduction": {
+            "howToTaxi": "¿Desea utilizar la aplicación<br/> Mezcalmos para ofrecer<br/> transporte a los clientes<br/> en <span class = 'text_blue'> Puerto Escondido? </span> ",
+            "signUpTaxi": "Haga clic en Registrarse,<br/> muéstrenos la prueba de su<br/> autorización de taxi y comience<br/> a ofrecer viajes de inmediato.",
+            "confirmation": "Su solicitud está bajo revisión. Nos pondremos en contacto con usted en breve",
+            "logIn": " Registrate|Iniciar sesión",
+            "alreadyMember": "Ya eres un usuario?",
+            "yes": "SI"
+
+        },
+        "permissions": {
+            "askForNotif": "Servicio de ubicación desactivado | La aplicación no puede funcionar sin el servicio de ubicación | Habilite los servicios de ubicación desde su configuración",
+            "permissionBtn": "Activar ahora"
+        }
+    },
+    "shared": {
+        "login": {
+            "owner": " Inicie sesión con <br/> Facebook para <br/> hacer un pedido ",
+            "customer": " Inicie sesión con <br/> Facebook para <br/> hacer un pedido ",
+            "fbBtn": "INICIAR CON FACEBOOK",
+            "whatsAppLogin": " INICIAR CON WHATSAPP",
+            "loginWithSms": "INICIAR CON SMS",
+            "verifyCountryCode": "Verifique el código de su país",
+            "verifyPhoneNumber": "Verifique su número de teléfono",
+            "OtpConfirmation": "Confirmación del código OTP",
+            "enterOtpCode": "Ingrese el código OTP enviado a",
+            "resend": "Reenviar",
+            "confirm": "Confirmar",
+            "otpCode": "OTP código",
+            "enterPhoneNumber": "Ingrese el número teléfono para recibir el código OTP",
+            "submit": "ENVIAR",
+            "twilioNote": "Al continuar, recibirá un código de verificación a su número de teléfono por SMS. Se pueden aplicar tarifas por mensajes y datos."
+
+        },
+        "messages": {
+            "title": "Mensajes",
+            "available": "Disponible",
+            "orderLink": "Página de pedido"
+        },
+        "notification": {
+            "title": "Notificaciones",
+            "today": "Hoy",
+            "yesterday": "Ayer",
+            "older": "Antiguos",
+            "item": "Artículo|Artículos",
+            "clear": "Borrar"
+        },
+        "userInfo": {
+            "title": " Información <br/> del usuario ",
+            "editInfo": "Editar  <br/> Información",
+            "editPhoneNumber": "Cambiar número de teléfono",
+            "addInfo": "Agregar <br/> Información",
+            "editBtn": "EDITAR INFORMACION",
+            "deleteBtn": "Borrar cuenta",
+            "saveBtn": "GUARDAR",
+            "editImgMsg": "Click on image to change it",
+            "fullName": "Nombre completo",
+            "phoneNumber": "Número de teléfono",
+            "clickToUploadImg": "clickToUpdateEs",
+            "addPhoneNumber": "Agregar el número de teléfono"
+        },
+        "navDrawer": {
+            "userInfo": "Información del usuario",
+            "myOrders": "Mis Pedidos",
+            "savedLocations": "Ubicaciones guardadas",
+            "logout": "Cerrar sesión",
+            "login": "Iniciar sesión",
+            "contactAdmin": "Contactar admin"
+        },
+        "header": {
+            "alert": "El estado del pedido cambió"
+        },
+        "addItem": {
+            "title": " Agregar artículo nuevo",
+            "name": "Nombre",
+            "note": "nota|notas",
+            "addItemBtn": "Agregar artículo"
+        },
+        "inputLocation": {
+            "from": "Desde",
+            "to": "Para",
+            "optional": "Opcional",
+            "currentLoc": "Ubicación Actual",
+            "searching": "Buscando",
+            "pick": "ELIGE",
+            "pickFromMap": "Elige del mapa",
+            "mapPickerExplain": "Mueva el mapa para elegir la ubicación"
+        },
+        "pickLocation": {
+            "name": "Nombre",
+            "address": "Dirección",
+            "searching": "ELEGIR",
+            "pick": "ELIGE"
+
+        },
+        "placeHolders": {
+            "address": "Ingresa Dirección",
+            "name": "Ingresa Nombre",
+            "search": "Busca",
+            "writeHere": "Escriba aquí"
+        }
+    }
+}
