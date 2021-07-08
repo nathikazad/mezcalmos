@@ -30,27 +30,45 @@
 + Get Phone's Location Access and keep it updated on db.
 + add a Proxy for cloud functions!
 
------- UI -------
-+ Drawer Button / logo :
-	- Border raduis : 10px
-	- Button size 32/32px
-	- logo h:32px - w:32
-	- Mezcalmos title:
+---- done - today-----
++ Language is no more hardcoded in Cloud functions.
++ LanguageController Initial  implementation.
++ Language json in /assets/json/
++ db is no more hardcoded in Cloud functions.
++ SignIn bug that happend to Yassine should not be a problem anymore (it's due to heavy First CloudFunctions call)
++ [UI] Drawer Button / logo done.
++ [UI] Incomming Orders Text done 
++ [UI] ON/OFF Switcher done.
+
+
+--------Check with yassine---------
+- Incomming Orders Screen :
+	|_ Under Img screen: title  Size = 38.5
+
+- infos line in IncommingOrdersList > Getting out of bounds
+
+------ UI  TODO -------
+
+[Done]  Drawer Button / logo :
+	|_ Border raduis : 10px
+	|_ Button size 32/32px
+	|_ logo h:32px - w:32
+	|_  Mezcalmos title:
 		|_ font: Product Sans Regualar
 		|_ 25.5PX
 
-	- Incomming Orders:
+	[Done] Incomming Orders:
 		|_ Size : 38.5px
-
 		|_ Font : RProduct Sans regular
-	- ON/OFF :
+	
+	[Done] ON/OFF :
 		|_ green : #32C76D 
 		|_ gradient : 	
 		|_ off color::active : #FF0008
 		|_ inear-gradient( 151deg , rgba(81, 133, 255, 0.1) 0%, rgba(207, 73, 252, 0.1) 100%) 0% 0%
 
 
-+ Incomming Orders Screen :
+[Done] Incomming Orders Screen :
 	|_ OFF middle Screen Image.
 	|_ ON not found Img
 	|_ Under Img screen:
@@ -59,14 +77,14 @@
 			|_ #a8a8a8
 			|_ 16px
 
-+ Drawer SIdeMenu :
+[Done] Drawer SIdeMenu :
 	|_ displayName :
 		|_ fontsize 25.5px
 		|_ bold
 	|_ MenuItems:
 		|_ 16px bold
 
-+ INcommingOrderListItem:
+[Done] IncommingOrderListItem:
 	|_ border : 0.5px solid #ececec  
 	|_ raduis : 4px
 	|_ Padding : 16px
@@ -81,7 +99,7 @@
 			|_ bel3in
 
 + OrderVIew:
-	|_Map"
+	|_[Ongoing] Map"
 		|+ make use of fitBounds to center everything up.
 		|+ if zoom > 16 : zoom = 16
 		|_ markers ~
@@ -95,7 +113,7 @@
 		|_ Status : others status:
 			|_ Show from <--> to
 
-	|_ BottomBar:
+	|_ [Done] BottomBar:
 		|_ displaName : 16px bold
 		|_ "x km far" :
 			|_ regular
