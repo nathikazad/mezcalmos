@@ -11,9 +11,12 @@ class SettingsController extends GetxController {
 
   @override
   void onInit() {
-    super.onInit();
+    // TODO : ADD CHECK IF THERE IS STORED LANGUAGE IN LOCAL ALREADY
+    // here --------
+    // FOR NOW WE SET IT TO EN (default  if not passed to LangController)
     _appTheme = Get.put(ThemeController(), permanent: true);
-    _appLanguage = Get.put(LanguageController(), permanent: true);
+    _appLanguage = Get.put(LanguageController(/*Here we pass the cached language selected*/), permanent: true);
+    super.onInit();
   }
 
   @override

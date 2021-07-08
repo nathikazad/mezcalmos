@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 class MezcalmosSideMenu extends GetWidget<AuthController> {
+  SettingsController _settingsController = Get.find<SettingsController>();
   @override
   Widget build(BuildContext context) {
     final sw = MediaQuery.of(context).size.width;
@@ -49,51 +51,75 @@ class MezcalmosSideMenu extends GetWidget<AuthController> {
               child: Text(
                 controller.user?.displayName ?? tDefaultUserName,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: getSizeRelativeToScreen(55, sw, sh)),
+                style: TextStyle(fontFamily: 'psb', fontSize: 25.5),
               ),
             ),
 
-            SizedBox(height: getSizeRelativeToScreen(80, sw, sh)),
-            Container(
-              height: 222,
-              // color: Colors.red,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.all(getSizeRelativeToScreen(25.0, sw, sh)),
-                    child: GestureDetector(
-                      onTap: () async => await controller.signOut(),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(Icons.power_settings_new_rounded),
-                          SizedBox(width: getSizeRelativeToScreen(20.0, sw, sh)),
-                          Center(child: Text(tDisconnect)),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(getSizeRelativeToScreen(25.0, sw, sh)),
-                    child: GestureDetector(
-                      onTap: () => print("Clicked To Spanish!!"),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(Icons.language),
-                          SizedBox(width: getSizeRelativeToScreen(20.0, sw, sh)),
-                          Center(child: Text("To Spanish")),
-                        ],
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
+            SizedBox(height: getSizeRelativeToScreen(300, sw, sh)),
+            ListTile(
+                onTap: () async => await controller.signOut(),
+                leading: Icon(
+                  Icons.power_settings_new_rounded,
+                  size: 30,
+                ),
+                title: Text(
+                  tDisconnect,
+                  style: TextStyle(fontFamily: 'psb', fontSize: 16),
+                )),
+            Obx(() => ListTile(
+                onTap: () => _settingsController.appLanguage.changeLang(),
+                leading: Container(
+                  height: 31,
+                  width: 31,
+                  decoration: BoxDecoration(shape: BoxShape.circle, image: DecorationImage(image: AssetImage(_settingsController.appLanguage.oppositFlag))),
+                ),
+                title: Text(_settingsController.appLanguage.oppositToLang, style: TextStyle(fontFamily: 'psb', fontSize: 16)))),
+            // Container(
+            //   height: 222,
+            //   // color: Colors.red,
+            //   child: Column(
+            //     mainAxisAlignment: MainAxisAlignment.end,
+            //     crossAxisAlignment: CrossAxisAlignment.center,
+            //     children: [
+            //       Padding(
+            //         padding: EdgeInsets.all(getSizeRelativeToScreen(25.0, sw, sh)),
+            //         child: GestureDetector(
+            //           onTap: () async => await controller.signOut(),
+            //           child: Row(
+            //             mainAxisAlignment: MainAxisAlignment.center,
+            //             crossAxisAlignment: CrossAxisAlignment.center,
+            //             children: [
+            //               Icon(Icons.power_settings_new_rounded),
+            //               SizedBox(width: getSizeRelativeToScreen(20.0, sw, sh)),
+            //               Center(
+            //                   child: Text(
+            //                 tDisconnect,
+            //                 style: TextStyle(fontFamily: 'psb', fontSize: 16),
+            //               )),
+            //             ],
+            //           ),
+            //         ),
+            //       ),
+            //       Padding(
+            //         padding: EdgeInsets.all(getSizeRelativeToScreen(25.0, sw, sh)),
+            //         child: GestureDetector(
+            //           onTap: () {
+            //             _settingsController.appLanguage.changeLang();
+            //           },
+            //           child: Row(
+            //             mainAxisAlignment: MainAxisAlignment.center,
+            //             crossAxisAlignment: CrossAxisAlignment.center,
+            //             children: [
+            //               Icon(Icons.language),
+            //               SizedBox(width: getSizeRelativeToScreen(20.0, sw, sh)),
+            //               Center(child: Obx(() => Text(_settingsController.appLanguage.langFullName, style: TextStyle(fontFamily: 'psb', fontSize: 16)))),
+            //             ],
+            //           ),
+            //         ),
+            //       )
+            //     ],
+            //   ),
+            // ),
           ],
         ),
       ),

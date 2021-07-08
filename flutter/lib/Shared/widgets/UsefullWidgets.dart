@@ -16,18 +16,18 @@ class MezcalmosSharedWidgets {
 
   static RichText mezcalmos({double textSize = nDefaultMezcalmosTextSize, bool isBold = false}) => RichText(
           text: TextSpan(
-        style: TextStyle(color: Colors.black, fontSize: textSize, fontWeight: FontWeight.w400),
+        style: TextStyle(fontFamily: 'psr', color: Colors.black, fontSize: textSize, fontWeight: FontWeight.w400),
         children: <TextSpan>[
           TextSpan(
             text: tMez,
             style: TextStyle(
-              fontWeight: isBold ? FontWeight.bold : FontWeight.w300,
+              fontWeight: isBold ? FontWeight.bold : FontWeight.w400,
             ),
           ),
           TextSpan(
             text: tCalmos,
             style: TextStyle(
-              fontWeight: isBold ? FontWeight.bold : FontWeight.w500,
+              fontWeight: isBold ? FontWeight.bold : FontWeight.w400,
               color: Color.fromARGB(255, 103, 122, 253),
             ),
           ),
@@ -40,6 +40,13 @@ class MezcalmosSharedWidgets {
       child: child,
     );
   }
+
+  static Widget fillTitle() => Row(
+        children: [
+          logo(size: 32),
+          Padding(padding: EdgeInsets.only(left: 10), child: mezcalmos()),
+        ],
+      );
 
   static AppBar mezcalmosAppBar(String btnType, Function onTapFunction, {dynamic bgColor = Colors.white}) {
     Widget btn_icon;
@@ -59,88 +66,133 @@ class MezcalmosSharedWidgets {
         btn_icon = Icon(
           Icons.menu,
           color: Colors.white,
-          size: getSizeRelativeToScreen(50, Get.width, Get.height),
+          size: 20,
         );
         break;
     }
-
     return AppBar(
-      // automaticallyImplyLeading: false,
-      centerTitle: true,
-      toolbarHeight: getSizeRelativeToScreen(45, Get.height, Get.width),
-      // leadingWidth: 55,
-      // toolbarHeight: 65,
-      // backgroundColor: bgColor,
-      // backgroundColor: Colors.red,
-      elevation: 0,
-      title: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(left: getSizeRelativeToScreen(5, Get.height, Get.width)),
-            child: logo(size: getSizeRelativeToScreen(20, Get.height, Get.width)),
-          ),
-          Padding(padding: EdgeInsets.only(left: getSizeRelativeToScreen(5, Get.height, Get.width)), child: mezcalmos())
-        ],
-      ),
-
-      // actions: [
-      //   Transform.scale(
-      //     scale: 0.85,
-      //     child: GestureDetector(
-      //       onTap: () => print("Clicked back btn!"),
-      //       child: Container(
-      //       width: 45,
-      //       height: 45,
-      //       margin: EdgeInsets.only(top: 5, right: 10, bottom: 5),
-      //       decoration: BoxDecoration(
-      //         borderRadius: BorderRadius.all(Radius.circular(10)),
-      //           // bottom-right : #f7eafb
-      //           // top left : #edeffc
-      //         gradient: LinearGradient(
-      //           colors: [
-      //             Color.fromARGB(255, 237, 239, 252),
-      //             Color.fromARGB(255, 247, 234, 251),
-      //           ],
-      //           begin: Alignment.topLeft,
-      //           end: Alignment.bottomRight
-      //           ),
-      //         ),
-      //         child: Icon(Icons.restore , color: Color.fromARGB(255, 117, 146, 254) , size: 20,),
-      //       ),
-      //     ),
-      //   ),
-      // ],
-
-      leading: GestureDetector(
-        onTap: () {
-          print("Taped Drawer btn !");
-          onTapFunction();
-        },
-        child: Container(
-          margin: EdgeInsets.only(
-              top: getSizeRelativeToScreen(11, Get.height, Get.width), left: getSizeRelativeToScreen(5, Get.height, Get.width), bottom: getSizeRelativeToScreen(11, Get.height, Get.width)),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                color: Color.fromARGB(255, 216, 225, 249),
-                spreadRadius: 0,
-                blurRadius: 7,
-                offset: Offset(0, 7), // changes position of shadow
+        toolbarHeight: 80,
+        elevation: 0,
+        automaticallyImplyLeading: false,
+        title: Container(
+          width: Get.width,
+          child: Stack(
+            alignment: Alignment.centerLeft,
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Container(
+                height: 32,
+                width: 32,
+                child: GestureDetector(
+                  onTap: () {
+                    print("Taped Drawer btn !");
+                    onTapFunction();
+                  },
+                  child: Container(
+                    height: 32,
+                    width: 32,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color.fromARGB(255, 216, 225, 249),
+                          spreadRadius: 0,
+                          blurRadius: 7,
+                          offset: Offset(0, 7), // changes position of shadow
+                        ),
+                      ],
+                      gradient: LinearGradient(colors: [
+                        Color.fromARGB(255, 97, 127, 255),
+                        Color.fromARGB(255, 198, 90, 252),
+                      ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                    ),
+                    child: btn_icon,
+                  ),
+                ),
               ),
+              Positioned(right: getSizeRelativeToScreen(40, Get.height, Get.width), child: fillTitle())
             ],
-            gradient: LinearGradient(colors: [
-              Color.fromARGB(255, 97, 127, 255),
-              Color.fromARGB(255, 198, 90, 252),
-            ], begin: Alignment.topLeft, end: Alignment.bottomRight),
           ),
-          child: btn_icon,
-        ),
-      ),
-    );
+        ));
+    // return AppBar(
+    //   // automaticallyImplyLeading: false,
+    //   centerTitle: true,
+    //   toolbarHeight: getSizeRelativeToScreen(45, Get.height, Get.width),
+    //   // leadingWidth: 55,
+    //   // toolbarHeight: 65,
+    //   // backgroundColor: bgColor,
+    //   // backgroundColor: Colors.red,
+    //   elevation: 0,
+    //   title: Row(
+    //     mainAxisSize: MainAxisSize.max,
+    //     mainAxisAlignment: MainAxisAlignment.start,
+    //     crossAxisAlignment: CrossAxisAlignment.center,
+    //     children: [
+    //       Padding(
+    //         padding: EdgeInsets.only(left: getSizeRelativeToScreen(5, Get.height, Get.width)),
+    //         child: logo(size: getSizeRelativeToScreen(20, Get.height, Get.width)),
+    //       ),
+    //       Padding(padding: EdgeInsets.only(left: getSizeRelativeToScreen(5, Get.height, Get.width)), child: mezcalmos())
+    //     ],
+    //   ),
+
+    //   // actions: [
+    //   //   Transform.scale(
+    //   //     scale: 0.85,
+    //   //     child: GestureDetector(
+    //   //       onTap: () => print("Clicked back btn!"),
+    //   //       child: Container(
+    //   //       width: 45,
+    //   //       height: 45,
+    //   //       margin: EdgeInsets.only(top: 5, right: 10, bottom: 5),
+    //   //       decoration: BoxDecoration(
+    //   //         borderRadius: BorderRadius.all(Radius.circular(10)),
+    //   //           // bottom-right : #f7eafb
+    //   //           // top left : #edeffc
+    //   //         gradient: LinearGradient(
+    //   //           colors: [
+    //   //             Color.fromARGB(255, 237, 239, 252),
+    //   //             Color.fromARGB(255, 247, 234, 251),
+    //   //           ],
+    //   //           begin: Alignment.topLeft,
+    //   //           end: Alignment.bottomRight
+    //   //           ),
+    //   //         ),
+    //   //         child: Icon(Icons.restore , color: Color.fromARGB(255, 117, 146, 254) , size: 20,),
+    //   //       ),
+    //   //     ),
+    //   //   ),
+    //   // ],
+
+    //   leading: GestureDetector(
+    //     onTap: () {
+    //       print("Taped Drawer btn !");
+    //       onTapFunction();
+    //     },
+    //     child: Container(
+    //       height: 32,
+    //       width: 32,
+    //       margin: EdgeInsets.only(
+    //           top: getSizeRelativeToScreen(11, Get.height, Get.width), left: getSizeRelativeToScreen(5, Get.height, Get.width), bottom: getSizeRelativeToScreen(11, Get.height, Get.width)),
+    //       decoration: BoxDecoration(
+    //         borderRadius: BorderRadius.circular(10),
+    //         boxShadow: [
+    //           BoxShadow(
+    //             color: Color.fromARGB(255, 216, 225, 249),
+    //             spreadRadius: 0,
+    //             blurRadius: 7,
+    //             offset: Offset(0, 7), // changes position of shadow
+    //           ),
+    //         ],
+    //         gradient: LinearGradient(colors: [
+    //           Color.fromARGB(255, 97, 127, 255),
+    //           Color.fromARGB(255, 198, 90, 252),
+    //         ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+    //       ),
+    //       child: btn_icon,
+    //     ),
+    //   ),
+    // );
   }
 
   static Future<void> mezcalmosDialog(double val, double sh, double sw) async => await Get.defaultDialog(

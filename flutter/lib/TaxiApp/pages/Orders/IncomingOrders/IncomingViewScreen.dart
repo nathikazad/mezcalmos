@@ -4,6 +4,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MezcalmosGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
+import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 
 class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
@@ -37,62 +38,103 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                     ),
                     Positioned(
                       left: 60,
-                      top: 10,
+                      top: 12,
                       child: Text(
                         controller.selectedIncommingOrder?.customer['name'] ?? "Customer",
                         style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                          fontFamily: 'psb',
                         ),
                       ),
                     ),
                     Positioned(
                       left: 60,
-                      bottom: 10,
+                      bottom: 12,
                       child: Text(
                         "${controller.selectedIncommingOrder?.routeInformation['distance']['text'] ?? '? km'} far",
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey),
+                        style: TextStyle(fontSize: 14, fontFamily: 'psr', color: Colors.grey),
                       ),
                     ),
                     Positioned(
                         bottom: 10,
                         top: 10,
-                        right: getSizeRelativeToScreen(180, Get.height, Get.width) / 3,
+                        right: getSizeRelativeToScreen(180, Get.height, Get.width) / 3.5,
                         child: VerticalDivider(
-                          width: 1,
-                          color: Colors.grey,
+                          width: 0.5,
+                          color: Color.fromARGB(255, 236, 236, 236),
                           thickness: 1,
                         )),
                     Positioned(
-                        bottom: 15,
-                        right: 70,
-                        child: Icon(
-                          Icons.alt_route_rounded,
-                          size: 16,
+                        bottom: 10,
+                        top: 10,
+                        right: getSizeRelativeToScreen(180, Get.height, Get.width) / 1.9,
+                        child: VerticalDivider(
+                          width: 0.5,
+                          color: Color.fromARGB(255, 236, 236, 236),
+                          thickness: 1,
                         )),
                     Positioned(
-                      bottom: 13,
-                      right: 10,
-                      child: Text(
-                        "${controller.selectedIncommingOrder?.routeInformation['distance']['text'] ?? '? km'}",
-                        style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black),
-                      ),
-                    ),
+                        right: getSizeRelativeToScreen(180, Get.height, Get.width) / 3.2,
+                        child: Wrap(
+                          alignment: WrapAlignment.center,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          spacing: 0,
+                          runSpacing: 0,
+                          direction: Axis.horizontal,
+                          children: [
+                            Transform.scale(
+                                scale: 2,
+                                child: Container(
+                                  height: 10,
+                                  width: 50,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                    image: AssetImage(money_asset),
+                                  )),
+                                )),
+                            Text(
+                              "${controller.selectedIncommingOrder?.estimatedPrice?.toString() ?? '? km'}",
+                              style: TextStyle(fontSize: 16, fontFamily: 'psb', color: Colors.black),
+                            ),
+                          ],
+                        )),
+                    Positioned(
+                        bottom: 15,
+                        right: 10,
+                        child: Wrap(
+                          direction: Axis.horizontal,
+                          alignment: WrapAlignment.spaceBetween,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          spacing: 4,
+                          children: [
+                            Icon(
+                              Icons.alt_route_rounded,
+                              size: 16,
+                            ),
+                            Text(
+                              "${controller.selectedIncommingOrder?.routeInformation['distance']['text'] ?? '? km'}",
+                              style: TextStyle(fontSize: 14, fontFamily: 'psr', color: Colors.black),
+                            ),
+                          ],
+                        )),
                     Positioned(
                         top: 15,
-                        right: 70,
-                        child: Icon(
-                          Icons.timer_rounded,
-                          size: 16,
+                        right: 10,
+                        child: Wrap(
+                          direction: Axis.horizontal,
+                          alignment: WrapAlignment.spaceBetween,
+                          spacing: 4,
+                          children: [
+                            Icon(
+                              Icons.timer_rounded,
+                              size: 16,
+                            ),
+                            Text(
+                              "${controller.selectedIncommingOrder?.routeInformation['duration']['text'] ?? '? mins'}",
+                              style: TextStyle(fontSize: 14, fontFamily: 'psr', color: Colors.black),
+                            ),
+                          ],
                         )),
-                    Positioned(
-                      top: 13,
-                      right: 10,
-                      child: Text(
-                        "${controller.selectedIncommingOrder?.routeInformation['duration']['text'] ?? '? mins'}",
-                        style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black),
-                      ),
-                    ),
                   ],
                 ),
               )),

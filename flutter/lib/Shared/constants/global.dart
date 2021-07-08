@@ -15,9 +15,12 @@ const String tEmailTestPassword = "password";
 
 // ----------------- Costants Numbers ----------------- //
 
-const double nDefaultMezcalmosTextSize = 25;
+const double nDefaultMezcalmosTextSize = 25.5;
 const int nSplashScreenTimer = 5;
 // ----------------- Costants Strings ----------------- //
+
+const String tDefaultLanguage = "en";
+const String tDefaultTheme = "light";
 
 const String tMez = "MEZ";
 const String tCalmos = "CALMOS";
@@ -27,8 +30,8 @@ const String tConnectMessage = "Connect using Facebook or using OTP !";
 const String tFacebookSigning = "Sign in with Facebook";
 const String tSmsSigning = "Sign in with SMS";
 const String tDefaultUserName = "Unknown";
-const String tDisconnect = "Disconnect";
-const String tIncommingOrders = "Incomming Orders";
+const String tDisconnect = "Logout";
+const String tIncommingOrders = "Ordenes Entrantes";
 const String tDefaultCustomerName = "Unknown";
 
 // ----------------- Assets Strings ----------------- //

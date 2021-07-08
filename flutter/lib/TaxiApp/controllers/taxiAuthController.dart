@@ -39,8 +39,6 @@ class TaxiAuthController extends GetxController {
 
   @override
   void onInit() async {
-    super.onInit();
-
     // Injecting all our TaxiOrderControllers here
     Get.lazyPut(() => CurrentOrderController());
     Get.lazyPut(() => IncomingOrdersController());
@@ -59,6 +57,7 @@ class TaxiAuthController extends GetxController {
       });
       print("/////////////////////////////////////////////${_model.value.toJson()}////////////////////////////////////////////////////");
     }
+    super.onInit();
   }
 
   void turnOff() {

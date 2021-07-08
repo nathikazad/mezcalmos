@@ -54,6 +54,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           GestureDetector(
+                            onTap: () => null,
                             child: Container(
                               height: getSizeRelativeToScreen(20, Get.height, Get.width),
                               width: 38,
@@ -72,6 +73,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                             ),
                           ),
                           GestureDetector(
+                            onTap: () => null,
                             child: Container(
                               height: getSizeRelativeToScreen(20, Get.height, Get.width),
                               width: 38,
@@ -90,6 +92,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                             ),
                           ),
                           GestureDetector(
+                            onTap: () async => await controller.cancelTaxi("test-reasons"),
                             child: Container(
                               height: getSizeRelativeToScreen(20, Get.height, Get.width),
                               width: 38,

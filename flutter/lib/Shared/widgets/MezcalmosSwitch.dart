@@ -35,9 +35,9 @@ class _MezcalmosSwitchState extends State<MezcalmosSwitch> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.transparent,
-      width: Get.width * 0.31,
-      height: Get.width * 0.13,
+      // color: Colors.black,
+      width: 125,
+      height: 65,
       // margin: EdgeInsets.all(0),
       child: Stack(
         fit: StackFit.loose,
@@ -59,10 +59,11 @@ class _MezcalmosSwitchState extends State<MezcalmosSwitch> {
               });
             },
             child: Container(
-              width: Get.width * 0.31,
-              height: Get.width * 0.13,
+              // width: 130,
+              height: 80,
               decoration: ShapeDecoration(
-                color: widget.backgroundColor,
+                // color: widget.backgroundColor,
+                gradient: LinearGradient(begin: Alignment.topLeft, colors: <Color>[Color.fromARGB(10, 81, 133, 255), Color.fromARGB(10, 207, 73, 252)]),
                 // color: Colors.blueAccent,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(Get.width * 0.1),
@@ -76,9 +77,9 @@ class _MezcalmosSwitchState extends State<MezcalmosSwitch> {
                   (index) => Text(
                     widget.values[index],
                     style: TextStyle(
-                      fontFamily: 'Rubik',
+                      fontFamily: 'psb',
                       fontSize: Get.width * 0.040,
-                      fontWeight: FontWeight.bold,
+                      // fontWeight: FontWeight.bold,
                       color: index == 0 ? Colors.green : Colors.red,
                     ),
                   ),
@@ -89,16 +90,17 @@ class _MezcalmosSwitchState extends State<MezcalmosSwitch> {
           AnimatedAlign(
             duration: const Duration(milliseconds: 250),
             curve: Curves.decelerate,
-            alignment:
-                initialPosition ? Alignment.centerLeft : Alignment.centerRight,
+            alignment: initialPosition ? Alignment.centerLeft : Alignment.centerRight,
             child: Container(
               transformAlignment: Alignment.topLeft,
-              width: Get.width * 0.18,
-              height: Get.width * 0.13,
+              // width: Get.width * 0.16,
+              // height: Get.width * 0.13,
+              height: 80,
+              width: 72,
               decoration: ShapeDecoration(
                 color: widget.buttonColor,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(Get.width * 0.1),
+                  borderRadius: BorderRadius.circular(50),
                 ),
               ),
               child: Text(

@@ -4,6 +4,8 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/helpers/InjectionHelper.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
@@ -15,6 +17,8 @@ import 'package:mezcalmos/TaxiApp/routes/SimpleRouter.dart';
 class AuthController extends GetxController {
   fireAuth.FirebaseAuth _auth = fireAuth.FirebaseAuth.instance;
   Rxn<User> _user = Rxn<User>();
+  final GetStorage _storage = GetStorage();
+  final SettingsController _settings = Get.find<SettingsController>();
 
   User? get user => _user.value;
   fireAuth.FirebaseAuth get auth => _auth;
@@ -43,11 +47,11 @@ class AuthController extends GetxController {
       },
     );
   }
+
   //------------------------------------------------
 
   @override
   void onInit() {
-    super.onInit();
     // _user.bindStream(_auth.authStateChanges());
     _auth.authStateChanges().listen((fireAuth.User? user) {
       if (user == null) {
@@ -61,6 +65,7 @@ class AuthController extends GetxController {
         });
       }
     });
+    super.onInit();
   }
 
   Future<void> signUp(String email, String password) async {
@@ -73,7 +78,7 @@ class AuthController extends GetxController {
   }
 
   Future<void> signIn(String email, String password) async {
-    await _auth.signInWithEmailAndPassword(email: email, password: password).timeout(Duration(seconds: 5), onTimeout: () => Future.error(Exception("Timed out , Check your Internet."))).then((value) {
+    await _auth.signInWithEmailAndPassword(email: email, password: password).timeout(Duration(seconds: 10), onTimeout: () => Future.error(Exception("Timed out , Check your Internet."))).then((value) {
       Get.snackbar("Welcome Back :D", "Hello ${value.user?.displayName}, We are glad you're back!",
           colorText: Colors.white, backgroundColor: Colors.black87, snackPosition: SnackPosition.BOTTOM, snackStyle: SnackStyle.FLOATING);
     }, onError: ((Object e, StackTrace stackTrace) {
@@ -86,7 +91,8 @@ class AuthController extends GetxController {
     HttpsCallableResult? response;
     try {
       // _waitingResponse.value = true;
-      response = await sendOTPForLoginFunction.call(<String, dynamic>{'phoneNumber': phoneNumber, 'messageType': 'SMS', 'language': 'en', 'database': 'test'});
+      response = await sendOTPForLoginFunction
+          .call(<String, dynamic>{'phoneNumber': phoneNumber, 'messageType': 'SMS', 'language': _settings.appLanguage.userLanguageKey, 'database': _databaseHelper.dbType});
       mezcalmosSnackBar("Notice ~", "OTP message has been sent !");
     } catch (e) {
       // mezcalmosSnackBar("Notice ~", "Failed to send OTP message :( ");
@@ -101,7 +107,8 @@ class AuthController extends GetxController {
     HttpsCallable getAuthUsingOTPFunction = FirebaseFunctions.instance.httpsCallable('getAuthUsingOTP');
     try {
       // _waitingResponse.value = true;
-      HttpsCallableResult response = await getAuthUsingOTPFunction.call(<String, dynamic>{'phoneNumber': phoneNumber, 'OTPCode': otpCode, 'database': 'test'});
+      HttpsCallableResult response =
+          await getAuthUsingOTPFunction.call(<String, dynamic>{'phoneNumber': phoneNumber, 'OTPCode': otpCode, 'language': _settings.appLanguage.userLanguageKey, 'database': _databaseHelper.dbType});
       // mezcalmosSnackBar("Notice ~", "OTP message has been sent !");
       // _waitingResponse.value = false;
       print("GetAuthUsingOTP Response");
@@ -137,6 +144,7 @@ class AuthController extends GetxController {
     try {
       detachListeners();
       await _auth.signOut();
+
       TaxiInjectionHelper.revokeListenersOnSignOut();
     } catch (e) {
       Get.snackbar("Failed to Sign you out!", e.toString(), snackPosition: SnackPosition.BOTTOM);
