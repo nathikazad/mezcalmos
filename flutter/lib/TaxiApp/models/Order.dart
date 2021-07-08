@@ -1,11 +1,29 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:geolocator/geolocator.dart';
+
+class Location {
+  late String address;
+  late Position position;
+
+  Location(dynamic location) {
+    this.address = location["address"];
+    this.position = Position.fromMap(<dynamic, dynamic>{
+      "latitude": location["lat"],
+      "longitude": location["lng"]
+    });
+  }
+
+  dynamic get latitude => position.latitude;
+  dynamic get longitude => position.longitude;
+
+}
 
 class Order {
   dynamic id;
   dynamic customer;
   dynamic estimatedPrice;
-  dynamic from;
-  dynamic to;
+  late Location from;
+  late Location to;
   dynamic orderTime;
   dynamic paymentType;
   dynamic routeInformation; // Map<String , Map<String, dynamic>>
@@ -20,6 +38,7 @@ class Order {
   dynamic rideStartTime;
   dynamic status;
   String polyline;
+  double distanceToClient = 0;
 
   Order(
       {required this.id,
@@ -42,7 +61,8 @@ class Order {
       required this.polyline});
 
   // Get props as list.
-  List<Object> get props => [id, from, to, orderTime, paymentType, routeInformation];
+  List<Object> get props =>
+      [id, from, to, orderTime, paymentType, routeInformation];
 
   // Empty Order Constructor!
   Order.empty({this.polyline = ""});
@@ -59,8 +79,8 @@ class Order {
         orderType = snapshot.value['orderType'],
         acceptRideTime = snapshot.value['acceptRideTime'],
         estimatedPrice = snapshot.value['estimatedPrice'],
-        from = snapshot.value['from'],
-        to = snapshot.value['to'],
+        from = Location(snapshot.value['from']),
+        to = Location(snapshot.value['to']),
         orderTime = snapshot.value['orderTime'],
         paymentType = snapshot.value['paymentType'],
         routeInformation = snapshot.value['routeInformation'],
@@ -78,6 +98,15 @@ class Order {
         polyline = value['polyline'] ?? "";
 
   // Added for Debugging Perposes - Don't delete for now
-  Map<String, dynamic> toJson() =>
-      {"customer": customer, "estimatedPrice": estimatedPrice, "from": from, "to": to, "orderTime": orderTime, "paymentType": paymentType, "polyline": polyline, "routeInformation": routeInformation};
+  Map<String, dynamic> toJson() => {
+        "customer": customer,
+        "estimatedPrice": estimatedPrice,
+        "from": from,
+        "to": to,
+        "orderTime": orderTime,
+        "paymentType": paymentType,
+        "polyline": polyline,
+        "routeInformation": routeInformation,
+        "distanceToClient": distanceToClient
+      };
 }
