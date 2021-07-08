@@ -128,4 +128,7 @@
 			|_ add 2 deviders : border : 0.5px solid #ececec
 		|_ left distance:
 			|_ regular 14px black
-		
+
+------- review -------
++ Load to/from Data.
++ 		

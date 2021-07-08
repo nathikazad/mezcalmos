@@ -143,9 +143,9 @@ class AuthController extends GetxController {
   Future<void> signOut() async {
     try {
       detachListeners();
-      await _auth.signOut();
-
       TaxiInjectionHelper.revokeListenersOnSignOut();
+      await _auth.signOut();
+      Get.offAllNamed(kMainAuthWrapperRoute);
     } catch (e) {
       Get.snackbar("Failed to Sign you out!", e.toString(), snackPosition: SnackPosition.BOTTOM);
     }
