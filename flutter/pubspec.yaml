@@ -63,6 +63,24 @@ flutter:
     - assets/fonts/
     - assets/json/
 
+  fonts:
+    - family: psr  # Product Sans Regular
+      fonts:
+          - asset: assets/fonts/psr.ttf
+
+    -  family: psb  # Product Sans Bold
+       fonts:
+          - asset: assets/fonts/psb.ttf
+
+    -  family: psi  # Product Sans Italic
+       fonts:
+          - asset: assets/fonts/psi.ttf
+
+
+    -  family: psbi  # Product Sans bold Italic
+       fonts:
+          - asset: assets/fonts/psbi.ttf
+          
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
