@@ -11,26 +11,26 @@
 [Done] Implement the Logic on/off on click!
 [Done] Implement the logic of onTap/onLongTap/onDoubleTap ...etc on openedOrders listed!
 [Done] implement the side menu Click (Open n close).
-[ONGOING] Change To Spanish / To English depending on Lang Controller In SideMenu!
-[ONGOING] Implemet Language Controller.
+[Done] Change To Spanish / To English depending on Lang Controller In SideMenu!
+[Done] Implemet Language Controller.
 [ARCHIVED] Add the Left-top button in SideMenu to close the Menu aka drawer Using : SideMenuDraweController.closeMenu()
-[PRIORITY] Change Text("0 km") in openedOrder , I hardcoded it , cuz i didn't know where it comes from!
-[ONGOING] Make everything inside InjectionHelper class.
 [Done] Tite spacing + ON / OFF toggle capitalize!
-[ONGOING] Implement Theme Controller.
 [Done] Add Option to set database=test/prod during the launch.
 [Done] Implement SettingsController
 [Done] Fix Delay that makes the LoginPage pushed to stack and (show n pop) when user first enters to app while already logged in.
-[PRIORITY] OTP Screens - Remove SmsControlle!
-[PRIORITY] CurrentOrder Screens <- Marker!
+[Done] OTP Screens - Remove SmsControlle!
 [Done] Facebook logging
-[Fix] weird error when changing on/off
+[FIXED] weird error when changing on/off
+[Done by Nathik] Get Phone's Location Access and keep it updated on db.
 
+[PRIORITY] Change Text("0 km") in openedOrder , I hardcoded it , cuz i didn't know where it comes from!
+[ONGOING] Implement Theme Controller.
+[PRIORITY] CurrentOrder Screens <- Marker!
+[ONGOING] Make everything inside InjectionHelper class.
 + Add notifications system
-+ Get Phone's Location Access and keep it updated on db.
 + add a Proxy for cloud functions!
 
----- done - today-----
+---- done - today 07/08/21 -----
 + Language is no more hardcoded in Cloud functions.
 + LanguageController Initial  implementation.
 + Language json in /assets/json/
@@ -39,7 +39,10 @@
 + [UI] Drawer Button / logo done.
 + [UI] Incomming Orders Text done 
 + [UI] ON/OFF Switcher done.
-
++ [UI] Incomming Orders Screen
++ [UI] Drawer SIdeMenu
++ [UI] IncommingOrderListItem
++ [UI] OrderVIewScreen -> BottomBar 
 
 --------Check with yassine---------
 - Incomming Orders Screen :
