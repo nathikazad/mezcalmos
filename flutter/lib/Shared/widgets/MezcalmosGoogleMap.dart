@@ -1,15 +1,20 @@
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
+import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/models/Order.dart';
 
 class OrderGoogleMap extends StatefulWidget {
   final Order currentOrder;
   OrderGoogleMap(this.currentOrder);
+
+  TaxiAuthController taxiAuthCtrl = Get.find<TaxiAuthController>();
 
   @override
   OrderGoogleMapState createState() => OrderGoogleMapState();
@@ -24,6 +29,39 @@ class OrderGoogleMapState extends State<OrderGoogleMap> {
 
   List<LatLng> pLineCoords = <LatLng>[];
   Set<Polyline> polyLineSet = {};
+
+  Marker? fromMarker;
+  Marker? toMarker;
+
+  Circle? circle;
+  GoogleMapController? _controller;
+
+  void reUpdateLocation() {
+    if (widget.currentOrder.status == "onTheWay") {
+      print("++++++++++++ [reUpdateLocation] >>>>>>>>>>. onTheWay ++++++++++");
+      _controller!.animateCamera(CameraUpdate.newLatLng(new LatLng(widget.taxiAuthCtrl.currentLocation.latitude, widget.taxiAuthCtrl.currentLocation.longitude)));
+      // _controller!.animateCamera(CameraUpdate.newLatLngBounds(_bounds({fromMarker!, toMarker!})!, 150));
+    }
+    // this.setState(() {
+    //   if (widget.currentOrder.status == "onTheWay") {
+    //     _controller!.animateCamera(CameraUpdate.newLatLngBounds(_bounds({fromMarker!, toMarker!})!, 150));
+    //   }
+    // });
+  }
+
+  LatLngBounds _createBounds(List<LatLng> positions) {
+    final southwestLat = positions.map((p) => p.latitude).reduce((value, element) => value < element ? value : element); //  snallest value
+    final southwestLon = positions.map((p) => p.longitude).reduce((value, element) => value < element ? value : element);
+    final northeastLat = positions.map((p) => p.latitude).reduce((value, element) => value > element ? value : element); // biggest value
+    final northeastLon = positions.map((p) => p.longitude).reduce((value, element) => value > element ? value : element);
+    return LatLngBounds(southwest: LatLng(southwestLat, southwestLon), northeast: LatLng(northeastLat, northeastLon));
+  }
+
+// ----------- to fit everything in the map !
+  LatLngBounds? _bounds(Set<Marker>? markers) {
+    if (markers == null || markers.isEmpty) return null;
+    return _createBounds(markers.map((m) => m.position).toList());
+  }
 
   Future<List<BitmapDescriptor>> loadBitmapDescriptors() async {
     return <BitmapDescriptor>[
@@ -40,6 +78,26 @@ class OrderGoogleMapState extends State<OrderGoogleMap> {
       setState(() {
         customerLocationMarker = value[0];
         customerDestinationMarker = value[1];
+        fromMarker = Marker(
+          draggable: false,
+          flat: true,
+          anchor: Offset(0.5, 1),
+          infoWindow: InfoWindow(title: "Ride from : ", snippet: widget.currentOrder.to.address),
+          markerId: MarkerId("from"),
+          icon: customerLocationMarker,
+          visible: true,
+          position: LatLng(widget.currentOrder.from.latitude, widget.currentOrder.from.longitude),
+        );
+        toMarker = Marker(
+            draggable: false,
+            flat: true,
+            anchor: Offset(0.5, 1),
+            infoWindow: InfoWindow(title: "Ride to : ", snippet: widget.currentOrder.to.address),
+            markerId: MarkerId("to"),
+            icon: customerDestinationMarker,
+            visible: true,
+            position: LatLng(widget.currentOrder.to.latitude, widget.currentOrder.to.longitude));
+
         mapReady = true;
       });
     });
@@ -48,14 +106,14 @@ class OrderGoogleMapState extends State<OrderGoogleMap> {
     res.forEach((PointLatLng point) => pLineCoords.add(LatLng(point.latitude, point.longitude)));
 
     polyLineSet.add(Polyline(
-      color: Colors.blueAccent,
+      color: Color.fromARGB(255, 172, 89, 252),
       polylineId: PolylineId(widget.currentOrder.id),
       jointType: JointType.round,
       points: pLineCoords,
-      width: 5,
-      startCap: Cap.roundCap,
+      width: 3,
+      startCap: Cap.buttCap,
       endCap: Cap.roundCap,
-      geodesic: true,
+      // geodesic: true,
     ));
 
     super.initState();
@@ -67,29 +125,13 @@ class OrderGoogleMapState extends State<OrderGoogleMap> {
   Widget build(BuildContext context) {
     return !mapReady
         ? Center(child: CircularProgressIndicator())
-        : GoogleMap(
-            buildingsEnabled: false,
-            markers: {
-              Marker(
-                draggable: false,
-                flat: true,
-                anchor: Offset(0.5, 1),
-                infoWindow: InfoWindow(title: "Ride from : ", snippet: widget.currentOrder.to.address),
-                markerId: MarkerId("from"),
-                icon: customerLocationMarker,
-                visible: true,
-                position: LatLng(widget.currentOrder.from.latitude, widget.currentOrder.from.longitude),
-              ),
-              Marker(
-                  draggable: false,
-                  flat: true,
-                  anchor: Offset(0.5, 1),
-                  infoWindow: InfoWindow(title: "Ride to : ", snippet: widget.currentOrder.to.address),
-                  markerId: MarkerId("to"),
-                  icon: customerDestinationMarker,
-                  visible: true,
-                  position: LatLng(widget.currentOrder.to.latitude, widget.currentOrder.to.longitude)),
+        : new GoogleMap(
+            onCameraMove: (_) {
+              reUpdateLocation();
             },
+            minMaxZoomPreference: MinMaxZoomPreference(10, 16),
+            buildingsEnabled: false,
+            markers: {fromMarker!, toMarker!},
             polylines: polyLineSet,
             zoomControlsEnabled: false,
             compassEnabled: false,
@@ -97,11 +139,19 @@ class OrderGoogleMapState extends State<OrderGoogleMap> {
             tiltGesturesEnabled: true,
             initialCameraPosition:
                 // CameraPosition(bearing: 192.8334901395799, target: LatLng(widget.currentOrder.from['lat'], widget.currentOrder.from['lng']), tilt: 59.440717697143555, zoom: 15.151926040649414),
-                CameraPosition(target: LatLng(widget.currentOrder.from.latitude, widget.currentOrder.from.longitude), tilt: 9.440717697143555, zoom: 15.151926040649414),
-            onMapCreated: (GoogleMapController controller) {
-              controller.setMapStyle(GetStorage().read('map_style'));
+                CameraPosition(target: LatLng(widget.currentOrder.from.latitude, widget.currentOrder.from.longitude), tilt: 9.440717697143555, zoom: 14.151926040649414),
+            onMapCreated: (GoogleMapController controller) async {
+              _controller = controller;
+              await controller.setMapStyle(GetStorage().read('map_style'));
+              await controller.animateCamera(CameraUpdate.newLatLngBounds(_bounds({fromMarker!, toMarker!})!, 150));
               _gMapCompleter.complete(controller);
             },
           );
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 }

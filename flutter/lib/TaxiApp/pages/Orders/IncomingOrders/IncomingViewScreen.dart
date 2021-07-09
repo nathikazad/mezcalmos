@@ -6,16 +6,17 @@ import 'package:mezcalmos/Shared/widgets/MezcalmosGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
+import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingListScreen.dart';
 
 class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back(closeOverlays: true)),
+      appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back()),
       body: Stack(
         alignment: Alignment.topCenter,
         children: [
-          Obx(() => controller.waitingResponse || controller.selectedIncommingOrder?.id == null ? Center(child: CircularProgressIndicator()) : OrderGoogleMap(controller.selectedIncommingOrder!)),
+          Obx(() => controller.waitingResponse || controller.selectedIncommingOrder?.id == null ? Center(child: CircularProgressIndicator()) : new OrderGoogleMap(controller.selectedIncommingOrder!)),
           Positioned(
               bottom: 90,
               child: Container(
@@ -207,8 +208,7 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                     child: GestureDetector(
                       onTap: () => mezcalmosSnackBar("From", controller.selectedIncommingOrder?.from.address ?? ""),
                       child: Text(
-                        (controller.selectedIncommingOrder?.from.address
-                                    .toString().substring(0, 13) ?? "..........") + " ..", //13+..
+                        (controller.selectedIncommingOrder?.from.address.toString().substring(0, 13) ?? "..........") + " ..", //13+..
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -233,8 +233,7 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                     child: GestureDetector(
                       onTap: () => mezcalmosSnackBar("Destination", controller.selectedIncommingOrder?.to.address ?? ""),
                       child: Text(
-                        (controller.selectedIncommingOrder?.to.address
-                                    .toString().substring(0, 13) ?? "..........") + " ..", //13+..
+                        (controller.selectedIncommingOrder?.to.address.toString().substring(0, 13) ?? "..........") + " ..", //13+..
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
