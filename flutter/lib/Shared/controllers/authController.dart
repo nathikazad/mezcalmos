@@ -134,7 +134,6 @@ class AuthController extends GetxController {
     } else {
       // Create a credential from the access token
       final facebookAuthCredential = fireAuth.FacebookAuthProvider.credential(result.accessToken!.token);
-
       // Once signed in, return the UserCredential
       fireAuth.FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
     }
@@ -143,7 +142,7 @@ class AuthController extends GetxController {
   Future<void> signOut() async {
     try {
       detachListeners();
-      TaxiInjectionHelper.revokeListenersOnSignOut();
+      // TaxiInjectionHelper.revokeListenersOnSignOut();
       await _auth.signOut();
       Get.offAllNamed(kMainAuthWrapperRoute);
     } catch (e) {

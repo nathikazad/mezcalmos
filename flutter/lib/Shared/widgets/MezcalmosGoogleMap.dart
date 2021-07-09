@@ -68,6 +68,11 @@ class OrderGoogleMapState extends State<OrderGoogleMap> {
     return !mapReady
         ? Center(child: CircularProgressIndicator())
         : GoogleMap(
+            // cameraTargetBounds: CameraTargetBounds(LatLngBounds(
+            //   northeast: LatLng(widget.currentOrder.from.latitude, widget.currentOrder.from.longitude),
+            //   southwest: LatLng(widget.currentOrder.to.latitude, widget.currentOrder.to.longitude),
+            // )),
+            minMaxZoomPreference: MinMaxZoomPreference(16, 30),
             buildingsEnabled: false,
             markers: {
               Marker(

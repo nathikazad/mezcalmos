@@ -33,7 +33,7 @@ class TaxiInjectionHelper
     print("revokeListenersOnSignOut -> called");
 
     Get.find<IncomingOrdersController>().detachListeners();
-    Get.find<TaxiAuthController>().detachListeners();
+    // Get.find<TaxiAuthController>().detachListeners();
     print("Revoking all the ::taxiOpenOrdersNode:: Listners !");
   }
 

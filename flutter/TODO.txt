@@ -97,6 +97,8 @@
 		|_ bold 16px
 	|_ infoText : 
 		|_ 14px
+_listenForLocation_listenForLocation
+_listenForLocation_listenForLocation
 	|_ add Price + icon (in v3)
 		|_ MoneyIcon :
 			|_ bel3in

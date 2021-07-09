@@ -11,9 +11,7 @@ class TaxiApp extends GetView<SettingsController> {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'mezcalmos',
-      theme: ThemeData(
-          primaryColor: Colors.white,
-          visualDensity: VisualDensity.adaptivePlatformDensity),
+      theme: ThemeData(primaryColor: Colors.white, visualDensity: VisualDensity.adaptivePlatformDensity),
       color: Colors.white,
       getPages: XRouter.mainRoutes,
       enableLog: true,

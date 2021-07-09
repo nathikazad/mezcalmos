@@ -16,7 +16,7 @@ class Wrapper extends GetWidget<AuthController> {
       if (controller.user != null) {
         // Injecting TaxiAuthController Here so we can get it as Widget in TaxiWrapper
         //Get.put(TaxiAuthController());
-        Get.put(SideMenuDraweController(), permanent: true);
+        Get.put(SideMenuDraweController());
         return TaxiWrapper();
       } else
         return SignIn();
