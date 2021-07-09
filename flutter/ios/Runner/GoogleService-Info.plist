@@ -6,6 +6,8 @@
 	<string>804036698204-o7k28o40anvf9ojkkoqspmls7im06h1i.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
 	<string>com.googleusercontent.apps.804036698204-o7k28o40anvf9ojkkoqspmls7im06h1i</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>804036698204-pdgnjbhoomuc7jmsmvncd783gjasqsos.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyCOVuUV0qhw0SbNrQMfMVTBDm-5bJVozYg</string>
 	<key>GCM_SENDER_ID</key>
@@ -29,7 +31,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:804036698204:ios:6c9f7dea375e276e3f8699</string>
+	<string>1:804036698204:ios:4bca8302a252625b3f8699</string>
 	<key>DATABASE_URL</key>
 	<string>https://mezcalmos-31f1c-default-rtdb.firebaseio.com</string>
 </dict>
