@@ -153,8 +153,8 @@ class AuthController extends GetxController {
   void detachListeners() {
     _userInfoListener
         .cancel()
-        .then((value) => print("A listener was disposed on authController::detachListeners !"))
-        .catchError((err) => print("Error happend while trying to dispose authController::detachListeners !"));
+        .then((value) => print("_userInfoListener was disposed on authController::detachListeners !"))
+        .catchError((err) => print("Error happend while trying to dispose _userInfoListener in authController::detachListeners !"));
   }
 
   @override

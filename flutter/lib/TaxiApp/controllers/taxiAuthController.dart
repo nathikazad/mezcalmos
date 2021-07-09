@@ -132,7 +132,7 @@ class TaxiAuthController extends GetxController {
   void turnOn() {
     _databaseHelper.firebaseDatabase.reference().child(taxiIsLookingField(_authController.user?.uid)).set(true).catchError((err) {
       print("Error turning [ isLooking = true ] -> $err");
-      mezcalmosSnackBar("Error ~", "Failed turning it on!");
+      mezcalmosSnackBar("Error ~", "Failed turning_listenForLocation it on!");
     });
   }
 

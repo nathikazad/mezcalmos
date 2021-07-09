@@ -35,7 +35,7 @@ class IncomingOrdersController extends GetxController {
     // _selectedIncommingOrder.value = null;
 
     super.onInit();
-    print("--------------------> OrderController Initialized !");
+    print("--------------------> IncomingOrderController Initialized !");
 
     // uhm .. well let's just attach some listeners..
     // READ : it's better to keep them like that , becauce that way we can update orders, which is an observale list.
@@ -103,8 +103,8 @@ class IncomingOrdersController extends GetxController {
   void detachListeners() {
     _listeners.forEach((sub) => sub
         .cancel()
-        .then((value) => print("A listener was disposed on orderController::dettahListeners !"))
-        .catchError((err) => print("Error happend while trying to dispose orderController::dettahListeners !")));
+        .then((value) => print("A listener was disposed on incomingOrdersController !"))
+        .catchError((err) => print("Error happend while trying to dispose incomingOrdersController!")));
 
     _updateOrderDistanceToClient.dispose();
   }
@@ -129,7 +129,8 @@ class IncomingOrdersController extends GetxController {
 
   @override
   void dispose() {
+    detachListeners();
     super.dispose();
-    print("--------------------> OrderController Auto");
+    print("--------------------> Incoming Order Controller disposed");
   }
 }

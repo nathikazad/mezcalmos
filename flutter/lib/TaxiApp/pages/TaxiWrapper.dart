@@ -13,7 +13,8 @@ class TaxiWrapper extends GetView<AuthController> {
   // pop Point!
   @override
   Widget build(BuildContext context) {
-    TaxiAuthController _taxiAuthController = Get.put<TaxiAuthController>(TaxiAuthController());
+    print("Putting Taxi Auth Controller");
+    TaxiAuthController _taxiAuthController = Get.find<TaxiAuthController>();
     return Scaffold(
       key: _sideMenuDrawerController.scaffoldKey,
       drawer: MezcalmosSideMenu(),
