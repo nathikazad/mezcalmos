@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/TaxiApp/helpers/InjectionHelper.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/models/User.dart';
 import 'package:cloud_functions/cloud_functions.dart';
@@ -81,6 +80,7 @@ class AuthController extends GetxController {
     await _auth.signInWithEmailAndPassword(email: email, password: password).timeout(Duration(seconds: 10), onTimeout: () => Future.error(Exception("Timed out , Check your Internet."))).then((value) {
       Get.snackbar("Welcome Back :D", "Hello ${value.user?.displayName}, We are glad you're back!",
           colorText: Colors.white, backgroundColor: Colors.black87, snackPosition: SnackPosition.BOTTOM, snackStyle: SnackStyle.FLOATING);
+      _userInfoListener.resume();
     }, onError: ((Object e, StackTrace stackTrace) {
       Get.snackbar("Failed to Sign you in!", e.toString(), snackPosition: SnackPosition.BOTTOM);
     }));
@@ -114,6 +114,8 @@ class AuthController extends GetxController {
       print("GetAuthUsingOTP Response");
       print("################################ DATA ###############################\n\n${response.data}\n\n");
       await fireAuth.FirebaseAuth.instance.signInWithCustomToken(response.data["token"]);
+      _userInfoListener.resume();
+
       await Get.offAllNamed(kMainAuthWrapperRoute);
     } catch (e) {
       mezcalmosSnackBar("Error", "OTP Code confirmation failed :(");
@@ -137,13 +139,14 @@ class AuthController extends GetxController {
 
       // Once signed in, return the UserCredential
       fireAuth.FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+      _userInfoListener.resume();
     }
   }
 
   Future<void> signOut() async {
     try {
-      detachListeners();
-      TaxiInjectionHelper.revokeListenersOnSignOut();
+      _userInfoListener.pause();
+      // TaxiInjectionHelper.revokeListenersOnSignOut();
       await _auth.signOut();
       Get.offAllNamed(kMainAuthWrapperRoute);
     } catch (e) {
@@ -151,16 +154,9 @@ class AuthController extends GetxController {
     }
   }
 
-  void detachListeners() {
-    _userInfoListener
-        .cancel()
-        .then((value) => print("A listener was disposed on authController::detachListeners !"))
-        .catchError((err) => print("Error happend while trying to dispose authController::detachListeners !"));
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    print("--------------------> AuthController Auto Disposed !");
-  }
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  //   print("--------------------> AuthController Auto Disposed !");
+  // }
 }

@@ -19,8 +19,11 @@ class OrderGoogleMap extends StatefulWidget {
   @override
   OrderGoogleMapState createState() => OrderGoogleMapState();
 }
+//{errorMessage: User is not an authorized driver, status: Error}
 
 class OrderGoogleMapState extends State<OrderGoogleMap> {
+  double test_lng = -97.05531560386919;
+  double test_lat = 15.855722506461488;
   // Used for markers !
   Completer<GoogleMapController> _gMapCompleter = Completer();
   late BitmapDescriptor customerLocationMarker;
@@ -39,7 +42,7 @@ class OrderGoogleMapState extends State<OrderGoogleMap> {
   void reUpdateLocation() {
     if (widget.currentOrder.status == "onTheWay") {
       print("++++++++++++ [reUpdateLocation] >>>>>>>>>>. onTheWay ++++++++++");
-      _controller!.animateCamera(CameraUpdate.newLatLng(new LatLng(widget.taxiAuthCtrl.currentLocation.latitude, widget.taxiAuthCtrl.currentLocation.longitude)));
+      _controller!.animateCamera(CameraUpdate.newLatLng(new LatLng(test_lat, test_lng)));
       // _controller!.animateCamera(CameraUpdate.newLatLngBounds(_bounds({fromMarker!, toMarker!})!, 150));
     }
     // this.setState(() {
@@ -110,7 +113,7 @@ class OrderGoogleMapState extends State<OrderGoogleMap> {
       polylineId: PolylineId(widget.currentOrder.id),
       jointType: JointType.round,
       points: pLineCoords,
-      width: 3,
+      width: 2,
       startCap: Cap.buttCap,
       endCap: Cap.roundCap,
       // geodesic: true,
@@ -137,9 +140,7 @@ class OrderGoogleMapState extends State<OrderGoogleMap> {
             compassEnabled: false,
             mapType: MapType.normal,
             tiltGesturesEnabled: true,
-            initialCameraPosition:
-                // CameraPosition(bearing: 192.8334901395799, target: LatLng(widget.currentOrder.from['lat'], widget.currentOrder.from['lng']), tilt: 59.440717697143555, zoom: 15.151926040649414),
-                CameraPosition(target: LatLng(widget.currentOrder.from.latitude, widget.currentOrder.from.longitude), tilt: 9.440717697143555, zoom: 14.151926040649414),
+            initialCameraPosition: CameraPosition(target: LatLng(widget.currentOrder.from.latitude, widget.currentOrder.from.longitude), tilt: 9.440717697143555, zoom: 14.151926040649414),
             onMapCreated: (GoogleMapController controller) async {
               _controller = controller;
               await controller.setMapStyle(GetStorage().read('map_style'));
