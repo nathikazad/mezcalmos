@@ -3,44 +3,27 @@ import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 
-class TaxiInjectionHelper
-{
+class TaxiInjectionHelper {
   // it would be much easier if we maintain the toInjectAt(x) Functions in the SameDependency Orders
-  
-  static void toInjectAtWrapper()
-  {
-  }
 
-  static void toInjectAtSignIn()
-  {
+  static void toInjectAtWrapper() {}
+
+  static void toInjectAtSignIn() {
     // stuff to inject on SignIn!
     print("toInjectAtSignIn -> called");
   }
 
-  static void toInjectAtHome()
-  {
-    Get.lazyPut(() => SideMenuDraweController() , fenix: true);
+  static void toInjectAtHome() {
+    // Get.lazyPut(() => SideMenuDraweController(), fenix: true);
     // Get.lazyPut(() => OrderController() , fenix: true);
   }
 
-
-
-
-
   // Listeners Revoking in case needed !
-  static void revokeListenersOnSignOut()
-  {
+  static void revokeListenersOnSignOut() {
     print("revokeListenersOnSignOut -> called");
-<<<<<<< HEAD
 
     Get.find<IncomingOrdersController>().detachListeners();
     // Get.find<TaxiAuthController>().detachListeners();
     print("Revoking all the ::taxiOpenOrdersNode:: Listners !");
-=======
-    Get.find<TaxiAuthController>().dispose();
-    Get.find<IncomingOrdersController>().dispose();
-    
->>>>>>> 866d09baaf1e0181d34ee57338b3b0d22d6ac14e
   }
-
 }

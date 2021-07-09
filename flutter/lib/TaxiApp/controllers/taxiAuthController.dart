@@ -145,11 +145,11 @@ class TaxiAuthController extends GetxController {
 
   @override
   void onClose() {
-    _locationListener.cancel().then((value) {
+    _locationListener.cancel().then((_) {
       print("[ + ] TaxiAuthController::LocationListener has been canceled successfully !");
-      _taxiAuthListener.cancel().then((value) => print("[ + ] TaxiAuthController::AuthListener has been canceled successfully !"));
+      _taxiAuthListener.cancel().then((_) => print("[ + ] TaxiAuthController::AuthListener has been canceled successfully !"));
     });
-    _taxiAuthListener.cancel();
+
     super.onClose();
   }
 
