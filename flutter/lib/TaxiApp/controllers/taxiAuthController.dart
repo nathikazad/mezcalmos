@@ -51,6 +51,7 @@ class TaxiAuthController extends GetxController {
 
   @override
   void onInit() async {
+    print("Initializing Taxi Auth Controller");
     // Injecting all our TaxiOrderControllers here
     Get.lazyPut(() => CurrentOrderController());
     Get.lazyPut(() => IncomingOrdersController());
@@ -162,19 +163,20 @@ class TaxiAuthController extends GetxController {
     });
   }
 
-  void detachListeners() {
-    _taxiAuthListener
+  Future<void> detachListeners() {
+    return _taxiAuthListener
         .cancel()
         .then((value) => print(
-            "A listener was disposed on TaxiAuthController::detachListeners !"))
+            "_taxiAuthListener was disposed on TaxiAuthController!"))
         .catchError((err) => print(
-            "Error happend while trying to dispose TaxiAuthController::detachListeners !"));
+            "Error happend while trying to dispose _taxiAuthListener in TaxiAuthController!"));
   }
 
   @override
-  void dispose() {
-    detachListeners();
+  void dispose() async{
+    await detachListeners();
     super.dispose();
-    print("--------------------> OrderController Auto Disposed !");
+    print("--------------------> Taxi Auth Controller Disposed !");
   }
+  
 }

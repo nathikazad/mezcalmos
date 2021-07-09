@@ -88,8 +88,8 @@ class CurrentOrderController extends GetxController {
   void detachListeners() {
     _currentOrderListener
         .cancel()
-        .then((value) => print("A listener was disposed on currentOrderController::detachListeners !"))
-        .catchError((err) => print("Error happend while trying to dispose currentOrderController::detachListeners !"));
+        .then((value) => print("_currentOrderListener was disposed on currentOrderController::detachListeners !"))
+        .catchError((err) => print("Error happend while trying to dispose _currentOrderListener on currentOrderController::detachListeners !"));
   }
 
   @override

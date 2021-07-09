@@ -12,14 +12,17 @@ import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 class Wrapper extends GetWidget<AuthController> {
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      if (controller.user != null) {
-        // Injecting TaxiAuthController Here so we can get it as Widget in TaxiWrapper
-        //Get.put(TaxiAuthController());
-        Get.put(SideMenuDraweController(), permanent: true);
-        return TaxiWrapper();
-      } else
-        return SignIn();
+    return Obx(() 
+    {
+        if( controller.user != null )
+        {
+          // Injecting TaxiAuthController Here so we can get it as Widget in TaxiWrapper
+          Get.put(TaxiAuthController());
+          Get.put(SideMenuDraweController() , permanent: true);
+          return TaxiWrapper();
+        }
+        else return  SignIn();
     });
+    
   }
 }
