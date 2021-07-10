@@ -97,7 +97,7 @@ class IncomingOrdersController extends GetxController {
     HttpsCallable acceptTaxiFunction = FirebaseFunctions.instance.httpsCallable('acceptTaxiOrder');
     try {
       _waitingResponse.value = true;
-      HttpsCallableResult response = await acceptTaxiFunction.call(<String, dynamic>{'orderId': orderId});
+      HttpsCallableResult response = await acceptTaxiFunction.call(<String, dynamic>{'orderId': orderId, 'database': _databaseHelper.dbType});
       _waitingResponse.value = false;
       _selectedIncommingOrder.value = new Order.empty();
       Get.back(closeOverlays: true);

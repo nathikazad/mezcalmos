@@ -16,7 +16,12 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
     return Stack(
       alignment: Alignment.topCenter,
       children: [
-        Obx(() => controller.waitingResponse || controller.value?.id == null ? Center(child: CircularProgressIndicator()) : OrderGoogleMap(controller.value!)),
+        Obx(() => controller.waitingResponse || controller.value?.id == null
+            ? Center(child: CircularProgressIndicator())
+            : OrderGoogleMap(
+                controller.value!,
+                realtime: true,
+              )),
         Positioned(
             bottom: 35,
             child: Container(

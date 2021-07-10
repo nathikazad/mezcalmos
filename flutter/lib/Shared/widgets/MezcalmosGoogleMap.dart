@@ -1,7 +1,10 @@
 import 'dart:async';
 import 'dart:typed_data';
+import 'dart:ui' as ui;
+import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -12,7 +15,11 @@ import 'package:mezcalmos/TaxiApp/models/Order.dart';
 
 class OrderGoogleMap extends StatefulWidget {
   final Order currentOrder;
-  OrderGoogleMap(this.currentOrder);
+  late final bool realtimeTracking; // this is for controlling weither we will be doing some realtime  Location tracking or not !
+
+  OrderGoogleMap(this.currentOrder, {bool realtime = false}) {
+    this.realtimeTracking = realtime;
+  }
 
   TaxiAuthController taxiAuthCtrl = Get.find<TaxiAuthController>();
 
@@ -39,17 +46,38 @@ class OrderGoogleMapState extends State<OrderGoogleMap> {
   Circle? circle;
   GoogleMapController? _controller;
 
-  void reUpdateLocation() {
+  Future<Uint8List> getBytesFromCanvas(int width, int height, urlAsset, {bool isBytes = false}) async {
+    final ui.PictureRecorder pictureRecorder = ui.PictureRecorder();
+    final Canvas canvas = Canvas(pictureRecorder);
+    late final ByteData datai;
+
+    if (!isBytes) datai = await rootBundle.load(urlAsset);
+    var imaged = await loadImage(!isBytes ? new Uint8List.view(datai.buffer) : urlAsset);
+    canvas.drawImageRect(
+      imaged,
+      Rect.fromLTRB(0.0, 0.0, imaged.width.toDouble(), imaged.height.toDouble()),
+      Rect.fromLTRB(0.0, 0.0, width.toDouble(), height.toDouble()),
+      new Paint(),
+    );
+
+    final img = await pictureRecorder.endRecording().toImage(width, height);
+    final data = await img.toByteData(format: ui.ImageByteFormat.png);
+    return data!.buffer.asUint8List();
+  }
+
+  Future<ui.Image> loadImage(Uint8List img) async {
+    final Completer<ui.Image> completer = new Completer();
+    ui.decodeImageFromList(img, (ui.Image img) {
+      return completer.complete(img);
+    });
+    return completer.future;
+  }
+
+  Future<void> reUpdateLocation() async {
     if (widget.currentOrder.status == "onTheWay") {
       print("++++++++++++ [reUpdateLocation] >>>>>>>>>>. onTheWay ++++++++++");
       _controller!.animateCamera(CameraUpdate.newLatLng(new LatLng(test_lat, test_lng)));
-      // _controller!.animateCamera(CameraUpdate.newLatLngBounds(_bounds({fromMarker!, toMarker!})!, 150));
-    }
-    // this.setState(() {
-    //   if (widget.currentOrder.status == "onTheWay") {
-    //     _controller!.animateCamera(CameraUpdate.newLatLngBounds(_bounds({fromMarker!, toMarker!})!, 150));
-    //   }
-    // });
+    } else if (widget.currentOrder.status == "inTransit") {}
   }
 
   LatLngBounds _createBounds(List<LatLng> positions) {
@@ -66,21 +94,39 @@ class OrderGoogleMapState extends State<OrderGoogleMap> {
     return _createBounds(markers.map((m) => m.position).toList());
   }
 
-  Future<List<BitmapDescriptor>> loadBitmapDescriptors() async {
+  Future<List<BitmapDescriptor>> currentOrderVewBitmapDescriptors() async {
     return <BitmapDescriptor>[
-      await BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(20, 20)), custommer_location_marker_asset),
-      await BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(20, 20)), custommer_destination_marker_asset)
+      // await BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(20, 20)), taxi_driver_marker_asset),
+      // await BitmapDescriptor.fromAssetImage(ImageConfiguration(), user_icon_marker_asset),
+      BitmapDescriptor.fromBytes(await getBytesFromCanvas(40, 45, taxi_driver_marker_asset)),
+      BitmapDescriptor.fromBytes(await getBytesFromCanvas(40, 45, user_icon_marker_asset))
+
+      // BitmapDescriptor.fromBytes(await getBytesFromCanvas(50, 80, purple_destination_marker_asset))
+      // await BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(1, 1)), purple_destination_marker_asset),
+    ];
+  }
+
+  Future<List<BitmapDescriptor>> orderViewBitmapDescriptors() async {
+    print(
+        "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n\n${widget.currentOrder.customer['image']}\n\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    return <BitmapDescriptor>[
+      await BitmapDescriptor.fromAssetImage(ImageConfiguration(), user_icon_marker_asset),
+      // BitmapDescriptor.fromBytes(await getBytesFromCanvas(40, 40, (await http.get(Uri.parse(widget.currentOrder.customer['image']))).bodyBytes, isBytes: true)),
+      BitmapDescriptor.fromBytes(await getBytesFromCanvas(40, 45, purple_destination_marker_asset))
+
+      // await BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(1, 1)), purple_destination_marker_asset),
     ];
   }
 
   @override
   void initState() {
     print("################### ${widget.currentOrder.toJson()} ###################!");
-    loadBitmapDescriptors().then((value) {
+    (widget.realtimeTracking ? currentOrderVewBitmapDescriptors() : orderViewBitmapDescriptors()).then((value) {
       print("#########################\n$value \n#######################");
       setState(() {
         customerLocationMarker = value[0];
         customerDestinationMarker = value[1];
+
         fromMarker = Marker(
           draggable: false,
           flat: true,
@@ -129,8 +175,8 @@ class OrderGoogleMapState extends State<OrderGoogleMap> {
     return !mapReady
         ? Center(child: CircularProgressIndicator())
         : new GoogleMap(
-            onCameraMove: (_) {
-              reUpdateLocation();
+            onCameraMove: (_) async {
+              await reUpdateLocation();
             },
             minMaxZoomPreference: MinMaxZoomPreference(10, 16),
             buildingsEnabled: false,

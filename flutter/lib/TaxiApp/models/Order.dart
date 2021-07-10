@@ -33,7 +33,7 @@ class Order {
   dynamic rideFinishTime;
   dynamic rideStartTime;
   dynamic status;
-  String polyline;
+  dynamic polyline;
   double distanceToClient = 0;
 
   Order(
