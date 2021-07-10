@@ -166,10 +166,10 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                   left: 25,
                   top: 30,
                   child: GestureDetector(
-                      onTap: () => mezcalmosSnackBar("From", controller.value?.from.address ?? ""),
+                      onTap: () => mezcalmosSnackBar("From", controller.value?.from?.address ?? ""),
                       child: Obx(
                         () => Text(
-                          (controller.value?.from.address.toString().substring(0, 13) ?? "..........") + " ..", //13+..
+                          (controller.value?.from?.address.toString().substring(0, 13) ?? "..........") + " ..", //13+..
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
@@ -192,10 +192,10 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                   left: (getSizeRelativeToScreen(180, Get.height, Get.width) / 2) + 40,
                   top: 30,
                   child: GestureDetector(
-                      onTap: () => mezcalmosSnackBar("Destination", controller.value?.to.address ?? ""),
+                      onTap: () => mezcalmosSnackBar("Destination", controller.value?.to?.address ?? ""),
                       child: Obx(
                         () => Text(
-                          (controller.value?.to.address.toString().substring(0, 13) ?? "..........") + " ..", //13+..
+                          (controller.value?.to?.address.toString().substring(0, 13) ?? "..........") + " ..", //13+..
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,

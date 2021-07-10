@@ -15,7 +15,7 @@ class Wrapper extends GetWidget<AuthController> {
     return Obx(() {
       if (controller.user != null) {
         // Injecting TaxiAuthController Here so we can get it as Widget in TaxiWrapper
-        //Get.put(TaxiAuthController());
+        Get.put(TaxiAuthController());
         Get.put(SideMenuDraweController(), permanent: true);
         return TaxiWrapper();
       } else
