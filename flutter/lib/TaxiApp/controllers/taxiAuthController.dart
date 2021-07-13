@@ -3,7 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/controllers/messagingController.dart';
+import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
@@ -23,7 +23,7 @@ class TaxiAuthController extends GetxController {
   Rx<Widget> _dynamicScreen = (Center(child: CircularProgressIndicator()) as Widget).obs;
   Rx<Position> _currentLocation = Position.fromMap(<dynamic, dynamic>{"latitude": 15.851385, "longitude": -97.046429}).obs;
   RxBool _locationEnabled = false.obs;
- MessagingController _messagingController = Get.find<MessagingController>();
+  NotificationsController _messagingController = Get.find<NotificationsController>();
   dynamic get currentOrderId => _model.value.currentOrder ?? null;
   dynamic get authorizedTaxi => _model.value.isAuthorized ?? false;
   bool get isLooking => _model.value.isLooking ?? false;
@@ -58,7 +58,10 @@ class TaxiAuthController extends GetxController {
     print("TaxiAuthController  Messaging Token>> ${await _messagingController.getToken()}");
 
     if (_authController.user != null) {
-       _databaseHelper.firebaseDatabase.reference().child('${taxiAuthNode(_authController.user?.uid ?? '')}/notificationInfo/fcmKey').set(await _messagingController.getToken());
+       _databaseHelper.firebaseDatabase
+          .reference()
+          .child('${taxiAuthNode(_authController.user?.uid ?? '')}/notificationInfo/fcmKey')
+          .set(await _messagingController.getToken());
       _taxiAuthListener = _databaseHelper.firebaseDatabase
           .reference()
           .child(taxiAuthNode(_authController.user?.uid ?? ''))
@@ -154,6 +157,7 @@ class TaxiAuthController extends GetxController {
 
   @override
   void onClose() {
+    print("Taxi Auth Contoller onClose");
     _locationListener.cancel().then((_) {
       print("[ + ] TaxiAuthController::LocationListener has been canceled successfully !");
       _taxiAuthListener.cancel().then((_) => print("[ + ] TaxiAuthController::AuthListener has been canceled successfully !"));

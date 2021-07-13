@@ -27,6 +27,8 @@
 [ONGOING] Implement Theme Controller.
 [PRIORITY] CurrentOrder Screens <- Marker!
 [ONGOING] Make everything inside InjectionHelper class.
+[Done] Receive notifications for ios and android
+[ONGOING] Detach listeners inside notifications controller
 + Add notifications system
 + add a Proxy for cloud functions!
 

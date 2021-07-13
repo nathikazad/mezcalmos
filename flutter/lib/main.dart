@@ -10,7 +10,7 @@ import 'package:mezcalmos/CustomerApp/main.dart';
 import 'package:mezcalmos/DeliveryApp/main.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/controllers/messagingController.dart';
+import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
@@ -145,7 +145,7 @@ class _SPointState extends State<SPoint> {
     }
 
     Get.put<AuthController>(AuthController(), permanent: true);
-    Get.put<MessagingController>(MessagingController(), permanent: true);
+    Get.put<NotificationsController>(NotificationsController(), permanent: true);
 
     Timer(
         Duration(seconds: nSplashScreenTimer),

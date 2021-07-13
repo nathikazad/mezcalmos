@@ -19,14 +19,12 @@ webpush.setVapidDetails(
   vapidKeys.public,
   vapidKeys.private
 )
-const sendWithFcm= async(firebase,message,notifKey)=>{
-  const sentMessage = {
-    data: message,
-    token: notifKey
+async function sendWithFcm(firebase, message, notifKey) {
+  const payload = {
+    notification: message
   };
-let fcmResp= await firebase.messaging().send(sentMessage)
-console.log(fcmResp);
-
+  let fcmResp = await firebase.messaging().sendToDevice(notifKey, payload)
+  console.log(fcmResp);
 }
 
 async function push(firebase, userId, message, particpantType = "customer") {
@@ -55,8 +53,15 @@ async function notifyDriversNewRequest(firebase, address) {
   for (let driverId in drivers){
     let driver = drivers[driverId]
     if(driver.state && driver.state.isLooking && !driver.state.currentOrder) {
-      if(driver.notificationInfo) {   
-        if (driver.notificationInfo.webPush) {
+      if(driver.notificationInfo) { 
+        if (driver.notificationInfo.fcmKey) {
+          console.log("fcm key");
+          let message={
+            title: "Nueva Pedido",
+            body: `Hay una nueva orden de taxi de ${address}, vea si puede aceptarla.`
+          };
+          sendWithFcm(firebase, message, driver.notificationInfo.fcmKey);
+        } else if (driver.notificationInfo.webPush) {
           webpush.sendNotification(driver.notificationInfo.webPush, JSON.stringify({
             notificationType: "newOrder",
             message: `Hay una nueva orden de taxi de ${address}, vea si puede aceptarla.`
@@ -65,13 +70,7 @@ async function notifyDriversNewRequest(firebase, address) {
           })
         }
         
-        if (driver.notificationInfo.fcmKey) {
-          let message={
-            title: "newOrder",
-            message: `Hay una nueva orden de taxi de ${address}, vea si puede aceptarla.`
-          };
-          sendWithFcm(firebase,message,driver.notificationInfo.fcmKey)
-        }
+        
       }
     }
   }

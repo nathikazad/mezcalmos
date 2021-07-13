@@ -26,6 +26,9 @@ PODS:
   - Firebase/Functions (8.0.0):
     - Firebase/CoreOnly
     - FirebaseFunctions (~> 8.0.0)
+  - Firebase/Messaging (8.0.0):
+    - Firebase/CoreOnly
+    - FirebaseMessaging (~> 8.0.0)
   - firebase_auth (1.4.1):
     - Firebase/Auth (= 8.0.0)
     - firebase_core
@@ -35,6 +38,10 @@ PODS:
     - Flutter
   - firebase_database (7.1.1):
     - Firebase/Database (= 8.0.0)
+    - firebase_core
+    - Flutter
+  - firebase_messaging (10.0.3):
+    - Firebase/Messaging (= 8.0.0)
     - firebase_core
     - Flutter
   - FirebaseAuth (8.0.0):
@@ -57,10 +64,24 @@ PODS:
   - FirebaseFunctions (8.0.0):
     - FirebaseCore (~> 8.0)
     - GTMSessionFetcher/Core (~> 1.5)
+  - FirebaseInstallations (8.3.0):
+    - FirebaseCore (~> 8.0)
+    - GoogleUtilities/Environment (~> 7.4)
+    - GoogleUtilities/UserDefaults (~> 7.4)
+    - PromisesObjC (~> 1.2)
+  - FirebaseMessaging (8.0.0):
+    - FirebaseCore (~> 8.0)
+    - FirebaseInstallations (~> 8.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.4)
+    - GoogleUtilities/Environment (~> 7.4)
+    - GoogleUtilities/Reachability (~> 7.4)
+    - GoogleUtilities/UserDefaults (~> 7.4)
   - Flutter (1.0.0)
   - flutter_facebook_auth (2.0.0):
     - FBSDKCoreKit (~> 11.0.0)
     - FBSDKLoginKit (~> 11.0.0)
+    - Flutter
+  - flutter_local_notifications (0.0.1):
     - Flutter
   - geolocator (6.2.0):
     - Flutter
@@ -91,6 +112,8 @@ PODS:
   - "GoogleUtilities/NSData+zlib (7.4.1)"
   - GoogleUtilities/Reachability (7.4.1):
     - GoogleUtilities/Logger
+  - GoogleUtilities/UserDefaults (7.4.1):
+    - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (1.5.0)
   - image_downloader (0.0.1):
     - Flutter
@@ -109,8 +132,10 @@ DEPENDENCIES:
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_database (from `.symlinks/plugins/firebase_database/ios`)
+  - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - Flutter (from `Flutter`)
   - flutter_facebook_auth (from `.symlinks/plugins/flutter_facebook_auth/ios`)
+  - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - geolocator (from `.symlinks/plugins/geolocator/ios`)
   - google_maps_flutter (from `.symlinks/plugins/google_maps_flutter/ios`)
   - image_downloader (from `.symlinks/plugins/image_downloader/ios`)
@@ -127,6 +152,8 @@ SPEC REPOS:
     - FirebaseCoreDiagnostics
     - FirebaseDatabase
     - FirebaseFunctions
+    - FirebaseInstallations
+    - FirebaseMessaging
     - GoogleDataTransport
     - GoogleMaps
     - GoogleUtilities
@@ -144,10 +171,14 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_core/ios"
   firebase_database:
     :path: ".symlinks/plugins/firebase_database/ios"
+  firebase_messaging:
+    :path: ".symlinks/plugins/firebase_messaging/ios"
   Flutter:
     :path: Flutter
   flutter_facebook_auth:
     :path: ".symlinks/plugins/flutter_facebook_auth/ios"
+  flutter_local_notifications:
+    :path: ".symlinks/plugins/flutter_local_notifications/ios"
   geolocator:
     :path: ".symlinks/plugins/geolocator/ios"
   google_maps_flutter:
@@ -166,13 +197,17 @@ SPEC CHECKSUMS:
   firebase_auth: 6532658f5a4f76be32cd5e7518753ebedd4544d2
   firebase_core: cda81ae37eda6df2bc2d16027fda527987c4bd33
   firebase_database: 0c3f1c61d8fc7dfd5f4e339f85906e24f0121449
+  firebase_messaging: 861664166bbdd527cb40396d4a381f0a1c39f61d
   FirebaseAuth: b8cd992fca5b53dc6eec09e873a3f375f000c5a1
   FirebaseCore: 3f09591d51292843e2a46f18358d60bf4e996255
   FirebaseCoreDiagnostics: 61384f54989065b15c36b5922b65112e86811d3c
   FirebaseDatabase: 363961e25451425be8b14bb8801a592515ec58f2
   FirebaseFunctions: 57fedef9b8808b83be40e176bcb28aa2aa78cf92
+  FirebaseInstallations: b69db7680870dbac17bba7a51fc0b5c4b365baa7
+  FirebaseMessaging: 1a33b4af3c8042ed6ddacb6c031894af2064bfab
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
   flutter_facebook_auth: abc044072738b7baa90d80583dabdb1211614f0d
+  flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
   geolocator: f5e3de65e241caba7ce3e8a618803387bda73384
   google_maps_flutter: df4e7de95264aa0a2f11aac0fc7e313acb8ffc7e
   GoogleDataTransport: 04c3e9a480bbcaa2ec3f5d27f1cdeb6a92f20c8d
