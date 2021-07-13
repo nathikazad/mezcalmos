@@ -132,19 +132,22 @@ export default {
   },
   computed: {
     arrivalTime() {
-      return this.deepFind(
-        this.orderDetails,
-        "driver.location.estimatedArrivalTime"
-      )
-        ? this.$t("customer.taxiView.arrival") +
-            " " +
-            this.$moment(
-              this.deepFind(
-                this.orderDetails,
-                "driver.location.estimatedArrivalTime"
-              )
-            ).fromNow()
-        : this.$t("customer.taxiView.arrival") + "TBD";
+      let arrivalTimeInText = this.$moment(
+        this.deepFind(this.orderDetails, "driver.location.estimatedArrivalTime")
+      ).fromNow();
+      let differenceBetweenNowAndArrival = this.$moment().diff(
+        this.$moment(
+          this.deepFind(
+            this.orderDetails,
+            "driver.location.estimatedArrivalTime"
+          )
+        )
+      );
+      console.log(differenceBetweenNowAndArrival, arrivalTimeInText);
+
+      return differenceBetweenNowAndArrival <= 0
+        ? arrivalTimeInText
+        : this.$t("customer.taxiView.arrival") + " TBD";
     }
   },
   methods: {
