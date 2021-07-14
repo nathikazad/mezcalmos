@@ -34,6 +34,10 @@ const String tDisconnect = "Logout";
 const String tIncommingOrders = "Incoming Orders";
 const String tDefaultCustomerName = "Unknown";
 
+// ----------------- GetStorage Strings ----------------- //
+const String getxLmodeKey = "lmod";
+const String getxGmapBottomPaddingKey = "gmap_bottom_padding";
+const String getxMapStyleJsonKey = "map_style";
 // ----------------- Assets Strings ----------------- //
 
 const String aLogoPath = "assets/images/logo.png";

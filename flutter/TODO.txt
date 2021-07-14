@@ -46,11 +46,14 @@
 + [UI] IncommingOrderListItem
 + [UI] OrderVIewScreen -> BottomBar 
 
---------Check with yassine---------
-- Incomming Orders Screen :
-	|_ Under Img screen: title  Size = 38.5
 
-- infos line in IncommingOrdersList > Getting out of bounds
+---- done - today 07/09/21 -----
++ TaxiAuthController problem temp fix
++ make use of fitBounds to center everything up.
++ if zoom > 16 : zoom = 16
+		|_ polyline Color : 
+		|_ Polyline Weight : Stroke
+		
 
 ------ UI  TODO -------
 
@@ -107,11 +110,11 @@ _listenForLocation_listenForLocation
 
 + OrderVIew:
 	|_[Ongoing] Map"
-		|+ make use of fitBounds to center everything up.
-		|+ if zoom > 16 : zoom = 16
+		|+[Done] make use of fitBounds to center everything up.
+		|+[Done] if zoom > 16 : zoom = 16
 		|_ markers ~
-		|_ polyline Color : 
-		|_ Polyline Weight : Stroke
+		|_ [Done] polyline Color : 
+		|_ [Done]Polyline Weight : Stroke
 		|
 		|_ Status: onTheWay:
 			|_  Centers  THe map Bounds of Driver's location to (Destination = from).

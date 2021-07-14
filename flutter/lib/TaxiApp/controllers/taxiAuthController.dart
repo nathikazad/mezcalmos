@@ -20,10 +20,13 @@ class TaxiAuthController extends GetxController {
   Rx<TaxiDriver> _model = TaxiDriver.empty().obs;
   DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
   AuthController _authController = Get.find<AuthController>();
-  Rx<Widget> _dynamicScreen = (Center(child: CircularProgressIndicator()) as Widget).obs;
-  Rx<Position> _currentLocation = Position.fromMap(<dynamic, dynamic>{"latitude": 15.851385, "longitude": -97.046429}).obs;
+  Rx<Widget> _dynamicScreen =
+      (Center(child: CircularProgressIndicator()) as Widget).obs;
+  Rx<Position> _currentLocation = Position.fromMap(
+      <dynamic, dynamic>{"latitude": 15.851385, "longitude": -97.046429}).obs;
   RxBool _locationEnabled = false.obs;
-  NotificationsController _messagingController = Get.find<NotificationsController>();
+  NotificationsController _messagingController =
+      Get.find<NotificationsController>();
   dynamic get currentOrderId => _model.value.currentOrder ?? null;
   dynamic get authorizedTaxi => _model.value.isAuthorized ?? false;
   bool get isLooking => _model.value.isLooking ?? false;
@@ -42,7 +45,11 @@ class TaxiAuthController extends GetxController {
       - CurrentOrder
   */
 
-  Widget _getScreen() => authorizedTaxi == true ? (_model.value.currentOrder != null ? CurrentOrderScreen() : IncomingOrdersScreen()) : UnauthorizedScreen();
+  Widget _getScreen() => authorizedTaxi == true
+      ? (_model.value.currentOrder != null
+          ? CurrentOrderScreen()
+          : IncomingOrdersScreen())
+      : UnauthorizedScreen();
 
   @override
   void onInit() async {
@@ -55,7 +62,8 @@ class TaxiAuthController extends GetxController {
     print("User from TaxiAuthController >> ${_authController.user?.uid}");
     print("authorizedTaxi from TaxiAuthController >> ${authorizedTaxi}");
     print("currentOrderId from TaxiAuthController >> ${currentOrderId}");
-    print("TaxiAuthController  Messaging Token>> ${await _messagingController.getToken()}");
+    print(
+        "TaxiAuthController  Messaging Token>> ${await _messagingController.getToken()}");
 
     if (_authController.user != null) {
       _taxiAuthListener = _databaseHelper.firebaseDatabase
@@ -70,12 +78,16 @@ class TaxiAuthController extends GetxController {
         _dynamicScreen.value = _getScreen();
       });
       String? deviceNotificationToken = await _messagingController.getToken();
-      if(deviceNotificationToken != null)
+      if (deviceNotificationToken != null)
         _databaseHelper.firebaseDatabase
             .reference()
-            .child('${taxiAuthNode(_authController.user?.uid ?? '')}/notificationInfo/')
-            .set(<String, String> {'deviceNotificationToken':deviceNotificationToken });
-      print("/////////////////////////////////////////////${_model.value.toJson()}////////////////////////////////////////////////////");
+            .child(
+                '${taxiAuthNode(_authController.user?.uid ?? '')}/notificationInfo/')
+            .set(<String, String>{
+          'deviceNotificationToken': deviceNotificationToken
+        });
+      print(
+          "/////////////////////////////////////////////${_model.value.toJson()}////////////////////////////////////////////////////");
       _listenForLocation();
     }
   }
@@ -111,22 +123,33 @@ class TaxiAuthController extends GetxController {
 
       if (permission == LocationPermission.deniedForever) {
         // Permissions are denied forever, handle appropriately.
-        return Future.error('Location permissions are permanently denied, we cannot request permissions.');
+        return Future.error(
+            'Location permissions are permanently denied, we cannot request permissions.');
       }
-
       _locationEnabled.value = true;
-      _locationListener = Geolocator.getPositionStream().listen((Position position) {
+      _locationListener =
+          Geolocator.getPositionStream().listen((Position position) {
         _currentLocation.value = position;
         Map<String, dynamic> positionUpdate = <String, dynamic>{
           "lastUpdateTime": DateTime.now().toUtc().toString(),
-          "position": <String, dynamic>{"lat": position.latitude, "lng": position.longitude}
+          "position": <String, dynamic>{
+            "lat": position.latitude,
+            "lng": position.longitude
+          }
         };
         // print(positionUpdate);
-        _databaseHelper.firebaseDatabase.reference().child(taxiAuthNode(_authController.user?.uid ?? '')).child('location').set(positionUpdate);
+        _databaseHelper.firebaseDatabase
+            .reference()
+            .child(taxiAuthNode(_authController.user?.uid ?? ''))
+            .child('location')
+            .set(positionUpdate);
         if (_model.value.currentOrder != null) {
-          _databaseHelper.firebaseDatabase.reference().child(orderId(_model.value.currentOrder)).child('driver/location').set(positionUpdate);
+          _databaseHelper.firebaseDatabase
+              .reference()
+              .child(orderId(_model.value.currentOrder))
+              .child('driver/location')
+              .set(positionUpdate);
         }
-
         //   print(position == null
         //       ? 'Unknown'
         //       : position.latitude.toString() +
@@ -134,44 +157,42 @@ class TaxiAuthController extends GetxController {
         //           position.longitude.toString());
       });
     }
+
+    void turnOff() {
+      _databaseHelper.firebaseDatabase
+          .reference()
+          .child(taxiIsLookingField(_authController.user?.uid))
+          .set(false)
+          .catchError((err) {
+        print("Error turning [ isLooking = false ] -> $err");
+        mezcalmosSnackBar("Error ~", "Failed turning it off!");
+      });
+    }
+
+    void turnOn() {
+      _databaseHelper.firebaseDatabase
+          .reference()
+          .child(taxiIsLookingField(_authController.user?.uid))
+          .set(true)
+          .catchError((err) {
+        print("Error turning [ isLooking = true ] -> $err");
+        mezcalmosSnackBar("Error ~", "Failed turning_listenForLocation it on!");
+      });
+    }
+
+    @override
+    void onClose() async {
+      print("[+] TaxiAuthController::onClose ---------> Was invoked !");
+      await _locationListener.cancel();
+      await _taxiAuthListener.cancel();
+      super.onClose();
+    }
+
+    // @override
+    // void dispose() {
+    //   detachListeners();
+    //   super.dispose();
+    //   print("--------------------> OrderController Auto Disposed !");
+    // }
   }
-
-  void turnOff() {
-    _databaseHelper.firebaseDatabase.reference().child(taxiIsLookingField(_authController.user?.uid)).set(false).catchError((err) {
-      print("Error turning [ isLooking = false ] -> $err");
-      mezcalmosSnackBar("Error ~", "Failed turning it off!");
-    });
-  }
-
-  void turnOn() {
-    _databaseHelper.firebaseDatabase.reference().child(taxiIsLookingField(_authController.user?.uid)).set(true).catchError((err) {
-      print("Error turning [ isLooking = true ] -> $err");
-      mezcalmosSnackBar("Error ~", "Failed turning_listenForLocation it on!");
-    });
-  }
-
-  // void detachListeners() {
-  //   _taxiAuthListener
-  //       .cancel()
-  //       .then((value) => print("A listener was disposed on TaxiAuthController::detachListeners !"))
-  //       .catchError((err) => print("Error happend while trying to dispose TaxiAuthController::detachListeners !"));
-  // }
-
-  @override
-  void onClose() {
-    print("Taxi Auth Contoller onClose");
-    _locationListener.cancel().then((_) {
-      print("[ + ] TaxiAuthController::LocationListener has been canceled successfully !");
-      _taxiAuthListener.cancel().then((_) => print("[ + ] TaxiAuthController::AuthListener has been canceled successfully !"));
-    });
-
-    super.onClose();
-  }
-
-  // @override
-  // void dispose() {
-  //   detachListeners();
-  //   super.dispose();
-  //   print("--------------------> OrderController Auto Disposed !");
-  // }
 }

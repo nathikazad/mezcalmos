@@ -18,8 +18,8 @@ class Order {
   dynamic id;
   dynamic customer;
   dynamic estimatedPrice;
-  late Location from;
-  late Location to;
+  dynamic from; // this must not be late  , especcially since  we are using Order.emty
+  dynamic to; // this too .
   dynamic orderTime;
   dynamic paymentType;
   dynamic routeInformation; // Map<String , Map<String, dynamic>>
@@ -33,7 +33,7 @@ class Order {
   dynamic rideFinishTime;
   dynamic rideStartTime;
   dynamic status;
-  String polyline;
+  dynamic polyline;
   double distanceToClient = 0;
 
   Order(

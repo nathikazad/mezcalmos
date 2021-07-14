@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/TaxiApp/helpers/InjectionHelper.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/models/User.dart';
 import 'package:cloud_functions/cloud_functions.dart';
@@ -25,7 +24,8 @@ class AuthController extends GetxController {
 
   // RxInt _isWaitingRresponse = 0.obs;
 
-  DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>(); // Already Injected in main function
+  DatabaseHelper _databaseHelper =
+      Get.find<DatabaseHelper>(); // Already Injected in main function
 
   late StreamSubscription<Event> _userInfoListener;
 
@@ -39,7 +39,8 @@ class AuthController extends GetxController {
     Timer.periodic(
       second,
       (Timer __t) {
-        print("OTP Code resending available after $timeBetweenResending Seconds !");
+        print(
+            "OTP Code resending available after $timeBetweenResending Seconds !");
         if (_timeBetweenResending.value == 0)
           __t.cancel();
         else
@@ -58,9 +59,15 @@ class AuthController extends GetxController {
         print('User is currently signed out!');
         _user.value = null;
       } else {
-        _userInfoListener = _databaseHelper.firebaseDatabase.reference().child(userId(user.uid)).onValue.listen((event) {
-          print("AuthController::onValue Invoked >> ${event.snapshot.key} : ${event.snapshot.value}");
-          print("++++++++++++++++++++++++++++++++++++++++++++++\n\n${event.snapshot.value}\n\n++++++++++++++++++++++++++++++++");
+        _userInfoListener = _databaseHelper.firebaseDatabase
+            .reference()
+            .child(userId(user.uid))
+            .onValue
+            .listen((event) {
+          print(
+              "AuthController::onValue Invoked >> ${event.snapshot.key} : ${event.snapshot.value}");
+          print(
+              "++++++++++++++++++++++++++++++++++++++++++++++\n\n${event.snapshot.value}\n\n++++++++++++++++++++++++++++++++");
           _user.value = User.fromSnapshot(user, event.snapshot);
         });
       }
@@ -70,29 +77,47 @@ class AuthController extends GetxController {
 
   Future<void> signUp(String email, String password) async {
     try {
-      await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
       Get.back();
     } catch (e) {
-      Get.snackbar("Error creating your account!", e.toString(), snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar("Error creating your account!", e.toString(),
+          snackPosition: SnackPosition.BOTTOM);
     }
   }
 
   Future<void> signIn(String email, String password) async {
-    await _auth.signInWithEmailAndPassword(email: email, password: password).timeout(Duration(seconds: 10), onTimeout: () => Future.error(Exception("Timed out , Check your Internet."))).then((value) {
-      Get.snackbar("Welcome Back :D", "Hello ${value.user?.displayName}, We are glad you're back!",
-          colorText: Colors.white, backgroundColor: Colors.black87, snackPosition: SnackPosition.BOTTOM, snackStyle: SnackStyle.FLOATING);
+    await _auth
+        .signInWithEmailAndPassword(email: email, password: password)
+        .timeout(Duration(seconds: 10),
+            onTimeout: () =>
+                Future.error(Exception("Timed out , Check your Internet.")))
+        .then((value) {
+      Get.snackbar("Welcome Back :D",
+          "Hello ${value.user?.displayName}, We are glad you're back!",
+          colorText: Colors.white,
+          backgroundColor: Colors.black87,
+          snackPosition: SnackPosition.BOTTOM,
+          snackStyle: SnackStyle.FLOATING);
+      _userInfoListener.resume();
     }, onError: ((Object e, StackTrace stackTrace) {
-      Get.snackbar("Failed to Sign you in!", e.toString(), snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar("Failed to Sign you in!", e.toString(),
+          snackPosition: SnackPosition.BOTTOM);
     }));
   }
 
   dynamic sendOTPForLogin(String phoneNumber) async {
-    HttpsCallable sendOTPForLoginFunction = FirebaseFunctions.instance.httpsCallable('sendOTPForLogin');
+    HttpsCallable sendOTPForLoginFunction =
+        FirebaseFunctions.instance.httpsCallable('sendOTPForLogin');
     HttpsCallableResult? response;
     try {
       // _waitingResponse.value = true;
-      response = await sendOTPForLoginFunction
-          .call(<String, dynamic>{'phoneNumber': phoneNumber, 'messageType': 'SMS', 'language': _settings.appLanguage.userLanguageKey, 'database': _databaseHelper.dbType});
+      response = await sendOTPForLoginFunction.call(<String, dynamic>{
+        'phoneNumber': phoneNumber,
+        'messageType': 'SMS',
+        'language': _settings.appLanguage.userLanguageKey,
+        'database': _databaseHelper.dbType
+      });
       mezcalmosSnackBar("Notice ~", "OTP message has been sent !");
     } catch (e) {
       // mezcalmosSnackBar("Notice ~", "Failed to send OTP message :( ");
@@ -104,16 +129,26 @@ class AuthController extends GetxController {
 
   Future<void> signInUsingOTP(String phoneNumber, String otpCode) async {
     print("$phoneNumber  < phone ------ otp > $otpCode");
-    HttpsCallable getAuthUsingOTPFunction = FirebaseFunctions.instance.httpsCallable('getAuthUsingOTP');
+    HttpsCallable getAuthUsingOTPFunction =
+        FirebaseFunctions.instance.httpsCallable('getAuthUsingOTP');
     try {
       // _waitingResponse.value = true;
       HttpsCallableResult response =
-          await getAuthUsingOTPFunction.call(<String, dynamic>{'phoneNumber': phoneNumber, 'OTPCode': otpCode, 'language': _settings.appLanguage.userLanguageKey, 'database': _databaseHelper.dbType});
+          await getAuthUsingOTPFunction.call(<String, dynamic>{
+        'phoneNumber': phoneNumber,
+        'OTPCode': otpCode,
+        'language': _settings.appLanguage.userLanguageKey,
+        'database': _databaseHelper.dbType
+      });
       // mezcalmosSnackBar("Notice ~", "OTP message has been sent !");
       // _waitingResponse.value = false;
       print("GetAuthUsingOTP Response");
-      print("################################ DATA ###############################\n\n${response.data}\n\n");
-      await fireAuth.FirebaseAuth.instance.signInWithCustomToken(response.data["token"]);
+      print(
+          "################################ DATA ###############################\n\n${response.data}\n\n");
+      await fireAuth.FirebaseAuth.instance
+          .signInWithCustomToken(response.data["token"]);
+      _userInfoListener.resume();
+
       await Get.offAllNamed(kMainAuthWrapperRoute);
     } catch (e) {
       mezcalmosSnackBar("Error", "OTP Code confirmation failed :(");
@@ -133,33 +168,30 @@ class AuthController extends GetxController {
       mezcalmosSnackBar("Notice ~", "Failed SignIn with Facebook !");
     } else {
       // Create a credential from the access token
-      final facebookAuthCredential = fireAuth.FacebookAuthProvider.credential(result.accessToken!.token);
+      final facebookAuthCredential =
+          fireAuth.FacebookAuthProvider.credential(result.accessToken!.token);
       // Once signed in, return the UserCredential
-      fireAuth.FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+      fireAuth.FirebaseAuth.instance
+          .signInWithCredential(facebookAuthCredential);
+      _userInfoListener.resume();
     }
   }
 
   Future<void> signOut() async {
     try {
-      detachListeners();
+      _userInfoListener.pause();
       // TaxiInjectionHelper.revokeListenersOnSignOut();
       await _auth.signOut();
       Get.offAllNamed(kMainAuthWrapperRoute);
     } catch (e) {
-      Get.snackbar("Failed to Sign you out!", e.toString(), snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar("Failed to Sign you out!", e.toString(),
+          snackPosition: SnackPosition.BOTTOM);
     }
   }
 
-  void detachListeners() {
-    _userInfoListener
-        .cancel()
-        .then((value) => print("_userInfoListener was disposed on authController::detachListeners !"))
-        .catchError((err) => print("Error happend while trying to dispose _userInfoListener in authController::detachListeners !"));
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    print("--------------------> AuthController Auto Disposed !");
-  }
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  //   print("--------------------> AuthController Auto Disposed !");
+  // }
 }

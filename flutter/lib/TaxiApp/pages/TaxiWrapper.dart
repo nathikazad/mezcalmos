@@ -8,18 +8,19 @@ import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 
 class TaxiWrapper extends GetView<AuthController> {
-  SideMenuDraweController _sideMenuDrawerController = Get.find<SideMenuDraweController>();
+  SideMenuDraweController _sideMenuDrawerController =
+      Get.find<SideMenuDraweController>();
 
   // pop Point!
   @override
   Widget build(BuildContext context) {
-    print("Putting Taxi Auth Controller");
     TaxiAuthController _taxiAuthController = Get.find<TaxiAuthController>();
     return Scaffold(
       key: _sideMenuDrawerController.scaffoldKey,
       drawer: MezcalmosSideMenu(),
       backgroundColor: Colors.white,
-      appBar: MezcalmosSharedWidgets.mezcalmosAppBar("menu", _sideMenuDrawerController.openMenu),
+      appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
+          "menu", _sideMenuDrawerController.openMenu),
       body: Obx(() => _taxiAuthController.dynamicScreen),
       // - Incomiing order Sc
       // - Anauthorized
