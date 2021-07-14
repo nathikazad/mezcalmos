@@ -58,10 +58,6 @@ class TaxiAuthController extends GetxController {
     print("TaxiAuthController  Messaging Token>> ${await _messagingController.getToken()}");
 
     if (_authController.user != null) {
-       _databaseHelper.firebaseDatabase
-          .reference()
-          .child('${taxiAuthNode(_authController.user?.uid ?? '')}/notificationInfo/fcmKey')
-          .set(await _messagingController.getToken());
       _taxiAuthListener = _databaseHelper.firebaseDatabase
           .reference()
           .child(taxiAuthNode(_authController.user?.uid ?? ''))
@@ -73,6 +69,12 @@ class TaxiAuthController extends GetxController {
         // our magical Trick :p
         _dynamicScreen.value = _getScreen();
       });
+      String? deviceNotificationToken = await _messagingController.getToken();
+      if(deviceNotificationToken != null)
+        _databaseHelper.firebaseDatabase
+            .reference()
+            .child('${taxiAuthNode(_authController.user?.uid ?? '')}/notificationInfo/')
+            .set(<String, String> {'deviceNotificationToken':deviceNotificationToken });
       print("/////////////////////////////////////////////${_model.value.toJson()}////////////////////////////////////////////////////");
       _listenForLocation();
     }
