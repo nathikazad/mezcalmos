@@ -270,7 +270,8 @@ class MezcalmosSharedWidgets {
         ),
       );
 
-  static Future<void> confirmFinishRideDialog(onYes) async =>
+  static Future<void> yesNoDefaultConfirmationDialog(
+          onYes, String text) async =>
       await Get.defaultDialog(
         backgroundColor: Colors.grey.shade100,
         title: '',
@@ -295,46 +296,15 @@ class MezcalmosSharedWidgets {
             Flexible(
                 fit: FlexFit.loose,
                 child: Text(
-                  "Click Finish after the customer has exited your taxi. Based on your GPS it seems you are still far from customer's end location, are you sure you still want to end the ride?",
+                  text,
                   style: TextStyle(fontFamily: 'psr', fontSize: 18),
                 )),
             Flexible(child: TextButton(onPressed: onYes, child: Text('Yes'))),
-            Flexible(
-                child:
-                    TextButton(onPressed: () => Get.back(), child: Text('No'))),
-          ],
-        ),
-      );
-
-  static Future<void> confirmStartRideDialog(onYes) async =>
-      await Get.defaultDialog(
-        backgroundColor: Colors.grey.shade100,
-        title: '',
-        content: Flex(
-          direction: Axis.vertical,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Flexible(
-                fit: FlexFit.loose,
-                child: Icon(
-                  CupertinoIcons.delete,
-                  size: 30,
-                  color: Colors.black,
-                )),
             Flexible(
                 fit: FlexFit.loose,
                 child: SizedBox(
-                  height: 20,
+                  height: 5,
                 )),
-            Flexible(
-                fit: FlexFit.loose,
-                child: Text(
-                  "Click Finish after the customer has exited your taxi. Based on your GPS it seems you are still far from customer's end location, are you sure you still want to end the ride?",
-                  style: TextStyle(fontFamily: 'psr', fontSize: 18),
-                )),
-            Flexible(child: TextButton(onPressed: onYes, child: Text('Yes'))),
             Flexible(
                 child:
                     TextButton(onPressed: () => Get.back(), child: Text('No'))),

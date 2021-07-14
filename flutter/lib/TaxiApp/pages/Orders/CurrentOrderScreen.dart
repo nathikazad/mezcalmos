@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ffi';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MezcalmosGoogleMap.dart';
+import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
+import 'package:mezcalmos/TaxiApp/constants/taxiConstants.dart';
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
 
 class CurrentOrderScreen extends GetView<CurrentOrderController> {
@@ -46,24 +49,40 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                 children: [
                   Flexible(
                     flex: 1,
-                    child: TextButton(
-                      style: ButtonStyle(
-                        fixedSize: MaterialStateProperty.all(Size(
-                            getSizeRelativeToScreen(120, Get.height, Get.width),
-                            getSizeRelativeToScreen(
-                                20, Get.height, Get.width))),
-                        backgroundColor: MaterialStateProperty.all(
-                            Color.fromARGB(255, 79, 168, 35)),
-                      ),
-                      onPressed: () async => await controller.startRide(),
-                      child: Text(
-                        "Start Ride",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ),
+                    child: Obx(() => TextButton(
+                          style: ButtonStyle(
+                            fixedSize: MaterialStateProperty.all(Size(
+                                getSizeRelativeToScreen(
+                                    120, Get.height, Get.width),
+                                getSizeRelativeToScreen(
+                                    20, Get.height, Get.width))),
+                            backgroundColor:
+                                controller.value?.status != "inTransit"
+                                    ? MaterialStateProperty.all(
+                                        Color.fromARGB(255, 79, 168, 35))
+                                    : MaterialStateProperty.all(
+                                        Color.fromARGB(255, 234, 51, 38)),
+                          ),
+                          onPressed: () async => controller.value?.status ==
+                                  "inTransit"
+                              ? await MezcalmosSharedWidgets
+                                  .yesNoDefaultConfirmationDialog(
+                                      () async => await controller.finishRide(),
+                                      tFinishRideConfirmation)
+                              : await MezcalmosSharedWidgets
+                                  .yesNoDefaultConfirmationDialog(
+                                      () async => await controller.startRide(),
+                                      tStartRideConfirmation),
+                          child: Text(
+                            controller.value?.status != "inTransit"
+                                ? "Start Ride"
+                                : "Finish Ride",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        )),
                   ),
                   Flexible(
                       flex: 1,

@@ -43,8 +43,8 @@ class OrderGoogleMapState extends State<OrderGoogleMap> {
 
   Marker? fromMarker;
   Marker? toMarker;
-
   Circle? circle;
+
   GoogleMapController? _controller;
 
   Future<Uint8List> getBytesFromCanvas(int width, int height, urlAsset,
@@ -82,7 +82,52 @@ class OrderGoogleMapState extends State<OrderGoogleMap> {
       print("++++++++++++ [reUpdateLocation] >>>>>>>>>>. onTheWay ++++++++++");
       _controller!.animateCamera(
           CameraUpdate.newLatLng(new LatLng(test_lat, test_lng)));
-    } else if (widget.currentOrder.status == "inTransit") {}
+      this.setState(() {
+        fromMarker = Marker(
+          draggable: false,
+          flat: true,
+          anchor: Offset(0.5, 1),
+          markerId: MarkerId("from"),
+          icon: customerLocationMarker,
+          visible: true,
+          position: LatLng(test_lat, test_lng),
+        );
+        toMarker = Marker(
+            draggable: false,
+            flat: true,
+            anchor: Offset(0.5, 1),
+            markerId: MarkerId("to"),
+            icon: customerDestinationMarker,
+            visible: true,
+            position: LatLng(widget.currentOrder.from.latitude,
+                widget.currentOrder.from.longitude));
+      });
+    } else if (widget.currentOrder.status == "inTransit") {
+      _controller!.animateCamera(
+          CameraUpdate.newLatLng(new LatLng(test_lat, test_lng)));
+
+      this.setState(() {
+        fromMarker = Marker(
+          draggable: false,
+          flat: true,
+          anchor: Offset(0.5, 1),
+          markerId: MarkerId("from"),
+          icon: customerLocationMarker,
+          visible: true,
+          position: LatLng(widget.currentOrder.from.latitude,
+              widget.currentOrder.from.longitude),
+        );
+        toMarker = Marker(
+            draggable: false,
+            flat: true,
+            anchor: Offset(0.5, 1),
+            markerId: MarkerId("to"),
+            icon: customerDestinationMarker,
+            visible: true,
+            position: LatLng(widget.currentOrder.to.latitude,
+                widget.currentOrder.to.longitude));
+      });
+    }
   }
 
   LatLngBounds _createBounds(List<LatLng> positions) {
