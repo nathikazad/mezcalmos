@@ -269,8 +269,9 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                                 "..........") +
                             " ..", //13+..
                         style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                          fontFamily: 'psr',
+                          // fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
@@ -303,8 +304,10 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                                 "..........") +
                             " ..", //13+..
                         style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                          fontFamily: 'psr',
+
+                          // fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
