@@ -15,7 +15,8 @@ import 'package:mezcalmos/TaxiApp/models/Order.dart';
 
 class OrderGoogleMap extends StatefulWidget {
   final Order currentOrder;
-  late final bool realtimeTracking; // this is for controlling weither we will be doing some realtime  Location tracking or not !
+  late final bool
+      realtimeTracking; // this is for controlling weither we will be doing some realtime  Location tracking or not !
 
   OrderGoogleMap(this.currentOrder, {bool realtime = false}) {
     this.realtimeTracking = realtime;
@@ -46,16 +47,19 @@ class OrderGoogleMapState extends State<OrderGoogleMap> {
   Circle? circle;
   GoogleMapController? _controller;
 
-  Future<Uint8List> getBytesFromCanvas(int width, int height, urlAsset, {bool isBytes = false}) async {
+  Future<Uint8List> getBytesFromCanvas(int width, int height, urlAsset,
+      {bool isBytes = false}) async {
     final ui.PictureRecorder pictureRecorder = ui.PictureRecorder();
     final Canvas canvas = Canvas(pictureRecorder);
     late final ByteData datai;
 
     if (!isBytes) datai = await rootBundle.load(urlAsset);
-    var imaged = await loadImage(!isBytes ? new Uint8List.view(datai.buffer) : urlAsset);
+    var imaged =
+        await loadImage(!isBytes ? new Uint8List.view(datai.buffer) : urlAsset);
     canvas.drawImageRect(
       imaged,
-      Rect.fromLTRB(0.0, 0.0, imaged.width.toDouble(), imaged.height.toDouble()),
+      Rect.fromLTRB(
+          0.0, 0.0, imaged.width.toDouble(), imaged.height.toDouble()),
       Rect.fromLTRB(0.0, 0.0, width.toDouble(), height.toDouble()),
       new Paint(),
     );
@@ -76,16 +80,26 @@ class OrderGoogleMapState extends State<OrderGoogleMap> {
   Future<void> reUpdateLocation() async {
     if (widget.currentOrder.status == "onTheWay") {
       print("++++++++++++ [reUpdateLocation] >>>>>>>>>>. onTheWay ++++++++++");
-      _controller!.animateCamera(CameraUpdate.newLatLng(new LatLng(test_lat, test_lng)));
+      _controller!.animateCamera(
+          CameraUpdate.newLatLng(new LatLng(test_lat, test_lng)));
     } else if (widget.currentOrder.status == "inTransit") {}
   }
 
   LatLngBounds _createBounds(List<LatLng> positions) {
-    final southwestLat = positions.map((p) => p.latitude).reduce((value, element) => value < element ? value : element); //  snallest value
-    final southwestLon = positions.map((p) => p.longitude).reduce((value, element) => value < element ? value : element);
-    final northeastLat = positions.map((p) => p.latitude).reduce((value, element) => value > element ? value : element); // biggest value
-    final northeastLon = positions.map((p) => p.longitude).reduce((value, element) => value > element ? value : element);
-    return LatLngBounds(southwest: LatLng(southwestLat, southwestLon), northeast: LatLng(northeastLat, northeastLon));
+    final southwestLat = positions.map((p) => p.latitude).reduce(
+        (value, element) =>
+            value < element ? value : element); //  snallest value
+    final southwestLon = positions
+        .map((p) => p.longitude)
+        .reduce((value, element) => value < element ? value : element);
+    final northeastLat = positions.map((p) => p.latitude).reduce(
+        (value, element) => value > element ? value : element); // biggest value
+    final northeastLon = positions
+        .map((p) => p.longitude)
+        .reduce((value, element) => value > element ? value : element);
+    return LatLngBounds(
+        southwest: LatLng(southwestLat, southwestLon),
+        northeast: LatLng(northeastLat, northeastLon));
   }
 
 // ----------- to fit everything in the map !
@@ -98,8 +112,10 @@ class OrderGoogleMapState extends State<OrderGoogleMap> {
     return <BitmapDescriptor>[
       // await BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(20, 20)), taxi_driver_marker_asset),
       // await BitmapDescriptor.fromAssetImage(ImageConfiguration(), user_icon_marker_asset),
-      BitmapDescriptor.fromBytes(await getBytesFromCanvas(40, 45, taxi_driver_marker_asset)),
-      BitmapDescriptor.fromBytes(await getBytesFromCanvas(40, 45, user_icon_marker_asset))
+      BitmapDescriptor.fromBytes(
+          await getBytesFromCanvas(40, 45, taxi_driver_marker_asset)),
+      BitmapDescriptor.fromBytes(
+          await getBytesFromCanvas(40, 45, user_icon_marker_asset))
 
       // BitmapDescriptor.fromBytes(await getBytesFromCanvas(50, 80, purple_destination_marker_asset))
       // await BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(1, 1)), purple_destination_marker_asset),
@@ -110,9 +126,11 @@ class OrderGoogleMapState extends State<OrderGoogleMap> {
     print(
         "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n\n${widget.currentOrder.customer['image']}\n\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     return <BitmapDescriptor>[
-      await BitmapDescriptor.fromAssetImage(ImageConfiguration(), user_icon_marker_asset),
+      await BitmapDescriptor.fromAssetImage(
+          ImageConfiguration(), user_icon_marker_asset),
       // BitmapDescriptor.fromBytes(await getBytesFromCanvas(40, 40, (await http.get(Uri.parse(widget.currentOrder.customer['image']))).bodyBytes, isBytes: true)),
-      BitmapDescriptor.fromBytes(await getBytesFromCanvas(40, 45, purple_destination_marker_asset))
+      BitmapDescriptor.fromBytes(
+          await getBytesFromCanvas(40, 45, purple_destination_marker_asset))
 
       // await BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(1, 1)), purple_destination_marker_asset),
     ];
@@ -120,8 +138,12 @@ class OrderGoogleMapState extends State<OrderGoogleMap> {
 
   @override
   void initState() {
-    print("################### ${widget.currentOrder.toJson()} ###################!");
-    (widget.realtimeTracking ? currentOrderVewBitmapDescriptors() : orderViewBitmapDescriptors()).then((value) {
+    print(
+        "################### ${widget.currentOrder.toJson()} ###################!");
+    (widget.realtimeTracking
+            ? currentOrderVewBitmapDescriptors()
+            : orderViewBitmapDescriptors())
+        .then((value) {
       print("#########################\n$value \n#######################");
       setState(() {
         customerLocationMarker = value[0];
@@ -131,28 +153,35 @@ class OrderGoogleMapState extends State<OrderGoogleMap> {
           draggable: false,
           flat: true,
           anchor: Offset(0.5, 1),
-          infoWindow: InfoWindow(title: "Ride from : ", snippet: widget.currentOrder.to.address),
+          infoWindow: InfoWindow(
+              title: "Ride from : ", snippet: widget.currentOrder.to.address),
           markerId: MarkerId("from"),
           icon: customerLocationMarker,
           visible: true,
-          position: LatLng(widget.currentOrder.from.latitude, widget.currentOrder.from.longitude),
+          position: LatLng(widget.currentOrder.from.latitude,
+              widget.currentOrder.from.longitude),
         );
         toMarker = Marker(
             draggable: false,
             flat: true,
             anchor: Offset(0.5, 1),
-            infoWindow: InfoWindow(title: "Ride to : ", snippet: widget.currentOrder.to.address),
+            infoWindow: InfoWindow(
+                title: "Ride to : ", snippet: widget.currentOrder.to.address),
             markerId: MarkerId("to"),
             icon: customerDestinationMarker,
             visible: true,
-            position: LatLng(widget.currentOrder.to.latitude, widget.currentOrder.to.longitude));
+            position: LatLng(widget.currentOrder.to.latitude,
+                widget.currentOrder.to.longitude));
 
         mapReady = true;
       });
     });
 
-    List<PointLatLng> res = polylinePoints.decodePolyline(widget.currentOrder.routeInformation['polyline']);
-    res.forEach((PointLatLng point) => pLineCoords.add(LatLng(point.latitude, point.longitude)));
+    List<PointLatLng> res = polylinePoints.decodePolyline(
+        widget.currentOrder.routeInformation?['polyline'] ??
+            widget.currentOrder.polyline);
+    res.forEach((PointLatLng point) =>
+        pLineCoords.add(LatLng(point.latitude, point.longitude)));
 
     polyLineSet.add(Polyline(
       color: Color.fromARGB(255, 172, 89, 252),
@@ -178,6 +207,7 @@ class OrderGoogleMapState extends State<OrderGoogleMap> {
             onCameraMove: (_) async {
               await reUpdateLocation();
             },
+            myLocationButtonEnabled: false,
             minMaxZoomPreference: MinMaxZoomPreference(10, 16),
             buildingsEnabled: false,
             markers: {fromMarker!, toMarker!},
@@ -186,11 +216,16 @@ class OrderGoogleMapState extends State<OrderGoogleMap> {
             compassEnabled: false,
             mapType: MapType.normal,
             tiltGesturesEnabled: true,
-            initialCameraPosition: CameraPosition(target: LatLng(widget.currentOrder.from.latitude, widget.currentOrder.from.longitude), tilt: 9.440717697143555, zoom: 14.151926040649414),
+            initialCameraPosition: CameraPosition(
+                target: LatLng(widget.currentOrder.from.latitude,
+                    widget.currentOrder.from.longitude),
+                tilt: 9.440717697143555,
+                zoom: 14.151926040649414),
             onMapCreated: (GoogleMapController controller) async {
               _controller = controller;
               await controller.setMapStyle(GetStorage().read('map_style'));
-              await controller.animateCamera(CameraUpdate.newLatLngBounds(_bounds({fromMarker!, toMarker!})!, 150));
+              await controller.animateCamera(CameraUpdate.newLatLngBounds(
+                  _bounds({fromMarker!, toMarker!})!, 150));
               _gMapCompleter.complete(controller);
             },
           );

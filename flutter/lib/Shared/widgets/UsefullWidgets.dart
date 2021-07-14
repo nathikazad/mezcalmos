@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/NoScrollGlowBehaviour.dart';
+import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/constants/taxiConstants.dart';
 
 class MezcalmosSharedWidgets {
@@ -14,9 +16,15 @@ class MezcalmosSharedWidgets {
         fit: BoxFit.contain,
       );
 
-  static RichText mezcalmos({double textSize = nDefaultMezcalmosTextSize, bool isBold = false}) => RichText(
+  static RichText mezcalmos(
+          {double textSize = nDefaultMezcalmosTextSize, bool isBold = false}) =>
+      RichText(
           text: TextSpan(
-        style: TextStyle(fontFamily: 'psr', color: Colors.black, fontSize: textSize, fontWeight: FontWeight.w400),
+        style: TextStyle(
+            fontFamily: 'psr',
+            color: Colors.black,
+            fontSize: textSize,
+            fontWeight: FontWeight.w400),
         children: <TextSpan>[
           TextSpan(
             text: tMez,
@@ -36,7 +44,8 @@ class MezcalmosSharedWidgets {
 
   static Widget MezcalmosNoGlowScrollConfiguration(Widget child) {
     return ScrollConfiguration(
-      behavior: NoScrollGlowBehaviour(testCaller: "MezcalmosNoGlowScrollConfiguration"),
+      behavior: NoScrollGlowBehaviour(
+          testCaller: "MezcalmosNoGlowScrollConfiguration"),
       child: child,
     );
   }
@@ -48,13 +57,15 @@ class MezcalmosSharedWidgets {
         ],
       );
 
-  static AppBar mezcalmosAppBar(String btnType, Function onTapFunction, {dynamic bgColor = Colors.white}) {
+  static AppBar mezcalmosAppBar(String btnType, Function onTapFunction,
+      {dynamic bgColor = Colors.white}) {
     Widget btn_icon;
 
     switch (btnType) {
       case "back":
         btn_icon = Padding(
-          padding: EdgeInsets.only(left: getSizeRelativeToScreen(4, Get.height, Get.width)),
+          padding: EdgeInsets.only(
+              left: getSizeRelativeToScreen(4, Get.height, Get.width)),
           child: Icon(
             Icons.arrow_back_ios,
             color: Colors.white,
@@ -110,7 +121,9 @@ class MezcalmosSharedWidgets {
                   ),
                 ),
               ),
-              Positioned(right: getSizeRelativeToScreen(40, Get.height, Get.width), child: fillTitle())
+              Positioned(
+                  right: getSizeRelativeToScreen(40, Get.height, Get.width),
+                  child: fillTitle())
             ],
           ),
         ));
@@ -195,7 +208,8 @@ class MezcalmosSharedWidgets {
     // );
   }
 
-  static Future<void> mezcalmosDialog(double val, double sh, double sw) async => await Get.defaultDialog(
+  static Future<void> mezcalmosDialog(double val, double sh, double sw) async =>
+      await Get.defaultDialog(
         backgroundColor: Colors.grey.shade100,
         title: '',
         content: Flex(
@@ -216,7 +230,114 @@ class MezcalmosSharedWidgets {
                 child: SizedBox(
                   height: 20,
                 )),
-            Flexible(fit: FlexFit.loose, child: Text(tOrderIsNotAvailableAnymore))
+            Flexible(
+                fit: FlexFit.loose, child: Text(tOrderIsNotAvailableAnymore))
+          ],
+        ),
+      );
+
+  static Future<void> mezcalmosDialogOrderNoMoreAvailable() async =>
+      await Get.defaultDialog(
+        backgroundColor: Colors.grey.shade100,
+        title: '',
+        content: Flex(
+          direction: Axis.vertical,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Flexible(
+                fit: FlexFit.loose,
+                child: Container(
+                  height: Get.height / 4,
+                  width: Get.width / 2,
+                  decoration: BoxDecoration(
+                      image:
+                          DecorationImage(image: AssetImage(taxiImageAsset))),
+                )),
+            Flexible(
+                fit: FlexFit.loose,
+                child: SizedBox(
+                  height: 20,
+                )),
+            Flexible(
+                fit: FlexFit.loose,
+                child: Text(
+                  "Sorry This ride could not be accepted, Please try another one.",
+                  style: TextStyle(fontFamily: 'psr', fontSize: 18),
+                ))
+          ],
+        ),
+      );
+
+  static Future<void> confirmFinishRideDialog(onYes) async =>
+      await Get.defaultDialog(
+        backgroundColor: Colors.grey.shade100,
+        title: '',
+        content: Flex(
+          direction: Axis.vertical,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Flexible(
+                fit: FlexFit.loose,
+                child: Icon(
+                  CupertinoIcons.delete,
+                  size: 30,
+                  color: Colors.black,
+                )),
+            Flexible(
+                fit: FlexFit.loose,
+                child: SizedBox(
+                  height: 20,
+                )),
+            Flexible(
+                fit: FlexFit.loose,
+                child: Text(
+                  "Click Finish after the customer has exited your taxi. Based on your GPS it seems you are still far from customer's end location, are you sure you still want to end the ride?",
+                  style: TextStyle(fontFamily: 'psr', fontSize: 18),
+                )),
+            Flexible(child: TextButton(onPressed: onYes, child: Text('Yes'))),
+            Flexible(
+                child:
+                    TextButton(onPressed: () => Get.back(), child: Text('No'))),
+          ],
+        ),
+      );
+
+  static Future<void> confirmStartRideDialog(onYes) async =>
+      await Get.defaultDialog(
+        backgroundColor: Colors.grey.shade100,
+        title: '',
+        content: Flex(
+          direction: Axis.vertical,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Flexible(
+                fit: FlexFit.loose,
+                child: Icon(
+                  CupertinoIcons.delete,
+                  size: 30,
+                  color: Colors.black,
+                )),
+            Flexible(
+                fit: FlexFit.loose,
+                child: SizedBox(
+                  height: 20,
+                )),
+            Flexible(
+                fit: FlexFit.loose,
+                child: Text(
+                  "Click Finish after the customer has exited your taxi. Based on your GPS it seems you are still far from customer's end location, are you sure you still want to end the ride?",
+                  style: TextStyle(fontFamily: 'psr', fontSize: 18),
+                )),
+            Flexible(child: TextButton(onPressed: onYes, child: Text('Yes'))),
+            Flexible(
+                child:
+                    TextButton(onPressed: () => Get.back(), child: Text('No'))),
           ],
         ),
       );

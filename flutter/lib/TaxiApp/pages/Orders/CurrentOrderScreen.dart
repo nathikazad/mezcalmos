@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MezcalmosGoogleMap.dart';
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
@@ -23,14 +25,21 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                 realtime: true,
               )),
         Positioned(
-            bottom: 35,
+            bottom: GetStorage().read(getxGmapBottomPaddingKey),
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 5),
               height: getSizeRelativeToScreen(30, Get.height, Get.width),
               width: getSizeRelativeToScreen(180, Get.height, Get.width),
-              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(5), boxShadow: <BoxShadow>[
-                BoxShadow(color: Color.fromARGB(255, 216, 225, 249), spreadRadius: 0, blurRadius: 7, offset: Offset(0, 7)),
-              ]),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(5),
+                  boxShadow: <BoxShadow>[
+                    BoxShadow(
+                        color: Color.fromARGB(255, 216, 225, 249),
+                        spreadRadius: 0,
+                        blurRadius: 7,
+                        offset: Offset(0, 7)),
+                  ]),
               child: Flex(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 direction: Axis.horizontal,
@@ -39,10 +48,14 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                     flex: 1,
                     child: TextButton(
                       style: ButtonStyle(
-                        fixedSize: MaterialStateProperty.all(Size(getSizeRelativeToScreen(120, Get.height, Get.width), getSizeRelativeToScreen(20, Get.height, Get.width))),
-                        backgroundColor: MaterialStateProperty.all(Color.fromARGB(255, 79, 168, 35)),
+                        fixedSize: MaterialStateProperty.all(Size(
+                            getSizeRelativeToScreen(120, Get.height, Get.width),
+                            getSizeRelativeToScreen(
+                                20, Get.height, Get.width))),
+                        backgroundColor: MaterialStateProperty.all(
+                            Color.fromARGB(255, 79, 168, 35)),
                       ),
-                      onPressed: () async => null,
+                      onPressed: () async => await controller.startRide(),
                       child: Text(
                         "Start Ride",
                         style: TextStyle(
@@ -52,7 +65,13 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                       ),
                     ),
                   ),
-                  Flexible(flex: 1, child: Text("\$50", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 21))),
+                  Flexible(
+                      flex: 1,
+                      child: Text(
+                          controller.value?.estimatedPrice?.toString() ??
+                              "\$00",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 21))),
                   Flexible(
                       flex: 2,
                       child: Row(
@@ -61,7 +80,8 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                           GestureDetector(
                             onTap: () => null,
                             child: Container(
-                              height: getSizeRelativeToScreen(20, Get.height, Get.width),
+                              height: getSizeRelativeToScreen(
+                                  20, Get.height, Get.width),
                               width: 38,
                               decoration: BoxDecoration(
                                 color: Colors.blue.shade50,
@@ -80,7 +100,8 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                           GestureDetector(
                             onTap: () => null,
                             child: Container(
-                              height: getSizeRelativeToScreen(20, Get.height, Get.width),
+                              height: getSizeRelativeToScreen(
+                                  20, Get.height, Get.width),
                               width: 38,
                               decoration: BoxDecoration(
                                 color: Colors.blueGrey.shade50,
@@ -97,9 +118,11 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                             ),
                           ),
                           GestureDetector(
-                            onTap: () async => await controller.cancelTaxi("test-reasons"),
+                            onTap: () async =>
+                                await controller.cancelTaxi(null),
                             child: Container(
-                              height: getSizeRelativeToScreen(20, Get.height, Get.width),
+                              height: getSizeRelativeToScreen(
+                                  20, Get.height, Get.width),
                               width: 38,
                               decoration: BoxDecoration(
                                 color: Colors.red.shade100,
@@ -125,9 +148,16 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
           child: Container(
             height: getSizeRelativeToScreen(30, Get.height, Get.width),
             width: getSizeRelativeToScreen(180, Get.height, Get.width),
-            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(5), boxShadow: <BoxShadow>[
-              BoxShadow(color: Color.fromARGB(255, 216, 225, 249), spreadRadius: 0, blurRadius: 7, offset: Offset(0, 7)),
-            ]),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(5),
+                boxShadow: <BoxShadow>[
+                  BoxShadow(
+                      color: Color.fromARGB(255, 216, 225, 249),
+                      spreadRadius: 0,
+                      blurRadius: 7,
+                      offset: Offset(0, 7)),
+                ]),
             child: Stack(
               // direction: Axis.horizontal,
               // mainAxisAlignment: MainAxisAlignment.center,
@@ -139,13 +169,18 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                   thickness: 1,
                 ),
                 Container(
-                  padding: EdgeInsets.all(getSizeRelativeToScreen(2.5, Get.height, Get.width)),
+                  padding: EdgeInsets.all(
+                      getSizeRelativeToScreen(2.5, Get.height, Get.width)),
                   height: getSizeRelativeToScreen(20, Get.height, Get.width),
                   width: getSizeRelativeToScreen(20, Get.height, Get.width),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     boxShadow: <BoxShadow>[
-                      BoxShadow(color: Color.fromARGB(255, 216, 225, 249), spreadRadius: 0, blurRadius: 5, offset: Offset(0, 7)),
+                      BoxShadow(
+                          color: Color.fromARGB(255, 216, 225, 249),
+                          spreadRadius: 0,
+                          blurRadius: 5,
+                          offset: Offset(0, 7)),
                     ],
                     gradient: LinearGradient(colors: [
                       Color.fromARGB(255, 97, 127, 255),
@@ -171,10 +206,15 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                   left: 25,
                   top: 30,
                   child: GestureDetector(
-                      onTap: () => mezcalmosSnackBar("From", controller.value?.from?.address ?? ""),
+                      onTap: () => mezcalmosSnackBar(
+                          "From", controller.value?.from?.address ?? ""),
                       child: Obx(
                         () => Text(
-                          (controller.value?.from?.address.toString().substring(0, 13) ?? "..........") + " ..", //13+..
+                          (controller.value?.from?.address
+                                      .toString()
+                                      .substring(0, 13) ??
+                                  "..........") +
+                              " ..", //13+..
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
@@ -183,7 +223,9 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                       )),
                 ),
                 Positioned(
-                  left: (getSizeRelativeToScreen(180, Get.height, Get.width) / 2) + 40,
+                  left: (getSizeRelativeToScreen(180, Get.height, Get.width) /
+                          2) +
+                      40,
                   top: 13,
                   child: Text(
                     "to",
@@ -194,13 +236,20 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                   ),
                 ),
                 Positioned(
-                  left: (getSizeRelativeToScreen(180, Get.height, Get.width) / 2) + 40,
+                  left: (getSizeRelativeToScreen(180, Get.height, Get.width) /
+                          2) +
+                      40,
                   top: 30,
                   child: GestureDetector(
-                      onTap: () => mezcalmosSnackBar("Destination", controller.value?.to?.address ?? ""),
+                      onTap: () => mezcalmosSnackBar(
+                          "Destination", controller.value?.to?.address ?? ""),
                       child: Obx(
                         () => Text(
-                          (controller.value?.to?.address.toString().substring(0, 13) ?? "..........") + " ..", //13+..
+                          (controller.value?.to?.address
+                                      .toString()
+                                      .substring(0, 13) ??
+                                  "..........") +
+                              " ..", //13+..
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,

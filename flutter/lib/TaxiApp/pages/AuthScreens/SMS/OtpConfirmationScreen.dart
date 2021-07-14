@@ -15,10 +15,13 @@ class OtpConfirmationScreen extends GetView<AuthController> {
     TextEditingController _otpCodeTextController = TextEditingController();
     RxBool canConfirmOtp = false.obs;
     String otpCode = "";
+    String _phonePassed = Get.arguments;
 
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back(closeOverlays: true), bgColor: Colors.grey[50]),
+        appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
+            "back", () => Get.back(closeOverlays: true),
+            bgColor: Colors.grey[50]),
         body: Container(
             height: double.infinity,
             // color: Colors.white,
@@ -29,13 +32,19 @@ class OtpConfirmationScreen extends GetView<AuthController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Confirm the OTP Code", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 45)),
+                  Text("Confirm the OTP Code",
+                      style:
+                          TextStyle(fontWeight: FontWeight.w500, fontSize: 45)),
                   SizedBox(
                     height: 20,
                   ),
                   Container(
                     height: Get.height * 0.25,
-                    decoration: BoxDecoration(color: Colors.white, border: Border.all(color: Colors.grey.shade200, width: 1), borderRadius: BorderRadius.circular(8)),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        border:
+                            Border.all(color: Colors.grey.shade200, width: 1),
+                        borderRadius: BorderRadius.circular(8)),
                     child: Padding(
                       padding: EdgeInsets.all(20),
                       child: Column(
@@ -49,9 +58,11 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                                 fontSize: 16.5,
                               ),
                               children: <TextSpan>[
-                                new TextSpan(text: "Enter the OTP code sent to ", style: TextStyle(color: Colors.black87)),
                                 new TextSpan(
-                                  text: Get.arguments,
+                                    text: "Enter the OTP code sent to ",
+                                    style: TextStyle(color: Colors.black87)),
+                                new TextSpan(
+                                  text: Get.arguments ?? _phonePassed,
                                   style: TextStyle(color: Colors.blue),
                                 )
                               ],
@@ -85,7 +96,8 @@ class OtpConfirmationScreen extends GetView<AuthController> {
 
                             cursorColor: Colors.purpleAccent,
                             keyboardType: TextInputType.number,
-                            textStyle: TextStyle(fontSize: 18, color: Colors.black87),
+                            textStyle:
+                                TextStyle(fontSize: 18, color: Colors.black87),
                             pinTheme: PinTheme(
                               borderRadius: BorderRadius.circular(5),
                               borderWidth: 0.0,
@@ -108,13 +120,22 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                                         // resend code !
                                         canConfirmOtp.value = false;
                                         _otpCodeTextController.clear();
-                                        await controller.sendOTPForLogin(Get.arguments);
+                                        await controller.sendOTPForLogin(
+                                            Get.arguments ?? _phonePassed);
                                       }
                                     : null,
                                 child: Text(
-                                  controller.timeBetweenResending == 0 ? "Resend" : "Resend after ${controller.timeBetweenResending} seconds",
+                                  controller.timeBetweenResending == 0
+                                      ? "Resend"
+                                      : "Resend after ${controller.timeBetweenResending} seconds",
                                   textAlign: TextAlign.left,
-                                  style: TextStyle(color: controller.timeBetweenResending == 0 ? Colors.black : Colors.grey.shade400, fontSize: 17.5, decoration: TextDecoration.underline),
+                                  style: TextStyle(
+                                      color:
+                                          controller.timeBetweenResending == 0
+                                              ? Colors.black
+                                              : Colors.grey.shade400,
+                                      fontSize: 17.5,
+                                      decoration: TextDecoration.underline),
                                 )),
                           )
                         ],
@@ -125,24 +146,34 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                     padding: EdgeInsets.only(top: 15, bottom: 15),
                     child: Text(
                       "By continuing you will receive a verification code to your phone number by SMS. Rates may apply for messages and data.",
-                      style: TextStyle(fontWeight: FontWeight.w500, fontSize: 11),
+                      style:
+                          TextStyle(fontWeight: FontWeight.w500, fontSize: 11),
                     ),
                   ),
                   Obx(() => TextButton(
                         onPressed: canConfirmOtp.value
                             ? () async {
-                                print("${Get.arguments} -------------- $otpCode ");
-                                await controller.signInUsingOTP(Get.arguments, otpCode);
+                                print(
+                                    "${Get.arguments ?? _phonePassed} -------------- $otpCode ");
+                                await controller.signInUsingOTP(
+                                    Get.arguments ?? _phonePassed, otpCode);
                               }
                             : null,
                         child: Text(
                           "Confirm",
-                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 15),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 15),
                         ),
                         style: ButtonStyle(
-                            fixedSize: MaterialStateProperty.all(Size(Get.width, 50)),
+                            fixedSize:
+                                MaterialStateProperty.all(Size(Get.width, 50)),
                             alignment: Alignment.center,
-                            backgroundColor: MaterialStateProperty.all(canConfirmOtp.value ? Colors.blue : Colors.grey)),
+                            backgroundColor: MaterialStateProperty.all(
+                                canConfirmOtp.value
+                                    ? Colors.blue
+                                    : Colors.grey)),
                       ))
                 ],
               ),
