@@ -12,3 +12,7 @@ String orderId(String? orderId) {
 String userInfo(String? userId) {
   return 'users/$userId/info';
 }
+
+String userLanguage(String? userId) {
+  return 'users/$userId/info/language';
+}

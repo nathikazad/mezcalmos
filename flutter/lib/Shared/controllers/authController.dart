@@ -75,6 +75,15 @@ class AuthController extends GetxController {
     super.onInit();
   }
 
+  void changeLanguage(String newLanguage) {
+    if (newLanguage == "en" || newLanguage == "es") {
+      _databaseHelper.firebaseDatabase
+          .reference()
+          .child(userLanguage(_user.value!.uid))
+          .set(newLanguage);
+    }
+  }
+
   Future<void> signUp(String email, String password) async {
     try {
       await _auth.createUserWithEmailAndPassword(

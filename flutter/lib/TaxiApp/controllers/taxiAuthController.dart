@@ -38,6 +38,7 @@ class TaxiAuthController extends GetxController {
   late StreamSubscription<Event> _taxiAuthListener;
   late StreamSubscription<Position> _locationListener;
 
+  DateTime lastLocationUpdatedTime = DateTime.now();
   /*
     GetScreen function basically will return on of the 3 right Screens :
       - AnauthorizedScreen
@@ -129,26 +130,33 @@ class TaxiAuthController extends GetxController {
       _locationEnabled.value = true;
       _locationListener =
           Geolocator.getPositionStream().listen((Position position) {
-        _currentLocation.value = position;
-        Map<String, dynamic> positionUpdate = <String, dynamic>{
-          "lastUpdateTime": DateTime.now().toUtc().toString(),
-          "position": <String, dynamic>{
-            "lat": position.latitude,
-            "lng": position.longitude
-          }
-        };
-        // print(positionUpdate);
-        _databaseHelper.firebaseDatabase
-            .reference()
-            .child(taxiAuthNode(_authController.user?.uid ?? ''))
-            .child('location')
-            .set(positionUpdate);
-        if (_model.value.currentOrder != null) {
+        DateTime currentTime = DateTime.now();
+        print(
+            'time difference $currentTime $lastLocationUpdatedTime ${currentTime.difference(lastLocationUpdatedTime).inSeconds}');
+        if (currentTime.difference(lastLocationUpdatedTime).inSeconds > 5) {
+          print("entered");
+          lastLocationUpdatedTime = currentTime;
+          _currentLocation.value = position;
+          Map<String, dynamic> positionUpdate = <String, dynamic>{
+            "lastUpdateTime": currentTime.toUtc().toString(),
+            "position": <String, dynamic>{
+              "lat": position.latitude,
+              "lng": position.longitude
+            }
+          };
+          // print(positionUpdate);
           _databaseHelper.firebaseDatabase
               .reference()
-              .child(orderId(_model.value.currentOrder))
-              .child('driver/location')
+              .child(taxiAuthNode(_authController.user?.uid ?? ''))
+              .child('location')
               .set(positionUpdate);
+          if (_model.value.currentOrder != null) {
+            _databaseHelper.firebaseDatabase
+                .reference()
+                .child(orderId(_model.value.currentOrder))
+                .child('driver/location')
+                .set(positionUpdate);
+          }
         }
         //   print(position == null
         //       ? 'Unknown'
@@ -157,8 +165,6 @@ class TaxiAuthController extends GetxController {
         //           position.longitude.toString());
       });
     }
-
-   
 
     @override
     void onClose() async {
@@ -175,25 +181,26 @@ class TaxiAuthController extends GetxController {
     //   print("--------------------> OrderController Auto Disposed !");
     // }
   }
-   void turnOff() {
-      _databaseHelper.firebaseDatabase
-          .reference()
-          .child(taxiIsLookingField(_authController.user?.uid))
-          .set(false)
-          .catchError((err) {
-        print("Error turning [ isLooking = false ] -> $err");
-        mezcalmosSnackBar("Error ~", "Failed turning it off!");
-      });
-    }
 
-    void turnOn() {
-      _databaseHelper.firebaseDatabase
-          .reference()
-          .child(taxiIsLookingField(_authController.user?.uid))
-          .set(true)
-          .catchError((err) {
-        print("Error turning [ isLooking = true ] -> $err");
-        mezcalmosSnackBar("Error ~", "Failed turning_listenForLocation it on!");
-      });
-    }
+  void turnOff() {
+    _databaseHelper.firebaseDatabase
+        .reference()
+        .child(taxiIsLookingField(_authController.user!.uid))
+        .set(false)
+        .catchError((err) {
+      print("Error turning [ isLooking = false ] -> $err");
+      mezcalmosSnackBar("Error ~", "Failed turning it off!");
+    });
+  }
+
+  void turnOn() {
+    _databaseHelper.firebaseDatabase
+        .reference()
+        .child(taxiIsLookingField(_authController.user!.uid))
+        .set(true)
+        .catchError((err) {
+      print("Error turning [ isLooking = true ] -> $err");
+      mezcalmosSnackBar("Error ~", "Failed turning_listenForLocation it on!");
+    });
+  }
 }
