@@ -158,7 +158,24 @@ class TaxiAuthController extends GetxController {
       });
     }
 
-    void turnOff() {
+   
+
+    @override
+    void onClose() async {
+      print("[+] TaxiAuthController::onClose ---------> Was invoked !");
+      await _locationListener.cancel();
+      await _taxiAuthListener.cancel();
+      super.onClose();
+    }
+
+    // @override
+    // void dispose() {
+    //   detachListeners();
+    //   super.dispose();
+    //   print("--------------------> OrderController Auto Disposed !");
+    // }
+  }
+   void turnOff() {
       _databaseHelper.firebaseDatabase
           .reference()
           .child(taxiIsLookingField(_authController.user?.uid))
@@ -179,20 +196,4 @@ class TaxiAuthController extends GetxController {
         mezcalmosSnackBar("Error ~", "Failed turning_listenForLocation it on!");
       });
     }
-
-    @override
-    void onClose() async {
-      print("[+] TaxiAuthController::onClose ---------> Was invoked !");
-      await _locationListener.cancel();
-      await _taxiAuthListener.cancel();
-      super.onClose();
-    }
-
-    // @override
-    // void dispose() {
-    //   detachListeners();
-    //   super.dispose();
-    //   print("--------------------> OrderController Auto Disposed !");
-    // }
-  }
 }

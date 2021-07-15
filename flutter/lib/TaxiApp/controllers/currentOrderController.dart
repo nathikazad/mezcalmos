@@ -27,7 +27,10 @@ class CurrentOrderController extends GetxController {
   void onInit() {
     super.onInit();
     print("--------------------> CurrentOrderController Initialized !");
-    _currentOrderListener = _databaseHelper.firebaseDatabase
+    
+  }
+ void dispatchCurrentOrder(){
+   _currentOrderListener= _databaseHelper.firebaseDatabase
         .reference()
         .child(orderId(_taxiAuthController.currentOrderId))
         .onValue
@@ -36,8 +39,7 @@ class CurrentOrderController extends GetxController {
           "CurrentOrderController::onValue Invoked >> ${event.snapshot.key} : ${event.snapshot.value}");
       _model.value = Order.fromSnapshot(event.snapshot);
     });
-  }
-
+ }
   Future<void> cancelTaxi(String? reason) async {
     HttpsCallable cancelTaxiFunction =
         FirebaseFunctions.instance.httpsCallable('cancelTaxiFromDriver');

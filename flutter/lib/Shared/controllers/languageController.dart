@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
@@ -6,8 +9,8 @@ class LanguageController extends GetxController {
   // default is english
   RxBool isAppInitialized = false.obs;
   RxString _userLanguageKey = tDefaultLanguage.obs;
-  RxString _langFullName = "English".obs;
-  RxString _langImage = usaFlagAsset.obs;
+  RxString _langFullName = "Español".obs;
+  RxString _langImage = mexicoFlagAsset.obs;
   // jsonStrings will have:
   // {en : {}, es : {}}  <- so we avoid loading up each one onchanging lang
   dynamic _jsonStrings = {}.obs; // language Object by default  must be set to en if no lang given  in constructor.
@@ -15,10 +18,11 @@ class LanguageController extends GetxController {
   LanguageController({String? lang}) {
     if (lang != null) this._userLanguageKey.value = lang;
 
-    if (lang == "es") {
-      _langFullName.value = "Español";
+    if (lang == "en") {
+      _langFullName.value = "English";
       _langImage.value = mexicoFlagAsset;
     }
+ 
     // and :
     // we also set  jsonStrings depending on {this._userLanguageKey} value
   }
@@ -26,7 +30,7 @@ class LanguageController extends GetxController {
   String get userLanguageKey => _userLanguageKey.value;
   String get langFullName => _langFullName.value;
   String get langImage => _langImage.value;
-  String get strings => _jsonStrings[_userLanguageKey.value];
+  dynamic get strings => _jsonStrings[_userLanguageKey.value];
   String get oppositToLang => _userLanguageKey.value == "en" ? "A Español" : "To English";
   String get oppositFlag => _userLanguageKey.value == "en" ? mexicoFlagAsset : usaFlagAsset;
 
@@ -49,8 +53,11 @@ class LanguageController extends GetxController {
   }
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
+     String enJson=  await rootBundle.loadString(enLang);
+     String esJson= await rootBundle.loadString(esLang);
+   _jsonStrings = <String,dynamic> {"en":jsonDecode(enJson)as Map<String,dynamic> ,"es":jsonDecode(esJson)as Map<String,dynamic>};
   }
 
   @override

@@ -18,6 +18,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.dispatchCurrentOrder();
     return Stack(
       alignment: Alignment.topCenter,
       children: [
@@ -63,95 +64,100 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                                     : MaterialStateProperty.all(
                                         Color.fromARGB(255, 234, 51, 38)),
                           ),
-                          onPressed: () async => controller.value?.status ==
-                                  "inTransit"
-                              ? await MezcalmosSharedWidgets
-                                  .yesNoDefaultConfirmationDialog(
-                                      () async => await controller.finishRide(),
-                                      tFinishRideConfirmation)
-                              : await MezcalmosSharedWidgets
-                                  .yesNoDefaultConfirmationDialog(
-                                      () async => await controller.startRide(),
-                                      tStartRideConfirmation),
+                          onPressed: () async =>
+                              controller.value?.status == "inTransit"
+                                  ? await MezcalmosSharedWidgets
+                                      .yesNoDefaultConfirmationDialog(() async {
+                                      Get.back();
+                                      await controller.finishRide();
+                                    }, tFinishRideConfirmation)
+                                  : await MezcalmosSharedWidgets
+                                      .yesNoDefaultConfirmationDialog(() async {
+                                      Get.back();
+                                      await controller.startRide();
+                                    }, tStartRideConfirmation),
                           child: Text(
                             controller.value?.status != "inTransit"
                                 ? "Start Ride"
                                 : "Finish Ride",
                             style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700,
-                            ),
+                                color: Colors.white, fontFamily: 'psr'),
                           ),
                         )),
                   ),
                   Flexible(
                       flex: 1,
                       child: Text(
-                          controller.value?.estimatedPrice?.toString() ??
-                              "\$00",
+                          '\$' +
+                              (controller.value?.estimatedPrice?.toString() ??
+                                  "00"),
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 21))),
                   Flexible(
                       flex: 2,
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           GestureDetector(
                             onTap: () => null,
                             child: Container(
                               height: getSizeRelativeToScreen(
                                   20, Get.height, Get.width),
-                              width: 38,
+                              width: getSizeRelativeToScreen(
+                                  20, Get.height, Get.width),
                               decoration: BoxDecoration(
-                                color: Colors.blue.shade50,
-                                borderRadius: BorderRadius.circular(5),
+                                color: Color.fromARGB(255, 232, 239, 254),
+                                borderRadius: BorderRadius.circular(4),
                                 // boxShadow: <BoxShadow>[BoxShadow(color: Color.fromARGB(255, 216, 225, 249), spreadRadius: 0, blurRadius: 1, offset: Offset(0, 5))],
                               ),
                               child: Center(
                                 child: Icon(
                                   CupertinoIcons.location_fill,
-                                  color: Colors.blue.shade200,
+                                  color: Color.fromARGB(255, 103, 121, 254),
                                   size: 25,
                                 ),
                               ),
                             ),
                           ),
-                          GestureDetector(
-                            onTap: () => null,
-                            child: Container(
-                              height: getSizeRelativeToScreen(
-                                  20, Get.height, Get.width),
-                              width: 38,
-                              decoration: BoxDecoration(
-                                color: Colors.blueGrey.shade50,
-                                borderRadius: BorderRadius.circular(5),
-                                // boxShadow: <BoxShadow>[BoxShadow(color: Color.fromARGB(255, 216, 225, 249), spreadRadius: 0, blurRadius: 1, offset: Offset(0, 5))],
-                              ),
-                              child: Center(
-                                child: Icon(
-                                  CupertinoIcons.mail,
-                                  color: Colors.blue.shade200,
-                                  size: 25,
-                                ),
-                              ),
-                            ),
-                          ),
+                          // GestureDetector(
+                          //   onTap: () => null,
+                          //   child: Container(
+                          //     height: getSizeRelativeToScreen(
+                          //         20, Get.height, Get.width),
+                          //     width: getSizeRelativeToScreen(
+                          //         20, Get.height, Get.width),
+                          //     decoration: BoxDecoration(
+                          //       color: Colors.blueGrey.shade50,
+                          //       borderRadius: BorderRadius.circular(4),
+                          //       // boxShadow: <BoxShadow>[BoxShadow(color: Color.fromARGB(255, 216, 225, 249), spreadRadius: 0, blurRadius: 1, offset: Offset(0, 5))],
+                          //     ),
+                          //     child: Center(
+                          //       child: Icon(
+                          //         CupertinoIcons.mail,
+                          //         color: Colors.blue.shade200,
+                          //         size: 25,
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
+                          Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
                           GestureDetector(
                             onTap: () async =>
                                 await controller.cancelTaxi(null),
                             child: Container(
                               height: getSizeRelativeToScreen(
                                   20, Get.height, Get.width),
-                              width: 38,
+                              width: getSizeRelativeToScreen(
+                                  20, Get.height, Get.width),
                               decoration: BoxDecoration(
-                                color: Colors.red.shade100,
-                                borderRadius: BorderRadius.circular(5),
+                                color: Color.fromARGB(255, 247, 177, 179),
+                                borderRadius: BorderRadius.circular(4),
                                 // boxShadow: <BoxShadow>[BoxShadow(color: Color.fromARGB(255, 216, 225, 249), spreadRadius: 0, blurRadius: 1, offset: Offset(0, 5))],
                               ),
                               child: Center(
                                 child: Icon(
                                   CupertinoIcons.clear_circled,
-                                  color: Colors.red.shade300,
+                                  color: Color.fromARGB(255, 255, 0, 8),
                                   size: 25,
                                 ),
                               ),
@@ -234,10 +240,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                                       .substring(0, 13) ??
                                   "..........") +
                               " ..", //13+..
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                          ),
+                          style: TextStyle(fontSize: 16, fontFamily: 'psr'),
                         ),
                       )),
                 ),
@@ -269,10 +272,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                                       .substring(0, 13) ??
                                   "..........") +
                               " ..", //13+..
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                          ),
+                          style: TextStyle(fontSize: 16, fontFamily: 'psr'),
                         ),
                       )),
                 ),

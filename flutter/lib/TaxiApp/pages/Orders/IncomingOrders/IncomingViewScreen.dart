@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MezcalmosGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
@@ -11,6 +12,7 @@ import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 
 class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
+ LanguageController lang =Get.find<LanguageController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -188,7 +190,7 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                 onPressed: () async => await controller
                     .acceptTaxi(controller.selectedIncommingOrder?.id),
                 child: Text(
-                  "Accept Order",
+                  lang.strings['taxi']['taxiView']["acceptOrders"],
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w700,
@@ -268,10 +270,7 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                                     .substring(0, 13) ??
                                 "..........") +
                             " ..", //13+..
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                        ),
+                        style: TextStyle(fontSize: 16, fontFamily: 'psr'),
                       ),
                     ),
                   ),
@@ -302,10 +301,7 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                                     .substring(0, 13) ??
                                 "..........") +
                             " ..", //13+..
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                        ),
+                        style: TextStyle(fontSize: 16, fontFamily: 'psr'),
                       ),
                     ),
                   ),
