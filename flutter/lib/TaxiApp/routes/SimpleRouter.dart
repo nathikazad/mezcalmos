@@ -39,7 +39,7 @@ class XRouter {
   static dynamic mainRoutes = [
     GetPage(name: kMainAuthWrapperRoute, page: () => Wrapper()),
     GetPage(name: kSplashRoute, page: () => SplashScreen(), binding: SettingsBinding()),
-    GetPage(name: kTaxiWrapperRoute, page: () => TaxiWrapper() , binding:  BindingsBuilder(() => Get.put<TaxiAuthController>(TaxiAuthController()))),
+    GetPage(name: kTaxiWrapperRoute, page: () => TaxiWrapper(), binding: BindingsBuilder(() => Get.put<TaxiAuthController>(TaxiAuthController()))),
     GetPage(name: kSelectedIcommingOrder, page: () => IncommingOrderScreenView()),
     GetPage(name: kSignInRoute, page: () => SignIn()),
     GetPage(name: kOtpRoute, page: () => PhoneNumberScreen()),

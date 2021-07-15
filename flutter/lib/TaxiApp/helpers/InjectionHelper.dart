@@ -14,16 +14,16 @@ class TaxiInjectionHelper {
   }
 
   static void toInjectAtHome() {
-    // Get.lazyPut(() => SideMenuDraweController(), fenix: true);
+    Get.lazyPut(() => SideMenuDraweController(), fenix: true);
     // Get.lazyPut(() => OrderController() , fenix: true);
   }
 
   // Listeners Revoking in case needed !
-  static void revokeListenersOnSignOut() {
-    print("revokeListenersOnSignOut -> called");
+  // static void revokeListenersOnSignOut() {
+  //   print("revokeListenersOnSignOut -> called");
 
-    Get.find<IncomingOrdersController>().detachListeners();
-    // Get.find<TaxiAuthController>().detachListeners();
-    print("Revoking all the ::taxiOpenOrdersNode:: Listners !");
-  }
+  //   // Get.find<IncomingOrdersController>().detachListeners();
+  //   // Get.find<TaxiAuthController>().detachListeners();
+  //   print("Revoking all the ::taxiOpenOrdersNode:: Listners !");
+  // }
 }

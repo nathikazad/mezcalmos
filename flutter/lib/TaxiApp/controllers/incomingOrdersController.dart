@@ -43,11 +43,7 @@ class IncomingOrdersController extends GetxController {
     if (_authController.user != null) {
       _listeners.addAll([
         // Added Order!
-        _databaseHelper.firebaseDatabase
-            .reference()
-            .child(taxiOpenOrdersNode)
-            .onChildAdded
-            .listen((event) {
+        _databaseHelper.firebaseDatabase.reference().child(taxiOpenOrdersNode).onChildAdded.listen((event) {
           Order order = Order.fromSnapshot(event.snapshot);
           order.distanceToClient = MapHelper.calculateDistance(order.from.position, _taxiAuthController.currentLocation);
           orders.add(order);
@@ -55,16 +51,11 @@ class IncomingOrdersController extends GetxController {
         }),
 
         // Removed Order
-        _databaseHelper.firebaseDatabase
-            .reference()
-            .child(taxiOpenOrdersNode)
-            .onChildRemoved
-            .listen((event) async {
+        _databaseHelper.firebaseDatabase.reference().child(taxiOpenOrdersNode).onChildRemoved.listen((event) async {
           // This is why GetX guys XD!
           if (event.snapshot.key == _selectedIncommingOrder.value?.id) {
             _selectedIncommingOrder.value = null;
-            if (Get.currentRoute == kSelectedIcommingOrder)
-              await MezcalmosSharedWidgets.mezcalmosDialog(55, Get.height, Get.width);
+            if (Get.currentRoute == kSelectedIcommingOrder) await MezcalmosSharedWidgets.mezcalmosDialog(55, Get.height, Get.width);
             Get.back(closeOverlays: true);
           }
 
@@ -72,21 +63,14 @@ class IncomingOrdersController extends GetxController {
         }),
 
         //changed Order
-        _databaseHelper.firebaseDatabase
-            .reference()
-            .child(taxiOpenOrdersNode)
-            .onChildChanged
-            .listen((event) {
-          orders[orders.indexOf(orders.singleWhere(
-                  (element) => element.id == event.snapshot.key))] =
-              Order.fromSnapshot(event.snapshot);
+        _databaseHelper.firebaseDatabase.reference().child(taxiOpenOrdersNode).onChildChanged.listen((event) {
+          orders[orders.indexOf(orders.singleWhere((element) => element.id == event.snapshot.key))] = Order.fromSnapshot(event.snapshot);
         }),
       ]);
 
       print("Attached Listeners on taxiOpenOrdersNode : ${_listeners.length}");
 
-      _updateOrderDistanceToClient =
-          ever(_taxiAuthController.currentLocationRx, (userLocation) {
+      _updateOrderDistanceToClient = ever(_taxiAuthController.currentLocationRx, (userLocation) {
         orders.forEach((order) {
           order.distanceToClient = MapHelper.calculateDistance(order.from.position, userLocation as Position);
         });
@@ -113,7 +97,7 @@ class IncomingOrdersController extends GetxController {
     HttpsCallable acceptTaxiFunction = FirebaseFunctions.instance.httpsCallable('acceptTaxiOrder');
     try {
       _waitingResponse.value = true;
-      HttpsCallableResult response = await acceptTaxiFunction.call(<String, dynamic>{'orderId': orderId, "database": "test"});
+      HttpsCallableResult response = await acceptTaxiFunction.call(<String, dynamic>{'orderId': orderId, 'database': _databaseHelper.dbType});
       _waitingResponse.value = false;
       _selectedIncommingOrder.value = new Order.empty();
       Get.back(closeOverlays: true);
@@ -125,6 +109,13 @@ class IncomingOrdersController extends GetxController {
       mezcalmosSnackBar("Notice ~", "Failed to accept the taxi order :( ");
       print("Exception happend in acceptTaxi : $e");
     }
+  }
+
+  @override
+  void onClose() {
+    print("[+]  IncommingOrderController::onClose ---------> Was invoked !");
+    // TODO: implement onClose
+    super.onClose();
   }
 
   @override
