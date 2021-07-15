@@ -61,7 +61,7 @@ class AuthController extends GetxController {
       } else {
         _userInfoListener = _databaseHelper.firebaseDatabase
             .reference()
-            .child(userId(user.uid))
+            .child(userInfo(user.uid))
             .onValue
             .listen((event) {
           print(
