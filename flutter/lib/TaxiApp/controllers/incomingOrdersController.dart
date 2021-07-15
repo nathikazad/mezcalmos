@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
@@ -72,7 +72,8 @@ class IncomingOrdersController extends GetxController {
 
       _updateOrderDistanceToClient = ever(_taxiAuthController.currentLocationRx, (userLocation) {
         orders.forEach((order) {
-          order.distanceToClient = MapHelper.calculateDistance(order.from.position, userLocation as Position);
+          order.distanceToClient = MapHelper.calculateDistance(
+              order.from.position, userLocation as LocationData);
         });
         orders.sort((a, b) => a.distanceToClient.compareTo(b.distanceToClient));
         // orders.forEach((order) {
