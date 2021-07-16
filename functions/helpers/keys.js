@@ -12,7 +12,7 @@ function keys() {
         "private": "dummy"
       },
       "twilio": {
-        "accountid": "dummy",
+        "accountid": "ACdummy",
         "authtoken": "dummy"
       },
       "stripe": {
