@@ -208,6 +208,7 @@ async function sendOTP(firebase, data, userId) {
       return {
         status: "Error",
         errorMessage: (data.language == "es") ? `No puedes generar otro codigo para ${secondsLeft} segundos` : `Cannot generate another code for ${secondsLeft} seconds`,
+        secondsLeft: secondsLeft
       }
     }
   }

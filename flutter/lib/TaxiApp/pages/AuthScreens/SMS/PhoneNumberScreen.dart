@@ -58,10 +58,10 @@ class PhoneNumberScreen extends GetView<AuthController> {
                                   canSendOtp.value = false;
                               },
                               autofocus: true,
-                              maxLength: 3,
+                              maxLength: 4,
                               keyboardType: TextInputType.phone,
                               decoration: InputDecoration(
-                                  hintText: "+",
+                                  hintText: "+52",
                                   focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(5), gapPadding: 1, borderSide: BorderSide(color: Colors.blue)),
                                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), gapPadding: 1)),
                               controller: _prefixTextFieldController,
@@ -77,7 +77,7 @@ class PhoneNumberScreen extends GetView<AuthController> {
                                 } else
                                   canSendOtp.value = false;
                               },
-                              maxLength: 9,
+                              maxLength: 10,
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                   hintText: "number",

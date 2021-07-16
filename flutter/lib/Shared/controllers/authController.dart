@@ -33,8 +33,8 @@ class AuthController extends GetxController {
   RxInt _timeBetweenResending = 0.obs;
   int get timeBetweenResending => _timeBetweenResending.value;
 
-  void resendOtpTimerActivate() {
-    _timeBetweenResending.value = 60;
+  void resendOtpTimerActivate(int time) {
+    _timeBetweenResending.value = time;
     const second = const Duration(seconds: 1);
     Timer.periodic(
       second,
@@ -127,7 +127,13 @@ class AuthController extends GetxController {
         'language': _settings.appLanguage.userLanguageKey,
         'database': _databaseHelper.dbType
       });
-      mezcalmosSnackBar("Notice ~", "OTP message has been sent !");
+      mezcalmosSnackBar(
+          "Notice ~",
+          responseStatusChecker(response.data,
+              onSuccessMessage: "OTP message has been sent !"));
+      if (response.data['secondsLeft'] != null) {
+        resendOtpTimerActivate(response.data['secondsLeft']);
+      }
     } catch (e) {
       // mezcalmosSnackBar("Notice ~", "Failed to send OTP message :( ");
       // _waitingResponse.value = false;
