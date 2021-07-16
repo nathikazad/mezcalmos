@@ -5,7 +5,7 @@
             "groceries": "Comestibles",
             "services": "Todos los servicios"
         },
-        "inviteCode":{
+        "inviteCode": {
             "inviteCodQuestion": "Tienes un código de invitación?",
             "no": "No",
             "confirm": "Confirmar"
@@ -25,7 +25,7 @@
             "logIn": "Inicie sesión para hacer este pedido",
             "outOfPuerto": "Estas demasiado lejos de puerto",
             "priceEstimate": "El precio estimado del viaje es de $",
-            "noRide":"Lamento informarle que este viaje ya no existe."
+            "noRide": "Lamento informarle que este viaje ya no existe."
         },
         "cancelOrder": {
             "question": "Por qué quieres cancelar el viaje?",
@@ -53,13 +53,15 @@
     },
     "taxi": {
         "incoming": {
-            "title": "Órdenes <br/>Entrantes",
+            "title": "Órdenes  Entrantes",
             "loading": "Cargando",
             "services": "Todos los servicios",
             "isInTax": "Por favor finalice | su viaje | para aceptar nuevos pedidos",
             "far": "lejos",
-            "noOrders": "No Hay Ordenes|Intentarlo más tarde",
-            "toggle": "Activar Pedidos Entrantes|Activar para ver nuevos pedidos"
+            "toggleTitle": "Activar Pedidos Entrantes",
+            "toggleDesc": "Activar para ver nuevos pedidos",
+            "noOrdersTitle": "No Hay Ordenes",
+            "noOrdersDesc": "Intentarlo más tarde"
         },
         "taxiView": {
             "taxi": "Taxi",
@@ -77,7 +79,7 @@
             "tooFarFromfinishRide": "Haga clic en Terminar después de que el cliente haya salido de su vehículo. Según su GPS, parece que todavía está lejos de la ubicación final del cliente. Estás seguro de que aún desea terminar el viaje?",
             "no": "No",
             "yes": "Sí",
-            "noRide":"Lamento informarle que este viaje ya no existe."
+            "noRide": "Lamento informarle que este viaje ya no existe."
         },
         "cancelOrder": {
             "question": "Por qué quieres cancelar el viaje?",
@@ -104,13 +106,12 @@
             "cancelledMessage": "Tu viaje ha sido cancelado"
         },
         "introduction": {
-            "howToTaxi": "¿Desea utilizar la aplicación<br/> Mezcalmos para ofrecer<br/> transporte a los clientes<br/> en <span class = 'text_blue'> Puerto Escondido? </span> ",
-            "signUpTaxi": "Haga clic en Registrarse,<br/> muéstrenos la prueba de su<br/> autorización de taxi y comience<br/> a ofrecer viajes de inmediato.",
+            "howToTaxi": "¿Desea utilizar la aplicación  Mezcalmos para ofrecer  transporte a los clientes  en <span class = 'text_blue'> Puerto Escondido? </span> ",
+            "signUpTaxi": "Haga clic en Registrarse,  muéstrenos la prueba de su  autorización de taxi y comience  a ofrecer viajes de inmediato.",
             "confirmation": "Su solicitud está bajo revisión. Nos pondremos en contacto con usted en breve",
             "logIn": " Registrate|Iniciar sesión",
             "alreadyMember": "Ya eres un usuario?",
             "yes": "SI"
-
         },
         "permissions": {
             "askForNotif": "Servicio de ubicación desactivado | La aplicación no puede funcionar sin el servicio de ubicación | Habilite los servicios de ubicación desde su configuración",
@@ -119,8 +120,9 @@
     },
     "shared": {
         "login": {
-            "owner": " Inicie sesión con <br/> Facebook para <br/> hacer un pedido ",
-            "customer": " Inicie sesión con <br/> Facebook para <br/> hacer un pedido ",
+            "title": "Conéctese usando Facebook o usando SMS! ",
+            "owner": " Inicie sesión con   Facebook para   hacer un pedido ",
+            "customer": " Inicie sesión con   Facebook para   hacer un pedido ",
             "fbBtn": "INICIAR CON FACEBOOK",
             "whatsAppLogin": " INICIAR CON WHATSAPP",
             "loginWithSms": "INICIAR CON SMS",
@@ -129,12 +131,13 @@
             "OtpConfirmation": "Confirmación del código OTP",
             "enterOtpCode": "Ingrese el código OTP enviado a",
             "resend": "Reenviar",
+            "resendAfter":"Reenviar después",
+            "seconds":"segundos",
             "confirm": "Confirmar",
             "otpCode": "OTP código",
             "enterPhoneNumber": "Ingrese el número teléfono para recibir el código OTP",
             "submit": "ENVIAR",
             "twilioNote": "Al continuar, recibirá un código de verificación a su número de teléfono por SMS. Se pueden aplicar tarifas por mensajes y datos."
-
         },
         "messages": {
             "title": "Mensajes",
@@ -150,10 +153,10 @@
             "clear": "Borrar"
         },
         "userInfo": {
-            "title": " Información <br/> del usuario ",
-            "editInfo": "Editar  <br/> Información",
+            "title": " Información   del usuario ",
+            "editInfo": "Editar    Información",
             "editPhoneNumber": "Cambiar número de teléfono",
-            "addInfo": "Agregar <br/> Información",
+            "addInfo": "Agregar   Información",
             "editBtn": "EDITAR INFORMACION",
             "deleteBtn": "Borrar cuenta",
             "saveBtn": "GUARDAR",
@@ -195,7 +198,6 @@
             "address": "Dirección",
             "searching": "ELEGIR",
             "pick": "ELIGE"
-
         },
         "placeHolders": {
             "address": "Ingresa Dirección",

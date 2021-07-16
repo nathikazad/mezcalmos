@@ -7,13 +7,17 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/utilities/mezcalmos_icons.dart';
 import 'package:mezcalmos/Shared/widgets/MezcalmosGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/constants/taxiConstants.dart';
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
 
 class CurrentOrderScreen extends GetView<CurrentOrderController> {
+  LanguageController lang = Get.find<LanguageController>();
+
   Completer<GoogleMapController> _controller = Completer();
 
   @override
@@ -49,7 +53,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                 direction: Axis.horizontal,
                 children: [
                   Flexible(
-                    flex: 1,
+                    flex: 2,
                     child: Obx(() => TextButton(
                           style: ButtonStyle(
                             fixedSize: MaterialStateProperty.all(Size(
@@ -70,16 +74,21 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                                       .yesNoDefaultConfirmationDialog(() async {
                                       Get.back();
                                       await controller.finishRide();
-                                    }, tFinishRideConfirmation)
+                                    },
+                                          lang.strings['taxi']['taxiView']
+                                              ["tooFarFromfinishRide"])
                                   : await MezcalmosSharedWidgets
                                       .yesNoDefaultConfirmationDialog(() async {
                                       Get.back();
                                       await controller.startRide();
-                                    }, tStartRideConfirmation),
+                                    },
+                                          lang.strings['taxi']['taxiView']
+                                              ["tooFarFromstartRide"]),
                           child: Text(
                             controller.value?.status != "inTransit"
-                                ? "Start Ride"
-                                : "Finish Ride",
+                                ? lang.strings['taxi']['taxiView']["startRide"]
+                                : lang.strings['taxi']['taxiView']
+                                    ["finishRide"],
                             style: TextStyle(
                                 color: Colors.white, fontFamily: 'psr'),
                           ),
@@ -112,7 +121,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                               ),
                               child: Center(
                                 child: Icon(
-                                  CupertinoIcons.location_fill,
+                                  MezcalmosIcons.locationArrow,
                                   color: Color.fromARGB(255, 103, 121, 254),
                                   size: 25,
                                 ),
@@ -156,7 +165,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                               ),
                               child: Center(
                                 child: Icon(
-                                  CupertinoIcons.clear_circled,
+                                 MezcalmosIcons.timesCircle,
                                   color: Color.fromARGB(255, 255, 0, 8),
                                   size: 25,
                                 ),
@@ -220,7 +229,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                   left: 25,
                   top: 13,
                   child: Text(
-                    "from",
+                    lang.strings['shared']['inputLocation']["from"],
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -232,7 +241,8 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                   top: 30,
                   child: GestureDetector(
                       onTap: () => mezcalmosSnackBar(
-                          "From", controller.value?.from?.address ?? ""),
+                          lang.strings['shared']['inputLocation']["from"],
+                          controller.value?.from?.address ?? ""),
                       child: Obx(
                         () => Text(
                           (controller.value?.from?.address
@@ -250,7 +260,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                       40,
                   top: 13,
                   child: Text(
-                    "to",
+                    lang.strings['shared']['inputLocation']["to"],
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -264,7 +274,8 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                   top: 30,
                   child: GestureDetector(
                       onTap: () => mezcalmosSnackBar(
-                          "Destination", controller.value?.to?.address ?? ""),
+                          lang.strings['shared']['inputLocation']["to"],
+                          controller.value?.to?.address ?? ""),
                       child: Obx(
                         () => Text(
                           (controller.value?.to?.address

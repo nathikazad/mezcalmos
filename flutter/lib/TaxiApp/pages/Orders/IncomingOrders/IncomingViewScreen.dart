@@ -72,7 +72,7 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                       left: 60,
                       bottom: 12,
                       child: Text(
-                        "${controller.selectedIncommingOrder?.routeInformation['distance']['text'] ?? '? km'} far",
+                        "${controller.selectedIncommingOrder?.routeInformation['distance']['text'] ?? '? km'} ${lang.strings['taxi']['incoming']["far"]}",
                         style: TextStyle(
                             fontSize: 14,
                             fontFamily: 'psr',
@@ -249,7 +249,7 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                     left: 25,
                     top: 13,
                     child: Text(
-                      "from",
+                     lang.strings['shared']['inputLocation']["from"],
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -261,7 +261,7 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                     top: 30,
                     child: GestureDetector(
                       onTap: () => mezcalmosSnackBar(
-                          "From",
+                          lang.strings['shared']['inputLocation']["from"],
                           controller.selectedIncommingOrder?.from.address ??
                               ""),
                       child: Text(
@@ -280,7 +280,7 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                         40,
                     top: 13,
                     child: Text(
-                      "to",
+                      lang.strings['shared']['inputLocation']["to"],
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -293,7 +293,7 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                         40,
                     top: 30,
                     child: GestureDetector(
-                      onTap: () => mezcalmosSnackBar("Destination",
+                      onTap: () => mezcalmosSnackBar(lang.strings['shared']['inputLocation']["to"],
                           controller.selectedIncommingOrder?.to.address ?? ""),
                       child: Text(
                         (controller.selectedIncommingOrder?.to.address

@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/utilities/mezcalmos_icons.dart';
 import 'package:mezcalmos/Shared/widgets/NoScrollGlowBehaviour.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/constants/taxiConstants.dart';
@@ -75,7 +76,7 @@ class MezcalmosSharedWidgets {
         break;
       default:
         btn_icon = Icon(
-          Icons.menu,
+          MezcalmosIcons.stream,
           color: Colors.white,
           size: 20,
         );
