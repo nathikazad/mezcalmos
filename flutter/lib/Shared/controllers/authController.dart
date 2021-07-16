@@ -8,6 +8,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
+import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/models/User.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:mezcalmos/TaxiApp/helpers/DatabaseHelper.dart';
@@ -59,6 +60,8 @@ class AuthController extends GetxController {
         print('User is currently signed out!');
         _user.value = null;
       } else {
+        print("Putting Taxi Auth Controller");
+        Get.lazyPut(() => TaxiAuthController());
         _userInfoListener = _databaseHelper.firebaseDatabase
             .reference()
             .child(userInfo(user.uid))
@@ -196,6 +199,7 @@ class AuthController extends GetxController {
     try {
       _userInfoListener.pause();
       // TaxiInjectionHelper.revokeListenersOnSignOut();
+      Get.find<TaxiAuthController>().dispose();
       await _auth.signOut();
       Get.offAllNamed(kMainAuthWrapperRoute);
     } catch (e) {

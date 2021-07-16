@@ -113,13 +113,6 @@ class IncomingOrdersController extends GetxController {
   }
 
   @override
-  void onClose() {
-    print("[+]  IncommingOrderController::onClose ---------> Was invoked !");
-    // TODO: implement onClose
-    super.onClose();
-  }
-
-  @override
   void dispose() {
     detachListeners();
     super.dispose();

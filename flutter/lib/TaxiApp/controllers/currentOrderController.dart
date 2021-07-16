@@ -21,16 +21,16 @@ class CurrentOrderController extends GetxController {
   dynamic get id => _model.value.id;
   dynamic get waitingResponse => _waitingResponse.value;
 
-  late StreamSubscription<Event> _currentOrderListener;
+  StreamSubscription<Event>? _currentOrderListener;
 
   @override
   void onInit() {
     super.onInit();
     print("--------------------> CurrentOrderController Initialized !");
-    
   }
- void dispatchCurrentOrder(){
-   _currentOrderListener= _databaseHelper.firebaseDatabase
+
+  void dispatchCurrentOrder() {
+    _currentOrderListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(orderId(_taxiAuthController.currentOrderId))
         .onValue
@@ -39,7 +39,8 @@ class CurrentOrderController extends GetxController {
           "CurrentOrderController::onValue Invoked >> ${event.snapshot.key} : ${event.snapshot.value}");
       _model.value = Order.fromSnapshot(event.snapshot);
     });
- }
+  }
+
   Future<void> cancelTaxi(String? reason) async {
     HttpsCallable cancelTaxiFunction =
         FirebaseFunctions.instance.httpsCallable('cancelTaxiFromDriver');
@@ -110,18 +111,20 @@ class CurrentOrderController extends GetxController {
   }
 
   void detachListeners() {
-    _currentOrderListener
-        .cancel()
-        .then((value) => print(
-            "A listener was disposed on currentOrderController::detachListeners !"))
-        .catchError((err) => print(
-            "Error happend while trying to dispose currentOrderController::detachListeners !"));
+    if (_currentOrderListener != null) {
+      _currentOrderListener!
+          .cancel()
+          .then((value) => print(
+              "A listener was disposed on currentOrderController::detachListeners !"))
+          .catchError((err) => print(
+              "Error happend while trying to dispose currentOrderController::detachListeners !"));
+    }
   }
 
   @override
   void dispose() {
     detachListeners();
     super.dispose();
-    print("--------------------> OrderController Auto Disposed !");
+    print("--------------------> CurrentOrderController Auto Disposed !");
   }
 }

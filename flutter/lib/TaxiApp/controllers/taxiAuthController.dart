@@ -35,8 +35,8 @@ class TaxiAuthController extends GetxController {
   bool get locationEnabled => _locationEnabled.value;
   Rx<LocationData> get currentLocationRx => _currentLocation;
 
-  late StreamSubscription<Event> _taxiAuthListener;
-  late StreamSubscription<LocationData> _locationListener;
+  StreamSubscription<Event>? _taxiAuthListener;
+  StreamSubscription<LocationData>? _locationListener;
 
   DateTime lastLocationUpdatedTime = DateTime.now();
   /*
@@ -153,21 +153,16 @@ class TaxiAuthController extends GetxController {
         //           position.longitude.toString());
       });
     }
+  }
 
-    @override
-    void onClose() async {
-      print("[+] TaxiAuthController::onClose ---------> Was invoked !");
-      await _locationListener.cancel();
-      await _taxiAuthListener.cancel();
-      super.onClose();
-    }
-
-    // @override
-    // void dispose() {
-    //   detachListeners();
-    //   super.dispose();
-    //   print("--------------------> OrderController Auto Disposed !");
-    // }
+  @override
+  void dispose() async {
+    print("[+] TaxiAuthController::dispose ---------> Was invoked !");
+    await _locationListener?.cancel();
+    await _taxiAuthListener?.cancel();
+    Get.find<CurrentOrderController>().dispose();
+    Get.find<IncomingOrdersController>().dispose();
+    super.onClose();
   }
 
   void turnOff() {
