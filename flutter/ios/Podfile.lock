@@ -81,8 +81,6 @@ PODS:
     - FBSDKCoreKit (~> 11.0.0)
     - FBSDKLoginKit (~> 11.0.0)
     - Flutter
-  - flutter_local_notifications (0.0.1):
-    - Flutter
   - geolocator (6.2.0):
     - Flutter
   - google_maps_flutter (0.0.1):
@@ -135,7 +133,6 @@ DEPENDENCIES:
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - Flutter (from `Flutter`)
   - flutter_facebook_auth (from `.symlinks/plugins/flutter_facebook_auth/ios`)
-  - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - geolocator (from `.symlinks/plugins/geolocator/ios`)
   - google_maps_flutter (from `.symlinks/plugins/google_maps_flutter/ios`)
   - image_downloader (from `.symlinks/plugins/image_downloader/ios`)
@@ -177,8 +174,6 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_facebook_auth:
     :path: ".symlinks/plugins/flutter_facebook_auth/ios"
-  flutter_local_notifications:
-    :path: ".symlinks/plugins/flutter_local_notifications/ios"
   geolocator:
     :path: ".symlinks/plugins/geolocator/ios"
   google_maps_flutter:
@@ -207,7 +202,6 @@ SPEC CHECKSUMS:
   FirebaseMessaging: 1a33b4af3c8042ed6ddacb6c031894af2064bfab
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
   flutter_facebook_auth: abc044072738b7baa90d80583dabdb1211614f0d
-  flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
   geolocator: f5e3de65e241caba7ce3e8a618803387bda73384
   google_maps_flutter: df4e7de95264aa0a2f11aac0fc7e313acb8ffc7e
   GoogleDataTransport: 04c3e9a480bbcaa2ec3f5d27f1cdeb6a92f20c8d

@@ -27,13 +27,17 @@ class CurrentOrderController extends GetxController {
   void onInit() {
     super.onInit();
     print("--------------------> CurrentOrderController Initialized !");
+    dispatchCurrentOrder();
+  }
+
+  void dispatchCurrentOrder() {
     _currentOrderListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(orderId(_taxiAuthController.currentOrderId))
         .onValue
         .listen((event) {
       print(
-          "CurrentOrderController::onValue Invoked >> ${event.snapshot.key} : ${event.snapshot.value}");
+          "CurrentOrderController::onValue Invoked >> ${event.snapshot.key} : ${event.snapshot.value['status']}");
       _model.value = Order.fromSnapshot(event.snapshot);
     });
   }

@@ -2,6 +2,12 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
+Future<void> firebaseMessagingBackgroundHandler(
+    RemoteMessage message) async {
+  print("Handling a background message");
+  print(message.toString());
+}
+
 class NotificationsController extends GetxController {
   FirebaseMessaging _messaging = FirebaseMessaging.instance;
 
@@ -28,12 +34,6 @@ class NotificationsController extends GetxController {
         print('Message clicked!');
         print(message.toString());
       });
-
-      Future<void> firebaseMessagingBackgroundHandler(
-          RemoteMessage message) async {
-        print("Handling a background message");
-        print(message.toString());
-      }
 
       FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
     }
