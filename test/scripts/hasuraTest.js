@@ -56,6 +56,7 @@ mutation updateOrder($orderId:String, $changes: orders_set_input!){
   ){
     returning{
       orderId
+      finalStatus
     }
   }
   }`
@@ -182,9 +183,9 @@ async function addOrder(){
 }
 async function updateOneOrder(){
   await updateOrder({
-   orderId: 'ORDER4',
+   orderId: '-Mej1zUmFYirNzKBmLJw',
    changes:{
-     customerId: 'customer4Updated'
+     finalStatus: 'cancelledByTest'
    }
   })
 }
@@ -204,9 +205,8 @@ async function updateTheUser(){
     }
   })
 }
-
-addUser()
-//update()
+//addUser()
+updateOneOrder()
 //addUser()
 //updateTheUser()
 

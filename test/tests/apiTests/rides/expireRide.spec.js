@@ -91,7 +91,6 @@ admin.initializeApp({
         expect(response.errorMessage).toBe('Order id does not match any order')
       })
 
-
       it('Test expire when ride status is LookingForTaxi', async () => {
         // create ride
         let response = await customer.callFunction('requestTaxi', tripData)
@@ -106,104 +105,104 @@ admin.initializeApp({
         expect(response.status).toBe('Success')
 
 
-         // verify removing order
-         customerCurrentOrder = (await admin.database().ref(`users/${customer.id}/state/currentOrder`).once('value')).val()
-         expect(customerCurrentOrder).toBeNull()
+        // // verify removing order
+        //  customerCurrentOrder = (await admin.database().ref(`users/${customer.id}/state/currentOrder`).once('value')).val()
+        //  expect(customerCurrentOrder).toBeNull()
 
-         customerOrder = (await admin.database().ref(`users/${customer.id}/orders/${orderId}`).once('value')).val()
-         expect(customerOrder).toBeNull()
+        //  customerOrder = (await admin.database().ref(`users/${customer.id}/orders/${orderId}`).once('value')).val()
+        //  expect(customerOrder).toBeNull()
 
-         openOrder = (await admin.database().ref(`openOrders/taxi/${orderId}`).once('value')).val()
-         expect(openOrder).toBeNull()
+        //  openOrder = (await admin.database().ref(`openOrders/taxi/${orderId}`).once('value')).val()
+        //  expect(openOrder).toBeNull()
 
-         chat = (await admin.database().ref(`chat/${orderId}`).once('value')).val()
-         expect(chat).toBeNull()
+        //  chat = (await admin.database().ref(`chat/${orderId}`).once('value')).val()
+        //  expect(chat).toBeNull()
 
-         //verify updates
-         orderExpired = (await admin.database().ref(`orders/taxi/${orderId}`).once('value')).val()
+        //  //verify updates
+        //  orderExpired = (await admin.database().ref(`orders/taxi/${orderId}`).once('value')).val()
       
-         expect(orderExpired.customer.id).toBe(order.customer.id)
-         expect(orderExpired.customer.image).toBe(order.customer.image) 
-         expect(orderExpired.distance).toBe(order.distance)
-         expect(orderExpired.duration).toBe(order.duration)
-         expect(orderExpired.estimatedPrice).toBe(order.estimatedPrice)
-         expect(orderExpired.from).toBe(order.from)
-         expect(orderExpired.orderType).toBe(order.orderType)
-         expect(orderExpired.paymentType).toBe(order.paymentType)
-         expect(orderExpired.to).toBe(order.to)
-         expect(orderExpired.status).toBe('expired')
-         expect(orderExpired).toHaveProperty('rideFinishTime')
-         expect(orderExpired.rideFinishTime).not.toBeNull()
+        //  expect(orderExpired.customer.id).toBe(order.customer.id)
+        //  expect(orderExpired.customer.image).toBe(order.customer.image) 
+        //  expect(orderExpired.distance).toBe(order.distance)
+        //  expect(orderExpired.duration).toBe(order.duration)
+        //  expect(orderExpired.estimatedPrice).toBe(order.estimatedPrice)
+        //  expect(orderExpired.from).toBe(order.from)
+        //  expect(orderExpired.orderType).toBe(order.orderType)
+        //  expect(orderExpired.paymentType).toBe(order.paymentType)
+        //  expect(orderExpired.to).toBe(order.to)
+        //  expect(orderExpired.status).toBe('expired')
+        //  expect(orderExpired).toHaveProperty('rideFinishTime')
+        //  expect(orderExpired.rideFinishTime).not.toBeNull()
 
-         unfulfilledOrder = (await admin.database().ref(`unfulfilledOrders/${orderId}`).once('value')).val()
-         expect(unfulfilledOrder.reason).toBe('expired')
-         expect(unfulfilledOrder.status).toBe(orderExpired.status)
-         expect(unfulfilledOrder.rideFinishTime).toBe(orderExpired.rideFinishTime)
+        //  unfulfilledOrder = (await admin.database().ref(`unfulfilledOrders/${orderId}`).once('value')).val()
+        //  expect(unfulfilledOrder.reason).toBe('expired')
+        //  expect(unfulfilledOrder.status).toBe(orderExpired.status)
+        //  expect(unfulfilledOrder.rideFinishTime).toBe(orderExpired.rideFinishTime)
 
-         //verify notification
-         notification = (await admin.database().ref(`notifications/customer/${customer.id}`).once('value')).val()
-         long = Object.values(notification).length
-         customerNotification = (Object.values(notification))[long-1]
+        //  //verify notification
+        //  notification = (await admin.database().ref(`notifications/customer/${customer.id}`).once('value')).val()
+        //  long = Object.values(notification).length
+        //  customerNotification = (Object.values(notification))[long-1]
          
-         expect(customerNotification.notificationType).toBe('orderStatusChange')
-         expect(customerNotification.orderId).toBe(orderId)
-         expect(customerNotification.orderType).toBe('taxi')
-         expect(customerNotification.rideFinishTime).not.toBeNull()
-         expect(customerNotification.status).toBe('expired')
+        //  expect(customerNotification.notificationType).toBe('orderStatusChange')
+        //  expect(customerNotification.orderId).toBe(orderId)
+        //  expect(customerNotification.orderType).toBe('taxi')
+        //  expect(customerNotification.rideFinishTime).not.toBeNull()
+        //  expect(customerNotification.status).toBe('expired')
 
-         orderLock = (await admin.database().ref(`orders/taxi/${orderId}/lock`).once('value')).val()
-         expect(orderLock).toBeNull()
+        //  orderLock = (await admin.database().ref(`orders/taxi/${orderId}/lock`).once('value')).val()
+        //  expect(orderLock).toBeNull()
 
       })
 
-    it('Test expire when ride status is onTHeWay', async () => {
+    // it('Test expire when ride status is onTHeWay', async () => {
 
-      // create ride
-       let response = await secondCustomer.callFunction('requestTaxi', tripData)
-       expect(response.result.status).toBe('Success')
+    //   // create ride
+    //    let response = await secondCustomer.callFunction('requestTaxi', tripData)
+    //    expect(response.result.status).toBe('Success')
 
-      //accept ride
-       let orderId = response.result.orderId
-       response = await driver.callFunction('acceptTaxiOrder', {orderId: orderId})
+    //   //accept ride
+    //    let orderId = response.result.orderId
+    //    response = await driver.callFunction('acceptTaxiOrder', {orderId: orderId})
        
-       expect(response.result.status).toBe('Success')
-       let order = (await admin.database().ref(`orders/taxi/${orderId}`).once('value')).val()
-       expect(order.status).toBe('onTheWay')
+    //    expect(response.result.status).toBe('Success')
+    //    let order = (await admin.database().ref(`orders/taxi/${orderId}`).once('value')).val()
+    //    expect(order.status).toBe('onTheWay')
 
-       // send expiration
-       response = await expireOrder(admin, orderId, customer.id)
-       expect(response.status).toBe('Error')
-       expect(response.errorMessage).toBe('cannot expire because order status is not lookingForTaxi')
+    //    // send expiration
+    //    response = await expireOrder(admin, orderId, customer.id)
+    //    expect(response.status).toBe('Error')
+    //    expect(response.errorMessage).toBe('cannot expire because order status is not lookingForTaxi')
 
-       orderLock = (await admin.database().ref(`orders/taxi/${orderId}/lock`).once('value')).val()
-       expect(orderLock).toBeNull()
-    })
+    //    orderLock = (await admin.database().ref(`orders/taxi/${orderId}/lock`).once('value')).val()
+    //    expect(orderLock).toBeNull()
+    // })
 
-     it('Test expire when ride status is inTransit', async () => {
-        // create ride
-       let response = await thirdCustomer.callFunction('requestTaxi', tripData)
-       expect(response.result.status).toBe('Success')
-        // accept ride
-       orderId = response.result.orderId
-       response = await thirdDriver.callFunction('acceptTaxiOrder', {orderId: orderId})
-       expect(response.result.status).toBe('Success') 
+    //  it('Test expire when ride status is inTransit', async () => {
+    //     // create ride
+    //    let response = await thirdCustomer.callFunction('requestTaxi', tripData)
+    //    expect(response.result.status).toBe('Success')
+    //     // accept ride
+    //    orderId = response.result.orderId
+    //    response = await thirdDriver.callFunction('acceptTaxiOrder', {orderId: orderId})
+    //    expect(response.result.status).toBe('Success') 
 
-       //start ride
-       response = await thirdDriver.callFunction('startTaxiRide', {})  
-       expect(response.result.status).toBe('Success')
-       let order = (await admin.database().ref(`orders/taxi/${orderId}`).once('value')).val()
-       expect(order.status).toBe('inTransit')
+    //    //start ride
+    //    response = await thirdDriver.callFunction('startTaxiRide', {})  
+    //    expect(response.result.status).toBe('Success')
+    //    let order = (await admin.database().ref(`orders/taxi/${orderId}`).once('value')).val()
+    //    expect(order.status).toBe('inTransit')
        
-       // send expiration
-       response = await expireOrder(admin, orderId, customer.id)
+    //    // send expiration
+    //    response = await expireOrder(admin, orderId, customer.id)
        
-       expect(response.status).toBe('Error')
-       expect(response.errorMessage).toBe('cannot expire because order status is not lookingForTaxi')
+    //    expect(response.status).toBe('Error')
+    //    expect(response.errorMessage).toBe('cannot expire because order status is not lookingForTaxi')
        
-       orderLock = (await admin.database().ref(`orders/taxi/${orderId}/lock`).once('value')).val()
-       expect(orderLock).toBeNull()
+    //    orderLock = (await admin.database().ref(`orders/taxi/${orderId}/lock`).once('value')).val()
+    //    expect(orderLock).toBeNull()
        
-     })
+    //  })
 
  })
 

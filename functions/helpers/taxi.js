@@ -87,7 +87,6 @@ async function request(firebase, uid, data) {
         distance: data.distance,
       }
     }
-  
     let orderRef = await firebase.database().ref(`/orders/taxi`).push(payload);
     firebase.database().ref(`/users/${uid}/orders/${orderRef.key}`).set(payload);
     firebase.database().ref(`/openOrders/taxi/${orderRef.key}`).set(payload);
@@ -105,9 +104,10 @@ async function request(firebase, uid, data) {
     }
     firebase.database().ref(`/chat/${orderRef.key}`).set(chat);
     firebase.database().ref(`users/${uid}/lock`).remove()
+
     // insert order
     async function addOrder(){
-      await hasura.insertOrder({
+      let req = await hasura.insertOrder({
         order:{
           orderId: orderRef.key,
           customerId: uid,
@@ -115,17 +115,18 @@ async function request(firebase, uid, data) {
           finalStatus: payload.status
         }
       })
-      console.log("order inserted successfully");
+      if(req.status == 'Success'){
+        console.log('order inserted successfully in DB');
+      }
     }
-    addOrder()
+    await addOrder()
 
-    return {
+    return{
       status: "Success",
       orderId: orderRef.key
-    }
+  }
 }
   
-
 async function cancelTaxiFromCustomer(firebase, uid, data) { 
 
   let orderId = (await firebase.database().ref(`/users/${uid}/state/currentOrder`).once('value')).val();
@@ -189,7 +190,7 @@ async function cancelTaxiFromCustomer(firebase, uid, data) {
     notification.push(firebase, order.driver.id, update,'taxi')
   }
   //update order
-  async function updateOrder(){
+  async function updateCancellingOrder(){
     let req = await hasura.updateOrder({
       orderId: orderId,
       changes:{
@@ -199,11 +200,12 @@ async function cancelTaxiFromCustomer(firebase, uid, data) {
       } 
     })
     if(req.status == 'Success'){
-      console.log("cancelled order successfully updated");
+      console.log('cancelled order updated successfully in DB');
     }
+   
     
   }
-  updateOrder()
+  await updateCancellingOrder()
   firebase.database().ref(`/chat/${orderId}`).remove()
   await firebase.database().ref(`orders/taxi/${orderId}/lock`).remove()
   return {
@@ -258,26 +260,26 @@ async function expireOrder(firebase, orderId, customerId) {
   firebase.database().ref(`/users/${customerId}/orders/${orderId}`).remove();
   firebase.database().ref(`/openOrders/taxi/${orderId}`).remove();
   firebase.database().ref(`/chat/${orderId}`).remove();
-  firebase.database().ref(`/orders/taxi/${orderId}`).update({
+  await firebase.database().ref(`/orders/taxi/${orderId}`).update({
     status: "expired",
     rideFinishTime: (new Date()).toUTCString(),
   })
   order = (await firebase.database().ref(`/orders/taxi/${orderId}`).once('value')).val()
   //update order
-  async function updateOrder(){
-    let req = await hasura.updateOrder({
+  async function updateExpiringOrder(){
+     let req = await hasura.updateOrder({
       orderId: orderId,
       changes:{
-        finalStatus:order.status,
+        finalStatus: order.status,
         rideFinishTime: order.rideFinishTime,
       } 
-    })
+    }) 
     if(req.status == 'Success'){
-      console.log("expired order successfully updated ");
+      console.log('expired order updated successfully in DB');
     }
     
   }
-  updateOrder()
+  await updateExpiringOrder()
 
   firebase.database().ref(`/orders/taxi/${orderId}`).once('value', function(snap) {
     let order = snap.val()
@@ -297,7 +299,6 @@ async function expireOrder(firebase, orderId, customerId) {
     status: 'Success',
     message: 'expired'
   }
-
 }
 
 async function accept(firebase, uid, data) {
@@ -413,6 +414,9 @@ async function accept(firebase, uid, data) {
     func: "accept"
   };
 }
+
+
+
 async function cancelTaxiFromDriver(firebase, uid, data) {
   let orderId = (await firebase.database().ref(`/taxiDrivers/${uid}/state/currentOrder`).once('value')).val();
   if (orderId == null) {
