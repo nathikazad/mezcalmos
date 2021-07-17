@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'dart:ui' as ui;
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void mezcalmosLogger(String text, {bool isError = false}) =>
     print("[ MEZCALMOS ][ GETX ] $text");
@@ -78,3 +79,12 @@ Future<ui.Image> loadImage(Uint8List img) async {
   return completer.future;
 }
 // ------------------------
+
+Future<void> mapLauncher(lat, lng) async {
+  String url = "https://www.google.com/maps/dir/?api=1&destination=$lat,$lng";
+  if (await canLaunch(url))
+    await launch(url);
+  else {
+    mezcalmosSnackBar("Error", "Failed to launch that on Map!");
+  }
+}

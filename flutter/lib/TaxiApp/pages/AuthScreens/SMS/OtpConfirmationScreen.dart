@@ -11,7 +11,8 @@ import 'package:mezcalmos/TaxiApp/routes/SimpleRouter.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OtpConfirmationScreen extends GetView<AuthController> {
-     LanguageController lang =Get.find<LanguageController>();
+  LanguageController lang = Get.find<LanguageController>();
+  RxBool clickedSignInOtp = false.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +63,8 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                               ),
                               children: <TextSpan>[
                                 new TextSpan(
-                                    text: lang.strings['shared']['login']["enterOtpCode"],
+                                    text: lang.strings['shared']['login']
+                                        ["enterOtpCode"],
                                     style: TextStyle(color: Colors.black87)),
                                 new TextSpan(
                                   text: Get.arguments ?? _phonePassed,
@@ -129,7 +131,8 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                                     : null,
                                 child: Text(
                                   controller.timeBetweenResending == 0
-                                      ?lang.strings['shared']['login']["resend"]
+                                      ? lang.strings['shared']['login']
+                                          ["resend"]
                                       : "${lang.strings['shared']['login']["resendAfter"]} ${controller.timeBetweenResending} ${lang.strings['shared']['login']["seconds"]}",
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
@@ -148,27 +151,40 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                   Padding(
                     padding: EdgeInsets.only(top: 15, bottom: 15),
                     child: Text(
-                     lang.strings['shared']['login']["twilioNote"],
+                      lang.strings['shared']['login']["twilioNote"],
                       style:
                           TextStyle(fontWeight: FontWeight.w500, fontSize: 11),
                     ),
                   ),
                   Obx(() => TextButton(
-                        onPressed: canConfirmOtp.value
-                            ? () async {
-                                print(
-                                    "${Get.arguments ?? _phonePassed} -------------- $otpCode ");
-                                await controller.signInUsingOTP(
-                                    Get.arguments ?? _phonePassed, otpCode);
-                              }
-                            : null,
-                        child: Text(
-                          lang.strings['shared']['login']["confirm"],
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 15),
-                        ),
+                        onPressed:
+                            canConfirmOtp.value && !clickedSignInOtp.value
+                                ? () async {
+                                    clickedSignInOtp.value = true;
+                                    print(
+                                        "${Get.arguments ?? _phonePassed} -------------- $otpCode ");
+                                    await controller.signInUsingOTP(
+                                        Get.arguments ?? _phonePassed, otpCode);
+
+                                    clickedSignInOtp.value = false;
+                                  }
+                                : null,
+                        child: clickedSignInOtp.value
+                            ? SizedBox(
+                                height: 15,
+                                width: 15,
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                  strokeWidth: 2,
+                                ),
+                              )
+                            : Text(
+                                lang.strings['shared']['login']["confirm"],
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 15),
+                              ),
                         style: ButtonStyle(
                             fixedSize:
                                 MaterialStateProperty.all(Size(Get.width, 50)),

@@ -42,5 +42,5 @@ const String getxMapStyleJsonKey = "map_style";
 
 const String aLogoPath = "assets/images/logo.png";
 const String aDefaultAvatar = "assets/images/defaultAvatar.png";
-const String enLang="assets/json/en.json";
-const String esLang="assets/json/es.json";
+const String enLang = "assets/json/en.json";
+const String esLang = "assets/json/es.json";

@@ -9,7 +9,7 @@ import 'package:mezcalmos/Shared/utilities/mezcalmos_icons.dart';
 
 class MezcalmosSideMenu extends GetWidget<AuthController> {
   SettingsController _settingsController = Get.find<SettingsController>();
- LanguageController lang =Get.find<LanguageController>();
+  LanguageController lang = Get.find<LanguageController>();
   @override
   Widget build(BuildContext context) {
     print("=========> ImgUrl ======<  ${controller.user?.image}");
@@ -46,11 +46,12 @@ class MezcalmosSideMenu extends GetWidget<AuthController> {
                 height: getSizeRelativeToScreen(300, sw, sh),
                 width: double.infinity,
                 child: CircleAvatar(
-                  radius: 30.0,
-                  child: ClipOval(
+                  // radius: 30.0,
+                  child: ClipRRect(
                     child: controller.user?.image == null
                         ? Image.asset(aDefaultAvatar)
-                        : Image.network(controller.user!.image + "?type=large"),
+                        : Image.network(
+                            controller.user!.image! + "?type=large"),
                   ),
                   backgroundColor: Colors
                       .grey.shade100, //Color.fromARGB(255, 222, 222, 222),
@@ -68,8 +69,11 @@ class MezcalmosSideMenu extends GetWidget<AuthController> {
             SizedBox(height: getSizeRelativeToScreen(300, sw, sh)),
             ListTile(
                 onTap: () async => await controller.signOut(),
-                leading:  Icon(MezcalmosIcons.powerOff, color: Color.fromARGB(255, 103, 121, 254),
-                                  size: 25,),
+                leading: Icon(
+                  MezcalmosIcons.powerOff,
+                  color: Color.fromARGB(255, 103, 121, 254),
+                  size: 25,
+                ),
                 title: Text(
                   lang.strings['shared']['navDrawer']["logout"],
                   style: TextStyle(fontFamily: 'psb', fontSize: 16),

@@ -112,8 +112,8 @@ class MezcalmosCurrentOrderGoogleMapController extends GetxController {
           markerId: MarkerId("taxi"),
           icon: _getStorage.read('taxi_descriptor'),
           visible: true,
-          position: LatLng(_taxiAuthController.currentLocation.latitude,
-              _taxiAuthController.currentLocation.longitude),
+          position: LatLng(_taxiAuthController.currentLocation.latitude!,
+              _taxiAuthController.currentLocation.longitude!),
         )
       ]);
 
@@ -149,8 +149,8 @@ class MezcalmosCurrentOrderGoogleMapController extends GetxController {
       // });
 
       initialCameraPosition = LatLng(
-          _taxiAuthController.currentLocation.latitude,
-          _taxiAuthController.currentLocation.longitude);
+          _taxiAuthController.currentLocation.latitude!,
+          _taxiAuthController.currentLocation.longitude!);
 
       _mapReady.value = true;
     } else if (_currentOrderController.value!.status == "inTransit") {
@@ -165,8 +165,8 @@ class MezcalmosCurrentOrderGoogleMapController extends GetxController {
           markerId: MarkerId("from"),
           icon: _getStorage.read('taxi_descriptor'),
           visible: true,
-          position: LatLng(_taxiAuthController.currentLocation.latitude,
-              _taxiAuthController.currentLocation.longitude),
+          position: LatLng(_taxiAuthController.currentLocation.latitude!,
+              _taxiAuthController.currentLocation.longitude!),
         ),
         Marker(
           draggable: false,
@@ -213,8 +213,8 @@ class MezcalmosCurrentOrderGoogleMapController extends GetxController {
       // });
 
       initialCameraPosition = LatLng(
-          _taxiAuthController.currentLocation.latitude,
-          _taxiAuthController.currentLocation.longitude);
+          _taxiAuthController.currentLocation.latitude!,
+          _taxiAuthController.currentLocation.longitude!);
       this._mapReady.value = true;
     } else if (_currentOrderController.value!.status == "droppedOff") {
       print(

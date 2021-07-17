@@ -1,6 +1,3 @@
-import 'dart:async';
-import 'dart:ffi';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,12 +9,11 @@ import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/mezcalmos_icons.dart';
 import 'package:mezcalmos/Shared/widgets/MezcalmosGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
-import 'package:mezcalmos/TaxiApp/constants/taxiConstants.dart';
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
-import 'package:mezcalmos/TaxiApp/routes/SimpleRouter.dart';
 
 class CurrentOrderScreen extends GetView<CurrentOrderController> {
   LanguageController lang = Get.find<LanguageController>();
+  RxBool clickedLaunchOnMap = false.obs;
 
   Widget build(BuildContext context) {
     Get.put<MezcalmosCurrentOrderGoogleMapController>(
@@ -121,7 +117,15 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           GestureDetector(
-                            onTap: () => null,
+                            onTap: clickedLaunchOnMap.value
+                                ? null
+                                : () async {
+                                    clickedLaunchOnMap.value = true;
+                                    await mapLauncher(
+                                        controller.value!.to.latitude,
+                                        controller.value!.to.longitude);
+                                    clickedLaunchOnMap.value = false;
+                                  },
                             child: Container(
                               height: getSizeRelativeToScreen(
                                   20, Get.height, Get.width),
@@ -133,10 +137,20 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                                 // boxShadow: <BoxShadow>[BoxShadow(color: Color.fromARGB(255, 216, 225, 249), spreadRadius: 0, blurRadius: 1, offset: Offset(0, 5))],
                               ),
                               child: Center(
-                                child: Icon(
-                                  CupertinoIcons.location_fill,
-                                  color: Color.fromARGB(255, 103, 121, 254),
-                                  size: 25,
+                                child: Obx(
+                                  () => clickedLaunchOnMap.value
+                                      ? SizedBox(
+                                          height: 10,
+                                          width: 10,
+                                          child: CircularProgressIndicator(
+                                            color: Colors.purple.shade400,
+                                          ))
+                                      : Icon(
+                                          CupertinoIcons.location_fill,
+                                          color: Color.fromARGB(
+                                              255, 103, 121, 254),
+                                          size: 25,
+                                        ),
                                 ),
                               ),
                             ),
