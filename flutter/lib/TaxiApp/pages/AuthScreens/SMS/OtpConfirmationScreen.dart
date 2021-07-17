@@ -4,12 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/routes/SimpleRouter.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OtpConfirmationScreen extends GetView<AuthController> {
+     LanguageController lang =Get.find<LanguageController>();
+
   @override
   Widget build(BuildContext context) {
     TextEditingController _otpCodeTextController = TextEditingController();
@@ -32,7 +35,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Confirm the OTP Code",
+                  Text(lang.strings['shared']['login']["OtpConfirmation"],
                       style:
                           TextStyle(fontWeight: FontWeight.w500, fontSize: 45)),
                   SizedBox(
@@ -59,7 +62,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                               ),
                               children: <TextSpan>[
                                 new TextSpan(
-                                    text: "Enter the OTP code sent to ",
+                                    text: lang.strings['shared']['login']["enterOtpCode"],
                                     style: TextStyle(color: Colors.black87)),
                                 new TextSpan(
                                   text: Get.arguments ?? _phonePassed,
@@ -126,8 +129,8 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                                     : null,
                                 child: Text(
                                   controller.timeBetweenResending == 0
-                                      ? "Resend"
-                                      : "Resend after ${controller.timeBetweenResending} seconds",
+                                      ?lang.strings['shared']['login']["resend"]
+                                      : "${lang.strings['shared']['login']["resendAfter"]} ${controller.timeBetweenResending} ${lang.strings['shared']['login']["seconds"]}",
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                       color:
@@ -145,7 +148,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                   Padding(
                     padding: EdgeInsets.only(top: 15, bottom: 15),
                     child: Text(
-                      "By continuing you will receive a verification code to your phone number by SMS. Rates may apply for messages and data.",
+                     lang.strings['shared']['login']["twilioNote"],
                       style:
                           TextStyle(fontWeight: FontWeight.w500, fontSize: 11),
                     ),
@@ -160,7 +163,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                               }
                             : null,
                         child: Text(
-                          "Confirm",
+                          lang.strings['shared']['login']["confirm"],
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w600,

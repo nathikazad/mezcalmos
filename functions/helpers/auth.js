@@ -29,10 +29,17 @@ async function sendOTPForLogin(firebase, data) {
     user = await firebase.auth().getUserByPhoneNumber(data.phoneNumber);
   } catch (e) {
     if (e.errorInfo.code == "auth/user-not-found") {
-      user = await firebase.auth().createUser({
-        phoneNumber: data.phoneNumber
-      })
-      firebase.database().ref(`/users/${user.uid}/info/phoneNumber`).set(data.phoneNumber);
+      try {
+        user = await firebase.auth().createUser({
+          phoneNumber: data.phoneNumber
+        })
+        firebase.database().ref(`/users/${user.uid}/info/phoneNumber`).set(data.phoneNumber);
+      } catch (e) {
+        return {
+          status: "Error",
+          errorMessage: e.errorInfo.message,
+        }
+      }
     } else {
       return {
         status: "Error",
@@ -208,6 +215,7 @@ async function sendOTP(firebase, data, userId) {
       return {
         status: "Error",
         errorMessage: (data.language == "es") ? `No puedes generar otro codigo para ${secondsLeft} segundos` : `Cannot generate another code for ${secondsLeft} seconds`,
+        secondsLeft: secondsLeft
       }
     }
   }

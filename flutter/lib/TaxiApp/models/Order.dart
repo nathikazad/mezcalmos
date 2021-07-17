@@ -1,13 +1,16 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:location/location.dart';
 
 class Location {
   late String address;
-  late Position position;
+  late LocationData position;
 
   Location(dynamic location) {
     this.address = location["address"];
-    this.position = Position.fromMap(<dynamic, dynamic>{"latitude": location["lat"], "longitude": location["lng"]});
+    this.position = LocationData.fromMap(<String, dynamic>{
+      "latitude": location["lat"],
+      "longitude": location["lng"]
+    });
   }
 
   dynamic get latitude => position.latitude;

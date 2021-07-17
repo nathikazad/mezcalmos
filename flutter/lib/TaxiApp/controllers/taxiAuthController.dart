@@ -14,7 +14,7 @@ import 'package:mezcalmos/TaxiApp/models/TaxiDriver.dart';
 import 'package:mezcalmos/TaxiApp/pages/AuthScreens/UnauthorizedScreen.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/CurrentOrderScreen.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingListScreen.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:location/location.dart';
 
 class TaxiAuthController extends GetxController {
   Rx<TaxiDriver> _model = TaxiDriver.empty().obs;
@@ -22,8 +22,8 @@ class TaxiAuthController extends GetxController {
   AuthController _authController = Get.find<AuthController>();
   Rx<Widget> _dynamicScreen =
       (Center(child: CircularProgressIndicator()) as Widget).obs;
-  Rx<Position> _currentLocation = Position.fromMap(
-      <dynamic, dynamic>{"latitude": 15.851385, "longitude": -97.046429}).obs;
+  Rx<LocationData> _currentLocation = LocationData.fromMap(
+      <String, dynamic>{"latitude": 15.851385, "longitude": -97.046429}).obs;
   RxBool _locationEnabled = false.obs;
   NotificationsController _messagingController =
       Get.find<NotificationsController>();
@@ -31,13 +31,14 @@ class TaxiAuthController extends GetxController {
   dynamic get authorizedTaxi => _model.value.isAuthorized ?? false;
   bool get isLooking => _model.value.isLooking ?? false;
   Widget get dynamicScreen => _dynamicScreen.value;
-  Position get currentLocation => _currentLocation.value;
+  LocationData get currentLocation => _currentLocation.value;
   bool get locationEnabled => _locationEnabled.value;
-  Rx<Position> get currentLocationRx => _currentLocation;
+  Rx<LocationData> get currentLocationRx => _currentLocation;
 
-  late StreamSubscription<Event> _taxiAuthListener;
-  late StreamSubscription<Position> _locationListener;
+  StreamSubscription<Event>? _taxiAuthListener;
+  StreamSubscription<LocationData>? _locationListener;
 
+  DateTime lastLocationUpdatedTime = DateTime.now();
   /*
     GetScreen function basically will return on of the 3 right Screens :
       - AnauthorizedScreen
@@ -94,61 +95,56 @@ class TaxiAuthController extends GetxController {
 
   Future<void> _listenForLocation() async {
     if (_authController.user == null) {
-      print("User is not signed IN !");
+      print("User is not signed in !");
     } else {
-      bool serviceEnabled;
-      LocationPermission permission;
+      Location location = new Location();
 
-      // Test if location services are enabled.
-      serviceEnabled = await Geolocator.isLocationServiceEnabled();
-      if (!serviceEnabled) {
-        // Location services are not enabled don't continue
-        // accessing the position and request users of the
-        // App to enable the location services.
-        return Future.error('Location services are disabled.');
-      }
+      bool _serviceEnabled;
+      PermissionStatus _permissionGranted;
 
-      permission = await Geolocator.checkPermission();
-      if (permission == LocationPermission.denied) {
-        permission = await Geolocator.requestPermission();
-        if (permission == LocationPermission.denied) {
-          // Permissions are denied, next time you could try
-          // requesting permissions again (this is also where
-          // Android's shouldShowRequestPermissionRationale
-          // returned true. According to Android guidelines
-          // your App should show an explanatory UI now.
-          return Future.error('Location permissions are denied');
+      _serviceEnabled = await location.serviceEnabled();
+      if (!_serviceEnabled) {
+        _serviceEnabled = await location.requestService();
+        if (!_serviceEnabled) {
+          return;
         }
       }
 
-      if (permission == LocationPermission.deniedForever) {
-        // Permissions are denied forever, handle appropriately.
-        return Future.error(
-            'Location permissions are permanently denied, we cannot request permissions.');
+      _permissionGranted = await location.hasPermission();
+      if (_permissionGranted == PermissionStatus.denied) {
+        _permissionGranted = await location.requestPermission();
+        if (_permissionGranted != PermissionStatus.granted) {
+          return;
+        }
       }
       _locationEnabled.value = true;
+      location.enableBackgroundMode(enable: true);
       _locationListener =
-          Geolocator.getPositionStream().listen((Position position) {
-        _currentLocation.value = position;
-        Map<String, dynamic> positionUpdate = <String, dynamic>{
-          "lastUpdateTime": DateTime.now().toUtc().toString(),
-          "position": <String, dynamic>{
-            "lat": position.latitude,
-            "lng": position.longitude
-          }
-        };
-        // print(positionUpdate);
-        _databaseHelper.firebaseDatabase
-            .reference()
-            .child(taxiAuthNode(_authController.user?.uid ?? ''))
-            .child('location')
-            .set(positionUpdate);
-        if (_model.value.currentOrder != null) {
+          location.onLocationChanged.listen((LocationData currentLocation) {
+        DateTime currentTime = DateTime.now();
+        if (currentTime.difference(lastLocationUpdatedTime).inSeconds > 5) {
+          lastLocationUpdatedTime = currentTime;
+          _currentLocation.value = currentLocation;
+          Map<String, dynamic> positionUpdate = <String, dynamic>{
+            "lastUpdateTime": currentTime.toUtc().toString(),
+            "position": <String, dynamic>{
+              "lat": currentLocation.latitude,
+              "lng": currentLocation.longitude
+            }
+          };
+          // print(positionUpdate);
           _databaseHelper.firebaseDatabase
               .reference()
-              .child(orderId(_model.value.currentOrder))
-              .child('driver/location')
+              .child(taxiAuthNode(_authController.user?.uid ?? ''))
+              .child('location')
               .set(positionUpdate);
+          if (_model.value.currentOrder != null) {
+            _databaseHelper.firebaseDatabase
+                .reference()
+                .child(orderId(_model.value.currentOrder))
+                .child('driver/location')
+                .set(positionUpdate);
+          }
         }
         //   print(position == null
         //       ? 'Unknown'
@@ -157,42 +153,37 @@ class TaxiAuthController extends GetxController {
         //           position.longitude.toString());
       });
     }
+  }
 
-    void turnOff() {
-      _databaseHelper.firebaseDatabase
-          .reference()
-          .child(taxiIsLookingField(_authController.user?.uid))
-          .set(false)
-          .catchError((err) {
-        print("Error turning [ isLooking = false ] -> $err");
-        mezcalmosSnackBar("Error ~", "Failed turning it off!");
-      });
-    }
+  @override
+  void dispose() async {
+    print("[+] TaxiAuthController::dispose ---------> Was invoked !");
+    await _locationListener?.cancel();
+    await _taxiAuthListener?.cancel();
+    Get.find<CurrentOrderController>().dispose();
+    Get.find<IncomingOrdersController>().dispose();
+    super.onClose();
+  }
 
-    void turnOn() {
-      _databaseHelper.firebaseDatabase
-          .reference()
-          .child(taxiIsLookingField(_authController.user?.uid))
-          .set(true)
-          .catchError((err) {
-        print("Error turning [ isLooking = true ] -> $err");
-        mezcalmosSnackBar("Error ~", "Failed turning_listenForLocation it on!");
-      });
-    }
+  void turnOff() {
+    _databaseHelper.firebaseDatabase
+        .reference()
+        .child(taxiIsLookingField(_authController.user!.uid))
+        .set(false)
+        .catchError((err) {
+      print("Error turning [ isLooking = false ] -> $err");
+      mezcalmosSnackBar("Error ~", "Failed turning it off!");
+    });
+  }
 
-    @override
-    void onClose() async {
-      print("[+] TaxiAuthController::onClose ---------> Was invoked !");
-      await _locationListener.cancel();
-      await _taxiAuthListener.cancel();
-      super.onClose();
-    }
-
-    // @override
-    // void dispose() {
-    //   detachListeners();
-    //   super.dispose();
-    //   print("--------------------> OrderController Auto Disposed !");
-    // }
+  void turnOn() {
+    _databaseHelper.firebaseDatabase
+        .reference()
+        .child(taxiIsLookingField(_authController.user!.uid))
+        .set(true)
+        .catchError((err) {
+      print("Error turning [ isLooking = true ] -> $err");
+      mezcalmosSnackBar("Error ~", "Failed turning_listenForLocation it on!");
+    });
   }
 }

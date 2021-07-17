@@ -4,6 +4,7 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/routes/SimpleRouter.dart';
@@ -11,6 +12,7 @@ import 'package:mezcalmos/TaxiApp/routes/SimpleRouter.dart';
 class SignIn extends GetWidget<AuthController> {
   // final TextEditingController emailController = TextEditingController();
   // final TextEditingController passwordController = TextEditingController();
+ LanguageController lang =Get.find<LanguageController>();
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,7 @@ class SignIn extends GetWidget<AuthController> {
               ),
               Flexible(
                 child: Text(
-                  tConnectMessage,
+                  lang.strings['shared']['login']["title"],
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -56,7 +58,7 @@ class SignIn extends GetWidget<AuthController> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [Icon(Icons.facebook), Text(lmode != "dev" ? tFacebookSigning : "test mode login")],
+                      children: [Icon(Icons.facebook), Text(lmode != "dev" ? lang.strings['shared']['login']["fbBtn"] : "test mode login")],
                     ),
 
                     style: ButtonStyle(
@@ -78,7 +80,7 @@ class SignIn extends GetWidget<AuthController> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [Icon(Icons.email_outlined), Text(tSmsSigning)],
+                      children: [Icon(Icons.email_outlined), Text(lang.strings['shared']['login']["loginWithSms"])],
                     ),
                     style: ButtonStyle(
                       textStyle: MaterialStateProperty.all<TextStyle>(new TextStyle(fontSize: getSizeRelativeToScreen(10, sh, sw), fontWeight: FontWeight.bold)),

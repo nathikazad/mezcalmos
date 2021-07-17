@@ -19,7 +19,7 @@ const double nDefaultMezcalmosTextSize = 25.5;
 const int nSplashScreenTimer = 5;
 // ----------------- Costants Strings ----------------- //
 
-const String tDefaultLanguage = "en";
+const String tDefaultLanguage = "es";
 const String tDefaultTheme = "light";
 
 const String tMez = "MEZ";
@@ -42,3 +42,5 @@ const String getxMapStyleJsonKey = "map_style";
 
 const String aLogoPath = "assets/images/logo.png";
 const String aDefaultAvatar = "assets/images/defaultAvatar.png";
+const String enLang="assets/json/en.json";
+const String esLang="assets/json/es.json";

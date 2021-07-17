@@ -1,5 +1,5 @@
 name: mezcalmos
-description: A new Flutter project.
+description: A rideshare app.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -41,12 +41,24 @@ dependencies:
   image_downloader: ^0.30.0
   flutter_facebook_auth: ^3.5.0
   pin_code_fields: ^7.2.0
-  geolocator: ^7.2.0
   firebase_messaging: ^10.0.3
+  # font_awesome_flutter: '>= 4.7.0'
+  location: ^4.2.0
+  
+# dependency_overrides:
+#   font_awesome_flutter:
+#     path: font_awesome_flutter
 
 dev_dependencies:
+  flutter_launcher_icons: "^0.8.0"
   flutter_test:
     sdk: flutter
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path_ios: "assets/icons/ios.png"
+  image_path_android: "assets/icons/android.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -82,6 +94,11 @@ flutter:
     -  family: psbi  # Product Sans bold Italic
        fonts:
           - asset: assets/fonts/psbi.ttf
+    -  family: MezcalmosIcons  # Product Sans bold Italic
+       fonts:
+          - asset: assets/fonts/MezcalmosIcons.ttf 
+   
+    
           
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -7,17 +7,22 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/utilities/mezcalmos_icons.dart';
 import 'package:mezcalmos/Shared/widgets/MezcalmosGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/constants/taxiConstants.dart';
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
 
 class CurrentOrderScreen extends GetView<CurrentOrderController> {
+  LanguageController lang = Get.find<LanguageController>();
+
   Completer<GoogleMapController> _controller = Completer();
 
   @override
   Widget build(BuildContext context) {
+    controller.dispatchCurrentOrder();
     return Stack(
       alignment: Alignment.topCenter,
       children: [
@@ -48,7 +53,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                 direction: Axis.horizontal,
                 children: [
                   Flexible(
-                    flex: 1,
+                    flex: 2,
                     child: Obx(() => TextButton(
                           style: ButtonStyle(
                             fixedSize: MaterialStateProperty.all(Size(
@@ -63,95 +68,105 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                                     : MaterialStateProperty.all(
                                         Color.fromARGB(255, 234, 51, 38)),
                           ),
-                          onPressed: () async => controller.value?.status ==
-                                  "inTransit"
-                              ? await MezcalmosSharedWidgets
-                                  .yesNoDefaultConfirmationDialog(
-                                      () async => await controller.finishRide(),
-                                      tFinishRideConfirmation)
-                              : await MezcalmosSharedWidgets
-                                  .yesNoDefaultConfirmationDialog(
-                                      () async => await controller.startRide(),
-                                      tStartRideConfirmation),
+                          onPressed: () async =>
+                              controller.value?.status == "inTransit"
+                                  ? await MezcalmosSharedWidgets
+                                      .yesNoDefaultConfirmationDialog(() async {
+                                      Get.back();
+                                      await controller.finishRide();
+                                    },
+                                          lang.strings['taxi']['taxiView']
+                                              ["tooFarFromfinishRide"])
+                                  : await MezcalmosSharedWidgets
+                                      .yesNoDefaultConfirmationDialog(() async {
+                                      Get.back();
+                                      await controller.startRide();
+                                    },
+                                          lang.strings['taxi']['taxiView']
+                                              ["tooFarFromstartRide"]),
                           child: Text(
                             controller.value?.status != "inTransit"
-                                ? "Start Ride"
-                                : "Finish Ride",
+                                ? lang.strings['taxi']['taxiView']["startRide"]
+                                : lang.strings['taxi']['taxiView']
+                                    ["finishRide"],
                             style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700,
-                            ),
+                                color: Colors.white, fontFamily: 'psr'),
                           ),
                         )),
                   ),
                   Flexible(
                       flex: 1,
                       child: Text(
-                          controller.value?.estimatedPrice?.toString() ??
-                              "\$00",
+                          '\$' +
+                              (controller.value?.estimatedPrice?.toString() ??
+                                  "00"),
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 21))),
                   Flexible(
                       flex: 2,
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           GestureDetector(
                             onTap: () => null,
                             child: Container(
                               height: getSizeRelativeToScreen(
                                   20, Get.height, Get.width),
-                              width: 38,
-                              decoration: BoxDecoration(
-                                color: Colors.blue.shade50,
-                                borderRadius: BorderRadius.circular(5),
-                                // boxShadow: <BoxShadow>[BoxShadow(color: Color.fromARGB(255, 216, 225, 249), spreadRadius: 0, blurRadius: 1, offset: Offset(0, 5))],
-                              ),
-                              child: Center(
-                                child: Icon(
-                                  CupertinoIcons.location_fill,
-                                  color: Colors.blue.shade200,
-                                  size: 25,
-                                ),
-                              ),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () => null,
-                            child: Container(
-                              height: getSizeRelativeToScreen(
+                              width: getSizeRelativeToScreen(
                                   20, Get.height, Get.width),
-                              width: 38,
                               decoration: BoxDecoration(
-                                color: Colors.blueGrey.shade50,
-                                borderRadius: BorderRadius.circular(5),
+                                color: Color.fromARGB(255, 232, 239, 254),
+                                borderRadius: BorderRadius.circular(4),
                                 // boxShadow: <BoxShadow>[BoxShadow(color: Color.fromARGB(255, 216, 225, 249), spreadRadius: 0, blurRadius: 1, offset: Offset(0, 5))],
                               ),
                               child: Center(
                                 child: Icon(
-                                  CupertinoIcons.mail,
-                                  color: Colors.blue.shade200,
+                                  MezcalmosIcons.locationArrow,
+                                  color: Color.fromARGB(255, 103, 121, 254),
                                   size: 25,
                                 ),
                               ),
                             ),
                           ),
+                          // GestureDetector(
+                          //   onTap: () => null,
+                          //   child: Container(
+                          //     height: getSizeRelativeToScreen(
+                          //         20, Get.height, Get.width),
+                          //     width: getSizeRelativeToScreen(
+                          //         20, Get.height, Get.width),
+                          //     decoration: BoxDecoration(
+                          //       color: Colors.blueGrey.shade50,
+                          //       borderRadius: BorderRadius.circular(4),
+                          //       // boxShadow: <BoxShadow>[BoxShadow(color: Color.fromARGB(255, 216, 225, 249), spreadRadius: 0, blurRadius: 1, offset: Offset(0, 5))],
+                          //     ),
+                          //     child: Center(
+                          //       child: Icon(
+                          //         CupertinoIcons.mail,
+                          //         color: Colors.blue.shade200,
+                          //         size: 25,
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
+                          Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
                           GestureDetector(
                             onTap: () async =>
                                 await controller.cancelTaxi(null),
                             child: Container(
                               height: getSizeRelativeToScreen(
                                   20, Get.height, Get.width),
-                              width: 38,
+                              width: getSizeRelativeToScreen(
+                                  20, Get.height, Get.width),
                               decoration: BoxDecoration(
-                                color: Colors.red.shade100,
-                                borderRadius: BorderRadius.circular(5),
+                                color: Color.fromARGB(255, 247, 177, 179),
+                                borderRadius: BorderRadius.circular(4),
                                 // boxShadow: <BoxShadow>[BoxShadow(color: Color.fromARGB(255, 216, 225, 249), spreadRadius: 0, blurRadius: 1, offset: Offset(0, 5))],
                               ),
                               child: Center(
                                 child: Icon(
-                                  CupertinoIcons.clear_circled,
-                                  color: Colors.red.shade300,
+                                 MezcalmosIcons.timesCircle,
+                                  color: Color.fromARGB(255, 255, 0, 8),
                                   size: 25,
                                 ),
                               ),
@@ -214,7 +229,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                   left: 25,
                   top: 13,
                   child: Text(
-                    "from",
+                    lang.strings['shared']['inputLocation']["from"],
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -226,7 +241,8 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                   top: 30,
                   child: GestureDetector(
                       onTap: () => mezcalmosSnackBar(
-                          "From", controller.value?.from?.address ?? ""),
+                          lang.strings['shared']['inputLocation']["from"],
+                          controller.value?.from?.address ?? ""),
                       child: Obx(
                         () => Text(
                           (controller.value?.from?.address
@@ -234,10 +250,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                                       .substring(0, 13) ??
                                   "..........") +
                               " ..", //13+..
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                          ),
+                          style: TextStyle(fontSize: 16, fontFamily: 'psr'),
                         ),
                       )),
                 ),
@@ -247,7 +260,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                       40,
                   top: 13,
                   child: Text(
-                    "to",
+                    lang.strings['shared']['inputLocation']["to"],
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -261,7 +274,8 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                   top: 30,
                   child: GestureDetector(
                       onTap: () => mezcalmosSnackBar(
-                          "Destination", controller.value?.to?.address ?? ""),
+                          lang.strings['shared']['inputLocation']["to"],
+                          controller.value?.to?.address ?? ""),
                       child: Obx(
                         () => Text(
                           (controller.value?.to?.address
@@ -269,10 +283,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                                       .substring(0, 13) ??
                                   "..........") +
                               " ..", //13+..
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                          ),
+                          style: TextStyle(fontSize: 16, fontFamily: 'psr'),
                         ),
                       )),
                 ),

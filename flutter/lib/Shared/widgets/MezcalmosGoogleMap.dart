@@ -249,9 +249,9 @@ class OrderGoogleMapState extends State<OrderGoogleMap> {
     return !mapReady
         ? Center(child: CircularProgressIndicator())
         : new GoogleMap(
-            onCameraMove: (_) async {
-              await reUpdateLocation();
-            },
+            // onCameraMove: (_) async {
+            //   await reUpdateLocation();
+            // },
             myLocationButtonEnabled: false,
             minMaxZoomPreference: MinMaxZoomPreference(10, 16),
             buildingsEnabled: false,
