@@ -182,9 +182,7 @@ class AuthController extends GetxController {
     final LoginResult result = await FacebookAuth.instance.login();
     print(" FB AUTH STATUS +++++++++++++++++++++ ${result.status.toString()}");
 
-    if (result.status == LoginStatus.failed) {
-      mezcalmosSnackBar("Notice ~", "Failed SignIn with Facebook !");
-    } else {
+    if (result.status == LoginStatus.success) {
       // Create a credential from the access token
       final facebookAuthCredential =
           fireAuth.FacebookAuthProvider.credential(result.accessToken!.token);
@@ -192,6 +190,8 @@ class AuthController extends GetxController {
       fireAuth.FirebaseAuth.instance
           .signInWithCredential(facebookAuthCredential);
       _userInfoListener.resume();
+    } else {
+      mezcalmosSnackBar("Notice ~", "Failed SignIn with Facebook !");
     }
   }
 

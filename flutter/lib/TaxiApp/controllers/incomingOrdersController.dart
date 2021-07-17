@@ -14,10 +14,13 @@ import 'package:mezcalmos/TaxiApp/routes/SimpleRouter.dart';
 import 'package:mezcalmos/TaxiApp/helpers/MapHelper.dart';
 
 class IncomingOrdersController extends GetxController {
-  RxList<Order> orders = <Order>[].obs; // this is observable which will be constaintly changing in realtime .
-  AuthController _authController = Get.find<AuthController>(); // since it's already injected .
+  RxList<Order> orders = <Order>[]
+      .obs; // this is observable which will be constaintly changing in realtime .
+  AuthController _authController =
+      Get.find<AuthController>(); // since it's already injected .
   TaxiAuthController _taxiAuthController = Get.find<TaxiAuthController>();
-  DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>(); // Already Injected in main function
+  DatabaseHelper _databaseHelper =
+      Get.find<DatabaseHelper>(); // Already Injected in main function
   RxBool _waitingResponse = RxBool(false);
   Rx<Order?> _selectedIncommingOrder = Order.empty().obs;
 
@@ -28,7 +31,8 @@ class IncomingOrdersController extends GetxController {
   dynamic get waitingResponse => _waitingResponse.value;
 
   Order? get selectedIncommingOrder => _selectedIncommingOrder.value;
-  set selectedIncommingOrder(Order? selectedOrder) => _selectedIncommingOrder.value = selectedOrder;
+  set selectedIncommingOrder(Order? selectedOrder) =>
+      _selectedIncommingOrder.value = selectedOrder;
 
   @override
   void onInit() async {
@@ -43,19 +47,31 @@ class IncomingOrdersController extends GetxController {
     if (_authController.user != null) {
       _listeners.addAll([
         // Added Order!
-        _databaseHelper.firebaseDatabase.reference().child(taxiOpenOrdersNode).onChildAdded.listen((event) {
+        _databaseHelper.firebaseDatabase
+            .reference()
+            .child(taxiOpenOrdersNode)
+            .onChildAdded
+            .listen((event) {
           Order order = Order.fromSnapshot(event.snapshot);
-          order.distanceToClient = MapHelper.calculateDistance(order.from.position, _taxiAuthController.currentLocation);
+          order.distanceToClient = MapHelper.calculateDistance(
+              order.from.position, _taxiAuthController.currentLocation);
           orders.add(order);
-          orders.sort((a, b) => a.distanceToClient.compareTo(b.distanceToClient));
+          orders
+              .sort((a, b) => a.distanceToClient.compareTo(b.distanceToClient));
         }),
 
         // Removed Order
-        _databaseHelper.firebaseDatabase.reference().child(taxiOpenOrdersNode).onChildRemoved.listen((event) async {
+        _databaseHelper.firebaseDatabase
+            .reference()
+            .child(taxiOpenOrdersNode)
+            .onChildRemoved
+            .listen((event) async {
           // This is why GetX guys XD!
           if (event.snapshot.key == _selectedIncommingOrder.value?.id) {
             _selectedIncommingOrder.value = null;
-            if (Get.currentRoute == kSelectedIcommingOrder) await MezcalmosSharedWidgets.mezcalmosDialog(55, Get.height, Get.width);
+            if (Get.currentRoute == kSelectedIcommingOrder)
+              await MezcalmosSharedWidgets.mezcalmosDialog(
+                  55, Get.height, Get.width);
             Get.back(closeOverlays: true);
           }
 
@@ -63,14 +79,22 @@ class IncomingOrdersController extends GetxController {
         }),
 
         //changed Order
-        _databaseHelper.firebaseDatabase.reference().child(taxiOpenOrdersNode).onChildChanged.listen((event) {
-          orders[orders.indexOf(orders.singleWhere((element) => element.id == event.snapshot.key))] = Order.fromSnapshot(event.snapshot);
+        _databaseHelper.firebaseDatabase
+            .reference()
+            .child(taxiOpenOrdersNode)
+            .onChildChanged
+            .listen((event) {
+          orders[orders.indexOf(orders.singleWhere(
+                  (element) => element.id == event.snapshot.key))] =
+              Order.fromSnapshot(event.snapshot);
         }),
       ]);
 
       print("Attached Listeners on taxiOpenOrdersNode : ${_listeners.length}");
 
-      _updateOrderDistanceToClient = ever(_taxiAuthController.currentLocationRx, (userLocation) {
+      // TODO : Convert to KM
+      _updateOrderDistanceToClient =
+          ever(_taxiAuthController.currentLocationRx, (userLocation) {
         orders.forEach((order) {
           order.distanceToClient = MapHelper.calculateDistance(
               order.from.position, userLocation as LocationData);
@@ -88,17 +112,24 @@ class IncomingOrdersController extends GetxController {
   void detachListeners() {
     _listeners.forEach((sub) => sub
         .cancel()
-        .then((value) => print("A listener was disposed on incomingOrdersController !"))
-        .catchError((err) => print("Error happend while trying to dispose incomingOrdersController!")));
+        .then((value) =>
+            print("A listener was disposed on incomingOrdersController !"))
+        .catchError((err) => print(
+            "Error happend while trying to dispose incomingOrdersController!")));
 
     _updateOrderDistanceToClient.dispose();
   }
 
   Future<void> acceptTaxi(String orderId) async {
-    HttpsCallable acceptTaxiFunction = FirebaseFunctions.instance.httpsCallable('acceptTaxiOrder');
+    HttpsCallable acceptTaxiFunction =
+        FirebaseFunctions.instance.httpsCallable('acceptTaxiOrder');
     try {
       _waitingResponse.value = true;
-      HttpsCallableResult response = await acceptTaxiFunction.call(<String, dynamic>{'orderId': orderId, 'database': _databaseHelper.dbType});
+      HttpsCallableResult response = await acceptTaxiFunction
+          .call(<String, dynamic>{
+        'orderId': orderId,
+        'database': _databaseHelper.dbType
+      });
       _waitingResponse.value = false;
       _selectedIncommingOrder.value = new Order.empty();
       Get.back(closeOverlays: true);

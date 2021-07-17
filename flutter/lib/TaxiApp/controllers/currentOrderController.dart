@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/mezcalmosGoogleMapController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
@@ -27,6 +28,7 @@ class CurrentOrderController extends GetxController {
   void onInit() {
     super.onInit();
     print("--------------------> CurrentOrderController Initialized !");
+    dispatchCurrentOrder();
   }
 
   void dispatchCurrentOrder() {
@@ -35,9 +37,24 @@ class CurrentOrderController extends GetxController {
         .child(orderId(_taxiAuthController.currentOrderId))
         .onValue
         .listen((event) {
-      print(
-          "CurrentOrderController::onValue Invoked >> ${event.snapshot.key} : ${event.snapshot.value}");
-      _model.value = Order.fromSnapshot(event.snapshot);
+      // if (event.snapshot.value['status'] != _model.value.status) {
+      //   // we will trigger updateGoogleMap
+      // }
+
+      print("[[[[[[[[[[ \n\n ${event.snapshot.value} \n\n ]]]]]]]]]]");
+      if (event.snapshot.value != null) {
+        bool dirty = event.snapshot.value['status'] == _model.value.status;
+
+        print(
+            "CurrentOrderController::onValue Invoked >> ${event.snapshot.key} : ${event.snapshot.value['status']}");
+        _model.value = Order.fromSnapshot(event.snapshot);
+
+        MezcalmosCurrentOrderGoogleMapController mezCurrentMap =
+            Get.find<MezcalmosCurrentOrderGoogleMapController>();
+        if (!mezCurrentMap.isClosed && !dirty) {
+          mezCurrentMap.googleMapUpdate();
+        }
+      }
     });
   }
 

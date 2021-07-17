@@ -12,7 +12,7 @@ import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/routes/SimpleRouter.dart';
 
 class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
- LanguageController lang =Get.find<LanguageController>();
+  LanguageController lang = Get.find<LanguageController>();
   @override
   Widget build(BuildContext context) {
     TaxiAuthController _taxiAuthController = Get.find<TaxiAuthController>();
@@ -25,7 +25,9 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Container(
-          margin: EdgeInsets.only(left: getSizeRelativeToScreen(40, sw, sh), right: getSizeRelativeToScreen(40, sw, sh)),
+          margin: EdgeInsets.only(
+              left: getSizeRelativeToScreen(40, sw, sh),
+              right: getSizeRelativeToScreen(40, sw, sh)),
           child: Container(
             height: getSizeRelativeToScreen(300, sw, sh),
             child: Row(
@@ -40,7 +42,7 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                       style: TextStyle(
                           // fontSize: getSizeRelativeToScreen(70, sw, sh),
                           fontSize: 38.5,
-                           fontWeight: FontWeight.w400,
+                          fontWeight: FontWeight.w400,
                           fontFamily: 'psr'),
                     ),
                   ),
@@ -57,7 +59,9 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                               _taxiAuthController.turnOff();
                             }
                           },
-                          buttonColor: _taxiAuthController.isLooking == true ? Colors.green : Colors.red,
+                          buttonColor: _taxiAuthController.isLooking == true
+                              ? Colors.green
+                              : Colors.red,
                           backgroundColor: Colors.transparent,
                           textColor: const Color(0xFFFFFFFF),
                         )))
@@ -67,7 +71,9 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
         ),
         Expanded(
           child: Container(
-            margin: EdgeInsets.only(left: getSizeRelativeToScreen(40, sw, sh), right: getSizeRelativeToScreen(40, sw, sh)),
+            margin: EdgeInsets.only(
+                left: getSizeRelativeToScreen(40, sw, sh),
+                right: getSizeRelativeToScreen(40, sw, sh)),
 
             // Removed the Native Glow Effect on list !
             child: Obx(() => _taxiAuthController.isLooking == true
@@ -78,16 +84,24 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                             itemCount: controller.orders.length,
                             itemBuilder: (ctx, i) {
                               return Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 2),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 2),
                                 child: GestureDetector(
                                   onTap: () async {
-                                    print("Clicked on order::${controller.orders[i].id}");
-                                    controller.selectedIncommingOrder = controller.orders[i];
+                                    print(
+                                        "Clicked on order::${controller.orders[i].id}");
+                                    controller.selectedIncommingOrder =
+                                        controller.orders[i];
                                     Get.toNamed(kSelectedIcommingOrder);
                                   },
                                   child: Container(
-                                    decoration:
-                                        BoxDecoration(border: Border.all(color: Color.fromARGB(255, 236, 236, 236), width: 0.5, style: BorderStyle.solid), borderRadius: BorderRadius.circular(4)),
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: Color.fromARGB(
+                                                255, 236, 236, 236),
+                                            width: 0.5,
+                                            style: BorderStyle.solid),
+                                        borderRadius: BorderRadius.circular(4)),
                                     padding: EdgeInsets.all(16),
                                     // alignment: Alignment.centerLeft,
                                     child: Stack(
@@ -100,7 +114,8 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                           right: 0,
                                           top: 0,
                                           child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
                                             // direction: Axis.horizontal,
                                             children: [
                                               Transform.scale(
@@ -110,12 +125,17 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                                     width: 50,
                                                     decoration: BoxDecoration(
                                                         image: DecorationImage(
-                                                      image: AssetImage(money_asset),
+                                                      image: AssetImage(
+                                                          money_asset),
                                                     )),
                                                   )),
                                               Text(
-                                                controller.orders[i].estimatedPrice.toString(),
-                                                style: TextStyle(fontFamily: 'psb', fontSize: 16),
+                                                controller
+                                                    .orders[i].estimatedPrice
+                                                    .toString(),
+                                                style: TextStyle(
+                                                    fontFamily: 'psb',
+                                                    fontSize: 16),
                                               )
                                             ],
                                           ),
@@ -124,8 +144,11 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                           // maxRadius: getSizeRelativeToScreen(56, sw, sh),
                                           // minRadius: getSizeRelativeToScreen(55, sw, sh),
                                           backgroundColor: Colors.grey,
-                                          backgroundImage: NetworkImage(controller.orders[i].customer['image']),
-                                          onBackgroundImageError: (e, s) => print("Failed loading Customer openOrder::id::${controller.orders[i].id}"),
+                                          backgroundImage: NetworkImage(
+                                              controller
+                                                  .orders[i].customer['image']),
+                                          onBackgroundImageError: (e, s) => print(
+                                              "Failed loading Customer openOrder::id::${controller.orders[i].id}"),
                                         ),
                                         // Positioned(
                                         //     child: Container(
@@ -137,8 +160,12 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                             left: 50,
                                             top: 0,
                                             child: Text(
-                                              controller.orders[i].customer['name'] ?? tDefaultCustomerName,
-                                              style: TextStyle(fontFamily: 'psb', fontSize: 16),
+                                              controller.orders[i]
+                                                      .customer['name'] ??
+                                                  tDefaultCustomerName,
+                                              style: TextStyle(
+                                                  fontFamily: 'psb',
+                                                  fontSize: 16),
                                             )),
 
                                         // info line
@@ -146,52 +173,82 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                           left: 50,
                                           bottom: 0,
                                           child: Wrap(
-                                            spacing: 1.0, // gap between adjacent chips
-                                            runSpacing: 4.0, // gap between lines
+                                            spacing:
+                                                1.0, // gap between adjacent chips
+                                            runSpacing:
+                                                4.0, // gap between lines
                                             children: <Widget>[
-                                              Icon(Icons.location_on_outlined, size: getSizeRelativeToScreen(32, sw, sh)),
+                                              Icon(Icons.location_on_outlined,
+                                                  size: getSizeRelativeToScreen(
+                                                      32, sw, sh)),
                                               Text(
-                                                controller.orders[i].from.address.substring(0, 10) + "... ",
+                                                controller
+                                                        .orders[i].from.address
+                                                        .substring(0, 10) +
+                                                    "... ",
                                                 overflow: TextOverflow.ellipsis,
                                                 maxLines: 1,
                                                 softWrap: false,
-                                                style: TextStyle(fontFamily: 'psr', fontSize: 14),
+                                                style: TextStyle(
+                                                    fontFamily: 'psr',
+                                                    fontSize: 14),
                                               ),
-                                              Icon(Icons.my_location_rounded, size: getSizeRelativeToScreen(32, sw, sh)),
+                                              Icon(Icons.my_location_rounded,
+                                                  size: getSizeRelativeToScreen(
+                                                      32, sw, sh)),
                                               SizedBox(
                                                 width: 2,
                                               ),
                                               Text(
-                                                controller.orders[i].routeInformation['distance']['text'] ?? "? km",
+                                                controller.orders[i]
+                                                            .routeInformation[
+                                                        'distance']['text'] ??
+                                                    "? km",
                                                 overflow: TextOverflow.ellipsis,
                                                 maxLines: 1,
                                                 softWrap: false,
-                                                style: TextStyle(fontFamily: 'psr', fontSize: 14),
+                                                style: TextStyle(
+                                                    fontFamily: 'psr',
+                                                    fontSize: 14),
                                               ),
                                               SizedBox(
                                                 width: 5,
                                               ),
-                                              Icon(Icons.social_distance, size: getSizeRelativeToScreen(32, sw, sh)),
+                                              Icon(Icons.social_distance,
+                                                  size: getSizeRelativeToScreen(
+                                                      32, sw, sh)),
                                               SizedBox(
                                                 width: 2,
                                               ),
                                               Text(
-                                                controller.orders[i].routeInformation['distance']['text'] ?? "? km",
+                                                controller.orders[i]
+                                                            .routeInformation[
+                                                        'distance']['text'] ??
+                                                    "? km",
                                                 overflow: TextOverflow.ellipsis,
                                                 maxLines: 1,
                                                 softWrap: false,
-                                                style: TextStyle(fontFamily: 'psr', fontSize: 14),
+                                                style: TextStyle(
+                                                    fontFamily: 'psr',
+                                                    fontSize: 14),
                                               ),
-                                              Icon(Icons.timer, size: getSizeRelativeToScreen(32, sw, sh)),
+                                              Icon(Icons.timer,
+                                                  size: getSizeRelativeToScreen(
+                                                      32, sw, sh)),
                                               SizedBox(
                                                 width: 2,
                                               ),
                                               Text(
-                                                controller.orders[i].routeInformation['duration']['text'] + "  -----" ?? "? mins",
+                                                controller.orders[i]
+                                                            .routeInformation[
+                                                        'duration']['text'] ??
+                                                    "? mins",
                                                 overflow: TextOverflow.ellipsis,
                                                 maxLines: 1,
                                                 softWrap: false,
-                                                style: TextStyle(fontFamily: 'psr', fontSize: 14),
+                                                style: TextStyle(
+                                                    fontFamily: 'psr',
+                                                    fontSize: 14),
                                               ),
                                             ],
                                           ),
@@ -260,7 +317,9 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                         children: [
                           Expanded(
                             child: Container(
-                              decoration: BoxDecoration(image: DecorationImage(image: AssetImage(noOrdersFound_asset))),
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage(noOrdersFound_asset))),
                             ),
                           ),
                           Expanded(
@@ -271,14 +330,21 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                               children: [
                                 Flexible(
                                   child: Text(
-                                    lang.strings['taxi']['incoming']["noOrdersTitle"],
-                                    style: TextStyle(fontSize: 38.5, fontFamily: 'psr'),
+                                    lang.strings['taxi']['incoming']
+                                        ["noOrdersTitle"],
+                                    style: TextStyle(
+                                        fontSize: 38.5, fontFamily: 'psr'),
                                   ),
                                 ),
                                 Flexible(
                                   child: Text(
-                                    lang.strings['taxi']['incoming']["noOrdersDesc"],
-                                    style: TextStyle(fontSize: 16, fontFamily: 'psr', color: Color.fromARGB(255, 168, 168, 168)),
+                                    lang.strings['taxi']['incoming']
+                                        ["noOrdersDesc"],
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontFamily: 'psr',
+                                        color:
+                                            Color.fromARGB(255, 168, 168, 168)),
                                   ),
                                 ),
                               ],
@@ -294,7 +360,9 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                     children: [
                       Expanded(
                         child: Container(
-                          decoration: BoxDecoration(image: DecorationImage(image: AssetImage(turnOn_asset))),
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(turnOn_asset))),
                         ),
                       ),
                       Expanded(
@@ -305,11 +373,15 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                           children: [
                             Text(
                               lang.strings['taxi']['incoming']["toggleTitle"],
-                              style: TextStyle(fontSize: 25.5, fontFamily: 'psr'),
+                              style:
+                                  TextStyle(fontSize: 25.5, fontFamily: 'psr'),
                             ),
                             Text(
                               lang.strings['taxi']['incoming']["toggleDesc"],
-                              style: TextStyle(fontSize: 16, fontFamily: 'psr', color: Color.fromARGB(255, 168, 168, 168)),
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: 'psr',
+                                  color: Color.fromARGB(255, 168, 168, 168)),
                             ),
                           ],
                         ),

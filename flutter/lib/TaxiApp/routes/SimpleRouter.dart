@@ -1,5 +1,6 @@
 import 'package:get/get.dart'; // getX
 import 'package:mezcalmos/Shared/bindings/settingsBinding.dart';
+import 'package:mezcalmos/Shared/controllers/mezcalmosGoogleMapController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/pages/AuthScreens/SMS/OtpConfirmationScreen.dart';
 import 'package:mezcalmos/TaxiApp/pages/AuthScreens/SMS/PhoneNumberScreen.dart';
@@ -38,9 +39,19 @@ const String kSelectedIcommingOrder = '/selected_incomming_order';
 class XRouter {
   static dynamic mainRoutes = [
     GetPage(name: kMainAuthWrapperRoute, page: () => Wrapper()),
-    GetPage(name: kSplashRoute, page: () => SplashScreen(), binding: SettingsBinding()),
-    GetPage(name: kTaxiWrapperRoute, page: () => TaxiWrapper(), binding: BindingsBuilder(() => Get.put<TaxiAuthController>(TaxiAuthController()))),
-    GetPage(name: kSelectedIcommingOrder, page: () => IncommingOrderScreenView()),
+    GetPage(
+        name: kSplashRoute,
+        page: () => SplashScreen(),
+        binding: SettingsBinding()),
+    GetPage(
+        name: kTaxiWrapperRoute,
+        page: () => TaxiWrapper(),
+        binding: BindingsBuilder(
+            () => Get.put<TaxiAuthController>(TaxiAuthController()))),
+    GetPage(
+      name: kSelectedIcommingOrder,
+      page: () => IncommingOrderScreenView(),
+    ),
     GetPage(name: kSignInRoute, page: () => SignIn()),
     GetPage(name: kOtpRoute, page: () => PhoneNumberScreen()),
     GetPage(name: kOtpConfirmRoute, page: () => OtpConfirmationScreen()),

@@ -25,117 +25,18 @@
 
 [PRIORITY] Change Text("0 km") in openedOrder , I hardcoded it , cuz i didn't know where it comes from!
 [ONGOING] Implement Theme Controller.
-[PRIORITY] CurrentOrder Screens <- Marker!
+[DONE] CurrentOrder Screens <- Marker!
 [ONGOING] Make everything inside InjectionHelper class.
 [Done] Receive notifications for ios and android
 [ONGOING] Detach listeners inside notifications controller
-+ Add notifications system
-+ add a Proxy for cloud functions!
+OrderNoMoreAvailable  UI.
+Dialog popups Design + condition to pop only if far 500meters
+[Done] Rest of google map Fixes
+[Done] Anauthorized Screen Image
+[Done] Show the progressive loading Circle when clicking on Send SMS and SingIn Using OTP (both SMS Screens)
+[Done] Open Direction from > to,  When clicking LaunchOnGoogleMapBtn
+[Ongoing] Language stuff
+[Done] Loading Indicators in both Signing Buttons when clicking on Signing using Facebook .
+ 
+- Total Fixes  : 3 ,  Check errors_tracking folder in /flutter
 
----- done - today 07/08/21 -----
-+ Language is no more hardcoded in Cloud functions.
-+ LanguageController Initial  implementation.
-+ Language json in /assets/json/
-+ db is no more hardcoded in Cloud functions.
-+ SignIn bug that happend to Yassine should not be a problem anymore (it's due to heavy First CloudFunctions call)
-+ [UI] Drawer Button / logo done.
-+ [UI] Incomming Orders Text done 
-+ [UI] ON/OFF Switcher done.
-+ [UI] Incomming Orders Screen
-+ [UI] Drawer SIdeMenu
-+ [UI] IncommingOrderListItem
-+ [UI] OrderVIewScreen -> BottomBar 
-
-
----- done - today 07/09/21 -----
-+ TaxiAuthController problem temp fix
-+ make use of fitBounds to center everything up.
-+ if zoom > 16 : zoom = 16
-		|_ polyline Color : 
-		|_ Polyline Weight : Stroke
-		
-
------- UI  TODO -------
-
-[Done]  Drawer Button / logo :
-	|_ Border raduis : 10px
-	|_ Button size 32/32px
-	|_ logo h:32px - w:32
-	|_  Mezcalmos title:
-		|_ font: Product Sans Regualar
-		|_ 25.5PX
-
-	[Done] Incomming Orders:
-		|_ Size : 38.5px
-		|_ Font : RProduct Sans regular
-	
-	[Done] ON/OFF :
-		|_ green : #32C76D 
-		|_ gradient : 	
-		|_ off color::active : #FF0008
-		|_ inear-gradient( 151deg , rgba(81, 133, 255, 0.1) 0%, rgba(207, 73, 252, 0.1) 100%) 0% 0%
-
-
-[Done] Incomming Orders Screen :
-	|_ OFF middle Screen Image.
-	|_ ON not found Img
-	|_ Under Img screen:
-		|_ tilte:  25.5px
-		|_ grayed : 
-			|_ #a8a8a8
-			|_ 16px
-
-[Done] Drawer SIdeMenu :
-	|_ displayName :
-		|_ fontsize 25.5px
-		|_ bold
-	|_ MenuItems:
-		|_ 16px bold
-
-[Done] IncommingOrderListItem:
-	|_ border : 0.5px solid #ececec  
-	|_ raduis : 4px
-	|_ Padding : 16px
-	|+ image :
-		|_ h/w38.5px
-	|_ customerName:
-		|_ bold 16px
-	|_ infoText : 
-		|_ 14px
-_listenForLocation_listenForLocation
-_listenForLocation_listenForLocation
-	|_ add Price + icon (in v3)
-		|_ MoneyIcon :
-			|_ bel3in
-
-+ OrderVIew:
-	|_[Ongoing] Map"
-		|+[Done] make use of fitBounds to center everything up.
-		|+[Done] if zoom > 16 : zoom = 16
-		|_ markers ~
-		|_ [Done] polyline Color : 
-		|_ [Done]Polyline Weight : Stroke
-		|
-		|_ Status: onTheWay:
-			|_  Centers  THe map Bounds of Driver's location to (Destination = from).
-		|_ Status: inTransit:
-			|_ Centers the map bounds of driver's location and (Destination == to).
-		|_ Status : others status:
-			|_ Show from <--> to
-
-	|_ [Done] BottomBar:
-		|_ displaName : 16px bold
-		|_ "x km far" :
-			|_ regular
-			|_ 14px
-			|_ #a8a8a8 
-		|_ Price :
-			|_ PriceSIze: 18px
-			|_ add Icon
-			|_ add 2 deviders : border : 0.5px solid #ececec
-		|_ left distance:
-			|_ regular 14px black
-
-------- review -------
-+ Load to/from Data.
-+ 		

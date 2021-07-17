@@ -15,6 +15,8 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
   LanguageController lang = Get.find<LanguageController>();
   @override
   Widget build(BuildContext context) {
+    // Get.put<MezcalmosGoogleMapController>(MezcalmosGoogleMapController());
+
     return Scaffold(
       appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back()),
       body: Stack(
@@ -23,7 +25,7 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
           Obx(() => controller.waitingResponse ||
                   controller.selectedIncommingOrder?.id == null
               ? Center(child: CircularProgressIndicator())
-              : new OrderGoogleMap(controller.selectedIncommingOrder!)),
+              : MezcalmosGoogleMap(false)),
           Positioned(
               bottom: GetStorage().read(getxGmapBottomPaddingKey) + 55,
               child: Container(
@@ -187,8 +189,9 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                   backgroundColor: MaterialStateProperty.all(
                       Color.fromARGB(255, 79, 168, 35)),
                 ),
-                onPressed: () async => await controller
-                    .acceptTaxi(controller.selectedIncommingOrder?.id),
+                onPressed: () => controller
+                    .acceptTaxi(controller.selectedIncommingOrder?.id)
+                    .then((_) => Get.back()),
                 child: Text(
                   lang.strings['taxi']['taxiView']["acceptOrders"],
                   style: TextStyle(
@@ -270,11 +273,7 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                                     .substring(0, 13) ??
                                 "..........") +
                             " ..", //13+..
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontFamily: 'psr',
-                          // fontWeight: FontWeight.w600,
-                        ),
+                        style: TextStyle(fontSize: 16, fontFamily: 'psr'),
                       ),
                     ),
                   ),
@@ -306,12 +305,7 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                                     .substring(0, 13) ??
                                 "..........") +
                             " ..", //13+..
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontFamily: 'psr',
-
-                          // fontWeight: FontWeight.w600,
-                        ),
+                        style: TextStyle(fontSize: 16, fontFamily: 'psr'),
                       ),
                     ),
                   ),

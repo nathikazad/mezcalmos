@@ -7,29 +7,36 @@ import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/routes/SimpleRouter.dart';
 
 class PhoneNumberScreen extends GetView<AuthController> {
-   LanguageController lang =Get.find<LanguageController>();
+  LanguageController lang = Get.find<LanguageController>();
 
   TextEditingController _prefixTextFieldController = TextEditingController();
   TextEditingController _numberTextFieldController = TextEditingController();
 
   RxBool canSendOtp = false.obs;
+  RxBool clickedSendOtp = false.obs;
 
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back(closeOverlays: true), bgColor: Colors.grey[50]),
+      appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
+          "back", () => Get.back(closeOverlays: true),
+          bgColor: Colors.grey[50]),
       body: Container(
           padding: const EdgeInsets.only(left: 20, right: 20, top: 40),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(lang.strings['shared']['login']["otpCode"], style: TextStyle(fontWeight: FontWeight.w500, fontSize: 45)),
+              Text(lang.strings['shared']['login']["otpCode"],
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 45)),
               SizedBox(
                 height: 20,
               ),
               Container(
                 height: Get.height * 0.25,
-                decoration: BoxDecoration(color: Colors.white, border: Border.all(color: Colors.grey.shade200, width: 1), borderRadius: BorderRadius.circular(8)),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(color: Colors.grey.shade200, width: 1),
+                    borderRadius: BorderRadius.circular(8)),
                 child: Padding(
                   padding: EdgeInsets.all(20),
                   child: Column(
@@ -55,7 +62,12 @@ class PhoneNumberScreen extends GetView<AuthController> {
                           Expanded(
                             child: TextFormField(
                               onChanged: (s) {
-                                if (_prefixTextFieldController.value.text.length > 0 && _numberTextFieldController.value.text.length >= 8) {
+                                if (_prefixTextFieldController
+                                            .value.text.length >
+                                        0 &&
+                                    _numberTextFieldController
+                                            .value.text.length >=
+                                        8) {
                                   canSendOtp.value = true;
                                 } else
                                   canSendOtp.value = false;
@@ -65,8 +77,14 @@ class PhoneNumberScreen extends GetView<AuthController> {
                               keyboardType: TextInputType.phone,
                               decoration: InputDecoration(
                                   hintText: "+52",
-                                  focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(5), gapPadding: 1, borderSide: BorderSide(color: Colors.blue)),
-                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), gapPadding: 1)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                      gapPadding: 1,
+                                      borderSide:
+                                          BorderSide(color: Colors.blue)),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                      gapPadding: 1)),
                               controller: _prefixTextFieldController,
                             ),
                           ),
@@ -75,7 +93,10 @@ class PhoneNumberScreen extends GetView<AuthController> {
                             flex: 3,
                             child: TextFormField(
                               onChanged: (s) {
-                                if (_prefixTextFieldController.text.length > 0 && _numberTextFieldController.text.length >= 8) {
+                                if (_prefixTextFieldController.text.length >
+                                        0 &&
+                                    _numberTextFieldController.text.length >=
+                                        8) {
                                   canSendOtp.value = true;
                                 } else
                                   canSendOtp.value = false;
@@ -84,8 +105,14 @@ class PhoneNumberScreen extends GetView<AuthController> {
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                   hintText: "number",
-                                  focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(5), gapPadding: 1, borderSide: BorderSide(color: Colors.purple)),
-                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), gapPadding: 1)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                      gapPadding: 1,
+                                      borderSide:
+                                          BorderSide(color: Colors.purple)),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                      gapPadding: 1)),
                               controller: _numberTextFieldController,
                             ),
                           ),
@@ -103,34 +130,57 @@ class PhoneNumberScreen extends GetView<AuthController> {
                 ),
               ),
               Obx(() => TextButton(
-                    onPressed: canSendOtp.value
+                    onPressed: canSendOtp.value && !clickedSendOtp.value
                         ? () async {
-                            String phone = "${_prefixTextFieldController.text}${_numberTextFieldController.text}";
+                            clickedSendOtp.value = true;
+                            String phone =
+                                "${_prefixTextFieldController.text}${_numberTextFieldController.text}";
                             if (!phone.startsWith('+')) phone = "+" + phone;
                             print(phone);
                             if (phone.isPhoneNumber) {
-                              dynamic response = await controller.sendOTPForLogin(phone);
+                              dynamic response =
+                                  await controller.sendOTPForLogin(phone);
                               print("++++++++++++ response >>> $response");
                               if (response == null) {
                                 mezcalmosSnackBar("Error", "Null response !");
                               } else if (response['status'] == "Success") {
-                                mezcalmosSnackBar("Notice ~", "OTP Sent code to : $phone");
+                                mezcalmosSnackBar(
+                                    "Notice ~", "OTP Sent code to : $phone");
                                 Get.toNamed(kOtpConfirmRoute, arguments: phone);
                               } else {
-                                mezcalmosSnackBar('Error', response['errorMessage']);
+                                mezcalmosSnackBar(
+                                    'Error', response['errorMessage']);
                               }
                             } else
-                              mezcalmosSnackBar("Error", "Invalid phone Number !");
+                              mezcalmosSnackBar(
+                                  "Error", "Invalid phone Number !");
+                            clickedSendOtp.value = false;
                           }
                         : null,
-                    child: Text(
-                      lang.strings['shared']['login']["submit"],
-                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 15),
+                    child: Obx(
+                      () => clickedSendOtp.value
+                          ? SizedBox(
+                              height: 15,
+                              width: 15,
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                                strokeWidth: 2,
+                              ),
+                            )
+                          : Text(
+                              lang.strings['shared']['login']["submit"],
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 15),
+                            ),
                     ),
                     style: ButtonStyle(
-                        fixedSize: MaterialStateProperty.all(Size(Get.width, 50)),
+                        fixedSize:
+                            MaterialStateProperty.all(Size(Get.width, 50)),
                         alignment: Alignment.center,
-                        backgroundColor: MaterialStateProperty.all(canSendOtp.value ? Colors.blue : Colors.grey)),
+                        backgroundColor: MaterialStateProperty.all(
+                            canSendOtp.value ? Colors.blue : Colors.grey)),
                   ))
             ],
           )),

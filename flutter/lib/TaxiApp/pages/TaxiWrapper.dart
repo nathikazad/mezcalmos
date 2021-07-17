@@ -7,7 +7,7 @@ import 'package:mezcalmos/Shared/widgets/MezcalmosSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 
-class TaxiWrapper extends GetView<AuthController> {
+class TaxiWrapper extends GetWidget<AuthController> {
   SideMenuDraweController _sideMenuDrawerController =
       Get.find<SideMenuDraweController>();
 

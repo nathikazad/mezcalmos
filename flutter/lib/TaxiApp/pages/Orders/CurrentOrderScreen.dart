@@ -1,37 +1,33 @@
-import 'dart:async';
-import 'dart:ffi';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/mezcalmosGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/mezcalmos_icons.dart';
 import 'package:mezcalmos/Shared/widgets/MezcalmosGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
-import 'package:mezcalmos/TaxiApp/constants/taxiConstants.dart';
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
 
 class CurrentOrderScreen extends GetView<CurrentOrderController> {
   LanguageController lang = Get.find<LanguageController>();
+  RxBool clickedLaunchOnMap = false.obs;
 
-  Completer<GoogleMapController> _controller = Completer();
-
-  @override
   Widget build(BuildContext context) {
+    Get.put<MezcalmosCurrentOrderGoogleMapController>(
+        MezcalmosCurrentOrderGoogleMapController());
+
     controller.dispatchCurrentOrder();
     return Stack(
       alignment: Alignment.topCenter,
       children: [
-        Obx(() => controller.waitingResponse || controller.value?.id == null
+        Obx(() => controller.waitingResponse ||
+                controller.value?.id == null ||
+                controller.value?.status == null
             ? Center(child: CircularProgressIndicator())
-            : OrderGoogleMap(
-                controller.value!,
-                realtime: true,
-              )),
+            : new MezcalmosGoogleMap(true)),
         Positioned(
             bottom: GetStorage().read(getxGmapBottomPaddingKey),
             child: Container(
@@ -68,22 +64,33 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                                     : MaterialStateProperty.all(
                                         Color.fromARGB(255, 234, 51, 38)),
                           ),
-                          onPressed: () async =>
-                              controller.value?.status == "inTransit"
-                                  ? await MezcalmosSharedWidgets
+                          onPressed: () => controller.value?.status ==
+                                  "inTransit"
+                              ? MezcalmosSharedWidgets
                                       .yesNoDefaultConfirmationDialog(() async {
-                                      Get.back();
-                                      await controller.finishRide();
-                                    },
+                                  Get.back();
+                                  await controller.finishRide();
+                                },
                                           lang.strings['taxi']['taxiView']
                                               ["tooFarFromfinishRide"])
-                                  : await MezcalmosSharedWidgets
+                                  .then((_) {
+                                  //Get.offAllNamed(kTaxiWrapperRoute);
+                                  // _mezcalmosCurrentOrderGoogleMapController
+                                  //     .googleMapUpdate();
+                                  Get.back(closeOverlays: true);
+                                })
+                              : MezcalmosSharedWidgets
                                       .yesNoDefaultConfirmationDialog(() async {
-                                      Get.back();
-                                      await controller.startRide();
-                                    },
+                                  Get.back();
+                                  await controller.startRide();
+                                },
                                           lang.strings['taxi']['taxiView']
-                                              ["tooFarFromstartRide"]),
+                                              ["tooFarFromstartRide"])
+                                  .then((_) {
+                                  // _mezcalmosCurrentOrderGoogleMapController
+                                  //     .googleMapUpdate();
+                                  //Get.back(closeOverlays: true);
+                                }),
                           child: Text(
                             controller.value?.status != "inTransit"
                                 ? lang.strings['taxi']['taxiView']["startRide"]
@@ -96,19 +103,29 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                   ),
                   Flexible(
                       flex: 1,
-                      child: Text(
-                          '\$' +
-                              (controller.value?.estimatedPrice?.toString() ??
-                                  "00"),
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 21))),
+                      child: Obx(
+                        () => Text(
+                            '\$' +
+                                (controller.value?.estimatedPrice?.toString() ??
+                                    "00"),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 21)),
+                      )),
                   Flexible(
                       flex: 2,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           GestureDetector(
-                            onTap: () => null,
+                            onTap: clickedLaunchOnMap.value
+                                ? null
+                                : () async {
+                                    clickedLaunchOnMap.value = true;
+                                    await mapLauncher(
+                                        controller.value!.to.latitude,
+                                        controller.value!.to.longitude);
+                                    clickedLaunchOnMap.value = false;
+                                  },
                             child: Container(
                               height: getSizeRelativeToScreen(
                                   20, Get.height, Get.width),
@@ -120,10 +137,20 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                                 // boxShadow: <BoxShadow>[BoxShadow(color: Color.fromARGB(255, 216, 225, 249), spreadRadius: 0, blurRadius: 1, offset: Offset(0, 5))],
                               ),
                               child: Center(
-                                child: Icon(
-                                  MezcalmosIcons.locationArrow,
-                                  color: Color.fromARGB(255, 103, 121, 254),
-                                  size: 25,
+                                child: Obx(
+                                  () => clickedLaunchOnMap.value
+                                      ? SizedBox(
+                                          height: 10,
+                                          width: 10,
+                                          child: CircularProgressIndicator(
+                                            color: Colors.purple.shade400,
+                                          ))
+                                      : Icon(
+                                          CupertinoIcons.location_fill,
+                                          color: Color.fromARGB(
+                                              255, 103, 121, 254),
+                                          size: 25,
+                                        ),
                                 ),
                               ),
                             ),
@@ -151,8 +178,9 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                           // ),
                           Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
                           GestureDetector(
-                            onTap: () async =>
-                                await controller.cancelTaxi(null),
+                            onTap: () => controller
+                                .cancelTaxi(null)
+                                .then((_) => Get.back()),
                             child: Container(
                               height: getSizeRelativeToScreen(
                                   20, Get.height, Get.width),
@@ -165,7 +193,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                               ),
                               child: Center(
                                 child: Icon(
-                                 MezcalmosIcons.timesCircle,
+                                  MezcalmosIcons.timesCircle,
                                   color: Color.fromARGB(255, 255, 0, 8),
                                   size: 25,
                                 ),
