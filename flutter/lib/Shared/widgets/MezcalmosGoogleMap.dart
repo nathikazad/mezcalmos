@@ -34,15 +34,15 @@ class MezcalmosGoogleMap extends StatelessWidget {
         "[[[[[[[[[[[[[[[[[[[[[[[[[ BUILD : realtimeTracking > ${realtimeTracking} ]]]]]]]]]]]]]]]]]]]]]]]]]]]]");
 
     if (realtimeTracking) {
-      if (_mezcalmosOrderViewGoogleMapController != null)
-        _mezcalmosOrderViewGoogleMapController!.onDelete;
+      if (_mezcalmosOrderViewGoogleMapController?.isClosed != false)
+        Get.delete<MezcalmosOrderViewGoogleMapController>();
 
       _currentOrderGoogleMapController =
           Get.put<MezcalmosCurrentOrderGoogleMapController>(
               MezcalmosCurrentOrderGoogleMapController());
     } else {
-      if (_currentOrderGoogleMapController != null)
-        _currentOrderGoogleMapController!.dispose();
+      if (_currentOrderGoogleMapController?.isClosed != false)
+        Get.delete<MezcalmosCurrentOrderGoogleMapController>();
 
       _mezcalmosOrderViewGoogleMapController =
           Get.put<MezcalmosOrderViewGoogleMapController>(
@@ -54,19 +54,20 @@ class MezcalmosGoogleMap extends StatelessWidget {
     print(
         "[HOLY MEZCALMOS GMAP] initialCameraPosition ====> ${getCorespondingController().initialCameraPosition.toString()}");
 
-    return Obx(() => !getCorespondingController().mapReady ||
-            (realtimeTracking && _currentOrderController.value!.status == null)
+    return Obx(() => getCorespondingController().mapReady == false
         ? Center(child: CircularProgressIndicator())
-        : GoogleMap(
+        : new GoogleMap(
             // onCameraMove: (_) async {
             //   await reUpdateLocation();
             // },
+
             myLocationButtonEnabled: false,
             // minMaxZoomPreference: MinMaxZoomPreference(10, 16),
             buildingsEnabled: false,
             markers: getCorespondingController().markers,
             polylines: getCorespondingController().polylines,
             zoomControlsEnabled: false,
+
             compassEnabled: false,
             mapType: MapType.normal,
             tiltGesturesEnabled: true,

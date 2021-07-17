@@ -1,6 +1,13 @@
 // Usefull when trying to make Sizes adptable!
+import 'dart:async';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'dart:ui' as ui;
+
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 void mezcalmosLogger(String text, {bool isError = false}) =>
     print("[ MEZCALMOS ][ GETX ] $text");
@@ -33,3 +40,41 @@ dynamic responseStatusChecker(dynamic resp,
     return null;
   }
 }
+
+// BitmapLoading stuff -------------------
+Future<BitmapDescriptor> BitmapDescriptorLoader(
+    String asset, int width, int height) async {
+  return BitmapDescriptor.fromBytes(
+      await getBytesFromCanvas(width, height, asset));
+}
+
+Future<Uint8List> getBytesFromCanvas(int width, int height, urlAsset,
+    {bool isBytes = false}) async {
+  final ui.PictureRecorder pictureRecorder = ui.PictureRecorder();
+  final ui.Canvas canvas = ui.Canvas(pictureRecorder);
+  late final ByteData datai;
+
+  if (!isBytes) datai = await rootBundle.load(urlAsset);
+  var imaged =
+      await loadImage(!isBytes ? new Uint8List.view(datai.buffer) : urlAsset);
+  canvas.drawImageRect(
+    imaged,
+    ui.Rect.fromLTRB(
+        0.0, 0.0, imaged.width.toDouble(), imaged.height.toDouble()),
+    ui.Rect.fromLTRB(0.0, 0.0, width.toDouble(), height.toDouble()),
+    new ui.Paint(),
+  );
+
+  final img = await pictureRecorder.endRecording().toImage(width, height);
+  final data = await img.toByteData(format: ui.ImageByteFormat.png);
+  return data!.buffer.asUint8List();
+}
+
+Future<ui.Image> loadImage(Uint8List img) async {
+  final Completer<ui.Image> completer = new Completer();
+  ui.decodeImageFromList(img, (ui.Image img) {
+    return completer.complete(img);
+  });
+  return completer.future;
+}
+// ------------------------

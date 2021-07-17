@@ -37,12 +37,21 @@ class MezcalmosCurrentOrderGoogleMapController extends GetxController {
   Set<Marker> get markers => _markers;
   bool get mapReady => _mapReady.value;
 
+  GetStorage _getStorage = GetStorage();
+
   @override
   void onInit() {
     // initilize our polylines ====================
 
     print(
         "\n\n[MezcalmosCurrentOrderGoogleMapController] =============== INITIALIZED ==============\n\n");
+
+    googleMapUpdate();
+    super.onInit();
+  }
+
+  void googleMapUpdate() {
+    _polylines.clear();
     List<LatLng> pLineCoords = [];
 
     List<PointLatLng> res = PolylinePoints().decodePolyline(
@@ -62,191 +71,215 @@ class MezcalmosCurrentOrderGoogleMapController extends GetxController {
       endCap: Cap.roundCap,
       // geodesic: true,
     ));
-    googleMapUpdate();
 
-    super.onInit();
-  }
-
-  void googleMapUpdate() {
     print(":::::::: googleMapUpdate :::::::: Called ::::::::");
+    print(
+        ":::::::: ========= POLYLINE len: ${_polylines.length} ======== ::::::::");
     _markers.clear();
+    _mapReady.value = false;
 
     if (_currentOrderController.value!.status == "onTheWay") {
       // that means taxi accepted order
       print("]]]]]]]]]]]]]]]]]]]]]]\n\n ON_THE_WAY \n\n[[[[[[[[[[[[[[[[[[[[[");
-      BitmapDescriptorLoader(user_icon_marker_asset, 170, 180).then((value) {
-        print("0000000000000000 RENDER USER MARKER -----------< $value >");
-        _markers.add(
-          // _customerLocationMarker
-          Marker(
-            draggable: false,
-            flat: true,
-            anchor: ui.Offset(0.5, 1),
-            markerId: MarkerId("from"),
-            icon: value,
-            visible: true,
-            position: LatLng(_currentOrderController.value!.from.latitude,
-                _currentOrderController.value!.from.longitude),
-          ),
-        );
-      });
 
-      BitmapDescriptorLoader(purple_destination_marker_asset, 80, 90)
-          .then((value) {
-        _markers.add(
-          // _customerLocationMarker
-          Marker(
-            draggable: false,
-            flat: true,
-            anchor: ui.Offset(0.5, 1),
-            markerId: MarkerId("to"),
-            icon: value,
-            visible: true,
-            position: LatLng(_currentOrderController.value!.to.latitude,
-                _currentOrderController.value!.to.longitude),
-          ),
-        );
-      });
+      _markers.addAll([
+        // _customerLocationMarker
+        Marker(
+          draggable: false,
+          flat: true,
+          anchor: ui.Offset(0.5, 1),
+          markerId: MarkerId("from"),
+          icon: _getStorage.read('user_descriptor'),
+          visible: true,
+          position: LatLng(_currentOrderController.value!.from.latitude,
+              _currentOrderController.value!.from.longitude),
+        ),
 
-      BitmapDescriptorLoader(taxi_driver_marker_asset, 80, 90).then((value) {
-        _markers.add(Marker(
+        Marker(
+          draggable: false,
+          flat: true,
+          anchor: ui.Offset(0.5, 1),
+          markerId: MarkerId("to"),
+          icon: _getStorage.read('destination_descriptor'),
+          visible: true,
+          position: LatLng(_currentOrderController.value!.to.latitude,
+              _currentOrderController.value!.to.longitude),
+        ),
+        Marker(
           draggable: false,
           flat: true,
           anchor: ui.Offset(0.5, 1),
           markerId: MarkerId("taxi"),
-          icon: value,
+          icon: _getStorage.read('taxi_descriptor'),
           visible: true,
           position: LatLng(_taxiAuthController.currentLocation.latitude,
               _taxiAuthController.currentLocation.longitude),
-        ));
-        this._mapReady.value = true;
-      });
+        )
+      ]);
 
-      initialCameraPosition = _app_launch_mode == "dev"
-          ? LatLng(_currentOrderController.value!.to.latitude,
-              _currentOrderController.value!.to.longitude)
-          : LatLng(_taxiAuthController.currentLocation.latitude,
-              _taxiAuthController.currentLocation.longitude);
+      // BitmapDescriptorLoader(purple_destination_marker_asset, 80, 90)
+      //     .then((value) {
+      //   _markers.add(
+      //     // _customerLocationMarker
+      //     Marker(
+      //       draggable: false,
+      //       flat: true,
+      //       anchor: ui.Offset(0.5, 1),
+      //       markerId: MarkerId("to"),
+      //       icon: value,
+      //       visible: true,
+      //       position: LatLng(_currentOrderController.value!.to.latitude,
+      //           _currentOrderController.value!.to.longitude),
+      //     ),
+      //   );
+      // });
+
+      // BitmapDescriptorLoader(taxi_driver_marker_asset, 80, 90).then((value) {
+      //   _markers.add(Marker(
+      //     draggable: false,
+      //     flat: true,
+      //     anchor: ui.Offset(0.5, 1),
+      //     markerId: MarkerId("taxi"),
+      //     icon: value,
+      //     visible: true,
+      //     position: LatLng(_taxiAuthController.currentLocation.latitude,
+      //         _taxiAuthController.currentLocation.longitude),
+      //   ));
+      //   this._mapReady.value = true;
+      // });
+
+      initialCameraPosition = LatLng(
+          _taxiAuthController.currentLocation.latitude,
+          _taxiAuthController.currentLocation.longitude);
+
+      _mapReady.value = true;
     } else if (_currentOrderController.value!.status == "inTransit") {
       // that means taxi already picked up the customer
       print("]]]]]]]]]]]]]]]]]]]]]]\n\n IN_TRANSIT \n\n[[[[[[[[[[[[[[[[[[[[[");
 
-      BitmapDescriptorLoader(taxi_driver_marker_asset, 80, 90).then((value) {
-        _markers.add(
-          // from ==> TaxiDriverMarker
-          Marker(
-            draggable: false,
-            flat: true,
-            anchor: ui.Offset(0.5, 1),
-            markerId: MarkerId("from"),
-            icon: value,
-            visible: true,
-            position: LatLng(_taxiAuthController.currentLocation.latitude,
-                _taxiAuthController.currentLocation.longitude),
-          ),
-        );
-      });
+      _markers.addAll([
+        Marker(
+          draggable: false,
+          flat: true,
+          anchor: ui.Offset(0.5, 1),
+          markerId: MarkerId("from"),
+          icon: _getStorage.read('taxi_descriptor'),
+          visible: true,
+          position: LatLng(_taxiAuthController.currentLocation.latitude,
+              _taxiAuthController.currentLocation.longitude),
+        ),
+        Marker(
+          draggable: false,
+          flat: true,
+          anchor: ui.Offset(0.5, 1),
+          markerId: MarkerId("to"),
+          icon: _getStorage.read('destination_descriptor'),
+          visible: true,
+          position: LatLng(_currentOrderController.value!.to.latitude,
+              _currentOrderController.value!.to.longitude),
+        ),
+      ]);
+      // BitmapDescriptorLoader(taxi_driver_marker_asset, 80, 90).then((value) {
+      //   _markers.add(
+      //     // from ==> TaxiDriverMarker
+      //     Marker(
+      //       draggable: false,
+      //       flat: true,
+      //       anchor: ui.Offset(0.5, 1),
+      //       markerId: MarkerId("from"),
+      //       icon: value,
+      //       visible: true,
+      //       position: LatLng(_taxiAuthController.currentLocation.latitude,
+      //           _taxiAuthController.currentLocation.longitude),
+      //     ),
+      //   );
+      // });
 
-      BitmapDescriptorLoader(purple_destination_marker_asset, 80, 90)
-          .then((value) {
-        _markers.add(
-          Marker(
-            draggable: false,
-            flat: true,
-            anchor: ui.Offset(0.5, 1),
-            markerId: MarkerId("to"),
-            icon: value,
-            visible: true,
-            position: LatLng(_currentOrderController.value!.to.latitude,
-                _currentOrderController.value!.to.longitude),
-          ),
-        );
-        this._mapReady.value = true;
-      });
+      // BitmapDescriptorLoader(purple_destination_marker_asset, 80, 90)
+      //     .then((value) {
+      //   _markers.add(
+      //     Marker(
+      //       draggable: false,
+      //       flat: true,
+      //       anchor: ui.Offset(0.5, 1),
+      //       markerId: MarkerId("to"),
+      //       icon: value,
+      //       visible: true,
+      //       position: LatLng(_currentOrderController.value!.to.latitude,
+      //           _currentOrderController.value!.to.longitude),
+      //     ),
+      //   );
+      //   this._mapReady.value = true;
+      // });
 
-      initialCameraPosition = _app_launch_mode == "dev"
-          ? LatLng(_currentOrderController.value!.to.latitude,
-              _currentOrderController.value!.to.longitude)
-          : LatLng(_taxiAuthController.currentLocation.latitude,
-              _taxiAuthController.currentLocation.longitude);
+      initialCameraPosition = LatLng(
+          _taxiAuthController.currentLocation.latitude,
+          _taxiAuthController.currentLocation.longitude);
+      this._mapReady.value = true;
     } else if (_currentOrderController.value!.status == "droppedOff") {
       print(
           "]]]]]]]]]]]]]]]]]]]]]]\n\n OTHER_RIDE_STATUS \n\n[[[[[[[[[[[[[[[[[[[[[");
 
-      BitmapDescriptorLoader(user_icon_marker_asset, 170, 180).then((value) {
-        _markers.add(
-          Marker(
-            draggable: false,
-            flat: true,
-            anchor: ui.Offset(0.5, 1),
-            markerId: MarkerId("from"),
-            icon: value,
-            visible: true,
-            position: LatLng(_currentOrderController.value!.from.latitude,
-                _currentOrderController.value!.from.longitude),
-          ),
-        );
-      });
+      _markers.addAll([
+        Marker(
+          draggable: false,
+          flat: true,
+          anchor: ui.Offset(0.5, 1),
+          markerId: MarkerId("from"),
+          icon: _getStorage.read('user_descriptor'),
+          visible: true,
+          position: LatLng(_currentOrderController.value!.from.latitude,
+              _currentOrderController.value!.from.longitude),
+        ),
+        Marker(
+          draggable: false,
+          flat: true,
+          anchor: ui.Offset(0.5, 1),
+          markerId: MarkerId("to"),
+          icon: _getStorage.read('destination_descriptor'),
+          visible: true,
+          position: LatLng(_currentOrderController.value!.to.latitude,
+              _currentOrderController.value!.to.longitude),
+        ),
+      ]);
+      // BitmapDescriptorLoader(user_icon_marker_asset, 170, 180).then((value) {
+      //   _markers.add(
+      //     Marker(
+      //       draggable: false,
+      //       flat: true,
+      //       anchor: ui.Offset(0.5, 1),
+      //       markerId: MarkerId("from"),
+      //       icon: value,
+      //       visible: true,
+      //       position: LatLng(_currentOrderController.value!.from.latitude,
+      //           _currentOrderController.value!.from.longitude),
+      //     ),
+      //   );
+      // });
 
-      BitmapDescriptorLoader(purple_destination_marker_asset, 80, 90)
-          .then((value) {
-        _markers.add(
-          Marker(
-            draggable: false,
-            flat: true,
-            anchor: ui.Offset(0.5, 1),
-            markerId: MarkerId("to"),
-            icon: value,
-            visible: true,
-            position: LatLng(_currentOrderController.value!.to.latitude,
-                _currentOrderController.value!.to.longitude),
-          ),
-        );
-        initialCameraPosition = LatLng(
-            _currentOrderController.value!.from.latitude,
-            _currentOrderController.value!.from.longitude);
-        this._mapReady.value = true;
-      });
+      // BitmapDescriptorLoader(purple_destination_marker_asset, 80, 90)
+      //     .then((value) {
+      //   _markers.add(
+      //     Marker(
+      //       draggable: false,
+      //       flat: true,
+      //       anchor: ui.Offset(0.5, 1),
+      //       markerId: MarkerId("to"),
+      //       icon: value,
+      //       visible: true,
+      //       position: LatLng(_currentOrderController.value!.to.latitude,
+      //           _currentOrderController.value!.to.longitude),
+      //     ),
+      //   );
+      initialCameraPosition = LatLng(
+          _currentOrderController.value!.from.latitude,
+          _currentOrderController.value!.from.longitude);
+      this._mapReady.value = true;
+      // });
     } else {
       print(
           "\n\n __________________________( STATUS => ${_currentOrderController.value!.status} )_______________________\n\n");
     }
-  }
-
-  Future<BitmapDescriptor> BitmapDescriptorLoader(
-      String asset, int width, int height) async {
-    return BitmapDescriptor.fromBytes(
-        await getBytesFromCanvas(width, height, asset));
-  }
-
-  Future<Uint8List> getBytesFromCanvas(int width, int height, urlAsset,
-      {bool isBytes = false}) async {
-    final ui.PictureRecorder pictureRecorder = ui.PictureRecorder();
-    final ui.Canvas canvas = ui.Canvas(pictureRecorder);
-    late final ByteData datai;
-
-    if (!isBytes) datai = await rootBundle.load(urlAsset);
-    var imaged =
-        await loadImage(!isBytes ? new Uint8List.view(datai.buffer) : urlAsset);
-    canvas.drawImageRect(
-      imaged,
-      ui.Rect.fromLTRB(
-          0.0, 0.0, imaged.width.toDouble(), imaged.height.toDouble()),
-      ui.Rect.fromLTRB(0.0, 0.0, width.toDouble(), height.toDouble()),
-      new ui.Paint(),
-    );
-
-    final img = await pictureRecorder.endRecording().toImage(width, height);
-    final data = await img.toByteData(format: ui.ImageByteFormat.png);
-    return data!.buffer.asUint8List();
-  }
-
-  Future<ui.Image> loadImage(Uint8List img) async {
-    final Completer<ui.Image> completer = new Completer();
-    ui.decodeImageFromList(img, (ui.Image img) {
-      return completer.complete(img);
-    });
-    return completer.future;
   }
 
   LatLngBounds _createBounds(List<LatLng> positions) {
@@ -284,6 +317,7 @@ class MezcalmosCurrentOrderGoogleMapController extends GetxController {
   }
 }
 
+// to - from
 // we are using this in google map Screens
 class MezcalmosOrderViewGoogleMapController extends GetxController {
   // puerto mezcondido cords in case we need to test
@@ -299,6 +333,8 @@ class MezcalmosOrderViewGoogleMapController extends GetxController {
   RxSet<Marker> _markers = <Marker>{}.obs;
 
   late LatLng initialCameraPosition;
+
+  GetStorage _getStorage = GetStorage();
 
   // to keep track if everything is initilized !
   RxBool _mapReady = false.obs;
@@ -344,111 +380,72 @@ class MezcalmosOrderViewGoogleMapController extends GetxController {
 
     // get our bitmaps for markers
 
-    BitmapDescriptorLoader(user_icon_marker_asset, 170, 180).then((value) {
-      _markers.add(
-        Marker(
-          draggable: false,
-          flat: true,
-          anchor: ui.Offset(0.5, 1),
-          markerId: MarkerId("from"),
-          icon: value,
-          visible: true,
-          position: LatLng(
-              _incomingOrdersController.selectedIncommingOrder!.from.latitude,
-              _incomingOrdersController.selectedIncommingOrder!.from.longitude),
-        ),
-      );
-    });
+    // BitmapDescriptorLoader(user_icon_marker_asset, 170, 180).then((value) {
+    //   _markers.add(
+    //     Marker(
+    //       draggable: false,
+    //       flat: true,
+    //       anchor: ui.Offset(0.5, 1),
+    //       markerId: MarkerId("from"),
+    //       icon: value,
+    //       visible: true,
+    //       position: LatLng(
+    //           _incomingOrdersController.selectedIncommingOrder!.from.latitude,
+    //           _incomingOrdersController.selectedIncommingOrder!.from.longitude),
+    //     ),
+    //   );
+    // });
 
-    BitmapDescriptorLoader(purple_destination_marker_asset, 80, 90)
-        .then((value) {
-      _markers.add(
-        Marker(
-          draggable: false,
-          flat: true,
-          anchor: ui.Offset(0.5, 1),
-          markerId: MarkerId("to"),
-          icon: value,
-          visible: true,
-          position: LatLng(
-              _incomingOrdersController.selectedIncommingOrder!.to.latitude,
-              _incomingOrdersController.selectedIncommingOrder!.to.longitude),
-        ),
-      );
+    // BitmapDescriptorLoader(purple_destination_marker_asset, 80, 90)
+    //     .then((value) {
+    //   _markers.add(
+    //     Marker(
+    //       draggable: false,
+    //       flat: true,
+    //       anchor: ui.Offset(0.5, 1),
+    //       markerId: MarkerId("to"),
+    //       icon: value,
+    //       visible: true,
+    //       position: LatLng(
+    //           _incomingOrdersController.selectedIncommingOrder!.to.latitude,
+    //           _incomingOrdersController.selectedIncommingOrder!.to.longitude),
+    //     ),
+    //   );
 
-      this._mapReady.value = true;
-    });
+    //   this._mapReady.value = true;
+    // });
 
-    // add markers in
-    // _markers.addAll([
-    // from ==> TaxiDriverMarker
-    // Marker(
-    //   draggable: false,
-    //   flat: true,
-    //   anchor: ui.Offset(0.5, 1),
-    //   markerId: MarkerId("from"),
-    //   icon: _customer_location_marker_bitmap,
-    //   visible: true,
-    //   position: LatLng(
-    //       _incomingOrdersController.selectedIncommingOrder!.from.latitude,
-    //       _incomingOrdersController.selectedIncommingOrder!.from.longitude),
-    // ),
-
-    // _customerDestinationMarker
-    // Marker(
-    //   draggable: false,
-    //   flat: true,
-    //   anchor: ui.Offset(0.5, 1),
-    //   markerId: MarkerId("to"),
-    //   icon: _customer_destination_marker_bitmap,
-    //   visible: true,
-    //   position: LatLng(
-    //       _incomingOrdersController.selectedIncommingOrder!.to.latitude,
-    //       _incomingOrdersController.selectedIncommingOrder!.to.longitude),
-    // ),
-    // ]);
+    _markers.addAll([
+      Marker(
+        draggable: false,
+        flat: true,
+        anchor: ui.Offset(0.5, 1),
+        markerId: MarkerId("from"),
+        icon: _getStorage.read('user_descriptor'),
+        visible: true,
+        position: LatLng(
+            _incomingOrdersController.selectedIncommingOrder!.from.latitude,
+            _incomingOrdersController.selectedIncommingOrder!.from.longitude),
+      ),
+      Marker(
+        draggable: false,
+        flat: true,
+        anchor: ui.Offset(0.5, 1),
+        markerId: MarkerId("to"),
+        icon: _getStorage.read('destination_descriptor'),
+        visible: true,
+        position: LatLng(
+            _incomingOrdersController.selectedIncommingOrder!.to.latitude,
+            _incomingOrdersController.selectedIncommingOrder!.to.longitude),
+      ),
+    ]);
 
     initialCameraPosition = LatLng(
         _incomingOrdersController.selectedIncommingOrder!.from.latitude,
         _incomingOrdersController.selectedIncommingOrder!.from.longitude);
 
+    _mapReady.value = true;
     super.onInit();
-  }
-
-  Future<BitmapDescriptor> BitmapDescriptorLoader(
-      String asset, int width, int height) async {
-    return BitmapDescriptor.fromBytes(
-        await getBytesFromCanvas(width, height, asset));
-  }
-
-  Future<Uint8List> getBytesFromCanvas(int width, int height, urlAsset,
-      {bool isBytes = false}) async {
-    final ui.PictureRecorder pictureRecorder = ui.PictureRecorder();
-    final ui.Canvas canvas = ui.Canvas(pictureRecorder);
-    late final ByteData datai;
-
-    if (!isBytes) datai = await rootBundle.load(urlAsset);
-    var imaged =
-        await loadImage(!isBytes ? new Uint8List.view(datai.buffer) : urlAsset);
-    canvas.drawImageRect(
-      imaged,
-      ui.Rect.fromLTRB(
-          0.0, 0.0, imaged.width.toDouble(), imaged.height.toDouble()),
-      ui.Rect.fromLTRB(0.0, 0.0, width.toDouble(), height.toDouble()),
-      new ui.Paint(),
-    );
-
-    final img = await pictureRecorder.endRecording().toImage(width, height);
-    final data = await img.toByteData(format: ui.ImageByteFormat.png);
-    return data!.buffer.asUint8List();
-  }
-
-  Future<ui.Image> loadImage(Uint8List img) async {
-    final Completer<ui.Image> completer = new Completer();
-    ui.decodeImageFromList(img, (ui.Image img) {
-      return completer.complete(img);
-    });
-    return completer.future;
   }
 
   LatLngBounds _createBounds(List<LatLng> positions) {

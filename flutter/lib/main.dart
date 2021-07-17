@@ -114,6 +114,18 @@ class _SPointState extends State<SPoint> {
         await GetStorage().write(getxLmodeKey, widget._launch_mode);
         await GetStorage()
             .write(getxGmapBottomPaddingKey, Platform.isAndroid ? 38.0 : 63.0);
+
+        await GetStorage().write('user_descriptor',
+            await BitmapDescriptorLoader(user_icon_marker_asset, 170, 180));
+
+        await GetStorage().write('taxi_descriptor',
+            await BitmapDescriptorLoader(taxi_driver_marker_asset, 80, 90));
+
+        await GetStorage().write(
+            'destination_descriptor',
+            await BitmapDescriptorLoader(
+                purple_destination_marker_asset, 80, 90));
+
         // Loading map asset !
         await rootBundle.loadString(map_style_asset).then((jsonString) =>
             GetStorage().write(getxMapStyleJsonKey, jsonString));

@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/mezcalmosGoogleMapController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
@@ -16,12 +15,11 @@ import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
 import 'package:mezcalmos/TaxiApp/routes/SimpleRouter.dart';
 
 class CurrentOrderScreen extends GetView<CurrentOrderController> {
-  MezcalmosCurrentOrderGoogleMapController
-      _mezcalmosCurrentOrderGoogleMapController =
-      Get.find<MezcalmosCurrentOrderGoogleMapController>();
-
   @override
   Widget build(BuildContext context) {
+    Get.put<MezcalmosCurrentOrderGoogleMapController>(
+        MezcalmosCurrentOrderGoogleMapController());
+
     controller.dispatchCurrentOrder();
 
     return Stack(
@@ -76,9 +74,9 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                                   await controller.finishRide();
                                 }, tFinishRideConfirmation)
                                   .then((_) {
-                                  Get.offAllNamed(kTaxiWrapperRoute);
-                                  _mezcalmosCurrentOrderGoogleMapController
-                                      .googleMapUpdate();
+                                  //Get.offAllNamed(kTaxiWrapperRoute);
+                                  // _mezcalmosCurrentOrderGoogleMapController
+                                  //     .googleMapUpdate();
                                   Get.back(closeOverlays: true);
                                 })
                               : MezcalmosSharedWidgets
@@ -87,9 +85,9 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                                   await controller.startRide();
                                 }, tStartRideConfirmation)
                                   .then((_) {
-                                  _mezcalmosCurrentOrderGoogleMapController
-                                      .googleMapUpdate();
-                                  Get.back(closeOverlays: true);
+                                  // _mezcalmosCurrentOrderGoogleMapController
+                                  //     .googleMapUpdate();
+                                  //Get.back(closeOverlays: true);
                                 }),
                           child: Text(
                             controller.value?.status != "inTransit"
