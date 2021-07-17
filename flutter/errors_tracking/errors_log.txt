@@ -1,0 +1,73 @@
+> Error 1:
+
+    flutter: AuthController::onValue Invoked >> info : {phoneNumber: +216xxxxxxx, phoneNumberType: SMS}
+flutter: ++++++++++++++++++++++++++++++++++++++++++++++
+
+{phoneNumber: +216xxxxxxx, phoneNumberType: SMS}
+
+++++++++++++++++++++++++++++++++
+[VERBOSE-2:ui_dart_state.cc(199)] Unhandled Exception: type 'Null' is not a subtype of type 'String'
+#0      new User.fromSnapshot (package:mezcalmos/TaxiApp/models/User.dart:27:21)
+#1      AuthController.onInit.<anonymous closure>.<anonymous closure> (package:mezcalmos/Shared/controllers/authController.dart:74:30)
+#2      _rootRunUnary (dart:async/zone.dart:1362:47)
+#3      _CustomZone.runUnary (dart:async/zone.dart:1265:19)
+#4      _CustomZone.runUnaryGuarded (dart:async/zone.dart:1170:7)
+#5      _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:341:11)
+#6      _DelayedData.perform (dart:async/stream_impl.dart:591:14)
+#7      _StreamImplEvents.handleNext (dart:async/stream_impl.dart:706:11)
+#8      _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:663:7)
+#9      _rootRun (dart:async/zone.dart:1346:47)
+#10     _CustomZone.run (dart:async/zone.dart:1258:19)
+#11     _CustomZone.runGuarded (dart:async/zone.dart:1162:7)
+#12     _CustomZone.bindCallbackGuarded.<an<…>
+
+
+> Error 2:
+
+══╡ EXCEPTION CAUGHT BY WIDGETS LIBRARY ╞═══════════════════════════════════════════════════════════
+The following assertion was thrown while finalizing the widget tree:
+Multiple widgets used the same GlobalKey.
+The key [LabeledGlobalKey<ScaffoldState>#6af7a] was used by multiple widgets. The parents of those
+widgets were different widgets that both had the following description:
+  TaxiWrapper
+A GlobalKey can only be specified on one widget at a time in the widget tree.
+
+When the exception was thrown, this was the stack:
+#0      BuildOwner._debugVerifyGlobalKeyReservation.<anonymous closure>.<anonymous closure>.<anonymous closure>
+(package:flutter/src/widgets/framework.dart:2778:13)
+#1      _LinkedHashMapMixin.forEach (dart:collection-patch/compact_hash.dart:397:8)
+#2      BuildOwner._debugVerifyGlobalKeyReservation.<anonymous closure>.<anonymous closure>
+(package:flutter/src/widgets/framework.dart:2725:20)
+#3      _LinkedHashMapMixin.forEach (dart:collection-patch/compact_hash.dart:397:8)
+#4      BuildOwner._debugVerifyGlobalKeyReservation.<anonymous closure> (package:flutter/src/widgets/framework.dart:2721:35)
+#5      BuildOwner._debugVerifyGlobalKeyReservation (package:flutter/src/widgets/framework.dart:2786:6)
+#6      BuildOwner.finalizeTree.<anonymous closure> (package:flutter/src/widgets/framework.dart:2844:11)
+#7      BuildOwner.finalizeTree (package:flutter/src/widgets/framework.dart:2925:8)
+#8      WidgetsBinding.drawFrame (package:flutter/src/widgets/binding.dart:877:19)
+#9      RendererBinding._handlePersistentFrameCallback (package:flutter/src/rendering/binding.dart:328:5)
+#10     SchedulerBinding._invokeFrameCallback (package:flutter/src/scheduler/binding.dart:1144:15)
+#11     SchedulerBinding.handleDrawFrame (package:flutter/src/scheduler/binding.dart:1082:9)
+#12     SchedulerBinding._handleDrawFrame (package:flutter/src/scheduler/binding.dart:998:5)
+#16     _invoke (dart:ui/hooks.dart:163:10)
+#17     PlatformDispatcher._drawFrame (dart:ui/platform_dispatcher.dart:259:5)
+#18     _drawFrame (dart:ui/hooks.dart:126:31)
+(elided 3 frames from dart:async)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+
+> Error 3:
+
+flutter:  FB AUTH STATUS +++++++++++++++++++++ LoginStatus.cancelled
+[VERBOSE-2:ui_dart_state.cc(199)] Unhandled Exception: Null check operator used on a null value
+#0      AuthController.signInWithFacebook (package:mezcalmos/Shared/controllers/authController.dart:190:70)
+<asynchronous suspension>
+#1      SignIn.build.<anonymous closure> (package:mezcalmos/TaxiApp/pages/AuthScreens/SignInScreen.dart:65:35)
+<asynchronous suspension>
+
+> Error 4:
+
+This not exactly an error , but we are hardcoding : ?type=large in MezcalmosSideMenu.dart 
+for the User Image that comes from facebook , tho the image can be https://firebasestorage.googleapis.com/v... 
+so adding that might cause problems in future.
+
+a typical solution would be , checking the user's auth type .. facebook .. email n pass ..etc.
+but a way better solution would be to add this in the backend.
