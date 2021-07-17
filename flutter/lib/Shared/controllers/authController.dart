@@ -8,6 +8,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
+import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/models/User.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:mezcalmos/TaxiApp/helpers/DatabaseHelper.dart';
@@ -33,8 +34,8 @@ class AuthController extends GetxController {
   RxInt _timeBetweenResending = 0.obs;
   int get timeBetweenResending => _timeBetweenResending.value;
 
-  void resendOtpTimerActivate() {
-    _timeBetweenResending.value = 60;
+  void resendOtpTimerActivate(int time) {
+    _timeBetweenResending.value = time;
     const second = const Duration(seconds: 1);
     Timer.periodic(
       second,
@@ -59,9 +60,11 @@ class AuthController extends GetxController {
         print('User is currently signed out!');
         _user.value = null;
       } else {
+        print("Putting Taxi Auth Controller");
+        Get.lazyPut(() => TaxiAuthController());
         _userInfoListener = _databaseHelper.firebaseDatabase
             .reference()
-            .child(userId(user.uid))
+            .child(userInfo(user.uid))
             .onValue
             .listen((event) {
           print(
@@ -73,6 +76,15 @@ class AuthController extends GetxController {
       }
     });
     super.onInit();
+  }
+
+  void changeLanguage(String newLanguage) {
+    if (newLanguage == "en" || newLanguage == "es") {
+      _databaseHelper.firebaseDatabase
+          .reference()
+          .child(userLanguage(_user.value!.uid))
+          .set(newLanguage);
+    }
   }
 
   Future<void> signUp(String email, String password) async {
@@ -118,7 +130,13 @@ class AuthController extends GetxController {
         'language': _settings.appLanguage.userLanguageKey,
         'database': _databaseHelper.dbType
       });
-      mezcalmosSnackBar("Notice ~", "OTP message has been sent !");
+      mezcalmosSnackBar(
+          "Notice ~",
+          responseStatusChecker(response.data,
+              onSuccessMessage: "OTP message has been sent !"));
+      if (response.data['secondsLeft'] != null) {
+        resendOtpTimerActivate(response.data['secondsLeft']);
+      }
     } catch (e) {
       // mezcalmosSnackBar("Notice ~", "Failed to send OTP message :( ");
       // _waitingResponse.value = false;
@@ -181,6 +199,7 @@ class AuthController extends GetxController {
     try {
       _userInfoListener.pause();
       // TaxiInjectionHelper.revokeListenersOnSignOut();
+      Get.find<TaxiAuthController>().dispose();
       await _auth.signOut();
       Get.offAllNamed(kMainAuthWrapperRoute);
     } catch (e) {

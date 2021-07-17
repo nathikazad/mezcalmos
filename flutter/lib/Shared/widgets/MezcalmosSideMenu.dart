@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/utilities/mezcalmos_icons.dart';
 
 class MezcalmosSideMenu extends GetWidget<AuthController> {
   SettingsController _settingsController = Get.find<SettingsController>();
+ LanguageController lang =Get.find<LanguageController>();
   @override
   Widget build(BuildContext context) {
     print("=========> ImgUrl ======<  ${controller.user?.image}");
@@ -65,12 +68,10 @@ class MezcalmosSideMenu extends GetWidget<AuthController> {
             SizedBox(height: getSizeRelativeToScreen(300, sw, sh)),
             ListTile(
                 onTap: () async => await controller.signOut(),
-                leading: Icon(
-                  Icons.power_settings_new_rounded,
-                  size: 30,
-                ),
+                leading:  Icon(MezcalmosIcons.powerOff, color: Color.fromARGB(255, 103, 121, 254),
+                                  size: 25,),
                 title: Text(
-                  tDisconnect,
+                  lang.strings['shared']['navDrawer']["logout"],
                   style: TextStyle(fontFamily: 'psb', fontSize: 16),
                 )),
             Obx(() => ListTile(

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MezcalmosSwitch.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
@@ -11,6 +12,7 @@ import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/routes/SimpleRouter.dart';
 
 class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
+ LanguageController lang =Get.find<LanguageController>();
   @override
   Widget build(BuildContext context) {
     TaxiAuthController _taxiAuthController = Get.find<TaxiAuthController>();
@@ -34,7 +36,7 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                   child: Transform.scale(
                     scale: 1.15,
                     child: Text(
-                      tIncommingOrders,
+                      lang.strings['taxi']['incoming']["title"],
                       style: TextStyle(
                           // fontSize: getSizeRelativeToScreen(70, sw, sh),
                           fontSize: 38.5,
@@ -269,13 +271,13 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                               children: [
                                 Flexible(
                                   child: Text(
-                                    "No Orders Found",
+                                    lang.strings['taxi']['incoming']["noOrdersTitle"],
                                     style: TextStyle(fontSize: 38.5, fontFamily: 'psr'),
                                   ),
                                 ),
                                 Flexible(
                                   child: Text(
-                                    "Try again later",
+                                    lang.strings['taxi']['incoming']["noOrdersDesc"],
                                     style: TextStyle(fontSize: 16, fontFamily: 'psr', color: Color.fromARGB(255, 168, 168, 168)),
                                   ),
                                 ),
@@ -302,11 +304,11 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              "Turn On Incoming Orders",
+                              lang.strings['taxi']['incoming']["toggleTitle"],
                               style: TextStyle(fontSize: 25.5, fontFamily: 'psr'),
                             ),
                             Text(
-                              "Turn On to see new orders",
+                              lang.strings['taxi']['incoming']["toggleDesc"],
                               style: TextStyle(fontSize: 16, fontFamily: 'psr', color: Color.fromARGB(255, 168, 168, 168)),
                             ),
                           ],

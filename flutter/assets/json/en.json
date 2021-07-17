@@ -42,7 +42,6 @@
             "location": "Location|Locations",
             "addNewLoc": "Add New Location",
             "editLocation": "Edit Location"
-
         },
         "orders": {
             "title": "Orders",
@@ -55,13 +54,15 @@
     },
     "taxi": {
         "incoming": {
-            "title": " Incoming <br/>Orders",
+            "title": " Incoming  Orders",
             "loading": "Loading",
             "services": "All Services",
             "isInTax": "Please finish|your ride|to accept new orders",
             "far": "far",
-            "toggle": "Turn On Incoming Orders|Turn on to see new orders",
-            "noOrders": "No Orders Found|Try again later"
+            "toggleTitle": "Turn On Incoming Orders",
+            "toggleDesc": "Turn on to see new orders",
+            "noOrdersTitle": "No Orders Found",
+            "noOrdersDesc": "Try again later"
         },
         "taxiView": {
             "taxi": "Taxi",
@@ -106,13 +107,12 @@
             "cancelledMessage": "Your ride has been cancelled"
         },
         "introduction": {
-            "howToTaxi": "Do You Want To Use <br/>The Mezcalmos App To <br/>Give Rides To Customers In <br/> <span class='text_blue'>Puerto Escondido?</span> ",
-            "signUpTaxi": "Click Sign Up, Show Us Proof <br/>Of Your Taxi Authorization <br/>And Start Giving Rides  <br/> Right Away.",
+            "howToTaxi": "Do You Want To Use  The Mezcalmos App To  Give Rides To Customers In   <span class='text_blue'>Puerto Escondido?</span> ",
+            "signUpTaxi": "Click Sign Up, Show Us Proof  Of Your Taxi Authorization  And Start Giving Rides    Right Away.",
             "confirmation": "Your Application Is Under Review. We Will Contact You Shortly",
             "logIn": " Sign Up |Login",
             "alreadyMember": "Already a member?",
             "yes": "YES"
-
         },
         "permissions": {
             "askForNotif": "Location Service Turned Off|App cannot work without the location service|Enable location services from  your setting",
@@ -121,8 +121,10 @@
     },
     "shared": {
         "login": {
-            "owner": "Login To <br/>  Make An Order ",
-            "customer": "Login To <br/>  Make An Order ",
+
+            "title": "Connect using Facebook or using SMS ! ",
+            "owner": "Login To    Make An Order ",
+            "customer": "Login To    Make An Order ",
             "fbBtn": "LOGIN WITH FACEBOOK",
             "loginWithSms": "LOGIN WITH SMS",
             "whatsAppLogin": " LOGIN WITH WHATSAPP",
@@ -131,6 +133,9 @@
             "OtpConfirmation": "OTP Code Confirmation",
             "enterOtpCode": "Enter OTP code sent to",
             "resend": "Resend",
+            "resendAfter":"Resend after",
+            "seconds":"seconds",
+
             "confirm": "Confirm",
             "otpCode": "OTP Code",
             "enterPhoneNumber": "Enter phone number to recieve OTP code",
@@ -151,10 +156,10 @@
             "clear": "Clear"
         },
         "userInfo": {
-            "title": " User <br/> Information ",
-            "editInfo": "Edit  <br/> Information",
+            "title": " User   Information ",
+            "editInfo": "Edit    Information",
             "editPhoneNumber": "Change Phone Number",
-            "addInfo": "Add  <br/> Information",
+            "addInfo": "Add    Information",
             "editBtn": "EDIT INFORMATION",
             "deleteBtn": "Delete Account",
             "saveBtn": "SAVE",
@@ -166,7 +171,6 @@
         },
         "navDrawer": {
             "userInfo": "User Information",
-
             "myOrders": "My Orders",
             "savedLocations": "Saved Locations",
             "logout": "Logout",
@@ -197,7 +201,6 @@
             "address": "Address",
             "searching": "Searching",
             "pick": "PICK"
-
         },
         "placeHolders": {
             "address": "Enter Address",
@@ -207,7 +210,6 @@
             "displayName": "Enter Display Name",
             "phone": "Enter Phone Number",
             "phoneNumber": "+52123456.."
-
         }
     }
 }

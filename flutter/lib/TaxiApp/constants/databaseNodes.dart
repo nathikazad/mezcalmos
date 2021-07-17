@@ -9,6 +9,10 @@ String orderId(String? orderId) {
   return 'orders/taxi/$orderId';
 }
 
-String userId(String? userId) {
-  return 'users/$userId';
+String userInfo(String? userId) {
+  return 'users/$userId/info';
+}
+
+String userLanguage(String? userId) {
+  return 'users/$userId/info/language';
 }

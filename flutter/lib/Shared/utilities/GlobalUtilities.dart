@@ -31,7 +31,7 @@ dynamic responseStatusChecker(dynamic resp,
     return null;
   } else if (resp['status'] == "Error") {
     print("[RESPONSE ERROR] -> $resp['status'] ");
-    return onErrorMessage ?? resp['status'];
+    return resp['errorMessage'] ?? onErrorMessage ?? resp['status'];
   } else if (resp['status'] == "Success") {
     print("[RESPONSE SUCCESS] -> $resp['status'] ");
     return onSuccessMessage ?? resp['status'];

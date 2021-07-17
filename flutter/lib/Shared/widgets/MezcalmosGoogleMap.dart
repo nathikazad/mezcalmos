@@ -13,9 +13,6 @@ class MezcalmosGoogleMap extends StatelessWidget {
   Completer<GoogleMapController> _gMapCompleter = Completer();
   GoogleMapController? _googleMapController;
 
-  CurrentOrderController _currentOrderController =
-      Get.find<CurrentOrderController>();
-
   MezcalmosCurrentOrderGoogleMapController? _currentOrderGoogleMapController;
   MezcalmosOrderViewGoogleMapController? _mezcalmosOrderViewGoogleMapController;
 

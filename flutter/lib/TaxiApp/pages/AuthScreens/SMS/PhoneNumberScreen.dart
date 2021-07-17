@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/routes/SimpleRouter.dart';
 
 class PhoneNumberScreen extends GetView<AuthController> {
+   LanguageController lang =Get.find<LanguageController>();
+
   TextEditingController _prefixTextFieldController = TextEditingController();
   TextEditingController _numberTextFieldController = TextEditingController();
 
@@ -20,7 +23,7 @@ class PhoneNumberScreen extends GetView<AuthController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("OTP Code", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 45)),
+              Text(lang.strings['shared']['login']["otpCode"], style: TextStyle(fontWeight: FontWeight.w500, fontSize: 45)),
               SizedBox(
                 height: 20,
               ),
@@ -34,7 +37,7 @@ class PhoneNumberScreen extends GetView<AuthController> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        "Enter your phone number to receive the OTP code",
+                        lang.strings['shared']['login']["enterPhoneNumber"],
                         style: TextStyle(
                           color: Colors.black87,
                           fontWeight: FontWeight.w500,
@@ -58,10 +61,10 @@ class PhoneNumberScreen extends GetView<AuthController> {
                                   canSendOtp.value = false;
                               },
                               autofocus: true,
-                              maxLength: 3,
+                              maxLength: 4,
                               keyboardType: TextInputType.phone,
                               decoration: InputDecoration(
-                                  hintText: "+",
+                                  hintText: "+52",
                                   focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(5), gapPadding: 1, borderSide: BorderSide(color: Colors.blue)),
                                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), gapPadding: 1)),
                               controller: _prefixTextFieldController,
@@ -77,7 +80,7 @@ class PhoneNumberScreen extends GetView<AuthController> {
                                 } else
                                   canSendOtp.value = false;
                               },
-                              maxLength: 9,
+                              maxLength: 10,
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                   hintText: "number",
@@ -95,7 +98,7 @@ class PhoneNumberScreen extends GetView<AuthController> {
               Padding(
                 padding: EdgeInsets.only(top: 15, bottom: 15),
                 child: Text(
-                  "By continuing you will receive a verification code to your phone number by SMS. Rates may apply for messages and data.",
+                  lang.strings['shared']['login']["twilioNote"],
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 11),
                 ),
               ),
@@ -121,7 +124,7 @@ class PhoneNumberScreen extends GetView<AuthController> {
                           }
                         : null,
                     child: Text(
-                      "SEND",
+                      lang.strings['shared']['login']["submit"],
                       style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 15),
                     ),
                     style: ButtonStyle(

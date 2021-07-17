@@ -2,13 +2,20 @@ import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:firebase_database/firebase_database.dart';
 
 class User {
-  dynamic uid;
+  String uid;
   dynamic email;
-  dynamic displayName;
-  dynamic image;
-  dynamic language;
+  String displayName;
+  String image;
+  String language;
+  String? phone;
 
-  User({required this.uid, required this.email, required this.displayName, required this.image, required this.language});
+  User(
+      {required this.uid,
+      required this.email,
+      required this.displayName,
+      required this.image,
+      required this.language,
+      this.phone});
 
   // Get props as list.
   List<Object> get props => [uid, email, displayName, image];
@@ -17,9 +24,12 @@ class User {
   User.fromSnapshot(fireAuth.User user, DataSnapshot snapshot)
       : uid = user.uid,
         email = user.email,
-        displayName = user.displayName,
-        image = user.photoURL,
-        language = snapshot.value == null ? "en" : snapshot.value['language'];
+        displayName = snapshot.value['displayName'],
+        image = snapshot.value['photo'],
+        language = snapshot.value['language'] == null
+            ? "en"
+            : snapshot.value['language'],
+        phone = snapshot.value['phone'];
 
   // Added for Debugging Perposes - Don't delete for now
   Map<String, dynamic> toJson() => {"uid": uid, "email": email, "displayName": displayName, "image": image, "language": language};
