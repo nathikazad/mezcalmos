@@ -64,33 +64,44 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                                     : MaterialStateProperty.all(
                                         Color.fromARGB(255, 234, 51, 38)),
                           ),
-                          onPressed: () => controller.value?.status ==
-                                  "inTransit"
-                              ? MezcalmosSharedWidgets
-                                      .yesNoDefaultConfirmationDialog(() async {
-                                  Get.back();
-                                  await controller.finishRide();
-                                },
-                                          lang.strings['taxi']['taxiView']
-                                              ["tooFarFromfinishRide"])
-                                  .then((_) {
-                                  //Get.offAllNamed(kTaxiWrapperRoute);
-                                  // _mezcalmosCurrentOrderGoogleMapController
-                                  //     .googleMapUpdate();
-                                  Get.back(closeOverlays: true);
-                                })
-                              : MezcalmosSharedWidgets
-                                      .yesNoDefaultConfirmationDialog(() async {
-                                  Get.back();
-                                  await controller.startRide();
-                                },
-                                          lang.strings['taxi']['taxiView']
-                                              ["tooFarFromstartRide"])
-                                  .then((_) {
-                                  // _mezcalmosCurrentOrderGoogleMapController
-                                  //     .googleMapUpdate();
-                                  //Get.back(closeOverlays: true);
-                                }),
+                          onPressed: () async {
+                            print(
+                                "%%%%%%%%%%%%\n controller.value!.distanceToClient :: ${controller.distanceToClient}\n%%%%%%%%%%%%");
+                            print(
+                                "%%%%%%%%%%%%\n controller.distanceFromFinish :: ${controller.distanceToFinish}\n%%%%%%%%%%%%");
+                            controller.value?.status == "inTransit"
+                                ? (controller.distanceToFinish > 0.5
+                                    ? MezcalmosSharedWidgets
+                                            .yesNoDefaultConfirmationDialog(
+                                                () async {
+                                        Get.back();
+                                        await controller.finishRide();
+                                      },
+                                                lang.strings['taxi']['taxiView']
+                                                    ["tooFarFromfinishRide"])
+                                        .then((_) {
+                                        //Get.offAllNamed(kTaxiWrapperRoute);
+                                        // _mezcalmosCurrentOrderGoogleMapController
+                                        //     .googleMapUpdate();
+                                        Get.back(closeOverlays: true);
+                                      })
+                                    : await controller.finishRide())
+                                : (controller.distanceToClient > 0.5
+                                    ? MezcalmosSharedWidgets
+                                            .yesNoDefaultConfirmationDialog(
+                                                () async {
+                                        Get.back();
+                                        await controller.startRide();
+                                      },
+                                                lang.strings['taxi']['taxiView']
+                                                    ["tooFarFromstartRide"])
+                                        .then((_) {
+                                        // _mezcalmosCurrentOrderGoogleMapController
+                                        //     .googleMapUpdate();
+                                        //Get.back(closeOverlays: true);
+                                      })
+                                    : await controller.startRide());
+                          },
                           child: Text(
                             controller.value?.status != "inTransit"
                                 ? lang.strings['taxi']['taxiView']["startRide"]

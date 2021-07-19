@@ -203,9 +203,9 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                               ),
                                               Text(
                                                 controller.orders[i]
-                                                            .routeInformation[
-                                                        'distance']['text'] ??
-                                                    "? km",
+                                                        .distanceToClient
+                                                        .toStringAsFixed(2) +
+                                                    " km",
                                                 overflow: TextOverflow.ellipsis,
                                                 maxLines: 1,
                                                 softWrap: false,
@@ -255,55 +255,6 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                             ],
                                           ),
                                         )
-                                        // Positioned(
-                                        //     left: 50,
-                                        //     bottom: 0,
-                                        //     child: Row(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.end, children: [
-                                        // Icon(Icons.location_on_outlined, size: getSizeRelativeToScreen(32, sw, sh)),
-                                        // Text(
-                                        //   controller.orders[i].from['address'].toString().substring(0, 10) + "... ",
-                                        //   overflow: TextOverflow.ellipsis,
-                                        //   maxLines: 1,
-                                        //   softWrap: false,
-                                        //   style: TextStyle(fontFamily: 'psr', fontSize: 14),
-                                        // ),
-                                        // Icon(Icons.my_location_rounded, size: getSizeRelativeToScreen(32, sw, sh)),
-                                        // SizedBox(
-                                        //   width: 2,
-                                        // ),
-                                        // Text(
-                                        //   controller.orders[i].routeInformation['distance']['text'] ?? "? km",
-                                        //   overflow: TextOverflow.ellipsis,
-                                        //   maxLines: 1,
-                                        //   softWrap: false,
-                                        //   style: TextStyle(fontFamily: 'psr', fontSize: 14),
-                                        // ),
-                                        // SizedBox(
-                                        //   width: 5,
-                                        // ),
-                                        // Icon(Icons.social_distance, size: getSizeRelativeToScreen(32, sw, sh)),
-                                        // SizedBox(
-                                        //   width: 2,
-                                        // ),
-                                        // Text(
-                                        //   controller.orders[i].routeInformation['distance']['text'] ?? "? km",
-                                        //   overflow: TextOverflow.ellipsis,
-                                        //   maxLines: 1,
-                                        //   softWrap: false,
-                                        //   style: TextStyle(fontFamily: 'psr', fontSize: 14),
-                                        // ),
-                                        // Icon(Icons.timer, size: getSizeRelativeToScreen(32, sw, sh)),
-                                        // SizedBox(
-                                        //   width: 2,
-                                        // ),
-                                        // Text(
-                                        //   controller.orders[i].routeInformation['duration']['text'] ?? "? mins",
-                                        //   overflow: TextOverflow.ellipsis,
-                                        //   maxLines: 1,
-                                        //   softWrap: false,
-                                        //   style: TextStyle(fontFamily: 'psr', fontSize: 14),
-                                        // ),
-                                        //     ])),
                                       ],
                                     ),
                                   ),

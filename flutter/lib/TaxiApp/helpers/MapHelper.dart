@@ -11,6 +11,8 @@ class MapHelper {
             c(from.latitude! * p) *
             (1 - c((from.longitude! - to.longitude!) * p)) /
             2;
-    return 12742 * asin(sqrt(a));
+    double res = ((12742 * asin(sqrt(a))) / 1000);
+
+    return res;
   }
 }

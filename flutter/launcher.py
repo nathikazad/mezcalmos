@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 
+from os import error
 from sys import argv , platform
 import socket
 
@@ -8,7 +9,7 @@ import socket
 class Launcher(object):
     def __init__(self, *args):
         self.args               = args[0]
-        self.VERSION            = "2021.7.2.4.8.44.980557"
+        self.VERSION            = "2021-07-19 16:32:03.708480"
         self._ip_dart_define    = "HOST"
         self._db_dart_define    = "DB"
         self._sp_dart_define    = "APP_SP"
@@ -48,6 +49,19 @@ class Launcher(object):
         # Auto Launching
         self.Launch()
 
+
+    def __errors_tracker__(self):
+        if __import__('os').path.exists("errors_tracking"):
+            import json as jsn
+            import re
+            solved = [ s_err_key for s_err_key in jsn.load(open("errors_tracking/solved.json" , "r+"))['v1'] ]
+            unsolved_errors = [ _l.replace(' ','').replace(':','').replace('>Error' , '').strip() for _l in open("errors_tracking/errors_log.txt" , "r+").readlines() if re.match(r'^(.|\>).{0,12}Error.{0,12}[0-9]+' , _l) and _l.replace(' ','').replace(':','').replace('>Error' , '').strip() not in solved]
+            print("\n[ REMINDER ] There are unsolved Problems / Errors that might affect the application in Runtime!")
+            print(f"\t|")
+            print(f"\t|_ Errors IDs : {' - '.join(unsolved_errors)}")
+            print("\t|_ Check errors_tracking/errors_log.txt for more\n\n")
+            __import__('time').sleep(0.5)
+            
 
     def __set_sys_cmd__(self):
         if self.isWin:
@@ -110,6 +124,9 @@ class Launcher(object):
 
     def Launch(self):
         try:
+
+            self.__errors_tracker__()
+
             self.__pre_launch_process__()
             self.__checks__()
             _web        = "-d chrome " if self.web else ""

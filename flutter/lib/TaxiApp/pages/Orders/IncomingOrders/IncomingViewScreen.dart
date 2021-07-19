@@ -214,28 +214,27 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                 ),
               )),
           Positioned(
-              bottom: GetStorage().read(getxGmapBottomPaddingKey),
-              child: TextButton(
-                style: ButtonStyle(
-                  fixedSize: MaterialStateProperty.all(Size(
-                      getSizeRelativeToScreen(180, Get.height, Get.width),
-                      getSizeRelativeToScreen(20, Get.height, Get.width))),
-                  backgroundColor: MaterialStateProperty.all(
-                      Color.fromARGB(255, 79, 168, 35)),
+            bottom: GetStorage().read(getxGmapBottomPaddingKey),
+            child: TextButton(
+              style: ButtonStyle(
+                fixedSize: MaterialStateProperty.all(Size(
+                    getSizeRelativeToScreen(180, Get.height, Get.width),
+                    getSizeRelativeToScreen(20, Get.height, Get.width))),
+                backgroundColor:
+                    MaterialStateProperty.all(Color.fromARGB(255, 79, 168, 35)),
+              ),
+              onPressed: () => controller
+                  .acceptTaxi(controller.selectedIncommingOrder?.id)
+                  .then((_) => Get.back()),
+              child: Text(
+                lang.strings['taxi']['taxiView']["acceptOrders"],
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w700,
                 ),
-                onPressed: () => controller
-                    .acceptTaxi(controller.selectedIncommingOrder?.id)
-                    .then((_) => Get.back()),
-                child: Obx(
-                  () => Text(
-                    lang.strings['taxi']['taxiView']["acceptOrders"],
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-              )),
+              ),
+            ),
+          ),
           Positioned(
             top: 10,
             child: Container(
@@ -304,10 +303,10 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                       () => GestureDetector(
                         onTap: () => mezcalmosSnackBar(
                             lang.strings['shared']['inputLocation']["from"],
-                            controller.selectedIncommingOrder?.from.address ??
+                            controller.selectedIncommingOrder?.from?.address ??
                                 ""),
                         child: Text(
-                          (controller.selectedIncommingOrder?.from.address
+                          (controller.selectedIncommingOrder?.from?.address
                                       .toString()
                                       .substring(0, 13) ??
                                   "..........") +
@@ -341,10 +340,10 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                       () => GestureDetector(
                         onTap: () => mezcalmosSnackBar(
                             lang.strings['shared']['inputLocation']["to"],
-                            controller.selectedIncommingOrder?.to.address ??
+                            controller.selectedIncommingOrder?.to?.address ??
                                 ""),
                         child: Text(
-                          (controller.selectedIncommingOrder?.to.address
+                          (controller.selectedIncommingOrder?.to?.address
                                       .toString()
                                       .substring(0, 13) ??
                                   "..........") +

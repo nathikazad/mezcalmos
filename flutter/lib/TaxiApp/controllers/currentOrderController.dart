@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/helpers/DatabaseHelper.dart';
+import 'package:mezcalmos/TaxiApp/helpers/MapHelper.dart';
 import 'package:mezcalmos/TaxiApp/models/Order.dart';
 
 class CurrentOrderController extends GetxController {
@@ -21,6 +22,12 @@ class CurrentOrderController extends GetxController {
   Order? get value => _model.value;
   dynamic get id => _model.value.id;
   dynamic get waitingResponse => _waitingResponse.value;
+
+  double get distanceToFinish => MapHelper.calculateDistance(
+      _taxiAuthController.currentLocation, _model.value.to.position);
+
+  double get distanceToClient => MapHelper.calculateDistance(
+      _taxiAuthController.currentLocation, _model.value.from.position);
 
   StreamSubscription<Event>? _currentOrderListener;
 

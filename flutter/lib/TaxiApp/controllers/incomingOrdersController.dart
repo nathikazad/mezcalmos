@@ -92,7 +92,6 @@ class IncomingOrdersController extends GetxController {
 
       print("Attached Listeners on taxiOpenOrdersNode : ${_listeners.length}");
 
-      // TODO : Convert to KM
       _updateOrderDistanceToClient =
           ever(_taxiAuthController.currentLocationRx, (userLocation) {
         orders.forEach((order) {
