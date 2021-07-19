@@ -26,8 +26,11 @@ class PhoneNumberScreen extends GetView<AuthController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(lang.strings['shared']['login']["otpCode"],
-                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 45)),
+              Obx(
+                () => Text(lang.strings['shared']['login']["otpCode"],
+                    style:
+                        TextStyle(fontWeight: FontWeight.w500, fontSize: 45)),
+              ),
               SizedBox(
                 height: 20,
               ),
@@ -43,12 +46,14 @@ class PhoneNumberScreen extends GetView<AuthController> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
-                        lang.strings['shared']['login']["enterPhoneNumber"],
-                        style: TextStyle(
-                          color: Colors.black87,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16.5,
+                      Obx(
+                        () => Text(
+                          lang.strings['shared']['login']["enterPhoneNumber"],
+                          style: TextStyle(
+                            color: Colors.black87,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16.5,
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -124,9 +129,11 @@ class PhoneNumberScreen extends GetView<AuthController> {
               ),
               Padding(
                 padding: EdgeInsets.only(top: 15, bottom: 15),
-                child: Text(
-                  lang.strings['shared']['login']["twilioNote"],
-                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 11),
+                child: Obx(
+                  () => Text(
+                    lang.strings['shared']['login']["twilioNote"],
+                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 11),
+                  ),
                 ),
               ),
               Obx(() => TextButton(

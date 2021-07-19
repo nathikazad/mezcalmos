@@ -37,13 +37,15 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                 Flexible(
                   child: Transform.scale(
                     scale: 1.15,
-                    child: Text(
-                      lang.strings['taxi']['incoming']["title"],
-                      style: TextStyle(
-                          // fontSize: getSizeRelativeToScreen(70, sw, sh),
-                          fontSize: 38.5,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'psr'),
+                    child: Obx(
+                      () => Text(
+                        lang.strings['taxi']['incoming']["title"],
+                        style: TextStyle(
+                            // fontSize: getSizeRelativeToScreen(70, sw, sh),
+                            fontSize: 38.5,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: 'psr'),
+                      ),
                     ),
                   ),
                 ),
@@ -329,22 +331,26 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Flexible(
-                                  child: Text(
-                                    lang.strings['taxi']['incoming']
-                                        ["noOrdersTitle"],
-                                    style: TextStyle(
-                                        fontSize: 38.5, fontFamily: 'psr'),
+                                  child: Obx(
+                                    () => Text(
+                                      lang.strings['taxi']['incoming']
+                                          ["noOrdersTitle"],
+                                      style: TextStyle(
+                                          fontSize: 38.5, fontFamily: 'psr'),
+                                    ),
                                   ),
                                 ),
                                 Flexible(
-                                  child: Text(
-                                    lang.strings['taxi']['incoming']
-                                        ["noOrdersDesc"],
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontFamily: 'psr',
-                                        color:
-                                            Color.fromARGB(255, 168, 168, 168)),
+                                  child: Obx(
+                                    () => Text(
+                                      lang.strings['taxi']['incoming']
+                                          ["noOrdersDesc"],
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontFamily: 'psr',
+                                          color: Color.fromARGB(
+                                              255, 168, 168, 168)),
+                                    ),
                                   ),
                                 ),
                               ],
@@ -371,17 +377,21 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(
-                              lang.strings['taxi']['incoming']["toggleTitle"],
-                              style:
-                                  TextStyle(fontSize: 25.5, fontFamily: 'psr'),
+                            Obx(
+                              () => Text(
+                                lang.strings['taxi']['incoming']["toggleTitle"],
+                                style: TextStyle(
+                                    fontSize: 25.5, fontFamily: 'psr'),
+                              ),
                             ),
-                            Text(
-                              lang.strings['taxi']['incoming']["toggleDesc"],
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: 'psr',
-                                  color: Color.fromARGB(255, 168, 168, 168)),
+                            Obx(
+                              () => Text(
+                                lang.strings['taxi']['incoming']["toggleDesc"],
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontFamily: 'psr',
+                                    color: Color.fromARGB(255, 168, 168, 168)),
+                              ),
                             ),
                           ],
                         ),

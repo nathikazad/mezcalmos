@@ -36,9 +36,12 @@ class OtpConfirmationScreen extends GetView<AuthController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(lang.strings['shared']['login']["OtpConfirmation"],
-                      style:
-                          TextStyle(fontWeight: FontWeight.w500, fontSize: 45)),
+                  Obx(
+                    () => Text(
+                        lang.strings['shared']['login']["OtpConfirmation"],
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 45)),
+                  ),
                   SizedBox(
                     height: 20,
                   ),
@@ -55,22 +58,24 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          RichText(
-                            text: new TextSpan(
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16.5,
+                          Obx(
+                            () => RichText(
+                              text: new TextSpan(
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16.5,
+                                ),
+                                children: <TextSpan>[
+                                  new TextSpan(
+                                      text: lang.strings['shared']['login']
+                                          ["enterOtpCode"],
+                                      style: TextStyle(color: Colors.black87)),
+                                  new TextSpan(
+                                    text: Get.arguments ?? _phonePassed,
+                                    style: TextStyle(color: Colors.blue),
+                                  )
+                                ],
                               ),
-                              children: <TextSpan>[
-                                new TextSpan(
-                                    text: lang.strings['shared']['login']
-                                        ["enterOtpCode"],
-                                    style: TextStyle(color: Colors.black87)),
-                                new TextSpan(
-                                  text: Get.arguments ?? _phonePassed,
-                                  style: TextStyle(color: Colors.blue),
-                                )
-                              ],
                             ),
                           ),
                           SizedBox(
@@ -150,10 +155,12 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 15, bottom: 15),
-                    child: Text(
-                      lang.strings['shared']['login']["twilioNote"],
-                      style:
-                          TextStyle(fontWeight: FontWeight.w500, fontSize: 11),
+                    child: Obx(
+                      () => Text(
+                        lang.strings['shared']['login']["twilioNote"],
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 11),
+                      ),
                     ),
                   ),
                   Obx(() => TextButton(
@@ -178,12 +185,14 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                                   strokeWidth: 2,
                                 ),
                               )
-                            : Text(
-                                lang.strings['shared']['login']["confirm"],
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 15),
+                            : Obx(
+                                () => Text(
+                                  lang.strings['shared']['login']["confirm"],
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 15),
+                                ),
                               ),
                         style: ButtonStyle(
                             fixedSize:

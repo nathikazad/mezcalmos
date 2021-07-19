@@ -5,7 +5,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:mezcalmos/Shared/controllers/settingsController.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+// import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
@@ -18,7 +19,7 @@ class AuthController extends GetxController {
   fireAuth.FirebaseAuth _auth = fireAuth.FirebaseAuth.instance;
   Rxn<User> _user = Rxn<User>();
   final GetStorage _storage = GetStorage();
-  final SettingsController _settings = Get.find<SettingsController>();
+  // final SettingsController _settings = Get.find<SettingsController>();
 
   User? get user => _user.value;
   fireAuth.FirebaseAuth get auth => _auth;
@@ -127,7 +128,8 @@ class AuthController extends GetxController {
       response = await sendOTPForLoginFunction.call(<String, dynamic>{
         'phoneNumber': phoneNumber,
         'messageType': 'SMS',
-        'language': _settings.appLanguage.userLanguageKey,
+        'language': tDefaultLanguage,
+        // 'language': _settings.appLanguage.userLanguageKey,
         'database': _databaseHelper.dbType
       });
       mezcalmosSnackBar(
@@ -155,7 +157,8 @@ class AuthController extends GetxController {
           await getAuthUsingOTPFunction.call(<String, dynamic>{
         'phoneNumber': phoneNumber,
         'OTPCode': otpCode,
-        'language': _settings.appLanguage.userLanguageKey,
+        'language': tDefaultLanguage,
+        // 'language': _settings.appLanguage.userLanguageKey,
         'database': _databaseHelper.dbType
       });
       // mezcalmosSnackBar("Notice ~", "OTP message has been sent !");

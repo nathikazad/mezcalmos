@@ -145,8 +145,6 @@ class _SPointState extends State<SPoint> {
   @override
   void initState() {
     // INjecting this here cuz we will need it For language / them ... etc
-    _settingsController =
-        Get.put<SettingsController>(SettingsController(), permanent: true);
 
     initializeSetup();
     super.initState();
@@ -176,6 +174,8 @@ class _SPointState extends State<SPoint> {
     Get.put<AuthController>(AuthController(), permanent: true);
     Get.put<NotificationsController>(NotificationsController(),
         permanent: true);
+    _settingsController =
+        Get.put<SettingsController>(SettingsController(), permanent: true);
 
     Timer(
         Duration(seconds: nSplashScreenTimer),

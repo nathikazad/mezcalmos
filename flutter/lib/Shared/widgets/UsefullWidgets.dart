@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/mezcalmos_icons.dart';
 import 'package:mezcalmos/Shared/widgets/NoScrollGlowBehaviour.dart';
@@ -285,8 +286,8 @@ class MezcalmosSharedWidgets {
             Flexible(
                 fit: FlexFit.loose,
                 child: Icon(
-                  CupertinoIcons.delete,
-                  size: 30,
+                  MezcalmosIcons.timesCircle,
+                  size: 40,
                   color: Colors.black,
                 )),
             Flexible(
@@ -298,17 +299,50 @@ class MezcalmosSharedWidgets {
                 fit: FlexFit.loose,
                 child: Text(
                   text,
+                  textAlign: TextAlign.center,
                   style: TextStyle(fontFamily: 'psr', fontSize: 18),
                 )),
-            Flexible(child: TextButton(onPressed: onYes, child: Text('Yes'))),
             Flexible(
-                fit: FlexFit.loose,
-                child: SizedBox(
+                child: Column(
+              children: [
+                SizedBox(
+                  height: 20,
+                ),
+                TextButton(
+                    style: ButtonStyle(
+                        minimumSize: MaterialStateProperty.all<Size>(
+                            (Size(double.infinity, 50))),
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            (Colors.grey.shade300))),
+                    onPressed: onYes,
+                    child: Obx(() => Text(
+                        Get.find<LanguageController>().strings['taxi']
+                            ['taxiView']['yes'],
+                        style: TextStyle(
+                          fontFamily: 'psr',
+                          fontSize: 14,
+                          color: Colors.black,
+                        )))),
+                SizedBox(
                   height: 5,
-                )),
-            Flexible(
-                child:
-                    TextButton(onPressed: () => Get.back(), child: Text('No'))),
+                ),
+                TextButton(
+                    style: ButtonStyle(
+                        minimumSize: MaterialStateProperty.all<Size>(
+                            (Size(double.infinity, 50))),
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            (Colors.grey.shade300))),
+                    onPressed: () => Get.back(),
+                    child: Obx(() => Text(
+                        Get.find<LanguageController>().strings['taxi']
+                            ['taxiView']['no'],
+                        style: TextStyle(
+                          fontFamily: 'psr',
+                          fontSize: 14,
+                          color: Colors.black,
+                        ))))
+              ],
+            )),
           ],
         ),
       );

@@ -14,7 +14,7 @@ class User {
   String? email;
   String? displayName;
   String? image;
-  String? language;
+  String language;
   String? phone;
 
   User(

@@ -42,12 +42,14 @@ class SignIn extends GetWidget<AuthController> {
                 height: getSizeRelativeToScreen(20, sh, sw),
               ),
               Flexible(
-                child: Text(
-                  lang.strings['shared']['login']["title"],
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: getSizeRelativeToScreen(18, sh, sw),
+                child: Obx(
+                  () => Text(
+                    lang.strings['shared']['login']["title"],
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: getSizeRelativeToScreen(18, sh, sw),
+                    ),
                   ),
                 ),
               ),

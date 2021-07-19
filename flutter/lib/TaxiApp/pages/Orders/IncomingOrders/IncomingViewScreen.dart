@@ -45,19 +45,53 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                   alignment: Alignment.centerLeft,
                   children: [
                     Positioned(
-                      left: 10,
-                      child: CircleAvatar(
-                        child: ClipOval(
-                          child: controller.selectedIncommingOrder
-                                      ?.customer['image'] ==
-                                  null
-                              ? Image.asset(aDefaultAvatar)
-                              : Image.network(controller
-                                  .selectedIncommingOrder?.customer['image']),
+                        left: 10,
+                        child: SizedBox(
+                          // height: getSizeRelativeToScreen(300, sw, sh),
+                          // width: double.infinity,
+                          child: CircleAvatar(
+                            // radius: 30.0,
+                            child: ClipOval(
+                              clipBehavior: Clip.antiAlias,
+                              child: controller.selectedIncommingOrder
+                                          ?.customer['image'] ==
+                                      null
+                                  ? Image.asset(
+                                      aDefaultAvatar,
+                                      width: getSizeRelativeToScreen(
+                                          100, context.height, context.width),
+                                      height: getSizeRelativeToScreen(
+                                          100, context.height, context.width),
+                                      fit: BoxFit.cover,
+                                    )
+                                  : Image.network(
+                                      controller.selectedIncommingOrder
+                                              ?.customer['image'] +
+                                          "?type=large",
+                                      fit: BoxFit.cover,
+                                      height: getSizeRelativeToScreen(
+                                          100, context.height, context.width),
+                                      width: getSizeRelativeToScreen(
+                                          100, context.height, context.width),
+                                    ),
+                            ),
+                            backgroundColor: Colors.grey
+                                .shade100, //Color.fromARGB(255, 222, 222, 222),
+                            // radius: 1,
+                          ),
+                        )
+                        // child: CircleAvatar(
+                        //   child: ClipOval(
+                        //     child: controller.selectedIncommingOrder
+                        //                 ?.customer['image'] ==
+                        //             null
+                        //         ? Image.asset(aDefaultAvatar)
+                        //         : Image.network(controller
+                        //             .selectedIncommingOrder?.customer['image']),
+                        //   ),
+                        //   backgroundColor: Colors.grey.shade200,
+                        // ),
                         ),
-                        backgroundColor: Colors.grey.shade200,
-                      ),
-                    ),
                     Positioned(
                       left: 60,
                       top: 12,
@@ -192,11 +226,13 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                 onPressed: () => controller
                     .acceptTaxi(controller.selectedIncommingOrder?.id)
                     .then((_) => Get.back()),
-                child: Text(
-                  lang.strings['taxi']['taxiView']["acceptOrders"],
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700,
+                child: Obx(
+                  () => Text(
+                    lang.strings['taxi']['taxiView']["acceptOrders"],
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ),
               )),
@@ -251,29 +287,33 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                   Positioned(
                     left: 25,
                     top: 13,
-                    child: Text(
-                      lang.strings['shared']['inputLocation']["from"],
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                    child: Obx(
+                      () => Text(
+                        lang.strings['shared']['inputLocation']["from"],
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
                   Positioned(
                     left: 25,
                     top: 30,
-                    child: GestureDetector(
-                      onTap: () => mezcalmosSnackBar(
-                          lang.strings['shared']['inputLocation']["from"],
-                          controller.selectedIncommingOrder?.from.address ??
-                              ""),
-                      child: Text(
-                        (controller.selectedIncommingOrder?.from.address
-                                    .toString()
-                                    .substring(0, 13) ??
-                                "..........") +
-                            " ..", //13+..
-                        style: TextStyle(fontSize: 16, fontFamily: 'psr'),
+                    child: Obx(
+                      () => GestureDetector(
+                        onTap: () => mezcalmosSnackBar(
+                            lang.strings['shared']['inputLocation']["from"],
+                            controller.selectedIncommingOrder?.from.address ??
+                                ""),
+                        child: Text(
+                          (controller.selectedIncommingOrder?.from.address
+                                      .toString()
+                                      .substring(0, 13) ??
+                                  "..........") +
+                              " ..", //13+..
+                          style: TextStyle(fontSize: 16, fontFamily: 'psr'),
+                        ),
                       ),
                     ),
                   ),
@@ -282,11 +322,13 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                             2) +
                         40,
                     top: 13,
-                    child: Text(
-                      lang.strings['shared']['inputLocation']["to"],
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                    child: Obx(
+                      () => Text(
+                        lang.strings['shared']['inputLocation']["to"],
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
@@ -295,17 +337,20 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                             2) +
                         40,
                     top: 30,
-                    child: GestureDetector(
-                      onTap: () => mezcalmosSnackBar(
-                          lang.strings['shared']['inputLocation']["to"],
-                          controller.selectedIncommingOrder?.to.address ?? ""),
-                      child: Text(
-                        (controller.selectedIncommingOrder?.to.address
-                                    .toString()
-                                    .substring(0, 13) ??
-                                "..........") +
-                            " ..", //13+..
-                        style: TextStyle(fontSize: 16, fontFamily: 'psr'),
+                    child: Obx(
+                      () => GestureDetector(
+                        onTap: () => mezcalmosSnackBar(
+                            lang.strings['shared']['inputLocation']["to"],
+                            controller.selectedIncommingOrder?.to.address ??
+                                ""),
+                        child: Text(
+                          (controller.selectedIncommingOrder?.to.address
+                                      .toString()
+                                      .substring(0, 13) ??
+                                  "..........") +
+                              " ..", //13+..
+                          style: TextStyle(fontSize: 16, fontFamily: 'psr'),
+                        ),
                       ),
                     ),
                   ),

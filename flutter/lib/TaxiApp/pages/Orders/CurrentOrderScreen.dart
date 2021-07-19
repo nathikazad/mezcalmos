@@ -256,23 +256,24 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                 Positioned(
                   left: 25,
                   top: 13,
-                  child: Text(
-                    lang.strings['shared']['inputLocation']["from"],
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                  child: Obx(
+                    () => Text(
+                      lang.strings['shared']['inputLocation']["from"],
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
                 Positioned(
                   left: 25,
                   top: 30,
-                  child: GestureDetector(
-                      onTap: () => mezcalmosSnackBar(
-                          lang.strings['shared']['inputLocation']["from"],
-                          controller.value?.from?.address ?? ""),
-                      child: Obx(
-                        () => Text(
+                  child: Obx(() => GestureDetector(
+                        onTap: () => mezcalmosSnackBar(
+                            lang.strings['shared']['inputLocation']["from"],
+                            controller.value?.from?.address ?? ""),
+                        child: Text(
                           (controller.value?.from?.address
                                       .toString()
                                       .substring(0, 13) ??
@@ -287,11 +288,13 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                           2) +
                       40,
                   top: 13,
-                  child: Text(
-                    lang.strings['shared']['inputLocation']["to"],
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                  child: Obx(
+                    () => Text(
+                      lang.strings['shared']['inputLocation']["to"],
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
@@ -300,20 +303,21 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                           2) +
                       40,
                   top: 30,
-                  child: GestureDetector(
+                  child: Obx(
+                    () => GestureDetector(
                       onTap: () => mezcalmosSnackBar(
                           lang.strings['shared']['inputLocation']["to"],
                           controller.value?.to?.address ?? ""),
-                      child: Obx(
-                        () => Text(
-                          (controller.value?.to?.address
-                                      .toString()
-                                      .substring(0, 13) ??
-                                  "..........") +
-                              " ..", //13+..
-                          style: TextStyle(fontSize: 16, fontFamily: 'psr'),
-                        ),
-                      )),
+                      child: Text(
+                        (controller.value?.to?.address
+                                    .toString()
+                                    .substring(0, 13) ??
+                                "..........") +
+                            " ..", //13+..
+                        style: TextStyle(fontSize: 16, fontFamily: 'psr'),
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),

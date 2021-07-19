@@ -39,24 +39,50 @@ class MezcalmosSideMenu extends GetWidget<AuthController> {
               height: getSizeRelativeToScreen(25, sw, sh),
               // width: 1,
             ),
-            Container(
-                margin: EdgeInsets.only(
-                    top: getSizeRelativeToScreen(200, sw, sh),
-                    bottom: getSizeRelativeToScreen(20, sw, sh)),
+            // Container(
+            //     margin: EdgeInsets.only(
+            //         top: getSizeRelativeToScreen(200, sw, sh),
+            //         bottom: getSizeRelativeToScreen(20, sw, sh)),
+            //     height: getSizeRelativeToScreen(300, sw, sh),
+            //     width: double.infinity,
+            //   child: CircleAvatar(
+            //     radius: 200.0,
+            //     backgroundImage: controller.user?.image == null
+            //         ? AssetImage(aDefaultAvatar) as ImageProvider
+            //         : NetworkImage(controller.user!.image! + '?type=large'),
+            //   ),
+            // ),
+            Padding(
+              padding: EdgeInsets.only(
+                  top: getSizeRelativeToScreen(200, sw, sh),
+                  bottom: getSizeRelativeToScreen(20, sw, sh)),
+              child: SizedBox(
                 height: getSizeRelativeToScreen(300, sw, sh),
                 width: double.infinity,
                 child: CircleAvatar(
                   // radius: 30.0,
-                  child: ClipRRect(
+                  child: ClipOval(
+                    clipBehavior: Clip.antiAlias,
                     child: controller.user?.image == null
-                        ? Image.asset(aDefaultAvatar)
+                        ? Image.asset(
+                            aDefaultAvatar,
+                            width: getSizeRelativeToScreen(300, sw, sh),
+                            height: getSizeRelativeToScreen(300, sw, sh),
+                            fit: BoxFit.contain,
+                          )
                         : Image.network(
-                            controller.user!.image! + "?type=large"),
+                            controller.user!.image! + "?type=large",
+                            fit: BoxFit.cover,
+                            height: getSizeRelativeToScreen(300, sw, sh),
+                            width: getSizeRelativeToScreen(300, sw, sh),
+                          ),
                   ),
                   backgroundColor: Colors
                       .grey.shade100, //Color.fromARGB(255, 222, 222, 222),
                   // radius: 1,
-                )),
+                ),
+              ),
+            ),
 
             Flexible(
               child: Text(
@@ -74,12 +100,15 @@ class MezcalmosSideMenu extends GetWidget<AuthController> {
                   color: Color.fromARGB(255, 103, 121, 254),
                   size: 25,
                 ),
-                title: Text(
-                  lang.strings['shared']['navDrawer']["logout"],
-                  style: TextStyle(fontFamily: 'psb', fontSize: 16),
+                title: Obx(
+                  () => Text(
+                    lang.strings['shared']['navDrawer']["logout"],
+                    style: TextStyle(fontFamily: 'psb', fontSize: 16),
+                  ),
                 )),
             Obx(() => ListTile(
-                onTap: () => _settingsController.appLanguage.changeLang(),
+                onTap: () =>
+                    _settingsController.appLanguage.updateUserLanguage(),
                 leading: Container(
                   height: 31,
                   width: 31,
