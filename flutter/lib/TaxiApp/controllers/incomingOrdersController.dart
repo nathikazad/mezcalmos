@@ -68,7 +68,7 @@ class IncomingOrdersController extends GetxController {
             .listen((event) async {
           // This is why GetX guys XD!
           if (event.snapshot.key == _selectedIncommingOrder.value?.id) {
-            _selectedIncommingOrder.value = null;
+            _selectedIncommingOrder.value = Order.empty();
             if (Get.currentRoute == kSelectedIcommingOrder)
               await MezcalmosSharedWidgets.mezcalmosDialog(
                   55, Get.height, Get.width);

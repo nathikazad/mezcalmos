@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:io' show Platform;
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -13,6 +15,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/utilities/ImageCropper.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/TaxiApp/main.dart';
@@ -115,16 +118,40 @@ class _SPointState extends State<SPoint> {
         await GetStorage()
             .write(getxGmapBottomPaddingKey, Platform.isAndroid ? 38.0 : 63.0);
 
-        await GetStorage().write('user_descriptor',
-            await BitmapDescriptorLoader(user_icon_marker_asset, 170, 180));
+        // first original user marker loading
+
+        // await GetStorage().write(
+        //     'user_descriptor',
+        //     await BitmapDescriptorLoader(user_icon_marker_asset, 170, 180,
+        //         isBytes: true));
+
+        // second method
+
+        await GetStorage().write(
+            'user_descriptor',
+            (isByte, imgUrl) async => await BitmapDescriptorLoader(
+                isByte == true
+                    ? await cropRonded(
+                        (await http.get(Uri.parse(imgUrl))).bodyBytes)
+                    : user_icon_marker_asset,
+                100,
+                100,
+                isBytes: isByte));
+
+        // await GetStorage().write(
+        //     'user_descriptor',
+        //     (isByte, imgUrl) async => isByte == false
+        //         ? await BitmapDescriptorLoader(user_icon_marker_asset, 170, 180,
+        //             isBytes: isByte)
+        //         : await ImageCropper().resizeAndCircle(imgUrl, 20));
 
         await GetStorage().write('taxi_descriptor',
-            await BitmapDescriptorLoader(taxi_driver_marker_asset, 80, 90));
+            await BitmapDescriptorLoader(taxi_driver_marker_asset, 90, 90));
 
         await GetStorage().write(
             'destination_descriptor',
             await BitmapDescriptorLoader(
-                purple_destination_marker_asset, 80, 90));
+                purple_destination_marker_asset, 90, 90));
 
         // Loading map asset !
         await rootBundle.loadString(map_style_asset).then((jsonString) =>

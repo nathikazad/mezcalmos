@@ -5,6 +5,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
@@ -40,7 +41,7 @@ class MezcalmosCurrentOrderGoogleMapController extends GetxController {
   GetStorage _getStorage = GetStorage();
 
   @override
-  void onInit() {
+  void onInit() async {
     // initilize our polylines ====================
 
     print(
@@ -50,7 +51,7 @@ class MezcalmosCurrentOrderGoogleMapController extends GetxController {
     super.onInit();
   }
 
-  void googleMapUpdate() {
+  void googleMapUpdate() async {
     _polylines.clear();
     List<LatLng> pLineCoords = [];
 
@@ -82,14 +83,18 @@ class MezcalmosCurrentOrderGoogleMapController extends GetxController {
       // that means taxi accepted order
       print("]]]]]]]]]]]]]]]]]]]]]]\n\n ON_THE_WAY \n\n[[[[[[[[[[[[[[[[[[[[[");
 
+      initialCameraPosition = LatLng(
+          _taxiAuthController.currentLocation.latitude!,
+          _taxiAuthController.currentLocation.longitude!);
       _markers.addAll([
         // _customerLocationMarker
         Marker(
           draggable: false,
-          flat: true,
-          anchor: ui.Offset(0.5, 1),
+          // flat: true,
+          // anchor: ui.Offset(0.5, 1),
           markerId: MarkerId("from"),
-          icon: _getStorage.read('user_descriptor'),
+          icon: await _getStorage.read<Function>('user_descriptor')!(
+              true, _currentOrderController.value!.customer['image']),
           visible: true,
           position: LatLng(_currentOrderController.value!.from.latitude,
               _currentOrderController.value!.from.longitude),
@@ -97,8 +102,8 @@ class MezcalmosCurrentOrderGoogleMapController extends GetxController {
 
         Marker(
           draggable: false,
-          flat: true,
-          anchor: ui.Offset(0.5, 1),
+          // flat: true,
+          // anchor: ui.Offset(0.5, 1),
           markerId: MarkerId("to"),
           icon: _getStorage.read('destination_descriptor'),
           visible: true,
@@ -107,8 +112,8 @@ class MezcalmosCurrentOrderGoogleMapController extends GetxController {
         ),
         Marker(
           draggable: false,
-          flat: true,
-          anchor: ui.Offset(0.5, 1),
+          // flat: true,
+          // anchor: ui.Offset(0.5, 1),
           markerId: MarkerId("taxi"),
           icon: _getStorage.read('taxi_descriptor'),
           visible: true,
@@ -117,45 +122,14 @@ class MezcalmosCurrentOrderGoogleMapController extends GetxController {
         )
       ]);
 
-      // BitmapDescriptorLoader(purple_destination_marker_asset, 80, 90)
-      //     .then((value) {
-      //   _markers.add(
-      //     // _customerLocationMarker
-      //     Marker(
-      //       draggable: false,
-      //       flat: true,
-      //       anchor: ui.Offset(0.5, 1),
-      //       markerId: MarkerId("to"),
-      //       icon: value,
-      //       visible: true,
-      //       position: LatLng(_currentOrderController.value!.to.latitude,
-      //           _currentOrderController.value!.to.longitude),
-      //     ),
-      //   );
-      // });
-
-      // BitmapDescriptorLoader(taxi_driver_marker_asset, 80, 90).then((value) {
-      //   _markers.add(Marker(
-      //     draggable: false,
-      //     flat: true,
-      //     anchor: ui.Offset(0.5, 1),
-      //     markerId: MarkerId("taxi"),
-      //     icon: value,
-      //     visible: true,
-      //     position: LatLng(_taxiAuthController.currentLocation.latitude,
-      //         _taxiAuthController.currentLocation.longitude),
-      //   ));
-      //   this._mapReady.value = true;
-      // });
-
-      initialCameraPosition = LatLng(
-          _taxiAuthController.currentLocation.latitude!,
-          _taxiAuthController.currentLocation.longitude!);
-
       _mapReady.value = true;
     } else if (_currentOrderController.value!.status == "inTransit") {
       // that means taxi already picked up the customer
       print("]]]]]]]]]]]]]]]]]]]]]]\n\n IN_TRANSIT \n\n[[[[[[[[[[[[[[[[[[[[[");
+
+      initialCameraPosition = LatLng(
+          _taxiAuthController.currentLocation.latitude!,
+          _taxiAuthController.currentLocation.longitude!);
 
       _markers.addAll([
         Marker(
@@ -179,62 +153,31 @@ class MezcalmosCurrentOrderGoogleMapController extends GetxController {
               _currentOrderController.value!.to.longitude),
         ),
       ]);
-      // BitmapDescriptorLoader(taxi_driver_marker_asset, 80, 90).then((value) {
-      //   _markers.add(
-      //     // from ==> TaxiDriverMarker
-      //     Marker(
-      //       draggable: false,
-      //       flat: true,
-      //       anchor: ui.Offset(0.5, 1),
-      //       markerId: MarkerId("from"),
-      //       icon: value,
-      //       visible: true,
-      //       position: LatLng(_taxiAuthController.currentLocation.latitude,
-      //           _taxiAuthController.currentLocation.longitude),
-      //     ),
-      //   );
-      // });
 
-      // BitmapDescriptorLoader(purple_destination_marker_asset, 80, 90)
-      //     .then((value) {
-      //   _markers.add(
-      //     Marker(
-      //       draggable: false,
-      //       flat: true,
-      //       anchor: ui.Offset(0.5, 1),
-      //       markerId: MarkerId("to"),
-      //       icon: value,
-      //       visible: true,
-      //       position: LatLng(_currentOrderController.value!.to.latitude,
-      //           _currentOrderController.value!.to.longitude),
-      //     ),
-      //   );
-      //   this._mapReady.value = true;
-      // });
-
-      initialCameraPosition = LatLng(
-          _taxiAuthController.currentLocation.latitude!,
-          _taxiAuthController.currentLocation.longitude!);
       this._mapReady.value = true;
     } else if (_currentOrderController.value!.status == "droppedOff") {
+      initialCameraPosition = LatLng(
+          _currentOrderController.value!.from.latitude,
+          _currentOrderController.value!.from.longitude);
       print(
           "]]]]]]]]]]]]]]]]]]]]]]\n\n OTHER_RIDE_STATUS \n\n[[[[[[[[[[[[[[[[[[[[[");
 
       _markers.addAll([
         Marker(
           draggable: false,
-          flat: true,
-          anchor: ui.Offset(0.5, 1),
+          // flat: true,
+          // anchor: ui.Offset(0.5, 1),
           markerId: MarkerId("from"),
-          icon: _getStorage.read('user_descriptor'),
+          icon: await _getStorage.read<Function>('user_descriptor')!(
+              true, _currentOrderController.value!.customer['image']),
           visible: true,
           position: LatLng(_currentOrderController.value!.from.latitude,
               _currentOrderController.value!.from.longitude),
         ),
         Marker(
           draggable: false,
-          flat: true,
-          anchor: ui.Offset(0.5, 1),
+          // flat: true,
+          // anchor: ui.Offset(0.5, 1),
           markerId: MarkerId("to"),
           icon: _getStorage.read('destination_descriptor'),
           visible: true,
@@ -242,38 +185,7 @@ class MezcalmosCurrentOrderGoogleMapController extends GetxController {
               _currentOrderController.value!.to.longitude),
         ),
       ]);
-      // BitmapDescriptorLoader(user_icon_marker_asset, 170, 180).then((value) {
-      //   _markers.add(
-      //     Marker(
-      //       draggable: false,
-      //       flat: true,
-      //       anchor: ui.Offset(0.5, 1),
-      //       markerId: MarkerId("from"),
-      //       icon: value,
-      //       visible: true,
-      //       position: LatLng(_currentOrderController.value!.from.latitude,
-      //           _currentOrderController.value!.from.longitude),
-      //     ),
-      //   );
-      // });
 
-      // BitmapDescriptorLoader(purple_destination_marker_asset, 80, 90)
-      //     .then((value) {
-      //   _markers.add(
-      //     Marker(
-      //       draggable: false,
-      //       flat: true,
-      //       anchor: ui.Offset(0.5, 1),
-      //       markerId: MarkerId("to"),
-      //       icon: value,
-      //       visible: true,
-      //       position: LatLng(_currentOrderController.value!.to.latitude,
-      //           _currentOrderController.value!.to.longitude),
-      //     ),
-      //   );
-      initialCameraPosition = LatLng(
-          _currentOrderController.value!.from.latitude,
-          _currentOrderController.value!.from.longitude);
       this._mapReady.value = true;
       // });
     } else {
@@ -345,17 +257,15 @@ class MezcalmosOrderViewGoogleMapController extends GetxController {
   Set<Marker> get markers => _markers;
   bool get mapReady => _mapReady.value;
 
-  // @override
-  // void onReady() {
-  //   this._mapReady.value = true;
-  //   super.onReady();
-  // }
-
   @override
-  void onInit() {
+  void onInit() async {
     // initilize our polylines ====================
     print(
         "\n\n[MezcalmosOrderViewGoogleMapController] =============== INITIALIZED ==============\n\n");
+
+    initialCameraPosition = LatLng(
+        _incomingOrdersController.selectedIncommingOrder!.from.latitude,
+        _incomingOrdersController.selectedIncommingOrder!.from.longitude);
 
     List<LatLng> pLineCoords = [];
 
@@ -378,50 +288,18 @@ class MezcalmosOrderViewGoogleMapController extends GetxController {
       // geodesic: true,
     ));
 
-    // get our bitmaps for markers
-
-    // BitmapDescriptorLoader(user_icon_marker_asset, 170, 180).then((value) {
-    //   _markers.add(
-    //     Marker(
-    //       draggable: false,
-    //       flat: true,
-    //       anchor: ui.Offset(0.5, 1),
-    //       markerId: MarkerId("from"),
-    //       icon: value,
-    //       visible: true,
-    //       position: LatLng(
-    //           _incomingOrdersController.selectedIncommingOrder!.from.latitude,
-    //           _incomingOrdersController.selectedIncommingOrder!.from.longitude),
-    //     ),
-    //   );
-    // });
-
-    // BitmapDescriptorLoader(purple_destination_marker_asset, 80, 90)
-    //     .then((value) {
-    //   _markers.add(
-    //     Marker(
-    //       draggable: false,
-    //       flat: true,
-    //       anchor: ui.Offset(0.5, 1),
-    //       markerId: MarkerId("to"),
-    //       icon: value,
-    //       visible: true,
-    //       position: LatLng(
-    //           _incomingOrdersController.selectedIncommingOrder!.to.latitude,
-    //           _incomingOrdersController.selectedIncommingOrder!.to.longitude),
-    //     ),
-    //   );
-
-    //   this._mapReady.value = true;
-    // });
-
     _markers.addAll([
       Marker(
         draggable: false,
-        flat: true,
-        anchor: ui.Offset(0.5, 1),
+        // flat: true,
+        // anchor: ui.Offset(0.5, 1),
         markerId: MarkerId("from"),
-        icon: _getStorage.read('user_descriptor'),
+
+        // icon: await _getStorage.read('user_descriptor'),
+        icon: await _getStorage.read<Function>('user_descriptor')!(
+            true,
+            _incomingOrdersController
+                .selectedIncommingOrder!.customer['image']),
         visible: true,
         position: LatLng(
             _incomingOrdersController.selectedIncommingOrder!.from.latitude,
@@ -429,8 +307,9 @@ class MezcalmosOrderViewGoogleMapController extends GetxController {
       ),
       Marker(
         draggable: false,
-        flat: true,
-        anchor: ui.Offset(0.5, 1),
+        // flat: true,
+        // anchor: ui.Offset(0., 0.9),
+
         markerId: MarkerId("to"),
         icon: _getStorage.read('destination_descriptor'),
         visible: true,
@@ -439,10 +318,6 @@ class MezcalmosOrderViewGoogleMapController extends GetxController {
             _incomingOrdersController.selectedIncommingOrder!.to.longitude),
       ),
     ]);
-
-    initialCameraPosition = LatLng(
-        _incomingOrdersController.selectedIncommingOrder!.from.latitude,
-        _incomingOrdersController.selectedIncommingOrder!.from.longitude);
 
     _mapReady.value = true;
     super.onInit();
@@ -467,7 +342,11 @@ class MezcalmosOrderViewGoogleMapController extends GetxController {
 
 // ----------- to fit everything in the map !
   LatLngBounds? getBounds() {
-    if (markers.isEmpty) return null;
+    if (markers.isEmpty) {
+      print(
+          "=================>>>>>>>> GET BOUND ARE EMPTY <<<<<<<<<=================");
+      return null;
+    }
     return _createBounds(markers.map((m) => m.position).toList());
   }
 

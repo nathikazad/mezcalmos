@@ -10,9 +10,9 @@ const String custommer_location_marker_asset =
 const String custommer_destination_marker_asset =
     "${_imgs_path}customer_destination.png";
 // OnTheWay
-const String taxi_driver_marker_asset = "${_imgs_path}driverCar2.png";
+const String taxi_driver_marker_asset = "${_imgs_path}taxiDriverImg.png";
 const String purple_destination_marker_asset =
-    "${_imgs_path}marker_location.png";
+    "${_imgs_path}destinationImg.png";
 const String user_icon_marker_asset = "${_imgs_path}userDefault.png";
 
 // --------------------------------------------------------------------------------------------------------------

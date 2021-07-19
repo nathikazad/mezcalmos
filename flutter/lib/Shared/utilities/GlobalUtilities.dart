@@ -43,10 +43,12 @@ dynamic responseStatusChecker(dynamic resp,
 }
 
 // BitmapLoading stuff -------------------
+
 Future<BitmapDescriptor> BitmapDescriptorLoader(
-    String asset, int width, int height) async {
+    dynamic asset, int width, int height,
+    {bool isBytes = false}) async {
   return BitmapDescriptor.fromBytes(
-      await getBytesFromCanvas(width, height, asset));
+      await getBytesFromCanvas(width, height, asset, isBytes: isBytes));
 }
 
 Future<Uint8List> getBytesFromCanvas(int width, int height, urlAsset,
@@ -87,4 +89,29 @@ Future<void> mapLauncher(lat, lng) async {
   else {
     mezcalmosSnackBar("Error", "Failed to launch that on Map!");
   }
+}
+
+Future<List<int>> cropRonded(Uint8List bytes) async {
+  ui.Image image = await loadImage(bytes);
+  var recorder = ui.PictureRecorder();
+  var canvas = Canvas(recorder);
+  var imageSize = Size(image.width.toDouble(), image.height.toDouble());
+  var boundsToCrop = Rect.fromCenter(
+      center: imageSize.center(Offset.zero),
+      width: imageSize.shortestSide,
+      height: imageSize.shortestSide);
+  var matrix = Matrix4.translationValues(
+          -boundsToCrop.topLeft.dx, -boundsToCrop.topLeft.dy, 0)
+      .storage;
+  var paint = Paint()
+    ..shader = ImageShader(image, TileMode.clamp, TileMode.clamp, matrix);
+  var radius = imageSize.shortestSide / 2;
+  canvas.drawCircle(Offset(radius, radius), radius, paint);
+
+  ui.Image cropped = await recorder
+      .endRecording()
+      .toImage(imageSize.shortestSide.toInt(), imageSize.shortestSide.toInt());
+  var byteData = await cropped.toByteData(format: ui.ImageByteFormat.png);
+
+  return byteData!.buffer.asUint8List();
 }
