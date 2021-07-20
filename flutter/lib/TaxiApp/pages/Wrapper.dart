@@ -12,9 +12,9 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 class Wrapper extends GetWidget<AuthController> {
   @override
   Widget build(BuildContext context) {
-    Locale userLocale = Localizations.localeOf(context);
-    print(userLocale.toString());
-    Get.find<LanguageController>().changeUserLanguage(userLocale.languageCode);
+    // Locale userLocale = Localizations.localeOf(context);
+    // print(userLocale.toString());
+    // Get.find<LanguageController>().changeUserLanguage(userLocale.languageCode);
     return Obx(() {
       if (controller.user != null) {
         // Injecting TaxiAuthController Here so we can get it as Widget in TaxiWrapper

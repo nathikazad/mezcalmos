@@ -18,10 +18,12 @@ class LanguageController extends GetxController {
   dynamic _jsonStrings = {}
       .obs; // language Object by default  must be set to en if no lang given  in constructor.
 
-  LanguageController({String? lang}) {
-    if (lang == "en") {
-      this._userLanguageKey.value = lang!;
-    }
+  LanguageController() {
+    String? lang = Get.locale?.languageCode.toLowerCase();
+    print("USER LANGUAGE [[ $lang ]]");
+    if (lang == "en")
+      _userLanguageKey.value =
+          lang!; // to avoid diffrent other languages diffrent than en and es
   }
 
   Map<String, dynamic> languageDetails = {
@@ -32,6 +34,7 @@ class LanguageController extends GetxController {
   String get langFullName => languageDetails[_userLanguageKey.value].fullName;
   String get langImage => languageDetails[_userLanguageKey.value].langImage;
   dynamic get strings => _jsonStrings[_userLanguageKey.value];
+
   String get oppositToLang =>
       _userLanguageKey.value == "en" ? "A Español" : "To English";
   String get oppositFlag =>

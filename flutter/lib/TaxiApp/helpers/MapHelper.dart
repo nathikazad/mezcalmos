@@ -13,6 +13,12 @@ class MapHelper {
             2;
     double res = ((12742 * asin(sqrt(a))) / 1000);
 
+    print(
+        "[ LOCATION DATA FROM ] -------\n${from.latitude} | ${from.longitude}\n");
+    print(
+        "[ LOCATION DATA TO ] -------\n${to.latitude} | ${to.longitude}\n\n\n");
+    print(res);
+
     return res;
   }
 }

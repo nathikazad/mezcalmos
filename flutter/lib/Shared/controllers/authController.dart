@@ -18,7 +18,6 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 
 class AuthController extends GetxController {
-  
   fireAuth.FirebaseAuth _auth = fireAuth.FirebaseAuth.instance;
   Rxn<User> _user = Rxn<User>();
   final GetStorage _storage = GetStorage();

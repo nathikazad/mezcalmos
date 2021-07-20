@@ -97,6 +97,8 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                     Get.toNamed(kSelectedIcommingOrder);
                                   },
                                   child: Container(
+                                    height: 70,
+
                                     decoration: BoxDecoration(
                                         border: Border.all(
                                             color: Color.fromARGB(
@@ -104,7 +106,8 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                             width: 0.5,
                                             style: BorderStyle.solid),
                                         borderRadius: BorderRadius.circular(4)),
-                                    padding: EdgeInsets.all(16),
+                                    padding: EdgeInsets.only(
+                                        left: 10, top: 5, bottom: 5, right: 5),
                                     // alignment: Alignment.centerLeft,
                                     child: Stack(
                                       clipBehavior: Clip.antiAlias,
@@ -113,8 +116,8 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                         Positioned(
                                           // bottom: 0,
                                           // left: Get.width - 150,
-                                          right: 0,
-                                          top: 0,
+                                          right: 10,
+                                          top: 5,
                                           child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
@@ -142,15 +145,18 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                             ],
                                           ),
                                         ),
-                                        CircleAvatar(
-                                          // maxRadius: getSizeRelativeToScreen(56, sw, sh),
-                                          // minRadius: getSizeRelativeToScreen(55, sw, sh),
-                                          backgroundColor: Colors.grey,
-                                          backgroundImage: NetworkImage(
-                                              controller
-                                                  .orders[i].customer['image']),
-                                          onBackgroundImageError: (e, s) => print(
-                                              "Failed loading Customer openOrder::id::${controller.orders[i].id}"),
+                                        Positioned(
+                                          top: 10,
+                                          child: CircleAvatar(
+                                            // maxRadius: getSizeRelativeToScreen(56, sw, sh),
+                                            // minRadius: getSizeRelativeToScreen(55, sw, sh),
+                                            backgroundColor: Colors.grey,
+                                            backgroundImage: NetworkImage(
+                                                controller.orders[i]
+                                                    .customer['image']),
+                                            onBackgroundImageError: (e, s) => print(
+                                                "Failed loading Customer openOrder::id::${controller.orders[i].id}"),
+                                          ),
                                         ),
                                         // Positioned(
                                         //     child: Container(
@@ -160,7 +166,7 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                         // )),
                                         Positioned(
                                             left: 50,
-                                            top: 0,
+                                            top: 10,
                                             child: Text(
                                               controller.orders[i]
                                                       .customer['name'] ??
@@ -173,7 +179,7 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                         // info line
                                         Positioned(
                                           left: 50,
-                                          bottom: 0,
+                                          bottom: 5,
                                           child: Wrap(
                                             spacing:
                                                 1.0, // gap between adjacent chips
@@ -186,7 +192,7 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                               Text(
                                                 controller
                                                         .orders[i].from.address
-                                                        .substring(0, 10) +
+                                                        .substring(0, 5) +
                                                     "... ",
                                                 overflow: TextOverflow.ellipsis,
                                                 maxLines: 1,

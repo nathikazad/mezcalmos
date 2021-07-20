@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/themeContoller.dart';
 
@@ -16,8 +15,7 @@ class SettingsController extends GetxController {
     // here --------
     // FOR NOW WE SET IT TO EN (default  if not passed to LangController)
     _appTheme = Get.put(ThemeController(), permanent: true);
-    _appLanguage = Get.put(LanguageController(lang: 'es'),
-        permanent: true);
+    _appLanguage = Get.put(LanguageController(), permanent: true);
     super.onInit();
   }
 

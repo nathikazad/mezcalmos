@@ -11,7 +11,7 @@
 ///      fonts:
 ///       - asset: fonts/MezcalmosIcons.ttf
 ///
-/// 
+///
 ///
 import 'package:flutter/widgets.dart';
 
@@ -21,8 +21,12 @@ class MezcalmosIcons {
   static const _kFontFam = 'MezcalmosIcons';
   static const String? _kFontPkg = null;
 
-  static const IconData stream = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData timesCircle = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData powerOff = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData locationArrow = IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData stream =
+      IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData timesCircle =
+      IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData powerOff =
+      IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData locationArrow =
+      IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

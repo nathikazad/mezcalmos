@@ -114,7 +114,9 @@ class _SPointState extends State<SPoint> {
         print("[ GET STORAGE ] INITIALIZED !");
         await GetStorage().write(getxLmodeKey, widget._launch_mode);
         await GetStorage()
-            .write(getxGmapBottomPaddingKey, Platform.isAndroid ? 38.0 : 63.0);
+            // .write(getxGmapBottomPaddingKey, Platform.isAndroid ? 38.0 : 63.0);
+            .write(getxGmapBottomPaddingKey,
+                Platform.isAndroid ? 38.0 : Get.height / 20);
 
         // first original user marker loading
 
@@ -125,16 +127,16 @@ class _SPointState extends State<SPoint> {
 
         // second method
 
-        await GetStorage().write(
-            'user_descriptor',
-            (isByte, imgUrl) async => await BitmapDescriptorLoader(
-                isByte == true
-                    ? await cropRonded(
-                        (await http.get(Uri.parse(imgUrl))).bodyBytes)
-                    : user_icon_marker_asset,
-                100,
-                100,
-                isBytes: isByte));
+        // await GetStorage().write(
+        //     'user_descriptor',
+        //     (isByte, imgUrl) async => await BitmapDescriptorLoader(
+        //         isByte == true
+        //             ? await cropRonded(
+        //                 (await http.get(Uri.parse(imgUrl))).bodyBytes)
+        //             : user_icon_marker_asset,
+        //         100,
+        //         100,
+        //         isBytes: isByte));
 
         // await GetStorage().write(
         //     'user_descriptor',

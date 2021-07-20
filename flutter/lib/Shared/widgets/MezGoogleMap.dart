@@ -52,17 +52,13 @@ class MezGoogleMap extends StatelessWidget {
     return Obx(() => getCorespondingController().mapReady == false
         ? Center(child: CircularProgressIndicator())
         : new GoogleMap(
-            // onCameraMove: (_) async {
-            //   await reUpdateLocation();
-            // },
-
+            mapToolbarEnabled: false,
             myLocationButtonEnabled: false,
-            // minMaxZoomPreference: MinMaxZoomPreference(10, 16),
+            minMaxZoomPreference: MinMaxZoomPreference(10, 50),
             buildingsEnabled: false,
             markers: getCorespondingController().markers,
             polylines: getCorespondingController().polylines,
             zoomControlsEnabled: false,
-
             compassEnabled: false,
             mapType: MapType.normal,
             tiltGesturesEnabled: true,
