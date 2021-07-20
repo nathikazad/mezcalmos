@@ -14,7 +14,7 @@ import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 
 // we are using this in google map Screens
-class MezcalmosCurrentOrderGoogleMapController extends GetxController {
+class CurrentOrderMapController extends GetxController {
   // puerto mezcondido cords in case we need to test
   final double test_lng = -97.05531560386919;
   final double test_lat = 15.855722506461488;
@@ -45,7 +45,7 @@ class MezcalmosCurrentOrderGoogleMapController extends GetxController {
     // initilize our polylines ====================
 
     print(
-        "\n\n[MezcalmosCurrentOrderGoogleMapController] =============== INITIALIZED ==============\n\n");
+        "\n\n[CurrentOrderMapController] =============== INITIALIZED ==============\n\n");
 
     googleMapUpdate();
     super.onInit();
@@ -223,15 +223,14 @@ class MezcalmosCurrentOrderGoogleMapController extends GetxController {
 
   @override
   void onClose() {
-    print(
-        "[==== MezcalmosOrderViewGoogleMapController] got closes !!!!!!!!!!!!!!!!!!");
+    print("[==== IncomingOrderMapController] got closes !!!!!!!!!!!!!!!!!!");
     super.onClose();
   }
 }
 
 // to - from
 // we are using this in google map Screens
-class MezcalmosOrderViewGoogleMapController extends GetxController {
+class IncomingOrderMapController extends GetxController {
   // puerto mezcondido cords in case we need to test
   double test_lng = -97.05531560386919;
   double test_lat = 15.855722506461488;
@@ -261,7 +260,7 @@ class MezcalmosOrderViewGoogleMapController extends GetxController {
   void onInit() async {
     // initilize our polylines ====================
     print(
-        "\n\n[MezcalmosOrderViewGoogleMapController] =============== INITIALIZED ==============\n\n");
+        "\n\n[IncomingOrderMapController] =============== INITIALIZED ==============\n\n");
 
     initialCameraPosition = LatLng(
         _incomingOrdersController.selectedIncommingOrder!.from.latitude,
@@ -352,8 +351,7 @@ class MezcalmosOrderViewGoogleMapController extends GetxController {
 
   @override
   void onClose() {
-    print(
-        "[MezcalmosOrderViewGoogleMapController] got closes !!!!!!!!!!!!!!!!!!");
+    print("[IncomingOrderMapController] got closes !!!!!!!!!!!!!!!!!!");
     super.onClose();
   }
 }

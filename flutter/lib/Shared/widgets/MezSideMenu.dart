@@ -7,7 +7,7 @@ import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/mezcalmos_icons.dart';
 
-class MezcalmosSideMenu extends GetWidget<AuthController> {
+class MezSideMenu extends GetWidget<AuthController> {
   SettingsController _settingsController = Get.find<SettingsController>();
   LanguageController lang = Get.find<LanguageController>();
   @override

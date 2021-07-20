@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/mezcalmosGoogleMapController.dart';
+import 'package:mezcalmos/Shared/controllers/mapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/mezcalmos_icons.dart';
-import 'package:mezcalmos/Shared/widgets/MezcalmosGoogleMap.dart';
+import 'package:mezcalmos/Shared/widgets/MezGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
 
@@ -16,8 +16,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
   RxBool clickedLaunchOnMap = false.obs;
 
   Widget build(BuildContext context) {
-    Get.put<MezcalmosCurrentOrderGoogleMapController>(
-        MezcalmosCurrentOrderGoogleMapController());
+    Get.put<CurrentOrderMapController>(CurrentOrderMapController());
 
     controller.dispatchCurrentOrder();
     return Stack(
@@ -27,7 +26,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                 controller.value?.id == null ||
                 controller.value?.status == null
             ? Center(child: CircularProgressIndicator())
-            : new MezcalmosGoogleMap(true)),
+            : new MezGoogleMap(true)),
         Positioned(
             bottom: GetStorage().read(getxGmapBottomPaddingKey),
             child: Container(
@@ -81,7 +80,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                                                     ["tooFarFromfinishRide"])
                                         .then((_) {
                                         //Get.offAllNamed(kTaxiWrapperRoute);
-                                        // _mezcalmosCurrentOrderGoogleMapController
+                                        // _CurrentOrderMapController
                                         //     .googleMapUpdate();
                                         Get.back(closeOverlays: true);
                                       })
@@ -96,7 +95,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                                                 lang.strings['taxi']['taxiView']
                                                     ["tooFarFromstartRide"])
                                         .then((_) {
-                                        // _mezcalmosCurrentOrderGoogleMapController
+                                        // _CurrentOrderMapController
                                         //     .googleMapUpdate();
                                         //Get.back(closeOverlays: true);
                                       })
