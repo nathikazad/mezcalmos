@@ -4,21 +4,22 @@ import 'package:flutter/material.dart';
 // import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:mezcalmos/Shared/controllers/GoogleMapController.dart';
+import 'package:mezcalmos/Shared/controllers/mapController.dart';
+import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
 
-class MezcalmosGoogleMap extends StatelessWidget {
+class MezGoogleMap extends StatelessWidget {
   final realtimeTracking;
-  MezcalmosGoogleMap(this.realtimeTracking);
+  MezGoogleMap(this.realtimeTracking);
   Completer<GoogleMapController> _gMapCompleter = Completer();
   GoogleMapController? _googleMapController;
 
-  MezcalmosCurrentOrderGoogleMapController? _currentOrderGoogleMapController;
-  MezcalmosOrderViewGoogleMapController? _mezcalmosOrderViewGoogleMapController;
+  CurrentOrderMapController? _currentOrderGoogleMapController;
+  IncomingOrderMapController? _IncomingOrderMapController;
 
   dynamic getCorespondingController() {
     dynamic res = realtimeTracking
         ? _currentOrderGoogleMapController
-        : _mezcalmosOrderViewGoogleMapController;
+        : _IncomingOrderMapController;
 
     print(res);
     return res;
@@ -30,19 +31,17 @@ class MezcalmosGoogleMap extends StatelessWidget {
         "[[[[[[[[[[[[[[[[[[[[[[[[[ BUILD : realtimeTracking > ${realtimeTracking} ]]]]]]]]]]]]]]]]]]]]]]]]]]]]");
 
     if (realtimeTracking) {
-      if (_mezcalmosOrderViewGoogleMapController?.isClosed != false)
-        Get.delete<MezcalmosOrderViewGoogleMapController>();
+      if (_IncomingOrderMapController?.isClosed != false)
+        Get.delete<IncomingOrderMapController>();
 
       _currentOrderGoogleMapController =
-          Get.put<MezcalmosCurrentOrderGoogleMapController>(
-              MezcalmosCurrentOrderGoogleMapController());
+          Get.put<CurrentOrderMapController>(CurrentOrderMapController());
     } else {
       if (_currentOrderGoogleMapController?.isClosed != false)
-        Get.delete<MezcalmosCurrentOrderGoogleMapController>();
+        Get.delete<CurrentOrderMapController>();
 
-      _mezcalmosOrderViewGoogleMapController =
-          Get.put<MezcalmosOrderViewGoogleMapController>(
-              MezcalmosOrderViewGoogleMapController());
+      _IncomingOrderMapController =
+          Get.put<IncomingOrderMapController>(IncomingOrderMapController());
     }
 
     print(

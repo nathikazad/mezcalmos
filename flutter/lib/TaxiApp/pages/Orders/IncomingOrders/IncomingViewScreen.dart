@@ -6,7 +6,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/Shared/widgets/GoogleMap.dart';
+import 'package:mezcalmos/Shared/widgets/MezGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
@@ -15,7 +15,7 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
   LanguageController lang = Get.find<LanguageController>();
   @override
   Widget build(BuildContext context) {
-    // Get.put<MezcalmosGoogleMapController>(MezcalmosGoogleMapController());
+    // Get.put<MezGoogleMapController>(MezGoogleMapController());
 
     return Scaffold(
       appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back()),
@@ -26,7 +26,7 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
             Obx(() => controller.waitingResponse ||
                     controller.selectedIncommingOrder?.id == null
                 ? Center(child: CircularProgressIndicator())
-                : MezcalmosGoogleMap(false)),
+                : MezGoogleMap(false)),
             Positioned(
                 bottom: GetStorage().read(getxGmapBottomPaddingKey) + 55,
                 child: Container(

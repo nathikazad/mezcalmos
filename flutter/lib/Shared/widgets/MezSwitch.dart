@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class MezcalmosSwitch extends StatefulWidget {
+class MezSwitch extends StatefulWidget {
   final initialPosition;
   final List<String> values;
   final ValueChanged onToggleCallback;
@@ -11,7 +11,7 @@ class MezcalmosSwitch extends StatefulWidget {
   @required
   Color textColor;
 
-  MezcalmosSwitch({
+  MezSwitch({
     required this.initialPosition,
     required this.values,
     required this.onToggleCallback,
@@ -20,10 +20,10 @@ class MezcalmosSwitch extends StatefulWidget {
     this.textColor = const Color(0xFF000000),
   });
   @override
-  _MezcalmosSwitchState createState() => _MezcalmosSwitchState();
+  _MezSwitchState createState() => _MezSwitchState();
 }
 
-class _MezcalmosSwitchState extends State<MezcalmosSwitch> {
+class _MezSwitchState extends State<MezSwitch> {
   bool initialPosition = false;
 
   @override
@@ -63,7 +63,12 @@ class _MezcalmosSwitchState extends State<MezcalmosSwitch> {
               height: 80,
               decoration: ShapeDecoration(
                 // color: widget.backgroundColor,
-                gradient: LinearGradient(begin: Alignment.topLeft, colors: <Color>[Color.fromARGB(10, 81, 133, 255), Color.fromARGB(10, 207, 73, 252)]),
+                gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    colors: <Color>[
+                      Color.fromARGB(10, 81, 133, 255),
+                      Color.fromARGB(10, 207, 73, 252)
+                    ]),
                 // color: Colors.blueAccent,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(Get.width * 0.1),
@@ -90,7 +95,8 @@ class _MezcalmosSwitchState extends State<MezcalmosSwitch> {
           AnimatedAlign(
             duration: const Duration(milliseconds: 250),
             curve: Curves.decelerate,
-            alignment: initialPosition ? Alignment.centerLeft : Alignment.centerRight,
+            alignment:
+                initialPosition ? Alignment.centerLeft : Alignment.centerRight,
             child: Container(
               transformAlignment: Alignment.topLeft,
               // width: Get.width * 0.16,
