@@ -14,8 +14,11 @@ import 'package:mezcalmos/TaxiApp/models/User.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:mezcalmos/TaxiApp/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/TaxiApp/routes/SimpleRouter.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 
 class AuthController extends GetxController {
+  
   fireAuth.FirebaseAuth _auth = fireAuth.FirebaseAuth.instance;
   Rxn<User> _user = Rxn<User>();
   final GetStorage _storage = GetStorage();
@@ -55,6 +58,7 @@ class AuthController extends GetxController {
 
   @override
   void onInit() {
+    Get.lazyPut(() => LanguageController());
     // _user.bindStream(_auth.authStateChanges());
     _auth.authStateChanges().listen((fireAuth.User? user) {
       if (user == null) {
@@ -72,7 +76,14 @@ class AuthController extends GetxController {
               "AuthController::onValue Invoked >> ${event.snapshot.key} : ${event.snapshot.value}");
           print(
               "++++++++++++++++++++++++++++++++++++++++++++++\n\n${event.snapshot.value}\n\n++++++++++++++++++++++++++++++++");
+          // if language is not set in db, then get it from lang controller which gets it from device
+          if (event.snapshot.value['language'] == null) {
+            event.snapshot.value['language'] =
+                Get.find<LanguageController>().userLanguageKey;
+          }
           _user.value = User.fromSnapshot(user, event.snapshot);
+          Get.find<LanguageController>()
+              .userLanguageChanged(_user.value!.language);
         });
       }
     });
@@ -80,11 +91,13 @@ class AuthController extends GetxController {
   }
 
   void changeLanguage(String newLanguage) {
-    if (newLanguage == "en" || newLanguage == "es") {
-      _databaseHelper.firebaseDatabase
-          .reference()
-          .child(userLanguage(_user.value!.uid))
-          .set(newLanguage);
+    if (_user.value != null) {
+      if (newLanguage == "en" || newLanguage == "es") {
+        _databaseHelper.firebaseDatabase
+            .reference()
+            .child(userLanguage(_user.value!.uid))
+            .set(newLanguage);
+      }
     }
   }
 

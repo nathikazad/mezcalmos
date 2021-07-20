@@ -35,7 +35,7 @@ class User {
         displayName = snapshot.value['displayName'],
         image = snapshot.value['photo'],
         language = snapshot.value['language'] == null
-            ? "en"
+            ? "es"
             : snapshot.value['language'],
         phone = snapshot.value['phone'];
 

@@ -108,7 +108,7 @@ class MezSideMenu extends GetWidget<AuthController> {
                 )),
             Obx(() => ListTile(
                 onTap: () =>
-                    _settingsController.appLanguage.updateUserLanguage(),
+                    _settingsController.appLanguage.changeUserLanguage(),
                 leading: Container(
                   height: 31,
                   width: 31,

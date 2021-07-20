@@ -83,8 +83,6 @@ class _SPointState extends State<SPoint> {
   bool _error = false;
   bool timerDone = false;
 
-  late SettingsController _settingsController;
-
   initializeSetup() async {
     try {
       FirebaseApp _app = await Firebase.initializeApp();
@@ -201,8 +199,8 @@ class _SPointState extends State<SPoint> {
     Get.put<AuthController>(AuthController(), permanent: true);
     Get.put<NotificationsController>(NotificationsController(),
         permanent: true);
-    _settingsController =
-        Get.put<SettingsController>(SettingsController(), permanent: true);
+    Get.put<SettingsController>(SettingsController(), permanent: true);
+    
 
     Timer(
         Duration(seconds: nSplashScreenTimer),
