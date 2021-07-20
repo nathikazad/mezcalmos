@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 // import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:mezcalmos/Shared/controllers/mezcalmosGoogleMapController.dart';
-import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
+import 'package:mezcalmos/Shared/controllers/GoogleMapController.dart';
 
 class MezcalmosGoogleMap extends StatelessWidget {
   final realtimeTracking;
@@ -54,17 +53,13 @@ class MezcalmosGoogleMap extends StatelessWidget {
     return Obx(() => getCorespondingController().mapReady == false
         ? Center(child: CircularProgressIndicator())
         : new GoogleMap(
-            // onCameraMove: (_) async {
-            //   await reUpdateLocation();
-            // },
-
+            mapToolbarEnabled: false,
             myLocationButtonEnabled: false,
-            // minMaxZoomPreference: MinMaxZoomPreference(10, 16),
+            minMaxZoomPreference: MinMaxZoomPreference(10, 50),
             buildingsEnabled: false,
             markers: getCorespondingController().markers,
             polylines: getCorespondingController().polylines,
             zoomControlsEnabled: false,
-
             compassEnabled: false,
             mapType: MapType.normal,
             tiltGesturesEnabled: true,

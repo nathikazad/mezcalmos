@@ -32,6 +32,7 @@ class LanguageController extends GetxController {
   String get langFullName => _langFullName.value;
   String get langImage => _langImage.value;
   dynamic get strings => _jsonStrings[_userLanguageKey.value];
+
   String get oppositToLang =>
       _userLanguageKey.value == "en" ? "A Español" : "To English";
   String get oppositFlag =>

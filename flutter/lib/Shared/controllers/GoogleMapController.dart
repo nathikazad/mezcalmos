@@ -1,13 +1,14 @@
 import 'dart:async';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
-
+import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
@@ -53,6 +54,8 @@ class MezcalmosCurrentOrderGoogleMapController extends GetxController {
 
   void googleMapUpdate() async {
     _polylines.clear();
+    bool _dirty = _currentOrderController.value?.customer['image'] == null;
+
     List<LatLng> pLineCoords = [];
 
     List<PointLatLng> res = PolylinePoints().decodePolyline(
@@ -93,8 +96,15 @@ class MezcalmosCurrentOrderGoogleMapController extends GetxController {
           // flat: true,
           // anchor: ui.Offset(0.5, 1),
           markerId: MarkerId("from"),
-          icon: await _getStorage.read<Function>('user_descriptor')!(
-              true, _currentOrderController.value!.customer['image']),
+          icon: await BitmapDescriptorLoader(
+              !_dirty
+                  ? (await cropRonded((await http.get(Uri.parse(
+                          _currentOrderController.value?.customer?['image'])))
+                      .bodyBytes) as Uint8List)
+                  : user_icon_marker_asset,
+              100,
+              100,
+              isBytes: !_dirty),
           visible: true,
           position: LatLng(_currentOrderController.value!.from.latitude,
               _currentOrderController.value!.from.longitude),
@@ -102,6 +112,8 @@ class MezcalmosCurrentOrderGoogleMapController extends GetxController {
 
         Marker(
           draggable: false,
+          onTap: () => null,
+          onDragEnd: (value) => null,
           // flat: true,
           // anchor: ui.Offset(0.5, 1),
           markerId: MarkerId("to"),
@@ -168,8 +180,18 @@ class MezcalmosCurrentOrderGoogleMapController extends GetxController {
           // flat: true,
           // anchor: ui.Offset(0.5, 1),
           markerId: MarkerId("from"),
-          icon: await _getStorage.read<Function>('user_descriptor')!(
-              true, _currentOrderController.value!.customer['image']),
+          // icon: await _getStorage.read<Function>('user_descriptor')!(
+          //     true, _currentOrderController.value!.customer['image']),
+          icon: await BitmapDescriptorLoader(
+              !_dirty
+                  ? (await cropRonded((await http.get(Uri.parse(
+                          _currentOrderController.value?.customer['image'])))
+                      .bodyBytes) as Uint8List)
+                  : user_icon_marker_asset,
+              100,
+              100,
+              isBytes: !_dirty),
+
           visible: true,
           position: LatLng(_currentOrderController.value!.from.latitude,
               _currentOrderController.value!.from.longitude),
@@ -218,7 +240,6 @@ class MezcalmosCurrentOrderGoogleMapController extends GetxController {
   }
 
   @override
-  // TODO: implement onDelete
   get onDelete => super.onDelete;
 
   @override
@@ -259,6 +280,10 @@ class MezcalmosOrderViewGoogleMapController extends GetxController {
 
   @override
   void onInit() async {
+    bool _dirty =
+        _incomingOrdersController.selectedIncommingOrder!.customer['image'] ==
+            null;
+
     // initilize our polylines ====================
     print(
         "\n\n[MezcalmosOrderViewGoogleMapController] =============== INITIALIZED ==============\n\n");
@@ -296,10 +321,16 @@ class MezcalmosOrderViewGoogleMapController extends GetxController {
         markerId: MarkerId("from"),
 
         // icon: await _getStorage.read('user_descriptor'),
-        icon: await _getStorage.read<Function>('user_descriptor')!(
-            true,
-            _incomingOrdersController
-                .selectedIncommingOrder!.customer['image']),
+        icon: await BitmapDescriptorLoader(
+            !_dirty
+                ? (await cropRonded((await http.get(Uri.parse(
+                        _incomingOrdersController
+                            .selectedIncommingOrder!.customer['image'])))
+                    .bodyBytes) as Uint8List)
+                : user_icon_marker_asset,
+            100,
+            100,
+            isBytes: !_dirty),
         visible: true,
         position: LatLng(
             _incomingOrdersController.selectedIncommingOrder!.from.latitude,

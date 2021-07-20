@@ -23,10 +23,10 @@ class MezcalmosSharedWidgets {
       RichText(
           text: TextSpan(
         style: TextStyle(
-            fontFamily: 'psr',
-            color: Colors.black,
-            fontSize: textSize,
-            fontWeight: FontWeight.w400),
+          fontFamily: 'psr',
+          color: Colors.black,
+          fontSize: textSize,
+        ),
         children: <TextSpan>[
           TextSpan(
             text: tMez,
@@ -54,7 +54,7 @@ class MezcalmosSharedWidgets {
 
   static Widget fillTitle() => Row(
         children: [
-          logo(size: 32),
+          logo(size: getSizeRelativeToScreen(85, Get.width, Get.height)),
           Padding(padding: EdgeInsets.only(left: 10), child: mezcalmos()),
         ],
       );
@@ -89,9 +89,9 @@ class MezcalmosSharedWidgets {
         automaticallyImplyLeading: false,
         title: Container(
           width: Get.width,
-          child: Stack(
-            alignment: Alignment.centerLeft,
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Container(
                 height: 32,
@@ -123,9 +123,12 @@ class MezcalmosSharedWidgets {
                   ),
                 ),
               ),
-              Positioned(
-                  right: getSizeRelativeToScreen(40, Get.height, Get.width),
-                  child: fillTitle())
+              // Positioned(
+              //     right: getSizeRelativeToScreen(40, Get.height, Get.width),
+              //     child: fillTitle())
+              SizedBox(
+                  width: getSizeRelativeToScreen(20, Get.height, Get.width)),
+              fillTitle(),
             ],
           ),
         ));

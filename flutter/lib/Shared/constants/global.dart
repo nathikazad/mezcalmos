@@ -15,7 +15,7 @@ const String tEmailTestPassword = "password";
 
 // ----------------- Costants Numbers ----------------- //
 
-const double nDefaultMezcalmosTextSize = 25.5;
+const double nDefaultMezcalmosTextSize = 30.5;
 const int nSplashScreenTimer = 5;
 // ----------------- Costants Strings ----------------- //
 

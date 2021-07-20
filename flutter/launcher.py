@@ -54,7 +54,7 @@ class Launcher(object):
         if __import__('os').path.exists("errors_tracking"):
             import json as jsn
             import re
-            solved = [ s_err_key for s_err_key in jsn.load(open("errors_tracking/solved.json" , "r+"))['v1'] ]
+            solved = [ s_err_key for s_err_key in jsn.load(open("errors_tracking/solved.json" ,  encoding='utf-8', errors='ignore' ))['v1'] ]
             unsolved_errors = [ _l.replace(' ','').replace(':','').replace('>Error' , '').strip() for _l in open("errors_tracking/errors_log.txt" , "r+").readlines() if re.match(r'^(.|\>).{0,12}Error.{0,12}[0-9]+' , _l) and _l.replace(' ','').replace(':','').replace('>Error' , '').strip() not in solved]
             print("\n[ REMINDER ] There are unsolved Problems / Errors that might affect the application in Runtime!")
             print(f"\t|")
@@ -130,8 +130,9 @@ class Launcher(object):
             self.__pre_launch_process__()
             self.__checks__()
             _web        = "-d chrome " if self.web else ""
-            _lanhost    = f" --dart-define={self._ip_dart_define}={self.get_lan_ip()} " if self.lanhost else ""
-            __dec_ip__  = self.get_lan_ip()
+            # _lanhost    = f" --dart-define={self._ip_dart_define}={self.get_lan_ip()} " if self.lanhost else ""
+            _lanhost    = f" --dart-define={self._ip_dart_define}=http://192.168.1.24 " if self.lanhost else ""
+            __dec_ip__  = "http://192.168.1.24"#self.get_lan_ip()
             if self.lanhost and not __dec_ip__.startswith('http://192'):
                 raise Exception("[EXCEPTION] --lan is set to true , but got invalid LAN IP address !\n\t|_ Try to `vim /etc/hosts` and comment line : [127.0.0.1 `your_host_name`] ?")
 
