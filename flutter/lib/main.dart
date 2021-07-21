@@ -120,10 +120,8 @@ class _SPointState extends State<SPoint> {
 
         // first original user marker loading
 
-        // await GetStorage().write(
-        //     'user_descriptor',
-        //     await BitmapDescriptorLoader(user_icon_marker_asset, 170, 180,
-        //         isBytes: true));
+        await GetStorage().write('user_descriptor_placeholder',
+            await BitmapDescriptorLoader(logo_asset, 90, 90));
 
         // second method
 
@@ -202,7 +200,6 @@ class _SPointState extends State<SPoint> {
     Get.put<NotificationsController>(NotificationsController(),
         permanent: true);
     Get.put<SettingsController>(SettingsController(), permanent: true);
-    
 
     Timer(
         Duration(seconds: nSplashScreenTimer),

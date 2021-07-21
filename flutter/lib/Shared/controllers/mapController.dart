@@ -29,7 +29,7 @@ class CurrentOrderMapController extends GetxController {
   RxSet<Polyline> _polylines = <Polyline>{}.obs;
   RxSet<Marker> _markers = <Marker>{}.obs;
 
-  late LatLng initialCameraPosition;
+  Rx<LatLng> _initialCameraPosition = LatLng(0, 0).obs;
 
   // to keep track if everything is initilized !
   RxBool _mapReady = false.obs;
@@ -37,6 +37,7 @@ class CurrentOrderMapController extends GetxController {
   // get me boi xD
   Set<Polyline> get polylines => _polylines;
   Set<Marker> get markers => _markers;
+  dynamic get initialCameraPosition => _initialCameraPosition.value;
   bool get mapReady => _mapReady.value;
 
   GetStorage _getStorage = GetStorage();
@@ -54,7 +55,7 @@ class CurrentOrderMapController extends GetxController {
 
   void googleMapUpdate() async {
     _polylines.clear();
-    bool _dirty = _currentOrderController.value?.customer['image'] == null;
+    bool _dirty = _currentOrderController.value?.customer?['image'] == null;
 
     List<LatLng> pLineCoords = [];
 
@@ -86,7 +87,7 @@ class CurrentOrderMapController extends GetxController {
       // that means taxi accepted order
       print("]]]]]]]]]]]]]]]]]]]]]]\n\n ON_THE_WAY \n\n[[[[[[[[[[[[[[[[[[[[[");
 
-      initialCameraPosition = LatLng(
+      _initialCameraPosition.value = LatLng(
           _taxiAuthController.currentLocation.latitude!,
           _taxiAuthController.currentLocation.longitude!);
       _markers.addAll([
@@ -139,7 +140,7 @@ class CurrentOrderMapController extends GetxController {
       // that means taxi already picked up the customer
       print("]]]]]]]]]]]]]]]]]]]]]]\n\n IN_TRANSIT \n\n[[[[[[[[[[[[[[[[[[[[[");
 
-      initialCameraPosition = LatLng(
+      _initialCameraPosition.value = LatLng(
           _taxiAuthController.currentLocation.latitude!,
           _taxiAuthController.currentLocation.longitude!);
 
@@ -168,7 +169,7 @@ class CurrentOrderMapController extends GetxController {
 
       this._mapReady.value = true;
     } else if (_currentOrderController.value!.status == "droppedOff") {
-      initialCameraPosition = LatLng(
+      _initialCameraPosition.value = LatLng(
           _currentOrderController.value!.from.latitude,
           _currentOrderController.value!.from.longitude);
       print(
@@ -234,7 +235,7 @@ class CurrentOrderMapController extends GetxController {
   }
 
 // ----------- to fit everything in the map !
-  LatLngBounds? getBounds() {
+  dynamic getBounds() {
     if (markers.isEmpty) return null;
     return _createBounds(markers.map((m) => m.position).toList());
   }
@@ -264,7 +265,7 @@ class IncomingOrderMapController extends GetxController {
   RxSet<Polyline> _polylines = <Polyline>{}.obs;
   RxSet<Marker> _markers = <Marker>{}.obs;
 
-  late LatLng initialCameraPosition;
+  Rx<LatLng> _initialCameraPosition = LatLng(0, 0).obs;
 
   GetStorage _getStorage = GetStorage();
 
@@ -275,19 +276,20 @@ class IncomingOrderMapController extends GetxController {
   // get me boi xD
   Set<Polyline> get polylines => _polylines;
   Set<Marker> get markers => _markers;
+  dynamic get initialCameraPosition => _initialCameraPosition.value;
   bool get mapReady => _mapReady.value;
 
   @override
   void onInit() async {
     bool _dirty =
-        _incomingOrdersController.selectedIncommingOrder!.customer['image'] ==
+        _incomingOrdersController.selectedIncommingOrder!.customer?['image'] ==
             null;
 
     // initilize our polylines ====================
     print(
         "\n\n[IncomingOrderMapController] =============== INITIALIZED ==============\n\n");
 
-    initialCameraPosition = LatLng(
+    _initialCameraPosition.value = LatLng(
         _incomingOrdersController.selectedIncommingOrder!.from.latitude,
         _incomingOrdersController.selectedIncommingOrder!.from.longitude);
 
@@ -371,7 +373,7 @@ class IncomingOrderMapController extends GetxController {
   }
 
 // ----------- to fit everything in the map !
-  LatLngBounds? getBounds() {
+  dynamic getBounds() {
     if (markers.isEmpty) {
       print(
           "=================>>>>>>>> GET BOUND ARE EMPTY <<<<<<<<<=================");

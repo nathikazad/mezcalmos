@@ -49,7 +49,8 @@ class MezGoogleMap extends StatelessWidget {
     print(
         "[HOLY MEZCALMOS GMAP] initialCameraPosition ====> ${getCorespondingController().initialCameraPosition.toString()}");
 
-    return Obx(() => getCorespondingController().mapReady == false
+    return Obx(() => getCorespondingController().mapReady == false ||
+            getCorespondingController().initialCameraPosition == LatLng(0, 0)
         ? Center(child: CircularProgressIndicator())
         : new GoogleMap(
             mapToolbarEnabled: false,
@@ -69,8 +70,11 @@ class MezGoogleMap extends StatelessWidget {
             onMapCreated: (GoogleMapController _gController) async {
               // _googleMapController = controller;
               await _gController.setMapStyle(GetStorage().read('map_style'));
-              await _gController.animateCamera(CameraUpdate.newLatLngBounds(
-                  getCorespondingController().getBounds()!, 150));
+              dynamic _getBounds = getCorespondingController().getBounds();
+              if (_getBounds != null) {
+                await _gController.animateCamera(
+                    CameraUpdate.newLatLngBounds(_getBounds, 150));
+              }
               _gMapCompleter.complete(_gController);
             },
           ));
