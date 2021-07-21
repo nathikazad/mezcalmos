@@ -93,8 +93,8 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                   onTap: () async {
                                     print(
                                         "Clicked on order::${controller.orders[i].id}");
-                                    controller.selectedIncommingOrder =
-                                        controller.orders[i];
+                                    controller.selectedIncommingOrderKey =
+                                        controller.orders[i].id;
                                     Get.toNamed(kSelectedIcommingOrder);
                                   },
                                   child: Container(

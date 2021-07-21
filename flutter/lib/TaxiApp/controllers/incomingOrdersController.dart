@@ -22,7 +22,7 @@ class IncomingOrdersController extends GetxController {
   DatabaseHelper _databaseHelper =
       Get.find<DatabaseHelper>(); // Already Injected in main function
   RxBool _waitingResponse = RxBool(false);
-  Rx<Order?> _selectedIncommingOrder = Order.empty().obs;
+  RxString _selectedIncommingOrderKey = "".obs;
 
   // Storing all the needed Listeners here
   List<StreamSubscription<Event>> _listeners = <StreamSubscription<Event>>[];
@@ -30,9 +30,13 @@ class IncomingOrdersController extends GetxController {
 
   dynamic get waitingResponse => _waitingResponse.value;
 
-  Order? get selectedIncommingOrder => _selectedIncommingOrder.value;
-  set selectedIncommingOrder(Order? selectedOrder) =>
-      _selectedIncommingOrder.value = selectedOrder;
+  Order? get selectedIncommingOrder => (_selectedIncommingOrderKey.value != "")
+      ? orders.firstWhere(
+          (element) => element.id == _selectedIncommingOrderKey.value,
+          orElse: () => Order.empty())
+      : null;
+  set selectedIncommingOrderKey(String selectedOrderKey) =>
+      _selectedIncommingOrderKey.value = selectedOrderKey;
 
   @override
   void onInit() async {
@@ -50,45 +54,35 @@ class IncomingOrdersController extends GetxController {
         _databaseHelper.firebaseDatabase
             .reference()
             .child(taxiOpenOrdersNode)
-            .onChildAdded
-            .listen((event) {
-          Order order = Order.fromSnapshot(event.snapshot);
-          order.distanceToClient = MapHelper.calculateDistance(
-              order.from.position, _taxiAuthController.currentLocation);
-          orders.add(order);
-          orders
-              .sort((a, b) => a.distanceToClient.compareTo(b.distanceToClient));
-        }),
-
-        // Removed Order
-        _databaseHelper.firebaseDatabase
-            .reference()
-            .child(taxiOpenOrdersNode)
-            .onChildRemoved
+            .onValue
             .listen((event) async {
-          // This is why GetX guys XD!
-          if (event.snapshot.key == _selectedIncommingOrder.value?.id) {
-            _selectedIncommingOrder.value = Order.empty();
-            if (Get.currentRoute == kSelectedIcommingOrder)
-              await MezcalmosSharedWidgets.mezcalmosDialog(
-                  55, Get.height, Get.width);
-            Get.back(closeOverlays: true);
+          print(event.snapshot.value);
+          orders.value = <Order>[];
+          if (event.snapshot.value != null) {
+            event.snapshot.value.forEach((dynamic key, dynamic value) {
+              Order order = Order.fromJson(key, value);
+              order.distanceToClient = MapHelper.calculateDistance(
+                  order.from.position, _taxiAuthController.currentLocation);
+              orders.add(order);
+            });
+
+            orders.sort(
+                (a, b) => a.distanceToClient.compareTo(b.distanceToClient));
           }
-
-          orders.removeWhere((element) => element.id == event.snapshot.key);
-        }),
-
-        //changed Order
-        _databaseHelper.firebaseDatabase
-            .reference()
-            .child(taxiOpenOrdersNode)
-            .onChildChanged
-            .listen((event) {
-          orders[orders.indexOf(orders.singleWhere(
-                  (element) => element.id == event.snapshot.key))] =
-              Order.fromSnapshot(event.snapshot);
-        }),
+          if (orders
+                  .where((element) =>
+                      element.id == _selectedIncommingOrderKey.value)
+                  .length ==
+              0) {
+            if (Get.currentRoute == kSelectedIcommingOrder) {
+              await MezcalmosSharedWidgets.mezcalmosDialogOrderNoMoreAvailable(
+                  55, Get.height, Get.width);
+              Get.back(closeOverlays: true);
+            }
+          }
+        })
       ]);
+
 
       print("Attached Listeners on taxiOpenOrdersNode : ${_listeners.length}");
 
@@ -99,10 +93,6 @@ class IncomingOrdersController extends GetxController {
               order.from.position, userLocation as LocationData);
         });
         orders.sort((a, b) => a.distanceToClient.compareTo(b.distanceToClient));
-        // orders.forEach((order) {
-        //   print(order.toJson());
-        //   print("");
-        // });
       });
     }
   }
@@ -130,7 +120,7 @@ class IncomingOrdersController extends GetxController {
         'database': _databaseHelper.dbType
       });
       _waitingResponse.value = false;
-      _selectedIncommingOrder.value = new Order.empty();
+      _selectedIncommingOrderKey.value = "";
       Get.back(closeOverlays: true);
       mezcalmosSnackBar("Notice ~", "A new Order has been accpeted !");
       print("Accept Taxi Response");

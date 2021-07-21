@@ -4,6 +4,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/mapController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/helpers/DatabaseHelper.dart';
@@ -43,7 +44,7 @@ class CurrentOrderController extends GetxController {
         .reference()
         .child(orderId(_taxiAuthController.currentOrderId))
         .onValue
-        .listen((event) {
+        .listen((event) async {
       // if (event.snapshot.value['status'] != _model.value.status) {
       //   // we will trigger updateGoogleMap
       // }
@@ -54,6 +55,11 @@ class CurrentOrderController extends GetxController {
 
         print(
             "CurrentOrderController::onValue Invoked >> ${event.snapshot.key} : ${event.snapshot.value['status']}");
+        if (event.snapshot.value['status'] == "cancelled") {
+          await MezcalmosSharedWidgets.mezcalmosDialogOrderCancelled(
+              55, Get.height, Get.width);
+          Get.back(closeOverlays: true);
+        }
         _model.value = Order.fromSnapshot(event.snapshot);
 
         CurrentOrderMapController mezCurrentMap =

@@ -8,7 +8,6 @@ import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/mezcalmos_icons.dart';
 import 'package:mezcalmos/Shared/widgets/NoScrollGlowBehaviour.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
-import 'package:mezcalmos/TaxiApp/constants/taxiConstants.dart';
 
 class MezcalmosSharedWidgets {
   static Image logo({double size = 20}) => Image.asset(
@@ -65,9 +64,7 @@ class MezcalmosSharedWidgets {
 
     switch (btnType) {
       case "back":
-        btn_icon = Padding(
-          padding: EdgeInsets.only(
-              left: getSizeRelativeToScreen(4, Get.height, Get.width)),
+        btn_icon = Center(
           child: Icon(
             MezcalmosIcons.chevron_left,
             color: Colors.white,
@@ -134,35 +131,8 @@ class MezcalmosSharedWidgets {
         ));
   }
 
-  static Future<void> mezcalmosDialog(double val, double sh, double sw) async =>
-      await Get.defaultDialog(
-        backgroundColor: Colors.grey.shade100,
-        title: '',
-        content: Flex(
-          direction: Axis.vertical,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Flexible(
-                fit: FlexFit.loose,
-                child: Icon(
-                  MezcalmosIcons.ban,
-                  color: Colors.redAccent.shade200,
-                  size: getSizeRelativeToScreen(val, sh, sw),
-                )),
-            Flexible(
-                fit: FlexFit.loose,
-                child: SizedBox(
-                  height: 20,
-                )),
-            Flexible(
-                fit: FlexFit.loose, child: Text(tOrderIsNotAvailableAnymore))
-          ],
-        ),
-      );
-
-  static Future<void> mezcalmosDialogOrderNoMoreAvailable() async =>
+  static Future<void> mezcalmosDialog(
+          double val, double sh, double sw, String message) async =>
       await Get.defaultDialog(
         backgroundColor: Colors.grey.shade100,
         title: '',
@@ -188,13 +158,33 @@ class MezcalmosSharedWidgets {
                 )),
             Flexible(
                 fit: FlexFit.loose,
-                child: Text(
-                  "Sorry This ride could not be accepted, Please try another one.",
-                  style: TextStyle(fontFamily: 'psr', fontSize: 18),
+                child: Center(
+                  child: Text(
+                    message,
+                    style: TextStyle(fontFamily: 'psr', fontSize: 18),
+                  ),
                 ))
           ],
         ),
       );
+
+  static Future<void> mezcalmosDialogOrderNoMoreAvailable(
+          double val, double sh, double sw) async =>
+      mezcalmosDialog(
+          val,
+          sh,
+          sw,
+          Get.find<LanguageController>().strings['taxi']['cancelOrder']
+              ['rideUnavailble']);
+
+  static Future<void> mezcalmosDialogOrderCancelled(
+          double val, double sh, double sw) async =>
+      mezcalmosDialog(
+          val,
+          sh,
+          sw,
+          Get.find<LanguageController>().strings['taxi']['cancelOrder']
+              ['customerCancelled']);
 
   static Future<void> yesNoDefaultConfirmationDialog(
           onYes, String text) async =>
