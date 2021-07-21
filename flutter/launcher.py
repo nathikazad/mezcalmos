@@ -55,7 +55,7 @@ class Launcher(object):
             import json as jsn
             import re
             solved = [ s_err_key for s_err_key in jsn.load(open("errors_tracking/solved.json" ,  encoding='utf-8', errors='ignore' ))['v1'] ]
-            unsolved_errors = [ _l.replace(' ','').replace(':','').replace('>Error' , '').strip() for _l in open("errors_tracking/errors_log.txt" , "r+").readlines() if re.match(r'^(.|\>).{0,12}Error.{0,12}[0-9]+' , _l) and _l.replace(' ','').replace(':','').replace('>Error' , '').strip() not in solved]
+            unsolved_errors = [ _l.replace(' ','').replace(':','').replace('>Error' , '').strip() for _l in open("errors_tracking/errors_log.txt" , encoding='utf-8', errors='ignore').readlines() if re.match(r'^(.|\>).{0,12}Error.{0,12}[0-9]+' , _l) and _l.replace(' ','').replace(':','').replace('>Error' , '').strip() not in solved]
             print("\n[ REMINDER ] There are unsolved Problems / Errors that might affect the application in Runtime!")
             print(f"\t|")
             print(f"\t|_ Errors IDs : {' - '.join(unsolved_errors)}")

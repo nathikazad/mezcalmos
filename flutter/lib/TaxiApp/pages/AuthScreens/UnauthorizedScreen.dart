@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/utilities/mezcalmos_icons.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -51,7 +52,7 @@ class _UnauthorizedScreenState extends State<UnauthorizedScreen>
       children: [
         Container(
           child: Icon(
-            Icons.block_outlined,
+            MezcalmosIcons.ban,
             color: Color.fromARGB(150, 198, 90, 252),
             size: getSizeRelativeToScreen(80, Get.height, Get.width),
           ),

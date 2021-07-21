@@ -187,7 +187,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                                                 color: Colors.purple.shade400,
                                               ))
                                           : Icon(
-                                              MezcalmosIcons.locationArrow,
+                                              MezcalmosIcons.location_arrow,
                                               color: Color.fromARGB(
                                                   255, 103, 121, 254),
                                               size: 16,
@@ -214,7 +214,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                                   ),
                                   child: Center(
                                     child: Icon(
-                                      MezcalmosIcons.timesCircle,
+                                      MezcalmosIcons.times_circle,
                                       color: Color.fromARGB(255, 255, 0, 8),
                                       size: 16,
                                     ),

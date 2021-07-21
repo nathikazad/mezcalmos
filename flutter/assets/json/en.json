@@ -135,7 +135,9 @@
             "resend": "Resend",
             "resendAfter":"Resend after",
             "seconds":"seconds",
-
+            "welcomeTitle":"Welcome Back :D",
+            "hello":"Hello",
+            "welcomeDesc2":"We are glad you're back!",
             "confirm": "Confirm",
             "otpCode": "OTP Code",
             "enterPhoneNumber": "Enter phone number to recieve OTP code",

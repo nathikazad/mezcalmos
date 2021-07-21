@@ -6,6 +6,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/utilities/mezcalmos_icons.dart';
 import 'package:mezcalmos/Shared/widgets/MezGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
@@ -180,7 +181,7 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                             spacing: 4,
                             children: [
                               Icon(
-                                Icons.alt_route_rounded,
+                                MezcalmosIcons.route,
                                 size: 16,
                               ),
                               Text(
@@ -202,7 +203,7 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                             spacing: 4,
                             children: [
                               Icon(
-                                Icons.timer_rounded,
+                                MezcalmosIcons.stopwatch,
                                 size: 16,
                               ),
                               Text(

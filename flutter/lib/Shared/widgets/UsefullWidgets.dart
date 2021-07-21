@@ -69,7 +69,7 @@ class MezcalmosSharedWidgets {
           padding: EdgeInsets.only(
               left: getSizeRelativeToScreen(4, Get.height, Get.width)),
           child: Icon(
-            Icons.arrow_back_ios,
+            MezcalmosIcons.chevron_left,
             color: Colors.white,
             size: getSizeRelativeToScreen(35, Get.width, Get.height),
           ),
@@ -147,7 +147,7 @@ class MezcalmosSharedWidgets {
             Flexible(
                 fit: FlexFit.loose,
                 child: Icon(
-                  Icons.error,
+                  MezcalmosIcons.ban,
                   color: Colors.redAccent.shade200,
                   size: getSizeRelativeToScreen(val, sh, sw),
                 )),
@@ -210,7 +210,7 @@ class MezcalmosSharedWidgets {
             Flexible(
                 fit: FlexFit.loose,
                 child: Icon(
-                  MezcalmosIcons.timesCircle,
+                  MezcalmosIcons.times_circle,
                   size: 40,
                   color: Colors.black,
                 )),

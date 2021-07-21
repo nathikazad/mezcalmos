@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/utilities/mezcalmos_icons.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/routes/SimpleRouter.dart';
 
@@ -86,7 +87,7 @@ class SignIn extends GetWidget<AuthController> {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Icon(Icons.facebook),
+                                Icon(MezcalmosIcons.facebook_f),
                                 Text(lmode != "dev"
                                     ? lang.strings['shared']['login']["fbBtn"]
                                     : "test mode login")
@@ -134,7 +135,7 @@ class SignIn extends GetWidget<AuthController> {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Icon(Icons.email_outlined),
+                                Icon(MezcalmosIcons.envelope),
                                 Text(lang.strings['shared']['login']
                                     ["loginWithSms"])
                               ],

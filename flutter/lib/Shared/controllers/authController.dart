@@ -7,6 +7,8 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 // import 'package:mezcalmos/Shared/controllers/settingsController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
@@ -18,6 +20,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 
 class AuthController extends GetxController {
+ 
   fireAuth.FirebaseAuth _auth = fireAuth.FirebaseAuth.instance;
   Rxn<User> _user = Rxn<User>();
   final GetStorage _storage = GetStorage();
@@ -118,12 +121,12 @@ class AuthController extends GetxController {
             onTimeout: () =>
                 Future.error(Exception("Timed out , Check your Internet.")))
         .then((value) {
-      Get.snackbar("Welcome Back :D",
-          "Hello ${value.user?.displayName}, We are glad you're back!",
-          colorText: Colors.white,
-          backgroundColor: Colors.black87,
-          snackPosition: SnackPosition.BOTTOM,
-          snackStyle: SnackStyle.FLOATING);
+      // Get.snackbar(lang.strings['shared']['login']["welcomeTitle"],
+      //     "${lang.strings['shared']['login']["hello"]} ${value.user?.displayName}, ${lang.strings['shared']['login']["welcomeDesc2"]}",
+      //     colorText: Colors.white,
+      //     backgroundColor: Colors.black87,
+      //     snackPosition: SnackPosition.BOTTOM,
+      //     snackStyle: SnackStyle.FLOATING);
       _userInfoListener.resume();
     }, onError: ((Object e, StackTrace stackTrace) {
       Get.snackbar("Failed to Sign you in!", e.toString(),

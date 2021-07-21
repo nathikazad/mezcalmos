@@ -71,7 +71,7 @@ class MezSideMenu extends GetWidget<AuthController> {
             ListTile(
                 onTap: () async => await controller.signOut(),
                 leading: Icon(
-                  MezcalmosIcons.powerOff,
+                  MezcalmosIcons.power_off,
                   color: Color.fromARGB(255, 103, 121, 254),
                   size: 25,
                 ),

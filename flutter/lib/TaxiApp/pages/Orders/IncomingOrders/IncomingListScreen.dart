@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/utilities/mezcalmos_icons.dart';
 import 'package:mezcalmos/Shared/widgets/MezSwitch.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
@@ -186,7 +187,7 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                             runSpacing:
                                                 4.0, // gap between lines
                                             children: <Widget>[
-                                              Icon(Icons.location_on_outlined,
+                                              Icon(MezcalmosIcons.map_marker,
                                                   size: getSizeRelativeToScreen(
                                                       32, sw, sh)),
                                               Text(
@@ -201,7 +202,7 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                                     fontFamily: 'psr',
                                                     fontSize: 14),
                                               ),
-                                              Icon(Icons.my_location_rounded,
+                                              Icon(MezcalmosIcons.map_pin,
                                                   size: getSizeRelativeToScreen(
                                                       32, sw, sh)),
                                               SizedBox(
@@ -222,7 +223,7 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                               SizedBox(
                                                 width: 5,
                                               ),
-                                              Icon(Icons.social_distance,
+                                              Icon(MezcalmosIcons.route,
                                                   size: getSizeRelativeToScreen(
                                                       32, sw, sh)),
                                               SizedBox(
@@ -240,7 +241,7 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                                     fontFamily: 'psr',
                                                     fontSize: 14),
                                               ),
-                                              Icon(Icons.timer,
+                                              Icon(MezcalmosIcons.stopwatch,
                                                   size: getSizeRelativeToScreen(
                                                       32, sw, sh)),
                                               SizedBox(
