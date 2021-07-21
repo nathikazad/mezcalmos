@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'dart:io' show Platform;
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -19,11 +19,12 @@ class LanguageController extends GetxController {
       .obs; // language Object by default  must be set to en if no lang given  in constructor.
 
   LanguageController() {
-    String? lang = Get.locale?.languageCode.toLowerCase();
-    print("USER LANGUAGE [[ $lang ]]");
+    final lang = Platform.localeName.substring(0, 2);
+
+    // print("\n\n\n\n\nUSER LANGUAGE [[ $lang ]]\n\n\n\n\n");
     if (lang == "en")
       _userLanguageKey.value =
-          lang!; // to avoid diffrent other languages diffrent than en and es
+          lang; // to avoid diffrent other languages diffrent than en and es
   }
 
   Map<String, dynamic> languageDetails = {

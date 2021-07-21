@@ -33,7 +33,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                 bottom: GetStorage().read(getxGmapBottomPaddingKey),
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 5),
-                  height: getSizeRelativeToScreen(30, Get.height, Get.width),
+                  height: getSizeRelativeToScreen(25, Get.height, Get.width),
                   // width: getSizeRelativeToScreen(180, Get.height, Get.width),
                   width: Get.width / 1.05,
 
@@ -57,9 +57,9 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                               style: ButtonStyle(
                                 fixedSize: MaterialStateProperty.all(Size(
                                     getSizeRelativeToScreen(
-                                        120, Get.height, Get.width),
+                                        115, Get.height, Get.width),
                                     getSizeRelativeToScreen(
-                                        20, Get.height, Get.width))),
+                                        15, Get.height, Get.width))),
                                 backgroundColor:
                                     controller.value?.status != "inTransit"
                                         ? MaterialStateProperty.all(
@@ -119,7 +119,15 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                             )),
                       ),
                       Flexible(
-                          flex: 1,
+                          child: SizedBox(
+                        height:
+                            getSizeRelativeToScreen(15, Get.height, Get.width),
+                        child: VerticalDivider(
+                            // width: Get.width / 20,
+                            ),
+                      )),
+                      Flexible(
+                          flex: 2,
                           child: Obx(
                             () => Text(
                                 '\$' +
@@ -127,8 +135,16 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                                             ?.toString() ??
                                         "00"),
                                 style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 21)),
+                                    fontWeight: FontWeight.bold, fontSize: 18)),
                           )),
+                      Flexible(
+                          child: SizedBox(
+                        height:
+                            getSizeRelativeToScreen(15, Get.height, Get.width),
+                        child: VerticalDivider(
+                            // width: Get.width / 20,
+                            ),
+                      )),
                       Flexible(
                           flex: 2,
                           child: Row(
@@ -146,13 +162,20 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                                       },
                                 child: Container(
                                   height: getSizeRelativeToScreen(
-                                      20, Get.height, Get.width),
+                                      16, Get.height, Get.width),
                                   width: getSizeRelativeToScreen(
-                                      20, Get.height, Get.width),
+                                      16, Get.height, Get.width),
                                   decoration: BoxDecoration(
                                     color: Color.fromARGB(255, 232, 239, 254),
                                     borderRadius: BorderRadius.circular(4),
-                                    // boxShadow: <BoxShadow>[BoxShadow(color: Color.fromARGB(255, 216, 225, 249), spreadRadius: 0, blurRadius: 1, offset: Offset(0, 5))],
+                                    boxShadow: <BoxShadow>[
+                                      BoxShadow(
+                                          color: Color.fromARGB(
+                                              255, 216, 225, 249),
+                                          spreadRadius: 0,
+                                          blurRadius: 4,
+                                          offset: Offset(0, 2))
+                                    ],
                                   ),
                                   child: Center(
                                     child: Obx(
@@ -167,7 +190,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                                               MezcalmosIcons.locationArrow,
                                               color: Color.fromARGB(
                                                   255, 103, 121, 254),
-                                              size: 25,
+                                              size: 16,
                                             ),
                                     ),
                                   ),
@@ -181,9 +204,9 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                                     .then((_) => Get.back()),
                                 child: Container(
                                   height: getSizeRelativeToScreen(
-                                      20, Get.height, Get.width),
+                                      16, Get.height, Get.width),
                                   width: getSizeRelativeToScreen(
-                                      20, Get.height, Get.width),
+                                      16, Get.height, Get.width),
                                   decoration: BoxDecoration(
                                     color: Color.fromARGB(255, 247, 177, 179),
                                     borderRadius: BorderRadius.circular(4),
@@ -193,7 +216,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                                     child: Icon(
                                       MezcalmosIcons.timesCircle,
                                       color: Color.fromARGB(255, 255, 0, 8),
-                                      size: 25,
+                                      size: 16,
                                     ),
                                   ),
                                 ),

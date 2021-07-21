@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UnauthorizedScreen extends StatefulWidget {
   UnauthorizedScreen({Key? key}) : super(key: key);
@@ -74,10 +75,26 @@ class _UnauthorizedScreenState extends State<UnauthorizedScreen>
         ),
         Text(
           'Anauthorized',
-          style: TextStyle(
-              color: Colors.black38,
-              fontSize: 20,
-              fontWeight: FontWeight.normal),
+          style:
+              TextStyle(color: Colors.black38, fontSize: 20, fontFamily: 'psr'),
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        InkWell(
+          onTap: () async {
+            if (!await launch('https://meztaxi.com'))
+              mezcalmosSnackBar('Error',
+                  "Failed launching https://meztaxi.com on browser , maybe try to browse to it manually ? ");
+          },
+          child: Text(
+            'Request permission at : mextaxi.com ?',
+            style: TextStyle(
+                decoration: TextDecoration.underline,
+                color: Colors.black26,
+                fontSize: 14,
+                fontFamily: 'psr'),
+          ),
         )
       ],
     ));

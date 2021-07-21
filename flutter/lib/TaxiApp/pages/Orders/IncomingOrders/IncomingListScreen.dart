@@ -210,7 +210,7 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                               Text(
                                                 controller.orders[i]
                                                         .distanceToClient
-                                                        .toStringAsFixed(2) +
+                                                        .toStringAsFixed(1) +
                                                     " km",
                                                 overflow: TextOverflow.ellipsis,
                                                 maxLines: 1,

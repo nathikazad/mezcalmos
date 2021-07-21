@@ -110,7 +110,7 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                         bottom:
                             getSizeRelativeToScreen(5, Get.height, Get.width),
                         child: Text(
-                          "${controller.selectedIncommingOrder?.distanceToClient.toStringAsFixed(3) ?? '? '} km ${lang.strings['taxi']['incoming']["far"]}",
+                          "${controller.selectedIncommingOrder?.distanceToClient.toStringAsFixed(1) ?? '? '} km ${lang.strings['taxi']['incoming']["far"]}",
                           style: TextStyle(
                               fontSize: 14,
                               fontFamily: 'psr',
@@ -161,7 +161,7 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                                     )),
                                   )),
                               Text(
-                                "${controller.selectedIncommingOrder?.estimatedPrice?.toString() ?? '? km'}",
+                                "${controller.selectedIncommingOrder?.estimatedPrice?.toString() ?? '? \$'}",
                                 style: TextStyle(
                                     fontSize: 16,
                                     fontFamily: 'psb',

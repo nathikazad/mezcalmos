@@ -1,23 +1,25 @@
 import 'package:location/location.dart';
-import 'dart:math' show cos, sqrt, asin;
+import 'dart:math' show cos, sqrt, sin, pi, atan2;
 
 class MapHelper {
   static double calculateDistance(LocationData from, LocationData to) {
-    var p = 0.017453292519943295;
-    var c = cos;
-    var a = 0.5 -
-        c((from.latitude ?? 0 - to.latitude!) * p) / 2 +
-        c(to.latitude! * p) *
-            c(from.latitude! * p) *
-            (1 - c((from.longitude! - to.longitude!) * p)) /
-            2;
-    double res = ((12742 * asin(sqrt(a))) / 1000);
+    var R = 6371;
+    var dLat = (to.latitude! - from.latitude!) * pi / 180;
+    var dLon = (to.longitude! - from.longitude!) * pi / 180;
 
-    print(
-        "[ LOCATION DATA FROM ] -------\n${from.latitude} | ${from.longitude}\n");
-    print(
-        "[ LOCATION DATA TO ] -------\n${to.latitude} | ${to.longitude}\n\n\n");
-    print(res);
+    var a = sin(dLat / 2) * sin(dLat / 2) +
+        cos(from.latitude! * pi / 180) *
+            cos(to.latitude! * pi / 180) *
+            sin(dLon / 2) *
+            sin(dLon / 2);
+    var c = 2 * atan2(sqrt(a), sqrt(1 - a));
+    var res = R * c; // this is in km
+
+    // print(
+    //     "[ LOCATION DATA FROM ] -------\n${from.latitude} | ${from.longitude}\n");
+    // print(
+    //     "[ LOCATION DATA TO ] -------\n${to.latitude} | ${to.longitude}\n\n\n");
+    // print(res);
 
     return res;
   }
