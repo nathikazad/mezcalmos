@@ -7,6 +7,11 @@ import socket
 
 
 class Launcher(object):
+    def _get_actual_lan_ip(self):
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(("8.8.8.8", 80))
+        return s.getsockname()[0]
+
     def __init__(self, *args):
         self.args               = args[0]
         self.VERSION            = "2021-07-19 16:32:03.708480"
@@ -17,7 +22,7 @@ class Launcher(object):
         self.build_output_dir   = '.launcher_output'
 
         self.__exec__           = lambda c:__import__("os").system(c)
-        self.get_lan_ip         = lambda: f"http://{socket.gethostbyname(socket.gethostname())}"
+        self.get_lan_ip         = lambda: f"http://{self._get_actual_lan_ip()}"
         self.lanhost            = False
         self.app                = "taxi"
         self.web                = False
@@ -130,9 +135,10 @@ class Launcher(object):
             self.__pre_launch_process__()
             self.__checks__()
             _web        = "-d chrome " if self.web else ""
-            # _lanhost    = f" --dart-define={self._ip_dart_define}={self.get_lan_ip()} " if self.lanhost else ""
-            _lanhost    = f" --dart-define={self._ip_dart_define}=http://192.168.1.24 " if self.lanhost else ""
-            __dec_ip__  = "http://192.168.1.24"#self.get_lan_ip()
+            _lanhost    = f" --dart-define={self._ip_dart_define}={self.get_lan_ip()} " if self.lanhost else ""
+            # _lanhost    = f" --dart-define={self._ip_dart_define}=http://192.168.1.24 " if self.lanhost else ""
+            __dec_ip__  =  self.get_lan_ip()
+
             if self.lanhost and not __dec_ip__.startswith('http://192'):
                 raise Exception("[EXCEPTION] --lan is set to true , but got invalid LAN IP address !\n\t|_ Try to `vim /etc/hosts` and comment line : [127.0.0.1 `your_host_name`] ?")
 
