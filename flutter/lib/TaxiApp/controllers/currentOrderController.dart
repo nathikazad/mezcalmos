@@ -55,7 +55,8 @@ class CurrentOrderController extends GetxController {
 
         print(
             "CurrentOrderController::onValue Invoked >> ${event.snapshot.key} : ${event.snapshot.value['status']}");
-        if (event.snapshot.value['status'] == "cancelled") {
+        if (event.snapshot.value['status'] == "cancelled" &&
+            event.snapshot.value['cancelledBy'] == "customer") {
           await MezcalmosSharedWidgets.mezcalmosDialogOrderCancelled(
               55, Get.height, Get.width);
           Get.back(closeOverlays: true);

@@ -1,4 +1,9 @@
-# See https://www.dartlang.org/guides/libraries/private-files
+# Keys
+
+*.jks
+key.properties
+
+# --
 .launcher_output/*.apk
 .launcher_output/*.aab
 font_awesome_flutter/

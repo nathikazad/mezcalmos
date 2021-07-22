@@ -1,3 +1,17 @@
+# New TODO
+
+- Messaging UI.
+- Aunothorized Page -> Should bring the upload user image + The user fullname then actually SignUp for authorization.
+- UserInformation UI.
+
+
+
+
+
+
+
+#  first v 1.0.0  Deployed Version
+
 [Done] Set all firebase functions' names as constants on /constants.
 [Done] Use FutureBuilder > with ListView inside (for orders listing).
 [Done] Add a Database helper :
@@ -20,27 +34,25 @@
 [Done] Fix Delay that makes the LoginPage pushed to stack and (show n pop) when user first enters to app while already logged in.
 [Done] OTP Screens - Remove SmsControlle!
 [Done] Facebook logging
-[FIXED] weird error when changing on/off
+[Done] weird error when changing on/off
 [Done by Nathik] Get Phone's Location Access and keep it updated on db.
 
-[PRIORITY] Change Text("0 km") in openedOrder , I hardcoded it , cuz i didn't know where it comes from!
-[ONGOING] Implement Theme Controller.
+[Done] Change Text("0 km") in openedOrder , I hardcoded it , cuz i didn't know where it comes from!
+[Done] Implement Theme Controller.
 [DONE] CurrentOrder Screens <- Marker!
-[ONGOING] Make everything inside InjectionHelper class.
+[DELETED] Make everything inside InjectionHelper class.
 [Done] Receive notifications for ios and android
-[ONGOING] Detach listeners inside notifications controller
+[DONE] Detach listeners inside notifications controller
 OrderNoMoreAvailable  UI.
-Dialog popups Design + condition to pop only if far 500meters
+[Done] Dialog popups Design + condition to pop only if far 500meters
 [Done] Rest of google map Fixes
 [Done] Anauthorized Screen Image
 [Done] Show the progressive loading Circle when clicking on Send SMS and SingIn Using OTP (both SMS Screens)
 [Done] Open Direction from > to,  When clicking LaunchOnGoogleMapBtn
-[Ongoing] Language stuff
+[Done] Language stuff
 [Done] Loading Indicators in both Signing Buttons when clicking on Signing using Facebook .
  
-- Total Fixes  : 3 ,  Check errors_tracking folder in /flutter
-
-Nathik todo notes:
+[DONE] Nathik todo notes:
 Incoming orders list, distance to client and trip distance icons incorrect
 Incoming order view, distance to client incorrect, trip distance icon incorrect
 Logo and Title too small
@@ -52,3 +64,4 @@ Not showing distance to client
 Always asking whether you want to start ride or end ride regardless of distance
 Unhandled Exception: Converting object to an encodable object failed: Closure: (dynamic, dynamic)
 Language from database
+
