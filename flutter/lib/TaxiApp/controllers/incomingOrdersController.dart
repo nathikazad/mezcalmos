@@ -7,11 +7,11 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
-import 'package:mezcalmos/TaxiApp/helpers/DatabaseHelper.dart';
-import 'package:mezcalmos/TaxiApp/models/Order.dart';
+import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
+import 'package:mezcalmos/Shared/models/Order.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
-import 'package:mezcalmos/TaxiApp/routes/SimpleRouter.dart';
-import 'package:mezcalmos/TaxiApp/helpers/MapHelper.dart';
+import 'package:mezcalmos/TaxiApp/router.dart';
+import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 
 class IncomingOrdersController extends GetxController {
   RxList<Order> orders = <Order>[]

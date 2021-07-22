@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
-import 'package:mezcalmos/TaxiApp/pages/AuthScreens/SignInScreen.dart';
+import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/TaxiApp/pages/TaxiWrapper.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 // import 'package:mezcalmos/TaxiApp/pages/CurrentOrderScreen.dart';

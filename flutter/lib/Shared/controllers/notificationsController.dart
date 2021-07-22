@@ -60,3 +60,5 @@ class NotificationsController extends GetxController {
 
   //TODO: detach listeners on signout
 }
+
+
