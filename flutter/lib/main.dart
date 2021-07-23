@@ -196,8 +196,6 @@ class _SPointState extends State<SPoint> {
     }
 
     Get.put<AuthController>(AuthController(), permanent: true);
-    Get.put<NotificationsController>(NotificationsController(),
-        permanent: true);
     Get.put<SettingsController>(SettingsController(), permanent: true);
 
     Timer(

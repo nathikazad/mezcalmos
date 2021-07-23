@@ -3,6 +3,14 @@ String taxiAuthNode(String? uid) {
   return 'taxiDrivers/$uid';
 }
 
+String notificationsNode(String? uid) {
+  return 'notifications/$uid';
+}
+
+String orderChatNode(String orderId) {
+  return 'chat/${orderId}';
+}
+
 String taxiIsLookingField(String uid) => "${taxiAuthNode(uid)}/state/isLooking";
 
 String orderId(String? orderId) {
