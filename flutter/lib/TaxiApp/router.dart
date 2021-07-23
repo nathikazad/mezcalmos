@@ -2,12 +2,12 @@ import 'package:get/get.dart'; // getX
 import 'package:mezcalmos/Shared/bindings/settingsBinding.dart';
 import 'package:mezcalmos/Shared/pages/Messaging.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
-import 'package:mezcalmos/TaxiApp/pages/AuthScreens/SMS/OtpConfirmationScreen.dart';
-import 'package:mezcalmos/TaxiApp/pages/AuthScreens/SMS/PhoneNumberScreen.dart';
-import 'package:mezcalmos/TaxiApp/pages/AuthScreens/SignInScreen.dart';
-import 'package:mezcalmos/TaxiApp/pages/AuthScreens/SignUpScreen.dart';
+import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/OtpConfirmationScreen.dart';
+import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/PhoneNumberScreen.dart';
+import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
+import 'package:mezcalmos/Shared/pages/AuthScreens/SignUpScreen.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen.dart';
-import 'package:mezcalmos/TaxiApp/pages/SplashScreen.dart';
+import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
 import 'package:mezcalmos/TaxiApp/pages/TaxiWrapper.dart';
 import 'package:mezcalmos/TaxiApp/pages/Wrapper.dart';
 

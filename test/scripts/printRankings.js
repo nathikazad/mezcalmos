@@ -16,8 +16,8 @@ async function main() {
     for(let orderId in driver.orders) {
       let order = driver.orders[orderId]
 
-      let startTime = new Date("Thu, 20 Jun 2021 05:00:00 GMT")
-      let endTime = new Date("Mon, 24 Jun 2021 05:00:00 GMT")
+      let startTime = new Date("Mon, 19 Jul 2021 05:00:00 GMT")
+      let endTime = new Date("Thu, 22 Jul 2021 05:00:00 GMT")
       let orderTime = new Date(order.acceptRideTime)
       if(orderTime > startTime && orderTime < endTime && order.status == "droppedOff"){
         if(!customers[order.customer.id]) {

@@ -8,14 +8,16 @@ import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 // import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/controllers/messageController.dart';
+import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
-import 'package:mezcalmos/TaxiApp/models/User.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:mezcalmos/TaxiApp/helpers/DatabaseHelper.dart';
-import 'package:mezcalmos/TaxiApp/routes/SimpleRouter.dart';
+import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
+import 'package:mezcalmos/TaxiApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 
@@ -69,6 +71,9 @@ class AuthController extends GetxController {
       } else {
         print("Putting Taxi Auth Controller");
         Get.lazyPut(() => TaxiAuthController());
+        Get.lazyPut(() => DeviceNotificationsController());
+        Get.lazyPut(() => MessageController());
+        Get.lazyPut(() => FBNotificationsController());
         _userInfoListener = _databaseHelper.firebaseDatabase
             .reference()
             .child(userInfo(user.uid))
@@ -90,6 +95,22 @@ class AuthController extends GetxController {
       }
     });
     super.onInit();
+  }
+
+  Future<void> signOut() async {
+    try {
+      _userInfoListener.pause();
+      // TaxiInjectionHelper.revokeListenersOnSignOut();
+      Get.find<TaxiAuthController>().dispose();
+      Get.find<DeviceNotificationsController>().dispose();
+      Get.find<MessageController>().dispose();
+      Get.find<FBNotificationsController>().dispose();
+      await _auth.signOut();
+      Get.offAllNamed(kMainAuthWrapperRoute);
+    } catch (e) {
+      Get.snackbar("Failed to Sign you out!", e.toString(),
+          snackPosition: SnackPosition.BOTTOM);
+    }
   }
 
   void changeLanguage(String newLanguage) {
@@ -210,19 +231,6 @@ class AuthController extends GetxController {
       _userInfoListener.resume();
     } else {
       mezcalmosSnackBar("Notice ~", "Failed SignIn with Facebook !");
-    }
-  }
-
-  Future<void> signOut() async {
-    try {
-      _userInfoListener.pause();
-      // TaxiInjectionHelper.revokeListenersOnSignOut();
-      Get.find<TaxiAuthController>().dispose();
-      await _auth.signOut();
-      Get.offAllNamed(kMainAuthWrapperRoute);
-    } catch (e) {
-      Get.snackbar("Failed to Sign you out!", e.toString(),
-          snackPosition: SnackPosition.BOTTOM);
     }
   }
 

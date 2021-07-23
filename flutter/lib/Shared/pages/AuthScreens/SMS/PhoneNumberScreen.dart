@@ -4,7 +4,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
-import 'package:mezcalmos/TaxiApp/routes/SimpleRouter.dart';
+import 'package:mezcalmos/TaxiApp/router.dart';
 
 class PhoneNumberScreen extends GetView<AuthController> {
   LanguageController lang = Get.find<LanguageController>();

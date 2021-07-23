@@ -3,13 +3,14 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/mapController.dart';
+import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
-import 'package:mezcalmos/TaxiApp/helpers/DatabaseHelper.dart';
-import 'package:mezcalmos/TaxiApp/helpers/MapHelper.dart';
-import 'package:mezcalmos/TaxiApp/models/Order.dart';
+import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
+import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
+import 'package:mezcalmos/Shared/models/Order.dart';
 
 class CurrentOrderController extends GetxController {
   Rx<Order> _model = Order.empty().obs;
@@ -19,6 +20,9 @@ class CurrentOrderController extends GetxController {
       Get.find<TaxiAuthController>(); // since it's already injected .
   DatabaseHelper _databaseHelper =
       Get.find<DatabaseHelper>(); // Already Injected in main function
+
+  FBNotificationsController _notifications =
+      Get.find<FBNotificationsController>();
 
   Order? get value => _model.value;
   dynamic get id => _model.value.id;
@@ -62,7 +66,7 @@ class CurrentOrderController extends GetxController {
           Get.back(closeOverlays: true);
         }
         _model.value = Order.fromSnapshot(event.snapshot);
-
+        _model.value.id = _taxiAuthController.currentOrderId;
         CurrentOrderMapController mezCurrentMap =
             Get.find<CurrentOrderMapController>();
         if (!mezCurrentMap.isClosed && !dirty) {
@@ -70,6 +74,14 @@ class CurrentOrderController extends GetxController {
         }
       }
     });
+  }
+
+  int remainingUnreadMessages() {
+    if (_model.value.id != null) {
+      return _notifications.remainingMessageNotificationsCount(_model.value.id);
+    } else {
+      return 0;
+    }
   }
 
   Future<void> cancelTaxi(String? reason) async {

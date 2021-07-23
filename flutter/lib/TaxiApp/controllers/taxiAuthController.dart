@@ -9,9 +9,9 @@ import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
-import 'package:mezcalmos/TaxiApp/helpers/DatabaseHelper.dart';
+import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/TaxiApp/models/TaxiDriver.dart';
-import 'package:mezcalmos/TaxiApp/pages/AuthScreens/UnauthorizedScreen.dart';
+import 'package:mezcalmos/Shared/pages/AuthScreens/UnauthorizedScreen.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/CurrentOrderScreen.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingListScreen.dart';
 import 'package:location/location.dart';
@@ -25,8 +25,8 @@ class TaxiAuthController extends GetxController {
   Rx<LocationData> _currentLocation = LocationData.fromMap(
       <String, dynamic>{"latitude": 15.851385, "longitude": -97.046429}).obs;
   RxBool _locationEnabled = false.obs;
-  NotificationsController _messagingController =
-      Get.find<NotificationsController>();
+  DeviceNotificationsController _messagingController =
+      Get.find<DeviceNotificationsController>();
   dynamic get currentOrderId => _model.value.currentOrder ?? null;
   dynamic get authorizedTaxi => _model.value.isAuthorized ?? false;
   bool get isLooking => _model.value.isLooking ?? false;
@@ -69,7 +69,7 @@ class TaxiAuthController extends GetxController {
     if (_authController.user != null) {
       _taxiAuthListener = _databaseHelper.firebaseDatabase
           .reference()
-          .child(taxiAuthNode(_authController.user?.uid ?? ''))
+          .child(taxiAuthNode(_authController.user!.uid))
           .onValue
           .listen((event) {
         _model.value = event.snapshot.value != null

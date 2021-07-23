@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 // import 'package:mezcalmos/Shared/pages/Messaging.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/TaxiApp/routes/SimpleRouter.dart';
+import 'package:mezcalmos/TaxiApp/router.dart';
 
 class TaxiApp extends GetView<SettingsController> {
   @override

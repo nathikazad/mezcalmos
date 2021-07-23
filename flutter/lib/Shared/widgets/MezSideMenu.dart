@@ -6,7 +6,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/Shared/utilities/mezcalmos_icons.dart';
+import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
 
 class MezSideMenu extends GetWidget<AuthController> {
   SideMenuDraweController _draweController =
