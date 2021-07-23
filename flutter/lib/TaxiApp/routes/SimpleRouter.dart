@@ -1,5 +1,6 @@
 import 'package:get/get.dart'; // getX
 import 'package:mezcalmos/Shared/bindings/settingsBinding.dart';
+import 'package:mezcalmos/Shared/pages/Messaging.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/pages/AuthScreens/SMS/OtpConfirmationScreen.dart';
 import 'package:mezcalmos/TaxiApp/pages/AuthScreens/SMS/PhoneNumberScreen.dart';
@@ -20,19 +21,7 @@ const String kOtpConfirmRoute = '/sign_in_otp_confirm';
 const String kMainAuthWrapperRoute = '/auth_wrapper';
 const String kTaxiWrapperRoute = '/taxi_wrapper';
 const String kSelectedIcommingOrder = '/selected_incomming_order';
-
-// No need these :
-
-// const String kIncomingOrdersRoute       = '/incoming_orders';
-// const String kCurrentOrderRoute         = '/current_order';
-// const String kUnauthorizedRoute         = '/unauthorized';
-
-// since they're not actual Routes ,
-// You can see them as the following :
-// the mainRoute  is : taxi_wrapper
-//                     |__scaffold's body :  incoming_orders | current_order | unauthorized
-//
-// what goes in the Scaffold's body is depending on what's Rx<TaxiAuthController::dynamicScreen>'s value.
+const String kMessagesRoute = '/messages';
 
 // GetX based Router (For navigating)
 class XRouter {
@@ -55,5 +44,13 @@ class XRouter {
     GetPage(name: kOtpRoute, page: () => PhoneNumberScreen()),
     GetPage(name: kOtpConfirmRoute, page: () => OtpConfirmationScreen()),
     GetPage(name: kSignUpRoute, page: () => SignUp()),
+    GetPage(
+      name: kMessagesRoute,
+      page: () => MessagingScreen(),
+      binding: null, // add here our messagingController using bindingBuilder
+      transition: Transition.rightToLeftWithFade,
+      transitionDuration: Duration(milliseconds: 500),
+      // customTransition:
+    )
   ];
 }

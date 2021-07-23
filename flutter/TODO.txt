@@ -1,6 +1,6 @@
 # New TODO
 
-- Messaging UI.
+[Done] Messaging UI.
 - Aunothorized Page -> Should bring the upload user image + The user fullname then actually SignUp for authorization.
 - UserInformation UI.
 

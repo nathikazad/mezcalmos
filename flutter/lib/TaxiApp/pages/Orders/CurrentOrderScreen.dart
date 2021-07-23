@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/utilities/mezcalmos_icons.dart';
 import 'package:mezcalmos/Shared/widgets/MezGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
+import 'package:mezcalmos/TaxiApp/routes/SimpleRouter.dart';
 
 class CurrentOrderScreen extends GetView<CurrentOrderController> {
   LanguageController lang = Get.find<LanguageController>();
@@ -48,11 +49,12 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                             offset: Offset(0, 7)),
                       ]),
                   child: Flex(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     direction: Axis.horizontal,
                     children: [
                       Flexible(
-                        flex: 2,
+                        flex: 3,
+                        fit: FlexFit.loose,
                         child: Obx(() => TextButton(
                               style: ButtonStyle(
                                 fixedSize: MaterialStateProperty.all(Size(
@@ -146,9 +148,15 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                             ),
                       )),
                       Flexible(
-                          flex: 2,
+                          flex: 4,
+                          fit: FlexFit.loose,
                           child: Row(
+                            // direction: Axis.horizontal,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.end,
+                            // runAlignment: WrapAlignment.end,
+                            // alignment: WrapAlignment.end,
+                            // spacing: 10,
                             children: [
                               GestureDetector(
                                 onTap: clickedLaunchOnMap.value
@@ -196,6 +204,51 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                                   ),
                                 ),
                               ),
+                              // Spacer(),
+                              Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 5)),
+                              GestureDetector(
+                                onTap: () async {
+                                  Get.toNamed(kMessagesRoute);
+                                },
+                                child: Container(
+                                  height: getSizeRelativeToScreen(
+                                      16, Get.height, Get.width),
+                                  width: getSizeRelativeToScreen(
+                                      16, Get.height, Get.width),
+                                  decoration: BoxDecoration(
+                                    color: Color.fromARGB(255, 232, 239, 254),
+                                    borderRadius: BorderRadius.circular(4),
+                                    boxShadow: <BoxShadow>[
+                                      BoxShadow(
+                                          color: Color.fromARGB(
+                                              255, 216, 225, 249),
+                                          spreadRadius: 0,
+                                          blurRadius: 4,
+                                          offset: Offset(0, 2))
+                                    ],
+                                  ),
+                                  child: Center(
+                                    child: Obx(
+                                      () => clickedLaunchOnMap.value
+                                          ? SizedBox(
+                                              height: 10,
+                                              width: 10,
+                                              child: CircularProgressIndicator(
+                                                color: Colors.purple.shade400,
+                                              ))
+                                          : Icon(
+                                              Icons.message,
+                                              color: Color.fromARGB(
+                                                  255, 103, 121, 254),
+                                              size: 16,
+                                            ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              // Spacer(),
+
                               Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 5)),
                               GestureDetector(
@@ -242,108 +295,136 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                           blurRadius: 7,
                           offset: Offset(0, 7)),
                     ]),
-                child: Stack(
+                child: Flex(
+                  clipBehavior: Clip.hardEdge,
+
                   // direction: Axis.horizontal,
                   // mainAxisAlignment: MainAxisAlignment.center,
                   // crossAxisAlignment: CrossAxisAlignment.center,
-                  alignment: Alignment.center,
+                  // alignment: Alignment.center,
+                  direction: Axis.horizontal,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    VerticalDivider(
-                      color: Color.fromARGB(255, 236, 236, 236),
-                      thickness: 1,
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(
-                          getSizeRelativeToScreen(2, Get.height, Get.width)),
-                      height:
-                          getSizeRelativeToScreen(20, Get.height, Get.width),
-                      width: getSizeRelativeToScreen(20, Get.height, Get.width),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        boxShadow: <BoxShadow>[
-                          BoxShadow(
-                              color: Color.fromARGB(255, 216, 225, 249),
-                              spreadRadius: 0,
-                              blurRadius: 5,
-                              offset: Offset(0, 7)),
-                        ],
-                        gradient: LinearGradient(
-                            colors: [
-                              Color.fromARGB(255, 97, 127, 255),
-                              Color.fromARGB(255, 198, 90, 252),
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight),
-                      ),
-                      child: Center(
-                        child: Image.asset('assets/images/logoWhite.png'),
-                      ),
-                    ),
-                    Positioned(
-                      left: 25,
-                      top: 13,
-                      child: Obx(
-                        () => Text(
-                          lang.strings['shared']['inputLocation']["from"],
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 25,
-                      top: 30,
-                      child: Obx(() => GestureDetector(
-                            onTap: () => mezcalmosSnackBar(
-                                lang.strings['shared']['inputLocation']["from"],
-                                controller.value?.from?.address ?? ""),
-                            child: Text(
-                              (controller.value?.from?.address
-                                          .toString()
-                                          .substring(0, 13) ??
-                                      "..........") +
-                                  " ..", //13+..
-                              style: TextStyle(fontSize: 16, fontFamily: 'psr'),
+                    Flexible(
+                      flex: 2,
+                      fit: FlexFit.tight,
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 20, top: 12, bottom: 12, right: 8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Obx(
+                              () => Expanded(
+                                child: Text(
+                                  lang.strings['shared']['inputLocation']
+                                      ["from"],
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
                             ),
-                          )),
-                    ),
-                    Positioned(
-                      left:
-                          (getSizeRelativeToScreen(180, Get.height, Get.width) /
-                                  2) +
-                              40,
-                      top: 13,
-                      child: Obx(
-                        () => Text(
-                          lang.strings['shared']['inputLocation']["to"],
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
+                            Obx(() => GestureDetector(
+                                  onTap: () => mezcalmosSnackBar(
+                                      lang.strings['shared']['inputLocation']
+                                          ["from"],
+                                      controller.value?.from?.address ?? ""),
+                                  child: Text(
+                                    (controller.value?.from?.address
+                                                .toString()
+                                                .substring(0, 13) ??
+                                            "..........") +
+                                        " ..", //13+..
+                                    style: TextStyle(
+                                        fontSize: 16, fontFamily: 'psr'),
+                                  ),
+                                ))
+                          ],
                         ),
                       ),
                     ),
-                    Positioned(
-                      left:
-                          (getSizeRelativeToScreen(180, Get.height, Get.width) /
-                                  2) +
-                              40,
-                      top: 30,
-                      child: Obx(
-                        () => GestureDetector(
-                          onTap: () => mezcalmosSnackBar(
-                              lang.strings['shared']['inputLocation']["to"],
-                              controller.value?.to?.address ?? ""),
-                          child: Text(
-                            (controller.value?.to?.address
-                                        .toString()
-                                        .substring(0, 13) ??
-                                    "..........") +
-                                " ..", //13+..
-                            style: TextStyle(fontSize: 16, fontFamily: 'psr'),
+                    Flexible(
+                      fit: FlexFit.tight,
+                      flex: 1,
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          VerticalDivider(
+                            color: Color.fromARGB(255, 236, 236, 236),
+                            thickness: 1,
                           ),
+                          Container(
+                            padding: EdgeInsets.all(getSizeRelativeToScreen(
+                                2, Get.height, Get.width)),
+                            height: getSizeRelativeToScreen(
+                                20, Get.height, Get.width),
+                            width: getSizeRelativeToScreen(
+                                20, Get.height, Get.width),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              boxShadow: <BoxShadow>[
+                                BoxShadow(
+                                    color: Color.fromARGB(255, 216, 225, 249),
+                                    spreadRadius: 0,
+                                    blurRadius: 5,
+                                    offset: Offset(0, 7)),
+                              ],
+                              gradient: LinearGradient(
+                                  colors: [
+                                    Color.fromARGB(255, 97, 127, 255),
+                                    Color.fromARGB(255, 198, 90, 252),
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight),
+                            ),
+                            child: Center(
+                              child: Image.asset('assets/images/logoWhite.png'),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Flexible(
+                      fit: FlexFit.tight,
+                      flex: 2,
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 0, top: 12, bottom: 12, right: 8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Obx(
+                              () => Expanded(
+                                child: Text(
+                                  lang.strings['shared']['inputLocation']["to"],
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Obx(() => GestureDetector(
+                                  onTap: () => mezcalmosSnackBar(
+                                      lang.strings['shared']['inputLocation']
+                                          ["to"],
+                                      controller.value?.to?.address ?? ""),
+                                  child: Text(
+                                    (controller.value?.to?.address
+                                                .toString()
+                                                .substring(0, 13) ??
+                                            "..........") +
+                                        " ..", //13+..
+                                    style: TextStyle(
+                                        fontSize: 16, fontFamily: 'psr'),
+                                  ),
+                                ))
+                          ],
                         ),
                       ),
                     ),
