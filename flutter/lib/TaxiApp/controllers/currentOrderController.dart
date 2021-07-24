@@ -40,10 +40,11 @@ class CurrentOrderController extends GetxController {
   void onInit() {
     super.onInit();
     print("--------------------> CurrentOrderController Initialized !");
-    dispatchCurrentOrder();
+    // dispatchCurrentOrder();
   }
 
   void dispatchCurrentOrder() {
+    _currentOrderListener?.cancel();
     _currentOrderListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(orderId(_taxiAuthController.currentOrderId))
@@ -53,7 +54,9 @@ class CurrentOrderController extends GetxController {
       //   // we will trigger updateGoogleMap
       // }
 
-      print("[[[[[[[[[[ \n\n ${event.snapshot.value} \n\n ]]]]]]]]]]");
+      // print("[[[[[[[[[[ \n\n ${event.snapshot.value} \n\n ]]]]]]]]]]");
+      print(
+          "CurrentOrderController :: DispatchCurrentOrder :: _taxiAuthController.currentOrderId ${_taxiAuthController.currentOrderId}");
       if (event.snapshot.value != null) {
         bool dirty = event.snapshot.value['status'] == _model.value.status;
 
@@ -96,11 +99,14 @@ class CurrentOrderController extends GetxController {
         'database': _databaseHelper.dbType
       });
       dynamic _res = responseStatusChecker(response.data);
+      if (_res == null) {
+        throw Exception(
+            "Manually thrown Exception - Reason -> Response.data was null !");
+      } else {
+        mezcalmosSnackBar("Notice ~", _res);
+        Get.delete<CurrentOrderMapController>();
+      }
 
-      _res == null
-          ? throw Exception(
-              "Manually thrown Exception - Reason -> Response.data was null !")
-          : mezcalmosSnackBar("Notice ~", _res);
       _waitingResponse.value = false;
     } catch (e) {
       mezcalmosSnackBar("Notice ~", "Failed to Cancel the Taxi Request :( ");
@@ -141,10 +147,14 @@ class CurrentOrderController extends GetxController {
           .call(<String, dynamic>{'database': _databaseHelper.dbType});
       dynamic _res = responseStatusChecker(response.data);
 
-      _res == null
-          ? throw Exception(
-              "Manually thrown Exception - Reason -> Response.data was null !")
-          : mezcalmosSnackBar("Notice ~", _res);
+      if (_res == null) {
+        throw Exception(
+            "Manually thrown Exception - Reason -> Response.data was null !");
+      } else {
+        mezcalmosSnackBar("Notice ~", _res);
+        Get.delete<CurrentOrderMapController>();
+      }
+
       _waitingResponse.value = false;
     } catch (e) {
       mezcalmosSnackBar("Notice ~", "Failed to finish The ride :( ");
@@ -155,6 +165,7 @@ class CurrentOrderController extends GetxController {
 
   void detachListeners() {
     if (_currentOrderListener != null) {
+      Get.delete<CurrentOrderMapController>();
       _currentOrderListener!
           .cancel()
           .then((value) => print(
@@ -162,6 +173,13 @@ class CurrentOrderController extends GetxController {
           .catchError((err) => print(
               "Error happend while trying to dispose currentOrderController::detachListeners !"));
     }
+  }
+
+  @override
+  void onClose() async {
+    // TODO: implement onClose
+    detachListeners();
+    super.onClose();
   }
 
   @override

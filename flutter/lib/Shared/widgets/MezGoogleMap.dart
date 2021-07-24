@@ -21,7 +21,6 @@ class MezGoogleMap extends StatelessWidget {
         ? _currentOrderGoogleMapController
         : _IncomingOrderMapController;
 
-    print(res);
     return res;
   }
 

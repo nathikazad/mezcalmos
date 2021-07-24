@@ -10,7 +10,7 @@ import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
 import 'package:mezcalmos/Shared/widgets/MezGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
-import 'package:mezcalmos/TaxiApp/routes/SimpleRouter.dart';
+import 'package:mezcalmos/TaxiApp/router.dart';
 
 class CurrentOrderScreen extends GetView<CurrentOrderController> {
   LanguageController lang = Get.find<LanguageController>();
@@ -18,7 +18,6 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
 
   Widget build(BuildContext context) {
     Get.put<CurrentOrderMapController>(CurrentOrderMapController());
-
     controller.dispatchCurrentOrder();
     return Scaffold(
       body: SafeArea(

@@ -241,11 +241,9 @@ class CurrentOrderMapController extends GetxController {
   }
 
   @override
-  get onDelete => super.onDelete;
-
-  @override
   void onClose() {
-    print("[==== IncomingOrderMapController] got closes !!!!!!!!!!!!!!!!!!");
+    print("[==== CurrentOrderMapController] got closes !!!!!!!!!!!!!!!!!!");
+    _currentOrderController.detachListeners();
     super.onClose();
   }
 }

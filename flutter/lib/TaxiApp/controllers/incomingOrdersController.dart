@@ -56,7 +56,6 @@ class IncomingOrdersController extends GetxController {
             .child(taxiOpenOrdersNode)
             .onValue
             .listen((event) async {
-          print(event.snapshot.value);
           orders.value = <Order>[];
           if (event.snapshot.value != null) {
             event.snapshot.value.forEach((dynamic key, dynamic value) {
@@ -82,7 +81,6 @@ class IncomingOrdersController extends GetxController {
           }
         })
       ]);
-
 
       print("Attached Listeners on taxiOpenOrdersNode : ${_listeners.length}");
 
