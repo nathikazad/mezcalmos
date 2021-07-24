@@ -11,7 +11,14 @@
       >
         <paymentToggle class="flex align_center" slot="part3"></paymentToggle>
 
-        <price class="flex align_center" slot="part1" :price="price"></price>
+        <price
+          class="flex align_center"
+          slot="part1"
+          :price="price"
+          :plusMinus="true"
+          @plusClicked="$emit('increasePrice')"
+          @minusClicked="$emit('reducePrice')"
+        ></price>
 
         <div class="flex align_center" slot="part2">
           <routeInfo :distance="distance" :duration="duration"></routeInfo>
@@ -29,7 +36,8 @@ export default {
     price: [Number, String],
     duration: String,
     distance: String
-  }
+  },
+
 };
 </script>
 <style lang="scss" scoped>

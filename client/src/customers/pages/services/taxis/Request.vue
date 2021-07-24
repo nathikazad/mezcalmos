@@ -42,7 +42,9 @@
         class="routePill"
         :distance="distance.text"
         :duration="duration.text"
-        :price="Number.parseFloat(this.estimatedPrice).toFixed(2)"
+        @increasePrice="increasePrice"
+        @reducePrice="reducePrice"
+        :price.sync="Number.parseFloat(this.estimatedPrice).toFixed(2)"
       ></estimateRoute>
 
       <div class="flex align_center center btnP" slot="action">
@@ -146,6 +148,16 @@ export default {
     }
   },
   methods: {
+    reducePrice() {
+      if (this.estimatedPrice > 35) {
+        this.estimatedPrice -= 5;
+      }
+    },
+    increasePrice() {
+      console.log("clicked ",this.estimatedPrice);
+
+      this.estimatedPrice += 5;
+    },
     async setDistanceDuration(pos) {
       this.polyline = pos.polyline;
       this.distance = pos.leg.distance;
