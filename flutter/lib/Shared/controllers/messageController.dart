@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
@@ -15,21 +16,30 @@ class MessageController extends GetxController {
 
   StreamSubscription<Event>? _chatListener;
   late String _dbAddress;
+
   @override
   void onInit() {
     super.onInit();
     print("--------------------> messageController Initialized !");
   }
 
-  void loadChat(String userId, String orderId) {
+  void loadChat(String userId, String orderId,
+      {VoidCallback? onValueCallBack}) {
     _dbAddress = orderChatNode(orderId);
+
     _chatListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(orderChatNode(orderId))
         .onValue
-        .listen((event) async {
+        .listen((event) {
       if (event.snapshot.value != null) {
-        _model.value = Chat.fromJson(event.snapshot.value);
+        // print("\n\n\n ${event.snapshot.value} \n\n\n");
+        Chat res = Chat.fromJson(event.snapshot.value);
+
+        _model.value = res;
+        if (onValueCallBack != null) onValueCallBack();
+        // print(
+        //     "--------------------> messageController Listener Invoked with Messages > ${_model.value.messages} ");
       }
     });
   }
@@ -60,14 +70,20 @@ class MessageController extends GetxController {
     return recipient;
   }
 
-  void dispose() {
+  // using onClose better , since  the getter of GetX invoke it automatically.
+  // for now we will delete the MessageController instance manually , when Order canceled or finished.
+  // Later on , it will be done automatically by GetX since we will be changing everything to GetxPage routes.
+
+  @override
+  void onClose() {
     if (_chatListener != null) {
       _chatListener!
           .cancel()
-          .then((value) => print(
-              "A listener was disposed on currentOrderController::detachListeners !"))
+          .then((value) =>
+              print("A listener was disposed on messageController::onClose !"))
           .catchError((err) => print(
-              "Error happend while trying to dispose currentOrderController::detachListeners !"));
+              "Error happend while trying to dispose messageController::onClose !"));
     }
+    super.onClose();
   }
 }

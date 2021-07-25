@@ -1,5 +1,6 @@
 import 'package:get/get.dart'; // getX
 import 'package:mezcalmos/Shared/bindings/settingsBinding.dart';
+import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/pages/Messaging.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/OtpConfirmationScreen.dart';
@@ -47,7 +48,8 @@ class XRouter {
     GetPage(
       name: kMessagesRoute,
       page: () => MessagingScreen(),
-      binding: null, // add here our messagingController using bindingBuilder
+      binding: BindingsBuilder(() => Get.put<MessageController>(
+          MessageController())), // add here our messagingController using bindingBuilder
       transition: Transition.rightToLeftWithFade,
       transitionDuration: Duration(milliseconds: 500),
       // customTransition:

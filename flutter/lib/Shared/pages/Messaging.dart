@@ -2,124 +2,169 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/messageController.dart';
+import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
+import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
 
 // Extends GetView<MessagingController> after Nathik implements the controller
-class MessagingScreen extends StatelessWidget {
+class MessagingScreen extends GetView<MessageController> {
+  AuthController _authController = Get.find<AuthController>();
+  CurrentOrderController _currentOrderController =
+      Get.find<CurrentOrderController>();
   TextEditingController _textEditingController = new TextEditingController();
   ScrollController _listViewScrollController = new ScrollController();
+  RxList<Widget> chatLines = <Widget>[].obs;
 
   RxString _typedMsg = "".obs;
 
+  Widget SingleChatComponent(
+    String message,
+    String time,
+    bool isMe, {
+    String? userImage,
+  }) =>
+      Container(
+        alignment: isMe ? Alignment.centerLeft : Alignment.centerRight,
+        // width: double.infinity,
+        // color: Colors.black,
+        // margin: const EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 30),
+        padding:
+            const EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 20),
+        // const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+        child: Wrap(
+            // alignment: isMe ? Alignment.topLeft : Alignment.topRight,
+            alignment: isMe ? WrapAlignment.start : WrapAlignment.end,
+            runAlignment: isMe ? WrapAlignment.start : WrapAlignment.end,
+            crossAxisAlignment: WrapCrossAlignment.start,
+            textDirection: isMe ? TextDirection.ltr : TextDirection.rtl,
+            spacing: 20,
+            clipBehavior: Clip.none,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border:
+                        Border.all(color: Colors.grey.shade200, width: 0.5)),
+                child: CircleAvatar(
+                  radius: 23,
+                  backgroundColor: Colors.grey.shade200,
+                  backgroundImage: userImage == null
+                      ? AssetImage(aDefaultAvatar) as ImageProvider
+                      : NetworkImage(userImage),
+                ),
+              ),
+              // SizedBox(
+              //   width: 50,
+              // ),
+              // Positioned(
+              //   left: isMe ? 65 : 0,
+              //   right: isMe ? 0 : 65,
+              //   top: 0,
+              //   child:
+              Wrap(
+                spacing: 10,
+                direction: Axis.vertical,
+                // alignment: WrapAlignment.spaceEvenly,
+                runAlignment: isMe ? WrapAlignment.start : WrapAlignment.end,
+                // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
+                children: [
+                  Container(
+                      constraints: BoxConstraints(maxWidth: 170),
+                      padding: isMe
+                          ? EdgeInsets.all(15)
+                          : EdgeInsets.only(
+                              left: 25, top: 16, bottom: 16, right: 15),
+                      // width: Get.width / 2,
+                      decoration: BoxDecoration(
+                          gradient: isMe
+                              ? LinearGradient(colors: [
+                                  Color.fromARGB(255, 248, 248, 248),
+                                  Color.fromARGB(255, 248, 248, 248)
+                                ])
+                              : LinearGradient(colors: [
+                                  Color.fromARGB(255, 92, 127, 255),
+                                  Color.fromARGB(255, 172, 89, 252)
+                                ]),
+                          borderRadius: isMe
+                              ? BorderRadius.only(
+                                  topLeft: Radius.zero,
+                                  topRight: Radius.circular(30),
+                                  bottomRight: Radius.circular(30),
+                                  bottomLeft: Radius.circular(20))
+                              : BorderRadius.only(
+                                  topLeft: Radius.circular(30),
+                                  topRight: Radius.zero,
+                                  bottomRight: Radius.circular(20),
+                                  bottomLeft: Radius.circular(30))),
+                      child: Text(
+                        message,
+                        style: TextStyle(
+                            fontFamily: 'psr',
+                            fontSize: 12,
+                            color: isMe
+                                ? Color.fromARGB(255, 0, 15, 28)
+                                : Colors.white),
+                      )),
+                  // SizedBox(
+                  //   height: 10,
+                  // ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 5.0),
+                    child: Text(
+                      (isMe ? 'Seen In' : 'Sent In') + '    $time',
+                      style: TextStyle(
+                          fontFamily: 'psr',
+                          fontSize: 10,
+                          color: Color.fromARGB(255, 0, 15, 28)),
+                    ),
+                  ),
+                ],
+              ),
+            ]),
+      );
+
+  void scrollDown({Duration? mezChatScrollDuration}) {
+    Timer(mezChatScrollDuration ?? Duration(milliseconds: 200), () {
+      if (_listViewScrollController.hasClients)
+        _listViewScrollController.animateTo(
+            _listViewScrollController.position.maxScrollExtent,
+            duration: Duration(seconds: 1),
+            curve: Curves.fastOutSlowIn);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    Timer(
-      Duration(seconds: 1),
-      () => _listViewScrollController.animateTo(
-          _listViewScrollController.position.maxScrollExtent,
-          duration: Duration(seconds: 1),
-          curve: Curves.fastOutSlowIn),
-    );
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      scrollDown(mezChatScrollDuration: timeStamp);
+    });
 
-    Widget SingleChatComponent(
-      String message,
-      String time, {
-      bool isMe = true,
-      String? userImage,
-    }) =>
-        Padding(
-          padding:
-              const EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 30),
-          child: Stack(
-              alignment: isMe ? Alignment.topLeft : Alignment.topRight,
-              clipBehavior: Clip.none,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border:
-                          Border.all(color: Colors.grey.shade200, width: 0.5)),
-                  child: CircleAvatar(
-                    radius: 23,
-                    backgroundColor: Colors.grey.shade200,
-                    backgroundImage: userImage == null
-                        ? AssetImage(aDefaultAvatar) as ImageProvider
-                        : NetworkImage(userImage),
-                  ),
-                ),
-                // SizedBox(
-                //   width: 50,
-                // ),
-                Positioned(
-                  left: isMe ? 65 : 0,
-                  right: isMe ? 0 : 65,
-                  top: 0,
-                  child: Wrap(
-                    spacing: 10,
-                    direction: Axis.vertical,
-                    // alignment: WrapAlignment.spaceEvenly,
-                    runAlignment:
-                        isMe ? WrapAlignment.start : WrapAlignment.end,
-                    // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    controller.loadChat(
+        _authController.user!.uid, _currentOrderController.value?.id);
 
-                    children: [
-                      Container(
-                          constraints: BoxConstraints(maxWidth: 170),
-                          padding: isMe
-                              ? EdgeInsets.all(15)
-                              : EdgeInsets.only(
-                                  left: 25, top: 16, bottom: 16, right: 15),
-                          // width: Get.width / 2,
-                          decoration: BoxDecoration(
-                              gradient: isMe
-                                  ? LinearGradient(colors: [
-                                      Color.fromARGB(255, 248, 248, 248),
-                                      Color.fromARGB(255, 248, 248, 248)
-                                    ])
-                                  : LinearGradient(colors: [
-                                      Color.fromARGB(255, 92, 127, 255),
-                                      Color.fromARGB(255, 172, 89, 252)
-                                    ]),
-                              borderRadius: isMe
-                                  ? BorderRadius.only(
-                                      topLeft: Radius.zero,
-                                      topRight: Radius.circular(30),
-                                      bottomRight: Radius.circular(30),
-                                      bottomLeft: Radius.circular(20))
-                                  : BorderRadius.only(
-                                      topLeft: Radius.circular(30),
-                                      topRight: Radius.zero,
-                                      bottomRight: Radius.circular(20),
-                                      bottomLeft: Radius.circular(30))),
-                          child: Text(
-                            message,
-                            style: TextStyle(
-                                fontFamily: 'psr',
-                                fontSize: 12,
-                                color: isMe
-                                    ? Color.fromARGB(255, 0, 15, 28)
-                                    : Colors.white),
-                          )),
-                      // SizedBox(
-                      //   height: 10,
-                      // ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 5.0),
-                        child: Text(
-                          (isMe ? 'Seen In' : 'Sent In') + '    $time',
-                          style: TextStyle(
-                              fontFamily: 'psr',
-                              fontSize: 10,
-                              color: Color.fromARGB(255, 0, 15, 28)),
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ]),
-        );
+    void _fillCallBack() {
+      print(
+          "--------------------- >>>>> FillCallback Executed  >> Messages Count >> ${controller.value?.messages.length}!");
+      chatLines.assignAll(controller.value!.messages.map(
+        (e) => SingleChatComponent(
+          e.message,
+          e.formatedTime,
+          e.userId == _authController.user!.uid,
+          userImage: controller.value!.participants[e.userId]?.image,
+        ),
+      ));
+
+      scrollDown();
+    }
+
+    controller.loadChat(
+        _authController.user!.uid, _currentOrderController.value!.id,
+        onValueCallBack: _fillCallBack);
 
     return Scaffold(
         backgroundColor: Colors.white,
@@ -153,17 +198,25 @@ class MessagingScreen extends StatelessWidget {
                         child: CircleAvatar(
                           radius: 23,
                           backgroundColor: Colors.grey.shade200,
-                          backgroundImage: NetworkImage(
-                              'https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/users%2F8o66cnaUMyYpXu9vwT3eKHE5Bfh2%2Favatar%2F16229101458719088018037554647166.jpg?alt=media&token=77b5b27c-848f-4630-bfbb-fa67da494be5'),
+                          backgroundImage: _currentOrderController
+                                      .value?.customer['image'] !=
+                                  null
+                              ? NetworkImage(_currentOrderController
+                                  .value!.customer['image'])
+                              : AssetImage(aDefaultAvatar) as ImageProvider,
                         ),
                       ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'Jorge Doe',
-                            style: TextStyle(fontFamily: 'psb', fontSize: 16.5),
+                          Obx(
+                            () => Text(
+                              _currentOrderController.value?.customer['name'] ??
+                                  ".....",
+                              style:
+                                  TextStyle(fontFamily: 'psb', fontSize: 16.5),
+                            ),
                           ),
                           SizedBox(
                             height: 5,
@@ -180,34 +233,15 @@ class MessagingScreen extends StatelessWidget {
                     ],
                   )),
               Expanded(
-                child: ListView(
-                    padding: EdgeInsets.only(top: 20, bottom: 50),
+                child: Obx(
+                  () => ListView(
+                    // reverse: true,
                     shrinkWrap: true,
+                    padding: EdgeInsets.only(top: 20, bottom: 50),
                     controller: _listViewScrollController,
-                    children: [
-                      SingleChatComponent('I am on the way.', '18:06',
-                          userImage:
-                              'https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/users%2F6l5S9qNSrMSIkwZRcchUaP8bJsk2%2Favatar%2FScreenshot_20210601-135100_Facebook.jpg?alt=media&token=d27eafc0-0b97-47fc-b420-51543403d6f8'),
-                      SingleChatComponent(
-                          'I am outside but i cant find your house', '18:06',
-                          userImage:
-                              'https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/users%2F6l5S9qNSrMSIkwZRcchUaP8bJsk2%2Favatar%2FScreenshot_20210601-135100_Facebook.jpg?alt=media&token=d27eafc0-0b97-47fc-b420-51543403d6f8'),
-                      SingleChatComponent('I am comming...', '18:07',
-                          userImage:
-                              'https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/users%2F8o66cnaUMyYpXu9vwT3eKHE5Bfh2%2Favatar%2F16229101458719088018037554647166.jpg?alt=media&token=77b5b27c-848f-4630-bfbb-fa67da494be5',
-                          isMe: false),
-                      SingleChatComponent(
-                          'I can not see you man , where are exactly at ?',
-                          '18:07',
-                          userImage:
-                              'https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/users%2F8o66cnaUMyYpXu9vwT3eKHE5Bfh2%2Favatar%2F16229101458719088018037554647166.jpg?alt=media&token=77b5b27c-848f-4630-bfbb-fa67da494be5',
-                          isMe: false),
-                      SingleChatComponent(
-                          'Are you drunk or something ? Check the Map on your phone please ... you are just wasting mytime ..',
-                          '18:06',
-                          userImage:
-                              'https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/users%2F6l5S9qNSrMSIkwZRcchUaP8bJsk2%2Favatar%2FScreenshot_20210601-135100_Facebook.jpg?alt=media&token=d27eafc0-0b97-47fc-b420-51543403d6f8'),
-                    ]),
+                    children: List.from(chatLines.reversed),
+                  ),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.all(20),
@@ -244,8 +278,9 @@ class MessagingScreen extends StatelessWidget {
                                       .length >
                                   0;
                               if (msgReady2Send) {
-                                mezcalmosSnackBar('Notice ~',
-                                    'Not yet implemented , comming soon when controller is up !');
+                                controller.sendMessage(_typedMsg.value);
+                                _textEditingController.clear();
+                                _typedMsg.value = "";
                               } else {
                                 _textEditingController.clear();
                                 _typedMsg.value = "";
