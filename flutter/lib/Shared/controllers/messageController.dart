@@ -34,7 +34,7 @@ class MessageController extends GetxController {
         .listen((event) {
       if (event.snapshot.value != null) {
         // print("\n\n\n ${event.snapshot.value} \n\n\n");
-        Chat res = Chat.fromJson(event.snapshot.value);
+        Chat res = Chat.fromJson(event.snapshot.key, event.snapshot.value);
 
         _model.value = res;
         if (onValueCallBack != null) onValueCallBack();
@@ -52,7 +52,8 @@ class MessageController extends GetxController {
         .set(<String, dynamic>{
       "message": message,
       "userId": _authController.user!.uid,
-      "timestamp": DateTime.now().toUtc().toString()
+      "timestamp": DateTime.now().toUtc().toString(),
+      "orderId": _model.value.orderId
     });
   }
 

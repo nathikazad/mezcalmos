@@ -30,12 +30,13 @@ class Message {
 class Chat {
   late String chatType;
   late String orderType;
+  late String orderId;
   late Map<String, Participant> participants;
   List<Message> messages = <Message>[];
 
   Chat(this.chatType, this.orderType, this.participants, this.messages);
 
-  Chat.fromJson(_value) {
+  Chat.fromJson(key, _value) {
     // print("1 >>>$_value");
 
     Map<String, dynamic> value = new Map<String, dynamic>.from(_value);
@@ -70,6 +71,7 @@ class Chat {
     // }
 
     this.chatType = value['chatType'];
+    this.orderId = key;
     this.orderType = value['orderType'];
     this.participants = _participants;
     this.messages = _messages;
