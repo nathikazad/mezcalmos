@@ -6,6 +6,7 @@ class TaxiDriver {
   dynamic currentOrder;
   dynamic driverLocation;
   dynamic lastLocationUpdateTime;
+  dynamic isEmpty = false;
 
   TaxiDriver(
     this.isAuthorized,
@@ -15,7 +16,9 @@ class TaxiDriver {
     this.lastLocationUpdateTime,
   );
 
-  TaxiDriver.empty();
+  TaxiDriver.empty() {
+    isEmpty = true;
+  }
 
   // Parse Json comming from the server
   // TaxiDriver.fromJson(dynamic value)

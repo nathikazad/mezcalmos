@@ -21,9 +21,13 @@ class Wrapper extends GetWidget<AuthController> {
       if (controller.user != null) {
         Get.put(SideMenuDraweController(), permanent: false);
 
-        return _settingsController.hasLocationPermissions.value == false
-            ? LocationPermissionScreen()
-            : TaxiWrapper();
+        if (_settingsController.hasLocationPermissions.value == false &&
+            Get.arguments != true)
+          _settingsController.hasLocationPermissions.value = true;
+
+        return _settingsController.hasLocationPermissions.value
+            ? TaxiWrapper()
+            : LocationPermissionScreen();
       } else
         return SignIn();
     });

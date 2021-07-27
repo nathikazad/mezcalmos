@@ -171,7 +171,7 @@ class MessagingScreen extends GetView<MessageController> {
         onValueCallBack: _fillCallBack);
 
     return Scaffold(
-        resizeToAvoidBottomInset: false,
+        // resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         appBar:
             MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back()),
@@ -243,14 +243,14 @@ class MessagingScreen extends GetView<MessageController> {
                   () => ListView(
                     // reverse: true,
                     shrinkWrap: true,
-                    padding: EdgeInsets.only(top: 20, bottom: 50),
+                    padding: EdgeInsets.only(top: 20, bottom: 0),
                     controller: _listViewScrollController,
                     children: List.from(chatLines.reversed),
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(20),
+                padding: EdgeInsets.all(20),
                 child: TextField(
                     onChanged: (value) => _typedMsg.value = value,
                     controller: _textEditingController,

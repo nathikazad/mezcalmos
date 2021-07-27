@@ -71,12 +71,28 @@ class TaxiAuthController extends GetxController {
           .reference()
           .child(taxiAuthNode(_authController.user!.uid))
           .onValue
-          .listen((event) {
+          .listen((event) async {
         _model.value = event.snapshot.value != null
             ? TaxiDriver.fromSnapshot(event.snapshot)
-            : TaxiDriver(false, false, null, null, null);
+            // : TaxiDriver(false, false, null, null, null);
+            : TaxiDriver.empty();
+
         // our magical Trick :p
         _dynamicScreen.value = _getScreen();
+
+        if (_model.value.isEmpty == true ||
+            (_model.value.currentOrder == null &&
+                _model.value.isLooking == false)) {
+          await Location().enableBackgroundMode(enable: false);
+          _locationListener?.pause();
+          print(
+              " [=] ---------------------------------> Paused locationListener !");
+        } else {
+          await Location().enableBackgroundMode(enable: true);
+          _locationListener?.resume();
+          print(
+              " [=] ---------------------------------> Resumed locationListener !");
+        }
       });
       String? deviceNotificationToken = await _messagingController.getToken();
       if (deviceNotificationToken != null)
@@ -100,7 +116,7 @@ class TaxiAuthController extends GetxController {
       Location location = new Location();
 
       _locationEnabled.value = true;
-      location.enableBackgroundMode(enable: true);
+      // location.enableBackgroundMode(enable: true);
       _locationListener =
           location.onLocationChanged.listen((LocationData currentLocation) {
         DateTime currentTime = DateTime.now();

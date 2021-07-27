@@ -70,9 +70,10 @@ class LocationPermissionScreen extends StatelessWidget {
                 onTap: () async {
                   bool grantedPermission = await getLocationPermission();
                   print("Permissions Granted ==========> $grantedPermission");
-                  if (grantedPermission) {
-                    _settingsController.hasLocationPermissions.value = true;
-                  }
+                  // if (grantedPermission) {
+                  //   _settingsController.hasLocationPermissions.value = true;
+                  // }
+                  Get.back(result: grantedPermission);
                 },
                 child: Container(
                   height: getSizeRelativeToScreen(25, Get.height, Get.width),
