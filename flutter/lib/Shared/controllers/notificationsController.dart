@@ -4,7 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
-import 'package:mezcalmos/Shared/models/Notification.dart';
+import 'package:mezcalmos/Shared/models/Notification.dart' as MezNotification;
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -84,8 +84,11 @@ class DeviceNotificationsController extends GetxController {
 class FBNotificationsController extends GetxController {
   AuthController _authController = Get.find<AuthController>();
   DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
-  RxList<Notification> notifications = <Notification>[].obs;
+  RxList<MezNotification.Notification> notifications =
+      <MezNotification.Notification>[].obs;
   StreamSubscription<Event>? _taxiAuthListener;
+  List _taxiAuthListenerCallbacks = [];
+
   @override
   void onInit() async {
     super.onInit();
@@ -96,14 +99,39 @@ class FBNotificationsController extends GetxController {
           .child(notificationsNode(_authController.user!.uid))
           .onValue
           .listen((event) {
-        notifications.value = <Notification>[];
+        notifications.clear();
         if (event.snapshot.value != null) {
+          print(
+              "=========> FBNotificationController :: onInit :: Listener :: Invoked!");
           event.snapshot.value.forEach((dynamic key, dynamic value) {
-            notifications.add(Notification.fromJson(key, value));
+            MezNotification.Notification _notif =
+                MezNotification.Notification.fromJson(key, value);
+            _taxiAuthListenerCallbacks.forEach((callback) {
+              // this is much more dynamic :D
+              if (_notif.notificationType == callback["type"] &&
+                  _notif.variableParams["orderId"] == callback["orderId"]) {
+                callback["__call__"](_notif); // this is our actuall callback
+              }
+            });
+            notifications.add(_notif);
           });
         }
       });
     }
+  }
+
+  // using this we can register our callbacks from diffrent places , and invoke them onValue !
+  void registerCallbackOnListenerInvoke(callback) {
+    _taxiAuthListenerCallbacks.add(callback);
+    print("[+] ----------> ${callback}  ::  Was Registred successfully !!");
+  }
+
+  void setAllMessagesAsReadInDb() {
+    // for now i', just removing all notifications to test.
+    _databaseHelper.firebaseDatabase
+        .reference()
+        .child(notificationsNode(_authController.user!.uid))
+        .remove();
   }
 
   void clearMessageNotifications(String orderId) {
@@ -126,7 +154,8 @@ class FBNotificationsController extends GetxController {
     return count;
   }
 
-  void dispose() {
+  @override
+  void onClose() {
     if (_taxiAuthListener != null) {
       _taxiAuthListener!
           .cancel()
@@ -135,5 +164,6 @@ class FBNotificationsController extends GetxController {
           .catchError((err) => print(
               "Error happend while trying to dispose currentOrderController::detachListeners !"));
     }
+    super.onClose();
   }
 }
