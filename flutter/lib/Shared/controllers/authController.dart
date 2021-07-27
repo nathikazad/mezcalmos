@@ -22,7 +22,6 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 
 class AuthController extends GetxController {
- 
   fireAuth.FirebaseAuth _auth = fireAuth.FirebaseAuth.instance;
   Rxn<User> _user = Rxn<User>();
   final GetStorage _storage = GetStorage();
@@ -103,8 +102,8 @@ class AuthController extends GetxController {
       // TaxiInjectionHelper.revokeListenersOnSignOut();
       Get.find<TaxiAuthController>().dispose();
       Get.find<DeviceNotificationsController>().dispose();
-      Get.find<MessageController>().dispose();
-      Get.find<FBNotificationsController>().dispose();
+      Get.delete<MessageController>();
+      Get.delete<FBNotificationsController>();
       await _auth.signOut();
       Get.offAllNamed(kMainAuthWrapperRoute);
     } catch (e) {
