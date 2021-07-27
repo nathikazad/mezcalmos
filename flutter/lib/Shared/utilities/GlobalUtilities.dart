@@ -18,11 +18,13 @@ double getSizeRelativeToScreen(
     (screenHeight / screenWidth) * v;
 
 //Our default snackBar
-void mezcalmosSnackBar(String _title, String _msg) => Get.snackbar(_title, _msg,
-    colorText: Colors.white,
-    backgroundColor: Colors.black87,
-    snackPosition: SnackPosition.BOTTOM,
-    snackStyle: SnackStyle.FLOATING);
+void mezcalmosSnackBar(String _title, String _msg,
+        {SnackPosition position = SnackPosition.BOTTOM}) =>
+    Get.snackbar(_title, _msg,
+        colorText: Colors.white,
+        backgroundColor: Colors.black87,
+        snackPosition: position,
+        snackStyle: SnackStyle.FLOATING);
 
 dynamic responseStatusChecker(dynamic resp,
     {String? onSuccessMessage, String? onErrorMessage}) {
