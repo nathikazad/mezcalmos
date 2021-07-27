@@ -9,6 +9,8 @@ class SettingsController extends GetxController {
   ThemeController get appTheme => _appTheme;
   LanguageController get appLanguage => _appLanguage;
 
+  RxBool showCustomersMessages = true.obs;
+
   @override
   void onInit() {
     // TODO : ADD CHECK IF THERE IS STORED LANGUAGE IN LOCAL ALREADY
