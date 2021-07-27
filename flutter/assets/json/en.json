@@ -115,8 +115,8 @@
             "yes": "YES"
         },
         "permissions": {
-            "askForNotif": "Location Service Turned Off|App cannot work without the location service|Enable location services from  your setting",
-            "permissionBtn": "Turn On Now"
+            "askForNotif": "The app uses your location to match you with the best rides and share your location with customers, even when the app is in background.",
+            "permissionBtn": "GIVE PERMISSION"
         }
     },
     "shared": {

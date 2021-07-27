@@ -10,6 +10,7 @@ class SettingsController extends GetxController {
   LanguageController get appLanguage => _appLanguage;
 
   RxBool showCustomersMessages = true.obs;
+  RxBool hasLocationPermissions = false.obs;
 
   @override
   void onInit() {

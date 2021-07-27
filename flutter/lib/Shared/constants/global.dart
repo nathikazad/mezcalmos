@@ -20,6 +20,7 @@ const int nSplashScreenTimer = 5;
 // ----------------- Costants Strings ----------------- //
 
 const String tPrivacyPolicy = "https://meztaxi.com/privacy-policy.html";
+
 const String tDefaultLanguage = "es";
 const String tDefaultTheme = "light";
 
@@ -45,3 +46,5 @@ const String aLogoPath = "assets/images/logo.png";
 const String aDefaultAvatar = "assets/images/defaultAvatar.png";
 const String enLang = "assets/json/en.json";
 const String esLang = "assets/json/es.json";
+const String aLocationPermissionAsset =
+    "assets/images/Enable Map_Illustration.png";

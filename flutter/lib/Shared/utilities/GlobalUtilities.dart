@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'dart:ui' as ui;
+import 'package:location/location.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -116,4 +117,29 @@ Future<List<int>> cropRonded(Uint8List bytes) async {
   var byteData = await cropped.toByteData(format: ui.ImageByteFormat.png);
 
   return byteData!.buffer.asUint8List();
+}
+
+Future<bool> getLocationPermission() async {
+  Location location = new Location();
+
+  bool _serviceEnabled;
+  PermissionStatus _permissionGranted;
+
+  _serviceEnabled = await location.serviceEnabled();
+  if (!_serviceEnabled) {
+    _serviceEnabled = await location.requestService();
+    if (!_serviceEnabled) {
+      return false;
+    }
+  }
+  print("[+] Location Service Enabled !");
+  _permissionGranted = await location.hasPermission();
+  if (_permissionGranted == PermissionStatus.denied) {
+    _permissionGranted = await location.requestPermission();
+    if (_permissionGranted != PermissionStatus.granted) {
+      return false;
+    }
+  }
+  print("[+] Location Permissions Granted !");
+  return true;
 }

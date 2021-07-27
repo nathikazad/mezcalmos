@@ -99,24 +99,6 @@ class TaxiAuthController extends GetxController {
     } else {
       Location location = new Location();
 
-      bool _serviceEnabled;
-      PermissionStatus _permissionGranted;
-
-      _serviceEnabled = await location.serviceEnabled();
-      if (!_serviceEnabled) {
-        _serviceEnabled = await location.requestService();
-        if (!_serviceEnabled) {
-          return;
-        }
-      }
-
-      _permissionGranted = await location.hasPermission();
-      if (_permissionGranted == PermissionStatus.denied) {
-        _permissionGranted = await location.requestPermission();
-        if (_permissionGranted != PermissionStatus.granted) {
-          return;
-        }
-      }
       _locationEnabled.value = true;
       location.enableBackgroundMode(enable: true);
       _locationListener =
@@ -146,11 +128,6 @@ class TaxiAuthController extends GetxController {
                 .set(positionUpdate);
           }
         }
-        //   print(position == null
-        //       ? 'Unknown'
-        //       : position.latitude.toString() +
-        //           ', ' +
-        //           position.longitude.toString());
       });
     }
   }
