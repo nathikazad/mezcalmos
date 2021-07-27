@@ -4,7 +4,7 @@ String taxiAuthNode(String? uid) {
 }
 
 String notificationsNode(String? uid) {
-  return 'notifications/$uid';
+  return 'notifications/taxi/$uid';
 }
 
 String orderChatNode(String orderId) {
