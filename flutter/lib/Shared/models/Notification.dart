@@ -1,8 +1,12 @@
 class Notification {
-  String id;
-  String notificationType;
+  dynamic id;
+  dynamic notificationType;
   dynamic variableParams;
+  bool isEmpty = false;
 
+  Notification.empty() {
+    isEmpty = true;
+  }
   Notification(
       {required this.id,
       required this.notificationType,
