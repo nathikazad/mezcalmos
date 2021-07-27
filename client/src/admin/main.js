@@ -9,6 +9,7 @@ import {
 import {
   i18n
 } from '@/shared/config/i18n'
+
 import {
   firebaseInit
 } from '@/shared/config/firebase'

@@ -80,7 +80,8 @@ export default {
       { icon: "mdi-inbox-arrow-down", name: "Messages", path: "/messages" },
       { icon: "mdi-send", name: "Customers", path: "/customers" },
       { icon: "mdi-delete", name: "Orders", path: "/orders" },
-      { icon: "mdi-alert-octagon", name: "Taxis", path: "/taxis" }
+      { icon: "mdi-alert-octagon", name: "Taxis", path: "/taxis" },
+      { icon: "", name: "Map areas", path: "/mapAreas" }
     ]
   }),
   components: {

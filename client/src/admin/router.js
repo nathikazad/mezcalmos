@@ -5,6 +5,7 @@ import MessagesPage from './pages/Messages'
 import OrdersPage from './pages/Orders'
 import CustomersPage from './pages/Customers'
 import TaxisPage from './pages/Taxis'
+import AdminAreas from './pages/areas'
 import LoginPage from "@/shared/pages/user/Login";
 
 import NotFoundPage from '@/shared/pages/NotFound'
@@ -21,6 +22,7 @@ const router = new VueRouter({
     { path: '/orders', component: OrdersPage, meta: { requiresAuth: true}},
     { path: '/customers', component: CustomersPage, meta: { requiresAuth: true}},
     { path: '/taxis', component: TaxisPage, meta: { requiresAuth: true}},
+    { path: '/mapAreas', component: AdminAreas, meta: { requiresAuth: true}},
     { path: '/auth', component: LoginPage},
     { path: '/unauthorized', component: UnauthorizedPage },
     { path: '/:notFound(.*)', component: NotFoundPage }
