@@ -17,6 +17,7 @@ class LocationPermissionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     print("Onlocation screeeeeen !");
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       key: _sideMenuDrawerController.scaffoldKey,
       drawer: MezSideMenu(),
       backgroundColor: Colors.white,

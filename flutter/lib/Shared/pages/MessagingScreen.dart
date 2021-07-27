@@ -171,6 +171,7 @@ class MessagingScreen extends GetView<MessageController> {
         onValueCallBack: _fillCallBack);
 
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         appBar:
             MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back()),
