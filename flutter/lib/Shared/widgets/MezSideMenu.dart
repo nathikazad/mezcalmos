@@ -3,10 +3,10 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MezSideMenu extends GetWidget<AuthController> {
   SideMenuDraweController _draweController =
@@ -78,6 +78,19 @@ class MezSideMenu extends GetWidget<AuthController> {
                 title: Obx(
                   () => Text(
                     lang.strings['shared']['navDrawer']["logout"],
+                    style: TextStyle(fontFamily: 'psb', fontSize: 16),
+                  ),
+                )),
+            ListTile(
+                onTap: () async => launch("https://meztaxi.com/privacypolicy"),
+                leading: Icon(
+                  Icons.lock_sharp,
+                  color: Color.fromARGB(255, 103, 121, 254),
+                  size: 25,
+                ),
+                title: Obx(
+                  () => Text(
+                    lang.strings['shared']['navDrawer']["legal"],
                     style: TextStyle(fontFamily: 'psb', fontSize: 16),
                   ),
                 )),
