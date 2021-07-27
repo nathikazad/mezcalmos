@@ -3,22 +3,67 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/models/Notification.dart' as MezNotifications;
 import 'package:mezcalmos/Shared/controllers/mapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
 import 'package:mezcalmos/Shared/widgets/MezGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
+import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
 
 class CurrentOrderScreen extends GetView<CurrentOrderController> {
   LanguageController lang = Get.find<LanguageController>();
+  FBNotificationsController fbNotificationsController =
+      Get.find<FBNotificationsController>();
+
   RxBool clickedLaunchOnMap = false.obs;
+  RxBool hasNewMessage = false.obs;
+  Rx<MezNotifications.Notification> newestNotif =
+      MezNotifications.Notification.empty().obs;
+
+  void newMessageNotificationCallback(MezNotifications.Notification? notif) {
+    print("newMessageNotificationCallback :: Invoked automatically !");
+    // I made this callback so it will get invoked whenever there's a newMessage Notification !
+
+    if (notif == null) {
+      newestNotif.value = fbNotificationsController.notifications.lastWhere(
+          (element) =>
+              element.notificationType == "newMessage" &&
+              element.variableParams["orderId"] == controller.value!.id,
+          orElse: () => MezNotifications.Notification
+              .empty()); // this sets isEmpty = true , So we can check with it later on.
+    } else
+      newestNotif.value = notif;
+
+    if (!newestNotif.value.isEmpty && Get.currentRoute != kMessagesRoute) {
+      // hasNewMessage.value = true;
+      mezcalmosSnackBar(
+          "${lang.strings['shared']['messages']['newMessage']} ${newestNotif.value.variableParams['sender']['name']}",
+          "${newestNotif.value.variableParams['message']}",
+          position: SnackPosition.TOP);
+    } else
+      fbNotificationsController.setAllMessagesAsReadInDb();
+
+    hasNewMessage.value = false;
+  }
 
   Widget build(BuildContext context) {
     Get.put<CurrentOrderMapController>(CurrentOrderMapController());
     controller.dispatchCurrentOrder();
+
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      fbNotificationsController
+          .registerCallbackOnListenerInvoke(<String, dynamic>{
+        "__call__": newMessageNotificationCallback,
+        "orderId": Get.find<TaxiAuthController>().currentOrderId,
+        "type": "newMessage"
+      });
+    });
+
     return Scaffold(
       body: SafeArea(
         child: Stack(
@@ -228,20 +273,33 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                                     ],
                                   ),
                                   child: Center(
-                                    child: Obx(
-                                      () => clickedLaunchOnMap.value
-                                          ? SizedBox(
-                                              height: 10,
-                                              width: 10,
-                                              child: CircularProgressIndicator(
-                                                color: Colors.purple.shade400,
-                                              ))
-                                          : Icon(
-                                              Icons.message,
-                                              color: Color.fromARGB(
-                                                  255, 103, 121, 254),
-                                              size: 16,
-                                            ),
+                                    child: Stack(
+                                      children: [
+                                        Obx(
+                                          () => fbNotificationsController
+                                                      .notifications.length >
+                                                  0
+                                              ? Positioned(
+                                                  top: 5,
+                                                  right: 5,
+                                                  child: Container(
+                                                    height: 6,
+                                                    width: 6,
+                                                    decoration: BoxDecoration(
+                                                        color: Colors.red,
+                                                        shape: BoxShape.circle),
+                                                  ))
+                                              : SizedBox(),
+                                        ),
+                                        Center(
+                                          child: Icon(
+                                            Icons.mail,
+                                            color: Color.fromARGB(
+                                                255, 103, 121, 254),
+                                            size: 16,
+                                          ),
+                                        )
+                                      ],
                                     ),
                                   ),
                                 ),
@@ -281,155 +339,184 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
             Positioned(
               top: 10,
               child: Container(
-                height: getSizeRelativeToScreen(30, Get.height, Get.width),
-                width: Get.width / 1.05,
-                // width: getSizeRelativeToScreen(180, Get.height, Get.width),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(5),
-                    boxShadow: <BoxShadow>[
-                      BoxShadow(
-                          color: Color.fromARGB(255, 216, 225, 249),
-                          spreadRadius: 0,
-                          blurRadius: 7,
-                          offset: Offset(0, 7)),
-                    ]),
-                child: Flex(
-                  clipBehavior: Clip.hardEdge,
+                  height: getSizeRelativeToScreen(30, Get.height, Get.width),
+                  width: Get.width / 1.05,
+                  // width: getSizeRelativeToScreen(180, Get.height, Get.width),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5),
+                      boxShadow: <BoxShadow>[
+                        BoxShadow(
+                            color: Color.fromARGB(255, 216, 225, 249),
+                            spreadRadius: 0,
+                            blurRadius: 7,
+                            offset: Offset(0, 7)),
+                      ]),
+                  // child: Obx(
+                  //   () => !hasNewMessage.value
+                  child: Flex(
+                    clipBehavior: Clip.hardEdge,
 
-                  // direction: Axis.horizontal,
-                  // mainAxisAlignment: MainAxisAlignment.center,
-                  // crossAxisAlignment: CrossAxisAlignment.center,
-                  // alignment: Alignment.center,
-                  direction: Axis.horizontal,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Flexible(
-                      flex: 2,
-                      fit: FlexFit.tight,
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 20, top: 12, bottom: 12, right: 8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Obx(
-                              () => Expanded(
-                                child: Text(
-                                  lang.strings['shared']['inputLocation']
-                                      ["from"],
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
+                    // direction: Axis.horizontal,
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    // crossAxisAlignment: CrossAxisAlignment.center,
+                    // alignment: Alignment.center,
+                    direction: Axis.horizontal,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Flexible(
+                        flex: 2,
+                        fit: FlexFit.tight,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 20, top: 12, bottom: 12, right: 8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Obx(
+                                () => Expanded(
+                                  child: Text(
+                                    lang.strings['shared']['inputLocation']
+                                        ["from"],
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ),
+                              Obx(() => GestureDetector(
+                                    onTap: () => mezcalmosSnackBar(
+                                        lang.strings['shared']['inputLocation']
+                                            ["from"],
+                                        controller.value?.from?.address ?? ""),
+                                    child: Text(
+                                      (controller.value?.from?.address
+                                                  .toString()
+                                                  .substring(0, 13) ??
+                                              "..........") +
+                                          " ..", //13+..
+                                      style: TextStyle(
+                                          fontSize: 16, fontFamily: 'psr'),
+                                    ),
+                                  ))
+                            ],
+                          ),
+                        ),
+                      ),
+                      Flexible(
+                        fit: FlexFit.tight,
+                        flex: 1,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            VerticalDivider(
+                              color: Color.fromARGB(255, 236, 236, 236),
+                              thickness: 1,
                             ),
-                            Obx(() => GestureDetector(
-                                  onTap: () => mezcalmosSnackBar(
-                                      lang.strings['shared']['inputLocation']
-                                          ["from"],
-                                      controller.value?.from?.address ?? ""),
-                                  child: Text(
-                                    (controller.value?.from?.address
-                                                .toString()
-                                                .substring(0, 13) ??
-                                            "..........") +
-                                        " ..", //13+..
-                                    style: TextStyle(
-                                        fontSize: 16, fontFamily: 'psr'),
-                                  ),
-                                ))
+                            Container(
+                              padding: EdgeInsets.all(getSizeRelativeToScreen(
+                                  2, Get.height, Get.width)),
+                              height: getSizeRelativeToScreen(
+                                  20, Get.height, Get.width),
+                              width: getSizeRelativeToScreen(
+                                  20, Get.height, Get.width),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                boxShadow: <BoxShadow>[
+                                  BoxShadow(
+                                      color: Color.fromARGB(255, 216, 225, 249),
+                                      spreadRadius: 0,
+                                      blurRadius: 5,
+                                      offset: Offset(0, 7)),
+                                ],
+                                gradient: LinearGradient(
+                                    colors: [
+                                      Color.fromARGB(255, 97, 127, 255),
+                                      Color.fromARGB(255, 198, 90, 252),
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight),
+                              ),
+                              child: Center(
+                                child:
+                                    Image.asset('assets/images/logoWhite.png'),
+                              ),
+                            ),
                           ],
                         ),
                       ),
-                    ),
-                    Flexible(
-                      fit: FlexFit.tight,
-                      flex: 1,
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          VerticalDivider(
-                            color: Color.fromARGB(255, 236, 236, 236),
-                            thickness: 1,
-                          ),
-                          Container(
-                            padding: EdgeInsets.all(getSizeRelativeToScreen(
-                                2, Get.height, Get.width)),
-                            height: getSizeRelativeToScreen(
-                                20, Get.height, Get.width),
-                            width: getSizeRelativeToScreen(
-                                20, Get.height, Get.width),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              boxShadow: <BoxShadow>[
-                                BoxShadow(
-                                    color: Color.fromARGB(255, 216, 225, 249),
-                                    spreadRadius: 0,
-                                    blurRadius: 5,
-                                    offset: Offset(0, 7)),
-                              ],
-                              gradient: LinearGradient(
-                                  colors: [
-                                    Color.fromARGB(255, 97, 127, 255),
-                                    Color.fromARGB(255, 198, 90, 252),
-                                  ],
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight),
-                            ),
-                            child: Center(
-                              child: Image.asset('assets/images/logoWhite.png'),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Flexible(
-                      fit: FlexFit.tight,
-                      flex: 2,
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 0, top: 12, bottom: 12, right: 8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Obx(
-                              () => Expanded(
-                                child: Text(
-                                  lang.strings['shared']['inputLocation']["to"],
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
+                      Flexible(
+                        fit: FlexFit.tight,
+                        flex: 2,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 0, top: 12, bottom: 12, right: 8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Obx(
+                                () => Expanded(
+                                  child: Text(
+                                    lang.strings['shared']['inputLocation']
+                                        ["to"],
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            Obx(() => GestureDetector(
-                                  onTap: () => mezcalmosSnackBar(
-                                      lang.strings['shared']['inputLocation']
-                                          ["to"],
-                                      controller.value?.to?.address ?? ""),
-                                  child: Text(
-                                    (controller.value?.to?.address
-                                                .toString()
-                                                .substring(0, 13) ??
-                                            "..........") +
-                                        " ..", //13+..
-                                    style: TextStyle(
-                                        fontSize: 16, fontFamily: 'psr'),
-                                  ),
-                                ))
-                          ],
+                              Obx(() => GestureDetector(
+                                    onTap: () => mezcalmosSnackBar(
+                                        lang.strings['shared']['inputLocation']
+                                            ["to"],
+                                        controller.value?.to?.address ?? ""),
+                                    child: Text(
+                                      (controller.value?.to?.address
+                                                  .toString()
+                                                  .substring(0, 13) ??
+                                              "..........") +
+                                          " ..", //13+..
+                                      style: TextStyle(
+                                          fontSize: 16, fontFamily: 'psr'),
+                                    ),
+                                  ))
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
+                    ],
+                  )
+                  // : AnimatedContainer(
+                  //     duration: Duration(seconds: 2),
+                  //     curve: Curves.easeInOut,
+                  //     decoration: BoxDecoration(
+                  //       borderRadius: BorderRadius.circular(5),
+                  //       gradient: LinearGradient(
+                  //           colors: [
+                  //             Color.fromARGB(255, 97, 127, 255),
+                  //             Color.fromARGB(255, 198, 90, 252),
+                  //           ],
+                  //           begin: Alignment.topLeft,
+                  //           end: Alignment.bottomRight),
+                  //     ),
+                  //     height: double.infinity,
+                  //     width: double.infinity,
+                  //     child: ListTile(
+                  //       trailing: Text("data"),
+                  //       contentPadding: EdgeInsets.only(top: 5, left: 10),
+                  //       leading: CircleAvatar(
+                  //         backgroundColor: Color.fromARGB(255, 97, 80, 255),
+                  //         radius: 20,
+                  //         // backgroundImage: ,
+                  //       ),
+                  //     ),
+                  //   ),
+                  ),
             ),
           ],
         ),
