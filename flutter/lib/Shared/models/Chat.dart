@@ -34,7 +34,7 @@ class Chat {
   late Map<String, Participant> participants;
   List<Message> messages = <Message>[];
 
-  Chat(this.chatType, this.orderType, this.participants, this.messages);
+  Chat(this.chatType, this.orderType, this.participants, this.messages, this.orderId);
 
   Chat.fromJson(key, _value) {
     // print("1 >>>$_value");

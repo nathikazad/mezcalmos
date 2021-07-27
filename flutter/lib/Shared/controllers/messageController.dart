@@ -9,7 +9,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 
 class MessageController extends GetxController {
-  Rx<Chat> _model = Chat("", "", {}, []).obs;
+  Rx<Chat> _model = Chat("", "", {}, [], "").obs;
   Chat? get value => _model.value;
   DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
   AuthController _authController = Get.find<AuthController>();

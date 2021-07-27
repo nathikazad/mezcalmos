@@ -24,8 +24,11 @@ async function push(firebase, userId, message, particpantType = "customer") {
   }
   if(subscription){
     if (subscription.deviceNotificationToken) {
-      if(message.notificationType == "orderStatusChange" && particpantType == "taxi"){
+      if ((message.notificationType == "orderStatusChange" ||
+        message.notificationType == "newMessage") && particpantType == "taxi") {
         let notificationMessage = await buildDeviceNotificationMessage(firebase, userId, message)
+        notificationMessage.title += message.sender.name;
+        notificationMessage.body = message.message;
         sender.sendToDevice(subscription.deviceNotificationToken, notificationMessage, firebase)
       }
     } else {

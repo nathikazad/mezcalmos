@@ -53,12 +53,12 @@
   },
   "newMessage": {
     "en": {
-      "title": "Groceries",
-      "body": "All Services"
+      "title": "New message from ",
+      "body": "You have a new message"
     },
     "es": {
-      "title": "Groceries",
-      "body": "All Services"
+      "title": "Nueva mensaje de ",
+      "body": "Tienes un nuevo mensaje"
     }
   },
   "newAdminMessage": {
