@@ -82,7 +82,7 @@ class MezSideMenu extends GetWidget<AuthController> {
                   ),
                 )),
             ListTile(
-                onTap: () async => launch("https://meztaxi.com/privacypolicy"),
+                onTap: () async => await launch(tPrivacyPolicy),
                 leading: Icon(
                   Icons.lock_sharp,
                   color: Color.fromARGB(255, 103, 121, 254),

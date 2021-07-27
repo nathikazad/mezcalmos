@@ -19,6 +19,7 @@ const double nDefaultMezcalmosTextSize = 30.5;
 const int nSplashScreenTimer = 5;
 // ----------------- Costants Strings ----------------- //
 
+const String tPrivacyPolicy = "https://meztaxi.com/privacy-policy.html";
 const String tDefaultLanguage = "es";
 const String tDefaultTheme = "light";
 
