@@ -26,13 +26,28 @@ class TaxiDriver {
   //       lastLocationUpdateTime = value['location']['lastUpdateTime'];
 
   TaxiDriver.fromSnapshot(DataSnapshot snapshot)
-      : isAuthorized = snapshot.value['state'] == null ? false : snapshot.value['state']['authorizationStatus'] == "authorized",
-        isLooking = snapshot.value['state'] == null ? false : snapshot.value['state']['isLooking'] == true,
-        currentOrder = snapshot.value['state'] == null ? null : snapshot.value['state']['currentOrder'],
-        driverLocation = snapshot.value['location'] == null ? null : snapshot.value['location']['position'],
-        lastLocationUpdateTime = snapshot.value['location'] == null ? null : snapshot.value['location']['lastUpdateTime'];
+      : isAuthorized = snapshot.value['state'] == null
+            ? false
+            : snapshot.value['state']['authorizationStatus'] == "authorized",
+        isLooking = snapshot.value['state'] == null
+            ? false
+            : snapshot.value['state']['isLooking'] == true,
+        currentOrder = snapshot.value['state'] == null
+            ? null
+            : snapshot.value['state']['currentOrder'],
+        driverLocation = snapshot.value['location'] == null
+            ? null
+            : snapshot.value['location']['position'],
+        lastLocationUpdateTime = snapshot.value['location'] == null
+            ? null
+            : snapshot.value['location']['lastUpdateTime'];
 
   // Added for Debugging Perposes - Don't delete for now
-  Map<String, dynamic> toJson() =>
-      {"authorizationStatus": isAuthorized, "isLooking": isLooking, "currentOrder": currentOrder, "driverLocation": driverLocation, "lastLocationUpdateTime": lastLocationUpdateTime};
+  Map<String, dynamic> toJson() => {
+        "authorizationStatus": isAuthorized,
+        "isLooking": isLooking,
+        "currentOrder": currentOrder,
+        "driverLocation": driverLocation,
+        "lastLocationUpdateTime": lastLocationUpdateTime
+      };
 }
