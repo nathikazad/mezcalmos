@@ -145,7 +145,10 @@
         "messages": {
             "title": "Mensajes",
             "available": "Disponible",
-            "orderLink": "Página de pedido"
+            "orderLink": "Página de pedido",
+            "newMessage" : "Nuevo mensaje de",
+            "writeMsgPlaceholder" : "Escribe tu mensaje aqui ..."
+
         },
         "notification": {
             "title": "Notificaciones",
@@ -175,7 +178,8 @@
             "savedLocations": "Ubicaciones guardadas",
             "logout": "Cerrar sesión",
             "login": "Iniciar sesión",
-            "contactAdmin": "Contactar admin"
+            "contactAdmin": "Contactar admin",
+            "legal" : "Política de privacidad"
         },
         "header": {
             "alert": "El estado del pedido cambió"

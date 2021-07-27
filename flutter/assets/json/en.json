@@ -147,7 +147,11 @@
         "messages": {
             "title": "Messages",
             "available": "Available",
-            "orderLink": "Order page"
+            "orderLink": "Order page",
+            "newMessage" : "New message from",
+            "writeMsgPlaceholder" : "Write your message here ..."
+            
+
         },
         "notification": {
             "title": "Notifications",
@@ -177,7 +181,8 @@
             "savedLocations": "Saved Locations",
             "logout": "Logout",
             "login": "Login",
-            "contactAdmin": "Contact Admin"
+            "contactAdmin": "Contact Admin",
+            "legal" : "Privacy policy"
         },
         "header": {
             "alert": "Order status changed"
