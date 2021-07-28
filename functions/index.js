@@ -30,7 +30,7 @@ const { user } = require("firebase-functions/lib/providers/auth");
 exports.processSignUp = functions.auth.user().onCreate(async user => {
   hasura.setClaim(user.uid);
   let firebase = getFirebase();
-  if(!user.photoURL)
+  if (!user.photoURL)
     user.photoURL = 'https://www.mezcalmos.com/img/logo.71b44398.svg'
 
   await firebase.database().ref(`/users/${user.uid}/info`).update({
@@ -42,15 +42,15 @@ exports.processSignUp = functions.auth.user().onCreate(async user => {
 
 exports.changeName = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
   '/users/{userId}/info/displayName').onUpdate(async (snap, context) => {
-  let firebase = getFirebase();
-  await firebase.auth().updateUser(context.params.userId, {displayName: snap.after.val()})
-})
+    let firebase = getFirebase();
+    await firebase.auth().updateUser(context.params.userId, { displayName: snap.after.val() })
+  })
 
 exports.changePhoto = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
   '/users/{userId}/info/photo').onUpdate(async (snap, context) => {
-  let firebase = getFirebase();
-  await firebase.auth().updateUser(context.params.userId, {photoURL: snap.after.val()})
-})
+    let firebase = getFirebase();
+    await firebase.auth().updateUser(context.params.userId, { photoURL: snap.after.val() })
+  })
 
 exports.addHasuraClaims = functions.https.onCall(async (data, context) => {
   let firebase = getFirebase();
@@ -183,7 +183,7 @@ exports.approveAuthorizationRequest = functions.https.onCall(async (data, contex
 
 exports.createAdminChat = functions.https.onCall(async (data, context) => {
   let firebase = getFirebase(data.database);
-  if(data.fromAdmin){
+  if (data.fromAdmin) {
     data.adminId = context.auth.uid
   } else {
     data.userId = context.auth.uid
@@ -201,27 +201,27 @@ exports.resolveAdminChat = functions.https.onCall(async (data, context) => {
 
 exports.notifyMessageParticipantsTest = functions.database.instance('mezcalmos-test').ref(
   '/chat/{chatId}/messages/{messageId}').onCreate((snap, context) => {
-  let firebase = getFirebase('test');
-  message.notifyOthers(firebase, context.params, snap.val())
-})
+    let firebase = getFirebase('test');
+    message.notifyOthers(firebase, context.params, snap.val())
+  })
 
 exports.notifyMessageParticipants = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
   '/chat/{chatId}/messages/{messageId}').onCreate(async (snap, context) => {
-  let firebase = getFirebase();
-  message.notifyOthers(firebase, context.params, snap.val())
-})
+    let firebase = getFirebase();
+    message.notifyOthers(firebase, context.params, snap.val())
+  })
 
 exports.notifyMessageFromAdminTest = functions.database.instance('mezcalmos-test').ref(
   'adminChat/{userType}/current/{userId}/{ticketId}/messages/{messageId}').onCreate((snap, context) => {
-  let firebase = getFirebase('test');
-  message.notifyUser(firebase, context.params, snap.val())
-})
+    let firebase = getFirebase('test');
+    message.notifyUser(firebase, context.params, snap.val())
+  })
 
 exports.notifyMessageFromAdmin = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
   'adminChat/{userType}/current/{userId}/{ticketId}/messages/{messageId}').onCreate(async (snap, context) => {
-  let firebase = getFirebase();
-  message.notifyUser(firebase, context.params, snap.val())
-})
+    let firebase = getFirebase();
+    message.notifyUser(firebase, context.params, snap.val())
+  })
 
 exports.sendOTPForLogin = functions.https.onCall(async (data) => {
   let firebase = getFirebase(data.database);
@@ -261,8 +261,8 @@ exports.confirmNumberChangeUsingOTP = functions.https.onCall(async (data, contex
 
 exports.sendTestNotification = functions.https.onCall(async (data, context) => {
   let firebase = getFirebase(data.database);
-  let response = await admin.checkAdmin(firebase, {adminId:context.auth.uid})
-  if (response) 
+  let response = await admin.checkAdmin(firebase, { adminId: context.auth.uid })
+  if (response)
     return response
   response = await notifications.sendTest(firebase, data)
   return response
@@ -272,26 +272,31 @@ exports.sendTestNotification = functions.https.onCall(async (data, context) => {
 
 exports.notifyPromoterFromTestCustomer = functions.database.instance('mezcalmos-test').ref(
   'users/{userId}/invite/code').onCreate(async (snap, context) => {
-  let firebase = getFirebase('test');
-  await notifications.notifyPromoterOfCustomerReferral(firebase, context.params, snap.val())
-})
+    let firebase = getFirebase('test');
+    await notifications.notifyPromoterOfCustomerReferral(firebase, context.params, snap.val())
+  })
 
 
 exports.notifyPromoterOfCustomer = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
   'users/{userId}/invite/code').onCreate(async (snap, context) => {
-  let firebase = getFirebase();
-  await notifications.notifyPromoterOfCustomerReferral(firebase, context.params, snap.val())
-})
+    let firebase = getFirebase();
+    await notifications.notifyPromoterOfCustomerReferral(firebase, context.params, snap.val())
+  })
 
 exports.notifyPromoterFromTestDriver = functions.database.instance('mezcalmos-test').ref(
   'taxiDrivers/{userId}/invite/code').onCreate(async (snap, context) => {
-  let firebase = getFirebase('test');
-  await notifications.notifyPromoterOfDriverReferral(firebase, context.params, snap.val())
-})
+    let firebase = getFirebase('test');
+    await notifications.notifyPromoterOfDriverReferral(firebase, context.params, snap.val())
+  })
 
 exports.notifyPromoterOfDriver = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
   'taxiDrivers/{userId}/invite/code').onCreate(async (snap, context) => {
-  let firebase = getFirebase();
-  await notifications.notifyPromoterOfDriverReferral(firebase, context.params, snap.val())
-})
+    let firebase = getFirebase();
+    await notifications.notifyPromoterOfDriverReferral(firebase, context.params, snap.val())
+  })
 
+exports.notifyPromoterOfSignUp = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
+  'promoters/{inviteCode}').onCreate(async (snap, context) => {
+    let firebase = getFirebase();
+    await notifications.notifyPromoterOfSignup(firebase, context.params, snap.val())
+  })

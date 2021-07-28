@@ -5,7 +5,7 @@ export default {
   },
   actions: {
     async log(_, payload) {
-     payload
+     console.log(payload)
     },
   },
 };

@@ -12,15 +12,21 @@ async function main() {
   for (let driverId in drivers) {
     let driver = drivers[driverId]
     let total = 0;
+    let customers = {}
     for(let orderId in driver.orders) {
       let order = driver.orders[orderId]
 
-      let startTime = new Date("Mon, 14 Jun 2021 05:00:00 GMT")
-      let endTime = new Date("Thur, 17 Jun 2021 05:00:00 GMT")
+      let startTime = new Date("Mon, 17 Jun 2021 05:00:00 GMT")
+      let endTime = new Date("Thur, 20 Jun 2021 05:00:00 GMT")
       let orderTime = new Date(order.acceptRideTime)
       if(orderTime > startTime && orderTime < endTime && order.status == "droppedOff"){
-        total += 1
+        if(!customers[order.customer.id]) {
+          total += 1
+        }
+        customers[order.customer.id] = true
       }
+
+      
         
       
       // console.log('\t '+driver.orders[orderId].acceptRideTime)

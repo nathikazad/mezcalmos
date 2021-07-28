@@ -66,6 +66,7 @@
         :fromUrl="deepFind(orderDetails, 'customer.image')"
         :driverLocation="deepFind(orderDetails, 'driver.location')"
         :status="deepFind(orderDetails,'status')"
+        :polyline="deepFind(orderDetails,'polyline')"
       >
         <!-- Alert statment -->
         <div

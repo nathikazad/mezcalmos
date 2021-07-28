@@ -83,7 +83,7 @@
     <base-button
       v-if="mapPicker"
       :mode="{ dark: true, bg_diagonal: true }"
-      class="pickerBtn w-90 flex align_center center"
+      class="pickerBtn w-95 flex align_center center"
       @click.native="pickFromMap"
     >
       <span>{{$t('shared.inputLocation.pick')}}</span>
@@ -93,15 +93,15 @@
       <div
         @click="pickerExplainer=false"
         @touchstart="pickerExplainer=false"
-        class="overlay_explainer flex center align_center"
+        class="overlay_explainer flex center align_start"
         v-if="pickerExplainer&&mapPicker"
       >
-        <h3 class="text_white">
+        <h3 class="text_white w-80 txt_center">
           <span>
             <fa icon="arrows-alt"></fa>
           </span>
           &nbsp;
-          {{$t('shared.inputLocation.mapPickerExplain')}}
+          {{$tc('shared.inputLocation.mapPickerExplain',mapPickerExplainIndex)}}
         </h3>
       </div>
       <!-- map picker icon -->
@@ -122,6 +122,7 @@
         :status="status"
         @centerChangedByClient="pickedLocFromMap=$event"
         :pickingFromMap="mapPicker"
+        :polyline="polyline"
       ></map-view>
 
       <slot name="details"></slot>
@@ -169,7 +170,8 @@ export default {
     },
     driverLocation: {
       type: Object
-    }
+    },
+    polyline: String
   },
   data() {
     return {
@@ -180,7 +182,8 @@ export default {
       delayer: null,
       pickedLocFromMap: null,
       mapPicker: false,
-      pickerExplainer: false
+      pickerExplainer: false,
+      mapPickerExplainIndex: 1
     };
   },
   computed: {
@@ -217,9 +220,9 @@ export default {
     mapPicker: {
       deep: true,
       handler: function(newVal) {
-        console.log(newVal);
+        // console.log(newVal);
         if (newVal) {
-          this.auxCenter = this.customerLocation;
+          //this.auxCenter = this.customerLocation;
           this.pickerExplainer = true;
         }
       }
@@ -372,7 +375,14 @@ export default {
         this[this.search.origin].lat = res.geometry.location.lat();
         this[this.search.origin].lng = res.geometry.location.lng();
         this.$emit("centerChanged", res.geometry.location);
-        this.changeDirection(this.search.origin, res.geometry.location);
+        this.$refs["map"].mapZoomIn();
+        this.mapPickerExplainIndex = 2;
+        this.mapPicker = true;
+
+        this.pickedLocFromMap = {
+          lat: res.geometry.location.lat(),
+          lng: res.geometry.location.lng()
+        };
       });
     },
     pickedFromSaved(place) {
@@ -428,8 +438,12 @@ export default {
       setTimeout(() => {
         this[origin].by = "search";
       }, 200);
+      this.mapPickerExplainIndex = 2;
+      this.mapPicker = true;
+      this.pickedLocFromMap = pos;
     },
     async pickFromMap() {
+      this.mapPickerExplainIndex = 1;
       if (!this.pickedLocFromMap) {
         this.pickCuerrentLocation();
         this.pickerExplainer = false;
@@ -581,7 +595,7 @@ export default {
   bottom: 2rem;
   padding: 0.5rem;
   z-index: 999;
-  right: 5%;
+  right: 2.5%;
 }
 .overlay_explainer {
   position: absolute;
@@ -592,5 +606,9 @@ export default {
   width: 100%;
   height: 100%;
   user-select: none;
+  h3 {
+    position: absolute;
+    bottom: 6rem;
+  }
 }
 </style>
