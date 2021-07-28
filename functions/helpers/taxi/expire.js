@@ -4,14 +4,6 @@ module.exports = ( firebase, orderId, customerId ) => { return expireOrder(fireb
 
 async function expireOrder(firebase, orderId, customerId) {
 
-  let order = (await firebase.database().ref(`/orders/taxi/${orderId}`).once('value')).val() 
-  if(order == null){
-    return{
-      status: 'Error',
-      errorMessage: 'Order id does not match any order'
-    }
-  }
-
   let response = await firebase.database().ref(`/orders/taxi/${orderId}`).transaction(function(order){
     if(order != null) {
      if(order.lock == true){
@@ -34,13 +26,13 @@ async function expireOrder(firebase, orderId, customerId) {
   order = response.snapshot.val();
 
   
-    if(order.status != "lookingForTaxi") {
-      await firebase.database().ref(`orders/taxi/${orderId}/lock`).remove()
-      return {
-        status: 'Error',
-        errorMessage: 'cannot expire because order status is not lookingForTaxi'
-      }
+  if (!order || !order.status || order.status != "lookingForTaxi") {
+    await firebase.database().ref(`orders/taxi/${orderId}/lock`).remove()
+    return {
+      status: 'Error',
+      errorMessage: 'cannot expire because order status is not lookingForTaxi'
     }
+  }
   
   
   console.log(`Removing order ${orderId} of ${customerId}`)

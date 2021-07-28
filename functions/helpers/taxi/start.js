@@ -13,21 +13,6 @@ async function start(firebase, uid) {
     }
   }
 
-  let order = (await firebase.database().ref(`orders/taxi/${orderId}`).once('value')).val()
-  if(order == null){
-    return {
-      status: "Error",
-      errorMessage: "Order id does not match any order"
-    }
-  }
-
-  // if(order.status != 'onTheWay'){
-  //   return {
-  //     status: 'Error',
-  //     errorMessage: 'Ride status is not onTheWay but ' + order.status
-  //   }
-  // } 
-
   let response = await firebase.database().ref(`/orders/taxi/${orderId}`).transaction(function(order){
     if(order != null) {
      if(order.lock == true){

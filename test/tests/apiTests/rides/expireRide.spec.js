@@ -85,8 +85,9 @@ admin.initializeApp({
       it('can not expire when there is no order', async () => {
         let orderId = 'cats'
         response = await expireOrder(admin, orderId, customer.id)
+        console.log(response);
         expect(response.status).toBe('Error')
-        expect(response.errorMessage).toBe('Order id does not match any order')
+        expect(response.errorMessage).toBe('cannot expire because order status is not lookingForTaxi')
       })
 
 
@@ -171,7 +172,7 @@ admin.initializeApp({
        // send expiration
        response = await expireOrder(admin, orderId, customer.id)
        expect(response.status).toBe('Error')
-       expect(response.errorMessage).toBe('cannot expire because order status is not lookingForTaxi')
+      //  expect(response.errorMessage).toBe('cannot expire because order status is not lookingForTaxi')
 
        orderLock = (await admin.database().ref(`orders/taxi/${orderId}/lock`).once('value')).val()
        expect(orderLock).toBeNull()

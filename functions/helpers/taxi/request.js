@@ -5,15 +5,6 @@ const notification = require("../notification");
 module.exports = ( firebase, uid, data ) => { return request(firebase, uid, data) }
 
 async function request(firebase, uid, data) {
-  // TODO: prevent user from sending another request before this finishes
-  // let customerCurrentOrder = (await firebase.database().ref(`/users/${uid}/state/currentOrder`).once('value')).val();
-
-  // if (customerCurrentOrder != null) {
-  //   return {
-  //     status: "Error",
-  //     errorMessage: "Customer is already in another taxi"
-  //   }
-  // }
   if (!data.from || !data.to || !data.distance || !data.duration 
     || !data.estimatedPrice || !data.paymentType) {
     return {
@@ -49,7 +40,6 @@ async function request(firebase, uid, data) {
 
   try{
     notification.notifyDriversNewRequest(firebase, data.from.address.split(',')[0]);
-    //notification.notifyDriversNewRequest(firebase, data.from.split(',')[0]);
   }catch(e){
     console.log(e);
   }
