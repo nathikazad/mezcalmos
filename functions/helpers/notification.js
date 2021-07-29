@@ -24,12 +24,18 @@ async function push(firebase, userId, message, particpantType = "customer") {
   }
   if(subscription){
     if (subscription.deviceNotificationToken) {
-      if ((message.notificationType == "orderStatusChange" ||
-        message.notificationType == "newMessage") && particpantType == "taxi") {
-        let notificationMessage = await buildDeviceNotificationMessage(firebase, userId, message)
-        notificationMessage.title += message.sender.name;
-        notificationMessage.body = message.message;
-        sender.sendToDevice(subscription.deviceNotificationToken, notificationMessage, firebase)
+      if (particpantType == "taxi") {
+        if (message.notificationType == "orderStatusChange") {
+          let notificationMessage = await buildDeviceNotificationMessage(firebase, userId, message)
+          sender.sendToDevice(subscription.deviceNotificationToken, notificationMessage, firebase)
+        } else if (message.notificationType == "newMessage") {
+          let notificationMessage = await buildDeviceNotificationMessage(firebase, userId, message)
+          console.log(notificationMessage)
+          notificationMessage.title = `${notificationMessage.title}${message.sender.name}`;
+          notificationMessage.body = message.message;
+          console.log(notificationMessage)
+          sender.sendToDevice(subscription.deviceNotificationToken, notificationMessage, firebase)
+        }
       }
     } else {
       sender.sendToBrowser(subscription, message)
