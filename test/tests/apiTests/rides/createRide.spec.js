@@ -4,7 +4,7 @@ const helper = require("../../../libraries/helpers")
 const admin = require("firebase-admin");
 
 
-// jest.setTimeout(30000)
+jest.setTimeout(30000)
 
 admin.initializeApp({
   projectId: "mezcalmos-31f1c",
@@ -72,83 +72,83 @@ describe('Mezcalmos', () => {
     response = await customer.callFunction("requestTaxi", tripData)
     expect(response.result.status).toBe('Success')
     
-    // //test preventing customer from creating another ride before this finishes
-    // newRequest = await customer.callFunction("requestTaxi", tripData)
-    // expect(newRequest.result.status).toBe('Error')
-    // expect(newRequest.result.errorMessage).toBe("Customer is already in another taxi")
-    // response = await customer.callFunction("cancelTaxiFromCustomer", {})
+    //test preventing customer from creating another ride before this finishes
+    newRequest = await customer.callFunction("requestTaxi", tripData)
+    expect(newRequest.result.status).toBe('Error')
+    expect(newRequest.result.errorMessage).toBe("Customer is already in another taxi")
+    response = await customer.callFunction("cancelTaxiFromCustomer", {})
     
-    // // ORDER TESTING
-    // response = await customer.callFunction("requestTaxi", tripData)
-    // expect(response.result.status).toBe('Success')
-    // let orderId = response.result.orderId
-    // let order = await customer.db.get(`orders/taxi/${orderId}`)
-    // expect(order.customer.id).toBe(customer.id)
-    // expect(order.customer.image).toBe(userData.photo)
-    // expect(order.customer.name).toBe(userData.displayName.split(' ')[0])
-    // expect(order.duration).toBe(tripData.duration)
-    // expect(order.distance).toBe(tripData.distance)
-    // expect(order.from).toBe(tripData.from)
-    // expect(order.to).toBe(tripData.to)
-    // expect(order.orderType).toBe('taxi')
-    // expect(order.status).toBe('lookingForTaxi')
+    // ORDER TESTING
+    response = await customer.callFunction("requestTaxi", tripData)
+    expect(response.result.status).toBe('Success')
+    let orderId = response.result.orderId
+    let order = await customer.db.get(`orders/taxi/${orderId}`)
+    expect(order.customer.id).toBe(customer.id)
+    expect(order.customer.image).toBe(userData.photo)
+    expect(order.customer.name).toBe(userData.displayName.split(' ')[0])
+    expect(order.duration).toBe(tripData.duration)
+    expect(order.distance).toBe(tripData.distance)
+    expect(order.from).toBe(tripData.from)
+    expect(order.to).toBe(tripData.to)
+    expect(order.orderType).toBe('taxi')
+    expect(order.status).toBe('lookingForTaxi')
 
     
-    // let customerOrder = await customer.db.get(`users/${customer.id}/orders/${orderId}`)
-    // expect(customerOrder).not.toBeNull()
-    // expect(customerOrder.routeInformation.duration).toBe(tripData.duration)
-    // expect(customerOrder.routeInformation.distance).toBe(tripData.distance)
-    // expect(customerOrder.orderType).toBe('taxi')
-    // expect(customerOrder.status).toBe('lookingForTaxi')
-    // expect(customerOrder.from).toBe(tripData.from)
-    // expect(customerOrder.to).toBe(tripData.to)
+    let customerOrder = await customer.db.get(`users/${customer.id}/orders/${orderId}`)
+    expect(customerOrder).not.toBeNull()
+    expect(customerOrder.routeInformation.duration).toBe(tripData.duration)
+    expect(customerOrder.routeInformation.distance).toBe(tripData.distance)
+    expect(customerOrder.orderType).toBe('taxi')
+    expect(customerOrder.status).toBe('lookingForTaxi')
+    expect(customerOrder.from).toBe(tripData.from)
+    expect(customerOrder.to).toBe(tripData.to)
     
-    // let customerCurrentOrderId = await customer.db.get(`users/${customer.id}/state/currentOrder`)
-    // expect(customerCurrentOrderId).not.toBeNull()
-    // expect(customerCurrentOrderId).toBe(orderId)
+    let customerCurrentOrderId = await customer.db.get(`users/${customer.id}/state/currentOrder`)
+    expect(customerCurrentOrderId).not.toBeNull()
+    expect(customerCurrentOrderId).toBe(orderId)
     
 
-    // // Bad user should not be able to access other customer's order 
-    // await helper.expectUnauthorized(async () => {
-    //   await badUser.db.get(`orders/taxi/${orderId}`)
-    // })
+    // Bad user should not be able to access other customer's order 
+    await helper.expectUnauthorized(async () => {
+      await badUser.db.get(`orders/taxi/${orderId}`)
+    })
 
-    // // CHAT TESTING
-    // let chat = await customer.db.get(`chat/${orderId}`)
-    // expect(chat).not.toBeNull()
-    // expect(chat.chatType).toBe("order")
-    // expect(chat.orderType).toBe("taxi")
-    // expect(chat.participants[customer.id].image).toBe(userData.photo)
-    // expect(chat.participants[customer.id].name).toBe(userData.displayName.split(' ')[0])
-    // expect(chat.participants[customer.id].particpantType).toBe("customer")
+    // CHAT TESTING
+    let chat = await customer.db.get(`chat/${orderId}`)
+    expect(chat).not.toBeNull()
+    expect(chat.chatType).toBe("order")
+    expect(chat.orderType).toBe("taxi")
+    expect(chat.participants[customer.id].image).toBe(userData.photo)
+    expect(chat.participants[customer.id].name).toBe(userData.displayName.split(' ')[0])
+    expect(chat.participants[customer.id].particpantType).toBe("customer")
 
-    // // Bad user should not be able to access other customer's order's chat
-    // await helper.expectUnauthorized(async () => {
-    //   await badUser.db.get(`chat/${orderId}`)
-    // })
+    // Bad user should not be able to access other customer's order's chat
+    await helper.expectUnauthorized(async () => {
+      await badUser.db.get(`chat/${orderId}`)
+    })
 
-    // // OPEN ORDER TESTING
-    // let openOrder = await driver.db.get(`openOrders/taxi/${orderId}`)
-    // expect(openOrder).not.toBeNull()
-    // expect(openOrder.customer.id).toBe(customer.id)
-    // expect(openOrder.customer.image).toBe(userData.photo)
-    // expect(openOrder.customer.name).toBe(userData.displayName.split(' ')[0])
-    // expect(openOrder.routeInformation.duration).toBe(tripData.duration)
-    // expect(openOrder.routeInformation.distance).toBe(tripData.distance)
-    // expect(openOrder.from).toBe(tripData.from)
-    // expect(openOrder.to).toBe(tripData.to)
+    // OPEN ORDER TESTING
+    let openOrder = await driver.db.get(`openOrders/taxi/${orderId}`)
+    expect(openOrder).not.toBeNull()
+    expect(openOrder.customer.id).toBe(customer.id)
+    expect(openOrder.customer.image).toBe(userData.photo)
+    expect(openOrder.customer.name).toBe(userData.displayName.split(' ')[0])
+    expect(openOrder.routeInformation.duration).toBe(tripData.duration)
+    expect(openOrder.routeInformation.distance).toBe(tripData.distance)
+    expect(openOrder.from).toBe(tripData.from)
+    expect(openOrder.to).toBe(tripData.to)
 
-    // //verify lock order
-    // orderLock = (await admin.database().ref(`orders/taxi/${orderId}/lock`).once('value')).val()
-    // expect(orderLock).toBeNull()
+    //verify lock order
+    orderLock = (await admin.database().ref(`orders/taxi/${orderId}/lock`).once('value')).val()
+    expect(orderLock).toBeNull()
 
-    // await helper.expectUnauthorized(async () => {
-    //   await customer.db.get(`openOrders/taxi/${orderId}`)
-    // })
+    await helper.expectUnauthorized(async () => {
+      await customer.db.get(`openOrders/taxi/${orderId}`)
+    })
 
-    // await helper.expectUnauthorized(async () => {
-    //   await badUser.db.get(`openOrders/taxi/${orderId}`)
-    // })
+    await helper.expectUnauthorized(async () => {
+      await badUser.db.get(`openOrders/taxi/${orderId}`)
+    })
    });
 })
 

@@ -115,6 +115,19 @@ exports.cancelTaxiFromDriver = functions.https.onCall(async (data, context) => {
   return response
 });
 
+// exports.finishTaxiRide = functions.https.onCall(async (data, context) => {
+//   if (!context.auth) {
+//     return {
+//       status: "Error",
+//       errorMessage: "User needs to be signed in"
+//     }
+//   }
+//   let firebase = getFirebase(data.database);
+//   // const {finish} = require("./helpers/taxi")
+//   let response = await taxi.finish(firebase, context.auth.uid, data), 
+//   return response
+// });
+
 exports.finishTaxiRide = functions.https.onCall(async (data, context) => {
   if (!context.auth) {
     return {
@@ -123,19 +136,19 @@ exports.finishTaxiRide = functions.https.onCall(async (data, context) => {
     }
   }
   let firebase = getFirebase(data.database);
-  let orderId
-  if(data.fromAdmin) {
-    let response = await admin.checkAdmin(firebase, {adminId:context.auth.uid})
-    if (response) return response
-    orderId = data.orderId
-  } else {
-    let driverId = context.auth.uid
-    orderId = (await firebase.database().ref(`/taxiDrivers/${driverId}/state/currentOrder`).once('value')).val();
-    if (orderId == null) {
-      return { status: "Error", errorMessage: "Driver has not accepted any ride" }
-    }
-  }
-  let response = await taxi.finish(firebase, orderId)
+  // let orderId
+  // if(data.fromAdmin) {
+  //   let response = await admin.checkAdmin(firebase, {adminId:context.auth.uid})
+  //   if (response) return response
+  //   orderId = data.orderId
+  // } else {
+  //   let driverId = context.auth.uid
+  //   orderId = (await firebase.database().ref(`/taxiDrivers/${driverId}/state/currentOrder`).once('value')).val();
+  //   if (orderId == null) {
+  //     return { status: "Error", errorMessage: "Driver has not accepted any ride" }
+  //   }
+  // }
+  let response = await taxi.finish(firebase, context.auth.uid)
   return response
 });
 

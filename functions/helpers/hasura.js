@@ -1,6 +1,5 @@
 const {gql, GraphQLClient} = require('graphql-request')
 
-
 module.exports = { 
   setClaim,
   insertOrder,
@@ -8,7 +7,6 @@ module.exports = {
   insertUser,
   updateUser
 }
-
 
 async function setClaim(firebase, uid) {
   try {
@@ -66,19 +64,6 @@ mutation updateOrder($orderId:String, $changes: orders_set_input!){
   }
   }`
 
-// const updateOrderMutation = gql`
-// mutation updateOrder($orderId:String, $changes: orders_set_input!){
-//   update_orders(
-//     where: {orderId: {_eq: $orderId}},
-//     _set: $changes
-//   ){
-//     returning {
-//       orderId,
-//       finalStatus
-//     }
-//   }
-//   }`
-
   async function insertOrder(query){
     // gqlReq.request("https://mezcalmos.hasura.app/v1/graphql", query).then((data) => console.log(data))
     try {
@@ -98,23 +83,6 @@ mutation updateOrder($orderId:String, $changes: orders_set_input!){
       console.log(e.response.errors)
     }
   }
-
-  // async function updateOrder(query){
-  //   try {
-  //     const client = new GraphQLClient(
-  //       'https://summary-mole-22.hasura.app/v1/graphql',
-  //       //https://mezcalmos.hasura.app/v1/graphql",
-  //        {
-  //       headers: { 'x-hasura-admin-secret': 'JzI9zQvNqmLKK1A1HjY1oEZ2FYkd7C7qk8brZYby4wTYIUbaWUVD0F9o07Gj2g4i'
-  //       //"hasurhasura" }
-  //     }})
-  //     const result = await client.request(updateOrderMutation, query)
-  //     console.log(result.update_orders.returning)
-      
-  //   }catch(e){
-  //     console.log(e.response.errors)
-  //   }
-  // }
 
   async function updateOrder(query){
     try {
@@ -176,30 +144,4 @@ mutation updateOrder($orderId:String, $changes: orders_set_input!){
     }
   }
 
-  // import { GraphQLClient } from 'graphql-request'
-// // from https://github.com/leoalves/hasura-firebase-auth
-// exports.authorizedHasuraOperation = functions.https.onCall(async (data, context) => {
-//   export const query = `
-//     query
-//     `
-//   try {
-//     // set from cli using 
-//     // firebase functions:config:set hasura.host="HOST ADDRESS" hasura.adminSecret="ADMIN SECRET"
-//     const client = new GraphQLClient(functions.config().hasura.host, {
-//       headers: { 'x-hasura-admin-secret': functions.config().hasura.adminSecret }
-//     })
-//     const result = await client.request(query, {
-//       // query variables
-//       uid: context.auth.uid,
-//     })
-//     if (hasuraUser) {
-//       return { status: "success", result: result }
-//     } else {
-//       throw new Error('Error running query')
-//     }
-
-//   } catch (error) {
-//     console
-//     return { status: "failure", message: error }
-//   }
-// });
+  

@@ -3,6 +3,7 @@ const auth = require("../../../libraries/rest/auth");
 const helper = require("../../../libraries/helpers");
 const admin = require("firebase-admin");
 
+jest.setTimeout(30000)
 
 admin.initializeApp({
     projectId: "mezcalmos-31f1c",
@@ -34,12 +35,15 @@ let driverData = {
     "returnSecureToken":true
   }
   
-let tripData = {
-    from: "home",
-    to: "office",
-    duration: 10,
-    distance: 5
-  }  
+
+  let tripData = {
+    'from': "home",
+    'to': "office",
+    'duration': 10,
+    'distance': 5,
+    'estimatedPrice': '2$',
+    'paymentType': 'Paypal'
+  }
 
 let customer, driver, badUser
 
@@ -108,6 +112,9 @@ describe('Mezcalmos', () => {
 
      expect(notification.status).toBe('inTransit')
      expect(notification.notificationType).toBe('orderStatusChange')
+
+     orderLock = (await admin.database().ref(`orders/taxi/${orderId}/lock`).once('value')).val()
+    expect(orderLock).toBeNull()
     
     })
   

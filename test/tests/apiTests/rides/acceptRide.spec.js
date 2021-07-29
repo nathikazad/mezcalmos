@@ -99,14 +99,17 @@ describe('Mezcalmos', () => {
     expect(response.data.result.errorMessage).toBe('User needs to be signed in')
 
     response = await customer.callFunction("requestTaxi", tripData)
+    console.log(response);
     expect(response.result.status).toBe('Success')
     let orderId = response.result.orderId
+    console.log(orderId);
 
+   
     response = await driver.callFunction("acceptTaxiOrder", "cats")
     expect(response.result.status).toBe('Error')
     expect(response.result.errorMessage).toBe('Required orderId')
 
-   // Non taxi drivers cannot accept order
+   //Non taxi drivers cannot accept order
     response = await badUser.callFunction("acceptTaxiOrder", {orderId: orderId})
     expect(response.result.status).toBe('Error')
     expect(response.result.errorMessage).toBe('User is not an authorized driver')
@@ -115,14 +118,12 @@ describe('Mezcalmos', () => {
     response = await driver.callFunction("acceptTaxiOrder", {orderId: orderId})
     expect(response.result.status).toBe('Success')
 
-
     //not able to accept a new ride when driver is already on the first ride
     let newRequest = await badUser.callFunction("requestTaxi", tripData)
-    //console.log(newRequest);
     expect(newRequest.result.status).toBe('Success')
     let newOrderId = newRequest.result.orderId
+
     let newResponse = await driver.callFunction("acceptTaxiOrder", {orderId: newOrderId})
-    
     expect(newResponse.result.status).toBe('Error')
     expect(newResponse.result.errorMessage).toBe("Driver is already in another taxi")
 
@@ -283,7 +284,6 @@ describe('Mezcalmos', () => {
        }
      })
 
-
     expect(acceptedCounter).toEqual(1)
     expect(acceptedResponse).toHaveLength(1)
     expect(acceptedResponse[0].result.status).toBe('Success')
@@ -298,7 +298,7 @@ describe('Mezcalmos', () => {
 
 
   })
-  //
+  
  
 });
 

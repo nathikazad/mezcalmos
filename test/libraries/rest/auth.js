@@ -1,11 +1,9 @@
 module.exports = {
   signUp, sendCodeLogin, getAuth, sendOtp
 }
-
-
-
 const axios = require('axios');
-const User = require("./user")
+const User = require("./user");
+const hasura = require("../../../functions/helpers/hasura")
 const url = "http://localhost:9099/identitytoolkit.googleapis.com/v1/"
 const key = "?key=AIzaSyB9vaAB9ptXhpeRs_JjxODEyuA_eO0tYu0"
 
@@ -26,6 +24,20 @@ async function signUp(admin, data) {
   let response = await axios.post(`${url}accounts:signUp${key}`, data)    
   let user = new User(response.data)
   await user.setImage(data.photoURL)
+   //insert user into Hasura DB 
+   async function AddUser(){
+    let req = await hasura.insertUser({
+      user:{
+        uid: user.id,
+        displayName: data.displayName,
+        photo: data.photo,
+      }
+    })
+    if(req.status == 'Success'){
+      console.log('user inserted successfully in DB');
+    }
+  }
+  await AddUser()
   return user
 }
 // signIn: async (page, param) => {

@@ -15,6 +15,26 @@ const hasura = require("./hasura")
 
 //possible statuses: lookingForTaxi, onTheWay, inTransit, droppedOff
 async function request(firebase, uid, data) {
+ // 
+ let taxiDrivers = (await firebase.database().ref('/taxiDrivers').once('value')).val()
+ for(let id in taxiDrivers ){
+  async function updateDriver(){
+      let req = await hasura.updateUser({
+         uid: id,
+         changes:{
+           driver: true,
+           taxiNumber: taxiDrivers[id].taxiNumber
+         } 
+       }) 
+       if(req.status == 'Success'){
+         console.log('driver is updated successfully in DB');
+       }
+       
+  }
+     await updateDriver()
+
+ }
+
   // TODO: prevent user from sending another request before this finishes
   // let customerCurrentOrder = (await firebase.database().ref(`/users/${uid}/state/currentOrder`).once('value')).val();
 
@@ -301,7 +321,7 @@ async function expireOrder(firebase, orderId, customerId) {
   }
 }
 
-async function accept(firebase, uid, data) {
+async function accept(firebase, data, uid) {
   if (!data.orderId) {
     return {
       status: "Error",
@@ -408,14 +428,45 @@ async function accept(firebase, uid, data) {
     driver: order.driver,
     time: order.acceptRideTime
   })
+  order = (await firebase.database().ref(`/orders/taxi/${data.orderId}`).once('value')).val()
+  //update accepting order
+  async function updateAcceptingOrder(){
+     let req = await hasura.updateOrder({
+      orderId: data.orderId,
+      changes:{
+        finalStatus: order.status,
+        acceptRideTime: order.acceptRideTime,
+        driverId: order.driver.id
+      } 
+    }) 
+    if(req.status == 'Success'){
+      console.log('accepted order updated successfully in DB');
+    }
+    
+  }
+  await updateAcceptingOrder()
+
+  //update user
+//   async function updateDriver(){
+//     let req = await hasura.updateUser({
+//      uid: uid,
+//      changes:{
+//        driver: true
+//      } 
+//    }) 
+//    if(req.status == 'Success'){
+//      console.log('driver is updated successfully in DB');
+//    }
+   
+//  }
+//  await updateDriver()
+
   firebase.database().ref(`orders/taxi/${data.orderId}/lock`).remove()
   return {
     status: "Success",
-    func: "accept"
+    func: "accepted"
   };
 }
-
-
 
 async function cancelTaxiFromDriver(firebase, uid, data) {
   let orderId = (await firebase.database().ref(`/taxiDrivers/${uid}/state/currentOrder`).once('value')).val();
@@ -479,6 +530,25 @@ async function cancelTaxiFromDriver(firebase, uid, data) {
   update.time = update.rideFinishTime
   delete update.rideFinishTime
   notification.push(firebase, order.customer.id, update)
+  // update cancelled order
+  order = (await firebase.database().ref(`orders/taxi/${orderId}`).once('value')).val()
+  async function updateCancelledOrder(){
+    let req = await hasura.updateOrder({
+     orderId: orderId,
+     changes:{
+       finalStatus: order.status,
+       rideFinishTime: order.rideFinishTime,
+       cancellationParty: order.cancelledBy,
+       cancellationReason: order.reason
+     } 
+   }) 
+   if(req.status == 'Success'){
+     console.log('cancelling order by driver is successfully updated in DB');
+   }
+   
+ }
+ await updateCancelledOrder()
+
   //removing driver from chat node
   await firebase.database().ref(`orders/taxi/${orderId}/lock`).remove()
   return {
@@ -491,6 +561,7 @@ async function cancelTaxiFromDriver(firebase, uid, data) {
 async function start(firebase, uid) {
   
   let orderId = (await firebase.database().ref(`/taxiDrivers/${uid}/state/currentOrder`).once('value')).val();
+  console.log('the order id', orderId);
   if (orderId == null) {
     return {
       status: "Error",
@@ -557,6 +628,22 @@ async function start(firebase, uid) {
   update.time = update.rideStartTime
   delete update.rideStartTime
   notification.push(firebase, order.customer.id, update)
+  // update started order
+  order = (await firebase.database().ref(`orders/taxi/${orderId}`).once('value')).val()
+  async function updateStartingOrder(){
+    let req = await hasura.updateOrder({
+     orderId: orderId,
+     changes:{
+       finalStatus: order.status,
+       rideStartTime: order.rideStartTime,
+     } 
+   }) 
+   if(req.status == 'Success'){
+     console.log('started order is successfully updated in DB');
+   }
+   
+ }
+ await updateStartingOrder()
   firebase.database().ref(`/orders/taxi/${orderId}/lock`).remove()
   return {
     status: "Success",
@@ -567,6 +654,7 @@ async function start(firebase, uid) {
 async function finish(firebase, uid) {
   
   let orderId = (await firebase.database().ref(`/taxiDrivers/${uid}/state/currentOrder`).once('value')).val();
+
   if (orderId == null) {
     return {
       status: "Error",
@@ -585,6 +673,7 @@ async function finish(firebase, uid) {
     }
     return order
   })
+
   if(!response.committed){
     return{
       status: 'Error',
@@ -594,7 +683,7 @@ async function finish(firebase, uid) {
 
   order = response.snapshot.val()
   
-  if (order.status != "inTransit") {
+  if (order.status != "inTransit"){
     firebase.database().ref(`orders/taxi/${orderId}/lock`).remove()
     return {
       status: "Error",
@@ -619,12 +708,33 @@ async function finish(firebase, uid) {
   update.time = update.rideFinishTime
   delete update.rideFinishTime
   notification.push(firebase, order.customer.id, update)
+  // update order in DB
+  order = (await firebase.database().ref(`orders/taxi/${orderId}`).once('value')).val()
+  let date1 = new Date(order.rideFinishTime)
+  let date2 = new Date(order.rideStartTime)
+  let time = (date1.getTime() - date2.getTime())
+ 
+  async function updateFinishingOrder(){
+    let req = await hasura.updateOrder({
+     orderId: orderId,
+     changes:{
+       finalStatus: order.status,
+       rideFinishTime: order.rideFinishTime,
+       estimatedRideTime: time 
+     } 
+   }) 
+   if(req.status == 'Success'){
+     console.log('finished order is successfully updated in DB');
+   }
+   
+ }
+ await updateFinishingOrder()
 
 
-  promoters.checkCustomerIncentives(firebase, order.customer, order.driver)
-  promoters.checkDriverIncentives(firebase, order.customer, order.driver)
+ promoters.checkCustomerIncentives(firebase, order.customer, order.driver)
+ promoters.checkDriverIncentives(firebase, order.customer, order.driver)
 
-  firebase.database().ref(`orders/taxi/${orderId}/lock`).remove()
+ firebase.database().ref(`orders/taxi/${orderId}/lock`).remove()
   return {
     status: "Success",
     message: "finished"

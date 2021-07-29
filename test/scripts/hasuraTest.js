@@ -220,54 +220,54 @@ async function saveFile(){
 	console.log("Finished");
 }
 
-// async function writeToDB(){
-//   let data = JSON.parse(fs.readFileSync('data/db-snapshot.json'));
-//   let orders = data.orders.taxi
-//   let i = 0
-//   let array = []
-//   for(let orderId in orders){
-//     let order = orders[orderId]
-//     let object = {
-//       customerId:order.customer.id,
-//       orderId:orderId,
-//       orderTime:(new Date(order.orderTime)).toISOString()
-//     }
-//     if(order.driver)
-//       object.driverId = order.driver.id
-//     if(order.acceptRideTime)
-//       object.acceptRideTime = (new Date(order.acceptRideTime)).toISOString()
-//     if(order.rideStartTime)
-//       object.rideStartTime = (new Date(order.rideStartTime)).toISOString()
-//     if(order.rideFinishTime)
-//       object.rideFinishTime = (new Date(order.rideFinishTime)).toISOString()
-//     if(order.status)
-//       object.finalStatus = order.status
-//     if(order.duration)
-//       object.estimatedRideTime = order.duration.value
-//     if(order.to && order.to.lat && order.to.lng)
-//       object.dropOffLocation ={
-//         type:"Point",
-//         coordinates: [order.to.lat,order.to.lng]
-//       }
-//     if(order.from && order.from.lat && order.from.lng)
-//       order.pickUpLocation = {
-//         type:"Point",
-//         coordinates: [order.from.lat,order.from.lng]
-//       }
-//     if(order.cancelledBy)
-//       object.cancellationParty = order.cancelledBy
-//     if(order.reason)
-//       object.cancellationReason = order.reason
-//     i++
-//     if(i%50 == 0){
-//       await insertOrder({objects:array})
-//       array = []
-//     } else {
-//       array.push(object)
-//     }
-//   }
-//   await insertOrder({objects:array})
-// }
+async function writeToDB(){
+  let data = JSON.parse(fs.readFileSync('data/db-snapshot.json'));
+  let orders = data.orders.taxi
+  let i = 0
+  let array = []
+  for(let orderId in orders){
+    let order = orders[orderId]
+    let object = {
+      customerId:order.customer.id,
+      orderId:orderId,
+      orderTime:(new Date(order.orderTime)).toISOString()
+    }
+    if(order.driver)
+      object.driverId = order.driver.id
+    if(order.acceptRideTime)
+      object.acceptRideTime = (new Date(order.acceptRideTime)).toISOString()
+    if(order.rideStartTime)
+      object.rideStartTime = (new Date(order.rideStartTime)).toISOString()
+    if(order.rideFinishTime)
+      object.rideFinishTime = (new Date(order.rideFinishTime)).toISOString()
+    if(order.status)
+      object.finalStatus = order.status
+    if(order.duration)
+      object.estimatedRideTime = order.duration.value
+    if(order.to && order.to.lat && order.to.lng)
+      object.dropOffLocation ={
+        type:"Point",
+        coordinates: [order.to.lat,order.to.lng]
+      }
+    if(order.from && order.from.lat && order.from.lng)
+      order.pickUpLocation = {
+        type:"Point",
+        coordinates: [order.from.lat,order.from.lng]
+      }
+    if(order.cancelledBy)
+      object.cancellationParty = order.cancelledBy
+    if(order.reason)
+      object.cancellationReason = order.reason
+    i++
+    if(i%50 == 0){
+      await insertOrder({objects:array})
+      array = []
+    } else {
+      array.push(object)
+    }
+  }
+  await insertOrder({objects:array})
+}
 
 
 
@@ -276,7 +276,7 @@ async function saveFile(){
 
 
 
-// let data = JSON.parse(fs.readFileSync(filePrefix+'data.json'));
-// saveFile()
-//writeToDB()
+let data = JSON.parse(fs.readFileSync(filePrefix+'data.json'));
+saveFile()
+writeToDB()
 

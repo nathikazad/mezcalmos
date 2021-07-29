@@ -86,6 +86,7 @@ async function saveFile(){
 }
 
 async function writeToDB(){
+  
   let data = JSON.parse(fs.readFileSync('data/db-snapshot.json'));
   let drivers = data.taxiDrivers
   let users = data.users
@@ -166,14 +167,7 @@ async function writeToDB(){
 //   }
 //   await insertOrder({objects:array})
 
-
-
-
-
-
-
-
-// let data = JSON.parse(fs.readFileSync(filePrefix+'data.json'));
-// saveFile()
+//let data = JSON.parse(fs.readFileSync(filePrefix+'data.json'));
+saveFile()
 writeToDB()
 
