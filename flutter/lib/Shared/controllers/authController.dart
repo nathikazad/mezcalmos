@@ -72,7 +72,7 @@ class AuthController extends GetxController {
         Get.lazyPut(() => TaxiAuthController());
         Get.lazyPut(() => DeviceNotificationsController());
         Get.lazyPut(() => MessageController());
-        Get.lazyPut(() => FBNotificationsController());
+        Get.lazyPut(() => FBNotificationsController(), fenix: true);
         _userInfoListener = _databaseHelper.firebaseDatabase
             .reference()
             .child(userInfo(user.uid))

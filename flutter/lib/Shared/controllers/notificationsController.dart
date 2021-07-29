@@ -87,7 +87,7 @@ class FBNotificationsController extends GetxController {
   RxList<MezNotification.Notification> notifications =
       <MezNotification.Notification>[].obs;
   StreamSubscription<Event>? _taxiAuthListener;
-  List _taxiAuthListenerCallbacks = [];
+  List taxiAuthListenerCallbacks = [];
 
   @override
   void onInit() async {
@@ -104,9 +104,12 @@ class FBNotificationsController extends GetxController {
           print(
               "=========> FBNotificationController :: onInit :: Listener :: Invoked!");
           event.snapshot.value.forEach((dynamic key, dynamic value) {
+            print(
+                "\n\n\n\n\n New Notification Inserted : ${key} , \n${value}\n\n\n\n\n");
+
             MezNotification.Notification _notif =
                 MezNotification.Notification.fromJson(key, value);
-            _taxiAuthListenerCallbacks.forEach((callback) {
+            taxiAuthListenerCallbacks.forEach((callback) {
               // this is much more dynamic :D
               if (_notif.notificationType == callback["type"] &&
                   _notif.variableParams["orderId"] == callback["orderId"]) {
@@ -122,13 +125,14 @@ class FBNotificationsController extends GetxController {
 
   // using this we can register our callbacks from diffrent places , and invoke them onValue !
   void registerCallbackOnListenerInvoke(callback) {
-    _taxiAuthListenerCallbacks.add(callback);
+    taxiAuthListenerCallbacks.add(callback);
     print("[+] ----------> ${callback}  ::  Was Registred successfully !!");
   }
 
-  void setAllMessagesAsReadInDb() {
+  Future<void> setAllMessagesAsReadInDb() async {
     // for now i', just removing all notifications to test.
-    _databaseHelper.firebaseDatabase
+
+    await _databaseHelper.firebaseDatabase
         .reference()
         .child(notificationsNode(_authController.user!.uid))
         .remove();

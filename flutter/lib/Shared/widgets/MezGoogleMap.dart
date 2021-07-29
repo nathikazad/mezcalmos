@@ -54,7 +54,7 @@ class MezGoogleMap extends StatelessWidget {
         : new GoogleMap(
             mapToolbarEnabled: false,
             myLocationButtonEnabled: false,
-            minMaxZoomPreference: MinMaxZoomPreference(10, 50),
+            minMaxZoomPreference: MinMaxZoomPreference(10, 20),
             buildingsEnabled: false,
             markers: getCorespondingController().markers,
             polylines: getCorespondingController().polylines,
@@ -72,7 +72,7 @@ class MezGoogleMap extends StatelessWidget {
               dynamic _getBounds = getCorespondingController().getBounds();
               if (_getBounds != null) {
                 await _gController.animateCamera(
-                    CameraUpdate.newLatLngBounds(_getBounds, 150));
+                    CameraUpdate.newLatLngBounds(_getBounds, 50));
               }
               _gMapCompleter.complete(_gController);
             },

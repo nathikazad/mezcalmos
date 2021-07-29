@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/settingsController.dart';
+import 'package:mezcalmos/Shared/pages/LocationPermissionScreen.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
@@ -27,6 +29,9 @@ class TaxiAuthController extends GetxController {
   RxBool _locationEnabled = false.obs;
   DeviceNotificationsController _messagingController =
       Get.find<DeviceNotificationsController>();
+
+  SettingsController _settingsController = Get.find<SettingsController>();
+
   dynamic get currentOrderId => _model.value.currentOrder ?? null;
   dynamic get authorizedTaxi => _model.value.isAuthorized ?? false;
   bool get isLooking => _model.value.isLooking ?? false;
@@ -46,11 +51,14 @@ class TaxiAuthController extends GetxController {
       - CurrentOrder
   */
 
-  Widget _getScreen() => authorizedTaxi == true
-      ? (_model.value.currentOrder != null
-          ? CurrentOrderScreen()
-          : IncomingOrdersScreen())
-      : UnauthorizedScreen();
+  Widget _getScreen() =>
+      _settingsController.hasLocationPermissions.value == false
+          ? LocationPermissionScreen()
+          : authorizedTaxi == true
+              ? (_model.value.currentOrder != null
+                  ? CurrentOrderScreen()
+                  : IncomingOrdersScreen())
+              : UnauthorizedScreen();
 
   @override
   void onInit() async {
@@ -74,8 +82,8 @@ class TaxiAuthController extends GetxController {
           .listen((event) async {
         _model.value = event.snapshot.value != null
             ? TaxiDriver.fromSnapshot(event.snapshot)
-            // : TaxiDriver(false, false, null, null, null);
-            : TaxiDriver.empty();
+            : TaxiDriver(false, false, null, null, null, isEmpty: false);
+        // : TaxiDriver.empty();
 
         // our magical Trick :p
         _dynamicScreen.value = _getScreen();
@@ -85,13 +93,13 @@ class TaxiAuthController extends GetxController {
                 _model.value.isLooking == false)) {
           await Location().enableBackgroundMode(enable: false);
           _locationListener?.pause();
-          print(
-              " [=] ---------------------------------> Paused locationListener !");
+          // print(
+          //     " [=] ---------------------------------> Paused locationListener !");
         } else {
           await Location().enableBackgroundMode(enable: true);
           _locationListener?.resume();
-          print(
-              " [=] ---------------------------------> Resumed locationListener !");
+          // print(
+          //     " [=] ---------------------------------> Resumed locationListener !");
         }
       });
       String? deviceNotificationToken = await _messagingController.getToken();

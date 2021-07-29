@@ -59,6 +59,8 @@ class IncomingOrdersController extends GetxController {
           orders.value = <Order>[];
           if (event.snapshot.value != null) {
             event.snapshot.value.forEach((dynamic key, dynamic value) {
+              print(
+                  "\n\n\n\n\n New Customer Order Inserted : ${key} , \n${value}\n\n\n\n\n");
               Order order = Order.fromJson(key, value);
               order.distanceToClient = MapHelper.calculateDistance(
                   order.from.position, _taxiAuthController.currentLocation);

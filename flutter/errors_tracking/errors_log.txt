@@ -156,3 +156,9 @@ When the exception was thrown, this was the stack:
 (elided 3 frames from dart:async)
 
 ════════════════════════════════════════════════════════════════════════════════════════════════════
+
+> Error 7 :
+
+Duplicate of same error as #Error2,
+
+now this Actually happens because of the GlobalKey<ScaffoldState> , that is remaining the same on memory When revuilding!

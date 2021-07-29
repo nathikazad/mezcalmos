@@ -16,7 +16,7 @@ class TaxiWrapper extends GetWidget<AuthController> {
   Widget build(BuildContext context) {
     TaxiAuthController _taxiAuthController = Get.find<TaxiAuthController>();
     return Scaffold(
-      key: _sideMenuDrawerController.scaffoldKey,
+      key: _sideMenuDrawerController.getNewKey(),
       drawer: MezSideMenu(),
       backgroundColor: Colors.white,
       appBar: MezcalmosSharedWidgets.mezcalmosAppBar(

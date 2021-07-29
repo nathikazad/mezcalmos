@@ -144,8 +144,6 @@ class MessagingScreen extends GetView<MessageController> {
   Widget build(BuildContext context) {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       scrollDown(mezChatScrollDuration: timeStamp);
-
-      Get.find<FBNotificationsController>().setAllMessagesAsReadInDb();
     });
 
     controller.loadChat(
@@ -173,8 +171,8 @@ class MessagingScreen extends GetView<MessageController> {
     return Scaffold(
         // resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
-        appBar:
-            MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back()),
+        appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
+            "back", () => Get.back(result: "clear_notification")),
         body: Container(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,

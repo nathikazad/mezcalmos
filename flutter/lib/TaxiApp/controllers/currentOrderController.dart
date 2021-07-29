@@ -11,6 +11,7 @@ import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Order.dart';
+import 'package:mezcalmos/TaxiApp/router.dart';
 
 class CurrentOrderController extends GetxController {
   Rx<Order> _model = Order.empty().obs;
@@ -66,26 +67,28 @@ class CurrentOrderController extends GetxController {
             event.snapshot.value['cancelledBy'] == "customer") {
           await MezcalmosSharedWidgets.mezcalmosDialogOrderCancelled(
               55, Get.height, Get.width);
-          Get.back(closeOverlays: true);
-        }
-        _model.value = Order.fromSnapshot(event.snapshot);
-        _model.value.id = _taxiAuthController.currentOrderId;
-        CurrentOrderMapController mezCurrentMap =
-            Get.find<CurrentOrderMapController>();
-        if (!mezCurrentMap.isClosed && !dirty) {
-          mezCurrentMap.googleMapUpdate();
+          // Get.back(closeOverlays: true);
+          Get.offAndToNamed(kMainAuthWrapperRoute);
+        } else {
+          _model.value = Order.fromSnapshot(event.snapshot);
+          _model.value.id = _taxiAuthController.currentOrderId;
+          CurrentOrderMapController mezCurrentMap =
+              Get.find<CurrentOrderMapController>();
+          if (!mezCurrentMap.isClosed && !dirty) {
+            mezCurrentMap.googleMapUpdate();
+          }
         }
       }
     });
   }
 
-  int remainingUnreadMessages() {
-    if (_model.value.id != null) {
-      return _notifications.remainingMessageNotificationsCount(_model.value.id);
-    } else {
-      return 0;
-    }
-  }
+  // int remainingUnreadMessages() {
+  //   if (_model.value.id != null) {
+  //     return _notifications.remainingMessageNotificationsCount(_model.value.id);
+  //   } else {
+  //     return 0;
+  //   }
+  // }
 
   Future<void> cancelTaxi(String? reason) async {
     HttpsCallable cancelTaxiFunction =
@@ -165,7 +168,7 @@ class CurrentOrderController extends GetxController {
 
   void detachListeners() {
     if (_currentOrderListener != null) {
-      Get.delete<CurrentOrderMapController>();
+      // Get.delete<CurrentOrderMapController>();
       _currentOrderListener!
           .cancel()
           .then((value) => print(
@@ -177,13 +180,28 @@ class CurrentOrderController extends GetxController {
 
   @override
   void onClose() async {
-    // TODO: implement onClose
+    // TO Remove our callback
+    _notifications.taxiAuthListenerCallbacks.forEach((map) {
+      if (map['orderId'] == _model.value.id) {
+        print(
+            "===================> Removing Registered Callback : $map =====> Cuz CurrentOredrController got closed !");
+        _notifications.taxiAuthListenerCallbacks.remove(map);
+      }
+    });
     detachListeners();
     super.onClose();
   }
 
   @override
   void dispose() {
+    // TO Remove our callback
+    _notifications.taxiAuthListenerCallbacks.forEach((map) {
+      if (map['orderId'] == _model.value.id) {
+        print(
+            "===================> Removing Registered Callback : $map =====> Cuz CurrentOredrController got closed !");
+        _notifications.taxiAuthListenerCallbacks.remove(map);
+      }
+    });
     detachListeners();
     super.dispose();
     print("--------------------> CurrentOrderController Auto Disposed !");

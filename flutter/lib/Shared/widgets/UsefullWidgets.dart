@@ -148,8 +148,9 @@ class MezcalmosSharedWidgets {
                   height: Get.height / 4,
                   width: Get.width / 2,
                   decoration: BoxDecoration(
-                      image:
-                          DecorationImage(image: AssetImage(taxiImageAsset))),
+                      image: DecorationImage(
+                          image: AssetImage(taxiImageAsset),
+                          fit: BoxFit.contain)),
                 )),
             Flexible(
                 fit: FlexFit.loose,
@@ -161,7 +162,11 @@ class MezcalmosSharedWidgets {
                 child: Center(
                   child: Text(
                     message,
-                    style: TextStyle(fontFamily: 'psr', fontSize: 18),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontFamily: 'psr',
+                        fontSize: 20,
+                        color: Colors.grey.shade700),
                   ),
                 ))
           ],

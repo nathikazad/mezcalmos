@@ -8,13 +8,9 @@ class TaxiDriver {
   dynamic lastLocationUpdateTime;
   dynamic isEmpty = false;
 
-  TaxiDriver(
-    this.isAuthorized,
-    this.isLooking,
-    this.currentOrder,
-    this.driverLocation,
-    this.lastLocationUpdateTime,
-  );
+  TaxiDriver(this.isAuthorized, this.isLooking, this.currentOrder,
+      this.driverLocation, this.lastLocationUpdateTime,
+      {this.isEmpty});
 
   TaxiDriver.empty() {
     isEmpty = true;
