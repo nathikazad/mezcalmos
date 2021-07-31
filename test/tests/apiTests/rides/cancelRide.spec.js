@@ -100,11 +100,9 @@ describe('Mezcalmos', () => {
     expect(orderAfterCancel).toHaveProperty('rideFinishTime')
 
     //verify removing chat
-
     let chat = (await admin.database().ref(`chat/${orderId}`).once('value')).val()
     expect(chat).toBeNull()
    })
-
 
   it('Cancel ride from customer while onTheWay', async () => {    
 
@@ -276,14 +274,14 @@ describe('Mezcalmos', () => {
 
   it('Cancel ride from Driver before then after accepting the order', async () => {
 
-    //while order is not accepted yet 
+  
     response = await customer.callFunction("requestTaxi", tripData)
     expect(response.result.status).toBe('Success')
 
     let orderId = response.result.orderId
     let order = await driver.db.get(`orders/taxi/${orderId}`)
     expect(order.status).toBe('lookingForTaxi')
-
+      //while order is not accepted yet 
     response = await driver.callFunction("cancelTaxiFromDriver", {orderId: orderId})
     expect(response.result.status).toBe('Error')
     expect(response.result.errorMessage).toBe('Driver has not accepted any ride')
@@ -298,7 +296,6 @@ describe('Mezcalmos', () => {
     // Test Cancel order when status is onTheWay
     response = await driver.callFunction("cancelTaxiFromDriver", {orderId: orderId})
     expect(response.result.status).toBe('Success')
-
 
     //verify updating order after being cancelled
     orderCancelled = await customer.db.get(`orders/taxi/${orderId}`)
@@ -399,123 +396,123 @@ describe('Mezcalmos', () => {
     order = await driver.db.get(`orders/taxi/${orderId}`)
     expect(order.status).toBe('inTransit')
 
-    // Test Cancel order when status is onTheWay
+    // Test Cancel order when status is inTransit
     response = await driver.callFunction("cancelTaxiFromDriver", {orderId: orderId})
     expect(response.result.status).toBe('Success')
 
-  //   //verify updating order after being cancelled
-  //   orderCancelled = await customer.db.get(`orders/taxi/${orderId}`)
-  //   expect(orderCancelled).not.toContain('reason')
-  //   expect(orderCancelled.status).toBe('cancelled')
-  //   expect(orderCancelled.cancelledBy).toBe('driver')
-  //   expect(orderCancelled).toHaveProperty('rideFinishTime')
+    //verify updating order after being cancelled
+    orderCancelled = await customer.db.get(`orders/taxi/${orderId}`)
+    expect(orderCancelled).not.toContain('reason')
+    expect(orderCancelled.status).toBe('cancelled')
+    expect(orderCancelled.cancelledBy).toBe('driver')
+    expect(orderCancelled).toHaveProperty('rideFinishTime')
 
-  //   let customerOrderAfterCancel = await customer.db.get(`users/${order.customer.id}/orders/${orderId}`)
-  //   expect(customerOrderAfterCancel).not.toContain('reason')
-  //   expect(customerOrderAfterCancel.status).toBe('cancelled')
-  //   expect(customerOrderAfterCancel.cancelledBy).toBe('driver')
-  //   expect(customerOrderAfterCancel).toHaveProperty('rideFinishTime')
+    let customerOrderAfterCancel = await customer.db.get(`users/${order.customer.id}/orders/${orderId}`)
+    expect(customerOrderAfterCancel).not.toContain('reason')
+    expect(customerOrderAfterCancel.status).toBe('cancelled')
+    expect(customerOrderAfterCancel.cancelledBy).toBe('driver')
+    expect(customerOrderAfterCancel).toHaveProperty('rideFinishTime')
 
-  //   let driverOrderAfterCancel = await driver.db.get(`taxiDrivers/${order.driver.id}/orders/${orderId}`)
-  //   expect(driverOrderAfterCancel).not.toContain('reason')
-  //   expect(driverOrderAfterCancel.status).toBe('cancelled')
-  //   expect(driverOrderAfterCancel.cancelledBy).toBe('driver')
-  //   expect(driverOrderAfterCancel).toHaveProperty('rideFinishTime')
+    let driverOrderAfterCancel = await driver.db.get(`taxiDrivers/${order.driver.id}/orders/${orderId}`)
+    expect(driverOrderAfterCancel).not.toContain('reason')
+    expect(driverOrderAfterCancel.status).toBe('cancelled')
+    expect(driverOrderAfterCancel.cancelledBy).toBe('driver')
+    expect(driverOrderAfterCancel).toHaveProperty('rideFinishTime')
 
-  //   //verify taxiCancelledOrders
-  //   let taxiCancelledOrder = (await admin.database().ref(`taxiCancelledOrders/${orderId}`).once('value')).val()
-  //   expect(taxiCancelledOrder.status).toBe(order.status);
+    //verify taxiCancelledOrders
+    let taxiCancelledOrder = (await admin.database().ref(`taxiCancelledOrders/${orderId}`).once('value')).val()
+    expect(taxiCancelledOrder.status).toBe(order.status);
 
-  //   //verify removing order 
-  //   let customerCurrentOrder = await customer.db.get(`users/${order.customer.id}/state/currentOrder`)
-  //   expect(customerCurrentOrder).toBeNull()
+    //verify removing order 
+    let customerCurrentOrder = await customer.db.get(`users/${order.customer.id}/state/currentOrder`)
+    expect(customerCurrentOrder).toBeNull()
 
-  //   let driverCurrentOrder = await driver.db.get(`taxiDrivers/${order.driver.id}/state/currentOrder`)
-  //   expect(driverCurrentOrder).toBeNull()
+    let driverCurrentOrder = await driver.db.get(`taxiDrivers/${order.driver.id}/state/currentOrder`)
+    expect(driverCurrentOrder).toBeNull()
 
-  //   let inProcessOrder =  (await admin.database().ref(`/inProcessOrders/taxi/${orderId}`).once('value')).val()
-  //   expect(inProcessOrder).toBeNull()
+    let inProcessOrder =  (await admin.database().ref(`/inProcessOrders/taxi/${orderId}`).once('value')).val()
+    expect(inProcessOrder).toBeNull()
 
-  //   //verify notification update
-  //   let customerNotificationsInfo = await customer.db.get(`notifications/customer/${order.customer.id}`)
-  //   let arrayNotifications = Object.entries(customerNotificationsInfo);
-  //   let notification = (arrayNotifications[arrayNotifications.length-1])[1];
+    //verify notification update
+    let customerNotificationsInfo = await customer.db.get(`notifications/customer/${order.customer.id}`)
+    let arrayNotifications = Object.entries(customerNotificationsInfo);
+    let notification = (arrayNotifications[arrayNotifications.length-1])[1];
 
-  //   expect(notification.status).toBe('cancelled')
-  //   expect(notification.cancelledBy).toBe('driver')
-  //   expect(notification).not.toContain('reason')
-  //   expect(notification.orderId).toBe(orderId)
-  //   expect(notification.notificationType).toBe('orderStatusChange')
-  //   expect(notification.orderType).toBe('taxi')
+    expect(notification.status).toBe('cancelled')
+    expect(notification.cancelledBy).toBe('driver')
+    expect(notification).not.toContain('reason')
+    expect(notification.orderId).toBe(orderId)
+    expect(notification.notificationType).toBe('orderStatusChange')
+    expect(notification.orderType).toBe('taxi')
 
-  //   //cancel order while there is a reason
-  //   response = await customer.callFunction("requestTaxi", tripData)
-  //   expect(response.result.status).toBe('Success')
-  //   orderId = response.result.orderId
+    //cancel order while there is a reason
+    response = await customer.callFunction("requestTaxi", tripData)
+    expect(response.result.status).toBe('Success')
+    orderId = response.result.orderId
     
-  //   response = await driver.callFunction("acceptTaxiOrder", {orderId: orderId})
-  //   expect(response.result.status).toBe('Success')
+    response = await driver.callFunction("acceptTaxiOrder", {orderId: orderId})
+    expect(response.result.status).toBe('Success')
 
-  //   response = await driver.callFunction("cancelTaxiFromDriver", {orderId: orderId, reason : 'emergency'})
-  //   expect(response.result.status).toBe('Success')
+    response = await driver.callFunction("cancelTaxiFromDriver", {orderId: orderId, reason : 'emergency'})
+    expect(response.result.status).toBe('Success')
 
-  //   order = await customer.db.get(`orders/taxi/${orderId}`)
+    order = await customer.db.get(`orders/taxi/${orderId}`)
     
-  //   expect(order.status).toBe('cancelled')
-  //   expect(order.cancelledBy).toBe('driver')
-  //   expect(order.reason).toBe('emergency')
+    expect(order.status).toBe('cancelled')
+    expect(order.cancelledBy).toBe('driver')
+    expect(order.reason).toBe('emergency')
 
-  //   //verify notification while there is a reason
-  //    customerNotificationsInfo = await customer.db.get(`notifications/customer/${order.customer.id}`)
-  //    arrayNotifications = Object.entries(customerNotificationsInfo);
-  //    notification = (arrayNotifications[arrayNotifications.length-1])[1];
+    //verify notification while there is a reason
+     customerNotificationsInfo = await customer.db.get(`notifications/customer/${order.customer.id}`)
+     arrayNotifications = Object.entries(customerNotificationsInfo);
+     notification = (arrayNotifications[arrayNotifications.length-1])[1];
 
-  //    expect(notification.status).toBe('cancelled')
-  //    expect(notification.cancelledBy).toBe('driver')
-  //    expect(notification.reason).toBe(order.reason)
+     expect(notification.status).toBe('cancelled')
+     expect(notification.cancelledBy).toBe('driver')
+     expect(notification.reason).toBe(order.reason)
 
-  //    orderLock = (await admin.database().ref(`orders/taxi/${orderId}/lock`).once('value')).val()
-  //    expect(orderLock).toBeNull()
+     orderLock = (await admin.database().ref(`orders/taxi/${orderId}/lock`).once('value')).val()
+     expect(orderLock).toBeNull()
 
-  // })
+  })
 
-  // it('Cannot cancel ride from driver when order status is droppedOff', async () => {
-  //   // create ride
-  //   response = await customer.callFunction("requestTaxi", tripData)
-  //   expect(response.result.status).toBe('Success')
+  it('Cannot cancel ride from driver when order status is droppedOff', async () => {
+    // create ride
+    response = await customer.callFunction("requestTaxi", tripData)
+    expect(response.result.status).toBe('Success')
 
-  //   orderId = response.result.orderId
-  //   order = await driver.db.get(`orders/taxi/${orderId}`)
-  //   expect(order.status).toBe('lookingForTaxi')
+    orderId = response.result.orderId
+    order = await driver.db.get(`orders/taxi/${orderId}`)
+    expect(order.status).toBe('lookingForTaxi')
 
-  //   //accept ride by driver
-  //   response = await driver.callFunction("acceptTaxiOrder", {orderId: orderId})
-  //   expect(response.result.status).toBe('Success')
-  //     //verify accepted order status
-  //   order = await driver.db.get(`orders/taxi/${orderId}`)
-  //   expect(order.status).toBe('onTheWay')
+    //accept ride by driver
+    response = await driver.callFunction("acceptTaxiOrder", {orderId: orderId})
+    expect(response.result.status).toBe('Success')
+      //verify accepted order status
+    order = await driver.db.get(`orders/taxi/${orderId}`)
+    expect(order.status).toBe('onTheWay')
 
-  //   //start ride
-  //   response = await driver.callFunction('startTaxiRide', {})
-  //   expect(response.result.status).toBe('Success')
-  //   //verify accepted order status
-  //   order = await driver.db.get(`orders/taxi/${orderId}`)
-  //   expect(order.status).toBe('inTransit')
+    //start ride
+    response = await driver.callFunction('startTaxiRide', {})
+    expect(response.result.status).toBe('Success')
+    //verify accepted order status
+    order = await driver.db.get(`orders/taxi/${orderId}`)
+    expect(order.status).toBe('inTransit')
 
-  //   //finish ride 
-  //   response = await driver.callFunction('finishTaxiRide', {})
-  //   expect(response.result.status).toBe('Success')
-  //   //verify accepted order status
-  //   order = await driver.db.get(`orders/taxi/${orderId}`)
-  //   expect(order.status).toBe('droppedOff')
+    //finish ride 
+    response = await driver.callFunction('finishTaxiRide', {})
+    expect(response.result.status).toBe('Success')
+    //verify accepted order status
+    order = await driver.db.get(`orders/taxi/${orderId}`)
+    expect(order.status).toBe('droppedOff')
 
-  //   // Test Cancel order when status is onTheWay
-  //   response = await driver.callFunction("cancelTaxiFromDriver", {orderId: orderId})
-  //   expect(response.result.status).toBe('Error')
-  //   expect(response.result.errorMessage).toBe('Driver has not accepted any ride')
+    // Test Cancel order when status is droppedOff
+    response = await driver.callFunction("cancelTaxiFromDriver", {orderId: orderId})
+    expect(response.result.status).toBe('Error')
+    expect(response.result.errorMessage).toBe('Driver has not accepted any ride')
 
-  //   orderLock = (await admin.database().ref(`orders/taxi/${orderId}/lock`).once('value')).val()
-  //   expect(orderLock).toBeNull()
+    orderLock = (await admin.database().ref(`orders/taxi/${orderId}/lock`).once('value')).val()
+    expect(orderLock).toBeNull()
 
   })
 });

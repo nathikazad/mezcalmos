@@ -13,6 +13,7 @@ module.exports = {
 }
 
 const webpush = require('web-push')
+
 const vapidKeys = keys.keys().vapidkeys
 webpush.setVapidDetails(
   'http://www.mezcalmos.com',
@@ -37,7 +38,7 @@ async function push(firebase, userId, message, particpantType = "customer") {
 }
 
 async function notifyDriversNewRequest(firebase, address) {
-  drivers = (await firebase.database().ref(`/taxiDrivers`).once('value')).val();
+  let drivers = (await firebase.database().ref(`/taxiDrivers`).once('value')).val();
   for (let driverId in drivers){
     let driver = drivers[driverId]
     if(driver.state && driver.state.isLooking && !driver.state.currentOrder) {
@@ -52,7 +53,7 @@ async function notifyDriversNewRequest(firebase, address) {
     }
   }
 
-  users = (await firebase.database().ref(`/users`).once('value')).val();
+  let users = (await firebase.database().ref(`/users`).once('value')).val();
   for (let driverId in drivers){
     let driver = drivers[driverId]
     let user = users[driverId]

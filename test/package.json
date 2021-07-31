@@ -12,10 +12,16 @@
     "loadData": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 node ./loadData.js",
     "emulator:loadData": "npm-run-all --parallel emulator loadData",
     "browserTests": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 jest --verbose .tests/browserTests",
+<<<<<<< HEAD
     "apiTests": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 jest --verbose --runInBand .tests/apiTests",
     "test": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 MEZC_API_KEYS='../functions/.runtimeconfig.json' jest --verbose --runInBand",
     
     "autoTest": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 MEZC_API_KEYS='../functions/.runtimeconfig.json' supervisor --no-restart-on exit -w tests,libraries -x jest"
+=======
+    "apiTests": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 GCLOUD_PROJECT=none FIREBASE_CONFIG=none jest --verbose --runInBand .tests/apiTests",
+    "test": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 GCLOUD_PROJECT=none FIREBASE_CONFIG=none jest --verbose --runInBand",
+    "autoTest": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 GCLOUD_PROJECT=none FIREBASE_CONFIG=none supervisor --no-restart-on exit -w tests,libraries -x jest"
+>>>>>>> master
   },
 
   "author": "",

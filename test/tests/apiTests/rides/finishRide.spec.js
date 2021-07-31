@@ -72,8 +72,6 @@ describe('Mezcalmos', () => {
      response = await customer.callFunction('requestTaxi', tripData)
      let orderId = response.result.orderId
      expect(response.result.status).toBe('Success')
-
-     console.log(orderId);
      
      let order = await customer.db.get(`orders/taxi/${orderId}`)
      expect(order.status).toBe('lookingForTaxi')
@@ -116,6 +114,7 @@ describe('Mezcalmos', () => {
      let orderFinished = await customer.db.get(`orders/taxi/${orderId}`)
      expect(orderFinished.status).toBe('droppedOff')
      
+      
      let customerOrderFinished = await customer.db.get(`users/${order.customer.id}/orders/${orderId}`)
      expect(customerOrderFinished.status).toBe('droppedOff') 
 

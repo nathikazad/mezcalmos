@@ -5,8 +5,8 @@ import {
 
 import {
   getDistanceFromLatLonInKm,
-  puertoCoords,
-  inRichPeopleCoords
+  puertoCoords
+
 } from '@/shared/mixins/mapFunctions'
 
 export default {
@@ -40,7 +40,6 @@ export default {
       });
     },
     async requestTaxi(context, payload) {
-      // console.log(payload)
       if (getDistanceFromLatLonInKm(payload.from, puertoCoords) > 50 ||
         getDistanceFromLatLonInKm(payload.to, puertoCoords) > 200) {
 
@@ -60,14 +59,40 @@ export default {
         distance: payload.distance,
         duration: payload.duration,
         estimatedPrice: payload.estimatedPrice,
-        paymentType: "cash"
+        paymentType: "cash",
+        polyline: payload.polyline
       })).data;
-      if(response.status == "Error") {
+      if (response.status == "Error") {
         console.log(response.errorMessage)
       }
       context.commit('saveTemporaryAddresses', null)
 
       return response;
+    },
+    async increaseTaxiPrice(_, payload) {
+      let orderId = payload.orderId
+      let calcEstimated = (estimated) => {
+        if (estimated) {
+
+         estimated += 5
+         }
+        return estimated
+      }
+      await firebaseDatabase().ref(`/orders/taxi/${orderId}/estimatedPrice`).transaction(calcEstimated)
+      await firebaseDatabase().ref(`/openOrders/taxi/${orderId}/estimatedPrice`).transaction(calcEstimated)
+    },
+    async reduceTaxiPrice(_, payload) {
+      let orderId = payload.orderId
+      let calcEstimated = (estimated) => {
+        if (estimated&&estimated>35) {
+
+          estimated -= 5
+        }
+        return estimated
+      }
+      await firebaseDatabase().ref(`/orders/taxi/${orderId}/estimatedPrice`).transaction(calcEstimated)
+      await firebaseDatabase().ref(`/openOrders/taxi/${orderId}/estimatedPrice`).transaction(calcEstimated)
+
     },
     async cancelTaxi(context, payload) {
       let status = context.state.value.status
@@ -75,8 +100,10 @@ export default {
         console.log("Not possible to cancel")
         return
       }
-      let response = (await cloudCall('cancelTaxiFromCustomer', { reason: payload.reason})).data
-      if(response.status == "Error") {
+      let response = (await cloudCall('cancelTaxiFromCustomer', {
+        reason: payload.reason
+      })).data
+      if (response.status == "Error") {
         console.log(response.errorMessage)
       }
       return response
@@ -106,12 +133,11 @@ export default {
       return state.temporaryAddresseses
     },
     estimatePrice() {
-      return async function (distance, locations) {
+      return async function (distance) {
         let pricePolicy = (await firebaseDatabase().ref(`pricePolicy`).once('value')).val();
         distance = parseFloat(distance);
         let perKmCost = (pricePolicy && pricePolicy.perKmCost) ? parseInt(pricePolicy.perKmCost) : 0;
-        if (inRichPeopleCoords(locations.from, locations.to))
-          perKmCost = pricePolicy.perKmCostRichPeople
+
         let minimumCost = (pricePolicy && pricePolicy.minimumCost) ? parseInt(pricePolicy.minimumCost) : 0
         let estimate = parseInt(distance * perKmCost)
         return estimate > minimumCost ? estimate : minimumCost;
