@@ -128,15 +128,21 @@ Future<bool> getLocationPermission() async {
   _serviceEnabled = await location.serviceEnabled();
   if (!_serviceEnabled) {
     _serviceEnabled = await location.requestService();
+
     if (!_serviceEnabled) {
       return false;
     }
   }
   print("[+] Location Service Enabled !");
   _permissionGranted = await location.hasPermission();
-  if (_permissionGranted == PermissionStatus.denied) {
-    _permissionGranted = await location.requestPermission();
-    if (_permissionGranted != PermissionStatus.granted) {
+
+  if (_permissionGranted == PermissionStatus.denied ||
+      _permissionGranted == PermissionStatus.deniedForever) {
+    _permissionGranted = await location
+        .requestPermission(); // problem is when the user gives deniedForever it wont pop dialog again
+
+    if (_permissionGranted != PermissionStatus.granted ||
+        _permissionGranted != PermissionStatus.grantedLimited) {
       return false;
     }
   }

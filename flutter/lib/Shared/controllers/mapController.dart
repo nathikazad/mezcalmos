@@ -102,7 +102,7 @@ class CurrentOrderMapController extends GetxController {
                   ? (await cropRonded((await http.get(Uri.parse(
                           _currentOrderController.value?.customer?['image'])))
                       .bodyBytes) as Uint8List)
-                  : user_icon_marker_asset,
+                  : logo_asset,
               100,
               100,
               isBytes: !_dirty),
@@ -188,7 +188,7 @@ class CurrentOrderMapController extends GetxController {
                   ? (await cropRonded((await http.get(Uri.parse(
                           _currentOrderController.value?.customer['image'])))
                       .bodyBytes) as Uint8List)
-                  : user_icon_marker_asset,
+                  : logo_asset,
               100,
               100,
               isBytes: !_dirty),
@@ -326,7 +326,7 @@ class IncomingOrderMapController extends GetxController {
                         _incomingOrdersController
                             .selectedIncommingOrder!.customer['image'])))
                     .bodyBytes) as Uint8List)
-                : user_icon_marker_asset,
+                : logo_asset,
             100,
             100,
             isBytes: !_dirty),

@@ -75,6 +75,7 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
         Expanded(
           child: Container(
             margin: EdgeInsets.only(
+                top: getSizeRelativeToScreen(60, sw, sh),
                 left: getSizeRelativeToScreen(40, sw, sh),
                 right: getSizeRelativeToScreen(40, sw, sh)),
 

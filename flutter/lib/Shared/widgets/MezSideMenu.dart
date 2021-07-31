@@ -40,7 +40,8 @@ class MezSideMenu extends GetWidget<AuthController> {
                   // radius: 30.0,
                   child: ClipOval(
                     clipBehavior: Clip.antiAlias,
-                    child: controller.user?.image == null
+                    child: controller.user?.image == null ||
+                            controller.user?.image == ""
                         ? Image.asset(
                             aDefaultAvatar,
                             width: getSizeRelativeToScreen(300, sw, sh),

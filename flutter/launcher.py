@@ -102,6 +102,7 @@ class Launcher(object):
         
         --version                   : Get version.
         --release                   : Build release for Android / IOS (for now only appbundle supported)
+        --release-stage             : Build a release version out of staging.
         --pub=[default=false]       : if set to true , it will perfome Flutter pub get.
         --app=[default=taxi]        : Default StartingPoint , since we have more than app to start with.
         --web=[default=false]       : if Set to true , it will be built for Web.
@@ -188,7 +189,7 @@ class Launcher(object):
             self.__get_release_files__(__ios__ , __android__)
             exit(-1)
 
-        
+
         if(self.args.__len__() == 1):
             return 
         else:

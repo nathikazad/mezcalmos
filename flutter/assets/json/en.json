@@ -117,7 +117,8 @@
         "permissions": {
             "locationIsOff" : "Location Service Turned Off",
             "askForNotif": "The app uses your location to match you with the best rides and share your location with customers, even when the app is in background.",
-            "permissionBtn": "GIVE PERMISSION"
+            "permissionBtn": "GIVE PERMISSION",
+            "locationPermissionDenied" : "Ops, Sadly without location permissions you can not use our application!"
         }
     },
     "shared": {
