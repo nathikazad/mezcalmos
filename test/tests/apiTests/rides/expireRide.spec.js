@@ -2,8 +2,10 @@ const axios = require('axios');
 const auth = require("../../../libraries/rest/auth")
 const helper = require("../../../libraries/helpers")
 const admin = require("firebase-admin");
-//const expireOrder = require('../../../../functions/helpers/taxi/expire');
-const {expireOrder} = require('../../../../functions/helpers/taxi')
+const expireOrder = require('../../../../functions/helpers/taxi/expire')
+//const {expireOrder} = require('../../../../functions/helpers/taxi')
+
+jest.setTimeout(30000)
 
 admin.initializeApp({
     projectId: "mezcalmos-31f1c",

@@ -156,7 +156,8 @@ exports.finishTaxiRide = functions.https.onCall(async (data, context) => {
   //     return { status: "Error", errorMessage: "Driver has not accepted any ride" }
   //   }
   // }
-  let response = await taxi.finish(firebase, context.auth.uid)
+  const finish = require('./helpers/taxi/finish')
+  let response = await finish(firebase, context.auth.uid)
   return response
 });
 

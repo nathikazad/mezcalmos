@@ -32,7 +32,7 @@ async function signUp(admin, data) {
       user:{
         uid: user.id,
         displayName: data.displayName,
-        photo: data.photo,
+        photo: data.photoURL,
       }
     })
     if(req.status == 'Success'){

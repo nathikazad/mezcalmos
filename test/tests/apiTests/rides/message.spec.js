@@ -3,7 +3,7 @@ const auth = require("../../../libraries/rest/auth")
 const helper = require("../../../libraries/helpers")
 const admin = require("firebase-admin");
 
-// jest.setTimeout(30000)
+jest.setTimeout(20000)
 
 admin.initializeApp({
   projectId: "mezcalmos-31f1c",
@@ -65,6 +65,7 @@ describe('Mezcalmos', () => {
     // accept taxi
     response = await driver.callFunction("acceptTaxiOrder", {orderId: orderId})
     expect(response.result.status).toBe('Success')
+
     let newMessage = {
       orderId: orderId,
       message: "Hey",
@@ -78,7 +79,9 @@ describe('Mezcalmos', () => {
       res()
     }, 200))
     let driverNotifications = await driver.db.get(`notifications/taxi/${driver.id}`)
-    expect(driverNotifications).not.toBeNull()
+    
+    expect(driverNotifications.response).not.toBeNull()
+    
 
     let driverNotification = driverNotifications[Object.keys(driverNotifications)[0]]
     expect(driverNotification.chatType).toBe("order")

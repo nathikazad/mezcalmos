@@ -3,7 +3,7 @@ const auth = require("../../../libraries/rest/auth")
 const helper = require("../../../libraries/helpers")
 const admin = require("firebase-admin");
 
-// jest.setTimeout(30000)
+jest.setTimeout(20000)
 
 admin.initializeApp({
   projectId: "mezcalmos-31f1c",
