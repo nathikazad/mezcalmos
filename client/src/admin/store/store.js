@@ -8,6 +8,7 @@ import ordersModule from './modules/orders';
 import customersModule from './modules/customers';
 import taxisModule from './modules/taxis';
 import messagesModule from './modules/messages';
+import areasModule from './modules/areas';
 
 
 Vue.use(Vuex)
@@ -19,7 +20,8 @@ const store = new Vuex.Store({
     orders: ordersModule,
     messages: messagesModule,
     customers: customersModule,
-    taxis: taxisModule
+    taxis: taxisModule,
+    areas: areasModule
   },
   getters: {
     appName() {

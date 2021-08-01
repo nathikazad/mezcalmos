@@ -1,20 +1,56 @@
 <template>
   <v-container class="map_container" fluid>
-    <div class="my-2">
-      <v-spacer></v-spacer>
-      <v-btn elevation="2">Save</v-btn>
-    </div>
-    <div class="ranger">
+    <v-snackbar top :width="900" v-model="snackbar">
+      {{ text }}
+      <template v-slot:action="{ attrs }">
+        <v-btn :color="color" text v-bind="attrs" @click="snackbar = false">Close</v-btn>
+      </template>
+    </v-snackbar>
+    <div class="ranger" v-if="clicked">
       <v-slider
         label="distance"
         thumb-label="always"
-        v-model="circles[clicked].distance"
+        v-model="currentArea.distance"
         max="1000"
         min="10"
         step="10"
         ticks
+        @change="alertUser(1)"
       ></v-slider>
-      <v-text-field name="name" label="Name" id="id" outlined v-model="circles[clicked].name"></v-text-field>
+      <v-text-field
+        name="name"
+        label="Name"
+        id="id"
+        outlined
+        v-model="currentArea.name"
+        @input="alertUser(1)"
+      ></v-text-field>
+      <div class="d-flex">
+        <v-text-field
+          name="lat"
+          label="Lat"
+          id="id"
+          outlined
+          v-model="currentArea.position.lat"
+          disabled
+        ></v-text-field>
+        <v-text-field
+          name="Lng"
+          label="Lng"
+          id="id"
+          outlined
+          v-model="currentArea.position.lng"
+          disabled
+        ></v-text-field>
+      </div>
+      <v-btn
+        :loading="loading"
+        block
+        color="success"
+        elevation="2"
+        class="fill_width"
+        @click="updateArea"
+      >Save</v-btn>
     </div>
     <div class="py-8 map_part">
       <GmapMap
@@ -23,11 +59,11 @@
         :zoom="14"
         v-bind:options="mapOptions"
         ref="gmap"
-        @click="addMarker($event)"
+        @rightclick="addMarker($event)"
       >
         <GmapCircle
-          v-for="(pin, index) in circles"
-          :key="pin.id"
+          v-for="(pin, index) in copiedList"
+          :key="index"
           :center="pin.position"
           :radius="pin.distance"
           :visible="true"
@@ -35,15 +71,35 @@
           @click="clicked=index"
         ></GmapCircle>
         <GmapMarker
-          v-for="(pin, index) in circles"
-          :key="index"
+          v-for="(pin, index) in copiedList"
+          :key="index+'M'"
           :ref="`marker-center`"
           :position="pin.position"
           :clickable="true"
           :draggable="true"
-          @drag="updateMarker($event,index)"
-          @click="removeCircle(index)"
+          @dragstart="clicked=index"
+          @drag="changeMarkerPosition($event,index)"
+          @click="clicked=index"
         />
+        <gmap-info-window
+          v-for="(pin, index) in copiedList"
+          :key="index+'I'"
+          :opened="clicked==index"
+          :position="pin.position"
+          :options="{
+          pixelOffset: {
+            width: 0,
+            height: -35
+          }
+        }"
+        >
+          <div class="d-flex align-center justify-center w-100">
+            <span class="px-2">{{pin.name}}</span>
+            <v-btn icon outlined color="red" size="12" @click="removeArea(index)">
+              <v-icon>mdi-delete</v-icon>
+            </v-btn>
+          </div>
+        </gmap-info-window>
       </GmapMap>
     </div>
   </v-container>
@@ -51,9 +107,13 @@
 
 <script>
 export default {
+  beforeCreate() {
+    this.$store.dispatch("areas/fetchAreas");
+  },
   data() {
     return {
-      clicked: 0,
+      loading: false,
+      clicked: null,
       range: 500,
       mapOptions: {
         disableDefaultUI: true,
@@ -230,43 +290,87 @@ export default {
       },
       zoom: 10,
       center: { lat: 15.867251158382286, lng: -97.07948455797843 },
-      circles: [
-        {
-          Id: 1,
-          distance: 300,
-          name: "area1",
-          position: { lat: 15.867251158382286, lng: -97.07948455797843 }
-        },
-        {
-          Id: 2,
-          name: "area2",
-          distance: 500,
-          position: { lat: 15.872617509283694, lng: -97.08472022981 }
-        }
-      ]
+      snackbar: false,
+      text: `Hello, I'm a snackbar`,
+      color: "pink"
     };
   },
+  computed: {
+    copiedList() {
+      let list = this.$store.getters["areas/areasList"];
+      console.log(list);
+
+      if (list) {
+        return list;
+      } else {
+        return {};
+      }
+    },
+
+    currentArea() {
+      let copiedArea;
+      if (this.clicked) {
+        copiedArea = this.copiedList[this.clicked];
+      }
+      console.log(copiedArea);
+
+      return copiedArea;
+    }
+  },
   methods: {
-    updateMarker(location, id) {
-      this.circles[id].position = {
+    changeMarkerPosition(location, id) {
+      this.copiedList[id].position = {
         lat: location.latLng.lat(),
         lng: location.latLng.lng()
       };
+      this.alertUser(1);
     },
-    addMarker(location) {
-      let circle = {
-        Id: this.circles.length,
+    async updateArea() {
+      if (this.clicked) {
+        this.loading = true;
+        await this.$store.dispatch("areas/updateArea", {
+          id: this.clicked,
+          ...this.currentArea
+        });
+        this.loading = false;
+        this.clicked = null;
+        this.alertUser(2);
+      }
+    },
+    async addMarker(location) {
+      let area = {
         distance: 100,
         name: "",
         position: { lat: location.latLng.lat(), lng: location.latLng.lng() }
       };
-      this.circles.push(circle);
-      this.clicked = this.circles.length - 1;
+      let resp = await this.$store.dispatch("areas/addArea", { ...area });
+      this.clicked = resp.key;
     },
-    removeCircle(index) {
-      if (index > 0) {
-        this.clicked -= 1;
-        this.circles.splice(index, 1);
+    async removeArea(id) {
+      this.$store.dispatch("areas/removeArea", { id: id, ...this.currentArea });
+      this.clicked = null;
+      this.alertUser(3);
+    },
+    alertUser(code) {
+      switch (code) {
+        case 1:
+          this.snackbar = true;
+          this.text = "Please make sure to save your changes";
+          this.color = "pink";
+          break;
+        case 2:
+          this.snackbar = true;
+          this.text = "Area updated successfully";
+          this.color = "green";
+          break;
+        case 3:
+          this.snackbar = true;
+          this.text = "Area removed successfully";
+          this.color = "green";
+          break;
+
+        default:
+          break;
       }
     }
   }
@@ -282,7 +386,7 @@ export default {
 .ranger {
   height: auto;
 }
-.map_part{
+.map_part {
   height: 600px;
 }
 </style>
