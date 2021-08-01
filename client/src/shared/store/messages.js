@@ -19,7 +19,7 @@ export default {
         orderId: orderId,
         message: payload.message,
         userId: context.rootGetters.userId,
-        timestamp: (new Date()).toUTCString()
+        timestamp: (new Date()).toISOString()
       }
       // user can claim to be any user
       firebaseDatabase().ref(`/chat/${orderId}/messages`).push(newMessage);
