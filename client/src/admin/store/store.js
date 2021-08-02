@@ -8,7 +8,7 @@ import ordersModule from './modules/orders';
 import customersModule from './modules/customers';
 import taxisModule from './modules/taxis';
 import messagesModule from './modules/messages';
-import areasModule from './modules/areas';
+import areasModule from '@/shared/store/areas';
 
 
 Vue.use(Vuex)

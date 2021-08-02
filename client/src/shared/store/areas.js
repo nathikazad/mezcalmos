@@ -33,6 +33,13 @@ export default {
                 }
             })
         },
+        async fetchAreasOnce(context) {
+
+
+            let areas = (await firebaseDatabase().ref(`areas/puerto`).once('value')).val()
+            context.commit('loadAreas', areas);
+        },
+
         async addArea(_, area) {
             if (area) {
                 return await firebaseDatabase().ref(`areas/puerto`).push(area)

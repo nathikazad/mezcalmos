@@ -14,7 +14,7 @@ import groceriesModule from './modules/groceries'
 import ordersModule from './modules/orders';
 import savedLocationsModule from './modules/savedLocations';
 import notificationsModule from './modules/notifications'
-
+import areasModule from '@/shared/store/areas';
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
@@ -28,7 +28,8 @@ const store = new Vuex.Store({
     savedLocations: savedLocationsModule,
     notifications: notificationsModule,
     admin: adminModule,
-    logger: loggerModule
+    logger: loggerModule,
+    areas: areasModule
   },
   getters: {
     appName() {

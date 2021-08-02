@@ -46,3 +46,23 @@ export function inRichPeopleCoords(from, to) {
   }
   return false
 }
+export function nearestArea(areas,pos){
+  let nearestArea=null;
+  let firstDistance=null;
+  if (areas) {
+     firstDistance=getDistanceFromLatLonInKm(pos,Object.values(areas)[0].position);
+     nearestArea={key:Object.keys(areas)[0],distance:firstDistance};
+   
+    for (const key in areas) {
+     
+        const area = areas[key];
+        if (nearestArea.distance>getDistanceFromLatLonInKm(pos,area.position)) {
+          nearestArea={key:key,distance:getDistanceFromLatLonInKm(pos,area.position),name:area.name}
+        }
+       
+        
+      
+    }
+  }
+  return nearestArea;
+}

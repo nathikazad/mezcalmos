@@ -133,6 +133,7 @@
 </template>
 
 <script>
+import { nearestArea } from "@/shared/mixins/mapFunctions";
 export default {
   props: {
     search: {
@@ -212,6 +213,15 @@ export default {
         return this.auxCenter;
       } else {
         return this.directionsBorns.start || this.customerLocation;
+      }
+    },
+    areasList() {
+      let list = this.$store.getters["areas/areasList"];
+
+      if (list) {
+        return list;
+      } else {
+        return {};
       }
     }
   },
@@ -454,6 +464,7 @@ export default {
           lat: this.pickedLocFromMap.lat,
           lng: this.pickedLocFromMap.lng
         };
+        console.log(nearestArea(this.areasList, pos));
         this.changeDirection(this.saved.origin, {
           lat: () => {
             return pos.lat;

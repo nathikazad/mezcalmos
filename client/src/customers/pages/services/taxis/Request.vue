@@ -69,6 +69,9 @@
 //import PickLocation from "../../../components/map/GetLocation";
 import popUp from "@/shared/components/ui/popUp";
 export default {
+  beforeCreate() {
+    this.$store.dispatch("areas/fetchAreasOnce");
+  },
   components: { popUp },
   data() {
     return {
@@ -127,7 +130,8 @@ export default {
     },
     temporaryAddresses() {
       return this.$store.getters["taxis/temporaryAddresses"];
-    }
+    },
+    
   },
   watch: {
     temporaryAddresses: {
@@ -154,7 +158,7 @@ export default {
       }
     },
     increasePrice() {
-      console.log("clicked ",this.estimatedPrice);
+      console.log("clicked ", this.estimatedPrice);
 
       this.estimatedPrice += 5;
     },
