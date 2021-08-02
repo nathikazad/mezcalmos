@@ -18,6 +18,10 @@ function keys() {
       },
       "stripe": {
         "secretkey": "sk_dummy"
+      },
+      "hasura": {
+        "url": 'https://summary-mole-22.hasura.app/v1/graphql',
+        "key": 'JzI9zQvNqmLKK1A1HjY1oEZ2FYkd7C7qk8brZYby4wTYIUbaWUVD0F9o07Gj2g4i'
       }
     }
   var fs = require('fs');

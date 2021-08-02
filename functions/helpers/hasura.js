@@ -8,6 +8,10 @@ module.exports = {
   updateUser
 }
 
+const keys = require("./keys")
+const hasuraKeys = keys.keys().hasura
+
+
 async function setClaim(firebase, uid) {
   try {
     const customClaims = {
@@ -64,13 +68,13 @@ mutation updateOrder($orderId:String, $changes: orders_set_input!){
   }
   }`
 
-  async function insertOrder(query){
-    // gqlReq.request("https://mezcalmos.hasura.app/v1/graphql", query).then((data) => console.log(data))
+async function insertOrder(query) {
     try {
       const client = new GraphQLClient(
-        'https://summary-mole-22.hasura.app/v1/graphql',
+        hasuraKeys.url,
          {
-        headers: { 'x-hasura-admin-secret': 'JzI9zQvNqmLKK1A1HjY1oEZ2FYkd7C7qk8brZYby4wTYIUbaWUVD0F9o07Gj2g4i'
+           headers: {
+             'x-hasura-admin-secret': hasuraKeys.secret
         
         }})
       const result = await client.request(insertOrderMutation,query)
@@ -87,11 +91,10 @@ mutation updateOrder($orderId:String, $changes: orders_set_input!){
   async function updateOrder(query){
     try {
       const client = new GraphQLClient(
-        'https://summary-mole-22.hasura.app/v1/graphql',
-        //https://mezcalmos.hasura.app/v1/graphql",
+        hasuraKeys.url,
          {
-        headers: { 'x-hasura-admin-secret': 'JzI9zQvNqmLKK1A1HjY1oEZ2FYkd7C7qk8brZYby4wTYIUbaWUVD0F9o07Gj2g4i'
-        //"hasurhasura" }
+           headers: {
+             'x-hasura-admin-secret': hasuraKeys.secret
       }})
       const result = await client.request(updateOrderMutation, query)
       console.log(result.update_orders.returning)
@@ -106,10 +109,10 @@ mutation updateOrder($orderId:String, $changes: orders_set_input!){
   async function insertUser(query){
     try{
       const client = new GraphQLClient(
-        'https://summary-mole-22.hasura.app/v1/graphql',
+        hasuraKeys.url,
          {
            headers: {
-            'x-hasura-admin-secret': 'JzI9zQvNqmLKK1A1HjY1oEZ2FYkd7C7qk8brZYby4wTYIUbaWUVD0F9o07Gj2g4i'
+             'x-hasura-admin-secret': hasuraKeys.secret
            }
          }
       )
@@ -126,10 +129,10 @@ mutation updateOrder($orderId:String, $changes: orders_set_input!){
   async function updateUser(query){
     try{
       const client = new GraphQLClient(
-        'https://summary-mole-22.hasura.app/v1/graphql',
+        hasuraKeys.url,
          {
            headers: {
-            'x-hasura-admin-secret': 'JzI9zQvNqmLKK1A1HjY1oEZ2FYkd7C7qk8brZYby4wTYIUbaWUVD0F9o07Gj2g4i'
+             'x-hasura-admin-secret': hasuraKeys.secret
            }
          }
       )
