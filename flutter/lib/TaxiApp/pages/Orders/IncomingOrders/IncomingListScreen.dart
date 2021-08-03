@@ -9,7 +9,9 @@ import 'package:mezcalmos/Shared/widgets/MezSwitch.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
+// import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
+import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
 
 class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
@@ -17,6 +19,7 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
   @override
   Widget build(BuildContext context) {
     TaxiAuthController _taxiAuthController = Get.find<TaxiAuthController>();
+    Get.put<IncomingOrdersController>(IncomingOrdersController());
 
     final sw = MediaQuery.of(context).size.width;
     final sh = MediaQuery.of(context).size.height;
@@ -92,6 +95,9 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                     const EdgeInsets.symmetric(vertical: 2),
                                 child: GestureDetector(
                                   onTap: () async {
+                                    IncomingOrdersController __ =
+                                        Get.put<IncomingOrdersController>(
+                                            IncomingOrdersController());
                                     print(
                                         "Clicked on order::${controller.orders[i].id}");
                                     controller.selectedIncommingOrderKey =

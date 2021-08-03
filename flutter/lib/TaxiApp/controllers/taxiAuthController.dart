@@ -36,7 +36,7 @@ class TaxiAuthController extends GetxController {
   LocationData get currentLocation => _currentLocation.value;
   bool get locationEnabled => _locationEnabled.value;
   Rx<LocationData> get currentLocationRx => _currentLocation;
-
+  List<Function> _locationChangeCallbacks = [];
   StreamSubscription<Event>? _taxiAuthListener;
   StreamSubscription<LocationData>? _locationListener;
 
@@ -57,7 +57,7 @@ class TaxiAuthController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    // Injecting all our TaxiOrderControllers here
+    // Injecting all our c here
     Get.lazyPut(() => CurrentOrderController());
     Get.lazyPut(() => IncomingOrdersController());
     // ------------------------------------------------------------------------
@@ -155,7 +155,7 @@ class TaxiAuthController extends GetxController {
     print("[+] TaxiAuthController::dispose ---------> Was invoked !");
     await _locationListener?.cancel();
     await _taxiAuthListener?.cancel();
-    Get.find<CurrentOrderController>().dispose();
+    // Get.find<CurrentOrderController>().dispose();
     // Get.find<IncomingOrdersController>().dispose();
     super.onClose();
   }

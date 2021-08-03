@@ -11,11 +11,15 @@ class PhoneNumberScreen extends GetView<AuthController> {
 
   TextEditingController _prefixTextFieldController = TextEditingController();
   TextEditingController _numberTextFieldController = TextEditingController();
+  final phoneNumberFocusNode = FocusNode();
 
   RxBool canSendOtp = false.obs;
   RxBool clickedSendOtp = false.obs;
 
   Widget build(BuildContext context) {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      _prefixTextFieldController..text = "+52";
+    });
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
@@ -77,7 +81,6 @@ class PhoneNumberScreen extends GetView<AuthController> {
                                 } else
                                   canSendOtp.value = false;
                               },
-                              autofocus: true,
                               maxLength: 4,
                               keyboardType: TextInputType.phone,
                               decoration: InputDecoration(
@@ -97,6 +100,7 @@ class PhoneNumberScreen extends GetView<AuthController> {
                           Expanded(
                             flex: 3,
                             child: TextFormField(
+                              autofocus: true,
                               onChanged: (s) {
                                 if (_prefixTextFieldController.text.length >
                                         0 &&

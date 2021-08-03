@@ -84,6 +84,8 @@
         },
         "cancelOrder": {
             "question": "Why do you want to cancel the ride?",
+            "confirmation_header" : "Please confirm",
+            "confirmation_text" : "Are you sure you want to cancel the current ride ?",
             "cancelRide": "Cancel ride",
             "backToIncoming": "Back to incoming",
             "noShow": "No show",

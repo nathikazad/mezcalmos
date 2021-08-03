@@ -259,6 +259,7 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                           offset: Offset(0, 7)),
                     ]),
                 child: Stack(
+                  clipBehavior: Clip.hardEdge,
                   alignment: Alignment.center,
                   children: [
                     VerticalDivider(

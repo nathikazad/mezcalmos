@@ -84,6 +84,8 @@
         "cancelOrder": {
             "question": "Por qué quieres cancelar el viaje?",
             "cancelRide": "Cancelar viaje",
+            "confirmation_header" : "Por favor confirmar",
+            "confirmation_text" : "¿Estás seguro de que deseas cancelar el viaje actual?",
             "backToIncoming": "Volver a entrante",
             "noShow": "No vino",
             "otherRide": "Otro viaje",

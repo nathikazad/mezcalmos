@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
@@ -53,6 +54,36 @@ class CurrentOrderMapController extends GetxController {
     super.onInit();
   }
 
+  String? updateTaxiMarker(LocationData location) {
+    if (_markers.length > 0 &&
+        _mapReady.value &&
+        location.latitude != null &&
+        location.longitude != null) {
+      String _markerId = "taxi";
+
+      if (_currentOrderController.value!.status == "inTransit") {
+        _markerId = "from";
+      }
+      // print("------------------> Removing -- Marker with ID  $_markerId !");
+      _markers.removeWhere((element) => element.markerId.value == _markerId);
+      // print(
+      //     "------------------> Updating/Replacing -- Marker with ID  $_markerId --- updating ...");
+
+      _markers.add(Marker(
+        draggable: false,
+        // flat: true,
+        // anchor: ui.Offset(0.5, 1),
+        markerId: MarkerId(_markerId),
+        icon: _getStorage.read('taxi_descriptor'),
+        visible: true,
+        position: LatLng(location.latitude!, location.longitude!),
+      ));
+
+      return _markerId;
+    }
+    return null;
+  }
+
   void googleMapUpdate() async {
     _polylines.clear();
     bool _dirty = _currentOrderController.value?.customer?['image'] == null;
@@ -92,6 +123,7 @@ class CurrentOrderMapController extends GetxController {
           _taxiAuthController.currentLocation.longitude!);
       _markers.addAll([
         // _customerLocationMarker
+
         Marker(
           draggable: false,
           // flat: true,
@@ -123,6 +155,7 @@ class CurrentOrderMapController extends GetxController {
           position: LatLng(_currentOrderController.value!.to.latitude,
               _currentOrderController.value!.to.longitude),
         ),
+
         Marker(
           draggable: false,
           // flat: true,

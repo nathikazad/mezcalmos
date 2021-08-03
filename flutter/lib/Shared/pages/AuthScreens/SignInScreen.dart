@@ -26,9 +26,14 @@ class SignIn extends GetWidget<AuthController> {
       body: SafeArea(
           child: Center(
         child: Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+          height: sh,
+          width: sw,
+          child: Flex(
+            // crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
+            direction: Axis.vertical,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            // spacing: 20,
             textDirection: TextDirection.ltr,
             children: [
               Container(

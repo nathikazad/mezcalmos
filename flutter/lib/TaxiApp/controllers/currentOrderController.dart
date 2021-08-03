@@ -68,7 +68,7 @@ class CurrentOrderController extends GetxController {
           await MezcalmosSharedWidgets.mezcalmosDialogOrderCancelled(
               55, Get.height, Get.width);
           // Get.back(closeOverlays: true);
-          Get.offAndToNamed(kMainAuthWrapperRoute);
+          Get.offAndToNamed(kTaxiWrapperRoute);
         } else {
           _model.value = Order.fromSnapshot(event.snapshot);
           _model.value.id = _taxiAuthController.currentOrderId;
@@ -181,13 +181,9 @@ class CurrentOrderController extends GetxController {
   @override
   void onClose() async {
     // TO Remove our callback
-    _notifications.taxiAuthListenerCallbacks.forEach((map) {
-      if (map['orderId'] == _model.value.id) {
-        print(
-            "===================> Removing Registered Callback : $map =====> Cuz CurrentOredrController got closed !");
-        _notifications.taxiAuthListenerCallbacks.remove(map);
-      }
-    });
+    _notifications.taxiAuthListenerCallbacks
+        .removeWhere((element) => element?['orderId'] == _model.value.id);
+
     detachListeners();
     super.onClose();
   }
@@ -195,13 +191,9 @@ class CurrentOrderController extends GetxController {
   @override
   void dispose() {
     // TO Remove our callback
-    _notifications.taxiAuthListenerCallbacks.forEach((map) {
-      if (map['orderId'] == _model.value.id) {
-        print(
-            "===================> Removing Registered Callback : $map =====> Cuz CurrentOredrController got closed !");
-        _notifications.taxiAuthListenerCallbacks.remove(map);
-      }
-    });
+    _notifications.taxiAuthListenerCallbacks
+        .removeWhere((element) => element?['orderId'] == _model.value.id);
+
     detachListeners();
     super.dispose();
     print("--------------------> CurrentOrderController Auto Disposed !");

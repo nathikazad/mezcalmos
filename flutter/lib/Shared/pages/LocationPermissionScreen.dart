@@ -67,7 +67,10 @@ class LocationPermissionScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    bool grantedPermission = await getLocationPermission();
+                    bool grantedPermission = false;
+                    do {
+                      grantedPermission = await getLocationPermission();
+                    } while (grantedPermission == false);
                     print("Permissions Granted ==========> $grantedPermission");
                     if (grantedPermission) {
                       _settingsController.hasLocationPermissions.value = true;

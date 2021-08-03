@@ -102,11 +102,9 @@ class FBNotificationsController extends GetxController {
         notifications.clear();
         if (event.snapshot.value != null) {
           print(
-              "=========> FBNotificationController :: onInit :: Listener :: Invoked!");
+              "=========> FBNotificationController :: onInit :: Listener :: Invoked --> \n");
+          print("New notif : ${event.snapshot.value}");
           event.snapshot.value.forEach((dynamic key, dynamic value) {
-            print(
-                "\n\n\n\n\n New Notification Inserted : ${key} , \n${value}\n\n\n\n\n");
-
             MezNotification.Notification _notif =
                 MezNotification.Notification.fromJson(key, value);
             taxiAuthListenerCallbacks.forEach((callback) {
@@ -125,8 +123,19 @@ class FBNotificationsController extends GetxController {
 
   // using this we can register our callbacks from diffrent places , and invoke them onValue !
   void registerCallbackOnListenerInvoke(callback) {
+    // if (!taxiAuthListenerCallbacks.contains(callback)) {
+    //   print(taxiAuthListenerCallbacks);
     taxiAuthListenerCallbacks.add(callback);
-    print("[+] ----------> ${callback}  ::  Was Registred successfully !!");
+    print("[+] ----------> $callback  ::  Was Registred successfully !!");
+    // }
+  }
+
+  dynamic checkCallbackIsRegistred(String orderId) {
+    dynamic res = taxiAuthListenerCallbacks.singleWhere(
+        (element) => element['orderId'] == orderId,
+        orElse: () => null);
+    print("Resuly -----------> $res");
+    return res;
   }
 
   Future<void> setAllMessagesAsReadInDb() async {
