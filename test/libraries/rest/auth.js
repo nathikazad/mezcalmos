@@ -20,26 +20,12 @@ const key = "?key=AIzaSyB9vaAB9ptXhpeRs_JjxODEyuA_eO0tYu0"
 //   let response = await axios.post(`${url}${functionName}`, {data:data}, config)
 //   return response.data
 // }
-
 async function signUp(admin, data) {
   // console.log(data)
   let response = await axios.post(`${url}accounts:signUp${key}`, data)    
   let user = new User(response.data)
   await user.setImage(data.photoURL)
-   //insert user into Hasura DB 
-   async function AddUser(){
-    let req = await hasura.insertUser({
-      user:{
-        uid: user.id,
-        displayName: data.displayName,
-        photo: data.photoURL,
-      }
-    })
-    if(req.status == 'Success'){
-      console.log('user inserted successfully in DB');
-    }
-  }
-  await AddUser()
+ 
   return user
 }
 // signIn: async (page, param) => {

@@ -6,6 +6,8 @@ module.exports = {
   checkAdmin
 }
 
+const hasura = require('./hasura')
+
 async function createChat(firebase, params) {
   if(!params.userId || !params.userType){
     return { status: "Error", errorMessage: "Required userId and userType" }
@@ -53,8 +55,9 @@ async function createChat(firebase, params) {
 
 async function checkAdmin(firebase, params) {
   let isAdmin = (await firebase.database().ref(`admins/${params.adminId}/authorized`).once('value')).val();
-  isAdmin = isAdmin != null && isAdmin == true 
-  if(!isAdmin) {
+   isAdmin = isAdmin != null && isAdmin == true 
+ // isAdmin != null ? isAdmin = true : isAdmin = false
+  if(isAdmin) {
     return { status: "Error", errorMessage: "Only admins can run this operation" }
   } 
 }
@@ -113,5 +116,27 @@ async function approveAuthorizationRequest(firebase, params) {
   }
 
   await firebase.database().ref(`/taxiDrivers/${params.userId}/state/authorizationStatus`).set('authorized')
+
   resolve(firebase, params)
+  // update user in Hasura
+  await hasura.updateUser({
+    uid: params.userId,
+    changes:{
+       driver: true,
+    } 
+  }) 
+  // if (taxiDriver.taxiNumber != null){
+  //   await hasura.updateUser({
+  //     uid: params.userId,
+  //     changes:{
+  //        taxiNumber: taxiDriver.taxiNumber
+  //     } 
+  //   }) 
+  // }
+  return {
+      status: 'Success',
+      message: 'authorization approved'
+  }
+    
+
 }

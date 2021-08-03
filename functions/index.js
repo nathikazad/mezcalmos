@@ -28,6 +28,7 @@ const { user } = require("firebase-functions/lib/providers/auth");
 
 // On sign up.
 exports.processSignUp = functions.auth.user().onCreate(async user => {
+
   hasura.setClaim(user.uid);
   let firebase = getFirebase();
   if (!user.photoURL)
@@ -38,18 +39,53 @@ exports.processSignUp = functions.auth.user().onCreate(async user => {
     photo: user.photoURL,
     email: user.email
   });
+
+  // async function AddUser(){
+     await hasura.insertUser({ 
+      user: {
+        uid: user.uid,
+        displayName: user.displayName,
+        photo: user.photoURL,
+      }
+    })
+    // if (req.status == 'Success') {
+    //   console.log(`user ${user.uid} is successfully inserted`);
+    // }
+  //}
+  //await AddUser()
+
 });
 
 exports.changeName = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
   '/users/{userId}/info/displayName').onUpdate(async (snap, context) => {
     let firebase = getFirebase();
     await firebase.auth().updateUser(context.params.userId, { displayName: snap.after.val() })
+    // 
+  
+      let req = await hasura.updateUser({
+         uid: context.params.userId,
+         changes:{
+           displayName: snap.after.val()
+         } 
+       }) 
+      //  if(req.status == 'Success'){
+      //    console.log('user name is updated successfully in DB');
+      //  }
+    
+    console.log('name changed');
   })
 
 exports.changePhoto = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
   '/users/{userId}/info/photo').onUpdate(async (snap, context) => {
     let firebase = getFirebase();
-    await firebase.auth().updateUser(context.params.userId, { photoURL: snap.after.val() })
+    await firebase.auth().updateUser(context.params.userId, { photo: snap.after.val() })
+   
+      let req = await hasura.updateUser({
+         uid: context.params.userId,
+         changes:{
+           photo: snap.after.val()
+         } 
+       }) 
   })
 
 exports.addHasuraClaims = functions.https.onCall(async (data, context) => {

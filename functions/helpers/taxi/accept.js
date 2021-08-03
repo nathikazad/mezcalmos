@@ -111,8 +111,8 @@ async function accept(firebase, uid, data) {
     })
     order = (await firebase.database().ref(`/orders/taxi/${data.orderId}`).once('value')).val()
     //update accepting order
-    async function updateAcceptingOrder(){
-       let req = await hasura.updateOrder({
+    
+      await hasura.updateOrder({
         orderId: data.orderId,
         changes:{
           finalStatus: order.status,
@@ -120,13 +120,7 @@ async function accept(firebase, uid, data) {
           driverId: order.driver.id
         } 
       }) 
-      if(req.status == 'Success'){
-        console.log('accepted order updated successfully in DB');
-      }
-      
-    }
-    await updateAcceptingOrder()
-  
+     
     firebase.database().ref(`orders/taxi/${data.orderId}/lock`).remove()
     return {
       status: "Success",

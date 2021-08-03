@@ -6,24 +6,16 @@ module.exports = ( firebase, uid, data ) => { return request(firebase, uid, data
 async function request(firebase, uid, data) {
     // 
     let taxiDrivers = (await firebase.database().ref('/taxiDrivers').once('value')).val()
-    for(let id in taxiDrivers ){
-     async function updateDriver(){
-         let req = await hasura.updateUser({
+     for(let id in taxiDrivers ){
+   
+        await hasura.updateUser({
             uid: id,
             changes:{
-              driver: true,
               taxiNumber: taxiDrivers[id].taxiNumber
             } 
-          }) 
-          if(req.status == 'Success'){
-            console.log('driver is updated successfully in DB');
-          }
-          
-     }
-        await updateDriver()
-   
+        })
     }
-   
+    
      // TODO: prevent user from sending another request before this finishes
      // let customerCurrentOrder = (await firebase.database().ref(`/users/${uid}/state/currentOrder`).once('value')).val();
    
@@ -115,7 +107,7 @@ async function request(firebase, uid, data) {
        firebase.database().ref(`users/${uid}/lock`).remove()
    
        // insert order
-       async function addOrder(){
+       
          let req = await hasura.insertOrder({
            order:{
              orderId: orderRef.key,
@@ -124,14 +116,9 @@ async function request(firebase, uid, data) {
              finalStatus: payload.status
            }
          })
-         if(req.status == 'Success'){
-           console.log('order inserted successfully in DB');
-         }
-       }
-       await addOrder()
-   
+       
        return{
          status: "Success",
          orderId: orderRef.key
-     }
-   }
+        }
+}

@@ -55,21 +55,15 @@ async function expireOrder(firebase, orderId, customerId) {
     })
     order = (await firebase.database().ref(`/orders/taxi/${orderId}`).once('value')).val()
     //update order
-    async function updateExpiringOrder(){
-       let req = await hasura.updateOrder({
+   
+      await hasura.updateOrder({
         orderId: orderId,
         changes:{
           finalStatus: order.status,
           rideFinishTime: order.rideFinishTime,
         } 
       }) 
-      if(req.status == 'Success'){
-        console.log('expired order updated successfully in DB');
-      }
       
-    }
-    await updateExpiringOrder()
-  
     firebase.database().ref(`/orders/taxi/${orderId}`).once('value', function(snap) {
       let order = snap.val()
       firebase.database().ref(`/unfulfilledOrders/${orderId}`).set({...order, reason:"expired"});

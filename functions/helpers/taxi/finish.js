@@ -67,8 +67,8 @@ async function finish(firebase, uid) {
     let date2 = new Date(order.rideStartTime)
     let time = (date1.getTime() - date2.getTime())
    
-    async function updateFinishingOrder(){
-      let req = await hasura.updateOrder({
+   
+      await hasura.updateOrder({
        orderId: orderId,
        changes:{
          finalStatus: order.status,
@@ -76,14 +76,7 @@ async function finish(firebase, uid) {
          estimatedRideTime: time 
        } 
      }) 
-     if(req.status == 'Success'){
-       console.log('finished order is successfully updated in DB');
-     }
-     
-   }
-   await updateFinishingOrder()
-  
-  
+   
    promoters.checkCustomerIncentives(firebase, order.customer, order.driver)
    promoters.checkDriverIncentives(firebase, order.customer, order.driver)
   

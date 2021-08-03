@@ -75,20 +75,15 @@ async function start(firebase, uid) {
     notification.push(firebase, order.customer.id, update)
     // update started order
     order = (await firebase.database().ref(`orders/taxi/${orderId}`).once('value')).val()
-    async function updateStartingOrder(){
-      let req = await hasura.updateOrder({
+   
+      await hasura.updateOrder({
        orderId: orderId,
        changes:{
          finalStatus: order.status,
          rideStartTime: order.rideStartTime,
        } 
      }) 
-     if(req.status == 'Success'){
-       console.log('started order is successfully updated in DB');
-     }
-     
-   }
-   await updateStartingOrder()
+   
     firebase.database().ref(`/orders/taxi/${orderId}/lock`).remove()
     return {
       status: "Success",

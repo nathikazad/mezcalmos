@@ -11,7 +11,6 @@ module.exports = {
 const keys = require("./keys")
 const hasuraKeys = keys.keys().hasura
 
-
 async function setClaim(firebase, uid) {
   try {
     const customClaims = {
@@ -69,12 +68,13 @@ mutation updateOrder($orderId:String, $changes: orders_set_input!){
   }`
 
 async function insertOrder(query) {
+
     try {
       const client = new GraphQLClient(
         hasuraKeys.url,
          {
            headers: {
-             'x-hasura-admin-secret': hasuraKeys.secret
+             'x-hasura-admin-secret': hasuraKeys.key
         
         }})
       const result = await client.request(insertOrderMutation,query)
@@ -84,17 +84,18 @@ async function insertOrder(query) {
       }
      
     } catch (e) {
-      console.log(e.response.errors)
+      console.log(e)
     }
-  }
+}
 
   async function updateOrder(query){
+    
     try {
       const client = new GraphQLClient(
         hasuraKeys.url,
          {
            headers: {
-             'x-hasura-admin-secret': hasuraKeys.secret
+             'x-hasura-admin-secret': hasuraKeys.key
       }})
       const result = await client.request(updateOrderMutation, query)
       console.log(result.update_orders.returning)
@@ -102,17 +103,18 @@ async function insertOrder(query) {
         status: 'Success'
       }
     } catch (e) {
-      console.log(e.response.errors)
+      console.log(e)
     }
   }
 
   async function insertUser(query){
+    
     try{
       const client = new GraphQLClient(
         hasuraKeys.url,
          {
            headers: {
-             'x-hasura-admin-secret': hasuraKeys.secret
+             'x-hasura-admin-secret': hasuraKeys.key
            }
          }
       )
@@ -123,27 +125,29 @@ async function insertOrder(query) {
       }
      
     }catch(e){
-      console.log(e.response.errors);
+      console.log(e);
     }
   }
+
   async function updateUser(query){
+   
     try{
       const client = new GraphQLClient(
         hasuraKeys.url,
          {
            headers: {
-             'x-hasura-admin-secret': hasuraKeys.secret
+             'x-hasura-admin-secret': hasuraKeys.key
            }
          }
       )
       const result = await client.request(updateUserMutation, query)
       console.log(result);
-      return{
-        status: 'Success'
-      }
+      // return{
+      //   status: 'Success'
+      // }
      
     }catch(e){
-      console.log(e.response.errors);
+      console.log(e);
     }
   }
 

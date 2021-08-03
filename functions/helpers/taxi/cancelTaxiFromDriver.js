@@ -67,8 +67,8 @@ async function cancelTaxiFromDriver(firebase, uid, data) {
     notification.push(firebase, order.customer.id, update)
     // update cancelled order
     order = (await firebase.database().ref(`orders/taxi/${orderId}`).once('value')).val()
-    async function updateCancelledOrder(){
-      let req = await hasura.updateOrder({
+   
+      await hasura.updateOrder({
        orderId: orderId,
        changes:{
          finalStatus: order.status,
@@ -77,12 +77,6 @@ async function cancelTaxiFromDriver(firebase, uid, data) {
          cancellationReason: order.reason
        } 
      }) 
-     if(req.status == 'Success'){
-       console.log('cancelling order by driver is successfully updated in DB');
-     }
-     
-   }
-   await updateCancelledOrder()
   
     //removing driver from chat node
     await firebase.database().ref(`orders/taxi/${orderId}/lock`).remove()
