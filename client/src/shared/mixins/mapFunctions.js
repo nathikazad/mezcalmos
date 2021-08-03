@@ -56,8 +56,10 @@ export function nearestArea(areas,pos){
     for (const key in areas) {
      
         const area = areas[key];
-        if (nearestArea.distance>getDistanceFromLatLonInKm(pos,area.position)) {
-          nearestArea={key:key,distance:getDistanceFromLatLonInKm(pos,area.position),name:area.name}
+        
+        let distanceBetweenAreaAndPos=getDistanceFromLatLonInKm(pos,area.position)*1000;
+        if (nearestArea.distance>(distanceBetweenAreaAndPos-area.distance)) {
+          nearestArea={key:key,distance:distanceBetweenAreaAndPos-area.distance,name:area.name}
         }
        
         

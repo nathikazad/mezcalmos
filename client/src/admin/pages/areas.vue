@@ -60,6 +60,7 @@
         v-bind:options="mapOptions"
         ref="gmap"
         @rightclick="addMarker($event)"
+        class="map"
       >
         <GmapCircle
           v-for="(pin, index) in copiedList"
@@ -77,6 +78,15 @@
           :position="pin.position"
           :clickable="true"
           :draggable="true"
+          :label="{text:pin.name,color:'black',className:'labelMarker'}"
+          :icon="{
+            url: ' https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi.png',
+            fillColor: 'yellow',
+            fillOpacity: 1,
+            strokeColor: 'black',
+            strokeWeight: 1,
+            labelOrigin: {x: 40, y: 15}
+}"
           @dragstart="clicked=index"
           @drag="changeMarkerPosition($event,index)"
           @click="clicked=index"
@@ -388,5 +398,8 @@ export default {
 }
 .map_part {
   height: 600px;
+}
+::v-deep .map .labelMarker {
+  transform: translateY(-300);
 }
 </style>
