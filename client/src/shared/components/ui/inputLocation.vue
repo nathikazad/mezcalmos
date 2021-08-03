@@ -370,6 +370,11 @@ export default {
       this.directionsBorns = borns;
     },
     async pickedLocation(place) {
+      //save query to db
+      this.$store.dispatch(
+        "search/addQuery",
+        this[this.search.origin].address.toLowerCase()
+      );
       let map = this.$refs["map"].$refs["marker-center"].$map;
       this.search[this.search.origin] = place.description;
       this[this.search.origin].address = place.description;

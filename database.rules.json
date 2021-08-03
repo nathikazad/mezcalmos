@@ -149,7 +149,11 @@
     },
     "areas": {
       ".write": "root.child('admins/' + auth.uid + '/authorized').val() === true",
-      ".read":"true"
+      ".read": "true"
+    },
+    "searchQuery": {
+      ".write": "true",
+      ".read": "true"
     }
   }
 }
