@@ -120,13 +120,29 @@ async function storeState(newState, context) {
       id: null,
       value: null
     })
+    let apolloClient = getApolloClient();
     if (newState.isLooking) {
       context.commit('setIsLooking', true)
+      // setHasuraAvailableOn
+
+      await apolloClient.mutate({
+        mutation: gql`
+        mutation setDriverAvailability {
+          update_driverLocation(_set: {available: false}, where: {uid: {_eq: "assddf"}})
+        }
+      ` })
       context.dispatch('incomingOrders/startListeningForIncoming')
     } else {
       context.commit('setIsLooking', false)
+      await apolloClient.mutate({
+        mutation: gql`
+        mutation setDriverAvailability {
+          update_driverLocation(_set: {available: true}, where: {uid: {_eq: "assddf"}})
+        }
+      ` })
       context.dispatch('incomingOrders/stopListeningForIncoming')
     }
+
   }
 }
 
@@ -142,6 +158,16 @@ const updateDriverPosition = async (context) => {
     lastUpdateTime: lastUpdateTime.toUTCString()
   }
   firebaseDatabase().ref(`taxiDrivers/${userId}/location`).set(locationUpdate)
+  // setDriverPosition
+  // let apolloClient = getApolloClient();
+  const { data } = await apolloClient.mutate({
+    mutation: gql`
+    mutation MyMutation {
+      insert_places_one(object: {coordinates: {type: "Point", coordinates: [${payload.lat}, ${payload.lng}]}, name: "${payload.name}"}) {
+        id
+      }
+    }
+  ` })
   if (context.state.currentOrder.id) {
     firebaseDatabase().ref(`orders/taxi/${context.state.currentOrder.id}/driver/location`).update(locationUpdate)
   }

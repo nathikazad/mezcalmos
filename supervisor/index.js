@@ -12,7 +12,7 @@ const testFirebase = firebaseAdmin.initializeApp({
 let openOrdersTest = {}
 let openOrdersProduction = {}
 
-let checkOpenOrdersInterval = 60 //seconds
+let checkOpenOrdersInterval = 10 //seconds
 let orderExpirationLimit = 5 * 60 // seconds
 
 if (process.argv[2] && process.argv[2] == "test") {
@@ -39,15 +39,23 @@ function checkOpenOrders(firebase, openOrders) {
     if (openOrders[orderId].orderTime) {
       let orderTime = new Date(openOrders[orderId].orderTime)
       let orderExpirationTime = new Date(orderTime.getTime() + orderExpirationLimit * 1000);
-	console.log("ordertime ", orderTime.toUTCString())
-	console.log("currentime", (new Date()).toUTCString())
-	console.log("expirationtime", orderExpirationTime.toUTCString())
-	console.log()
       if (Date.now() > orderExpirationTime) {
         expireOrder(firebase, orderId, openOrders[orderId].customer.id);
       }
+
+      drivers = hasura.getDrivers(openOrders[orderId].from.lat, openOrders[orderId].from.lng)
+      // drivers = [driver1, driver2 .....] 8
+      // notifiedDrivers = 0
+      // while(notifiedDrivers < 5)
+      //     if(openOrders/${orderId}/notifiedDrivers/{$driverId}){
+      //        skip
+      //     }
+      //     sendNotification(drivers[i])
+      //     openOrders/${orderId}/drivers/{$driverId}/notificationSent  true TRANSACTION
+      //     notifiedDrivers++
     } else {
       expireOrder(firebase, orderId, openOrders[orderId].customer.id)
     }
   }
 }
+
