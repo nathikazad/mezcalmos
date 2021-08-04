@@ -19,14 +19,10 @@ export default {
         }
     },
     actions: {
-        async fetchAreas(context) {
-            console.log('areas');
-
-            await firebaseDatabase().ref(`areas/puerto`).on('value', snapshot => {
+        fetchAreas(context) {
+            firebaseDatabase().ref(`places/zonas`).on('value', snapshot => {
                 console.log(snapshot.val());
                 if (snapshot.val()) {
-
-
                     context.commit('loadAreas', snapshot.val())
                 } else {
                     context.commit('loadAreas', null)
@@ -34,25 +30,23 @@ export default {
             })
         },
         async fetchAreasOnce(context) {
-
-
-            let areas = (await firebaseDatabase().ref(`areas/puerto`).once('value')).val()
+            let areas = (await firebaseDatabase().ref(`places/zonas`).once('value')).val()
             context.commit('loadAreas', areas);
         },
 
         async addArea(_, area) {
             if (area) {
-                return await firebaseDatabase().ref(`areas/puerto`).push(area)
+                return await firebaseDatabase().ref(`places/zonas`).push(area)
             }
         },
         async removeArea(_, area) {
             if (area) {
-                await firebaseDatabase().ref(`areas/puerto/${area.id}`).remove()
+                await firebaseDatabase().ref(`places/zonas/${area.id}`).remove()
             }
         },
         async updateArea(_, area) {
             if (area) {
-                await firebaseDatabase().ref(`areas/puerto/${area.id}`).set(area)
+                await firebaseDatabase().ref(`places/zonas/${area.id}`).set(area)
             }
         },
     },
