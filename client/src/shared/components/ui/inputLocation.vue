@@ -469,7 +469,9 @@ export default {
           lat: this.pickedLocFromMap.lat,
           lng: this.pickedLocFromMap.lng
         };
-        console.log(nearestArea(this.areasList, pos));
+        let nearest = nearestArea(this.areasList, pos);
+        console.log(nearest);
+
         this.changeDirection(this.saved.origin, {
           lat: () => {
             return pos.lat;
@@ -480,7 +482,8 @@ export default {
         });
         this.auxCenter = pos;
         this[this.saved.origin].by = "current";
-        this[this.saved.origin].address = await this.geocodedAddress(pos);
+        this[this.saved.origin].address =
+          nearest.distance < 2000 ? nearest.name : "Puerto Escondido";
         this[this.saved.origin].lat = pos.lat;
         this[this.saved.origin].lng = pos.lng;
         this.$emit("changedDirection", {

@@ -6,52 +6,7 @@
         <v-btn :color="color" text v-bind="attrs" @click="snackbar = false">Close</v-btn>
       </template>
     </v-snackbar>
-    <div class="ranger" v-if="clicked">
-      <v-slider
-        label="distance"
-        thumb-label="always"
-        v-model="currentArea.distance"
-        max="1000"
-        min="10"
-        step="10"
-        ticks
-        @change="alertUser(1)"
-      ></v-slider>
-      <v-text-field
-        name="name"
-        label="Name"
-        id="id"
-        outlined
-        v-model="currentArea.name"
-        @input="alertUser(1)"
-      ></v-text-field>
-      <div class="d-flex">
-        <v-text-field
-          name="lat"
-          label="Lat"
-          id="id"
-          outlined
-          v-model="currentArea.position.lat"
-          disabled
-        ></v-text-field>
-        <v-text-field
-          name="Lng"
-          label="Lng"
-          id="id"
-          outlined
-          v-model="currentArea.position.lng"
-          disabled
-        ></v-text-field>
-      </div>
-      <v-btn
-        :loading="loading"
-        block
-        color="success"
-        elevation="2"
-        class="fill_width"
-        @click="updateArea"
-      >Save</v-btn>
-    </div>
+
     <div class="py-8 map_part">
       <GmapMap
         style="width: 100%; height: 100%; "
@@ -59,7 +14,7 @@
         :zoom="14"
         v-bind:options="mapOptions"
         ref="gmap"
-        @rightclick="addMarker($event)"
+        @rightclick="addMarker($event,'rightClick')"
         class="map"
       >
         <GmapCircle
@@ -111,6 +66,66 @@
           </div>
         </gmap-info-window>
       </GmapMap>
+    </div>
+    <div class="d-flex align-center justify-center" v-if="!clicked">
+      <v-btn
+        :loading="loading"
+        color="teal"
+        elevation="2"
+        @click="addMarker($event,'plusBtn')"
+        fab
+        dark
+        large
+      >
+        <v-icon dark>mdi-plus</v-icon>
+      </v-btn>
+    </div>
+
+    <div class="ranger" v-if="clicked">
+      <v-slider
+        label="distance"
+        thumb-label="always"
+        v-model="currentArea.distance"
+        max="1000"
+        min="10"
+        step="10"
+        ticks
+        @change="alertUser(1)"
+      ></v-slider>
+      <v-text-field
+        name="name"
+        label="Name"
+        id="id"
+        outlined
+        v-model="currentArea.name"
+        @input="alertUser(1)"
+      ></v-text-field>
+      <div class="d-flex">
+        <v-text-field
+          name="lat"
+          label="Lat"
+          id="id"
+          outlined
+          v-model="currentArea.position.lat"
+          disabled
+        ></v-text-field>
+        <v-text-field
+          name="Lng"
+          label="Lng"
+          id="id"
+          outlined
+          v-model="currentArea.position.lng"
+          disabled
+        ></v-text-field>
+      </div>
+      <v-btn
+        :loading="loading"
+        block
+        color="success"
+        elevation="2"
+        class="fill_width"
+        @click="updateArea"
+      >Save</v-btn>
     </div>
   </v-container>
 </template>
@@ -347,11 +362,17 @@ export default {
         this.alertUser(2);
       }
     },
-    async addMarker(location) {
+    async addMarker(location, type) {
+      let position;
+      if (type == "rightClick") {
+        position = { lat: location.latLng.lat(), lng: location.latLng.lng() };
+      } else {
+        position = { lat: 15.869527165205357,  lng: -97.09751163086203 };
+      }
       let area = {
         distance: 100,
         name: "",
-        position: { lat: location.latLng.lat(), lng: location.latLng.lng() }
+        position: position
       };
       let resp = await this.$store.dispatch("areas/addArea", { ...area });
       this.clicked = resp.key;
