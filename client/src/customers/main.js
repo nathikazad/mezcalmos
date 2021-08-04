@@ -21,7 +21,7 @@ import {
 initModules(Vue)
 //Firebase state changed function
 async function firebaseCallback(user) {
- 
+
   if (user) {
     await store.dispatch("autoSignIn", {
       userId: user.uid,
@@ -29,21 +29,16 @@ async function firebaseCallback(user) {
       email: user.email,
       photoURL: user.photoURL,
       loggedIn: true,
-      // hasuraAuthToken: token
     });
 
-    user.getIdToken()
-
-    user.getIdTokenResult()
-      .then(async (tokenResult) => {
-        let hasuraClaim = tokenResult.claims['https://hasura.io/jwt/claims']
-        if (!hasuraClaim) {
-          console.log("No hasura, retrying")
-          await store.dispatch("addHasuraClaims");
-        }
-        let hasuraAuthToken = await user.getIdToken(true)
-        store.dispatch("saveHasuraToken", { hasuraAuthToken: hasuraAuthToken });
-      })
+    let tokenResult = await user.getIdTokenResult()
+    let hasuraClaim = tokenResult.claims['https://hasura.io/jwt/claims']
+    if (!hasuraClaim) {
+      console.log("No hasura, retrying")
+      await store.dispatch("addHasuraClaims");
+    }
+    let hasuraAuthToken = await user.getIdToken(true)
+    store.dispatch("saveHasuraToken", { hasuraAuthToken: hasuraAuthToken });
 
 
 
@@ -58,12 +53,12 @@ async function firebaseCallback(user) {
     let dbUser = store.getters["userInfo"]
     if (!dbUser || !dbUser.displayName || !dbUser.photo) {
       router.push('/userinfo?edit=true');
-    } else if ( router.currentRoute.path == "/auth" &&
-      router.currentRoute.query.redirect ) {
+    } else if (router.currentRoute.path == "/auth" &&
+      router.currentRoute.query.redirect) {
       router.push({ path: router.currentRoute.query.redirect });
-    } else if (store.getters.currentOrderId ) {
+    } else if (store.getters.currentOrderId) {
       router.push({ path: `/services/taxi/${store.getters.currentOrderId}` });
-    } else if  (router.currentRoute.path == "/auth" || router.currentRoute.path == "/validation")  {
+    } else if (router.currentRoute.path == "/auth" || router.currentRoute.path == "/validation") {
       router.push({ path: "/" });
     }
   }

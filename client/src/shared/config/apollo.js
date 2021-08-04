@@ -4,7 +4,7 @@ import { setContext } from "apollo-link-context";
 import { createHttpLink } from "apollo-link-http";
 
 let _apolloClient;
-
+let httpLink;
 export const initializeApolloClient = function (hasuraAuthToken) {
   let authLink = setContext((_, { headers }) => {
     let returnValue = {
@@ -23,9 +23,17 @@ export const initializeApolloClient = function (hasuraAuthToken) {
   });
 };
 
-const httpLink = createHttpLink({
-  uri: `https://mezcalmos.hasura.app/v1/graphql`,
-});
+if (process.env.VUE_APP_TEST_DB == "true" || process.env.VUE_APP_EMULATE == "true") {
+  httpLink = createHttpLink({
+    uri: `https://mezcalmos.hasura.app/v1/graphql`//`https://summary-mole-22.hasura.app/v1/graphql`,
+  });
+} else {
+  httpLink = createHttpLink({
+    uri: `https://mezcalmos.hasura.app/v1/graphql`,
+  });
+}
+
+
 
 const cache = new InMemoryCache();
 

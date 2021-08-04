@@ -1,6 +1,6 @@
 import { firebaseDatabase } from '@/shared/config/firebase'
-// import { apolloClient } from '@/config/apollo'
-// import gql from 'graphql-tag'
+import { getApolloClient } from '@/shared/config/apollo'
+import gql from 'graphql-tag'
 export default {
   state() {
     return {
@@ -121,14 +121,17 @@ async function storeState(newState, context) {
       value: null
     })
     let apolloClient = getApolloClient();
+    let userId = context.rootGetters.userId
     if (newState.isLooking) {
       context.commit('setIsLooking', true)
       // setHasuraAvailableOn
 
       await apolloClient.mutate({
         mutation: gql`
-        mutation setDriverAvailability {
-          update_driverLocation(_set: {available: false}, where: {uid: {_eq: "assddf"}})
+        mutation AvailableMutation {
+          insert_driverLocation_one(object: {available: true, uid: "${userId}"}, on_conflict: {constraint: driverLocation_pkey, update_columns: available, where: {uid: {_eq: "${userId}"}}}) {
+            location
+          }
         }
       ` })
       context.dispatch('incomingOrders/startListeningForIncoming')
@@ -136,8 +139,10 @@ async function storeState(newState, context) {
       context.commit('setIsLooking', false)
       await apolloClient.mutate({
         mutation: gql`
-        mutation setDriverAvailability {
-          update_driverLocation(_set: {available: true}, where: {uid: {_eq: "assddf"}})
+        mutation AvailbleMutation {
+          insert_driverLocation_one(object: {available: false, uid: "${userId}"}, on_conflict: {constraint: driverLocation_pkey, update_columns: available, where: {uid: {_eq: "${userId}"}}}) {
+            location
+          }
         }
       ` })
       context.dispatch('incomingOrders/stopListeningForIncoming')
@@ -158,13 +163,14 @@ const updateDriverPosition = async (context) => {
     lastUpdateTime: lastUpdateTime.toUTCString()
   }
   firebaseDatabase().ref(`taxiDrivers/${userId}/location`).set(locationUpdate)
+  console.log(driverLocation.lat, driverLocation.lng)
   // setDriverPosition
-  // let apolloClient = getApolloClient();
-  const { data } = await apolloClient.mutate({
+  let apolloClient = getApolloClient();
+  await apolloClient.mutate({
     mutation: gql`
-    mutation MyMutation {
-      insert_places_one(object: {coordinates: {type: "Point", coordinates: [${payload.lat}, ${payload.lng}]}, name: "${payload.name}"}) {
-        id
+    mutation LocationMutation {
+      insert_driverLocation_one(object: {location: {type: "Point", coordinates: [${driverLocation.lng}, ${driverLocation.lat}]}, uid: "FtvC1uz9i9QtXu5V142Ju1HZ9Ur1"}, on_conflict: {constraint: driverLocation_pkey, update_columns: location, where: {uid: {_eq: "FtvC1uz9i9QtXu5V142Ju1HZ9Ur1"}}}) {
+        location
       }
     }
   ` })
