@@ -70,7 +70,7 @@
 import popUp from "@/shared/components/ui/popUp";
 export default {
   beforeCreate() {
-    this.$store.dispatch("areas/fetchAreasOnce");
+    this.$store.dispatch("geoInfo/fetchAreasOnce");
   },
   components: { popUp },
   data() {

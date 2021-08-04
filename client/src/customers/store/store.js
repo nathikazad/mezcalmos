@@ -3,7 +3,7 @@ import Vue from 'vue'
 
 import { firebaseDatabase } from '@/shared/config/firebase'
 
-import searchModule from '@/shared/store/search';
+
 import authModule from '@/shared/store/auth';
 import messagesModule from '@/shared/store/messages'
 import adminModule from '@/shared/store/admin'
@@ -15,7 +15,7 @@ import groceriesModule from './modules/groceries'
 import ordersModule from './modules/orders';
 import savedLocationsModule from './modules/savedLocations';
 import notificationsModule from './modules/notifications'
-import areasModule from '@/shared/store/areas';
+import geoInfoModule from '@/shared/store/geoInfo';
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
@@ -30,8 +30,7 @@ const store = new Vuex.Store({
     notifications: notificationsModule,
     admin: adminModule,
     logger: loggerModule,
-    areas: areasModule,
-    search: searchModule
+    geoInfo: geoInfoModule,
   },
   getters: {
     appName() {

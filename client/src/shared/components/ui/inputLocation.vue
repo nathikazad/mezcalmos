@@ -216,7 +216,7 @@ export default {
       }
     },
     areasList() {
-      let list = this.$store.getters["areas/areasList"];
+      let list = this.$store.getters["geoInfo/areasList"];
 
       if (list) {
         return list;
@@ -372,7 +372,7 @@ export default {
     async pickedLocation(place) {
       //save query to db
       this.$store.dispatch(
-        "search/addQuery",
+        "geoInfo/addQuery",
         this[this.search.origin].address.toLowerCase()
       );
       let map = this.$refs["map"].$refs["marker-center"].$map;

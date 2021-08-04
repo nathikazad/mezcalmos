@@ -133,7 +133,7 @@
 <script>
 export default {
   beforeCreate() {
-    this.$store.dispatch("areas/fetchAreas");
+    this.$store.dispatch("geoInfo/fetchAreas");
   },
   data() {
     return {
@@ -322,7 +322,7 @@ export default {
   },
   computed: {
     copiedList() {
-      let list = this.$store.getters["areas/areasList"];
+      let list = this.$store.getters["geoInfo/areasList"];
       console.log(list);
 
       if (list) {
@@ -353,7 +353,7 @@ export default {
     async updateArea() {
       if (this.clicked) {
         this.loading = true;
-        await this.$store.dispatch("areas/updateArea", {
+        await this.$store.dispatch("geoInfo/updateArea", {
           id: this.clicked,
           ...this.currentArea
         });
@@ -374,11 +374,11 @@ export default {
         name: "",
         position: position
       };
-      let resp = await this.$store.dispatch("areas/addArea", { ...area });
+      let resp = await this.$store.dispatch("geoInfo/addArea", { ...area });
       this.clicked = resp.key;
     },
     async removeArea(id) {
-      this.$store.dispatch("areas/removeArea", { id: id, ...this.currentArea });
+      this.$store.dispatch("geoInfo/removeArea", { id: id, ...this.currentArea });
       this.clicked = null;
       this.alertUser(3);
     },
