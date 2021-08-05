@@ -27,7 +27,7 @@ class TaxiAuthController extends GetxController {
       <String, dynamic>{"latitude": 15.851385, "longitude": -97.046429}).obs;
   RxBool _locationEnabled = false.obs;
   DeviceNotificationsController _messagingController =
-      Get.find<DeviceNotificationsController>();
+      Get.put<DeviceNotificationsController>(DeviceNotificationsController());
 
   dynamic get currentOrderId => _model.value.currentOrder ?? null;
   dynamic get authorizedTaxi => _model.value.isAuthorized ?? false;
@@ -122,9 +122,12 @@ class TaxiAuthController extends GetxController {
       _locationListener =
           location.onLocationChanged.listen((LocationData currentLocation) {
         DateTime currentTime = DateTime.now();
-        if (currentTime.difference(lastLocationUpdatedTime).inSeconds > 5) {
+        if (currentTime.difference(lastLocationUpdatedTime).inSeconds > 5 &&
+            currentLocation.latitude != null &&
+            currentLocation.longitude != null) {
           lastLocationUpdatedTime = currentTime;
           _currentLocation.value = currentLocation;
+
           Map<String, dynamic> positionUpdate = <String, dynamic>{
             "lastUpdateTime": currentTime.toUtc().toString(),
             "position": <String, dynamic>{

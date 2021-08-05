@@ -80,7 +80,7 @@ class SPoint extends StatefulWidget {
 class _SPointState extends State<SPoint> {
   bool _initialized = false;
   bool _error = false;
-  bool timerDone = false;
+  bool timerDone = false; 
 
   initializeSetup() async {
     try {
@@ -120,7 +120,7 @@ class _SPointState extends State<SPoint> {
         // first original user marker loading
 
         await GetStorage().write('user_descriptor_placeholder',
-            await BitmapDescriptorLoader(logo_asset, 90, 90));
+            await BitmapDescriptorLoader(logo_asset, 60, 60));
 
         // second method
 
@@ -143,12 +143,12 @@ class _SPointState extends State<SPoint> {
         //         : await ImageCropper().resizeAndCircle(imgUrl, 20));
 
         await GetStorage().write('taxi_descriptor',
-            await BitmapDescriptorLoader(taxi_driver_marker_asset, 90, 90));
+            await BitmapDescriptorLoader(taxi_driver_marker_asset, 60, 60));
 
         await GetStorage().write(
             'destination_descriptor',
             await BitmapDescriptorLoader(
-                purple_destination_marker_asset, 90, 90));
+                purple_destination_marker_asset, 60, 60));
 
         // Loading map asset !
         await rootBundle.loadString(map_style_asset).then((jsonString) =>

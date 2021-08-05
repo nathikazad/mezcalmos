@@ -16,13 +16,15 @@ class Participant {
 
 class Message {
   late String message;
-  late DateTime timeStamp;
-  late String formatedTime;
+  DateTime? timeStamp;
+  String? formatedTime;
   late String userId;
   Message(message, timestamp, userId) {
     this.message = message;
     this.timeStamp = timestamp;
-    this.formatedTime = DateFormat('HH:mm').format(timestamp).toString();
+    this.formatedTime = timestamp == null
+        ? null
+        : DateFormat('HH:mm').format(timestamp).toString();
     this.userId = userId;
   }
 }
@@ -34,7 +36,8 @@ class Chat {
   late Map<String, Participant> participants;
   List<Message> messages = <Message>[];
 
-  Chat(this.chatType, this.orderType, this.participants, this.messages, this.orderId);
+  Chat(this.chatType, this.orderType, this.participants, this.messages,
+      this.orderId);
 
   Chat.fromJson(key, _value) {
     // print("1 >>>$_value");
@@ -58,12 +61,20 @@ class Chat {
     // }
 
     value['messages']?.forEach((key, m) {
-      _messages.add(
-          Message(m['message'], DateTime.parse(m['timestamp']), m['userId']));
+      try {
+        _messages.add(
+            Message(m['message'], DateTime.parse(m['timestamp']), m['userId']));
+      } catch (e) {
+        _messages.add(Message(m['message'], null, m['userId']));
+      }
     });
 
-    _messages
-        .sort((after, before) => before.timeStamp.compareTo(after.timeStamp));
+    _messages.sort((after, before) {
+      if (before.timeStamp == null || after.timeStamp == null)
+        return 0;
+      else
+        return before.timeStamp!.compareTo(after.timeStamp!);
+    });
 
     // for (var messageId in value['messages']) {
     //   dynamic m = value['messages'][messageId];

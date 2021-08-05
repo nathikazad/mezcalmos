@@ -25,7 +25,7 @@ class MessagingScreen extends GetView<MessageController> {
 
   Widget SingleChatComponent(
     String message,
-    String time,
+    String? time,
     bool isMe, {
     String? userImage,
   }) =>
@@ -115,16 +115,18 @@ class MessagingScreen extends GetView<MessageController> {
                   // SizedBox(
                   //   height: 10,
                   // ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 5.0),
-                    child: Text(
-                      (isMe ? 'Seen In' : 'Sent In') + '    $time',
-                      style: TextStyle(
-                          fontFamily: 'psr',
-                          fontSize: 10,
-                          color: Color.fromARGB(255, 0, 15, 28)),
-                    ),
-                  ),
+                  time != null
+                      ? Padding(
+                          padding: const EdgeInsets.only(left: 5.0),
+                          child: Text(
+                            (isMe ? 'Seen In' : 'Sent In') + '    $time',
+                            style: TextStyle(
+                                fontFamily: 'psr',
+                                fontSize: 10,
+                                color: Color.fromARGB(255, 0, 15, 28)),
+                          ),
+                        )
+                      : SizedBox(),
                 ],
               ),
             ]),

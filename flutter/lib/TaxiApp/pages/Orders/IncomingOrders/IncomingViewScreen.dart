@@ -270,8 +270,8 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                       padding: EdgeInsets.all(
                           getSizeRelativeToScreen(2.5, Get.height, Get.width)),
                       height:
-                          getSizeRelativeToScreen(20, Get.height, Get.width),
-                      width: getSizeRelativeToScreen(20, Get.height, Get.width),
+                          getSizeRelativeToScreen(17, Get.height, Get.width),
+                      width: getSizeRelativeToScreen(17, Get.height, Get.width),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         boxShadow: <BoxShadow>[
@@ -295,7 +295,7 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                     ),
                     Positioned(
                       left: 25,
-                      top: 13,
+                      top: 10,
                       child: Obx(
                         () => Text(
                           lang.strings['shared']['inputLocation']["from"],
@@ -308,7 +308,7 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                     ),
                     Positioned(
                       left: 25,
-                      top: 30,
+                      top: 27,
                       child: Obx(
                         () => GestureDetector(
                           onTap: () => mezcalmosSnackBar(
@@ -317,12 +317,26 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                                       .selectedIncommingOrder?.from?.address ??
                                   ""),
                           child: Text(
-                            (controller.selectedIncommingOrder?.from?.address
-                                        .toString()
-                                        .substring(0, 13) ??
-                                    "..........") +
-                                " ..", //13+..
+                            controller.selectedIncommingOrder?.from?.address
+                                        ?.toString()
+                                        .length ==
+                                    null
+                                ? "........."
+                                : controller.selectedIncommingOrder!.from!
+                                            .address!
+                                            .toString()
+                                            .length >
+                                        13
+                                    ? (controller.selectedIncommingOrder?.from
+                                                ?.address
+                                                .toString()
+                                                .substring(0, 13) ??
+                                            "..........") +
+                                        " .."
+                                    : controller.selectedIncommingOrder?.from
+                                        ?.address, //13+..
                             style: TextStyle(fontSize: 16, fontFamily: 'psr'),
+                            overflow: TextOverflow.visible,
                           ),
                         ),
                       ),
@@ -332,7 +346,7 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                           (getSizeRelativeToScreen(180, Get.height, Get.width) /
                                   2) +
                               40,
-                      top: 13,
+                      top: 10,
                       child: Obx(
                         () => Text(
                           lang.strings['shared']['inputLocation']["to"],
@@ -348,7 +362,7 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                           (getSizeRelativeToScreen(180, Get.height, Get.width) /
                                   2) +
                               40,
-                      top: 30,
+                      top: 27,
                       child: Obx(
                         () => GestureDetector(
                           onTap: () => mezcalmosSnackBar(
@@ -356,12 +370,26 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                               controller.selectedIncommingOrder?.to?.address ??
                                   ""),
                           child: Text(
-                            (controller.selectedIncommingOrder?.to?.address
-                                        .toString()
-                                        .substring(0, 13) ??
-                                    "..........") +
-                                " ..", //13+..
+                            controller.selectedIncommingOrder?.to?.address
+                                        ?.toString()
+                                        .length ==
+                                    null
+                                ? "........."
+                                : controller.selectedIncommingOrder!.to!
+                                            .address!
+                                            .toString()
+                                            .length >
+                                        13
+                                    ? (controller.selectedIncommingOrder?.to
+                                                ?.address
+                                                .toString()
+                                                .substring(0, 13) ??
+                                            "..........") +
+                                        " .."
+                                    : controller.selectedIncommingOrder?.to
+                                        ?.address, //13+..
                             style: TextStyle(fontSize: 16, fontFamily: 'psr'),
+                            overflow: TextOverflow.visible,
                           ),
                         ),
                       ),

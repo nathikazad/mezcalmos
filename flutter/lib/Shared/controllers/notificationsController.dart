@@ -3,9 +3,13 @@ import 'package:get/get.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as MezNotification;
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
+import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
+import 'package:mezcalmos/TaxiApp/router.dart';
 
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("Handling a background message");
@@ -87,7 +91,11 @@ class FBNotificationsController extends GetxController {
   RxList<MezNotification.Notification> notifications =
       <MezNotification.Notification>[].obs;
   StreamSubscription<Event>? _taxiAuthListener;
-  List taxiAuthListenerCallbacks = [];
+  // List taxiAuthListenerCallbacks = [];
+  RxBool _hasNewNotification = false.obs;
+  LanguageController _lang = Get.find<LanguageController>();
+
+  bool get hasNewNotification => _hasNewNotification.value;
 
   @override
   void onInit() async {
@@ -107,14 +115,30 @@ class FBNotificationsController extends GetxController {
           event.snapshot.value.forEach((dynamic key, dynamic value) {
             MezNotification.Notification _notif =
                 MezNotification.Notification.fromJson(key, value);
-            taxiAuthListenerCallbacks.forEach((callback) {
+
+            // this is to not invoke callbacks of newMessage when type == order
+            if (_notif.notificationType == "newMessage") {
+              print("\n\n\n ${_notif.toJson()} \n\n\n");
+              // taxiAuthListenerCallbacks.forEach((callback) {
               // this is much more dynamic :D
-              if (_notif.notificationType == callback["type"] &&
-                  _notif.variableParams["orderId"] == callback["orderId"]) {
-                callback["__call__"](_notif); // this is our actuall callback
+              if (Get.currentRoute != kMessagesRoute &&
+                  Get.find<TaxiAuthController>().currentOrderId != null) {
+                mezcalmosSnackBar(
+                    "${_lang.strings['shared']['messages']['newMessage']} ${_notif.variableParams['sender']['name']}",
+                    "${_notif.variableParams['message']}",
+                    position: SnackPosition.TOP);
+                _hasNewNotification.value = true;
               }
-            });
+              // if (_notif.notificationType == callback["type"] &&
+              //     _notif.variableParams["orderId"] == callback["orderId"]) {
+              //   callback["__call__"](_notif);
+              //   // this is our actuall callback
+              // }
+              // });
+            }
             notifications.add(_notif);
+
+            print(notifications.toJson());
           });
         }
       });
@@ -122,20 +146,29 @@ class FBNotificationsController extends GetxController {
   }
 
   // using this we can register our callbacks from diffrent places , and invoke them onValue !
-  void registerCallbackOnListenerInvoke(callback) {
-    // if (!taxiAuthListenerCallbacks.contains(callback)) {
-    //   print(taxiAuthListenerCallbacks);
-    taxiAuthListenerCallbacks.add(callback);
-    print("[+] ----------> $callback  ::  Was Registred successfully !!");
-    // }
-  }
+  // void registerCallbackOnListenerInvoke(callback) {
+  //   // if (!taxiAuthListenerCallbacks.contains(callback)) {
+  //   //   print(taxiAuthListenerCallbacks);
+  //   taxiAuthListenerCallbacks.add(callback);
+  //   print(taxiAuthListenerCallbacks);
+  //   print("[+] ----------> $callback  ::  Was Registred successfully !!");
+  //   // }
+  // }
 
-  dynamic checkCallbackIsRegistred(String orderId) {
-    dynamic res = taxiAuthListenerCallbacks.singleWhere(
-        (element) => element['orderId'] == orderId,
-        orElse: () => null);
-    print("Resuly -----------> $res");
-    return res;
+  // dynamic checkCallbackIsRegistred(String orderId) {
+  //   dynamic res = taxiAuthListenerCallbacks.singleWhere(
+  //       (element) => element['orderId'] == orderId,
+  //       orElse: () => null);
+  //   print("Resuly -----------> $res");
+  //   return res;
+  // }
+
+  void clearAllMessageNotification() {
+    print(
+        "-=-=-=-=-=-=-=-=-=-=-=-=-=-= Clearing All Messages Notifications -=-=-=-=-=-=-=-=-=-=-=-=-=-= ");
+    _hasNewNotification.value = false;
+    _clearMessageNotificationsLocally();
+    setAllMessagesAsReadInDb();
   }
 
   Future<void> setAllMessagesAsReadInDb() async {
@@ -147,13 +180,13 @@ class FBNotificationsController extends GetxController {
         .remove();
   }
 
-  void clearMessageNotifications(String orderId) {
-    notifications.forEach((notification) {
-      if (notification.notificationType == "newMessage" &&
-          notification.variableParams['orderId'] == orderId) {
-        notifications.remove(notification);
-      }
-    });
+  void _clearMessageNotificationsLocally(/*String? orderId*/) {
+    notifications.removeWhere(
+        (notification) => notification.notificationType == "newMessage");
+    //  if (notification.notificationType == "newMessage" &&
+    //     notification.variableParams['orderId'] == orderId) {
+    //   notifications.remove(notification);
+    // }
   }
 
   int remainingMessageNotificationsCount(String orderId) {

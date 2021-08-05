@@ -18,7 +18,8 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
   LanguageController lang = Get.find<LanguageController>();
   @override
   Widget build(BuildContext context) {
-    TaxiAuthController _taxiAuthController = Get.find<TaxiAuthController>();
+    TaxiAuthController _taxiAuthController =
+        Get.put<TaxiAuthController>(TaxiAuthController());
     Get.put<IncomingOrdersController>(IncomingOrdersController());
 
     final sw = MediaQuery.of(context).size.width;

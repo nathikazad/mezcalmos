@@ -21,6 +21,13 @@ class CurrentOrderMapController extends GetxController {
   final double test_lng = -97.05531560386919;
   final double test_lat = 15.855722506461488;
   final String _app_launch_mode = GetStorage().read('lmod');
+  final bool isCurrentOrder = true;
+
+  // directly access InitialValues!
+  late double from_lat;
+  late double from_lng;
+  late double to_lat;
+  late double to_lng;
 
   CurrentOrderController _currentOrderController =
       Get.find<CurrentOrderController>();
@@ -117,6 +124,11 @@ class CurrentOrderMapController extends GetxController {
     if (_currentOrderController.value!.status == "onTheWay") {
       // that means taxi accepted order
       print("]]]]]]]]]]]]]]]]]]]]]]\n\n ON_THE_WAY \n\n[[[[[[[[[[[[[[[[[[[[[");
+      from_lat = _taxiAuthController.currentLocation.latitude!;
+      from_lng = _taxiAuthController.currentLocation.longitude!;
+
+      to_lat = _currentOrderController.value?.from?.latitude!;
+      to_lng = _currentOrderController.value?.from?.longitude!;
 
       _initialCameraPosition.value = LatLng(
           _taxiAuthController.currentLocation.latitude!,
@@ -135,8 +147,8 @@ class CurrentOrderMapController extends GetxController {
                           _currentOrderController.value?.customer?['image'])))
                       .bodyBytes) as Uint8List)
                   : logo_asset,
-              100,
-              100,
+              60,
+              60,
               isBytes: !_dirty),
           visible: true,
           position: LatLng(_currentOrderController.value!.from.latitude,
@@ -172,6 +184,11 @@ class CurrentOrderMapController extends GetxController {
     } else if (_currentOrderController.value!.status == "inTransit") {
       // that means taxi already picked up the customer
       print("]]]]]]]]]]]]]]]]]]]]]]\n\n IN_TRANSIT \n\n[[[[[[[[[[[[[[[[[[[[[");
+      from_lat = _taxiAuthController.currentLocation.latitude!;
+      from_lng = _taxiAuthController.currentLocation.longitude!;
+
+      to_lat = _currentOrderController.value?.to?.latitude!;
+      to_lng = _currentOrderController.value?.to?.longitude!;
 
       _initialCameraPosition.value = LatLng(
           _taxiAuthController.currentLocation.latitude!,
@@ -202,6 +219,12 @@ class CurrentOrderMapController extends GetxController {
 
       this._mapReady.value = true;
     } else if (_currentOrderController.value!.status == "droppedOff") {
+      from_lat = _taxiAuthController.currentLocation.latitude!;
+      from_lng = _taxiAuthController.currentLocation.longitude!;
+
+      to_lat = _currentOrderController.value?.to?.latitude!;
+      to_lng = _currentOrderController.value?.to?.longitude!;
+
       _initialCameraPosition.value = LatLng(
           _currentOrderController.value!.from.latitude,
           _currentOrderController.value!.from.longitude);
@@ -222,8 +245,8 @@ class CurrentOrderMapController extends GetxController {
                           _currentOrderController.value?.customer['image'])))
                       .bodyBytes) as Uint8List)
                   : logo_asset,
-              100,
-              100,
+              60,
+              60,
               isBytes: !_dirty),
 
           visible: true,
@@ -245,6 +268,11 @@ class CurrentOrderMapController extends GetxController {
       this._mapReady.value = true;
       // });
     } else {
+      from_lat = 0;
+      from_lng = 0;
+
+      to_lat = 0;
+      to_lng = 0;
       print(
           "\n\n __________________________( STATUS => ${_currentOrderController.value!.status} )_______________________\n\n");
     }
@@ -270,7 +298,17 @@ class CurrentOrderMapController extends GetxController {
 // ----------- to fit everything in the map !
   dynamic getBounds() {
     if (markers.isEmpty) return null;
-    return _createBounds(markers.map((m) => m.position).toList());
+    List<LatLng> positions = <LatLng>[];
+    markers.forEach((m) {
+      if (!(_currentOrderController.value!.status == "onTheWay" &&
+          m.markerId.value == "to")) {
+        positions.add(m.position);
+      } else {
+        print(
+            "\n\n============ Detected onTheWay + MarkerID (to) ===========\n ignoring that marker to fit only the Taxi-From markers !\n\n");
+      }
+    });
+    return _createBounds(positions);
   }
 
   @override
@@ -288,6 +326,13 @@ class IncomingOrderMapController extends GetxController {
   double test_lng = -97.05531560386919;
   double test_lat = 15.855722506461488;
 
+  // directly access InitialValues!
+  late double from_lat;
+  late double from_lng;
+  late double to_lat;
+  late double to_lng;
+
+  final bool isCurrentOrder = false;
   IncomingOrdersController _incomingOrdersController =
       Get.find<IncomingOrdersController>();
 
@@ -315,7 +360,13 @@ class IncomingOrderMapController extends GetxController {
     bool _dirty =
         _incomingOrdersController.selectedIncommingOrder!.customer?['image'] ==
             null;
+    from_lat =
+        _incomingOrdersController.selectedIncommingOrder?.from?.latitude!;
+    from_lng =
+        _incomingOrdersController.selectedIncommingOrder?.from?.longitude!;
 
+    to_lat = _incomingOrdersController.selectedIncommingOrder?.to?.latitude!;
+    to_lng = _incomingOrdersController.selectedIncommingOrder?.to?.longitude!;
     // initilize our polylines ====================
     print(
         "\n\n[IncomingOrderMapController] =============== INITIALIZED ==============\n\n");
@@ -360,8 +411,8 @@ class IncomingOrderMapController extends GetxController {
                             .selectedIncommingOrder!.customer['image'])))
                     .bodyBytes) as Uint8List)
                 : logo_asset,
-            100,
-            100,
+            60,
+            60,
             isBytes: !_dirty),
         visible: true,
         position: LatLng(

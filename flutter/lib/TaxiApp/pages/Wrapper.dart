@@ -18,14 +18,15 @@ class Wrapper extends GetWidget<AuthController> {
     // Locale userLocale = Localizations.localeOf(context);
     // print(userLocale.toString());
     // Get.find<LanguageController>().changeUserLanguage(userLocale.languageCode);
-    Get.lazyPut(() => TaxiAuthController());
-    Get.lazyPut(() => DeviceNotificationsController());
-    Get.lazyPut(() => MessageController());
-    Get.lazyPut(() => FBNotificationsController());
+
     SettingsController _settingsController = Get.find<SettingsController>();
 
     return Obx(() {
       if (controller.user != null) {
+        Get.lazyPut(() => TaxiAuthController());
+        Get.lazyPut(() => DeviceNotificationsController());
+        Get.lazyPut(() => MessageController());
+        Get.lazyPut(() => FBNotificationsController());
         // Injecting TaxiAuthController Here so we can get it as Widget in TaxiWrapper
         return _settingsController.hasLocationPermissions.value == false
             ? LocationPermissionScreen()

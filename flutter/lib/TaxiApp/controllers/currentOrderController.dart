@@ -23,7 +23,7 @@ class CurrentOrderController extends GetxController {
       Get.find<DatabaseHelper>(); // Already Injected in main function
 
   FBNotificationsController _notifications =
-      Get.find<FBNotificationsController>();
+      Get.put<FBNotificationsController>(FBNotificationsController());
 
   Order? get value => _model.value;
   dynamic get id => _model.value.id;
@@ -68,7 +68,10 @@ class CurrentOrderController extends GetxController {
           await MezcalmosSharedWidgets.mezcalmosDialogOrderCancelled(
               55, Get.height, Get.width);
           // Get.back(closeOverlays: true);
-          Get.offAndToNamed(kTaxiWrapperRoute);
+          // Get.offAndToNamed(kMainAuthWrapperRoute);
+          Get.delete<CurrentOrderMapController>();
+          Get.delete<CurrentOrderController>()
+              .then((_) => Get.back(closeOverlays: true));
         } else {
           _model.value = Order.fromSnapshot(event.snapshot);
           _model.value.id = _taxiAuthController.currentOrderId;
@@ -128,10 +131,10 @@ class CurrentOrderController extends GetxController {
           .call(<String, dynamic>{'database': _databaseHelper.dbType});
       dynamic _res = responseStatusChecker(response.data);
 
-      _res == null
-          ? throw Exception(
-              "Manually thrown Exception - Reason -> Response.data was null !")
-          : mezcalmosSnackBar("Notice ~", _res);
+      if (_res == null)
+        throw Exception(
+            "Manually thrown Exception - Reason -> Response.data was null !");
+      // : mezcalmosSnackBar("Notice ~", _res);
       _waitingResponse.value = false;
     } catch (e) {
       mezcalmosSnackBar("Notice ~", "Failed to Start The ride :( ");
@@ -167,6 +170,7 @@ class CurrentOrderController extends GetxController {
   }
 
   void detachListeners() {
+    _notifications.clearAllMessageNotification();
     if (_currentOrderListener != null) {
       // Get.delete<CurrentOrderMapController>();
       _currentOrderListener!
@@ -181,8 +185,8 @@ class CurrentOrderController extends GetxController {
   @override
   void onClose() async {
     // TO Remove our callback
-    _notifications.taxiAuthListenerCallbacks
-        .removeWhere((element) => element?['orderId'] == _model.value.id);
+    // _notifications.taxiAuthListenerCallbacks
+    //     .removeWhere((element) => element?['orderId'] == _model.value.id);
 
     detachListeners();
     super.onClose();
@@ -191,8 +195,8 @@ class CurrentOrderController extends GetxController {
   @override
   void dispose() {
     // TO Remove our callback
-    _notifications.taxiAuthListenerCallbacks
-        .removeWhere((element) => element?['orderId'] == _model.value.id);
+    // _notifications.taxiAuthListenerCallbacks
+    //     .removeWhere((element) => element?['orderId'] == _model.value.id);
 
     detachListeners();
     super.dispose();

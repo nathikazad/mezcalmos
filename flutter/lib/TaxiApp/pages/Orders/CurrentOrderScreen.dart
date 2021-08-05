@@ -15,48 +15,50 @@ import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
 
-class CurrentOrderScreen extends GetWidget<CurrentOrderController> {
+class CurrentOrderScreen extends GetView<CurrentOrderController> {
   LanguageController lang = Get.find<LanguageController>();
   FBNotificationsController fbNotificationsController =
       Get.put<FBNotificationsController>(FBNotificationsController());
 
   RxBool clickedLaunchOnMap = false.obs;
-  Rx<MezNotifications.Notification> newestNotif =
-      MezNotifications.Notification.empty().obs;
+  // Rx<MezNotifications.Notification> newestNotif =
+  // MezNotifications.Notification.empty().obs;
 
-  void newMessageNotificationCallback(MezNotifications.Notification? notif) {
-    print("newMessageNotificationCallback :: Invoked automatically !");
-    // I made this callback so it will get invoked whenever there's a newMessage Notification !
+  bool clickedYesCancelPopUp = false;
 
-    if (notif == null) {
-      newestNotif.value = fbNotificationsController.notifications.lastWhere(
-        (element) =>
-            element.notificationType == "newMessage" &&
-            element.variableParams["orderId"] == controller.value!.id,
-      ); // this sets isEmpty = true , So we can check with it later on.
-    } else
-      newestNotif.value = notif;
+  // void newMessageNotificationCallback(MezNotifications.Notification? notif) {
+  //   print("newMessageNotificationCallback :: Invoked automatically !");
+  //   // I made this callback so it will get invoked whenever there's a newMessage Notification !
 
-    print(
-        "\n\n\t\t ============== MessageNotification Checks ==============\n");
-    print(
-        "\t [newestNotif] This is the obs variable's value  > ${newestNotif.value.props}\n");
+  //   if (notif == null) {
+  //     newestNotif.value = fbNotificationsController.notifications.lastWhere(
+  //       (element) =>
+  //           element.notificationType == "newMessage" &&
+  //           element.variableParams["orderId"] == controller.value!.id,
+  //     ); // this sets isEmpty = true , So we can check with it later on.
+  //   } else
+  //     newestNotif.value = notif;
 
-    print("\t [currentRoute] This is the current Order  > ${Get.currentRoute}");
+  //   print(
+  //       "\n\n\t\t ============== MessageNotification Checks ==============\n");
+  //   print(
+  //       "\t [newestNotif] This is the obs variable's value  > ${newestNotif.value.props}\n");
 
-    print(
-        "\n\n\t\t ============== ========================== ==============\n");
-    if (!newestNotif.value.isEmpty && Get.currentRoute != kMessagesRoute) {
-      // hasNewMessage.value = true;
-      mezcalmosSnackBar(
-          "${lang.strings['shared']['messages']['newMessage']} ${newestNotif.value.variableParams['sender']['name']}",
-          "${newestNotif.value.variableParams['message']}",
-          position: SnackPosition.TOP);
-    } else
-      fbNotificationsController.setAllMessagesAsReadInDb();
+  //   print("\t [currentRoute] This is the current Order  > ${Get.currentRoute}");
 
-    // hasNewMessage.value = false;
-  }
+  //   print(
+  //       "\n\n\t\t ============== ========================== ==============\n");
+  //   if (!newestNotif.value.isEmpty && Get.currentRoute != kMessagesRoute) {
+  //     // hasNewMessage.value = true;
+  //     mezcalmosSnackBar(
+  //         "${lang.strings['shared']['messages']['newMessage']} ${newestNotif.value.variableParams['sender']['name']}",
+  //         "${newestNotif.value.variableParams['message']}",
+  //         position: SnackPosition.TOP);
+  //   } else
+  //     fbNotificationsController.setAllMessagesAsReadInDb();
+
+  //   // hasNewMessage.value = false;
+  // }
 
   Widget build(BuildContext context) {
     print(
@@ -66,18 +68,18 @@ class CurrentOrderScreen extends GetWidget<CurrentOrderController> {
     Get.put<CurrentOrderMapController>(CurrentOrderMapController());
     controller.dispatchCurrentOrder();
 
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-      if (fbNotificationsController.checkCallbackIsRegistred(
-              Get.find<TaxiAuthController>().currentOrderId) ==
-          null) {
-        fbNotificationsController
-            .registerCallbackOnListenerInvoke(<String, dynamic>{
-          "__call__": newMessageNotificationCallback,
-          "orderId": Get.find<TaxiAuthController>().currentOrderId,
-          "type": "newMessage"
-        });
-      }
-    });
+    // WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    //   if (fbNotificationsController.checkCallbackIsRegistred(
+    //           Get.find<TaxiAuthController>().currentOrderId) ==
+    //       null) {
+    //     fbNotificationsController
+    //         .registerCallbackOnListenerInvoke(<String, dynamic>{
+    //       "__call__": newMessageNotificationCallback,
+    //       "orderId": Get.find<TaxiAuthController>().currentOrderId,
+    //       "type": "newMessage"
+    //     });
+    //   }
+    // });
 
     return SafeArea(
       child: Stack(
@@ -133,6 +135,7 @@ class CurrentOrderScreen extends GetWidget<CurrentOrderController> {
                               print(
                                   "%%%%%%%%%%%%\n controller.distanceFromFinish :: ${controller.distanceToFinish}\n%%%%%%%%%%%%");
                               controller.value?.status == "inTransit"
+                                  // ignore: unnecessary_statements
                                   ? (controller.distanceToFinish > 0.5
                                       ? MezcalmosSharedWidgets
                                               .yesNoDefaultConfirmationDialog(
@@ -150,6 +153,7 @@ class CurrentOrderScreen extends GetWidget<CurrentOrderController> {
                                           Get.back(closeOverlays: true);
                                         })
                                       : await controller.finishRide())
+                                  // ignore: unnecessary_statements
                                   : (controller.distanceToClient > 0.5
                                       ? MezcalmosSharedWidgets
                                               .yesNoDefaultConfirmationDialog(
@@ -274,8 +278,8 @@ class CurrentOrderScreen extends GetWidget<CurrentOrderController> {
                                     .setAllMessagesAsReadInDb();
 
                                 Get.toNamed(kMessagesRoute)?.then((_) =>
-                                    newestNotif.value = new MezNotifications
-                                        .Notification.empty());
+                                    fbNotificationsController
+                                        .clearAllMessageNotification());
                               },
                               child: Container(
                                 height: getSizeRelativeToScreen(
@@ -298,7 +302,8 @@ class CurrentOrderScreen extends GetWidget<CurrentOrderController> {
                                   child: Stack(
                                     children: [
                                       Obx(
-                                        () => !newestNotif.value.isEmpty
+                                        () => fbNotificationsController
+                                                .hasNewNotification
                                             ? Positioned(
                                                 top: 5,
                                                 right: 5,
@@ -343,9 +348,19 @@ class CurrentOrderScreen extends GetWidget<CurrentOrderController> {
                                           "¿Cancelar el viaje actual?"),
                                       actions: [
                                         TextButton(
-                                            onPressed: () => controller
-                                                .cancelTaxi(null)
-                                                .then((_) => Get.back()),
+                                            onPressed: () {
+                                              if (!clickedYesCancelPopUp) {
+                                                controller
+                                                    .cancelTaxi(null)
+                                                    .then((_) => Get.back(
+                                                        closeOverlays: true))
+                                                    .catchError((onError) {
+                                                  clickedYesCancelPopUp = false;
+                                                });
+                                              }
+                                            },
+                                            // Navigator.of(context)
+                                            //     .pop()),
                                             child: Text(lang.strings?['taxi']
                                                     ?['taxiView']?['yes'] ??
                                                 'Si')),
@@ -547,8 +562,8 @@ class CurrentOrderScreen extends GetWidget<CurrentOrderController> {
                   Container(
                     padding: EdgeInsets.all(
                         getSizeRelativeToScreen(2.5, Get.height, Get.width)),
-                    height: getSizeRelativeToScreen(20, Get.height, Get.width),
-                    width: getSizeRelativeToScreen(20, Get.height, Get.width),
+                    height: getSizeRelativeToScreen(17, Get.height, Get.width),
+                    width: getSizeRelativeToScreen(17, Get.height, Get.width),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       boxShadow: <BoxShadow>[
@@ -569,7 +584,7 @@ class CurrentOrderScreen extends GetWidget<CurrentOrderController> {
                   ),
                   Positioned(
                     left: 25,
-                    top: 13,
+                    top: 10,
                     child: Obx(
                       () => Text(
                         lang.strings['shared']['inputLocation']["from"],
@@ -582,19 +597,28 @@ class CurrentOrderScreen extends GetWidget<CurrentOrderController> {
                   ),
                   Positioned(
                     left: 25,
-                    top: 30,
+                    top: 27,
                     child: Obx(
                       () => GestureDetector(
                         onTap: () => mezcalmosSnackBar(
                             lang.strings['shared']['inputLocation']["from"],
                             controller.value?.from?.address ?? ""),
                         child: Text(
-                          (controller.value?.from?.address
-                                      .toString()
-                                      .substring(0, 13) ??
-                                  "..........") +
-                              " ..", //13+..
+                          controller.value?.from?.address?.toString().length ==
+                                  null
+                              ? "........."
+                              : controller.value!.from!.address!
+                                          .toString()
+                                          .length >
+                                      13
+                                  ? (controller.value?.from?.address
+                                              .toString()
+                                              .substring(0, 13) ??
+                                          "..........") +
+                                      " .."
+                                  : controller.value!.from!.address.toString(),
                           style: TextStyle(fontSize: 16, fontFamily: 'psr'),
+                          overflow: TextOverflow.visible,
                         ),
                       ),
                     ),
@@ -603,7 +627,7 @@ class CurrentOrderScreen extends GetWidget<CurrentOrderController> {
                     left: (getSizeRelativeToScreen(180, Get.height, Get.width) /
                             2) +
                         40,
-                    top: 13,
+                    top: 10,
                     child: Obx(
                       () => Text(
                         lang.strings['shared']['inputLocation']["to"],
@@ -618,19 +642,28 @@ class CurrentOrderScreen extends GetWidget<CurrentOrderController> {
                     left: (getSizeRelativeToScreen(180, Get.height, Get.width) /
                             2) +
                         40,
-                    top: 30,
+                    top: 27,
                     child: Obx(
                       () => GestureDetector(
                         onTap: () => mezcalmosSnackBar(
                             lang.strings['shared']['inputLocation']["to"],
                             controller.value?.to?.address ?? ""),
                         child: Text(
-                          (controller.value?.to?.address
-                                      .toString()
-                                      .substring(0, 13) ??
-                                  "..........") +
-                              " ..", //13+..
+                          controller.value?.to?.address?.toString().length ==
+                                  null
+                              ? "........."
+                              : controller.value!.to!.address!
+                                          .toString()
+                                          .length >
+                                      13
+                                  ? (controller.value?.to?.address
+                                              .toString()
+                                              .substring(0, 13) ??
+                                          "..........") +
+                                      " .."
+                                  : controller.value?.to?.address, //13+..
                           style: TextStyle(fontSize: 16, fontFamily: 'psr'),
+                          overflow: TextOverflow.visible,
                         ),
                       ),
                     ),
