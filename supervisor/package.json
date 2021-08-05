@@ -4,11 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "emulateSupervsior": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 node index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cross-env": "^7.0.3",
     "firebase-admin": "^9.9.0",
     "web-push": "^3.4.4"
   }

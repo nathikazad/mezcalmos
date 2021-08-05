@@ -12,8 +12,15 @@ export const initializeApolloClient = function (hasuraAuthToken) {
         ...headers
       }
     };
+    if (process.env.VUE_APP_EMULATE == "true") {
+      var jwt = require('jsonwebtoken');
+      var decodedObject = jwt.verify(hasuraAuthToken)
+      returnValue.headers.authorization = `Bearer ${jwt.sign(decodedObject, process.env.VUE_APP_JWT_KEY)}`
+    } else {
+      returnValue.headers.authorization = `Bearer ${hasuraAuthToken}`
+    }
 
-    returnValue.headers.authorization = `Bearer ${hasuraAuthToken}`
+
     return returnValue;
   });
 
@@ -23,15 +30,21 @@ export const initializeApolloClient = function (hasuraAuthToken) {
   });
 };
 
-if (process.env.VUE_APP_TEST_DB == "true" || process.env.VUE_APP_EMULATE == "true") {
+if (process.env.VUE_APP_EMULATE == "true") {
   httpLink = createHttpLink({
-    uri: `https://mezcalmos.hasura.app/v1/graphql`//`https://summary-mole-22.hasura.app/v1/graphql`,
+    uri: `https://testing-mezc.hasura.app/v1/graphql`
+  });
+} else if (process.env.VUE_APP_TEST_DB == "true") {
+  httpLink = createHttpLink({
+    uri: `https://staging-mezc.hasura.app/v1/graphql`
   });
 } else {
   httpLink = createHttpLink({
     uri: `https://mezcalmos.hasura.app/v1/graphql`,
   });
 }
+
+
 
 
 

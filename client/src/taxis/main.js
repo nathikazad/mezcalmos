@@ -34,6 +34,7 @@ async function firebaseCallback(user) {
 
 
     let tokenResult = await user.getIdTokenResult()
+    console.log(tokenResult);
     let hasuraClaim = tokenResult.claims['https://hasura.io/jwt/claims']
     if (!hasuraClaim) {
       console.log("No hasura, retrying")

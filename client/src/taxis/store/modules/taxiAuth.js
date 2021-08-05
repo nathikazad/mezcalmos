@@ -169,7 +169,7 @@ const updateDriverPosition = async (context) => {
   await apolloClient.mutate({
     mutation: gql`
     mutation LocationMutation {
-      insert_driverLocation_one(object: {location: {type: "Point", coordinates: [${driverLocation.lng}, ${driverLocation.lat}]}, uid: "FtvC1uz9i9QtXu5V142Ju1HZ9Ur1"}, on_conflict: {constraint: driverLocation_pkey, update_columns: location, where: {uid: {_eq: "FtvC1uz9i9QtXu5V142Ju1HZ9Ur1"}}}) {
+      insert_driverLocation_one(object: {location: {type: "Point", coordinates: [${driverLocation.lng}, ${driverLocation.lat}]}, uid: "${userId}"}, on_conflict: {constraint: driverLocation_pkey, update_columns: location, where: {uid: {_eq: "${userId}"}}}) {
         location
       }
     }
