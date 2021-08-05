@@ -1,5 +1,6 @@
+const { gql, GraphQLClient } = require('graphql-request')
 const firebaseAdmin = require("firebase-admin");
-// const notification = require("../functions/helpers/notification");
+const keys = require("../functions/helpers/keys").keys();
 const expireOrder = require("../functions/helpers/taxi/expire");
 
 const productionFirebase = firebaseAdmin.initializeApp({
@@ -29,34 +30,72 @@ productionFirebase.database().ref(`/openOrders/taxi`).on('value', function (snap
   openOrdersProduction = snap.val()
 });
 
-setInterval(function () {
-  checkOpenOrders(testFirebase, openOrdersTest)
-  checkOpenOrders(productionFirebase, openOrdersProduction)
-}, checkOpenOrdersInterval * 1000)
-
-function checkOpenOrders(firebase, openOrders) {
-  console.log(openOrders);
-  // for (let orderId in openOrders) {
-  //   if (openOrders[orderId].orderTime) {
-  //     let orderTime = new Date(openOrders[orderId].orderTime)
-  //     let orderExpirationTime = new Date(orderTime.getTime() + orderExpirationLimit * 1000);
-  //     if (Date.now() > orderExpirationTime) {
-  //       expireOrder(firebase, orderId, openOrders[orderId].customer.id);
-  //     }
-
-  //     drivers = hasura.getDrivers(openOrders[orderId].from.lat, openOrders[orderId].from.lng)
-  //     // drivers = [driver1, driver2 .....] 8
-  //     // notifiedDrivers = 0
-  //     // while(notifiedDrivers < 5)
-  //     //     if(openOrders/${orderId}/notifiedDrivers/{$driverId}){
-  //     //        skip
-  //     //     }
-  //     //     sendNotification(drivers[i])
-  //     //     openOrders/${orderId}/drivers/{$driverId}/notificationSent  true TRANSACTION
-  //     //     notifiedDrivers++
-  //   } else {
-  //     expireOrder(firebase, orderId, openOrders[orderId].customer.id)
-  //   }
-  // }
+if (process.env.FIREBASE_DATABASE_EMULATOR_HOST != null) {
+  const hasuraEmulator = new GraphQLClient(
+    keys.hasuraTest.url,
+    {
+      headers: {
+        'x-hasura-admin-secret': keys.hasuraTest.key
+      }
+    });
+  setInterval(function () {
+    checkOpenOrders(productionFirebase, openOrdersProduction, hasuraEmulator)
+  }, checkOpenOrdersInterval * 1000)
+} else {
+  const hasuraTest = new GraphQLClient(
+    keys.hasuraStage.url,
+    {
+      headers: {
+        'x-hasura-admin-secret': keys.hasuraStage.key
+      }
+    });
+  const hasuraProduction = new GraphQLClient(
+    keys.hasura.url,
+    {
+      headers: {
+        'x-hasura-admin-secret': keys.hasura.key
+      }
+    });
+  setInterval(function () {
+    checkOpenOrders(testFirebase, openOrdersTest, hasuraTest)
+    checkOpenOrders(productionFirebase, openOrdersProduction, hasuraProduction)
+  }, checkOpenOrdersInterval * 1000)
 }
 
+const getDriversQuery = gql` 
+query GetDriversQuery($lat: float8, $long: float8, $bound: Int) {
+  nearby_drivers(args: {bound: $bound, lat: $lat, long: $long}) {
+    location
+  }
+}`
+
+async function checkOpenOrders(firebase, openOrders, hasura) {
+  console.log(openOrders);
+
+  for (let orderId in openOrders) {
+    if (openOrders[orderId].orderTime) {
+      let orderTime = new Date(openOrders[orderId].orderTime)
+      let orderExpirationTime = new Date(orderTime.getTime() + orderExpirationLimit * 1000);
+      if (Date.now() > orderExpirationTime) {
+        expireOrder(firebase, orderId, openOrders[orderId].customer.id);
+      }
+      let drivers = await hasura.request(getDriversQuery, {
+        "lat": openOrders[orderId].from.lat,
+        "long": openOrders[orderId].from.lng,
+        "bound": 5
+      });
+      console.log(drivers)
+      // drivers = [driver1, driver2 .....] 8
+      // notifiedDrivers = 0
+      // while(notifiedDrivers < 5)
+      //     if(openOrders/${orderId}/notifiedDrivers/{$driverId}){
+      //        skip
+      //     }
+      //     sendNotification(drivers[i])
+      //     openOrders/${orderId}/drivers/{$driverId}/notificationSent  true TRANSACTION
+      //     notifiedDrivers++
+    } else {
+      expireOrder(firebase, orderId, openOrders[orderId].customer.id)
+    }
+  }
+}
