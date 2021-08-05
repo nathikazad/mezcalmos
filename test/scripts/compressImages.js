@@ -30,10 +30,14 @@ async function main() {
     let userId = file.name.split('/')[1]
 
     let fileName = `./data/${userId}.jpg`
-    console.log(userId, fileName);
-    await bucket.file(file.name).download({ destination: fileName })
-    await execShellCommand(`sips -Z 500 ${fileName}`);
-    await bucket.upload(fileName, { destination: file.name, public: true });
+    if (file.metadata.size < 10000) {
+      console.log(userId, fileName, file.metadata.size);
+      console.log(file.metadata.mediaLink);
+      await bucket.file(file.name).download({ destination: fileName })
+      await execShellCommand(`sips -Z 500 ${fileName}`);
+      await bucket.upload(fileName, { destination: file.name, public: true });
+    }
+
 
   };
   process.exit()
