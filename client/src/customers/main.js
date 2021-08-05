@@ -31,6 +31,22 @@ async function firebaseCallback(user) {
       loggedIn: true,
       // hasuraAuthToken: token
     });
+
+    user.getIdToken()
+
+    user.getIdTokenResult()
+      .then(async (tokenResult) => {
+        let hasuraClaim = tokenResult.claims['https://hasura.io/jwt/claims']
+        if (!hasuraClaim) {
+          console.log("No hasura, retrying")
+          await store.dispatch("addHasuraClaims");
+        }
+        let hasuraAuthToken = await user.getIdToken(true)
+        store.dispatch("saveHasuraToken", { hasuraAuthToken: hasuraAuthToken });
+      })
+
+
+
     registerServiceWorker('customer').then(() => {
       askForNotification('customer', store);
     });
