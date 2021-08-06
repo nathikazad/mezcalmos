@@ -5,11 +5,9 @@ module.exports = {
   insertOrder,
   updateOrder,
   insertUser,
-  updateUser
+  updateUser,
+  Hasura
 }
-
-const keys = require("./keys")
-const hasuraKeys = keys.keys().hasura
 
 async function setClaim(firebase, uid) {
   try {
@@ -67,37 +65,34 @@ mutation updateOrder($orderId:String, $changes: orders_set_input!){
   }
   }`
 
-async function insertOrder(query) {
-
+class Hasura {
+  client;
+  constructor(keys) {
+    this.client = new GraphQLClient(
+      keys.url,
+      {
+        headers: {
+          'x-hasura-admin-secret': keys.key
+        }
+      });
+  }
+  async insertOrder(query) {
     try {
-      const client = new GraphQLClient(
-        hasuraKeys.url,
-         {
-           headers: {
-             'x-hasura-admin-secret': hasuraKeys.key
-        
-        }})
-      const result = await client.request(insertOrderMutation,query)
+      const result = await this.client.request(insertOrderMutation, query)
       console.log(result)
       return{
         status: 'Success'
       }
-     
+
     } catch (e) {
       console.log(e)
     }
-}
+  }
 
-  async function updateOrder(query){
+  async updateOrder(query) {
     
     try {
-      const client = new GraphQLClient(
-        hasuraKeys.url,
-         {
-           headers: {
-             'x-hasura-admin-secret': hasuraKeys.key
-      }})
-      const result = await client.request(updateOrderMutation, query)
+      const result = await this.client.request(updateOrderMutation, query)
       console.log(result.update_orders.returning)
       return{
         status: 'Success'
@@ -107,48 +102,33 @@ async function insertOrder(query) {
     }
   }
 
-  async function insertUser(query){
+  async insertUser(query) {
     
     try{
-      const client = new GraphQLClient(
-        hasuraKeys.url,
-         {
-           headers: {
-             'x-hasura-admin-secret': hasuraKeys.key
-           }
-         }
-      )
-      const result = await client.request(insertUserMutation, query)
+      const result = await this.client.request(insertUserMutation, query)
       console.log(result);
       return{
         status: 'Success'
       }
-     
+
     }catch(e){
       console.log(e);
     }
   }
 
-  async function updateUser(query){
-   
+  async updateUser(query) {
+
     try{
-      const client = new GraphQLClient(
-        hasuraKeys.url,
-         {
-           headers: {
-             'x-hasura-admin-secret': hasuraKeys.key
-           }
-         }
-      )
-      const result = await client.request(updateUserMutation, query)
+      const result = await this.client.request(updateUserMutation, query)
       console.log(result);
       // return{
       //   status: 'Success'
       // }
-     
+
     }catch(e){
       console.log(e);
     }
   }
+}
 
   

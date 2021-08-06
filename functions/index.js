@@ -9,6 +9,23 @@ const testFirebase = firebaseAdmin.initializeApp({
   databaseURL: "https://mezcalmos-test.firebaseio.com"
 }, "test")
 
+const keys = require("./keys").keys()
+const hasura = require("./helpers/hasura");
+
+const testHasura = new hasura.Hasura(keys.hasura)
+const stagingHasura = new hasura.Hasura(keys.hasuraStage)
+const productionHasura = new hasura.Hasura(keys.hasuraTest)
+
+function getHasura(database = "production") {
+  if (process.env.FUNCTIONS_EMULATOR == true) {
+    return testHasura
+  } else if (database == "production") {
+    return productionHasura
+  } else {
+    return stagingHasura
+  }
+}
+
 function getFirebase(database = "production") {
   if (database == "production") {
     return productionFirebase
@@ -18,8 +35,6 @@ function getFirebase(database = "production") {
 }
 
 // const grocery = require("./helpers/grocery")
-
-const hasura = require("./helpers/hasura");
 const message = require("./helpers/message");
 const admin = require("./helpers/admin");
 const auth = require("./helpers/auth");
@@ -102,8 +117,9 @@ exports.requestTaxi = functions.https.onCall(async (data, context) => {
     }
   }
   let firebase = getFirebase(data.database);
+  let hasura = getHasura(data.database);
   const request = require("./helpers/taxi/request")
-  let response = await request(firebase, context.auth.uid, data)
+  let response = await request(firebase, context.auth.uid, data, hasura)
   return response
 });
 
