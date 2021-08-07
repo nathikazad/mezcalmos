@@ -278,6 +278,7 @@ class AuthController extends GetxController {
       // Sign in the user with Firebase. If the nonce we generated earlier does
       // not match the nonce in `appleCredential.identityToken`, sign in will fail.
       fireAuth.FirebaseAuth.instance.signInWithCredential(oauthCredential);
+      _userInfoListener.resume();
     } catch (exception) {
       print(exception);
       mezcalmosSnackBar("Notice ~", "Failed SignIn with Apple !");

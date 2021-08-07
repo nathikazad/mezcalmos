@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
@@ -161,6 +163,66 @@ class SignIn extends GetWidget<AuthController> {
                       ),
                     ),
                   )),
+              lmode != "dev" && Platform.isIOS
+                  ? SizedBox(
+                      height: getSizeRelativeToScreen(5, sh, sw),
+                    )
+                  : SizedBox(),
+              lmode != "dev" && Platform.isIOS
+                  ? Flexible(
+                      fit: FlexFit.loose,
+                      child: Obx(
+                        () => TextButton(
+                          onPressed: clickedLogin.value
+                              ? null
+                              : () async {
+                                  clickedLogin.value = true;
+                                  await controller.signInWithApple();
+                                  clickedLogin.value = false;
+                                },
+                          child: clickedLogin.value
+                              ? Center(
+                                  child: SizedBox(
+                                    height: 18,
+                                    width: 18,
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                      strokeWidth: 2,
+                                    ),
+                                  ),
+                                )
+                              : Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Icon(
+                                      Icons.iso_rounded,
+                                      color: Colors.black,
+                                    ),
+                                    Text(lang.strings['shared']['login']
+                                        ["loginWithApple"])
+                                  ],
+                                ),
+                          style: ButtonStyle(
+                            // padding:  MaterialStateProperty.<EdgeInsetsGeometry>(EdgeInsets.symmetric(horizontal: 10)),
+                            textStyle: MaterialStateProperty.all<TextStyle>(
+                                new TextStyle(
+                                    fontSize:
+                                        getSizeRelativeToScreen(10, sh, sw),
+                                    fontWeight: FontWeight.bold)),
+                            fixedSize: MaterialStateProperty.all<Size>(new Size(
+                                getSizeRelativeToScreen(150, sh, sw),
+                                getSizeRelativeToScreen(25, sh, sw))),
+                            elevation: MaterialStateProperty.all<double>(2),
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.white),
+                            foregroundColor:
+                                MaterialStateProperty.all<Color>(Colors.black),
+                          ),
+                        ),
+                      ))
+                  : SizedBox(),
             ],
           ),
         ),
