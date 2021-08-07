@@ -132,6 +132,7 @@
             "fbBtn": "LOGIN WITH FACEBOOK",
             "loginWithSms": "LOGIN WITH SMS",
             "whatsAppLogin": " LOGIN WITH WHATSAPP",
+            "loginWithApple": " LOGIN WITH APPLE",
             "verifyCountryCode": "Please verify your country code",
             "verifyPhoneNumber": "Please verify your phone number",
             "OtpConfirmation": "OTP Code Confirmation",

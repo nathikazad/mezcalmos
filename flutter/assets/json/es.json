@@ -131,6 +131,7 @@
             "fbBtn": "INICIAR CON FACEBOOK",
             "whatsAppLogin": " INICIAR CON WHATSAPP",
             "loginWithSms": "INICIAR CON SMS",
+            "loginWithApple": "INICIAR CON APPLE",
             "verifyCountryCode": "Verifique el código de su país",
             "verifyPhoneNumber": "Verifique su número de teléfono",
             "OtpConfirmation": "Confirmación del código OTP",
