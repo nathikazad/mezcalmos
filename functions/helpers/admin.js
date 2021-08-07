@@ -55,9 +55,8 @@ async function createChat(firebase, params) {
 
 async function checkAdmin(firebase, params) {
   let isAdmin = (await firebase.database().ref(`admins/${params.adminId}/authorized`).once('value')).val();
-   isAdmin = isAdmin != null && isAdmin == true 
- // isAdmin != null ? isAdmin = true : isAdmin = false
-  if(isAdmin) {
+  isAdmin = isAdmin != null && isAdmin == true
+  if (!isAdmin) {
     return { status: "Error", errorMessage: "Only admins can run this operation" }
   } 
 }
@@ -100,7 +99,6 @@ async function submitAuthorizationRequest(firebase, params) {
 }
 
 async function approveAuthorizationRequest(firebase, params, hasura) {
-
   let response = await checkAdmin(firebase, params)
   if (response) return response
 
@@ -109,8 +107,7 @@ async function approveAuthorizationRequest(firebase, params, hasura) {
   }
 
   let taxiDriver = (await firebase.database().ref(`/taxiDrivers/${params.userId}`).once('value')).val()
-  
-  if(taxiDriver && taxiDriver.state &&
+  if (!taxiDriver || !taxiDriver.state ||
         taxiDriver.state.authorizationStatus != "pending") {
     return { status: "Error", errorMessage: "Taxi driver has not requested for approval" }
   }

@@ -17,170 +17,125 @@ async function setClaim(firebase, uid) {
   }
 }
 
-// const insertOrderMutation = gql` 
-// mutation AddOrder($order: orders_insert_input!){
-//   insert_orders_one(object: $order) {
-//       customerId
-//       orderId
-//   }
-// }`
-// const insertUserMutation = gql`
-// mutation AddUser($user: users_insert_input!){
-//   insert_users_one(object: $user){
-//     uid
-//   }
-// }`
-// const updateUserMutation = gql`
-// mutation updateUser($uid: String, $changes: users_set_input!){
-//   update_users(
-//     where: {uid: {_eq: $uid}},
-//     _set: $changes
-//   ){
-//     returning{
-//       uid
-//       displayName
-//     }
-//   }
-// }` 
-
-// const updateOrderMutation = gql`
-// mutation updateOrder($orderId:String, $changes: orders_set_input!){
-//   update_orders(
-//     where: {orderId: {_eq: $orderId}},
-//     _set: $changes
-//   ){
-//     returning{
-//       orderId
-//       finalStatus
-//     }
-//   }
-//   }`
-
-  class Hasura {
-    client;
-    constructor(keys) {
-      this.client = new GraphQLClient(
-        keys.url,
-        {
-          headers: {
-            'x-hasura-admin-secret': keys.key
-          }
-        });
-    }
-    async insertOrder(query) {
-        const insertOrderMutation = gql` 
-        mutation AddOrder($order: orders_insert_input!){
-          insert_orders_one(object: $order) {
-           customerId
-           orderId
-          }
-       }`
-      try {
-        const result = await this.client.request(insertOrderMutation, query)
-        console.log(result)
-        return{
-          status: 'Success'
+class Hasura {
+  constructor(keys) {
+    this.client = new GraphQLClient(
+      keys.url,
+      {
+        headers: {
+          'x-hasura-admin-secret': keys.key
         }
-  
-      } catch (e) {
-        console.log(e)
-      }
-    }
-  
-    async updateOrder(query) {
-      const updateOrderMutation = gql`
-       mutation updateOrder($orderId:String, $changes: orders_set_input!){
-         update_orders(
-           where: {orderId: {_eq: $orderId}},
-           _set: $changes
-         ){
-         returning{
-           orderId
-           finalStatus
-          }
+      });
+  }
+  async insertOrder(query) {
+    const insertOrderMutation = gql` 
+      mutation AddOrder($order: orders_insert_input!){
+        insert_orders_one(object: $order) {
+          customerId
+          orderId
         }
       }`
-      
-      try {
-        const result = await this.client.request(updateOrderMutation, query)
-        console.log(result.update_orders.returning)
-        return{
-          status: 'Success'
-        }
-      } catch (e) {
-        console.log(e)
+    try {
+      const result = await this.client.request(insertOrderMutation, query)
+      console.log(result)
+      return {
+        status: 'Success'
       }
-    }
-  
-    async insertUser(query) {
-      const insertUserMutation = gql`
-      mutation AddUser($user: users_insert_input!){
-        insert_users_one(object: $user){
-          uid
-        }
-      }`
-      try{
-        const result = await this.client.request(insertUserMutation, query)
-        console.log(result);
-        return{
-          status: 'Success'
-        }
-  
-      }catch(e){
-        console.log(e);
-      }
-    }
-  
-    async updateUser(query) {
-      const updateUserMutation = gql`
-      mutation updateUser($uid: String, $changes: users_set_input!){
-        update_users(
-          where: {uid: {_eq: $uid}},
-          _set: $changes
-        ){
-          returning{
-            uid
-            displayName
-          }
-        }
-      }` 
-      try{
-        const result = await this.client.request(updateUserMutation, query)
-        console.log(result);
-        // return{
-        //   status: 'Success'
-        // }
-  
-      }catch(e){
-        console.log(e);
-      }
-    }
 
-    async getDrivers(query) {
-      const getDriversQuery = gql`
-       query GetDriversQuery($lat: float8, $long: float8, $bound: Int){
-         nearby_drivers(args: {lat: $lat, long: $long, bound: $bound}){
-            location
-          }
-        }`
-      try{
-        const result = await this.client.request(getDriversQuery, query)
-        console.log(result);
-      }catch(e){
-        console.log(e);
-      }
+    } catch (e) {
+      console.log(e)
     }
   }
+
+  async updateOrder(query) {
+    const updateOrderMutation = gql`
+      mutation updateOrder($orderId:String, $changes: orders_set_input!){
+        update_orders(
+          where: {orderId: {_eq: $orderId}},
+          _set: $changes
+        ){
+        returning{
+          orderId
+          finalStatus
+        }
+      }
+    }`
+
+    try {
+      const result = await this.client.request(updateOrderMutation, query)
+      console.log(result.update_orders.returning)
+      return {
+        status: 'Success'
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  async insertUser(query) {
+    const insertUserMutation = gql`
+    mutation AddUser($user: users_insert_input!){
+      insert_users_one(object: $user){
+        uid
+      }
+    }`
+    try {
+      const result = await this.client.request(insertUserMutation, query)
+      console.log(result);
+      return {
+        status: 'Success'
+      }
+
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async updateUser(query) {
+    const updateUserMutation = gql`
+    mutation updateUser($uid: String, $changes: users_set_input!){
+      update_users(
+        where: {uid: {_eq: $uid}},
+        _set: $changes
+      ){
+        returning{
+          uid
+          displayName
+        }
+      }
+    }`
+    try {
+      const result = await this.client.request(updateUserMutation, query)
+      console.log(result);
+      // return{
+      //   status: 'Success'
+      // }
+
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async getDrivers(query) {
+    const getDriversQuery = gql`
+      query GetDriversQuery($lat: float8, $long: float8, $bound: Int){
+        nearby_drivers(args: {lat: $lat, long: $long, bound: $bound}){
+          location
+        }
+      }`
+    try {
+      const result = await this.client.request(getDriversQuery, query)
+      console.log(result);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+}
   
 
 
 module.exports = { 
   Hasura,
   setClaim
-  // insertOrder,
-  // updateOrder,
-  // insertUser,
-  // updateUser,
-  
 }
   
