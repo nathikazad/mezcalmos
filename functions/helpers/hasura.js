@@ -155,6 +155,21 @@ async function setClaim(firebase, uid) {
         console.log(e);
       }
     }
+
+    async getDrivers(query) {
+      const getDriversQuery = gql`
+       query GetDriversQuery($lat: float8, $long: float8, $bound: Int){
+         nearby_drivers(args: {lat: $lat, long: $long, bound: $bound}){
+            location
+          }
+        }`
+      try{
+        const result = await this.client.request(getDriversQuery, query)
+        console.log(result);
+      }catch(e){
+        console.log(e);
+      }
+    }
   }
   
 
