@@ -39,10 +39,10 @@ function checkOpenOrders(firebase, openOrders) {
     if (openOrders[orderId].orderTime) {
       let orderTime = new Date(openOrders[orderId].orderTime)
       let orderExpirationTime = new Date(orderTime.getTime() + orderExpirationLimit * 1000);
-	console.log("ordertime ", orderTime.toUTCString())
-	console.log("currentime", (new Date()).toUTCString())
-	console.log("expirationtime", orderExpirationTime.toUTCString())
-	console.log()
+  	console.log("ordertime ", orderTime.toUTCString())
+  	console.log("currentime", (new Date()).toUTCString())
+  	console.log("expirationtime", orderExpirationTime.toUTCString())
+  	console.log(openOrders)
       if (Date.now() > orderExpirationTime) {
         expireOrder(firebase, orderId, openOrders[orderId].customer.id);
       }

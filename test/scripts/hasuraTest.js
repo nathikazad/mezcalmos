@@ -113,7 +113,7 @@ async function insertOrder(query){
   // gqlReq.request("https://mezcalmos.hasura.app/v1/graphql", query).then((data) => console.log(data))
   try {
     const client = new GraphQLClient(
-      'https://summary-mole-22.hasura.app/v1/graphql',
+      'https://staging-mezc.hasura.app/v1/graphql',
       //https://mezcalmos.hasura.app/v1/graphql",
        {
       headers: { 'x-hasura-admin-secret': 'JzI9zQvNqmLKK1A1HjY1oEZ2FYkd7C7qk8brZYby4wTYIUbaWUVD0F9o07Gj2g4i'
@@ -128,7 +128,7 @@ async function insertOrder(query){
 async function updateOrder(query){
   try {
     const client = new GraphQLClient(
-      'https://summary-mole-22.hasura.app/v1/graphql',
+      'https://staging-mezc.hasura.app/v1/graphql',
       //https://mezcalmos.hasura.app/v1/graphql",
        {
       headers: { 'x-hasura-admin-secret': 'JzI9zQvNqmLKK1A1HjY1oEZ2FYkd7C7qk8brZYby4wTYIUbaWUVD0F9o07Gj2g4i'
@@ -143,7 +143,7 @@ async function updateOrder(query){
 async function insertUser(query){
   try{
     const client = new GraphQLClient(
-      'https://summary-mole-22.hasura.app/v1/graphql',
+      'https://staging-mezc.hasura.app/v1/graphql',
        {
          headers: {
           'x-hasura-admin-secret': 'JzI9zQvNqmLKK1A1HjY1oEZ2FYkd7C7qk8brZYby4wTYIUbaWUVD0F9o07Gj2g4i'
@@ -153,13 +153,13 @@ async function insertUser(query){
     const result = await client.request(insertUserMutation, query)
     console.log(result);
   }catch(e){
-    console.log(e.response.errors);
+    console.log(e);
   }
 }
 async function updateUser(query){
   try{
     const client = new GraphQLClient(
-      'https://summary-mole-22.hasura.app/v1/graphql',
+      'https://staging-mezc.hasura.app/v1/graphql',
        {
          headers: {
           'x-hasura-admin-secret': 'JzI9zQvNqmLKK1A1HjY1oEZ2FYkd7C7qk8brZYby4wTYIUbaWUVD0F9o07Gj2g4i'
@@ -205,78 +205,78 @@ async function updateTheUser(){
     }
   })
 }
-//addUser()
-updateOneOrder()
+addUser()
+//updateOneOrder()
 //addUser()
 //updateTheUser()
 
 
-async function saveFile(){
-  let db = (await firebase.database().ref(`/`).once('value')).val();
-	console.log("finished downloading, starting write");
+// async function saveFile(){
+//   let db = (await firebase.database().ref(`/`).once('value')).val();
+// 	console.log("finished downloading, starting write");
 	
-	let data = JSON.stringify(db, null, "\t");  
-	fs.writeFileSync('data/db-snapshot.json', data);  
-	console.log("Finished");
-}
+// 	let data = JSON.stringify(db, null, "\t");  
+// 	fs.writeFileSync('data/db-snapshot.json', data);  
+// 	console.log("Finished");
+// }
 
-async function writeToDB(){
-  let data = JSON.parse(fs.readFileSync('data/db-snapshot.json'));
-  let orders = data.orders.taxi
-  let i = 0
-  let array = []
-  for(let orderId in orders){
-    let order = orders[orderId]
-    let object = {
-      customerId:order.customer.id,
-      orderId:orderId,
-      orderTime:(new Date(order.orderTime)).toISOString()
-    }
-    if(order.driver)
-      object.driverId = order.driver.id
-    if(order.acceptRideTime)
-      object.acceptRideTime = (new Date(order.acceptRideTime)).toISOString()
-    if(order.rideStartTime)
-      object.rideStartTime = (new Date(order.rideStartTime)).toISOString()
-    if(order.rideFinishTime)
-      object.rideFinishTime = (new Date(order.rideFinishTime)).toISOString()
-    if(order.status)
-      object.finalStatus = order.status
-    if(order.duration)
-      object.estimatedRideTime = order.duration.value
-    if(order.to && order.to.lat && order.to.lng)
-      object.dropOffLocation ={
-        type:"Point",
-        coordinates: [order.to.lat,order.to.lng]
-      }
-    if(order.from && order.from.lat && order.from.lng)
-      order.pickUpLocation = {
-        type:"Point",
-        coordinates: [order.from.lat,order.from.lng]
-      }
-    if(order.cancelledBy)
-      object.cancellationParty = order.cancelledBy
-    if(order.reason)
-      object.cancellationReason = order.reason
-    i++
-    if(i%50 == 0){
-      await insertOrder({objects:array})
-      array = []
-    } else {
-      array.push(object)
-    }
-  }
-  await insertOrder({objects:array})
-}
-
-
+// async function writeToDB(){
+//   let data = JSON.parse(fs.readFileSync('data/db-snapshot.json'));
+//   let orders = data.orders.taxi
+//   let i = 0
+//   let array = []
+//   for(let orderId in orders){
+//     let order = orders[orderId]
+//     let object = {
+//       customerId:order.customer.id,
+//       orderId:orderId,
+//       orderTime:(new Date(order.orderTime)).toISOString()
+//     }
+//     if(order.driver)
+//       object.driverId = order.driver.id
+//     if(order.acceptRideTime)
+//       object.acceptRideTime = (new Date(order.acceptRideTime)).toISOString()
+//     if(order.rideStartTime)
+//       object.rideStartTime = (new Date(order.rideStartTime)).toISOString()
+//     if(order.rideFinishTime)
+//       object.rideFinishTime = (new Date(order.rideFinishTime)).toISOString()
+//     if(order.status)
+//       object.finalStatus = order.status
+//     if(order.duration)
+//       object.estimatedRideTime = order.duration.value
+//     if(order.to && order.to.lat && order.to.lng)
+//       object.dropOffLocation ={
+//         type:"Point",
+//         coordinates: [order.to.lat,order.to.lng]
+//       }
+//     if(order.from && order.from.lat && order.from.lng)
+//       order.pickUpLocation = {
+//         type:"Point",
+//         coordinates: [order.from.lat,order.from.lng]
+//       }
+//     if(order.cancelledBy)
+//       object.cancellationParty = order.cancelledBy
+//     if(order.reason)
+//       object.cancellationReason = order.reason
+//     i++
+//     if(i%50 == 0){
+//       await insertOrder({objects:array})
+//       array = []
+//     } else {
+//       array.push(object)
+//     }
+//   }
+//   await insertOrder({objects:array})
+// }
 
 
 
 
 
 
-let data = JSON.parse(fs.readFileSync(filePrefix+'data.json'));
-saveFile()
-writeToDB()
+
+
+// let data = JSON.parse(fs.readFileSync(filePrefix+'data.json'));
+// //saveFile()
+// //writeToDB()
 

@@ -1,9 +1,9 @@
 const notification = require("../notification");
-const hasura = require("../hasura");
 
-module.exports = ( firebase, uid, data ) => { return cancelTaxiFromDriver(firebase, uid, data) }
 
-async function cancelTaxiFromDriver(firebase, uid, data) {
+module.exports = ( firebase, uid, data, hasura) => { return cancelTaxiFromDriver(firebase, uid, data, hasura) }
+
+async function cancelTaxiFromDriver(firebase, uid, data, hasura) {
     let orderId = (await firebase.database().ref(`/taxiDrivers/${uid}/state/currentOrder`).once('value')).val();
     if (orderId == null) {
       return {

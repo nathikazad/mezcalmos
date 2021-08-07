@@ -1,8 +1,8 @@
 const notification = require("../notification");
-const hasura = require('../hasura');
 
-module.exports = ( firebase, uid, data ) => { return accept(firebase, uid, data) }
-async function accept(firebase, uid, data) {
+
+module.exports = ( firebase, uid, data, hasura) => { return accept(firebase, uid, data, hasura) }
+async function accept(firebase, uid, data, hasura) {
     if (!data.orderId) {
       return {
         status: "Error",

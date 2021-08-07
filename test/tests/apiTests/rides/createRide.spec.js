@@ -59,32 +59,34 @@ let customer, badUser, driver
 describe('Mezcalmos', () => {
   beforeAll(async () => {
     await helper.clearDatabase(admin)
-    newAdmin = await auth.signUp(admin, adminData)
+    //newAdmin = await auth.signUp(admin, adminData)
     customer = await auth.signUp(admin, userData)
     driver = await auth.signUp(admin, driverData)
     badUser = await auth.signUp(admin, badUserData)
-    //await admin.database().ref(`/taxiDrivers/${driver.id}/state/authorizationStatus`).set('authorized')
-    await admin.database().ref(`admins/${newAdmin.id}/authorized`).set('authorized')
+    await admin.database().ref(`/taxiDrivers/${driver.id}/state/authorizationStatus`).set('authorized')
+   // await admin.database().ref(`admins/${newAdmin.id}/authorized`).set('authorized')
   });
 
   it('Create ride test', async () => {
+
+   
     // approve authorization for driver
-    let params = {
-      adminId: newAdmin.id,
-      userId: driver.id,
-      userType: 'driver'
-    }
-    // let isAdmin = (await admin.database().ref(`admins/${params.adminId}/authorized`).once('value')).val();
-    // isAdmin = isAdmin != null && isAdmin == true 
+  //   let params = {
+  //     adminId: newAdmin.id,
+  //     userId: driver.id,
+  //     userType: 'driver'
+  //   }
+  //   // let isAdmin = (await admin.database().ref(`admins/${params.adminId}/authorized`).once('value')).val();
+  //   // isAdmin = isAdmin != null && isAdmin == true 
   
-    let request  = await driver.callFunction('approveAuthorizationRequest', params)
+  //   let request  = await driver.callFunction('approveAuthorizationRequest', params)
     
     // change user's name and photo
     
-   let changeRequest = await admin.database().ref(`users/${customer.id}/info`).update({
-     displayName:'helena',
-     photo: "https://randomuser.me/api/portraits/men/78.jpg"
-    })
+  //  let changeRequest = await admin.database().ref(`users/${customer.id}/info`).update({
+  //    displayName:'helena',
+  //    photo: "https://randomuser.me/api/portraits/men/78.jpg"
+  //   })
 
     //Only authorized users can request ride
     let response = await axios.post(`http://localhost:5001/mezcalmos-31f1c/us-central1/requestTaxi`, { data: "cats"})

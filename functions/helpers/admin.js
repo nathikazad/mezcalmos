@@ -6,7 +6,7 @@ module.exports = {
   checkAdmin
 }
 
-const hasura = require('./hasura')
+//const hasura = require('./hasura')
 
 async function createChat(firebase, params) {
   if(!params.userId || !params.userType){
@@ -99,7 +99,7 @@ async function submitAuthorizationRequest(firebase, params) {
   createChat(firebase, params)
 }
 
-async function approveAuthorizationRequest(firebase, params) {
+async function approveAuthorizationRequest(firebase, params, hasura) {
 
   let response = await checkAdmin(firebase, params)
   if (response) return response

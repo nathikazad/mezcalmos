@@ -1,9 +1,9 @@
 const notification = require("../notification");
-const hasura = require('../hasura');
 
-module.exports = ( firebase, uid ) => { return start(firebase, uid) }
 
-async function start(firebase, uid) {
+module.exports = ( firebase, uid, hasura ) => { return start(firebase, uid, hasura) }
+
+async function start(firebase, uid, hasura) {
   
     let orderId = (await firebase.database().ref(`/taxiDrivers/${uid}/state/currentOrder`).once('value')).val();
     // console.log('the order id', orderId);

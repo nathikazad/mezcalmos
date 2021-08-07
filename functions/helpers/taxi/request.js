@@ -1,6 +1,6 @@
 const notification = require("../notification");
 
-module.exports = ( firebase, uid, data ) => { return request(firebase, uid, data) }
+module.exports = ( firebase, uid, data, hasura) => { return request(firebase, uid, data, hasura) }
 
 async function request(firebase, uid, data, hasura) {
     // 
