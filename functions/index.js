@@ -12,12 +12,18 @@ const testFirebase = firebaseAdmin.initializeApp({
 const keys = require("./helpers/keys").keys()
 const hasura = require("./helpers/hasura");
 
-// const testHasura = new hasura.Hasura(keys.hasura)
-const stagingHasura = new hasura.Hasura(keys.hasuraStage)
-const productionHasura = new hasura.Hasura(keys.hasuraTest)
+let testHasura, stagingHasura, productionHasura
+
+if (process.env.FUNCTIONS_EMULATOR == "true") {
+  testHasura = new hasura.Hasura(keys.hasuraTest)
+} else {
+  stagingHasura = new hasura.Hasura(keys.hasuraStage)
+  productionHasura = new hasura.Hasura(keys.hasura)
+}
+
 
 function getHasura(database = "production") {
-  if (process.env.FUNCTIONS_EMULATOR == true) {
+  if (process.env.FUNCTIONS_EMULATOR == "true") {
     return testHasura
   } else if (database == "production") {
     return productionHasura

@@ -27,7 +27,7 @@ class Hasura {
         }
       });
   }
-  async insertOrder(query) {
+  async insertOrder(parameters) {
     const insertOrderMutation = gql` 
       mutation AddOrder($order: orders_insert_input!){
         insert_orders_one(object: $order) {
@@ -36,7 +36,7 @@ class Hasura {
         }
       }`
     try {
-      const result = await this.client.request(insertOrderMutation, query)
+      const result = await this.client.request(insertOrderMutation, parameters)
       console.log(result)
       return {
         status: 'Success'
@@ -47,7 +47,7 @@ class Hasura {
     }
   }
 
-  async updateOrder(query) {
+  async updateOrder(parameters) {
     const updateOrderMutation = gql`
       mutation updateOrder($orderId:String, $changes: orders_set_input!){
         update_orders(
@@ -62,7 +62,7 @@ class Hasura {
     }`
 
     try {
-      const result = await this.client.request(updateOrderMutation, query)
+      const result = await this.client.request(updateOrderMutation, parameters)
       console.log(result.update_orders.returning)
       return {
         status: 'Success'
@@ -72,7 +72,7 @@ class Hasura {
     }
   }
 
-  async insertUser(query) {
+  async insertUser(parameters) {
     const insertUserMutation = gql`
     mutation AddUser($user: users_insert_input!){
       insert_users_one(object: $user){
@@ -80,7 +80,7 @@ class Hasura {
       }
     }`
     try {
-      const result = await this.client.request(insertUserMutation, query)
+      const result = await this.client.request(insertUserMutation, parameters)
       console.log(result);
       return {
         status: 'Success'
@@ -91,7 +91,7 @@ class Hasura {
     }
   }
 
-  async updateUser(query) {
+  async updateUser(parameters) {
     const updateUserMutation = gql`
     mutation updateUser($uid: String, $changes: users_set_input!){
       update_users(
@@ -105,7 +105,7 @@ class Hasura {
       }
     }`
     try {
-      const result = await this.client.request(updateUserMutation, query)
+      const result = await this.client.request(updateUserMutation, parameters)
       console.log(result);
       // return{
       //   status: 'Success'
@@ -116,7 +116,7 @@ class Hasura {
     }
   }
 
-  async getDrivers(query) {
+  async getDrivers(parameters) {
     const getDriversQuery = gql`
       query GetDriversQuery($lat: float8, $long: float8, $bound: Int){
         nearby_drivers(args: {lat: $lat, long: $long, bound: $bound}){
@@ -124,7 +124,7 @@ class Hasura {
         }
       }`
     try {
-      const result = await this.client.request(getDriversQuery, query)
+      const result = await this.client.request(getDriversQuery, parameters)
       console.log(result);
     } catch (e) {
       console.log(e);

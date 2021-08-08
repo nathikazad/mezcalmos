@@ -4,6 +4,20 @@ const admin = require("firebase-admin");
 const puppeteer = require('puppeteer');
 const CustomerApp = require("./libraries/apps/customerApp")
 const helper = require("./libraries/helpers")
+
+const { GraphQLClient } = require('graphql-request')
+const keys = require("../functions/helpers/keys").keys()
+
+let hasura = new GraphQLClient(
+  keys.hasuraTest.url,
+  {
+    headers: {
+      'x-hasura-admin-secret': keys.hasuraTest.key
+    }
+  });
+
+
+
 admin.initializeApp({
   projectId: "mezcalmos-31f1c",
   databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com"
@@ -36,8 +50,7 @@ console.log("Load Data: Starting Up")
 
 async function loadData(dataFolderName = "dummyData"){
   //clear DB
-  await helper.clearDatabase(admin)
-
+  await helper.clearDatabase(admin, hasura)
   // Get test data
   let rawData = fs.readFileSync(`../test/data/${dataFolderName}/database_export/mezcalmos-31f1c-default-rtdb.json`, "utf8")
   let data = JSON.parse(rawData)
