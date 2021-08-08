@@ -96,17 +96,26 @@ exports.changePhoto = functions.database.instance('mezcalmos-31f1c-default-rtdb'
       }) 
   })
 
-
-exports.changeTaxiNumber = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
+exports.changeTaxiNumberCreate = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
   'users/{userId}/info/taxiNumber').onCreate(async (snap, context) => {
-    console.log(snap.after.val());
+    let hasura = getHasura();
+    await hasura.updateUser({
+      uid: context.params.userId,
+      changes: {
+        taxiNumber: snap.val()
+      }
+    })
+  })
+
+exports.changeTaxiNumberUpdate = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
+  'users/{userId}/info/taxiNumber').onUpdate(async (snap, context) => {
+    let hasura = getHasura();
     await hasura.updateUser({
       uid: context.params.userId,
       changes: {
         taxiNumber: snap.after.val()
       }
     })
-    console.log('number updated');
   })
   
 

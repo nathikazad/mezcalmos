@@ -14,8 +14,6 @@ dist
 .vscode
 test/data/newDummyData
 service_account.json
-<<<<<<< HEAD
 test/scripts/data
-=======
 service-account.json
->>>>>>> master
+flutter/
