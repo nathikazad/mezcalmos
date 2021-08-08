@@ -28,7 +28,7 @@ let driverData = {
   "returnSecureToken": true
 }
 
-
+//
 async function main() {
   let client = new GraphQLClient(
     keys.hasuraTest.url,
@@ -54,7 +54,12 @@ async function main() {
   }
 
   request = await newAdmin.callFunction('approveAuthorizationRequest', params)
+   request = await admin.database().ref(`users/${driver.id}/info`).update({
+    taxiNumber: "55555555"
+  })
+  console.log('taxiNumber changed successfully');
   process.exit()
 }
 
 main();
+

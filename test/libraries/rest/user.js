@@ -22,6 +22,14 @@ class User {
   async setImage(img){
     await this.db.update(`/users/${this.id}/info`, {photo:img})
   }
+  async getInfo(){
+    let req = await this.db.get(`users/${this.id}/info`)
+    console.log('info', req);
+  }
+
+  // async setNumber(num){
+  //   await this.db.set(`users/${this.id}/info/taxiNumber`, num)
+  // }
 
   async sendMessage(orderId, newMessage){
     await this.db.push(`/chat/${orderId}/messages`, newMessage)

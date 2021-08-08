@@ -3,6 +3,7 @@ const firebaseAdmin = require("firebase-admin");
 
 const productionFirebase = firebaseAdmin.initializeApp({
   databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com"
+  
 }, "production");
 const testFirebase = firebaseAdmin.initializeApp({
   databaseURL: "https://mezcalmos-test.firebaseio.com"
@@ -11,7 +12,7 @@ const testFirebase = firebaseAdmin.initializeApp({
 const keys = require("./helpers/keys").keys()
 const hasura = require("./helpers/hasura");
 
-const testHasura = new hasura.Hasura(keys.hasura)
+// const testHasura = new hasura.Hasura(keys.hasura)
 const stagingHasura = new hasura.Hasura(keys.hasuraStage)
 const productionHasura = new hasura.Hasura(keys.hasuraTest)
 
@@ -47,7 +48,7 @@ exports.processSignUp = functions.auth.user().onCreate(async user => {
   let hasuraDb = getHasura()
   if (!user.photoURL)
     user.photoURL = 'https://www.mezcalmos.com/img/logo.71b44398.svg'
-
+  
   await firebase.database().ref(`/users/${user.uid}/info`).update({
     displayName: user.displayName,
     photo: user.photoURL,
@@ -61,11 +62,7 @@ exports.processSignUp = functions.auth.user().onCreate(async user => {
         photo: user.photoURL,
       }
   })
-    // if (req.status == 'Success') {
-    //   console.log(`user ${user.uid} is successfully inserted`);
-    // }
-  //}
-  //await AddUser()
+  
 
 });
 
@@ -81,10 +78,7 @@ exports.changeName = functions.database.instance('mezcalmos-31f1c-default-rtdb')
            displayName: snap.after.val()
          } 
        }) 
-      //  if(req.status == 'Success'){
-      //    console.log('user name is updated successfully in DB');
-      //  }
-    
+     
     console.log('name changed');
   })
 
@@ -101,6 +95,20 @@ exports.changePhoto = functions.database.instance('mezcalmos-31f1c-default-rtdb'
          } 
       }) 
   })
+
+
+exports.changeTaxiNumber = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
+  'users/{userId}/info/taxiNumber').onCreate(async (snap, context) => {
+    console.log(snap.after.val());
+    await hasura.updateUser({
+      uid: context.params.userId,
+      changes: {
+        taxiNumber: snap.after.val()
+      }
+    })
+    console.log('number updated');
+  })
+  
 
 exports.addHasuraClaims = functions.https.onCall(async (data, context) => {
   let firebase = getFirebase();

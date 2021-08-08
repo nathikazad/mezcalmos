@@ -2,8 +2,7 @@
 const { gql } = require('graphql-request')
 
 
-
-const deleterOrderQuery = gql`
+const deleteOrderQuery = gql`
 mutation DeleteOrders {
   delete_orders(where: {}) {
     affected_rows
@@ -31,7 +30,7 @@ module.exports = {
       await admin.database().ref("/").remove()
       if (hasura) {
         await hasura.request(deleteUsersQuery)
-        await hasura.request(deleterOrderQuery)
+        await hasura.request(deleteOrderQuery)
       }
     }
   },

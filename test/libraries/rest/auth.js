@@ -21,11 +21,12 @@ const key = "?key=AIzaSyB9vaAB9ptXhpeRs_JjxODEyuA_eO0tYu0"
 //   return response.data
 // }
 async function signUp(admin, data) {
+
   // console.log(data)
   let response = await axios.post(`${url}accounts:signUp${key}`, data)    
   let user = new User(response.data)
   await user.setImage(data.photoURL)
- 
+  
   return user
 }
 // signIn: async (page, param) => {

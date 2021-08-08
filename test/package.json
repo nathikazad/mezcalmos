@@ -7,7 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-    "emulator": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 firebase emulators:start --export-on-exit=test/data/newDummyData",
+    "emulator": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 MEZC_API_KEY=/Users/nathikazad/Projects/mezcalmos/functions/.runtimeconfig.json firebase emulators:start --export-on-exit=test/data/newDummyData",
     "emulator:onlyFunctions": "firebase emulators:start --only functions",
     "loadData": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 node ./loadData.js",
     "emulator:loadData": "npm-run-all --parallel emulator loadData",

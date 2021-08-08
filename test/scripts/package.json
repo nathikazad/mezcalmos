@@ -4,7 +4,7 @@
   "description": "",
   "main": "testNotification.js",
   "scripts": {
-    "emulate": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 GCLOUD_PROJECT=none MEZC_API_KEYS=/Users/nathikazad/Projects/mezcalmos/functions/.runtimeconfig.json FIREBASE_CONFIG=MEZC_API_KEYS node"
+    "emulate": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 GCLOUD_PROJECT=none MEZC_API_KEYS=/home/sam/Desktop/WORK/testmezcalmos/mezcalmos/functions/.runtimeconfig.json FIREBASE_CONFIG=MEZC_API_KEYS node"
   },
   "author": "",
   "license": "ISC",
