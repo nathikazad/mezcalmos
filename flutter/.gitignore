@@ -2,6 +2,7 @@
 
 *.jks
 key.properties
+upload_certificate.pem
 
 # --
 .launcher_output/*.apk
