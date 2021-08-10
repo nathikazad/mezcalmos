@@ -1,7 +1,6 @@
 import os , json
 from sys import argv
 from enum import Enum
-from base64 import b64decode as b64d , b64encode as b64e
 
 # GLOBAL CONSTANTS !
 VERSION = "1.0.2"
