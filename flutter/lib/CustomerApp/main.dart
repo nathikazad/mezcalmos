@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
+import 'package:mezcalmos/CustomerApp/pages/Wrapper.dart';
 
 class CustomerApp extends StatelessWidget {
   @override
@@ -10,18 +11,13 @@ class CustomerApp extends StatelessWidget {
     }
 
     return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      onInit: () async => await _initializeConfig(),
-      title: 'Fiction2Mission',
-      theme: ThemeData(
-          primaryColor: Colors.white,
-          visualDensity: VisualDensity.adaptivePlatformDensity),
-      color: Colors.white,
-      home: Scaffold(
-        body: Center(
-          child: Text("Customer App"),
-        ),
-      ),
-    );
+        debugShowCheckedModeBanner: false,
+        onInit: () async => await _initializeConfig(),
+        title: 'Fiction2Mission',
+        theme: ThemeData(
+            primaryColor: Colors.white,
+            visualDensity: VisualDensity.adaptivePlatformDensity),
+        color: Colors.white,
+        home: Wrapper());
   }
 }
