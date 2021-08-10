@@ -5,7 +5,7 @@
 // =============================
 
 import 'dart:async';
-import 'package:mezcalmos/CustomerApp/main.dart';
+import 'package:mezcalmos/TaxiApp/main.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -40,7 +40,7 @@ void main() {
   print('db  -> $_db');
   print('mode  -> $_launch_mode');
 
-  runApp(SPoint(CustomerApp(), _host, _db, _launch_mode));
+  runApp(SPoint(TaxiApp(), _host, _db, _launch_mode));
 }
 
 class SPoint extends StatefulWidget {
