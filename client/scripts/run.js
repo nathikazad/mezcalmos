@@ -4,27 +4,34 @@ var argv = require('yargs/yargs')(process.argv.slice(2)).argv;
 if (argv.command == "deploy") {
   let fullCommand;
   let mode = ""
-  let destSuffix = ""
-  if (argv.mode == "test"){
-    mode = "--mode test"
-    destSuffix = "Test"
+
+  if (argv.mode == "test") {
+    mode = "--mode staging"
   }
   if (argv.app == "taxis" || argv.app == "all") {
-    fullCommand = `vue-cli-service build ${mode} --dest ../dist/taxis${destSuffix} src/taxis/main.js`
+    fullCommand = `vue-cli-service build ${mode} --dest ../dist/taxis src/taxis/main.js`
     execSync(fullCommand, {stdio:[0, 1, 2]});
   }
   if (argv.app == "admin" || argv.app == "all") {
-    fullCommand = `vue-cli-service build ${mode} --dest ../dist/admin${destSuffix} src/admin/main.js`
+    fullCommand = `vue-cli-service build ${mode} --dest ../dist/admin src/admin/main.js`
     execSync(fullCommand, {stdio:[0, 1, 2]});
   }
   if (argv.app == "customers" || argv.app == "all") {
-    fullCommand = `npx vue-cli-service build ${mode} --dest ../dist/customers${destSuffix} src/customers/main.js`
+    fullCommand = `npx vue-cli-service build ${mode} --dest ../dist/customers src/customers/main.js`
     execSync(fullCommand, {stdio:[0, 1, 2]});
   }
-  if (argv.app == "all") {
-    fullCommand = `firebase deploy --only hosting:taxis${destSuffix},hosting:customers${destSuffix},hosting:admin${destSuffix}`
+
+  if (argv.mode == "test") {
+    fullCommand = "firebase use mezcalmos-staging"
   } else {
-    fullCommand = `firebase deploy --only hosting:${argv.app}${destSuffix}`
+    fullCommand = "firebase use mezcalmos-31f1c"
+  }
+  execSync(fullCommand, { stdio: [0, 1, 2] });
+
+  if (argv.app == "all") {
+    fullCommand = `firebase deploy --only hosting:taxis,hosting:customers,hosting:admin`
+  } else {
+    fullCommand = `firebase deploy --only hosting:${argv.app}`
   }
   execSync(fullCommand, {stdio:[0, 1, 2]});
 }

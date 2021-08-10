@@ -1,43 +1,30 @@
 const functions = require("firebase-functions");
 const firebaseAdmin = require("firebase-admin");
 
-const productionFirebase = firebaseAdmin.initializeApp({
-  databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com"
-  
-}, "production");
-const testFirebase = firebaseAdmin.initializeApp({
-  databaseURL: "https://mezcalmos-test.firebaseio.com"
-}, "test")
+const firebase = firebaseAdmin.initializeApp();
 
 const keys = require("./helpers/keys").keys()
 const hasura = require("./helpers/hasura");
 
-let testHasura, stagingHasura, productionHasura
+let testHasuraClient, hasuraClient
 
 if (process.env.FUNCTIONS_EMULATOR == "true") {
-  testHasura = new hasura.Hasura(keys.hasuraTest)
-} else {
-  stagingHasura = new hasura.Hasura(keys.hasuraStage)
-  productionHasura = new hasura.Hasura(keys.hasura)
+  testHasuraClient = new hasura.Hasura(keys.hasuraTest)
+} else if (keys.hasura) {
+  hasuraClient = new hasura.Hasura(keys.hasura)
 }
 
 
-function getHasura(database = "production") {
+function getHasura() {
   if (process.env.FUNCTIONS_EMULATOR == "true") {
-    return testHasura
-  } else if (database == "production") {
-    return productionHasura
+    return testHasuraClient
   } else {
-    return stagingHasura
+    return hasuraClient
   }
 }
 
 function getFirebase(database = "production") {
-  if (database == "production") {
-    return productionFirebase
-  } else {
-    return testFirebase
-  }
+  return firebase
 }
 // const grocery = require("./helpers/grocery")
 const message = require("./helpers/message");
@@ -72,7 +59,7 @@ exports.processSignUp = functions.auth.user().onCreate(async user => {
 
 });
 
-exports.changeName = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
+exports.changeName = functions.database.ref(
   '/users/{userId}/info/displayName').onUpdate(async (snap, context) => {
     let firebase = getFirebase();
     let hasura = getHasura()
@@ -88,7 +75,7 @@ exports.changeName = functions.database.instance('mezcalmos-31f1c-default-rtdb')
     console.log('name changed');
   })
 
-exports.changePhoto = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
+exports.changePhoto = functions.database.ref(
   '/users/{userId}/info/photo').onUpdate(async (snap, context) => {
     let firebase = getFirebase();
     let hasura = getHasura();
@@ -102,7 +89,7 @@ exports.changePhoto = functions.database.instance('mezcalmos-31f1c-default-rtdb'
       }) 
   })
 
-exports.changeTaxiNumberCreate = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
+exports.createTaxiNumber = functions.database.ref(
   'users/{userId}/info/taxiNumber').onCreate(async (snap, context) => {
     let hasura = getHasura();
     await hasura.updateUser({
@@ -113,7 +100,7 @@ exports.changeTaxiNumberCreate = functions.database.instance('mezcalmos-31f1c-de
     })
   })
 
-exports.changeTaxiNumberUpdate = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
+exports.updateTaxiNumber = functions.database.ref(
   'users/{userId}/info/taxiNumber').onUpdate(async (snap, context) => {
     let hasura = getHasura();
     await hasura.updateUser({
@@ -282,25 +269,13 @@ exports.resolveAdminChat = functions.https.onCall(async (data, context) => {
   return response
 });
 
-exports.notifyMessageParticipantsTest = functions.database.instance('mezcalmos-test').ref(
-  '/chat/{chatId}/messages/{messageId}').onCreate((snap, context) => {
-    let firebase = getFirebase('test');
-    message.notifyOthers(firebase, context.params, snap.val())
-  })
-
-exports.notifyMessageParticipants = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
+exports.notifyMessageParticipants = functions.database.ref(
   '/chat/{chatId}/messages/{messageId}').onCreate(async (snap, context) => {
     let firebase = getFirebase();
     message.notifyOthers(firebase, context.params, snap.val())
   })
 
-exports.notifyMessageFromAdminTest = functions.database.instance('mezcalmos-test').ref(
-  'adminChat/{userType}/current/{userId}/{ticketId}/messages/{messageId}').onCreate((snap, context) => {
-    let firebase = getFirebase('test');
-    message.notifyUser(firebase, context.params, snap.val())
-  })
-
-exports.notifyMessageFromAdmin = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
+exports.notifyMessageFromAdmin = functions.database.ref(
   'adminChat/{userType}/current/{userId}/{ticketId}/messages/{messageId}').onCreate(async (snap, context) => {
     let firebase = getFirebase();
     message.notifyUser(firebase, context.params, snap.val())
@@ -351,34 +326,21 @@ exports.sendTestNotification = functions.https.onCall(async (data, context) => {
   return response
 });
 
-
-
-exports.notifyPromoterFromTestCustomer = functions.database.instance('mezcalmos-test').ref(
-  'users/{userId}/invite/code').onCreate(async (snap, context) => {
-    let firebase = getFirebase('test');
-    await notifications.notifyPromoterOfCustomerReferral(firebase, context.params, snap.val())
-  })
-
-
-exports.notifyPromoterOfCustomer = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
+exports.notifyPromoterOfCustomer = functions.database.ref(
   'users/{userId}/invite/code').onCreate(async (snap, context) => {
     let firebase = getFirebase();
     await notifications.notifyPromoterOfCustomerReferral(firebase, context.params, snap.val())
   })
 
-exports.notifyPromoterFromTestDriver = functions.database.instance('mezcalmos-test').ref(
-  'taxiDrivers/{userId}/invite/code').onCreate(async (snap, context) => {
-    let firebase = getFirebase('test');
-    await notifications.notifyPromoterOfDriverReferral(firebase, context.params, snap.val())
-  })
 
-exports.notifyPromoterOfDriver = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
+
+exports.notifyPromoterOfDriver = functions.database.ref(
   'taxiDrivers/{userId}/invite/code').onCreate(async (snap, context) => {
     let firebase = getFirebase();
     await notifications.notifyPromoterOfDriverReferral(firebase, context.params, snap.val())
   })
 
-exports.notifyPromoterOfSignUp = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
+exports.notifyPromoterOfSignUp = functions.database.ref(
   'promoters/{inviteCode}').onCreate(async (snap, context) => {
     let firebase = getFirebase();
     await notifications.notifyPromoterOfSignup(firebase, context.params, snap.val())

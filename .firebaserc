@@ -11,31 +11,34 @@
         "customers": [
           "mezcalmos-31f1c"
         ],
-        "customersTest": [
-          "customers-in-test"
-        ],
-        "taxisTest": [
-          "taxis-in-test"
-        ],
         "deliveries": [
           "deliveries-3f1da"
         ],
-        "deliveriesTest": [
-          "deliveries-in-test-ba13c"
-        ],
         "admin": [
           "admins-51885"
-        ],
-        "adminTest": [
-          "admins-in-test"
         ]
       },
       "database": {
         "main": [
           "mezcalmos-31f1c-default-rtdb"
+        ]
+      }
+    },
+    "mezcalmos-staging": {
+      "hosting": {
+        "customers": [
+          "mezcalmos-staging"
         ],
-        "test": [
-          "mezcalmos-test"
+        "taxis": [
+          "meztaxi-staging"
+        ],
+        "admin": [
+          "meztaxi-staging-admin"
+        ]
+      },
+      "database": {
+        "main": [
+          "mezcalmos-staging-default-rtdb"
         ]
       }
     }

@@ -15,11 +15,13 @@ module.exports = {
 const webpush = require('web-push')
 
 const vapidKeys = keys.keys().vapidkeys
-webpush.setVapidDetails(
-  'http://www.mezcalmos.com',
-  vapidKeys.public,
-  vapidKeys.private
-)
+if (vapidKeys) {
+  webpush.setVapidDetails(
+    'http://www.mezcalmos.com',
+    vapidKeys.public,
+    vapidKeys.private
+  )
+}
 
 async function push(firebase, userId, message, particpantType = "customer") {
   firebase.database().ref(`/notifications/${particpantType}/${userId}`).push(message)

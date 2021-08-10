@@ -12,30 +12,8 @@
       ]
     },
     {
-      "target": "customersTest",
-      "public": "dist/customersTest",
-      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-      "rewrites": [
-        {
-          "source": "**",
-          "destination": "/index.html"
-        }
-      ]
-    },
-    {
       "target": "taxis",
       "public": "dist/taxis",
-      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-      "rewrites": [
-        {
-          "source": "**",
-          "destination": "/index.html"
-        }
-      ]
-    },
-    {
-      "target": "taxisTest",
-      "public": "dist/taxisTest",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "rewrites": [
         {
@@ -56,30 +34,8 @@
       ]
     },
     {
-      "target": "deliveriesTest",
-      "public": "dist/deliveriesTest",
-      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-      "rewrites": [
-        {
-          "source": "**",
-          "destination": "/index.html"
-        }
-      ]
-    },
-    {
       "target": "admin",
       "public": "dist/admin",
-      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-      "rewrites": [
-        {
-          "source": "**",
-          "destination": "/index.html"
-        }
-      ]
-    },
-    {
-      "target": "adminTest",
-      "public": "dist/adminTest",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "rewrites": [
         {
@@ -90,8 +46,10 @@
     }
   ],
   "database": [
-    {"target": "main", "rules": "database.rules.json"},
-    {"target": "test", "rules": "database.rules.json"}
+    {
+      "target": "main",
+      "rules": "database.rules.json"
+    }
   ],
   "emulators": {
     "functions": {
