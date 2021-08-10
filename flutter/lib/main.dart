@@ -1,23 +1,21 @@
+// WARNING : ===================
+
+// DO NOT TOUCH OR IMPORT ANYTHING IN THIS MAIN PLEASE.
+
+// =============================
+
 import 'dart:async';
-import 'dart:io' show Platform;
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:http/http.dart' as http;
+import 'package:mezcalmos/TaxiApp/main.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/services.dart';
-import 'package:mezcalmos/CustomerApp/main.dart';
-import 'package:mezcalmos/DeliveryApp/main.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
-import 'package:mezcalmos/TaxiApp/main.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -42,27 +40,7 @@ void main() {
   print('db  -> $_db');
   print('mode  -> $_launch_mode');
 
-  // commented this try-catch block cuz it shouldn't be here cuz i forgot the emulator case
-
-  // try {
-  //   if ((Platform.isAndroid || Platform.isIOS) && _host == localhost) {
-  //     throw new Exception(
-  //         "[!] Error > When building for Android/IOS , Please make sure to pass Your Firebase host Machine's IP !");
-  //   }
-  // } catch (e) {
-  //   print(e);
-  // }
-
-  switch (startPoint) {
-    case 'delivery':
-      return runApp(SPoint(DeliveryApp(), _host, _db, _launch_mode));
-
-    case 'customer':
-      return runApp(SPoint(CustomerApp(), _host, _db, _launch_mode));
-
-    default:
-      return runApp(SPoint(TaxiApp(), _host, _db, _launch_mode));
-  }
+  runApp(SPoint(TaxiApp(), _host, _db, _launch_mode));
 }
 
 class SPoint extends StatefulWidget {
@@ -80,7 +58,7 @@ class SPoint extends StatefulWidget {
 class _SPointState extends State<SPoint> {
   bool _initialized = false;
   bool _error = false;
-  bool timerDone = false; 
+  bool timerDone = false;
 
   initializeSetup() async {
     try {
@@ -112,47 +90,6 @@ class _SPointState extends State<SPoint> {
       if (await GetStorage.init()) {
         print("[ GET STORAGE ] INITIALIZED !");
         await GetStorage().write(getxLmodeKey, widget._launch_mode);
-        await GetStorage()
-            // .write(getxGmapBottomPaddingKey, Platform.isAndroid ? 38.0 : 63.0);
-            .write(getxGmapBottomPaddingKey,
-                Platform.isAndroid ? 38.0 : Get.height / 20);
-
-        // first original user marker loading
-
-        await GetStorage().write('user_descriptor_placeholder',
-            await BitmapDescriptorLoader(logo_asset, 60, 60));
-
-        // second method
-
-        // await GetStorage().write(
-        //     'user_descriptor',
-        //     (isByte, imgUrl) async => await BitmapDescriptorLoader(
-        //         isByte == true
-        //             ? await cropRonded(
-        //                 (await http.get(Uri.parse(imgUrl))).bodyBytes)
-        //             : user_icon_marker_asset,
-        //         100,
-        //         100,
-        //         isBytes: isByte));
-
-        // await GetStorage().write(
-        //     'user_descriptor',
-        //     (isByte, imgUrl) async => isByte == false
-        //         ? await BitmapDescriptorLoader(user_icon_marker_asset, 170, 180,
-        //             isBytes: isByte)
-        //         : await ImageCropper().resizeAndCircle(imgUrl, 20));
-
-        await GetStorage().write('taxi_descriptor',
-            await BitmapDescriptorLoader(taxi_driver_marker_asset, 60, 60));
-
-        await GetStorage().write(
-            'destination_descriptor',
-            await BitmapDescriptorLoader(
-                purple_destination_marker_asset, 60, 60));
-
-        // Loading map asset !
-        await rootBundle.loadString(map_style_asset).then((jsonString) =>
-            GetStorage().write(getxMapStyleJsonKey, jsonString));
       } else
         print("[ GET STORAGE ] FAILED TO INITIALIZE !");
 
@@ -169,7 +106,6 @@ class _SPointState extends State<SPoint> {
   @override
   void initState() {
     // INjecting this here cuz we will need it For language / them ... etc
-
     initializeSetup();
     super.initState();
   }
