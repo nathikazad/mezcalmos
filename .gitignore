@@ -15,4 +15,8 @@ dist
 test/data/newDummyData
 service_account.json
 service-account.json
+<<<<<<< HEAD
 test/scripts/data/
+=======
+test/scripts/data/
+>>>>>>> 3cff1c2 (Ran Garbage Collecter via > git gc)
