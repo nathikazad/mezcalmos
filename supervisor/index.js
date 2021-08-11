@@ -1,37 +1,46 @@
 
 const firebaseAdmin = require("firebase-admin");
 const keys = require("../functions/helpers/keys").keys()
-const hasura = require("../functions/helpers/hasura")
+const hasuraClass = require("../functions/helpers/hasura")
 const expireOrder = require("../functions/helpers/taxi/expire");
 
-const firebase = firebaseAdmin.initializeApp();
+let fbUrl, hasuraUrl;
 
-let openOrdersTest = {}
+if (process.argv[2]) {
+  if (process.argv[2] == "emulate") {
+    fbUrl = "https://mezcalmos-31f1c-default-rtdb.firebaseio.com"
+    hasuraUrl = keys.hasuraTest
+  } else if (process.argv[2] == "staging") {
+    fbUrl = "https://mezcalmos-staging-default-rtdb.firebaseio.com"
+    hasuraUrl = keys.hasura
+  } else if (process.argv[2] == "production") {
+    fbUrl = "https://mezcalmos-31f1c-default-rtdb.firebaseio.com"
+    hasuraUrl = keys.hasura
+  } else {
+    console.log("Invalid environment variable")
+    process.exit()
+  }
+} else {
+  console.log("Required environment variable")
+  process.exit()
+}
+
+const firebase = firebaseAdmin.initializeApp({
+  databaseURL: fbUrl
+});
+const hasura = new hasuraClass.Hasura(hasuraUrl)
+let openOrders = {}
 
 let checkOpenOrdersInterval = 30 //seconds
 let orderExpirationLimit = 5 * 60 // seconds
 
-if (process.argv[2] && process.argv[2] == "test") {
-  console.log("Supervisor test mode")
-  checkOpenOrdersInterval = 10 //seconds
-  orderExpirationLimit = 30 // seconds
-}
+
 
 firebase.database().ref(`/openOrders/taxi`).on('value', function (snap) {
   openOrders = snap.val()
 });
 
-let hasura;
-if (process.env.FIREBASE_DATABASE_EMULATOR_HOST != null) {
-  hasura = new hasura.Hasura(keys.hasuraTest)
-} else {
-  hasura = new hasura.Hasura(keys.hasura)
-}
-
-
-
-
-async function checkOpenOrders(firebase, openOrders, hasura) {
+async function checkOpenOrders() {
   console.log(openOrders);
   for (let orderId in openOrders) {
     if (openOrders[orderId].orderTime) {
@@ -47,6 +56,8 @@ async function checkOpenOrders(firebase, openOrders, hasura) {
 }
 
 setInterval(checkOpenOrders, checkOpenOrdersInterval * 1000);
+
+
 
 // const getDriversQuery = gql`
 // query GetDriversQuery($lat: float8, $long: float8, $bound: Int) {

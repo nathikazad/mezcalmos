@@ -6,26 +6,16 @@ const firebase = firebaseAdmin.initializeApp();
 const keys = require("./helpers/keys").keys()
 const hasura = require("./helpers/hasura");
 
-let testHasuraClient, hasuraClient
-
+let hasuraKeys;
 if (process.env.FUNCTIONS_EMULATOR == "true") {
-  testHasuraClient = new hasura.Hasura(keys.hasuraTest)
-} else if (keys.hasura) {
-  hasuraClient = new hasura.Hasura(keys.hasura)
+  hasuraKeys = keys.hasuraTest
+} else {
+  hasuraKeys = keys.hasura
 }
+const hasuraClient = new hasura.Hasura(keys.hasura)
 
 
-function getHasura() {
-  if (process.env.FUNCTIONS_EMULATOR == "true") {
-    return testHasuraClient
-  } else {
-    return hasuraClient
-  }
-}
 
-function getFirebase(database = "production") {
-  return firebase
-}
 // const grocery = require("./helpers/grocery")
 const message = require("./helpers/message");
 const admin = require("./helpers/admin");
@@ -37,8 +27,6 @@ const { user } = require("firebase-functions/lib/providers/auth");
 exports.processSignUp = functions.auth.user().onCreate(async user => {
  
   await hasura.setClaim(user.uid);
-  let firebase = getFirebase();
-  let hasuraDb = getHasura()
   if (!user.photoURL)
     user.photoURL = 'https://www.mezcalmos.com/img/logo.71b44398.svg'
   
