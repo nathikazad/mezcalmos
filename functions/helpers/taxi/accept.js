@@ -117,7 +117,8 @@ async function accept(firebase, uid, data, hasura) {
         changes:{
           finalStatus: order.status,
           acceptRideTime: order.acceptRideTime,
-          driverId: order.driver.id
+          driverId: order.driver.id,
+          cost: order.estimatedPrice
         } 
       }) 
      

@@ -12,8 +12,8 @@ import {
   getBrowserLanguage
 } from '@/shared/mixins/functions'
 
-// import { apolloClient } from '@/config/apollo'
-// import gql from 'graphql-tag'
+import { initializeApolloClient } from '@/shared/config/apollo'
+
 export default {
   state() {
     return {
@@ -176,13 +176,22 @@ export default {
       }else{
         firebaseDatabase().ref(`${nodeName}/${userId}/invite/code`).set(payload);
       }
-    }
+    },
+    async addHasuraClaims() {
+      await cloudCall('addHasuraClaims');
+    },
+    saveHasuraToken(context, payload) {
+      context.commit('saveHasuraToken', payload)
+      initializeApolloClient(payload.hasuraAuthToken);
+    },
   },
   mutations: {
     saveAuthData(state, payload) {
       state.userId = payload.userId;
-      state.hasuraAuthToken = payload.hasuraAuthToken;
       state.loggedIn = payload.loggedIn;
+    },
+    saveHasuraToken(state, payload) {
+      state.hasuraAuthToken = payload.hasuraAuthToken;
     },
     saveUserInfo(state, payload) {
       state.info = payload
@@ -207,7 +216,6 @@ export default {
     saveInviteCode(state, payload) {
       state.inviteCode = payload
     }
-
   }
 }
 

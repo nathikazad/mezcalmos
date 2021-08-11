@@ -12,7 +12,6 @@ import incomingOrdersModule from './modules/incomingOrders';
 import pastOrdersModule from './modules/pastOrders';
 import orderModule from './modules/order';
 import notificationsModule from './modules/notifications'
-
 Vue.use(Vuex)
 
 const store = new Vuex.Store({

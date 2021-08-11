@@ -1,6 +1,6 @@
 import { firebaseDatabase } from '@/shared/config/firebase'
-// import { apolloClient } from '@/config/apollo'
-// import gql from 'graphql-tag'
+import { getApolloClient } from '@/shared/config/apollo'
+import gql from 'graphql-tag'
 export default {
   state() {
     return {
@@ -120,13 +120,34 @@ async function storeState(newState, context) {
       id: null,
       value: null
     })
+    let apolloClient = getApolloClient();
+    let userId = context.rootGetters.userId
     if (newState.isLooking) {
       context.commit('setIsLooking', true)
+      // setHasuraAvailableOn
+
+      await apolloClient.mutate({
+        mutation: gql`
+        mutation AvailableMutation {
+          insert_driverLocation_one(object: {available: true, uid: "${userId}"}, on_conflict: {constraint: driverLocation_pkey, update_columns: available, where: {uid: {_eq: "${userId}"}}}) {
+            location
+          }
+        }
+      ` })
       context.dispatch('incomingOrders/startListeningForIncoming')
     } else {
       context.commit('setIsLooking', false)
+      await apolloClient.mutate({
+        mutation: gql`
+        mutation AvailbleMutation {
+          insert_driverLocation_one(object: {available: false, uid: "${userId}"}, on_conflict: {constraint: driverLocation_pkey, update_columns: available, where: {uid: {_eq: "${userId}"}}}) {
+            location
+          }
+        }
+      ` })
       context.dispatch('incomingOrders/stopListeningForIncoming')
     }
+
   }
 }
 
@@ -142,6 +163,17 @@ const updateDriverPosition = async (context) => {
     lastUpdateTime: lastUpdateTime.toUTCString()
   }
   firebaseDatabase().ref(`taxiDrivers/${userId}/location`).set(locationUpdate)
+  console.log(driverLocation.lat, driverLocation.lng)
+  // setDriverPosition
+  let apolloClient = getApolloClient();
+  await apolloClient.mutate({
+    mutation: gql`
+    mutation LocationMutation {
+      insert_driverLocation_one(object: {location: {type: "Point", coordinates: [${driverLocation.lng}, ${driverLocation.lat}]}, uid: "${userId}"}, on_conflict: {constraint: driverLocation_pkey, update_columns: location, where: {uid: {_eq: "${userId}"}}}) {
+        location
+      }
+    }
+  ` })
   if (context.state.currentOrder.id) {
     firebaseDatabase().ref(`orders/taxi/${context.state.currentOrder.id}/driver/location`).update(locationUpdate)
   }
