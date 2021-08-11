@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import os , json
 from sys import argv
 from enum import Enum
@@ -68,18 +70,18 @@ class Launcher:
             print("Exiting the launcher .... bye bye!")
     
     def __f_checker__(self):
-        if not os.path.exists('lib/main.dart'):
+        if not os.path.exists('../lib/main.dart'):
             exit(DW_EXIT_REASONS.ROOT_MAIN_DART_FILE_NOT_FOUND)
 
 
     def __patcher__(self):
-        PRINTLN("[+] Patching lib/main.dart !")
-        f_root_main = open('lib/main.dart' , encoding='utf-8' , errors='ignore').read()
+        PRINTLN("[+] Patching ../lib/main.dart !")
+        f_root_main = open('../lib/main.dart' , encoding='utf-8' , errors='ignore').read()
         f_root_main = f_root_main.replace(self.last_app , self.user_args['app'])
 
         # Writing new Valid App.
-        open('lib/main.dart' , 'w+').write(f_root_main)
-        PRINTLN("[+] Pacthed lib/main successfully !")
+        open('../lib/main.dart' , 'w+').write(f_root_main)
+        PRINTLN("[+] Pacthed ../lib/main successfully !")
 
     def __set_flutter_args__(self):
         self.flutter_setup = f"--dart-define=APP_SP={self.user_args['app']} --dart-define=HOST={self.user_args['host']} --dart-define=LMODE={self.user_args['lmode']} --dart-define=DB={self.user_args['db']}"
