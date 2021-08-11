@@ -56,7 +56,7 @@ async function buildDeviceNotificationMessage(firebase, userId, message){
 }
 
 async function notifyDriversNewRequest(firebase, address) {
-  drivers = (await firebase.database().ref(`/taxiDrivers`).once('value')).val();
+  let drivers = (await firebase.database().ref(`/taxiDrivers`).once('value')).val();
   for (let driverId in drivers){
     let driver = drivers[driverId]
     if(driver.state && driver.state.isLooking && !driver.state.currentOrder) {
@@ -78,7 +78,7 @@ async function notifyDriversNewRequest(firebase, address) {
     }
   }
 
-  users = (await firebase.database().ref(`/users`).once('value')).val();
+  let users = (await firebase.database().ref(`/users`).once('value')).val();
   for (let driverId in drivers){
     let driver = drivers[driverId]
     let user = users[driverId]

@@ -74,8 +74,8 @@ export default {
       let calcEstimated = (estimated) => {
         if (estimated) {
 
-          estimated += 5
-        }
+         estimated += 5
+         }
         return estimated
       }
       await firebaseDatabase().ref(`/orders/taxi/${orderId}/estimatedPrice`).transaction(calcEstimated)
@@ -84,7 +84,7 @@ export default {
     async reduceTaxiPrice(_, payload) {
       let orderId = payload.orderId
       let calcEstimated = (estimated) => {
-        if (estimated) {
+        if (estimated&&estimated>35) {
 
           estimated -= 5
         }

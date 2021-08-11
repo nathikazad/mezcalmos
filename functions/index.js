@@ -18,7 +18,7 @@ function getFirebase(database = "production") {
 }
 
 // const grocery = require("./helpers/grocery")
-const taxi = require("./helpers/taxi")
+
 const hasura = require("./helpers/hasura");
 const message = require("./helpers/message");
 const admin = require("./helpers/admin");
@@ -30,6 +30,9 @@ const { user } = require("firebase-functions/lib/providers/auth");
 exports.processSignUp = functions.auth.user().onCreate(async user => {
   hasura.setClaim(user.uid);
   let firebase = getFirebase();
+  if (!user.photoURL)
+    user.photoURL = 'https://www.mezcalmos.com/img/logo.71b44398.svg'
+
   await firebase.database().ref(`/users/${user.uid}/info`).update({
     displayName: user.displayName,
     photo: user.photoURL,
@@ -39,15 +42,15 @@ exports.processSignUp = functions.auth.user().onCreate(async user => {
 
 exports.changeName = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
   '/users/{userId}/info/displayName').onUpdate(async (snap, context) => {
-  let firebase = getFirebase();
-  await firebase.auth().updateUser(context.params.userId, {displayName: snap.after.val()})
-})
+    let firebase = getFirebase();
+    await firebase.auth().updateUser(context.params.userId, { displayName: snap.after.val() })
+  })
 
 exports.changePhoto = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
   '/users/{userId}/info/photo').onUpdate(async (snap, context) => {
-  let firebase = getFirebase();
-  await firebase.auth().updateUser(context.params.userId, {photoURL: snap.after.val()})
-})
+    let firebase = getFirebase();
+    await firebase.auth().updateUser(context.params.userId, { photoURL: snap.after.val() })
+  })
 
 exports.addHasuraClaims = functions.https.onCall(async (data, context) => {
   let firebase = getFirebase();
@@ -63,7 +66,8 @@ exports.requestTaxi = functions.https.onCall(async (data, context) => {
     }
   }
   let firebase = getFirebase(data.database);
-  let response = await taxi.request(firebase, context.auth.uid, data)
+  const request = require("./helpers/taxi/request")
+  let response = await request(firebase, context.auth.uid, data)
   return response
 });
 
@@ -75,7 +79,8 @@ exports.acceptTaxiOrder = functions.https.onCall(async (data, context) => {
     }
   }
   let firebase = getFirebase(data.database);
-  let response = await taxi.accept(firebase, data, context.auth.uid)
+  const accept = require("./helpers/taxi/accept")
+  let response = await accept(firebase, context.auth.uid, data)
   return response
 });
 
@@ -87,7 +92,8 @@ exports.startTaxiRide = functions.https.onCall(async (data, context) => {
     }
   }
   let firebase = getFirebase(data.database);
-  let response = await taxi.start(firebase, context.auth.uid)
+  const start = require("./helpers/taxi/start")
+  let response = await start(firebase, context.auth.uid)
   return response
 });
 
@@ -99,7 +105,8 @@ exports.cancelTaxiFromCustomer = functions.https.onCall(async (data, context) =>
     }
   }
   let firebase = getFirebase(data.database);
-  let response = await taxi.cancelTaxiFromCustomer(firebase, context.auth.uid, data)
+  const cancelTaxiFromCustomer = require("./helpers/taxi/cancelTaxiFromCustomer")
+  let response = await cancelTaxiFromCustomer(firebase, context.auth.uid, data)
   return response
 });
 
@@ -111,7 +118,8 @@ exports.cancelTaxiFromDriver = functions.https.onCall(async (data, context) => {
     }
   }
   let firebase = getFirebase(data.database);
-  let response = await taxi.cancelTaxiFromDriver(firebase, context.auth.uid, data)
+  const cancelTaxiFromDriver = require("./helpers/taxi/cancelTaxiFromDriver")
+  let response = await cancelTaxiFromDriver(firebase, context.auth.uid, data)
   return response
 });
 
@@ -123,19 +131,8 @@ exports.finishTaxiRide = functions.https.onCall(async (data, context) => {
     }
   }
   let firebase = getFirebase(data.database);
-  let orderId
-  if(data.fromAdmin) {
-    let response = await admin.checkAdmin(firebase, {adminId:context.auth.uid})
-    if (response) return response
-    orderId = data.orderId
-  } else {
-    let driverId = context.auth.uid
-    orderId = (await firebase.database().ref(`/taxiDrivers/${driverId}/state/currentOrder`).once('value')).val();
-    if (orderId == null) {
-      return { status: "Error", errorMessage: "Driver has not accepted any ride" }
-    }
-  }
-  let response = await taxi.finish(firebase, orderId)
+  const finishTaxiRide = require("./helpers/taxi/finish")
+  let response = await finishTaxiRide(firebase, context.auth.uid, data)
   return response
 });
 
@@ -170,7 +167,6 @@ exports.finishTaxiRide = functions.https.onCall(async (data, context) => {
 //   return response
 // });
 
-
 exports.submitAuthorizationRequest = functions.https.onCall(async (data, context) => {
   let firebase = getFirebase(data.database);
   data.userId = context.auth.uid
@@ -187,7 +183,7 @@ exports.approveAuthorizationRequest = functions.https.onCall(async (data, contex
 
 exports.createAdminChat = functions.https.onCall(async (data, context) => {
   let firebase = getFirebase(data.database);
-  if(data.fromAdmin){
+  if (data.fromAdmin) {
     data.adminId = context.auth.uid
   } else {
     data.userId = context.auth.uid
@@ -205,27 +201,27 @@ exports.resolveAdminChat = functions.https.onCall(async (data, context) => {
 
 exports.notifyMessageParticipantsTest = functions.database.instance('mezcalmos-test').ref(
   '/chat/{chatId}/messages/{messageId}').onCreate((snap, context) => {
-  let firebase = getFirebase('test');
-  message.notifyOthers(firebase, context.params, snap.val())
-})
+    let firebase = getFirebase('test');
+    message.notifyOthers(firebase, context.params, snap.val())
+  })
 
 exports.notifyMessageParticipants = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
   '/chat/{chatId}/messages/{messageId}').onCreate(async (snap, context) => {
-  let firebase = getFirebase();
-  message.notifyOthers(firebase, context.params, snap.val())
-})
+    let firebase = getFirebase();
+    message.notifyOthers(firebase, context.params, snap.val())
+  })
 
 exports.notifyMessageFromAdminTest = functions.database.instance('mezcalmos-test').ref(
   'adminChat/{userType}/current/{userId}/{ticketId}/messages/{messageId}').onCreate((snap, context) => {
-  let firebase = getFirebase('test');
-  message.notifyUser(firebase, context.params, snap.val())
-})
+    let firebase = getFirebase('test');
+    message.notifyUser(firebase, context.params, snap.val())
+  })
 
 exports.notifyMessageFromAdmin = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
   'adminChat/{userType}/current/{userId}/{ticketId}/messages/{messageId}').onCreate(async (snap, context) => {
-  let firebase = getFirebase();
-  message.notifyUser(firebase, context.params, snap.val())
-})
+    let firebase = getFirebase();
+    message.notifyUser(firebase, context.params, snap.val())
+  })
 
 exports.sendOTPForLogin = functions.https.onCall(async (data) => {
   let firebase = getFirebase(data.database);
@@ -265,40 +261,42 @@ exports.confirmNumberChangeUsingOTP = functions.https.onCall(async (data, contex
 
 exports.sendTestNotification = functions.https.onCall(async (data, context) => {
   let firebase = getFirebase(data.database);
-  let response = await admin.checkAdmin(firebase, {adminId:context.auth.uid})
-  if (response) 
+  let response = await admin.checkAdmin(firebase, { adminId: context.auth.uid })
+  if (response)
     return response
   response = await notifications.sendTest(firebase, data)
   return response
 });
 
+
+
 exports.notifyPromoterFromTestCustomer = functions.database.instance('mezcalmos-test').ref(
   'users/{userId}/invite/code').onCreate(async (snap, context) => {
-  let firebase = getFirebase('test');
-  await notifications.notifyPromoterOfCustomerReferral(firebase, context.params, snap.val())
-})
+    let firebase = getFirebase('test');
+    await notifications.notifyPromoterOfCustomerReferral(firebase, context.params, snap.val())
+  })
 
 
 exports.notifyPromoterOfCustomer = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
   'users/{userId}/invite/code').onCreate(async (snap, context) => {
-  let firebase = getFirebase();
-  await notifications.notifyPromoterOfCustomerReferral(firebase, context.params, snap.val())
-})
+    let firebase = getFirebase();
+    await notifications.notifyPromoterOfCustomerReferral(firebase, context.params, snap.val())
+  })
 
 exports.notifyPromoterFromTestDriver = functions.database.instance('mezcalmos-test').ref(
   'taxiDrivers/{userId}/invite/code').onCreate(async (snap, context) => {
-  let firebase = getFirebase('test');
-  await notifications.notifyPromoterOfDriverReferral(firebase, context.params, snap.val())
-})
+    let firebase = getFirebase('test');
+    await notifications.notifyPromoterOfDriverReferral(firebase, context.params, snap.val())
+  })
 
 exports.notifyPromoterOfDriver = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
   'taxiDrivers/{userId}/invite/code').onCreate(async (snap, context) => {
-  let firebase = getFirebase();
-  await notifications.notifyPromoterOfDriverReferral(firebase, context.params, snap.val())
-})
+    let firebase = getFirebase();
+    await notifications.notifyPromoterOfDriverReferral(firebase, context.params, snap.val())
+  })
 
 exports.notifyPromoterOfSignUp = functions.database.instance('mezcalmos-31f1c-default-rtdb').ref(
   'promoters/{inviteCode}').onCreate(async (snap, context) => {
-  let firebase = getFirebase();
-  await notifications.notifyPromoterOfSignup(firebase, context.params, snap.val())
-})
+    let firebase = getFirebase();
+    await notifications.notifyPromoterOfSignup(firebase, context.params, snap.val())
+  })

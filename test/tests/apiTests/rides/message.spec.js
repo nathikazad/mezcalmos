@@ -36,10 +36,12 @@ let driverData = {
 }
 
 let tripData = {
-  from: "home",
-  to: "office",
-  duration: 10,
-  distance: 5
+  'from': "home",
+  'to': "office",
+  'duration': 10,
+  'distance': 5,
+  'estimatedPrice': '2$',
+  'paymentType': 'Paypal'
 }
 
 let customer, badUser, driver
@@ -62,7 +64,7 @@ describe('Mezcalmos', () => {
     
     // accept taxi
     response = await driver.callFunction("acceptTaxiOrder", {orderId: orderId})
-
+    expect(response.result.status).toBe('Success')
     let newMessage = {
       orderId: orderId,
       message: "Hey",
@@ -70,7 +72,8 @@ describe('Mezcalmos', () => {
       timestamp: (new Date()).toUTCString()
     }
 
-    await customer.sendMessage(orderId, newMessage)
+    response = await customer.sendMessage(orderId, newMessage)
+    //console.log(response);
     await new Promise(res => setTimeout(() => {
       res()
     }, 200))
@@ -85,7 +88,6 @@ describe('Mezcalmos', () => {
     expect(driverNotification.sender.id).toBe(customer.id)
     expect(driverNotification.sender.image).toBe(userData.photo)
     expect(driverNotification.sender.name).toBe(userData.displayName.split(' ')[0])
-    
   })
 });
 

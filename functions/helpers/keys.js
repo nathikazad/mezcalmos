@@ -8,8 +8,8 @@ function keys() {
   if(!process.env.MEZC_API_KEYS)
     return {
       "vapidkeys": {
-        "public": "BAV5jTZmkERfU-EoeD5TsGuzOhcWXUlNrrh8dkaKGSt92x6eyGCCQYFM4Us_U8vEZ7HRIYqvVjUhUx7ROcL5Hso",
-        "private": "LsQNDKic2ZBSUnXlbMqoUI07eEYRuIjIdvj1pg7h33g"
+        "public": "BI6u8d0SftoK0O9HpSANUfGTli6aWO8PwmjjhVdqPXd5fZRdJfOH0m_nhtFceYNS5Fya1VQvxpx_itrJ0Epppjw",
+        "private": "1WXut8bK2ctiirzyEka9H5qxuUNNHlTTkCGW5xzpSh8"
       },
       "twilio": {
         "accountid": "ACbfdce78851a77c16f0fa37a7",

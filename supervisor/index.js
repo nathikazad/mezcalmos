@@ -1,6 +1,7 @@
 const firebaseAdmin = require("firebase-admin");
 // const notification = require("../functions/helpers/notification");
-const taxi = require("../functions/helpers/taxi");
+const expireOrder = require("../functions/helpers/taxi/expire");
+
 const productionFirebase = firebaseAdmin.initializeApp({
   databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com",
 }, "production");
@@ -43,10 +44,10 @@ function checkOpenOrders(firebase, openOrders) {
 	console.log("expirationtime", orderExpirationTime.toUTCString())
 	console.log()
       if (Date.now() > orderExpirationTime) {
-        taxi.expireOrder(firebase, orderId, openOrders[orderId].customer.id);
+        expireOrder(firebase, orderId, openOrders[orderId].customer.id);
       }
     } else {
-      taxi.expireOrder(firebase, orderId, openOrders[orderId].customer.id)
+      expireOrder(firebase, orderId, openOrders[orderId].customer.id)
     }
   }
 }

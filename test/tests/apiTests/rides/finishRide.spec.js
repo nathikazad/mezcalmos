@@ -34,11 +34,13 @@ let driverData = {
   }
   
 let tripData = {
-    from: "home",
-    to: "office",
-    duration: 10,
-    distance: 5
-  }  
+  'from': "home",
+  'to': "office",
+  'duration': 10,
+  'distance': 5,
+  'estimatedPrice': '2$',
+  'paymentType': 'Paypal'
+}
 
 let customer, driver, badUser
 
@@ -57,8 +59,7 @@ describe('Mezcalmos', () => {
      let response = await axios.post(`http://localhost:5001/mezcalmos-31f1c/us-central1/finishTaxiRide`, { data: "cats"})
      expect(response.data.result.status).toBe('Error')
      expect(response.data.result.errorMessage).toBe('User needs to be signed in') 
-
-    
+     
      //let order = (await admin.database().ref(`orders/taxi`).once('value')).val()
      //test when no order is created yet 
      response = await driver.callFunction('finishTaxiRide', 'cats')
@@ -69,7 +70,7 @@ describe('Mezcalmos', () => {
      response = await customer.callFunction('requestTaxi', tripData)
      let orderId = response.result.orderId
      expect(response.result.status).toBe('Success')
-
+     
      let order = await customer.db.get(`orders/taxi/${orderId}`)
      expect(order.status).toBe('lookingForTaxi')
      
@@ -107,6 +108,7 @@ describe('Mezcalmos', () => {
 
      let orderFinished = await customer.db.get(`orders/taxi/${orderId}`)
      expect(orderFinished.status).toBe('droppedOff')
+     
       
      let customerOrderFinished = await customer.db.get(`users/${order.customer.id}/orders/${orderId}`)
      expect(customerOrderFinished.status).toBe('droppedOff') 
@@ -129,6 +131,9 @@ describe('Mezcalmos', () => {
      notification = (arrayNotifications[arrayNotifications.length-1])[1]
      expect(notification.status).toBe('droppedOff')
      expect(notification.notificationType).toBe('orderStatusChange')
+
+     orderLock = (await admin.database().ref(`orders/taxi/${orderId}/lock`).once('value')).val()
+     expect(orderLock).toBeNull()
     })
 
     

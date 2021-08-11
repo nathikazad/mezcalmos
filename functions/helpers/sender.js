@@ -2,9 +2,9 @@ const axios = require('axios');
 const functions = require('firebase-functions');
 
 const keys = require("./keys").keys();
-const accountSid = keys.twilio.accountid;
-const authToken = keys.twilio.authtoken;
-const client = require('twilio')(accountSid, authToken);
+// const accountSid = keys.twilio.accountid;
+// const authToken = keys.twilio.authtoken;
+// const client = require('twilio')(accountSid, authToken);
 
 const webpush = require('web-push')
 const vapidKeys = keys.vapidkeys
