@@ -5,11 +5,11 @@ const expireOrder = require("../functions/helpers/taxi/expire");
 
 
 const checkOpenOrdersInterval = 30 //seconds
-const orderExpirationLimit = 5 * 60 // seconds
+let orderExpirationLimit = 5 * 60 // seconds
 
 let fbUrl, hasuraUrl;
 
-if (process.argv[2]) {
+if (process.argv.length >= 3) {
   if (process.argv[2] == "emulate") {
     fbUrl = "https://mezcalmos-31f1c-default-rtdb.firebaseio.com"
     hasuraUrl = keys.hasuraTest
@@ -26,6 +26,11 @@ if (process.argv[2]) {
 } else {
   console.log("Required environment variable")
   process.exit()
+}
+
+if (process.argv.length == 4) {
+  console.log("Test mode")
+  orderExpirationLimit = 30;
 }
 
 const firebase = firebaseAdmin.initializeApp({
