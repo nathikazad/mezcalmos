@@ -64,11 +64,6 @@ async function expireOrder(firebase, orderId, customerId, hasura) {
       finalPrice: order.estimatedPrice
     }
   })
-      
-  firebase.database().ref(`/orders/taxi/${orderId}`).once('value', function (snap) {
-    let order = snap.val()
-    firebase.database().ref(`/unfulfilledOrders/${orderId}`).set({ ...order, reason: "expired" });
-  })
 
   notification.push(firebase, customerId, {
     status: "expired",

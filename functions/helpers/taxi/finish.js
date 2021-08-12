@@ -52,8 +52,7 @@ async function finish(firebase, uid, hasura) {
     firebase.database().ref(`/taxiDrivers/${order.driver.id}/orders/${orderId}`).update(update);
     firebase.database().ref(`/taxiDrivers/${order.driver.id}/state/currentOrder`).remove()
     firebase.database().ref(`/users/${order.customer.id}/state/currentOrder`).remove()
-    firebase.database().ref(`/inProcessOrders/taxi/${orderId}`).remove();
-    firebase.database().ref(`/fulfilledOrders/${orderId}`).set(order)
+  firebase.database().ref(`/inProcessOrders/taxi/${orderId}`).remove();
     update.notificationType = "orderStatusChange"
     update.orderId = orderId
     update.orderType = "taxi"
