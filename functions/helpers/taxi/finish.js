@@ -1,5 +1,4 @@
 const notification = require("../notification");
-const promoters = require('../promoters');
 
 
 module.exports = ( firebase, uid, data, hasura) => { return finish(firebase, uid, data, hasura) }
@@ -68,18 +67,15 @@ async function finish(firebase, uid, hasura) {
     let time = (date1.getTime() - date2.getTime())
    
    
-      await hasura.updateOrder({
-       orderId: orderId,
-       changes:{
-         finalStatus: order.status,
-         rideFinishTime: order.rideFinishTime,
-         estimatedRideTime: time 
-       } 
-     }) 
-   
-   promoters.checkCustomerIncentives(firebase, order.customer, order.driver)
-   promoters.checkDriverIncentives(firebase, order.customer, order.driver)
-  
+  await hasura.updateOrder({
+    orderId: orderId,
+    changes: {
+      finalStatus: order.status,
+      rideFinishTime: order.rideFinishTime,
+      estimatedRideTime: time
+    }
+  })
+
    firebase.database().ref(`orders/taxi/${orderId}/lock`).remove()
     return {
       status: "Success",

@@ -39,8 +39,10 @@ export default {
       let users = (await firebaseDatabase().ref(`users`).once("value")).val()
       let taxis = (await firebaseDatabase().ref(`taxiDrivers`).once("value")).val()
       for (let key in taxis) {
-
-        taxis[key].info = users[key].info
+        if (users[key] && users[key].info)
+          taxis[key].info = users[key].info
+        else
+          delete taxis[key]
       }
       context.commit('saveTaxis', taxis)
     },

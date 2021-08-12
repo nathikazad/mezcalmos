@@ -4,10 +4,10 @@ module.exports = ( firebase, uid, data, hasura) => { return request(firebase, ui
 
 async function request(firebase, uid, data, hasura) {
   if (!data.from || !data.to || !data.distance || !data.duration
-    || !data.estimatedPrice || !data.paymentType) {
+    || !data.estimatedPrice || !data.paymentType || !data.polyline) {
     return {
       status: "Error",
-      errorMessage: "Required from, to, distance, duration, estimatedPrice and paymentType"
+      errorMessage: "Required from, to, distance, duration, polyline, estimatedPrice and paymentType"
     }
   }
 
@@ -50,6 +50,7 @@ async function request(firebase, uid, data, hasura) {
     to: data.to,
     distance: data.distance,
     duration: data.duration,
+    polyline: data.polyline,
     estimatedPrice: data.estimatedPrice,
     customer: {
       id: uid,
@@ -63,6 +64,7 @@ async function request(firebase, uid, data, hasura) {
     routeInformation: {
       duration: data.duration,
       distance: data.distance,
+      polyline: data.polyline
     }
   }
   let orderRef = await firebase.database().ref(`/orders/taxi`).push(payload);

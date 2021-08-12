@@ -5,7 +5,7 @@
   "scripts": {
     "emulator": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 firebase emulators:start --export-on-exit=../test/data/newDummyData",
     "emulator:onlyFunctions": "firebase emulators:start --only functions",
-    "supervisor": "cross-env node ../supervisor/index.js",
+    "supervisor": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 node ../supervisor/index.js",
     "loadData": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 node ../test/loadData.js",
     "serve:customers": "vue-cli-service serve src/customers/main.js",
     "test:customers": "vue-cli-service serve --mode test --port 8080 src/customers/main.js",
@@ -58,6 +58,7 @@
     "graphql": "^15.5.1",
     "graphql-tag": "^2.12.5",
     "gsap": "^3.6.0",
+    "has-tostringtag": "^1.0.0",
     "is-svg": "^4.3.1",
     "jsonwebtoken": "^8.5.1",
     "node-sass": "^5.0.0",

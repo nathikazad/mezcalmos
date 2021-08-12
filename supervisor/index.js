@@ -1,8 +1,11 @@
-
 const firebaseAdmin = require("firebase-admin");
 const keys = require("../functions/helpers/keys").keys()
 const hasuraClass = require("../functions/helpers/hasura")
 const expireOrder = require("../functions/helpers/taxi/expire");
+
+
+const checkOpenOrdersInterval = 30 //seconds
+const orderExpirationLimit = 5 * 60 // seconds
 
 let fbUrl, hasuraUrl;
 
@@ -12,7 +15,7 @@ if (process.argv[2]) {
     hasuraUrl = keys.hasuraTest
   } else if (process.argv[2] == "staging") {
     fbUrl = "https://mezcalmos-staging-default-rtdb.firebaseio.com"
-    hasuraUrl = keys.hasura
+    hasuraUrl = keys.hasuraStaging
   } else if (process.argv[2] == "production") {
     fbUrl = "https://mezcalmos-31f1c-default-rtdb.firebaseio.com"
     hasuraUrl = keys.hasura
@@ -30,10 +33,6 @@ const firebase = firebaseAdmin.initializeApp({
 });
 const hasura = new hasuraClass.Hasura(hasuraUrl)
 let openOrders = {}
-
-let checkOpenOrdersInterval = 30 //seconds
-let orderExpirationLimit = 5 * 60 // seconds
-
 
 
 firebase.database().ref(`/openOrders/taxi`).on('value', function (snap) {
