@@ -6,6 +6,8 @@
     "shell": "firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
+    "deployStaging": "firebase use mezcalmos-staging;firebase deploy --only functions",
+    "deployProduction": "firebase use mezcalmos-31f1c;firebase deploy --only functions",
     "logs": "firebase functions:log"
   },
   "engines": {
