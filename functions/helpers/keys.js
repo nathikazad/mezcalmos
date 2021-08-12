@@ -9,11 +9,10 @@ function keys() {
     return {
       "vapidkeys": {
         "public": "BI6u8d0SftoK0O9HpSANUfGTli6aWO8PwmjjhVdqPXd5fZRdJfOH0m_nhtFceYNS5Fya1VQvxpx_itrJ0Epppjw",
-        
         "private": "1WXut8bK2ctiirzyEka9H5qxuUNNHlTTkCGW5xzpSh8"
       },
       "twilio": {
-        "accountid": "ACdummy",
+        "accountid": "ACbfdce78851a77c16f0fa37a7",
         "authtoken": "dummy"
       },
       "stripe": {

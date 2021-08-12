@@ -1,0 +1,161 @@
+{
+  "kind": "identitytoolkit#DownloadAccountResponse",
+  "users": [
+    {
+      "localId": "O7jcgQ0UcQbMDRKYRbTjZRLgMnTz",
+      "createdAt": "1625603553071",
+      "lastLoginAt": "1625603675394",
+      "displayName": "CustTwo",
+      "photoUrl": "https://randomuser.me/api/portraits/men/65.jpg",
+      "screenName": "CustTwo",
+      "email": "customer.two@mezcalmos.com",
+      "emailVerified": true,
+      "salt": "fakeSalts8T2ZCugYpYA83699UNG",
+      "passwordHash": "fakeHash:salt=fakeSalts8T2ZCugYpYA83699UNG:password=password",
+      "passwordUpdatedAt": 1624297122634,
+      "validSince": "1624297122",
+      "providerUserInfo": [
+        {
+          "providerId": "password",
+          "rawId": "customer.two@mezcalmos.com",
+          "federatedId": "customer.two@mezcalmos.com",
+          "displayName": "CustTwo",
+          "photoUrl": "https://randomuser.me/api/portraits/men/65.jpg",
+          "email": "customer.two@mezcalmos.com",
+          "screenName": "CustTwo"
+        }
+      ],
+      "lastRefreshAt": "2021-07-06T20:34:35.394Z"
+    },
+    {
+      "localId": "PBcTv6zSy1FUT7C3EOaFj1Rw8dct",
+      "createdAt": "1625603561139",
+      "lastLoginAt": "1625603664395",
+      "displayName": "Taxi Two",
+      "photoUrl": "https://randomuser.me/api/portraits/men/79.jpg",
+      "screenName": "Taxi Two",
+      "email": "taxi.two@mezcalmos.com",
+      "emailVerified": true,
+      "salt": "fakeSalts8T2ZCugYpYA83699UNG",
+      "passwordHash": "fakeHash:salt=fakeSalts8T2ZCugYpYA83699UNG:password=password",
+      "passwordUpdatedAt": 1624297122634,
+      "validSince": "1624297122",
+      "providerUserInfo": [
+        {
+          "providerId": "password",
+          "rawId": "taxi.two@mezcalmos.com",
+          "federatedId": "taxi.two@mezcalmos.com",
+          "displayName": "Taxi Two",
+          "photoUrl": "https://randomuser.me/api/portraits/men/79.jpg",
+          "email": "taxi.two@mezcalmos.com",
+          "screenName": "Taxi Two"
+        }
+      ],
+      "lastRefreshAt": "2021-07-06T20:34:24.396Z"
+    },
+    {
+      "localId": "S4mN56Yf2YeSLbWRzgAOuRJ7HAI8",
+      "createdAt": "1625603536983",
+      "lastLoginAt": "1625603783338",
+      "displayName": "Customer One",
+      "photoUrl": "https://randomuser.me/api/portraits/men/70.jpg",
+      "screenName": "Customer One",
+      "email": "customer.one@mezcalmos.com",
+      "emailVerified": true,
+      "salt": "fakeSalts8T2ZCugYpYA83699UNG",
+      "passwordHash": "fakeHash:salt=fakeSalts8T2ZCugYpYA83699UNG:password=password",
+      "passwordUpdatedAt": 1624297122634,
+      "validSince": "1624297122",
+      "providerUserInfo": [
+        {
+          "providerId": "password",
+          "rawId": "customer.one@mezcalmos.com",
+          "federatedId": "customer.one@mezcalmos.com",
+          "displayName": "Customer One",
+          "photoUrl": "https://randomuser.me/api/portraits/men/70.jpg",
+          "email": "customer.one@mezcalmos.com",
+          "screenName": "Customer One"
+        }
+      ],
+      "lastRefreshAt": "2021-07-06T20:36:23.339Z"
+    },
+    {
+      "localId": "T8AByBxlwcS321zFp8um19fzPwns",
+      "createdAt": "1625603544957",
+      "lastLoginAt": "1625603744981",
+      "displayName": "Taxi One",
+      "photoUrl": "https://randomuser.me/api/portraits/men/74.jpg",
+      "screenName": "Taxi One",
+      "email": "taxi.one@mezcalmos.com",
+      "emailVerified": true,
+      "salt": "fakeSalts8T2ZCugYpYA83699UNG",
+      "passwordHash": "fakeHash:salt=fakeSalts8T2ZCugYpYA83699UNG:password=password",
+      "passwordUpdatedAt": 1624297122634,
+      "validSince": "1624297122",
+      "providerUserInfo": [
+        {
+          "providerId": "password",
+          "rawId": "taxi.one@mezcalmos.com",
+          "federatedId": "taxi.one@mezcalmos.com",
+          "displayName": "Taxi One",
+          "photoUrl": "https://randomuser.me/api/portraits/men/74.jpg",
+          "email": "taxi.one@mezcalmos.com",
+          "screenName": "Taxi One"
+        }
+      ],
+      "lastRefreshAt": "2021-07-06T20:35:44.981Z"
+    },
+    {
+      "localId": "soJ5WrpYtQ2R2ssZNMYBYNBVNyZ9",
+      "createdAt": "1625603520994",
+      "lastLoginAt": "1625603520994",
+      "displayName": "Admin One",
+      "photoUrl": "https://randomuser.me/api/portraits/men/75.jpg",
+      "screenName": "Admin One",
+      "email": "admin@mezcalmos.com",
+      "emailVerified": true,
+      "salt": "fakeSalts8T2ZCugYpYA83699UNG",
+      "passwordHash": "fakeHash:salt=fakeSalts8T2ZCugYpYA83699UNG:password=password",
+      "passwordUpdatedAt": 1624297122634,
+      "validSince": "1624297122",
+      "providerUserInfo": [
+        {
+          "providerId": "password",
+          "rawId": "admin@mezcalmos.com",
+          "federatedId": "admin@mezcalmos.com",
+          "displayName": "Admin One",
+          "photoUrl": "https://randomuser.me/api/portraits/men/75.jpg",
+          "email": "admin@mezcalmos.com",
+          "screenName": "Admin One"
+        }
+      ],
+      "lastRefreshAt": "2021-07-06T20:32:01.013Z"
+    },
+    {
+      "localId": "zOTdxx6Hr3Hc2hkkZa7LX7slnFo3",
+      "createdAt": "1625603529018",
+      "lastLoginAt": "1625603529018",
+      "displayName": "Customer Three",
+      "photoUrl": "https://randomuser.me/api/portraits/men/71.jpg",
+      "screenName": "Customer Three",
+      "email": "customer.three@mezcalmos.com",
+      "emailVerified": true,
+      "salt": "fakeSalts8T2ZCugYpYA83699UNG",
+      "passwordHash": "fakeHash:salt=fakeSalts8T2ZCugYpYA83699UNG:password=password",
+      "passwordUpdatedAt": 1624297122634,
+      "validSince": "1624297122",
+      "providerUserInfo": [
+        {
+          "providerId": "password",
+          "rawId": "customer.three@mezcalmos.com",
+          "federatedId": "customer.three@mezcalmos.com",
+          "displayName": "Customer Three",
+          "photoUrl": "https://randomuser.me/api/portraits/men/71.jpg",
+          "email": "customer.three@mezcalmos.com",
+          "screenName": "Customer Three"
+        }
+      ],
+      "lastRefreshAt": "2021-07-06T20:32:09.022Z"
+    }
+  ]
+}

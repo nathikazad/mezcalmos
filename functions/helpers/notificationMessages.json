@@ -1,0 +1,75 @@
+{
+  "orderStatusChange": {
+    "expired": {
+      "en": {
+        "title": "Ride request has timed out",
+        "body": "Unfortunately we were not able to find you a ride, please try again later."
+      },
+      "es": {
+        "title": "Tiempo de espera agotado",
+        "body": "Lamentablemente, no pudimos encontrarle transporte. Vuelva a intentarlo más tarde."
+      }    
+    },
+    "onTheWay": {
+      "en": {
+        "title": "Your driver is on the way",
+        "body": "Your driver will arrive shortly to pick you up, please be ready."
+      },
+      "es": {
+        "title": "Tu chofer esta en camino",
+        "body": "Tu chofer llegará en breve para recogerlo, esté listo."
+      }    
+    }, 
+    "inTransit": {
+      "en": {
+        "title": "Your ride has begun",
+        "body": "Your driver has indicated that he has picked you up, if there has been an error, please report to us."
+      },
+      "es": {
+        "title": "Tu viaje ha comenzado",
+        "body": "Tu chófer ha indicado que lo ha recogido, si ha habido un error, infórmenos."
+      }    
+    }, 
+    "droppedOff": {
+      "en": {
+        "title": "Your ride has finished",
+        "body": "Your driver has indicated that he has dropped you off, if there has been an error, please report to us."
+      },
+      "es": {
+        "title": "Tu viaje ha terminado",
+        "body": "Tu chófer ha indicado que lo ha dejado, si ha habido un error, infórmenos."
+      }
+    }, 
+    "cancelled": {
+      "en": {
+        "title": "Your ride has been cancelled",
+        "body": "Sorry to inform you that your ride has been cancelled."
+      },
+      "es": {
+        "title": "Tu viaje ha sido cancelado",
+        "body": "Lamento informarle que su viaje ha sido cancelado."
+      }
+    }
+  },
+  "newMessage": {
+    "en": {
+      "title": "New message from ",
+      "body": "You have a new message"
+    },
+    "es": {
+      "title": "Nueva mensaje de ",
+      "body": "Tienes un nuevo mensaje"
+    }
+  },
+  "newAdminMessage": {
+    "en": {
+      "title": "Groceries",
+      "body": "All Services"
+    },
+    "es": {
+      "title": "Groceries",
+      "body": "All Services"
+    }
+  }
+
+}

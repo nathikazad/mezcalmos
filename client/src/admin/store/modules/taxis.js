@@ -21,7 +21,7 @@ export default {
         }
         let list = {}
         for (let key in taxis) {
-          if (taxis[key].info.displayName.toLowerCase().indexOf(query) >= 0) {
+          if (taxis[key].info.displayName && taxis[key].info.displayName.toLowerCase().indexOf(query) >= 0) {
             list[key] = taxis[key]
           } else if (key.indexOf(query) >= 0) {
             list[key] = taxis[key]
@@ -54,6 +54,7 @@ export default {
       return response
     },
     async sendTestNotification(_, payload) {
+      console.log(`Sending test notification to ${payload.userId}`)
       let response = await cloudCall('sendTestNotification', {
         userId: payload.userId
       })

@@ -1,0 +1,36 @@
+{
+    "v1": {
+        
+        "1": {
+            "author":"Saad",
+            "solution": "changed these User fields to String? , cuz a new user authenticated using OTP will have only : {phoneNumber: +216xxxxxxx, phoneNumberType: SMS} , thus errors gets thrown in authController ,to avoid that its better to make them Nullable String"
+        },
+
+        "2": {
+            "author":"Saad",
+            "solution": "This happens Because we were using `extends GetView` have to use `GetWidget`."
+        },
+
+        "3": {
+            "author":"Saad",
+            "solution" : "Now Facebook status checks only for success else it's considerated as failed"
+        },
+
+        "5" : {
+            "author" : "Saad",
+            "solution" : "Made sure tha field is fully initialized !"
+        },
+
+        "6" : {
+            "author" : "Saad",
+            "solution" : "null safety signe ? check added."
+        },
+
+        "7" : {
+            "author":"Saad",
+            "solution":" Instead of giving the Scaffold::key in TaxiWrapper the SideMenuDraweController.key .. we actually call a the getNewKey() , to generate a new Key when rebuilding !"
+        }
+
+         
+    }
+}

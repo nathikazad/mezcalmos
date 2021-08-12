@@ -6,9 +6,20 @@ const keys = require("./keys").keys();
 // const authToken = keys.twilio.authtoken;
 // const client = require('twilio')(accountSid, authToken);
 
+const webpush = require('web-push')
+const vapidKeys = keys.vapidkeys
+
+webpush.setVapidDetails(
+  'http://www.mezcalmos.com',
+  vapidKeys.public,
+  vapidKeys.private
+)
+
 module.exports = {
     sendSMS,
-    sendWhatsApp
+    sendWhatsApp,
+    sendToDevice,
+    sendToBrowser
   }
 
 async function sendWhatsApp(data) {
@@ -53,3 +64,23 @@ async function sendSMS(data) {
 }
 
 
+async function sendToDevice(notifKey, message, firebase) {
+  const payload = {
+    notification: message
+  };
+  try {
+    let response = await firebase.messaging().sendToDevice(notifKey, payload)
+    // console.log(response);
+  } catch (e) {
+    console.log(`Send to devices error `, e);
+  }
+}
+
+async function sendToBrowser(webPushKey, message) {
+  try{
+    let response = await webpush.sendNotification(webPushKey, JSON.stringify(message)) 
+    // console.log(response);
+  } catch (e){
+    functions.logger.error(`web push error `, e);
+  }
+}

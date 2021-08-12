@@ -1,22 +1,13 @@
 const functions = require('firebase-functions');
 const sender = require("./sender")
-const keys = require("./keys")
+
 module.exports = {
   push,
   notifyDriversNewRequest,
   sendTest
 }
 
-const webpush = require('web-push')
-
-const vapidKeys = keys.keys().vapidkeys
-if (vapidKeys) {
-  webpush.setVapidDetails(
-    'http://www.mezcalmos.com',
-    vapidKeys.public,
-    vapidKeys.private
-  )
-}
+const notificationMessages = require('./notificationMessages.json')
 
 async function push(firebase, userId, message, particpantType = "customer") {
   firebase.database().ref(`/notifications/${particpantType}/${userId}`).push(message)
@@ -27,10 +18,35 @@ async function push(firebase, userId, message, particpantType = "customer") {
     subscription = (await firebase.database().ref(`/taxiDrivers/${userId}/notificationInfo`).once('value')).val();
   }
   if(subscription){
-    webpush.sendNotification(subscription, JSON.stringify(message))
-    .catch((e) => {
-      functions.logger.error(`web push error, ${particpantType} ${userId}`, e);
-    })
+    if (subscription.deviceNotificationToken) {
+      if (particpantType == "taxi") {
+        if (message.notificationType == "orderStatusChange") {
+          let notificationMessage = await buildDeviceNotificationMessage(firebase, userId, message)
+          sender.sendToDevice(subscription.deviceNotificationToken, notificationMessage, firebase)
+        } else if (message.notificationType == "newMessage") {
+          let notificationMessage = await buildDeviceNotificationMessage(firebase, userId, message)
+          console.log(notificationMessage)
+          notificationMessage.title = `${notificationMessage.title}${message.sender.name}`;
+          notificationMessage.body = message.message;
+          console.log(notificationMessage)
+          sender.sendToDevice(subscription.deviceNotificationToken, notificationMessage, firebase)
+        }
+      }
+    } else {
+      sender.sendToBrowser(subscription, message)
+    }
+    
+  }
+}
+
+async function buildDeviceNotificationMessage(firebase, userId, message){
+  let userLang = (await firebase.database().ref(`/users/${userId}/info/language`).once('value')).val();
+  if(!userLang)
+    userLang = "es";
+  if(message.notificationType == "orderStatusChange"){
+    return notificationMessages[message.notificationType][message.status][userLang]
+  } else {
+    return notificationMessages[message.notificationType][userLang]
   }
 }
 
@@ -39,13 +55,20 @@ async function notifyDriversNewRequest(firebase, address) {
   for (let driverId in drivers){
     let driver = drivers[driverId]
     if(driver.state && driver.state.isLooking && !driver.state.currentOrder) {
-      if(driver.notificationInfo) {   
-        webpush.sendNotification(driver.notificationInfo, JSON.stringify({
-          notificationType: "newOrder",
-          message: `Hay una nueva orden de taxi de ${address}, vea si puede aceptarla.`
-        })).catch((e) => {
-          functions.logger.error(`notify drivers web push error, ${driverId}`, e);
-        })
+      if(driver.notificationInfo) { 
+        if (driver.notificationInfo.deviceNotificationToken) {
+          let message={
+            title: "Nueva Pedido",
+            body: `Hay una nueva orden de taxi de ${address}, vea si puede aceptarla.`
+          };
+          sender.sendToDevice(driver.notificationInfo.deviceNotificationToken, message, firebase);
+        } else {
+          let message = {
+            notificationType: "newOrder",
+            message: `Hay una nueva orden de taxi de ${address}, vea si puede aceptarla.`
+          }
+          sender.sendToBrowser(driver.notificationInfo, message);
+        }        
       }
     }
   }
@@ -78,12 +101,20 @@ async function sendTest(firebase, data) {
   }
   let uid = data.userId
   let driver = (await firebase.database().ref(`/taxiDrivers/${uid}`).once('value')).val();
-  if(driver.notificationInfo){     
-    webpush.sendNotification(driver.notificationInfo, JSON.stringify({
-      notificationType: "newOrder",
-      message: "Eso es una prueba, gracias."
-    })).catch((e) => {
-      functions.logger.error("test notification push error ",uid)
-    })
+  if(driver.notificationInfo){
+    if (driver.notificationInfo.deviceNotificationToken) {
+      let message = {
+        title: "Prueba",
+        body: "Eso es una prueba, gracias."
+      }
+      sender.sendToDevice(driver.notificationInfo.deviceNotificationToken, message, firebase);
+    } else {
+      let message = {
+        notificationType: "Prueba",
+        message: "Eso es una prueba, gracias."
+      }
+      sender.sendToBrowser(driver.notificationInfo, message);
+    }
+    
   }
 }
