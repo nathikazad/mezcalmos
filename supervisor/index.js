@@ -7,18 +7,21 @@ const expireOrder = require("../functions/helpers/taxi/expire");
 const checkOpenOrdersInterval = 30 //seconds
 let orderExpirationLimit = 5 * 60 // seconds
 
-let fbUrl, hasuraUrl;
+let hasuraParams;
+let firebaseParams = {};
 
 if (process.argv.length >= 3) {
   if (process.argv[2] == "emulate") {
-    fbUrl = "https://mezcalmos-31f1c-default-rtdb.firebaseio.com"
-    hasuraUrl = keys.hasuraTest
+    firebaseParams.databaseURL = "https://mezcalmos-31f1c-default-rtdb.firebaseio.com"
+    hasuraParams = keys.hasuraTest
   } else if (process.argv[2] == "staging") {
-    fbUrl = "https://mezcalmos-staging-default-rtdb.firebaseio.com"
-    hasuraUrl = keys.hasuraStaging
+    firebaseParams.databaseURL = "https://mezcalmos-staging-default-rtdb.firebaseio.com"
+    firebaseParams.credential = firebaseAdmin.credential.cert(require(keys.firebaseStagingServiceAccount))
+    hasuraParams = keys.hasuraStaging
   } else if (process.argv[2] == "production") {
-    fbUrl = "https://mezcalmos-31f1c-default-rtdb.firebaseio.com"
-    hasuraUrl = keys.hasura
+    firebaseParams.databaseURL = "https://mezcalmos-31f1c-default-rtdb.firebaseio.com"
+    firebaseParams.credential = firebaseAdmin.credential.cert(require(keys.firebaseProductionServiceAccount))
+    hasuraParams = keys.hasura
   } else {
     console.log("Invalid environment variable")
     process.exit()
@@ -33,10 +36,8 @@ if (process.argv.length == 4) {
   orderExpirationLimit = 30;
 }
 
-const firebase = firebaseAdmin.initializeApp({
-  databaseURL: fbUrl
-});
-const hasura = new hasuraClass.Hasura(hasuraUrl)
+const firebase = firebaseAdmin.initializeApp(firebaseParams)
+const hasura = new hasuraClass.Hasura(hasuraParams)
 let openOrders = {}
 
 
