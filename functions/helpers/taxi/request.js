@@ -94,7 +94,8 @@ async function request(firebase, uid, data, hasura) {
       orderTime: payload.orderTime,
       finalStatus: payload.status,
       pickUpLocation: { type: "Point", coordinates: [payload.from.lng, payload.from.lat] },
-      dropOffLocation: { type: "Point", coordinates: [payload.to.lng, payload.to.lat] }
+      dropOffLocation: { type: "Point", coordinates: [payload.to.lng, payload.to.lat] },
+      offeredPrice: payload.estimatedPrice
     }
   })
 

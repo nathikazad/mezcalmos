@@ -244,6 +244,10 @@ addUser()
 //       object.finalStatus = order.status
 //     if(order.duration)
 //       object.estimatedRideTime = order.duration.value
+//     if(order.estimatedPrice){
+//       object.offeredPrice = order.estimatedPrice
+//       object.finalPrice = order.estimatedPrice
+//     }
 //     if(order.to && order.to.lat && order.to.lng)
 //       object.dropOffLocation ={
 //         type:"Point",
