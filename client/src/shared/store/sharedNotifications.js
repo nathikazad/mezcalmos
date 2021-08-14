@@ -114,10 +114,10 @@ export default {
       let appName = context.rootGetters.appName;
       // console.log("Saving notification info, ", userId, appName, payload)
       if (appName == "customer"){
-        await firebaseDatabase().ref(`/users/${userId}/notificationInfo`).set(payload)
+        await firebaseDatabase().ref(`/users/${userId}/notificationInfo`).update(payload)
       } else if (appName == "taxi") {
         // console.log(`/taxiDrivers/${userId}/notificationInfo`, payload)
-        await firebaseDatabase().ref(`/taxiDrivers/${userId}/notificationInfo`).set(payload)
+        await firebaseDatabase().ref(`/taxiDrivers/${userId}/notificationInfo`).update(payload)
       }
     },
   },
