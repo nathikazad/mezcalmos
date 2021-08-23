@@ -54,6 +54,10 @@ class DW_EXIT_REASONS(Enum):
     HOOKS_BUILD_KEYS_INVALID = -19
     HOOKS_LAUNCH_KEYS_INVALID = -20
     RESOLVING_LAN_IP_FAILED = -21
+    GOOGLE_SERVICES_JSON_NOT_IN_LAUNCHER_FILES = -22
+    GOOGLE_SERVICES_JSON_NOT_IN_ANDROID_APP_FOLDER = -23
+    PLIST_GOOGLE_SERVICES_JSON_NOT_IN_LAUNCHER_FILES = -24
+    PLIST_GOOGLE_SERVICES_JSON_NOT_IN_IOS_APP_FOLDER = -25
 
     REACH_THE_LAZY_SAAD = -10000
 
@@ -82,7 +86,38 @@ class Launcher:
         # Writing new Valid App.
         open('../lib/main.dart' , 'w+').write(f_root_main)
         PRINTLN("[+] Pacthed ../lib/main successfully !")
+    
+    def __patch_gs__(self):
+        '''If its staging mode Patch the Gpoogle-services.json'''
+        if self.user_args['lmode'] == 'stage':
+            PRINTLN("[+] Launching on Staging mode - Patching gServices ...!")
+            android_flutter_gs_path = '../android/app/google-services.json'
+            ios_flutter_gs_path = '../ios/Runner/GoogleService-Info.plist'
+            
+            # Android
+            if not os.path.exists('staging.google-services.json'):
+                exit(DW_EXIT_REASONS.GOOGLE_SERVICES_JSON_NOT_IN_LAUNCHER_FILES)
+            if not os.path.exists(android_flutter_gs_path):
+                exit(DW_EXIT_REASONS.GOOGLE_SERVICES_JSON_NOT_IN_ANDROID_APP_FOLDER)
+            
+            # ios
 
+            if not os.path.exists('staging.GoogleService-Info.plist'):
+                exit(DW_EXIT_REASONS.PLIST_GOOGLE_SERVICES_JSON_NOT_IN_LAUNCHER_FILES)
+            if not os.path.exists(ios_flutter_gs_path):
+                exit(DW_EXIT_REASONS.PLIST_GOOGLE_SERVICES_JSON_NOT_IN_IOS_APP_FOLDER)
+
+
+            staging_client = json.loads(open('staging.google-services.json').read())
+            del staging_client['client'][0]
+            PRINTLN(f"[+] Applying Client's Package :{staging_client['client'][0]['client_info']['android_client_info']}")
+            open(android_flutter_gs_path , 'w+').write(json.dumps(staging_client))
+            open(ios_flutter_gs_path , 'w+').write(open('staging.GoogleService-Info.plist').read())
+
+        else:
+            PRINTLN("[+] Passed GS patching steps , since it's not staging mode !")
+            
+            
     def __set_flutter_args__(self):
         self.flutter_setup = f"--dart-define=APP_SP={self.user_args['app']} --dart-define=HOST={self.user_args['host']} --dart-define=LMODE={self.user_args['lmode']} --dart-define=DB={self.user_args['db']}"
 
@@ -90,6 +125,7 @@ class Launcher:
         self.__f_checker__()
         if self.last_app != None:
             self.__patcher__()
+        self.__patch_gs__()
         self.__set_flutter_args__()
         
 
@@ -105,6 +141,9 @@ class Builder:
             exit(DW_EXIT_REASONS.HOOKS_BUILD_KEYS_INVALID)
 
     def __init__(self , user_args , conf) -> None:
+        print("[+] Please don't build anything yet , this will mess things up as long as the builder is not done !")
+        exit(DW_EXIT_REASONS.REACH_THE_LAZY_SAAD)
+        
         self.user_args = user_args
         self.conf = conf
 
@@ -297,6 +336,10 @@ class Config:
             if _ not in POSSIBLE_LMODES:
                 PRINTLN(f'[!] lmode={_} : Error This launch mode is wrong !')
                 exit(DW_EXIT_REASONS.CONF_FILE_LMODENAME_WRONG)
+            if _ == 'prod':
+                PRINTLN(f'[!] lmode={_} : Error This launch mode not yet fully tested !')
+                exit(DW_EXIT_REASONS.REACH_THE_LAZY_SAAD)
+
             self.user_args['lmode'] = _
         else:
             self.user_args['lmode'] = self.conf[self.user_args['pymode']][self.user_args['app']]['launchMode']
