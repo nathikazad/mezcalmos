@@ -133,9 +133,6 @@ export default {
     },
     async logout() {
       await this.$store.dispatch("logout");
-      if (this.appName == "customer") {
-        await this.$store.dispatch("saveInviteCode", null);
-      }
       this.$emit("closeNavDrawer");
     },
     swipeHandler(direction) {

@@ -51,7 +51,6 @@ async function firebaseCallback(user) {
     await store.dispatch('loadTaxiAuth');
     store.dispatch("notifications/loadNotificationsForTaxi");
     await store.dispatch("admin/loadAdmin");
-    store.dispatch("loadInviteCode");
     let dbUser = store.getters["userInfo"]
     if (!dbUser || !dbUser.displayName || !dbUser.photo) {
       router.push('/userinfo?edit=true');

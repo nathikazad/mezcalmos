@@ -5,11 +5,6 @@
             "groceries": "Groceries",
             "services": "All Services"
         },
-        "inviteCode": {
-            "inviteCodQuestion": "Do You Have An Invite Code?",
-            "no": "No",
-            "confirm": "Confirm"
-        },
         "taxiView": {
             "taxi": "Taxi",
             "searching": "Searching for Taxi",
