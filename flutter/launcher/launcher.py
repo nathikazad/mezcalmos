@@ -89,11 +89,11 @@ class Launcher:
     
     def __patch_gs__(self):
         '''If its staging mode Patch the Gpoogle-services.json'''
+        android_flutter_gs_path = '../android/app/google-services.json'
+        ios_flutter_gs_path = '../ios/Runner/GoogleService-Info.plist'
+
         if self.user_args['lmode'] == 'stage':
-            PRINTLN("[+] Launching on Staging mode - Patching gServices ...!")
-            android_flutter_gs_path = '../android/app/google-services.json'
-            ios_flutter_gs_path = '../ios/Runner/GoogleService-Info.plist'
-            
+            PRINTLN("[+] Launching on Staging mode - Patching gServices ...!")    
             # Android
             if not os.path.exists('staging.google-services.json'):
                 exit(DW_EXIT_REASONS.GOOGLE_SERVICES_JSON_NOT_IN_LAUNCHER_FILES)
@@ -114,6 +114,26 @@ class Launcher:
             open(android_flutter_gs_path , 'w+').write(json.dumps(staging_client))
             open(ios_flutter_gs_path , 'w+').write(open('staging.GoogleService-Info.plist').read())
 
+        # Prodyction Mode !
+        elif self.user_args['lmode'] == 'prod':
+            '''We will copy the prod plist and gms to android / ios folders !'''
+             # Android
+            if not os.path.exists('prod.google-services.json'):
+                exit(DW_EXIT_REASONS.GOOGLE_SERVICES_JSON_NOT_IN_LAUNCHER_FILES)
+            if not os.path.exists(android_flutter_gs_path):
+                exit(DW_EXIT_REASONS.GOOGLE_SERVICES_JSON_NOT_IN_ANDROID_APP_FOLDER)
+            
+            # ios
+            if not os.path.exists('prod.GoogleService-Info.plist'):
+                exit(DW_EXIT_REASONS.PLIST_GOOGLE_SERVICES_JSON_NOT_IN_LAUNCHER_FILES)
+            if not os.path.exists(ios_flutter_gs_path):
+                exit(DW_EXIT_REASONS.PLIST_GOOGLE_SERVICES_JSON_NOT_IN_IOS_APP_FOLDER)
+
+            prod_client = json.loads(open('prod.google-services.json').read())
+            open(android_flutter_gs_path , 'w+').write(json.dumps(prod_client))
+            open(ios_flutter_gs_path , 'w+').write(open('prod.GoogleService-Info.plist').read())
+            PRINTLN("[+] Done Patching Prod clients !")
+            
         else:
             PRINTLN("[+] Passed GS patching steps , since it's not staging mode !")
             
@@ -336,9 +356,9 @@ class Config:
             if _ not in POSSIBLE_LMODES:
                 PRINTLN(f'[!] lmode={_} : Error This launch mode is wrong !')
                 exit(DW_EXIT_REASONS.CONF_FILE_LMODENAME_WRONG)
-            if _ == 'prod':
-                PRINTLN(f'[!] lmode={_} : Error This launch mode not yet fully tested !')
-                exit(DW_EXIT_REASONS.REACH_THE_LAZY_SAAD)
+            # if _ == 'prod':
+            #     PRINTLN(f'[!] lmode={_} : Error This launch mode not yet fully tested !')
+            #     exit(DW_EXIT_REASONS.REACH_THE_LAZY_SAAD)
 
             self.user_args['lmode'] = _
         else:
