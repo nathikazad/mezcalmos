@@ -1,7 +1,8 @@
 // ----------------- CONNECTIVITY STRINGS ----------------- //
 // PLEASE DO NOT TOUCH ANYTHING IN CONNECTIVITY STRINGS , UNLESS YOU INFORM OTHERS.
 const String db = "mezcalmos-31f1c-default-rtdb";
-const String stagingDb = "https://mezcalmos-test.firebaseio.com";
+const String stagingDb =
+    "https://mezcalmos-staging-default-rtdb.firebaseio.com";
 const String localhost = "http://127.0.0.1";
 const String authPort = ":9099";
 const String dbRoot = ":9000/?ns=$db";

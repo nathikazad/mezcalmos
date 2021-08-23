@@ -57,7 +57,7 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         // applicationId "com.meztaxi.driver"
-        applicationId "com.meztaxi.driver"
+        applicationId "com.meztaxi.stagingDriver"
         minSdkVersion 21 // google map's package we;re using needs  >= 20 .. but 21 has multidex by default .
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()

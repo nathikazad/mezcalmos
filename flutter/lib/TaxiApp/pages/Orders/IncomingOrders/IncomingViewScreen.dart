@@ -246,7 +246,7 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
             Positioned(
               top: 10,
               child: Container(
-                height: getSizeRelativeToScreen(30, Get.height, Get.width),
+                height: 65,
                 width: Get.width / 1.05,
                 decoration: BoxDecoration(
                     color: Colors.white,
@@ -258,142 +258,174 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                           blurRadius: 7,
                           offset: Offset(0, 7)),
                     ]),
-                child: Stack(
+                child: Flex(
                   clipBehavior: Clip.hardEdge,
-                  alignment: Alignment.center,
+                  direction: Axis.horizontal,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    VerticalDivider(
-                      color: Color.fromARGB(255, 236, 236, 236),
-                      thickness: 1,
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(
-                          getSizeRelativeToScreen(2.5, Get.height, Get.width)),
-                      height:
-                          getSizeRelativeToScreen(17, Get.height, Get.width),
-                      width: getSizeRelativeToScreen(17, Get.height, Get.width),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        boxShadow: <BoxShadow>[
-                          BoxShadow(
-                              color: Color.fromARGB(255, 216, 225, 249),
-                              spreadRadius: 0,
-                              blurRadius: 5,
-                              offset: Offset(0, 7)),
-                        ],
-                        gradient: LinearGradient(
-                            colors: [
-                              Color.fromARGB(255, 97, 127, 255),
-                              Color.fromARGB(255, 198, 90, 252),
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight),
-                      ),
-                      child: Center(
-                        child: Image.asset('assets/images/logoWhite.png'),
-                      ),
-                    ),
-                    Positioned(
-                      left: 25,
-                      top: 10,
-                      child: Obx(
-                        () => Text(
-                          lang.strings['shared']['inputLocation']["from"],
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 25,
-                      top: 27,
-                      child: Obx(
-                        () => GestureDetector(
-                          onTap: () => mezcalmosSnackBar(
-                              lang.strings['shared']['inputLocation']["from"],
-                              controller
-                                      .selectedIncommingOrder?.from?.address ??
-                                  ""),
-                          child: Text(
-                            controller.selectedIncommingOrder?.from?.address
-                                        ?.toString()
-                                        .length ==
-                                    null
-                                ? "........."
-                                : controller.selectedIncommingOrder!.from!
-                                            .address!
-                                            .toString()
-                                            .length >
-                                        13
-                                    ? (controller.selectedIncommingOrder?.from
-                                                ?.address
-                                                .toString()
-                                                .substring(0, 13) ??
-                                            "..........") +
-                                        " .."
-                                    : controller.selectedIncommingOrder?.from
-                                        ?.address, //13+..
-                            style: TextStyle(fontSize: 16, fontFamily: 'psr'),
-                            overflow: TextOverflow.visible,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left:
-                          (getSizeRelativeToScreen(180, Get.height, Get.width) /
-                                  2) +
-                              40,
-                      top: 10,
-                      child: Obx(
-                        () => Text(
-                          lang.strings['shared']['inputLocation']["to"],
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left:
-                          (getSizeRelativeToScreen(180, Get.height, Get.width) /
-                                  2) +
-                              40,
-                      top: 27,
-                      child: Obx(
-                        () => GestureDetector(
-                          onTap: () => mezcalmosSnackBar(
-                              lang.strings['shared']['inputLocation']["to"],
-                              controller.selectedIncommingOrder?.to?.address ??
-                                  ""),
-                          child: Text(
-                            controller.selectedIncommingOrder?.to?.address
-                                        ?.toString()
-                                        .length ==
-                                    null
-                                ? "........."
-                                : controller.selectedIncommingOrder!.to!
-                                            .address!
-                                            .toString()
-                                            .length >
-                                        13
-                                    ? (controller.selectedIncommingOrder?.to
-                                                ?.address
-                                                .toString()
-                                                .substring(0, 13) ??
-                                            "..........") +
-                                        " .."
-                                    : controller.selectedIncommingOrder?.to
-                                        ?.address, //13+..
-                            style: TextStyle(fontSize: 16, fontFamily: 'psr'),
-                            overflow: TextOverflow.visible,
-                          ),
-                        ),
-                      ),
-                    ),
+                    Flexible(
+                        flex: 2,
+                        fit: FlexFit.tight,
+                        child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 8.0, top: 12, bottom: 12, right: 8.0),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Obx(
+                                    () => Text(
+                                      lang.strings['shared']['inputLocation']
+                                          ["to"],
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  Obx(
+                                    () => GestureDetector(
+                                      onTap: () => mezcalmosSnackBar(
+                                          lang.strings['shared']
+                                              ['inputLocation']["from"],
+                                          controller.selectedIncommingOrder
+                                                  ?.from?.address ??
+                                              ""),
+                                      child: Text(
+                                        controller.selectedIncommingOrder?.from
+                                                    ?.address
+                                                    ?.toString()
+                                                    .length ==
+                                                null
+                                            ? "........."
+                                            : controller.selectedIncommingOrder!
+                                                        .from!.address!
+                                                        .toString()
+                                                        .length >
+                                                    13
+                                                ? (controller
+                                                            .selectedIncommingOrder
+                                                            ?.from
+                                                            ?.address
+                                                            .toString()
+                                                            .substring(0, 13) ??
+                                                        "..........") +
+                                                    " .."
+                                                : controller
+                                                    .selectedIncommingOrder
+                                                    ?.from
+                                                    ?.address, //13+..
+                                        style: TextStyle(
+                                            fontSize: 16, fontFamily: 'psr'),
+                                        overflow: TextOverflow.visible,
+                                      ),
+                                    ),
+                                  ),
+                                ]))),
+                    Flexible(
+                        flex: 1,
+                        fit: FlexFit.tight,
+                        child: Stack(
+                            alignment: Alignment.center,
+                            fit: StackFit.passthrough,
+                            children: [
+                              VerticalDivider(
+                                color: Color.fromARGB(255, 236, 236, 236),
+                                thickness: 1,
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(getSizeRelativeToScreen(
+                                    2.5, Get.height, Get.width)),
+                                height: getSizeRelativeToScreen(
+                                    17, Get.height, Get.width),
+                                width: getSizeRelativeToScreen(
+                                    17, Get.height, Get.width),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  boxShadow: <BoxShadow>[
+                                    BoxShadow(
+                                        color:
+                                            Color.fromARGB(255, 216, 225, 249),
+                                        spreadRadius: 0,
+                                        blurRadius: 5,
+                                        offset: Offset(0, 7)),
+                                  ],
+                                  gradient: LinearGradient(
+                                      colors: [
+                                        Color.fromARGB(255, 97, 127, 255),
+                                        Color.fromARGB(255, 198, 90, 252),
+                                      ],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight),
+                                ),
+                                child: Center(
+                                  child: Image.asset(
+                                      'assets/images/logoWhite.png'),
+                                ),
+                              ),
+                            ])),
+                    Flexible(
+                        flex: 2,
+                        fit: FlexFit.tight,
+                        child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 0, top: 12, bottom: 12, right: 8.0),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Obx(
+                                    () => Text(
+                                      lang.strings['shared']['inputLocation']
+                                          ["to"],
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  Obx(
+                                    () => GestureDetector(
+                                      onTap: () => mezcalmosSnackBar(
+                                          lang.strings['shared']
+                                              ['inputLocation']["to"],
+                                          controller.selectedIncommingOrder?.to
+                                                  ?.address ??
+                                              ""),
+                                      child: Text(
+                                        controller.selectedIncommingOrder?.to
+                                                    ?.address
+                                                    ?.toString()
+                                                    .length ==
+                                                null
+                                            ? "........."
+                                            : controller.selectedIncommingOrder!
+                                                        .to!.address!
+                                                        .toString()
+                                                        .length >
+                                                    13
+                                                ? (controller
+                                                            .selectedIncommingOrder
+                                                            ?.to
+                                                            ?.address
+                                                            .toString()
+                                                            .substring(0, 13) ??
+                                                        "..........") +
+                                                    " .."
+                                                : controller
+                                                    .selectedIncommingOrder
+                                                    ?.to
+                                                    ?.address, //13+..
+                                        style: TextStyle(
+                                            fontSize: 16, fontFamily: 'psr'),
+                                        overflow: TextOverflow.visible,
+                                      ),
+                                    ),
+                                  ),
+                                ]))),
                   ],
                 ),
               ),

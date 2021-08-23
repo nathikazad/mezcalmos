@@ -91,13 +91,26 @@ class SignIn extends GetWidget<AuthController> {
                               ),
                             )
                           : Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Icon(MezcalmosIcons.facebook_f),
-                                Text(lmode != "dev"
-                                    ? lang.strings['shared']['login']["fbBtn"]
-                                    : "test mode login")
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 15.0),
+                                  child: Icon(MezcalmosIcons.facebook_f),
+                                ),
+                                Flexible(
+                                    fit: FlexFit.tight,
+                                    child: Text(
+                                      lmode != "dev"
+                                          ? lang.strings['shared']['login']
+                                              ["fbBtn"]
+                                          : "test mode login",
+                                      softWrap: true,
+                                      textAlign: TextAlign.center,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      textScaleFactor: 0.9,
+                                    ))
                               ],
                             ),
                       style: ButtonStyle(
@@ -139,12 +152,24 @@ class SignIn extends GetWidget<AuthController> {
                               ),
                             )
                           : Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Icon(MezcalmosIcons.envelope),
-                                Text(lang.strings['shared']['login']
-                                    ["loginWithSms"])
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 15.0),
+                                  child: Icon(MezcalmosIcons.envelope),
+                                ),
+                                Flexible(
+                                    fit: FlexFit.tight,
+                                    child: Text(
+                                      lang.strings['shared']['login']
+                                          ["loginWithSms"],
+                                      softWrap: true,
+                                      textAlign: TextAlign.center,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      textScaleFactor: 0.9,
+                                    ))
                               ],
                             ),
                       style: ButtonStyle(
@@ -193,15 +218,29 @@ class SignIn extends GetWidget<AuthController> {
                                 )
                               : Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
+                                      MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Icon(
-                                      Icons.iso_rounded,
-                                      color: Colors.black,
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(left: 15.0),
+                                      child: Icon(
+                                        MezcalmosIcons.apple,
+                                        color: Colors.white,
+                                      ),
                                     ),
-                                    Text(lang.strings['shared']['login']
-                                        ["loginWithApple"])
+                                    Flexible(
+                                      fit: FlexFit.tight,
+                                      child: Text(
+                                        lang.strings['shared']['login']
+                                            ["loginWithApple"],
+                                        softWrap: true,
+                                        textAlign: TextAlign.center,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        textScaleFactor: 0.9,
+                                      ),
+                                    )
                                   ],
                                 ),
                           style: ButtonStyle(
@@ -216,9 +255,9 @@ class SignIn extends GetWidget<AuthController> {
                                 getSizeRelativeToScreen(25, sh, sw))),
                             elevation: MaterialStateProperty.all<double>(2),
                             backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.white),
-                            foregroundColor:
                                 MaterialStateProperty.all<Color>(Colors.black),
+                            foregroundColor:
+                                MaterialStateProperty.all<Color>(Colors.white),
                           ),
                         ),
                       ))

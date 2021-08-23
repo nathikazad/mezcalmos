@@ -23,6 +23,7 @@ class MezcalmosIcons {
 
   static const IconData stream =
       IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+
   static const IconData times_circle =
       IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData power_off =
@@ -91,4 +92,6 @@ class MezcalmosIcons {
       IconData(0xe821, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData whatsapp =
       IconData(0xe822, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData apple =
+      IconData(0xf179, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }
