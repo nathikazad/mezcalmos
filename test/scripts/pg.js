@@ -1,4 +1,5 @@
 const { Client } = require('pg')
+const fs = require('fs');
 
 const client = new Client({
   user: 'xqzmxaqcsacvjl',
@@ -11,45 +12,12 @@ const client = new Client({
   }
 })
 client.connect()
-
-
-// client.query(`SELECT date("orderTime"), count(*) as totalOrders, 
-// count(*) FILTER (WHERE "finalStatus" = 'droppedOff') AS droppedOff,
-// count(*) FILTER (WHERE "finalStatus" = 'expired') AS expired,
-// count(*) FILTER (WHERE "finalStatus" = 'cancelled') AS cancelled,
-// count(*) FILTER (WHERE "finalStatus" = 'droppedOff')*100/count(*) as fulfillmentRatio
-// FROM orders 
-// GROUP BY date("orderTime") 
-// ORDER BY date("orderTime") ASC`, (err, res) => {
-//   if (err)
-//     console.log(err)
-//   else
-//     console.log(res.rows)
-//   client.end()
-// })
-
-
-// client.query(`SELECT extract(month from "orderTime") as month, 
-// count(*) as totalOrders, 
-// count(*) FILTER (WHERE "finalStatus" = 'droppedOff') AS droppedOff,
-// count(*) FILTER (WHERE "finalStatus" = 'expired') AS expired,
-// count(*) FILTER (WHERE "finalStatus" = 'cancelled') AS cancelled,
-// count(*) FILTER (WHERE "finalStatus" = 'droppedOff')*100/count(*) as fulfillmentRatio
-// FROM orders 
-// GROUP BY month 
-// ORDER BY month ASC`, (err, res) => {
-//   if (err)
-//     console.log(err)
-//   else
-//     console.log(res.rows)
-//   client.end()
-// })
-
-client.query(`SELECT extract(month from "orderTime") as month, 
-count(distinct "driverId") as drivers
-FROM orders 
-GROUP BY month 
-ORDER BY month ASC`, (err, res) => {
+if (process.argv.length != 3) {
+  console.log("Required sql file name");
+  process.exit()
+}
+let query = fs.readFileSync(`sql/${process.argv[2]}.sql`, 'utf8');
+client.query(query, (err, res) => {
   if (err)
     console.log(err)
   else
