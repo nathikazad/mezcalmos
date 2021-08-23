@@ -20,7 +20,7 @@ mutation AddOrder($objects: [orders_insert_input!]!){
 
 const userMutationQuery = gql`
 mutation AddUser($objects: [users_insert_input!]!){
-  insert_users(objects: $objects) {
+  insert_users(objects: $objects, on_conflict: {constraint: users_pkey, update_columns: [displayName, photo, driver, taxiNumber]}) {
     returning {
       uid
     }

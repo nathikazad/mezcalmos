@@ -1,6 +1,4 @@
-SELECT TO_CHAR(
-    TO_DATE (extract(month from "orderTime")::text, 'MM'), 'Month'
-    ) AS month, 
+SELECT TO_CHAR(TO_DATE (extract(month from "orderTime")::text, 'MM'), 'Month') AS month, 
 count(*) AS totalOrders, 
 count(*) FILTER (WHERE "finalStatus" = 'droppedOff') AS droppedOff,
 count(*) FILTER (WHERE "finalStatus" = 'expired') AS expired,

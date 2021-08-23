@@ -40,7 +40,6 @@ exports.processSignUp = functions.auth.user().onCreate(async user => {
 
 exports.changeName = functions.database.ref(
   '/users/{userId}/info/displayName').onUpdate(async (snap, context) => {
-    let hasura = getHasura()
     await firebase.auth().updateUser(context.params.userId, { displayName: snap.after.val() })
     await hasura.updateUser({
       uid: context.params.userId,
