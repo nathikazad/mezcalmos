@@ -15,6 +15,7 @@
     "firebase-functions": "^3.14.1",
     "graphql": "^15.5.0",
     "graphql-request": "^3.5.0",
+    "pg": "^8.7.1",
     "twilio": "^3.63.1",
     "web-push": "^3.4.4"
   }
