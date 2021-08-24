@@ -1,1 +1,0 @@
-select "orderTime" at time zone 'pst' from orders limit 10;
