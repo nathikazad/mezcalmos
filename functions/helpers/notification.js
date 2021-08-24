@@ -59,7 +59,8 @@ async function notifyDriversNewRequest(firebase, address) {
         if (driver.notificationInfo.deviceNotificationToken) {
           let message={
             title: "Nueva Pedido",
-            body: `Hay una nueva orden de taxi de ${address}, vea si puede aceptarla.`
+            body: `Hay una nueva orden de taxi de ${address}, vea si puede aceptarla.`,
+            sound: "default"
           };
           sender.sendToDevice(driver.notificationInfo.deviceNotificationToken, message, firebase);
         } else {
