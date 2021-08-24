@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -10,10 +11,24 @@ import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
+import 'package:http/http.dart' as http;
 
-Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
   print("Handling a background message");
-  print(message.toString());
+  print(event.data);
+  echoPostMessage(event.data);
+}
+
+void echoPostMessage(Map<String, dynamic> body) {
+  http
+      .post(
+        Uri.parse('https://postman-echo.com/post'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(body),
+      )
+      .then((value) => print(jsonDecode(value.body)["data"]));
 }
 
 class DeviceNotificationsController extends GetxController {
@@ -37,7 +52,8 @@ class DeviceNotificationsController extends GetxController {
       _listeners.addAll([
         FirebaseMessaging.onMessage.listen((RemoteMessage event) {
           print("message recieved");
-          print(event.notification!.body);
+          print(event.data);
+          echoPostMessage(event.data);
         }),
         FirebaseMessaging.onMessageOpenedApp.listen((message) {
           print('Message clicked!');
