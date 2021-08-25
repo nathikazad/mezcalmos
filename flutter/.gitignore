@@ -1,9 +1,10 @@
 # Keys
-
 *.jks
 key.properties
 upload_certificate.pem
 
+android/app/google-services.json
+ios/Runner/GoogleService-Info.plist
 # --
 .launcher_output/*.apk
 .launcher_output/*.aab
