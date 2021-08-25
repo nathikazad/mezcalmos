@@ -1,1 +1,227 @@
-{"admins":{"IJt8suHU7VpXxMbzaI2pXKDBbEZx":{"authorized":true}},"chat":{"-MbDVGiEJP_PAHkhy02V":{"chatType":"order","orderType":"taxi","participants":{"Fmn5ntvhobYTXbSkNS0xpAXT9wuF":{"image":"https://randomuser.me/api/portraits/men/74.jpg","name":"Taxi","particpantType":"taxi"},"Xg94I7n6Ny2QOiFNakBPURUCFESQ":{"image":"https://randomuser.me/api/portraits/men/70.jpg","name":"Customer","particpantType":"customer"}}}},"orders":{"taxi":{"-MbDVGiEJP_PAHkhy02V":{"acceptRideTime":"Wed, 02 Jun 2021 20:54:12 GMT","customer":{"id":"Xg94I7n6Ny2QOiFNakBPURUCFESQ","image":"https://randomuser.me/api/portraits/men/70.jpg","name":"Customer"},"distance":{"text":"2.7 km","value":2652},"driver":{"id":"Fmn5ntvhobYTXbSkNS0xpAXT9wuF","image":"https://randomuser.me/api/portraits/men/74.jpg","location":{"distanceToLocation":{"text":"29 m","value":29},"estimatedArrivalTime":"Wed, 02 Jun 2021 20:54:34 GMT","lastUpdateTime":"Wed, 02 Jun 2021 20:54:22 GMT","polyline":"qzv_B~kioQl@Y","position":{"lat":15.850815076245208,"lng":-97.04654059045353},"timeToLocation":{"text":"1 min","value":7}},"name":"Taxi"},"duration":{"text":"8 mins","value":453},"estimatedPrice":53.040000000000006,"from":{"address":"Infraganti 23B, Lazaro Cardenas, 70934 Brisas de Zicatela, Oax., Mexico","by":"search","lat":15.850659999999998,"lng":-97.04626259999999},"orderTime":"Wed, 02 Jun 2021 20:53:58 GMT","orderType":"taxi","paymentType":"cash","rideFinishTime":"Wed, 02 Jun 2021 20:54:35 GMT","rideStartTime":"Wed, 02 Jun 2021 20:54:25 GMT","status":"droppedOff","to":{"address":"Brisas de Zicatela, Oaxaca, Mexico","by":"search","lat":15.8336944,"lng":-97.0424994}}}},"pricePolicy":{"minimumCost":40,"perKmCost":20},"taxiDrivers":{"BaYcsVDDrNQ8YpMeY3vpFjFg7Pkf":{"location":{"lastUpdateTime":"Wed, 02 Jun 2021 20:53:56 GMT","position":{"lat":15.835236758928996,"lng":-97.04486852286556}}},"Fmn5ntvhobYTXbSkNS0xpAXT9wuF":{"location":{"lastUpdateTime":"Wed, 02 Jun 2021 20:54:30 GMT","position":{"lat":15.835236758928996,"lng":-97.04486852286556}},"notificationInfo":{"endpoint":"https://fcm.googleapis.com/fcm/send/eaKWraQ29EA:APA91bGFjlhlBoT4ne1Je8b-k6IJx-cQZ8uBhwpEdyC_e0heBvaLbAk3yV21p_E2hqp33PPOosJ5BIyw2sJ5zjznW8ZeF5mV0-DaMKLhFvBwHlg-nkH1fajJS9slYTjiIQmE7hqLE1iU","keys":{"auth":"DAlZD8i7QK7D5cXlQCRY2g","p256dh":"BJW2cDJv1uQuZwIo7V-7r1GGuanW6h3EEKLJwqq-QgijewjlPgMnPCqZFEtJYHLJX_CMwaUmpnftMEoyUytYhwk"}},"orders":{"-MbDVGiEJP_PAHkhy02V":{"acceptRideTime":"Wed, 02 Jun 2021 20:54:12 GMT","customer":{"id":"Xg94I7n6Ny2QOiFNakBPURUCFESQ","image":"https://randomuser.me/api/portraits/men/70.jpg","name":"Customer"},"estimatedPrice":53.040000000000006,"paymentType":"cash","rideFinishTime":"Wed, 02 Jun 2021 20:54:35 GMT","rideStartTime":"Wed, 02 Jun 2021 20:54:25 GMT","routeInformation":{"distance":{"text":"2.7 km","value":2652},"duration":{"text":"8 mins","value":453}},"status":"droppedOff","to":{"address":"Brisas de Zicatela, Oaxaca, Mexico","by":"search","lat":15.8336944,"lng":-97.0424994}}},"state":{"authorizationStatus":"authorized","isLooking":true}}},"users":{"Fmn5ntvhobYTXbSkNS0xpAXT9wuF":{"info":{"displayName":"Taxi One","email":"driver.one@mezcalmos.com","language":"en","photo":"https://randomuser.me/api/portraits/men/74.jpg"}},"IJt8suHU7VpXxMbzaI2pXKDBbEZx":{"info":{"displayName":"Admin One","email":"admin@mezcalmos.com","language":"en","photo":"https://randomuser.me/api/portraits/men/75.jpg"}},"Xg94I7n6Ny2QOiFNakBPURUCFESQ":{"info":{"displayName":"Customer One","email":"customer.one@mezcalmos.com","language":"en","photo":"https://randomuser.me/api/portraits/men/70.jpg"},"notificationInfo":{"endpoint":"https://fcm.googleapis.com/fcm/send/cNtCqCYfjhU:APA91bEnFC-Wl8sXHZMMxZYNsHnq5BG3q3n7NSs4Eol0jRxY6xcCiWWX0lcSIiI6BjAkF0lnXjQz3Kwpx8MztsQaCWAiJ7bPH6K90Yf5H7ObFzYel6awGQKCIzP7QlP7pOxbPJqqyiXq","keys":{"auth":"2XpwPAWtOrF6BMtrbOFR0g","p256dh":"BHoQfSok1z1U4X3zlbuFdn7gPbqTkIyNlJYfLkJRxNjZYBkLS5twvGZBPqx09B0pPMyfseAeyqYoioQPPfz81hs"}},"orders":{"-MbDVGiEJP_PAHkhy02V":{"acceptRideTime":"Wed, 02 Jun 2021 20:54:12 GMT","driver":{"id":"Fmn5ntvhobYTXbSkNS0xpAXT9wuF","image":"https://randomuser.me/api/portraits/men/74.jpg","name":"Taxi"},"estimatedPrice":53.040000000000006,"from":{"address":"Infraganti 23B, Lazaro Cardenas, 70934 Brisas de Zicatela, Oax., Mexico","by":"search","lat":15.850659999999998,"lng":-97.04626259999999},"orderTime":"Wed, 02 Jun 2021 20:53:58 GMT","orderType":"taxi","paymentType":"cash","rideFinishTime":"Wed, 02 Jun 2021 20:54:35 GMT","rideStartTime":"Wed, 02 Jun 2021 20:54:25 GMT","routeInformation":{"distance":{"text":"2.7 km","value":2652},"duration":{"text":"8 mins","value":453}},"status":"droppedOff","to":{"address":"Brisas de Zicatela, Oaxaca, Mexico","by":"search","lat":15.8336944,"lng":-97.0424994}}}}}}
+{
+  "metadata": {
+    "notifyDrivers": true
+  },
+  "admins": {
+    "IJt8suHU7VpXxMbzaI2pXKDBbEZx": {
+      "authorized": true
+    }
+  },
+  "chat": {
+    "-MbDVGiEJP_PAHkhy02V": {
+      "chatType": "order",
+      "orderType": "taxi",
+      "participants": {
+        "Fmn5ntvhobYTXbSkNS0xpAXT9wuF": {
+          "image": "https://randomuser.me/api/portraits/men/74.jpg",
+          "name": "Taxi",
+          "particpantType": "taxi"
+        },
+        "Xg94I7n6Ny2QOiFNakBPURUCFESQ": {
+          "image": "https://randomuser.me/api/portraits/men/70.jpg",
+          "name": "Customer",
+          "particpantType": "customer"
+        }
+      }
+    }
+  },
+  "orders": {
+    "taxi": {
+      "-MbDVGiEJP_PAHkhy02V": {
+        "acceptRideTime": "Wed, 02 Jun 2021 20:54:12 GMT",
+        "customer": {
+          "id": "Xg94I7n6Ny2QOiFNakBPURUCFESQ",
+          "image": "https://randomuser.me/api/portraits/men/70.jpg",
+          "name": "Customer"
+        },
+        "distance": {
+          "text": "2.7 km",
+          "value": 2652
+        },
+        "driver": {
+          "id": "Fmn5ntvhobYTXbSkNS0xpAXT9wuF",
+          "image": "https://randomuser.me/api/portraits/men/74.jpg",
+          "location": {
+            "distanceToLocation": {
+              "text": "29 m",
+              "value": 29
+            },
+            "estimatedArrivalTime": "Wed, 02 Jun 2021 20:54:34 GMT",
+            "lastUpdateTime": "Wed, 02 Jun 2021 20:54:22 GMT",
+            "polyline": "qzv_B~kioQl@Y",
+            "position": {
+              "lat": 15.850815076245208,
+              "lng": -97.04654059045353
+            },
+            "timeToLocation": {
+              "text": "1 min",
+              "value": 7
+            }
+          },
+          "name": "Taxi"
+        },
+        "duration": {
+          "text": "8 mins",
+          "value": 453
+        },
+        "estimatedPrice": 53.040000000000006,
+        "from": {
+          "address": "Infraganti 23B, Lazaro Cardenas, 70934 Brisas de Zicatela, Oax., Mexico",
+          "by": "search",
+          "lat": 15.850659999999998,
+          "lng": -97.04626259999999
+        },
+        "orderTime": "Wed, 02 Jun 2021 20:53:58 GMT",
+        "orderType": "taxi",
+        "paymentType": "cash",
+        "rideFinishTime": "Wed, 02 Jun 2021 20:54:35 GMT",
+        "rideStartTime": "Wed, 02 Jun 2021 20:54:25 GMT",
+        "status": "droppedOff",
+        "to": {
+          "address": "Brisas de Zicatela, Oaxaca, Mexico",
+          "by": "search",
+          "lat": 15.8336944,
+          "lng": -97.0424994
+        }
+      }
+    }
+  },
+  "pricePolicy": {
+    "minimumCost": 40,
+    "perKmCost": 20
+  },
+  "taxiDrivers": {
+    "BaYcsVDDrNQ8YpMeY3vpFjFg7Pkf": {
+      "location": {
+        "lastUpdateTime": "Wed, 02 Jun 2021 20:53:56 GMT",
+        "position": {
+          "lat": 15.835236758928996,
+          "lng": -97.04486852286556
+        }
+      }
+    },
+    "Fmn5ntvhobYTXbSkNS0xpAXT9wuF": {
+      "location": {
+        "lastUpdateTime": "Wed, 02 Jun 2021 20:54:30 GMT",
+        "position": {
+          "lat": 15.835236758928996,
+          "lng": -97.04486852286556
+        }
+      },
+      "notificationInfo": {
+        "endpoint": "https://fcm.googleapis.com/fcm/send/eaKWraQ29EA:APA91bGFjlhlBoT4ne1Je8b-k6IJx-cQZ8uBhwpEdyC_e0heBvaLbAk3yV21p_E2hqp33PPOosJ5BIyw2sJ5zjznW8ZeF5mV0-DaMKLhFvBwHlg-nkH1fajJS9slYTjiIQmE7hqLE1iU",
+        "keys": {
+          "auth": "DAlZD8i7QK7D5cXlQCRY2g",
+          "p256dh": "BJW2cDJv1uQuZwIo7V-7r1GGuanW6h3EEKLJwqq-QgijewjlPgMnPCqZFEtJYHLJX_CMwaUmpnftMEoyUytYhwk"
+        }
+      },
+      "orders": {
+        "-MbDVGiEJP_PAHkhy02V": {
+          "acceptRideTime": "Wed, 02 Jun 2021 20:54:12 GMT",
+          "customer": {
+            "id": "Xg94I7n6Ny2QOiFNakBPURUCFESQ",
+            "image": "https://randomuser.me/api/portraits/men/70.jpg",
+            "name": "Customer"
+          },
+          "estimatedPrice": 53.040000000000006,
+          "paymentType": "cash",
+          "rideFinishTime": "Wed, 02 Jun 2021 20:54:35 GMT",
+          "rideStartTime": "Wed, 02 Jun 2021 20:54:25 GMT",
+          "routeInformation": {
+            "distance": {
+              "text": "2.7 km",
+              "value": 2652
+            },
+            "duration": {
+              "text": "8 mins",
+              "value": 453
+            }
+          },
+          "status": "droppedOff",
+          "to": {
+            "address": "Brisas de Zicatela, Oaxaca, Mexico",
+            "by": "search",
+            "lat": 15.8336944,
+            "lng": -97.0424994
+          }
+        }
+      },
+      "state": {
+        "authorizationStatus": "authorized",
+        "isLooking": true
+      }
+    }
+  },
+  "users": {
+    "Fmn5ntvhobYTXbSkNS0xpAXT9wuF": {
+      "info": {
+        "displayName": "Taxi One",
+        "email": "driver.one@mezcalmos.com",
+        "language": "en",
+        "photo": "https://randomuser.me/api/portraits/men/74.jpg"
+      }
+    },
+    "IJt8suHU7VpXxMbzaI2pXKDBbEZx": {
+      "info": {
+        "displayName": "Admin One",
+        "email": "admin@mezcalmos.com",
+        "language": "en",
+        "photo": "https://randomuser.me/api/portraits/men/75.jpg"
+      }
+    },
+    "Xg94I7n6Ny2QOiFNakBPURUCFESQ": {
+      "info": {
+        "displayName": "Customer One",
+        "email": "customer.one@mezcalmos.com",
+        "language": "en",
+        "photo": "https://randomuser.me/api/portraits/men/70.jpg"
+      },
+      "notificationInfo": {
+        "endpoint": "https://fcm.googleapis.com/fcm/send/cNtCqCYfjhU:APA91bEnFC-Wl8sXHZMMxZYNsHnq5BG3q3n7NSs4Eol0jRxY6xcCiWWX0lcSIiI6BjAkF0lnXjQz3Kwpx8MztsQaCWAiJ7bPH6K90Yf5H7ObFzYel6awGQKCIzP7QlP7pOxbPJqqyiXq",
+        "keys": {
+          "auth": "2XpwPAWtOrF6BMtrbOFR0g",
+          "p256dh": "BHoQfSok1z1U4X3zlbuFdn7gPbqTkIyNlJYfLkJRxNjZYBkLS5twvGZBPqx09B0pPMyfseAeyqYoioQPPfz81hs"
+        }
+      },
+      "orders": {
+        "-MbDVGiEJP_PAHkhy02V": {
+          "acceptRideTime": "Wed, 02 Jun 2021 20:54:12 GMT",
+          "driver": {
+            "id": "Fmn5ntvhobYTXbSkNS0xpAXT9wuF",
+            "image": "https://randomuser.me/api/portraits/men/74.jpg",
+            "name": "Taxi"
+          },
+          "estimatedPrice": 53.040000000000006,
+          "from": {
+            "address": "Infraganti 23B, Lazaro Cardenas, 70934 Brisas de Zicatela, Oax., Mexico",
+            "by": "search",
+            "lat": 15.850659999999998,
+            "lng": -97.04626259999999
+          },
+          "orderTime": "Wed, 02 Jun 2021 20:53:58 GMT",
+          "orderType": "taxi",
+          "paymentType": "cash",
+          "rideFinishTime": "Wed, 02 Jun 2021 20:54:35 GMT",
+          "rideStartTime": "Wed, 02 Jun 2021 20:54:25 GMT",
+          "routeInformation": {
+            "distance": {
+              "text": "2.7 km",
+              "value": 2652
+            },
+            "duration": {
+              "text": "8 mins",
+              "value": 453
+            }
+          },
+          "status": "droppedOff",
+          "to": {
+            "address": "Brisas de Zicatela, Oaxaca, Mexico",
+            "by": "search",
+            "lat": 15.8336944,
+            "lng": -97.0424994
+          }
+        }
+      }
+    }
+  }
+}

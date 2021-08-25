@@ -37,7 +37,10 @@ async function request(firebase, uid, data, hasura) {
   }
 
   try {
-    notification.notifyDriversNewRequest(firebase, data.from.address.split(',')[0]);
+    firebase.database().ref(`/metadata/notifyDrivers`).once('value', (snap) => {
+      if (snap.val() == true)
+        notification.notifyDriversNewRequest(firebase, data.from.address.split(',')[0]);
+    })
   } catch (e) {
     console.log(e);
   }
