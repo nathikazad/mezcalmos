@@ -4,8 +4,8 @@ const hasuraClass = require("../functions/helpers/hasura")
 const expireOrder = require("../functions/helpers/taxi/expire");
 
 
-const checkOpenOrdersInterval = 30 //seconds
-let orderExpirationLimit = 5 * 60 // seconds
+const checkOpenOrdersInterval = 10 //seconds
+let orderExpirationLimit = 180 // seconds
 
 let hasuraParams;
 let firebaseParams = {};
@@ -53,6 +53,19 @@ async function checkOpenOrders() {
       let orderExpirationTime = new Date(orderTime.getTime() + orderExpirationLimit * 1000);
       if (Date.now() > orderExpirationTime) {
         expireOrder(firebase, orderId, openOrders[orderId].customer.id, hasura);
+      } else {
+        // get list of drivers
+        // check for device token
+        // if yes
+        //    check driver is available and looking
+        //    check if already driver has read for this order
+        //    check if notified in this cycle for another order
+        //      if no and no  
+        //        notify driver
+        //        log to firebase mark driver as notified for this order and if firsttime save time
+        //        log to hasura mark driver as notified for this order and if firsttime save time
+        //        mark driver as notified for this cycle
+
       }
     } else {
       expireOrder(firebase, orderId, openOrders[orderId].customer.id, hasura)

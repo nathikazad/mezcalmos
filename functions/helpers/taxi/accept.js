@@ -99,8 +99,7 @@ async function accept(firebase, uid, data, hasura) {
     driver: order.driver,
     time: order.acceptRideTime
   })
-  order = (await firebase.database().ref(`/orders/taxi/${data.orderId}`).once('value')).val()
-  //update accepting order
+  // cancel notification on all drivers who recieved order
     
   await hasura.updateOrder({
     orderId: data.orderId,
