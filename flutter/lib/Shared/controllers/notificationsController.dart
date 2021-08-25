@@ -41,6 +41,8 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
     int orderId = event.hashCode;
     if (event.data["notificationType"] == "newOrder") {
       orderId = event.data["orderId"].hashCode;
+      // log to firebase openOrders/orderId, driver recieved and time
+      // log to hasura, driver recieved and time
     }
     FlutterLocalNotificationsPlugin().show(
       orderId,
