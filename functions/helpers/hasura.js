@@ -1,6 +1,6 @@
 const {gql, GraphQLClient} = require('graphql-request')
 
-async function setClaim(firebase, uid) {
+module.exports.setClaim = async function setClaim(firebase, uid) {
   try {
     const customClaims = {
       "https://hasura.io/jwt/claims": {
@@ -17,7 +17,7 @@ async function setClaim(firebase, uid) {
   }
 }
 
-class Hasura {
+module.exports.Hasura = class Hasura {
   constructor(keys) {
     this.client = new GraphQLClient(
       keys.url,
@@ -131,11 +131,3 @@ class Hasura {
     }
   }
 }
-  
-
-
-module.exports = { 
-  Hasura,
-  setClaim
-}
-  

@@ -2,9 +2,22 @@
   "rules": {
     ".read": "false",
     ".write": "false",
+    "notificationStatus": {
+      "$orderType": {
+        "$orderId": {
+          "$driverId": {
+            "read": {
+              ".write": "true"
+            },
+            "received": {
+              ".write": "true"
+            }
+          }
+        }
+      }
+    },
     "users": {
       ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true",
-
       "$uid": {
         ".read": "$uid === auth.uid",
         "notificationInfo": {

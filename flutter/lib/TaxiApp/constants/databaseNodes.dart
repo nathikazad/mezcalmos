@@ -3,6 +3,10 @@ String taxiAuthNode(String? uid) {
   return 'taxiDrivers/$uid';
 }
 
+String notificationStatusReadNode(String? orderId, String? uid) {
+  return 'notificationStatus/taxi/$orderId/$uid/read';
+}
+
 String notificationsNode(String? uid) {
   return 'notifications/taxi/$uid';
 }

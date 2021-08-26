@@ -33,16 +33,13 @@ final androidPlatformChannelSpecifics = AndroidNotificationDetails(
 
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
   print("Handling a background message");
-  print(event.hashCode);
-  echoPostMessage(event.data);
 
   if (event.data["notificationType"] == "newOrder" ||
       event.data["notificationType"] == "newMessage") {
     int orderId = event.hashCode;
     if (event.data["notificationType"] == "newOrder") {
       orderId = event.data["orderId"].hashCode;
-      // log to firebase openOrders/orderId, driver recieved and time
-      // log to hasura, driver recieved and time
+      markInDb(event.data["markReceivedUrl"]);
     }
     FlutterLocalNotificationsPlugin().show(
       orderId,
@@ -58,14 +55,14 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
   print('Handling a background message ${event.messageId}');
 }
 
-void echoPostMessage(Map<String, dynamic> body) {
+void markInDb(String url) {
   http
-      .post(
-        Uri.parse('https://postman-echo.com/post'),
+      .put(
+        Uri.parse(url),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode(body),
+        body: jsonEncode(<String, bool>{"value": true}),
       )
       .then((value) => print(jsonDecode(value.body)["data"]));
 }
@@ -92,14 +89,9 @@ class DeviceNotificationsController extends GetxController {
         FirebaseMessaging.onMessage.listen((RemoteMessage event) {
           print("message recieved");
           print(event.data);
-          echoPostMessage(event.data);
-        }),
-        FirebaseMessaging.onMessageOpenedApp.listen((message) {
-          print('Message clicked!');
-          print(message.toString());
+          markInDb(event.data["markReadUrl"]);
         })
       ]);
-
 
       Future onDidReceiveLocalNotification(
           int? id, String? title, String? body, String? payload) async {
