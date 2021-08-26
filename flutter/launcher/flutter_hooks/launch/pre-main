@@ -1,0 +1,4 @@
+// DO NOT TOUCH THIS PLEASE !
+import 'package:mezcalmos/TaxiApp/main.dart';
+
+TaxiApp launcherApp = new TaxiApp();
