@@ -33,6 +33,20 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
+// Added this to make our package Name more dynamic
+// this must be there, else the launcher will try to create it anyways when launched using our pylauncher.
+def packageProperties = new Properties()
+def packagePropertiesFile = rootProject.file('launcherPackage.properties')
+if (packagePropertiesFile.exists()) {
+    packagePropertiesFile.withReader('UTF-8') { reader ->
+        packageProperties.load(reader)
+    }
+}
+else
+{
+    throw new GradleException("[!] Error - launcherPackage not found !")
+}
+
 android {
     compileSdkVersion 30
     compileOptions {
@@ -56,8 +70,8 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        // applicationId "com.meztaxi.driver"
-        applicationId "com.meztaxi.stagingDriver"
+        applicationId packageProperties.getProperty('package.name')
+        // applicationId "com.meztaxi.stagingDriver"
         minSdkVersion 21 // google map's package we;re using needs  >= 20 .. but 21 has multidex by default .
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
