@@ -92,11 +92,29 @@ class Launcher:
         # Writing new Valid App.
         open('../lib/pre-main.dart' , 'w+').write(f_root_main)
         PRINTLN("[+] Pacthed ../lib/pre-main.dart successfully !")
-    
+
+        # Writing Valid launcher.xml
+        _launcherXmlFile = '../android/app/src/main/res/values/launcher.xml'
+        _launcherXml = f'''<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="packageName">{self.conf['packages'][self.user_args['lmode']]}</string>
+</resources>'''
+        
+        open(_launcherXmlFile , 'w+').write(_launcherXml)
+        PRINTLN(f"[+] Patched launcher.xml => {self.conf['packages'][self.user_args['lmode']]}")
+
+        # writing Valid launcherPackage.properties
+        _launcherPackagePropertiesFile = '../android/launcherPackage.properties'
+        _launcherPackageProperties = f"package.name={self.conf['packages'][self.user_args['lmode']]}"
+        open(_launcherPackagePropertiesFile , 'w+').write(_launcherPackageProperties)
+        PRINTLN(f"[+] Patched launcherPackage.properties => {_launcherPackageProperties}")
+
     def __patch_gs__(self):
         '''If its staging mode Patch the Gpoogle-services.json'''
         android_flutter_gs_path = '../android/app/google-services.json'
         ios_flutter_gs_path = '../ios/Runner/GoogleService-Info.plist'
+        copied_ios = False
+        copied_android = False
 
         if self.user_args['lmode'] == 'stage':
             PRINTLN("[+] Launching on Staging mode - Patching gServices ...!")    
@@ -104,44 +122,59 @@ class Launcher:
             if not os.path.exists('staging.google-services.json'):
                 exit(DW_EXIT_REASONS.GOOGLE_SERVICES_JSON_NOT_IN_LAUNCHER_FILES)
             if not os.path.exists(android_flutter_gs_path):
-                exit(DW_EXIT_REASONS.GOOGLE_SERVICES_JSON_NOT_IN_ANDROID_APP_FOLDER)
-            
+                # if not there we copy the one from launcher and save it under android_flutter_gs_path
+                PRINTLN("[!] Generating google-services.json!")
+                open(android_flutter_gs_path , 'w+').write(open('staging.google-services.json' , encoding='utf-8' , errors='ignore').read())
+                copied_android = True
             # ios
-
             if not os.path.exists('staging.GoogleService-Info.plist'):
                 exit(DW_EXIT_REASONS.PLIST_GOOGLE_SERVICES_JSON_NOT_IN_LAUNCHER_FILES)
             if not os.path.exists(ios_flutter_gs_path):
-                exit(DW_EXIT_REASONS.PLIST_GOOGLE_SERVICES_JSON_NOT_IN_IOS_APP_FOLDER)
-
+                # exit(DW_EXIT_REASONS.PLIST_GOOGLE_SERVICES_JSON_NOT_IN_IOS_APP_FOLDER)
+                PRINTLN("[!] Generating GoogleService-Info.plist !")
+                open(ios_flutter_gs_path , 'w+').write(open('staging.GoogleService-Info.plist' , encoding='utf-8' , errors='ignore').read())
+                copied_ios = True
 
             staging_client = json.loads(open('staging.google-services.json').read())
             del staging_client['client'][0]
             PRINTLN(f"[+] Applying Client's Package :{staging_client['client'][0]['client_info']['android_client_info']}")
-            open(android_flutter_gs_path , 'w+').write(json.dumps(staging_client))
-            open(ios_flutter_gs_path , 'w+').write(open('staging.GoogleService-Info.plist').read())
+            if not copied_android:
+                open(android_flutter_gs_path , 'w+').write(json.dumps(staging_client))
+            if not copied_ios:
+                open(ios_flutter_gs_path , 'w+').write(open('staging.GoogleService-Info.plist').read())
 
         # Prodyction Mode !
-        elif self.user_args['lmode'] == 'prod':
+        elif self.user_args['lmode'] == 'prod' or self.user_args['lmode'] == 'dev':
             '''We will copy the prod plist and gms to android / ios folders !'''
              # Android
             if not os.path.exists('prod.google-services.json'):
                 exit(DW_EXIT_REASONS.GOOGLE_SERVICES_JSON_NOT_IN_LAUNCHER_FILES)
             if not os.path.exists(android_flutter_gs_path):
-                exit(DW_EXIT_REASONS.GOOGLE_SERVICES_JSON_NOT_IN_ANDROID_APP_FOLDER)
-            
+                # exit(DW_EXIT_REASONS.GOOGLE_SERVICES_JSON_NOT_IN_ANDROID_APP_FOLDER)
+                PRINTLN("[!] Generating google-services.json!")
+                open(android_flutter_gs_path , 'w+').write(open('prod.google-services.json' , encoding='utf-8' , errors='ignore').read())
+                copied_android = True
+
             # ios
             if not os.path.exists('prod.GoogleService-Info.plist'):
                 exit(DW_EXIT_REASONS.PLIST_GOOGLE_SERVICES_JSON_NOT_IN_LAUNCHER_FILES)
             if not os.path.exists(ios_flutter_gs_path):
-                exit(DW_EXIT_REASONS.PLIST_GOOGLE_SERVICES_JSON_NOT_IN_IOS_APP_FOLDER)
+                PRINTLN("[!] Generating GoogleService-Info.plist !")
+                # exit(DW_EXIT_REASONS.PLIST_GOOGLE_SERVICES_JSON_NOT_IN_IOS_APP_FOLDER)
+                open(ios_flutter_gs_path , 'w+').write(open('prod.GoogleService-Info.plist' , encoding='utf-8' , errors='ignore').read())
+                copied_ios = True
 
             prod_client = json.loads(open('prod.google-services.json').read())
-            open(android_flutter_gs_path , 'w+').write(json.dumps(prod_client))
-            open(ios_flutter_gs_path , 'w+').write(open('prod.GoogleService-Info.plist').read())
+            if not copied_android:
+                open(android_flutter_gs_path , 'w+').write(json.dumps(prod_client))
+            if not copied_ios:
+                open(ios_flutter_gs_path , 'w+').write(open('prod.GoogleService-Info.plist').read())
+            
             PRINTLN("[+] Done Patching Prod clients !")
             
         else:
-            PRINTLN("[+] Passed GS patching steps , since it's not staging mode !")
+            PRINTLN("[+] Invalid lmode !")
+            exit(DW_EXIT_REASONS.APP_LMODE_NOT_FOUND)
             
             
     def __set_flutter_args__(self):
@@ -243,16 +276,26 @@ class Config:
     def chSum(app , isLaunch=True):
         last_ch_sum = "flutter_hooks/" + ("launch" if isLaunch else "build") + "/.chsum"
         f = open(last_ch_sum , 'r+').read().replace('\n' , '')
-        if not f or f != app:
-            PRINTLN(f"[+] Generating new checkSum for __app__[{app}]")
-            fp = open(last_ch_sum , 'w+')
-            fp.write(app)
-            fp.close()
-            # return last app
-            return f
-        else: 
-            PRINTLN(f"[+] Detected Same checkSum for __app__[{app}] , Skipping Generation !")
-            return None
+        
+        PRINTLN(f"[+] Generating new checkSum for __app__[{app}]")
+        fp = open(last_ch_sum , 'w+')
+        fp.write(app)
+        fp.close()
+        # return last app
+        return f
+
+        # last_ch_sum = "flutter_hooks/" + ("launch" if isLaunch else "build") + "/.chsum"
+        # f = open(last_ch_sum , 'r+').read().replace('\n' , '')
+        # if not f or f != app:
+        #     PRINTLN(f"[+] Generating new checkSum for __app__[{app}]")
+        #     fp = open(last_ch_sum , 'w+')
+        #     fp.write(app)
+        #     fp.close()
+        #     # return last app
+        #     return f
+        # else: 
+        #     PRINTLN(f"[+] Detected Same checkSum for __app__[{app}] , Skipping Generation !")
+        #     return None
 
     def __preinit__(self):
         if not os.path.exists(CONFIG_FILE):
@@ -344,7 +387,7 @@ class Config:
         # in case of a launch and run in lan :
 
         if self.user_args['pymode'] == "launch":
-            self.user_args['host'] = "http://127.0.0.1" if '--lan' not in args else self.__get_actual_lan_ip()
+            self.user_args['host'] = "http://"+("127.0.0.1" if '--lan' not in args else self.__get_actual_lan_ip())
 
         # Checking App
         _ = self.__get_arg_value__('app=')

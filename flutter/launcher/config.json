@@ -1,4 +1,5 @@
 {
+
     
     "build":{
     
@@ -23,6 +24,13 @@
 
     "launch":{
         
+        "packages":
+        {
+            "stage" : "com.meztaxi.stagingDriver",
+            "dev"   : "com.meztaxi.driver",
+            "prod"  : "com.meztaxi.driver"
+        },
+
         "globals":{
             "stage": {
                 "launchMode" : "stage",
