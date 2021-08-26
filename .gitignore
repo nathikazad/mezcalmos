@@ -7,6 +7,8 @@ firebase-debug.log
 .DS_Store
 .firebase
 service_account.json
+service_account_production.json
+service_account_staging.json
 client/ui-debug.log
 database-debug.log
 ui-debug.log

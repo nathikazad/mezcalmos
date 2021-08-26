@@ -58,6 +58,7 @@ class DW_EXIT_REASONS(Enum):
     GOOGLE_SERVICES_JSON_NOT_IN_ANDROID_APP_FOLDER = -23
     PLIST_GOOGLE_SERVICES_JSON_NOT_IN_LAUNCHER_FILES = -24
     PLIST_GOOGLE_SERVICES_JSON_NOT_IN_IOS_APP_FOLDER = -25
+    WRONG_GLOBALS_USED = -26
 
     REACH_THE_LAZY_SAAD = -10000
 
@@ -74,18 +75,18 @@ class Launcher:
             print("Exiting the launcher .... bye bye!")
     
     def __f_checker__(self):
-        if not os.path.exists('../lib/main.dart'):
+        if not os.path.exists('../lib/pre-main.dart'):
             exit(DW_EXIT_REASONS.ROOT_MAIN_DART_FILE_NOT_FOUND)
 
 
     def __patcher__(self):
-        PRINTLN("[+] Patching ../lib/main.dart !")
-        f_root_main = open('../lib/main.dart' , encoding='utf-8' , errors='ignore').read()
+        PRINTLN("[+] Patching ../lib/pre-main.dart !")
+        f_root_main = open('../lib/pre-main.dart' , encoding='utf-8' , errors='ignore').read()
         f_root_main = f_root_main.replace(self.last_app , self.user_args['app'])
 
         # Writing new Valid App.
-        open('../lib/main.dart' , 'w+').write(f_root_main)
-        PRINTLN("[+] Pacthed ../lib/main successfully !")
+        open('../lib/pre-main.dart' , 'w+').write(f_root_main)
+        PRINTLN("[+] Pacthed ../lib/pre-main.dart successfully !")
     
     def __patch_gs__(self):
         '''If its staging mode Patch the Gpoogle-services.json'''
@@ -351,28 +352,51 @@ class Config:
         else:
             self.user_args['app'] = DEFAULT_APP
 
-        _ = self.__get_arg_value__('lmode=')
+        # if using globals from json jump lmode and db checks
+        _ = self.__get_arg_value__('-g=')
         if _:
             if _ not in POSSIBLE_LMODES:
-                PRINTLN(f'[!] lmode={_} : Error This launch mode is wrong !')
+                PRINTLN(f'[!] -g={_} : Invalid global keyword used !')
+                exit(DW_EXIT_REASONS.WRONG_GLOBALS_USED)
+            
+            self.user_args['lmode'] = self.conf[self.user_args['pymode']]['globals'][_]['launchMode']
+            self.user_args['db'] = self.conf[self.user_args['pymode']]['globals'][_]['database']
+
+            # check if lmode was tampered
+            if self.user_args['lmode'] not in POSSIBLE_LMODES:
+                PRINTLN(f'[!] lmode={self.user_args["lmode"]} : Error This launch mode is wrong !')
                 exit(DW_EXIT_REASONS.CONF_FILE_LMODENAME_WRONG)
-            # if _ == 'prod':
-            #     PRINTLN(f'[!] lmode={_} : Error This launch mode not yet fully tested !')
-            #     exit(DW_EXIT_REASONS.REACH_THE_LAZY_SAAD)
 
-            self.user_args['lmode'] = _
-        else:
-            self.user_args['lmode'] = self.conf[self.user_args['pymode']][self.user_args['app']]['launchMode']
+            # check if db was tampered
+            if self.user_args['db'] not in POSSIBLE_DBS:
+                    PRINTLN(f'[!] db={self.user_args["db"]} : Error This Database mode is wrong !')
+                    exit(DW_EXIT_REASONS.CONF_FILE_LMODENAME_WRONG)
+        
+            PRINTLN(f"[+] You are using globals::{_} with :")
+            PRINTLN(f"\t\t|_ Lmode => {self.user_args['lmode']}")
+            PRINTLN(f"\t\t|_ Database => {self.user_args['db']}")
 
-        _ = self.__get_arg_value__('db=')
-        if _:
-            if _ not in POSSIBLE_DBS:
-                PRINTLN(f'[!] db={_} : Error This database is wrong !')
-                exit(DW_EXIT_REASONS.CONF_FILE_DBNAME_WRONG)
-            self.user_args['db'] = _
+        # Else get default lmode / db if not given by user.
         else:
-            self.user_args['db'] = self.conf[self.user_args['pymode']][self.user_args['app']]['database']
-                
+            _ = self.__get_arg_value__('lmode=')
+            if _:
+                if _ not in POSSIBLE_LMODES:
+                    PRINTLN(f'[!] lmode={_} : Error This launch mode is wrong !')
+                    exit(DW_EXIT_REASONS.CONF_FILE_LMODENAME_WRONG)
+
+                self.user_args['lmode'] = _
+            else:
+                self.user_args['lmode'] = self.conf[self.user_args['pymode']][self.user_args['app']]['launchMode']
+
+            _ = self.__get_arg_value__('db=')
+            if _:
+                if _ not in POSSIBLE_DBS:
+                    PRINTLN(f'[!] db={_} : Error This database is wrong !')
+                    exit(DW_EXIT_REASONS.CONF_FILE_DBNAME_WRONG)
+                self.user_args['db'] = _
+            else:
+                self.user_args['db'] = self.conf[self.user_args['pymode']][self.user_args['app']]['database']
+                    
 
    
 

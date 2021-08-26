@@ -5,7 +5,6 @@
 // =============================
 
 import 'dart:async';
-import 'package:mezcalmos/TaxiApp/main.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -20,6 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
+import 'package:mezcalmos/pre-main.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,7 +40,7 @@ void main() {
   print('db  -> $_db');
   print('mode  -> $_launch_mode');
 
-  runApp(SPoint(TaxiApp(), _host, _db, _launch_mode));
+  runApp(SPoint(launcherApp, _host, _db, _launch_mode));
 }
 
 class SPoint extends StatefulWidget {

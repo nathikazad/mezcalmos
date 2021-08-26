@@ -6,6 +6,10 @@ upload_certificate.pem
 android/app/google-services.json
 ios/Runner/GoogleService-Info.plist
 # --
+pre-main.dart
+google-services.json
+GoogleService-Info.plist
+
 .launcher_output/*.apk
 .launcher_output/*.aab
 font_awesome_flutter/
