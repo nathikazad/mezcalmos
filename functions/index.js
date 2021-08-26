@@ -8,7 +8,7 @@ const hasuraModule = require("./helpers/hasura");
 
 let hasuraKeys;
 if (process.env.FUNCTIONS_EMULATOR == "true") {
-  hasuraKeys = keys.hasuraTest
+  hasuraKeys = keys.emulate.hasura
 } else {
   hasuraKeys = keys.hasura
 }

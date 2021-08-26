@@ -23,40 +23,12 @@ if (vapidKeys && vapidKeys.public && vapidKeys.private) {
 }
 
 module.exports = {
-    sendSMS,
-    sendWhatsApp,
-    sendToDevice,
-    sendToBrowser
-  }
-
-async function sendWhatsApp(data) {
-  
-  const headers = {
-    'Content-Type': 'application/json',
-    'D360-API-KEY': data.apiKey
-  }
-
-  const message = {
-    "recipient_type": "individual",
-    "to": data.phoneNumber.replace('+', ''),
-    "type": "text",
-    "text": {
-      "body": data.message
-    }
-  }
-
-  try {
-    let response = await axios.post("https://waba-sandbox.360dialog.io/v1/messages", message, headers)
-  } catch (error) {
-    console.log(error)
-    return {
-      status: "Error",
-      errorMessage: error
-    }
-  }
+  sendSMS,
+  sendToDevice,
+  sendToBrowser
 }
 
-async function sendSMS(data) { 
+async function sendSMS(data) {
   try {
     await twilio.messages
       .create({ body: data.message, from: '+16304488781', to: data.phoneNumber })
@@ -66,6 +38,27 @@ async function sendSMS(data) {
       status: "Error",
       errorMessage: `Message Send Error`
     }
+  }
+}
+
+
+module.exports.FCM = class FCM {
+  constructor(key) {
+    this.key = key
+  }
+
+  async push(message) {
+    axios.post(
+      "https://fcm.googleapis.com/fcm/send",
+      message,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization:
+            `key=${this.key}`
+        }
+      }
+    )
   }
 }
 

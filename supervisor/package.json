@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "emulateSupervsior": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 node index.js"
+    "emulateSupervisor": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 supervisor -x node --  index.js emulate"
   },
   "author": "",
   "license": "ISC",
