@@ -48,6 +48,7 @@ async function expireOrder(firebase, orderId, customerId, hasura) {
   firebase.database().ref(`/users/${customerId}/state/currentOrder`).remove()
   firebase.database().ref(`/users/${customerId}/orders/${orderId}`).remove();
   firebase.database().ref(`/openOrders/taxi/${orderId}`).remove();
+  notification.cancelNotificationsForOrderId(firebase, orderId);
   firebase.database().ref(`/chat/${orderId}`).remove();
   await firebase.database().ref(`/orders/taxi/${orderId}`).update({
     status: "expired",

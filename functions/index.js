@@ -6,13 +6,7 @@ const firebase = firebaseAdmin.initializeApp();
 const keys = require("./helpers/keys").keys()
 const hasuraModule = require("./helpers/hasura");
 
-let hasuraKeys;
-if (process.env.FUNCTIONS_EMULATOR == "true") {
-  hasuraKeys = keys.emulate.hasura
-} else {
-  hasuraKeys = keys.hasura
-}
-const hasura = new hasuraModule.Hasura(hasuraKeys)
+const hasura = new hasuraModule.Hasura(keys.hasura)
 
 
 

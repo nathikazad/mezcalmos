@@ -51,7 +51,8 @@ async function cancelTaxiFromCustomer(firebase, uid, data, hasura) {
       firebase.database().ref(`/openOrders/taxi/${orderId}`).remove();
       firebase.database().ref(`/orders/taxi/${orderId}`).update(update)
       firebase.database().ref(`/users/${order.customer.id}/orders/${orderId}`).remove();
-      // cancel notification on all drivers who recieved order
+      notification.cancelNotificationsForOrderId(firebase, orderId);
+
     } else if (order.status == "onTheWay" || order.status == "inTransit") {
       firebase.database().ref(`/orders/taxi/${orderId}`).update(update)
       firebase.database().ref(`/users/${order.customer.id}/orders/${orderId}`).update(update);
@@ -66,15 +67,14 @@ async function cancelTaxiFromCustomer(firebase, uid, data, hasura) {
       notification.push(firebase, order.driver.id, update,'taxi')
     }
     //update order
-    
-      await hasura.updateOrder({
-        orderId: orderId,
-        changes:{
-          finalStatus:update.status,
-          rideFinishTime: update.rideFinishTime,
-          cancellationParty: update.cancelledBy
-        } 
-      })
+  await hasura.updateOrder({
+    orderId: orderId,
+    changes: {
+      finalStatus: update.status,
+      rideFinishTime: update.rideFinishTime,
+      cancellationParty: update.cancelledBy
+    }
+  })
     
     firebase.database().ref(`/chat/${orderId}`).remove()
     await firebase.database().ref(`orders/taxi/${orderId}/lock`).remove()

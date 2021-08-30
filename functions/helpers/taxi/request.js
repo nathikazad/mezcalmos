@@ -36,16 +36,6 @@ async function request(firebase, uid, data, hasura) {
     }
   }
 
-  try {
-    firebase.database().ref(`/metadata/notifyDrivers`).once('value', (snap) => {
-      if (snap.val() == true)
-        notification.notifyDriversNewRequest(firebase, data.from.address.split(',')[0]);
-    })
-  } catch (e) {
-    console.log(e);
-  }
-
-
   let user = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val();
 
   let payload = {
