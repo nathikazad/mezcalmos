@@ -11,6 +11,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
@@ -133,6 +134,9 @@ class _SPointState extends State<SPoint> {
 
     Get.put<AuthController>(AuthController(), permanent: true);
     Get.put<SettingsController>(SettingsController(), permanent: true);
+    // set to logs=false if you don't need the logs anymore.
+    Get.put<AppLifeCycleController>(AppLifeCycleController(logs: true),
+        permanent: true);
 
     Timer(
         Duration(seconds: nSplashScreenTimer),
