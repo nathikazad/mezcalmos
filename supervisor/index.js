@@ -10,7 +10,7 @@ function requireHelper(filename) {
 }
 
 const checkOpenOrdersInterval = 10 //seconds
-let orderExpirationLimit = 600 // seconds
+let orderExpirationLimit = 200 // seconds
 
 if (process.argv.length != 3) {
   console.log("Required environment variable")
@@ -42,6 +42,16 @@ firebase.database().ref(`/notificationStatus/taxi`).on('value', function (snap) 
   notificationStatus = {}
   if (snap.val())
     notificationStatus = snap.val()
+  for (orderId in notificationStatus) {
+    if (!openOrders[orderId])
+      firebase.database().ref(`/notificationStatus/taxi/${orderId}`).remove()
+  }
+});
+
+firebase.database().ref(`/metadata/orderExpirationTime`).on('value', function (snap) {
+  if (snap.val()) {
+    orderExpirationLimit = parseInt(snap.val())
+  }
 });
 
 function filterDrivers(drivers) {
@@ -55,15 +65,7 @@ function filterDrivers(drivers) {
   }
   return newDrivers
 }
-function updateHasuraAboutRecievedNotifications(orderId) {
-  let orderDrivers = notificationStatus[orderId]
-  for (let driverId in orderDrivers) {
-    let driver = orderDrivers[driverId]
-    if (driver.received && !driver.updateHasuraAboutReceived) {
-      // build message for hasura with received true and received time
-    }
-  }
-}
+
 
 function updateOrderNotificationsList(orderId, drivers, orderNotificationsList, driversAlreadyInList) {
   for (let driverId in drivers) {
@@ -88,7 +90,7 @@ function notifyDrivers(orderNotificationsList, hasuraUpdateList) {
       notificationStatus[orderId] = {}
     let driverNotificationTokens = []
     for (let driverId in orderNotificationsList[orderId]) {
-      let driver = orderNotificationsList[orderId][driverId]
+      let driver = orderNotificationsList[orderId][driverId];
       driverNotificationTokens.push(driver.notificationInfo.deviceNotificationToken)
 
       if (!notificationStatus[orderId][driverId])
@@ -121,6 +123,7 @@ function notifyDrivers(orderNotificationsList, hasuraUpdateList) {
       registration_ids: driverNotificationTokens,
       data: data
     });
+
   }
   return hasuraUpdateList
 }
@@ -138,6 +141,7 @@ function checkForStatusChange(orderId, hasuraUpdateList) {
         notificationStatus[orderId][driverId].readTime = (new Date()).toUTCString()
         notificationStatus[orderId][driverId].updatedHasuraAboutRead = true
         hasuraUpdateList.push(`${orderId} ${driverId} read ${notificationStatus[orderId][driverId].readTime}`)
+
 
         for (let openOrderId in openOrders) {
           notificationStatus[openOrderId][driverId].read = true
@@ -159,29 +163,30 @@ async function checkOpenOrders() {
   let hasuraUpdateList = []
   for (let orderId in openOrders) {
     if (openOrders[orderId].orderTime) {
-      // let orderTime = new Date(openOrders[orderId].orderTime)
-      // let orderExpirationTime = new Date(orderTime.getTime() + orderExpirationLimit * 1000);
-      // if (Date.now() > orderExpirationTime) {
-      //   delete openOrders[orderId]
-      //   expireOrder(firebase, orderId, openOrders[orderId].customer.id, hasura);
-      // } else {
-      orderNotificationsList, driversAlreadyInList = updateOrderNotificationsList(orderId, drivers, orderNotificationsList, driversAlreadyInList)
-      hasuraUpdateList = checkForStatusChange(orderId, hasuraUpdateList)
-        // console.log(driversToNotify)
-        // hasuraUpdateList = updateHasuraAboutRecievedNotifications(orderId, hasuraUpdateList)
-      // }
+      let orderTime = new Date(openOrders[orderId].orderTime)
+      let orderExpirationTime = new Date(orderTime.getTime() + orderExpirationLimit * 1000);
+      if (Date.now() > orderExpirationTime) {
+        expireOrder(firebase, orderId, openOrders[orderId].customer.id, hasura);
+        delete openOrders[orderId]
+      } else {
+        // for drivers not already notified, add them to order notifications list
+        orderNotificationsList, driversAlreadyInList = updateOrderNotificationsList(orderId, drivers, orderNotificationsList, driversAlreadyInList)
+        // for drivers who just got marked read or received, mark them to be written in hasura
+        hasuraUpdateList = checkForStatusChange(orderId, hasuraUpdateList)
+      }
     } else {
       expireOrder(firebase, orderId, openOrders[orderId].customer.id, hasura)
     }
   }
-  if (Object.keys(orderNotificationsList).length > 0) { }
-  hasuraUpdateList = notifyDrivers(orderNotificationsList, hasuraUpdateList)
-
-  console.log(notificationStatus)
+  if (Object.keys(orderNotificationsList).length > 0) {
+    // for drivers who just got marked sent, mark them to be written in hasura
+    hasuraUpdateList = notifyDrivers(orderNotificationsList, hasuraUpdateList)
+  }
 
   if (Object.keys(hasuraUpdateList).length > 0)
     console.log(hasuraUpdateList)
 
+  console.log(hasuraUpdateList)
 
   firebase.database().ref(`/notificationStatus/taxi/`).update(notificationStatus)
 }
@@ -214,5 +219,5 @@ function constructReturnUrl(orderId, driverId, markType) {
     url = keys[env].databaseURL
     dbName = keys[env].databaseURL.split('.')[0].split('/')[2]
   }
-  return `${url}/notificationStatus/taxi/${orderId}/${driverId}/${markType}.json?ns=${dbName}`
+  return `${url}/notificationStatus/taxi/${orderId}/<driverId>/${markType}.json?ns=${dbName}`
 }
