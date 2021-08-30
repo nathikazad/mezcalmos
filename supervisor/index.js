@@ -116,8 +116,8 @@ function notifyDrivers(orderNotificationsList, hasuraUpdateList) {
       body: `Hay una nueva orden de taxi, vea si puede aceptarla.`,
       orderId: orderId,
       notificationType: "newOrder",
-      markReceivedUrl: constructReturnUrl(orderId, driverId, "received"),
-      markReadUrl: constructReturnUrl(orderId, driverId, "read")
+      markReceivedUrl: constructReturnUrl(orderId, "received"),
+      markReadUrl: constructReturnUrl(orderId, "read")
     };
     fcm.push({
       registration_ids: driverNotificationTokens,
@@ -186,7 +186,6 @@ async function checkOpenOrders() {
   if (Object.keys(hasuraUpdateList).length > 0)
     console.log(hasuraUpdateList)
 
-  console.log(hasuraUpdateList)
 
   firebase.database().ref(`/notificationStatus/taxi/`).update(notificationStatus)
 }
@@ -209,7 +208,7 @@ function getIPAddress() {
   return '0.0.0.0';
 }
 
-function constructReturnUrl(orderId, driverId, markType) {
+function constructReturnUrl(orderId, markType) {
   let url;
   let dbName;
   if (env == "emulate") {

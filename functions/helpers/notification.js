@@ -1,10 +1,12 @@
 const functions = require('firebase-functions');
 const sender = require("./sender")
+const keys = require("./keys").keys()
 
 module.exports = {
   push,
   notifyDriversNewRequest,
-  sendTest
+  sendTest,
+  cancelNotificationsForOrderId
 }
 
 const notificationMessages = require('./notificationMessages.json')
@@ -118,4 +120,28 @@ async function sendTest(firebase, data) {
     }
     
   }
+}
+
+async function cancelNotificationsForOrderId(firebase, orderId) {
+  const fcm = new sender.FCM(keys.fcm)
+  let driversToNotify = (await firebase.database().ref(`/notificationStatus/taxi/${orderId}`).once('value')).val()
+  let drivers = (await firebase.database().ref(`/taxiDrivers`).once('value')).val();
+
+  let notificationList = []
+  for (let driverId in driversToNotify) {
+    if (drivers[driverId] && drivers[driverId].notificationInfo && drivers[driverId].notificationInfo.deviceNotificationToken) {
+      notificationList.push(drivers[driverId].notificationInfo.deviceNotificationToken)
+    }
+  }
+  let data = {
+    orderId: orderId,
+    notificationType: "newOrderExpired",
+  };
+
+
+  fcm.push({
+    registration_ids: notificationList,
+    data: data
+  });
+
 }
