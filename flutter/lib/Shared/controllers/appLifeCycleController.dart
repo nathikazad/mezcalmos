@@ -5,10 +5,31 @@ import 'package:get/state_manager.dart';
 class AppLifeCycleController extends GetxController
     with WidgetsBindingObserver {
   final bool logs;
+  Map<AppLifecycleState, VoidCallback> callbacks = {
+    AppLifecycleState.detached: () => null,
+    AppLifecycleState.inactive: () => null,
+    AppLifecycleState.paused: () => null,
+    AppLifecycleState.resumed: () => null,
+  };
+
   AppLifeCycleController({this.logs = false});
 
   Rx<AppLifecycleState> _appState = AppLifecycleState.resumed.obs;
   AppLifecycleState get appState => _appState.value;
+
+  void attachCallback(AppLifecycleState onState, VoidCallback f) {
+    callbacks[onState] = f;
+  }
+
+  void cleanCallback(AppLifecycleState state) {
+    callbacks[state] = () => null;
+  }
+
+  void cleanAllCallbacks() {
+    callbacks.keys.forEach((element) {
+      callbacks[element] = () => null;
+    });
+  }
 
   @override
   void onInit() {
@@ -31,7 +52,8 @@ class AppLifeCycleController extends GetxController
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     _appState.value = state;
-    if (this.logs)
-      print("[+] AppLifeCycleController :: AppStateChanged :: $state");
+    callbacks[state]!();
+    // if (this.logs)
+    //   print("[+] AppLifeCycleController :: AppStateChanged :: $state");
   }
 }
