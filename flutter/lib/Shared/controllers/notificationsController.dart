@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
@@ -56,6 +58,8 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
 }
 
 void markInDb(String url) {
+  String driverId = GetStorage().read(getUserId);
+  url = url.replaceAll("<driverId>", driverId);
   http
       .put(
         Uri.parse(url),

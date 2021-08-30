@@ -41,6 +41,7 @@ const String tDefaultCustomerName = "Unknown";
 const String getxLmodeKey = "lmod";
 const String getxGmapBottomPaddingKey = "gmap_bottom_padding";
 const String getxMapStyleJsonKey = "map_style";
+const String getUserId = "userid";
 // ----------------- Assets Strings ----------------- //
 
 const String aLogoPath = "assets/images/logo.png";
