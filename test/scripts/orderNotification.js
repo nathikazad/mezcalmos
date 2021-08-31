@@ -46,10 +46,12 @@ mutation AddOrder($order: orders_insert_input!){
 }`
 
 const insertNotificationsMutation = gql`
-mutation insertNotifications($objects: [notifications_insert_input!]!){
-    insert_notifications(objects:$objects){
-        affected_rows
-    }
+mutation insertNotifications($objects: [notifications_insert_input!]!) {
+  insert_notifications(objects: $objects, on_conflict:
+    {constraint: notifications_orderId_driverId_key,
+      update_columns: [sentTime, receivedTime, openedTime]}) {
+    affected_rows
+  }
 }
 `
 async function insertNotifications(query){

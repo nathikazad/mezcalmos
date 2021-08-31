@@ -58,7 +58,11 @@ module.exports.FCM = class FCM {
             `key=${this.key}`
         }
       }
-    )
+    ).catch(error => {
+      console.log("FCM push error")
+      console.log(message)
+      console.log(error.response.statusText)
+    });
   }
 }
 

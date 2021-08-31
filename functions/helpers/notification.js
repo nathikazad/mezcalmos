@@ -122,8 +122,10 @@ async function sendTest(firebase, data) {
   }
 }
 
-async function cancelNotificationsForOrderId(firebase, orderId) {
-  const fcm = new sender.FCM(keys.fcm)
+async function cancelNotificationsForOrderId(firebase, orderId, fcm) {
+  if (!fcm) {
+    fcm = new sender.FCM(keys.fcm)
+  }
   let driversToNotify = (await firebase.database().ref(`/notificationStatus/taxi/${orderId}`).once('value')).val()
   let drivers = (await firebase.database().ref(`/taxiDrivers`).once('value')).val();
 
@@ -138,10 +140,11 @@ async function cancelNotificationsForOrderId(firebase, orderId) {
     notificationType: "newOrderExpired",
   };
 
-
   fcm.push({
     registration_ids: notificationList,
     data: data
   });
+
+  firebase.database().ref(`/notificationStatus/taxi/${orderId}`).remove()
 
 }
