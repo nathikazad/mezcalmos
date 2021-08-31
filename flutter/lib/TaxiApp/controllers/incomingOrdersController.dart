@@ -73,11 +73,12 @@ class IncomingOrdersController extends GetxController {
               order.distanceToClient = MapHelper.calculateDistance(
                   order.from.position, _taxiAuthController.currentLocation);
               orders.add(order);
-              _databaseHelper.firebaseDatabase
-                  .reference()
-                  .child(notificationStatusReadNode(
-                      key, _authController.user!.uid))
-                  .set(true);
+              if (_appLifeCycleController.appState == AppLifecycleState.resumed)
+                _databaseHelper.firebaseDatabase
+                    .reference()
+                    .child(notificationStatusReadNode(
+                        key, _authController.user!.uid))
+                    .set(true);
             });
 
             orders.sort(

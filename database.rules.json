@@ -7,7 +7,7 @@
         "$orderId": {
           "$driverId": {
             "read": {
-              ".write": "true"
+              ".write": "$driverId === auth.uid"
             },
             "received": {
               ".write": "true"
