@@ -23,7 +23,7 @@ if (env != "emulate" && env != "staging" && env != "production") {
   console.log("Invalid environment has to be emulate, staging or production")
   process.exit()
 }
-
+console.log(keys)
 let firebaseParams = { databaseURL: keys[env].databaseURL };
 if (keys[env].serviceAccount)
   firebaseParams.credential = firebaseAdmin.credential.cert(require(keys[env].serviceAccount))
@@ -116,8 +116,7 @@ function notifyDrivers(orderNotificationsList, hasuraUpdateList) {
       body: `Hay una nueva orden de taxi, vea si puede aceptarla.`,
       orderId: orderId,
       notificationType: "newOrder",
-      markReceivedUrl: constructReturnUrl(orderId, "received"),
-      markReadUrl: constructReturnUrl(orderId, "read")
+      markReceivedUrl: constructReturnUrl(orderId)
     };
     fcm.push({
       registration_ids: driverNotificationTokens,
@@ -208,7 +207,7 @@ function getIPAddress() {
   return '0.0.0.0';
 }
 
-function constructReturnUrl(orderId, markType) {
+function constructReturnUrl(orderId) {
   let url;
   let dbName;
   if (env == "emulate") {
@@ -218,5 +217,5 @@ function constructReturnUrl(orderId, markType) {
     url = keys[env].databaseURL
     dbName = keys[env].databaseURL.split('.')[0].split('/')[2]
   }
-  return `${url}/notificationStatus/taxi/${orderId}/<driverId>/${markType}.json?ns=${dbName}`
+  return `${url}/notificationStatus/taxi/${orderId}/<driverId>/received.json?ns=${dbName}`
 }
