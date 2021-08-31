@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/pages/Wrapper.dart';
 
 class CustomerApp extends StatelessWidget {
@@ -7,6 +9,10 @@ class CustomerApp extends StatelessWidget {
   Widget build(BuildContext context) {
     Future<void> _initializeConfig() async {
       // We will use this to Initialize anything at MaterialApp root init of app
+      BitmapDescriptor desc = await BitmapDescriptor.fromAssetImage(
+          ImageConfiguration(), 'assets/images/purple_circle.png');
+
+      await GetStorage().write('markerCircle', desc);
       print("[+] InitializedConfig -- the Customer App !");
     }
 
