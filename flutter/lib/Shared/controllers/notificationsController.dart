@@ -93,7 +93,6 @@ class DeviceNotificationsController extends GetxController {
         FirebaseMessaging.onMessage.listen((RemoteMessage event) {
           print("message recieved");
           print(event.data);
-          markInDb(event.data["markReadUrl"]);
         })
       ]);
 

@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
@@ -19,8 +22,13 @@ class IncomingOrdersController extends GetxController {
   AuthController _authController =
       Get.find<AuthController>(); // since it's already injected .
   TaxiAuthController _taxiAuthController = Get.find<TaxiAuthController>();
+
   DatabaseHelper _databaseHelper =
       Get.find<DatabaseHelper>(); // Already Injected in main function
+
+  AppLifeCycleController _appLifeCycleController =
+      Get.find<AppLifeCycleController>();
+
   RxBool _waitingResponse = RxBool(false);
   RxString _selectedIncommingOrderKey = "".obs;
 
@@ -65,6 +73,11 @@ class IncomingOrdersController extends GetxController {
               order.distanceToClient = MapHelper.calculateDistance(
                   order.from.position, _taxiAuthController.currentLocation);
               orders.add(order);
+              _databaseHelper.firebaseDatabase
+                  .reference()
+                  .child(notificationStatusReadNode(
+                      key, _authController.user!.uid))
+                  .set(true);
             });
 
             orders.sort(
@@ -95,6 +108,17 @@ class IncomingOrdersController extends GetxController {
         orders.sort((a, b) => a.distanceToClient.compareTo(b.distanceToClient));
       });
     }
+
+    _appLifeCycleController.attachCallback(AppLifecycleState.resumed, () {
+      print("[+] Callback executed :: app resumed !");
+      orders.value.forEach((element) {
+        _databaseHelper.firebaseDatabase
+            .reference()
+            .child(notificationStatusReadNode(
+                element.id, _authController.user!.uid))
+            .set(true);
+      });
+    });
   }
 
   // I added this to avoid possible dangling pointers ...
@@ -107,6 +131,8 @@ class IncomingOrdersController extends GetxController {
             "Error happend while trying to dispose incomingOrdersController!")));
 
     _updateOrderDistanceToClient.dispose();
+
+    _appLifeCycleController.cleanAllCallbacks();
   }
 
   Future<void> acceptTaxi(String orderId) async {
