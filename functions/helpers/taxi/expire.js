@@ -1,10 +1,9 @@
 const notification = require("../notification");
 
 
-module.exports = ( firebase, orderId, customerId, hasura ) => { return expireOrder(firebase, orderId, customerId, hasura) }
+module.exports = (firebase, orderId, customerId, hasura, fcm) => { return expireOrder(firebase, orderId, customerId, hasura, fcm) }
 
-async function expireOrder(firebase, orderId, customerId, hasura) {
-
+async function expireOrder(firebase, orderId, customerId, hasura, fcm) {
   let order = (await firebase.database().ref(`/orders/taxi/${orderId}`).once('value')).val()
   if (order == null) {
     return {
@@ -48,7 +47,7 @@ async function expireOrder(firebase, orderId, customerId, hasura) {
   firebase.database().ref(`/users/${customerId}/state/currentOrder`).remove()
   firebase.database().ref(`/users/${customerId}/orders/${orderId}`).remove();
   firebase.database().ref(`/openOrders/taxi/${orderId}`).remove();
-  notification.cancelNotificationsForOrderId(firebase, orderId);
+  notification.cancelNotificationsForOrderId(firebase, orderId, fcm);
   firebase.database().ref(`/chat/${orderId}`).remove();
   await firebase.database().ref(`/orders/taxi/${orderId}`).update({
     status: "expired",

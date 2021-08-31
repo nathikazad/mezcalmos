@@ -116,6 +116,23 @@ module.exports.Hasura = class Hasura {
     }
   }
 
+
+  async updateNotifications(notifications) {
+    const insertNotificationsMutation = gql`
+  mutation insertNotifications($objects: [notifications_insert_input!]!) {
+    insert_notifications(objects: $objects, on_conflict: 
+      {constraint: notifications_orderId_driverId_key, 
+        update_columns: [sentTime, receivedTime, readTime]}) {
+      affected_rows
+    }
+  }`
+    try {
+      const result = await this.client.request(insertNotificationsMutation, { objects: notifications })
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   async getDrivers(parameters) {
     const getDriversQuery = gql`
       query GetDriversQuery($lat: float8, $long: float8, $bound: Int){

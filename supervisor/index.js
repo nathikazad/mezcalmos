@@ -1,9 +1,10 @@
 const firebaseAdmin = require("firebase-admin");
 
 const keys = requireHelper("keys").keys()
-const hasuraClass = require("../functions/helpers/hasura")
+const hasuraClass = requireHelper("hasura")
 const expireOrder = requireHelper("taxi/expire");
 const sender = requireHelper("sender")
+
 
 function requireHelper(filename) {
   return require(`../functions/helpers/${filename}`)
@@ -23,7 +24,6 @@ if (env != "emulate" && env != "staging" && env != "production") {
   console.log("Invalid environment has to be emulate, staging or production")
   process.exit()
 }
-console.log(keys)
 let firebaseParams = { databaseURL: keys[env].databaseURL };
 if (keys[env].serviceAccount)
   firebaseParams.credential = firebaseAdmin.credential.cert(require(keys[env].serviceAccount))
@@ -42,10 +42,6 @@ firebase.database().ref(`/notificationStatus/taxi`).on('value', function (snap) 
   notificationStatus = {}
   if (snap.val())
     notificationStatus = snap.val()
-  for (orderId in notificationStatus) {
-    if (!openOrders[orderId])
-      firebase.database().ref(`/notificationStatus/taxi/${orderId}`).remove()
-  }
 });
 
 firebase.database().ref(`/metadata/orderExpirationTime`).on('value', function (snap) {
@@ -105,7 +101,14 @@ function notifyDrivers(orderNotificationsList, hasuraUpdateList) {
         notificationStatus[orderId][driverId].sent = true
         notificationStatus[orderId][driverId].sentTime = (new Date()).toUTCString()
         notificationStatus[orderId][driverId].sentCount = 1
-        hasuraUpdateList.push(`${orderId} ${driverId} sent ${notificationStatus[orderId][driverId].sentTime}`)
+        hasuraUpdateList[orderId] =
+        {
+          orderId: orderId,
+          driverId: driverId,
+          receivedTime: notificationStatus[orderId][driverId].receievedTime,
+          readTime: notificationStatus[orderId][driverId].readTime,
+          sentTime: notificationStatus[orderId][driverId].sentTime
+        }
       } else {
         notificationStatus[orderId][driverId].sentCount =
           parseInt(notificationStatus[orderId][driverId].sentCount) + 1
@@ -134,12 +137,26 @@ function checkForStatusChange(orderId, hasuraUpdateList) {
       if (driver.received && !driver.updatedHasuraAboutReceived) {
         notificationStatus[orderId][driverId].receievedTime = (new Date()).toUTCString()
         notificationStatus[orderId][driverId].updatedHasuraAboutReceived = true
-        hasuraUpdateList.push(`${orderId} ${driverId} received ${notificationStatus[orderId][driverId].receievedTime}`)
+        hasuraUpdateList[orderId] =
+        {
+          orderId: orderId,
+          driverId: driverId,
+          receivedTime: notificationStatus[orderId][driverId].receievedTime,
+          readTime: notificationStatus[orderId][driverId].readTime,
+          sentTime: notificationStatus[orderId][driverId].sentTime
+        }
       }
       if (driver.read && !driver.updatedHasuraAboutRead) {
         notificationStatus[orderId][driverId].readTime = (new Date()).toUTCString()
         notificationStatus[orderId][driverId].updatedHasuraAboutRead = true
-        hasuraUpdateList.push(`${orderId} ${driverId} read ${notificationStatus[orderId][driverId].readTime}`)
+        hasuraUpdateList[orderId] =
+        {
+          orderId: orderId,
+          driverId: driverId,
+          receivedTime: notificationStatus[orderId][driverId].receievedTime,
+          readTime: notificationStatus[orderId][driverId].readTime,
+          sentTime: notificationStatus[orderId][driverId].sentTime
+        }
 
 
         for (let openOrderId in openOrders) {
@@ -159,13 +176,13 @@ async function checkOpenOrders() {
   drivers = filterDrivers(drivers)
   let orderNotificationsList = {}
   let driversAlreadyInList = {}
-  let hasuraUpdateList = []
+  let hasuraUpdateList = {}
   for (let orderId in openOrders) {
     if (openOrders[orderId].orderTime) {
       let orderTime = new Date(openOrders[orderId].orderTime)
       let orderExpirationTime = new Date(orderTime.getTime() + orderExpirationLimit * 1000);
       if (Date.now() > orderExpirationTime) {
-        expireOrder(firebase, orderId, openOrders[orderId].customer.id, hasura);
+        expireOrder(firebase, orderId, openOrders[orderId].customer.id, hasura, fcm);
         delete openOrders[orderId]
       } else {
         // for drivers not already notified, add them to order notifications list
@@ -174,7 +191,7 @@ async function checkOpenOrders() {
         hasuraUpdateList = checkForStatusChange(orderId, hasuraUpdateList)
       }
     } else {
-      expireOrder(firebase, orderId, openOrders[orderId].customer.id, hasura)
+      expireOrder(firebase, orderId, openOrders[orderId].customer.id, hasura, fcm)
     }
   }
   if (Object.keys(orderNotificationsList).length > 0) {
@@ -182,8 +199,10 @@ async function checkOpenOrders() {
     hasuraUpdateList = notifyDrivers(orderNotificationsList, hasuraUpdateList)
   }
 
-  if (Object.keys(hasuraUpdateList).length > 0)
-    console.log(hasuraUpdateList)
+  if (Object.values(hasuraUpdateList).length > 0) {
+    hasura.updateNotifications(Object.values(hasuraUpdateList));
+  }
+
 
 
   firebase.database().ref(`/notificationStatus/taxi/`).update(notificationStatus)
