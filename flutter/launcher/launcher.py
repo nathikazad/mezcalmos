@@ -59,6 +59,8 @@ class DW_EXIT_REASONS(Enum):
     PLIST_GOOGLE_SERVICES_JSON_NOT_IN_LAUNCHER_FILES = -24
     PLIST_GOOGLE_SERVICES_JSON_NOT_IN_IOS_APP_FOLDER = -25
     WRONG_GLOBALS_USED = -26
+    PLATFORM_NOT_SUPPORTED_YET = -27
+    BUILDING_LMODE_DB_NOT_SUPPORTED_YET = -28
 
     REACH_THE_LAZY_SAAD = -10000
 
@@ -179,12 +181,20 @@ class Launcher:
             
     def __set_flutter_args__(self):
         self.flutter_setup = f"--dart-define=APP_SP={self.user_args['app']} --dart-define=HOST={self.user_args['host']} --dart-define=LMODE={self.user_args['lmode']} --dart-define=DB={self.user_args['db']}"
+    
+    def __build_temp(self):
+        os.system(f'flutter build {self.user_args["build"]}')
 
     def __launch__(self):
         self.__f_checker__()
         if self.last_app != None:
             self.__patcher__()
         self.__patch_gs__()
+        if 'build' in self.user_args.keys():
+            PRINTLN(f"[+] Building the app::{self.user_args['build']} for you ...")
+            self.__build_temp()
+            exit(DW_EXIT_REASONS.NORMAL)
+
         self.__set_flutter_args__()
         
 
@@ -444,7 +454,23 @@ class Config:
                 self.user_args['db'] = _
             else:
                 self.user_args['db'] = self.conf[self.user_args['pymode']][self.user_args['app']]['database']
-                    
+        
+        # THIS IS LAUNCHER BASED BUILD
+        # TODO : Implement that using class:Builder
+        _ = self.__get_arg_value__('--build=')
+        if _:
+            if str(_).lower() not in ['apk' , 'appbundle']:
+                PRINTLN(f'[!] --build={_} : Error Platform unsupported yet!')
+                exit(DW_EXIT_REASONS.PLATFORM_NOT_SUPPORTED_YET)
+            
+            # this is to force building with the  lmode::stage & db::test cuz that's the defaultValue Sat in flutterApp
+            # This is why i marked TODO above.
+
+            if self.user_args['lmode'] != 'stage' and self.user_args['db'] != 'test':
+                PRINTLN(f'[!] --build={_} : Error - One of Lmode::{self.user_args["lmode"]} | Db::{self.user_args["db"] } not supported yet!')
+                exit(DW_EXIT_REASONS.BUILDING_LMODE_DB_NOT_SUPPORTED_YET)
+
+            self.user_args['build'] = _
 
    
 

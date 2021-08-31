@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:mezcalmos/CustomerApp/pages/Orders/MakeOrderScreen.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
@@ -14,12 +15,12 @@ class CustomerWrapper extends GetWidget<AuthController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _sideMenuDrawerController.getNewKey(),
-      drawer: MezSideMenu(),
-      backgroundColor: Colors.white,
-      appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
-          "menu", _sideMenuDrawerController.openMenu),
-      body: Center(child: Text("CustomerApp")),
-    );
+        key: _sideMenuDrawerController.getNewKey(),
+        drawer: MezSideMenu(),
+        backgroundColor: Colors.white,
+        appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
+            "menu", _sideMenuDrawerController.openMenu),
+        body: MakeOrderScreen() // Center(child: Text("CustomerApp")),
+        );
   }
 }

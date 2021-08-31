@@ -87,8 +87,6 @@ class AuthController extends GetxController {
         print('User is currently signed out!');
         _user.value = null;
       } else {
-        print("Putting Taxi Auth Controller");
-
         _userInfoListener = _databaseHelper.firebaseDatabase
             .reference()
             .child(userInfo(user.uid))
