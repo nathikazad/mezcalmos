@@ -124,7 +124,7 @@ async function sendTest(firebase, data) {
 
 async function cancelNotificationsForOrderId(firebase, orderId, fcm) {
   if (!fcm) {
-    fcm = new sender.FCM(keys.fcm)
+    fcm = new sender.FCM(keys.fcm.key)
   }
   let driversToNotify = (await firebase.database().ref(`/notificationStatus/taxi/${orderId}`).once('value')).val()
   let drivers = (await firebase.database().ref(`/taxiDrivers`).once('value')).val();
