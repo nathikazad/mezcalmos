@@ -67,8 +67,8 @@ void markInDb(String url) {
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(<String, bool>{"value": true}),
-      )
-      .then((value) => print(jsonDecode(value.body)["data"]));
+      );
+      // .then((value) => print(jsonDecode(value.body)["data"]));
 }
 
 class DeviceNotificationsController extends GetxController {

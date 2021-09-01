@@ -70,7 +70,10 @@ function updateOrderNotificationsList(orderId, drivers, orderNotificationsList, 
     let driver = drivers[driverId]
 
     let orderNotificationStatuses = notificationStatus[orderId]
-    if (!orderNotificationStatuses || !orderNotificationStatuses[driverId] || !orderNotificationStatuses[driverId].read) {
+    if (!orderNotificationStatuses || !orderNotificationStatuses[driverId]
+      || (!orderNotificationStatuses[driverId].read
+          && (orderNotificationStatuses[driverId].sentCount 
+            && orderNotificationStatuses[driverId].sentCount < 6))) {
       driversAlreadyInList[driverId] = true
       if (!orderNotificationsList[orderId])
         orderNotificationsList[orderId] = {}
