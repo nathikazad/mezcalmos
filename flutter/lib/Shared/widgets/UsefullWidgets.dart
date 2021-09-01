@@ -17,8 +17,7 @@ class MezcalmosSharedWidgets {
         fit: BoxFit.contain,
       );
 
-  static RichText mezcalmos(
-          {double textSize = nDefaultMezcalmosTextSize, bool isBold = false}) =>
+  static RichText mezcalmos({double textSize = 20, bool isBold = false}) =>
       RichText(
           text: TextSpan(
         style: TextStyle(
@@ -53,7 +52,7 @@ class MezcalmosSharedWidgets {
 
   static Widget fillTitle() => Row(
         children: [
-          logo(size: getSizeRelativeToScreen(85, Get.width, Get.height)),
+          logo(size: getSizeRelativeToScreen(50, Get.width, Get.height)),
           Padding(padding: EdgeInsets.only(left: 10), child: mezcalmos()),
         ],
       );
