@@ -49,6 +49,7 @@ dependencies:
   url_launcher: ^6.0.9
   image: ^3.0.0
   flutter_local_notifications: ^8.1.1
+  progress_indicators: ^1.0.0
   
 # dependency_overrides:
 #   font_awesome_flutter:

@@ -39,7 +39,7 @@ class PhoneNumberScreen extends GetView<AuthController> {
                 height: 20,
               ),
               Container(
-                height: Get.height * 0.25,
+                height: Get.height * 0.30,
                 decoration: BoxDecoration(
                     color: Colors.white,
                     border: Border.all(color: Colors.grey.shade200, width: 1),
