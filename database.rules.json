@@ -66,6 +66,9 @@
             ".write": "$uid === auth.uid"
           }
         },
+        "versionNumber": {
+          ".write": "$uid === auth.uid"
+        },
         "location": {
           ".write": "$uid === auth.uid"
         },

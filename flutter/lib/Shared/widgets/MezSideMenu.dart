@@ -68,11 +68,12 @@ class MezSideMenu extends GetWidget<AuthController> {
             Flexible(
               child: Text(
                 controller.user?.displayName ?? tDefaultUserName,
+                overflow: TextOverflow.visible,
                 textAlign: TextAlign.center,
                 style: TextStyle(fontFamily: 'psb', fontSize: 25.5),
               ),
             ),
-            SizedBox(height: getSizeRelativeToScreen(300, sw, sh)), //
+            SizedBox(height: getSizeRelativeToScreen(270, sw, sh)), //
             ListTile(
                 onTap: () async => await controller.signOut(),
                 leading: Icon(
