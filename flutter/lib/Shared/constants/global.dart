@@ -9,6 +9,7 @@ const String dbRoot = ":9000/?ns=$db";
 const String functionPort = ":5001";
 const String defaultDb = "test";
 const String defaultLaunchMode = "stage"; // can be dev / prod
+const VERSION = "1.0.4";
 // ----------------- TEST STRINGS ----------------- //
 
 const String tEmailTestValue = "taxi.two@mezcalmos.com";

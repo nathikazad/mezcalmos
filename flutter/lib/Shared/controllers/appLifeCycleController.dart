@@ -8,6 +8,7 @@ class AppLifeCycleController extends GetxController
   Map<AppLifecycleState, VoidCallback> callbacks = {
     AppLifecycleState.detached: () => null,
     AppLifecycleState.inactive: () => null,
+    
     AppLifecycleState.paused: () => null,
     AppLifecycleState.resumed: () => null,
   };
