@@ -1,5 +1,5 @@
 const notification = require("../notification");
-
+const logger = require("firebase-functions/lib/logger");
 
 module.exports = ( firebase, uid, data, hasura) => { return accept(firebase, uid, data, hasura) }
 async function accept(firebase, uid, data, hasura) {
@@ -39,79 +39,82 @@ async function accept(firebase, uid, data, hasura) {
     return order
   })
 
-  if (!response.committed) {
-    return {
-      status: "Error",
-      errorMessage: "Order is locked in another request"
-    };
-  }
-  let order = response.snapshot.val();
-
-  if (order.customer.id == uid) {
-    firebase.database().ref(`orders/taxi/${data.orderId}/lock`).remove()
-    return {
-      status: "Error",
-      errorMessage: "Driver and Customer cannot have same id"
+  try {
+    if (!response.committed) {
+      return {
+        status: "Error",
+        errorMessage: "Order is locked in another request"
+      };
     }
-  }
+    let order = response.snapshot.val();
 
-  if (order.status != "lookingForTaxi") {
-    firebase.database().ref(`orders/taxi/${data.orderId}/lock`).remove()
-    return {
-      status: "Error",
-      errorMessage: `${data.orderId} status is not lookingForTaxi but ${order.status}`
-    };
-  }
+    if (order.customer.id == uid) {
+      firebase.database().ref(`orders/taxi/${data.orderId}/lock`).remove()
+      return {
+        status: "Error",
+        errorMessage: "Driver and Customer cannot have same id"
+      }
+    }
 
-  order.status = 'onTheWay';
-  order.acceptRideTime = (new Date()).toUTCString()
-  order.driver = {
-    id: uid,
-    name: driver.displayName.split(' ')[0],
-    image: driver.photo,
-    taxiNumber: (driver.taxiNumber) ? driver.taxiNumber : null,
-  }
+    if (order.status != "lookingForTaxi") {
+      firebase.database().ref(`orders/taxi/${data.orderId}/lock`).remove()
+      return {
+        status: "Error",
+        errorMessage: `${data.orderId} status is not lookingForTaxi but ${order.status}`
+      };
+    }
 
-  firebase.database().ref(`/orders/taxi/${data.orderId}`).update(order);
-  firebase.database().ref(`/taxiDrivers/${uid}/orders/${data.orderId}`).set(order);
-  firebase.database().ref(`/taxiDrivers/${uid}/state/currentOrder`).set(data.orderId)
-  firebase.database().ref(`/users/${order.customer.id}/orders/${data.orderId}`).update({
-    driver: order.driver,
-    acceptRideTime: order.acceptRideTime,
-    status: order.status,
-    taxiNumber: (driver.taxiNumber) ? driver.taxiNumber : null
-  });
-  firebase.database().ref(`/inProcessOrders/taxi/${data.orderId}`).set({ driver: order.driver, customer: order.customer });
-  firebase.database().ref(`/openOrders/taxi/${data.orderId}`).remove();
-  notification.cancelNotificationsForOrderId(firebase, data.orderId);
-  firebase.database().ref(`/chat/${data.orderId}/participants/${uid}`).set({
-    name: driver.displayName.split(' ')[0],
-    image: driver.photo,
-    particpantType: "taxi",
-    phoneNumber: (driver.phoneNumber) ? driver.phoneNumber : null,
-    taxiNumber: (driver.taxiNumber) ? driver.taxiNumber : null
-  });
+    order.status = 'onTheWay';
+    order.acceptRideTime = (new Date()).toUTCString()
+    order.driver = {
+      id: uid,
+      name: driver.displayName.split(' ')[0],
+      image: driver.photo,
+      taxiNumber: (driver.taxiNumber) ? driver.taxiNumber : null,
+    }
 
-  notification.push(firebase, order.customer.id, {
-    notificationType: "orderStatusChange",
-    orderId: data.orderId,
-    orderType: order.orderType,
-    status: order.status,
-    driver: order.driver,
-    time: order.acceptRideTime
-  })
-  // cancel notification on all drivers who recieved order
-    
-  await hasura.updateOrder({
-    orderId: data.orderId,
-    changes: {
-      finalStatus: order.status,
+    firebase.database().ref(`/orders/taxi/${data.orderId}`).update(order);
+    firebase.database().ref(`/taxiDrivers/${uid}/orders/${data.orderId}`).set(order);
+    firebase.database().ref(`/taxiDrivers/${uid}/state/currentOrder`).set(data.orderId)
+    firebase.database().ref(`/users/${order.customer.id}/orders/${data.orderId}`).update({
+      driver: order.driver,
       acceptRideTime: order.acceptRideTime,
-      driverId: order.driver.id,
-      finalPrice: order.estimatedPrice
-    }
-  })
-     
+      status: order.status,
+      taxiNumber: (driver.taxiNumber) ? driver.taxiNumber : null
+    });
+    firebase.database().ref(`/inProcessOrders/taxi/${data.orderId}`).set({ driver: order.driver, customer: order.customer });
+    firebase.database().ref(`/openOrders/taxi/${data.orderId}`).remove();
+    notification.cancelNotificationsForOrderId(firebase, data.orderId);
+    firebase.database().ref(`/chat/${data.orderId}/participants/${uid}`).set({
+      name: driver.displayName.split(' ')[0],
+      image: driver.photo,
+      particpantType: "taxi",
+      phoneNumber: (driver.phoneNumber) ? driver.phoneNumber : null,
+      taxiNumber: (driver.taxiNumber) ? driver.taxiNumber : null
+    });
+
+    notification.push(firebase, order.customer.id, {
+      notificationType: "orderStatusChange",
+      orderId: data.orderId,
+      orderType: order.orderType,
+      status: order.status,
+      driver: order.driver,
+      time: order.acceptRideTime
+    })
+    // cancel notification on all drivers who recieved order
+
+    await hasura.updateOrder({
+      orderId: data.orderId,
+      changes: {
+        finalStatus: order.status,
+        acceptRideTime: order.acceptRideTime,
+        driverId: order.driver.id,
+        finalPrice: order.estimatedPrice
+      }
+    })
+  } catch (e) {
+    logger.error(e)
+  }
   firebase.database().ref(`orders/taxi/${data.orderId}/lock`).remove()
   return {
     status: "Success",
