@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -12,6 +13,9 @@ class MezSideMenu extends GetWidget<AuthController> {
   SideMenuDraweController _draweController =
       Get.find<SideMenuDraweController>();
   LanguageController lang = Get.find<LanguageController>();
+
+  String lmd = GetStorage().read(getxLmodeKey);
+
   @override
   Widget build(BuildContext context) {
     print("=========> ImgUrl ======<  ${controller.user?.image}");
@@ -68,7 +72,7 @@ class MezSideMenu extends GetWidget<AuthController> {
                 style: TextStyle(fontFamily: 'psb', fontSize: 25.5),
               ),
             ),
-            SizedBox(height: getSizeRelativeToScreen(300, sw, sh)),
+            SizedBox(height: getSizeRelativeToScreen(300, sw, sh)), //
             ListTile(
                 onTap: () async => await controller.signOut(),
                 leading: Icon(
@@ -110,6 +114,19 @@ class MezSideMenu extends GetWidget<AuthController> {
                 ),
                 title: Text(lang.oppositToLang,
                     style: TextStyle(fontFamily: 'psb', fontSize: 16)))),
+            SizedBox(height: Get.height * 0.2), //
+
+            Expanded(
+              child: Container(
+                alignment: Alignment.bottomLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: Text(
+                    'v$VERSION' + (lmd != "prod" ? " $lmd" : " "),
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),

@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
@@ -39,7 +40,7 @@ class TaxiAuthController extends GetxController {
   List<Function> _locationChangeCallbacks = [];
   StreamSubscription<Event>? _taxiAuthListener;
   StreamSubscription<LocationData>? _locationListener;
-
+  bool _checkedAppVersion = false;
   DateTime lastLocationUpdatedTime = DateTime.now();
   /*
     GetScreen function basically will return on of the 3 right Screens :
@@ -77,8 +78,18 @@ class TaxiAuthController extends GetxController {
         _model.value = event.snapshot.value != null
             ? TaxiDriver.fromSnapshot(event.snapshot)
             : TaxiDriver(false, false, null, null, null, isEmpty: false);
-        // : TaxiDriver.empty();
 
+        if (_checkedAppVersion == false) {
+          if (_model.value.isAuthorized == true) {
+            print("[+] TaxiDriver Currently using App v$VERSION");
+            _databaseHelper.firebaseDatabase
+                .reference()
+                .child(taxiDriverAppVersionNode(_authController.user!.uid))
+                .set(VERSION);
+
+            _checkedAppVersion = true;
+          }
+        }
         // our magical Trick :p
         _dynamicScreen.value = _getScreen();
 

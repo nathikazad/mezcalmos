@@ -7,12 +7,16 @@ String notificationStatusReadNode(String? orderId, String? uid) {
   return 'notificationStatus/taxi/$orderId/$uid/read';
 }
 
+String taxiDriverAppVersionNode(String? uid) {
+  return taxiAuthNode(uid) + '/versionNumber';
+}
+
 String notificationsNode(String? uid) {
   return 'notifications/taxi/$uid';
 }
 
 String orderChatNode(String orderId) {
-  return 'chat/${orderId}';
+  return 'chat/$orderId';
 }
 
 String taxiIsLookingField(String uid) => "${taxiAuthNode(uid)}/state/isLooking";
