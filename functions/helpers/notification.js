@@ -144,7 +144,4 @@ async function cancelNotificationsForOrderId(firebase, orderId, fcm) {
     registration_ids: notificationList,
     data: data
   });
-
-  firebase.database().ref(`/notificationStatus/taxi/${orderId}`).remove()
-
 }
