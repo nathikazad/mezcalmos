@@ -11,7 +11,7 @@ function requireHelper(filename) {
 }
 
 const checkOpenOrdersInterval = 10 //seconds
-let orderExpirationLimit = 200 // seconds
+let orderExpirationLimit = 300 // seconds
 
 if (process.argv.length != 3) {
   console.log("Required environment variable")
@@ -68,16 +68,16 @@ function updateOrderNotificationsList(orderId, drivers, orderNotificationsList, 
     if (driversAlreadyInList[driverId])
       continue
     let driver = drivers[driverId]
-
     let orderNotificationStatuses = notificationStatus[orderId]
     if (!orderNotificationStatuses || !orderNotificationStatuses[driverId]
       || (!orderNotificationStatuses[driverId].read
-          && (orderNotificationStatuses[driverId].sentCount 
-            && orderNotificationStatuses[driverId].sentCount < 6))) {
+        && (!orderNotificationStatuses[driverId].sentCount
+          || orderNotificationStatuses[driverId].sentCount < 6))) {
       driversAlreadyInList[driverId] = true
       if (!orderNotificationsList[orderId])
         orderNotificationsList[orderId] = {}
       orderNotificationsList[orderId][driverId] = driver
+
     }
   }
   return orderNotificationsList, driversAlreadyInList
