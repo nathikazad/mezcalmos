@@ -37,7 +37,7 @@ ON s.day = o.day AND s."driverId" = o."driverId"),
 uniqueNotifications AS (SELECT 
     day,
     count(*) as "uniqueSent",
-    count(*) filter (where "received" = true) as uniqueReceived,
+    count(*) filter (where "received" = true) as "uniqueReceived",
     count(*) filter (where "read" = true) as "uniqueRead"
 FROM driverStatusByDay
 GROUP BY 1),

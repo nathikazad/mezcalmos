@@ -1,0 +1,20 @@
+query getAllOrders($start_date_input:timestamptz!, $end_date_input:timestamptz!){
+  orders_aggregate(where:
+    {orderTime: {_gte:$start_date_input, _lte:$end_date_input}},
+    order_by: {orderTime:desc}
+  ){
+    nodes{
+      orderTime
+      orderId
+      customer{
+        photo
+      }
+      driver{
+        photo
+      }
+      notifications_sent
+      notifications_received
+      notifications_read
+    }
+  }
+}
