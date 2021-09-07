@@ -1,7 +1,7 @@
 const { Client } = require('pg')
 const fs = require('fs');
 
-const client = new Client({
+const prodClient = new Client({
   user: 'xqzmxaqcsacvjl',
   host: 'ec2-35-173-94-156.compute-1.amazonaws.com',
   database: 'd3r4algidqrk00',
@@ -11,12 +11,41 @@ const client = new Client({
     rejectUnauthorized: false
   }
 })
-client.connect()
-if (process.argv.length != 3) {
-  console.log("Required sql file name");
+
+const testClient = new Client({
+  user: 'eaifyzkxpnbafv',
+  host: 'ec2-44-196-170-156.compute-1.amazonaws.com',
+  database: 'd6i9ej0gihqpgl',
+  password: 'f4a44cbadd71d2d34c50939036d60534481eaa8c36201fa32c4f33d6ac0b3d08',
+  port: 5432,
+  ssl: {
+    rejectUnauthorized: false
+  }
+})
+
+
+if (process.argv.length != 4) {
+  console.log("Required sql file name and database");
   process.exit()
 }
-let query = fs.readFileSync(`sql/${process.argv[2]}.sql`, 'utf8');
+
+if (process.argv[2] != "prod" && process.argv[2] != "test") {
+  console.log("db can be only prod or test");
+  process.exit()
+}
+
+let client;
+if (process.argv[2] == "prod") {
+  client = prodClient
+}
+
+if (process.argv[2] == "test") {
+  client = testClient
+}
+
+client.connect()
+
+let query = fs.readFileSync(`sql/${process.argv[3]}.sql`, 'utf8');
 client.query(query, (err, res) => {
   if (err)
     console.log(err)
