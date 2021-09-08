@@ -98,7 +98,30 @@ module.exports.Hasura = class Hasura {
       console.log(e);
     }
   }
+  async updateDriver(parameters) {
+    const updateDriverMutation = gql`
+    mutation updateDriver($driverId: String, $changes: drivers_set_input!){
+      update_drivers(
+        where: {driverId: {_eq: $driverId}},
+        _set: $changes
+      ){
+        returning{
+          driverId
+        
+        }
+      }
+    }`
+    try {
+      const result = await this.client.request(updateDriverMutation, parameters)
+      console.log(result);
+      // return{
+      //   status: 'Success'
+      // }
 
+    } catch (e) {
+      console.log(e);
+    }
+  }
   async updateUser(parameters) {
     const updateUserMutation = gql`
     mutation updateUser($uid: String, $changes: users_set_input!){

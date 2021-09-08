@@ -1,4 +1,4 @@
-query getAllOrders($start_date_input: timestamptz!, $end_date_input: timestamptz!) {
+query getDriversByDay($start_date_input: timestamptz!, $end_date_input: timestamptz!) {
   drivers {
     userInfo {
       displayName

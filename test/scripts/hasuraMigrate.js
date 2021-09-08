@@ -78,6 +78,7 @@ query MyQuery {
 let secret = ""
 let testSecret = "rOTavdgkE13VvHckk2AsK5FEMvkCLx5EriEBQF2GJaRLrCw55gv44uATzneQiEMN"
 
+
 async function insertOrder(query) {
   return await runQuery(orderMutationQuery, query)
 }
@@ -112,7 +113,8 @@ async function getUsers() {
 
 async function runQuery(mutation, query) {
   try {
-    const client = new GraphQLClient("https://testing-mezc.hasura.app/v1/graphql", {
+    const client = new GraphQLClient( "https://testing-mezc.hasura.app/v1/graphql",
+       {
       headers: { 'x-hasura-admin-secret': testSecret }
     })
     const result = await client.request(mutation, query)
@@ -142,100 +144,100 @@ async function writeToDB() {
   let drivers = data.taxiDrivers
   let users = data.users
 
-  // let array = []
-  // for (let userId in users) {
-  //   let user = users[userId]['info']
-  //   if (!user)
-  //     continue
-  //   let object = {
-  //     uid: userId,
-  //   }
-  //   if (user.displayName) {
-  //     object.displayName = user.displayName
-  //   }
+  let array = []
+  for (let userId in users) {
+    let user = users[userId]['info']
+    if (!user)
+      continue
+    let object = {
+      uid: userId,
+    }
+    if (user.displayName) {
+      object.displayName = user.displayName
+    }
 
-  //   if (user.photo) {
-  //     object.photo = user.photo
-  //   }
-  //   array.push(object)
-  // }
-  // await insertUser({ objects: array })
+    if (user.photo) {
+      object.photo = user.photo
+    }
+    array.push(object)
+  }
+  await insertUser({ objects: array })
 
 
-  // let driversArray = []
-  // for (let driverId in drivers) {
-  //   let driver = drivers[driverId]
-  //   let location = null
-  //   let online = false
-  //   let taxiNumber = null
+  let driversArray = []
+  for (let driverId in drivers) {
+    let driver = drivers[driverId]
+    let location = null
+    let online = false
+    let taxiNumber = null
 
-  //   if (driver.location != null) {
-  //     let position = { ...driver.location }.position
-  //     location = {
-  //       type: "Point",
-  //       coordinates: [position.lat, position.lng]
-  //     }
-  //   }
+    if (driver.location != null) {
+      let position = { ...driver.location }.position
+      location = {
+        type: "Point",
+        coordinates: [position.lat, position.lng]
+      }
+    }
 
-  //   if (driver.state != null) {
-  //     online = driver.state.isLooking || false;
-  //   }
+    if (driver.state != null) {
+      online = driver.state.isLooking || false;
+    }
 
-  //   let info = users[driverId]['info']
-  //   if (info != null && info.taxiNumber != null) {
-  //     taxiNumber = info.taxiNumber
-  //   }
+    let info = users[driverId]['info']
+    if (info != null && info.taxiNumber != null) {
+      taxiNumber = info.taxiNumber
+    }
 
-  //   let object = {
-  //     driverId: driverId,
-  //     taxiNumber: taxiNumber,
-  //     location: location,
-  //     online: online
-  //   }
-  //   driversArray.push(object)
-  // }
-  // await insertDriver({ objects: driversArray })
+    let object = {
+      driverId: driverId,
+      taxiNumber: taxiNumber,
+      location: location,
+      online: online
+    }
+    driversArray.push(object)
+  }
+  await insertDriver({ objects: driversArray })
 
-  // let orders = data.orders.taxi
-  // let ordersArray = []
-  // for (let orderId in orders) {
-  //   let order = orders[orderId]
-  //   if (!order || !order.customer || !order.orderTime)
-  //     continue
-  //   let object = {
-  //     customerId: order.customer.id,
-  //     orderId: orderId,
-  //     orderTime: (new Date(order.orderTime)).toISOString()
-  //   }
-  //   if (order.driver)
-  //     object.driverId = order.driver.id
-  //   if (order.acceptRideTime)
-  //     object.acceptRideTime = (new Date(order.acceptRideTime)).toISOString()
-  //   if (order.rideStartTime)
-  //     object.rideStartTime = (new Date(order.rideStartTime)).toISOString()
-  //   if (order.rideFinishTime)
-  //     object.rideFinishTime = (new Date(order.rideFinishTime)).toISOString()
-  //   if (order.status)
-  //     object.finalStatus = order.status
-  //   if (order.duration)
-  //     object.estimatedRideTime = order.duration.value
-  //   if (order.to && order.to.lat && order.to.lng)
-  //     object.dropOffLocation = {
-  //       type: "Point",
-  //       coordinates: [order.to.lat, order.to.lng]
-  //     }
-  //   if (order.from && order.from.lat && order.from.lng)
-  //     object.pickUpLocation = {
-  //       type: "Point",
-  //       coordinates: [order.from.lat, order.from.lng]
-  //     }
-  //   if (order.cancelledBy)
-  //     object.cancellationParty = order.cancelledBy
-  //   if (order.reason)
-  //     object.cancellationReason = order.reason
-  //   ordersArray.push(object)
-  // }
-  // await insertOrder({ objects: ordersArray })
+  let orders = data.orders.taxi
+  let ordersArray = []
+  for (let orderId in orders) {
+    let order = orders[orderId]
+    if (!order || !order.customer || !order.orderTime)
+      continue
+    let object = {
+      customerId: order.customer.id,
+      orderId: orderId,
+      orderTime: (new Date(order.orderTime)).toISOString()
+    }
+    if (order.driver)
+      object.driverId = order.driver.id
+    if (order.acceptRideTime)
+      object.acceptRideTime = (new Date(order.acceptRideTime)).toISOString()
+    if (order.rideStartTime)
+      object.rideStartTime = (new Date(order.rideStartTime)).toISOString()
+    if (order.rideFinishTime)
+      object.rideFinishTime = (new Date(order.rideFinishTime)).toISOString()
+    if (order.status)
+      object.finalStatus = order.status
+    if (order.duration)
+      object.estimatedRideTime = order.duration.value
+    if (order.to && order.to.lat && order.to.lng)
+      object.dropOffLocation = {
+        type: "Point",
+        coordinates: [order.to.lat, order.to.lng]
+      }
+    if (order.from && order.from.lat && order.from.lng)
+      object.pickUpLocation = {
+        type: "Point",
+        coordinates: [order.from.lat, order.from.lng]
+      }
+    if (order.cancelledBy)
+      object.cancellationParty = order.cancelledBy
+    if (order.reason)
+      object.cancellationReason = order.reason
+    ordersArray.push(object)
+  }
+  await insertOrder({ objects: ordersArray })
 
   let notifications = data.notificationStatus["taxi"]
   let notificationsArray = []

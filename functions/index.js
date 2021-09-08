@@ -62,7 +62,7 @@ exports.changePhoto = functions.database.ref(
 
 exports.createTaxiNumber = functions.database.ref(
   'users/{userId}/info/taxiNumber').onCreate(async (snap, context) => {
-    await hasura.updateUser({
+    await hasura.updateDriver({
       uid: context.params.userId,
       changes: {
         taxiNumber: snap.val()
@@ -72,7 +72,7 @@ exports.createTaxiNumber = functions.database.ref(
 
 exports.updateTaxiNumber = functions.database.ref(
   'users/{userId}/info/taxiNumber').onUpdate(async (snap, context) => {
-    await hasura.updateUser({
+    await hasura.updateDriver({
       uid: context.params.userId,
       changes: {
         taxiNumber: snap.after.val()

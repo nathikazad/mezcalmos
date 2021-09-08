@@ -1,9 +1,11 @@
-WITH driversSentByDay AS(SELECT distinct on ("driverId")
+WITH driversSentByDay AS(SELECT
+    distinct on ("driverId")
     EXTRACT(day FROM "sentTime") as day,
     "driverId"
     FROM notifications
     WHERE ("sentTime" > '2021-09-01'::date AND "sentTime" < '2021-09-01'::date + interval '1 month')
     GROUP BY 1,2),
+
 
 driversReceivedByDay AS(SELECT distinct on ("driverId")
     EXTRACT(day FROM "receivedTime") as day,
@@ -33,6 +35,7 @@ LEFT JOIN driversReceivedByDay r
 ON s.day = r.day AND s."driverId" = r."driverId"
 LEFT JOIN driversReadByDay o
 ON s.day = o.day AND s."driverId" = o."driverId"),
+
 
 uniqueNotifications AS (SELECT 
     day,

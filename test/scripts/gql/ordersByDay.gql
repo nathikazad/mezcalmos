@@ -1,4 +1,4 @@
-query getAllOrders($start_date_input:timestamptz!, $end_date_input:timestamptz!){
+query getOrdersByDay($start_date_input:timestamptz!, $end_date_input:timestamptz!){
   orders_aggregate(where:
     {orderTime: {_gte:$start_date_input, _lte:$end_date_input}},
     order_by: {orderTime:desc}
