@@ -246,7 +246,6 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
             Positioned(
               top: 10,
               child: Container(
-                height: 65,
                 width: Get.width / 1.05,
                 decoration: BoxDecoration(
                     color: Colors.white,
@@ -278,7 +277,7 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                                   Obx(
                                     () => Text(
                                       lang.strings['shared']['inputLocation']
-                                          ["to"],
+                                          ["from"],
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
@@ -319,7 +318,7 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                                                     ?.address, //13+..
                                         style: TextStyle(
                                             fontSize: 16, fontFamily: 'psr'),
-                                        overflow: TextOverflow.visible,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
                                     ),
                                   ),
@@ -421,7 +420,7 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
                                                     ?.address, //13+..
                                         style: TextStyle(
                                             fontSize: 16, fontFamily: 'psr'),
-                                        overflow: TextOverflow.visible,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
                                     ),
                                   ),

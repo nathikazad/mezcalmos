@@ -116,75 +116,77 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                     Flexible(
                       flex: 3,
                       fit: FlexFit.loose,
-                      child: Obx(() => TextButton(
-                            style: ButtonStyle(
-                              fixedSize: MaterialStateProperty.all(Size(
-                                  getSizeRelativeToScreen(
-                                      115, Get.height, Get.width),
-                                  getSizeRelativeToScreen(
-                                      12, Get.height, Get.width))),
-                              backgroundColor:
-                                  controller.value?.status != "inTransit"
-                                      ? MaterialStateProperty.all(
-                                          Color.fromARGB(255, 79, 168, 35))
-                                      : MaterialStateProperty.all(
-                                          Color.fromARGB(255, 234, 51, 38)),
-                            ),
-                            onPressed: () async {
-                              print(
-                                  "%%%%%%%%%%%%\n controller.value!.distanceToClient :: ${controller.distanceToClient}\n%%%%%%%%%%%%");
-                              print(
-                                  "%%%%%%%%%%%%\n controller.distanceFromFinish :: ${controller.distanceToFinish}\n%%%%%%%%%%%%");
-                              controller.value?.status == "inTransit"
-                                  // ignore: unnecessary_statements
-                                  ? (controller.distanceToFinish > 0.5
-                                      ? MezcalmosSharedWidgets
-                                              .yesNoDefaultConfirmationDialog(
-                                                  () async {
-                                          Get.back();
-                                          await controller.finishRide();
-                                        },
-                                                  lang.strings['taxi']
-                                                          ['taxiView']
-                                                      ["tooFarFromfinishRide"])
-                                          .then((_) {
-                                          //Get.offAllNamed(kTaxiWrapperRoute);
-                                          // _mezcalmosCurrentOrderGoogleMapController
-                                          //     .googleMapUpdate();
-                                          Get.back(closeOverlays: true);
-                                        })
-                                      : await controller.finishRide())
-                                  // ignore: unnecessary_statements
-                                  : (controller.distanceToClient > 0.5
-                                      ? MezcalmosSharedWidgets
-                                              .yesNoDefaultConfirmationDialog(
-                                                  () async {
-                                          Get.back();
-                                          await controller.startRide();
-                                        },
-                                                  lang.strings['taxi']
-                                                          ['taxiView']
-                                                      ["tooFarFromstartRide"])
-                                          .then((_) {
-                                          // _mezcalmosCurrentOrderGoogleMapController
-                                          //     .googleMapUpdate();
-                                          //Get.back(closeOverlays: true);
-                                        })
-                                      : await controller.startRide());
-                            },
-                            child: Center(
-                              child: Text(
-                                controller.value?.status != "inTransit"
-                                    ? lang.strings['taxi']['taxiView']
-                                        ["startRide"]
-                                    : lang.strings['taxi']['taxiView']
-                                        ["finishRide"],
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: Colors.white, fontFamily: 'psr'),
+                      child: Container(
+                        child: Obx(() => TextButton(
+                              style: ButtonStyle(
+                                fixedSize: MaterialStateProperty.all(Size(
+                                    getSizeRelativeToScreen(
+                                        115, Get.height, Get.width),
+                                    getSizeRelativeToScreen(
+                                        12, Get.height, Get.width))),
+                                backgroundColor:
+                                    controller.value?.status != "inTransit"
+                                        ? MaterialStateProperty.all(
+                                            Color.fromARGB(255, 79, 168, 35))
+                                        : MaterialStateProperty.all(
+                                            Color.fromARGB(255, 234, 51, 38)),
                               ),
-                            ),
-                          )),
+                              onPressed: () async {
+                                print(
+                                    "%%%%%%%%%%%%\n controller.value!.distanceToClient :: ${controller.distanceToClient}\n%%%%%%%%%%%%");
+                                print(
+                                    "%%%%%%%%%%%%\n controller.distanceFromFinish :: ${controller.distanceToFinish}\n%%%%%%%%%%%%");
+                                controller.value?.status == "inTransit"
+                                    // ignore: unnecessary_statements
+                                    ? (controller.distanceToFinish > 0.5
+                                        ? MezcalmosSharedWidgets
+                                                .yesNoDefaultConfirmationDialog(
+                                                    () async {
+                                            Get.back();
+                                            await controller.finishRide();
+                                          },
+                                                    lang.strings['taxi']
+                                                            ['taxiView'][
+                                                        "tooFarFromfinishRide"])
+                                            .then((_) {
+                                            //Get.offAllNamed(kTaxiWrapperRoute);
+                                            // _mezcalmosCurrentOrderGoogleMapController
+                                            //     .googleMapUpdate();
+                                            Get.back(closeOverlays: true);
+                                          })
+                                        : await controller.finishRide())
+                                    // ignore: unnecessary_statements
+                                    : (controller.distanceToClient > 0.5
+                                        ? MezcalmosSharedWidgets
+                                                .yesNoDefaultConfirmationDialog(
+                                                    () async {
+                                            Get.back();
+                                            await controller.startRide();
+                                          },
+                                                    lang.strings['taxi']
+                                                            ['taxiView']
+                                                        ["tooFarFromstartRide"])
+                                            .then((_) {
+                                            // _mezcalmosCurrentOrderGoogleMapController
+                                            //     .googleMapUpdate();
+                                            //Get.back(closeOverlays: true);
+                                          })
+                                        : await controller.startRide());
+                              },
+                              child: Center(
+                                child: Text(
+                                  controller.value?.status != "inTransit"
+                                      ? lang.strings['taxi']['taxiView']
+                                          ["startRide"]
+                                      : lang.strings['taxi']['taxiView']
+                                          ["finishRide"],
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: Colors.white, fontFamily: 'psr'),
+                                ),
+                              ),
+                            )),
+                      ),
                     ),
                     Flexible(
                         child: SizedBox(
@@ -402,7 +404,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
           Positioned(
             top: 10,
             child: Container(
-              height: 65,
+              // height: 65,
               width: Get.width / 1.05,
               // width: getSizeRelativeToScreen(180, Get.height, Get.width),
               decoration: BoxDecoration(
@@ -549,63 +551,68 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
               //   ],
               // )
               // replaced by stack
-              child: Flex(
-                clipBehavior: Clip.hardEdge,
-                direction: Axis.horizontal,
+              child: Row(
+                // clipBehavior: Clip.hardEdge,
+                // direction: Axis.horizontal,
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Flexible(
-                      flex: 2,
-                      fit: FlexFit.tight,
+                  Expanded(
+                    flex: 2,
+                    // fit: FlexFit.tight,
+                    child: Container(
                       child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 8.0, top: 12, bottom: 12, right: 8.0),
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Obx(() => Text(
+                        padding: const EdgeInsets.only(
+                            left: 8.0, top: 12, bottom: 12, right: 8.0),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Obx(() => Text(
+                                    lang.strings['shared']['inputLocation']
+                                        ["from"],
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  )),
+                              Obx(
+                                () => GestureDetector(
+                                  onTap: () => mezcalmosSnackBar(
                                       lang.strings['shared']['inputLocation']
                                           ["from"],
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )),
-                                Obx(
-                                  () => GestureDetector(
-                                    onTap: () => mezcalmosSnackBar(
-                                        lang.strings['shared']['inputLocation']
-                                            ["from"],
-                                        controller.value?.from?.address ?? ""),
-                                    child: Text(
-                                      controller.value?.from?.address
-                                                  ?.toString()
-                                                  .length ==
-                                              null
-                                          ? "........."
-                                          : controller.value!.from!.address!
-                                                      .toString()
-                                                      .length >
-                                                  13
-                                              ? (controller.value?.from?.address
-                                                          .toString()
-                                                          .substring(0, 13) ??
-                                                      "..........") +
-                                                  " .."
-                                              : controller.value!.from!.address
-                                                  .toString(),
-                                      style: TextStyle(
-                                          fontSize: 16, fontFamily: 'psr'),
-                                      overflow: TextOverflow.visible,
-                                    ),
+                                      controller.value?.from?.address ?? ""),
+                                  child: Text(
+                                    controller.value?.from?.address
+                                                ?.toString()
+                                                .length ==
+                                            null
+                                        ? "........."
+                                        : controller.value!.from!.address!
+                                                    .toString()
+                                                    .length >
+                                                13
+                                            ? (controller.value?.from?.address
+                                                        .toString()
+                                                        .substring(0, 13) ??
+                                                    "..........") +
+                                                " .."
+                                            : controller.value!.from!.address
+                                                .toString(),
+                                    style: TextStyle(
+                                        fontSize: 16, fontFamily: 'psr'),
+                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
-                              ]))),
-                  Flexible(
+                              ),
+                            ]),
+                      ),
+                    ),
+                  ),
+                  Expanded(
                       flex: 1,
-                      fit: FlexFit.tight,
+                      // fit: FlexFit.tight,
                       child: Stack(
                           alignment: Alignment.center,
                           fit: StackFit.passthrough,
@@ -644,9 +651,9 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                               ),
                             ),
                           ])),
-                  Flexible(
+                  Expanded(
                     flex: 2,
-                    fit: FlexFit.tight,
+                    // fit: FlexFit.tight,
                     child: Padding(
                         padding: const EdgeInsets.only(
                             left: 0, top: 12, bottom: 12, right: 8.0),
