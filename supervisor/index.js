@@ -123,9 +123,9 @@ function notifyDrivers(orderNotificationsList, hasuraUpdateList) {
       notification: {
         title: "Nueva Pedido",
         body: `Hay una nueva orden de taxi, vea si puede aceptarla.`,
-        tag: "testing"
+        tag: "newOrder"
       },
-      collapse_key: "testing",
+      collapse_key: "newOrder",
       priority: "high"
     });
 

@@ -140,8 +140,16 @@ async function cancelNotificationsForOrderId(firebase, orderId, fcm) {
     notificationType: "newOrderExpired",
   };
 
+
+
   fcm.push({
     registration_ids: notificationList,
-    data: data
+    notification: {
+      title: "Nueva Pedido",
+      body: `El viaje ya se ha realizado, te avisaremos cuando llegue el próximo.`,
+      tag: "newOrder"
+    },
+    collapse_key: "newOrder",
+    priority: "high"
   });
 }
