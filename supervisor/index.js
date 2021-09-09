@@ -117,17 +117,16 @@ function notifyDrivers(orderNotificationsList, hasuraUpdateList) {
           parseInt(notificationStatus[orderId][driverId].sentCount) + 1
       }
     }
-    let data = {
-      title: "Nueva Pedido",
-      body: `Hay una nueva orden de taxi, vea si puede aceptarla.`,
-      orderId: orderId,
-      notificationType: "newOrder",
-      priority: "high",
-      markReceivedUrl: constructReturnUrl(orderId)
-    };
+
     fcm.push({
       registration_ids: driverNotificationTokens,
-      data: data
+      notification: {
+        title: "Nueva Pedido",
+        body: `Hay una nueva orden de taxi, vea si puede aceptarla.`,
+        tag: "testing"
+      },
+      collapse_key: "testing",
+      priority: "high"
     });
 
   }

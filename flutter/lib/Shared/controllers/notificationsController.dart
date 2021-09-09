@@ -1,10 +1,7 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
@@ -13,63 +10,8 @@ import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
-import 'package:http/http.dart' as http;
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-final channel = AndroidNotificationChannel(
-  'high_importance_channel', // id
-  'High Importance Notifications', // title
-  'This channel is used for important notifications.', // description
-  importance: Importance.high,
-);
 
-final androidPlatformChannelSpecifics = AndroidNotificationDetails(
-    'big text channel name',
-    'big text channel name',
-    'big text channel description',
-    icon: '@mipmap/launcher_icon',
-    ledOnMs: 1000,
-    ledOffMs: 500,
-    playSound: true,
-    sound: RawResourceAndroidNotificationSound('taxi_whistle'));
-
-Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
-  print("Handling a background message");
-
-  if (event.data["notificationType"] == "newOrder" ||
-      event.data["notificationType"] == "newMessage") {
-    int orderId = event.hashCode;
-    if (event.data["notificationType"] == "newOrder") {
-      orderId = event.data["orderId"].hashCode;
-      markInDb(event.data["markReceivedUrl"]);
-    }
-    FlutterLocalNotificationsPlugin().show(
-      orderId,
-      event.data["title"],
-      event.data["body"],
-      NotificationDetails(android: androidPlatformChannelSpecifics),
-      payload: '', // route information to use when notification is clicked
-    );
-  } else if (event.data["notificationType"] == "newOrderExpired") {
-    FlutterLocalNotificationsPlugin().cancel(event.data["orderId"].hashCode);
-  }
-
-  print('Handling a background message ${event.messageId}');
-}
-
-void markInDb(String url) {
-  String driverId = GetStorage().read(getUserId);
-  url = url.replaceAll("<driverId>", driverId);
-  http
-      .put(
-        Uri.parse(url),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(<String, bool>{"value": true}),
-      );
-      // .then((value) => print(jsonDecode(value.body)["data"]));
-}
 
 class DeviceNotificationsController extends GetxController {
   FirebaseMessaging _messaging = FirebaseMessaging.instance;
@@ -80,51 +22,6 @@ class DeviceNotificationsController extends GetxController {
   void onInit() async {
     super.onInit();
     NotificationSettings settings = await requestPermission();
-
-    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      RemoteMessage? initialMessage =
-          await FirebaseMessaging.instance.getInitialMessage();
-
-      if (initialMessage != null) {
-        print("message recieved in terminated state");
-        print(initialMessage.toString());
-      }
-      _listeners.addAll([
-        FirebaseMessaging.onMessage.listen((RemoteMessage event) {
-          print("message recieved");
-          print(event.data);
-        })
-      ]);
-
-      Future onDidReceiveLocalNotification(
-          int? id, String? title, String? body, String? payload) async {
-        print('onDidReceiveLocalNotification');
-      }
-
-      Future<void> onSelectNotification(String? payload) async {
-        print('onSelectNotification');
-      }
-
-      var flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-
-      final initializationSettingsAndroid =
-          AndroidInitializationSettings('@mipmap/launcher_icon');
-      final initializationSettingsIOS = IOSInitializationSettings(
-          onDidReceiveLocalNotification: onDidReceiveLocalNotification);
-
-      await flutterLocalNotificationsPlugin
-          .resolvePlatformSpecificImplementation<
-              AndroidFlutterLocalNotificationsPlugin>()
-          ?.createNotificationChannel(channel);
-      final initializationSettings = InitializationSettings(
-          android: initializationSettingsAndroid,
-          iOS: initializationSettingsIOS);
-      await flutterLocalNotificationsPlugin.initialize(
-        initializationSettings,
-        onSelectNotification: onSelectNotification,
-      );
-      FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-    }
   }
 
   Future<NotificationSettings> requestPermission() async {
