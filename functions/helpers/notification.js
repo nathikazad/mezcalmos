@@ -123,33 +123,33 @@ async function sendTest(firebase, data) {
 }
 
 async function cancelNotificationsForOrderId(firebase, orderId, fcm) {
-  if (!fcm) {
-    fcm = new sender.FCM(keys.fcm.key)
-  }
-  let driversToNotify = (await firebase.database().ref(`/notificationStatus/taxi/${orderId}`).once('value')).val()
-  let drivers = (await firebase.database().ref(`/taxiDrivers`).once('value')).val();
+  // if (!fcm) {
+  //   fcm = new sender.FCM(keys.fcm.key)
+  // }
+  // let driversToNotify = (await firebase.database().ref(`/notificationStatus/taxi/${orderId}`).once('value')).val()
+  // let drivers = (await firebase.database().ref(`/taxiDrivers`).once('value')).val();
 
-  let notificationList = []
-  for (let driverId in driversToNotify) {
-    if (drivers[driverId] && drivers[driverId].notificationInfo && drivers[driverId].notificationInfo.deviceNotificationToken) {
-      notificationList.push(drivers[driverId].notificationInfo.deviceNotificationToken)
-    }
-  }
-  let data = {
-    orderId: orderId,
-    notificationType: "newOrderExpired",
-  };
+  // let notificationList = []
+  // for (let driverId in driversToNotify) {
+  //   if (drivers[driverId] && drivers[driverId].notificationInfo && drivers[driverId].notificationInfo.deviceNotificationToken) {
+  //     notificationList.push(drivers[driverId].notificationInfo.deviceNotificationToken)
+  //   }
+  // }
+  // let data = {
+  //   orderId: orderId,
+  //   notificationType: "newOrderExpired",
+  // };
 
 
 
-  fcm.push({
-    registration_ids: notificationList,
-    notification: {
-      title: "Nueva Pedido",
-      body: `El viaje ya se ha realizado, te avisaremos cuando llegue el próximo.`,
-      tag: "newOrder"
-    },
-    collapse_key: "newOrder",
-    priority: "high"
-  });
+  // fcm.push({
+  //   registration_ids: notificationList,
+  //   notification: {
+  //     title: "Nueva Pedido",
+  //     body: `El viaje ya se ha realizado, te avisaremos cuando llegue el próximo.`,
+  //     tag: "newOrder"
+  //   },
+  //   collapse_key: "newOrder",
+  //   priority: "high"
+  // });
 }
