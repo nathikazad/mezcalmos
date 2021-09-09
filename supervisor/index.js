@@ -122,6 +122,7 @@ function notifyDrivers(orderNotificationsList, hasuraUpdateList) {
       body: `Hay una nueva orden de taxi, vea si puede aceptarla.`,
       orderId: orderId,
       notificationType: "newOrder",
+      priority: "high",
       markReceivedUrl: constructReturnUrl(orderId)
     };
     fcm.push({
