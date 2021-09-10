@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get_storage/get_storage.dart';
@@ -8,6 +9,8 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:path/path.dart';
+// import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
@@ -16,6 +19,8 @@ import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'dart:convert';
 import 'dart:math';
 import 'package:crypto/crypto.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:firebase_core/firebase_core.dart' as firebase_core;
 
 String generateNonce([int length = 32]) {
   final charset =
@@ -108,6 +113,40 @@ class AuthController extends GetxController {
       }
     });
     super.onInit();
+  }
+
+  Future<String> getImageUrl(File imageFile, String uid) async {
+    String x;
+
+    try {
+      await firebase_storage.FirebaseStorage.instance
+          .ref("users/${uid}/avatar/${imageFile.path}")
+          .putFile(imageFile);
+    } on firebase_core.FirebaseException catch (e) {
+      print("{{{{{{{{{{{{{{{{{{{{" +
+          e.message.toString() +
+          "}}}}}}}}}}}}}}}}}}}}}}}}}}}}");
+    } finally {
+      x = await firebase_storage.FirebaseStorage.instance
+          .ref('users/${uid}/avatar/${imageFile.path}')
+          .getDownloadURL();
+    }
+
+    return x;
+  }
+
+  Future<void> editUserProfile(String? displayName, String? photo) async {
+    Map<String, String> newProfileInfo = <String, String>{};
+    if (displayName != null) {
+      newProfileInfo["displayName"] = displayName;
+    }
+    if (photo != null) {
+      newProfileInfo["photo"] = photo;
+    }
+    await _databaseHelper.firebaseDatabase
+        .reference()
+        .child(userInfo(_user.value!.uid))
+        .update(newProfileInfo);
   }
 
   Future<void> signOut() async {

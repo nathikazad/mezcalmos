@@ -21,9 +21,10 @@ dependencies:
   get: ^4.1.4
   firebase_database: ^7.1.1
   firebase_auth: ^1.4.1
+  firebase_storage: 
   sign_in_with_apple: ^3.0.0
   crypto: ^3.0.0-nullsafety.0
-  firebase_core: ^1.3.0
+  firebase_core: 
   cloud_functions: ^1.0.7
   get_storage: ^2.0.0
   equatable: ^2.0.3
@@ -42,6 +43,11 @@ dependencies:
   font_awesome_flutter: ^9.1.0
   package_info: ^2.0.2
   rive: ^0.7.28
+  image_cropper: ^1.4.1
+  image_picker: ^0.8.4
+  
+  
+  
   
 # dependency_overrides:
 #   font_awesome_flutter:

@@ -5,6 +5,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
+import 'package:mezcalmos/Shared/pages/UserProfileScreen.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -21,6 +22,7 @@ class MezSideMenu extends GetWidget<AuthController> {
   @override
   Widget build(BuildContext context) {
     print("=========> ImgUrl ======<  ${controller.user?.image}");
+    print(controller.user!.phone);
 
     final sw = MediaQuery.of(context).size.width;
     final sh = MediaQuery.of(context).size.height;
@@ -85,6 +87,21 @@ class MezSideMenu extends GetWidget<AuthController> {
                       width: Get.width * 0.8,
                       child: Column(
                         children: [
+                          ListTile(
+                            onTap: () {
+                              Get.to(() => UserProfile(
+                                    controller.user.obs,
+                                  ));
+                            },
+                            leading: Icon(
+                              Icons.account_circle_outlined,
+                              color: Color.fromARGB(255, 103, 121, 254),
+                              size: 25,
+                            ),
+                            title: Text("User Information",
+                                style:
+                                    TextStyle(fontFamily: 'psb', fontSize: 16)),
+                          ),
                           ListTile(
                               onTap: () async => await controller.signOut(),
                               leading: Icon(
