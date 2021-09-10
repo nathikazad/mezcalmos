@@ -17,7 +17,7 @@ class MezcalmosSharedWidgets {
         fit: BoxFit.contain,
       );
 
-    static RichText mezcalmos(
+  static RichText mezcalmos(
           {double textSize = nDefaultMezcalmosTextSize, bool isBold = false}) =>
       RichText(
           text: TextSpan(
@@ -58,7 +58,8 @@ class MezcalmosSharedWidgets {
         ],
       );
 
-  static AppBar mezcalmosAppBar(String btnType, Function onTapFunction,
+  static AppBar mezcalmosAppBar(
+      String btnType, Function onTapFunction, dynamic _,
       {dynamic bgColor = Colors.white}) {
     Widget btn_icon;
 

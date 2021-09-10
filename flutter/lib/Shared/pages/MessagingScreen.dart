@@ -174,7 +174,7 @@ class MessagingScreen extends GetView<MessageController> {
         // resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
-            "back", () => Get.back(result: "clear_notification")),
+            "back", () => Get.back(result: "clear_notification"), context),
         body: Container(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,

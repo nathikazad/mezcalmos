@@ -19,7 +19,8 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
     // Get.put<MezGoogleMapController>(MezGoogleMapController());
 
     return Scaffold(
-      appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back()),
+      appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
+          "back", () => Get.back(), context),
       body: SafeArea(
         child: Stack(
           alignment: Alignment.topCenter,
