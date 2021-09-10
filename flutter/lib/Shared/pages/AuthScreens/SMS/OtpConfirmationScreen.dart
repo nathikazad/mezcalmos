@@ -23,16 +23,16 @@ class OtpConfirmationScreen extends GetView<AuthController> {
 
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
-            "back", () => Get.back(closeOverlays: true),
-            bgColor: Colors.grey[50]),
+        appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () {
+          Get.back();
+        }, context),
         body: Container(
-            height: double.infinity,
-            // color: Colors.white,
+            // height: double.infinity,
+
             alignment: Alignment.topCenter,
             child: Container(
-              padding: const EdgeInsets.only(left: 20, right: 20, top: 40),
-              height: double.infinity,
+              padding: const EdgeInsets.only(left: 10, right: 10, top: 40),
+              // height: double.infinity,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -40,46 +40,57 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                     () => Text(
                         lang.strings['shared']['login']["OtpConfirmation"],
                         style: TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: 45)),
+                            fontWeight: FontWeight.w400, fontSize: 45)),
                   ),
                   SizedBox(
                     height: 20,
                   ),
                   Container(
-                    height: Get.height * 0.25,
                     decoration: BoxDecoration(
                         color: Colors.white,
                         border:
                             Border.all(color: Colors.grey.shade200, width: 1),
                         borderRadius: BorderRadius.circular(8)),
                     child: Padding(
-                      padding: EdgeInsets.all(20),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           Obx(
                             () => RichText(
                               text: new TextSpan(
                                 style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16.5,
-                                ),
+                                    fontFamily: 'psr',
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500),
                                 children: <TextSpan>[
                                   new TextSpan(
-                                      text: lang.strings['shared']['login']
-                                          ["enterOtpCode"],
-                                      style: TextStyle(color: Colors.black87)),
+                                    text: lang.strings['shared']['login']
+                                        ["enterOtpCode"],
+                                    style: TextStyle(
+                                      color: Colors.black87,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 16,
+                                    ),
+                                  ),
                                   new TextSpan(
-                                    text: Get.arguments ?? _phonePassed,
-                                    style: TextStyle(color: Colors.blue),
+                                    text: "  ${Get.arguments ?? _phonePassed}",
+                                    style: TextStyle(
+                                      color: Colors.blue,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 16,
+                                    ),
                                   )
                                 ],
                               ),
                             ),
                           ),
                           SizedBox(
-                            height: 10,
+                            height: Get.height * 0.02,
                           ),
                           PinCodeTextField(
                             onTap: () {
@@ -111,8 +122,8 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                             pinTheme: PinTheme(
                               borderRadius: BorderRadius.circular(5),
                               borderWidth: 0.0,
-                              fieldHeight: 50,
-                              fieldWidth: 46,
+                              fieldHeight: Get.width * 0.13,
+                              fieldWidth: Get.width * 0.13,
                               shape: PinCodeFieldShape.box,
                               selectedFillColor: Colors.grey.shade100,
                               activeColor: Colors.transparent,
@@ -163,7 +174,11 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                       ),
                     ),
                   ),
-                  Obx(() => TextButton(
+                  Spacer(),
+                  Obx(
+                    () => Container(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: TextButton(
                         onPressed:
                             canConfirmOtp.value && !clickedSignInOtp.value
                                 ? () async {
@@ -202,7 +217,9 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                                 canConfirmOtp.value
                                     ? Colors.blue
                                     : Colors.grey)),
-                      ))
+                      ),
+                    ),
+                  )
                 ],
               ),
             )));

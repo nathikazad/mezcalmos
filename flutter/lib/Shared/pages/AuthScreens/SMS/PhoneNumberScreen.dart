@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+const mypadding = EdgeInsets.only(left: 15, right: 15);
 
 class PhoneNumberScreen extends GetView<AuthController> {
   LanguageController lang = Get.find<LanguageController>();
@@ -17,46 +22,81 @@ class PhoneNumberScreen extends GetView<AuthController> {
   RxBool clickedSendOtp = false.obs;
 
   Widget build(BuildContext context) {
+    TextEditingController _otpCodeTextController = TextEditingController();
+    RxBool canConfirmOtp = false.obs;
+    String otpCode = "";
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       _prefixTextFieldController..text = "+52";
     });
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
-          "back", () => Get.back(closeOverlays: true),
-          bgColor: Colors.grey[50]),
-      body: Container(
-          padding: const EdgeInsets.only(left: 20, right: 20, top: 40),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Obx(
-                () => Text(lang.strings['shared']['login']["otpCode"],
-                    style:
-                        TextStyle(fontWeight: FontWeight.w500, fontSize: 45)),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                height: Get.height * 0.30,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.grey.shade200, width: 1),
-                    borderRadius: BorderRadius.circular(8)),
-                child: Padding(
-                  padding: EdgeInsets.all(20),
+
+      /// i rewrite the appbar to soleve the title size i thoutht the title shoud be static
+
+      /// have the same the size to avoid flexign issuse
+
+      // fontWeight: isBold ? FontWeight.bold : FontWeight.w400,
+      /// have the same the size to avoid flexing issuses
+      appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () {
+        Get.back();
+      }, context),
+      // MezcalmosSharedWidgets.mezcalmosAppBar(
+      //     "back", () => Get.back(closeOverlays: true),
+      //     bgColor: Colors.grey[50]),
+      body: Column(
+        children: [
+          Expanded(
+            // height: Get.height * 0.90,
+            // color: Colors.red,
+            //  padding: const EdgeInsets.only(left: 20, right: 20, top: 40),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 35,
+                ),
+                Obx(() => Container(
+                      padding: mypadding,
+                      child: Text(lang.strings['shared']['login']["otpCode"],
+                          style: TextStyle(
+                              fontWeight: FontWeight.w400, fontSize: 45)),
+                    )),
+                SizedBox(
+                  height: 30,
+                ),
+                Container(
+                  padding: mypadding,
+                  child: Text(
+                    ///****add ths to lan file */
+                    lang.strings['shared']['login']["otpSubtitleNumber"],
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Container(
+                  margin: mypadding,
+                  //  height: Get.height * 0.30,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.grey.shade200, width: 1),
+                      borderRadius: BorderRadius.circular(8)),
+                  //r  child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Obx(
-                        () => Text(
+                      Container(
+                        child: Text(
                           lang.strings['shared']['login']["enterPhoneNumber"],
+                          // "Enter Phone To Recieve OPT Code",
                           style: TextStyle(
                             color: Colors.black87,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16.5,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16,
                           ),
                         ),
                       ),
@@ -66,81 +106,186 @@ class PhoneNumberScreen extends GetView<AuthController> {
                       Row(
                         // direction: Axis.horizontal,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        // crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Expanded(
-                            child: TextFormField(
-                              onChanged: (s) {
-                                if (_prefixTextFieldController
-                                            .value.text.length >
-                                        0 &&
-                                    _numberTextFieldController
-                                            .value.text.length >=
-                                        8) {
-                                  canSendOtp.value = true;
-                                } else
-                                  canSendOtp.value = false;
-                              },
-                              maxLength: 4,
-                              keyboardType: TextInputType.phone,
-                              decoration: InputDecoration(
-                                  hintText: "+52",
-                                  focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(5),
-                                      gapPadding: 1,
-                                      borderSide:
-                                          BorderSide(color: Colors.blue)),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(5),
-                                      gapPadding: 1)),
-                              controller: _prefixTextFieldController,
+                          Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                    width: 0.5,
+                                    color: Color.fromRGBO(236, 236, 236, 0)),
+                                color:
+                                    Theme.of(context).scaffoldBackgroundColor),
+                            child: Container(
+                              height: 49,
+                              width: 91,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Container(
+                                    height: 25,
+                                    width: 25,
+                                    child: ClipOval(
+                                      child: Image.network(
+                                        "https://www.worldometers.info/img/flags/us-flag.gif",
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Expanded(
+                                    child: TextFormField(
+                                        onChanged: (s) {
+                                          if (_prefixTextFieldController
+                                                      .value.text.length >
+                                                  0 &&
+                                              _numberTextFieldController
+                                                      .value.text.length >=
+                                                  8) {
+                                            canSendOtp.value = true;
+                                          } else {
+                                            canSendOtp.value = false;
+                                          }
+                                          print(canSendOtp.value);
+                                        },
+                                        textAlign: TextAlign.center,
+                                        decoration: InputDecoration(
+                                          hintText: "+52",
+                                          border: InputBorder.none,
+                                        ),
+                                        controller: _prefixTextFieldController,
+                                        keyboardType: TextInputType.phone),
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Container(
+                                    height: 30,
+                                    child: Center(
+                                      child: FaIcon(
+                                        FontAwesomeIcons.sort,
+                                        size: 15,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                ],
+                              ),
+
+                              // child: TextFormField(
+
+                              //   // maxLength: 4,
+                              //   keyboardType: TextInputType.phone,
+                              //   decoration: InputDecoration(
+                              //       hintText: "+52", border: InputBorder.none
+                              //       // focusedBorder: OutlineInputBorder(
+                              //       //     borderRadius: BorderRadius.circular(5),
+                              //       //     // gapPadding: 1,
+                              //       //     borderSide:
+                              //       //         BorderSide(color: Colors.blue)),
+                              //       // border: OutlineInputBorder(
+                              //       //     borderRadius: BorderRadius.circular(5),
+                              //       //     gapPadding: 1)
+                              //       ),
+                              //   controller: _prefixTextFieldController,
+                              // ),
                             ),
                           ),
-                          SizedBox(width: 10),
+                          SizedBox(width: 5),
                           Expanded(
-                            flex: 3,
-                            child: TextFormField(
-                              autofocus: true,
-                              onChanged: (s) {
-                                if (_prefixTextFieldController.text.length >
-                                        0 &&
-                                    _numberTextFieldController.text.length >=
-                                        8) {
-                                  canSendOtp.value = true;
-                                } else
-                                  canSendOtp.value = false;
-                              },
-                              maxLength: 10,
-                              keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                  hintText: "number",
-                                  focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(5),
-                                      gapPadding: 1,
-                                      borderSide:
-                                          BorderSide(color: Colors.purple)),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(5),
-                                      gapPadding: 1)),
-                              controller: _numberTextFieldController,
+                            flex: 100,
+                            child: Container(
+                              padding: const EdgeInsets.only(left: 8, right: 8),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                    width: 0.5,
+                                    color: Color.fromRGBO(236, 236, 236, 0)),
+                                color:
+                                    Theme.of(context).scaffoldBackgroundColor,
+                              ),
+                              child: TextFormField(
+                                autofocus: true,
+                                onChanged: (s) {
+                                  if (_prefixTextFieldController.text.length >
+                                          0 &&
+                                      _numberTextFieldController.text.length >=
+                                          8) {
+                                    canSendOtp.value = true;
+                                  } else {
+                                    canSendOtp.value = false;
+                                  }
+                                  print(canSendOtp.value);
+                                },
+                                //maxLength: 10,
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(
+                                    hintText: "Enter number",
+                                    // focusedBorder: OutlineInputBorder(
+                                    //     borderRadius: BorderRadius.circular(5),
+                                    //     gapPadding: 1,
+                                    //     borderSide:
+                                    //         BorderSide(color: Colors.purple)),
+                                    // border: OutlineInputBorder(
+                                    //     borderRadius: BorderRadius.circular(5),
+                                    // gapPadding: 1)
+                                    border: InputBorder.none),
+                                controller: _numberTextFieldController,
+                              ),
                             ),
                           ),
                         ],
                       )
                     ],
                   ),
+                  // ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 15, bottom: 15),
-                child: Obx(
-                  () => Text(
-                    lang.strings['shared']['login']["twilioNote"],
-                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 11),
+                // SizedBox(
+                //   height: 30,
+                // ),
+                // Container(
+                //   padding: mypadding,
+                //   child: Text(
+                //     "Invalid OTP Code Error Message",
+                //     style:
+                //         TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                //   ),
+                // ),
+                // SizedBox(
+                //   height: 15,
+                // ),
+                //////////////////////////////////////////////////////////////////////////////////
+
+                Obx(
+                  () => Container(
+                    padding: EdgeInsets.only(left: 15, right: 15, top: 15),
+                    child: Text(
+                      lang.strings['shared']['login']["twilioNote"],
+                      style:
+                          TextStyle(fontWeight: FontWeight.w500, fontSize: 11),
+                    ),
                   ),
                 ),
-              ),
-              Obx(() => TextButton(
+              ],
+            ),
+          ),
+          Container(
+            height: Get.height * 0.10,
+            child: Center(
+              child: Obx(
+                () => Container(
+                  padding: mypadding,
+                  child: MaterialButton(
+                    elevation: 2,
+                    padding: const EdgeInsets.all(0),
                     onPressed: canSendOtp.value && !clickedSendOtp.value
                         ? () async {
                             clickedSendOtp.value = true;
@@ -168,33 +313,114 @@ class PhoneNumberScreen extends GetView<AuthController> {
                             clickedSendOtp.value = false;
                           }
                         : null,
-                    child: Obx(
-                      () => clickedSendOtp.value
-                          ? SizedBox(
-                              height: 15,
-                              width: 15,
-                              child: CircularProgressIndicator(
+                    child: Container(
+                        height: 50,
+                        width: Get.width,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          gradient: LinearGradient(
+                              colors: [
+                                Color.fromRGBO(81, 132, 255, 1),
+                                Color.fromRGBO(206, 73, 252, 1)
+                              ],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "SUBMIT",
+                            style: TextStyle(
                                 color: Colors.white,
-                                strokeWidth: 2,
-                              ),
-                            )
-                          : Text(
-                              lang.strings['shared']['login']["submit"],
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 15),
-                            ),
-                    ),
-                    style: ButtonStyle(
-                        fixedSize:
-                            MaterialStateProperty.all(Size(Get.width, 50)),
-                        alignment: Alignment.center,
-                        backgroundColor: MaterialStateProperty.all(
-                            canSendOtp.value ? Colors.blue : Colors.grey)),
-                  ))
-            ],
-          )),
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700),
+                          ),
+                        )),
+                  ),
+
+                  // child: Obx(
+                  //   () => clickedSendOtp.value
+                  //       ? SizedBox(
+                  //           height: 15,
+                  //           width: 15,
+                  //           child: CircularProgressIndicator(
+                  //             color: Colors.white,
+                  //             strokeWidth: 2,
+                  //           ),
+                  //         )
+                  //       : Text(
+                  //           lang.strings['shared']['login']["submit"],
+                  //           style: TextStyle(
+                  //               color: Colors.white,
+                  //               fontWeight: FontWeight.w600,
+                  //               fontSize: 15),
+                  //         ),
+                  // ),
+                  // style: ButtonStyle(
+                  //     fixedSize:
+                  //         MaterialStateProperty.all(Size(Get.width, 50)),
+                  //     alignment: Alignment.center,
+                  //     backgroundColor: MaterialStateProperty.all(
+                  //         canSendOtp.value ? Colors.blue : Colors.grey)),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+
+      //   ActionButtons(Icons.notifications_outlined, true),
+      //   ActionButtons(Icons.history_outlined)
+      // ],
+
+      // MezcalmosSharedWidgets.mezcalmosAppBar(
+      //     "back", () => Get.back(closeOverlays: true),
+      //     bgColor: Colors.grey[50]),
     );
   }
 }
+
+//this will be responsible for buttons in the appbar
+// class ActionButtons extends StatelessWidget {
+//   final IconData icon;
+//   // this boolen will show users if they got any notications or not
+//   final bool hasNotif;
+//   ActionButtons(this.icon, [this.hasNotif = false]);
+//   @override
+//   Widget build(BuildContext context) {
+//     return InkWell(
+//       child: Container(
+//         decoration: BoxDecoration(
+//             borderRadius: BorderRadius.circular(12),
+//             //border: Border.all(color: Colors.black, width: 1),
+//             color: Colors.grey[200]),
+//         padding: const EdgeInsets.all(8),
+//         margin: const EdgeInsets.only(right: 5, top: 10, bottom: 10),
+//         child: Stack(
+//           children: [
+//             Icon(
+//               icon,
+//               size: 20,
+//               color: Colors.purple[900],
+//             ),
+//             (hasNotif == false)
+//                 ? Container()
+//                 : Positioned(
+//                     left: 11,
+//                     top: 3.5,
+//                     child: Container(
+//                       height: 7,
+//                       width: 7,
+//                       decoration: BoxDecoration(
+//                           borderRadius: BorderRadius.circular(5),
+//                           color: Colors.red),
+//                     ),
+//                   ),
+//           ],
+//         ),
+//       ),
+//       onTap: () {
+//         print("this button clicked");
+//       },
+//     );
+//   }
+// }

@@ -145,7 +145,8 @@
             "welcomeDesc2":"We are glad you're back!",
             "confirm": "Confirm",
             "otpCode": "OTP Code",
-            "enterPhoneNumber": "Enter phone number to recieve OTP code",
+            "enterPhoneNumber": "Enter Phone To Recieve OTP Code",
+            "otpSubtitleNumber":"Enter Phone Number",
             "submit": "SUBMIT",
             "twilioNote": "By continuing you will receive a verification code to your phone number by SMS. Message and data rates may apply."
         },

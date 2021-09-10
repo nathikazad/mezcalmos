@@ -145,6 +145,7 @@
             "confirm": "Confirmar",
             "otpCode": "OTP código",
             "enterPhoneNumber": "Ingrese el número teléfono para recibir el código OTP",
+            "otpSubtitleNumber":"Ingresa número telefónico",
             "submit": "ENVIAR",
             "twilioNote": "Al continuar, recibirá un código de verificación a su número de teléfono por SMS. Se pueden aplicar tarifas por mensajes y datos."
         },
