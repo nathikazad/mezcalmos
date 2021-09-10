@@ -695,7 +695,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                                               .value?.to?.address, //13+..
                                   style: TextStyle(
                                       fontSize: 16, fontFamily: 'psr'),
-                                  overflow: TextOverflow.visible,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ),
                             ),
