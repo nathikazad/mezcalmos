@@ -21,7 +21,7 @@ const { user } = require("firebase-functions/lib/providers/auth");
 exports.processSignUp = functions.auth.user().onCreate(async user => {
   await hasuraModule.setClaim(user.uid);
   if (!user.photoURL)
-    user.photoURL = 'https://www.mezcalmos.com/img/logo.71b44398.svg'
+    user.photoURL = 'https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d'
   
   await firebase.database().ref(`/users/${user.uid}/info`).update({
     displayName: user.displayName,
