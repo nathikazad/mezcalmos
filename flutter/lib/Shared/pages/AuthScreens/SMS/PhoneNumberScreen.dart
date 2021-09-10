@@ -7,7 +7,7 @@ import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+//import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 const mypadding = EdgeInsets.only(left: 15, right: 15);
 
@@ -122,22 +122,6 @@ class PhoneNumberScreen extends GetView<AuthController> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  SizedBox(
-                                    width: 8,
-                                  ),
-                                  Container(
-                                    height: 25,
-                                    width: 25,
-                                    child: ClipOval(
-                                      child: Image.network(
-                                        "https://www.worldometers.info/img/flags/us-flag.gif",
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
                                   Expanded(
                                     child: TextFormField(
                                         onChanged: (s) {
@@ -160,22 +144,6 @@ class PhoneNumberScreen extends GetView<AuthController> {
                                         ),
                                         controller: _prefixTextFieldController,
                                         keyboardType: TextInputType.phone),
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Container(
-                                    height: 30,
-                                    child: Center(
-                                      child: FaIcon(
-                                        FontAwesomeIcons.sort,
-                                        size: 15,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 8,
                                   ),
                                 ],
                               ),
@@ -312,7 +280,9 @@ class PhoneNumberScreen extends GetView<AuthController> {
                                   "Error", "Invalid phone Number !");
                             clickedSendOtp.value = false;
                           }
-                        : null,
+                        : () => Get.toNamed(kOtpConfirmRoute,
+                            arguments:
+                                "${_prefixTextFieldController.text}${_numberTextFieldController.text}"),
                     child: Container(
                         height: 50,
                         width: Get.width,

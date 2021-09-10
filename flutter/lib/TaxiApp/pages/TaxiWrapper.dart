@@ -19,9 +19,8 @@ class TaxiWrapper extends GetWidget<AuthController> {
       key: _sideMenuDrawerController.getNewKey(),
       drawer: MezSideMenu(),
       backgroundColor: Colors.white,
-      appBar: MezcalmosSharedWidgets.mezcalmosAppBar("menu", () {
-        _sideMenuDrawerController.openMenu();
-      }, context),
+      appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
+          "menu", _sideMenuDrawerController.openMenu, context),
       body: Obx(() => _taxiAuthController.dynamicScreen),
       // - Incomiing order Sc
       // - Anauthorized
