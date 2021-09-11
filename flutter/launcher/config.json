@@ -108,6 +108,29 @@
                     "apple-service-file": "services/staging.GoogleService-Info.plist"
                 }
             }
+        },
+        "AdminApp": {
+            "folderName": "AdminApp",
+            "packages": {
+                "stage": {
+                    "appName": "MezAdmin Staging",
+                    "packageName": "com.meztaxi.stagingDriver",
+                    "googe-service-file": "services/staging.google-services.json",
+                    "apple-service-file": "services/staging.GoogleService-Info.plist"
+                },
+                "prod": {
+                    "appName": "MezAdmin",
+                    "packageName": "com.meztaxi.driver",
+                    "googe-service-file": "services/prod.google-services.json",
+                    "apple-service-file": "services/prod.GoogleService-Info.plist"
+                },
+                "dev": {
+                    "appName": "MezAdmin Dev",
+                    "packageName": "com.meztaxi.driver",
+                    "googe-service-file": "services/prod.google-services.json",
+                    "apple-service-file": "services/prod.GoogleService-Info.plist"
+                }
+            }
         }
 
     }
