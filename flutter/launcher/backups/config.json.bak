@@ -1,0 +1,71 @@
+{
+
+    
+    "build":{
+    
+        "TaxiApp":{
+            "path":"/flutter/__APPS__/TaxiApp",
+            "database":"test",
+            "launchMode":"stage"
+        },
+    
+        "CustomerApp":{
+            "path":"/flutter/__APPS__/CustomerApp",
+            "database":"test",
+            "launchMode":"stage"
+        },
+    
+        "DeliveryApp":{
+            "path":"/flutter/__APPS__/DeliveryApp",
+            "database":"test",
+            "launchMode":"stage"
+        }
+    },
+
+    "launch":{
+        
+        "packages":
+        {
+            "stage" : "com.meztaxi.stagingDriver",
+            "dev"   : "com.meztaxi.driver",
+            "prod"  : "com.meztaxi.driver"
+        },
+
+        "globals":{
+            "stage": {
+                "launchMode" : "stage",
+                "database" :"test"
+            },
+
+            "dev" : {
+                "launchMode" : "dev",
+                "database" : "prod"
+            },
+
+            "prod":{
+                "launchMode" : "prod",
+                "database": "prod"
+            }
+        },
+
+        "TaxiApp":{
+            "path":"lib/TaxiApp/main.dart",
+            "database":"test",
+            "launchMode":"stage"
+        },
+
+        "CustomerApp":{
+            "path":"lib/CustomerApp/main.dart",
+            "database":"test",
+            "launchMode":"stage"
+        },
+
+        "DeliveryApp":{
+            "path":"lib/DeliveryApp/main.dart",
+            "database":"test",
+            "launchMode":"stage"
+        }
+    }
+
+
+}

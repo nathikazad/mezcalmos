@@ -5,18 +5,13 @@ from sys import argv
 from enum import Enum
 
 # GLOBAL CONSTANTS !
-VERSION = "1.0.4"
+VERSION = "1.0.2"
 XOR_VALUE = 100
 CONFIG_FILE = "config.json"
 ACTIVE_DEBUG = True
 PRINTLN = lambda x : print(x) if ACTIVE_DEBUG else None
-DEFAULTS = {
-    "APP"   : "TaxiApp",
-    "DB"    : "test",   
-    "LMODE" : "stage"
-}
-
-VALID_CONFIG_KEYS_LEN = 2
+DEFAULT_APP = "TaxiApp"
+POSSIBLE_PYMODES_LEN = 2
 
 POSSIBLE_APPS = [
     'TaxiApp',
@@ -44,8 +39,8 @@ class DW_EXIT_REASONS(Enum):
     APP_DB_NOT_FOUND = -4
     APP_LMODE_NOT_FOUND = -5
     WONG_BUILD_TYPE = -6
-    CONF_FILE_KEYS_LEN_WRONG = -7
-    CONF_FILE_KEYS_VALUES_WRONG = -8
+    CONF_FILE_PYMODES_LEN_WRONG = -7
+    CONF_FILE_PYMODES_VALUES_WRONG = -8
     CONF_FILE_APP_VALUES_WRONG = -9
     CONF_FILE_APP_PATH_EMPTY = -10
     CONF_FILE_APP_DB_EMPTY = -11
@@ -63,15 +58,9 @@ class DW_EXIT_REASONS(Enum):
     GOOGLE_SERVICES_JSON_NOT_IN_ANDROID_APP_FOLDER = -23
     PLIST_GOOGLE_SERVICES_JSON_NOT_IN_LAUNCHER_FILES = -24
     PLIST_GOOGLE_SERVICES_JSON_NOT_IN_IOS_APP_FOLDER = -25
-    WRONG_ENV_USED = -26
+    WRONG_GLOBALS_USED = -26
     PLATFORM_NOT_SUPPORTED_YET = -27
     BUILDING_LMODE_DB_NOT_SUPPORTED_YET = -28
-    WRONG_VERSION_GIVEN = -29
-    PUBSPECT_YAML_NOT_FOUND = -30
-    LOCAL_PROPERTIES_NOT_FOUND = 31
-    FOUND_MULTI_VERSIONS_IN_PUBSPEC_YAML = 32
-    FOUND_MULTI_VERSION_NAME_IN_LOCAL_PROPERTIES = 33
-    FOUND_MULTI_VERSION_CODE_IN_LOCAL_PROPERTIES = 34
 
     REACH_THE_LAZY_SAAD = -10000
 
@@ -101,85 +90,99 @@ class Launcher:
         PRINTLN("[+] Patching ../lib/pre-main.dart !")
         f_root_main = open('../lib/pre-main.dart' , encoding='utf-8' , errors='ignore').read()
         f_root_main = f_root_main.replace(self.last_app , self.user_args['app'])
-        PRINTLN(f"\t|_ last_app = {self.last_app}\n\t|_ launching_app = {self.user_args['app']}")
 
         # Writing new Valid App.
         open('../lib/pre-main.dart' , 'w+').write(f_root_main)
         PRINTLN("[+] Pacthed ../lib/pre-main.dart successfully !")
 
         # Writing Valid launcher.xml
-        _launcherXmlFile = self.conf['settings']['launcher.xml']
-        _outputAppName = self.conf['apps'][self.user_args['app']]['packages'][self.user_args['lmode']]['appName'];
-        _appPackageName = self.conf['apps'][self.user_args['app']]['packages'][self.user_args['lmode']]['packageName'];
-
-        PRINTLN(f"[+] Android:Label => {_outputAppName} .")
-        PRINTLN(f"[+] Package:Name  => {_appPackageName} .")
-
+        _launcherXmlFile = '../android/app/src/main/res/values/launcher.xml'
         _launcherXml = f'''<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="appName">{_outputAppName}</string>
-    <string name="packageName">{_appPackageName}</string>
+    <string name="packageName">{self.conf['packages'][self.user_args['lmode']]}</string>
 </resources>'''
         
         open(_launcherXmlFile , 'w+').write(_launcherXml)
-        PRINTLN(f"[+] Patched launcher.xml !")
+        PRINTLN(f"[+] Patched launcher.xml => {self.conf['packages'][self.user_args['lmode']]}")
 
         # writing Valid launcherPackage.properties
-        _launcherPackagePropertiesFile = self.conf['settings']['launcherPackageProperties']
-        _launcherPackageProperties = f"package.name={_appPackageName}"
+        _launcherPackagePropertiesFile = '../android/launcherPackage.properties'
+        _launcherPackageProperties = f"package.name={self.conf['packages'][self.user_args['lmode']]}"
         open(_launcherPackagePropertiesFile , 'w+').write(_launcherPackageProperties)
-        PRINTLN(f"[+] Patched launcherPackage.properties !")
+        PRINTLN(f"[+] Patched launcherPackage.properties => {_launcherPackageProperties}")
 
     def __patch_gs__(self):
         '''If its staging mode Patch the Gpoogle-services.json'''
-        # Project's Services files
-        android_flutter_gs_path = self.conf['settings']['appGoogleServices']
-        ios_flutter_gs_path = self.conf['settings']['appAppleServices']
-        # launcher Services files
-        _launcher_google_services = self.conf['apps'][self.user_args['app']]['packages'][self.user_args['lmode']]['googe-service-file']
-        _launcher_apple_services = self.conf['apps'][self.user_args['app']]['packages'][self.user_args['lmode']]['apple-service-file']
-      
+        android_flutter_gs_path = '../android/app/google-services.json'
+        ios_flutter_gs_path = '../ios/Runner/GoogleService-Info.plist'
         copied_ios = False
         copied_android = False
 
-        # Android
-        if not os.path.exists(_launcher_google_services):
-            exit(DW_EXIT_REASONS.GOOGLE_SERVICES_JSON_NOT_IN_LAUNCHER_FILES)
-        if not os.path.exists(android_flutter_gs_path):
-            # if not there we copy the one from launcher and save it under android_flutter_gs_path
-            PRINTLN("[!] Generating google-services.json!")
-            open(android_flutter_gs_path , 'w+').write(open(_launcher_google_services , encoding='utf-8' , errors='ignore').read())
-            copied_android = True
-        # ios
-        if not os.path.exists(_launcher_apple_services):
-            exit(DW_EXIT_REASONS.PLIST_GOOGLE_SERVICES_JSON_NOT_IN_LAUNCHER_FILES)
-        if not os.path.exists(ios_flutter_gs_path):
-            # exit(DW_EXIT_REASONS.PLIST_GOOGLE_SERVICES_JSON_NOT_IN_IOS_APP_FOLDER)
-            PRINTLN("[!] Generating GoogleService-Info.plist !")
-            open(ios_flutter_gs_path , 'w+').write(open(_launcher_apple_services, encoding='utf-8' , errors='ignore').read())
-            copied_ios = True
-        
-        # loading up json_client
-        json_client = json.loads(open(_launcher_google_services).read())
-
-        # if - elif - else
         if self.user_args['lmode'] == 'stage':
-            PRINTLN("[+] Launching on Staging mode - Patching gServices ...!")   
-            del json_client['client'][0]
-            PRINTLN(f"[+] Applying Client's Package :{json_client['client'][0]['client_info']['android_client_info']}")
-        
-        # Last phase , which is writing if everything is loaded correctly !
-        if not copied_android:
-            open(android_flutter_gs_path , 'w+').write(json.dumps(json_client))
-        if not copied_ios:
-            open(ios_flutter_gs_path , 'w+').write(open(_launcher_apple_services).read())
+            PRINTLN("[+] Launching on Staging mode - Patching gServices ...!")    
+            # Android
+            if not os.path.exists('staging.google-services.json'):
+                exit(DW_EXIT_REASONS.GOOGLE_SERVICES_JSON_NOT_IN_LAUNCHER_FILES)
+            if not os.path.exists(android_flutter_gs_path):
+                # if not there we copy the one from launcher and save it under android_flutter_gs_path
+                PRINTLN("[!] Generating google-services.json!")
+                open(android_flutter_gs_path , 'w+').write(open('staging.google-services.json' , encoding='utf-8' , errors='ignore').read())
+                copied_android = True
+            # ios
+            if not os.path.exists('staging.GoogleService-Info.plist'):
+                exit(DW_EXIT_REASONS.PLIST_GOOGLE_SERVICES_JSON_NOT_IN_LAUNCHER_FILES)
+            if not os.path.exists(ios_flutter_gs_path):
+                # exit(DW_EXIT_REASONS.PLIST_GOOGLE_SERVICES_JSON_NOT_IN_IOS_APP_FOLDER)
+                PRINTLN("[!] Generating GoogleService-Info.plist !")
+                open(ios_flutter_gs_path , 'w+').write(open('staging.GoogleService-Info.plist' , encoding='utf-8' , errors='ignore').read())
+                copied_ios = True
 
+            staging_client = json.loads(open('staging.google-services.json').read())
+            del staging_client['client'][0]
+            PRINTLN(f"[+] Applying Client's Package :{staging_client['client'][0]['client_info']['android_client_info']}")
+            if not copied_android:
+                open(android_flutter_gs_path , 'w+').write(json.dumps(staging_client))
+            if not copied_ios:
+                open(ios_flutter_gs_path , 'w+').write(open('staging.GoogleService-Info.plist').read())
 
+        # Prodyction Mode !
+        elif self.user_args['lmode'] == 'prod' or self.user_args['lmode'] == 'dev':
+            '''We will copy the prod plist and gms to android / ios folders !'''
+             # Android
+            if not os.path.exists('prod.google-services.json'):
+                exit(DW_EXIT_REASONS.GOOGLE_SERVICES_JSON_NOT_IN_LAUNCHER_FILES)
+            if not os.path.exists(android_flutter_gs_path):
+                # exit(DW_EXIT_REASONS.GOOGLE_SERVICES_JSON_NOT_IN_ANDROID_APP_FOLDER)
+                PRINTLN("[!] Generating google-services.json!")
+                open(android_flutter_gs_path , 'w+').write(open('prod.google-services.json' , encoding='utf-8' , errors='ignore').read())
+                copied_android = True
+
+            # ios
+            if not os.path.exists('prod.GoogleService-Info.plist'):
+                exit(DW_EXIT_REASONS.PLIST_GOOGLE_SERVICES_JSON_NOT_IN_LAUNCHER_FILES)
+            if not os.path.exists(ios_flutter_gs_path):
+                PRINTLN("[!] Generating GoogleService-Info.plist !")
+                # exit(DW_EXIT_REASONS.PLIST_GOOGLE_SERVICES_JSON_NOT_IN_IOS_APP_FOLDER)
+                open(ios_flutter_gs_path , 'w+').write(open('prod.GoogleService-Info.plist' , encoding='utf-8' , errors='ignore').read())
+                copied_ios = True
+
+            prod_client = json.loads(open('prod.google-services.json').read())
+            if not copied_android:
+                open(android_flutter_gs_path , 'w+').write(json.dumps(prod_client))
+            if not copied_ios:
+                open(ios_flutter_gs_path , 'w+').write(open('prod.GoogleService-Info.plist').read())
+            
+            PRINTLN("[+] Done Patching Prod clients !")
+            
+        else:
+            PRINTLN("[+] Invalid lmode !")
+            exit(DW_EXIT_REASONS.APP_LMODE_NOT_FOUND)
+            
+            
     def __set_flutter_args__(self):
         self.flutter_setup = f"--dart-define=APP_SP={self.user_args['app']} --dart-define=HOST={self.user_args['host']} --dart-define=LMODE={self.user_args['lmode']} --dart-define=DB={self.user_args['db']}"
     
     def __build_temp(self):
-        # Auto versioning checks.
         os.system(f'flutter build {self.user_args["build"]}')
 
     def __launch__(self):
@@ -279,19 +282,6 @@ class Builder:
 
 class Config:
     
-    def __help__(self):
-        print(f"""
-        
-        + app=<AppName>  `Default is {DEFAULTS['APP']}`
-        + env=<Environment> `default is stage`
-        + --lan : in case you want to launch to another device connected to the same network.
-        + --build=<mode> : to order the launcher to build where mode is [apk, appbundle]
-        + help : Show this help manual.
-
-        PS : if an Error happend Send DW_EXIT_REASON.<NAME>.
-        
-        """)
-
     @staticmethod
     def chSum(app , isLaunch=True):
         last_ch_sum = "flutter_hooks/" + ("launch" if isLaunch else "build") + "/.chsum"
@@ -326,114 +316,43 @@ class Config:
             PRINTLN(f"[+] Loaded {CONFIG_FILE}")
         
         # check validity of build conf
-        if self.conf.__len__() != VALID_CONFIG_KEYS_LEN:
-            exit(DW_EXIT_REASONS.CONF_FILE_KEYS_LEN_WRONG)
+        if self.conf.__len__() != POSSIBLE_PYMODES_LEN:
+            exit(DW_EXIT_REASONS.CONF_FILE_PYMODES_LEN_WRONG)
         else:
             # we checkk the validity of the rest of confs !
-            if 'settings' not in self.conf.keys() or 'apps' not in self.conf.keys():
-                exit(DW_EXIT_REASONS.CONF_FILE_KEYS_VALUES_WRONG)
+            if 'build' not in self.conf.keys() or 'launch' not in self.conf.keys():
+                exit(DW_EXIT_REASONS.CONF_FILE_PYMODES_VALUES_WRONG)
 
-            # # Build first !
-            # for k in self.conf['build']:
-            #     _ = self.conf['build'][k]
-            #     if 'database' not in _ or 'launchMode' not in _ or 'path' not in _:
-            #         exit(DW_EXIT_REASONS.CONF_FILE_APP_VALUES_WRONG)
-            #     else:
-            #         # null checks 
-            #         if _['database'] == None or _['database'] == "":
-            #             exit(DW_EXIT_REASONS.CONF_FILE_APP_DB_EMPTY)
-            #         if _['path'] == None or _['path'] == "":
-            #             exit(DW_EXIT_REASONS.CONF_FILE_APP_PATH_EMPTY)
-            #         if _['launchMode'] == None or _['launchMode'] == "":
-            #             exit(DW_EXIT_REASONS.CONF_FILE_APP_LMODE_EMPTY)
+            # Build first !
+            for k in self.conf['build']:
+                _ = self.conf['build'][k]
+                if 'database' not in _ or 'launchMode' not in _ or 'path' not in _:
+                    exit(DW_EXIT_REASONS.CONF_FILE_APP_VALUES_WRONG)
+                else:
+                    # null checks 
+                    if _['database'] == None or _['database'] == "":
+                        exit(DW_EXIT_REASONS.CONF_FILE_APP_DB_EMPTY)
+                    if _['path'] == None or _['path'] == "":
+                        exit(DW_EXIT_REASONS.CONF_FILE_APP_PATH_EMPTY)
+                    if _['launchMode'] == None or _['launchMode'] == "":
+                        exit(DW_EXIT_REASONS.CONF_FILE_APP_LMODE_EMPTY)
                     
             PRINTLN("[+] Config file validated !")
-    
-    def __patch_version__(self, v):
-        '''v=Version , Patch the version!'''
-        PRINTLN("------------------- [ VERSION PATCHING ] -------------------")
-        __v = v.split('+')
 
-        import re
-        if re.match(r'^([1-9]+)\.[0-9]+\.[0-9]+\+[1-9]+$' , v) == None and __v.__len__() != 2:
-            PRINTLN(f"[!] Error -> Incorrect Version {v} , type launcher.py help!")
-            exit(DW_EXIT_REASONS.WRONG_VERSION_GIVEN)
-        pubspec = self.conf['settings']['pubspec.yaml']
-        localProperties = self.conf['settings']['local.properties']
-        if not os.path.exists(pubspec):
-            PRINTLN(f'[!] config.json::{pubspec} not found !')
-            exit(DW_EXIT_REASONS.PUBSPECT_YAML_NOT_FOUND)
-        if not os.path.exists(localProperties):
-            PRINTLN(f'[!] config.json::{localProperties} not found !')
-            exit(DW_EXIT_REASONS.LOCAL_PROPERTIES_NOT_FOUND)
-        
-        _pubspec = open(pubspec , errors='ignore' , encoding='utf-8').readlines()
-        _localProperties = open(localProperties , errors='ignore' , encoding='utf-8').readlines()
 
-        # pubspect regex check:
-        # ex : version: 1.0.4+8
-
-        _res = [i for i,line in enumerate(_pubspec) if re.match(r'version {0,}: {0,}[1-9]+\.[0-9]+\.[0-9]+\+[1-9]+' , line ) != None]
-        if _res.__len__() > 1:
-            PRINTLN(f"[?] Found multi version ddffinition in {pubspec} at lines : {[x for x in _res]} ")
-            exit(DW_EXIT_REASONS.FOUND_MULTI_VERSIONS_IN_PUBSPEC_YAML)
-
-        
-        _res  = _res[0]
-        print(f"[+] pubspec.yaml :\n\t|_ old_version = {_pubspec[_res].strip()}\n\t|_ new_applied_version = {v}")
-        _pubspec[_res] = f"version: {v}\n"
-        open(pubspec , 'w+').write(''.join(_pubspec))
-        PRINTLN("[+] Checked and Patched pubspec.yaml successfully !")
-
-        # local.properties regex check:
-        # ex : 
-        # flutter.versionName=1.0.4
-        # flutter.versionCode=8
-
-        _versionName = [i for i,line in enumerate(_localProperties) if re.match(r' {0,}flutter\.versionName {0,}= {0,}[1-9]+\.[0-9]+\.[0-9]+' , line ) != None]
-        _versionCode = [i for i,line in enumerate(_localProperties) if re.match(r' {0,}flutter\.versionCode {0,}= {0,}[1-9]+' , line ) != None]
-        
-
-        if _versionName.__len__() > 1 :
-            PRINTLN(f"[?] Found multi version ddffinition in {_localProperties} at lines : {[x for x in _versionName]} ")
-            exit(DW_EXIT_REASONS.FOUND_MULTI_VERSION_NAME_IN_LOCAL_PROPERTIES)
-        if _versionCode.__len__() > 1 :
-            PRINTLN(f"[?] Found multi version ddffinition in {_localProperties} at lines : {[x for x in _versionCode]} ")
-            exit(DW_EXIT_REASONS.FOUND_MULTI_VERSION_CODE_IN_LOCAL_PROPERTIES)
-
-        _versionName  = _versionName[0]
-        _versionCode  = _versionCode[0]
-
-        print(f"[+] local.properties :\n\t|_ old_version :\n\t|\t|__ {_localProperties[_versionName].strip()}\n\t|\t|__ {_localProperties[_versionCode].strip()}\n\t|_ new_applied_version = {v}")
-        
-        _localProperties[_versionName] = f"flutter.versionName={__v[0]}\n"
-        _localProperties[_versionCode] = f"flutter.versionCode={__v[-1]}\n"
-        
-        open(localProperties , 'w+').write(''.join(_localProperties))
-        PRINTLN("[+] Checked and Patched local.properties successfully !")
-
-        PRINTLN("------------------- [ VERSION PATCHING] -------------------")
-
-        
     def __init__(self , args) -> None:
-        print(f"\n- MezLauncher v{VERSION}\n")
         self.args = args
-        if 'help' in args:
-            self.__help__()
-            exit(DW_EXIT_REASONS.NORMAL)
-        
-            
         self.user_args = {}
         self.__preinit__()
         self.__checker__(args) # dict
 
         if self.user_args['pymode'] == "launch":
             # it's a launch operation !
-            Launcher(self.user_args , self.conf)
+            Launcher(self.user_args , self.conf['launch'])
 
-        # elif self.user_args['pymode'] == "build":
-        #     # it's a build operation !
-        #     Builder(self.user_args , self.conf['build'])
+        elif self.user_args['pymode'] == "build":
+            # it's a build operation !
+            Builder(self.user_args , self.conf['build'])
         else:
             self.__wrong_args__()
 
@@ -468,14 +387,11 @@ class Config:
             exit(DW_EXIT_REASONS.RESOLVING_LAN_IP_FAILED)
 
     def __checker__(self , args) -> None:
-        _ = self.__get_arg_value__('--set-version=')
-        if _:
-            self.__patch_version__(_)
-            exit(DW_EXIT_REASONS.NORMAL)
-
         # Checking pymode
         if '--build' in args:
             self.user_args['pymode'] = "build"
+        elif '--launch' in args:
+            self.user_args['pymode'] = "launch"
         else: self.user_args['pymode'] = "launch"
         
         # in case of a launch and run in lan :
@@ -487,22 +403,22 @@ class Config:
         _ = self.__get_arg_value__('app=')
 
         if _ :
-            if _ not in self.conf['apps'].keys():
+            if _ not in POSSIBLE_APPS:
                 PRINTLN(f'[!] app={_} : Error This app is wrong !')
                 exit(DW_EXIT_REASONS.CONF_FILE_APPNAME_WRONG)
             self.user_args['app'] = _
         else:
-            self.user_args['app'] = DEFAULTS['APP']
+            self.user_args['app'] = DEFAULT_APP
 
         # if using globals from json jump lmode and db checks
-        _ = self.__get_arg_value__('env=')
+        _ = self.__get_arg_value__('-g=')
         if _:
-            if _ not in self.conf['settings']['envs'].keys():
-                PRINTLN(f'[!] env={_} : Invalid environment used !')
-                exit(DW_EXIT_REASONS.WRONG_ENV_USED)
-
-            self.user_args['lmode'] = self.conf['settings']['envs'][_]['lmode']
-            self.user_args['db'] = self.conf['settings']['envs'][_]['db']
+            if _ not in POSSIBLE_LMODES:
+                PRINTLN(f'[!] -g={_} : Invalid global keyword used !')
+                exit(DW_EXIT_REASONS.WRONG_GLOBALS_USED)
+            
+            self.user_args['lmode'] = self.conf[self.user_args['pymode']]['globals'][_]['launchMode']
+            self.user_args['db'] = self.conf[self.user_args['pymode']]['globals'][_]['database']
 
             # check if lmode was tampered
             if self.user_args['lmode'] not in POSSIBLE_LMODES:
@@ -520,26 +436,24 @@ class Config:
 
         # Else get default lmode / db if not given by user.
         else:
-            self.user_args['lmode'] = DEFAULTS['LMODE']
-            self.user_args['db'] = DEFAULTS['DB']
-            # _ = self.__get_arg_value__('lmode=')
-            # if _:
-            #     if _ not in POSSIBLE_LMODES:
-            #         PRINTLN(f'[!] lmode={_} : Error This launch mode is wrong !')
-            #         exit(DW_EXIT_REASONS.CONF_FILE_LMODENAME_WRONG)
+            _ = self.__get_arg_value__('lmode=')
+            if _:
+                if _ not in POSSIBLE_LMODES:
+                    PRINTLN(f'[!] lmode={_} : Error This launch mode is wrong !')
+                    exit(DW_EXIT_REASONS.CONF_FILE_LMODENAME_WRONG)
 
-            #     self.user_args['lmode'] = _
-            # else:
-            #     self.user_args['lmode'] = self.conf[self.user_args['pymode']][self.user_args['app']]['launchMode']
+                self.user_args['lmode'] = _
+            else:
+                self.user_args['lmode'] = self.conf[self.user_args['pymode']][self.user_args['app']]['launchMode']
 
-            # _ = self.__get_arg_value__('db=')
-            # if _:
-            #     if _ not in POSSIBLE_DBS:
-            #         PRINTLN(f'[!] db={_} : Error This database is wrong !')
-            #         exit(DW_EXIT_REASONS.CONF_FILE_DBNAME_WRONG)
-            #     self.user_args['db'] = _
-            # else:
-            #     self.user_args['db'] = self.conf[self.user_args['pymode']][self.user_args['app']]['database']
+            _ = self.__get_arg_value__('db=')
+            if _:
+                if _ not in POSSIBLE_DBS:
+                    PRINTLN(f'[!] db={_} : Error This database is wrong !')
+                    exit(DW_EXIT_REASONS.CONF_FILE_DBNAME_WRONG)
+                self.user_args['db'] = _
+            else:
+                self.user_args['db'] = self.conf[self.user_args['pymode']][self.user_args['app']]['database']
         
         # THIS IS LAUNCHER BASED BUILD
         # TODO : Implement that using class:Builder
@@ -548,20 +462,13 @@ class Config:
             if str(_).lower() not in ['apk' , 'appbundle']:
                 PRINTLN(f'[!] --build={_} : Error Platform unsupported yet!')
                 exit(DW_EXIT_REASONS.PLATFORM_NOT_SUPPORTED_YET)
-
+            
             # this is to force building with the  lmode::stage & db::test cuz that's the defaultValue Sat in flutterApp
             # This is why i marked TODO above.
 
-            # if self.user_args['lmode'] != 'stage' and self.user_args['db'] != 'test':
-            #     PRINTLN(f'[!] --build={_} : Error - One of Lmode::{self.user_args["lmode"]} | Db::{self.user_args["db"] } not supported yet!')
-            #     exit(DW_EXIT_REASONS.BUILDING_LMODE_DB_NOT_SUPPORTED_YET)
-            r = input("[!] Did you change the defaultLaunchMode and defaultDb in global.dart to the right ones ? y/n : ")
-            if r.lower() != 'y':
-                exit(DW_EXIT_REASONS.NORMAL)
-            
-            v_ = self.__get_arg_value__('version=')
-            if v_:
-                self.__patch_version__(v_)
+            if self.user_args['lmode'] != 'stage' and self.user_args['db'] != 'test':
+                PRINTLN(f'[!] --build={_} : Error - One of Lmode::{self.user_args["lmode"]} | Db::{self.user_args["db"] } not supported yet!')
+                exit(DW_EXIT_REASONS.BUILDING_LMODE_DB_NOT_SUPPORTED_YET)
 
             self.user_args['build'] = _
 

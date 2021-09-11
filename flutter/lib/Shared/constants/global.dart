@@ -9,7 +9,7 @@ const String dbRoot = ":9000/?ns=$db";
 const String functionPort = ":5001";
 const String defaultDb = "test";
 const String defaultLaunchMode = "stage"; // can be dev / prod
-const VERSION = "1.0.4";
+
 // ----------------- TEST STRINGS ----------------- //
 
 const String tEmailTestValue = "taxi.two@mezcalmos.com";
@@ -43,6 +43,7 @@ const String getxLmodeKey = "lmod";
 const String getxGmapBottomPaddingKey = "gmap_bottom_padding";
 const String getxMapStyleJsonKey = "map_style";
 const String getUserId = "userid";
+const String version = "VERSION";
 // ----------------- Assets Strings ----------------- //
 
 const String aLogoPath = "assets/images/logo.png";

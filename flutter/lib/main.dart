@@ -21,6 +21,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
 import 'package:mezcalmos/pre-main.dart';
+import 'package:package_info/package_info.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -91,6 +92,9 @@ class _SPointState extends State<SPoint> {
       if (await GetStorage.init()) {
         print("[ GET STORAGE ] INITIALIZED !");
         await GetStorage().write(getxLmodeKey, widget._launch_mode);
+        // Get the VersionNumber
+        PackageInfo pInfos = await PackageInfo.fromPlatform();
+        await GetStorage().write(version, pInfos.version);
       } else
         print("[ GET STORAGE ] FAILED TO INITIALIZE !");
 

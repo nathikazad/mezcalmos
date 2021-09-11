@@ -1,71 +1,114 @@
 {
+    "settings":
+    {
 
-    
-    "build":{
-    
-        "TaxiApp":{
-            "path":"/flutter/__APPS__/TaxiApp",
-            "database":"test",
-            "launchMode":"stage"
-        },
-    
-        "CustomerApp":{
-            "path":"/flutter/__APPS__/CustomerApp",
-            "database":"test",
-            "launchMode":"stage"
-        },
-    
-        "DeliveryApp":{
-            "path":"/flutter/__APPS__/DeliveryApp",
-            "database":"test",
-            "launchMode":"stage"
-        }
-    },
-
-    "launch":{
-        
-        "packages":
+        "envs":
         {
-            "stage" : "com.meztaxi.stagingDriver",
-            "dev"   : "com.meztaxi.driver",
-            "prod"  : "com.meztaxi.driver"
-        },
-
-        "globals":{
             "stage": {
-                "launchMode" : "stage",
-                "database" :"test"
+
+                "db": "test",
+                "lmode" : "stage"
             },
 
-            "dev" : {
-                "launchMode" : "dev",
-                "database" : "prod"
+            "dev":{
+
+                "db": "prod",
+                "lmode" : "dev"
             },
 
             "prod":{
-                "launchMode" : "prod",
-                "database": "prod"
+
+                "db": "prod",
+                "lmode" : "prod"
+            }
+        },
+        
+        "launcher.xml":"../android/app/src/main/res/values/launcher.xml",
+        "launcherPackageProperties":"../android/launcherPackage.properties",
+        "appGoogleServices":"../android/app/google-services.json",
+        "appAppleServices":"../ios/Runner/GoogleService-Info.plist",
+        "pubspec.yaml" : "../pubspec.yaml",
+        "local.properties" : "../android/local.properties"
+
+    },
+
+    "apps": {
+
+        "TaxiApp":
+        {
+            "folderName": "TaxiApp",
+            "packages": 
+            {
+
+                "stage": {
+
+                    "appName" : "MeztaxiStaging",
+                    "packageName": "com.meztaxi.stagingDriver",
+                    "googe-service-file": "services/staging.google-services.json",
+                    "apple-service-file": "services/staging.GoogleService-Info.plist"
+                },
+
+                "prod":{
+
+                    "appName" : "Meztaxi",
+                    "packageName": "com.meztaxi.driver",
+                    "googe-service-file": "services/prod.google-services.json",
+                    "apple-service-file": "services/prod.GoogleService-Info.plist"
+                },
+
+                "dev" : {
+
+                    "appName" : "MeztaxiDev",
+                    "packageName": "com.meztaxi.driver",
+                    "googe-service-file": "services/prod.google-services.json",
+                    "apple-service-file": "services/prod.GoogleService-Info.plist"
+                }
             }
         },
 
-        "TaxiApp":{
-            "path":"lib/TaxiApp/main.dart",
-            "database":"test",
-            "launchMode":"stage"
-        },
+        "CustomerApp":
+        {
+            "folderName": "CustomerApp",
+            "packages": 
+            {
 
-        "CustomerApp":{
-            "path":"lib/CustomerApp/main.dart",
-            "database":"test",
-            "launchMode":"stage"
+                "stage": {
+
+                    "appName" : "MezcustomerStaging",
+                    "packageName": "com.meztaxi.stagingDriver",
+                    "googe-service-file": "services/staging.google-services.json",
+                    "apple-service-file": "services/staging.GoogleService-Info.plist"
+
+                },
+
+                "prod":{
+
+                    "appName" : "Mezcustomer",
+                    "packageName": "com.meztaxi.driver",
+                    "googe-service-file": "services/prod.google-services.json",
+                    "apple-service-file": "services/prod.GoogleService-Info.plist"
+                },
+
+                "dev" : {
+
+                    "appName" : "MezcustomerDev",
+                    "packageName": "com.meztaxi.driver",
+                    "googe-service-file": "services/prod.google-services.json",
+                    "apple-service-file": "services/prod.GoogleService-Info.plist"
+                }
+            }
         },
 
         "DeliveryApp":{
-            "path":"lib/DeliveryApp/main.dart",
-            "database":"test",
-            "launchMode":"stage"
+            "folderName": "DeliveryApp",
+            "packages": {
+                "stage": {
+                    "name": "com.meztaxi.stagingDriver",
+                    "googe-service-file": "services/staging.google-services.json",
+                    "apple-service-file": "services/staging.GoogleService-Info.plist"
+                }
+            }
         }
+
     }
-
-
 }

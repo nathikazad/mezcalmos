@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -81,6 +82,7 @@ class TaxiAuthController extends GetxController {
 
         if (_checkedAppVersion == false) {
           if (_model.value.isAuthorized == true) {
+            String VERSION = GetStorage().read(version);
             print("[+] TaxiDriver Currently using App v$VERSION");
             _databaseHelper.firebaseDatabase
                 .reference()
