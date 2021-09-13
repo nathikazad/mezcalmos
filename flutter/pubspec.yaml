@@ -41,6 +41,7 @@ dependencies:
   progress_indicators: ^1.0.0
   font_awesome_flutter: ^9.1.0
   package_info: ^2.0.2
+  graphql: ^5.0.0
   
 # dependency_overrides:
 #   font_awesome_flutter:
