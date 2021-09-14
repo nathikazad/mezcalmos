@@ -39,7 +39,7 @@ class DriverStatsController extends GetxController {
       (dynamic f) {
         returnValue.add({
           "rank": i,
-          "name": f['drivername'],
+          "displayName": f['drivername'],
           "totalOrders": f['totalorders']
         });
         i++;
@@ -85,13 +85,30 @@ class DriverStatsController extends GetxController {
         }
       ''',
         ),
-        {});
+        {
+          "start_date_input": "2021-09-13T00:00:00-05:00",
+          "end_date_input": "2021-09-14T00:00:00-05:00"
+        });
 
     if (result.hasException) {
       print(result.exception.toString());
     }
-    print(result.data);
+    List<dynamic> drivers = result.data!['drivers'] as List<dynamic>;
+
     List<dynamic> returnValue = [];
+    drivers.forEach(
+      (dynamic driver) {
+        returnValue.add({
+          "displayName": driver['userInfo']['displayName'],
+          "uid": driver['userInfo']['uid'],
+          "photo": driver['userInfo']['photo'],
+          "totalOrders": driver['totalOrders']['aggregate']['count'],
+          "sent": driver['sent']['aggregate']['count'],
+          "received": driver['received']['aggregate']['count'],
+          "read": driver['read']['aggregate']['count']
+        });
+      },
+    );
     return returnValue;
   }
 
@@ -121,7 +138,7 @@ class DriverStatsController extends GetxController {
     return returnValue;
   }
 
-  Future<List<dynamic>> getNotificationReadStatusOnMonth() async {
+  Future<List<dynamic>> getNotificationReadStatusForMonth() async {
     HasuraHelper hasuraHelper = HasuraHelper();
 
     QueryResult result = await hasuraHelper.get(
@@ -154,3 +171,4 @@ class DriverStatsController extends GetxController {
     return returnValue;
   }
 }
+

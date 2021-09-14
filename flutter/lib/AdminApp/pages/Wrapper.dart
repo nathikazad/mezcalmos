@@ -4,7 +4,7 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/helpers/HasuraHelper.dart';
-import 'package:mezcalmos/AdminApp/pages/RankingsPage.dart';
+import 'package:mezcalmos/AdminApp/pages/StatsIndexPage.dart';
 
 class Wrapper extends GetWidget<AuthController> {
   @override
@@ -12,7 +12,7 @@ class Wrapper extends GetWidget<AuthController> {
     return Obx(() {
       if (controller.user != null) {
         Get.put(HasuraHelper());
-        return RankingsPage();
+        return StatsIndexPage();
       } else
         return SignIn();
     });

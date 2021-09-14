@@ -1,4 +1,5 @@
 import 'package:mezcalmos/Shared/helpers/HasuraHelper.dart';
+import 'package:mezcalmos/AdminApp/helpers/formatter.dart';
 import 'package:graphql/client.dart';
 import 'package:get/get.dart';
 
@@ -11,17 +12,16 @@ class OrderStatsController extends GetxController {
     print("--------------------> OrderStatsController Initialized !");
   }
 
-  Future<List<dynamic>> getOrdersOnDay() async {
+  Future<List<dynamic>> getOrdersOnDay(DateTime date) async {
     HasuraHelper hasuraHelper = HasuraHelper();
     QueryResult result = await hasuraHelper.get(
         gql(
           r'''
           query getOrdersByDay($start_date_input:timestamptz!, $end_date_input:timestamptz!){
-            orders_aggregate(where:
+            orders(where:
               {orderTime: {_gte:$start_date_input, _lte:$end_date_input}},
               order_by: {orderTime:asc}
             ){
-              nodes{
                 orderTime
                 finalStatus
                 orderId
@@ -34,35 +34,36 @@ class OrderStatsController extends GetxController {
                 notifications_sent
                 notifications_received
                 notifications_read
-              }
             }
           }
         ''',
         ),
         {
-          "start_date_input": "2021-09-13T00:00:00-05:00",
-          "end_date_input": "2021-09-14T00:00:00-05:00"
+          "start_date_input": "${formatDateForHasura(date)}T00:00:00-05:00",
+          "end_date_input":
+              "${formatDateForHasura(new DateTime(date.year, date.month + 1, date.day))}T00:00:00-05:00"
         });
 
     if (result.hasException) {
       print(result.exception.toString());
     }
-    print(result.data);
-    // List<dynamic> rankings =
-    //     result.data!['get_last_week_rankings'] as List<dynamic>;
-
+    List<dynamic> orders = result.data!['orders'] as List<dynamic>;
     List<dynamic> returnValue = [];
-    // int i = 1;
-    // rankings.forEach(
-    //   (dynamic f) {
-    //     returnValue.add({
-    //       "rank": i,
-    //       "name": f['drivername'],
-    //       "totalOrders": f['totalorders']
-    //     });
-    //     i++;
-    //   },
-    // );
+
+    orders.forEach(
+      (dynamic order) {
+        returnValue.add({
+          "orderTime": order['orderTime'],
+          "status": order['finalStatus'],
+          "orderId": order['orderId'],
+          "customer": order['customer'],
+          "driver": order['driver'],
+          "notifications_sent": order['notifications_sent'],
+          "notifications_received": order['notifications_received'],
+          "notifications_read": order['notifications_read'],
+        });
+      },
+    );
     return returnValue;
   }
 
