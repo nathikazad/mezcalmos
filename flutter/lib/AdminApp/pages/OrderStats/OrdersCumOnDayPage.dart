@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:mezcalmos/AdminApp/controller/OrderStatsController.dart';
 import 'package:get/get.dart';
 
-class OrdersOnDayPage extends GetView<OrderStatsController> {
-  FutureBuilder<List<dynamic>> getOrdersOnDay() {
-    return FutureBuilder<List<dynamic>>(
-        future: controller.getOrdersOnDay(
+class OrdersCumOnDayPage extends GetView<OrderStatsController> {
+  FutureBuilder<Map<String, dynamic>> getOrdersCumulativeOnDay() {
+    return FutureBuilder<Map<String, dynamic>>(
+        future: controller.getOrdersCumulativeOnDay(
             new DateTime.now()), // a previously-obtained Future<String> or null
-        builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
+        builder: (BuildContext context,
+            AsyncSnapshot<Map<String, dynamic>> snapshot) {
           List<Widget> children;
           if (snapshot.hasData) {
             children = <Widget>[
@@ -70,9 +71,9 @@ class OrdersOnDayPage extends GetView<OrderStatsController> {
     Get.put<OrderStatsController>(OrderStatsController());
     return Scaffold(
       appBar: AppBar(
-        title: Text("Orders On Day"),
+        title: Text("Orders Cumulative"),
       ),
-      body: Center(child: getOrdersOnDay()),
+      body: Center(child: getOrdersCumulativeOnDay()),
     );
   }
 }

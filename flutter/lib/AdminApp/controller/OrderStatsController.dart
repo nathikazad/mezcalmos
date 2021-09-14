@@ -67,7 +67,7 @@ class OrderStatsController extends GetxController {
     return returnValue;
   }
 
-  Future<List<dynamic>> getOrderscumulativeOnDay() async {
+  Future<Map<String, dynamic>> getOrdersCumulativeOnDay(DateTime date) async {
     HasuraHelper hasuraHelper = HasuraHelper();
     QueryResult result = await hasuraHelper.get(
         gql(
@@ -121,29 +121,24 @@ class OrderStatsController extends GetxController {
         ''',
         ),
         {
-          "start_date_input": "2021-09-13T00:00:00-05:00",
-          "end_date_input": "2021-09-14T00:00:00-05:00"
+          "start_date_input": "${formatDateForHasura(date)}T00:00:00-05:00",
+          "end_date_input":
+              "${formatDateForHasura(new DateTime(date.year, date.month + 1, date.day))}T00:00:00-05:00"
         });
 
     if (result.hasException) {
       print(result.exception.toString());
     }
-    print(result.data);
-    // List<dynamic> rankings =
-    //     result.data!['get_last_week_rankings'] as List<dynamic>;
+    // List<dynamic> aggregates = result.data! as List<dynamic>;
+    Map<String, dynamic> returnValue = {
+      "total": result.data!['total_orders']['aggregate']['count'],
+      "finished": result.data!['dropped_off_orders']['aggregate']['count'],
+      "cancelled": result.data!['cancelled_orders']['aggregate']['count'],
+      "expired": result.data!['expired_orders']['aggregate']['count'],
+      "isLooking": result.data!['isLooking_orders']['aggregate']['count'],
+      "inProcess": result.data!['inProcess_orders']['aggregate']['count']
+    };
 
-    List<dynamic> returnValue = [];
-    // int i = 1;
-    // rankings.forEach(
-    //   (dynamic f) {
-    //     returnValue.add({
-    //       "rank": i,
-    //       "name": f['drivername'],
-    //       "totalOrders": f['totalorders']
-    //     });
-    //     i++;
-    //   },
-    // );
     return returnValue;
   }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/AdminApp/pages/DriverStats/RankingsPage.dart';
 import 'package:mezcalmos/AdminApp/pages/OrderStats/OrdersOnDayPage.dart';
+import 'package:mezcalmos/AdminApp/pages/OrderStats/OrdersCumOnDayPage.dart';
 
 class StatsIndexPage extends GetView {
   // void getRanks() async {
@@ -39,7 +40,7 @@ class StatsIndexPage extends GetView {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Rankings"),
+        title: Text("Stats"),
       ),
       body: Center(
         child: Column(
@@ -48,7 +49,7 @@ class StatsIndexPage extends GetView {
             Text("Order Stats"),
             OutlinedButton(
                 child: Text("Order Cumulative On Day"),
-                onPressed: () => print("Order Cumulative On Day")),
+                onPressed: () => Get.to(OrdersCumOnDayPage())),
             OutlinedButton(
                 child: Text("Orders On Day"),
                 onPressed: () => Get.to(OrdersOnDayPage())),
