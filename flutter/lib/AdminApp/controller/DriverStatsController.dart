@@ -1,4 +1,5 @@
 import 'package:mezcalmos/Shared/helpers/HasuraHelper.dart';
+import 'package:mezcalmos/AdminApp/helpers/formatter.dart';
 import 'package:graphql/client.dart';
 import 'package:get/get.dart';
 
@@ -48,7 +49,7 @@ class DriverStatsController extends GetxController {
     return returnValue;
   }
 
-  Future<List<dynamic>> getNotificationCountStatsOnDay() async {
+  Future<List<dynamic>> getNotificationCountOnDay(DateTime date) async {
     HasuraHelper hasuraHelper = HasuraHelper();
 
     QueryResult result = await hasuraHelper.get(
@@ -86,8 +87,9 @@ class DriverStatsController extends GetxController {
       ''',
         ),
         {
-          "start_date_input": "2021-09-13T00:00:00-05:00",
-          "end_date_input": "2021-09-14T00:00:00-05:00"
+          "start_date_input": "${formatDateForHasura(date)}T00:00:00-05:00",
+          "end_date_input":
+              "${formatDateForHasura(new DateTime(date.year, date.month + 1, date.day))}T00:00:00-05:00"
         });
 
     if (result.hasException) {

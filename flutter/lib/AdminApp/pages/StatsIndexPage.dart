@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/AdminApp/pages/DriverStats/RankingsPage.dart';
+import 'package:mezcalmos/AdminApp/pages/DriverStats/NotifCountOnDayPage.dart';
 import 'package:mezcalmos/AdminApp/pages/OrderStats/OrdersOnDayPage.dart';
 import 'package:mezcalmos/AdminApp/pages/OrderStats/OrdersCumOnDayPage.dart';
 
@@ -65,7 +66,7 @@ class StatsIndexPage extends GetView {
                 onPressed: () => Get.to(RankingsPage())),
             OutlinedButton(
                 child: Text("Notification count on day"),
-                onPressed: () => print("Notification count on day")),
+                onPressed: () => Get.to(NotifCountOnDayPage())),
             OutlinedButton(
                 child: Text("Notification stats For Month"),
                 onPressed: () => print("Notification stats For Month")),
