@@ -4,6 +4,8 @@ import 'package:mezcalmos/AdminApp/pages/DriverStats/RankingsPage.dart';
 import 'package:mezcalmos/AdminApp/pages/DriverStats/NotifCountOnDayPage.dart';
 import 'package:mezcalmos/AdminApp/pages/OrderStats/OrdersOnDayPage.dart';
 import 'package:mezcalmos/AdminApp/pages/OrderStats/OrdersCumOnDayPage.dart';
+import 'package:mezcalmos/AdminApp/pages/OrderStats/OrdersCumOnMonthPage.dart';
+import 'package:mezcalmos/AdminApp/pages/OrderStats/OrdersFulfillmentOnMonthPage.dart';
 
 class StatsIndexPage extends GetView {
   // void getRanks() async {
@@ -56,7 +58,10 @@ class StatsIndexPage extends GetView {
                 onPressed: () => Get.to(OrdersOnDayPage())),
             OutlinedButton(
                 child: Text("Order Cumulative For Month"),
-                onPressed: () => print("Order Cumulative For Month")),
+                onPressed: () => Get.to(OrdersCumOnMonthPage())),
+            OutlinedButton(
+                child: Text("Order Fulfillment For Month"),
+                onPressed: () => Get.to(OrdersFulfillmentOnMonthPage())),
             OutlinedButton(
                 child: Text("Order Cumulative By Month"),
                 onPressed: () => print("Order Cumulative By Month")),

@@ -142,49 +142,91 @@ class OrderStatsController extends GetxController {
     return returnValue;
   }
 
-  Future<List<dynamic>> getOrderscumulativeByMonth() async {
+  Future<Map<String, dynamic>> getOrderscumulativeOnMonth(int month) async {
     HasuraHelper hasuraHelper = HasuraHelper();
     QueryResult result = await hasuraHelper.get(
         gql(
           r'''
-          query MyQuery {
-            get_monthly_stats {
-              cancelled
-              customers
-              drivers
-              expired
-              droppedoff
-              fulfillmentRatio
-              orders
-              month
+            query OrdersByMonth($month_date:String, $month_number:Int) {
+              get_monthly_stats(where: {month: {_eq: $month_number}}) {
+                cancelled
+                customers
+                drivers
+                expired
+                droppedoff
+                fulfillmentRatio
+                orders
+                month
+              }
+              get_orders_cum_by_days_of_month(args: {month: $month_date}, order_by: {day: asc}) {
+                cancelled
+                day
+                droppedoff
+                expired
+                fulfillmentratio
+                totalOrders
+              }
             }
-          }
-        ''',
+          ''',
         ),
-        {
-          "start_date_input": "2021-09-13T00:00:00-05:00",
-          "end_date_input": "2021-09-14T00:00:00-05:00"
-        });
+        {"month_date": "$month/01/21", "month_number": month});
 
     if (result.hasException) {
       print(result.exception.toString());
     }
-    print(result.data);
-    // List<dynamic> rankings =
-    //     result.data!['get_last_week_rankings'] as List<dynamic>;
 
-    List<dynamic> returnValue = [];
-    // int i = 1;
-    // rankings.forEach(
-    //   (dynamic f) {
-    //     returnValue.add({
-    //       "rank": i,
-    //       "name": f['drivername'],
-    //       "totalOrders": f['totalorders']
-    //     });
-    //     i++;
-    //   },
-    // );
+    Map<String, dynamic> returnValue = {};
+    returnValue['cumulative'] = {
+      "total": result.data!['get_monthly_stats'][0]['orders'],
+      "droppedoff": result.data!['get_monthly_stats'][0]['droppedoff'],
+      "cancelled": result.data!['get_monthly_stats'][0]['cancelled'],
+      "expired": result.data!['get_monthly_stats'][0]['expired'],
+    };
+    returnValue['byDay'] = {};
+    result.data!['get_orders_cum_by_days_of_month'].forEach(
+      (dynamic f) {
+        returnValue['byDay'][f['day']] = {
+          "total": f['totalOrders'],
+          "droppedoff": f['droppedoff'],
+          "expired": f['expired'],
+          "cancelled": f['cancelled']
+        };
+      },
+    );
+    return returnValue;
+  }
+
+  Future<Map<String, dynamic>> getFulfillmentRatioOnMonth(int month) async {
+    HasuraHelper hasuraHelper = HasuraHelper();
+    QueryResult result = await hasuraHelper.get(
+        gql(
+          r'''
+            query OrdersByMonth($month_date:String, $month_number:Int) {
+              get_monthly_stats(where: {month: {_eq: $month_number}}) {
+                fulfillmentRatio
+              }
+              get_orders_cum_by_days_of_month(args: {month: $month_date}, order_by: {day: asc}) {
+                day
+                fulfillmentratio
+              }
+            }
+          ''',
+        ),
+        {"month_date": "$month/01/21", "month_number": month});
+
+    if (result.hasException) {
+      print(result.exception.toString());
+    }
+
+    Map<String, dynamic> returnValue = {};
+    returnValue['cumulative'] =
+        result.data!['get_monthly_stats'][0]['fulfillmentRatio'];
+    returnValue['byDay'] = {};
+    result.data!['get_orders_cum_by_days_of_month'].forEach(
+      (dynamic f) {
+        returnValue['byDay'][f['day']] = f['fulfillmentratio'];
+      },
+    );
     return returnValue;
   }
 }
