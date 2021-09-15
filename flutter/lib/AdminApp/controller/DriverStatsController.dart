@@ -173,4 +173,3 @@ class DriverStatsController extends GetxController {
     return returnValue;
   }
 }
-
