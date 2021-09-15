@@ -13,10 +13,11 @@ class OrdersOnDayPage extends GetView<OrderStatsController> {
   var selectedtime = DateTime.now().obs;
   LanguageController lang = Get.find<LanguageController>();
   FutureBuilder<List<dynamic>> getOrdersOnDay() {
-    return FutureBuilder<List<dynamic>>(
+    return FutureBuilder<RxList<dynamic>>(
         future: controller.getOrdersOnDay(
-            new DateTime.now()), // a previously-obtained Future<String> or null
-        builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
+            selectedtime.value), // a previously-obtained Future<String> or null
+        builder:
+            (BuildContext context, AsyncSnapshot<RxList<dynamic>> snapshot) {
           List<Widget> children;
           if (snapshot.hasData) {
             children = <Widget>[
@@ -88,16 +89,18 @@ class OrdersOnDayPage extends GetView<OrderStatsController> {
                               ),
                             ),
                             onTap: () async {
-                              print("${snapshot.data!.length}");
                               var x = await showDatePicker(
                                 context: context,
-                                initialDate: DateTime.now(),
+                                initialDate: selectedtime.value,
                                 firstDate: DateTime(2018),
-                                lastDate: DateTime(2030),
+                                lastDate: DateTime.now(),
                               );
                               selectedtime.value =
                                   (x == null) ? DateTime.now() : x;
                               print(selectedtime.value);
+
+                              Get.snackbar("Loading data ...", "",
+                                  snackPosition: SnackPosition.BOTTOM);
                             },
                           );
                         },
@@ -200,11 +203,13 @@ class OrdersOnDayPage extends GetView<OrderStatsController> {
                         var t = snapshot.data![index]['orderTime']
                             .toString()
                             .split("T")[1];
-
+                        String driver = snapshot.data![index]["driver"] == null
+                            ? "none"
+                            : snapshot.data![index]["driver"]["photo"];
                         return MezAdminOrdersComponents.buildTableWidget(
-                            OrdersStates.Finished,
+                            getState(snapshot.data![index]["status"]),
                             "${t.split(":")[0]}:${t.split(":")[1]}",
-                            "${snapshot.data![index]["driver"]["photo"]}",
+                            driver,
                             "${snapshot.data![index]["customer"]["photo"]}",
                             "${snapshot.data![index]["notifications_sent"]}",
                             "${snapshot.data![index]["notifications_received"]}",
@@ -215,34 +220,36 @@ class OrdersOnDayPage extends GetView<OrderStatsController> {
             ];
           } else if (snapshot.hasError) {
             children = <Widget>[
-              Container(
-                  height: Get.height * 0.9,
-                  width: Get.width,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Icon(
-                          Icons.error_outline,
-                          color: Colors.red,
-                          size: 60,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 16),
-                          child: Text('Error: ${snapshot.error}'),
-                        )
-                      ],
+              Expanded(
+                  child: Container(
+                width: Get.width,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Icon(
+                      Icons.error_outline,
+                      color: Colors.red,
+                      size: 60,
                     ),
-                  )),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 16),
+                      child: Text('Error: ${snapshot.error}'),
+                    )
+                  ],
+                ),
+              )),
             ];
           } else {
             children = <Widget>[
-              Container(
-                height: Get.height * 0.9,
-                width: Get.width,
-                child: SingleChildScrollView(
+              Expanded(
+                // height: Get.height * 0.85,
+                // color: Colors.red,
+                // width: Get.width,
+
+                child: Container(
+                  width: Get.width,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -280,8 +287,35 @@ class OrdersOnDayPage extends GetView<OrderStatsController> {
   Widget build(BuildContext context) {
     Get.put<OrderStatsController>(OrderStatsController());
     return Scaffold(
-      appBar: MezcalmosSharedWidgets.mezCalmosAdminAppBar(context),
-      body: Container(child: getOrdersOnDay()),
-    );
+        appBar: MezcalmosSharedWidgets.mezCalmosAdminAppBar(context),
+        body: GetX<OrderStatsController>(
+            init: OrderStatsController(),
+            builder: (controller) {
+              return Container(child: getOrdersOnDay());
+            }));
   }
+}
+
+OrdersStates getState(String str) {
+  OrdersStates? x = null;
+  switch (str) {
+    case "droppedOff":
+      x = OrdersStates.Finished;
+      break;
+    case "cancelled":
+      x = OrdersStates.Cancelled;
+      break;
+    case "expired":
+      x = OrdersStates.Expired;
+      break;
+    case "inProcess":
+      x = OrdersStates.InProccess;
+      break;
+    case "isLooking":
+      x = OrdersStates.IsLooking;
+      break;
+
+    default:
+  }
+  return x!;
 }

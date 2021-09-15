@@ -128,7 +128,7 @@ class MezAdminOrdersComponents {
 
   /// buildWidgets for Orders in table
   static Widget buildTableWidget(OrdersStates states, String time,
-      String driverImg, String custImg, String s, String r, String o) {
+      String? driverImg, String custImg, String s, String r, String o) {
     var mytextStyle = TextStyle(
         color: Colors.white.withOpacity(0.9), fontWeight: FontWeight.w600);
     LinearGradient? myColors = null;
@@ -203,7 +203,7 @@ class MezAdminOrdersComponents {
           ),
           Expanded(
             flex: 2,
-            child: (driverImg != null)
+            child: (driverImg != "none")
                 ? Center(
                     child: Container(
                       height: 30,

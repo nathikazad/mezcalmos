@@ -12,12 +12,12 @@ class OrdersCumOnDayPage extends GetView<OrderStatsController> {
   var f = new DateFormat('dd/MM/yy');
   var selectedtime = DateTime.now().obs;
   LanguageController lang = Get.find<LanguageController>();
-  FutureBuilder<Map<String, dynamic>> getOrdersCumulativeOnDay() {
-    return FutureBuilder<Map<String, dynamic>>(
+  FutureBuilder<RxMap<String, dynamic>> getOrdersCumulativeOnDay() {
+    return FutureBuilder<RxMap<String, dynamic>>(
         future: controller.getOrdersCumulativeOnDay(
-            new DateTime.now()), // a previously-obtained Future<String> or null
+            selectedtime.value), // a previously-obtained Future<String> or null
         builder: (BuildContext context,
-            AsyncSnapshot<Map<String, dynamic>> snapshot) {
+            AsyncSnapshot<RxMap<String, dynamic>> snapshot) {
           List<Widget> children;
           if (snapshot.hasData) {
             children = <Widget>[
@@ -82,13 +82,15 @@ class OrdersCumOnDayPage extends GetView<OrderStatsController> {
                               print("${snapshot.data!.keys}");
                               var x = await showDatePicker(
                                 context: context,
-                                initialDate: DateTime.now(),
+                                initialDate: selectedtime.value,
                                 firstDate: DateTime(2018),
-                                lastDate: DateTime(2030),
+                                lastDate: DateTime.now(),
                               );
                               selectedtime.value =
                                   (x == null) ? DateTime.now() : x;
                               print(selectedtime.value);
+                              Get.snackbar("Loading data ...", "",
+                                  snackPosition: SnackPosition.BOTTOM);
                             },
                           );
                         },
@@ -100,79 +102,83 @@ class OrdersCumOnDayPage extends GetView<OrderStatsController> {
               SizedBox(
                 height: 35,
               ),
-              Container(
-                padding: const EdgeInsets.only(left: 10, right: 5),
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(25),
-                      bottomRight: Radius.circular(25),
-                    ),
-                  ),
-                  elevation: 5,
-                  child: Container(
-                    width: Get.width,
-                    //padding: mypadding,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(20),
-                          bottomRight: Radius.circular(20),
-                        ),
-                        gradient: LinearGradient(
-                          colors: [
-                            Color.fromRGBO(118, 67, 224, 0.9),
-                            Color.fromRGBO(80, 38, 163, 0.9)
-                          ],
-                          begin: Alignment(0.0, 0.8),
-                          end: Alignment(0.8, 0.2),
-                        ),
+              Obx(
+                () => Container(
+                  padding: const EdgeInsets.only(left: 10, right: 5),
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(25),
+                        bottomRight: Radius.circular(25),
                       ),
+                    ),
+                    elevation: 5,
+                    child: Container(
+                      width: Get.width,
+                      //padding: mypadding,
                       child: Container(
-                        padding: mypadding,
-                        child: Row(
-                          children: [
-                            Expanded(
-                              flex: 3,
-                              child: Container(
-                                padding: const EdgeInsets.only(
-                                    top: 0, bottom: 0, right: 8, left: 10),
-                                child: Text(
-                                  lang.strings["admin"]["orders"]
-                                      ["totalOrders"],
-                                  style: GoogleFonts.lato(
-                                    textStyle: TextStyle(
-                                      color: Colors.white
-                                          .withOpacity(0.9568627450980393),
-                                      fontSize: 31,
-                                      fontWeight: FontWeight.w500,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(20),
+                            bottomRight: Radius.circular(20),
+                          ),
+                          gradient: LinearGradient(
+                            colors: [
+                              Color.fromRGBO(118, 67, 224, 0.9),
+                              Color.fromRGBO(80, 38, 163, 0.9)
+                            ],
+                            begin: Alignment(0.0, 0.8),
+                            end: Alignment(0.8, 0.2),
+                          ),
+                        ),
+                        child: Container(
+                          padding: mypadding,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                flex: 3,
+                                child: Container(
+                                  padding: const EdgeInsets.only(
+                                      top: 0, bottom: 0, right: 8, left: 10),
+                                  child: Text(
+                                    lang.strings["admin"]["orders"]
+                                        ["totalOrders"],
+                                    style: GoogleFonts.lato(
+                                      textStyle: TextStyle(
+                                        color: Colors.white
+                                            .withOpacity(0.9568627450980393),
+                                        fontSize: 31,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
-                                  ),
-                                  textAlign: TextAlign.left,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: Container(
-                                alignment: Alignment.centerRight,
-                                padding: const EdgeInsets.only(
-                                    right: 20, top: 10, bottom: 10),
-                                child: Text(
-                                  "${snapshot.data!["total"]}",
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.lato(
-                                    textStyle: TextStyle(
-                                      color: Colors.white
-                                          .withOpacity(0.9568627450980393),
-                                      fontSize: 27,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                                    textAlign: TextAlign.left,
                                   ),
                                 ),
                               ),
-                            )
-                          ],
+                              Expanded(
+                                flex: 1,
+                                child: Container(
+                                  alignment: Alignment.centerRight,
+                                  padding: const EdgeInsets.only(
+                                      right: 20, top: 10, bottom: 10),
+                                  child: Obx(
+                                    () => Text(
+                                      "${snapshot.data!["total"]}",
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.lato(
+                                        textStyle: TextStyle(
+                                          color: Colors.white
+                                              .withOpacity(0.9568627450980393),
+                                          fontSize: 27,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -276,8 +282,23 @@ class OrdersCumOnDayPage extends GetView<OrderStatsController> {
   Widget build(BuildContext context) {
     Get.put<OrderStatsController>(OrderStatsController());
     return Scaffold(
-      appBar: MezcalmosSharedWidgets.mezCalmosAdminAppBar(context),
-      body: Container(child: getOrdersCumulativeOnDay()),
-    );
+        appBar: MezcalmosSharedWidgets.mezCalmosAdminAppBar(context),
+        body: GetX<OrderStatsController>(
+          init: OrderStatsController(),
+          builder: (controller) {
+            return Container(child: getOrdersCumulativeOnDay());
+          },
+        ));
   }
 }
+
+// class CumulateOrsers extends GetView<OrderStatsController> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return GetX<OrderStatsController>(
+//         init: OrderStatsController(),
+//         builder: (controller) {
+//           return Container();
+//         });
+//   }
+// }

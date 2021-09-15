@@ -12,7 +12,7 @@ class OrderStatsController extends GetxController {
     print("--------------------> OrderStatsController Initialized !");
   }
 
-  Future<List<dynamic>> getOrdersOnDay(DateTime date) async {
+  Future<RxList<dynamic>> getOrdersOnDay(DateTime date) async {
     HasuraHelper hasuraHelper = HasuraHelper();
     QueryResult result = await hasuraHelper.get(
         gql(
@@ -48,7 +48,7 @@ class OrderStatsController extends GetxController {
       print(result.exception.toString());
     }
     List<dynamic> orders = result.data!['orders'] as List<dynamic>;
-    List<dynamic> returnValue = [];
+    RxList<dynamic> returnValue = [].obs;
 
     orders.forEach(
       (dynamic order) {
@@ -67,7 +67,7 @@ class OrderStatsController extends GetxController {
     return returnValue;
   }
 
-  Future<Map<String, dynamic>> getOrdersCumulativeOnDay(DateTime date) async {
+  Future<RxMap<String, dynamic>> getOrdersCumulativeOnDay(DateTime date) async {
     HasuraHelper hasuraHelper = HasuraHelper();
     QueryResult result = await hasuraHelper.get(
         gql(
@@ -130,14 +130,14 @@ class OrderStatsController extends GetxController {
       print(result.exception.toString());
     }
     // List<dynamic> aggregates = result.data! as List<dynamic>;
-    Map<String, dynamic> returnValue = {
+    RxMap<String, dynamic> returnValue = RxMap({
       "total": result.data!['total_orders']['aggregate']['count'],
       "finished": result.data!['dropped_off_orders']['aggregate']['count'],
       "cancelled": result.data!['cancelled_orders']['aggregate']['count'],
       "expired": result.data!['expired_orders']['aggregate']['count'],
       "isLooking": result.data!['isLooking_orders']['aggregate']['count'],
       "inProcess": result.data!['inProcess_orders']['aggregate']['count']
-    };
+    });
 
     return returnValue;
   }
