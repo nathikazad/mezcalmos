@@ -13,9 +13,8 @@ class DriverStatsController extends GetxController {
   }
 
   Future<List<dynamic>> getLastWeekRankings() async {
-    HasuraHelper hasuraHelper = HasuraHelper();
 
-    QueryResult result = await hasuraHelper.get(
+    QueryResult result = await _hasuraHelper.get(
         gql(
           r'''
         query MyQuery {
@@ -50,9 +49,7 @@ class DriverStatsController extends GetxController {
   }
 
   Future<List<dynamic>> getNotificationCountOnDay(DateTime date) async {
-    HasuraHelper hasuraHelper = HasuraHelper();
-
-    QueryResult result = await hasuraHelper.get(
+    QueryResult result = await _hasuraHelper.get(
         gql(
           r'''
         query getDriversByDay($start_date_input: timestamptz!, $end_date_input: timestamptz!) {
@@ -116,9 +113,7 @@ class DriverStatsController extends GetxController {
   }
 
   Future<List<dynamic>> getUniqueNotificationStatsForMonth() async {
-    HasuraHelper hasuraHelper = HasuraHelper();
-
-    QueryResult result = await hasuraHelper.get(
+    QueryResult result = await _hasuraHelper.get(
         gql(
           r'''
         query getUniqueDriverNotificationsByDay {
@@ -142,9 +137,7 @@ class DriverStatsController extends GetxController {
   }
 
   Future<List<dynamic>> getNotificationReadStatusForMonth() async {
-    HasuraHelper hasuraHelper = HasuraHelper();
-
-    QueryResult result = await hasuraHelper.get(
+    QueryResult result = await _hasuraHelper.get(
         gql(
           r'''
         query MyQuery {

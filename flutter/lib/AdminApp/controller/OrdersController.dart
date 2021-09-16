@@ -13,8 +13,7 @@ class OrderStatsController extends GetxController {
   }
 
   Future<RxList<dynamic>> getOrdersOnDay(DateTime date) async {
-    HasuraHelper hasuraHelper = HasuraHelper();
-    QueryResult result = await hasuraHelper.get(
+    QueryResult result = await _hasuraHelper.get(
         gql(
           r'''
           query getOrdersByDay($start_date_input:timestamptz!, $end_date_input:timestamptz!){
@@ -68,8 +67,7 @@ class OrderStatsController extends GetxController {
   }
 
   Future<RxMap<String, dynamic>> getOrdersCumulativeOnDay(DateTime date) async {
-    HasuraHelper hasuraHelper = HasuraHelper();
-    QueryResult result = await hasuraHelper.get(
+    QueryResult result = await _hasuraHelper.get(
         gql(
           r'''
           query orders_cumulative($start_date_input:timestamptz!, $end_date_input:timestamptz!){
@@ -143,8 +141,7 @@ class OrderStatsController extends GetxController {
   }
 
   Future<Map<String, dynamic>> getOrderscumulativeOnMonth(int month) async {
-    HasuraHelper hasuraHelper = HasuraHelper();
-    QueryResult result = await hasuraHelper.get(
+    QueryResult result = await _hasuraHelper.get(
         gql(
           r'''
             query OrdersByMonth($month_date:String, $month_number:Int) {
@@ -197,8 +194,7 @@ class OrderStatsController extends GetxController {
   }
 
   Future<Map<String, dynamic>> getFulfillmentRatioOnMonth(int month) async {
-    HasuraHelper hasuraHelper = HasuraHelper();
-    QueryResult result = await hasuraHelper.get(
+    QueryResult result = await _hasuraHelper.get(
         gql(
           r'''
             query OrdersByMonth($month_date:String, $month_number:Int) {
@@ -231,8 +227,7 @@ class OrderStatsController extends GetxController {
   }
 
   Future<Map<String, dynamic>> getOrder(String orderId) async {
-    HasuraHelper hasuraHelper = HasuraHelper();
-    QueryResult result = await hasuraHelper.get(
+    QueryResult result = await _hasuraHelper.get(
         gql(
           r'''
             query getOrder($orderId: String) {
