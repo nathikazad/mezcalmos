@@ -1,14 +1,22 @@
 const {gql, GraphQLClient} = require('graphql-request')
-
+const admin = require("./admin");
 module.exports.setClaim = async function setClaim(firebase, uid) {
   try {
-    const customClaims = {
+    let customClaims = {
       "https://hasura.io/jwt/claims": {
         "x-hasura-default-role": "user",
         "x-hasura-allowed-roles": ["user"], // add admin role for admin users
         "x-hasura-user-id": uid
       }
     };
+
+    let response = await admin.checkAdmin(firebase, { adminId: uid })
+    if (!response) {
+      customClaims["https://hasura.io/jwt/claims"]["x-hasura-default-role"] = "admin";
+      customClaims["https://hasura.io/jwt/claims"]["x-hasura-allowed-roles"] = ["admin", "user"];
+    }
+
+
     await firebase.auth().setCustomUserClaims(uid, customClaims)
     return { status: "success", user: context.auth.uid }
   } catch (error) {

@@ -8,37 +8,6 @@ import 'package:mezcalmos/AdminApp/pages/Orders/OrdersCumOnMonthPage.dart';
 import 'package:mezcalmos/AdminApp/pages/Orders/OrdersFulfillmentOnMonthPage.dart';
 
 class StatsIndexPage extends GetView {
-  // void getRanks() async {
-  //   controller.getLastWeekRankings().then((rankings) => {
-  //         rankings.forEach((driver) {
-  //           print(
-  //               'Rank:${driver['rank']}, Name: ${driver['displayName']}, Orders: ${driver['totalOrders']}');
-  //         })
-  //       });
-  // }
-
-  // void getNotificationCountStatsOnDay() async {
-  //   controller.getNotificationCountStatsOnDay().then((value) => print(value));
-  //   // .then((rankings) => {
-  //   //   rankings.forEach((driver) {
-  //   //     print(
-  //   //         'Rank:${driver['rank']}, Name: ${driver['name']}, Orders: ${driver['totalOrders']}');
-  //   //   })
-  //   // });
-  // }
-
-  // void getUniqueNotificationStatsForMonth() async {
-  //   controller
-  //       .getUniqueNotificationStatsForMonth()
-  //       .then((value) => print(value));
-  //   // .then((rankings) => {
-  //   //   rankings.forEach((driver) {
-  //   //     print(
-  //   //         'Rank:${driver['rank']}, Name: ${driver['name']}, Orders: ${driver['totalOrders']}');
-  //   //   })
-  //   // });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

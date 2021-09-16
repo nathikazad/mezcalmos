@@ -3,15 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-// import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
-import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
@@ -19,8 +16,6 @@ import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'dart:convert';
 import 'dart:math';
 import 'package:crypto/crypto.dart';
@@ -43,10 +38,10 @@ String sha256ofString(String input) {
 class AuthController extends GetxController {
   fireAuth.FirebaseAuth _auth = fireAuth.FirebaseAuth.instance;
   Rxn<User> _user = Rxn<User>();
-  final GetStorage _storage = GetStorage();
-  // final SettingsController _settings = Get.find<SettingsController>();
+  Rxn<fireAuth.User> _fireAuthUser = Rxn<fireAuth.User>();
 
   User? get user => _user.value;
+  fireAuth.User? get fireAuthUser => _fireAuthUser.value;
   fireAuth.FirebaseAuth get auth => _auth;
 
   // RxInt _isWaitingRresponse = 0.obs;
@@ -83,6 +78,7 @@ class AuthController extends GetxController {
     Get.lazyPut(() => LanguageController());
     // _user.bindStream(_auth.authStateChanges());
     _auth.authStateChanges().listen((fireAuth.User? user) {
+      _fireAuthUser.value = user;
       if (user == null) {
         print('User is currently signed out!');
         _user.value = null;
@@ -101,6 +97,7 @@ class AuthController extends GetxController {
             event.snapshot.value['language'] =
                 Get.find<LanguageController>().userLanguageKey;
           }
+
           _user.value = User.fromSnapshot(user, event.snapshot);
           Get.find<LanguageController>()
               .userLanguageChanged(_user.value!.language);
@@ -182,6 +179,7 @@ class AuthController extends GetxController {
         // 'language': _settings.appLanguage.userLanguageKey,
         'database': _databaseHelper.dbType
       });
+      print(response);
       mezcalmosSnackBar(
           "Notice ~",
           responseStatusChecker(response.data,
@@ -193,6 +191,7 @@ class AuthController extends GetxController {
       // mezcalmosSnackBar("Notice ~", "Failed to send OTP message :( ");
       // _waitingResponse.value = false;
       print("Exception happend in sendOTPForLogin : $e"); // i
+      print(e);
     }
     return response!.data;
   }
