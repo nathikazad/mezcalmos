@@ -1,37 +1,48 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/AdminApp/controller/DriverStatsController.dart';
+import 'package:mezcalmos/AdminApp/controller/OrdersController.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/utilities/SharedEnums.dart';
 import 'package:mezcalmos/Shared/widgets/MezAdminOrdersComponents.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:intl/intl.dart';
 
-const mypadding = const EdgeInsets.symmetric(horizontal: 10);
-
-class NotifCountOnDayPage extends GetView<DriverStatsController> {
-  final f = new DateFormat('dd/MM/yy');
+class OrdersOnDayPage extends GetView<OrderStatsController> {
+  var f = new DateFormat('dd/MM/yy');
   var selectedtime = DateTime.now().obs;
-  final TextEditingController srearchC = new TextEditingController();
-  FutureBuilder<List<dynamic>> getNotificationCountOnDay() {
-    return FutureBuilder<List<dynamic>>(
-        future: controller.getNotificationCountOnDay(
+  LanguageController lang = Get.find<LanguageController>();
+  FutureBuilder<List<dynamic>> getOrdersOnDay() {
+    return FutureBuilder<RxList<dynamic>>(
+        future: controller.getOrdersOnDay(
             selectedtime.value), // a previously-obtained Future<String> or null
-        builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
+        builder:
+            (BuildContext context, AsyncSnapshot<RxList<dynamic>> snapshot) {
           List<Widget> children;
           if (snapshot.hasData) {
             children = <Widget>[
+              // const Icon(
+              //   Icons.check_circle_outline,
+              //   color: Colors.green,
+              //   size: 60,
+              // ),
+              // Padding(
+              //     padding: const EdgeInsets.only(top: 16),
+              //     child: Text('Result: ${snapshot.data}')
+
+              //     )
               SizedBox(
                 height: 30,
               ),
               Container(
-                padding: mypadding,
+                padding: const EdgeInsets.only(left: 10, right: 20),
                 child: Row(
                   children: [
                     Expanded(
                       child: Text(
-                        "Notifications",
+                        lang.strings["admin"]["orders"]["orders"],
                         style: TextStyle(
-                            fontSize: 28, fontWeight: FontWeight.bold),
+                            fontSize: 29, fontWeight: FontWeight.bold),
                       ),
                     ),
                     Theme(
@@ -54,13 +65,13 @@ class NotifCountOnDayPage extends GetView<DriverStatsController> {
                         builder: (context) {
                           return InkWell(
                             child: Container(
-                              padding: EdgeInsets.only(left: 10, right: 5),
+                              padding: EdgeInsets.only(left: 15, right: 5),
                               decoration: BoxDecoration(
                                 border: Border.all(
                                   width: 1,
                                   color: Color.fromRGBO(112, 112, 112, 1),
                                 ),
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(12),
                               ),
                               child: Row(
                                 children: [
@@ -71,26 +82,25 @@ class NotifCountOnDayPage extends GetView<DriverStatsController> {
                                   ),
                                   Icon(
                                     Icons.arrow_drop_down,
-                                    color: Colors.purple,
+                                    color: Color.fromRGBO(132, 139, 230, 1),
+                                    size: 30,
                                   ),
                                 ],
                               ),
                             ),
                             onTap: () async {
-                              print("hello");
                               var x = await showDatePicker(
                                 context: context,
-                                initialDate: DateTime.now(),
+                                initialDate: selectedtime.value,
                                 firstDate: DateTime(2018),
-                                lastDate: DateTime(2030),
+                                lastDate: DateTime.now(),
                               );
                               selectedtime.value =
                                   (x == null) ? DateTime.now() : x;
                               print(selectedtime.value);
-                              // controller.searchQuery.value = srearchC.text;
-                              // controller.getNotificationsResults(
-                              //     controller.searchQuery.value,
-                              //     selectedtime.value);
+
+                              Get.snackbar("Loading data ...", "",
+                                  snackPosition: SnackPosition.BOTTOM);
                             },
                           );
                         },
@@ -100,42 +110,7 @@ class NotifCountOnDayPage extends GetView<DriverStatsController> {
                 ),
               ),
               SizedBox(
-                height: 25,
-              ),
-              Container(
-                padding: mypadding,
-                height: 50,
-                width: Get.width,
-                alignment: Alignment.centerLeft,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(25),
-                        topRight: Radius.circular(25)),
-                    color: Color.fromRGBO(13, 12, 12, 0.34509803921568627)),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.search,
-                      size: 27,
-                      //color: Color.fromRGBO(152, 147, 147, 1),
-                      color: Color.fromRGBO(152, 147, 147, 1),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                        child: TextField(
-                      controller: srearchC,
-                      onChanged: (val) {
-                        controller.searchQuery.value = val.trim();
-                        print(val.trim());
-                        // controller.getNotificationsResults(
-                        //     val.trim(), selectedtime.value);
-                      },
-                      decoration: InputDecoration(border: InputBorder.none),
-                    ))
-                  ],
-                ),
+                height: 30,
               ),
               Container(
                 decoration: BoxDecoration(
@@ -154,21 +129,30 @@ class NotifCountOnDayPage extends GetView<DriverStatsController> {
                 child: Row(
                   children: [
                     Expanded(
-                      flex: 4,
+                      flex: 2,
                       child: Container(
-                        padding: const EdgeInsets.only(left: 10),
                         child: Text(
-                          "Driver",
+                          "Time",
                           style: adminAppTextStyle1,
-                          textAlign: TextAlign.left,
+                          textAlign: TextAlign.center,
                         ),
                       ),
                     ),
                     Expanded(
-                      flex: 1,
+                      flex: 2,
                       child: Container(
                         child: Text(
-                          "T",
+                          "Driver",
+                          style: adminAppTextStyle1,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Container(
+                        child: Text(
+                          "Cust",
                           style: adminAppTextStyle1,
                           textAlign: TextAlign.center,
                         ),
@@ -211,60 +195,27 @@ class NotifCountOnDayPage extends GetView<DriverStatsController> {
                   ],
                 ),
               ),
-              Obx(
-                () => (controller.searchQuery == "")
-                    ? Container(
-                        child: Expanded(
-                          child: Column(
-                            children: [
-                              Expanded(
-                                child: ListView.builder(
-                                    itemCount: snapshot.data!.length,
-                                    itemBuilder: (context, index) {
-                                      //displayName
-                                      //photo,
-                                      //totalOrders
-                                      //sent
-                                      //received
-                                      //read
-                                      return MezAdminOrdersComponents.buildNotificationTable(
-                                          index,
-                                          "${snapshot.data![index]["photo"]}",
-                                          "${snapshot.data![index]["displayName"]}",
-                                          "${snapshot.data![index]["totalOrders"]}",
-                                          "${snapshot.data![index]["sent"]}",
-                                          "${snapshot.data![index]["received"]}",
-                                          "${snapshot.data![index]["read"]}");
-                                    }),
-                              )
-                            ],
-                          ),
-                        ),
-                      )
-                    : Expanded(
-                        child: ListView.builder(
-                            itemCount: controller.searchedList.value
-                                .where((x) => x["displayName"]
-                                    .toString()
-                                    .toLowerCase()
-                                    .startsWith(controller.searchQuery.value
-                                        .trim()
-                                        .toLowerCase()))
-                                .toList()
-                                .length,
-                            itemBuilder: (context, index) {
-                              return MezAdminOrdersComponents.buildNotificationTable(
-                                  index,
-                                  "${controller.searchedList.value[index]["photo"]}",
-                                  "${controller.searchedList.value[index]["displayName"]}",
-                                  "${controller.searchedList.value[index]["totalOrders"]}",
-                                  "${controller.searchedList.value[index]["sent"]}",
-                                  "${controller.searchedList.value[index]["received"]}",
-                                  "${controller.searchedList.value[index]["read"]}");
-                              //Text(
-                              //"${controller.searchedList.value[index]["displayName"]}");
-                            }),
-                      ),
+              Expanded(
+                child: Container(
+                  child: ListView.builder(
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        var t = snapshot.data![index]['orderTime']
+                            .toString()
+                            .split("T")[1];
+                        String driver = snapshot.data![index]["driver"] == null
+                            ? "none"
+                            : snapshot.data![index]["driver"]["photo"];
+                        return MezAdminOrdersComponents.buildTableWidget(
+                            getState(snapshot.data![index]["status"]),
+                            "${t.split(":")[0]}:${t.split(":")[1]}",
+                            driver,
+                            "${snapshot.data![index]["customer"]["photo"]}",
+                            "${snapshot.data![index]["notifications_sent"]}",
+                            "${snapshot.data![index]["notifications_received"]}",
+                            "${snapshot.data![index]["notifications_read"]}");
+                      }),
+                ),
               ),
             ];
           } else if (snapshot.hasError) {
@@ -315,26 +266,52 @@ class NotifCountOnDayPage extends GetView<DriverStatsController> {
               ),
             ];
           }
-          return Center(
+          return Container(
+            // child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
               children: children,
             ),
+            //),
           );
         });
   }
 
   @override
   Widget build(BuildContext context) {
-    Get.put<DriverStatsController>(DriverStatsController());
+    Get.put<OrderStatsController>(OrderStatsController());
     return Scaffold(
         appBar: MezcalmosSharedWidgets.mezCalmosAdminAppBar(context),
-        body: GetX<DriverStatsController>(
-            init: DriverStatsController(),
+        body: GetX<OrderStatsController>(
+            init: OrderStatsController(),
             builder: (controller) {
-              return Container(child: getNotificationCountOnDay());
+              return Container(child: getOrdersOnDay());
             }));
   }
+}
+
+OrdersStates getState(String str) {
+  OrdersStates? x = null;
+  switch (str) {
+    case "droppedOff":
+      x = OrdersStates.Finished;
+      break;
+    case "cancelled":
+      x = OrdersStates.Cancelled;
+      break;
+    case "expired":
+      x = OrdersStates.Expired;
+      break;
+    case "inProcess":
+      x = OrdersStates.InProccess;
+      break;
+    case "isLooking":
+      x = OrdersStates.IsLooking;
+      break;
+
+    default:
+  }
+  return x!;
 }

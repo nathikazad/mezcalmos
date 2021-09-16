@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/AdminApp/controller/OrderStatsController.dart';
+import 'package:mezcalmos/AdminApp/controller/OrdersController.dart';
 import 'package:get/get.dart';
 
-class OrdersFulfillmentOnMonthPage extends GetView<OrderStatsController> {
-  FutureBuilder<Map<String, dynamic>> getFulfillmentRatioOnMonth() {
+class OrdersCumOnMonthPage extends GetView<OrderStatsController> {
+  FutureBuilder<Map<String, dynamic>> getOrderscumulativeOnMonth() {
     return FutureBuilder<Map<String, dynamic>>(
-        future: controller.getFulfillmentRatioOnMonth(
+        future: controller.getOrderscumulativeOnMonth(
             9), // a previously-obtained Future<String> or null
         builder: (BuildContext context,
             AsyncSnapshot<Map<String, dynamic>> snapshot) {
@@ -71,9 +71,9 @@ class OrdersFulfillmentOnMonthPage extends GetView<OrderStatsController> {
     Get.put<OrderStatsController>(OrderStatsController());
     return Scaffold(
       appBar: AppBar(
-        title: Text("Fulfillment ratio for month"),
+        title: Text("Cum Orders For Day"),
       ),
-      body: Center(child: getFulfillmentRatioOnMonth()),
+      body: Center(child: getOrderscumulativeOnMonth()),
     );
   }
 }

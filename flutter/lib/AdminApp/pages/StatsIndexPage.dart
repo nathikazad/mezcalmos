@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/AdminApp/pages/DriverStats/RankingsPage.dart';
-import 'package:mezcalmos/AdminApp/pages/DriverStats/NotifCountOnDayPage.dart';
-import 'package:mezcalmos/AdminApp/pages/OrderStats/OrdersOnDayPage.dart';
-import 'package:mezcalmos/AdminApp/pages/OrderStats/OrdersCumOnDayPage.dart';
-import 'package:mezcalmos/AdminApp/pages/OrderStats/OrdersCumOnMonthPage.dart';
-import 'package:mezcalmos/AdminApp/pages/OrderStats/OrdersFulfillmentOnMonthPage.dart';
+import 'package:mezcalmos/AdminApp/pages/Driver/RankingsPage.dart';
+import 'package:mezcalmos/AdminApp/pages/Driver/NotifCountOnDayPage.dart';
+import 'package:mezcalmos/AdminApp/pages/Orders/OrdersOnDayPage.dart';
+import 'package:mezcalmos/AdminApp/pages/Orders/OrdersCumOnDayPage.dart';
+import 'package:mezcalmos/AdminApp/pages/Orders/OrdersCumOnMonthPage.dart';
+import 'package:mezcalmos/AdminApp/pages/Orders/OrdersFulfillmentOnMonthPage.dart';
 
 class StatsIndexPage extends GetView {
   // void getRanks() async {

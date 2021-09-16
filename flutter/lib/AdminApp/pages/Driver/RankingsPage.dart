@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/AdminApp/controller/DriverStatsController.dart';
+import 'package:mezcalmos/AdminApp/controller/DriverController.dart';
 import 'package:get/get.dart';
 
 class RankingsPage extends GetView<DriverStatsController> {

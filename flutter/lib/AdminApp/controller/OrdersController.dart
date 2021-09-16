@@ -229,4 +229,56 @@ class OrderStatsController extends GetxController {
     );
     return returnValue;
   }
+
+  Future<Map<String, dynamic>> getOrder(String orderId) async {
+    HasuraHelper hasuraHelper = HasuraHelper();
+    QueryResult result = await hasuraHelper.get(
+        gql(
+          r'''
+            query getOrder($orderId: String) {
+            orders(where: {orderId: {_eq: $orderId}}) {
+              customer {
+                displayName
+                photo
+                uid
+              }
+              driver {
+                displayName
+                photo
+                uid
+              }
+              cancellationParty
+              acceptRideTime
+              dropOffLocation
+              finalPrice
+              finalStatus
+              notifications_read
+              notifications_received
+              notifications_sent
+              orderId
+              orderTime
+              pickUpLocation
+              rideFinishTime
+              rideStartTime
+            }
+          }
+          ''',
+        ),
+        {"orderId": orderId});
+
+    if (result.hasException) {
+      print(result.exception.toString());
+    }
+
+    // Map<String, dynamic> returnValue = {};
+    // returnValue['cumulative'] =
+    //     result.data!['get_monthly_stats'][0]['fulfillmentRatio'];
+    // returnValue['byDay'] = {};
+    // result.data!['get_orders_cum_by_days_of_month'].forEach(
+    //   (dynamic f) {
+    //     returnValue['byDay'][f['day']] = f['fulfillmentratio'];
+    //   },
+    // );
+    return result.data!;
+  }
 }
