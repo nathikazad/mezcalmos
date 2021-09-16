@@ -3,9 +3,9 @@ import 'package:mezcalmos/AdminApp/controller/OrdersController.dart';
 import 'package:get/get.dart';
 
 class OrderViewPage extends GetView<OrderStatsController> {
-  FutureBuilder<Map<String, dynamic>> getOrder(String orderId) {
-    return FutureBuilder<Map<String, dynamic>>(
-        future: controller
+  StreamBuilder<Map<String, dynamic>> getOrder(String orderId) {
+    return StreamBuilder<Map<String, dynamic>>(
+        stream: controller
             .getOrder(orderId), // a previously-obtained Future<String> or null
         builder: (BuildContext context,
             AsyncSnapshot<Map<String, dynamic>> snapshot) {

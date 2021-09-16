@@ -12,58 +12,61 @@ class OrderStatsController extends GetxController {
     print("--------------------> OrderStatsController Initialized !");
   }
 
-  Future<RxList<dynamic>> getOrdersOnDay(DateTime date) async {
-    QueryResult result = await _hasuraHelper.get(
+  Stream<RxList<dynamic>> getOrdersOnDay(DateTime date) {
+    Stream<QueryResult> stream = _hasuraHelper.subscribe(
         gql(
           r'''
-          query getOrdersByDay($start_date_input:timestamptz!, $end_date_input:timestamptz!){
-            orders(where:
-              {orderTime: {_gte:$start_date_input, _lte:$end_date_input}},
-              order_by: {orderTime:asc}
-            ){
-                orderTime
-                finalStatus
-                orderId
-                customer{
-                  photo
-                }
-                driver{
-                  photo
-                }
-                notifications_sent
-                notifications_received
-                notifications_read
-            }
+        query getOrdersByDay($start_date_input:timestamptz!, $end_date_input:timestamptz!){
+          orders(where:
+            {orderTime: {_gte:$start_date_input, _lte:$end_date_input}},
+            order_by: {orderTime:asc}
+          ){
+              orderTime
+              finalStatus
+              orderId
+              customer{
+                photo
+              }
+              driver{
+                photo
+              }
+              notifications_sent
+              notifications_received
+              notifications_read
           }
-        ''',
+        }
+      ''',
         ),
         {
           "start_date_input": "${formatDateForHasura(date)}T00:00:00-05:00",
           "end_date_input":
               "${formatDateForHasura(new DateTime(date.year, date.month + 1, date.day))}T00:00:00-05:00"
-        });
+      });
 
-    if (result.hasException) {
-      print(result.exception.toString());
-    }
-    List<dynamic> orders = result.data!['orders'] as List<dynamic>;
-    RxList<dynamic> returnValue = [].obs;
+    return stream.map<RxList<dynamic>>((result) {
+      if (result.hasException) {
+        print(result.exception.toString());
+      }
+      print(result.data);
+      List<dynamic> orders = result.data!['orders'] as List<dynamic>;
+      RxList<dynamic> returnValue = [].obs;
 
-    orders.forEach(
-      (dynamic order) {
-        returnValue.add({
-          "orderTime": order['orderTime'],
-          "status": order['finalStatus'],
-          "orderId": order['orderId'],
-          "customer": order['customer'],
-          "driver": order['driver'],
-          "notifications_sent": order['notifications_sent'],
-          "notifications_received": order['notifications_received'],
-          "notifications_read": order['notifications_read'],
-        });
-      },
-    );
-    return returnValue;
+      orders.forEach(
+        (dynamic order) {
+          returnValue.add({
+            "orderTime": order['orderTime'],
+            "status": order['finalStatus'],
+            "orderId": order['orderId'],
+            "customer": order['customer'],
+            "driver": order['driver'],
+            "notifications_sent": order['notifications_sent'],
+            "notifications_received": order['notifications_received'],
+            "notifications_read": order['notifications_read'],
+          });
+        },
+      );
+      return returnValue;
+    }); 
   }
 
   Future<RxMap<String, dynamic>> getOrdersCumulativeOnDay(DateTime date) async {
@@ -226,54 +229,53 @@ class OrderStatsController extends GetxController {
     return returnValue;
   }
 
-  Future<Map<String, dynamic>> getOrder(String orderId) async {
-    QueryResult result = await _hasuraHelper.get(
+  Stream<Map<String, dynamic>> getOrder(String orderId) {
+    Stream<QueryResult> stream = _hasuraHelper.subscribe(
         gql(
           r'''
-            query getOrder($orderId: String) {
-            orders(where: {orderId: {_eq: $orderId}}) {
-              customer {
-                displayName
-                photo
-                uid
+            subscription MySubscription($orderId: String) {
+              orders(where: {orderId: {_eq: $orderId}}) {
+                customer {
+                  displayName
+                  photo
+                  uid
+                }
+                driver {
+                  displayName
+                  photo
+                  uid
+                }
+                cancellationParty
+                acceptRideTime
+                dropOffLocation
+                finalPrice
+                finalStatus
+                notifications_read
+                notifications_received
+                notifications_sent
+                orderId
+                orderTime
+                pickUpLocation
+                rideFinishTime
+                rideStartTime
               }
-              driver {
-                displayName
-                photo
-                uid
-              }
-              cancellationParty
-              acceptRideTime
-              dropOffLocation
-              finalPrice
-              finalStatus
-              notifications_read
-              notifications_received
-              notifications_sent
-              orderId
-              orderTime
-              pickUpLocation
-              rideFinishTime
-              rideStartTime
             }
-          }
           ''',
         ),
         {"orderId": orderId});
 
-    if (result.hasException) {
-      print(result.exception.toString());
-    }
+    // await for (QueryResult result in stream){
 
-    // Map<String, dynamic> returnValue = {};
-    // returnValue['cumulative'] =
-    //     result.data!['get_monthly_stats'][0]['fulfillmentRatio'];
-    // returnValue['byDay'] = {};
-    // result.data!['get_orders_cum_by_days_of_month'].forEach(
-    //   (dynamic f) {
-    //     returnValue['byDay'][f['day']] = f['fulfillmentratio'];
-    //   },
-    // );
-    return result.data!;
+    return stream.map<Map<String, dynamic>>((result) {
+      if (result.hasException) {
+        print(result.exception.toString());
+      }
+      print(result.data);
+      // If you want to manipulate the data, use the bottom two lines
+      // Map<String, dynamic> returnValue = {};
+      // return returnValue;
+
+      return result.data!;
+    });
   }
 }

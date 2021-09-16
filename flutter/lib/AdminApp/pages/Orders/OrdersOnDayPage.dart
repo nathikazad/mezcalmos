@@ -12,9 +12,9 @@ class OrdersOnDayPage extends GetView<OrderStatsController> {
   var f = new DateFormat('dd/MM/yy');
   var selectedtime = DateTime.now().obs;
   LanguageController lang = Get.find<LanguageController>();
-  FutureBuilder<List<dynamic>> getOrdersOnDay() {
-    return FutureBuilder<RxList<dynamic>>(
-        future: controller.getOrdersOnDay(
+  StreamBuilder<List<dynamic>> getOrdersOnDay() {
+    return StreamBuilder<RxList<dynamic>>(
+        stream: controller.getOrdersOnDay(
             selectedtime.value), // a previously-obtained Future<String> or null
         builder:
             (BuildContext context, AsyncSnapshot<RxList<dynamic>> snapshot) {

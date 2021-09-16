@@ -31,6 +31,9 @@ class HasuraHelper {
         config: SocketClientConfig(
           autoReconnect: true,
           inactivityTimeout: Duration(seconds: 30),
+          initialPayload: {
+              'headers': {'Authorization': 'Bearer $hasuraAuthToken'},
+            }
         ),
       );
 
@@ -55,6 +58,14 @@ class HasuraHelper {
         QueryOptions(document: documentNode, variables: variables);
 
     return this.graphQLClient.query(options);
+  }
+
+    Stream<QueryResult> subscribe(
+      DocumentNode documentNode, Map<String, dynamic> variables) {
+    final SubscriptionOptions options =
+        SubscriptionOptions(document: documentNode, variables: variables);
+
+    return this.graphQLClient.subscribe(options);
   }
 
   Future<String> _getAuthorizationToken(User user) async {
