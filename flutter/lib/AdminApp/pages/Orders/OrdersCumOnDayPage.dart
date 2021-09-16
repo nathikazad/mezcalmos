@@ -12,9 +12,9 @@ class OrdersCumOnDayPage extends GetView<OrderStatsController> {
   var f = new DateFormat('dd/MM/yy');
   var selectedtime = DateTime.now().obs;
   LanguageController lang = Get.find<LanguageController>();
-  FutureBuilder<RxMap<String, dynamic>> getOrdersCumulativeOnDay() {
-    return FutureBuilder<RxMap<String, dynamic>>(
-        future: controller.getOrdersCumulativeOnDay(
+  StreamBuilder<RxMap<String, dynamic>> getOrdersCumulativeOnDay() {
+    return StreamBuilder<RxMap<String, dynamic>>(
+        stream: controller.getOrdersCumulativeOnDay(
             selectedtime.value), // a previously-obtained Future<String> or null
         builder: (BuildContext context,
             AsyncSnapshot<RxMap<String, dynamic>> snapshot) {

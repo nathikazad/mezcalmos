@@ -304,11 +304,14 @@ OrdersStates getState(String str) {
     case "expired":
       x = OrdersStates.Expired;
       break;
-    case "inProcess":
-      x = OrdersStates.InProccess;
-      break;
     case "isLooking":
       x = OrdersStates.IsLooking;
+      break;
+    case "inTransit":
+      x = OrdersStates.InProccess;
+      break;
+    case "onTheWay":
+      x = OrdersStates.InProccess;
       break;
 
     default:

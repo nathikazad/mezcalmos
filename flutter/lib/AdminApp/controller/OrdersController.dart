@@ -40,8 +40,8 @@ class OrderStatsController extends GetxController {
         {
           "start_date_input": "${formatDateForHasura(date)}T00:00:00-05:00",
           "end_date_input":
-              "${formatDateForHasura(new DateTime(date.year, date.month + 1, date.day))}T00:00:00-05:00"
-      });
+              "${formatDateForHasura(new DateTime(date.year, date.month, date.day + 1))}T00:00:00-05:00"
+        });
 
     return stream.map<RxList<dynamic>>((result) {
       if (result.hasException) {
@@ -66,14 +66,14 @@ class OrderStatsController extends GetxController {
         },
       );
       return returnValue;
-    }); 
+    });
   }
 
-  Future<RxMap<String, dynamic>> getOrdersCumulativeOnDay(DateTime date) async {
-    QueryResult result = await _hasuraHelper.get(
+  Stream<RxMap<String, dynamic>> getOrdersCumulativeOnDay(DateTime date) {
+    Stream<QueryResult> stream = _hasuraHelper.subscribe(
         gql(
           r'''
-          query orders_cumulative($start_date_input:timestamptz!, $end_date_input:timestamptz!){
+          subscription orders_cumulative($start_date_input:timestamptz!, $end_date_input:timestamptz!){
             total_orders: orders_aggregate(where: 
               {orderTime: {_gte:$start_date_input, _lte:$end_date_input}}){
                 aggregate { 
@@ -124,23 +124,27 @@ class OrderStatsController extends GetxController {
         {
           "start_date_input": "${formatDateForHasura(date)}T00:00:00-05:00",
           "end_date_input":
-              "${formatDateForHasura(new DateTime(date.year, date.month + 1, date.day))}T00:00:00-05:00"
+              "${formatDateForHasura(new DateTime(date.year, date.month, date.day + 1))}T00:00:00-05:00"
         });
+    return stream.map<RxMap<String, dynamic>>((result) {
+      if (result.hasException) {
+        print(result.exception.toString());
+      }
 
-    if (result.hasException) {
-      print(result.exception.toString());
-    }
-    // List<dynamic> aggregates = result.data! as List<dynamic>;
-    RxMap<String, dynamic> returnValue = RxMap({
-      "total": result.data!['total_orders']['aggregate']['count'],
-      "finished": result.data!['dropped_off_orders']['aggregate']['count'],
-      "cancelled": result.data!['cancelled_orders']['aggregate']['count'],
-      "expired": result.data!['expired_orders']['aggregate']['count'],
-      "isLooking": result.data!['isLooking_orders']['aggregate']['count'],
-      "inProcess": result.data!['inProcess_orders']['aggregate']['count']
+      print(result.data);
+      // List<dynamic> aggregates = result.data! as List<dynamic>;
+      RxMap<String, dynamic> returnValue = RxMap({
+        "total": result.data!['total_orders']['aggregate']['count'],
+        "finished": result.data!['dropped_off_orders']['aggregate']['count'],
+        "cancelled": result.data!['cancelled_orders']['aggregate']['count'],
+        "expired": result.data!['expired_orders']['aggregate']['count'],
+        "isLooking": result.data!['isLooking_orders']['aggregate']['count'],
+        "inProcess": result.data!['inProcess_orders']['aggregate']['count']
+      });
+      return returnValue;
     });
 
-    return returnValue;
+
   }
 
   Future<Map<String, dynamic>> getOrderscumulativeOnMonth(int month) async {

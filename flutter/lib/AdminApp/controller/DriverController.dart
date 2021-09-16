@@ -85,7 +85,7 @@ class DriverStatsController extends GetxController {
         {
           "start_date_input": "${formatDateForHasura(date)}T00:00:00-05:00",
           "end_date_input":
-              "${formatDateForHasura(new DateTime(date.year, date.month + 1, date.day))}T00:00:00-05:00"
+              "${formatDateForHasura(new DateTime(date.year, date.month, date.day + 1))}T00:00:00-05:00"
         });
 
     if (result.hasException) {
