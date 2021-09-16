@@ -13,7 +13,6 @@ class DriverStatsController extends GetxController {
   }
 
   Future<List<dynamic>> getLastWeekRankings() async {
-
     QueryResult result = await _hasuraHelper.get(
         gql(
           r'''

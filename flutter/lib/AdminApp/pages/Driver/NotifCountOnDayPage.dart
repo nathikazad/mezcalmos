@@ -12,6 +12,7 @@ class NotifCountOnDayPage extends GetView<DriverStatsController> {
   final f = new DateFormat('dd/MM/yy');
   var selectedtime = DateTime.now().obs;
   final TextEditingController srearchC = new TextEditingController();
+  var searchQuery = "".obs;
   FutureBuilder<List<dynamic>> getNotificationCountOnDay() {
     return FutureBuilder<List<dynamic>>(
         future: controller.getNotificationCountOnDay(
@@ -87,10 +88,6 @@ class NotifCountOnDayPage extends GetView<DriverStatsController> {
                               selectedtime.value =
                                   (x == null) ? DateTime.now() : x;
                               print(selectedtime.value);
-                              // controller.searchQuery.value = srearchC.text;
-                              // controller.getNotificationsResults(
-                              //     controller.searchQuery.value,
-                              //     selectedtime.value);
                             },
                           );
                         },
@@ -117,7 +114,6 @@ class NotifCountOnDayPage extends GetView<DriverStatsController> {
                     Icon(
                       Icons.search,
                       size: 27,
-                      //color: Color.fromRGBO(152, 147, 147, 1),
                       color: Color.fromRGBO(152, 147, 147, 1),
                     ),
                     SizedBox(
@@ -127,10 +123,8 @@ class NotifCountOnDayPage extends GetView<DriverStatsController> {
                         child: TextField(
                       controller: srearchC,
                       onChanged: (val) {
-                        controller.searchQuery.value = val.trim();
+                        searchQuery.value = val.trim();
                         print(val.trim());
-                        // controller.getNotificationsResults(
-                        //     val.trim(), selectedtime.value);
                       },
                       decoration: InputDecoration(border: InputBorder.none),
                     ))
@@ -211,61 +205,34 @@ class NotifCountOnDayPage extends GetView<DriverStatsController> {
                   ],
                 ),
               ),
-              Obx(
-                () => (controller.searchQuery == "")
-                    ? Container(
-                        child: Expanded(
-                          child: Column(
-                            children: [
-                              Expanded(
-                                child: ListView.builder(
-                                    itemCount: snapshot.data!.length,
-                                    itemBuilder: (context, index) {
-                                      //displayName
-                                      //photo,
-                                      //totalOrders
-                                      //sent
-                                      //received
-                                      //read
-                                      return MezAdminOrdersComponents.buildNotificationTable(
-                                          index,
-                                          "${snapshot.data![index]["photo"]}",
-                                          "${snapshot.data![index]["displayName"]}",
-                                          "${snapshot.data![index]["totalOrders"]}",
-                                          "${snapshot.data![index]["sent"]}",
-                                          "${snapshot.data![index]["received"]}",
-                                          "${snapshot.data![index]["read"]}");
-                                    }),
-                              )
-                            ],
-                          ),
-                        ),
-                      )
-                    : Expanded(
+              Container(
+                child: Expanded(
+                  child: Column(
+                    children: [
+                      Expanded(
                         child: ListView.builder(
-                            itemCount: controller.searchedList.value
-                                .where((x) => x["displayName"]
-                                    .toString()
-                                    .toLowerCase()
-                                    .startsWith(controller.searchQuery.value
-                                        .trim()
-                                        .toLowerCase()))
-                                .toList()
-                                .length,
+                            itemCount: snapshot.data!.length,
                             itemBuilder: (context, index) {
-                              return MezAdminOrdersComponents.buildNotificationTable(
-                                  index,
-                                  "${controller.searchedList.value[index]["photo"]}",
-                                  "${controller.searchedList.value[index]["displayName"]}",
-                                  "${controller.searchedList.value[index]["totalOrders"]}",
-                                  "${controller.searchedList.value[index]["sent"]}",
-                                  "${controller.searchedList.value[index]["received"]}",
-                                  "${controller.searchedList.value[index]["read"]}");
-                              //Text(
-                              //"${controller.searchedList.value[index]["displayName"]}");
+                              return Obx(() => snapshot.data![index]
+                                          ["displayName"]
+                                      .toString()
+                                      .toLowerCase()
+                                      .contains(searchQuery.toLowerCase())
+                                  ? MezAdminOrdersComponents.buildNotificationTable(
+                                      index,
+                                      "${snapshot.data![index]["photo"]}",
+                                      "${snapshot.data![index]["displayName"]}",
+                                      "${snapshot.data![index]["totalOrders"]}",
+                                      "${snapshot.data![index]["sent"]}",
+                                      "${snapshot.data![index]["received"]}",
+                                      "${snapshot.data![index]["read"]}")
+                                  : Container());
                             }),
-                      ),
-              ),
+                      )
+                    ],
+                  ),
+                ),
+              )
             ];
           } else if (snapshot.hasError) {
             children = <Widget>[
