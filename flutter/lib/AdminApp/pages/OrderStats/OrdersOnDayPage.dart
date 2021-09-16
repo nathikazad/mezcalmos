@@ -244,10 +244,6 @@ class OrdersOnDayPage extends GetView<OrderStatsController> {
           } else {
             children = <Widget>[
               Expanded(
-                // height: Get.height * 0.85,
-                // color: Colors.red,
-                // width: Get.width,
-
                 child: Container(
                   width: Get.width,
                   child: Column(

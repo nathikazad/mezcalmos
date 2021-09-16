@@ -298,4 +298,108 @@ class MezAdminOrdersComponents {
       ),
     );
   }
+
+  static Widget buildNotificationTable(int index, String img, String name,
+      String t, String s, String r, String o) {
+    var myGradient = (index % 2 == 0)
+        ? LinearGradient(colors: [
+            Color.fromRGBO(117, 121, 208, 1),
+            Color.fromRGBO(68, 74, 205, 1)
+          ], begin: Alignment(0.0, 0.5), end: Alignment(0.5, 0.3))
+        : LinearGradient(colors: [
+            Color.fromRGBO(117, 121, 208, 1),
+            Color.fromRGBO(68, 74, 205, 1)
+          ], begin: Alignment(0.5, 0.3), end: Alignment(0.0, 0.5));
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      decoration: BoxDecoration(gradient: myGradient),
+      child: Row(
+        children: [
+          Expanded(
+            flex: 4,
+            child: Container(
+              child: Row(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(right: 8),
+                    height: 35,
+                    width: 35,
+                    child: ClipOval(
+                      child: Image.network(
+                        "${img}",
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      "${name}",
+                      style: TextStyle(color: Colors.white),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Container(
+              child: Text(
+                "${t}",
+                style: TextStyle(color: Colors.white),
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Container(
+              child: Text(
+                "${s}",
+                style: TextStyle(color: Colors.white),
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Container(
+              child: Text(
+                "${r}",
+                style: TextStyle(color: Colors.white),
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Container(
+              child: Text(
+                "${o}",
+                style: TextStyle(color: Colors.white),
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Container(
+              alignment: Alignment.center,
+              child: Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.white,
+                size: 16,
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
 }

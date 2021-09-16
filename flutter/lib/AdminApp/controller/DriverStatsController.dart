@@ -5,6 +5,9 @@ import 'package:get/get.dart';
 
 class DriverStatsController extends GetxController {
   HasuraHelper _hasuraHelper = Get.find<HasuraHelper>();
+  // final myList = Future.value([]).obs;
+  var searchQuery = "".obs;
+  var searchedList = [].obs;
 
   @override
   void onInit() {
@@ -111,6 +114,7 @@ class DriverStatsController extends GetxController {
         });
       },
     );
+    searchedList.value = returnValue;
     return returnValue;
   }
 
