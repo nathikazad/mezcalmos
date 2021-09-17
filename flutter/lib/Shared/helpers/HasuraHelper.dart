@@ -18,9 +18,9 @@ class HasuraHelper {
   initializeHasura() async {
     print("Inside Hasura Helper");
     print("Firebase auth user is ${_authController.fireAuthUser?.displayName}");
-    if (_authController.fireAuthUser != null) {
-      String hasuraAuthToken =
-          await _getAuthorizationToken(_authController.fireAuthUser!);
+    // if (_authController.fireAuthUser != null) {
+    // String hasuraAuthToken =
+    //     await _getAuthorizationToken(_authController.fireAuthUser!);
 
       final _httpLink = HttpLink(
         'https://mezcalmos.hasura.app/v1/graphql',
@@ -32,13 +32,18 @@ class HasuraHelper {
           autoReconnect: true,
           inactivityTimeout: Duration(seconds: 30),
           initialPayload: {
-              'headers': {'Authorization': 'Bearer $hasuraAuthToken'},
+              'headers': {
+              'x-hasura-admin-secret':
+                  'BGnr9cpGF42t09PccsyzeJADS1UPmZ4I_QiSY4mmPMTYcsgn5m2BrkPFR4r6gs3KEzMGOXwukjBwhWQ26_ikpMw'
+            },
             }
         ),
       );
 
       final _authLink = AuthLink(
-        getToken: () async => 'Bearer $hasuraAuthToken',
+        getToken: () async =>
+            'BGnr9cpGF42t09PccsyzeJADS1UPmZ4I_QiSY4mmPMTYcsgn5m2BrkPFR4r6gs3KEzMGOXwukjBwhWQ26_ikpMw',
+        headerKey: "x-hasura-admin-secret"
       );
 
       Link _link = _authLink.concat(_httpLink);
@@ -49,7 +54,7 @@ class HasuraHelper {
         cache: GraphQLCache(),
         link: _link,
       );
-    }
+    // }
   }
 
   Future<QueryResult> get(
