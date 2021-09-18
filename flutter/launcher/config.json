@@ -110,23 +110,23 @@
             }
         },
         "AdminApp": {
-            "folderName": "AdminApp",
+            "folderName": "TaxiAdminApp",
             "packages": {
                 "stage": {
-                    "appName": "MezAdmin Staging",
-                    "packageName": "com.meztaxi.stagingDriver",
+                    "appName": "Meztaxi Admin Stage",
+                    "packageName": "com.meztaxi.admin",
                     "googe-service-file": "services/staging.google-services.json",
                     "apple-service-file": "services/staging.GoogleService-Info.plist"
                 },
                 "prod": {
-                    "appName": "MezAdmin",
-                    "packageName": "com.meztaxi.driver",
-                    "googe-service-file": "services/prod.google-services.json",
+                    "appName": "Meztaxi Admin",
+                    "packageName": "com.meztaxi.admin",
+                    "googe-service-file": "services/taxi-admin-google-services.json",
                     "apple-service-file": "services/prod.GoogleService-Info.plist"
                 },
                 "dev": {
-                    "appName": "MezAdmin Dev",
-                    "packageName": "com.meztaxi.driver",
+                    "appName": "Meztaxi Admin Dev",
+                    "packageName": "com.meztaxi.admin",
                     "googe-service-file": "services/prod.google-services.json",
                     "apple-service-file": "services/prod.GoogleService-Info.plist"
                 }
