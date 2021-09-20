@@ -2,10 +2,10 @@ const { Client } = require('pg')
 const fs = require('fs');
 
 const prodClient = new Client({
-  user: 'xqzmxaqcsacvjl',
-  host: 'ec2-35-173-94-156.compute-1.amazonaws.com',
-  database: 'd3r4algidqrk00',
-  password: 'b4501d713f0caa3bd0efa49721d000dc739260dc314a7c9db176f89439c4e59a',
+  user: 'gswxnnbineecam',
+  host: 'ec2-3-217-219-146.compute-1.amazonaws.com',
+  database: 'd3nurnhq69kcf6',
+  password: '19d49c2e7ef98a532b2760ccf419007e499a84410f38fa2f57e8498a0adae853',
   port: 5432,
   ssl: {
     rejectUnauthorized: false
