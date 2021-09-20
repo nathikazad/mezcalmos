@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/AdminApp/controller/OrdersController.dart';
+import 'package:mezcalmos/TaxiAdminApp/controller/OrdersController.dart';
 import 'package:get/get.dart';
 
 class OrderViewPage extends GetView<OrderStatsController> {

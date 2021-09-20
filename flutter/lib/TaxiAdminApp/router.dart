@@ -1,8 +1,8 @@
 import 'package:get/get.dart'; // getX
 
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:mezcalmos/AdminApp/pages/Wrapper.dart';
-import 'package:mezcalmos/AdminApp/pages/Driver/RankingsPage.dart';
+import 'package:mezcalmos/TaxiAdminApp/pages/Wrapper.dart';
+import 'package:mezcalmos/TaxiAdminApp/pages/Driver/RankingsPage.dart';
 
 // Routes Keys.
 

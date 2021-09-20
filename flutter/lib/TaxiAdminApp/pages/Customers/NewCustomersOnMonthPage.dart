@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/TaxiAdminApp/controller/OrdersController.dart';
+import 'package:mezcalmos/TaxiAdminApp/controller/CustomersController.dart';
 import 'package:get/get.dart';
 
-class OrdersFulfillmentOnMonthPage extends GetView<OrderStatsController> {
+class NewCustomersOnMonthPage extends GetView<CustomersController> {
   FutureBuilder<Map<String, dynamic>> getFulfillmentRatioOnMonth() {
     return FutureBuilder<Map<String, dynamic>>(
-        future: controller.getFulfillmentRatioOnMonth(
+        future: controller.getNewCustomersForMonth(
             9), // a previously-obtained Future<String> or null
         builder: (BuildContext context,
             AsyncSnapshot<Map<String, dynamic>> snapshot) {
@@ -68,7 +68,7 @@ class OrdersFulfillmentOnMonthPage extends GetView<OrderStatsController> {
 
   @override
   Widget build(BuildContext context) {
-    Get.put<OrderStatsController>(OrderStatsController());
+    Get.put<CustomersController>(CustomersController());
     return Scaffold(
       appBar: AppBar(
         title: Text("Fulfillment ratio for month"),

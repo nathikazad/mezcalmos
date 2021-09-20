@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/AdminApp/controller/DriverController.dart';
+import 'package:mezcalmos/TaxiAdminApp/controller/NotificationsController.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/widgets/MezAdminOrdersComponents.dart';
@@ -8,14 +8,14 @@ import 'package:intl/intl.dart';
 
 const mypadding = const EdgeInsets.symmetric(horizontal: 10);
 
-class NotifCountOnDayPage extends GetView<DriverStatsController> {
+class NotifCountOnDayPage extends GetView<NotificationsController> {
   final f = new DateFormat('dd/MM/yy');
   var selectedtime = DateTime.now().obs;
   final TextEditingController srearchC = new TextEditingController();
   var searchQuery = "".obs;
-  FutureBuilder<List<dynamic>> getNotificationCountOnDay() {
+  FutureBuilder<List<dynamic>> getNotificationCountOnDayByDrivers() {
     return FutureBuilder<List<dynamic>>(
-        future: controller.getNotificationCountOnDay(
+        future: controller.getNotificationCountOnDayByDrivers(
             selectedtime.value), // a previously-obtained Future<String> or null
         builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
           List<Widget> children;
@@ -295,13 +295,13 @@ class NotifCountOnDayPage extends GetView<DriverStatsController> {
 
   @override
   Widget build(BuildContext context) {
-    Get.put<DriverStatsController>(DriverStatsController());
+    Get.put<NotificationsController>(NotificationsController());
     return Scaffold(
         appBar: MezcalmosSharedWidgets.mezCalmosAdminAppBar(context),
-        body: GetX<DriverStatsController>(
-            init: DriverStatsController(),
+        body: GetX<NotificationsController>(
+            init: NotificationsController(),
             builder: (controller) {
-              return Container(child: getNotificationCountOnDay());
+              return Container(child: getNotificationCountOnDayByDrivers());
             }));
   }
 }

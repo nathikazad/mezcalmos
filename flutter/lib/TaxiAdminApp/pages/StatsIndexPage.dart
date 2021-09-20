@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/AdminApp/pages/Driver/RankingsPage.dart';
-import 'package:mezcalmos/AdminApp/pages/Driver/NotifCountOnDayPage.dart';
-import 'package:mezcalmos/AdminApp/pages/Orders/OrdersOnDayPage.dart';
-import 'package:mezcalmos/AdminApp/pages/Orders/OrdersCumOnDayPage.dart';
-import 'package:mezcalmos/AdminApp/pages/Orders/OrdersCumOnMonthPage.dart';
-import 'package:mezcalmos/AdminApp/pages/Orders/OrdersFulfillmentOnMonthPage.dart';
+import 'package:mezcalmos/TaxiAdminApp/pages/Driver/RankingsPage.dart';
+import 'package:mezcalmos/TaxiAdminApp/pages/Notifications/NotifCountOnDayByDriverPage.dart';
+import 'package:mezcalmos/TaxiAdminApp/pages/Customers/NewCustomersOnMonthPage.dart';
+import 'package:mezcalmos/TaxiAdminApp/pages/Orders/OrdersOnDayPage.dart';
+import 'package:mezcalmos/TaxiAdminApp/pages/Orders/OrdersCumOnDayPage.dart';
+import 'package:mezcalmos/TaxiAdminApp/pages/Orders/OrdersCumOnMonthPage.dart';
+import 'package:mezcalmos/TaxiAdminApp/pages/Orders/OrdersFulfillmentOnMonthPage.dart';
 
 class StatsIndexPage extends GetView {
   @override
@@ -44,6 +45,10 @@ class StatsIndexPage extends GetView {
             OutlinedButton(
                 child: Text("Notification stats For Month"),
                 onPressed: () => print("Notification stats For Month")),
+            Text("Customer Stats"),
+            OutlinedButton(
+                child: Text("New Customers for month"),
+                onPressed: () => Get.to(NewCustomersOnMonthPage())),
           ],
         ),
       ),

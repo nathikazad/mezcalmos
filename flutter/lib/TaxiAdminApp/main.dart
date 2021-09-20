@@ -4,9 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/AdminApp/router.dart';
+import 'package:mezcalmos/TaxiAdminApp/router.dart';
 
-class AdminApp extends GetView<SettingsController> {
+class TaxiAdminApp extends GetView<SettingsController> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations(

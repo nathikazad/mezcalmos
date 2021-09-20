@@ -4,7 +4,7 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/helpers/HasuraHelper.dart';
-import 'package:mezcalmos/AdminApp/pages/StatsIndexPage.dart';
+import 'package:mezcalmos/TaxiAdminApp/pages/StatsIndexPage.dart';
 
 class Wrapper extends GetWidget<AuthController> {
   @override

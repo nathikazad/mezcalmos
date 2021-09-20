@@ -109,7 +109,7 @@
                 }
             }
         },
-        "AdminApp": {
+        "TaxiAdminApp": {
             "folderName": "TaxiAdminApp",
             "packages": {
                 "stage": {

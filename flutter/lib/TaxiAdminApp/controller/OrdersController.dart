@@ -151,29 +151,28 @@ class OrderStatsController extends GetxController {
     QueryResult result = await _hasuraHelper.get(
         gql(
           r'''
-            query OrdersByMonth($month_date:String, $month_number:Int) {
-              get_monthly_stats(where: {month: {_eq: $month_number}}) {
-                cancelled
-                customers
-                drivers
-                expired
-                droppedoff
-                fulfillmentRatio
-                orders
-                month
+            query OrdersByMonth($month_date: String) {
+              get_orders_cum_by_days_of_month_aggregate(args: {month: $month_date}) {
+                aggregate {
+                  sum {
+                    cancelled
+                    droppedoff
+                    expired
+                    totalOrders
+                  }
+                }
               }
               get_orders_cum_by_days_of_month(args: {month: $month_date}, order_by: {day: asc}) {
                 cancelled
                 day
                 droppedoff
                 expired
-                fulfillmentratio
                 totalOrders
               }
             }
           ''',
         ),
-        {"month_date": "$month/01/21", "month_number": month});
+        {"month_date": "$month/01/21"});
 
     if (result.hasException) {
       print(result.exception.toString());
@@ -204,9 +203,14 @@ class OrderStatsController extends GetxController {
     QueryResult result = await _hasuraHelper.get(
         gql(
           r'''
-            query OrdersByMonth($month_date:String, $month_number:Int) {
-              get_monthly_stats(where: {month: {_eq: $month_number}}) {
-                fulfillmentRatio
+            query OrdersByMonth($month_date: String) {
+              get_orders_cum_by_days_of_month_aggregate(args: {month: $month_date}) {
+                aggregate {
+                  sum {
+                    droppedoff
+                    totalOrders
+                  }
+                }
               }
               get_orders_cum_by_days_of_month(args: {month: $month_date}, order_by: {day: asc}) {
                 day
@@ -222,14 +226,14 @@ class OrderStatsController extends GetxController {
     }
 
     Map<String, dynamic> returnValue = {};
-    returnValue['cumulative'] =
-        result.data!['get_monthly_stats'][0]['fulfillmentRatio'];
-    returnValue['byDay'] = {};
-    result.data!['get_orders_cum_by_days_of_month'].forEach(
-      (dynamic f) {
-        returnValue['byDay'][f['day']] = f['fulfillmentratio'];
-      },
-    );
+    // returnValue['cumulative'] =
+    //     result.data!['get_monthly_stats'][0]['fulfillmentRatio'];
+    // returnValue['byDay'] = {};
+    // result.data!['get_orders_cum_by_days_of_month'].forEach(
+    //   (dynamic f) {
+    //     returnValue['byDay'][f['day']] = f['fulfillmentratio'];
+    //   },
+    // );
     return returnValue;
   }
 
