@@ -1,5 +1,5 @@
 import 'package:mezcalmos/Shared/helpers/HasuraHelper.dart';
-import 'package:mezcalmos/AdminApp/helpers/formatter.dart';
+import 'package:mezcalmos/TaxiAdminApp/helpers/formatter.dart';
 import 'package:graphql/client.dart';
 import 'package:get/get.dart';
 
