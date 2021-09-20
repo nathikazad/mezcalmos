@@ -104,8 +104,66 @@ class NotificationsController extends GetxController {
     if (result.hasException) {
       print(result.exception.toString());
     }
-    print(result.data);
+    // print(result.data);
     Map<String, dynamic> returnValue = {};
+    print(result.data!['get_all_notifications_by_days_of_month_aggregate']
+        ['aggregate']['sum']['sent']);
+    returnValue['cumulative'] = {
+      "sent": result.data!['get_all_notifications_by_days_of_month_aggregate']
+          ['aggregate']['sum']['sent'],
+      "read": result.data!['get_all_notifications_by_days_of_month_aggregate']
+          ['aggregate']['sum']['read'],
+      "readPercentage": (result
+                      .data!['get_all_notifications_by_days_of_month_aggregate']
+                  ['aggregate']['sum']['read'] *
+              100 /
+              result.data!['get_all_notifications_by_days_of_month_aggregate']
+                  ['aggregate']['sum']['sent'])
+          .toInt()
+    };
+    returnValue['byDay'] = {};
+    result.data!['get_all_notifications_by_days_of_month'].forEach(
+      (dynamic f) {
+        returnValue['byDay'][f['day']] = {
+          "sent": f['sent'],
+          "read": f['read'],
+          "readPercentage": f['readPercentage']
+        };
+      },
+    );
+    return returnValue;
+  }
+
+  Future<Map<String, dynamic>> getUniqueNotificationForMonth(int month) async {
+    QueryResult result = await _hasuraHelper.get(
+        gql(
+          r'''
+            query OrdersByMonth($month_date: String) {
+              get_all_notifications_by_days_of_month(args: {month: $month_date}) {
+                day
+                uniqueSent
+                uniqueRead
+                uniqueReadPercentage
+              }
+            }
+        ''',
+        ),
+        {"month_date": "$month/01/21"});
+
+    if (result.hasException) {
+      print(result.exception.toString());
+    }
+    Map<String, dynamic> returnValue = {};
+    returnValue['byDay'] = {};
+    result.data!['get_all_notifications_by_days_of_month'].forEach(
+      (dynamic f) {
+        returnValue['byDay'][f['day']] = {
+          "uniqueSent": f['uniqueSent'],
+          "uniqueRead": f['uniqueRead'],
+          "uniqueReadPercentage": f['uniqueReadPercentage']
+        };
+      },
+    );
     return returnValue;
   }
 }

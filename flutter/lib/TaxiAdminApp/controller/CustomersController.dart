@@ -35,10 +35,17 @@ class CustomersController extends GetxController {
     if (result.hasException) {
       print(result.exception.toString());
     }
-    // List<dynamic> drivers = result.data!['drivers'] as List<dynamic>;
-
-    // List<dynamic> returnValue = [];
+    print(result.data);
     Map<String, dynamic> returnValue = {};
+    returnValue['cumulative'] =
+        result.data!['get_new_customers_by_days_of_month_aggregate']
+            ['aggregate']['sum']['num_of_new_customers'];
+    returnValue['byDay'] = {};
+    result.data!['get_new_customers_by_days_of_month'].forEach(
+      (dynamic f) {
+        returnValue['byDay'][f['day']] = f['num_of_new_customers'];
+      },
+    );
     return returnValue;
   }
 }
