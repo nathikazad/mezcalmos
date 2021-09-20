@@ -23,11 +23,11 @@ class HasuraHelper {
           await _getAuthorizationToken(_authController.fireAuthUser!);
 
       final _httpLink = HttpLink(
-        'https://mezcalmos.hasura.app/v1/graphql',
+        'https://mezcalmosv2.hasura.app/v1/graphql',
       );
 
       final WebSocketLink _wsLink = WebSocketLink(
-        'wss://mezcalmos.hasura.app/v1/graphql',
+        'wss://mezcalmosv2.hasura.app/v1/graphql',
         config: SocketClientConfig(
           autoReconnect: true,
           inactivityTimeout: Duration(seconds: 30),

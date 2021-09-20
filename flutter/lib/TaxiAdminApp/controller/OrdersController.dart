@@ -69,82 +69,79 @@ class OrderStatsController extends GetxController {
     });
   }
 
-  Stream<RxMap<String, dynamic>> getOrdersCumulativeOnDay(DateTime date) {
-    Stream<QueryResult> stream = _hasuraHelper.subscribe(
+  Future<RxMap<String, dynamic>> getOrdersCumulativeOnDay(DateTime date) async {
+    QueryResult result = await _hasuraHelper.get(
         gql(
           r'''
-          subscription orders_cumulative($start_date_input:timestamptz!, $end_date_input:timestamptz!){
-            total_orders: orders_aggregate(where: 
-              {orderTime: {_gte:$start_date_input, _lte:$end_date_input}}){
-                aggregate { 
-                  count 
-                }
+        query orders_cumulative($start_date_input:timestamptz!, $end_date_input:timestamptz!){
+          total_orders: orders_aggregate(where: 
+            {orderTime: {_gte:$start_date_input, _lte:$end_date_input}}){
+              aggregate { 
+                count 
               }
-              dropped_off_orders: orders_aggregate(where:{
-                finalStatus:{ _eq: "droppedOff"}
-                orderTime: {_gte:$start_date_input, _lte:$end_date_input}
-              }
-              ){
-                aggregate { count }
-              }
-                expired_orders: orders_aggregate(where:{
-                finalStatus:{ _eq: "expired"}
-                orderTime: {_gte:$start_date_input, _lte:$end_date_input}
-              }){
-                aggregate { count }
-              }
-                cancelled_orders: orders_aggregate(where:{
-                finalStatus:{ _eq: "cancelled"} 
-                orderTime: {_gte:$start_date_input, _lte:$end_date_input} 
-              })
-                {
-                aggregate { count }
-                }  
-                inProcess_orders: orders_aggregate(
-                  where:{
-                    _or:[
-                      {finalStatus:{ _eq: "inTransit"}}
-                      {finalStatus: {_eq: "isLooking"}}
-                    ]
-                    orderTime: {_gte:$start_date_input, _lte:$end_date_input}
-                  })
-                {
-                aggregate { count }
-                } 
-                isLooking_orders: orders_aggregate(where:{
-                finalStatus:{ _eq: "lookingForTaxi"}
-                orderTime: {_gte:$start_date_input, _lte:$end_date_input}  
-              })
-                {
-                aggregate { count }
-                }     
             }
-        ''',
+            dropped_off_orders: orders_aggregate(where:{
+              finalStatus:{ _eq: "droppedOff"}
+              orderTime: {_gte:$start_date_input, _lte:$end_date_input}
+            }
+            ){
+              aggregate { count }
+            }
+              expired_orders: orders_aggregate(where:{
+              finalStatus:{ _eq: "expired"}
+              orderTime: {_gte:$start_date_input, _lte:$end_date_input}
+            }){
+              aggregate { count }
+            }
+              cancelled_orders: orders_aggregate(where:{
+              finalStatus:{ _eq: "cancelled"} 
+              orderTime: {_gte:$start_date_input, _lte:$end_date_input} 
+            })
+              {
+              aggregate { count }
+              }  
+              inProcess_orders: orders_aggregate(
+                where:{
+                  _or:[
+                    {finalStatus:{ _eq: "inTransit"}}
+                    {finalStatus: {_eq: "isLooking"}}
+                  ]
+                  orderTime: {_gte:$start_date_input, _lte:$end_date_input}
+                })
+              {
+              aggregate { count }
+              } 
+              isLooking_orders: orders_aggregate(where:{
+              finalStatus:{ _eq: "lookingForTaxi"}
+              orderTime: {_gte:$start_date_input, _lte:$end_date_input}  
+            })
+              {
+              aggregate { count }
+              }     
+          }
+      ''',
         ),
         {
           "start_date_input": "${formatDateForHasura(date)}T00:00:00-05:00",
           "end_date_input":
               "${formatDateForHasura(new DateTime(date.year, date.month, date.day + 1))}T00:00:00-05:00"
         });
-    return stream.map<RxMap<String, dynamic>>((result) {
-      if (result.hasException) {
-        print(result.exception.toString());
-      }
 
-      print(result.data);
-      // List<dynamic> aggregates = result.data! as List<dynamic>;
-      RxMap<String, dynamic> returnValue = RxMap({
-        "total": result.data!['total_orders']['aggregate']['count'],
-        "finished": result.data!['dropped_off_orders']['aggregate']['count'],
-        "cancelled": result.data!['cancelled_orders']['aggregate']['count'],
-        "expired": result.data!['expired_orders']['aggregate']['count'],
-        "isLooking": result.data!['isLooking_orders']['aggregate']['count'],
-        "inProcess": result.data!['inProcess_orders']['aggregate']['count']
-      });
-      return returnValue;
+    if (result.hasException) {
+      print(result.exception.toString());
+    }
+
+    print(result.data);
+    // List<dynamic> aggregates = result.data! as List<dynamic>;
+    RxMap<String, dynamic> returnValue = RxMap({
+      "total": result.data!['total_orders']['aggregate']['count'],
+      "finished": result.data!['dropped_off_orders']['aggregate']['count'],
+      "cancelled": result.data!['cancelled_orders']['aggregate']['count'],
+      "expired": result.data!['expired_orders']['aggregate']['count'],
+      "isLooking": result.data!['isLooking_orders']['aggregate']['count'],
+      "inProcess": result.data!['inProcess_orders']['aggregate']['count']
     });
-
-
+    return returnValue;
   }
 
   Future<Map<String, dynamic>> getOrderscumulativeOnMonth(int month) async {
@@ -180,10 +177,14 @@ class OrderStatsController extends GetxController {
 
     Map<String, dynamic> returnValue = {};
     returnValue['cumulative'] = {
-      "total": result.data!['get_monthly_stats'][0]['orders'],
-      "droppedoff": result.data!['get_monthly_stats'][0]['droppedoff'],
-      "cancelled": result.data!['get_monthly_stats'][0]['cancelled'],
-      "expired": result.data!['get_monthly_stats'][0]['expired'],
+      "total": result.data!['get_orders_cum_by_days_of_month_aggregate']
+          ['aggregate']['sum']['totalOrders'],
+      "droppedoff": result.data!['get_orders_cum_by_days_of_month_aggregate']
+          ['aggregate']['sum']['droppedoff'],
+      "cancelled": result.data!['get_orders_cum_by_days_of_month_aggregate']
+          ['aggregate']['sum']['cancelled'],
+      "expired": result.data!['get_orders_cum_by_days_of_month_aggregate']
+          ['aggregate']['sum']['expired'],
     };
     returnValue['byDay'] = {};
     result.data!['get_orders_cum_by_days_of_month'].forEach(
@@ -219,21 +220,27 @@ class OrderStatsController extends GetxController {
             }
           ''',
         ),
-        {"month_date": "$month/01/21", "month_number": month});
+        {"month_date": "$month/01/21"});
 
     if (result.hasException) {
       print(result.exception.toString());
     }
-
+    print(result.data);
     Map<String, dynamic> returnValue = {};
-    // returnValue['cumulative'] =
-    //     result.data!['get_monthly_stats'][0]['fulfillmentRatio'];
-    // returnValue['byDay'] = {};
-    // result.data!['get_orders_cum_by_days_of_month'].forEach(
-    //   (dynamic f) {
-    //     returnValue['byDay'][f['day']] = f['fulfillmentratio'];
-    //   },
-    // );
+
+    returnValue['cumulative'] =
+        (result.data!['get_orders_cum_by_days_of_month_aggregate']['aggregate']
+                    ['sum']['droppedoff'] *
+                100 /
+                result.data!['get_orders_cum_by_days_of_month_aggregate']
+                    ['aggregate']['sum']['totalOrders'])
+            .toInt();
+    returnValue['byDay'] = {};
+    result.data!['get_orders_cum_by_days_of_month'].forEach(
+      (dynamic f) {
+        returnValue['byDay'][f['day']] = f['fulfillmentratio'];
+      },
+    );
     return returnValue;
   }
 
