@@ -90,7 +90,6 @@ class OrdersCumOnMonthPage extends GetView<OrderStatsController> {
                                 ),
                               ),
                               onTap: () async {
-                                print("hello");
                                 await showMonthPicker(
                                   context: context,
                                   firstDate:
@@ -103,7 +102,6 @@ class OrdersCumOnMonthPage extends GetView<OrderStatsController> {
                                       (x == null) ? DateTime.now() : x;
                                 });
 
-                                print(selectedtime.value.month);
                                 Get.snackbar("Loading data ...", "",
                                     snackPosition: SnackPosition.BOTTOM);
                               },

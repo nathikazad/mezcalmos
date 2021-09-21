@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/TaxiAdminApp/pages/Driver/RankingsPage.dart';
+import 'package:mezcalmos/TaxiAdminApp/pages/Driver/DriverPage.dart';
 import 'package:mezcalmos/TaxiAdminApp/pages/Notifications/NotifCountOnDayByDriverPage.dart';
 import 'package:mezcalmos/TaxiAdminApp/pages/Notifications/NotificationsOnMonthPage.dart';
 import 'package:mezcalmos/TaxiAdminApp/pages/Notifications/UniqueNotificationsOnMonthPage.dart';
@@ -38,6 +39,9 @@ class StatsIndexPage extends GetView {
             OutlinedButton(
                 child: Text("Last Week Rankings"),
                 onPressed: () => Get.to(RankingsPage())),
+            OutlinedButton(
+                child: Text("Sample Driver Page"),
+                onPressed: () => Get.to(DriverPage())),
             Text("Notification Stats"),
             OutlinedButton(
                 child: Text("Notification by driver count on day"),

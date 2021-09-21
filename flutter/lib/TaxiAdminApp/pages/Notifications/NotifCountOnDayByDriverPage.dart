@@ -78,7 +78,6 @@ class NotifCountOnDayPage extends GetView<NotificationsController> {
                               ),
                             ),
                             onTap: () async {
-                              print("hello");
                               var x = await showDatePicker(
                                 context: context,
                                 initialDate: DateTime.now(),
@@ -87,7 +86,6 @@ class NotifCountOnDayPage extends GetView<NotificationsController> {
                               );
                               selectedtime.value =
                                   (x == null) ? DateTime.now() : x;
-                              print(selectedtime.value);
                             },
                           );
                         },
