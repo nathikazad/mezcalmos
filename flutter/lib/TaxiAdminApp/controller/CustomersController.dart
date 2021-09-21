@@ -35,7 +35,6 @@ class CustomersController extends GetxController {
     if (result.hasException) {
       print(result.exception.toString());
     }
-    print(result.data);
     Map<String, dynamic> returnValue = {};
     returnValue['cumulative'] =
         result.data!['get_new_customers_by_days_of_month_aggregate']

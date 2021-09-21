@@ -47,4 +47,83 @@ class DriverStatsController extends GetxController {
     return returnValue;
   }
 
+  Future<List<dynamic>> getDriverNotificationsLastNDays(
+      String driverId, int nDays) async {
+    QueryResult result = await _hasuraHelper.get(
+        gql(
+          r'''
+          query getDriverNotifications($driverId: String, $nDays: Int) {
+            get_notifications_by_driver_for_last_n_days(args: {driverid:$driverId, n: $nDays}) {
+              index
+              date
+              read_notifications
+              sent_notifications
+            }
+          }
+          ''',
+        ),
+        {
+          "driverId": driverId, //"yKo3XqL3dEd78BVgzjNOvAxru723",
+          "nDays": nDays
+        });
+
+    if (result.hasException) {
+      print(result.exception.toString());
+    }
+    List<dynamic> rankings = result
+        .data!['get_notifications_by_driver_for_last_n_days'] as List<dynamic>;
+
+    List<dynamic> returnValue = [];
+    rankings.forEach(
+      (dynamic f) {
+        returnValue.add({
+          "index": f['index'],
+          "date": f['date'],
+          "read_notifications": f['read_notifications'],
+          "sent_notifications": f['sent_notifications']
+        });
+      },
+    );
+    return returnValue;
+  }
+
+  Future<List<dynamic>> getDriverOrdersLastNDays(
+      String driverId, int nDays) async {
+    QueryResult result = await _hasuraHelper.get(
+        gql(
+          r'''
+          query getDriverOrders($driverId: String, $nDays: Int) {
+            get_order_count_by_driver_for_last_n_days(args: {driverid: $driverId, n: $nDays}) {
+              index
+              date
+              accepted_orders
+              droppedOff_orders
+            }
+          ''',
+        ),
+        {
+          "driverId": driverId, //"yKo3XqL3dEd78BVgzjNOvAxru723",
+          "nDays": nDays
+        });
+
+    if (result.hasException) {
+      print(result.exception.toString());
+    }
+    List<dynamic> rankings = result
+        .data!['get_order_count_by_driver_for_last_n_days'] as List<dynamic>;
+
+    List<dynamic> returnValue = [];
+    rankings.forEach(
+      (dynamic f) {
+        returnValue.add({
+          "index": f['index'],
+          "date": f['date'],
+          "accepted_orders": f['accepted_orders'],
+          "droppedOff_orders": f['droppedOff_orders']
+        });
+      },
+    );
+    return returnValue;
+  }
+
 }
