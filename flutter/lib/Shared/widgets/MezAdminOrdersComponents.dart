@@ -402,4 +402,123 @@ class MezAdminOrdersComponents {
       ),
     );
   }
+
+  ///orders board view for admin
+  static Widget ordersBoardView(
+      String? total, String? dropedOff, String? canceled, String? expired) {
+    return Container(
+      alignment: Alignment.center,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 60,
+            alignment: Alignment.center,
+            padding: const EdgeInsets.symmetric(vertical: 15),
+            margin: const EdgeInsets.all(5),
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color.fromRGBO(118, 67, 224, 0.9),
+                    Color.fromRGBO(82, 40, 167, 1),
+                  ],
+                  begin: Alignment.center,
+                  end: Alignment.topRight,
+                ),
+                borderRadius: BorderRadius.circular(18)),
+            child: Text(
+              "$total",
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700),
+            ),
+          ),
+          Container(
+            width: 60,
+            alignment: Alignment.center,
+            padding: const EdgeInsets.symmetric(vertical: 15),
+            margin: const EdgeInsets.all(5),
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color.fromRGBO(116, 196, 132, 0.9),
+                    Color.fromRGBO(97, 162, 111, 1)
+                  ],
+                  begin: Alignment.center,
+                  end: Alignment.topRight,
+                ),
+                borderRadius: BorderRadius.circular(18)),
+            child: Text(
+              "$dropedOff",
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700),
+            ),
+          ),
+          Container(
+            width: 60,
+            alignment: Alignment.center,
+            padding: const EdgeInsets.symmetric(vertical: 15),
+            margin: const EdgeInsets.all(5),
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color.fromRGBO(242, 83, 62, 1),
+                    Color.fromRGBO(117, 15, 15, 0.8)
+                  ],
+                  begin: Alignment.center,
+                  end: Alignment.topRight,
+                ),
+                borderRadius: BorderRadius.circular(18)),
+            child: Text(
+              "$canceled",
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700),
+            ),
+          ),
+          Container(
+            width: 60,
+            alignment: Alignment.center,
+            padding: const EdgeInsets.symmetric(vertical: 15),
+            margin: const EdgeInsets.all(5),
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color.fromRGBO(134, 136, 127, 0.9),
+                    Color.fromRGBO(119, 120, 117, 1)
+                  ],
+                  begin: Alignment.center,
+                  end: Alignment.topRight,
+                ),
+                borderRadius: BorderRadius.circular(18)),
+            child: Text(
+              "$expired",
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  static Widget noDataImage() {
+    return Container(
+      child: Image.asset("assets/images/nodata.jpg"),
+    );
+  }
 }
