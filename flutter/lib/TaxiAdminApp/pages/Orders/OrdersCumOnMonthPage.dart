@@ -165,7 +165,7 @@ class OrdersCumOnMonthPage extends GetView<OrderStatsController> {
                                   ),
                                   viewport: hasSize.value
                                       ? new charts.OrdinalViewport(
-                                          "${lastDay - 1}", 5)
+                                          "${lastDay - 1}", 12)
                                       : null,
                                 ),
                                 primaryMeasureAxis: new charts.NumericAxisSpec(
