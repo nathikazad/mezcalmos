@@ -10,7 +10,6 @@ import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 
 class MezGoogleMap extends StatelessWidget {
-  
   final realtimeTracking;
   MezGoogleMap(this.realtimeTracking);
   Completer<GoogleMapController> _gMapCompleter = Completer();

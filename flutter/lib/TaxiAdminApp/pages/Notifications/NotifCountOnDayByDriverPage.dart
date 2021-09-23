@@ -5,6 +5,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/widgets/MezAdminOrdersComponents.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/TaxiAdminApp/pages/Orders/OrdersCumOnDayPage.dart';
 
 const mypadding = const EdgeInsets.symmetric(horizontal: 10);
 
@@ -29,10 +30,17 @@ class NotifCountOnDayPage extends GetView<NotificationsController> {
                 child: Row(
                   children: [
                     Expanded(
-                      child: Text(
-                        "Notifications",
-                        style: TextStyle(
-                            fontSize: 28, fontWeight: FontWeight.bold),
+                      child: InkWell(
+                        child: Text(
+                          "Notifications",
+                          style: TextStyle(
+                              fontSize: 28, fontWeight: FontWeight.bold),
+                        ),
+                        onTap: () {
+                          Get.off(() => OrdersCumOnDayPage(),
+                              transition: Transition.rightToLeft,
+                              duration: Duration(milliseconds: 500));
+                        },
                       ),
                     ),
                     Theme(

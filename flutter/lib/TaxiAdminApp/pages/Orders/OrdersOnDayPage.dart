@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/utilities/SharedEnums.dart';
 import 'package:mezcalmos/Shared/widgets/MezAdminOrdersComponents.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/TaxiAdminApp/pages/Notifications/NotifCountOnDayByDriverPage.dart';
 
 class OrdersOnDayPage extends GetView<OrderStatsController> {
   var f = new DateFormat('dd/MM/yy');
@@ -20,6 +21,7 @@ class OrdersOnDayPage extends GetView<OrderStatsController> {
             (BuildContext context, AsyncSnapshot<RxList<dynamic>> snapshot) {
           List<Widget> children;
           if (snapshot.hasData) {
+            print(snapshot.data.toString());
             children = <Widget>[
               // const Icon(
               //   Icons.check_circle_outline,
@@ -39,10 +41,17 @@ class OrdersOnDayPage extends GetView<OrderStatsController> {
                 child: Row(
                   children: [
                     Expanded(
-                      child: Text(
-                        lang.strings["admin"]["orders"]["orders"],
-                        style: TextStyle(
-                            fontSize: 29, fontWeight: FontWeight.bold),
+                      child: InkWell(
+                        child: Text(
+                          lang.strings["admin"]["orders"]["orders"],
+                          style: TextStyle(
+                              fontSize: 29, fontWeight: FontWeight.bold),
+                        ),
+                        onTap: () {
+                          Get.off(() => NotifCountOnDayPage(),
+                              transition: Transition.rightToLeft,
+                              duration: Duration(milliseconds: 500));
+                        },
                       ),
                     ),
                     Theme(

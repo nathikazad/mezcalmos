@@ -18,6 +18,7 @@ class OrdersCumOnMonthPage extends GetView<OrderStatsController> {
   final f = new DateFormat('MMMM');
   var lastDay = DateTime.now().day - 1;
   var selectedtime = DateTime.now().obs;
+  var nbday = 0.obs;
   LanguageController lang = Get.find<LanguageController>();
   FutureBuilder<Map<String, dynamic>> getOrderscumulativeOnMonth() {
     return FutureBuilder<Map<String, dynamic>>(
@@ -166,6 +167,19 @@ class OrdersCumOnMonthPage extends GetView<OrderStatsController> {
                                           "${lastDay - 1}", 12)
                                       : null,
                                 ),
+                                selectionModels: [
+                                  new charts.SelectionModelConfig(
+                                      changedListener: (model) {
+                                    //print(model.selectedSeries[0].measureFn(3));
+                                    print(
+                                        "${model.selectedDatum.first.datum.day}");
+                                    nbday.value = int.parse(model
+                                        .selectedDatum.first.datum.day
+                                        .toString());
+                                    // print(model.selectedSeries[0].measureFn(
+                                    //     model.selectedDatum[1].index));
+                                  })
+                                ],
                                 primaryMeasureAxis: new charts.NumericAxisSpec(
                                     renderSpec: new charts.GridlineRendererSpec(
 
@@ -210,7 +224,12 @@ class OrdersCumOnMonthPage extends GetView<OrderStatsController> {
                           SizedBox(
                             height: 15,
                           ),
-                          checkIfTrue(snapshot.data!["byDay"], lastDay),
+                          Obx(
+                            () => (nbday.value == 0)
+                                ? checkIfTrue(snapshot.data!["byDay"], lastDay)
+                                : checkIfTrue(
+                                    snapshot.data!["byDay"], nbday.value),
+                          )
                         ],
                       )
                     : MezAdminOrdersComponents.noDataImage(),
@@ -348,17 +367,21 @@ class OrdersCumOnMonthPage extends GetView<OrderStatsController> {
 //
 Widget checkIfTrue(Map<dynamic, dynamic> data, int day) {
   var widget = null;
+
   data.forEach((key, value) {
     if (key.toString() == day.toString()) {
+      print("hey" + data[day].toString());
       widget = MezAdminOrdersComponents.ordersBoardView(
           "${data[int.parse(key.toString())]["total"]}",
           "${data[int.parse(key.toString())]["droppedoff"]}",
           "${data[int.parse(key.toString())]["cancelled"]}",
           "${data[int.parse(key.toString())]["expired"]}");
-    } else {
-      widget = MezAdminOrdersComponents.ordersBoardView("0", "0", "0", "0");
     }
   });
+  if (widget == null) {
+    widget = MezAdminOrdersComponents.ordersBoardView("0", "0", "0", "0");
+  }
+
   return Container(
     child: widget,
   );

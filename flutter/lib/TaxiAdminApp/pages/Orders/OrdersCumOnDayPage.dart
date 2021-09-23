@@ -8,6 +8,8 @@ import 'package:mezcalmos/Shared/utilities/SharedEnums.dart';
 import 'package:mezcalmos/Shared/widgets/MezAdminOrdersComponents.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 
+import 'OrdersOnDayPage.dart';
+
 class OrdersCumOnDayPage extends GetView<OrderStatsController> {
   var f = new DateFormat('dd/MM/yy');
   var selectedtime = DateTime.now().obs;
@@ -29,10 +31,17 @@ class OrdersCumOnDayPage extends GetView<OrderStatsController> {
                 child: Row(
                   children: [
                     Expanded(
-                      child: Text(
-                        lang.strings["admin"]["orders"]["cumulative"],
-                        style: TextStyle(
-                            fontSize: 29, fontWeight: FontWeight.bold),
+                      child: InkWell(
+                        child: Text(
+                          lang.strings["admin"]["orders"]["cumulative"],
+                          style: TextStyle(
+                              fontSize: 29, fontWeight: FontWeight.bold),
+                        ),
+                        onTap: () {
+                          Get.off(() => OrdersOnDayPage(),
+                              transition: Transition.rightToLeft,
+                              duration: Duration(milliseconds: 500));
+                        },
                       ),
                     ),
                     Theme(
