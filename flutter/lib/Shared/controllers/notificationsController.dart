@@ -23,16 +23,18 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
   }
 }
 
-void markInDb(String url) {
-  String driverId = GetStorage().read(getUserId);
-  url = url.replaceAll("<driverId>", driverId);
-  http.put(
-    Uri.parse(url),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: jsonEncode(<String, bool>{"value": true}),
-  );
+void markInDb(String url) async {
+  String? driverId = await GetStorage().read<String>(getUserId);
+  if (driverId != null) {
+    url = url.replaceAll("<driverId>", driverId);
+    http.put(
+      Uri.parse(url),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, bool>{"value": true}),
+    );
+  }
   // .then((value) => print(jsonDecode(value.body)["data"]));
 }
 
