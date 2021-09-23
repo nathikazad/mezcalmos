@@ -63,7 +63,6 @@ module.exports.Hasura = class Hasura {
 
     try {
       const result = await this.client.request(updateOrderMutation, parameters)
-      console.log(result.update_orders.returning)
       return {
         status: 'Success'
       }

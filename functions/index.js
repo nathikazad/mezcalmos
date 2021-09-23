@@ -38,6 +38,17 @@ exports.processSignUp = functions.auth.user().onCreate(async user => {
   })
 });
 
+exports.createName = functions.database.ref(
+  '/users/{userId}/info/displayName').onCreate(async (snap, context) => {
+    let hasura = getHasura()
+    await hasura.updateUser({
+      uid: context.params.userId,
+      changes: {
+        displayName: snap.val()
+      }
+    })
+  })
+
 exports.changeName = functions.database.ref(
   '/users/{userId}/info/displayName').onUpdate(async (snap, context) => {
     let hasura = getHasura()
@@ -46,6 +57,16 @@ exports.changeName = functions.database.ref(
       uid: context.params.userId,
       changes: {
         displayName: snap.after.val()
+      }
+    })
+  })
+
+exports.createPhoto = functions.database.ref(
+  '/users/{userId}/info/photo').onCreate(async (snap, context) => {
+    await hasura.updateUser({
+      uid: context.params.userId,
+      changes: {
+        photo: snap.val()
       }
     })
   })

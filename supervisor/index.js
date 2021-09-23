@@ -83,7 +83,7 @@ function updateOrderNotificationsList(orderId, drivers, orderNotificationsList, 
   return orderNotificationsList, driversAlreadyInList
 }
 
-function notifyDrivers(orderNotificationsList, hasuraUpdateList) {
+function notifyDrivers(orderNotificationsList, hasuraUpdateObject) {
   for (let orderId in orderNotificationsList) {
     if (!notificationStatus[orderId])
       notificationStatus[orderId] = {}
@@ -104,14 +104,7 @@ function notifyDrivers(orderNotificationsList, hasuraUpdateList) {
         notificationStatus[orderId][driverId].sent = true
         notificationStatus[orderId][driverId].sentTime = (new Date()).toUTCString()
         notificationStatus[orderId][driverId].sentCount = 1
-        hasuraUpdateList[orderId] =
-        {
-          orderId: orderId,
-          driverId: driverId,
-          receivedTime: notificationStatus[orderId][driverId].receievedTime,
-          readTime: notificationStatus[orderId][driverId].readTime,
-          sentTime: notificationStatus[orderId][driverId].sentTime
-        }
+        hasuraUpdateObject.update(orderId, driverId);
       } else {
         notificationStatus[orderId][driverId].sentCount =
           parseInt(notificationStatus[orderId][driverId].sentCount) + 1
@@ -125,50 +118,39 @@ function notifyDrivers(orderNotificationsList, hasuraUpdateList) {
         body: `Hay una nueva orden de taxi, vea si puede aceptarla.`,
         tag: "newOrder"
       },
+      data: {
+        notificationType: "newOrder",
+        markReceivedUrl: constructReturnUrl(orderId)
+      },
       collapse_key: "newOrder",
       priority: "high"
     });
 
   }
-  return hasuraUpdateList
+  return hasuraUpdateObject
 }
 
-function checkForStatusChange(orderId, hasuraUpdateList) {
+function checkForStatusChange(orderId, hasuraUpdateObject) {
   if (notificationStatus && notificationStatus[orderId]) {
     for (driverId in notificationStatus[orderId]) {
       let driver = notificationStatus[orderId][driverId]
       if (driver.received && !driver.updatedHasuraAboutReceived) {
         notificationStatus[orderId][driverId].receievedTime = (new Date()).toUTCString()
         notificationStatus[orderId][driverId].updatedHasuraAboutReceived = true
-        hasuraUpdateList[orderId] =
-        {
-          orderId: orderId,
-          driverId: driverId,
-          receivedTime: notificationStatus[orderId][driverId].receievedTime,
-          readTime: notificationStatus[orderId][driverId].readTime,
-          sentTime: notificationStatus[orderId][driverId].sentTime
-        }
+        hasuraUpdateObject.update(orderId, driverId);
+
       }
       if (driver.read && !driver.updatedHasuraAboutRead) {
         notificationStatus[orderId][driverId].readTime = (new Date()).toUTCString()
         notificationStatus[orderId][driverId].updatedHasuraAboutRead = true
-        hasuraUpdateList[orderId] =
-        {
-          orderId: orderId,
-          driverId: driverId,
-          receivedTime: notificationStatus[orderId][driverId].receievedTime,
-          readTime: notificationStatus[orderId][driverId].readTime,
-          sentTime: notificationStatus[orderId][driverId].sentTime
-        }
-
-
+        hasuraUpdateObject.update(orderId, driverId);
         for (let openOrderId in openOrders) {
           notificationStatus[openOrderId][driverId].read = true
         }
       }
     }
   }
-  return hasuraUpdateList
+  return hasuraUpdateObject
 }
 
 async function checkOpenOrders() {
@@ -179,7 +161,7 @@ async function checkOpenOrders() {
   drivers = filterDrivers(drivers)
   let orderNotificationsList = {}
   let driversAlreadyInList = {}
-  let hasuraUpdateList = {}
+  let hasuraUpdateObject = new HasuraUpdateObject();
   for (let orderId in openOrders) {
     if (openOrders[orderId].orderTime) {
       let orderTime = new Date(openOrders[orderId].orderTime)
@@ -191,7 +173,7 @@ async function checkOpenOrders() {
         // for drivers not already notified, add them to order notifications list
         orderNotificationsList, driversAlreadyInList = updateOrderNotificationsList(orderId, drivers, orderNotificationsList, driversAlreadyInList)
         // for drivers who just got marked read or received, mark them to be written in hasura
-        hasuraUpdateList = checkForStatusChange(orderId, hasuraUpdateList)
+        hasuraUpdateObject = checkForStatusChange(orderId, hasuraUpdateObject)
       }
     } else {
       expireOrder(firebase, orderId, openOrders[orderId].customer.id, hasura, fcm)
@@ -199,15 +181,12 @@ async function checkOpenOrders() {
   }
   if (Object.keys(orderNotificationsList).length > 0) {
     // for drivers who just got marked sent, mark them to be written in hasura
-    hasuraUpdateList = notifyDrivers(orderNotificationsList, hasuraUpdateList)
+    hasuraUpdateObject = notifyDrivers(orderNotificationsList, hasuraUpdateObject)
   }
 
-  if (Object.values(hasuraUpdateList).length > 0) {
-    hasura.updateNotifications(Object.values(hasuraUpdateList));
-  }
-
-
-
+  let hasuraUpdateArray = hasuraUpdateObject.getArray()
+  if (hasuraUpdateArray.length > 0)
+    hasura.updateNotifications(hasuraUpdateArray);
   firebase.database().ref(`/notificationStatus/taxi/`).update(notificationStatus)
 }
 
@@ -240,4 +219,32 @@ function constructReturnUrl(orderId) {
     dbName = keys[env].databaseURL.split('.')[0].split('/')[2]
   }
   return `${url}/notificationStatus/taxi/${orderId}/<driverId>/received.json?ns=${dbName}`
+}
+
+
+class HasuraUpdateObject {
+  constructor() {
+    this.list = {};
+  }
+
+  update(orderId, driverId) {
+    this.list[orderId] = this.list[orderId] || {}
+    this.list[orderId][driverId] = {
+      orderId: orderId,
+      driverId: driverId,
+      receivedTime: notificationStatus[orderId][driverId].receievedTime,
+      readTime: notificationStatus[orderId][driverId].readTime,
+      sentTime: notificationStatus[orderId][driverId].sentTime
+    }
+  }
+
+  getArray() {
+    let array = []
+    for (let orderId in this.list) {
+      for (let driverId in this.list[orderId]) {
+        array.push(this.list[orderId][driverId])
+      }
+    }
+    return array;
+  }
 }

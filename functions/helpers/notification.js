@@ -52,43 +52,32 @@ async function buildDeviceNotificationMessage(firebase, userId, message){
   }
 }
 
-async function notifyDriversNewRequest(firebase, address) {
+async function notifyDriversNewRequest(firebase) {
   let drivers = (await firebase.database().ref(`/taxiDrivers`).once('value')).val();
   for (let driverId in drivers){
     let driver = drivers[driverId]
     if(driver.state && driver.state.isLooking && !driver.state.currentOrder) {
       if(driver.notificationInfo) { 
-        if (driver.notificationInfo.deviceNotificationToken && !driver.versionNumber) {
-          let message={
-            title: "Nueva Pedido",
-            body: `Hay una nueva orden de taxi de ${address}, vea si puede aceptarla.`,
-            sound: "default"
+        if (driver.notificationInfo.deviceNotificationToken) {
+          let payload = {
+            notification: {
+              title: "Nueva Pedido",
+              body: `Hay una nueva orden de taxi, vea si puede aceptarla.`,
+              tag: "newOrder"
+            }
           };
-          sender.sendToDevice(driver.notificationInfo.deviceNotificationToken, message, firebase);
+          let options = {
+            collapse_key: "newOrder",
+            priority: "high"
+          }
+          await firebase.messaging().sendToDevice(driver.notificationInfo.deviceNotificationToken, payload, options)
         } else {
           let message = {
             notificationType: "newOrder",
-            message: `Hay una nueva orden de taxi de ${address}, vea si puede aceptarla.`
+            message: `Hay una nueva orden de taxi, vea si puede aceptarla.`
           }
           sender.sendToBrowser(driver.notificationInfo, message);
         }        
-      }
-    }
-  }
-
-  let users = (await firebase.database().ref(`/users`).once('value')).val();
-  for (let driverId in drivers){
-    let driver = drivers[driverId]
-    let user = users[driverId]
-    
-    if(driver.state && driver.state.isLooking && !driver.state.currentOrder) {
-      if(user.info.iphone && user.info.phoneNumber){     
-        sender.sendSMS({
-          message: `Hay una nueva orden de ${address}`,
-          phoneNumber: user.info.phoneNumber
-        }).catch(function(e){
-          functions.logger.error(`send sms error ${user.info.disp}`, e)
-        })
       }
     }
   }

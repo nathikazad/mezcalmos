@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -12,6 +13,28 @@ import 'package:mezcalmos/Shared/models/Notification.dart' as MezNotification;
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
+import 'package:http/http.dart' as http;
+
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
+  print("Handling a background message");
+  if (event.data["notificationType"] == "newOrder" &&
+      event.data["markReceivedUrl"] != null) {
+    markInDb(event.data["markReceivedUrl"]);
+  }
+}
+
+void markInDb(String url) {
+  String driverId = GetStorage().read(getUserId);
+  url = url.replaceAll("<driverId>", driverId);
+  http.put(
+    Uri.parse(url),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, bool>{"value": true}),
+  );
+  // .then((value) => print(jsonDecode(value.body)["data"]));
+}
 
 class DeviceNotificationsController extends GetxController {
   FirebaseMessaging _messaging = FirebaseMessaging.instance;
@@ -22,6 +45,9 @@ class DeviceNotificationsController extends GetxController {
   void onInit() async {
     super.onInit();
     NotificationSettings settings = await requestPermission();
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+    }
   }
 
   Future<NotificationSettings> requestPermission() async {
