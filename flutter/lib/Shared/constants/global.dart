@@ -52,3 +52,6 @@ const String enLang = "assets/json/en.json";
 const String esLang = "assets/json/es.json";
 const String aLocationPermissionAsset =
     "assets/images/Enable Map_Illustration.png";
+
+const String aPurpleLocationCircle = "assets/images/PurpleLocationCircle.png";
+const String aLocationPicker = "assets/images/PurpleLocationPicker.png";

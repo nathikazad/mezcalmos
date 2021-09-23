@@ -1,14 +1,22 @@
 import 'dart:async';
+import 'dart:typed_data';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+import 'package:get_storage/get_storage.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
+import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/Shared/models/Order.dart';
@@ -43,15 +51,72 @@ class IncomingOrdersController extends GetxController {
           (element) => element.id == _selectedIncommingOrderKey.value,
           orElse: () => Order.empty())
       : null;
-  set selectedIncommingOrderKey(String selectedOrderKey) =>
-      _selectedIncommingOrderKey.value = selectedOrderKey;
+  // ----- USED FOR G MAP STUFF ----- //
+  RxList<CustomMarker> _customMarkers = <CustomMarker>[].obs;
+  List<CustomMarker> get customMarkers => _customMarkers.value;
+  RxSet<Polyline> _polylines = <Polyline>{}.obs;
+  Set<Polyline> get polylines => _polylines.value;
+  LatLng? boundsSource;
+  LatLng? boundsDestination;
+  LatLng initialCameraLocation = LatLng(0, 0);
+  BitmapDescriptor? destionationMarker;
+  // -------------------------------- //
+
+  set selectedIncommingOrderKey(String selectedOrderKey) {
+    _selectedIncommingOrderKey.value = selectedOrderKey;
+    Order? _o = orders.firstWhere((element) => element.id == selectedOrderKey);
+
+    if (_o.id != null) {
+      initialCameraLocation = LatLng(_o.from.latitude!, _o.from.longitude!);
+      boundsSource = LatLng(_o.from.latitude!, _o.from.longitude!);
+      boundsDestination = LatLng(_o.to.latitude, _o.to.longitude);
+      print("[+] Sat Bitmaps::IncommingOrderControllers !");
+      _customMarkers.value = <CustomMarker>[
+        new CustomMarker("from", LatLng(_o.from.latitude!, _o.from.longitude!),
+            _o.pictureBytes),
+        new CustomMarker(
+            "to", LatLng(_o.to.latitude, _o.to.longitude), destionationMarker!),
+      ];
+
+      // Polylines stuff.
+      List<LatLng> pLineCoords = [];
+
+      List<PointLatLng> res = PolylinePoints()
+          .decodePolyline(_o.routeInformation?['polyline'] ?? _o.polyline);
+
+      res.forEach((PointLatLng point) =>
+          pLineCoords.add(LatLng(point.latitude, point.longitude)));
+
+      _polylines.add(Polyline(
+        color: Color.fromARGB(255, 172, 89, 252),
+        polylineId: PolylineId("ID"),
+        jointType: JointType.round,
+        points: pLineCoords,
+        width: 2,
+        startCap: Cap.buttCap,
+        endCap: Cap.roundCap,
+        // geodesic: true,
+      ));
+    }
+  }
 
   @override
   void onInit() async {
     // _selectedIncommingOrder.value = null;
-
     super.onInit();
     print("--------------------> IncomingOrderController Initialized !");
+    // destionationMarker = await BitmapDescriptor.fromAssetImage(
+    //     ImageConfiguration(size: Size(10, 10)),
+    //     'assets/images/destinationImg.png');
+
+    destionationMarker = await BitmapDescriptorLoader(
+        (await cropRonded(
+            (await rootBundle.load(purple_destination_marker_asset))
+                .buffer
+                .asUint8List())),
+        60,
+        60,
+        isBytes: true);
 
     // uhm .. well let's just attach some listeners..
     // READ : it's better to keep them like that , becauce that way we can update orders, which is an observale list.
@@ -66,10 +131,20 @@ class IncomingOrdersController extends GetxController {
             .listen((event) async {
           orders.value = <Order>[];
           if (event.snapshot.value != null) {
-            event.snapshot.value.forEach((dynamic key, dynamic value) {
+            event.snapshot.value.forEach((dynamic key, dynamic value) async {
               print(
                   "\n\n\n\n\n New Customer Order Inserted : ${key} , \n${value}\n\n\n\n\n");
-              Order order = Order.fromJson(key, value);
+
+              BitmapDescriptor picMarker = await BitmapDescriptorLoader(
+                  (await cropRonded(
+                      (await http.get(Uri.parse(value['customer']['image'])))
+                          .bodyBytes) as Uint8List),
+                  60,
+                  60,
+                  isBytes: true);
+
+              print("\n\n\n [bytes] $picMarker\n\n\n");
+              Order order = Order.fromJson(key, value, pictureBytes: picMarker);
               order.distanceToClient = MapHelper.calculateDistance(
                   order.from.position, _taxiAuthController.currentLocation);
               orders.add(order);

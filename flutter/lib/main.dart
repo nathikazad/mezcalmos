@@ -20,6 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
+import 'package:mezcalmos/TaxiApp/helpers/authHooks.dart';
 import 'package:mezcalmos/pre-main.dart';
 import 'package:package_info/package_info.dart';
 
@@ -61,11 +62,12 @@ class _SPointState extends State<SPoint> {
   bool _initialized = false;
   bool _error = false;
   bool timerDone = false;
+  late StreamSubscription<bool> onAuthStateNotifierInvoked;
 
   initializeSetup() async {
     try {
       FirebaseApp _app = await Firebase.initializeApp();
-
+      print("[+] App Initialized under Name ${_app.name} .");
       late FirebaseDatabase firebaseDb;
 
       if (widget._launch_mode == "prod") {
@@ -80,6 +82,7 @@ class _SPointState extends State<SPoint> {
       }
       // staging
       else {
+        print("[+] Entered Staging check ----.");
         firebaseDb = FirebaseDatabase(app: _app, databaseURL: stagingDb);
       }
 
@@ -97,11 +100,18 @@ class _SPointState extends State<SPoint> {
         await GetStorage().write(version, pInfos.version);
       } else
         print("[ GET STORAGE ] FAILED TO INITIALIZE !");
+      AuthController auCtrl =
+          Get.put<AuthController>(AuthController(), permanent: true);
+      Get.put<SettingsController>(SettingsController(), permanent: true);
+      // set to logs=false if you don't need the logs anymore.
+      Get.put<AppLifeCycleController>(AppLifeCycleController(logs: true),
+          permanent: true);
 
-      setState(() {
-        _initialized = true;
-      });
+      // this listenes on authStateNotifierInvoked changes and affect it's value to our _initialized StateVariable and rebuild the state of this Spoint.
+      onAuthStateNotifierInvoked = auCtrl.authStateNotifierInvoked
+          .listen((value) => setState(() => _initialized = value));
     } catch (e) {
+      print("[+] Error Happend =======> $e");
       setState(() {
         _error = true;
       });
@@ -131,16 +141,12 @@ class _SPointState extends State<SPoint> {
       );
     }
 
-    // Show a CircularIndicator until setup is full done and initialized !
+    // Show a SplashScreen until setup is full done and initialized!
     if (!_initialized) {
       return SplashScreen();
-    }
-
-    Get.put<AuthController>(AuthController(), permanent: true);
-    Get.put<SettingsController>(SettingsController(), permanent: true);
-    // set to logs=false if you don't need the logs anymore.
-    Get.put<AppLifeCycleController>(AppLifeCycleController(logs: true),
-        permanent: true);
+    } else
+      // we don't need to keep this listener there anymore
+      onAuthStateNotifierInvoked.cancel();
 
     Timer(
         Duration(seconds: nSplashScreenTimer),

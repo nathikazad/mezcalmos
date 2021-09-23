@@ -57,6 +57,7 @@
     "core-js": "^3.6.5",
     "firebase-admin": "^9.11.0",
     "graphql": "^15.5.1",
+    "graphql-request": "^3.5.0",
     "graphql-tag": "^2.12.5",
     "gsap": "^3.6.0",
     "has-tostringtag": "^1.0.0",

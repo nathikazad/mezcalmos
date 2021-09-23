@@ -1,5 +1,21 @@
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'dart:math' show cos, sqrt, sin, pi, atan2;
+
+class CustomMarker {
+  String id;
+  LatLng position;
+  BitmapDescriptor icon;
+
+  CustomMarker(this.id, this.position, this.icon);
+
+  Marker marker() => new Marker(
+      visible: true,
+      markerId: MarkerId(this.id),
+      position: this.position,
+      icon: this.icon,
+      draggable: false);
+}
 
 class MapHelper {
   static double calculateDistance(LocationData from, LocationData to) {

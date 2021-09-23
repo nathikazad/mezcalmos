@@ -103,7 +103,9 @@ class TaxiAuthController extends GetxController {
           // print(
           //     " [=] ---------------------------------> Paused locationListener !");
         } else {
-          await Location().enableBackgroundMode(enable: true);
+          if (!(await Location().isBackgroundModeEnabled()))
+            await Location().enableBackgroundMode(enable: true);
+
           _locationListener?.resume();
           // print(
           //     " [=] ---------------------------------> Resumed locationListener !");
@@ -128,7 +130,7 @@ class TaxiAuthController extends GetxController {
     if (_authController.user == null) {
       print("User is not signed in !");
     } else {
-      Location location = new Location();
+      Location location = Location();
 
       _locationEnabled.value = true;
       // location.enableBackgroundMode(enable: true);

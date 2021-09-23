@@ -25,7 +25,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
         resizeToAvoidBottomInset: false,
         appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () {
           Get.back();
-        }, context),
+        }),
         body: Container(
             // height: double.infinity,
 

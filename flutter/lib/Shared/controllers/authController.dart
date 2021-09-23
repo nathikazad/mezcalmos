@@ -1,26 +1,21 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:mezcalmos/Shared/constants/databaseNodes.dart';
+import 'package:mezcalmos/Shared/constants/routes.dart';
+import 'package:mezcalmos/TaxiApp/helpers/authHooks.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-// import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
-import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
-import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
-import 'package:mezcalmos/TaxiApp/router.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'dart:convert';
 import 'dart:math';
 import 'package:crypto/crypto.dart';
@@ -43,10 +38,14 @@ String sha256ofString(String input) {
 class AuthController extends GetxController {
   fireAuth.FirebaseAuth _auth = fireAuth.FirebaseAuth.instance;
   Rxn<User> _user = Rxn<User>();
-  final GetStorage _storage = GetStorage();
-  // final SettingsController _settings = Get.find<SettingsController>();
+  RxBool authStateNotifierInvoked = false
+      .obs; // THIS IS BEING CHECKED ON THE ROOT MAIN.DART To wait for the first invoke!
+
+  dynamic _onSignOutCallback;
+  dynamic _onSignInCallback;
 
   User? get user => _user.value;
+
   fireAuth.FirebaseAuth get auth => _auth;
 
   // RxInt _isWaitingRresponse = 0.obs;
@@ -55,10 +54,17 @@ class AuthController extends GetxController {
       Get.find<DatabaseHelper>(); // Already Injected in main function
 
   late StreamSubscription<Event> _userInfoListener;
+  StreamSubscription<Event> get userInfoListener => _userInfoListener;
 
   // # REGION ------------- OTP Code ---------------
   RxInt _timeBetweenResending = 0.obs;
   int get timeBetweenResending => _timeBetweenResending.value;
+
+  void attachOnSignOutHook(Function f) => _onSignOutCallback = f;
+  void attachOnSignInHook(Function f) {
+    if (_onSignInCallback == null) f();
+    _onSignOutCallback = f;
+  }
 
   void resendOtpTimerActivate(int time) {
     _timeBetweenResending.value = time;
@@ -81,8 +87,9 @@ class AuthController extends GetxController {
   @override
   void onInit() {
     Get.lazyPut(() => LanguageController());
-    // _user.bindStream(_auth.authStateChanges());
     _auth.authStateChanges().listen((fireAuth.User? user) {
+      authStateNotifierInvoked.value = true;
+      print("authStateNotifierInvoked ====> $authStateNotifierInvoked");
       if (user == null) {
         print('User is currently signed out!');
         _user.value = null;
@@ -92,11 +99,6 @@ class AuthController extends GetxController {
             .child(userInfo(user.uid))
             .onValue
             .listen((event) {
-          print(
-              "AuthController::onValue Invoked >> ${event.snapshot.key} : ${event.snapshot.value}");
-          print(
-              "++++++++++++++++++++++++++++++++++++++++++++++\n\n${event.snapshot.value}\n\n++++++++++++++++++++++++++++++++");
-          // if language is not set in db, then get it from lang controller which gets it from device
           if (event.snapshot.value['language'] == null) {
             event.snapshot.value['language'] =
                 Get.find<LanguageController>().userLanguageKey;
@@ -113,12 +115,7 @@ class AuthController extends GetxController {
 
   Future<void> signOut() async {
     try {
-      _userInfoListener.pause();
-      // TaxiInjectionHelper.revokeListenersOnSignOut();
-      Get.find<TaxiAuthController>().dispose();
-      Get.find<DeviceNotificationsController>().dispose();
-      Get.delete<MessageController>();
-      Get.delete<FBNotificationsController>();
+      _onSignOutCallback();
       await _auth.signOut();
       Get.offAllNamed(kMainAuthWrapperRoute);
     } catch (e) {
@@ -156,12 +153,7 @@ class AuthController extends GetxController {
             onTimeout: () =>
                 Future.error(Exception("Timed out , Check your Internet.")))
         .then((value) {
-      // Get.snackbar(lang.strings['shared']['login']["welcomeTitle"],
-      //     "${lang.strings['shared']['login']["hello"]} ${value.user?.displayName}, ${lang.strings['shared']['login']["welcomeDesc2"]}",
-      //     colorText: Colors.white,
-      //     backgroundColor: Colors.black87,
-      //     snackPosition: SnackPosition.BOTTOM,
-      //     snackStyle: SnackStyle.FLOATING);
+      _onSignInCallback();
       _userInfoListener.resume();
     }, onError: ((Object e, StackTrace stackTrace) {
       Get.snackbar("Failed to Sign you in!", e.toString(),
@@ -218,6 +210,7 @@ class AuthController extends GetxController {
           "################################ DATA ###############################\n\n${response.data}\n\n");
       await fireAuth.FirebaseAuth.instance
           .signInWithCustomToken(response.data["token"]);
+      _onSignInCallback();
       _userInfoListener.resume();
 
       await Get.offAllNamed(kMainAuthWrapperRoute);
@@ -243,6 +236,9 @@ class AuthController extends GetxController {
       fireAuth.FirebaseAuth.instance
           .signInWithCredential(facebookAuthCredential);
       _userInfoListener.resume();
+      AuthHooks();
+      print("+++++++++++++++++++==> $_onSignInCallback <==++++++++++++++++++");
+      // await _onSignInCallback();
     } else {
       mezcalmosSnackBar("Notice ~", "Failed SignIn with Facebook !");
     }
@@ -277,6 +273,7 @@ class AuthController extends GetxController {
       // Sign in the user with Firebase. If the nonce we generated earlier does
       // not match the nonce in `appleCredential.identityToken`, sign in will fail.
       fireAuth.FirebaseAuth.instance.signInWithCredential(oauthCredential);
+      _onSignInCallback();
       _userInfoListener.resume();
     } catch (exception) {
       print(exception);

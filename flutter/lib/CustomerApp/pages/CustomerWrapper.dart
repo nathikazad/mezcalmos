@@ -19,7 +19,7 @@ class CustomerWrapper extends GetWidget<AuthController> {
         drawer: MezSideMenu(),
         backgroundColor: Colors.white,
         appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
-            "menu", _sideMenuDrawerController.openMenu, context),
+            "menu", _sideMenuDrawerController.openMenu),
         body: MakeOrderScreen() // Center(child: Text("CustomerApp")),
         );
   }

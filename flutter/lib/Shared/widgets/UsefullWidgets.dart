@@ -59,7 +59,7 @@ class MezcalmosSharedWidgets {
       );
 
   static AppBar mezcalmosAppBar(
-      String btnType, Function onTapFunction, dynamic _,
+      String btnType, Function onTapFunction,
       {dynamic bgColor = Colors.white}) {
     Widget btn_icon;
 

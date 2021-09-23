@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/constants/databaseNodes.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
-import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 

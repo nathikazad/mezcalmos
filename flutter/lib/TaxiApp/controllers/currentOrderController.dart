@@ -1,22 +1,47 @@
 import 'dart:async';
+import 'package:http/http.dart' as http;
+import 'dart:typed_data';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/controllers/mapController.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
+import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Order.dart';
-import 'package:mezcalmos/TaxiApp/router.dart';
 
 class CurrentOrderController extends GetxController {
   Rx<Order> _model = Order.empty().obs;
   RxBool _waitingResponse = RxBool(false);
+  // final GetStorage _getStorage = new GetStorage();
+  // ----- USED FOR G MAP STUFF ----- //
+  RxList<CustomMarker> _customMarkers = <CustomMarker>[].obs;
+  List<CustomMarker> get customMarkers => _customMarkers.value;
+  late LatLng initialCameraLocation;
+  RxSet<Polyline> _polylines = <Polyline>{}.obs;
+  Set<Polyline> get polylines => _polylines.value;
+  LatLng? boundsSource;
+  LatLng? boundsDestination;
 
+  Map<String, dynamic> markerIdWithLocationSubscription = <String, dynamic>{
+    "id": null,
+    "sub": null
+  };
+
+  BitmapDescriptor? toDescriptor;
+  BitmapDescriptor? taxiDescriptor;
+  BitmapDescriptor? picMarker;
+  // -------------------------------- //
   TaxiAuthController _taxiAuthController =
       Get.find<TaxiAuthController>(); // since it's already injected .
   DatabaseHelper _databaseHelper =
@@ -36,12 +61,73 @@ class CurrentOrderController extends GetxController {
       _taxiAuthController.currentLocation, _model.value.from.position);
 
   StreamSubscription<Event>? _currentOrderListener;
+  RxInt mapNeedsRender = 0.obs;
 
   @override
   void onInit() {
     super.onInit();
+    // taxi marker subscription
+    markerIdWithLocationSubscription["id"] = "taxi";
+    markerIdWithLocationSubscription["sub"] =
+        _taxiAuthController.currentLocationRx;
+
+    initialCameraLocation = LatLng(
+        _taxiAuthController.currentLocation.latitude!,
+        _taxiAuthController.currentLocation.longitude!);
+
     print("--------------------> CurrentOrderController Initialized !");
     // dispatchCurrentOrder();
+  }
+
+  void loadUpPolyline(Order _o) {
+    // Polylines stuff.
+    List<LatLng> pLineCoords = [];
+
+    List<PointLatLng> res = PolylinePoints()
+        .decodePolyline(_o.routeInformation?['polyline'] ?? _o.polyline);
+
+    res.forEach((PointLatLng point) =>
+        pLineCoords.add(LatLng(point.latitude, point.longitude)));
+
+    _polylines.add(Polyline(
+      color: Color.fromARGB(255, 172, 89, 252),
+      polylineId: PolylineId("ID"),
+      jointType: JointType.round,
+      points: pLineCoords,
+      width: 2,
+      startCap: Cap.buttCap,
+      endCap: Cap.roundCap,
+      // geodesic: true,
+    ));
+  }
+
+  Future<void> loadBitmapsUp() async {
+    if (toDescriptor == null)
+      toDescriptor = await BitmapDescriptorLoader(
+          (await cropRonded(
+              (await rootBundle.load(purple_destination_marker_asset))
+                  .buffer
+                  .asUint8List())),
+          60,
+          60,
+          isBytes: true);
+    if (taxiDescriptor == null) {}
+    taxiDescriptor = await BitmapDescriptorLoader(
+        (await cropRonded((await rootBundle.load(taxi_driver_marker_asset))
+            .buffer
+            .asUint8List())),
+        60,
+        60,
+        isBytes: true);
+
+    if (picMarker == null)
+      picMarker = await BitmapDescriptorLoader(
+          (await cropRonded(
+              (await http.get(Uri.parse(value?.customer['image'])))
+                  .bodyBytes) as Uint8List),
+          60,
+          60,
+          isBytes: true);
   }
 
   void dispatchCurrentOrder() {
@@ -69,18 +155,155 @@ class CurrentOrderController extends GetxController {
               55, Get.height, Get.width);
           // Get.back(closeOverlays: true);
           // Get.offAndToNamed(kMainAuthWrapperRoute);
-          Get.delete<CurrentOrderMapController>();
-          Get.delete<CurrentOrderController>()
-              .then((_) => Get.back(closeOverlays: true));
+          // Get.delete<CurrentOrderMapController>();
+          // Get.delete<CurrentOrderController>()
+          //     .then((_) => Get.back(closeOverlays: true));
         } else {
           _model.value = Order.fromSnapshot(event.snapshot);
           _model.value.id = _taxiAuthController.currentOrderId;
-          CurrentOrderMapController mezCurrentMap =
-              Get.find<CurrentOrderMapController>();
-          if (!mezCurrentMap.isClosed && !dirty) {
-            mezCurrentMap.googleMapUpdate();
+
+          if (!dirty) {
+            // if status changed we change the narkers !
+            if (_polylines.length == 0) loadUpPolyline(value!);
+            if (_model.value.status == "onTheWay") {
+              // 3 markers
+              await loadBitmapsUp(); // happens only one
+              boundsSource = LatLng(
+                  _taxiAuthController.currentLocation.latitude!,
+                  _taxiAuthController.currentLocation.longitude!);
+              boundsDestination =
+                  LatLng(value?.to.latitude, value?.to.longitude);
+
+              _customMarkers.value = <CustomMarker>[
+                new CustomMarker(
+                    "taxi",
+                    LatLng(_taxiAuthController.currentLocation.latitude!,
+                        _taxiAuthController.currentLocation.longitude!),
+                    taxiDescriptor!),
+                new CustomMarker(
+                    "from",
+                    LatLng(value?.from.latitude, value?.from.longitude),
+                    picMarker!),
+                new CustomMarker(
+                    "to",
+                    LatLng(value?.to.latitude, value?.to.longitude),
+                    toDescriptor!),
+              ];
+            } else if (_model.value.status == "inTransit") {
+              await loadBitmapsUp();
+              boundsSource = LatLng(
+                  _taxiAuthController.currentLocation.latitude!,
+                  _taxiAuthController.currentLocation.longitude!);
+              boundsDestination =
+                  LatLng(value?.to.latitude, value?.to.longitude);
+              // two markers
+              _customMarkers.value = <CustomMarker>[
+                new CustomMarker(
+                    "taxi",
+                    LatLng(_taxiAuthController.currentLocation.latitude!,
+                        _taxiAuthController.currentLocation.longitude!),
+                    taxiDescriptor!),
+                new CustomMarker(
+                    "to",
+                    LatLng(value?.to.latitude, value?.to.longitude),
+                    toDescriptor!),
+              ];
+            }
+
+            //   print("\n\n\n ${GetStorage().read('taxi_descriptor')} \n\n\n");
+            // switch (_model.value.status) {
+            //   case "onTheWay":
+            //     // Markers stuff
+            //     Set<Marker> _markers = <Marker>{
+            //       Marker(
+            //         draggable: false,
+            //         markerId: MarkerId("from"),
+            //         icon: await BitmapDescriptorLoader(
+            //             taxi_driver_marker_asset, 60, 60),
+            //         visible: true,
+            //         position: LatLng(
+            //             _taxiAuthController.currentLocation.latitude!,
+            //             _taxiAuthController.currentLocation.longitude!),
+            //       ),
+            //       Marker(
+            //         draggable: false,
+            //         markerId: MarkerId("to"),
+            //         icon: await BitmapDescriptorLoader(
+            //             taxi_driver_marker_asset, 60, 60), // user img here
+            //         visible: true,
+            //         position: LatLng(_model.value.from.latitude,
+            //             _model.value.from.longitude),
+            //       ),
+            //       Marker(
+            //         draggable: false,
+            //         markerId: MarkerId("dest"),
+            //         icon: await BitmapDescriptorLoader(
+            //             purple_destination_marker_asset, 60, 60),
+            //         visible: true,
+            //         position: LatLng(
+            //             _model.value.to.latitude, _model.value.to.longitude),
+            //       ),
+            //     };
+
+            //     GetStorage().write("markers", _markers);
+
+            //     // Polylines Stuff
+            //     List<LatLng> _pCords = <LatLng>[];
+            //     PolylinePoints()
+            //         .decodePolyline(
+            //             _model.value.routeInformation?['polyline'] ??
+            //                 _model.value.polyline)
+            //         .forEach((plt) =>
+            //             _pCords.add(LatLng(plt.latitude, plt.longitude)));
+
+            //     _getStorage.write("polylines", <Polyline>{
+            //       new Polyline(
+            //         color: Color.fromARGB(255, 172, 89, 252),
+            //         polylineId: PolylineId("ID"),
+            //         jointType: JointType.round,
+            //         points: _pCords,
+            //         width: 2,
+            //         startCap: Cap.buttCap,
+            //         endCap: Cap.roundCap,
+            //         // geodesic: true,
+            //       )
+            //     });
+            //     mapNeedsRender.value += 1;
+            //     break;
+
+            //   case "inTransit":
+            //     _getStorage.write("markers", <Marker>{
+            //       new Marker(
+            //         draggable: false,
+            //         markerId: MarkerId("from"),
+            //         icon: _getStorage.read('taxi_descriptor'),
+            //         visible: true,
+            //         position: LatLng(
+            //             _taxiAuthController.currentLocation.latitude!,
+            //             _taxiAuthController.currentLocation.longitude!),
+            //       ),
+            //       new Marker(
+            //         draggable: false,
+            //         markerId: MarkerId("to"),
+            //         icon: _getStorage.read('destination_descriptor'),
+            //         visible: true,
+            //         position: LatLng(
+            //             _model.value.to.latitude, _model.value.to.longitude),
+            //       ),
+            //     });
+            //     mapNeedsRender.value += 1;
+            //     break;
+            //   default:
+            //     mapNeedsRender.value = 0;
+            //     break;
           }
         }
+        // CurrentOrderMapController mezCurrentMap =
+        //     Get.find<CurrentOrderMapController>();
+        // if (!mezCurrentMap.isClosed && !dirty) {
+        //   mezCurrentMap.googleMapUpdate();
+        // }
+        // }
       }
     });
   }
@@ -110,7 +333,7 @@ class CurrentOrderController extends GetxController {
             "Manually thrown Exception - Reason -> Response.data was null !");
       } else {
         mezcalmosSnackBar("Notice ~", _res);
-        Get.delete<CurrentOrderMapController>();
+        // Get.delete<CurrentOrderMapController>();
       }
 
       _waitingResponse.value = false;
@@ -158,7 +381,7 @@ class CurrentOrderController extends GetxController {
             "Manually thrown Exception - Reason -> Response.data was null !");
       } else {
         mezcalmosSnackBar("Notice ~", _res);
-        Get.delete<CurrentOrderMapController>();
+        // Get.delete<CurrentOrderMapController>();
       }
 
       _waitingResponse.value = false;
@@ -172,7 +395,6 @@ class CurrentOrderController extends GetxController {
   void detachListeners() {
     _notifications.clearAllMessageNotification();
     if (_currentOrderListener != null) {
-      // Get.delete<CurrentOrderMapController>();
       _currentOrderListener!
           .cancel()
           .then((value) => print(

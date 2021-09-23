@@ -16,7 +16,7 @@ class LocationPermissionScreen extends StatelessWidget {
     print("Onlocation screeeeeen !");
     return Scaffold(
         appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
-            "menu", () => _sideMenuDraweController.openMenu(), context),
+            "menu", () => _sideMenuDraweController.openMenu()),
         resizeToAvoidBottomInset: false,
         key: _sideMenuDraweController.getNewKey(),
         drawer: MezSideMenu(),

@@ -1,4 +1,7 @@
+import 'dart:typed_data';
+
 import 'package:firebase_database/firebase_database.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
 class Location {
@@ -21,12 +24,13 @@ class Order {
   dynamic id;
   dynamic customer;
   dynamic estimatedPrice;
-  dynamic from; // this must not be late  , especcially since  we are using Order.emty
+  dynamic
+      from; // this must not be late  , especcially since  we are using Order.emty
   dynamic to; // this too .
   dynamic orderTime;
   dynamic paymentType;
   dynamic routeInformation; // Map<String , Map<String, dynamic>>
-
+  dynamic pictureBytes;
   // orders/taxi are something else..
   dynamic driver;
   dynamic distance;
@@ -57,15 +61,17 @@ class Order {
       required this.rideFinishTime,
       required this.rideStartTime,
       required this.status,
-      required this.polyline});
+      required this.polyline,
+      required this.pictureBytes});
 
   // Get props as list.
-  List<Object> get props => [id, from, to, orderTime, paymentType, routeInformation];
+  List<Object> get props =>
+      [id, from, to, orderTime, paymentType, routeInformation];
 
   // Empty Order Constructor!
   Order.empty({this.polyline = ""});
 
-  Order.fromSnapshot(DataSnapshot snapshot)
+  Order.fromSnapshot(DataSnapshot snapshot, {BitmapDescriptor? pictureBytes})
       : id = snapshot.key ?? "",
         driver = snapshot.value['driver'],
         distance = snapshot.value['distance'],
@@ -82,9 +88,10 @@ class Order {
         orderTime = snapshot.value['orderTime'],
         paymentType = snapshot.value['paymentType'],
         routeInformation = snapshot.value['routeInformation'],
-        polyline = snapshot.value['polyline'] ?? "";
+        polyline = snapshot.value['polyline'] ?? "",
+        this.pictureBytes = pictureBytes;
 
-  Order.fromJson(dynamic key, dynamic value)
+  Order.fromJson(dynamic key, dynamic value, {BitmapDescriptor? pictureBytes})
       : id = key,
         driver = value['driver'],
         distance = value['distance'],
@@ -101,7 +108,8 @@ class Order {
         orderTime = value['orderTime'],
         paymentType = value['paymentType'],
         routeInformation = value['routeInformation'],
-        polyline = value['polyline'] ?? "";
+        polyline = value['polyline'] ?? "",
+        this.pictureBytes = pictureBytes;
 
   // Added for Debugging Perposes - Don't delete for now
   Map<String, dynamic> toJson() => {

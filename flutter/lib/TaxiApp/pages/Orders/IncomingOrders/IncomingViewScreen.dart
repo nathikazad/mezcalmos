@@ -3,32 +3,42 @@ import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
-import 'package:mezcalmos/Shared/widgets/MezGoogleMap.dart';
+import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
+import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 
 class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
   LanguageController lang = Get.find<LanguageController>();
+
   @override
   Widget build(BuildContext context) {
-    // Get.put<MezGoogleMapController>(MezGoogleMapController());
+    TaxiAuthController _taxiAuthController = Get.find<TaxiAuthController>();
 
     return Scaffold(
       appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
-          "back", () => Get.back(), context),
+          "back", () => Get.back()),
       body: SafeArea(
         child: Stack(
           alignment: Alignment.topCenter,
           children: [
             Obx(() => controller.waitingResponse ||
-                    controller.selectedIncommingOrder?.id == null
+                    controller.selectedIncommingOrder?.id == null ||
+                    controller.customMarkers.isEmpty ||
+                    controller.polylines.isEmpty
                 ? Center(child: CircularProgressIndicator())
-                : MezGoogleMap(false)),
+                : MGoogleMap(
+                    controller.customMarkers,
+                    controller.initialCameraLocation,
+                    controller.boundsSource!,
+                    controller.boundsDestination!,
+                    polylines: controller.polylines)),
             Positioned(
                 bottom: GetStorage().read(getxGmapBottomPaddingKey) + 55,
                 child: Container(

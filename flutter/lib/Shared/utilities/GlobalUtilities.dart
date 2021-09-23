@@ -52,6 +52,7 @@ Future<BitmapDescriptor> BitmapDescriptorLoader(
     {bool isBytes = false}) async {
   return BitmapDescriptor.fromBytes(
       await getBytesFromCanvas(width, height, asset, isBytes: isBytes));
+  // return await getBytesFromCanvas(width, height, asset, isBytes: isBytes);
 }
 
 Future<Uint8List> getBytesFromCanvas(int width, int height, urlAsset,
