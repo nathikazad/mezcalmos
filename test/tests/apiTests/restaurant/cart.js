@@ -36,7 +36,7 @@ let restaurantInfo = {
   }
 }
 
-let item = {
+let itemOne = {
   name: {
     en: "normal burger",
     es: "burgesa normal"
@@ -47,6 +47,7 @@ let item = {
   },
   available: true,
   images: ["img1", "img2", "img3"],
+  cost: 5.99,
   options: {
     chooseOne: {
       meat: {
@@ -99,6 +100,9 @@ let item = {
   }
 }
 
+// let itemTwo = {}
+// let itemThree = {}
+
 // /restaurant/<restaurantId>
 
 //{state:
@@ -117,16 +121,38 @@ describe('Mezcalmos', () => {
     restaurantUser = await auth.signUp(admin, restaurantData)
     restaurant = new Restaurant(restaurantUser);
     await restaurant.setRestaurantInfo(admin, restaurantInfo);
+    await restaurant.addItem(itemOne);
+    await restaurant.addItem(itemTwo);
+    await restaurant.addItem(itemThree);
   });
 
-  it('Add items test', async () => {
+  it('Add items to cart', async () => {
 
-    // Add an item
-    let itemId = await restaurant.addItem(item);
-    // make the customer retrieve the item
+
     let items = await customer.db.get(`resturants/${restaurantUser.id}/menu`);
-    // items length, name, item description
-    // items.length == 1
+    let itemToAdd = {
+      orderType: "restaurant",
+      serviceProviderId: "<restaurantId>",
+      itemId: "<id>",
+      options: {
+        meat: "chicken",
+        cheese: "mozarella",
+        lettuce: true,
+        tomato: true,
+        sides: {
+          frenchFries: true
+        }
+      }
+    }
+    await customer.callFunction("addToCart", itemToAdd);
+
+    let cart = await customer.db.get(`customer/${customer.id}/cart`);
+
+    // cart length, name, item description
+    // cart.orderType == "Restaurant"
+    // cart.serviceProviderId == "RestaurantId"
+    // cart.totalCost == 7.98
+    // cart.length == 1
     // items[0].name.en == "normal burger"
     // items[0].description.en == "normal burger with bla"
     // items.images.length == 3
@@ -136,55 +162,10 @@ describe('Mezcalmos', () => {
     // items.length == 2
   });
 
-  it('Remove items test', async () => {
+  it('Increase item count in cart', async () => { })
+  it('Decrease item count in cart', async () => { })
 
-    // Add an item
-    let itemId = await restaurant.addItem(item);
-    await restaurant.removeItem(item);
-    let items = await customer.db.get(`resturants/${restaurantUser.id}/menu`);
-    // make the customer retrieve items
-    // items.length == 0
-    // item should not be there
-  });
-
-  it('Edit items test', async () => {
-
-    // Add an item
-    let itemId = await restaurant.addItem(item);
-    itemModification = {
-      description: {
-        en: "a burger with patty",
-        es: "un burgesa normal con carne"
-      },
-      images: ["img1", "img2", "img3", "img4"],
-      options: {
-        chooseMany: {
-          onion: null
-        }
-      }
-    }
-
-    await restaurant.updateItem(itemId, itemModification);
-    let items = await customer.db.get(`resturants/${restaurantUser.id}/menu`);
-    // make the customer retrieve items
-    // items.length == 1
-    // items[id].description.en == "a burger with patty"
-    // items.images.length == 4
-  });
-
-  it('Mark item as unavailable test test', async () => {
-
-    // Add an item
-    let itemId = await restaurant.addItem(item);
-    itemModification = {
-      available: false
-    }
-    await restaurant.updateItem(itemId, itemModification);
-    // make the customer retrieve items
-    // items.length == 1
-    // items[id].available == false
-  });
-
+  it('Delete item count in cart', async () => { })
 })
 
 afterAll(() => {
