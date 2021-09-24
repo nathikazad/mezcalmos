@@ -14,7 +14,8 @@ class Database {
   }
 
   async push(path, data) {
-    await axios.post(`http://localhost:9000/${path}.json?ns=mezcalmos-31f1c-default-rtdb&auth=${this.idToken}`, data)
+    let response = await axios.post(`http://localhost:9000/${path}.json?ns=mezcalmos-31f1c-default-rtdb&auth=${this.idToken}`, data)
+    return response.data.id;
   }
 
   async update(path, data) {
