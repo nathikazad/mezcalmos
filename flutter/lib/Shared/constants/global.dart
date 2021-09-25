@@ -48,8 +48,8 @@ const String version = "VERSION";
 
 const String aLogoPath = "assets/images/logo.png";
 const String aDefaultAvatar = "assets/images/defaultAvatar.png";
-const String enLang = "assets/json/en.json";
-const String esLang = "assets/json/es.json";
+const String enLang = "assets/i18n/en.json";
+const String esLang = "assets/i18n/es.json";
 const String aLocationPermissionAsset =
     "assets/images/Enable Map_Illustration.png";
 
