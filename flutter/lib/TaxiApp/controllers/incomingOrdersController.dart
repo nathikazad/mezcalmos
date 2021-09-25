@@ -10,11 +10,9 @@ import 'package:http/http.dart' as http;
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
@@ -37,14 +35,14 @@ class IncomingOrdersController extends GetxController {
   AppLifeCycleController _appLifeCycleController =
       Get.find<AppLifeCycleController>();
 
-  RxBool _waitingResponse = RxBool(false);
+  // RxBool _waitingResponse = RxBool(false);
   RxString _selectedIncommingOrderKey = "".obs;
 
   // Storing all the needed Listeners here
   List<StreamSubscription<Event>> _listeners = <StreamSubscription<Event>>[];
   late Worker _updateOrderDistanceToClient;
 
-  dynamic get waitingResponse => _waitingResponse.value;
+  // dynamic get waitingResponse => _waitingResponse.value;
 
   Order? get selectedIncommingOrder => (_selectedIncommingOrderKey.value != "")
       ? orders.firstWhere(
@@ -133,7 +131,7 @@ class IncomingOrdersController extends GetxController {
           if (event.snapshot.value != null) {
             event.snapshot.value.forEach((dynamic key, dynamic value) async {
               print(
-                  "\n\n\n\n\n New Customer Order Inserted : ${key} , \n${value}\n\n\n\n\n");
+                  "\n\n\n\n\n New Customer Order Inserted : $key , \n$value\n\n\n\n\n");
 
               BitmapDescriptor picMarker = await BitmapDescriptorLoader(
                   (await cropRonded(
@@ -215,20 +213,20 @@ class IncomingOrdersController extends GetxController {
     HttpsCallable acceptTaxiFunction =
         FirebaseFunctions.instance.httpsCallable('acceptTaxiOrder');
     try {
-      _waitingResponse.value = true;
+      // _waitingResponse.value = true;
       HttpsCallableResult response = await acceptTaxiFunction
           .call(<String, dynamic>{
         'orderId': orderId,
         'database': _databaseHelper.dbType
       });
-      _waitingResponse.value = false;
+      // _waitingResponse.value = false;
       _selectedIncommingOrderKey.value = "";
       Get.back(closeOverlays: true);
       mezcalmosSnackBar("Notice ~", "A new Order has been accpeted !");
       print("Accept Taxi Response");
       print(response.data);
     } catch (e) {
-      _waitingResponse.value = false;
+      // _waitingResponse.value = false;
       mezcalmosSnackBar("Notice ~", "Failed to accept the taxi order :( ");
       print("Exception happend in acceptTaxi : $e");
     }

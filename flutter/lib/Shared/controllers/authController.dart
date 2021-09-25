@@ -4,14 +4,11 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/databaseNodes.dart';
 import 'package:mezcalmos/Shared/constants/routes.dart';
-import 'package:mezcalmos/TaxiApp/helpers/authHooks.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/controllers/messageController.dart';
-import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:cloud_functions/cloud_functions.dart';
@@ -63,7 +60,7 @@ class AuthController extends GetxController {
   void attachOnSignOutHook(Function f) => _onSignOutCallback = f;
   void attachOnSignInHook(Function f) {
     if (_onSignInCallback == null) f();
-    _onSignOutCallback = f;
+    _onSignInCallback = f;
   }
 
   void resendOtpTimerActivate(int time) {
@@ -154,7 +151,6 @@ class AuthController extends GetxController {
                 Future.error(Exception("Timed out , Check your Internet.")))
         .then((value) {
       _onSignInCallback();
-      _userInfoListener.resume();
     }, onError: ((Object e, StackTrace stackTrace) {
       Get.snackbar("Failed to Sign you in!", e.toString(),
           snackPosition: SnackPosition.BOTTOM);
@@ -211,7 +207,6 @@ class AuthController extends GetxController {
       await fireAuth.FirebaseAuth.instance
           .signInWithCustomToken(response.data["token"]);
       _onSignInCallback();
-      _userInfoListener.resume();
 
       await Get.offAllNamed(kMainAuthWrapperRoute);
     } catch (e) {
@@ -235,10 +230,8 @@ class AuthController extends GetxController {
       // Once signed in, return the UserCredential
       fireAuth.FirebaseAuth.instance
           .signInWithCredential(facebookAuthCredential);
-      _userInfoListener.resume();
-      AuthHooks();
-      print("+++++++++++++++++++==> $_onSignInCallback <==++++++++++++++++++");
-      // await _onSignInCallback();
+
+      _onSignInCallback();
     } else {
       mezcalmosSnackBar("Notice ~", "Failed SignIn with Facebook !");
     }
@@ -274,7 +267,6 @@ class AuthController extends GetxController {
       // not match the nonce in `appleCredential.identityToken`, sign in will fail.
       fireAuth.FirebaseAuth.instance.signInWithCredential(oauthCredential);
       _onSignInCallback();
-      _userInfoListener.resume();
     } catch (exception) {
       print(exception);
       mezcalmosSnackBar("Notice ~", "Failed SignIn with Apple !");

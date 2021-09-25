@@ -7,14 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
+import 'package:mezcalmos/TaxiApp/controllers/FBTaxiNorificationsController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
@@ -22,8 +21,8 @@ import 'package:mezcalmos/Shared/models/Order.dart';
 
 class CurrentOrderController extends GetxController {
   Rx<Order> _model = Order.empty().obs;
-  RxBool _waitingResponse = RxBool(false);
-  // final GetStorage _getStorage = new GetStorage();
+  // RxBool _waitingResponse = RxBool(false);
+
   // ----- USED FOR G MAP STUFF ----- //
   RxList<CustomMarker> _customMarkers = <CustomMarker>[].obs;
   List<CustomMarker> get customMarkers => _customMarkers.value;
@@ -48,11 +47,11 @@ class CurrentOrderController extends GetxController {
       Get.find<DatabaseHelper>(); // Already Injected in main function
 
   FBNotificationsController _notifications =
-      Get.put<FBNotificationsController>(FBNotificationsController());
+      Get.put<FBNotificationsController>(FBTaxiNotificationsController());
 
   Order? get value => _model.value;
   dynamic get id => _model.value.id;
-  dynamic get waitingResponse => _waitingResponse.value;
+  // dynamic get waitingResponse => _waitingResponse.value;
 
   double get distanceToFinish => MapHelper.calculateDistance(
       _taxiAuthController.currentLocation, _model.value.to.position);
@@ -137,11 +136,6 @@ class CurrentOrderController extends GetxController {
         .child(orderId(_taxiAuthController.currentOrderId))
         .onValue
         .listen((event) async {
-      // if (event.snapshot.value['status'] != _model.value.status) {
-      //   // we will trigger updateGoogleMap
-      // }
-
-      // print("[[[[[[[[[[ \n\n ${event.snapshot.value} \n\n ]]]]]]]]]]");
       print(
           "CurrentOrderController :: DispatchCurrentOrder :: _taxiAuthController.currentOrderId ${_taxiAuthController.currentOrderId}");
       if (event.snapshot.value != null) {
@@ -153,11 +147,6 @@ class CurrentOrderController extends GetxController {
             event.snapshot.value['cancelledBy'] == "customer") {
           await MezcalmosSharedWidgets.mezcalmosDialogOrderCancelled(
               55, Get.height, Get.width);
-          // Get.back(closeOverlays: true);
-          // Get.offAndToNamed(kMainAuthWrapperRoute);
-          // Get.delete<CurrentOrderMapController>();
-          // Get.delete<CurrentOrderController>()
-          //     .then((_) => Get.back(closeOverlays: true));
         } else {
           _model.value = Order.fromSnapshot(event.snapshot);
           _model.value.id = _taxiAuthController.currentOrderId;
@@ -209,119 +198,18 @@ class CurrentOrderController extends GetxController {
                     toDescriptor!),
               ];
             }
-
-            //   print("\n\n\n ${GetStorage().read('taxi_descriptor')} \n\n\n");
-            // switch (_model.value.status) {
-            //   case "onTheWay":
-            //     // Markers stuff
-            //     Set<Marker> _markers = <Marker>{
-            //       Marker(
-            //         draggable: false,
-            //         markerId: MarkerId("from"),
-            //         icon: await BitmapDescriptorLoader(
-            //             taxi_driver_marker_asset, 60, 60),
-            //         visible: true,
-            //         position: LatLng(
-            //             _taxiAuthController.currentLocation.latitude!,
-            //             _taxiAuthController.currentLocation.longitude!),
-            //       ),
-            //       Marker(
-            //         draggable: false,
-            //         markerId: MarkerId("to"),
-            //         icon: await BitmapDescriptorLoader(
-            //             taxi_driver_marker_asset, 60, 60), // user img here
-            //         visible: true,
-            //         position: LatLng(_model.value.from.latitude,
-            //             _model.value.from.longitude),
-            //       ),
-            //       Marker(
-            //         draggable: false,
-            //         markerId: MarkerId("dest"),
-            //         icon: await BitmapDescriptorLoader(
-            //             purple_destination_marker_asset, 60, 60),
-            //         visible: true,
-            //         position: LatLng(
-            //             _model.value.to.latitude, _model.value.to.longitude),
-            //       ),
-            //     };
-
-            //     GetStorage().write("markers", _markers);
-
-            //     // Polylines Stuff
-            //     List<LatLng> _pCords = <LatLng>[];
-            //     PolylinePoints()
-            //         .decodePolyline(
-            //             _model.value.routeInformation?['polyline'] ??
-            //                 _model.value.polyline)
-            //         .forEach((plt) =>
-            //             _pCords.add(LatLng(plt.latitude, plt.longitude)));
-
-            //     _getStorage.write("polylines", <Polyline>{
-            //       new Polyline(
-            //         color: Color.fromARGB(255, 172, 89, 252),
-            //         polylineId: PolylineId("ID"),
-            //         jointType: JointType.round,
-            //         points: _pCords,
-            //         width: 2,
-            //         startCap: Cap.buttCap,
-            //         endCap: Cap.roundCap,
-            //         // geodesic: true,
-            //       )
-            //     });
-            //     mapNeedsRender.value += 1;
-            //     break;
-
-            //   case "inTransit":
-            //     _getStorage.write("markers", <Marker>{
-            //       new Marker(
-            //         draggable: false,
-            //         markerId: MarkerId("from"),
-            //         icon: _getStorage.read('taxi_descriptor'),
-            //         visible: true,
-            //         position: LatLng(
-            //             _taxiAuthController.currentLocation.latitude!,
-            //             _taxiAuthController.currentLocation.longitude!),
-            //       ),
-            //       new Marker(
-            //         draggable: false,
-            //         markerId: MarkerId("to"),
-            //         icon: _getStorage.read('destination_descriptor'),
-            //         visible: true,
-            //         position: LatLng(
-            //             _model.value.to.latitude, _model.value.to.longitude),
-            //       ),
-            //     });
-            //     mapNeedsRender.value += 1;
-            //     break;
-            //   default:
-            //     mapNeedsRender.value = 0;
-            //     break;
           }
         }
-        // CurrentOrderMapController mezCurrentMap =
-        //     Get.find<CurrentOrderMapController>();
-        // if (!mezCurrentMap.isClosed && !dirty) {
-        //   mezCurrentMap.googleMapUpdate();
-        // }
-        // }
       }
     });
   }
-
-  // int remainingUnreadMessages() {
-  //   if (_model.value.id != null) {
-  //     return _notifications.remainingMessageNotificationsCount(_model.value.id);
-  //   } else {
-  //     return 0;
-  //   }
-  // }
 
   Future<void> cancelTaxi(String? reason) async {
     HttpsCallable cancelTaxiFunction =
         FirebaseFunctions.instance.httpsCallable('cancelTaxiFromDriver');
     print("Cancel Taxi Called");
     try {
-      _waitingResponse.value = true;
+      // _waitingResponse.value = true;
       HttpsCallableResult response = await cancelTaxiFunction
           .call(<String, dynamic>{
         'reason': reason,
@@ -336,10 +224,10 @@ class CurrentOrderController extends GetxController {
         // Get.delete<CurrentOrderMapController>();
       }
 
-      _waitingResponse.value = false;
+      // _waitingResponse.value = false;
     } catch (e) {
       mezcalmosSnackBar("Notice ~", "Failed to Cancel the Taxi Request :( ");
-      _waitingResponse.value = false;
+      // _waitingResponse.value = false;
       print("Exception happend in cancelTaxi : $e");
     }
   }
@@ -349,7 +237,7 @@ class CurrentOrderController extends GetxController {
         FirebaseFunctions.instance.httpsCallable('startTaxiRide');
     print("Start Taxi Called");
     try {
-      _waitingResponse.value = true;
+      // _waitingResponse.value = true;
       HttpsCallableResult response = await startRideFunction
           .call(<String, dynamic>{'database': _databaseHelper.dbType});
       dynamic _res = responseStatusChecker(response.data);
@@ -358,10 +246,10 @@ class CurrentOrderController extends GetxController {
         throw Exception(
             "Manually thrown Exception - Reason -> Response.data was null !");
       // : mezcalmosSnackBar("Notice ~", _res);
-      _waitingResponse.value = false;
+      // _waitingResponse.value = false;
     } catch (e) {
       mezcalmosSnackBar("Notice ~", "Failed to Start The ride :( ");
-      _waitingResponse.value = false;
+      // _waitingResponse.value = false;
       print("Exception happend in startRide : $e");
     }
   }
@@ -371,7 +259,7 @@ class CurrentOrderController extends GetxController {
         FirebaseFunctions.instance.httpsCallable('finishTaxiRide');
     print("Finish Taxi Called");
     try {
-      _waitingResponse.value = true;
+      // _waitingResponse.value = true;
       HttpsCallableResult response = await finishRideFunction
           .call(<String, dynamic>{'database': _databaseHelper.dbType});
       dynamic _res = responseStatusChecker(response.data);
@@ -384,10 +272,10 @@ class CurrentOrderController extends GetxController {
         // Get.delete<CurrentOrderMapController>();
       }
 
-      _waitingResponse.value = false;
+      // _waitingResponse.value = false;
     } catch (e) {
       mezcalmosSnackBar("Notice ~", "Failed to finish The ride :( ");
-      _waitingResponse.value = false;
+      // _waitingResponse.value = false;
       print("Exception happend in finishRide : $e");
     }
   }

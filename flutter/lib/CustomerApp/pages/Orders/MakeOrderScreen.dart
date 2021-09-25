@@ -4,7 +4,6 @@ import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/Shared/widgets/MezGoogleMap.dart';
 
 class MakeOrderScreen extends StatelessWidget {
   LanguageController lang = Get.find<LanguageController>();
@@ -16,7 +15,7 @@ class MakeOrderScreen extends StatelessWidget {
       child: Stack(
         alignment: Alignment.topCenter,
         children: [
-          MezGoogleMap(false),
+          // MezGoogleMap(false),
           Positioned(
               bottom: GetStorage().read(getxGmapBottomPaddingKey) + 55,
               child: Container(

@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/pages/LocationPermissionScreen.dart';
 
 import 'package:mezcalmos/CustomerApp/pages/CustomerWrapper.dart';
+import 'package:mezcalmos/TaxiApp/controllers/FBTaxiNorificationsController.dart';
 
 class Wrapper extends GetWidget<AuthController> {
   @override
@@ -20,7 +21,7 @@ class Wrapper extends GetWidget<AuthController> {
       if (controller.user != null) {
         Get.lazyPut(() => DeviceNotificationsController());
         Get.lazyPut(() => MessageController());
-        Get.lazyPut(() => FBNotificationsController());
+        Get.lazyPut(() => FBTaxiNotificationsController());
 
         return _settingsController.hasLocationPermissions.value == false
             ? LocationPermissionScreen()

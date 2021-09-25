@@ -7,24 +7,24 @@ import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/controllers/settingsController.dart';
+// import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/TaxiApp/models/TaxiDriver.dart';
-import 'package:mezcalmos/Shared/pages/AuthScreens/UnauthorizedScreen.dart';
-import 'package:mezcalmos/TaxiApp/pages/Orders/CurrentOrderScreen.dart';
-import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingListScreen.dart';
+// import 'package:mezcalmos/Shared/pages/AuthScreens/UnauthorizedScreen.dart';
+// import 'package:mezcalmos/TaxiApp/pages/Orders/CurrentOrderScreen.dart';
+// import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingListScreen.dart';
 import 'package:location/location.dart';
 
 class TaxiAuthController extends GetxController {
   Rx<TaxiDriver> _model = TaxiDriver.empty().obs;
   DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
   AuthController _authController = Get.find<AuthController>();
-  Rx<Widget> _dynamicScreen =
-      (Center(child: CircularProgressIndicator()) as Widget).obs;
+  // Rx<Widget> _dynamicScreen =
+  //     (Center(child: CircularProgressIndicator()) as Widget).obs;
   Rx<LocationData> _currentLocation = LocationData.fromMap(
       <String, dynamic>{"latitude": 15.851385, "longitude": -97.046429}).obs;
   RxBool _locationEnabled = false.obs;
@@ -34,7 +34,7 @@ class TaxiAuthController extends GetxController {
   dynamic get currentOrderId => _model.value.currentOrder ?? null;
   dynamic get authorizedTaxi => _model.value.isAuthorized ?? false;
   bool get isLooking => _model.value.isLooking ?? false;
-  Widget get dynamicScreen => _dynamicScreen.value;
+  // Widget get dynamicScreen => _dynamicScreen.value;
   LocationData get currentLocation => _currentLocation.value;
   bool get locationEnabled => _locationEnabled.value;
   Rx<LocationData> get currentLocationRx => _currentLocation;
@@ -50,11 +50,11 @@ class TaxiAuthController extends GetxController {
       - CurrentOrder
   */
 
-  Widget _getScreen() => authorizedTaxi == true
-      ? (_model.value.currentOrder != null
-          ? CurrentOrderScreen()
-          : IncomingOrdersScreen())
-      : UnauthorizedScreen();
+  // Widget _getScreen() => authorizedTaxi == true
+  //     ? (_model.value.currentOrder != null
+  //         ? CurrentOrderScreen()
+  //         : IncomingOrdersScreen())
+  //     : UnauthorizedScreen();
 
   @override
   void onInit() async {
@@ -93,7 +93,7 @@ class TaxiAuthController extends GetxController {
           }
         }
         // our magical Trick :p
-        _dynamicScreen.value = _getScreen();
+        // _dynamicScreen.value = _getScreen();
 
         if (_model.value.isEmpty == true ||
             (_model.value.currentOrder == null &&

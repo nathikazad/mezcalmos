@@ -5,6 +5,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
+import 'package:mezcalmos/TaxiApp/controllers/FBTaxiNorificationsController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 
 class AuthHooks {
@@ -20,11 +21,13 @@ class AuthHooks {
   }
 
   void onSignInHook() {
+    _authController.userInfoListener.resume();
+
     print("[+] TaxiApp::AuthHooks::onSignInHook -> Callback Executed.");
     Get.lazyPut(() => TaxiAuthController());
     Get.lazyPut(() => DeviceNotificationsController());
     Get.lazyPut(() => MessageController());
-    Get.lazyPut(() => FBNotificationsController());
+    Get.lazyPut(() => FBTaxiNotificationsController());
   }
   // SignInHook :
   // Inject The controllers here !

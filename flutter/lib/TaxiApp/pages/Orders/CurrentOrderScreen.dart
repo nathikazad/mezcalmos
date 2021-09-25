@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+// import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/constants/routes.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -11,17 +11,17 @@ import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
+import 'package:mezcalmos/TaxiApp/controllers/FBTaxiNorificationsController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
-import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
+// import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 
 class CurrentOrderScreen extends GetView<CurrentOrderController> {
   LanguageController lang = Get.find<LanguageController>();
   FBNotificationsController fbNotificationsController =
-      Get.put<FBNotificationsController>(FBNotificationsController());
-  TaxiAuthController _taxiAuthController = Get.find<TaxiAuthController>();
-
+      Get.put<FBNotificationsController>(FBTaxiNotificationsController());
+  // TaxiAuthController _taxiAuthController = Get.find<TaxiAuthController>();
+  RxBool showLoading = false.obs;
   RxBool clickedLaunchOnMap = false.obs;
-
   bool clickedYesCancelPopUp = false;
 
   Widget build(BuildContext context) {
@@ -32,21 +32,23 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
       child: Stack(
         alignment: Alignment.topCenter,
         children: [
-          Obx(() => controller.waitingResponse ||
-                  controller.value?.id == null ||
-                  controller.value?.status == null ||
-                  controller.customMarkers.isEmpty ||
-                  controller.polylines.isEmpty
-              ? Center(child: CircularProgressIndicator())
-              // these won't be defined here .
-              : MGoogleMap(
-                  controller.customMarkers,
-                  controller.initialCameraLocation,
-                  controller.boundsSource!,
-                  controller.boundsDestination!,
-                  markerIdWithLocationSubscription:
-                      controller.markerIdWithLocationSubscription,
-                  polylines: controller.polylines)),
+          Obx(() =>
+              // controller.waitingResponse ||
+              showLoading.value ||
+                      controller.value?.id == null ||
+                      controller.value?.status == null ||
+                      controller.customMarkers.isEmpty ||
+                      controller.polylines.isEmpty
+                  ? Center(child: CircularProgressIndicator())
+                  // these won't be defined here .
+                  : MGoogleMap(
+                      controller.customMarkers,
+                      controller.initialCameraLocation,
+                      controller.boundsSource!,
+                      controller.boundsDestination!,
+                      markerIdWithLocationSubscription:
+                          controller.markerIdWithLocationSubscription,
+                      polylines: controller.polylines)),
           Positioned(
               bottom: GetStorage().read(getxGmapBottomPaddingKey),
               child: Container(
@@ -88,6 +90,8 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                                             Color.fromARGB(255, 234, 51, 38)),
                               ),
                               onPressed: () async {
+                                showLoading.value = true;
+
                                 print(
                                     "%%%%%%%%%%%%\n controller.value!.distanceToClient :: ${controller.distanceToClient}\n%%%%%%%%%%%%");
                                 print(
@@ -126,8 +130,12 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                                             // _mezcalmosCurrentOrderGoogleMapController
                                             //     .googleMapUpdate();
                                             //Get.back(closeOverlays: true);
-                                          })
-                                        : await controller.startRide());
+                                          }).whenComplete(
+                                                () => showLoading.value = false)
+                                        : await controller
+                                            .startRide()
+                                            .whenComplete(() =>
+                                                showLoading.value = false));
                               },
                               child: Center(
                                 child: Text(
@@ -309,13 +317,16 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                                         TextButton(
                                             onPressed: () {
                                               if (!clickedYesCancelPopUp) {
+                                                showLoading.value = true;
                                                 controller
                                                     .cancelTaxi(null)
                                                     .then((_) => Get.back(
                                                         closeOverlays: true))
                                                     .catchError((onError) {
                                                   clickedYesCancelPopUp = false;
-                                                });
+                                                }).whenComplete(() =>
+                                                        showLoading.value =
+                                                            false);
                                               }
                                             },
                                             // Navigator.of(context)
