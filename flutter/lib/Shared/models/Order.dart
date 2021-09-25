@@ -1,3 +1,5 @@
+// BELONGS TO TAXI APP please move
+
 import 'dart:typed_data';
 
 import 'package:firebase_database/firebase_database.dart';
@@ -31,7 +33,6 @@ class Order {
   dynamic paymentType;
   dynamic routeInformation; // Map<String , Map<String, dynamic>>
   dynamic pictureBytes;
-  // orders/taxi are something else..
   dynamic driver;
   dynamic distance;
   dynamic duration;

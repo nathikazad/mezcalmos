@@ -174,6 +174,7 @@ class MezcalmosSharedWidgets {
         ),
       );
 
+  // THIS BELONGS TO TAXI
   static Future<void> mezcalmosDialogOrderNoMoreAvailable(
           double val, double sh, double sw) async =>
       mezcalmosDialog(
@@ -183,6 +184,7 @@ class MezcalmosSharedWidgets {
           Get.find<LanguageController>().strings['taxi']['cancelOrder']
               ['rideUnavailble']);
 
+  // THIS BELONGS TO TAXI
   static Future<void> mezcalmosDialogOrderCancelled(
           double val, double sh, double sw) async =>
       mezcalmosDialog(
@@ -192,6 +194,7 @@ class MezcalmosSharedWidgets {
           Get.find<LanguageController>().strings['taxi']['cancelOrder']
               ['customerCancelled']);
 
+  // THIS BELONGS TO TAXI
   static Future<void> yesNoDefaultConfirmationDialog(
           onYes, String text) async =>
       await Get.defaultDialog(

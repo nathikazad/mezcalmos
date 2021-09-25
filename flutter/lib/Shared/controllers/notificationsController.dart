@@ -120,6 +120,8 @@ class FBNotificationsController extends GetxController {
                 MezNotification.Notification.fromJson(key, value);
 
             // this is to not invoke callbacks of newMessage when type == order
+            // THIS EVENT HANDLER IS FOR TAXI APP, please move to notification controller of taxi app
+            // and make it register a callback to here which gets called on new message
             if (_notif.notificationType == "newMessage") {
               print("\n\n\n ${_notif.toJson()} \n\n\n");
               // taxiAuthListenerCallbacks.forEach((callback) {
