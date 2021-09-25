@@ -38,16 +38,16 @@ exports.processSignUp = functions.auth.user().onCreate(async user => {
   })
 });
 
-exports.createName = functions.database.ref(
+exports.addName = functions.database.ref(
   '/users/{userId}/info/displayName').onCreate(async (snap, context) => {
-    let hasura = getHasura()
-    await hasura.updateUser({
-      uid: context.params.userId,
-      changes: {
-        displayName: snap.val()
-      }
-    })
+  await firebase.auth().updateUser(context.params.userId, { displayName: snap.after.val() })
+  await hasura.updateUser({
+    uid: context.params.userId,
+    changes: {
+      displayName: snap.val()
+    }
   })
+})
 
 exports.changeName = functions.database.ref(
   '/users/{userId}/info/displayName').onUpdate(async (snap, context) => {
@@ -61,19 +61,20 @@ exports.changeName = functions.database.ref(
     })
   })
 
-exports.createPhoto = functions.database.ref(
+exports.addPhoto = functions.database.ref(
   '/users/{userId}/info/photo').onCreate(async (snap, context) => {
-    await hasura.updateUser({
-      uid: context.params.userId,
-      changes: {
-        photo: snap.val()
-      }
-    })
+  await firebase.auth().updateUser(context.params.userId, { photoURL: snap.after.val() })
+  await hasura.updateUser({
+    uid: context.params.userId,
+    changes: {
+      photo: snap.val()
+    }
   })
+})
 
 exports.changePhoto = functions.database.ref(
   '/users/{userId}/info/photo').onUpdate(async (snap, context) => {
-    await firebase.auth().updateUser(context.params.userId, { photo: snap.after.val() })
+    await firebase.auth().updateUser(context.params.userId, { photoURL: snap.after.val() })
     await hasura.updateUser({
       uid: context.params.userId,
       changes: {
