@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/widgets/MezAdminOrdersComponents.dart';
+import 'package:mezcalmos/TaxiAdminApp/components/MezAdminOrdersComponents.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiAdminApp/Models/NbOrders.dart';
 import 'package:mezcalmos/TaxiAdminApp/controller/OrdersController.dart';

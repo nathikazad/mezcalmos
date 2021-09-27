@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/utilities/SharedEnums.dart';
-import 'package:mezcalmos/Shared/widgets/MezAdminOrdersComponents.dart';
+import 'package:mezcalmos/TaxiAdminApp/components/MezAdminOrdersComponents.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/TaxiAdminApp/pages/Notifications/NotifCountOnDayByDriverPage.dart';
@@ -123,17 +123,15 @@ class OrdersOnDayPage extends GetView<OrderStatsController> {
               ),
               Container(
                 decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 1,
-                      color: Color.fromRGBO(112, 112, 112, 1),
-                    ),
+                    border:
+                        Border.all(color: const Color(0xff707070), width: 1),
                     gradient: LinearGradient(
+                        begin: Alignment(0.5, 0),
+                        end: Alignment(0.5, 1),
                         colors: [
-                          Color.fromRGBO(112, 54, 234, 1),
-                          Color.fromRGBO(123, 78, 216, 1),
-                        ],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter)),
+                          const Color(0xff6e31ed),
+                          const Color(0xff7d52d6)
+                        ])),
                 padding: const EdgeInsets.all(8),
                 child: Row(
                   children: [

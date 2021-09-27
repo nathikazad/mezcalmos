@@ -13,54 +13,33 @@ class MezAdminOrdersComponents {
     switch (state) {
       case OrdersStates.Finished:
         mygradient = LinearGradient(
-          colors: [
-            Color.fromRGBO(25, 165, 53, 1),
-            Color.fromRGBO(13, 83, 27, 0.8)
-          ],
-          begin: Alignment(0.0, 0.7),
-          end: Alignment(0.7, 0.2),
-        );
+            begin: Alignment(0.09354447573423386, 0.5),
+            end: Alignment(0.9385244250297546, 0.6013823747634888),
+            colors: [const Color(0xff19a535), const Color(0xff0d531b)]);
         break;
       case OrdersStates.Cancelled:
         mygradient = LinearGradient(
-          colors: [
-            Color.fromRGBO(217, 28, 28, 0.9),
-            Color.fromRGBO(109, 14, 14, 0.9)
-          ],
-          begin: Alignment(0.0, 0.9),
-          end: Alignment(0.9, 0.0),
-        );
+            begin: Alignment(0.11480801552534103, 0.5),
+            end: Alignment(0.9087746739387512, 0.5),
+            colors: [const Color(0xffd91c1c), const Color(0xff6d0e0e)]);
         break;
       case OrdersStates.Expired:
         mygradient = LinearGradient(
-          colors: [
-            //Color.fromRGBO(161, 163, 153, 0.9),
-            Colors.grey.withOpacity(0.9),
-            Color.fromRGBO(81, 82, 77, 0.9)
-          ],
-          begin: Alignment(0.0, 0.7),
-          end: Alignment(0.7, 0.2),
-        );
+            begin: Alignment(0.07909747213125229, 0.5),
+            end: Alignment(0.8506692051887512, 0.5),
+            colors: [const Color(0xffa1a399), const Color(0xff51524d)]);
         break;
       case OrdersStates.InProccess:
         mygradient = LinearGradient(
-          colors: [
-            Color.fromRGBO(1226, 156, 75, 0.9),
-            Color.fromRGBO(113, 78, 38, 1)
-          ],
-          begin: Alignment(0.0, 0.7),
-          end: Alignment(0.7, 0.2),
-        );
+            begin: Alignment(0.12472916394472122, 0.5),
+            end: Alignment(0.8882563710212708, 0.5),
+            colors: [const Color(0xffe29c4b), const Color(0xff714e26)]);
         break;
       case OrdersStates.IsLooking:
         mygradient = LinearGradient(
-          colors: [
-            Color.fromRGBO(132, 139, 230, 1),
-            Color.fromRGBO(52, 58, 199, 0.9)
-          ],
-          begin: Alignment(0.0, 0.7),
-          end: Alignment(0.7, 0.2),
-        );
+            begin: Alignment(0.12472916394472122, 0.5),
+            end: Alignment(0.8882563710212708, 0.5),
+            colors: [const Color(0xa54b57e2), const Color(0xff343ac7)]);
         break;
       default:
     }
@@ -135,53 +114,33 @@ class MezAdminOrdersComponents {
     switch (states) {
       case OrdersStates.Cancelled:
         myColors = LinearGradient(
-          colors: [
-            Color.fromRGBO(242, 83, 62, 1),
-            Color.fromRGBO(160, 106, 90, 1)
-          ],
-          begin: Alignment(0.0, 0.5),
-          end: Alignment(0.5, 0.3),
-        );
+            begin: Alignment(0.09354447573423386, 0.5),
+            end: Alignment(0.9385244250297546, 0.6013823747634888),
+            colors: [const Color(0xbcf82105), const Color(0xa0762007)]);
         break;
       case OrdersStates.Expired:
         myColors = LinearGradient(
-          colors: [
-            Color.fromRGBO(134, 136, 127, 1),
-            Color.fromRGBO(119, 120, 117, 1)
-          ],
-          begin: Alignment(0.0, 0.5),
-          end: Alignment(0.5, 0.3),
-        );
+            begin: Alignment(0.12271256744861603, 0.5),
+            end: Alignment(0.9394280314445496, 0.5),
+            colors: [const Color(0xff86887f), const Color(0xac434440)]);
         break;
       case OrdersStates.Finished:
         myColors = LinearGradient(
-          colors: [
-            Color.fromRGBO(116, 196, 132, 1),
-            Color.fromRGBO(97, 162, 111, 1)
-          ],
-          begin: Alignment(0.0, 0.5),
-          end: Alignment(0.5, 0.3),
-        );
+            begin: Alignment(0.09354447573423386, 0.5),
+            end: Alignment(0.9385244250297546, 0.6013823747634888),
+            colors: [const Color(0x9119a535), const Color(0xa0167e2b)]);
         break;
       case OrdersStates.InProccess:
         myColors = LinearGradient(
-          colors: [
-            Color.fromRGBO(239, 132, 26, 1),
-            Color.fromRGBO(166, 152, 102, 1),
-          ],
-          begin: Alignment(0.0, 0.5),
-          end: Alignment(0.5, 0.3),
-        );
+            begin: Alignment(0.1032487004995346, 0.5),
+            end: Alignment(0.9385117292404175, 0.5),
+            colors: [const Color(0xebf07c09), const Color(0x91785e05)]);
         break;
       case OrdersStates.IsLooking:
         myColors = LinearGradient(
-          colors: [
-            Color.fromRGBO(68, 74, 205, 1),
-            Color.fromRGBO(18, 122, 211, 1),
-          ],
-          begin: Alignment(0.0, 0.5),
-          end: Alignment(0.5, 0.3),
-        );
+            begin: Alignment(0.1032487004995346, 0.5),
+            end: Alignment(0.9385117292404175, 0.5),
+            colors: [const Color(0xff444acd), const Color(0xa83d43ca)]);
         break;
       default:
     }
@@ -302,14 +261,14 @@ class MezAdminOrdersComponents {
   static Widget buildNotificationTable(int index, String img, String name,
       String t, String s, String r, String o) {
     var myGradient = (index % 2 == 0)
-        ? LinearGradient(colors: [
-            Color.fromRGBO(117, 121, 208, 1),
-            Color.fromRGBO(68, 74, 205, 1)
-          ], begin: Alignment(0.0, 0.5), end: Alignment(0.5, 0.3))
-        : LinearGradient(colors: [
-            Color.fromRGBO(117, 121, 208, 1),
-            Color.fromRGBO(68, 74, 205, 1)
-          ], begin: Alignment(0.5, 0.3), end: Alignment(0.0, 0.5));
+        ? LinearGradient(
+            begin: Alignment(0.1032487004995346, 0.5),
+            end: Alignment(0.9385117292404175, 0.5),
+            colors: [const Color(0xff444acd), const Color(0xa83d43ca)])
+        : LinearGradient(
+            begin: Alignment(0.1032487004995346, 0.5),
+            end: Alignment(0.9385117292404175, 0.5),
+            colors: [const Color(0xff7579d0), const Color(0xff444acd)]);
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -418,13 +377,9 @@ class MezAdminOrdersComponents {
             margin: const EdgeInsets.all(5),
             decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [
-                    Color.fromRGBO(118, 67, 224, 0.9),
-                    Color.fromRGBO(82, 40, 167, 1),
-                  ],
-                  begin: Alignment.center,
-                  end: Alignment.topRight,
-                ),
+                    begin: Alignment(0.9568901658058167, 0.5),
+                    end: Alignment(0.11593939363956451, 0.5),
+                    colors: [const Color(0xff4f26a2), const Color(0xff7643e0)]),
                 borderRadius: BorderRadius.circular(18)),
             child: Text(
               "$total",
@@ -443,13 +398,9 @@ class MezAdminOrdersComponents {
             margin: const EdgeInsets.all(5),
             decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [
-                    Color.fromRGBO(116, 196, 132, 0.9),
-                    Color.fromRGBO(97, 162, 111, 1)
-                  ],
-                  begin: Alignment.center,
-                  end: Alignment.topRight,
-                ),
+                    begin: Alignment(0.09354447573423386, 0.5),
+                    end: Alignment(0.9385244250297546, 0.6013823747634888),
+                    colors: [const Color(0xff19a535), const Color(0xff0d531b)]),
                 borderRadius: BorderRadius.circular(18)),
             child: Text(
               "$dropedOff",
@@ -468,13 +419,9 @@ class MezAdminOrdersComponents {
             margin: const EdgeInsets.all(5),
             decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [
-                    Color.fromRGBO(242, 83, 62, 1),
-                    Color.fromRGBO(117, 15, 15, 0.8)
-                  ],
-                  begin: Alignment.center,
-                  end: Alignment.topRight,
-                ),
+                    begin: Alignment(0.11480801552534103, 0.5),
+                    end: Alignment(0.9087746739387512, 0.5),
+                    colors: [const Color(0xffd91c1c), const Color(0xff6d0e0e)]),
                 borderRadius: BorderRadius.circular(18)),
             child: Text(
               "$canceled",
@@ -493,13 +440,9 @@ class MezAdminOrdersComponents {
             margin: const EdgeInsets.all(5),
             decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [
-                    Color.fromRGBO(134, 136, 127, 0.9),
-                    Color.fromRGBO(119, 120, 117, 1)
-                  ],
-                  begin: Alignment.center,
-                  end: Alignment.topRight,
-                ),
+                    begin: Alignment(0.07909747213125229, 0.5),
+                    end: Alignment(0.8506692051887512, 0.5),
+                    colors: [const Color(0xffa1a399), const Color(0xff51524d)]),
                 borderRadius: BorderRadius.circular(18)),
             child: Text(
               "$expired",
