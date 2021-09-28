@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/Shared/utilities/SharedEnums.dart';
+import 'package:mezcalmos/TaxiAdminApp/pages/Orders/OrderViewPage.dart';
 
 const mypadding = const EdgeInsets.symmetric(horizontal: 10);
 
@@ -106,8 +107,15 @@ class MezAdminOrdersComponents {
   }
 
   /// buildWidgets for Orders in table
-  static Widget buildTableWidget(OrdersStates states, String time,
-      String? driverImg, String custImg, String s, String r, String o) {
+  static Widget buildTableWidget(
+      OrdersStates states,
+      String orderId,
+      String time,
+      String? driverImg,
+      String custImg,
+      String s,
+      String r,
+      String o) {
     var mytextStyle = TextStyle(
         color: Colors.white.withOpacity(0.9), fontWeight: FontWeight.w600);
     LinearGradient? myColors = null;
@@ -249,7 +257,10 @@ class MezAdminOrdersComponents {
                   color: Colors.white,
                   size: 16,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  print("hello world $orderId");
+                  Get.to(() => OrderViewPage("$orderId"));
+                },
               ),
             ),
           )

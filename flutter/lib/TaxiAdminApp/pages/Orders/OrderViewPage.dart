@@ -8,8 +8,11 @@ import 'package:mezcalmos/TaxiAdminApp/controller/OrdersController.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/TaxiAdminApp/components/getFutureData.dart';
+import 'package:mezcalmos/TaxiAdminApp/pages/Driver/DriverPage.dart';
 
 class OrderViewPage extends GetView<OrderStatsController> {
+  final String orderId;
+  OrderViewPage(this.orderId);
   var f = new DateFormat('dd/MM/yyyy').add_jm();
 
   var ff = new DateFormat().add_jm();
@@ -50,6 +53,7 @@ class OrderViewPage extends GetView<OrderStatsController> {
                       Container(
                         child: Text(
                           "${data["orders"][0]["customer"]["displayName"]}",
+                          textAlign: TextAlign.center,
                           style: TextStyle(
                               fontSize: 17, fontWeight: FontWeight.w400),
                         ),
@@ -64,10 +68,18 @@ class OrderViewPage extends GetView<OrderStatsController> {
                           child: Container(
                             height: Get.width * 0.3,
                             width: Get.width * 0.3,
-                            child: Image.network(
-                              "${data["orders"][0]["driver"]["photo"]}",
-                              fit: BoxFit.fitWidth,
-                            ),
+                            child: (data["orders"][0]["driver"] != null)
+                                ? InkWell(
+                                    child: Image.network(
+                                      "${data["orders"][0]["driver"]["photo"]}",
+                                      fit: BoxFit.cover,
+                                    ),
+                                    onTap: () {
+                                      Get.to(() => DriverPage(
+                                          "${data["orders"][0]["driver"]["uid"]}"));
+                                    },
+                                  )
+                                : Container(),
                           ),
                         ),
                       ),
@@ -76,7 +88,10 @@ class OrderViewPage extends GetView<OrderStatsController> {
                       ),
                       Container(
                         child: Text(
-                          "${data["orders"][0]["driver"]["displayName"]}",
+                          (data["orders"][0]["driver"] != null)
+                              ? "${data["orders"][0]["driver"]["displayName"]}"
+                              : "",
+                          textAlign: TextAlign.center,
                           style: TextStyle(
                               fontSize: 17, fontWeight: FontWeight.w400),
                         ),
@@ -120,8 +135,9 @@ class OrderViewPage extends GetView<OrderStatsController> {
                   ? "--:-- "
                   : "${ff.format(DateTime.parse("${data["orders"][0]["rideStartTime"]}"))}",
               title_2_1: "Ride End Time",
-              subTitle_2_1:
-                  "${ff.format(DateTime.parse("${data["orders"][0]["rideFinishTime"]}"))}",
+              subTitle_2_1: (data["orders"][0]['rideFinishTime'] != null)
+                  ? "${ff.format(DateTime.parse("${data["orders"][0]["rideFinishTime"]}"))}"
+                  : "--:--",
               title_3_0: "Notifications",
               subTitle_3_0: "Sent:${data["orders"][0]["notifications_sent"]}",
               subTitle_3_1:
@@ -139,7 +155,8 @@ class OrderViewPage extends GetView<OrderStatsController> {
     Get.put<OrderStatsController>(OrderStatsController());
     return Scaffold(
       appBar: MezcalmosSharedWidgets.mezCalmosAdminAppBar(context),
-      body: Container(child: getOrder("-MYztek7UKwGt9uc9abF")),
+      body: Container(child: getOrder(orderId)),
     );
   }
 }
+//

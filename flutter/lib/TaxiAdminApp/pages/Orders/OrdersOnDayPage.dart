@@ -207,6 +207,7 @@ class OrdersOnDayPage extends GetView<OrderStatsController> {
                   child: ListView.builder(
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
+                        print(snapshot.data![index]);
                         var t = snapshot.data![index]['orderTime']
                             .toString()
                             .split("T")[1];
@@ -215,6 +216,7 @@ class OrdersOnDayPage extends GetView<OrderStatsController> {
                             : snapshot.data![index]["driver"]["photo"];
                         return MezAdminOrdersComponents.buildTableWidget(
                             getState(snapshot.data![index]["status"]),
+                            "${snapshot.data![index]["orderId"]}",
                             "${t.split(":")[0]}:${t.split(":")[1]}",
                             driver,
                             "${snapshot.data![index]["customer"]["photo"]}",

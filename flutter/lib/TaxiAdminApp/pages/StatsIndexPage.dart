@@ -42,7 +42,7 @@ class StatsIndexPage extends GetView {
                 onPressed: () => Get.to(OrdersFulfillmentOnMonthPage())),
             OutlinedButton(
                 onPressed: () {
-                  Get.to(() => OrderViewPage());
+                  Get.to(() => OrderViewPage("-MYztek7UKwGt9uc9abF"));
                 },
                 child: Text("Orders View ")),
             Text(
@@ -55,7 +55,7 @@ class StatsIndexPage extends GetView {
             OutlinedButton(
                 child: Text("Sample Driver Page"),
                 onPressed: () =>
-                    Get.to(DriverPage("yKo3XqL3dEd78BVgzjNOvAxru723"))),
+                    Get.to(DriverPage("OAvACdFweLfUkQHPicckdA40XN92"))),
             Text(
               "Notification Stats",
               textAlign: TextAlign.center,

@@ -99,7 +99,7 @@ class DriverPage extends GetView<DriverStatsController> {
               title_0_1: "App Version",
               subTitle_0_1: "${data[1]["appVersionNumber"]}",
               title_1_0: "Total Orders",
-              subTitle_1_0: "${data[2]["totalOrders"]}}",
+              subTitle_1_0: "${data[2]["totalOrders"]}",
               title_1_1: "Dropped off",
               subTitle_1_1: "${data[2]["droppedOff"]}",
               title_2_0: "First Order",
@@ -473,16 +473,17 @@ List<charts.Series<NbNotifs, int>> _createNotifsData(List<dynamic> data) {
 
   return [
     new charts.Series<NbNotifs, int>(
-      id: 'first',
-      colorFn: (_, __) => charts.Color.fromHex(code: '#77727A'),
+      id: 'read',
+      colorFn: (_, __) => charts.Color.fromHex(code: '#18B037'),
       domainFn: (NbNotifs notifs, _) => int.parse(notifs.day.toString()),
       measureFn: (NbNotifs notifs, _) => notifs.nbNotifs,
       data: readNotifications,
     ),
     new charts.Series<NbNotifs, int>(
-      id: 'second',
+      id: 'sent',
       //#18B037
-      colorFn: (_, __) => charts.Color.fromHex(code: '#18B037'),
+      // ,
+      colorFn: (_, __) => charts.Color.fromHex(code: '#77727A'),
       domainFn: (NbNotifs notifs, _) => int.parse(notifs.day.toString()),
       measureFn: (NbNotifs notifs, _) => notifs.nbNotifs,
       data: sentNotifications,

@@ -239,7 +239,7 @@ class InfoCardComponent extends StatelessWidget {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "N$title_3_0",
+                  "$title_3_0",
                   textAlign: TextAlign.left,
                   style: TextStyle(fontSize: 10, fontWeight: FontWeight.w700),
                 ),
