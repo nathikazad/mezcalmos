@@ -41,6 +41,7 @@ dependencies:
   progress_indicators: ^1.0.0
   font_awesome_flutter: ^9.1.0
   package_info: ^2.0.2
+  rive: ^0.7.28
   
 # dependency_overrides:
 #   font_awesome_flutter:
@@ -72,7 +73,12 @@ flutter:
   assets:
     - assets/images/
     - assets/fonts/
+<<<<<<< HEAD
     - assets/i18n/
+=======
+    - assets/json/
+    - assets/animation/
+>>>>>>> 2eff9155 (Added Animated Splash Screen Mezcalmos Logo)
 
   fonts:
     - family: psr  # Product Sans Regular

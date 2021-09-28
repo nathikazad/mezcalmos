@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:progress_indicators/progress_indicators.dart';
+import 'package:rive/rive.dart' as rive;
 
 class SplashScreen extends StatelessWidget {
   @override
@@ -24,14 +25,17 @@ class SplashScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 20),
                           height: Get.width * 0.6,
                           width: Get.width * 0.6,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(170),
-                              color: Colors.white),
-                          child: Image.asset(aLogoPath),
+                          child: ClipOval(
+                            child: Container(
+                              color: Colors.white,
+                              child: rive.RiveAnimation.asset(
+                                "assets/animation/LoadingAnimationV6.riv",
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ),
                         ),
                         SizedBox(
                           height: Get.height * 0.06,
