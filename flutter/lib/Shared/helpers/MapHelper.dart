@@ -1,16 +1,25 @@
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:get/state_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'dart:math' show cos, sqrt, sin, pi, atan2;
-
+import 'dart:async';
 import 'package:mezcalmos/Shared/models/Order.dart';
 
 class CustomMarker {
   String id;
+  Rx<LocationData>? locationStream;
   LatLng position;
   BitmapDescriptor icon;
 
-  CustomMarker(this.id, this.position, this.icon);
+  CustomMarker(this.id, this.icon, this.position, {this.locationStream}) {
+    if (locationStream != null) {
+      locationStream!.listen((newLoc) {
+        print("[ CustomMarker::$id ] New position => $position");
+        this.position = new LatLng(newLoc.latitude!, newLoc.longitude!);
+      });
+    }
+  }
 
   Marker marker() => new Marker(
       visible: true,

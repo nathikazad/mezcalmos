@@ -43,6 +43,7 @@ class Order {
   dynamic status;
   dynamic polyline;
   double distanceToClient = 0;
+  dynamic cancelledBy;
 
   Order(
       {required this.id,
@@ -63,7 +64,8 @@ class Order {
       required this.rideStartTime,
       required this.status,
       required this.polyline,
-      required this.pictureBytes});
+      required this.pictureBytes,
+      dynamic cancelledBy});
 
   // Get props as list.
   List<Object> get props =>

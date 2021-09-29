@@ -8,8 +8,8 @@ import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 
-abstract class MTaxiGMapWrapper {
-  List<CustomMarker> markers = <CustomMarker>[];
+mixin MTaxiGMapWrapper {
+  RxList<CustomMarker> markers = <CustomMarker>[].obs;
   LatLng initialCameraLocation = LatLng(0, 0);
   Set<Polyline> polylines = <Polyline>{}.obs;
 
@@ -53,7 +53,7 @@ abstract class MTaxiGMapWrapper {
         60,
         isBytes: true);
 
-    if (picMarker == null) picMarker = await this.userMarkerPicture();
+    // if (picMarker == null) picMarker = await this.userMarkerPicture();
   }
 
   void setPolylines(List<LatLng> _pCords) {

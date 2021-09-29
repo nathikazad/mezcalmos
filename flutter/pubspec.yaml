@@ -72,7 +72,7 @@ flutter:
   assets:
     - assets/images/
     - assets/fonts/
-    - assets/json/
+    - assets/i18n/
 
   fonts:
     - family: psr  # Product Sans Regular

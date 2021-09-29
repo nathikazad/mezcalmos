@@ -42,16 +42,18 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController>
     await loadBitmapsUp(); // happens only one
     markers = <CustomMarker>[
       new CustomMarker(
-          "from",
-          LatLng(controller.selectedIncommingOrder?.from.latitude,
-              controller.selectedIncommingOrder?.from.longitude),
-          picMarker!),
+        "from",
+        picMarker!,
+        LatLng(controller.selectedIncommingOrder?.from.latitude,
+            controller.selectedIncommingOrder?.from.longitude),
+      ),
       new CustomMarker(
-          "to",
-          LatLng(controller.selectedIncommingOrder?.to.latitude,
-              controller.selectedIncommingOrder?.to.longitude),
-          toDescriptor!),
-    ];
+        "to",
+        toDescriptor!,
+        LatLng(controller.selectedIncommingOrder?.to.latitude,
+            controller.selectedIncommingOrder?.to.longitude),
+      ),
+    ].obs;
     return Future.value(true);
   }
 
@@ -74,7 +76,7 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController>
           alignment: Alignment.topCenter,
           children: [
             Obx(() => mapReady.value && latLngBounds != null
-                ? MGoogleMap(markers, initialCameraLocation, latLngBounds!,
+                ? MGoogleMap(markers, initialCameraLocation,
                     polylines: this.polylines)
                 : Center(
                     child: CircularProgressIndicator(),

@@ -1,31 +1,19 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:get/state_manager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 
 class MGoogleMap extends StatefulWidget {
-  Map<String, dynamic> markerIdWithLocationSubscription;
-  List<CustomMarker> _cMarkers;
+  RxList<CustomMarker> customMarkers;
   LatLng initialLocation;
   Set<Polyline> polylines;
-  // bounds
-  LatLng boundsSource = LatLng(0, 0);
-  LatLng boundsDestination = LatLng(0, 0);
-  LatLngBounds latLngBounds;
 
-  MGoogleMap(
-      this._cMarkers,
-      this.initialLocation,
-      // this.boundsSource,
-      //     this.boundsDestination,
-      this.latLngBounds,
-      {this.markerIdWithLocationSubscription = const <String, dynamic>{
-        "id": null,
-        "sub": null,
-      },
-      this.polylines = const <Polyline>{}});
+  MGoogleMap(this.customMarkers, this.initialLocation,
+      {this.polylines = const <Polyline>{}});
 
   @override
   _MGoogleMapState createState() => _MGoogleMapState();
@@ -33,13 +21,21 @@ class MGoogleMap extends StatefulWidget {
 
 class _MGoogleMapState extends State<MGoogleMap> {
   Set<Marker> markers = <Marker>{};
+  LatLngBounds? _bounds;
+  late StreamSubscription<List<CustomMarker>> markersSubscription;
 
   void _updateMarkers() {
+    print("_updateMarkers ======= CALLED");
+
     markers.clear();
-    setState(() {
-      widget._cMarkers.forEach((cmarker) {
-        markers.add(cmarker.marker());
-      });
+
+    widget.customMarkers.forEach((cmarker) {
+      markers.add(cmarker.marker());
+      print("Marker added => ${cmarker.id}");
+
+      _bounds = createBounds();
+      print("Bounds added => $_bounds");
+      setState(() {});
     });
   }
 
@@ -87,8 +83,15 @@ class _MGoogleMapState extends State<MGoogleMap> {
   @override
   void initState() {
     super.initState();
+    markersSubscription = widget.customMarkers.listen((m) async {
+      print("markersSubscription ======= triggered !");
+
+      if (widget.customMarkers.isNotEmpty) {
+        print("Updating marker => not null ============ !");
+        _updateMarkers();
+      }
+    });
     // initializing all the markers needed
-    _updateMarkers();
 
     // if (widget.markerIdWithLocationSubscription["sub"] != null &&
     //     widget.markerIdWithLocationSubscription["id"] != null) {
@@ -122,47 +125,77 @@ class _MGoogleMapState extends State<MGoogleMap> {
   //   }
   // }
 
-  @override
-  void dispose() {
-    if (widget.markerIdWithLocationSubscription["sub"] != null) {
-      widget.markerIdWithLocationSubscription["sub"]!.close();
-    }
-    super.dispose();
+  LatLngBounds createBounds() {
+    List<LatLng> positions = markers
+        .map((e) => LatLng(e.position.latitude, e.position.longitude))
+        .toList();
+
+    final southwestLat = positions.map((p) => p.latitude).reduce(
+        (value, element) =>
+            value < element ? value : element); //  snallest value
+    final southwestLon = positions
+        .map((p) => p.longitude)
+        .reduce((value, element) => value < element ? value : element);
+    final northeastLat = positions.map((p) => p.latitude).reduce(
+        (value, element) => value > element ? value : element); // biggest value
+    final northeastLon = positions
+        .map((p) => p.longitude)
+        .reduce((value, element) => value > element ? value : element);
+    // mapReady.value = true;
+    return LatLngBounds(
+        southwest: LatLng(southwestLat, southwestLon),
+        northeast: LatLng(northeastLat, northeastLon));
   }
 
   @override
-  Widget build(BuildContext context) {
-    return GoogleMap(
-      padding: EdgeInsets.all(20),
-      mapToolbarEnabled: false,
-      myLocationButtonEnabled: false,
-      minMaxZoomPreference: MinMaxZoomPreference(1, 20),
-      buildingsEnabled: false,
-      markers: markers,
-      polylines: widget.polylines,
-      zoomControlsEnabled: false,
-      compassEnabled: false,
-      mapType: MapType.normal,
-      tiltGesturesEnabled: true,
-      initialCameraPosition: CameraPosition(
-          target: widget.initialLocation,
-          tilt: 9.440717697143555,
-          zoom: 5.151926040649414),
-      onMapCreated: (GoogleMapController _gController) async {
-        await _gController.setMapStyle(GetStorage().read('map_style'));
-        _controller = _gController;
-        await _gController.animateCamera(CameraUpdate.newLatLngBounds(
-            widget.latLngBounds,
-            // _createBounds(<LatLng>[widget.boundsSource, widget.boundsSource]),
-            120));
-        // await updateCameraLocation(
-        //   widget.boundsSource,
-        //   widget.boundsDestination,
-        //   _controller,
-        // );
+  void dispose() {
+    markersSubscription.cancel();
+    // widget.customMarkers.forEach((cm) {
+    //   if (cm.locationStream != null) cm.locationStream!.close();
+    // });
+    super.dispose();
+  }
 
-        Completer<GoogleMapController>().complete(_gController);
-      },
-    );
+  bool mapReady = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return markers.isNotEmpty
+        ? GoogleMap(
+            padding: EdgeInsets.all(20),
+            mapToolbarEnabled: false,
+            myLocationButtonEnabled: false,
+            minMaxZoomPreference: MinMaxZoomPreference(1, 20),
+            buildingsEnabled: false,
+            markers: markers,
+            polylines: widget.polylines,
+            zoomControlsEnabled: false,
+            compassEnabled: false,
+            mapType: MapType.normal,
+            tiltGesturesEnabled: true,
+            initialCameraPosition: CameraPosition(
+                target: widget.initialLocation,
+                tilt: 9.440717697143555,
+                zoom: 5.151926040649414),
+            onMapCreated: (GoogleMapController _gController) async {
+              await _gController.setMapStyle(GetStorage().read('map_style'));
+              _controller = _gController;
+              if (_bounds != null)
+                await _gController.animateCamera(CameraUpdate.newLatLngBounds(
+                    _bounds!,
+                    // _createBounds(<LatLng>[widget.boundsSource, widget.boundsSource]),
+                    120));
+              // await updateCameraLocation(
+              //   widget.boundsSource,
+              //   widget.boundsDestination,
+              //   _controller,
+              // );
+
+              Completer<GoogleMapController>().complete(_gController);
+            },
+          )
+        : Center(
+            child: Text(Random().nextInt(100).toString()),
+          );
   }
 }

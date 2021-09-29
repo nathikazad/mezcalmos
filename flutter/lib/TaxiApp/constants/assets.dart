@@ -2,7 +2,7 @@ const String _imgs_path = "assets/images/";
 
 const String logo_asset = "${_imgs_path}logo.png";
 const String header_asset = "${_imgs_path}header.png";
-const String map_style_asset = "assets/json/mapStyle01.json";
+const String map_style_asset = "assets/i18n/mapStyle01.json";
 
 // default ones  --------------------------------------------------------------------------------------------------------------
 const String custommer_location_marker_asset =

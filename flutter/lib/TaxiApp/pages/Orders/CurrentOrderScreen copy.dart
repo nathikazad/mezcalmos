@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:typed_data';
-import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/cupertino.dart';
@@ -18,7 +17,6 @@ import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
-import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/FBTaxiNorificationsController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
@@ -27,6 +25,88 @@ import 'package:mezcalmos/TaxiApp/pages/MTaxiGMapWraper.dart';
 // import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 
 class CurrentOrderScreen extends GetView<CurrentOrderController> {
+  // overriding this to get the CustomerPicture
+  // so when we call loadBitmapsUp , it will call this implemented userMarkerPicture(), and only happens if it's not loaded up yet.
+  // @override
+  // Future<BitmapDescriptor> userMarkerPicture() async {
+  //   print("+ the implemented userMarkerPicture() got executed !");
+  //   // print("========= ${GetStorage().read('custBitmap')} -=========");
+
+  //   // return Future.value(GetStorage().read('custBitmap') as BitmapDescriptor);
+
+  //   return await BitmapDescriptorLoader(
+  //       (await cropRonded(
+  //           (await http.get(Uri.parse(controller.value?.customer['image'])))
+  //               .bodyBytes) as Uint8List),
+  //       60,
+  //       60,
+  //       isBytes: true);
+  // }
+
+  // @override
+  // Future<bool> fillMarkers({String? orderStatus}) async {
+  //   print(
+  //       "+ the implemented fillMarkers() got executed with params => {orderStatus : $orderStatus} !");
+
+  //   markers.clear();
+  //   if (polylines.length == 0) setPolylines(loadUpPolyline(controller.value!));
+  //   if (orderStatus == "onTheWay") {
+  //     // 3 markers
+  //     await loadBitmapsUp(); // happens only one
+  //     markers = <CustomMarker>[
+  //       new CustomMarker(
+  //           "taxi",
+  //           LatLng(taxiAuthController.currentLocation.latitude!,
+  //               taxiAuthController.currentLocation.longitude!),
+  //           taxiDescriptor!),
+  //       new CustomMarker(
+  //           "from",
+  //           LatLng(controller.value?.from.latitude,
+  //               controller.value?.from.longitude),
+  //           taxiDescriptor!),
+  //       new CustomMarker(
+  //           "to",
+  //           LatLng(
+  //               controller.value?.to.latitude, controller.value?.to.longitude),
+  //           toDescriptor!),
+  //     ];
+  //   } else if (orderStatus == "inTransit") {
+  //     await loadBitmapsUp();
+
+  //     markers = <CustomMarker>[
+  //       new CustomMarker(
+  //           "taxi",
+  //           LatLng(taxiAuthController.currentLocation.latitude!,
+  //               taxiAuthController.currentLocation.longitude!),
+  //           taxiDescriptor!),
+  //       new CustomMarker(
+  //           "to",
+  //           LatLng(
+  //               controller.value?.to.latitude, controller.value?.to.longitude),
+  //           toDescriptor!),
+  //     ];
+  //   }
+
+  //   super.initialCameraLocation = LatLng(
+  //       taxiAuthController.currentLocation.latitude!,
+  //       taxiAuthController.currentLocation.longitude!);
+  //   // depends on markers.
+  //   print(
+  //       "\n\n= = =Before= = =  ${controller.latLngBounds.value} == = = = = =\n\n");
+  //   super.setBounds(createBounds());
+  //   controller.latLngBounds.value = latLngBounds;
+  //   sub_markers = markers;
+  //   print(
+  //       "\n\n= = =After= = =  ${controller.latLngBounds.value} == = = = = =\n\n");
+
+  //   // print(mapReady.value);
+  //   // print(polylines);
+  //   // print(initialCameraLocation);
+  //   // print(markers);
+  //   // print(latLngBounds);
+  //   return Future.value(true);
+  // }
+
   final LanguageController lang = Get.find<LanguageController>();
   final FBNotificationsController fbNotificationsController =
       Get.put<FBNotificationsController>(FBTaxiNotificationsController());
@@ -37,38 +117,51 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
   bool clickedYesCancelPopUp = false;
   Rxn<CurrentOrder> currentOrderStream = Rxn();
   TaxiAuthController taxiAuthController = Get.find<TaxiAuthController>();
-  // MAP STUFF !
-  RxSet<Polyline> polylines = <Polyline>{}.obs;
 
-  Map<String, BitmapDescriptor?> bitmapDescriptors = {
-    "customerImg": null,
-    "taxiImg": null,
-    "destinationImg": null
-  };
-  Rx<LatLng> initialCameraPosition = LatLng(0, 0).obs;
-
-  RxList<CustomMarker> customMarkers = RxList.empty(growable: true);
-  // ------------
   Widget build(BuildContext context) {
     // controller.fillMarkersCallback = fillMarkers;
-    Get.put<CurrentOrderController>(CurrentOrderController());
 
-    controller.getCurrentOrder().stream.listen((data) async {
+    controller.getCurrentOrder().listen((data) async {
       currentOrderStream.value = data;
-      _loadPolyline();
-      _handleEvent();
-    });
+
+      if (currentOrderStream.value?.event != null) {
+        if (currentOrderStream.value!.event!.eventType ==
+            CurrentOrderEventTypes.OrderStatusChange) {
+          print(
+              "\n\n\n\n ${currentOrderStream.value?.event?.toJson()} \n\n\n\n");
+
+          if (currentOrderStream.value?.order.status == "cancelled" &&
+              currentOrderStream.value?.order.cancelledBy == "customer") {
+            await MezcalmosSharedWidgets.mezcalmosDialogOrderCancelled(
+                55, Get.height, Get.width);
+            // Get.back(closeOverlays: true);
+          }
+          // OnTheWay to Cancelled
+          // cancellationParty == customer
+          // show dialog and route to incomingOrders
+          // OnTheWay to InTransit
+          // reset the markers
+          //
+          //
+        }
+        controller.clearEvent();
+      }
+    }, onError: (e) => print("[FUTURE ERROR ] ======> $e <====== !"));
+
+    // currentOrderStream.listen((event) {
+    //   event.order.status;
+    // });
+
+    // this.fillMarkers().then((_) => latLngBounds.value = createBounds());
+
+    Get.put<CurrentOrderController>(CurrentOrderController());
 
     return SafeArea(
       child: Stack(
         alignment: Alignment.topCenter,
         children: [
-          Obx(
-            () => MGoogleMap(
-              customMarkers,
-              initialCameraPosition.value,
-              polylines: polylines,
-            ),
+          Center(
+            child: CircularProgressIndicator(),
           ),
           Positioned(
               bottom: GetStorage().read(getxGmapBottomPaddingKey),
@@ -191,9 +284,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                         child: Obx(
                           () => Text(
                               '\$' +
-                                  (currentOrderStream
-                                          .value?.order.estimatedPrice
-                                          ?.toString() ??
+                                  (controller.estimatedPrice?.toString() ??
                                       "00"),
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 18)),
@@ -222,11 +313,8 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                                   ? null
                                   : () async {
                                       clickedLaunchOnMap.value = true;
-                                      await mapLauncher(
-                                          currentOrderStream
-                                              .value?.order.to.latitude,
-                                          currentOrderStream
-                                              .value?.order.to.longitude);
+                                      await mapLauncher(controller.to.latitude,
+                                          controller.to.longitude);
                                       clickedLaunchOnMap.value = false;
                                     },
                               child: Container(
@@ -445,29 +533,23 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                                   onTap: () => mezcalmosSnackBar(
                                       lang.strings['shared']['inputLocation']
                                           ["from"],
-                                      currentOrderStream
-                                              .value?.order.from?.address ??
-                                          ""),
+                                      controller.from?.address ?? ""),
                                   child: Text(
-                                    currentOrderStream
-                                                .value?.order.from?.address
+                                    controller.from?.address
                                                 ?.toString()
                                                 .length ==
                                             null
                                         ? "........."
-                                        : currentOrderStream
-                                                    .value!.order.from!.address!
+                                        : controller.from!.address!
                                                     .toString()
                                                     .length >
                                                 13
-                                            ? (currentOrderStream.value?.order
-                                                        .from?.address
+                                            ? (controller.from?.address
                                                         .toString()
                                                         .substring(0, 13) ??
                                                     "..........") +
                                                 " .."
-                                            : currentOrderStream
-                                                .value!.order.from!.address
+                                            : controller.from!.address
                                                 .toString(),
                                     style: TextStyle(
                                         fontSize: 16, fontFamily: 'psr'),
@@ -544,28 +626,21 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                                 onTap: () => mezcalmosSnackBar(
                                     lang.strings['shared']['inputLocation']
                                         ["to"],
-                                    currentOrderStream
-                                            .value?.order.to?.address ??
-                                        ""),
+                                    controller.to?.address ?? ""),
                                 child: Text(
-                                  currentOrderStream.value?.order.to?.address
-                                              ?.toString()
-                                              .length ==
+                                  controller.to?.address?.toString().length ==
                                           null
                                       ? "........."
-                                      : currentOrderStream
-                                                  .value!.order.to!.address!
+                                      : controller.to!.address!
                                                   .toString()
                                                   .length >
                                               13
-                                          ? (currentOrderStream
-                                                      .value!.order.to?.address
+                                          ? (controller.to?.address
                                                       .toString()
                                                       .substring(0, 13) ??
                                                   "..........") +
                                               " .."
-                                          : currentOrderStream
-                                              .value?.order.to?.address, //13+..
+                                          : controller.to?.address, //13+..
                                   style: TextStyle(
                                       fontSize: 16, fontFamily: 'psr'),
                                   overflow: TextOverflow.ellipsis,
@@ -582,141 +657,5 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
         ],
       ),
     );
-  }
-
-  // Handling Event ------------------------------------------------------------------------------------
-
-  Future<void> _handleEvent() async {
-    if (currentOrderStream.value?.event != null) {
-      if (currentOrderStream.value!.event!.eventType ==
-          CurrentOrderEventTypes.OrderStatusChange) {
-        print("\n\n\n\n ${currentOrderStream.value?.event?.toJson()} \n\n\n\n");
-
-        if (currentOrderStream.value?.order.status == "cancelled" &&
-            currentOrderStream.value?.order.cancelledBy == "customer") {
-          await MezcalmosSharedWidgets.mezcalmosDialogOrderCancelled(
-              55, Get.height, Get.width);
-          // Get.back(closeOverlays: true);
-        } else if (currentOrderStream.value?.order.status == "onTheWay") {
-          _loadMarkersForOTW();
-        } else if (currentOrderStream.value?.order.status == "inTransit") {
-          _loadMarkersForIT();
-        }
-      }
-      controller.clearEvent();
-    }
-  }
-
-  void _loadPolyline() {
-    // check if polyline is empty
-    if (polylines.isEmpty) {
-      // check if event.order has data
-      if (currentOrderStream.value?.event != null) {
-        // load the polyline
-        print("[LOADED POLYLINES] ================= ");
-
-        polylines.add(new Polyline(
-          color: Color.fromARGB(255, 172, 89, 252),
-          polylineId: PolylineId("polyline"),
-          jointType: JointType.round,
-          points: loadUpPolyline(currentOrderStream.value?.order),
-          width: 2,
-          startCap: Cap.buttCap,
-          endCap: Cap.roundCap,
-          // geodesic: true,
-        ));
-      }
-    }
-  }
-
-  // onTheWay - state
-  Future<void> _loadMarkersForOTW() async {
-    await _loadBitmapDescriptors();
-
-    // customMarkers.clear(); // just in case.
-    print("\n\n\n\n[OnTheWay] ================= \n\n\n\n");
-
-    customMarkers.addAll(<CustomMarker>[
-      // Customer's Marker
-      new CustomMarker(
-          "customer",
-          bitmapDescriptors["customerImg"]!,
-          new LatLng(currentOrderStream.value?.order.from.latitude,
-              currentOrderStream.value?.order.from.longitude)),
-
-      // Destination Marker
-      new CustomMarker(
-          "destination",
-          bitmapDescriptors["destinationImg"]!,
-          new LatLng(currentOrderStream.value?.order.to.latitude,
-              currentOrderStream.value?.order.to.longitude)),
-
-      // Taxi Marker - with subscription
-      new CustomMarker(
-          "destination",
-          bitmapDescriptors["destinationImg"]!,
-          new LatLng(taxiAuthController.currentLocation.latitude!,
-              taxiAuthController.currentLocation.longitude!),
-          locationStream: taxiAuthController.currentLocationRx),
-    ]);
-    print("\n\n\n\n[OnTheWay] ================= $customMarkers\n\n\n\n");
-  }
-
-  // inTransit - state
-  Future<void> _loadMarkersForIT() async {
-    await _loadBitmapDescriptors();
-
-    customMarkers.clear(); // just in case.
-    customMarkers.addAll(<CustomMarker>[
-      // Taxi Marker (Customer in Taxi too ) - with subscription
-      new CustomMarker(
-          "from",
-          bitmapDescriptors["destinationImg"]!,
-          new LatLng(taxiAuthController.currentLocation.latitude!,
-              taxiAuthController.currentLocation.longitude!),
-          locationStream: taxiAuthController.currentLocationRx),
-
-      // Destination Marker
-      new CustomMarker("destination", bitmapDescriptors["destinationImg"]!,
-          currentOrderStream.value?.order.to),
-    ]);
-  }
-
-  Future<void> _loadBitmapDescriptors() async {
-    print("\n\n\n\n[_loadBitmapDescriptors] =================\n\n\n\n");
-
-    // customer marker's Image
-    if (bitmapDescriptors["customerImg"] == null) {
-      // Create the BitmapDescriptor Object for the customer marker using the images's bytes.
-      bitmapDescriptors["customerImg"] = await BitmapDescriptorLoader(
-          (await cropRonded((await http.get(
-                  Uri.parse(currentOrderStream.value?.order.customer['image'])))
-              .bodyBytes) as Uint8List),
-          60,
-          60,
-          isBytes: true);
-    }
-    // taxi marker's Image
-    if (bitmapDescriptors["taxiImg"] == null) {
-      bitmapDescriptors["taxiImg"] = await BitmapDescriptorLoader(
-          (await cropRonded((await rootBundle.load(taxi_driver_marker_asset))
-              .buffer
-              .asUint8List())),
-          60,
-          60,
-          isBytes: true);
-    }
-
-    // destination marker's Image
-    if (bitmapDescriptors["destinationImg"] == null) {
-      bitmapDescriptors["destinationImg"] = await BitmapDescriptorLoader(
-          (await cropRonded(
-              (await rootBundle.load(purple_destination_marker_asset))
-                  .buffer
-                  .asUint8List())),
-          60,
-          60,
-          isBytes: true);
-    }
   }
 }

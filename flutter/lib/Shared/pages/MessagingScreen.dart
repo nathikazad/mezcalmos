@@ -148,8 +148,7 @@ class MessagingScreen extends GetView<MessageController> {
       scrollDown(mezChatScrollDuration: timeStamp);
     });
 
-    controller.loadChat(
-        _authController.user!.uid, _currentOrderController.value?.id);
+    controller.loadChat(_authController.user!.uid, _currentOrderController.id);
 
     void _fillCallBack() {
       print(
@@ -166,8 +165,7 @@ class MessagingScreen extends GetView<MessageController> {
       scrollDown();
     }
 
-    controller.loadChat(
-        _authController.user!.uid, _currentOrderController.value!.id,
+    controller.loadChat(_authController.user!.uid, _currentOrderController.id,
         onValueCallBack: _fillCallBack);
 
     return Scaffold(
@@ -203,12 +201,11 @@ class MessagingScreen extends GetView<MessageController> {
                         child: CircleAvatar(
                           radius: 23,
                           backgroundColor: Colors.grey.shade200,
-                          backgroundImage: _currentOrderController
-                                      .value?.customer['image'] !=
-                                  null
-                              ? NetworkImage(_currentOrderController
-                                  .value!.customer['image'])
-                              : AssetImage(aDefaultAvatar) as ImageProvider,
+                          backgroundImage:
+                              _currentOrderController.customer['image'] != null
+                                  ? NetworkImage(
+                                      _currentOrderController.customer['image'])
+                                  : AssetImage(aDefaultAvatar) as ImageProvider,
                         ),
                       ),
                       Column(
@@ -217,7 +214,7 @@ class MessagingScreen extends GetView<MessageController> {
                         children: [
                           Obx(
                             () => Text(
-                              _currentOrderController.value?.customer['name'] ??
+                              _currentOrderController.customer['name'] ??
                                   ".....",
                               style:
                                   TextStyle(fontFamily: 'psb', fontSize: 16.5),
