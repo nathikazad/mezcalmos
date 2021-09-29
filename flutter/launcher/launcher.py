@@ -89,20 +89,19 @@ class Launcher:
             print("Exiting the launcher .... bye bye!")
     
     def __f_checker__(self):
-        if not os.path.exists('../lib/pre-main.dart'):
-            if not os.path.exists('flutter_hooks/launch/pre-main'):
-                PRINTLN("[!] Error - No pre-main file neither in launcher files or flutter files !")
-                exit(DW_EXIT_REASONS.ROOT_MAIN_DART_FILE_NOT_FOUND)
-            PRINTLN("[+] No ../lib/pre-main.dart found .. generating a new one !")
-            
-            prem = open('flutter_hooks/launch/pre-main' , encoding='utf-8' , errors='ignore').read()
-            open('../lib/pre-main.dart' , 'w+').write(prem) 
+        if not os.path.exists('flutter_hooks/launch/pre-main'):
+            PRINTLN("[!] Error - No pre-main file neither in launcher files or flutter files !")
+            exit(DW_EXIT_REASONS.ROOT_MAIN_DART_FILE_NOT_FOUND)
+        PRINTLN("[+] No ../lib/pre-main.dart found .. generating a new one !")
+        
+        prem = open('flutter_hooks/launch/pre-main' , encoding='utf-8' , errors='ignore').read()
+        open('../lib/pre-main.dart' , 'w+').write(prem) 
 
     def __patcher__(self):
         PRINTLN("[+] Patching ../lib/pre-main.dart !")
         f_root_main = open('../lib/pre-main.dart' , encoding='utf-8' , errors='ignore').read()
-        f_root_main = f_root_main.replace(self.last_app , self.user_args['app'])
-        PRINTLN(f"\t|_ last_app = {self.last_app}\n\t|_ launching_app = {self.user_args['app']}")
+        f_root_main = f_root_main.replace("<app-name>", self.user_args['app'])
+        # PRINTLN(f"\t|_ last_app = {self.last_app}\n\t|_ launching_app = {self.user_args['app']}")
 
         # Writing new Valid App.
         open('../lib/pre-main.dart' , 'w+').write(f_root_main)
