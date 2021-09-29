@@ -1,5 +1,7 @@
 import 'dart:io' show Platform;
-
+import 'dart:typed_data';
+import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -14,60 +16,26 @@ import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
-import 'package:mezcalmos/TaxiApp/pages/MTaxiGMapWraper.dart';
 
-class IncommingOrderScreenView extends GetView<IncomingOrdersController>
-    with MTaxiGMapWrapper {
+class IncommingOrderScreenView extends GetWidget<IncomingOrdersController> {
   LanguageController lang = Get.find<LanguageController>();
   // when clicking on accept .. etc
   RxBool showLoading = false.obs;
-  RxBool mapReady = false.obs;
+  TaxiAuthController taxiAuthController = Get.find<TaxiAuthController>();
 
-// overriding this to get the CustomerPicture
-  // so when we call loadBitmapsUp , it will call this implemented userMarkerPicture(), and only happens if it's not loaded up yet.
-  @override
-  Future<BitmapDescriptor> userMarkerPicture() {
-    print("+ the implemented userMarkerPicture() executed !");
-    return Future.value(controller.selectedIncommingOrder?.pictureBytes);
-  }
-
-  @override
-  Future<bool> fillMarkers({String? orderStatus}) async {
-    print("+ the implemented fillMarkers() executed !");
-
-    markers.clear();
-    if (polylines.length == 0)
-      setPolylines(loadUpPolyline(controller.selectedIncommingOrder!));
-    // 2 markers
-    await loadBitmapsUp(); // happens only one
-    markers = <CustomMarker>[
-      new CustomMarker(
-        "from",
-        picMarker!,
-        LatLng(controller.selectedIncommingOrder?.from.latitude,
-            controller.selectedIncommingOrder?.from.longitude),
-      ),
-      new CustomMarker(
-        "to",
-        toDescriptor!,
-        LatLng(controller.selectedIncommingOrder?.to.latitude,
-            controller.selectedIncommingOrder?.to.longitude),
-      ),
-    ].obs;
-    return Future.value(true);
-  }
-
+  // map stuff ==================================
+  Set<Polyline> polylines = <Polyline>{};
+  Map<String, BitmapDescriptor?> bitmapDescriptors = {
+    "customerImg": null,
+    "destinationImg": null
+  };
+  Rx<LatLng> initialCameraPosition = LatLng(0, 0).obs;
+  List<CustomMarker> customMarkers = <CustomMarker>[];
+  //==================================
   @override
   Widget build(BuildContext context) {
-    // if (controller.selectedIncommingOrder?.id != null)
-    initialCameraLocation = LatLng(
-        controller.selectedIncommingOrder?.from.latitude,
-        controller.selectedIncommingOrder?.from.longitude);
-    // depends on markers.
-    this.fillMarkers().then((_) {
-      latLngBounds = createBounds();
-      mapReady.value = true;
-    });
+    _loadPolyline();
+    _loadMarkers();
 
     return Scaffold(
       appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back()),
@@ -75,12 +43,11 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController>
         child: Stack(
           alignment: Alignment.topCenter,
           children: [
-            Obx(() => mapReady.value && latLngBounds != null
-                ? MGoogleMap(markers, initialCameraLocation,
-                    polylines: this.polylines)
-                : Center(
-                    child: CircularProgressIndicator(),
-                  )),
+            Obx(() => MGoogleMap(
+                  customMarkers,
+                  initialCameraPosition.value,
+                  polylines: polylines,
+                )),
             Positioned(
                 bottom: GetStorage().read(getxGmapBottomPaddingKey) + 55,
                 child: Container(
@@ -134,19 +101,7 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController>
                                   .shade100, //Color.fromARGB(255, 222, 222, 222),
                               // radius: 1,
                             ),
-                          )
-                          // child: CircleAvatar(
-                          //   child: ClipOval(
-                          //     child: controller.selectedIncommingOrder
-                          //                 ?.customer['image'] ==
-                          //             null
-                          //         ? Image.asset(aDefaultAvatar)
-                          //         : Image.network(controller
-                          //             .selectedIncommingOrder?.customer['image']),
-                          //   ),
-                          //   backgroundColor: Colors.grey.shade200,
-                          // ),
-                          ),
+                          )),
                       Positioned(
                         left: 60,
                         top: getSizeRelativeToScreen(5, Get.height, Get.width),
@@ -491,10 +446,71 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController>
       ),
     );
   }
-}
 
-//
-// Order expired
-// Customer canceled the order
-// Another driver has picked up the order !
-//
+  void _loadPolyline() {
+    // check if polyline is empty
+    if (polylines.isEmpty) {
+      polylines.add(Polyline(
+        color: Color.fromARGB(255, 172, 89, 252),
+        polylineId: PolylineId("polyline"),
+        jointType: JointType.round,
+        points: loadUpPolyline(controller.selectedIncommingOrder),
+        width: 2,
+        startCap: Cap.buttCap,
+        endCap: Cap.roundCap,
+        // geodesic: true,
+      ));
+    }
+  }
+
+// onTheWay - state
+  Future<void> _loadMarkers() async {
+    await _loadBitmapDescriptors();
+
+    initialCameraPosition.value = LatLng(
+        controller.selectedIncommingOrder?.from.latitude,
+        controller.selectedIncommingOrder?.from.longitude);
+
+    customMarkers.assignAll(<CustomMarker>[
+      // Customer's Marker
+      CustomMarker(
+          "customer",
+          bitmapDescriptors["customerImg"]!,
+          LatLng(controller.selectedIncommingOrder?.from.latitude,
+              controller.selectedIncommingOrder?.from.longitude)),
+
+      // Destination Marker
+      CustomMarker(
+          "destination",
+          bitmapDescriptors["destinationImg"]!,
+          LatLng(controller.selectedIncommingOrder?.to.latitude,
+              controller.selectedIncommingOrder?.to.longitude)),
+    ]);
+  }
+
+  Future<void> _loadBitmapDescriptors() async {
+    // customer marker's Image
+    if (bitmapDescriptors["customerImg"] == null) {
+      // Create the BitmapDescriptor Object for the customer marker using the images's bytes.
+      bitmapDescriptors["customerImg"] = await BitmapDescriptorLoader(
+          (await cropRonded((await http.get(Uri.parse(
+                  controller.selectedIncommingOrder?.customer['image'])))
+              .bodyBytes) as Uint8List),
+          60,
+          60,
+          isBytes: true);
+    }
+
+    // destination marker's Image
+    if (bitmapDescriptors["destinationImg"] == null) {
+      bitmapDescriptors["destinationImg"] = await BitmapDescriptorLoader(
+          (await cropRonded(
+              (await rootBundle.load(purple_destination_marker_asset))
+                  .buffer
+                  .asUint8List())),
+          60,
+          60,
+          isBytes: true);
+    }
+  }
+}

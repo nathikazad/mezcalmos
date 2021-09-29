@@ -1,22 +1,24 @@
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/routes.dart';
 import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
+import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as MezNotification;
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 
-class FBTaxiNotificationsController extends FBNotificationsController {
+class FBTaxiNotificationsController extends FBNotificationsController
+    with MezDisposable {
   @override
   void onInit() {
     super.onInit();
 
     if (authController.user != null) {
-      taxiAuthListener = databaseHelper.firebaseDatabase
-          .reference()
-          .child(notificationsNode(authController.user!.uid))
-          .onValue
-          .listen((event) {
+      (taxiAuthListener = databaseHelper.firebaseDatabase
+              .reference()
+              .child(notificationsNode(authController.user!.uid))
+              .onValue
+              .listen((event) {
         notifications.clear();
         if (event.snapshot.value != null) {
           print(
@@ -53,20 +55,22 @@ class FBTaxiNotificationsController extends FBNotificationsController {
             print(notifications.toJson());
           });
         }
-      });
+      }))
+          .canceledBy(this);
     }
   }
 
   @override
   void onClose() {
-    if (taxiAuthListener != null) {
-      taxiAuthListener!
-          .cancel()
-          .then((value) => print(
-              "A listener was disposed on currentOrderController::detachListeners !"))
-          .catchError((err) => print(
-              "Error happend while trying to dispose currentOrderController::detachListeners !"));
-    }
+    cancelSubscriptions();
+    // if (taxiAuthListener != null) {
+    //   taxiAuthListener!
+    //       .cancel()
+    //       .then((value) => print(
+    //           "A listener was disposed on currentOrderController::detachListeners !"))
+    //       .catchError((err) => print(
+    //           "Error happend while trying to dispose currentOrderController::detachListeners !"));
+    // }
     super.onClose();
   }
 

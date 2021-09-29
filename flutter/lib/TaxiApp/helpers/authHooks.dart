@@ -13,7 +13,7 @@ class AuthHooks {
 
   void onSignOutHook() async {
     print("[+] TaxiApp::AuthHooks::onSignOutHook -> Callback Executed.");
-    _authController.userInfoListener.pause();
+    _authController.userInfoListener?.pause();
     Get.find<TaxiAuthController>().dispose();
     Get.find<DeviceNotificationsController>().dispose();
     Get.delete<MessageController>();
@@ -21,7 +21,7 @@ class AuthHooks {
   }
 
   void onSignInHook() {
-    _authController.userInfoListener.resume();
+    _authController.userInfoListener?.resume();
 
     print("[+] TaxiApp::AuthHooks::onSignInHook -> Callback Executed.");
     Get.lazyPut(() => TaxiAuthController());

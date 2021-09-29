@@ -5,7 +5,6 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
-import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
@@ -148,7 +147,8 @@ class MessagingScreen extends GetView<MessageController> {
       scrollDown(mezChatScrollDuration: timeStamp);
     });
 
-    controller.loadChat(_authController.user!.uid, _currentOrderController.id);
+    controller.loadChat(_authController.user!.uid,
+        _currentOrderController.currentOrderStream?.order.id);
 
     void _fillCallBack() {
       print(
@@ -165,7 +165,8 @@ class MessagingScreen extends GetView<MessageController> {
       scrollDown();
     }
 
-    controller.loadChat(_authController.user!.uid, _currentOrderController.id,
+    controller.loadChat(_authController.user!.uid,
+        _currentOrderController.currentOrderStream?.order.id,
         onValueCallBack: _fillCallBack);
 
     return Scaffold(
@@ -201,11 +202,14 @@ class MessagingScreen extends GetView<MessageController> {
                         child: CircleAvatar(
                           radius: 23,
                           backgroundColor: Colors.grey.shade200,
-                          backgroundImage:
-                              _currentOrderController.customer['image'] != null
-                                  ? NetworkImage(
-                                      _currentOrderController.customer['image'])
-                                  : AssetImage(aDefaultAvatar) as ImageProvider,
+                          backgroundImage: _currentOrderController
+                                      .currentOrderStream
+                                      ?.order
+                                      .customer['image'] !=
+                                  null
+                              ? NetworkImage(_currentOrderController
+                                  .currentOrderStream?.order.customer['image'])
+                              : AssetImage(aDefaultAvatar) as ImageProvider,
                         ),
                       ),
                       Column(
@@ -214,7 +218,8 @@ class MessagingScreen extends GetView<MessageController> {
                         children: [
                           Obx(
                             () => Text(
-                              _currentOrderController.customer['name'] ??
+                              _currentOrderController.currentOrderStream?.order
+                                      .customer['name'] ??
                                   ".....",
                               style:
                                   TextStyle(fontFamily: 'psb', fontSize: 16.5),

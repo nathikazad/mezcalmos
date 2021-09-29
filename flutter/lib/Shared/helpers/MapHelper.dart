@@ -1,9 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/state_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'dart:math' show cos, sqrt, sin, pi, atan2;
-import 'dart:async';
 import 'package:mezcalmos/Shared/models/Order.dart';
 
 class CustomMarker {
@@ -21,12 +22,34 @@ class CustomMarker {
     }
   }
 
+  // this is needed when releasing the Resources!
+  void cancelSub() {
+    if (locationStream != null) locationStream!.close();
+  }
+
   Marker marker() => new Marker(
       visible: true,
       markerId: MarkerId(this.id),
       position: this.position,
       icon: this.icon,
       draggable: false);
+}
+
+LatLngBounds createMapBounds(List<LatLng> positions) {
+  final southwestLat = positions.map((p) => p.latitude).reduce(
+      (value, element) => value < element ? value : element); //  snallest value
+  final southwestLon = positions
+      .map((p) => p.longitude)
+      .reduce((value, element) => value < element ? value : element);
+  final northeastLat = positions.map((p) => p.latitude).reduce(
+      (value, element) => value > element ? value : element); // biggest value
+  final northeastLon = positions
+      .map((p) => p.longitude)
+      .reduce((value, element) => value > element ? value : element);
+  // mapReady.value = true;
+  return LatLngBounds(
+      southwest: LatLng(southwestLat, southwestLon),
+      northeast: LatLng(northeastLat, northeastLon));
 }
 
 List<LatLng> loadUpPolyline(Order? _o) {

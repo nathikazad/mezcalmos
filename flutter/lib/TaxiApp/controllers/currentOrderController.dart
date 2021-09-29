@@ -1,25 +1,17 @@
 import 'dart:async';
-import 'package:http/http.dart' as http;
-import 'dart:typed_data';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
+import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
-import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/controllers/FBTaxiNorificationsController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
-import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Order.dart';
 
-class CurrentOrderController extends GetxController {
+class CurrentOrderController extends GetxController with MezDisposable {
   Rx<Order> _model = Order.empty().obs;
 
   dynamic get id => _model.value.id;
@@ -33,56 +25,38 @@ class CurrentOrderController extends GetxController {
   FBNotificationsController _notifications =
       Get.put<FBNotificationsController>(FBTaxiNotificationsController());
 
-  // CurrentOrder? get currentOrder => _currentOrder.value;
-  // Order? get value => _model.value;
-  // dynamic get id => _model.value.id;
-  // dynamic get waitingResponse => _waitingResponse.value;
-
-  // double get distanceToClient => MapHelper.calculateDistance(
-  //     _taxiAuthController.currentLocation, _model.value.from.position);
-  late Stream<Event> _currentOrderListener;
   String? lastOrderStatus;
   CurrentOrderEvent? currentEvent;
-  // RxInt mapNeedsRender = 0.obs;
+  Rxn<CurrentOrder> _currentOrderStream = Rxn();
+  CurrentOrder? get currentOrderStream => _currentOrderStream.value;
+  Rxn<CurrentOrder> get currentOrderStreamRx => _currentOrderStream;
 
   @override
   void onInit() {
     super.onInit();
-    _currentOrderListener = _databaseHelper.firebaseDatabase
+    _databaseHelper.firebaseDatabase
         .reference()
         .child(orderId(_taxiAuthController.currentOrderId))
-        .onValue;
-  }
-
-  // inTransit
-  // lastOrderStatus = null
-  StreamController<CurrentOrder> getCurrentOrder() {
-    //listener may not get disposed when screen gets disposed
-    final StreamController<CurrentOrder> _streamController =
-        new StreamController<CurrentOrder>.broadcast();
-    _currentOrderListener.listen((event) {
-      _streamController.stream;
-
-      DataSnapshot snapshot = event.snapshot;
-      CurrentOrder currentOrder = new CurrentOrder.fromSnapshot(snapshot);
-      currentOrder.event = currentEvent;
-      if (currentOrder.order.status != null &&
-          currentOrder.order.status != lastOrderStatus) {
-        currentOrder.event = new CurrentOrderEvent(
+        .onValue
+        .listen((event) {
+      _currentOrderStream.value = new CurrentOrder.fromSnapshot(event.snapshot);
+      _currentOrderStream.value?.event = currentEvent;
+      if (_currentOrderStream.value?.order.status != null &&
+          _currentOrderStream.value?.order.status != lastOrderStatus) {
+        _currentOrderStream.value?.event = new CurrentOrderEvent(
             CurrentOrderEventTypes.OrderStatusChange,
             eventDetails: <String, String?>{
               "oldStatus": lastOrderStatus,
-              "newStatus": currentOrder.order.status
+              "newStatus": _currentOrderStream.value?.order.status
             });
-        lastOrderStatus = currentOrder.order.status;
-        currentEvent = currentOrder.event;
+        lastOrderStatus = _currentOrderStream.value?.order.status;
+        currentEvent = _currentOrderStream.value?.event;
       }
+    }).canceledBy(this);
+  }
 
-      _streamController.add(currentOrder);
-    });
-    // await for (CurrentOrder s in _streamController.stream) s.event = null;
-    return _streamController;
-    // return _currentOrderListener.first.asStream().cast<CurrentOrder>();
+  void clearEvent() async {
+    currentEvent = null;
   }
 
   void clearEvent() async {
@@ -189,32 +163,18 @@ class CurrentOrderController extends GetxController {
 
   void detachListeners() {
     _notifications.clearAllMessageNotification();
-    // if (_currentOrderListener != null) {
-    //   _currentOrderListener!
-    //       .cancel()
-    //       .then((value) => print(
-    //           "A listener was disposed on currentOrderController::detachListeners !"))
-    //       .catchError((err) => print(
-    //           "Error happend while trying to dispose currentOrderController::detachListeners !"));
-    // }
   }
 
   @override
   void onClose() async {
-    // TO Remove our callback
-    // _notifications.taxiAuthListenerCallbacks
-    //     .removeWhere((element) => element?['orderId'] == _model.value.id);
-
+    cancelSubscriptions();
     detachListeners();
     super.onClose();
   }
 
   @override
   void dispose() {
-    // TO Remove our callback
-    // _notifications.taxiAuthListenerCallbacks
-    //     .removeWhere((element) => element?['orderId'] == _model.value.id);
-
+    cancelSubscriptions();
     detachListeners();
     super.dispose();
     print("--------------------> CurrentOrderController Auto Disposed !");
@@ -240,7 +200,7 @@ class CurrentOrder {
   CurrentOrder(this.order, {this.event});
 
   Map toJson() =>
-      <dynamic, dynamic>{event: event?.toJson(), order: order.toJson()};
+      <dynamic, dynamic>{"event": event?.toJson(), "order": order.toJson()};
 
   CurrentOrder.fromSnapshot(DataSnapshot snapshot)
       : this.order = Order.fromSnapshot(snapshot);

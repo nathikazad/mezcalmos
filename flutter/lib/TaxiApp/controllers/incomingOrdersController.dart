@@ -12,6 +12,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
@@ -21,7 +22,7 @@ import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 
-class IncomingOrdersController extends GetxController {
+class IncomingOrdersController extends GetxController with MezDisposable {
   RxList<Order> orders = <Order>[]
       .obs; // this is observable which will be constaintly changing in realtime .
   AuthController _authController =
@@ -38,7 +39,6 @@ class IncomingOrdersController extends GetxController {
   RxString _selectedIncommingOrderKey = "".obs;
 
   // Storing all the needed Listeners here
-  List<StreamSubscription<Event>> _listeners = <StreamSubscription<Event>>[];
   late Worker _updateOrderDistanceToClient;
 
   // dynamic get waitingResponse => _waitingResponse.value;
@@ -61,60 +61,54 @@ class IncomingOrdersController extends GetxController {
     print("--------------------> IncomingOrderController Initialized !");
 
     if (_authController.user != null) {
-      _listeners.addAll([
-        // Added Order!
-        _databaseHelper.firebaseDatabase
-            .reference()
-            .child(taxiOpenOrdersNode)
-            .onValue
-            .listen((event) async {
-          orders.value = <Order>[];
-          if (event.snapshot.value != null) {
-            event.snapshot.value.forEach((dynamic key, dynamic value) async {
-              print(
-                  "\n\n\n\n\n New Customer Order Inserted : $key , \n$value\n\n\n\n\n");
+      // Added Order!
+      _databaseHelper.firebaseDatabase
+          .reference()
+          .child(taxiOpenOrdersNode)
+          .onValue
+          .listen((event) async {
+        orders.value = <Order>[];
+        if (event.snapshot.value != null) {
+          event.snapshot.value.forEach((dynamic key, dynamic value) async {
+            print(
+                "\n\n\n\n\n New Customer Order Inserted : $key , \n$value\n\n\n\n\n");
 
-              BitmapDescriptor picMarker = await BitmapDescriptorLoader(
-                  (await cropRonded(
-                      (await http.get(Uri.parse(value['customer']['image'])))
-                          .bodyBytes) as Uint8List),
-                  60,
-                  60,
-                  isBytes: true);
+            BitmapDescriptor picMarker = await BitmapDescriptorLoader(
+                (await cropRonded(
+                    (await http.get(Uri.parse(value['customer']['image'])))
+                        .bodyBytes) as Uint8List),
+                60,
+                60,
+                isBytes: true);
 
-              await GetStorage().write('custBitmap', picMarker);
+            print("\n\n\n [bytes] $picMarker\n\n\n");
+            Order order = Order.fromJson(key, value, pictureBytes: picMarker);
+            order.distanceToClient = MapHelper.calculateDistance(
+                order.from.position, _taxiAuthController.currentLocation);
+            orders.add(order);
+            if (_appLifeCycleController.appState == AppLifecycleState.resumed)
+              _databaseHelper.firebaseDatabase
+                  .reference()
+                  .child(notificationStatusReadNode(
+                      key, _authController.user!.uid))
+                  .set(true);
+          });
 
-              print("\n\n\n [bytes] $picMarker\n\n\n");
-              Order order = Order.fromJson(key, value, pictureBytes: picMarker);
-              order.distanceToClient = MapHelper.calculateDistance(
-                  order.from.position, _taxiAuthController.currentLocation);
-              orders.add(order);
-              if (_appLifeCycleController.appState == AppLifecycleState.resumed)
-                _databaseHelper.firebaseDatabase
-                    .reference()
-                    .child(notificationStatusReadNode(
-                        key, _authController.user!.uid))
-                    .set(true);
-            });
-
-            orders.sort(
-                (a, b) => a.distanceToClient.compareTo(b.distanceToClient));
+          orders
+              .sort((a, b) => a.distanceToClient.compareTo(b.distanceToClient));
+        }
+        if (orders
+                .where(
+                    (element) => element.id == _selectedIncommingOrderKey.value)
+                .length ==
+            0) {
+          if (Get.currentRoute == kSelectedIcommingOrder) {
+            await MezcalmosSharedWidgets.mezcalmosDialogOrderNoMoreAvailable(
+                55, Get.height, Get.width);
+            Get.back(closeOverlays: true);
           }
-          if (orders
-                  .where((element) =>
-                      element.id == _selectedIncommingOrderKey.value)
-                  .length ==
-              0) {
-            if (Get.currentRoute == kSelectedIcommingOrder) {
-              await MezcalmosSharedWidgets.mezcalmosDialogOrderNoMoreAvailable(
-                  55, Get.height, Get.width);
-              Get.back(closeOverlays: true);
-            }
-          }
-        })
-      ]);
-
-      print("Attached Listeners on taxiOpenOrdersNode : ${_listeners.length}");
+        }
+      }).canceledBy(this);
 
       _updateOrderDistanceToClient =
           ever(_taxiAuthController.currentLocationRx, (userLocation) {
@@ -140,12 +134,13 @@ class IncomingOrdersController extends GetxController {
 
   // I added this to avoid possible dangling pointers ...
   void detachListeners() {
-    _listeners.forEach((sub) => sub
-        .cancel()
-        .then((value) =>
-            print("A listener was disposed on incomingOrdersController !"))
-        .catchError((err) => print(
-            "Error happend while trying to dispose incomingOrdersController!")));
+    cancelSubscriptions();
+    // _listeners.forEach((sub) => sub
+    //     .cancel()
+    //     .then((value) =>
+    //         print("A listener was disposed on incomingOrdersController !"))
+    //     .catchError((err) => print(
+    //         "Error happend while trying to dispose incomingOrdersController!")));
 
     _updateOrderDistanceToClient.dispose();
 

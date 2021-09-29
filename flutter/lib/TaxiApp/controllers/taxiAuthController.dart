@@ -7,6 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 // import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
@@ -19,7 +20,7 @@ import 'package:mezcalmos/TaxiApp/models/TaxiDriver.dart';
 // import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingListScreen.dart';
 import 'package:location/location.dart';
 
-class TaxiAuthController extends GetxController {
+class TaxiAuthController extends GetxController with MezDisposable {
   Rx<TaxiDriver> _model = TaxiDriver.empty().obs;
   DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
   AuthController _authController = Get.find<AuthController>();
@@ -38,8 +39,7 @@ class TaxiAuthController extends GetxController {
   LocationData get currentLocation => _currentLocation.value;
   bool get locationEnabled => _locationEnabled.value;
   Rx<LocationData> get currentLocationRx => _currentLocation;
-  List<Function> _locationChangeCallbacks = [];
-  StreamSubscription<Event>? _taxiAuthListener;
+
   StreamSubscription<LocationData>? _locationListener;
   bool _checkedAppVersion = false;
   DateTime lastLocationUpdatedTime = DateTime.now();
@@ -71,7 +71,7 @@ class TaxiAuthController extends GetxController {
         "TaxiAuthController  Messaging Token>> ${await _messagingController.getToken()}");
 
     if (_authController.user != null) {
-      _taxiAuthListener = _databaseHelper.firebaseDatabase
+      _databaseHelper.firebaseDatabase
           .reference()
           .child(taxiAuthNode(_authController.user!.uid))
           .onValue
@@ -110,7 +110,8 @@ class TaxiAuthController extends GetxController {
           // print(
           //     " [=] ---------------------------------> Resumed locationListener !");
         }
-      });
+      }).canceledBy(this);
+
       String? deviceNotificationToken = await _messagingController.getToken();
       if (deviceNotificationToken != null)
         _databaseHelper.firebaseDatabase
@@ -134,8 +135,8 @@ class TaxiAuthController extends GetxController {
 
       _locationEnabled.value = true;
       // location.enableBackgroundMode(enable: true);
-      _locationListener =
-          location.onLocationChanged.listen((LocationData currentLocation) {
+      (_locationListener =
+              location.onLocationChanged.listen((LocationData currentLocation) {
         DateTime currentTime = DateTime.now();
         if (currentTime.difference(lastLocationUpdatedTime).inSeconds > 5 &&
             currentLocation.latitude != null &&
@@ -164,15 +165,16 @@ class TaxiAuthController extends GetxController {
                 .set(positionUpdate);
           }
         }
-      });
+      }))
+          .canceledBy(this);
     }
   }
 
   @override
   void dispose() async {
     print("[+] TaxiAuthController::dispose ---------> Was invoked !");
-    await _locationListener?.cancel();
-    await _taxiAuthListener?.cancel();
+    // await _locationListener?.cancel();
+    cancelSubscriptions();
     // Get.find<CurrentOrderController>().dispose();
     // Get.find<IncomingOrdersController>().dispose();
     super.onClose();

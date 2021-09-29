@@ -5,6 +5,7 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/databaseNodes.dart';
 import 'package:mezcalmos/Shared/constants/routes.dart';
+import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
@@ -37,7 +38,7 @@ String sha256ofString(String input) {
   return digest.toString();
 }
 
-class AuthController extends GetxController {
+class AuthController extends GetxController with MezDisposable {
   fireAuth.FirebaseAuth _auth = fireAuth.FirebaseAuth.instance;
   Rxn<User> _user = Rxn<User>();
   RxBool authStateNotifierInvoked = false
@@ -55,8 +56,8 @@ class AuthController extends GetxController {
   DatabaseHelper _databaseHelper =
       Get.find<DatabaseHelper>(); // Already Injected in main function
 
-  late StreamSubscription<Event> _userInfoListener;
-  StreamSubscription<Event> get userInfoListener => _userInfoListener;
+  StreamSubscription<Event>? _userInfoListener;
+  StreamSubscription<Event>? get userInfoListener => _userInfoListener;
 
   // # REGION ------------- OTP Code ---------------
   RxInt _timeBetweenResending = 0.obs;
@@ -111,7 +112,7 @@ class AuthController extends GetxController {
           GetStorage().write(getUserId, user.uid);
         });
       }
-    });
+    }).canceledBy(this);
     super.onInit();
   }
 
@@ -312,9 +313,10 @@ class AuthController extends GetxController {
     }
   }
 
-  // @override
-  // void dispose() {
-  //   super.dispose();
-  //   print("--------------------> AuthController Auto Disposed !");
-  // }
+  @override
+  void dispose() {
+    cancelSubscriptions();
+    super.dispose();
+    print("--------------------> AuthController Auto Disposed !");
+  }
 }

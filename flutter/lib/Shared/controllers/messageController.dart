@@ -7,14 +7,14 @@ import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 
-class MessageController extends GetxController {
+class MessageController extends GetxController with MezDisposable {
   Rx<Chat> _model = Chat("", "", {}, [], "").obs;
   Chat? get value => _model.value;
   DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
   AuthController _authController = Get.find<AuthController>();
 
-  StreamSubscription<Event>? _chatListener;
   late String _dbAddress;
 
   @override
@@ -27,7 +27,7 @@ class MessageController extends GetxController {
       {VoidCallback? onValueCallBack}) {
     _dbAddress = orderChatNode(orderId);
 
-    _chatListener = _databaseHelper.firebaseDatabase
+    _databaseHelper.firebaseDatabase
         .reference()
         .child(orderChatNode(orderId))
         .onValue
@@ -41,7 +41,7 @@ class MessageController extends GetxController {
         // print(
         //     "--------------------> messageController Listener Invoked with Messages > ${_model.value.messages} ");
       }
-    });
+    }).canceledBy(this);
   }
 
   void sendMessage(String message) {
@@ -77,14 +77,7 @@ class MessageController extends GetxController {
 
   @override
   void onClose() {
-    if (_chatListener != null) {
-      _chatListener!
-          .cancel()
-          .then((value) =>
-              print("A listener was disposed on messageController::onClose !"))
-          .catchError((err) => print(
-              "Error happend while trying to dispose messageController::onClose !"));
-    }
+    cancelSubscriptions();
     super.onClose();
   }
 }
