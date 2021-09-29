@@ -1,23 +1,115 @@
+import 'dart:typed_data';
+import 'package:http/http.dart' as http;
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 // import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/constants/routes.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
+import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/FBTaxiNorificationsController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
+import 'package:mezcalmos/TaxiApp/pages/MTaxiGMapWraper.dart';
+
 // import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 
-class CurrentOrderScreen extends GetView<CurrentOrderController> {
-  LanguageController lang = Get.find<LanguageController>();
-  FBNotificationsController fbNotificationsController =
+class CurrentOrderScreen extends GetView<CurrentOrderController>
+    with MTaxiGMapWrapper {
+  List<CustomMarker> sub_markers = <CustomMarker>[];
+
+  // overriding this to get the CustomerPicture
+  // so when we call loadBitmapsUp , it will call this implemented userMarkerPicture(), and only happens if it's not loaded up yet.
+  @override
+  Future<BitmapDescriptor> userMarkerPicture() async {
+    print("+ the implemented userMarkerPicture() got executed !");
+    // print("========= ${GetStorage().read('custBitmap')} -=========");
+
+    // return Future.value(GetStorage().read('custBitmap') as BitmapDescriptor);
+
+    return await BitmapDescriptorLoader(
+        (await cropRonded(
+            (await http.get(Uri.parse(controller.value?.customer['image'])))
+                .bodyBytes) as Uint8List),
+        60,
+        60,
+        isBytes: true);
+  }
+
+  @override
+  Future<bool> fillMarkers({String? orderStatus}) async {
+    print(
+        "+ the implemented fillMarkers() got executed with params => {orderStatus : $orderStatus} !");
+
+    markers.clear();
+    if (polylines.length == 0) setPolylines(loadUpPolyline(controller.value!));
+    if (orderStatus == "onTheWay") {
+      // 3 markers
+      await loadBitmapsUp(); // happens only one
+      markers = <CustomMarker>[
+        new CustomMarker(
+            "taxi",
+            LatLng(taxiAuthController.currentLocation.latitude!,
+                taxiAuthController.currentLocation.longitude!),
+            taxiDescriptor!),
+        new CustomMarker(
+            "from",
+            LatLng(controller.value?.from.latitude,
+                controller.value?.from.longitude),
+            taxiDescriptor!),
+        new CustomMarker(
+            "to",
+            LatLng(
+                controller.value?.to.latitude, controller.value?.to.longitude),
+            toDescriptor!),
+      ];
+    } else if (orderStatus == "inTransit") {
+      await loadBitmapsUp();
+
+      markers = <CustomMarker>[
+        new CustomMarker(
+            "taxi",
+            LatLng(taxiAuthController.currentLocation.latitude!,
+                taxiAuthController.currentLocation.longitude!),
+            taxiDescriptor!),
+        new CustomMarker(
+            "to",
+            LatLng(
+                controller.value?.to.latitude, controller.value?.to.longitude),
+            toDescriptor!),
+      ];
+    }
+
+    super.initialCameraLocation = LatLng(
+        taxiAuthController.currentLocation.latitude!,
+        taxiAuthController.currentLocation.longitude!);
+    // depends on markers.
+    print(
+        "\n\n= = =Before= = =  ${controller.latLngBounds.value} == = = = = =\n\n");
+    super.setBounds(createBounds());
+    controller.latLngBounds.value = latLngBounds;
+    sub_markers = markers;
+    print(
+        "\n\n= = =After= = =  ${controller.latLngBounds.value} == = = = = =\n\n");
+
+    // print(mapReady.value);
+    // print(polylines);
+    // print(initialCameraLocation);
+    // print(markers);
+    // print(latLngBounds);
+    return Future.value(true);
+  }
+
+  final LanguageController lang = Get.find<LanguageController>();
+  final FBNotificationsController fbNotificationsController =
       Get.put<FBNotificationsController>(FBTaxiNotificationsController());
   // TaxiAuthController _taxiAuthController = Get.find<TaxiAuthController>();
   RxBool showLoading = false.obs;
@@ -26,29 +118,29 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
 
   Widget build(BuildContext context) {
     Get.put<CurrentOrderController>(CurrentOrderController());
+    controller.fillMarkersCallback = fillMarkers;
     controller.dispatchCurrentOrder();
+
+    // this.fillMarkers().then((_) => latLngBounds.value = createBounds());
 
     return SafeArea(
       child: Stack(
         alignment: Alignment.topCenter,
         children: [
-          Obx(() =>
-              // controller.waitingResponse ||
-              showLoading.value ||
-                      controller.value?.id == null ||
-                      controller.value?.status == null ||
-                      controller.customMarkers.isEmpty ||
-                      controller.polylines.isEmpty
-                  ? Center(child: CircularProgressIndicator())
-                  // these won't be defined here .
-                  : MGoogleMap(
-                      controller.customMarkers,
-                      controller.initialCameraLocation,
-                      controller.boundsSource!,
-                      controller.boundsDestination!,
-                      markerIdWithLocationSubscription:
-                          controller.markerIdWithLocationSubscription,
-                      polylines: controller.polylines)),
+          Obx(() {
+            if (controller.latLngBounds.value != null) {
+              print("-----------> $markers .");
+              print("-----------> $sub_markers .");
+
+              return MGoogleMap(sub_markers, initialCameraLocation,
+                  controller.latLngBounds.value!,
+                  polylines: this.polylines);
+            } else {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          }),
           Positioned(
               bottom: GetStorage().read(getxGmapBottomPaddingKey),
               child: Container(

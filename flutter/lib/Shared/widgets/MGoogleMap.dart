@@ -11,11 +11,16 @@ class MGoogleMap extends StatefulWidget {
   LatLng initialLocation;
   Set<Polyline> polylines;
   // bounds
-  LatLng boundsSource;
-  LatLng boundsDestination;
+  LatLng boundsSource = LatLng(0, 0);
+  LatLng boundsDestination = LatLng(0, 0);
+  LatLngBounds latLngBounds;
 
-  MGoogleMap(this._cMarkers, this.initialLocation, this.boundsSource,
-      this.boundsDestination,
+  MGoogleMap(
+      this._cMarkers,
+      this.initialLocation,
+      // this.boundsSource,
+      //     this.boundsDestination,
+      this.latLngBounds,
       {this.markerIdWithLocationSubscription = const <String, dynamic>{
         "id": null,
         "sub": null,
@@ -39,60 +44,44 @@ class _MGoogleMapState extends State<MGoogleMap> {
   }
 
   // ============================= BOUNDS UPDATE ===========================
-  Future<void> updateCameraLocation(
-      LatLng source, LatLng destination, GoogleMapController? mapController,
-      {String? mode, double myPadding = 150}) async {
-    if (mapController == null) return;
+  // Future<void> updateCameraLocation(
+  //     LatLng source, LatLng destination, GoogleMapController? mapController,
+  //     {String? mode, double myPadding = 150}) async {
+  //   if (mapController == null) return;
 
-    LatLngBounds bounds;
+  //   LatLngBounds bounds;
 
-    if (source.latitude > destination.latitude &&
-        source.longitude > destination.longitude) {
-      bounds = LatLngBounds(southwest: destination, northeast: source);
-    } else if (source.longitude > destination.longitude) {
-      bounds = LatLngBounds(
-          southwest: LatLng(source.latitude, destination.longitude),
-          northeast: LatLng(destination.latitude, source.longitude));
-    } else if (source.latitude > destination.latitude) {
-      bounds = LatLngBounds(
-          southwest: LatLng(destination.latitude, source.longitude),
-          northeast: LatLng(source.latitude, destination.longitude));
-    } else {
-      bounds = LatLngBounds(southwest: source, northeast: destination);
-    }
+  //   if (source.latitude > destination.latitude &&
+  //       source.longitude > destination.longitude) {
+  //     bounds = LatLngBounds(southwest: destination, northeast: source);
+  //   } else if (source.longitude > destination.longitude) {
+  //     bounds = LatLngBounds(
+  //         southwest: LatLng(source.latitude, destination.longitude),
+  //         northeast: LatLng(destination.latitude, source.longitude));
+  //   } else if (source.latitude > destination.latitude) {
+  //     bounds = LatLngBounds(
+  //         southwest: LatLng(destination.latitude, source.longitude),
+  //         northeast: LatLng(source.latitude, destination.longitude));
+  //   } else {
+  //     bounds = LatLngBounds(southwest: source, northeast: destination);
+  //   }
 
-    CameraUpdate cameraUpdate = CameraUpdate.newLatLngBounds(bounds, myPadding);
+  //   CameraUpdate cameraUpdate = CameraUpdate.newLatLngBounds(bounds, myPadding);
 
-    return checkCameraLocation(cameraUpdate, mapController);
-  }
+  //   return checkCameraLocation(cameraUpdate, mapController);
+  // }
 
-  Future<void> checkCameraLocation(
-      CameraUpdate cameraUpdate, GoogleMapController? mapController) async {
-    mapController!.animateCamera(cameraUpdate);
-    LatLngBounds l1 = await mapController.getVisibleRegion();
-    LatLngBounds l2 = await mapController.getVisibleRegion();
+  // Future<void> checkCameraLocation(
+  //     CameraUpdate cameraUpdate, GoogleMapController? mapController) async {
+  //   mapController!.animateCamera(cameraUpdate);
+  //   LatLngBounds l1 = await mapController.getVisibleRegion();
+  //   LatLngBounds l2 = await mapController.getVisibleRegion();
 
-    if (l1.southwest.latitude == -90 || l2.southwest.latitude == -90) {
-      return checkCameraLocation(cameraUpdate, mapController);
-    }
-  }
+  //   if (l1.southwest.latitude == -90 || l2.southwest.latitude == -90) {
+  //     return checkCameraLocation(cameraUpdate, mapController);
+  //   }
+  // }
 
-  LatLngBounds _createBounds(List<LatLng> positions) {
-    final southwestLat = positions.map((p) => p.latitude).reduce(
-        (value, element) =>
-            value < element ? value : element); //  snallest value
-    final southwestLon = positions
-        .map((p) => p.longitude)
-        .reduce((value, element) => value < element ? value : element);
-    final northeastLat = positions.map((p) => p.latitude).reduce(
-        (value, element) => value > element ? value : element); // biggest value
-    final northeastLon = positions
-        .map((p) => p.longitude)
-        .reduce((value, element) => value > element ? value : element);
-    return LatLngBounds(
-        southwest: LatLng(southwestLat, southwestLon),
-        northeast: LatLng(northeastLat, northeastLon));
-  }
   // =======================================================================
 
   @override
@@ -101,37 +90,37 @@ class _MGoogleMapState extends State<MGoogleMap> {
     // initializing all the markers needed
     _updateMarkers();
 
-    if (widget.markerIdWithLocationSubscription["sub"] != null &&
-        widget.markerIdWithLocationSubscription["id"] != null) {
-      widget.markerIdWithLocationSubscription["sub"]!.listen((loc) {
-        updateMarkerLocationById(
-            loc, widget.markerIdWithLocationSubscription["id"]);
-        updateCameraLocation(new LatLng(loc.latitude, loc.longitude),
-            widget.boundsDestination, _controller);
-      });
+    // if (widget.markerIdWithLocationSubscription["sub"] != null &&
+    //     widget.markerIdWithLocationSubscription["id"] != null) {
+    //   widget.markerIdWithLocationSubscription["sub"]!.listen((loc) {
+    //     updateMarkerLocationById(
+    //         loc, widget.markerIdWithLocationSubscription["id"]);
+    //     updateCameraLocation(new LatLng(loc.latitude, loc.longitude),
+    //         widget.boundsDestination, _controller);
+    //   });
 
-      updateCameraLocation(
-          widget.boundsSource, widget.boundsDestination, _controller);
-      setState(() {});
-    } else {
-      updateCameraLocation(
-          widget.boundsSource, widget.boundsDestination, _controller);
-      setState(() {});
-    }
+    //   updateCameraLocation(
+    //       widget.boundsSource, widget.boundsDestination, _controller);
+    //   setState(() {});
+    // } else {
+    //   updateCameraLocation(
+    //       widget.boundsSource, widget.boundsDestination, _controller);
+    //   setState(() {});
+    // }
   }
 
   GoogleMapController? _controller;
 
-  void updateMarkerLocationById(LocationData newLocalData, String id) {
-    LatLng latlng = LatLng(newLocalData.latitude!, newLocalData.longitude!);
-    int i = widget._cMarkers.indexWhere((element) => element.id == id);
-    if (i != -1) {
-      widget._cMarkers[
-              widget._cMarkers.indexWhere((element) => element.id == id)] =
-          new CustomMarker(id, latlng, widget._cMarkers[i].icon);
-      this._updateMarkers();
-    }
-  }
+  // void updateMarkerLocationById(LocationData newLocalData, String id) {
+  //   LatLng latlng = LatLng(newLocalData.latitude!, newLocalData.longitude!);
+  //   int i = widget._cMarkers.indexWhere((element) => element.id == id);
+  //   if (i != -1) {
+  //     widget._cMarkers[
+  //             widget._cMarkers.indexWhere((element) => element.id == id)] =
+  //         new CustomMarker(id, latlng, widget._cMarkers[i].icon);
+  //     this._updateMarkers();
+  //   }
+  // }
 
   @override
   void dispose() {
@@ -163,13 +152,14 @@ class _MGoogleMapState extends State<MGoogleMap> {
         await _gController.setMapStyle(GetStorage().read('map_style'));
         _controller = _gController;
         await _gController.animateCamera(CameraUpdate.newLatLngBounds(
-            _createBounds(<LatLng>[widget.boundsSource, widget.boundsSource]),
+            widget.latLngBounds,
+            // _createBounds(<LatLng>[widget.boundsSource, widget.boundsSource]),
             120));
-        await updateCameraLocation(
-          widget.boundsSource,
-          widget.boundsDestination,
-          _controller,
-        );
+        // await updateCameraLocation(
+        //   widget.boundsSource,
+        //   widget.boundsDestination,
+        //   _controller,
+        // );
 
         Completer<GoogleMapController>().complete(_gController);
       },

@@ -21,25 +21,11 @@ import 'package:mezcalmos/Shared/models/Order.dart';
 
 class CurrentOrderController extends GetxController {
   Rx<Order> _model = Order.empty().obs;
-  // RxBool _waitingResponse = RxBool(false);
-
+  Function fillMarkersCallback = (String orderStatus) => null;
+  Rxn<LatLngBounds> latLngBounds = Rxn();
+  // VoidCallback createBoundsCallback = () => null;
   // ----- USED FOR G MAP STUFF ----- //
-  RxList<CustomMarker> _customMarkers = <CustomMarker>[].obs;
-  List<CustomMarker> get customMarkers => _customMarkers.value;
-  late LatLng initialCameraLocation;
-  RxSet<Polyline> _polylines = <Polyline>{}.obs;
-  Set<Polyline> get polylines => _polylines.value;
-  LatLng? boundsSource;
-  LatLng? boundsDestination;
 
-  Map<String, dynamic> markerIdWithLocationSubscription = <String, dynamic>{
-    "id": null,
-    "sub": null
-  };
-
-  BitmapDescriptor? toDescriptor;
-  BitmapDescriptor? taxiDescriptor;
-  BitmapDescriptor? picMarker;
   // -------------------------------- //
   TaxiAuthController _taxiAuthController =
       Get.find<TaxiAuthController>(); // since it's already injected .
@@ -65,69 +51,32 @@ class CurrentOrderController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // taxi marker subscription
-    markerIdWithLocationSubscription["id"] = "taxi";
-    markerIdWithLocationSubscription["sub"] =
-        _taxiAuthController.currentLocationRx;
-
-    initialCameraLocation = LatLng(
-        _taxiAuthController.currentLocation.latitude!,
-        _taxiAuthController.currentLocation.longitude!);
 
     print("--------------------> CurrentOrderController Initialized !");
     // dispatchCurrentOrder();
   }
 
-  void loadUpPolyline(Order _o) {
-    // Polylines stuff.
-    List<LatLng> pLineCoords = [];
+  // void loadUpPolyline(Order _o) {
+  //   // Polylines stuff.
+  //   List<LatLng> pLineCoords = [];
 
-    List<PointLatLng> res = PolylinePoints()
-        .decodePolyline(_o.routeInformation?['polyline'] ?? _o.polyline);
+  //   List<PointLatLng> res = PolylinePoints()
+  //       .decodePolyline(_o.routeInformation?['polyline'] ?? _o.polyline);
 
-    res.forEach((PointLatLng point) =>
-        pLineCoords.add(LatLng(point.latitude, point.longitude)));
+  //   res.forEach((PointLatLng point) =>
+  //       pLineCoords.add(LatLng(point.latitude, point.longitude)));
 
-    _polylines.add(Polyline(
-      color: Color.fromARGB(255, 172, 89, 252),
-      polylineId: PolylineId("ID"),
-      jointType: JointType.round,
-      points: pLineCoords,
-      width: 2,
-      startCap: Cap.buttCap,
-      endCap: Cap.roundCap,
-      // geodesic: true,
-    ));
-  }
-
-  Future<void> loadBitmapsUp() async {
-    if (toDescriptor == null)
-      toDescriptor = await BitmapDescriptorLoader(
-          (await cropRonded(
-              (await rootBundle.load(purple_destination_marker_asset))
-                  .buffer
-                  .asUint8List())),
-          60,
-          60,
-          isBytes: true);
-    if (taxiDescriptor == null) {}
-    taxiDescriptor = await BitmapDescriptorLoader(
-        (await cropRonded((await rootBundle.load(taxi_driver_marker_asset))
-            .buffer
-            .asUint8List())),
-        60,
-        60,
-        isBytes: true);
-
-    if (picMarker == null)
-      picMarker = await BitmapDescriptorLoader(
-          (await cropRonded(
-              (await http.get(Uri.parse(value?.customer['image'])))
-                  .bodyBytes) as Uint8List),
-          60,
-          60,
-          isBytes: true);
-  }
+  //   _polylines.add(Polyline(
+  //     color: Color.fromARGB(255, 172, 89, 252),
+  //     polylineId: PolylineId("ID"),
+  //     jointType: JointType.round,
+  //     points: pLineCoords,
+  //     width: 2,
+  //     startCap: Cap.buttCap,
+  //     endCap: Cap.roundCap,
+  //     // geodesic: true,
+  //   ));
+  // }
 
   void dispatchCurrentOrder() {
     _currentOrderListener?.cancel();
@@ -152,52 +101,21 @@ class CurrentOrderController extends GetxController {
           _model.value.id = _taxiAuthController.currentOrderId;
 
           if (!dirty) {
-            // if status changed we change the narkers !
-            if (_polylines.length == 0) loadUpPolyline(value!);
-            if (_model.value.status == "onTheWay") {
-              // 3 markers
-              await loadBitmapsUp(); // happens only one
-              boundsSource = LatLng(
-                  _taxiAuthController.currentLocation.latitude!,
-                  _taxiAuthController.currentLocation.longitude!);
-              boundsDestination =
-                  LatLng(value?.to.latitude, value?.to.longitude);
+            // if status changed we change the markers by executing the callback (abstract method) implemented on the view side!
+            dynamic lastExecution = await fillMarkersCallback(
+                orderStatus: event.snapshot.value['status']);
 
-              _customMarkers.value = <CustomMarker>[
-                new CustomMarker(
-                    "taxi",
-                    LatLng(_taxiAuthController.currentLocation.latitude!,
-                        _taxiAuthController.currentLocation.longitude!),
-                    taxiDescriptor!),
-                new CustomMarker(
-                    "from",
-                    LatLng(value?.from.latitude, value?.from.longitude),
-                    picMarker!),
-                new CustomMarker(
-                    "to",
-                    LatLng(value?.to.latitude, value?.to.longitude),
-                    toDescriptor!),
-              ];
-            } else if (_model.value.status == "inTransit") {
-              await loadBitmapsUp();
-              boundsSource = LatLng(
-                  _taxiAuthController.currentLocation.latitude!,
-                  _taxiAuthController.currentLocation.longitude!);
-              boundsDestination =
-                  LatLng(value?.to.latitude, value?.to.longitude);
-              // two markers
-              _customMarkers.value = <CustomMarker>[
-                new CustomMarker(
-                    "taxi",
-                    LatLng(_taxiAuthController.currentLocation.latitude!,
-                        _taxiAuthController.currentLocation.longitude!),
-                    taxiDescriptor!),
-                new CustomMarker(
-                    "to",
-                    LatLng(value?.to.latitude, value?.to.longitude),
-                    toDescriptor!),
-              ];
+            print(
+                "\n\n\n\n --------- LAST EXEC --------- $lastExecution --------------\n\n\n\n");
+
+            // make sure executed right , this is to avoid executing the callback before it has been attached.
+            while (lastExecution != true) {
+              print("\n\n\n[WHILE LOOP] Triggered !\n\n\n");
+              lastExecution = await fillMarkersCallback(
+                  orderStatus: event.snapshot.value['status']);
             }
+
+            // createBoundsCallback();
           }
         }
       }

@@ -14,7 +14,6 @@ import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
-import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/Shared/models/Order.dart';
@@ -49,53 +48,10 @@ class IncomingOrdersController extends GetxController {
           (element) => element.id == _selectedIncommingOrderKey.value,
           orElse: () => Order.empty())
       : null;
-  // ----- USED FOR G MAP STUFF ----- //
-  RxList<CustomMarker> _customMarkers = <CustomMarker>[].obs;
-  List<CustomMarker> get customMarkers => _customMarkers.value;
-  RxSet<Polyline> _polylines = <Polyline>{}.obs;
-  Set<Polyline> get polylines => _polylines.value;
-  LatLng? boundsSource;
-  LatLng? boundsDestination;
-  LatLng initialCameraLocation = LatLng(0, 0);
-  BitmapDescriptor? destionationMarker;
-  // -------------------------------- //
+  Function fillMarkersCallback = () => null; // returns null by default
 
   set selectedIncommingOrderKey(String selectedOrderKey) {
     _selectedIncommingOrderKey.value = selectedOrderKey;
-    Order? _o = orders.firstWhere((element) => element.id == selectedOrderKey);
-
-    if (_o.id != null) {
-      initialCameraLocation = LatLng(_o.from.latitude!, _o.from.longitude!);
-      boundsSource = LatLng(_o.from.latitude!, _o.from.longitude!);
-      boundsDestination = LatLng(_o.to.latitude, _o.to.longitude);
-      print("[+] Sat Bitmaps::IncommingOrderControllers !");
-      _customMarkers.value = <CustomMarker>[
-        new CustomMarker("from", LatLng(_o.from.latitude!, _o.from.longitude!),
-            _o.pictureBytes),
-        new CustomMarker(
-            "to", LatLng(_o.to.latitude, _o.to.longitude), destionationMarker!),
-      ];
-
-      // Polylines stuff.
-      List<LatLng> pLineCoords = [];
-
-      List<PointLatLng> res = PolylinePoints()
-          .decodePolyline(_o.routeInformation?['polyline'] ?? _o.polyline);
-
-      res.forEach((PointLatLng point) =>
-          pLineCoords.add(LatLng(point.latitude, point.longitude)));
-
-      _polylines.add(Polyline(
-        color: Color.fromARGB(255, 172, 89, 252),
-        polylineId: PolylineId("ID"),
-        jointType: JointType.round,
-        points: pLineCoords,
-        width: 2,
-        startCap: Cap.buttCap,
-        endCap: Cap.roundCap,
-        // geodesic: true,
-      ));
-    }
   }
 
   @override
@@ -103,21 +59,6 @@ class IncomingOrdersController extends GetxController {
     // _selectedIncommingOrder.value = null;
     super.onInit();
     print("--------------------> IncomingOrderController Initialized !");
-    // destionationMarker = await BitmapDescriptor.fromAssetImage(
-    //     ImageConfiguration(size: Size(10, 10)),
-    //     'assets/images/destinationImg.png');
-
-    destionationMarker = await BitmapDescriptorLoader(
-        (await cropRonded(
-            (await rootBundle.load(purple_destination_marker_asset))
-                .buffer
-                .asUint8List())),
-        60,
-        60,
-        isBytes: true);
-
-    // uhm .. well let's just attach some listeners..
-    // READ : it's better to keep them like that , becauce that way we can update orders, which is an observale list.
 
     if (_authController.user != null) {
       _listeners.addAll([
@@ -140,6 +81,8 @@ class IncomingOrdersController extends GetxController {
                   60,
                   60,
                   isBytes: true);
+
+              await GetStorage().write('custBitmap', picMarker);
 
               print("\n\n\n [bytes] $picMarker\n\n\n");
               Order order = Order.fromJson(key, value, pictureBytes: picMarker);
@@ -185,7 +128,7 @@ class IncomingOrdersController extends GetxController {
 
     _appLifeCycleController.attachCallback(AppLifecycleState.resumed, () {
       print("[+] Callback executed :: app resumed !");
-      orders.value.forEach((element) {
+      orders.forEach((element) {
         _databaseHelper.firebaseDatabase
             .reference()
             .child(notificationStatusReadNode(

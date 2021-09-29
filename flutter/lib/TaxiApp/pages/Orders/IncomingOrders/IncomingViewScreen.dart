@@ -3,8 +3,10 @@ import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
@@ -12,15 +14,58 @@ import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
+import 'package:mezcalmos/TaxiApp/pages/MTaxiGMapWraper.dart';
 
-class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
+class IncommingOrderScreenView extends GetView<IncomingOrdersController>
+    with MTaxiGMapWrapper {
   LanguageController lang = Get.find<LanguageController>();
   // when clicking on accept .. etc
   RxBool showLoading = false.obs;
+  RxBool mapReady = false.obs;
+
+// overriding this to get the CustomerPicture
+  // so when we call loadBitmapsUp , it will call this implemented userMarkerPicture(), and only happens if it's not loaded up yet.
+  @override
+  Future<BitmapDescriptor> userMarkerPicture() {
+    print("+ the implemented userMarkerPicture() executed !");
+    return Future.value(controller.selectedIncommingOrder?.pictureBytes);
+  }
+
+  @override
+  Future<bool> fillMarkers({String? orderStatus}) async {
+    print("+ the implemented fillMarkers() executed !");
+
+    markers.clear();
+    if (polylines.length == 0)
+      setPolylines(loadUpPolyline(controller.selectedIncommingOrder!));
+    // 2 markers
+    await loadBitmapsUp(); // happens only one
+    markers = <CustomMarker>[
+      new CustomMarker(
+          "from",
+          LatLng(controller.selectedIncommingOrder?.from.latitude,
+              controller.selectedIncommingOrder?.from.longitude),
+          picMarker!),
+      new CustomMarker(
+          "to",
+          LatLng(controller.selectedIncommingOrder?.to.latitude,
+              controller.selectedIncommingOrder?.to.longitude),
+          toDescriptor!),
+    ];
+    return Future.value(true);
+  }
 
   @override
   Widget build(BuildContext context) {
-    TaxiAuthController _taxiAuthController = Get.find<TaxiAuthController>();
+    // if (controller.selectedIncommingOrder?.id != null)
+    initialCameraLocation = LatLng(
+        controller.selectedIncommingOrder?.from.latitude,
+        controller.selectedIncommingOrder?.from.longitude);
+    // depends on markers.
+    this.fillMarkers().then((_) {
+      latLngBounds = createBounds();
+      mapReady.value = true;
+    });
 
     return Scaffold(
       appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back()),
@@ -28,19 +73,12 @@ class IncommingOrderScreenView extends GetView<IncomingOrdersController> {
         child: Stack(
           alignment: Alignment.topCenter,
           children: [
-            Obx(() =>
-                // controller.waitingResponse ||
-                showLoading.value ||
-                        controller.selectedIncommingOrder?.id == null ||
-                        controller.customMarkers.isEmpty ||
-                        controller.polylines.isEmpty
-                    ? Center(child: CircularProgressIndicator())
-                    : MGoogleMap(
-                        controller.customMarkers,
-                        controller.initialCameraLocation,
-                        controller.boundsSource!,
-                        controller.boundsDestination!,
-                        polylines: controller.polylines)),
+            Obx(() => mapReady.value && latLngBounds != null
+                ? MGoogleMap(markers, initialCameraLocation, latLngBounds!,
+                    polylines: this.polylines)
+                : Center(
+                    child: CircularProgressIndicator(),
+                  )),
             Positioned(
                 bottom: GetStorage().read(getxGmapBottomPaddingKey) + 55,
                 child: Container(

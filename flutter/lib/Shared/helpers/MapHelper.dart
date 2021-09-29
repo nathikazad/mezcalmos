@@ -1,6 +1,9 @@
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'dart:math' show cos, sqrt, sin, pi, atan2;
+
+import 'package:mezcalmos/Shared/models/Order.dart';
 
 class CustomMarker {
   String id;
@@ -15,6 +18,20 @@ class CustomMarker {
       position: this.position,
       icon: this.icon,
       draggable: false);
+}
+
+List<LatLng> loadUpPolyline(Order? _o) {
+  // Polylines stuff.
+  if (_o == null || _o.id == null) return <LatLng>[];
+  List<LatLng> pLineCoords = [];
+
+  List<PointLatLng> res = PolylinePoints()
+      .decodePolyline(_o.routeInformation?['polyline'] ?? _o.polyline);
+
+  res.forEach((PointLatLng point) =>
+      pLineCoords.add(LatLng(point.latitude, point.longitude)));
+
+  return pLineCoords;
 }
 
 class MapHelper {
