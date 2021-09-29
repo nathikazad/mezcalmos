@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/TaxiAdminApp/controller/NotificationsController.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -10,6 +11,7 @@ import 'package:mezcalmos/TaxiAdminApp/pages/Orders/OrdersCumOnDayPage.dart';
 const mypadding = const EdgeInsets.symmetric(horizontal: 10);
 
 class NotifCountOnDayPage extends GetView<NotificationsController> {
+  LanguageController lang = Get.find<LanguageController>();
   final f = new DateFormat('dd/MM/yy');
   var selectedtime = DateTime.now().obs;
   final TextEditingController srearchC = new TextEditingController();
@@ -32,7 +34,7 @@ class NotifCountOnDayPage extends GetView<NotificationsController> {
                     Expanded(
                       child: InkWell(
                         child: Text(
-                          "Notifications",
+                          lang.strings["admin"]["notifs"]["notifications"],
                           style: TextStyle(
                               fontSize: 28, fontWeight: FontWeight.bold),
                         ),
@@ -164,7 +166,7 @@ class NotifCountOnDayPage extends GetView<NotificationsController> {
                       child: Container(
                         padding: const EdgeInsets.only(left: 10),
                         child: Text(
-                          "Driver",
+                          lang.strings["admin"]["orders"]["driver"],
                           style: adminAppTextStyle1,
                           textAlign: TextAlign.left,
                         ),

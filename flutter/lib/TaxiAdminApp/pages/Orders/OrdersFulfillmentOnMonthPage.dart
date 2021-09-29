@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiAdminApp/Models/NbOrders.dart';
 import 'package:mezcalmos/TaxiAdminApp/controller/OrdersController.dart';
@@ -16,18 +17,19 @@ class OrdersFulfillmentOnMonthPage extends GetView<OrderStatsController> {
   final f = new DateFormat('MMMM');
   var selectedtime = DateTime.now().obs;
   var dayValue = DateTime.now().day.obs;
+  LanguageController lang = Get.find<LanguageController>();
   Widget getFulfillmentRatioOnMonth(BuildContext context) {
     return getFutureData(
         controller.getFulfillmentRatioOnMonth(selectedtime.value.month),
         (Map<String, dynamic> data) {
-      print(data);
       return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         SizedBox(
           height: 30,
         ),
         Container(
           child: Text(
-            "Order Fulfillment Ratio",
+            lang.strings["admin"]["orders"]["orderFR"],
+            textAlign: TextAlign.center,
             style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
           ),
         ),
@@ -156,7 +158,9 @@ class OrdersFulfillmentOnMonthPage extends GetView<OrderStatsController> {
                     borderRadius: BorderRadius.circular(18)),
                 child: Obx(
                   () => Text(
-                    "${data["byDay"][dayValue.value].toString()}",
+                    (data["byDay"][dayValue.value] != null)
+                        ? "${data["byDay"][dayValue.value].toString()}"
+                        : "0",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Colors.white,

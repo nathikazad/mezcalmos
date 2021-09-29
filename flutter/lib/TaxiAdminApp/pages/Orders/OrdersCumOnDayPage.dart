@@ -159,6 +159,7 @@ class OrdersCumOnDayPage extends GetView<OrderStatsController> {
                                         fontWeight: FontWeight.w500,
                                       ),
                                     ),
+                                    overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
                                   ),
                                 ),

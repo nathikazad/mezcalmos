@@ -227,7 +227,27 @@
             "expired": "Caducado",
             "inProcess": "En Proceso",
             "isLooking": "Está Mirando",
-            "orders":"Pedidos"
-        }
+            "orders": "Pedidos",
+            "time": "Tiempo",
+            "driver": "Conductor",
+            "cust": "Client",
+            "orderFR": "Proporción De Cumplimiento De Pedidos",
+            "orderId": "Solicitar ID",
+            "orderT": "Tiempo De La Orden",
+            "status": "Estado",
+            "price": "Precio",
+            "rideEnd": "Hora De Finalización Del Viaje",
+            "rideStart": "Hora De Inicio Del Viaje",
+            "droppedOff": "Dejado",
+            "firstOrder": "Primer pedido",
+            "lastOrder": "Último pedido"
+        },
+        "notifs": {
+            "notifications": "Notificaciones",
+            "sent": "Enviado",
+            "received": "Recibido",
+            "read": "Leer"
+        },
+        "appVersion": "Version De Aplicacion"
     }
 }

@@ -23,16 +23,6 @@ class OrdersOnDayPage extends GetView<OrderStatsController> {
           if (snapshot.hasData) {
             print(snapshot.data.toString());
             children = <Widget>[
-              // const Icon(
-              //   Icons.check_circle_outline,
-              //   color: Colors.green,
-              //   size: 60,
-              // ),
-              // Padding(
-              //     padding: const EdgeInsets.only(top: 16),
-              //     child: Text('Result: ${snapshot.data}')
-
-              //     )
               SizedBox(
                 height: 30,
               ),
@@ -139,8 +129,20 @@ class OrdersOnDayPage extends GetView<OrderStatsController> {
                       flex: 2,
                       child: Container(
                         child: Text(
-                          "Time",
+                          lang.strings["admin"]["orders"]["time"],
                           style: adminAppTextStyle1,
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Container(
+                        child: Text(
+                          lang.strings["admin"]["orders"]["driver"],
+                          style: adminAppTextStyle1,
+                          overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -149,18 +151,9 @@ class OrdersOnDayPage extends GetView<OrderStatsController> {
                       flex: 2,
                       child: Container(
                         child: Text(
-                          "Driver",
+                          lang.strings["admin"]["orders"]["cust"],
                           style: adminAppTextStyle1,
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: Container(
-                        child: Text(
-                          "Cust",
-                          style: adminAppTextStyle1,
+                          overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,
                         ),
                       ),

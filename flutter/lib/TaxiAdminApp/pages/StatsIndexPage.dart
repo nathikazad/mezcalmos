@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/TaxiAdminApp/pages/Driver/RankingsPage.dart';
 import 'package:mezcalmos/TaxiAdminApp/pages/Driver/DriverPage.dart';
 import 'package:mezcalmos/TaxiAdminApp/pages/Notifications/NotifCountOnDayByDriverPage.dart';
@@ -14,6 +15,7 @@ import 'package:mezcalmos/TaxiAdminApp/pages/Orders/OrdersFulfillmentOnMonthPage
 import 'Orders/OrderViewPage.dart';
 
 class StatsIndexPage extends GetView {
+  LanguageController lng = Get.find<LanguageController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,6 +78,12 @@ class StatsIndexPage extends GetView {
             OutlinedButton(
                 child: Text("New Customers for month"),
                 onPressed: () => Get.to(NewCustomersOnMonthPage())),
+            Divider(),
+            OutlinedButton(
+                child: Text("Langauge"),
+                onPressed: () {
+                  lng.changeUserLanguage();
+                }),
           ],
         ),
       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiAdminApp/components/infoCardComponent.dart';
@@ -11,6 +12,7 @@ import 'package:mezcalmos/TaxiAdminApp/components/getFutureData.dart';
 import 'package:mezcalmos/TaxiAdminApp/pages/Driver/DriverPage.dart';
 
 class OrderViewPage extends GetView<OrderStatsController> {
+  LanguageController lang = Get.find<LanguageController>();
   final String orderId;
   OrderViewPage(this.orderId);
   var f = new DateFormat('dd/MM/yyyy').add_jm();
@@ -120,29 +122,31 @@ class OrderViewPage extends GetView<OrderStatsController> {
               "${data["orders"][0]["dropOffLocation"]["crs"]["properties"]["name"]}",
             ),
             InfoCardComponent(
-              title_0: "Order Id",
+              title_0: lang.strings["admin"]["orders"]["orderId"],
               subTitle_0: "${data["orders"][0]["orderId"]}",
-              title_0_1: "Order Time",
+              title_0_1: lang.strings["admin"]["orders"]["orderT"],
               subTitle_0_1:
                   "${f.format(DateTime.parse("${data["orders"][0]["orderTime"]}"))}",
-              title_1_0: "Status",
+              title_1_0: lang.strings["admin"]["orders"]["status"],
               subTitle_1_0:
                   "${data["orders"][0]["finalStatus"].toString().toUpperCase()}",
-              title_1_1: "Price",
+              title_1_1: lang.strings["admin"]["orders"]["price"],
               subTitle_1_1: "\$${data["orders"][0]["finalPrice"]}",
-              title_2_0: "Ride Start Time",
+              title_2_0: lang.strings["admin"]["orders"]["rideStart"],
               subTitle_2_0: (data["orders"][0]["rideStartTime"] == null)
                   ? "--:-- "
                   : "${ff.format(DateTime.parse("${data["orders"][0]["rideStartTime"]}"))}",
-              title_2_1: "Ride End Time",
+              title_2_1: lang.strings["admin"]["orders"]["rideEnd"],
               subTitle_2_1: (data["orders"][0]['rideFinishTime'] != null)
                   ? "${ff.format(DateTime.parse("${data["orders"][0]["rideFinishTime"]}"))}"
                   : "--:--",
-              title_3_0: "Notifications",
-              subTitle_3_0: "Sent:${data["orders"][0]["notifications_sent"]}",
+              title_3_0: lang.strings["admin"]["notifs"]["notifications"],
+              subTitle_3_0:
+                  "${lang.strings["admin"]["notifs"]["sent"]}:${data["orders"][0]["notifications_sent"]}",
               subTitle_3_1:
-                  "Received:${data["orders"][0]["notifications_received"]}",
-              subTitle_3_2: "Read:${data["orders"][0]["notifications_read"]}",
+                  "${lang.strings["admin"]["notifs"]["received"]}:${data["orders"][0]["notifications_received"]}",
+              subTitle_3_2:
+                  "${lang.strings["admin"]["notifs"]["read"]}:${data["orders"][0]["notifications_read"]}",
             ),
           ],
         ),

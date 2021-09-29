@@ -211,10 +211,14 @@ class InfoCardComponent extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            "$title_2_1",
-                            style: TextStyle(
-                                fontSize: 10, fontWeight: FontWeight.w700),
+                          Container(
+                            width: Get.width * 0.3,
+                            child: Text(
+                              "$title_2_1",
+                              overflow: TextOverflow.clip,
+                              style: TextStyle(
+                                  fontSize: 10, fontWeight: FontWeight.w700),
+                            ),
                           ),
                           SizedBox(
                             height: 5,
