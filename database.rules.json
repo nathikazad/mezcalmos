@@ -51,6 +51,10 @@
         "auth": {
           ".read": "false",
           ".write": "false"
+        },
+        "cart": {
+          ".read": "true",
+          ".write": "false"
         }
       }
     },
@@ -157,6 +161,66 @@
         "past": {
           "$uid": {
             ".read": "$uid === auth.uid"
+          }
+        }
+      }
+    },
+    "restaurants": {
+      ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true",
+      ".write": "false",
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        "menu": {
+          ".write": "$uid === auth.uid",
+          ".read": "true",
+          "$itemid": {
+            ".validate": "newData.hasChildren(['name', 'description', 'available', 'image', 'cost'])",
+            "cost": {
+              ".validate": "newData.isNumber()"
+            },
+            "options": {
+              "chooseOne": {
+                "$optionId": {
+                  ".validate": "newData.hasChildren(['optionName', 'options'])",
+                  "optionName": {
+                    ".validate": "newData.hasChildren(['en', 'es'])"
+                  },
+                  "optionDialogText": {
+                    ".validate": "newData.hasChildren(['en', 'es'])"
+                  },
+                  "options": {
+                    "$optionChoiceId": {
+                      ".validate": "newData.hasChildren(['name', 'cost'])",
+                      "cost": {
+                        ".validate": "newData.isNumber()"
+                      }
+                    }
+                  }
+                }
+              },
+              "chooseMany": {
+                "$optionId": {
+                  ".validate": "newData.hasChildren(['name', 'cost'])",
+                  "name": {
+                    ".validate": "newData.hasChildren(['en', 'es'])"
+                  },
+                  "cost": {
+                    ".validate": "newData.isNumber()"
+                  }
+                }
+              },
+              "sides": {
+                "$optionId": {
+                  ".validate": "newData.hasChildren(['name', 'cost'])",
+                  "name": {
+                    ".validate": "newData.hasChildren(['en', 'es'])"
+                  },
+                  "cost": {
+                    ".validate": "newData.isNumber()"
+                  }
+                }
+              }
+            }
           }
         }
       }

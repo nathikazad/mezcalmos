@@ -14,7 +14,7 @@ class User {
     this.db = new DB(data.idToken)
   }
 
-  async callFunction(functionName, data) {
+  async callFunction(functionName, data = {}) {
     let response = await axios.post(`${url}${functionName}`, {data:data}, this.config)
     return response.data
   }  

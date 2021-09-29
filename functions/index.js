@@ -230,3 +230,30 @@ exports.sendTestNotification = functions.https.onCall(async (data, context) => {
   response = await notifications.sendTest(firebase, data)
   return response
 });
+
+exports.addRestaurantItemToCart = functions.https.onCall(async (data, context) => {
+  if (!context.auth) {
+    return notSignedInMessage
+  }
+  const addItem = require("./helpers/restaurant/addItem")
+  let response = await addItem(firebase, context.auth.uid, data, hasura)
+  return response
+});
+
+exports.changeItemCountInCart = functions.https.onCall(async (data, context) => {
+  if (!context.auth) {
+    return notSignedInMessage
+  }
+  const changeItemCount = require("./helpers/cart/changeItemCount")
+  let response = await changeItemCount(firebase, context.auth.uid, data, hasura)
+  return response
+});
+
+exports.clearCart = functions.https.onCall(async (data, context) => {
+  if (!context.auth) {
+    return notSignedInMessage
+  }
+  const clearCart = require("./helpers/cart/clearCart")
+  let response = await clearCart(firebase, context.auth.uid, data, hasura)
+  return response
+});

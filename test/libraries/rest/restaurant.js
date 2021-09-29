@@ -1,6 +1,7 @@
 const User = require("./user");
-class Restaurant {
-  constructor(User) {
+
+module.exports.Restaurant = class Restaurant {
+  constructor(user) {
     this.user = user
   }
 
@@ -17,8 +18,6 @@ class Restaurant {
   }
 
   async removeItem(itemId) {
-    await this.user.db.remove(`/restaurants/${this.user.id}/menu${itemId}`, item)
+    await this.user.db.remove(`/restaurants/${this.user.id}/menu/${itemId}`)
   }
 }
-
-module.exports = Restaurant;
