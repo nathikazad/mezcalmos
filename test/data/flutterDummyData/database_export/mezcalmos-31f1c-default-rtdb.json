@@ -1282,6 +1282,274 @@
       "state": {
         "currentOrder": "-McjgOAiBh8Nbr8T0sy6"
       }
+    },
+    "6Hr3Hc2hkkZa7LX7slnFo3zOTdxx": {
+      "info": {
+        "displayName": "Restaurant One",
+        "email": "restaurant.one@mezcalmos.com",
+        "language": "en",
+        "photo": "https://www.superama.com.mx/views/micrositio/recetas/images/fiestas-patrias/enchiladas-poblanas/Web_fotoreceta.jpg"
+      }
+    }
+  },
+  "restaurants": {
+    "info": {
+      "6Hr3Hc2hkkZa7LX7slnFo3zOTdxx": {
+        "state": {
+          "authorizationStatus": true,
+          "open": true
+        },
+        "menu": {
+          "-MkjUGzBopdBjNme7tnq": {
+            "name": {
+              "en": "normal burger",
+              "es": "burgesa normal"
+            },
+            "description": {
+              "en": "a normal burger with patty and cheese",
+              "es": "un burgesa normal con carne y queso"
+            },
+            "available": true,
+            "image": "https://imagenes.elpais.com/resizer/aIHR-EpBhcuUzFOObwnjcKr7HoA=/1960x0/arc-anglerfish-eu-central-1-prod-prisa.s3.amazonaws.com/public/24ESUXKGCOFX7UGZFVTU2W2BPI.jpg",
+            "cost": 5.99,
+            "options": {
+              "chooseOne": {
+                "meat": {
+                  "optionName": {
+                    "en": "Meat",
+                    "es": "Carne"
+                  },
+                  "optionDialogText": {
+                    "en": "Choose your patty type",
+                    "es": "Elige el tipo de carne"
+                  },
+                  "options": {
+                    "chicken": {
+                      "name": {
+                        "en": "Chicken",
+                        "es": "Pollo"
+                      },
+                      "cost": 0
+                    },
+                    "beef": {
+                      "name": {
+                        "en": "Beef",
+                        "es": "Res"
+                      },
+                      "cost": 0
+                    },
+                    "fish": {
+                      "name": {
+                        "en": "Fish",
+                        "es": "Pescado"
+                      },
+                      "cost": 1.99
+                    }
+                  }
+                },
+                "cheese": {
+                  "optionName": {
+                    "en": "Cheese",
+                    "es": "Queso"
+                  },
+                  "optionDialogText": {
+                    "en": "Choose your cheese",
+                    "es": "Elige el tipo de queso"
+                  },
+                  "options": {
+                    "mozarella": {
+                      "name": {
+                        "en": "Mozarella",
+                        "es": "Mozarella"
+                      },
+                      "cost": 0
+                    },
+                    "american": {
+                      "name": {
+                        "en": "American",
+                        "es": "Americano"
+                      },
+                      "cost": 0
+                    },
+                    "oaxacan": {
+                      "name": {
+                        "en": "Oaxacan",
+                        "es": "Oaxaqueno"
+                      },
+                      "cost": 0
+                    }
+                  }
+                }
+              },
+              "chooseMany": {
+                "lettuce": {
+                  "name": {
+                    "en": "Lettuce",
+                    "es": "Lechuga"
+                  },
+                  "cost": 0,
+                  "default": true
+                },
+                "tomato": {
+                  "name": {
+                    "en": "Tomato",
+                    "es": "Tomate"
+                  },
+                  "cost": 0,
+                  "default": true
+                },
+                "onion": {
+                  "name": {
+                    "en": "Onion",
+                    "es": "Cebolla"
+                  },
+                  "cost": 0,
+                  "default": true
+                },
+                "avocado": {
+                  "name": {
+                    "en": "Avocado",
+                    "es": "Avocado"
+                  },
+                  "cost": 1.00,
+                  "default": false
+                }
+              },
+              "sides": {
+                "frenchFries": {
+                  "name": {
+                    "en": "French fries",
+                    "es": "Batatas fritas"
+                  },
+                  "cost": 1.99
+                },
+                "nachos": {
+                  "name": {
+                    "en": "Nachos",
+                    "es": "Nachos"
+                  },
+                  "cost": 2.99
+                }
+              }
+            }
+          },
+          "-MopdBjkjUGzBNme7tnq": {
+            "name": {
+              "en": "normal burrito",
+              "es": "burgesa burrito"
+            },
+            "description": {
+              "en": "a normal burrito with filling, beans and cheese",
+              "es": "un burrito normal con carne, frijol y queso"
+            },
+            "available": true,
+            "image": "https://t1.rg.ltmcdn.com/es/images/2/4/8/burritos_de_carne_y_queso_71842_600.jpg",
+            "cost": 7.99,
+            "options": {
+              "chooseOne": {
+                "meat": {
+                  "optionName": {
+                    "en": "Meat",
+                    "es": "Carne"
+                  },
+                  "optionDialogText": {
+                    "en": "Choose your patty type",
+                    "es": "Elige el tipo de carne"
+                  },
+                  "options": {
+                    "chicken": {
+                      "name": {
+                        "en": "Chicken",
+                        "es": "Pollo"
+                      },
+                      "cost": 0
+                    },
+                    "beef": {
+                      "name": {
+                        "en": "Beef",
+                        "es": "Res"
+                      },
+                      "cost": 0
+                    },
+                    "veggie": {
+                      "name": {
+                        "en": "Veggie",
+                        "es": "Vegeteriano"
+                      },
+                      "cost": 0
+                    },
+                    "fish": {
+                      "name": {
+                        "en": "Fish",
+                        "es": "Pescado"
+                      },
+                      "cost": 1.99
+                    }
+                  }
+                }
+              },
+              "chooseMany": {
+                "cheese": {
+                  "name": {
+                    "en": "Cheese",
+                    "es": "Queso"
+                  },
+                  "cost": 0,
+                  "default": true
+                },
+                "lettuce": {
+                  "name": {
+                    "en": "Lettuce",
+                    "es": "Lechuga"
+                  },
+                  "cost": 0,
+                  "default": true
+                },
+                "tomato": {
+                  "name": {
+                    "en": "Tomato",
+                    "es": "Tomate"
+                  },
+                  "cost": 0,
+                  "default": true
+                },
+                "onion": {
+                  "name": {
+                    "en": "Onion",
+                    "es": "Cebolla"
+                  },
+                  "cost": 0,
+                  "default": true
+                },
+                "avocado": {
+                  "name": {
+                    "en": "Avocado",
+                    "es": "Avocado"
+                  },
+                  "cost": 1.00,
+                  "default": false
+                }
+              },
+              "sides": {
+                "frenchFries": {
+                  "name": {
+                    "en": "French fries",
+                    "es": "Batatas fritas"
+                  },
+                  "cost": 1.99
+                },
+                "nachos": {
+                  "name": {
+                    "en": "Nachos",
+                    "es": "Nachos"
+                  },
+                  "cost": 2.99
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
