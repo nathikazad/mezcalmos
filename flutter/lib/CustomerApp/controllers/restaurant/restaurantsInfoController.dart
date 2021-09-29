@@ -18,6 +18,7 @@ class RestaurantsInfoController extends GetxController {
   Stream<dynamic> getRestaurants() {
     return restaurants.map<dynamic>((event) {
       dynamic snapshot = event.snapshot.value;
+      print(snapshot);
       return snapshot;
     });
   }

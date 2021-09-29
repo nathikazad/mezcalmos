@@ -1299,6 +1299,17 @@
           "authorizationStatus": true,
           "open": true
         },
+        "details": {
+          "name": "Basic Fodd",
+          "description": {
+            "en": "a normal store selling very normal stuff",
+            "es": "un lugar normal vendiendo cosas muy normal"
+          },
+          "languages": {
+            "0": "en",
+            "1": "es"
+          }
+        },
         "menu": {
           "-MkjUGzBopdBjNme7tnq": {
             "name": {

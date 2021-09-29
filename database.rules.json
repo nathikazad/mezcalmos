@@ -169,8 +169,8 @@
       ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true",
       ".write": "false",
       "info": {
+        ".read": "true",
         "$uid": {
-          ".read": "true",
           "menu": {
             ".write": "$uid === auth.uid",
             "$itemid": {
@@ -231,8 +231,10 @@
         }
       },
       "orders": {
-        ".write": "false",
-        ".read": "$uid === auth.uid"
+        "$uid": {
+          ".write": "false",
+          ".read": "$uid === auth.uid"
+        }
       }
     }
   }
