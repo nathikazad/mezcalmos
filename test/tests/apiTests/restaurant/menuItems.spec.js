@@ -27,6 +27,7 @@ let restaurantData = fakeRestaurantData.restaurantData
 let restaurantInfo = fakeRestaurantData.restaurantInfo
 let item = fakeRestaurantData.item
 
+let customer, restaurantUser, restaurant
 describe('Mezcalmos', () => {
   beforeAll(async () => {
     await helper.clearDatabase(admin)

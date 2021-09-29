@@ -1,7 +1,21 @@
 
-module.exports = (firebase, uid, data, hasura) => { return func(firebase, uid, data, hasura) }
+const functions = require("firebase-functions");
+const firebase = require("firebase-admin");
 
-async function func(firebase, uid, data, hasura) {
+
+const keys = require("../keys").keys()
+const hasuraModule = require("../hasura");
+
+
+module.exports = functions.https.onCall(async (data, context) => {
+  if (!context.auth) {
+    return notSignedInMessage
+  }
+  let response = await addItem(context.auth.uid, data)
+  return response
+});
+
+async function addItem(uid, data) {
   if (!data.itemId || !data.restaurantId) {
     return {
       status: "Error",

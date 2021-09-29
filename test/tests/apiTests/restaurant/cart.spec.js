@@ -25,7 +25,7 @@ let userData = {
 const fakeRestaurantData = require("../../data/restaurant")
 let restaurantData = fakeRestaurantData.restaurantData
 let restaurantInfo = fakeRestaurantData.restaurantInfo
-let item = fakeRestaurantData.item
+let itemOne = fakeRestaurantData.item
 
 describe('Mezcalmos', () => {
   beforeAll(async () => {

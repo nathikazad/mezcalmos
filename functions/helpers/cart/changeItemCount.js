@@ -1,7 +1,19 @@
+const functions = require("firebase-functions");
+const firebase = require("firebase-admin");
 
-module.exports = (firebase, uid, data, hasura) => { return func(firebase, uid, data, hasura) }
 
-async function func(firebase, uid, data, hasura) {
+const keys = require("../keys").keys()
+const hasuraModule = require("../hasura");
+
+module.exports = functions.https.onCall(async (data, context) => {
+  if (!context.auth) {
+    return notSignedInMessage
+  }
+  let response = await changeItemCount(context.auth.uid, data)
+  return response
+})
+
+async function changeItemCount(uid, data) {
   if (!data.itemId || !data.countChange) {
     return {
       status: "Error",

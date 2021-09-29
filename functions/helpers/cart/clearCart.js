@@ -1,7 +1,21 @@
+const functions = require("firebase-functions");
+const firebase = require("firebase-admin");
 
-module.exports = (firebase, uid, data, hasura) => { return func(firebase, uid, data, hasura) }
 
-async function func(firebase, uid, data, hasura) {
+const keys = require("../keys").keys()
+const hasuraModule = require("../hasura");
+
+module.exports = functions.https.onCall(async (data, context) => {
+  if (!context.auth) {
+    return notSignedInMessage
+  }
+  let response = await clearCart(context.auth.uid, data)
+  return response
+});
+
+
+
+async function clearCart(uid, data) {
 
   let cart = (await firebase.database().ref(`/users/${uid}/cart`).once('value')).val();
   if (cart == null) {

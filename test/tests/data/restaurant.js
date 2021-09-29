@@ -14,6 +14,23 @@ module.exports.restaurantInfo = {
   }
 }
 
+module.exports.itemToAdd = {
+  options: {
+    chooseOne: {
+      meat: "fish",
+      cheese: "mozarella"
+    },
+    chooseMany: {
+      lettuce: true,
+      tomato: true,
+      avocado: false
+    },
+    sides: {
+      frenchFries: true
+    }
+  }
+}
+
 module.exports.item = {
   name: {
     en: "normal burger",
