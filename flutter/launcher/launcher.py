@@ -5,7 +5,7 @@ from sys import argv
 from enum import Enum
 
 # GLOBAL CONSTANTS !
-VERSION = "1.0.4"
+VERSION = "1.0.5"
 XOR_VALUE = 100
 CONFIG_FILE = "config.json"
 ACTIVE_DEBUG = True
