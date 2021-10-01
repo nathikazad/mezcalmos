@@ -79,12 +79,8 @@ flutter:
   assets:
     - assets/images/
     - assets/fonts/
-<<<<<<< HEAD
     - assets/i18n/
-=======
-    - assets/json/
     - assets/animation/
->>>>>>> 2eff9155 (Added Animated Splash Screen Mezcalmos Logo)
 
   fonts:
     - family: psr  # Product Sans Regular

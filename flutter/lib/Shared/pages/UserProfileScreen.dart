@@ -108,7 +108,7 @@ class UserProfile extends StatelessWidget {
 
     return Scaffold(
       appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
-          "back", () => Get.back(), context),
+          "back", () => Get.back()),
       body: SingleChildScrollView(
         child: Container(
           height: Get.height * 0.88,
