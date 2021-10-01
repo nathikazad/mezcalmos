@@ -29,10 +29,10 @@ class SplashScreen extends StatelessWidget {
                           width: Get.width * 0.6,
                           child: ClipOval(
                             child: Container(
+                              alignment: Alignment.center,
                               color: Colors.white,
                               child: rive.RiveAnimation.asset(
                                 "assets/animation/LoadingAnimationV6.riv",
-                                fit: BoxFit.fill,
                               ),
                             ),
                           ),

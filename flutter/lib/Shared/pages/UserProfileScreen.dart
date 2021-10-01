@@ -107,8 +107,7 @@ class UserProfile extends StatelessWidget {
         : "${user.value?.displayName}";
 
     return Scaffold(
-      appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
-          "back", () => Get.back()),
+      appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back()),
       body: SingleChildScrollView(
         child: Container(
           height: Get.height * 0.88,
@@ -211,36 +210,38 @@ class UserProfile extends StatelessWidget {
                           SizedBox(
                             height: Get.height * 0.025,
                           ),
-                          Container(
-                            padding: mypadding,
-                            child: ListTile(
-                                leading: Icon(
-                                  Icons.phone_iphone_outlined,
-                                  color: Colors.black,
-                                ),
-                                title: Text("Add phone number",
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w700)),
-                                trailing: InkWell(
-                                  borderRadius: BorderRadius.circular(50),
-                                  child: Card(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(50)),
-                                    child: Container(
-                                      padding: EdgeInsets.all(10),
-                                      child: Icon(
-                                        Icons.edit_outlined,
-                                        size: 16,
+                          (user.value!.phone != null)
+                              ? Container(
+                                  padding: mypadding,
+                                  child: ListTile(
+                                      leading: Icon(
+                                        Icons.phone_iphone_outlined,
+                                        color: Colors.black,
                                       ),
-                                    ),
-                                  ),
-                                  onTap: () {
-                                    Get.to(() => PhoneNumberScreen());
-                                  },
-                                )),
-                          ),
+                                      title: Text("Add phone number",
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w700)),
+                                      trailing: InkWell(
+                                        borderRadius: BorderRadius.circular(50),
+                                        child: Card(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(50)),
+                                          child: Container(
+                                            padding: EdgeInsets.all(10),
+                                            child: Icon(
+                                              Icons.edit_outlined,
+                                              size: 16,
+                                            ),
+                                          ),
+                                        ),
+                                        onTap: () {
+                                          Get.to(() => PhoneNumberScreen());
+                                        },
+                                      )),
+                                )
+                              : Container(),
                           // Container(
                           //   child: Text(
                           //     "406 874 5993",
