@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/Shared/utilities/SharedEnums.dart';
+import 'package:mezcalmos/TaxiAdminApp/pages/Driver/DriverPage.dart';
 import 'package:mezcalmos/TaxiAdminApp/pages/Orders/OrderViewPage.dart';
 
 const mypadding = const EdgeInsets.symmetric(horizontal: 10);
@@ -269,8 +270,8 @@ class MezAdminOrdersComponents {
     );
   }
 
-  static Widget buildNotificationTable(int index, String img, String name,
-      String t, String s, String r, String o) {
+  static Widget buildNotificationTable(String uid, int index, String img,
+      String name, String t, String s, String r, String o) {
     var myGradient = (index % 2 == 0)
         ? LinearGradient(
             begin: Alignment(0.1032487004995346, 0.5),
@@ -361,10 +362,15 @@ class MezAdminOrdersComponents {
             flex: 1,
             child: Container(
               alignment: Alignment.center,
-              child: Icon(
-                Icons.arrow_forward_ios,
-                color: Colors.white,
-                size: 16,
+              child: IconButton(
+                icon: Icon(
+                  Icons.arrow_forward_ios,
+                  color: Colors.white,
+                  size: 16,
+                ),
+                onPressed: () {
+                  Get.to(() => (DriverPage(uid)));
+                },
               ),
             ),
           )

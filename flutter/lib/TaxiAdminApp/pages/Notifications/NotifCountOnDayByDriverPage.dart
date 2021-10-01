@@ -233,6 +233,7 @@ class NotifCountOnDayPage extends GetView<NotificationsController> {
                                       .toLowerCase()
                                       .contains(searchQuery.toLowerCase())
                                   ? MezAdminOrdersComponents.buildNotificationTable(
+                                      "${snapshot.data![index]["uid"]}",
                                       index,
                                       "${snapshot.data![index]["photo"]}",
                                       "${snapshot.data![index]["displayName"]}",
