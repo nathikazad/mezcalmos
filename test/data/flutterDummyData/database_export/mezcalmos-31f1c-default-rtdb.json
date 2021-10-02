@@ -1326,11 +1326,11 @@
             "options": {
               "chooseOne": {
                 "meat": {
-                  "optionName": {
+                  "name": {
                     "en": "Meat",
                     "es": "Carne"
                   },
-                  "optionDialogText": {
+                  "dialog": {
                     "en": "Choose your patty type",
                     "es": "Elige el tipo de carne"
                   },
@@ -1359,11 +1359,11 @@
                   }
                 },
                 "cheese": {
-                  "optionName": {
+                  "name": {
                     "en": "Cheese",
                     "es": "Queso"
                   },
-                  "optionDialogText": {
+                  "dialog": {
                     "en": "Choose your cheese",
                     "es": "Elige el tipo de queso"
                   },
@@ -1427,19 +1427,21 @@
                 }
               },
               "sides": {
-                "frenchFries": {
-                  "name": {
-                    "en": "French fries",
-                    "es": "Batatas fritas"
+                "chooseMany": {
+                  "frenchFries": {
+                    "name": {
+                      "en": "French fries",
+                      "es": "Batatas fritas"
+                    },
+                    "cost": 1.99
                   },
-                  "cost": 1.99
-                },
-                "nachos": {
-                  "name": {
-                    "en": "Nachos",
-                    "es": "Nachos"
-                  },
-                  "cost": 2.99
+                  "nachos": {
+                    "name": {
+                      "en": "Nachos",
+                      "es": "Nachos"
+                    },
+                    "cost": 2.99
+                  }
                 }
               }
             }
@@ -1459,11 +1461,11 @@
             "options": {
               "chooseOne": {
                 "meat": {
-                  "optionName": {
+                  "name": {
                     "en": "Meat",
                     "es": "Carne"
                   },
-                  "optionDialogText": {
+                  "dialog": {
                     "en": "Choose your patty type",
                     "es": "Elige el tipo de carne"
                   },

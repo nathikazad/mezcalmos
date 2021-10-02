@@ -1,43 +1,50 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:mezcalmos/CustomerApp/models/restaurants/restaurant.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:get/get.dart';
+import 'dart:async';
 
 class RestaurantsInfoController extends GetxController {
   DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
-  late Stream<Event> restaurants;
   @override
   void onInit() {
     super.onInit();
-    print("--------------------> DriverStatsController Initialized !");
-    restaurants = _databaseHelper.firebaseDatabase
-        .reference()
-        .child('restaurants/info')
-        .onValue;
+    print("--------------------> RestaurantsInfoController Initialized !");
   }
 
-  Stream<dynamic> getRestaurants() {
-    return restaurants.map<dynamic>((event) {
-      dynamic snapshot = event.snapshot.value;
-      print(snapshot);
-      return snapshot;
+  Future<List<Restaurant>> getRestaurants() {
+    return _databaseHelper.firebaseDatabase
+        .reference()
+        .child('restaurants/info')
+        .once()
+        .then<List<Restaurant>>((snapshot) {
+      List<Restaurant> restaurants = [];
+      snapshot.value.forEach((dynamic key, dynamic value) {
+        try {
+          restaurants.add(Restaurant.fromRestaurantData(value, id: key));
+        } catch (e) {
+          print(e);
+        }
+      });
+      return restaurants;
     });
   }
 
-  Future<dynamic> getRestaurant(String restaurantId) async {
-    DataSnapshot snapshot = await _databaseHelper.firebaseDatabase
+  Future<Restaurant> getRestaurant(String restaurantId) async {
+    return _databaseHelper.firebaseDatabase
         .reference()
         .child('restaurants/info/$restaurantId')
-        .once();
-
-    return snapshot.value();
+        .once()
+        .then<Restaurant>((snapshot) {
+      return Restaurant.fromRestaurantData(snapshot.value, id: restaurantId);
+    });
   }
 
-  Future<dynamic> getItem(String restaurantId, String itemId) async {
-    DataSnapshot snapshot = await _databaseHelper.firebaseDatabase
+  Future<Item> getItem(String restaurantId, String itemId) async {
+    return _databaseHelper.firebaseDatabase
         .reference()
         .child('restaurants/info/$restaurantId/menu/$itemId')
-        .once();
-
-    return snapshot.value();
+        .once()
+        .then<Item>((snapshot) => Item.itemFromData(itemId, snapshot.value));
   }
 }
