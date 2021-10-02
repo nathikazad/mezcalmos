@@ -30,8 +30,8 @@ async function addItem(uid, data) {
     data.options.chooseOne = {}
   if (!data.options.chooseMany)
     data.options.chooseMany = {}
-  if (!data.options.sides)
-    data.options.sides = {}
+  // if (!data.options.sides)
+  //   data.options.sides = {}
   if (!data.quantity) {
     data.quantity = 1
   }
@@ -54,7 +54,7 @@ async function addItem(uid, data) {
   }
 
   let item = (await firebase.database().
-    ref(`/restaurants/${data.restaurantId}/menu/${data.itemId}`).once('value')).val();
+    ref(`/restaurants/info/${data.restaurantId}/menu/${data.itemId}`).once('value')).val();
 
   if (item == null) {
     return {
@@ -81,7 +81,7 @@ async function addItem(uid, data) {
     options: {
       chooseOne: {},
       chooseMany: {},
-      sides: {}
+      // sides: {}
     }
   }
 
@@ -131,21 +131,21 @@ async function addItem(uid, data) {
     }
   }
 
-  for (optionId in item.options.sides) {
-    let option = item.options.sides[optionId]
-    let selectedOption = data.options.sides[optionId]
-    if (!selectedOption) {
-      continue
-    }
+  // for (optionId in item.options.sides) {
+  //   let option = item.options.sides[optionId]
+  //   let selectedOption = data.options.sides[optionId]
+  //   if (!selectedOption) {
+  //     continue
+  //   }
 
-    newItem.options.sides[optionId] = {
-      optionName: option.name,
-      cost: option.cost
-    }
-    if (option.cost) {
-      newItem.costPerOne += parseFloat(option.cost)
-    }
-  }
+  //   newItem.options.sides[optionId] = {
+  //     optionName: option.name,
+  //     cost: option.cost
+  //   }
+  //   if (option.cost) {
+  //     newItem.costPerOne += parseFloat(option.cost)
+  //   }
+  // }
   newItem.totalCost = newItem.costPerOne * parseInt(newItem.quantity)
   let itemRef = await firebase.database().ref(`/users/${uid}/cart/items`).push(null)
 

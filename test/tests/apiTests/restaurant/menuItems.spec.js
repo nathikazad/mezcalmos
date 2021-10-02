@@ -43,24 +43,24 @@ describe('Mezcalmos', () => {
     // Add an item
     await restaurant.addItem(item);
     // make the customer retrieve the item
-    let items = await customer.db.get(`restaurants/${restaurantUser.id}/menu`);
+    let items = await customer.db.get(`restaurants/info/${restaurantUser.id}/menu`);
     expect(Object.keys(items).length).toBe(1)
     let retrievedItem = items[Object.keys(items)[0]]
     expect(retrievedItem).toStrictEqual(item)
 
 
     await restaurant.addItem(item);
-    items = await customer.db.get(`restaurants/${restaurantUser.id}/menu`);
+    items = await customer.db.get(`restaurants/info/${restaurantUser.id}/menu`);
     expect(Object.keys(items).length).toBe(2)
   });
 
   it('Remove items test', async () => {
 
     // Add an item
-    await admin.database().ref(`restaurants/${restaurantUser.id}/menu`).remove()
+    await admin.database().ref(`restaurants/info/${restaurantUser.id}/menu`).remove()
     let itemId = await restaurant.addItem(item);
     await restaurant.removeItem(itemId);
-    let items = await customer.db.get(`restaurants/${restaurantUser.id}/menu`);
+    let items = await customer.db.get(`restaurants/info/${restaurantUser.id}/menu`);
     // make the customer retrieve items
     expect(Object.keys(items || {}).length).toBe(0)
     // item should not be there
@@ -84,7 +84,7 @@ describe('Mezcalmos', () => {
     }
 
     await restaurant.updateItem(itemId, itemModification);
-    let items = await customer.db.get(`restaurants/${restaurantUser.id}/menu`);
+    let items = await customer.db.get(`restaurants/info/${restaurantUser.id}/menu`);
     expect(Object.keys(items).length).toBe(1)
     let retrievedItem = items[Object.keys(items)[0]]
     expect(retrievedItem.description).toStrictEqual(itemModification.description)
@@ -102,14 +102,14 @@ describe('Mezcalmos', () => {
     itemModification = {
       available: false
     }
-    let items = await customer.db.get(`restaurants/${restaurantUser.id}/menu`);
+    let items = await customer.db.get(`restaurants/info/${restaurantUser.id}/menu`);
     expect(items[itemId].available).toBe(true)
     await restaurant.updateItem(itemId, itemModification);
-    items = await customer.db.get(`restaurants/${restaurantUser.id}/menu`);
+    items = await customer.db.get(`restaurants/info/${restaurantUser.id}/menu`);
     expect(items[itemId].available).toBe(false)
   });
 
-  // it('Remove Item', async () => {
+//   // it('Remove Item', async () => {
 })
 
 afterAll(() => {

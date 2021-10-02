@@ -9,14 +9,16 @@ class ViewRestaurantScreen extends GetView<RestaurantsInfoController> {
   String restaurantId;
   Rxn<Restaurant> restaurant = Rxn();
 
-  ViewRestaurantScreen(this.restaurantId);
-
-  @override
-  Widget build(BuildContext context) {
-    Get.put<RestaurantsInfoController>(RestaurantsInfoController());
+  ViewRestaurantScreen(this.restaurantId) {
+    RestaurantsInfoController controller =
+        Get.put<RestaurantsInfoController>(RestaurantsInfoController());
     controller.getRestaurant(restaurantId).then((value) {
       restaurant.value = value;
     });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Obx(() => Text("${restaurant.value?.name ?? 'Loading'}")),
@@ -31,5 +33,23 @@ class ViewRestaurantScreen extends GetView<RestaurantsInfoController> {
                       child: Text(item.name!)))
                   .toList());
         }));
+  }
+}
+
+class ListRestaurantsScreen extends GetView<RestaurantsInfoController> {
+  RxList<Restaurant> restaurants = <Restaurant>[].obs;
+
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("Restaurant list"),
+        ),
+        body: Obx(() => Column(
+            children: restaurants
+                .map((restaurant) => TextButton(
+                    onPressed: () =>
+                        Get.to(ViewRestaurantScreen(restaurant.id!)),
+                    child: Text(restaurant.name!)))
+                .toList())));
   }
 }

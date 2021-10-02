@@ -86,15 +86,15 @@ module.exports.item = {
         default: false
       },
     },
-    sides: {
-      frenchFries: {
-        name: { en: "French fries", es: "Batatas fritas" },
-        cost: 1.99,
-      },
-      nachos: {
-        name: { en: "Nachos", es: "Nachos" },
-        cost: 2.99,
-      }
-    }
+    // sides: {
+    //   frenchFries: {
+    //     name: { en: "French fries", es: "Batatas fritas" },
+    //     cost: 1.99,
+    //   },
+    //   nachos: {
+    //     name: { en: "Nachos", es: "Nachos" },
+    //     cost: 2.99,
+    //   }
+    // }
   }
 }

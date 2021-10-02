@@ -7,24 +7,25 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen.dar
 import 'dart:async';
 
 class ListRestaurantsScreen extends GetView<RestaurantsInfoController> {
-  RxList<Restaurant> restaurantListStream = RxList.empty();
-
-  @override
-  Widget build(BuildContext context) {
-    Get.put<RestaurantsInfoController>(RestaurantsInfoController());
-    // restaurantListStream.value =
+  RxList<Restaurant> restaurants = <Restaurant>[].obs;
+  ListRestaurantsScreen() {
+    RestaurantsInfoController controller =
+        Get.put<RestaurantsInfoController>(RestaurantsInfoController());
     controller.getRestaurants().then((value) {
-      restaurantListStream.value = value;
+      restaurants.value = value;
     });
-    // controller.getRestaurants().listen((data) async {
-    //   restaurantListStream.value = data;
+    // controller.getCurrentOrder().listen((data) {
+    //   order = data;
     // });
+  }
+
+  Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text("Restaurant list"),
         ),
         body: Obx(() => Column(
-            children: restaurantListStream.value
+        children: restaurants
                 .map((restaurant) => TextButton(
                     onPressed: () =>
                         Get.to(ViewRestaurantScreen(restaurant.id!)),

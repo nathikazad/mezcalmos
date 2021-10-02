@@ -9,14 +9,15 @@ class ViewItemScreen extends GetView<RestaurantsInfoController> {
   String itemtId;
   Rxn<Item> item = Rxn();
 
-  ViewItemScreen(this.restaurantId, this.itemtId);
-
-  @override
-  Widget build(BuildContext context) {
+  ViewItemScreen(this.restaurantId, this.itemtId) {
     Get.put<RestaurantsInfoController>(RestaurantsInfoController());
     controller.getItem(restaurantId, itemtId).then((value) {
       item.value = value;
     });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Obx(() => Text("${item.value?.name ?? 'Loading'}")),

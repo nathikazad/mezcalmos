@@ -26,6 +26,7 @@ const fakeRestaurantData = require("../../data/restaurant")
 let restaurantData = fakeRestaurantData.restaurantData
 let restaurantInfo = fakeRestaurantData.restaurantInfo
 let itemOne = fakeRestaurantData.item
+let itemOneId;
 
 describe('Mezcalmos', () => {
   beforeAll(async () => {
@@ -40,7 +41,7 @@ describe('Mezcalmos', () => {
   });
 
   it('Add invalid items to cart ', async () => {
-    items = await customer.db.get(`restaurants/${restaurantUser.id}/menu`);
+    items = await customer.db.get(`restaurants/info/${restaurantUser.id}/menu`);
     let response = await customer.callFunction("addRestaurantItemToCart", {});
     expect(response.result.status).toBe("Error");
     expect(response.result.errorMessage).toBe("Required itemId and restaurantId");
@@ -94,9 +95,9 @@ describe('Mezcalmos', () => {
           tomato: true,
           avocado: false
         },
-        sides: {
-          frenchFries: true
-        }
+        // sides: {
+        //   frenchFries: true
+        // }
       }
     }
     response = await customer.callFunction("addRestaurantItemToCart", itemToAdd)
@@ -106,7 +107,7 @@ describe('Mezcalmos', () => {
     expect(Object.keys(cart.items).length).toBe(1)
     expect(cart.orderType).toBe("restaurant")
     expect(cart.serviceProviderId).toBe(restaurantUser.id)
-    expect(cart.total).toBe(9.97)
+    expect(cart.total).toBe(7.98)
 
     let secondItemToAdd = {
       restaurantId: restaurantUser.id,
@@ -128,7 +129,7 @@ describe('Mezcalmos', () => {
     expect(response.result.status).toBe("Success");
     cart = await customer.db.get(`users/${customer.id}/cart`);
     expect(Object.keys(cart.items).length).toBe(2)
-    expect(cart.total).toBe(16.96)
+    expect(cart.total).toBe(14.97)
 
     let thirdItemToAdd = {
       restaurantId: restaurantUser.id,
@@ -145,7 +146,7 @@ describe('Mezcalmos', () => {
     expect(response.result.status).toBe("Success");
     cart = await customer.db.get(`users/${customer.id}/cart`);
     expect(Object.keys(cart.items).length).toBe(3)
-    expect(cart.total).toBe(46.910000000000004)
+    expect(cart.total).toBe(44.92)
 
   })
 
@@ -173,16 +174,16 @@ describe('Mezcalmos', () => {
     })
     cart = await customer.db.get(`users/${customer.id}/cart`);
     expect(cart.items[itemId].quantity).toBe(2)
-    expect(cart.items[itemId].totalCost).toBe(19.94)
-    expect(cart.total).toBe(56.88)
+    expect(cart.items[itemId].totalCost).toBe(15.96)
+    expect(cart.total).toBe(52.900000000000006)
     response = await customer.callFunction("changeItemCountInCart", {
       itemId: itemId,
       countChange: 2
     })
     cart = await customer.db.get(`users/${customer.id}/cart`);
     expect(cart.items[itemId].quantity).toBe(4)
-    expect(cart.items[itemId].totalCost).toBe(39.88)
-    expect(cart.total).toBe(76.82000000000001)
+    expect(cart.items[itemId].totalCost).toBe(31.92)
+    expect(cart.total).toBe(68.86000000000001)
 
 
     // const util = require('util')
@@ -197,15 +198,15 @@ describe('Mezcalmos', () => {
     })
     cart = await customer.db.get(`users/${customer.id}/cart`);
     expect(cart.items[itemId].quantity).toBe(3)
-    expect(cart.items[itemId].totalCost).toBe(29.910000000000004)
-    expect(cart.total).toBe(66.85000000000001)
+    expect(cart.items[itemId].totalCost).toBe(23.94)
+    expect(cart.total).toBe(60.88000000000001)
     response = await customer.callFunction("changeItemCountInCart", {
       itemId: itemId,
       countChange: -3
     })
     cart = await customer.db.get(`users/${customer.id}/cart`);
     expect(cart.items[itemId]).toBe(undefined)
-    expect(cart.total).toBe(36.940000000000005)
+    expect(cart.total).toBe(36.94000000000001)
   })
 
 

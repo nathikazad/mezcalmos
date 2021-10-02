@@ -57,29 +57,29 @@ class ChooseOneOptionListItem {
   Map<String, dynamic> toJson() => {"id": id, "cost": cost, "name": name};
 }
 
-class Sides {
-  List<ChooseOneOption> chooseOneOptions = [];
-  List<ChooseManyOption> chooseManyOptions = [];
-  Sides();
-  Sides.fromData(dynamic sidesData, String language) {
-    if (sidesData["chooseOne"] != null) {
-      sidesData["chooseOne"].forEach((dynamic optionId, dynamic optionData) {
-        chooseOneOptions
-            .add(ChooseOneOption.fromData(optionId, optionData, language));
-      });
-    }
-    if (sidesData["chooseMany"] != null) {
-      sidesData["chooseMany"].forEach((dynamic optionId, dynamic optionData) {
-        chooseManyOptions
-            .add(ChooseManyOption.fromData(optionId, optionData, language));
-      });
-    }
-  }
-  Map<String, dynamic> toJson() => {
-        "chooseOneOptions": jsonEncode(chooseOneOptions),
-        "chooseManyOptions": jsonEncode(chooseManyOptions)
-      };
-}
+// class Sides {
+//   List<ChooseOneOption> chooseOneOptions = [];
+//   List<ChooseManyOption> chooseManyOptions = [];
+//   Sides();
+//   Sides.fromData(dynamic sidesData, String language) {
+//     if (sidesData["chooseOne"] != null) {
+//       sidesData["chooseOne"].forEach((dynamic optionId, dynamic optionData) {
+//         chooseOneOptions
+//             .add(ChooseOneOption.fromData(optionId, optionData, language));
+//       });
+//     }
+//     if (sidesData["chooseMany"] != null) {
+//       sidesData["chooseMany"].forEach((dynamic optionId, dynamic optionData) {
+//         chooseManyOptions
+//             .add(ChooseManyOption.fromData(optionId, optionData, language));
+//       });
+//     }
+//   }
+//   Map<String, dynamic> toJson() => {
+//         "chooseOneOptions": jsonEncode(chooseOneOptions),
+//         "chooseManyOptions": jsonEncode(chooseManyOptions)
+//       };
+// }
 
 class Item {
   String? id;
@@ -90,7 +90,7 @@ class Item {
   num cost = 0;
   List<ChooseOneOption> chooseOneOptions = [];
   List<ChooseManyOption> chooseManyOptions = [];
-  Sides sides = new Sides();
+  // Sides sides = new Sides();
   Item(this.id, this.available, this.description, this.image, this.name);
 
   factory Item.itemFromData(String itemId, dynamic itemData,
@@ -118,9 +118,9 @@ class Item {
             .add(ChooseManyOption.fromData(optionId, optionData, language!));
       });
     }
-    if (itemData["options"]["sides"] != null) {
-      item.sides = Sides.fromData(itemData["options"]["sides"], language);
-    }
+    // if (itemData["options"]["sides"] != null) {
+    //   item.sides = Sides.fromData(itemData["options"]["sides"], language);
+    // }
     return item;
   }
 
