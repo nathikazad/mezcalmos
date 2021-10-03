@@ -231,7 +231,27 @@
             "expired": "Expired",
             "inProcess": "In Process",
             "isLooking": "Is Looking",
-            "orders": "Orders"
-        }
+            "orders": "Orders",
+            "time": "Time",
+            "driver": "Driver",
+            "cust": "Cust",
+            "orderFR": "Order Fulfillment Ratio",
+            "orderId": "Order Id",
+            "orderT": "Order Time",
+            "status": "Status",
+            "price": "Price",
+            "rideEnd": "Ride End Time",
+            "rideStart": "Ride Start Time",
+            "droppedOff": "Dropped Off",
+            "firstOrder": "First Order",
+            "lastOrder": "Last Order"
+        },
+        "notifs": {
+            "notifications": "Notifications",
+            "sent": "Sent",
+            "received": "Received",
+            "read": "Read"
+        },
+        "appVersion": "App Version"
     }
 }

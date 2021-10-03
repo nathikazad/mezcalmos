@@ -14,12 +14,12 @@ const notificationMessages = require('./notificationMessages.json')
 async function push(firebase, userId, message, particpantType = "customer") {
   firebase.database().ref(`/notifications/${particpantType}/${userId}`).push(message)
   let subscription
-  if(particpantType == "customer") {
+  if (particpantType == "customer") {
     subscription = (await firebase.database().ref(`/users/${userId}/notificationInfo`).once('value')).val();
-  } else if(particpantType == "taxi") {
+  } else if (particpantType == "taxi") {
     subscription = (await firebase.database().ref(`/taxiDrivers/${userId}/notificationInfo`).once('value')).val();
   }
-  if(subscription){
+  if (subscription) {
     if (subscription.deviceNotificationToken) {
       if (particpantType == "taxi") {
         if (message.notificationType == "orderStatusChange") {
@@ -37,15 +37,15 @@ async function push(firebase, userId, message, particpantType = "customer") {
     } else {
       sender.sendToBrowser(subscription, message)
     }
-    
+
   }
 }
 
-async function buildDeviceNotificationMessage(firebase, userId, message){
+async function buildDeviceNotificationMessage(firebase, userId, message) {
   let userLang = (await firebase.database().ref(`/users/${userId}/info/language`).once('value')).val();
-  if(!userLang)
+  if (!userLang)
     userLang = "es";
-  if(message.notificationType == "orderStatusChange"){
+  if (message.notificationType == "orderStatusChange") {
     return notificationMessages[message.notificationType][message.status][userLang]
   } else {
     return notificationMessages[message.notificationType][userLang]
@@ -54,19 +54,15 @@ async function buildDeviceNotificationMessage(firebase, userId, message){
 
 async function notifyDriversNewRequest(firebase) {
   let drivers = (await firebase.database().ref(`/taxiDrivers`).once('value')).val();
-  for (let driverId in drivers){
+  for (let driverId in drivers) {
     let driver = drivers[driverId]
-    if(driver.state && driver.state.isLooking && !driver.state.currentOrder) {
-      if(driver.notificationInfo) { 
+    if (driver.state && driver.state.isLooking && !driver.state.currentOrder) {
+      if (driver.notificationInfo) {
         if (driver.notificationInfo.deviceNotificationToken) {
           let payload = {
             notification: {
               title: "Nueva Pedido",
-<<<<<<< HEAD
               body: `Hay una nueva orden de taxi, vea si puede aceptarla.`,
-=======
-              body: `Hay una nueva orden de taxi de ${address}, vea si puede aceptarla.`,
->>>>>>> postgres
               tag: "newOrder"
             }
           };
@@ -81,7 +77,7 @@ async function notifyDriversNewRequest(firebase) {
             message: `Hay una nueva orden de taxi, vea si puede aceptarla.`
           }
           sender.sendToBrowser(driver.notificationInfo, message);
-        }        
+        }
       }
     }
   }
@@ -89,7 +85,7 @@ async function notifyDriversNewRequest(firebase) {
 
 
 async function sendTest(firebase, data) {
-  if(!data.userId){
+  if (!data.userId) {
     return {
       status: "Error",
       errorMessage: "Need User Id"
@@ -97,7 +93,7 @@ async function sendTest(firebase, data) {
   }
   let uid = data.userId
   let driver = (await firebase.database().ref(`/taxiDrivers/${uid}`).once('value')).val();
-  if(driver.notificationInfo){
+  if (driver.notificationInfo) {
     if (driver.notificationInfo.deviceNotificationToken) {
       let message = {
         title: "Prueba",
@@ -111,7 +107,7 @@ async function sendTest(firebase, data) {
       }
       sender.sendToBrowser(driver.notificationInfo, message);
     }
-    
+
   }
 }
 

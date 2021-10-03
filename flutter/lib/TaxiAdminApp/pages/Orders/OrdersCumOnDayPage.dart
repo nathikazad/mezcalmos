@@ -5,8 +5,10 @@ import 'package:intl/intl.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/utilities/SharedEnums.dart';
-import 'package:mezcalmos/Shared/widgets/MezAdminOrdersComponents.dart';
+import 'package:mezcalmos/TaxiAdminApp/components/MezAdminOrdersComponents.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
+
+import 'OrdersOnDayPage.dart';
 
 class OrdersCumOnDayPage extends GetView<OrderStatsController> {
   var f = new DateFormat('dd/MM/yy');
@@ -29,10 +31,17 @@ class OrdersCumOnDayPage extends GetView<OrderStatsController> {
                 child: Row(
                   children: [
                     Expanded(
-                      child: Text(
-                        lang.strings["admin"]["orders"]["cumulative"],
-                        style: TextStyle(
-                            fontSize: 29, fontWeight: FontWeight.bold),
+                      child: InkWell(
+                        child: Text(
+                          lang.strings["admin"]["orders"]["cumulative"],
+                          style: TextStyle(
+                              fontSize: 29, fontWeight: FontWeight.bold),
+                        ),
+                        onTap: () {
+                          Get.off(() => OrdersOnDayPage(),
+                              transition: Transition.rightToLeft,
+                              duration: Duration(milliseconds: 500));
+                        },
                       ),
                     ),
                     Theme(
@@ -123,13 +132,12 @@ class OrdersCumOnDayPage extends GetView<OrderStatsController> {
                             bottomRight: Radius.circular(20),
                           ),
                           gradient: LinearGradient(
-                            colors: [
-                              Color.fromRGBO(118, 67, 224, 0.9),
-                              Color.fromRGBO(80, 38, 163, 0.9)
-                            ],
-                            begin: Alignment(0.0, 0.8),
-                            end: Alignment(0.8, 0.2),
-                          ),
+                              begin: Alignment(0.9568901658058167, 0.5),
+                              end: Alignment(0.11593939363956451, 0.5),
+                              colors: [
+                                const Color(0xff4f26a2),
+                                const Color(0xff7643e0)
+                              ]),
                         ),
                         child: Container(
                           padding: mypadding,
@@ -151,6 +159,7 @@ class OrdersCumOnDayPage extends GetView<OrderStatsController> {
                                         fontWeight: FontWeight.w500,
                                       ),
                                     ),
+                                    overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
                                   ),
                                 ),

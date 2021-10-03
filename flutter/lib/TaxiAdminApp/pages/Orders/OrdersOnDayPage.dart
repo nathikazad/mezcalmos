@@ -4,9 +4,10 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/utilities/SharedEnums.dart';
-import 'package:mezcalmos/Shared/widgets/MezAdminOrdersComponents.dart';
+import 'package:mezcalmos/TaxiAdminApp/components/MezAdminOrdersComponents.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/TaxiAdminApp/pages/Notifications/NotifCountOnDayByDriverPage.dart';
 
 class OrdersOnDayPage extends GetView<OrderStatsController> {
   var f = new DateFormat('dd/MM/yy');
@@ -20,17 +21,8 @@ class OrdersOnDayPage extends GetView<OrderStatsController> {
             (BuildContext context, AsyncSnapshot<RxList<dynamic>> snapshot) {
           List<Widget> children;
           if (snapshot.hasData) {
+            print(snapshot.data.toString());
             children = <Widget>[
-              // const Icon(
-              //   Icons.check_circle_outline,
-              //   color: Colors.green,
-              //   size: 60,
-              // ),
-              // Padding(
-              //     padding: const EdgeInsets.only(top: 16),
-              //     child: Text('Result: ${snapshot.data}')
-
-              //     )
               SizedBox(
                 height: 30,
               ),
@@ -39,10 +31,17 @@ class OrdersOnDayPage extends GetView<OrderStatsController> {
                 child: Row(
                   children: [
                     Expanded(
-                      child: Text(
-                        lang.strings["admin"]["orders"]["orders"],
-                        style: TextStyle(
-                            fontSize: 29, fontWeight: FontWeight.bold),
+                      child: InkWell(
+                        child: Text(
+                          lang.strings["admin"]["orders"]["orders"],
+                          style: TextStyle(
+                              fontSize: 29, fontWeight: FontWeight.bold),
+                        ),
+                        onTap: () {
+                          Get.off(() => NotifCountOnDayPage(),
+                              transition: Transition.rightToLeft,
+                              duration: Duration(milliseconds: 500));
+                        },
                       ),
                     ),
                     Theme(
@@ -114,17 +113,15 @@ class OrdersOnDayPage extends GetView<OrderStatsController> {
               ),
               Container(
                 decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 1,
-                      color: Color.fromRGBO(112, 112, 112, 1),
-                    ),
+                    border:
+                        Border.all(color: const Color(0xff707070), width: 1),
                     gradient: LinearGradient(
+                        begin: Alignment(0.5, 0),
+                        end: Alignment(0.5, 1),
                         colors: [
-                          Color.fromRGBO(112, 54, 234, 1),
-                          Color.fromRGBO(123, 78, 216, 1),
-                        ],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter)),
+                          const Color(0xff6e31ed),
+                          const Color(0xff7d52d6)
+                        ])),
                 padding: const EdgeInsets.all(8),
                 child: Row(
                   children: [
@@ -132,8 +129,20 @@ class OrdersOnDayPage extends GetView<OrderStatsController> {
                       flex: 2,
                       child: Container(
                         child: Text(
-                          "Time",
+                          lang.strings["admin"]["orders"]["time"],
                           style: adminAppTextStyle1,
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Container(
+                        child: Text(
+                          lang.strings["admin"]["orders"]["driver"],
+                          style: adminAppTextStyle1,
+                          overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -142,18 +151,9 @@ class OrdersOnDayPage extends GetView<OrderStatsController> {
                       flex: 2,
                       child: Container(
                         child: Text(
-                          "Driver",
+                          lang.strings["admin"]["orders"]["cust"],
                           style: adminAppTextStyle1,
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: Container(
-                        child: Text(
-                          "Cust",
-                          style: adminAppTextStyle1,
+                          overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -200,6 +200,7 @@ class OrdersOnDayPage extends GetView<OrderStatsController> {
                   child: ListView.builder(
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
+                        print(snapshot.data![index]);
                         var t = snapshot.data![index]['orderTime']
                             .toString()
                             .split("T")[1];
@@ -208,6 +209,7 @@ class OrdersOnDayPage extends GetView<OrderStatsController> {
                             : snapshot.data![index]["driver"]["photo"];
                         return MezAdminOrdersComponents.buildTableWidget(
                             getState(snapshot.data![index]["status"]),
+                            "${snapshot.data![index]["orderId"]}",
                             "${t.split(":")[0]}:${t.split(":")[1]}",
                             driver,
                             "${snapshot.data![index]["customer"]["photo"]}",

@@ -73,6 +73,7 @@ class NotificationsController extends GetxController {
         });
       },
     );
+    returnValue.sort((a, b) => b["sent"] - a["sent"]);
     returnValue.sort((a, b) => b["read"] - a["read"]);
     return returnValue;
   }

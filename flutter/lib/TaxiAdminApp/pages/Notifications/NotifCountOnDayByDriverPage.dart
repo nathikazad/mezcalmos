@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/TaxiAdminApp/controller/NotificationsController.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/widgets/MezAdminOrdersComponents.dart';
+import 'package:mezcalmos/TaxiAdminApp/components/MezAdminOrdersComponents.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/TaxiAdminApp/pages/Orders/OrdersCumOnDayPage.dart';
 
 const mypadding = const EdgeInsets.symmetric(horizontal: 10);
 
 class NotifCountOnDayPage extends GetView<NotificationsController> {
+  LanguageController lang = Get.find<LanguageController>();
   final f = new DateFormat('dd/MM/yy');
   var selectedtime = DateTime.now().obs;
   final TextEditingController srearchC = new TextEditingController();
@@ -29,10 +32,17 @@ class NotifCountOnDayPage extends GetView<NotificationsController> {
                 child: Row(
                   children: [
                     Expanded(
-                      child: Text(
-                        "Notifications",
-                        style: TextStyle(
-                            fontSize: 28, fontWeight: FontWeight.bold),
+                      child: InkWell(
+                        child: Text(
+                          lang.strings["admin"]["notifs"]["notifications"],
+                          style: TextStyle(
+                              fontSize: 28, fontWeight: FontWeight.bold),
+                        ),
+                        onTap: () {
+                          Get.off(() => OrdersCumOnDayPage(),
+                              transition: Transition.rightToLeft,
+                              duration: Duration(milliseconds: 500));
+                        },
                       ),
                     ),
                     Theme(
@@ -106,7 +116,13 @@ class NotifCountOnDayPage extends GetView<NotificationsController> {
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(25),
                         topRight: Radius.circular(25)),
-                    color: Color.fromRGBO(13, 12, 12, 0.34509803921568627)),
+                    gradient: LinearGradient(
+                        begin: Alignment(0.5, 0),
+                        end: Alignment(0.5, 1),
+                        colors: [
+                          const Color(0xff0d0c0c).withOpacity(0.2),
+                          const Color(0xff6f6d6d).withOpacity(0.2)
+                        ])),
                 child: Row(
                   children: [
                     Icon(
@@ -132,16 +148,16 @@ class NotifCountOnDayPage extends GetView<NotificationsController> {
               Container(
                 decoration: BoxDecoration(
                     border: Border.all(
+                      color: const Color(0xff707070),
                       width: 1,
-                      color: Color.fromRGBO(112, 112, 112, 1),
                     ),
                     gradient: LinearGradient(
+                        begin: Alignment(0.5, 0),
+                        end: Alignment(0.5, 1),
                         colors: [
-                          Color.fromRGBO(112, 54, 234, 1),
-                          Color.fromRGBO(123, 78, 216, 1),
-                        ],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter)),
+                          const Color(0xff6e31ed),
+                          const Color(0xff7d52d6)
+                        ])),
                 padding: const EdgeInsets.all(8),
                 child: Row(
                   children: [
@@ -150,7 +166,7 @@ class NotifCountOnDayPage extends GetView<NotificationsController> {
                       child: Container(
                         padding: const EdgeInsets.only(left: 10),
                         child: Text(
-                          "Driver",
+                          lang.strings["admin"]["orders"]["driver"],
                           style: adminAppTextStyle1,
                           textAlign: TextAlign.left,
                         ),
@@ -217,6 +233,7 @@ class NotifCountOnDayPage extends GetView<NotificationsController> {
                                       .toLowerCase()
                                       .contains(searchQuery.toLowerCase())
                                   ? MezAdminOrdersComponents.buildNotificationTable(
+                                      "${snapshot.data![index]["uid"]}",
                                       index,
                                       "${snapshot.data![index]["photo"]}",
                                       "${snapshot.data![index]["displayName"]}",

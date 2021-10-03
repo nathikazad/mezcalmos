@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/TaxiAdminApp/pages/Driver/RankingsPage.dart';
 import 'package:mezcalmos/TaxiAdminApp/pages/Driver/DriverPage.dart';
 import 'package:mezcalmos/TaxiAdminApp/pages/Notifications/NotifCountOnDayByDriverPage.dart';
@@ -11,18 +12,24 @@ import 'package:mezcalmos/TaxiAdminApp/pages/Orders/OrdersCumOnDayPage.dart';
 import 'package:mezcalmos/TaxiAdminApp/pages/Orders/OrdersCumOnMonthPage.dart';
 import 'package:mezcalmos/TaxiAdminApp/pages/Orders/OrdersFulfillmentOnMonthPage.dart';
 
+import 'Orders/OrderViewPage.dart';
+
 class StatsIndexPage extends GetView {
+  LanguageController lng = Get.find<LanguageController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Stats"),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      body: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: ListView(
           children: <Widget>[
-            Text("Order Stats"),
+            Text(
+              "Order Stats",
+              textAlign: TextAlign.center,
+            ),
             OutlinedButton(
                 child: Text("Order Cumulative On Day"),
                 onPressed: () => Get.to(OrdersCumOnDayPage())),
@@ -35,14 +42,26 @@ class StatsIndexPage extends GetView {
             OutlinedButton(
                 child: Text("Order Fulfillment For Month"),
                 onPressed: () => Get.to(OrdersFulfillmentOnMonthPage())),
-            Text("Driver Stats"),
+            OutlinedButton(
+                onPressed: () {
+                  Get.to(() => OrderViewPage("-MYztek7UKwGt9uc9abF"));
+                },
+                child: Text("Orders View ")),
+            Text(
+              "Driver Stats",
+              textAlign: TextAlign.center,
+            ),
             OutlinedButton(
                 child: Text("Last Week Rankings"),
                 onPressed: () => Get.to(RankingsPage())),
             OutlinedButton(
                 child: Text("Sample Driver Page"),
-                onPressed: () => Get.to(DriverPage())),
-            Text("Notification Stats"),
+                onPressed: () =>
+                    Get.to(DriverPage("OAvACdFweLfUkQHPicckdA40XN92"))),
+            Text(
+              "Notification Stats",
+              textAlign: TextAlign.center,
+            ),
             OutlinedButton(
                 child: Text("Notification by driver count on day"),
                 onPressed: () => Get.to(NotifCountOnDayPage())),
@@ -52,10 +71,19 @@ class StatsIndexPage extends GetView {
             OutlinedButton(
                 child: Text("Unique Notification stats For Month"),
                 onPressed: () => Get.to(UniqueNotificationsOnMonthPage())),
-            Text("Customer Stats"),
+            Text(
+              "Customer Stats",
+              textAlign: TextAlign.center,
+            ),
             OutlinedButton(
                 child: Text("New Customers for month"),
                 onPressed: () => Get.to(NewCustomersOnMonthPage())),
+            Divider(),
+            OutlinedButton(
+                child: Text("Langauge"),
+                onPressed: () {
+                  lng.changeUserLanguage();
+                }),
           ],
         ),
       ),
