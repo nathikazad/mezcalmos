@@ -45,8 +45,6 @@ class CurrentOrderScreen extends GetWidget<CurrentOrderController> {
   LatLng initialCameraPosition = LatLng(0, 0);
   List<CustomMarker> customMarkers = <CustomMarker>[];
   //==================================
-
-  RxList<CustomMarker> customMarkers = RxList.empty(growable: true);
   // ------------
   Widget build(BuildContext context) {
     // controller.fillMarkersCallback = fillMarkers;

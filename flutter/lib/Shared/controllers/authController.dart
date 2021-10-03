@@ -10,8 +10,6 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:path/path.dart';
-// import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
@@ -48,7 +46,7 @@ class AuthController extends GetxController with MezDisposable {
   dynamic _onSignInCallback;
 
   User? get user => _user.value;
-
+  Rxn<fireAuth.User> _fireAuthUser = Rxn<fireAuth.User>();
   fireAuth.FirebaseAuth get auth => _auth;
 
   // RxInt _isWaitingRresponse = 0.obs;
@@ -93,6 +91,7 @@ class AuthController extends GetxController with MezDisposable {
     _auth.authStateChanges().listen((fireAuth.User? user) {
       authStateNotifierInvoked.value = true;
       print("authStateNotifierInvoked ====> $authStateNotifierInvoked");
+      _fireAuthUser.value = user;
       if (user == null) {
         print('User is currently signed out!');
         _user.value = null;
@@ -106,6 +105,7 @@ class AuthController extends GetxController with MezDisposable {
             event.snapshot.value['language'] =
                 Get.find<LanguageController>().userLanguageKey;
           }
+
           _user.value = User.fromSnapshot(user, event.snapshot);
           Get.find<LanguageController>()
               .userLanguageChanged(_user.value!.language);
@@ -210,6 +210,7 @@ class AuthController extends GetxController with MezDisposable {
         // 'language': _settings.appLanguage.userLanguageKey,
         'database': _databaseHelper.dbType
       });
+      print(response);
       mezcalmosSnackBar(
           "Notice ~",
           responseStatusChecker(response.data,
@@ -221,6 +222,7 @@ class AuthController extends GetxController with MezDisposable {
       // mezcalmosSnackBar("Notice ~", "Failed to send OTP message :( ");
       // _waitingResponse.value = false;
       print("Exception happend in sendOTPForLogin : $e"); // i
+      print(e);
     }
     return response!.data;
   }

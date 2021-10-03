@@ -1,0 +1,51 @@
+query orders_cumulative($start_date_input:timestamptz!, $end_date_input:timestamptz!){
+  total_orders: orders_aggregate(where: 
+     {orderTime: {_gte:$start_date_input, _lte:$end_date_input}},
+      order_by: {orderTime:desc}){
+       aggregate { 
+        count 
+      }
+      nodes{
+        orderId
+        orderTime
+      }
+     }
+     dropped_off_orders: orders_aggregate(where:{
+      finalStatus:{ _eq: "droppedOff"}
+      orderTime: {_gte:$start_date_input, _lte:$end_date_input}
+    }
+    ){
+       aggregate { count }
+    }
+      expired_orders: orders_aggregate(where:{
+      finalStatus:{ _eq: "expired"}
+      orderTime: {_gte:$start_date_input, _lte:$end_date_input}
+    }){
+       aggregate { count }
+    }
+      cancelled_orders: orders_aggregate(where:{
+      finalStatus:{ _eq: "cancelled"} 
+      orderTime: {_gte:$start_date_input, _lte:$end_date_input} 
+    })
+      {
+       aggregate { count }
+      }  
+       inProcess_orders: orders_aggregate(
+        where:{
+          _or:[
+            {finalStatus:{ _eq: "inTransit"}}
+            {finalStatus: {_eq: "isLooking"}}
+          ]
+          orderTime: {_gte:$start_date_input, _lte:$end_date_input}
+        })
+      {
+       aggregate { count }
+      } 
+      isLooking_orders: orders_aggregate(where:{
+      finalStatus:{ _eq: "lookingForTaxi"}
+      orderTime: {_gte:$start_date_input, _lte:$end_date_input}  
+    })
+      {
+       aggregate { count }
+      }     
+  }

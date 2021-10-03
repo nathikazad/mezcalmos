@@ -1,14 +1,22 @@
 const {gql, GraphQLClient} = require('graphql-request')
-
+const admin = require("./admin");
 module.exports.setClaim = async function setClaim(firebase, uid) {
   try {
-    const customClaims = {
+    let customClaims = {
       "https://hasura.io/jwt/claims": {
         "x-hasura-default-role": "user",
         "x-hasura-allowed-roles": ["user"], // add admin role for admin users
         "x-hasura-user-id": uid
       }
     };
+
+    let response = await admin.checkAdmin(firebase, { adminId: uid })
+    if (!response) {
+      customClaims["https://hasura.io/jwt/claims"]["x-hasura-default-role"] = "admin";
+      customClaims["https://hasura.io/jwt/claims"]["x-hasura-allowed-roles"] = ["admin", "user"];
+    }
+
+
     await firebase.auth().setCustomUserClaims(uid, customClaims)
     return { status: "success", user: context.auth.uid }
   } catch (error) {
@@ -89,7 +97,30 @@ module.exports.Hasura = class Hasura {
       console.log(e);
     }
   }
+  async updateDriver(parameters) {
+    const updateDriverMutation = gql`
+    mutation updateDriver($driverId: String, $changes: drivers_set_input!){
+      update_drivers(
+        where: {driverId: {_eq: $driverId}},
+        _set: $changes
+      ){
+        returning{
+          driverId
+        
+        }
+      }
+    }`
+    try {
+      const result = await this.client.request(updateDriverMutation, parameters)
+      console.log(result);
+      // return{
+      //   status: 'Success'
+      // }
 
+    } catch (e) {
+      console.log(e);
+    }
+  }
   async updateUser(parameters) {
     const updateUserMutation = gql`
     mutation updateUser($uid: String, $changes: users_set_input!){

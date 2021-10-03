@@ -21,7 +21,8 @@ VALID_CONFIG_KEYS_LEN = 2
 POSSIBLE_APPS = [
     'TaxiApp',
     'CustomerApp',
-    'DeliveryApp'
+    'DeliveryApp',
+    'MezAdmin'
 ]
 
 POSSIBLE_DBS = [
@@ -487,6 +488,7 @@ class Config:
 
         if _ :
             if _ not in self.conf['apps'].keys():
+                PRINTLN(self.conf['apps'].keys())
                 PRINTLN(f'[!] app={_} : Error This app is wrong !')
                 exit(DW_EXIT_REASONS.CONF_FILE_APPNAME_WRONG)
             self.user_args['app'] = _

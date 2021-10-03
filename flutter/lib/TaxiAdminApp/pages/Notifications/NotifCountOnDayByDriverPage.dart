@@ -1,0 +1,305 @@
+import 'package:flutter/material.dart';
+import 'package:mezcalmos/TaxiAdminApp/controller/NotificationsController.dart';
+import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/widgets/MezAdminOrdersComponents.dart';
+import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
+import 'package:intl/intl.dart';
+
+const mypadding = const EdgeInsets.symmetric(horizontal: 10);
+
+class NotifCountOnDayPage extends GetView<NotificationsController> {
+  final f = new DateFormat('dd/MM/yy');
+  var selectedtime = DateTime.now().obs;
+  final TextEditingController srearchC = new TextEditingController();
+  var searchQuery = "".obs;
+  FutureBuilder<List<dynamic>> getNotificationCountOnDayByDrivers() {
+    return FutureBuilder<List<dynamic>>(
+        future: controller.getNotificationCountOnDayByDrivers(
+            selectedtime.value), // a previously-obtained Future<String> or null
+        builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
+          List<Widget> children;
+          if (snapshot.hasData) {
+            children = <Widget>[
+              SizedBox(
+                height: 30,
+              ),
+              Container(
+                padding: mypadding,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        "Notifications",
+                        style: TextStyle(
+                            fontSize: 28, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Theme(
+                      data: Theme.of(context).copyWith(
+                        primaryColor: Color.fromRGBO(
+                            79, 38, 162, 1), //color of the main banner
+                        accentColor: Color.fromRGBO(79, 38, 162,
+                            1), //color of circle indicating the selected date
+                        primaryColorBrightness: Brightness.light,
+                        colorScheme: ColorScheme.light().copyWith(
+                          primary: Color.fromRGBO(79, 38, 162, 1),
+                          primaryVariant: Color.fromRGBO(79, 38, 162, 1),
+                        ),
+                        buttonTheme: ButtonThemeData(
+                            textTheme: ButtonTextTheme
+                                .accent //color of the text in the button "OK/CANCEL"
+                            ),
+                      ),
+                      child: Builder(
+                        builder: (context) {
+                          return InkWell(
+                            child: Container(
+                              padding: EdgeInsets.only(left: 10, right: 5),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  width: 1,
+                                  color: Color.fromRGBO(112, 112, 112, 1),
+                                ),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Row(
+                                children: [
+                                  Obx(() =>
+                                      Text("${f.format(selectedtime.value)}")),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Icon(
+                                    Icons.arrow_drop_down,
+                                    color: Colors.purple,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            onTap: () async {
+                              var x = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(2018),
+                                lastDate: DateTime(2030),
+                              );
+                              selectedtime.value =
+                                  (x == null) ? DateTime.now() : x;
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              Container(
+                padding: mypadding,
+                height: 50,
+                width: Get.width,
+                alignment: Alignment.centerLeft,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(25),
+                        topRight: Radius.circular(25)),
+                    color: Color.fromRGBO(13, 12, 12, 0.34509803921568627)),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.search,
+                      size: 27,
+                      color: Color.fromRGBO(152, 147, 147, 1),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                        child: TextField(
+                      controller: srearchC,
+                      onChanged: (val) {
+                        searchQuery.value = val.trim();
+                        print(val.trim());
+                      },
+                      decoration: InputDecoration(border: InputBorder.none),
+                    ))
+                  ],
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 1,
+                      color: Color.fromRGBO(112, 112, 112, 1),
+                    ),
+                    gradient: LinearGradient(
+                        colors: [
+                          Color.fromRGBO(112, 54, 234, 1),
+                          Color.fromRGBO(123, 78, 216, 1),
+                        ],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter)),
+                padding: const EdgeInsets.all(8),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 4,
+                      child: Container(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Text(
+                          "Driver",
+                          style: adminAppTextStyle1,
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        child: Text(
+                          "T",
+                          style: adminAppTextStyle1,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        child: Text(
+                          "S",
+                          style: adminAppTextStyle1,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        child: Text(
+                          "R",
+                          style: adminAppTextStyle1,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        child: Text(
+                          "O",
+                          style: adminAppTextStyle1,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Container(),
+                    )
+                  ],
+                ),
+              ),
+              Container(
+                child: Expanded(
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: ListView.builder(
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (context, index) {
+                              return Obx(() => snapshot.data![index]
+                                          ["displayName"]
+                                      .toString()
+                                      .toLowerCase()
+                                      .contains(searchQuery.toLowerCase())
+                                  ? MezAdminOrdersComponents.buildNotificationTable(
+                                      index,
+                                      "${snapshot.data![index]["photo"]}",
+                                      "${snapshot.data![index]["displayName"]}",
+                                      "${snapshot.data![index]["totalOrders"]}",
+                                      "${snapshot.data![index]["sent"]}",
+                                      "${snapshot.data![index]["received"]}",
+                                      "${snapshot.data![index]["read"]}")
+                                  : Container());
+                            }),
+                      )
+                    ],
+                  ),
+                ),
+              )
+            ];
+          } else if (snapshot.hasError) {
+            children = <Widget>[
+              Expanded(
+                  child: Container(
+                width: Get.width,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Icon(
+                      Icons.error_outline,
+                      color: Colors.red,
+                      size: 60,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 16),
+                      child: Text('Error: ${snapshot.error}'),
+                    )
+                  ],
+                ),
+              )),
+            ];
+          } else {
+            children = <Widget>[
+              Expanded(
+                child: Container(
+                  width: Get.width,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      SizedBox(
+                        child: CircularProgressIndicator(),
+                        width: 60,
+                        height: 60,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 16),
+                        child: Text('Awaiting result...'),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ];
+          }
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: children,
+            ),
+          );
+        });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Get.put<NotificationsController>(NotificationsController());
+    return Scaffold(
+        appBar: MezcalmosSharedWidgets.mezCalmosAdminAppBar(context),
+        body: GetX<NotificationsController>(
+            init: NotificationsController(),
+            builder: (controller) {
+              return Container(child: getNotificationCountOnDayByDrivers());
+            }));
+  }
+}

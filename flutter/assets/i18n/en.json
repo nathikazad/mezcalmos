@@ -221,5 +221,17 @@
             "phone": "Enter Phone Number",
             "phoneNumber": "+52123456.."
         }
+    },
+    "admin": {
+        "orders": {
+            "cumulative": "Cumulative",
+            "totalOrders": "Total Orders",
+            "finished": "Finished",
+            "cancelled": "Cancelled",
+            "expired": "Expired",
+            "inProcess": "In Process",
+            "isLooking": "Is Looking",
+            "orders": "Orders"
+        }
     }
 }

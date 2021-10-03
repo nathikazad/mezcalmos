@@ -1,0 +1,28 @@
+query getDriversByDay($start_date_input: timestamptz!, $end_date_input: timestamptz!) {
+  drivers {
+    userInfo {
+      displayName
+      uid
+    }
+    sent: notifications_aggregate(where: {sentTime: {_gte: $start_date_input, _lte: $end_date_input}}) {
+      aggregate {
+        count
+      }
+    }
+    received: notifications_aggregate(where: {receivedTime: {_gte: $start_date_input, _lte: $end_date_input}}) {
+      aggregate {
+        count
+      }
+    }
+    read: notifications_aggregate(where: {readTime: {_gte: $start_date_input, _lte: $end_date_input}}) {
+      aggregate {
+        count
+      }
+    }
+    totalOrders: orders_aggregate(where: {orderTime: {_gte: $start_date_input, _lte: $end_date_input}}) {
+      aggregate {
+        count
+      }
+    }
+  }
+}

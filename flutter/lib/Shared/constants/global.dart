@@ -1,5 +1,7 @@
 // ----------------- CONNECTIVITY STRINGS ----------------- //
 // PLEASE DO NOT TOUCH ANYTHING IN CONNECTIVITY STRINGS , UNLESS YOU INFORM OTHERS.
+import 'package:flutter/material.dart';
+
 const String db = "mezcalmos-31f1c-default-rtdb";
 const String stagingDb =
     "https://mezcalmos-staging-default-rtdb.firebaseio.com";

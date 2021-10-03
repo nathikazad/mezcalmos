@@ -84,8 +84,8 @@
         "cancelOrder": {
             "question": "Por qué quieres cancelar el viaje?",
             "cancelRide": "Cancelar viaje",
-            "confirmation_header" : "Por favor confirmar",
-            "confirmation_text" : "¿Estás seguro de que deseas cancelar el viaje actual?",
+            "confirmation_header": "Por favor confirmar",
+            "confirmation_text": "¿Estás seguro de que deseas cancelar el viaje actual?",
             "backToIncoming": "Volver a entrante",
             "noShow": "No vino",
             "otherRide": "Otro viaje",
@@ -116,11 +116,10 @@
             "yes": "SI"
         },
         "permissions": {
-            "locationIsOff" : "Servicio de ubicación desactivado",
+            "locationIsOff": "Servicio de ubicación desactivado",
             "askForNotif": "La aplicación usa tu ubicación para conectarte con los mejores viajes y compartir tu ubicación con los clientes, incluso cuando la aplicación está en segundo plano",
             "permissionBtn": "ACTIVAR AHORA",
-            "locationPermissionDenied" : "Ops, lamentablemente, sin permisos de ubicación, ¡no puede usar nuestra aplicación!"
-
+            "locationPermissionDenied": "Ops, lamentablemente, sin permisos de ubicación, ¡no puede usar nuestra aplicación!"
         }
     },
     "shared": {
@@ -137,15 +136,15 @@
             "OtpConfirmation": "Confirmación del código OTP",
             "enterOtpCode": "Ingrese el código OTP enviado a",
             "resend": "Reenviar",
-            "resendAfter":"Reenviar después",
-            "seconds":"segundos",
-            "welcomeTitle":"Bienvenido de nuevo: D",
-            "hello":"Hola",
-            "welcomeDesc2":"Nos alegra que hayas vuelto!",
+            "resendAfter": "Reenviar después",
+            "seconds": "segundos",
+            "welcomeTitle": "Bienvenido de nuevo: D",
+            "hello": "Hola",
+            "welcomeDesc2": "Nos alegra que hayas vuelto!",
             "confirm": "Confirmar",
             "otpCode": "OTP código",
             "enterPhoneNumber": "Ingrese el número teléfono para recibir el código OTP",
-            "otpSubtitleNumber":"Ingresa número telefónico",
+            "otpSubtitleNumber": "Ingresa número telefónico",
             "submit": "ENVIAR",
             "twilioNote": "Al continuar, recibirá un código de verificación a su número de teléfono por SMS. Se pueden aplicar tarifas por mensajes y datos."
         },
@@ -153,9 +152,8 @@
             "title": "Mensajes",
             "available": "Disponible",
             "orderLink": "Página de pedido",
-            "newMessage" : "Nuevo mensaje de",
-            "writeMsgPlaceholder" : "Escribe tu mensaje aqui ..."
-
+            "newMessage": "Nuevo mensaje de",
+            "writeMsgPlaceholder": "Escribe tu mensaje aqui ..."
         },
         "notification": {
             "title": "Notificaciones",
@@ -186,7 +184,7 @@
             "logout": "Cerrar sesión",
             "login": "Iniciar sesión",
             "contactAdmin": "Contactar admin",
-            "legal" : "Política de privacidad"
+            "legal": "Política de privacidad"
         },
         "header": {
             "alert": "El estado del pedido cambió"
@@ -218,6 +216,18 @@
             "name": "Ingresa Nombre",
             "search": "Busca",
             "writeHere": "Escriba aquí"
+        }
+    },
+    "admin": {
+        "orders": {
+            "cumulative": "Cumulativo",
+            "totalOrders": "Órdenes Totales",
+            "finished": "Terminado",
+            "cancelled": "Cancelado",
+            "expired": "Caducado",
+            "inProcess": "En Proceso",
+            "isLooking": "Está Mirando",
+            "orders":"Pedidos"
         }
     }
 }

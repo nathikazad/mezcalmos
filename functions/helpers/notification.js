@@ -62,7 +62,11 @@ async function notifyDriversNewRequest(firebase) {
           let payload = {
             notification: {
               title: "Nueva Pedido",
+<<<<<<< HEAD
               body: `Hay una nueva orden de taxi, vea si puede aceptarla.`,
+=======
+              body: `Hay una nueva orden de taxi de ${address}, vea si puede aceptarla.`,
+>>>>>>> postgres
               tag: "newOrder"
             }
           };
