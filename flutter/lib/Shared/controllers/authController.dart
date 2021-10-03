@@ -48,6 +48,7 @@ class AuthController extends GetxController with MezDisposable {
   User? get user => _user.value;
   Rxn<fireAuth.User> _fireAuthUser = Rxn<fireAuth.User>();
   fireAuth.FirebaseAuth get auth => _auth;
+  fireAuth.User? get fireAuthUser => _fireAuthUser.value;
 
   // RxInt _isWaitingRresponse = 0.obs;
 

@@ -5,7 +5,6 @@ import 'package:mezcalmos/Shared/pages/MessagingScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/OtpConfirmationScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/PhoneNumberScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
-import 'package:mezcalmos/Shared/pages/AuthScreens/SignUpScreen.dart';
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
 
 // Routes Keys.
@@ -30,7 +29,6 @@ class SharedRouter {
     GetPage(name: kSignInRoute, page: () => SignIn()),
     GetPage(name: kOtpRoute, page: () => PhoneNumberScreen()),
     GetPage(name: kOtpConfirmRoute, page: () => OtpConfirmationScreen()),
-    GetPage(name: kSignUpRoute, page: () => SignUp()),
     GetPage(
       name: kMessagesRoute,
       page: () => MessagingScreen(),

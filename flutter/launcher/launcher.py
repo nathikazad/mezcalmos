@@ -80,7 +80,7 @@ class Launcher:
     def __init__(self , user_args , conf) -> None:
         self.user_args = user_args
         self.conf = conf
-        self.last_app = Config.chSum(user_args['app'])
+        # self.last_app = Config.chSum(user_args['app'])
         self.__launch__()
         try:
             PRINTLN(f"\n[~] Launching with : {user_args} \n\n")
@@ -184,8 +184,8 @@ class Launcher:
 
     def __launch__(self):
         self.__f_checker__()
-        if self.last_app != None:
-            self.__patcher__()
+        
+        self.__patcher__()
         self.__patch_gs__()
         if 'build' in self.user_args.keys():
             PRINTLN(f"[+] Building the app::{self.user_args['build']} for you ...")

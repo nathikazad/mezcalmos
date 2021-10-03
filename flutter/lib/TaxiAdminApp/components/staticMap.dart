@@ -7,7 +7,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:get/get.dart';
 import 'dart:ui' as ui;
 import 'package:http/http.dart' as http;
-import 'package:mezcalmos/Shared/controllers/mapController.dart';
+// import 'package:mezcalmos/Shared/controllers/mapController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiAdminApp/pages/Orders/OrdersCumOnMonthPage.dart';
 
@@ -31,9 +31,9 @@ class _StaticMapState extends State<StaticMap> {
 
   GoogleMapController? _googleMapController;
 
-  CurrentOrderMapController? _currentOrderGoogleMapController;
+  // CurrentOrderMapController? _currentOrderGoogleMapController;
 
-  IncomingOrderMapController? _IncomingOrderMapController;
+  // IncomingOrderMapController? _IncomingOrderMapController;
 
   Set<Marker> _markers = <Marker>{};
 
@@ -55,13 +55,13 @@ class _StaticMapState extends State<StaticMap> {
     super.initState();
   }
 
-  dynamic getCorespondingController() {
-    dynamic res = realtimeTracking == null
-        ? _currentOrderGoogleMapController
-        : _IncomingOrderMapController;
+  // dynamic getCorespondingController() {
+  //   dynamic res = realtimeTracking == null
+  //       ? _currentOrderGoogleMapController
+  //       : _IncomingOrderMapController;
 
-    return res;
-  }
+  //   return res;
+  // }
 
   @override
   Widget build(BuildContext context) {
