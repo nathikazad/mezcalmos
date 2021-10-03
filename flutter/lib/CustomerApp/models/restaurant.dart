@@ -13,7 +13,7 @@ class RestaurantState {
 
 class ChooseManyOption {
   String? id;
-  bool selectedByDefault = true;
+  bool selectedByDefault = false;
   num cost = 0;
   String? name;
 
@@ -21,6 +21,7 @@ class ChooseManyOption {
     this.id = id;
     this.name = data["name"][language];
     this.cost = data["cost"];
+    this.selectedByDefault = data["default"] ?? false;
   }
   Map<String, dynamic> toJson() => {"id": id, "cost": cost, "name": name};
 }
@@ -91,7 +92,8 @@ class Item {
   List<ChooseOneOption> chooseOneOptions = [];
   List<ChooseManyOption> chooseManyOptions = [];
   // Sides sides = new Sides();
-  Item(this.id, this.available, this.description, this.image, this.name);
+  Item(this.id, this.available, this.description, this.image, this.name,
+      this.cost);
 
   factory Item.itemFromData(String itemId, dynamic itemData,
       {String? language}) {
@@ -103,7 +105,8 @@ class Item {
         itemData["available"],
         itemData["description"][language],
         itemData["image"],
-        itemData["name"][language]);
+        itemData["name"][language],
+        itemData["cost"]);
     if (itemData["options"]["chooseOne"] != null) {
       itemData["options"]["chooseOne"]
           .forEach((dynamic optionId, dynamic optionData) {

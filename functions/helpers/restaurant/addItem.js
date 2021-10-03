@@ -16,6 +16,7 @@ module.exports = functions.https.onCall(async (data, context) => {
 });
 
 async function addItem(uid, data) {
+  console.log(data.options.chooseOne);
   if (!data.itemId || !data.restaurantId) {
     return {
       status: "Error",
@@ -85,6 +86,7 @@ async function addItem(uid, data) {
     }
   }
 
+
   for (optionId in item.options.chooseOne) {
     let option = item.options.chooseOne[optionId]
     let selectedOption = data.options.chooseOne[optionId]
@@ -105,7 +107,7 @@ async function addItem(uid, data) {
       }
     }
     newItem.options.chooseOne[optionId] = {
-      optionName: option.optionName,
+      name: option.name,
       selectedOption: option.options[selectedOption],
       selectedOptionId: selectedOption,
       cost: option.options[selectedOption].cost
@@ -123,13 +125,14 @@ async function addItem(uid, data) {
     }
 
     newItem.options.chooseMany[optionId] = {
-      optionName: option.name,
+      name: option.name,
       cost: option.cost
     }
     if (option.cost) {
       newItem.costPerOne += parseFloat(option.cost)
     }
   }
+
 
   // for (optionId in item.options.sides) {
   //   let option = item.options.sides[optionId]
@@ -150,7 +153,9 @@ async function addItem(uid, data) {
   let itemRef = await firebase.database().ref(`/users/${uid}/cart/items`).push(null)
 
   cart.total = parseFloat(cart.total) + parseFloat(newItem.totalCost)
+
   cart.items[itemRef.key] = newItem
+  console.log(cart.items[itemRef.key].options.chooseOne.meat);
   // const util = require('util')
   // console.log(util.inspect(newItem, false, null, true /* enable colors */))
   // // console.log(newItem.)
