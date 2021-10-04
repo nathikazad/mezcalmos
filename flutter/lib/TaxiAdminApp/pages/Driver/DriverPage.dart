@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiAdminApp/Models/NbNotifs.dart';
@@ -39,11 +40,18 @@ class DriverPage extends GetView<DriverStatsController> {
                   Container(
                     height: Get.width * 0.3,
                     width: Get.width * 0.3,
+                    color: Colors.white,
                     child: ClipOval(
-                      child: Image.network(
-                        "${data[0]["photo"]}",
-                        fit: BoxFit.cover,
-                      ),
+                      child: (data[0]["photo"] != "")
+                          ? Image.network(
+                              "${data[0]["photo"]}",
+                              fit: BoxFit.cover,
+                            )
+                          : Image.asset(
+                              aLogoPath,
+                              height: 50,
+                              width: 50,
+                            ),
                     ),
                   ),
                   SizedBox(
@@ -70,7 +78,9 @@ class DriverPage extends GetView<DriverStatsController> {
                         height: 5,
                       ),
                       Text(
-                        "${data[0]["taxiNumber"]}",
+                        (data[0]["taxiNumber"] != null)
+                            ? "${data[0]["taxiNumber"]}"
+                            : "",
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w500),
                       ),
@@ -99,7 +109,9 @@ class DriverPage extends GetView<DriverStatsController> {
               title_0: lng.strings["admin"]["orders"]["orderId"],
               subTitle_0: "$idOrder",
               title_0_1: lng.strings["admin"]["appVersion"],
-              subTitle_0_1: "${data[1]["appVersionNumber"]}",
+              subTitle_0_1: (data[1]["appVersionNumber"] == null)
+                  ? "Unknown"
+                  : "${data[1]["appVersionNumber"]}",
               title_1_0: lng.strings["admin"]["orders"]["totalOrders"],
               subTitle_1_0: "${data[2]["totalOrders"]}",
               title_1_1: lng.strings["admin"]["orders"]["droppedOff"],
@@ -211,24 +223,24 @@ class DriverPage extends GetView<DriverStatsController> {
                       Expanded(
                         child: Container(
                           width: Get.width * 0.95,
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Container(
-                              width: 500,
-                              child: new charts.LineChart(
-                                  _createOrdersData(data[3]),
-                                  animate: true,
-                                  customSeriesRenderers: [
-                                    new charts.LineRendererConfig(
-                                        // ID used to link series to this renderer.
-                                        customRendererId: 'customArea',
-                                        includeArea: true,
-                                        stacked: true),
-                                  ]),
-                            ),
+                          // child: SingleChildScrollView(
+                          //   scrollDirection: Axis.horizontal,
+                          child: Container(
+                            width: 500,
+                            child: new charts.LineChart(
+                                _createOrdersData(data[3]),
+                                animate: true,
+                                customSeriesRenderers: [
+                                  new charts.LineRendererConfig(
+                                      // ID used to link series to this renderer.
+                                      customRendererId: 'customArea',
+                                      includeArea: true,
+                                      stacked: true),
+                                ]),
                           ),
                         ),
                       ),
+                      // ),
                       SizedBox(
                         height: 10,
                       )
@@ -321,24 +333,24 @@ class DriverPage extends GetView<DriverStatsController> {
                       Expanded(
                         child: Container(
                           width: Get.width * 0.9,
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Container(
-                              width: 500,
-                              child: new charts.LineChart(
-                                  _createNotifsData(data[4]),
-                                  animate: true,
-                                  customSeriesRenderers: [
-                                    new charts.LineRendererConfig(
-                                        // ID used to link series to this renderer.
-                                        customRendererId: 'customArea',
-                                        includeArea: true,
-                                        stacked: true),
-                                  ]),
-                            ),
+                          // child: SingleChildScrollView(
+                          //   scrollDirection: Axis.horizontal,
+                          child: Container(
+                            // width: 500,
+                            child: new charts.LineChart(
+                                _createNotifsData(data[4]),
+                                animate: true,
+                                customSeriesRenderers: [
+                                  new charts.LineRendererConfig(
+                                      // ID used to link series to this renderer.
+                                      customRendererId: 'customArea',
+                                      includeArea: true,
+                                      stacked: true),
+                                ]),
                           ),
                         ),
                       ),
+                      // ),
                       SizedBox(
                         height: 10,
                       )
@@ -435,29 +447,28 @@ List<charts.Series<NbOrders, int>> _createOrdersData(List<dynamic> data) {
   final acceptedOrders = <NbOrders>[];
   final droppedOffOrders = <NbOrders>[];
   data.forEach((value) {
-    //print("the key is and its values ${value["index"]}");
-    acceptedOrders.add(NbOrders(
-        DateTime.parse("${value["date"]}").day.toString(),
-        int.parse("${value["accepted_orders"].toString()}")));
-    droppedOffOrders.add(NbOrders(
-        DateTime.parse("${value["date"]}").day.toString(),
-        int.parse("${value["droppedOff_orders"].toString()}")));
+    if (value["index"].toString() != "0") {
+      acceptedOrders.add(NbOrders("${value["index"]}",
+          int.parse("${value["accepted_orders"].toString()}")));
+      droppedOffOrders.add(NbOrders("${value["index"]}",
+          int.parse("${value["droppedOff_orders"].toString()}")));
+    }
   });
 
   return [
     new charts.Series<NbOrders, int>(
-      id: 'first',
+      id: 'acceptedOrders',
       colorFn: (_, __) => charts.Color.fromHex(code: '#77727A'),
-      domainFn: (NbOrders sales, _) => int.parse(sales.day.toString()),
-      measureFn: (NbOrders sales, _) => sales.nbOrders,
+      domainFn: (NbOrders orders, _) => int.parse(orders.day.toString()),
+      measureFn: (NbOrders orders, _) => orders.nbOrders,
       data: acceptedOrders,
     ),
     new charts.Series<NbOrders, int>(
-      id: 'second',
+      id: 'droppedOffOrders',
       //#18B037
       colorFn: (_, __) => charts.Color.fromHex(code: '#18B037'),
-      domainFn: (NbOrders sales, _) => int.parse(sales.day.toString()),
-      measureFn: (NbOrders sales, _) => sales.nbOrders,
+      domainFn: (NbOrders orders, _) => int.parse(orders.day.toString()),
+      measureFn: (NbOrders orders, _) => orders.nbOrders,
       data: droppedOffOrders,
     ),
   ];
@@ -467,13 +478,13 @@ List<charts.Series<NbNotifs, int>> _createNotifsData(List<dynamic> data) {
   final readNotifications = <NbNotifs>[];
   final sentNotifications = <NbNotifs>[];
   data.forEach((value) {
-    //print("the key is and its values ${value["index"]}");
-    readNotifications.add(NbNotifs(
-        DateTime.parse("${value["date"]}").day.toString(),
-        int.parse("${value["read_notifications"].toString()}")));
-    sentNotifications.add(NbNotifs(
-        DateTime.parse("${value["date"]}").day.toString(),
-        int.parse("${value["sent_notifications"].toString()}")));
+    if (value["index"].toString() != "0") {
+      print("the key is and its values ${value}");
+      readNotifications.add(NbNotifs("${value["index"]}",
+          int.parse("${value["read_notifications"].toString()}")));
+      sentNotifications.add(NbNotifs("${value["index"]}",
+          int.parse("${value["sent_notifications"].toString()}")));
+    }
   });
 
   return [

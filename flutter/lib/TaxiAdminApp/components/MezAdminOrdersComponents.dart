@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/utilities/SharedEnums.dart';
 import 'package:mezcalmos/TaxiAdminApp/pages/Driver/DriverPage.dart';
 import 'package:mezcalmos/TaxiAdminApp/pages/Orders/OrderViewPage.dart';
@@ -117,6 +118,8 @@ class MezAdminOrdersComponents {
       String s,
       String r,
       String o) {
+    print(driverImg.toString());
+    print(custImg.toString());
     var mytextStyle = TextStyle(
         color: Colors.white.withOpacity(0.9), fontWeight: FontWeight.w600);
     LinearGradient? myColors = null;
@@ -282,100 +285,115 @@ class MezAdminOrdersComponents {
             end: Alignment(0.9385117292404175, 0.5),
             colors: [const Color(0xff7579d0), const Color(0xff444acd)]);
 
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      decoration: BoxDecoration(gradient: myGradient),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 4,
-            child: Container(
-              child: Row(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(right: 8),
-                    height: 35,
-                    width: 35,
-                    child: ClipOval(
-                      child: Image.network(
-                        "${img}",
-                        fit: BoxFit.cover,
+    return InkWell(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        decoration: BoxDecoration(gradient: myGradient),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 4,
+              child: Container(
+                child: Row(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(right: 8),
+                      height: 35,
+                      width: 35,
+                      child: ClipOval(
+                          child: (img != "null")
+                              ? Image.network(
+                                  "${img}",
+                                  fit: BoxFit.cover,
+                                )
+                              : Container(
+                                  padding: const EdgeInsets.all(8),
+                                  color: Colors.white,
+                                  child: Image.asset(
+                                    aLogoPath,
+                                    height: 25,
+                                    width: 25,
+                                  ),
+                                )),
+                    ),
+                    Expanded(
+                      child: Text(
+                        "${name}",
+                        style: TextStyle(color: Colors.white),
+                        overflow: TextOverflow.ellipsis,
                       ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      "${name}",
-                      style: TextStyle(color: Colors.white),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Container(
-              child: Text(
-                "${t}",
-                style: TextStyle(color: Colors.white),
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Container(
-              child: Text(
-                "${s}",
-                style: TextStyle(color: Colors.white),
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Container(
-              child: Text(
-                "${r}",
-                style: TextStyle(color: Colors.white),
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Container(
-              child: Text(
-                "${o}",
-                style: TextStyle(color: Colors.white),
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Container(
-              alignment: Alignment.center,
-              child: IconButton(
-                icon: Icon(
-                  Icons.arrow_forward_ios,
-                  color: Colors.white,
-                  size: 16,
+                    )
+                  ],
                 ),
-                onPressed: () {
-                  Get.to(() => (DriverPage(uid)));
-                },
               ),
             ),
-          )
-        ],
+            Expanded(
+              flex: 1,
+              child: Container(
+                child: Text(
+                  "${t}",
+                  style: TextStyle(color: Colors.white),
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Container(
+                child: Text(
+                  "${s}",
+                  style: TextStyle(color: Colors.white),
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Container(
+                child: Text(
+                  "${r}",
+                  style: TextStyle(color: Colors.white),
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Container(
+                child: Text(
+                  "${o}",
+                  style: TextStyle(color: Colors.white),
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Container(
+                alignment: Alignment.center,
+                child: IconButton(
+                  icon: Icon(
+                    Icons.arrow_forward_ios,
+                    color: Colors.white,
+                    size: 16,
+                  ),
+                  onPressed: () {
+                    Get.to(() => (DriverPage(uid)));
+                  },
+                ),
+              ),
+            )
+          ],
+        ),
       ),
+      onTap: () {
+        print("the user  uid is $uid ${'=' * 8}");
+        Get.to(() => (DriverPage(uid)));
+      },
     );
   }
 
