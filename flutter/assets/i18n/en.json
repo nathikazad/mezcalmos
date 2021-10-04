@@ -85,7 +85,7 @@
         "cancelOrder": {
             "question": "Why do you want to cancel the ride?",
             "confirmation_header": "Please confirm",
-            "confirmation_text": "Are you sure you want to cancel the current ride ?",
+            "confirmation_text": "Are you sure you want to cancel the current ride?",
             "cancelRide": "Cancel ride",
             "backToIncoming": "Back to incoming",
             "noShow": "No show",
@@ -120,7 +120,7 @@
             "locationIsOff": "Location Service Turned Off",
             "askForNotif": "The app uses your location to match you with the best rides and share your location with customers, even when the app is in background.",
             "permissionBtn": "GIVE PERMISSION",
-            "locationPermissionDenied": "Ops, Sadly without location permissions you can not use our application!"
+            "locationPermissionDenied": "Oops, Sadly without location permissions you can not use our application!"
         }
     },
     "shared": {

@@ -119,7 +119,7 @@
             "locationIsOff": "Servicio de ubicación desactivado",
             "askForNotif": "La aplicación usa tu ubicación para conectarte con los mejores viajes y compartir tu ubicación con los clientes, incluso cuando la aplicación está en segundo plano",
             "permissionBtn": "ACTIVAR AHORA",
-            "locationPermissionDenied": "Ops, lamentablemente, sin permisos de ubicación, ¡no puede usar nuestra aplicación!"
+            "locationPermissionDenied": "Oops, lamentablemente, sin permisos de ubicación, ¡no puede usar nuestra aplicación!"
         }
     },
     "shared": {
