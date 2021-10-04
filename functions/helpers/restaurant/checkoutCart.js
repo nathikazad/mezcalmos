@@ -25,6 +25,16 @@ async function checkoutCart(uid, data) {
       errorCode: "invalidParams"
     }
   }
+  let customerCurrentOrder = (await firebase.database().ref(`/users/${uid}/state/currentOrder`).once('value')).val();
+
+  if (customerCurrentOrder) {
+    return {
+      status: "Error",
+      errorMessage: "Customer is already in another order",
+      errorCode: "inAnotherOrder"
+    }
+  }
+
   let cart = (await firebase.database().ref(`/users/${uid}/cart`).once('value')).val();
   if (cart == null) {
     return {
@@ -33,7 +43,6 @@ async function checkoutCart(uid, data) {
       errorCode: "cartDontExist"
     }
   }
-  console.log(cart);
 
   let restaurant = (await firebase.database().ref(`/restaurants/info/${cart.serviceProviderId}`).once('value')).val();
   if (restaurant == null) {

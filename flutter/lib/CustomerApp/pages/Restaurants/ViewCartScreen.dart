@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/cart.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen.dart';
 import 'dart:async';
 
 class ViewCartScreen extends GetView<RestaurantCartController> {
@@ -33,8 +33,10 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
             }),
             OutlinedButton(
                 child: Text("Checkout"),
-                onPressed: () {
-                  controller.checkout();
+                onPressed: () async {
+                  await controller.checkout();
+                  // check status and error message
+                  Get.offAll(ViewOrderScreen());
                 })
           ],
         ));

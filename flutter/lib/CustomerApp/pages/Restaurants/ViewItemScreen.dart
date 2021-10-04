@@ -155,6 +155,7 @@ class ViewItemScreen extends GetView<RestaurantsInfoController> {
         child: Text("Add item to cart"),
         onPressed: () {
           restaurantCartController?.addItem(cartItem.value!, this.restaurantId);
+          Get.off(ViewCartScreen());
         });
   }
 }

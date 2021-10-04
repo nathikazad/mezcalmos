@@ -90,7 +90,7 @@ class RestaurantCartController extends GetxController {
     cart.value?.incrementItem(itemId, quantity);
   }
 
-  void checkout() async {
+  Future<void> checkout() async {
     HttpsCallable checkoutRestaurantCart =
         FirebaseFunctions.instance.httpsCallable('checkoutRestaurantCart');
     try {
@@ -98,6 +98,7 @@ class RestaurantCartController extends GetxController {
           .call({"from": "home", "paymentType": "cash"});
       print(response.data);
       // handle restaurantClosed error
+      // handler inAnotherOrder error
     } catch (e) {}
   }
 }
