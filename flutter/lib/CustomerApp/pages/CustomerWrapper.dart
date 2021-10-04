@@ -21,7 +21,7 @@ class CustomerWrapper extends GetWidget<AuthController> {
         backgroundColor: Colors.white,
         appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
             "menu", _sideMenuDrawerController.openMenu),
-        body: ListRestaurantsScreen() // Center(child: Text("CustomerApp")),
+        body: ListRestaurantsScreen()
         );
   }
 }

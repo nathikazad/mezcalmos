@@ -54,7 +54,7 @@
         },
         "cart": {
           ".read": "true",
-          ".write": "false"
+          ".write": "true"
         }
       }
     },

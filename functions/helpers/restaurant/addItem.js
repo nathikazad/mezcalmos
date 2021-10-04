@@ -74,6 +74,7 @@ async function addItem(uid, data) {
   }
 
   let newItem = {
+    id: data.itemId,
     name: item.name,
     image: item.image,
     costPerOne: parseFloat(item.cost),

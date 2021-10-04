@@ -231,7 +231,7 @@ exports.sendTestNotification = functions.https.onCall(async (data, context) => {
   return response
 });
 
-exports.addRestaurantItemToCart = require("./helpers/restaurant/addItem");
-exports.changeItemCountInCart = require("./helpers/cart/changeItemCount");
-exports.clearCart = require("./helpers/cart/clearCart");
-exports.checkoutCart = require("./helpers/restaurant/checkoutCart");
+// exports.addRestaurantItemToCart = require("./helpers/restaurant/addItem");
+// exports.changeItemCountInCart = require("./helpers/cart/changeItemCount");
+// exports.clearCart = require("./helpers/cart/clearCart");
+exports.checkoutRestaurantCart = require("./helpers/restaurant/checkoutCart");

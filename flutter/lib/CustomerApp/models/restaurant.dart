@@ -42,6 +42,13 @@ class ChooseOneOption {
     });
   }
 
+  ChooseOneOptionListItem? findChooseOneOptionListItem(String id) {
+    if (this.chooseOneOptionListItems.length == 0) return null;
+    return this
+        .chooseOneOptionListItems
+        .firstWhere((element) => element.id == id);
+  }
+
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
@@ -139,12 +146,23 @@ class Item {
       "chooseManyOptions": jsonEncode(chooseManyOptions)
     };
   }
+
+  ChooseOneOption? findChooseOneOption(String id) {
+    if (this.chooseOneOptions.length == 0) return null;
+    return this.chooseOneOptions.firstWhere((element) => element.id == id);
+  }
+
+  ChooseManyOption? findChooseManyOption(String id) {
+    if (this.chooseOneOptions.length == 0) return null;
+    return this.chooseManyOptions.firstWhere((element) => element.id == id);
+  }
 }
 
 class Restaurant {
   String? id;
   String? description;
   String? name;
+  String? photo;
   RestaurantState? restaurantState;
   List<Item> items = [];
 
@@ -157,11 +175,16 @@ class Restaurant {
     }
     this.id = id;
     this.name = restaurantData["details"]["name"];
+    this.photo = restaurantData["details"]["photo"];
     this.description = restaurantData["details"]["description"][language];
     restaurantData["menu"].forEach((dynamic itemId, dynamic itemData) {
       this.items.add(Item.itemFromData(itemId, itemData, language: language));
       // print(Item.itemFromData(itemId, itemData, language).toJson());
     });
+  }
+
+  Item findItemById(String id) {
+    return this.items.firstWhere((item) => item.id == id);
   }
 
   Map<String, dynamic> toJson() {

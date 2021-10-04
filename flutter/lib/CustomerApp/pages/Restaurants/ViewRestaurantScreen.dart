@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
 import 'package:mezcalmos/CustomerApp/models/restaurant.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen.dart';
 import 'dart:async';
 
@@ -22,6 +23,10 @@ class ViewRestaurantScreen extends GetView<RestaurantsInfoController> {
     return Scaffold(
         appBar: AppBar(
           title: Obx(() => Text("${restaurant.value?.name ?? 'Loading'}")),
+          actions: [
+            TextButton(
+                onPressed: () => Get.to(ViewCartScreen()), child: Text("Cart"))
+          ],
         ),
         body: Obx(() {
           List<Item> items = restaurant.value?.items ?? [];
@@ -29,7 +34,8 @@ class ViewRestaurantScreen extends GetView<RestaurantsInfoController> {
               children: items
                   .map((item) => TextButton(
                       onPressed: () =>
-                          Get.to(ViewItemScreen(restaurantId, item.id!)),
+                          Get.to(
+                          ViewItemScreen.forNewItem(restaurantId, item.id!)),
                       child: Text(item.name!)))
                   .toList());
         }));

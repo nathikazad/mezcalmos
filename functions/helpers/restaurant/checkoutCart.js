@@ -22,7 +22,7 @@ async function checkoutCart(uid, data) {
     return {
       status: "Error",
       errorMessage: `No from address or payment type`,
-      errorCode: 1001
+      errorCode: "invalidParams"
     }
   }
   let cart = (await firebase.database().ref(`/users/${uid}/cart`).once('value')).val();
@@ -30,16 +30,17 @@ async function checkoutCart(uid, data) {
     return {
       status: "Error",
       errorMessage: `Cart does not exist`,
-      errorCode: 1002
+      errorCode: "cartDontExist"
     }
   }
+  console.log(cart);
 
-  let restaurant = (await firebase.database().ref(`/restaurants/${cart.serviceProviderId}`).once('value')).val();
+  let restaurant = (await firebase.database().ref(`/restaurants/info/${cart.serviceProviderId}`).once('value')).val();
   if (restaurant == null) {
     return {
       status: "Error",
       errorMessage: `Invalid restaurant id`,
-      errorCode: 1003
+      errorCode: "invalidRestaurantId"
     }
   }
 
@@ -47,7 +48,7 @@ async function checkoutCart(uid, data) {
     return {
       status: "Error",
       errorMessage: `Restaurant is closed`,
-      errorCode: 1004
+      errorCode: "restaurantClosed"
     }
   }
 
@@ -69,6 +70,7 @@ async function checkoutCart(uid, data) {
   console.log(payload)
   let orderRef = await firebase.database().ref(`/orders/restaurant`).push(payload);
   firebase.database().ref(`/users/${uid}/orders/${orderRef.key}`).set(payload);
+  firebase.database().ref(`/restaurants/orders/${cart.serviceProviderId}/${orderRef.key}`).set(payload);
   firebase.database().ref(`/openOrders/restaurant/${orderRef.key}`).set(payload);
   firebase.database().ref(`/users/${uid}/state/currentOrder`).set(orderRef.key);
   let chat = {
@@ -81,6 +83,12 @@ async function checkoutCart(uid, data) {
     image: user.photo,
     particpantType: "customer",
     phoneNumber: (user.phoneNumber) ? user.phoneNumber : null
+  }
+  chat.participants[cart.serviceProviderId] = {
+    name: restaurant.details.name,
+    image: (restaurant.details.photo) ? restaurant.details.photo : null,
+    particpantType: "restaurant",
+    phoneNumber: (restaurant.details.phoneNumber) ? restaurant.details.phoneNumber : null
   }
   firebase.database().ref(`/chat/${orderRef.key}`).set(chat);
   await firebase.database().ref(`/users/${uid}/cart`).remove();

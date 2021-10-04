@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
 import 'package:mezcalmos/CustomerApp/models/restaurant.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen.dart';
 import 'package:mezcalmos/Shared/widgets/GetFutureData.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen.dart';
 import 'dart:async';
@@ -23,6 +24,10 @@ class ListRestaurantsScreen extends GetView<RestaurantsInfoController> {
     return Scaffold(
         appBar: AppBar(
           title: Text("Restaurant list"),
+          actions: [
+            TextButton(
+                onPressed: () => Get.to(ViewCartScreen()), child: Text("Cart"))
+          ],
         ),
         body: Obx(() => Column(
         children: restaurants
