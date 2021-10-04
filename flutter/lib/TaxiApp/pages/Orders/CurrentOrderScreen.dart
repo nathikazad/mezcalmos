@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Order.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/utilities/SharedEnums.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/components/CurrentOrderMapScreen/CPositionedBottomBar.dart';
@@ -37,9 +38,8 @@ class CurrentOrderScreen extends GetWidget<CurrentOrderController> {
   LatLng initialCameraPosition = LatLng(0, 0);
   List<CustomMarker> customMarkers = <CustomMarker>[];
   //==================================
-  // ------------
+
   Widget build(BuildContext context) {
-    // controller.fillMarkersCallback = fillMarkers;
     Get.put<CurrentOrderController>(CurrentOrderController());
 
     return Stack(

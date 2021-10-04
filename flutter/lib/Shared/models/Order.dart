@@ -1,11 +1,8 @@
 // BELONGS TO TAXI APP please move
 
 import 'package:firebase_database/firebase_database.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-
-// CurrentOrderEventType ENUM, used by CurrentOrderEvent.
-enum CurrentOrderEventTypes { OrderStatusChange }
+import 'package:mezcalmos/Shared/utilities/SharedEnums.dart';
 
 class Order {
   dynamic id;
