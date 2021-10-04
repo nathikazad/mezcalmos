@@ -33,7 +33,7 @@ class TaxiAuthController extends GetxController with MezDisposable {
       Get.put<DeviceNotificationsController>(DeviceNotificationsController());
 
   dynamic get currentOrderId => _model.value.currentOrder ?? null;
-  dynamic get authorizedTaxi => _model.value.isAuthorized ?? false;
+  dynamic get authorizedTaxi => _model.value.isAuthorized;
   bool get isLooking => _model.value.isLooking ?? false;
   // Widget get dynamicScreen => _dynamicScreen.value;
   LocationData get currentLocation => _currentLocation.value;
@@ -49,12 +49,6 @@ class TaxiAuthController extends GetxController with MezDisposable {
       - IncommingOrders
       - CurrentOrder
   */
-
-  // Widget _getScreen() => authorizedTaxi == true
-  //     ? (_model.value.currentOrder != null
-  //         ? CurrentOrderScreen()
-  //         : IncomingOrdersScreen())
-  //     : UnauthorizedScreen();
 
   @override
   void onInit() async {

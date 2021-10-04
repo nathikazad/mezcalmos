@@ -138,8 +138,7 @@ class MezcalmosSharedWidgets {
         ],
       );
 
-  static AppBar mezcalmosAppBar(
-      String btnType, Function onTapFunction,
+  static AppBar mezcalmosAppBar(String btnType, Function onTapFunction,
       {dynamic bgColor = Colors.white}) {
     Widget btn_icon;
 
@@ -275,78 +274,85 @@ class MezcalmosSharedWidgets {
               ['customerCancelled']);
 
   // THIS BELONGS TO TAXI
-  static Future<void> yesNoDefaultConfirmationDialog(
-          onYes, String text) async =>
-      await Get.defaultDialog(
-        backgroundColor: Colors.grey.shade100,
-        title: '',
-        content: Flex(
-          direction: Axis.vertical,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Flexible(
-                fit: FlexFit.loose,
-                child: Icon(
-                  MezcalmosIcons.times_circle,
-                  size: 40,
-                  color: Colors.black,
-                )),
-            Flexible(
-                fit: FlexFit.loose,
-                child: SizedBox(
-                  height: 20,
-                )),
-            Flexible(
-                fit: FlexFit.loose,
-                child: Text(
-                  text,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontFamily: 'psr', fontSize: 18),
-                )),
-            Flexible(
-                child: Column(
-              children: [
-                SizedBox(
-                  height: 20,
-                ),
-                TextButton(
-                    style: ButtonStyle(
-                        minimumSize: MaterialStateProperty.all<Size>(
-                            (Size(double.infinity, 50))),
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            (Colors.grey.shade300))),
-                    onPressed: onYes,
-                    child: Obx(() => Text(
-                        Get.find<LanguageController>().strings['taxi']
-                            ['taxiView']['yes'],
-                        style: TextStyle(
-                          fontFamily: 'psr',
-                          fontSize: 14,
-                          color: Colors.black,
-                        )))),
-                SizedBox(
-                  height: 5,
-                ),
-                TextButton(
-                    style: ButtonStyle(
-                        minimumSize: MaterialStateProperty.all<Size>(
-                            (Size(double.infinity, 50))),
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            (Colors.grey.shade300))),
-                    onPressed: () => Get.back(),
-                    child: Obx(() => Text(
-                        Get.find<LanguageController>().strings['taxi']
-                            ['taxiView']['no'],
-                        style: TextStyle(
-                          fontFamily: 'psr',
-                          fontSize: 14,
-                          color: Colors.black,
-                        ))))
-              ],
-            )),
-          ],
-        ),
-      );
+  static Future<bool> yesNoDefaultConfirmationDialog(onYes, String text) async {
+    bool res = true;
+
+    await Get.defaultDialog<bool>(
+      backgroundColor: Colors.grey.shade100,
+      title: '',
+      content: Flex(
+        direction: Axis.vertical,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Flexible(
+              fit: FlexFit.loose,
+              child: Icon(
+                MezcalmosIcons.times_circle,
+                size: 40,
+                color: Colors.black,
+              )),
+          Flexible(
+              fit: FlexFit.loose,
+              child: SizedBox(
+                height: 20,
+              )),
+          Flexible(
+              fit: FlexFit.loose,
+              child: Text(
+                text,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontFamily: 'psr', fontSize: 18),
+              )),
+          Flexible(
+              child: Column(
+            children: [
+              SizedBox(
+                height: 20,
+              ),
+              TextButton(
+                  style: ButtonStyle(
+                      minimumSize: MaterialStateProperty.all<Size>(
+                          (Size(double.infinity, 50))),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          (Colors.grey.shade300))),
+                  onPressed: onYes,
+                  child: Obx(() => Text(
+                      Get.find<LanguageController>().strings['taxi']['taxiView']
+                          ['yes'],
+                      style: TextStyle(
+                        fontFamily: 'psr',
+                        fontSize: 14,
+                        color: Colors.black,
+                      )))),
+              SizedBox(
+                height: 5,
+              ),
+              TextButton(
+                  style: ButtonStyle(
+                      minimumSize: MaterialStateProperty.all<Size>(
+                          (Size(double.infinity, 50))),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          (Colors.grey.shade300))),
+                  onPressed: () {
+                    res = false;
+                    Get.back();
+                  },
+                  child: Obx(() => Text(
+                      Get.find<LanguageController>().strings['taxi']['taxiView']
+                          ['no'],
+                      style: TextStyle(
+                        fontFamily: 'psr',
+                        fontSize: 14,
+                        color: Colors.black,
+                      ))))
+            ],
+          )),
+        ],
+      ),
+    );
+
+    return Future.value(res);
+  }
 }

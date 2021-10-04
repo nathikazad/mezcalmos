@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -22,7 +21,7 @@ class MessagingScreen extends GetView<MessageController> {
 
   RxString _typedMsg = "".obs;
 
-  Widget SingleChatComponent(
+  Widget singleChatComponent(
     String message,
     String? time,
     bool isMe, {
@@ -154,7 +153,7 @@ class MessagingScreen extends GetView<MessageController> {
       print(
           "--------------------- >>>>> FillCallback Executed  >> Messages Count >> ${controller.value?.messages.length}!");
       chatLines.assignAll(controller.value!.messages.map(
-        (e) => SingleChatComponent(
+        (e) => singleChatComponent(
           e.message,
           e.formatedTime,
           e.userId == _authController.user!.uid,

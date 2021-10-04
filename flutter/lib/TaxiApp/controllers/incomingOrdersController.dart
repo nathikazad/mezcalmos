@@ -1,14 +1,7 @@
 import 'dart:async';
-import 'dart:typed_data';
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
-import 'package:get_storage/get_storage.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -58,7 +51,6 @@ class IncomingOrdersController extends GetxController with MezDisposable {
   void onInit() async {
     // _selectedIncommingOrder.value = null;
     super.onInit();
-    print("--------------------> IncomingOrderController Initialized !");
 
     if (_authController.user != null) {
       // Added Order!
@@ -70,19 +62,7 @@ class IncomingOrdersController extends GetxController with MezDisposable {
         orders.value = <Order>[];
         if (event.snapshot.value != null) {
           event.snapshot.value.forEach((dynamic key, dynamic value) async {
-            print(
-                "\n\n\n\n\n New Customer Order Inserted : $key , \n$value\n\n\n\n\n");
-
-            BitmapDescriptor picMarker = await BitmapDescriptorLoader(
-                (await cropRonded(
-                    (await http.get(Uri.parse(value['customer']['image'])))
-                        .bodyBytes) as Uint8List),
-                60,
-                60,
-                isBytes: true);
-
-            print("\n\n\n [bytes] $picMarker\n\n\n");
-            Order order = Order.fromJson(key, value, pictureBytes: picMarker);
+            Order order = Order.fromJson(key, value);
             order.distanceToClient = MapHelper.calculateDistance(
                 order.from.position, _taxiAuthController.currentLocation);
             orders.add(order);
@@ -97,17 +77,17 @@ class IncomingOrdersController extends GetxController with MezDisposable {
           orders
               .sort((a, b) => a.distanceToClient.compareTo(b.distanceToClient));
         }
-        if (orders
-                .where(
-                    (element) => element.id == _selectedIncommingOrderKey.value)
-                .length ==
-            0) {
-          if (Get.currentRoute == kSelectedIcommingOrder) {
-            await MezcalmosSharedWidgets.mezcalmosDialogOrderNoMoreAvailable(
-                55, Get.height, Get.width);
-            Get.back(closeOverlays: true);
-          }
-        }
+        // if (orders
+        //         .where(
+        //             (element) => element.id == _selectedIncommingOrderKey.value)
+        //         .length ==
+        //     0) {
+        //   if (Get.currentRoute == kSelectedIcommingOrder) {
+        //     await MezcalmosSharedWidgets.mezcalmosDialogOrderNoMoreAvailable(
+        //         55, Get.height, Get.width);
+        //     Get.back(closeOverlays: true);
+        //   }
+        // }
       }).canceledBy(this);
 
       _updateOrderDistanceToClient =
@@ -135,15 +115,7 @@ class IncomingOrdersController extends GetxController with MezDisposable {
   // I added this to avoid possible dangling pointers ...
   void detachListeners() {
     cancelSubscriptions();
-    // _listeners.forEach((sub) => sub
-    //     .cancel()
-    //     .then((value) =>
-    //         print("A listener was disposed on incomingOrdersController !"))
-    //     .catchError((err) => print(
-    //         "Error happend while trying to dispose incomingOrdersController!")));
-
     _updateOrderDistanceToClient.dispose();
-
     _appLifeCycleController.cleanAllCallbacks();
   }
 
@@ -157,7 +129,6 @@ class IncomingOrdersController extends GetxController with MezDisposable {
         'orderId': orderId,
         'database': _databaseHelper.dbType
       });
-      // _waitingResponse.value = false;
       _selectedIncommingOrderKey.value = "";
       Get.back(closeOverlays: true);
       mezcalmosSnackBar("Notice ~", "A new Order has been accpeted !");

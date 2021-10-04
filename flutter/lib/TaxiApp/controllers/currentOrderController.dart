@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
 import 'package:mezcalmos/Shared/utilities/Extensions.dart';
@@ -12,11 +11,6 @@ import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/Shared/models/Order.dart';
 
 class CurrentOrderController extends GetxController with MezDisposable {
-  Rx<Order> _model = Order.empty().obs;
-
-  dynamic get id => _model.value.id;
-  dynamic get customer => _model.value.customer;
-
   TaxiAuthController _taxiAuthController =
       Get.find<TaxiAuthController>(); // since it's already injected .
   DatabaseHelper _databaseHelper =
@@ -175,29 +169,4 @@ class CurrentOrderController extends GetxController with MezDisposable {
     super.dispose();
     print("--------------------> CurrentOrderController Auto Disposed !");
   }
-}
-
-enum CurrentOrderEventTypes { OrderStatusChange }
-
-class CurrentOrderEvent {
-  CurrentOrderEventTypes eventType;
-  dynamic eventDetails;
-  CurrentOrderEvent(this.eventType, {this.eventDetails});
-
-  Map toJson() => <dynamic, dynamic>{
-        eventType: eventType.toString(),
-        eventDetails: eventDetails.toString()
-      };
-}
-
-class CurrentOrder {
-  Order order;
-  CurrentOrderEvent? event;
-  CurrentOrder(this.order, {this.event});
-
-  Map toJson() =>
-      <dynamic, dynamic>{"event": event?.toJson(), "order": order.toJson()};
-
-  CurrentOrder.fromSnapshot(DataSnapshot snapshot)
-      : this.order = Order.fromSnapshot(snapshot);
 }

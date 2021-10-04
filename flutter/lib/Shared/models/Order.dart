@@ -1,26 +1,11 @@
 // BELONGS TO TAXI APP please move
 
-import 'dart:typed_data';
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
-class Location {
-  late String address;
-  late LocationData position;
-
-  Location(dynamic location) {
-    this.address = location["address"];
-    this.position = LocationData.fromMap(<String, dynamic>{
-      "latitude": location["lat"],
-      "longitude": location["lng"]
-    });
-  }
-
-  dynamic get latitude => position.latitude;
-  dynamic get longitude => position.longitude;
-}
+// CurrentOrderEventType ENUM, used by CurrentOrderEvent.
+enum CurrentOrderEventTypes { OrderStatusChange }
 
 class Order {
   dynamic id;
@@ -32,7 +17,7 @@ class Order {
   dynamic orderTime;
   dynamic paymentType;
   dynamic routeInformation; // Map<String , Map<String, dynamic>>
-  dynamic pictureBytes;
+
   dynamic driver;
   dynamic distance;
   dynamic duration;
@@ -64,7 +49,6 @@ class Order {
       required this.rideStartTime,
       required this.status,
       required this.polyline,
-      required this.pictureBytes,
       dynamic cancelledBy});
 
   // Get props as list.
@@ -74,7 +58,7 @@ class Order {
   // Empty Order Constructor!
   Order.empty({this.polyline = ""});
 
-  Order.fromSnapshot(DataSnapshot snapshot, {BitmapDescriptor? pictureBytes})
+  Order.fromSnapshot(DataSnapshot snapshot)
       : id = snapshot.key ?? "",
         driver = snapshot.value['driver'],
         distance = snapshot.value['distance'],
@@ -91,10 +75,9 @@ class Order {
         orderTime = snapshot.value['orderTime'],
         paymentType = snapshot.value['paymentType'],
         routeInformation = snapshot.value['routeInformation'],
-        polyline = snapshot.value['polyline'] ?? "",
-        this.pictureBytes = pictureBytes;
+        polyline = snapshot.value['polyline'] ?? "";
 
-  Order.fromJson(dynamic key, dynamic value, {BitmapDescriptor? pictureBytes})
+  Order.fromJson(dynamic key, dynamic value)
       : id = key,
         driver = value['driver'],
         distance = value['distance'],
@@ -111,19 +94,59 @@ class Order {
         orderTime = value['orderTime'],
         paymentType = value['paymentType'],
         routeInformation = value['routeInformation'],
-        polyline = value['polyline'] ?? "",
-        this.pictureBytes = pictureBytes;
+        polyline = value['polyline'] ?? "";
 
   // Added for Debugging Perposes - Don't delete for now
   Map<String, dynamic> toJson() => {
         "customer": customer,
         "estimatedPrice": estimatedPrice,
         "from": from,
+        "status": status,
         "to": to,
         "orderTime": orderTime,
         "paymentType": paymentType,
         "polyline": polyline,
         "routeInformation": routeInformation,
         "distanceToClient": distanceToClient
+      };
+}
+
+class Location {
+  late String address;
+  late LocationData position;
+
+  Location(dynamic location) {
+    this.address = location["address"];
+    this.position = LocationData.fromMap(<String, dynamic>{
+      "latitude": location["lat"],
+      "longitude": location["lng"]
+    });
+  }
+
+  dynamic get latitude => position.latitude;
+  dynamic get longitude => position.longitude;
+}
+
+// CurrentOrder
+class CurrentOrder {
+  Order order;
+  CurrentOrderEvent? event;
+  CurrentOrder(this.order, {this.event});
+
+  Map toJson() =>
+      <dynamic, dynamic>{"event": event?.toJson(), "order": order.toJson()};
+
+  CurrentOrder.fromSnapshot(DataSnapshot snapshot)
+      : this.order = Order.fromSnapshot(snapshot);
+}
+
+class CurrentOrderEvent {
+  CurrentOrderEventTypes eventType;
+  dynamic eventDetails;
+  CurrentOrderEvent(this.eventType, {this.eventDetails});
+
+  Map toJson() => <dynamic, dynamic>{
+        eventType: eventType.toString(),
+        eventDetails: eventDetails.toString()
       };
 }
