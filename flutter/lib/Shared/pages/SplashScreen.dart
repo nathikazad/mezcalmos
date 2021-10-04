@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:progress_indicators/progress_indicators.dart';
-import 'package:rive/rive.dart' as rive;
 
 class SplashScreen extends StatelessWidget {
   @override
@@ -29,12 +29,9 @@ class SplashScreen extends StatelessWidget {
                           width: Get.width * 0.6,
                           child: ClipOval(
                             child: Container(
-                              alignment: Alignment.center,
-                              color: Colors.white,
-                              child: rive.RiveAnimation.asset(
-                                "assets/animation/LoadingAnimationV6.riv",
-                              ),
-                            ),
+                                color: Colors.white,
+                                child: Transform.scale(
+                                    scale: 1.5, child: MezLogoAnimation())),
                           ),
                         ),
                         SizedBox(
