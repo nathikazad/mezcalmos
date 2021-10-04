@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/TaxiAdminApp/pages/Driver/RankingsPage.dart';
 import 'package:mezcalmos/TaxiAdminApp/pages/Driver/DriverPage.dart';
@@ -16,6 +17,7 @@ import 'Orders/OrderViewPage.dart';
 
 class StatsIndexPage extends GetView {
   LanguageController lng = Get.find<LanguageController>();
+  AuthController authController = Get.find<AuthController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,6 +80,13 @@ class StatsIndexPage extends GetView {
             OutlinedButton(
                 child: Text("New Customers for month"),
                 onPressed: () => Get.to(NewCustomersOnMonthPage())),
+            Text(
+              "Log out",
+              textAlign: TextAlign.center,
+            ),
+            OutlinedButton(
+                child: Text("Log Out"),
+                onPressed: () async => await authController.auth.signOut()),
             Divider(),
             OutlinedButton(
                 child: Text("Langauge"),
