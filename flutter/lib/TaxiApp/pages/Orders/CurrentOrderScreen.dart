@@ -17,7 +17,7 @@ import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/components/CurrentOrderMapScreen/CPositionedBottomBar.dart';
 import 'package:mezcalmos/TaxiApp/components/CurrentOrderMapScreen/CPositionedFromToBar.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
-import 'package:mezcalmos/TaxiApp/controllers/FBTaxiNorificationsController.dart';
+import 'package:mezcalmos/TaxiApp/controllers/fbTaxiNotificationsController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 

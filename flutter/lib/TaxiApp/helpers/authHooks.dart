@@ -5,7 +5,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
-import 'package:mezcalmos/TaxiApp/controllers/FBTaxiNorificationsController.dart';
+import 'package:mezcalmos/TaxiApp/controllers/fbTaxiNotificationsController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 
 class AuthHooks {

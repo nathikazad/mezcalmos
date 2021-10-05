@@ -4,8 +4,9 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
 import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/utilities/SharedEnums.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
-import 'package:mezcalmos/TaxiApp/controllers/FBTaxiNorificationsController.dart';
+import 'package:mezcalmos/TaxiApp/controllers/fbTaxiNotificationsController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/Shared/models/Order.dart';
@@ -24,7 +25,6 @@ class CurrentOrderController extends GetxController with MezDisposable {
   Rxn<CurrentOrder> _currentOrderStream = Rxn();
   CurrentOrder? get currentOrderStream => _currentOrderStream.value;
   Rxn<CurrentOrder> get currentOrderStreamRx => _currentOrderStream;
-
   @override
   void onInit() {
     super.onInit();

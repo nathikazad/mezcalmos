@@ -23,6 +23,7 @@ class OrderStatsController extends GetxController {
           ){
               orderTime
               finalStatus
+              cancellationParty
               orderId
               customer{
                 photo
@@ -59,6 +60,7 @@ class OrderStatsController extends GetxController {
             "orderId": order['orderId'],
             "customer": order['customer'],
             "driver": order['driver'],
+            "cancellationParty": order['cancellationParty'],
             "notifications_sent": order['notifications_sent'],
             "notifications_received": order['notifications_received'],
             "notifications_read": order['notifications_read'],

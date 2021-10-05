@@ -5,7 +5,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiAdminApp/components/infoCardComponent.dart';
 import 'package:mezcalmos/TaxiAdminApp/components/staticMap.dart';
-import 'package:mezcalmos/TaxiAdminApp/controller/OrdersController.dart';
+import 'package:mezcalmos/TaxiAdminApp/controller/ordersController.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/TaxiAdminApp/components/getFutureData.dart';

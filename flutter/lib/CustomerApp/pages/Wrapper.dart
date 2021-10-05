@@ -10,7 +10,7 @@ import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/pages/LocationPermissionScreen.dart';
 
 import 'package:mezcalmos/CustomerApp/pages/CustomerWrapper.dart';
-import 'package:mezcalmos/TaxiApp/controllers/FBTaxiNorificationsController.dart';
+import 'package:mezcalmos/TaxiApp/controllers/fbTaxiNotificationsController.dart';
 
 class Wrapper extends GetWidget<AuthController> {
   @override

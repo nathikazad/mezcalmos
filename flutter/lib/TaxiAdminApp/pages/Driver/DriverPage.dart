@@ -7,7 +7,7 @@ import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiAdminApp/Models/NbNotifs.dart';
 import 'package:mezcalmos/TaxiAdminApp/Models/NbOrders.dart';
 import 'package:mezcalmos/TaxiAdminApp/components/infoCardComponent.dart';
-import 'package:mezcalmos/TaxiAdminApp/controller/DriverController.dart';
+import 'package:mezcalmos/TaxiAdminApp/controller/driverController.dart';
 import 'package:mezcalmos/TaxiAdminApp/components/getFutureData.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';

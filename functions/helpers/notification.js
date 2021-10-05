@@ -22,16 +22,19 @@ async function push(firebase, userId, message, particpantType = "customer") {
   if (subscription) {
     if (subscription.deviceNotificationToken) {
       if (particpantType == "taxi") {
+
         if (message.notificationType == "orderStatusChange") {
           let notificationMessage = await buildDeviceNotificationMessage(firebase, userId, message)
           sender.sendToDevice(subscription.deviceNotificationToken, notificationMessage, firebase)
         } else if (message.notificationType == "newMessage") {
           let notificationMessage = await buildDeviceNotificationMessage(firebase, userId, message)
           console.log(notificationMessage)
-          notificationMessage.title = `${notificationMessage.title}${message.sender.name}`;
-          notificationMessage.body = message.message;
-          console.log(notificationMessage)
-          sender.sendToDevice(subscription.deviceNotificationToken, notificationMessage, firebase)
+          let newMessage = {
+            title: `${notificationMessage.title}${message.sender.name}`,
+            body: message.message
+          }
+          console.log(newMessage)
+          sender.sendToDevice(subscription.deviceNotificationToken, newMessage, firebase)
         }
       }
     } else {
