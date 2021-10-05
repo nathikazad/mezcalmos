@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantCartController.dart';
-import 'package:mezcalmos/CustomerApp/models/restaurant.dart';
-import 'package:mezcalmos/CustomerApp/models/cart.dart';
+import 'package:mezcalmos/CustomerApp/models/Restaurant.dart';
+import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'dart:async';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen.dart';
@@ -69,7 +69,7 @@ class ViewItemScreen extends GetView<RestaurantsInfoController> {
                                 cartItem.value!.item.chooseManyOptions),
                             incrementQuantityButton(),
                             Text(
-                                "\$${currency.format(cartItem.value!.totalCost)}"),
+                                "\$${currency.format(cartItem.value!.totalCost())}"),
                             addItemButton()
                           ] else
                             Text("Loading")
@@ -103,7 +103,6 @@ class ViewItemScreen extends GetView<RestaurantsInfoController> {
           onChanged: (newValue) {
             cartItem.value!.chosenOneOptions[chooseOneOption.id!] =
                 chooseOneOptionListItem.id!;
-            cartItem.value!.calculateCost();
             cartItem.refresh();
           },
           controlAffinity:
@@ -130,7 +129,6 @@ class ViewItemScreen extends GetView<RestaurantsInfoController> {
         onChanged: (newValue) {
           cartItem.value!.chosenManyOptions[chooseManyOption.id!] =
               newValue ?? false;
-          cartItem.value!.calculateCost();
           cartItem.refresh();
         },
         controlAffinity:
@@ -144,7 +142,6 @@ class ViewItemScreen extends GetView<RestaurantsInfoController> {
     return OutlinedButton(
         onPressed: () {
           cartItem.value!.quantity++;
-          cartItem.value!.calculateCost();
           cartItem.refresh();
         },
         child: Text(cartItem.value!.quantity.toString()));

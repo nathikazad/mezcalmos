@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
-import 'package:mezcalmos/CustomerApp/models/restaurant.dart';
+import 'package:mezcalmos/CustomerApp/models/Restaurant.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen.dart';
 import 'dart:async';

@@ -1,4 +1,4 @@
-import 'package:mezcalmos/CustomerApp/models/restaurant.dart';
+import 'package:mezcalmos/CustomerApp/models/Restaurant.dart';
 import 'dart:math';
 
 class CartItem {
@@ -7,37 +7,22 @@ class CartItem {
   Item item;
   Map<String, String> _chosenOneOptions = {};
   Map<String, bool> _chosenManyOptions = {};
-  num costPerOne = 0;
-  num totalCost = 0;
   int quantity;
   Map<String, String> get chosenOneOptions => _chosenOneOptions;
   Map<String, bool> get chosenManyOptions => _chosenManyOptions;
 
   CartItem(this.item, this.restaurantId, {this.quantity = 1}) {
-    this.costPerOne = this.item.cost;
-
     this.item.chooseOneOptions.forEach((chooseOneOption) {
       _chosenOneOptions[chooseOneOption.id!] =
           chooseOneOption.chooseOneOptionListItems[0].id!;
-      this.costPerOne += chooseOneOption.chooseOneOptionListItems[0].cost;
     });
     this.item.chooseManyOptions.forEach((chooseManyOption) {
       _chosenManyOptions[chooseManyOption.id!] =
           chooseManyOption.selectedByDefault;
-      if (chooseManyOption.selectedByDefault)
-        this.costPerOne += chooseManyOption.cost;
     });
-    this.totalCost = this.item.cost * this.quantity;
   }
-  CartItem.withData(
-      this.item,
-      this.restaurantId,
-      this.id,
-      this.quantity,
-      this.costPerOne,
-      this.totalCost,
-      this._chosenOneOptions,
-      this._chosenManyOptions);
+  CartItem.withData(this.item, this.restaurantId, this.id, this.quantity,
+      this._chosenOneOptions, this._chosenManyOptions);
 
   factory CartItem.clone(CartItem cartItem) {
     return CartItem.withData(
@@ -45,33 +30,34 @@ class CartItem {
         cartItem.restaurantId,
         cartItem.id,
         cartItem.quantity,
-        cartItem.costPerOne,
-        cartItem.totalCost,
         cartItem._chosenOneOptions,
         cartItem._chosenManyOptions);
   }
 
-  void calculateCost() {
-    this.costPerOne = this.item.cost;
+  num costPerOne() {
+    num costPerOne = this.item.cost;
     this.item.chooseOneOptions.forEach((chooseOneOption) {
       String chosenId = _chosenOneOptions[chooseOneOption.id]!;
-      this.costPerOne += chooseOneOption.chooseOneOptionListItems
-          .firstWhere((element) => element.id == chosenId)
-          .cost;
+      costPerOne += chooseOneOption.findChooseOneOptionListItem(chosenId)!.cost;
     });
     this.item.chooseManyOptions.forEach((chooseManyOption) {
       if (_chosenManyOptions[chooseManyOption.id]!)
-        this.costPerOne += chooseManyOption.cost;
+        costPerOne += chooseManyOption.cost;
     });
-    this.totalCost = this.quantity * this.costPerOne;
+    return costPerOne;
+  }
+
+  num totalCost() {
+    // return 0;
+    return this.quantity * costPerOne();
   }
 
   Map<String, dynamic> toFirebaseFunctionFormattedJson() {
     Map<String, dynamic> json = <String, dynamic>{
       "id": this.item.id,
       "quantity": this.quantity,
-      "totalCost": this.totalCost,
-      "costPerOne": this.costPerOne,
+      "totalCost": this.totalCost(),
+      "costPerOne": this.costPerOne(),
       "name": this.item.name,
       "image": this.item.image,
       "options": {"chosenOneOptions": {}, "chosenManyOptions": {}},
@@ -119,15 +105,8 @@ class Cart {
         chosenManyOptions[id] = data["chosenValue"];
       });
       Item item = this.restaurant.findItemById(itemData["id"]);
-      CartItem cartItem = CartItem.withData(
-          item,
-          restaurant.id!,
-          itemId,
-          itemData["quantity"],
-          itemData["costPerOne"],
-          itemData["totalCost"],
-          chosenOneOptions,
-          chosenManyOptions);
+      CartItem cartItem = CartItem.withData(item, restaurant.id!, itemId,
+          itemData["quantity"], chosenOneOptions, chosenManyOptions);
       this.items.add(cartItem);
     });
   }
@@ -138,7 +117,7 @@ class Cart {
 
   num totalCost() {
     if (this.items.length == 0) return 0;
-    return this.items.fold(0, (sum, cartItem) => sum + cartItem.totalCost);
+    return this.items.fold(0, (sum, cartItem) => sum + cartItem.totalCost());
   }
 
   void addItem(CartItem cartItem) {
@@ -155,7 +134,6 @@ class Cart {
   void incrementItem(String id, int quantity) {
     CartItem item = getItem(id);
     item.quantity += quantity;
-    item.calculateCost();
   }
 
   CartItem getItem(String id) {

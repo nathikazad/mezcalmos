@@ -1,5 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:mezcalmos/CustomerApp/models/restaurant.dart';
+import 'package:mezcalmos/CustomerApp/models/Restaurant.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:get/get.dart';
 import 'dart:async';
@@ -40,7 +40,7 @@ class RestaurantsInfoController extends GetxController {
     });
   }
 
-  Future<Item> getItem(String restaurantId, String itemId) async {
+  Future<Item> getItem(String restaurantId, String itemId) {
     return _databaseHelper.firebaseDatabase
         .reference()
         .child('restaurants/info/$restaurantId/menu/$itemId')
