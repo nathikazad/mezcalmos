@@ -34,9 +34,21 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
             OutlinedButton(
                 child: Text("Checkout"),
                 onPressed: () async {
-                  await controller.checkout();
-                  // check status and error message
-                  Get.offAll(ViewOrderScreen());
+                  dynamic response = await controller.checkout();
+                  if (response["status"] == "Success")
+                    Get.offAll(ViewOrderScreen());
+                  else {
+                    print(response);
+                    if (response["errorCode"] == "serverError") {
+                      // do something
+                    } else if (response["errorCode"] == "inAnotherOrder") {
+                      // do something
+                    } else if (response["errorCode"] == "restaurantClosed") {
+                      // do something
+                    } else {
+                      // do something
+                    }
+                  }
                 })
           ],
         ));

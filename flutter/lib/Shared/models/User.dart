@@ -16,6 +16,7 @@ class User {
   String? image;
   String language;
   String? phone;
+  dynamic data;
 
   User(
       {required this.uid,
@@ -37,7 +38,8 @@ class User {
         language = snapshot.value['language'] == null
             ? "es"
             : snapshot.value['language'],
-        phone = snapshot.value['phone'];
+        phone = snapshot.value['phone'],
+        data = snapshot.value;
 
   // Added for Debugging Perposes - Don't delete for now
   Map<String, dynamic> toJson() => {

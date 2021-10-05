@@ -69,7 +69,7 @@ class RestaurantCartController extends GetxController {
     if (cart.value == null) {
       cart.value = Cart(associatedRestaurant!);
     }
-    
+
     cart.value?.addItem(cartItem);
     _databaseHelper.firebaseDatabase
         .reference()
@@ -91,15 +91,19 @@ class RestaurantCartController extends GetxController {
     cart.value?.incrementItem(itemId, quantity);
   }
 
-  Future<void> checkout() async {
+  Future<dynamic> checkout() async {
     HttpsCallable checkoutRestaurantCart =
         FirebaseFunctions.instance.httpsCallable('checkoutRestaurantCart');
     try {
       HttpsCallableResult response = await checkoutRestaurantCart
           .call({"from": "home", "paymentType": "cash"});
-      print(response.data);
-      // handle restaurantClosed error
-      // handler inAnotherOrder error
-    } catch (e) {}
+      return response.data;
+    } catch (e) {
+      return <String, dynamic>{
+        "status": "Error",
+        "errorMessage": "Server Error",
+        "errorCode": "serverError"
+      };
+    }
   }
 }
