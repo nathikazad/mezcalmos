@@ -60,11 +60,13 @@ class IncommingOrderScreenView extends GetWidget<IncomingOrdersController> {
                       Color.fromARGB(255, 79, 168, 35)),
                 ),
                 onPressed: () {
+                  String _oid = controller.selectedIncommingOrder?.id;
                   showLoading.value = true;
                   controller
                       .acceptTaxi(controller.selectedIncommingOrder?.id)
-                      .then((_) => Get.back())
-                      .whenComplete(() => showLoading.value = true);
+                      .then((_) {
+                    Get.back(closeOverlays: true);
+                  }).whenComplete(() => showLoading.value = true);
                 },
                 child: Text(
                   lang.strings['taxi']['taxiView']["acceptOrders"],

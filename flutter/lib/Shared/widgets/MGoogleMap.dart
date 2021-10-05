@@ -27,17 +27,47 @@ class _MGoogleMapState extends State<MGoogleMap> {
     List<Marker> _mrkrs = [];
 
     widget.customMarkers.forEach((cmarker) {
-      _bnds.add(cmarker.position);
+      if (cmarker.fitInBounds) _bnds.add(cmarker.position);
       _mrkrs.add(cmarker.marker());
     });
+
+    /* basically means :
+    *   if all markers have fitInBounds = false  (we don't care about them in the fitBounds)
+    *   or all markers have firBounds = true  (We have to show all of them in the fitbounds)
+    *   then we will include the Polyline's Bounds , 
+    *   else we will just fit the markers with fitInBounds = True.
+    */
+
+    if (_bnds.isEmpty || _bnds.length == _mrkrs.length) {
+      _bnds.addAll(_getLatLngBoundsFromPolyline(widget.polylines));
+    }
+
     setState(() {
       if (_bnds.isNotEmpty) widget.bounds = createMapBounds(_bnds);
       if (_mrkrs.isNotEmpty) widget.markers.assignAll(_mrkrs);
       if (_controller != null) {
-        _controller!
-            .animateCamera(CameraUpdate.newLatLngBounds(widget.bounds!, 160));
+        _controller
+            ?.animateCamera(CameraUpdate.newLatLngBounds(widget.bounds!, 100));
       }
     });
+  }
+
+  // in case we need it in future.
+  List<LatLng> _getLatLngBoundsFromPolyline(Set<Polyline> p) {
+    double minLat = p.first.points.first.latitude;
+    double minLong = p.first.points.first.longitude;
+    double maxLat = p.first.points.first.latitude;
+    double maxLong = p.first.points.first.longitude;
+    p.forEach((poly) {
+      poly.points.forEach((point) {
+        if (point.latitude < minLat) minLat = point.latitude;
+        if (point.latitude > maxLat) maxLat = point.latitude;
+        if (point.longitude < minLong) minLong = point.longitude;
+        if (point.longitude > maxLong) maxLong = point.longitude;
+      });
+    });
+
+    return [LatLng(minLat, minLong), LatLng(maxLat, maxLong)];
   }
 
   @override
@@ -49,12 +79,12 @@ class _MGoogleMapState extends State<MGoogleMap> {
   @override
   void initState() {
     updateMarkers();
+
     super.initState();
   }
 
   @override
   void dispose() {
-    widget.customMarkers.forEach((element) => element.cancelSub());
     super.dispose();
   }
 
@@ -67,7 +97,7 @@ class _MGoogleMapState extends State<MGoogleMap> {
             padding: EdgeInsets.all(20),
             mapToolbarEnabled: false,
             myLocationButtonEnabled: false,
-            minMaxZoomPreference: MinMaxZoomPreference(1, 20),
+            // minMaxZoomPreference: MinMaxZoomPreference(10, 30),
             buildingsEnabled: false,
             markers:
                 widget.customMarkers.map((element) => element.marker()).toSet(),
@@ -81,19 +111,19 @@ class _MGoogleMapState extends State<MGoogleMap> {
                 tilt: 9.440717697143555,
                 zoom: 5.151926040649414),
             onMapCreated: (GoogleMapController _gController) async {
+              print("NEW GMAPCONTROLLER !!!!!1");
               await _gController.setMapStyle(GetStorage().read('map_style'));
               _controller = _gController;
 
               if (widget.bounds != null)
                 await _gController.animateCamera(
-                    CameraUpdate.newLatLngBounds(widget.bounds!, 160));
+                    CameraUpdate.newLatLngBounds(widget.bounds!, 100));
 
               Completer<GoogleMapController>().complete(_gController);
             },
           )
         : Center(
-            // child: Text(Random().nextInt(100).toString()),
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(color: Colors.purple),
           );
   }
 }

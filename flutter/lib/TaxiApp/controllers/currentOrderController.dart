@@ -49,8 +49,8 @@ class CurrentOrderController extends GetxController with MezDisposable {
     }).canceledBy(this);
   }
 
-  void clearEvent() async {
-    currentEvent = null;
+  void clearEvent() {
+    this.currentEvent = null;
   }
   // void dispatchCurrentOrder() {
 

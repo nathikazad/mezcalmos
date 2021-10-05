@@ -1,30 +1,26 @@
-import 'dart:async';
-
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/state_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'dart:math' show cos, sqrt, sin, pi, atan2;
 import 'package:mezcalmos/Shared/models/Order.dart';
+import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 
-class CustomMarker {
+class CustomMarker with MezDisposable {
   String id;
   Rx<LocationData>? locationStream;
   LatLng position;
   BitmapDescriptor icon;
+  bool fitInBounds;
 
-  CustomMarker(this.id, this.icon, this.position, {this.locationStream}) {
+  CustomMarker(this.id, this.icon, this.position,
+      {this.fitInBounds = false, this.locationStream}) {
     if (locationStream != null) {
       locationStream!.listen((newLoc) {
         print("[ CustomMarker::$id ] New position => $position");
         this.position = new LatLng(newLoc.latitude!, newLoc.longitude!);
-      });
+      }).canceledBy(this);
     }
-  }
-
-  // this is needed when releasing the Resources!
-  void cancelSub() {
-    if (locationStream != null) locationStream!.close();
   }
 
   Marker marker() => new Marker(
