@@ -18,7 +18,7 @@ class CurrentOrderController extends GetxController with MezDisposable {
       Get.find<DatabaseHelper>(); // Already Injected in main function
 
   FBNotificationsController _notifications =
-      Get.put<FBNotificationsController>(FBTaxiNotificationsController());
+      Get.put<FBTaxiNotificationsController>(FBTaxiNotificationsController());
 
   String? lastOrderStatus;
   CurrentOrderEvent? currentEvent;
@@ -33,6 +33,8 @@ class CurrentOrderController extends GetxController with MezDisposable {
         .child(orderId(_taxiAuthController.currentOrderId))
         .onValue
         .listen((event) {
+      final _lastDriverLocation =
+          _currentOrderStream.value?.order.driver['location']['position'];
       _currentOrderStream.value = new CurrentOrder.fromSnapshot(event.snapshot);
       _currentOrderStream.value?.event = currentEvent;
       if (_currentOrderStream.value?.order.status != null &&
@@ -162,6 +164,8 @@ class CurrentOrderController extends GetxController with MezDisposable {
   void onClose() async {
     cancelSubscriptions();
     detachListeners();
+    print("--------------------> CurrentOrderController::onClose called  !");
+
     super.onClose();
   }
 

@@ -7,11 +7,11 @@ import 'package:mezcalmos/Shared/constants/routes.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
-import 'package:mezcalmos/Shared/models/Order.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
+import 'package:mezcalmos/TaxiApp/controllers/fbTaxiNotificationsController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 
 class CurrentPositionedBottomBar extends StatelessWidget {
@@ -19,13 +19,11 @@ class CurrentPositionedBottomBar extends StatelessWidget {
   RxBool clickedLaunchOnMap = false.obs;
   bool clickedYesCancelPopUp = false;
 
-  CurrentOrderController controller;
-  TaxiAuthController taxiAuthController;
-  LanguageController lang;
-  FBNotificationsController fbNotificationsController;
-
-  CurrentPositionedBottomBar(this.controller, this.taxiAuthController,
-      this.lang, this.fbNotificationsController);
+  CurrentOrderController controller = Get.find<CurrentOrderController>();
+  TaxiAuthController taxiAuthController = Get.find<TaxiAuthController>();
+  LanguageController lang = Get.find<LanguageController>();
+  FBNotificationsController fbNotificationsController =
+      Get.find<FBTaxiNotificationsController>();
 
   @override
   Widget build(BuildContext context) {

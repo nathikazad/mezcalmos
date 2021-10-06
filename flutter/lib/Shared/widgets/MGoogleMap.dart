@@ -43,11 +43,13 @@ class _MGoogleMapState extends State<MGoogleMap> {
     if (_bnds.isEmpty || _bnds.length == _mrkrs.length) {
       _bnds.addAll(_getLatLngBoundsFromPolyline(widget.polylines));
     }
-
     setState(() {
       if (_bnds.isNotEmpty) widget.bounds = createMapBounds(_bnds);
-      if (_mrkrs.isNotEmpty) widget.markers.assignAll(_mrkrs);
-      if (_controller != null) {
+      if (_mrkrs.isNotEmpty) {
+        widget.markers.assignAll(_mrkrs);
+      }
+
+      if (_controller != null && widget.bounds != null) {
         _controller
             ?.animateCamera(CameraUpdate.newLatLngBounds(widget.bounds!, 100));
       }
@@ -89,7 +91,11 @@ class _MGoogleMapState extends State<MGoogleMap> {
   @override
   void dispose() {
     mezDbgPrint("+ Dispose MGoogleMap :: called !");
+    // favoid keeping listeners in memory.
     cancelMarkersSubs(widget.customMarkers);
+    // gmapControlelr disposing.
+    _controller?.dispose();
+
     super.dispose();
   }
 
@@ -116,7 +122,6 @@ class _MGoogleMapState extends State<MGoogleMap> {
                 tilt: 9.440717697143555,
                 zoom: 5.151926040649414),
             onMapCreated: (GoogleMapController _gController) async {
-              print("NEW GMAPCONTROLLER !!!!!1");
               await _gController.setMapStyle(GetStorage().read('map_style'));
               _controller = _gController;
 
@@ -129,12 +134,11 @@ class _MGoogleMapState extends State<MGoogleMap> {
           )
         : Center(
             child: Container(
-              height: 200,
-              width: 200,
-              decoration:
-                  BoxDecoration(shape: BoxShape.circle, color: Colors.white),
-              child: Transform.scale(scale: .8, child: MezLogoAnimation()),
-            ),
+                height: 200,
+                width: 200,
+                decoration:
+                    BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+                child: Transform.scale(scale: .8, child: MezLogoAnimation())),
           );
   }
 }

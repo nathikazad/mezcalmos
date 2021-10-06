@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 
 class IncomingPositionedFromToTopBar extends StatelessWidget {
-  LanguageController lang;
-  IncomingOrdersController controller;
-
-  IncomingPositionedFromToTopBar(this.controller, this.lang);
+  IncomingOrdersController controller = Get.find<IncomingOrdersController>();
+  LanguageController lang = Get.find<LanguageController>();
 
   @override
   Widget build(BuildContext context) {

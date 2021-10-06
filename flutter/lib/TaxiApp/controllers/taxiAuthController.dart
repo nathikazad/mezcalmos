@@ -1,7 +1,4 @@
 import 'dart:async';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -12,7 +9,6 @@ import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/SharedEnums.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
-import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/TaxiApp/models/TaxiDriver.dart';
@@ -55,6 +51,10 @@ class TaxiAuthController extends GetxController with MezDisposable {
       - IncommingOrders
       - CurrentOrder
   */
+
+  void testFunc(String? s) {
+    print("test func !");
+  }
 
   @override
   void onInit() async {
@@ -153,6 +153,8 @@ class TaxiAuthController extends GetxController with MezDisposable {
         if (currentTime.difference(lastLocationUpdatedTime).inSeconds > 5 &&
             currentLocation.latitude != null &&
             currentLocation.longitude != null) {
+          mezDbgPrint(
+              "-- -- -- onLocationChanged :: $currentLocation -- -- --");
           lastLocationUpdatedTime = currentTime;
           _currentLocation.value = currentLocation;
 

@@ -18,7 +18,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   http: ^0.13.3
-  get: ^4.1.4
+  get: ^4.3.8
   firebase_database: ^7.1.1
   firebase_auth: ^1.4.1
   firebase_storage: 
@@ -26,7 +26,7 @@ dependencies:
   crypto: ^3.0.0-nullsafety.0
   firebase_core: 
   cloud_functions: ^1.0.7
-  get_storage: ^2.0.0
+  get_storage: 
   equatable: ^2.0.3
   flutter_polyline_points: ^1.0.0
   google_maps_flutter: ^2.0.6

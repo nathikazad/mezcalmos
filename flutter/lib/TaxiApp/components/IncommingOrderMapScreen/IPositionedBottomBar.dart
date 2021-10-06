@@ -9,10 +9,8 @@ import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 
 class IncommingPositionedBottomBar extends StatelessWidget {
-  IncomingOrdersController controller;
-  LanguageController lang;
-
-  IncommingPositionedBottomBar(this.controller, this.lang);
+  IncomingOrdersController controller = Get.find<IncomingOrdersController>();
+  LanguageController lang = Get.find<LanguageController>();
 
   @override
   Widget build(BuildContext context) {

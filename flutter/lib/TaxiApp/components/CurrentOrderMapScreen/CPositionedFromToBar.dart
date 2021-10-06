@@ -5,10 +5,8 @@ import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
 
 class CurrentPositionedFromToTopBar extends StatelessWidget {
-  LanguageController lang;
-  CurrentOrderController controller;
-
-  CurrentPositionedFromToTopBar(this.controller, this.lang);
+  CurrentOrderController controller = Get.find<CurrentOrderController>();
+  LanguageController lang = Get.find<LanguageController>();
 
   @override
   Widget build(BuildContext context) {

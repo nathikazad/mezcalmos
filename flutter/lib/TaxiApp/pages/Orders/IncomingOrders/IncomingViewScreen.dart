@@ -61,45 +61,47 @@ class IncommingOrderScreenView extends GetWidget<IncomingOrdersController> {
                           Transform.scale(scale: .8, child: MezLogoAnimation()),
                     ),
                   )),
-            IncommingPositionedBottomBar(controller, lang),
+            IncommingPositionedBottomBar(),
             Positioned(
               bottom: GetStorage().read(getxGmapBottomPaddingKey),
-              child: TextButton(
-                style: ButtonStyle(
-                  fixedSize: MaterialStateProperty.all(Size(Get.width / 1.05,
-                      getSizeRelativeToScreen(20, Get.height, Get.width))),
-                  backgroundColor: MaterialStateProperty.all(
-                      Color.fromARGB(255, 79, 168, 35)),
-                ),
-                onPressed: !showLoading()
-                    ? () {
-                        showLoading.value = true;
-                        controller
-                            .acceptTaxi(controller.selectedIncommingOrder?.id)
-                            .whenComplete(() {
-                          showLoading.value = false;
-                          Get.back(closeOverlays: true);
-                        });
-                      }
-                    : () => null,
-                child: !showLoading()
-                    ? Text(
-                        lang.strings['taxi']['taxiView']["acceptOrders"],
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      )
-                    : SizedBox(
-                        child: CircularProgressIndicator(
-                          color: Colors.white,
-                        ),
-                        height: 20,
-                        width: 20,
-                      ),
-              ),
+              child: Obx(() => TextButton(
+                    style: ButtonStyle(
+                      fixedSize: MaterialStateProperty.all(Size(
+                          Get.width / 1.05,
+                          getSizeRelativeToScreen(20, Get.height, Get.width))),
+                      backgroundColor: MaterialStateProperty.all(
+                          Color.fromARGB(255, 79, 168, 35)),
+                    ),
+                    onPressed: !showLoading.value
+                        ? () {
+                            showLoading.value = true;
+                            controller
+                                .acceptTaxi(
+                                    controller.selectedIncommingOrder?.id)
+                                .whenComplete(() {
+                              showLoading.value = false;
+                              Get.back(closeOverlays: true);
+                            });
+                          }
+                        : () => null,
+                    child: !showLoading.value
+                        ? Text(
+                            lang.strings['taxi']['taxiView']["acceptOrders"],
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          )
+                        : SizedBox(
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                            height: 20,
+                            width: 20,
+                          ),
+                  )),
             ),
-            IncomingPositionedFromToTopBar(controller, lang)
+            IncomingPositionedFromToTopBar()
           ],
         ),
       ),
