@@ -1,9 +1,8 @@
-import 'dart:async';
 import 'dart:typed_data';
-import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -41,8 +40,8 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
   //==================================
 
   Widget build(BuildContext context) {
+    Get.put<CurrentOrderController>(CurrentOrderController());
     mezDbgPrint("CurrentOrderScreen :: BuildContext :: called !");
-    // Get.put<CurrentOrderController>(CurrentOrderController());
 
     return Stack(
       alignment: Alignment.topCenter,
@@ -177,10 +176,8 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
     initialCameraPosition = LatLng(taxiAuthController.currentLocation.latitude!,
         taxiAuthController.currentLocation.longitude!);
     mezDbgPrint("_loadMarkersForOTW -> Sat initialCameraPosition's value !");
-
-    customMarkers.forEach((element) => element.cancelSub());
-    mezDbgPrint(
-        "_loadMarkersForOTW -> customMarkers.forEach((element) => element.cancelSub()); Done !");
+    cancelMarkersSubs(customMarkers);
+    mezDbgPrint("_loadMarkersForOTW -> cancelMarkerSubs() Done !");
 
     customMarkers.assignAll(<CustomMarker>[
       // Customer's Marker
@@ -188,7 +185,8 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
           "customer",
           bitmapDescriptors["customerImg"]!,
           LatLng(controller.currentOrderStreamRx.value?.order.from.latitude,
-              controller.currentOrderStreamRx.value?.order.from.longitude)),
+              controller.currentOrderStreamRx.value?.order.from.longitude),
+          fitInBounds: true),
 
       // Destination Marker
       CustomMarker(
@@ -203,7 +201,8 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
           bitmapDescriptors["taxiImg"]!,
           LatLng(taxiAuthController.currentLocation.latitude!,
               taxiAuthController.currentLocation.longitude!),
-          locationStream: taxiAuthController.currentLocationRx),
+          locationStream: taxiAuthController.currentLocationRx,
+          fitInBounds: true),
     ]);
     mezDbgPrint(
         "_loadMarkersForOTW -> Markers filling is done -> ${customMarkers()}!");
@@ -217,6 +216,10 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
 
     initialCameraPosition = LatLng(taxiAuthController.currentLocation.latitude!,
         taxiAuthController.currentLocation.longitude!);
+    mezDbgPrint("_loadMarkersForIT -> Sat initialCameraPosition's value !");
+    cancelMarkersSubs(customMarkers);
+    mezDbgPrint("_loadMarkersForIT -> cancelMarkerSubs() Done !");
+
     customMarkers.assignAll(<CustomMarker>[
       // Taxi Marker (Customer in Taxi too ) - with subscription
       new CustomMarker(
@@ -224,15 +227,19 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
           bitmapDescriptors["taxiImg"]!,
           new LatLng(taxiAuthController.currentLocation.latitude!,
               taxiAuthController.currentLocation.longitude!),
-          locationStream: taxiAuthController.currentLocationRx),
+          locationStream: taxiAuthController.currentLocationRx,
+          fitInBounds: true),
 
       // Destination Marker
       new CustomMarker(
           "destination",
           bitmapDescriptors["destinationImg"]!,
           LatLng(controller.currentOrderStreamRx.value?.order.to.latitude,
-              controller.currentOrderStreamRx.value?.order.to.longitude)),
+              controller.currentOrderStreamRx.value?.order.to.longitude),
+          fitInBounds: true),
     ]);
+    mezDbgPrint(
+        "_loadMarkersForIT -> Markers filling is done -> ${customMarkers()}!");
   }
 
   Future<void> _loadBitmapDescriptors() async {

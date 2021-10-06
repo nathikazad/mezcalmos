@@ -1,14 +1,23 @@
+import 'dart:typed_data';
+import 'package:http/http.dart' as http;
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
+import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/UnauthorizedScreen.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/SharedEnums.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
+import 'package:mezcalmos/TaxiApp/constants/assets.dart';
+import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/CurrentOrderScreen.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingListScreen.dart';
@@ -17,20 +26,19 @@ import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen
 class TaxiWrapper extends GetWidget<AuthController> {
   SideMenuDraweController _sideMenuDrawerController =
       Get.find<SideMenuDraweController>();
+  TaxiAuthController _taxiAuthController = Get.find<TaxiAuthController>();
 
   // pop Point!
   @override
   Widget build(BuildContext context) {
     mezDbgPrint("Inside TaxiWrapper Builder");
-    TaxiAuthController _taxiAuthController = Get.find<TaxiAuthController>();
     return Scaffold(
       key: _sideMenuDrawerController.getNewKey(),
       drawer: MezSideMenu(),
       backgroundColor: Colors.white,
       appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
           "menu", _sideMenuDrawerController.openMenu),
-
-      body: StreamBuilder(
+      body: StreamBuilder<AgentDataEvent>(
           stream: _taxiAuthController.taxiDriverDataEventRx.stream,
           builder: (_, AsyncSnapshot<AgentDataEvent> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -38,7 +46,13 @@ class TaxiWrapper extends GetWidget<AuthController> {
                   "Inside TaxiWrapper::StreamBuilder::ConnectionState.waiting");
 
               return Center(
-                child: Transform.scale(scale: 0.3, child: MezLogoAnimation()),
+                child: Container(
+                  height: 200,
+                  width: 200,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle, color: Colors.white),
+                  child: Transform.scale(scale: .8, child: MezLogoAnimation()),
+                ),
               );
             } else if (snapshot.connectionState == ConnectionState.active ||
                 snapshot.connectionState == ConnectionState.done) {
@@ -55,8 +69,14 @@ class TaxiWrapper extends GetWidget<AuthController> {
                 switch (snapshot.data) {
                   case AgentDataEvent.DataNotLoadedYet:
                     return Center(
-                      child: Transform.scale(
-                          scale: 0.4, child: MezLogoAnimation()),
+                      child: Container(
+                        height: 200,
+                        width: 200,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle, color: Colors.white),
+                        child: Transform.scale(
+                            scale: .8, child: MezLogoAnimation()),
+                      ),
                     );
                   case AgentDataEvent.Unauthorized:
                     return UnauthorizedScreen();
@@ -69,29 +89,38 @@ class TaxiWrapper extends GetWidget<AuthController> {
               } else {
                 mezDbgPrint(
                     "Inside TaxiWrapper::StreamBuilder::ConnectionState.done|active::EmptyData");
-                return const Text('Empty data');
+                return Center(
+                  child: Container(
+                    height: 200,
+                    width: 200,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, color: Colors.white),
+                    child: Icon(
+                      Icons.error,
+                      size: 40,
+                      color: Colors.purple.shade200,
+                    ),
+                  ),
+                );
               }
             } else {
               mezDbgPrint(
                   "Else : Inside TaxiWrapper::StreamBuilder::ConnectionState.${snapshot.connectionState}");
-              return Text('State: ${snapshot.connectionState}');
+              return Center(
+                child: Container(
+                  height: 200,
+                  width: 200,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle, color: Colors.white),
+                  child: Icon(
+                    Icons.error,
+                    size: 40,
+                    color: Colors.purple.shade200,
+                  ),
+                ),
+              );
             }
           }),
-
-      // body: Obx(() => _taxiAuthController.authorizedTaxi != null
-      //     ? (_taxiAuthController.authorizedTaxi == true
-      //         ? (_taxiAuthController.currentOrderId != null
-      //             ? CurrentOrderScreen()
-      //             : IncomingOrdersScreen())
-      //         : UnauthorizedScreen())
-      //     : Center(
-      //         child: CircularProgressIndicator(
-      //           color: Colors.pink,
-      //         ),
-      //       )),
-      // - Incomiing order Sc
-      // - Anauthorized
-      // - CurrentOrder
     );
   }
 }

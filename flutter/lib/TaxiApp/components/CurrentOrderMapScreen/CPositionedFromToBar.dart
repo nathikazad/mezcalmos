@@ -68,20 +68,10 @@ class CurrentPositionedFromToTopBar extends StatelessWidget {
                                       null
                                   ? "........."
                                   : controller.currentOrderStreamRx.value!.order
-                                              .from!.address!
-                                              .toString()
-                                              .length >
-                                          13
-                                      ? (controller.currentOrderStreamRx.value
-                                                  ?.order.from?.address
-                                                  .toString()
-                                                  .substring(0, 13) ??
-                                              "..........") +
-                                          " .."
-                                      : controller.currentOrderStreamRx.value!
-                                          .order.from!.address
-                                          .toString(),
-                              style: TextStyle(fontSize: 16, fontFamily: 'psr'),
+                                      .from!.address!
+                                      .toString(),
+                              style: TextStyle(fontSize: 15, fontFamily: 'psr'),
+                              maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
@@ -133,56 +123,49 @@ class CurrentPositionedFromToTopBar extends StatelessWidget {
             Expanded(
               flex: 2,
               // fit: FlexFit.tight,
-              child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 0, top: 12, bottom: 12, right: 8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Obx(
-                        () => Text(
-                          lang.strings['shared']['inputLocation']["to"],
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+              child: Container(
+                child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: 0, top: 12, bottom: 12, right: 8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Obx(
+                          () => Text(
+                            lang.strings['shared']['inputLocation']["to"],
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                      Obx(
-                        () => GestureDetector(
-                          onTap: () => mezcalmosSnackBar(
-                              lang.strings['shared']['inputLocation']["to"],
+                        Obx(
+                          () => GestureDetector(
+                            onTap: () => mezcalmosSnackBar(
+                                lang.strings['shared']['inputLocation']["to"],
+                                controller.currentOrderStreamRx.value?.order.to
+                                        ?.address ??
+                                    ""),
+                            child: Text(
                               controller.currentOrderStreamRx.value?.order.to
-                                      ?.address ??
-                                  ""),
-                          child: Text(
-                            controller.currentOrderStreamRx.value?.order.to
-                                        ?.address
-                                        ?.toString()
-                                        .length ==
-                                    null
-                                ? "........."
-                                : controller.currentOrderStreamRx.value!.order
-                                            .to!.address!
-                                            .toString()
-                                            .length >
-                                        13
-                                    ? (controller.currentOrderStreamRx.value!
-                                                .order.to?.address
-                                                .toString()
-                                                .substring(0, 13) ??
-                                            "..........") +
-                                        " .."
-                                    : controller.currentOrderStreamRx.value
-                                        ?.order.to?.address, //13+..
-                            style: TextStyle(fontSize: 16, fontFamily: 'psr'),
-                            overflow: TextOverflow.ellipsis,
+                                          ?.address
+                                          ?.toString()
+                                          .length ==
+                                      null
+                                  ? "........."
+                                  : controller.currentOrderStreamRx.value!.order
+                                      .to!.address!
+                                      .toString(), //13+..
+                              style: TextStyle(fontSize: 15, fontFamily: 'psr'),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  )),
+                      ],
+                    )),
+              ),
             )
           ],
         ),

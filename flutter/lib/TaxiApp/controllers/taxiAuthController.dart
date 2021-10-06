@@ -44,6 +44,9 @@ class TaxiAuthController extends GetxController with MezDisposable {
   Rx<LocationData> get currentLocationRx => _currentLocation;
 
   StreamSubscription<LocationData>? _locationListener;
+  StreamSubscription<LocationData>? get currentLocationStream =>
+      _locationListener;
+
   bool _checkedAppVersion = false;
   DateTime lastLocationUpdatedTime = DateTime.now();
   /*
@@ -57,7 +60,7 @@ class TaxiAuthController extends GetxController with MezDisposable {
   void onInit() async {
     super.onInit();
     // Injecting all our c here
-    Get.lazyPut(() => CurrentOrderController());
+    // Get.lazyPut(() => CurrentOrderController());
     Get.lazyPut(() => IncomingOrdersController());
     // ------------------------------------------------------------------------
 

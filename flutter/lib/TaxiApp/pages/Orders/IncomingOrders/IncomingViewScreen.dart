@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
+import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/components/IncommingOrderMapScreen/IPositionedBottomBar.dart';
 import 'package:mezcalmos/TaxiApp/components/IncommingOrderMapScreen/IPositionedFromToBar.dart';
@@ -44,11 +45,22 @@ class IncommingOrderScreenView extends GetWidget<IncomingOrdersController> {
         child: Stack(
           alignment: Alignment.topCenter,
           children: [
-            Obx(() => MGoogleMap(
-                  customMarkers,
-                  initialCameraPosition.value,
-                  polylines: polylines,
-                )),
+            Obx(() => !showLoading()
+                ? MGoogleMap(
+                    customMarkers,
+                    initialCameraPosition.value,
+                    polylines: polylines,
+                  )
+                : Center(
+                    child: Container(
+                      height: 200,
+                      width: 200,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle, color: Colors.white),
+                      child:
+                          Transform.scale(scale: .8, child: MezLogoAnimation()),
+                    ),
+                  )),
             IncommingPositionedBottomBar(controller, lang),
             Positioned(
               bottom: GetStorage().read(getxGmapBottomPaddingKey),
@@ -59,20 +71,32 @@ class IncommingOrderScreenView extends GetWidget<IncomingOrdersController> {
                   backgroundColor: MaterialStateProperty.all(
                       Color.fromARGB(255, 79, 168, 35)),
                 ),
-                onPressed: () {
-                  showLoading.value = true;
-                  controller
-                      .acceptTaxi(controller.selectedIncommingOrder?.id)
-                      .then((_) => Get.back())
-                      .whenComplete(() => showLoading.value = true);
-                },
-                child: Text(
-                  lang.strings['taxi']['taxiView']["acceptOrders"],
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
+                onPressed: !showLoading()
+                    ? () {
+                        showLoading.value = true;
+                        controller
+                            .acceptTaxi(controller.selectedIncommingOrder?.id)
+                            .whenComplete(() {
+                          showLoading.value = false;
+                          Get.back(closeOverlays: true);
+                        });
+                      }
+                    : () => null,
+                child: !showLoading()
+                    ? Text(
+                        lang.strings['taxi']['taxiView']["acceptOrders"],
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      )
+                    : SizedBox(
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                        ),
+                        height: 20,
+                        width: 20,
+                      ),
               ),
             ),
             IncomingPositionedFromToTopBar(controller, lang)

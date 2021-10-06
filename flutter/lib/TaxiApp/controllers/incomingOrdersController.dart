@@ -129,8 +129,8 @@ class IncomingOrdersController extends GetxController with MezDisposable {
         'orderId': orderId,
         'database': _databaseHelper.dbType
       });
-      _selectedIncommingOrderKey.value = "";
-      Get.back(closeOverlays: true);
+      // _selectedIncommingOrderKey.value = "";
+      // Get.back(closeOverlays: true);
       mezcalmosSnackBar("Notice ~", "A new Order has been accpeted !");
       print("Accept Taxi Response");
       print(response.data);

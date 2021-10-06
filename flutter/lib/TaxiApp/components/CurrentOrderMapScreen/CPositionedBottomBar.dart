@@ -114,7 +114,11 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                                             await controller.startRide();
                                           }, lang.strings['taxi']['taxiView']["tooFarFromstartRide"])
                                             .then((_) {})
-                                            .whenComplete(() => this.showLoadingMapOnClick.value = false)
+                                            .whenComplete(() {
+                                            this.showLoadingMapOnClick.value =
+                                                false;
+                                            Get.back(closeOverlays: true);
+                                          })
                                         : await controller.startRide().whenComplete(() => this.showLoadingMapOnClick.value = false));
                               }
                             : () => null,
