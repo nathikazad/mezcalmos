@@ -11,6 +11,9 @@ import 'package:location/location.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+void mezDbgPrint(String log) =>
+    print("\n[MEZ LOG]\t[${DateTime.now()}] $log\n");
+
 void mezcalmosLogger(String text, {bool isError = false}) =>
     print("[ MEZCALMOS ][ GETX ] $text");
 

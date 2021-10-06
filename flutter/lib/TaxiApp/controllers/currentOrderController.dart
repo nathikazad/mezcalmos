@@ -45,6 +45,9 @@ class CurrentOrderController extends GetxController with MezDisposable {
             });
         lastOrderStatus = _currentOrderStream.value?.order.status;
         currentEvent = _currentOrderStream.value?.event;
+
+        mezDbgPrint(
+            "\nFront Listener of CurrentORderController :: \n${_currentOrderStream.value?.toJson()}\n");
       }
     }).canceledBy(this);
   }

@@ -4,6 +4,7 @@ import 'package:get/state_manager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 class MGoogleMap extends StatefulWidget {
   List<CustomMarker> customMarkers;
@@ -48,6 +49,7 @@ class _MGoogleMapState extends State<MGoogleMap> {
 
   @override
   void initState() {
+    mezDbgPrint("+ Init MGoogleMap :: called !");
     updateMarkers();
     super.initState();
   }
@@ -62,6 +64,8 @@ class _MGoogleMapState extends State<MGoogleMap> {
 
   @override
   Widget build(BuildContext context) {
+    mezDbgPrint("+ build MGoogleMap :: called !");
+
     return widget.customMarkers.isNotEmpty
         ? GoogleMap(
             padding: EdgeInsets.all(20),

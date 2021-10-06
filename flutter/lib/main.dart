@@ -108,8 +108,17 @@ class _SPointState extends State<SPoint> {
           permanent: true);
 
       // this listenes on authStateNotifierInvoked changes and affect it's value to our _initialized StateVariable and rebuild the state of this Spoint.
-      onAuthStateNotifierInvoked = auCtrl.authStateNotifierInvoked
-          .listen((value) => setState(() => _initialized = value));
+      onAuthStateNotifierInvoked =
+          auCtrl.authStateNotifierInvoked.listen((value) {
+        if (value) {
+          setState(() => _initialized = value);
+          Timer(
+              Duration(seconds: nSplashScreenTimer),
+              () => setState(() {
+                    timerDone = true;
+                  }));
+        }
+      });
     } catch (e) {
       print("[+] Error Happend =======> $e");
       setState(() {
@@ -142,22 +151,12 @@ class _SPointState extends State<SPoint> {
     }
 
     // Show a SplashScreen until setup is full done and initialized!
-    if (!_initialized) {
+    if (!_initialized || !timerDone) {
       return SplashScreen();
-    } else
+    } else {
       // we don't need to keep this listener there anymore
       onAuthStateNotifierInvoked.cancel();
-
-    Timer(
-        Duration(seconds: nSplashScreenTimer),
-        () => setState(() {
-              timerDone = true;
-            }));
-
-    // if there is no errors and Initialization is done , we inject Auth right away to not cause the Delay on the wrapper!
-    if (timerDone)
       return widget._app;
-    else
-      return SplashScreen();
+    }
   }
 }

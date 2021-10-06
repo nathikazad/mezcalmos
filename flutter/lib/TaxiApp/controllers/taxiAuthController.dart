@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 // import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/utilities/SharedEnums.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
@@ -31,6 +32,8 @@ class TaxiAuthController extends GetxController with MezDisposable {
   RxBool _locationEnabled = false.obs;
   DeviceNotificationsController _messagingController =
       Get.put<DeviceNotificationsController>(DeviceNotificationsController());
+
+  Rx<AgentDataEvent> taxiDriverDataEventRx = AgentDataEvent.Null.obs;
 
   dynamic get currentOrderId => _model.value.currentOrder ?? null;
   dynamic get authorizedTaxi => _model.value.isAuthorized;
@@ -70,9 +73,23 @@ class TaxiAuthController extends GetxController with MezDisposable {
           .child(taxiAuthNode(_authController.user!.uid))
           .onValue
           .listen((event) async {
-        _model.value = event.snapshot.value != null
-            ? TaxiDriver.fromSnapshot(event.snapshot)
-            : TaxiDriver(false, false, null, null, null, isEmpty: false);
+        if (event.snapshot.value != null) {
+          _model.value = TaxiDriver.fromSnapshot(event.snapshot);
+          if (_model.value.isAuthorized == null) {
+            taxiDriverDataEventRx.value = AgentDataEvent.DataNotLoadedYet;
+          } else if (_model.value.isAuthorized == false) {
+            taxiDriverDataEventRx.value = AgentDataEvent.Unauthorized;
+          } else if (_model.value.currentOrder != null) {
+            taxiDriverDataEventRx.value = AgentDataEvent.InCurrentOrder;
+          } else {
+            taxiDriverDataEventRx.value = AgentDataEvent.Free;
+          }
+          mezDbgPrint(taxiDriverDataEventRx.value.toString());
+        } else {
+          _model.value =
+              TaxiDriver(false, false, null, null, null, isEmpty: false);
+          taxiDriverDataEventRx.value = AgentDataEvent.Null;
+        }
 
         if (_checkedAppVersion == false) {
           if (_model.value.isAuthorized == true) {
@@ -86,8 +103,6 @@ class TaxiAuthController extends GetxController with MezDisposable {
             _checkedAppVersion = true;
           }
         }
-        // our magical Trick :p
-        // _dynamicScreen.value = _getScreen();
 
         if (_model.value.isEmpty == true ||
             (_model.value.currentOrder == null &&
