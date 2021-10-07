@@ -42,8 +42,8 @@ class AuthController extends GetxController with MezDisposable {
   RxBool authStateNotifierInvoked = false
       .obs; // THIS IS BEING CHECKED ON THE ROOT MAIN.DART To wait for the first invoke!
 
-  dynamic _onSignOutCallback;
-  dynamic _onSignInCallback;
+  Function _onSignOutCallback;
+  Function _onSignInCallback;
 
   User? get user => _user.value;
   Rxn<fireAuth.User> _fireAuthUser = Rxn<fireAuth.User>();
@@ -55,18 +55,11 @@ class AuthController extends GetxController with MezDisposable {
   DatabaseHelper _databaseHelper =
       Get.find<DatabaseHelper>(); // Already Injected in main function
 
-  StreamSubscription<Event>? _userInfoListener;
-  StreamSubscription<Event>? get userInfoListener => _userInfoListener;
-
   // # REGION ------------- OTP Code ---------------
   RxInt _timeBetweenResending = 0.obs;
   int get timeBetweenResending => _timeBetweenResending.value;
 
-  void attachOnSignOutHook(Function f) => _onSignOutCallback = f;
-  void attachOnSignInHook(Function f) {
-    if (_onSignInCallback == null) f();
-    _onSignInCallback = f;
-  }
+  AuthController(this._onSignInCallback, this._onSignOutCallback);
 
   void resendOtpTimerActivate(int time) {
     _timeBetweenResending.value = time;
@@ -97,7 +90,8 @@ class AuthController extends GetxController with MezDisposable {
         print('User is currently signed out!');
         _user.value = null;
       } else {
-        _userInfoListener = _databaseHelper.firebaseDatabase
+        _onSignInCallback();
+        _databaseHelper.firebaseDatabase
             .reference()
             .child(userInfo(user.uid))
             .onValue
@@ -111,9 +105,9 @@ class AuthController extends GetxController with MezDisposable {
           Get.find<LanguageController>()
               .userLanguageChanged(_user.value!.language);
           GetStorage().write(getUserId, user.uid);
-        });
+        }).canceledBy(this);
       }
-    }).canceledBy(this);
+    });
     super.onInit();
   }
 
@@ -153,12 +147,14 @@ class AuthController extends GetxController with MezDisposable {
 
   Future<void> signOut() async {
     try {
-      _onSignOutCallback();
+      await _onSignOutCallback();
+      await cancelSubscriptions();
       await _auth.signOut();
-      Get.offAllNamed(kMainAuthWrapperRoute);
+      // Get.offAllNamed(kMainAuthWrapperRoute);
     } catch (e) {
       Get.snackbar("Failed to Sign you out!", e.toString(),
           snackPosition: SnackPosition.BOTTOM);
+      print(e);
     }
   }
 
@@ -190,9 +186,7 @@ class AuthController extends GetxController with MezDisposable {
         .timeout(Duration(seconds: 10),
             onTimeout: () =>
                 Future.error(Exception("Timed out , Check your Internet.")))
-        .then((value) {
-      _onSignInCallback();
-    }, onError: ((Object e, StackTrace stackTrace) {
+        .then((value) {}, onError: ((Object e, StackTrace stackTrace) {
       Get.snackbar("Failed to Sign you in!", e.toString(),
           snackPosition: SnackPosition.BOTTOM);
     }));
@@ -249,7 +243,6 @@ class AuthController extends GetxController with MezDisposable {
           "################################ DATA ###############################\n\n${response.data}\n\n");
       await fireAuth.FirebaseAuth.instance
           .signInWithCustomToken(response.data["token"]);
-      _onSignInCallback();
 
       await Get.offAllNamed(kMainAuthWrapperRoute);
     } catch (e) {
@@ -273,8 +266,6 @@ class AuthController extends GetxController with MezDisposable {
       // Once signed in, return the UserCredential
       fireAuth.FirebaseAuth.instance
           .signInWithCredential(facebookAuthCredential);
-
-      _onSignInCallback();
     } else {
       mezcalmosSnackBar("Notice ~", "Failed SignIn with Facebook !");
     }
@@ -309,7 +300,6 @@ class AuthController extends GetxController with MezDisposable {
       // Sign in the user with Firebase. If the nonce we generated earlier does
       // not match the nonce in `appleCredential.identityToken`, sign in will fail.
       fireAuth.FirebaseAuth.instance.signInWithCredential(oauthCredential);
-      _onSignInCallback();
     } catch (exception) {
       print(exception);
       mezcalmosSnackBar("Notice ~", "Failed SignIn with Apple !");
