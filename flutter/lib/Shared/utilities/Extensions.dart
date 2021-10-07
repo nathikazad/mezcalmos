@@ -3,11 +3,12 @@ import 'dart:async';
 class MezDisposable {
   List<StreamSubscription> _subscriptions = [];
 
-  void cancelSubscriptions() {
-    _subscriptions.forEach((subscription) {
+  Future<void> cancelSubscriptions() async {
+    await Future.forEach<StreamSubscription>(_subscriptions,
+        (subscription) async {
       print(
           "\n\n[ MEZ-DISPOSABLE EXTENSION ] :: CLOSED SUBSCRIPTION :: ${subscription.toString()} \n\n");
-      subscription.cancel();
+      await subscription.cancel();
     });
   }
 

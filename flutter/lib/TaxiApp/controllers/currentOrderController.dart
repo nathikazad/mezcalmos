@@ -161,12 +161,4 @@ class CurrentOrderController extends GetxController with MezDisposable {
     detachListeners();
     super.onClose();
   }
-
-  @override
-  void dispose() {
-    cancelSubscriptions();
-    detachListeners();
-    super.dispose();
-    print("--------------------> CurrentOrderController Auto Disposed !");
-  }
 }

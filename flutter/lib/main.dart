@@ -101,7 +101,9 @@ class _SPointState extends State<SPoint> {
       } else
         print("[ GET STORAGE ] FAILED TO INITIALIZE !");
       AuthController auCtrl =
-          Get.put<AuthController>(AuthController(), permanent: true);
+          Get.put<AuthController>(
+          AuthController(signInCallback, signOutCallback),
+          permanent: true);
       Get.put<SettingsController>(SettingsController(), permanent: true);
       // set to logs=false if you don't need the logs anymore.
       Get.put<AppLifeCycleController>(AppLifeCycleController(logs: true),
