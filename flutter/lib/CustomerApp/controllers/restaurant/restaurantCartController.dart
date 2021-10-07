@@ -1,4 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:mezcalmos/CustomerApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/models/Restaurant.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -20,7 +21,7 @@ class RestaurantCartController extends GetxController {
     if (_authController.user != null) {
       _databaseHelper.firebaseDatabase
           .reference()
-          .child("/users/${_authController.user!.uid}/cart")
+          .child(customerCart(_authController.user!.uid))
           .onValue
           .listen((event) async {
         dynamic cartData = event.snapshot.value;
@@ -73,14 +74,14 @@ class RestaurantCartController extends GetxController {
     cart.value?.addItem(cartItem);
     _databaseHelper.firebaseDatabase
         .reference()
-        .child("/users/${_authController.user!.uid}/cart")
+        .child(customerCart(_authController.user!.uid))
         .set(cart.value?.toFirebaseFormattedJson());
   }
 
   void clearCart() {
     _databaseHelper.firebaseDatabase
         .reference()
-        .child("/users/${_authController.user!.uid}/cart")
+        .child(customerCart(_authController.user!.uid))
         .remove();
   }
 

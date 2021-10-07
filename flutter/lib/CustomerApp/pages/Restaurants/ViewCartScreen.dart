@@ -41,7 +41,8 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
                     print(response);
                     if (response["errorCode"] == "serverError") {
                       // do something
-                    } else if (response["errorCode"] == "inAnotherOrder") {
+                    } else if (response["errorCode"] ==
+                        "inMoreThanThreeOrders") {
                       // do something
                     } else if (response["errorCode"] == "restaurantClosed") {
                       // do something

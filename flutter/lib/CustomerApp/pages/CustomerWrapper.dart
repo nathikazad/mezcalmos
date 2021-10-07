@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 // import 'package:mezcalmos/CustomerApp/pages/Orders/MakeOrderScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ListRestaurantsScreen.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -11,7 +12,8 @@ import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 class CustomerWrapper extends GetWidget<AuthController> {
   SideMenuDraweController _sideMenuDrawerController =
       Get.find<SideMenuDraweController>();
-
+  CustomerAuthController _customerAuthController =
+      Get.find<CustomerAuthController>();
   // pop Point!
   @override
   Widget build(BuildContext context) {

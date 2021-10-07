@@ -25,17 +25,17 @@ async function checkoutCart(uid, data) {
       errorCode: "invalidParams"
     }
   }
-  let customerCurrentOrder = (await firebase.database().ref(`/users/${uid}/state/currentOrder`).once('value')).val();
+  let customerCurrentOrder = (await firebase.database().ref(`/customers/${uid}/state/currentOrder`).once('value')).val();
 
-  if (customerCurrentOrder) {
+  if (customerCurrentOrder && Object.keys(customerCurrentOrder).length >= 3) {
     return {
       status: "Error",
-      errorMessage: "Customer is already in another order",
-      errorCode: "inAnotherOrder"
+      errorMessage: "Customer is already in three orders",
+      errorCode: "inMoreThanThreeOrders"
     }
   }
 
-  let cart = (await firebase.database().ref(`/users/${uid}/cart`).once('value')).val();
+  let cart = (await firebase.database().ref(`/customers/${uid}/cart`).once('value')).val();
   if (cart == null) {
     return {
       status: "Error",
@@ -78,10 +78,10 @@ async function checkoutCart(uid, data) {
   }
   console.log(payload)
   let orderRef = await firebase.database().ref(`/orders/restaurant`).push(payload);
-  firebase.database().ref(`/users/${uid}/orders/${orderRef.key}`).set(payload);
+  firebase.database().ref(`/customers/${uid}/orders/${orderRef.key}`).set(payload);
   firebase.database().ref(`/restaurants/orders/${cart.serviceProviderId}/${orderRef.key}`).set(payload);
   firebase.database().ref(`/openOrders/restaurant/${orderRef.key}`).set(payload);
-  firebase.database().ref(`/users/${uid}/state/currentOrder`).set(orderRef.key);
+  firebase.database().ref(`/customers/${uid}/state/currentOrders/${orderRef.key}`).set(payload);
   let chat = {
     participants: {},
     chatType: "order",
@@ -100,7 +100,7 @@ async function checkoutCart(uid, data) {
     phoneNumber: (restaurant.details.phoneNumber) ? restaurant.details.phoneNumber : null
   }
   firebase.database().ref(`/chat/${orderRef.key}`).set(chat);
-  await firebase.database().ref(`/users/${uid}/cart`).remove();
+  await firebase.database().ref(`/customers/${uid}/cart`).remove();
   let response = { status: "Success" }
   return response
 }

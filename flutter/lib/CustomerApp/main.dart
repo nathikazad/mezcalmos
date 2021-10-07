@@ -3,6 +3,9 @@ import 'package:get/route_manager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/pages/Wrapper.dart';
+import 'package:mezcalmos/CustomerApp/helpers/authHooks.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:get/get.dart';
 
 class CustomerApp extends StatelessWidget {
   @override
@@ -19,7 +22,7 @@ class CustomerApp extends StatelessWidget {
     return GetMaterialApp(
         debugShowCheckedModeBanner: false,
         onInit: () async => await _initializeConfig(),
-        title: 'Fiction2Mission',
+        title: 'Customer App',
         theme: ThemeData(
             primaryColor: Colors.white,
             visualDensity: VisualDensity.adaptivePlatformDensity),
