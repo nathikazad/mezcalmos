@@ -1,6 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:mezcalmos/CustomerApp/models/Cart.dart';
-import 'package:mezcalmos/CustomerApp/models/Restaurant.dart';
+import 'package:mezcalmos/CustomerApp/models/cart.dart';
+import 'package:mezcalmos/CustomerApp/models/restaurant.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:cloud_functions/cloud_functions.dart';
@@ -69,7 +69,7 @@ class RestaurantCartController extends GetxController {
     if (cart.value == null) {
       cart.value = Cart(associatedRestaurant!);
     }
-    
+
     cart.value?.addItem(cartItem);
     _databaseHelper.firebaseDatabase
         .reference()
