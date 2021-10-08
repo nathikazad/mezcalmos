@@ -9,8 +9,7 @@ const String localhost = "http://127.0.0.1";
 const String authPort = ":9099";
 const String dbRoot = ":9000/?ns=$db";
 const String functionPort = ":5001";
-const String defaultDb = "prod";
-const String defaultLaunchMode = "prod"; // can be dev / prod
+// can be dev / prod
 
 // ----------------- TEST STRINGS ----------------- //
 

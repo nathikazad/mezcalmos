@@ -12,13 +12,13 @@
 
             "dev":{
 
-                "db": "prod",
+                "db": "production",
                 "lmode" : "dev"
             },
 
             "prod":{
 
-                "db": "prod",
+                "db": "production",
                 "lmode" : "prod"
             }
         },

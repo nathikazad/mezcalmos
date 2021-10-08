@@ -3,9 +3,11 @@
 import os , json
 from sys import argv
 from enum import Enum
+import subprocess as proc
+
 
 # GLOBAL CONSTANTS !
-VERSION = "1.0.5"
+VERSION = "1.0.6"
 XOR_VALUE = 100
 CONFIG_FILE = "config.json"
 ACTIVE_DEBUG = True
@@ -27,7 +29,7 @@ POSSIBLE_APPS = [
 
 POSSIBLE_DBS = [
     'test',
-    'prod',
+    'production',
     'dev'
 ]
 
@@ -36,6 +38,10 @@ POSSIBLE_LMODES = [
     'dev',
     'prod'
 ]
+
+class OUTPUT_FILTERS(Enum):
+    SHOW = 0
+    HIDE = 1
 
 class DW_EXIT_REASONS(Enum):
     NORMAL = 0
@@ -69,10 +75,12 @@ class DW_EXIT_REASONS(Enum):
     BUILDING_LMODE_DB_NOT_SUPPORTED_YET = -28
     WRONG_VERSION_GIVEN = -29
     PUBSPECT_YAML_NOT_FOUND = -30
-    LOCAL_PROPERTIES_NOT_FOUND = 31
-    FOUND_MULTI_VERSIONS_IN_PUBSPEC_YAML = 32
-    FOUND_MULTI_VERSION_NAME_IN_LOCAL_PROPERTIES = 33
-    FOUND_MULTI_VERSION_CODE_IN_LOCAL_PROPERTIES = 34
+    LOCAL_PROPERTIES_NOT_FOUND = -31
+    FOUND_MULTI_VERSIONS_IN_PUBSPEC_YAML = -32
+    FOUND_MULTI_VERSION_NAME_IN_LOCAL_PROPERTIES = -33
+    FOUND_MULTI_VERSION_CODE_IN_LOCAL_PROPERTIES = -34
+    LAUNCH_PROC_WITH_NONE_BINARY = -35
+    FILTER_FILE_NOT_FOUND = -36
 
     REACH_THE_LAZY_SAAD = -10000
 
@@ -84,17 +92,33 @@ class Launcher:
         self.__launch__()
         try:
             PRINTLN(f"\n[~] Launching with : {user_args} \n\n")
-            os.system(f'flutter run {self.flutter_setup}')
+            f_args = self.flutter_setup.split(' ')
+            ff = None
+            fmd = OUTPUT_FILTERS.SHOW
+
+            # filter file
+            if 'filter' in self.user_args.keys():
+                ff = self.user_args['filter']
+
+                # filter mode
+                if 'fmode' in self.user_args.keys():
+                    if self.user_args['fmode'] == "hide":
+                        fmd = OUTPUT_FILTERS.HIDE
+
+            binary = ['flutter' , 'run']
+            binary.extend(f_args)
+
+            Config.launch_flutter_app(binary=binary , filter_file=ff , filter_mode=fmd)
         except KeyboardInterrupt:
             print("Exiting the launcher .... bye bye!")
     
     def __f_checker__(self):
-        if not os.path.exists('flutter_hooks/launch/pre-main'):
+        if not os.path.exists('flutter_hooks/pre-main'):
             PRINTLN("[!] Error - No pre-main file neither in launcher files or flutter files !")
             exit(DW_EXIT_REASONS.ROOT_MAIN_DART_FILE_NOT_FOUND)
         PRINTLN("[+] No ../lib/pre-main.dart found .. generating a new one !")
         
-        prem = open('flutter_hooks/launch/pre-main' , encoding='utf-8' , errors='ignore').read()
+        prem = open('flutter_hooks/pre-main' , encoding='utf-8' , errors='ignore').read()
         open('../lib/pre-main.dart' , 'w+').write(prem) 
 
     def __patcher__(self):
@@ -278,31 +302,61 @@ class Builder:
 
 
 class Config:
-    
+
     def __help__(self):
         print(f"""
         
         + app=<AppName>  `Default is {DEFAULTS['APP']}`
         + env=<Environment> `default is stage`
+        + version
+        + filter=<FileName.filter>  : just pass the filter file name you created under output_filters.
+        + fmode=<filter_mode> : Default is 'show' , can be 'hide' depend on how you want to use the filter file!
         + --lan : in case you want to launch to another device connected to the same network.
         + --build=<mode> : to order the launcher to build where mode is [apk, appbundle]
-        + help : Show this help manual.
+        + --set-version=<version> : Used to set the project's version to a specific version , this will set the version and quit.
+        
+        === only in build ===
+        + version=<version> : example : 1.0.15+11
 
         PS : if an Error happend Send DW_EXIT_REASON.<NAME>.
         
         """)
-
+    
     @staticmethod
-    def chSum(app , isLaunch=True):
-        last_ch_sum = "flutter_hooks/" + ("launch" if isLaunch else "build") + "/.chsum"
-        f = open(last_ch_sum , 'r+').read().replace('\n' , '')
+    def launch_flutter_app(binary , filter_file=None, filter_mode=OUTPUT_FILTERS.SHOW):
+        ff = []
+        if binary != None:
+            if filter_file != None:
+                if os.path.exists(f"output_filters/{filter_file}"):
+                    ff = open(f"output_filters/{filter_file}").readlines()
+                    PRINTLN(f"[+] Using {filter_mode} on {ff.__len__()} filters specified in => output_filters/{filter_file}")
+                    with proc.Popen(binary, stdout=proc.PIPE, universal_newlines=True) as p:
+                        for line in p.stdout:  
+                            for f in ff:
+                                if f.strip() in line and filter_mode == OUTPUT_FILTERS.SHOW:
+                                    print(line)
+
+                else:
+                    PRINTLN(f"[!] Error there is no such filter file in output_filters/{filter_file} !")
+                    exit(DW_EXIT_REASONS.FILTER_FILE_NOT_FOUND)
+            else:
+                
+                os.system(' '.join(binary))
+        else:
+            PRINTLN("[!] Error happend in calling launch_flutter_app with null binary :( ")
+            exit(DW_EXIT_REASONS.LAUNCH_PROC_WITH_NONE_BINARY)
+
+    # @staticmethod
+    # def chSum(app , isLaunch=True):
+    #     last_ch_sum = "flutter_hooks/" + ("launch" if isLaunch else "build") + "/.chsum"
+    #     f = open(last_ch_sum , 'r+').read().replace('\n' , '')
         
-        PRINTLN(f"[+] Generating new checkSum for __app__[{app}]")
-        fp = open(last_ch_sum , 'w+')
-        fp.write(app)
-        fp.close()
-        # return last app
-        return f
+    #     PRINTLN(f"[+] Generating new checkSum for __app__[{app}]")
+    #     fp = open(last_ch_sum , 'w+')
+    #     fp.write(app)
+    #     fp.close()
+    #     # return last app
+    #     return f
 
         # last_ch_sum = "flutter_hooks/" + ("launch" if isLaunch else "build") + "/.chsum"
         # f = open(last_ch_sum , 'r+').read().replace('\n' , '')
@@ -478,8 +532,16 @@ class Config:
             self.user_args['pymode'] = "build"
         else: self.user_args['pymode'] = "launch"
         
-        # in case of a launch and run in lan :
+        _ = self.__get_arg_value__('filter=')
+        _fm = self.__get_arg_value__('fmode=')
+        if _:
+            self.user_args['filter'] = _
+            if _fm :
+                self.user_args['fmode']  = _fm
 
+
+
+        # in case of a launch and run in lan :
         if self.user_args['pymode'] == "launch":
             self.user_args['host'] = "http://"+("127.0.0.1" if '--lan' not in args else self.__get_actual_lan_ip())
 
@@ -556,10 +618,15 @@ class Config:
             # if self.user_args['lmode'] != 'stage' and self.user_args['db'] != 'test':
             #     PRINTLN(f'[!] --build={_} : Error - One of Lmode::{self.user_args["lmode"]} | Db::{self.user_args["db"] } not supported yet!')
             #     exit(DW_EXIT_REASONS.BUILDING_LMODE_DB_NOT_SUPPORTED_YET)
-            r = input("[!] Did you change the defaultLaunchMode and defaultDb in global.dart to the right ones ? y/n : ")
-            if r.lower() != 'y':
-                exit(DW_EXIT_REASONS.NORMAL)
+            # r = input("[!] Did you change the defaultLaunchMode and defaultDb in global.dart to the right ones ? y/n : ")
+            # if r.lower() != 'y':
+            #     exit(DW_EXIT_REASONS.NORMAL)
             
+            pre_main = open("flutter_hooks/pre-main").read()
+            pre_main = pre_main.replace("<database>" , self.user_args['db']).replace("<launch-mode>" , self.user_args['lmode'])
+    
+            open('../lib/pre-main.dart' , 'w+').write(pre_main)
+
             v_ = self.__get_arg_value__('version=')
             if v_:
                 self.__patch_version__(v_)
