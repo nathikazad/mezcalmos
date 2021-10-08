@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,18 +17,16 @@ class Wrapper extends GetWidget<AuthController> {
   @override
   Widget build(BuildContext context) {
     SettingsController _settingsController = Get.find<SettingsController>();
-    // Make it event based instead of Obx
-    return Obx(() {
-      if (controller.user != null) {
-        Get.lazyPut(() => DeviceNotificationsController());
-        Get.lazyPut(() => MessageController());
-        Get.lazyPut(() => FBTaxiNotificationsController());
-
-        return _settingsController.hasLocationPermissions.value == false
-            ? LocationPermissionScreen()
-            : CustomerWrapper();
-      } else
-        return SignIn();
-    });
+    return StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (_, AsyncSnapshot<User?> snapUser) {
+          if (snapUser.data == null) {
+            return SignIn();
+          } else {
+            return _settingsController.hasLocationPermissions.value == false
+                ? LocationPermissionScreen()
+                : CustomerWrapper();
+          }
+        });
   }
 }

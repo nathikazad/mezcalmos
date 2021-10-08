@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCurrentOrderScreen.dart';
 import 'dart:async';
 
 class ViewCartScreen extends GetView<RestaurantCartController> {
@@ -28,6 +28,7 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
                   controller.clearCart();
                 }),
             Obx(() {
+              print(cart.value);
               return Text(cart.value?.toFirebaseFormattedJson().toString() ??
                   "Cart is empty");
             }),
@@ -36,7 +37,8 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
                 onPressed: () async {
                   dynamic response = await controller.checkout();
                   if (response["status"] == "Success")
-                    Get.offAll(ViewOrderScreen());
+                    Get.offAll(
+                        ViewCurrentRestaurantOrderScreen(response["orderId"]));
                   else {
                     print(response);
                     if (response["errorCode"] == "serverError") {

@@ -40,8 +40,9 @@ class CartItem {
       String chosenId = _chosenOneOptions[chooseOneOption.id]!;
       costPerOne += chooseOneOption.findChooseOneOptionListItem(chosenId)!.cost;
     });
+    print(_chosenManyOptions);
     this.item.chooseManyOptions.forEach((chooseManyOption) {
-      if (_chosenManyOptions[chooseManyOption.id]!)
+      if (_chosenManyOptions[chooseManyOption.id] ?? false)
         costPerOne += chooseManyOption.cost;
     });
     return costPerOne;
@@ -77,11 +78,13 @@ class CartItem {
     this.item.chooseManyOptions.forEach((e) {
       ChooseManyOption? chooseManyOption =
           this.item.findChooseManyOption(e.id!);
-      json["options"]["chosenManyOptions"][e.id] = {
-        "chosenValue": this.chosenManyOptions[e.id],
-        "name": chooseManyOption?.name,
-        "chosenValueCost": chooseManyOption?.cost ?? 0
-      };
+      if (this.chosenManyOptions[e.id] ?? false) {
+        json["options"]["chosenManyOptions"][e.id] = {
+          "chosenValue": this.chosenManyOptions[e.id],
+          "name": chooseManyOption?.name,
+          "chosenValueCost": chooseManyOption?.cost ?? 0
+        };
+      }
     });
 
     return json;

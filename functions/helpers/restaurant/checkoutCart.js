@@ -72,7 +72,7 @@ async function checkoutCart(uid, data) {
     },
     orderType: "restaurant",
     status: "preparingOrder",
-    orderTime: (new Date()).toUTCString(),
+    orderTime: (new Date()).toISOString(),
     paymentType: data.paymentType,
     ...cart
   }
@@ -101,6 +101,6 @@ async function checkoutCart(uid, data) {
   }
   firebase.database().ref(`/chat/${orderRef.key}`).set(chat);
   await firebase.database().ref(`/customers/${uid}/cart`).remove();
-  let response = { status: "Success" }
+  let response = { status: "Success", orderId: orderRef.key }
   return response
 }

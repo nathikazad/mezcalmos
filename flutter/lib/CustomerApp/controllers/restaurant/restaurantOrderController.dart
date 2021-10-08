@@ -1,5 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
+import 'package:mezcalmos/CustomerApp/models/Order.dart';
 import 'package:mezcalmos/CustomerApp/models/Restaurant.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
@@ -8,94 +10,60 @@ import 'package:get/get.dart';
 import 'dart:async';
 
 class RestaurantOrderController extends GetxController {
-  DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
-  AuthController _authController = Get.find<AuthController>();
-
-  Restaurant? associatedRestaurant;
-  Rxn<Cart> cart = Rxn();
+  dynamic currentOrderData = "intitialized";
   @override
   void onInit() {
-    super.onInit();
-    print("--------------------> RestaurantsCartController Initialized !");
-    if (_authController.user != null) {
-      _databaseHelper.firebaseDatabase
-          .reference()
-          .child("/users/${_authController.user!.uid}/cart")
-          .onValue
-          .listen((event) async {
-        dynamic cartData = event.snapshot.value;
-        // check if cart has data
-        if (cartData != null) {
-          // check if cart data is for restaurant
-          if (cartData["orderType"] == "restaurant") {
-            // check if already associated restaurant with cart is the same as current restaurant,
-            // if not clear the old associated restaurant
-            if (associatedRestaurant != null) {
-              if (cartData["serviceProviderId"] != associatedRestaurant!.id) {
-                associatedRestaurant = null;
-              }
-            }
-            // if no associated restaurant data is saved, then fetch it from database
-            if (associatedRestaurant == null) {
-              associatedRestaurant =
-                  await getAssociatedRestaurant(cartData["serviceProviderId"]);
-            }
-            cart.value = Cart.fromCartData(cartData, associatedRestaurant!);
-          }
+    print("--------------------> RestaurantsOrderController Initialized !");
+  }
+
+  Stream<List<Order>> getCurrentOrders() {
+    return Get.find<CustomerAuthController>()
+        .customerStream
+        .stream
+        .where((customer) {
+      if (customer?.data["state"]?["currentOrders"] == null) {
+        if (currentOrderData != null) {
+          print("No current orders but there was before");
+          currentOrderData = null;
+          return true;
         } else {
-          cart.value = null;
+          print("No current orders now or before");
+          currentOrderData = null;
+          return false;
         }
-      });
-    }
+      } else if (currentOrderData == null) {
+        print("Previous current order was null");
+        currentOrderData = customer?.data["state"]?["currentOrders"];
+        return true;
+      } else if (currentOrderData.toString() !=
+          customer?.data["state"]?["currentOrders"].toString()) {
+        print("Previous current order was different");
+        currentOrderData = customer?.data["state"]?["currentOrders"];
+        return true;
+      } else {
+        print("Previous current order was same");
+        return false;
+      }
+    }).map<List<Order>>((customer) => customer?.currentOrders ?? []);
   }
 
-  Future<Restaurant> getAssociatedRestaurant(String restaurantId) async {
-    DataSnapshot snapshot = await _databaseHelper.firebaseDatabase
-        .reference()
-        .child('restaurants/info/${restaurantId}')
-        .once();
-    return Restaurant.fromRestaurantData(snapshot.value, id: restaurantId);
+  Stream<Order?> getCurrentOrder(String orderId) {
+    return getCurrentOrders().map<Order?>((currentOrders) {
+      try {
+        return currentOrders
+            .firstWhere((currentOrder) => currentOrder.orderId == orderId);
+      } on StateError {
+        return null;
+      }
+    });
   }
 
-  void addItem(CartItem cartItem, String restaurantId) async {
-    if (associatedRestaurant == null) {
-      associatedRestaurant = await getAssociatedRestaurant(restaurantId);
-    } else if (associatedRestaurant!.id != restaurantId) {
-      // In future, throw items from another restaurant in cart error
-      // for now clear cart and associate new restaurant
-      cart.value = Cart(associatedRestaurant!);
-      associatedRestaurant = await getAssociatedRestaurant(restaurantId);
-    }
-    if (cart.value == null) {
-      cart.value = Cart(associatedRestaurant!);
-    }
-    cart.value?.addItem(cartItem);
-    _databaseHelper.firebaseDatabase
-        .reference()
-        .child("/users/${_authController.user!.uid}/cart")
-        .set(cart.value?.toFirebaseFormattedJson());
-  }
-
-  void clearCart() {
-    _databaseHelper.firebaseDatabase
-        .reference()
-        .child("/users/${_authController.user!.uid}/cart")
-        .remove();
-  }
-
-  void changeQuantityOfItem(
-    String itemId,
-    int quantity,
-  ) {
-    cart.value?.incrementItem(itemId, quantity);
-  }
-
-  Future<void> checkout() async {
-    HttpsCallable checkoutRestaurantCart =
-        FirebaseFunctions.instance.httpsCallable('checkoutRestaurantCart');
+  Future<void> cancelOrder(String orderId) async {
+    HttpsCallable cancelOrder =
+        FirebaseFunctions.instance.httpsCallable('cancelOrder');
     try {
-      HttpsCallableResult response = await checkoutRestaurantCart
-          .call({"from": "home", "paymentType": "cash"});
+      HttpsCallableResult response =
+          await cancelOrder.call({"orderId": orderId});
       print(response.data);
       // handle restaurantClosed error
     } catch (e) {}

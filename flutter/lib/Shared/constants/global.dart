@@ -20,7 +20,7 @@ const String tEmailTestPassword = "password";
 // ----------------- Costants Numbers ----------------- //
 
 const double nDefaultMezcalmosTextSize = 30.5;
-const int nSplashScreenTimer = 5;
+const int nSplashScreenTimer = 1;
 // ----------------- Costants Strings ----------------- //
 
 const String tPrivacyPolicy = "https://meztaxi.com/privacy-policy.html";

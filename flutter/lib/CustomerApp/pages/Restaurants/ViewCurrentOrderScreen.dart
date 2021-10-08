@@ -5,13 +5,18 @@ import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 
 import 'dart:async';
 
-class ViewOrderScreen extends GetView<RestaurantOrderController> {
-  Rxn<Cart> cart = Rxn();
+import 'package:mezcalmos/CustomerApp/models/Order.dart';
 
-  ViewCartScreen() {
-    RestaurantOrderController controller =
-        Get.put<RestaurantOrderController>(RestaurantOrderController());
-    cart = controller.cart;
+class ViewCurrentRestaurantOrderScreen
+    extends GetView<RestaurantOrderController> {
+  Rxn<RestaurantOrder> order = Rxn();
+
+  ViewCurrentRestaurantOrderScreen(String orderId) {
+    Get.find<RestaurantOrderController>()
+        .getCurrentOrder(orderId)
+        .listen((event) {
+      order.value = event as RestaurantOrder;
+    });
   }
 
   @override

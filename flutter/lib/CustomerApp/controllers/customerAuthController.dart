@@ -19,7 +19,7 @@ class CustomerAuthController extends GetxController with MezDisposable {
       Get.put<DeviceNotificationsController>(DeviceNotificationsController());
 
   List<Order> get currentOrders => _customer.value?.currentOrders ?? [];
-
+  Rxn<Customer> get customerStream => _customer;
   bool _checkedAppVersion = false;
 
   @override
@@ -38,7 +38,7 @@ class CustomerAuthController extends GetxController with MezDisposable {
           .child(customerNode(_authController.user!.uid))
           .onValue
           .listen((event) async {
-        _customer.value = Customer.fromSnapshot(event.snapshot);
+        _customer.value = Customer.fromSnapshot(event.snapshot.value);
 
         if (_checkedAppVersion == false) {
           String VERSION = GetStorage().read(version);

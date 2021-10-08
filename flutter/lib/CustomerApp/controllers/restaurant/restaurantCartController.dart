@@ -25,6 +25,7 @@ class RestaurantCartController extends GetxController {
           .onValue
           .listen((event) async {
         dynamic cartData = event.snapshot.value;
+        print(cartData);
         // check if cart has data
         if (cartData != null) {
           // check if cart data is for restaurant
