@@ -67,7 +67,7 @@ class AuthController extends GetxController with MezDisposable {
     Timer.periodic(
       second,
       (Timer __t) {
-        print(
+        mezDbgPrint(
             "OTP Code resending available after $timeBetweenResending Seconds !");
         if (_timeBetweenResending.value == 0)
           __t.cancel();
@@ -84,10 +84,10 @@ class AuthController extends GetxController with MezDisposable {
     Get.lazyPut(() => LanguageController());
     _auth.authStateChanges().listen((fireAuth.User? user) {
       authStateNotifierInvoked.value = true;
-      print("authStateNotifierInvoked ====> $authStateNotifierInvoked");
+      mezDbgPrint("authStateNotifierInvoked ====> $authStateNotifierInvoked");
       _fireAuthUser.value = user;
       if (user == null) {
-        print('User is currently signed out!');
+        mezDbgPrint('User is currently signed out!');
         _user.value = null;
       } else {
         _onSignInCallback();
@@ -119,7 +119,7 @@ class AuthController extends GetxController with MezDisposable {
           .ref("users/${uid}/avatar/${imageFile.path}")
           .putFile(imageFile);
     } on firebase_core.FirebaseException catch (e) {
-      print("{{{{{{{{{{{{{{{{{{{{" +
+      mezDbgPrint("{{{{{{{{{{{{{{{{{{{{" +
           e.message.toString() +
           "}}}}}}}}}}}}}}}}}}}}}}}}}}}}");
     } finally {
@@ -205,7 +205,7 @@ class AuthController extends GetxController with MezDisposable {
         // 'language': _settings.appLanguage.userLanguageKey,
         'database': _databaseHelper.dbType
       });
-      print(response);
+      mezDbgPrint(response);
       mezcalmosSnackBar(
           "Notice ~",
           responseStatusChecker(response.data,
@@ -216,14 +216,14 @@ class AuthController extends GetxController with MezDisposable {
     } catch (e) {
       // mezcalmosSnackBar("Notice ~", "Failed to send OTP message :( ");
       // _waitingResponse.value = false;
-      print("Exception happend in sendOTPForLogin : $e"); // i
-      print(e);
+      mezDbgPrint("Exception happend in sendOTPForLogin : $e"); // i
+      mezDbgPrint(e);
     }
     return response!.data;
   }
 
   Future<void> signInUsingOTP(String phoneNumber, String otpCode) async {
-    print("$phoneNumber  < phone ------ otp > $otpCode");
+    mezDbgPrint("$phoneNumber  < phone ------ otp > $otpCode");
     HttpsCallable getAuthUsingOTPFunction =
         FirebaseFunctions.instance.httpsCallable('getAuthUsingOTP');
     try {
@@ -238,8 +238,8 @@ class AuthController extends GetxController with MezDisposable {
       });
       // mezcalmosSnackBar("Notice ~", "OTP message has been sent !");
       // _waitingResponse.value = false;
-      print("GetAuthUsingOTP Response");
-      print(
+      mezDbgPrint("GetAuthUsingOTP Response");
+      mezDbgPrint(
           "################################ DATA ###############################\n\n${response.data}\n\n");
       await fireAuth.FirebaseAuth.instance
           .signInWithCustomToken(response.data["token"]);
@@ -248,7 +248,7 @@ class AuthController extends GetxController with MezDisposable {
     } catch (e) {
       mezcalmosSnackBar("Error", "OTP Code confirmation failed :(");
 
-      print("Exception happend in GetAuthUsingOTP : $e");
+      mezDbgPrint("Exception happend in GetAuthUsingOTP : $e");
     }
   }
 
@@ -257,7 +257,8 @@ class AuthController extends GetxController with MezDisposable {
   Future signInWithFacebook() async {
     // Trigger the sign-in flow
     final LoginResult result = await FacebookAuth.instance.login();
-    print(" FB AUTH STATUS +++++++++++++++++++++ ${result.status.toString()}");
+    mezDbgPrint(
+        " FB AUTH STATUS +++++++++++++++++++++ ${result.status.toString()}");
 
     if (result.status == LoginStatus.success) {
       // Create a credential from the access token
@@ -289,7 +290,7 @@ class AuthController extends GetxController with MezDisposable {
         nonce: nonce,
       );
 
-      print(appleCredential.authorizationCode);
+      mezDbgPrint(appleCredential.authorizationCode);
 
       // Create an `OAuthCredential` from the credential returned by Apple.
       final oauthCredential = fireAuth.OAuthProvider("apple.com").credential(
@@ -301,7 +302,7 @@ class AuthController extends GetxController with MezDisposable {
       // not match the nonce in `appleCredential.identityToken`, sign in will fail.
       fireAuth.FirebaseAuth.instance.signInWithCredential(oauthCredential);
     } catch (exception) {
-      print(exception);
+      mezDbgPrint(exception);
       mezcalmosSnackBar("Notice ~", "Failed SignIn with Apple !");
     }
   }
@@ -310,6 +311,6 @@ class AuthController extends GetxController with MezDisposable {
   void dispose() {
     cancelSubscriptions();
     super.dispose();
-    print("--------------------> AuthController Auto Disposed !");
+    mezDbgPrint("--------------------> AuthController Auto Disposed !");
   }
 }

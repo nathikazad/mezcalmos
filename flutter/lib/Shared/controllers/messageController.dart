@@ -5,9 +5,9 @@ import 'package:mezcalmos/Shared/constants/databaseNodes.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/utilities/Extensions.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 class MessageController extends GetxController with MezDisposable {
   Rx<Chat> _model = Chat("", "", {}, [], "").obs;
@@ -20,7 +20,7 @@ class MessageController extends GetxController with MezDisposable {
   @override
   void onInit() {
     super.onInit();
-    print("--------------------> messageController Initialized !");
+    mezDbgPrint("--------------------> messageController Initialized !");
   }
 
   void loadChat(String userId, String orderId,
@@ -33,12 +33,12 @@ class MessageController extends GetxController with MezDisposable {
         .onValue
         .listen((event) {
       if (event.snapshot.value != null) {
-        // print("\n\n\n ${event.snapshot.value} \n\n\n");
+        // mezDbgPrint("\n\n\n ${event.snapshot.value} \n\n\n");
         Chat res = Chat.fromJson(event.snapshot.key, event.snapshot.value);
 
         _model.value = res;
         if (onValueCallBack != null) onValueCallBack();
-        // print(
+        // mezDbgPrint(
         //     "--------------------> messageController Listener Invoked with Messages > ${_model.value.messages} ");
       }
     }).canceledBy(this);

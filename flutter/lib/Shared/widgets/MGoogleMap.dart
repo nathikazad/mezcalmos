@@ -1,62 +1,73 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:get/state_manager.dart';
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
-class MGoogleMap extends StatefulWidget {
-  List<CustomMarker> customMarkers;
+class MGoogleMap extends StatefulWidget with MezDisposable {
+  // List<CustomMarker> customMarkers;
   LatLng initialLocation;
   Set<Polyline> polylines;
   LatLngBounds? bounds;
-  Set<Marker> markers = <Marker>{};
+  RxList<Marker> markers;
+  Map<String, Stream<LocationData>> idWithSubscription;
 
-  MGoogleMap(this.customMarkers, this.initialLocation,
-      {this.polylines = const <Polyline>{}, this.bounds});
+  MGoogleMap(
+    this.markers,
+    this.initialLocation, {
+    this.polylines = const <Polyline>{},
+    this.bounds,
+    this.idWithSubscription = const {},
+  });
 
   @override
   State<StatefulWidget> createState() => _MGoogleMapState();
 }
 
-class _MGoogleMapState extends State<MGoogleMap> {
+class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
   GoogleMapController? _controller;
+  Completer<GoogleMapController> _completer = Completer();
+
+  // LatLng getMapCenter()
+  // {
+
+  // }
 
   void updateMarkers() {
     List<LatLng> _bnds = [];
-    List<Marker> _mrkrs = [];
 
-    widget.customMarkers.forEach((cmarker) {
-      if (cmarker.fitInBounds) _bnds.add(cmarker.position);
-      _mrkrs.add(cmarker.marker());
+    widget.markers.forEach((cmarker) {
+      _bnds.add(cmarker.position);
     });
 
     /* basically means :
+    *
     *   if all markers have fitInBounds = false  (we don't care about them in the fitBounds)
     *   or all markers have firBounds = true  (We have to show all of them in the fitbounds)
     *   then we will include the Polyline's Bounds , 
     *   else we will just fit the markers with fitInBounds = True.
+    *
     */
 
-    if (_bnds.isEmpty || _bnds.length == _mrkrs.length) {
+    if (_bnds.isEmpty) {
       _bnds.addAll(_getLatLngBoundsFromPolyline(widget.polylines));
     }
-    setState(() {
-      if (_bnds.isNotEmpty) widget.bounds = createMapBounds(_bnds);
-      if (_mrkrs.isNotEmpty) {
-        widget.markers.assignAll(_mrkrs);
-      }
 
-      if (_controller != null && widget.bounds != null) {
-        _controller
-            ?.animateCamera(CameraUpdate.newLatLngBounds(widget.bounds!, 100));
-      }
-    });
+    if (mounted) {
+      setState(() {
+        if (_bnds.isNotEmpty) widget.bounds = createMapBounds(_bnds);
+        if (_controller != null && widget.bounds != null) {
+          _controller?.animateCamera(
+              CameraUpdate.newLatLngBounds(widget.bounds!, 100));
+        }
+      });
+    }
   }
 
-  // in case we need it in future.
   List<LatLng> _getLatLngBoundsFromPolyline(Set<Polyline> p) {
     double minLat = p.first.points.first.latitude;
     double minLong = p.first.points.first.longitude;
@@ -82,36 +93,43 @@ class _MGoogleMapState extends State<MGoogleMap> {
 
   @override
   void initState() {
-    mezDbgPrint("+ Init MGoogleMap :: called !");
     updateMarkers();
+
+    widget.idWithSubscription.forEach((markerId, stream) {
+      stream.listen((newLoc) {
+        setState(() {
+          int i = widget.markers
+              .indexWhere((element) => element.markerId.value == markerId);
+          widget.markers[i] = Marker(
+              markerId: MarkerId(markerId),
+              icon: widget.markers[i].icon,
+              position: LatLng(newLoc.latitude!, newLoc.longitude!));
+        });
+      }).canceledBy(this);
+    });
 
     super.initState();
   }
 
   @override
   void dispose() {
-    mezDbgPrint("+ Dispose MGoogleMap :: called !");
     // favoid keeping listeners in memory.
-    cancelMarkersSubs(widget.customMarkers);
+    cancelSubscriptions();
     // gmapControlelr disposing.
     _controller?.dispose();
-
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    mezDbgPrint("+ build MGoogleMap :: called !");
-
-    return widget.customMarkers.isNotEmpty
+    return widget.markers.isNotEmpty
         ? GoogleMap(
             padding: EdgeInsets.all(20),
             mapToolbarEnabled: false,
             myLocationButtonEnabled: false,
             // minMaxZoomPreference: MinMaxZoomPreference(10, 30),
             buildingsEnabled: false,
-            markers:
-                widget.customMarkers.map((element) => element.marker()).toSet(),
+            markers: Set<Marker>.from(widget.markers),
             polylines: widget.polylines,
             zoomControlsEnabled: false,
             compassEnabled: false,
@@ -125,11 +143,11 @@ class _MGoogleMapState extends State<MGoogleMap> {
               await _gController.setMapStyle(GetStorage().read('map_style'));
               _controller = _gController;
 
-              if (widget.bounds != null)
-                await _gController.animateCamera(
+              if (widget.bounds != null && _controller != null) {
+                await _controller!.animateCamera(
                     CameraUpdate.newLatLngBounds(widget.bounds!, 100));
-
-              Completer<GoogleMapController>().complete(_gController);
+              }
+              _completer.complete(_gController);
             },
           )
         : Center(

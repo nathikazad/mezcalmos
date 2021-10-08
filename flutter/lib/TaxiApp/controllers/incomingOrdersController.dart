@@ -32,14 +32,11 @@ class IncomingOrdersController extends GetxController with MezDisposable {
   // Storing all the needed Listeners here
   late Worker _updateOrderDistanceToClient;
 
-  // dynamic get waitingResponse => _waitingResponse.value;
-
   Order? get selectedIncommingOrder => (_selectedIncommingOrderKey.value != "")
       ? orders.firstWhere(
           (element) => element.id == _selectedIncommingOrderKey.value,
           orElse: () => Order.empty())
       : null;
-  Function fillMarkersCallback = () => null; // returns null by default
 
   set selectedIncommingOrderKey(String selectedOrderKey) {
     _selectedIncommingOrderKey.value = selectedOrderKey;
@@ -74,6 +71,8 @@ class IncomingOrdersController extends GetxController with MezDisposable {
 
           orders
               .sort((a, b) => a.distanceToClient.compareTo(b.distanceToClient));
+
+          mezDbgPrint(orders);
         }
         // if (orders
         //         .where(
@@ -99,7 +98,7 @@ class IncomingOrdersController extends GetxController with MezDisposable {
     }
 
     _appLifeCycleController.attachCallback(AppLifecycleState.resumed, () {
-      print("[+] Callback executed :: app resumed !");
+      mezDbgPrint("[+] Callback executed :: app resumed !");
       orders.forEach((element) {
         _databaseHelper.firebaseDatabase
             .reference()
@@ -130,12 +129,12 @@ class IncomingOrdersController extends GetxController with MezDisposable {
       // _selectedIncommingOrderKey.value = "";
       // Get.back(closeOverlays: true);
       mezcalmosSnackBar("Notice ~", "A new Order has been accpeted !");
-      print("Accept Taxi Response");
-      print(response.data);
+      mezDbgPrint("Accept Taxi Response");
+      mezDbgPrint(response.data);
     } catch (e) {
       // _waitingResponse.value = false;
       mezcalmosSnackBar("Notice ~", "Failed to accept the taxi order :( ");
-      print("Exception happend in acceptTaxi : $e");
+      mezDbgPrint("Exception happend in acceptTaxi : $e");
     }
   }
 
@@ -143,6 +142,6 @@ class IncomingOrdersController extends GetxController with MezDisposable {
   void dispose() {
     detachListeners();
     super.dispose();
-    print("--------------------> Incoming Order Controller disposed");
+    mezDbgPrint("--------------------> Incoming Order Controller disposed");
   }
 }

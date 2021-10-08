@@ -1,4 +1,3 @@
-import 'dart:io' show Platform;
 import 'dart:typed_data';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -9,6 +8,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
+import 'package:mezcalmos/Shared/models/Order.dart';
+import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
@@ -18,8 +19,10 @@ import 'package:mezcalmos/TaxiApp/components/IncommingOrderMapScreen/IPositioned
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
+import 'package:mezcalmos/TaxiApp/router.dart';
 
-class IncommingOrderScreenView extends GetWidget<IncomingOrdersController> {
+class IncommingOrderScreenView extends GetWidget<IncomingOrdersController>
+    with MezDisposable {
   LanguageController lang = Get.find<LanguageController>();
   // when clicking on accept .. etc
   RxBool showLoading = false.obs;
@@ -32,12 +35,23 @@ class IncommingOrderScreenView extends GetWidget<IncomingOrdersController> {
     "destinationImg": null
   };
   Rx<LatLng> initialCameraPosition = LatLng(0, 0).obs;
-  List<CustomMarker> customMarkers = <CustomMarker>[];
+  RxList<Marker> customMarkers = <Marker>[].obs;
   //==================================
   @override
   Widget build(BuildContext context) {
     _loadPolyline();
     _loadMarkers();
+
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      controller.orders.listen((_) async {
+        if (controller.selectedIncommingOrder?.id == null) {
+          cancelSubscriptions();
+          Get.back();
+          await MezcalmosSharedWidgets.mezcalmosDialogOrderNoMoreAvailable(
+              55, Get.height, Get.width);
+        }
+      }).canceledBy(this);
+    });
 
     return Scaffold(
       appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back()),
@@ -132,19 +146,19 @@ class IncommingOrderScreenView extends GetWidget<IncomingOrdersController> {
         controller.selectedIncommingOrder?.from.latitude,
         controller.selectedIncommingOrder?.from.longitude);
 
-    customMarkers.assignAll(<CustomMarker>[
+    customMarkers.assignAll(<Marker>[
       // Customer's Marker
-      CustomMarker(
-          "customer",
-          bitmapDescriptors["customerImg"]!,
-          LatLng(controller.selectedIncommingOrder?.from.latitude,
+      Marker(
+          markerId: MarkerId("customer"),
+          icon: bitmapDescriptors["customerImg"]!,
+          position: LatLng(controller.selectedIncommingOrder?.from.latitude,
               controller.selectedIncommingOrder?.from.longitude)),
 
       // Destination Marker
-      CustomMarker(
-          "destination",
-          bitmapDescriptors["destinationImg"]!,
-          LatLng(controller.selectedIncommingOrder?.to.latitude,
+      Marker(
+          markerId: MarkerId("destination"),
+          icon: bitmapDescriptors["destinationImg"]!,
+          position: LatLng(controller.selectedIncommingOrder?.to.latitude,
               controller.selectedIncommingOrder?.to.longitude)),
     ]);
   }

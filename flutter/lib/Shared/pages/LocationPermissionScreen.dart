@@ -13,7 +13,7 @@ class LocationPermissionScreen extends StatelessWidget {
       Get.find<SideMenuDraweController>();
   @override
   Widget build(BuildContext context) {
-    print("Onlocation screeeeeen !");
+    mezDbgPrint("Onlocation screeeeeen !");
     return Scaffold(
         appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
             "menu", () => _sideMenuDraweController.openMenu()),
@@ -71,11 +71,12 @@ class LocationPermissionScreen extends StatelessWidget {
                     do {
                       grantedPermission = await getLocationPermission();
                     } while (grantedPermission == false);
-                    print("Permissions Granted ==========> $grantedPermission");
+                    mezDbgPrint(
+                        "Permissions Granted ==========> $grantedPermission");
                     if (grantedPermission) {
                       _settingsController.hasLocationPermissions.value = true;
                     } else {
-                      print("Permission not granted !");
+                      mezDbgPrint("Permission not granted !");
                       mezcalmosSnackBar(
                           'info',
                           _settingsController.appLanguage.strings['taxi']

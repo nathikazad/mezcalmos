@@ -14,9 +14,10 @@ import 'package:mezcalmos/Shared/models/Notification.dart' as MezNotification;
 // import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 // import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:http/http.dart' as http;
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
-  print("Handling a background message");
+  mezDbgPrint("Handling a background message");
   if (event.data["notificationType"] == "newOrder" &&
       event.data["markReceivedUrl"] != null) {
     markInDb(event.data["markReceivedUrl"]);
@@ -35,7 +36,7 @@ void markInDb(String url) async {
       body: jsonEncode(<String, bool>{"value": true}),
     );
   }
-  // .then((value) => print(jsonDecode(value.body)["data"]));
+  // .then((value) => mezDbgPrint(jsonDecode(value.body)["data"]));
 }
 
 class DeviceNotificationsController extends GetxController {
@@ -62,7 +63,7 @@ class DeviceNotificationsController extends GetxController {
       provisional: false,
       sound: true,
     );
-    print('User granted permission: ${settings.authorizationStatus}');
+    mezDbgPrint('User granted permission: ${settings.authorizationStatus}');
     return settings;
   }
 
@@ -74,14 +75,14 @@ class DeviceNotificationsController extends GetxController {
   void detachListeners() {
     _listeners.forEach((sub) => sub
         .cancel()
-        .then((value) =>
-            print("A listener was disposed on deviceNotificationsController !"))
-        .catchError((err) => print(
+        .then((value) => mezDbgPrint(
+            "A listener was disposed on deviceNotificationsController !"))
+        .catchError((err) => mezDbgPrint(
             "Error happend while trying to dispose deviceNotificationsController!")));
   }
 
   void dispose() async {
-    print(
+    mezDbgPrint(
         "[+] DeviceNotificationsController::dispose ---------> Was invoked !");
     detachListeners();
     super.onClose();
@@ -103,17 +104,17 @@ abstract class FBNotificationsController extends GetxController {
 
   @override
   void onInit() async {
-    print("Hi from FBNOTIFICONTROLLER !");
+    mezDbgPrint("Hi from FBNOTIFICONTROLLER !");
     super.onInit();
   }
 
   // using this we can register our callbacks from diffrent places , and invoke them onValue !
   // void registerCallbackOnListenerInvoke(callback) {
   //   // if (!taxiAuthListenerCallbacks.contains(callback)) {
-  //   //   print(taxiAuthListenerCallbacks);
+  //   //   mezDbgPrint(taxiAuthListenerCallbacks);
   //   taxiAuthListenerCallbacks.add(callback);
-  //   print(taxiAuthListenerCallbacks);
-  //   print("[+] ----------> $callback  ::  Was Registred successfully !!");
+  //   mezDbgPrint(taxiAuthListenerCallbacks);
+  //   mezDbgPrint("[+] ----------> $callback  ::  Was Registred successfully !!");
   //   // }
   // }
 
@@ -121,12 +122,12 @@ abstract class FBNotificationsController extends GetxController {
   //   dynamic res = taxiAuthListenerCallbacks.singleWhere(
   //       (element) => element['orderId'] == orderId,
   //       orElse: () => null);
-  //   print("Resuly -----------> $res");
+  //   mezDbgPrint("Resuly -----------> $res");
   //   return res;
   // }
 
   void clearAllMessageNotification() {
-    print(
+    mezDbgPrint(
         "-=-=-=-=-=-=-=-=-=-=-=-=-=-= Clearing All Messages Notifications -=-=-=-=-=-=-=-=-=-=-=-=-=-= ");
     _hasNewNotification.value = false;
     _clearMessageNotificationsLocally();

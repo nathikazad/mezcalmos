@@ -24,6 +24,7 @@ class TaxiWrapper extends GetWidget<AuthController> {
   @override
   Widget build(BuildContext context) {
     mezDbgPrint("Inside TaxiWrapper Builder");
+
     return Scaffold(
       key: _sideMenuDrawerController.getNewKey(),
       drawer: MezSideMenu(),

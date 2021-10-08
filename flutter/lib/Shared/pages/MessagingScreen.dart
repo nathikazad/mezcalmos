@@ -7,6 +7,8 @@ import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart'
+    show mezDbgPrint;
 
 // Extends GetView<MessagingController> after Nathik implements the controller
 class MessagingScreen extends GetView<MessageController> {
@@ -150,7 +152,7 @@ class MessagingScreen extends GetView<MessageController> {
         _currentOrderController.currentOrderStream?.order.id);
 
     void _fillCallBack() {
-      print(
+      mezDbgPrint(
           "--------------------- >>>>> FillCallback Executed  >> Messages Count >> ${controller.value?.messages.length}!");
       chatLines.assignAll(controller.value!.messages.map(
         (e) => singleChatComponent(

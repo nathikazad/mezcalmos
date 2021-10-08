@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 
 import 'AuthScreens/SMS/PhoneNumberScreen.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 enum AccountState {
   free,
@@ -286,18 +287,18 @@ class UserProfile extends StatelessWidget {
                 onPressed: () async {
                   isEditing.value = !isEditing.value;
                   if (isEditing.value) {
-                    print("editing" + textController.text);
+                    mezDbgPrint("editing" + textController.text);
                   } else {
-                    print("saved");
+                    mezDbgPrint("saved");
                     user.value!.displayName = textController.text;
                     if (imageFile.value.path != "test") {
                       var xUrl = await auth.getImageUrl(
                           imageFile.value, user.value!.uid);
-                      print(xUrl);
+                      mezDbgPrint(xUrl);
                       user.value!.image = xUrl;
                       auth.editUserProfile(textController.text.trim(), xUrl);
                     } else {
-                      print("the path is empty");
+                      mezDbgPrint("the path is empty");
                       auth.editUserProfile(textController.text.trim(), "");
                     }
                   }

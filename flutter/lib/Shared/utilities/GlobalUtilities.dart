@@ -11,11 +11,11 @@ import 'package:location/location.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-void mezDbgPrint(String log) =>
+void mezDbgPrint(dynamic log) =>
     print("\n[MEZ LOG]\t[${DateTime.now()}] $log\n");
 
 void mezcalmosLogger(String text, {bool isError = false}) =>
-    print("[ MEZCALMOS ][ GETX ] $text");
+    mezDbgPrint("[ MEZCALMOS ][ GETX ] $text");
 
 double getSizeRelativeToScreen(
         double v, double screenHeight, double screenWidth) =>
@@ -34,16 +34,16 @@ dynamic responseStatusChecker(dynamic resp,
     {String? onSuccessMessage, String? onErrorMessage}) {
   // basically
   if (resp == null) {
-    print("Given Response is null !");
+    mezDbgPrint("Given Response is null !");
     return null;
   } else if (resp['status'] == "Error") {
-    print("[RESPONSE ERROR] -> $resp['status'] ");
+    mezDbgPrint("[RESPONSE ERROR] -> $resp['status'] ");
     return resp['errorMessage'] ?? onErrorMessage ?? resp['status'];
   } else if (resp['status'] == "Success") {
-    print("[RESPONSE SUCCESS] -> $resp['status'] ");
+    mezDbgPrint("[RESPONSE SUCCESS] -> $resp['status'] ");
     return onSuccessMessage ?? resp['status'];
   } else {
-    print("[RESPONSE UNKNOWN] -> $resp['status'] ");
+    mezDbgPrint("[RESPONSE UNKNOWN] -> $resp['status'] ");
     return null;
   }
 }
@@ -137,7 +137,7 @@ Future<bool> getLocationPermission() async {
       return false;
     }
   }
-  print("[+] Location Service Enabled !");
+  mezDbgPrint("[+] Location Service Enabled !");
   _permissionGranted = await location.hasPermission();
 
   if (_permissionGranted == PermissionStatus.denied ||
@@ -150,6 +150,6 @@ Future<bool> getLocationPermission() async {
       return false;
     }
   }
-  print("[+] Location Permissions Granted !");
+  mezDbgPrint("[+] Location Permissions Granted !");
   return true;
 }

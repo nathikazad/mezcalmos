@@ -18,8 +18,9 @@ class CurrentPositionedBottomBar extends StatelessWidget {
   RxBool showLoadingMapOnClick = false.obs;
   RxBool clickedLaunchOnMap = false.obs;
   bool clickedYesCancelPopUp = false;
+  CurrentOrderController controller;
 
-  CurrentOrderController controller = Get.find<CurrentOrderController>();
+  CurrentPositionedBottomBar(this.controller);
   TaxiAuthController taxiAuthController = Get.find<TaxiAuthController>();
   LanguageController lang = Get.find<LanguageController>();
   FBNotificationsController fbNotificationsController =
@@ -111,13 +112,16 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                                             Get.back();
                                             await controller.startRide();
                                           }, lang.strings['taxi']['taxiView']["tooFarFromstartRide"])
-                                            .then((_) {})
-                                            .whenComplete(() {
+                                            .then((_) {
                                             this.showLoadingMapOnClick.value =
                                                 false;
+                                          }).whenComplete(() {
                                             Get.back(closeOverlays: true);
                                           })
-                                        : await controller.startRide().whenComplete(() => this.showLoadingMapOnClick.value = false));
+                                        : controller.startRide().then((_) {
+                                            this.showLoadingMapOnClick.value =
+                                                false;
+                                          }).whenComplete(() => Get.back(closeOverlays: true)));
                               }
                             : () => null,
                         child: Center(
@@ -306,13 +310,13 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                                               true;
                                           controller
                                               .cancelTaxi(null)
-                                              .then((_) =>
-                                                  Get.back(closeOverlays: true))
+                                              .then((_) => this
+                                                  .showLoadingMapOnClick
+                                                  .value = false)
                                               .catchError((onError) {
                                             clickedYesCancelPopUp = false;
-                                          }).whenComplete(() => this
-                                                  .showLoadingMapOnClick
-                                                  .value = false);
+                                          }).whenComplete(() => Get.back(
+                                                  closeOverlays: true));
                                         }
                                       },
                                       // Navigator.of(context)

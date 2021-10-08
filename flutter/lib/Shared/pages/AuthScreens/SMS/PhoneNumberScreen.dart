@@ -133,7 +133,7 @@ class PhoneNumberScreen extends GetView<AuthController> {
                                           } else {
                                             canSendOtp.value = false;
                                           }
-                                          print(canSendOtp.value);
+                                          mezDbgPrint(canSendOtp.value);
                                         },
                                         textAlign: TextAlign.center,
                                         decoration: InputDecoration(
@@ -189,7 +189,7 @@ class PhoneNumberScreen extends GetView<AuthController> {
                                   } else {
                                     canSendOtp.value = false;
                                   }
-                                  print(canSendOtp.value);
+                                  mezDbgPrint(canSendOtp.value);
                                 },
                                 //maxLength: 10,
                                 keyboardType: TextInputType.number,
@@ -258,11 +258,12 @@ class PhoneNumberScreen extends GetView<AuthController> {
                             String phone =
                                 "${_prefixTextFieldController.text}${_numberTextFieldController.text}";
                             if (!phone.startsWith('+')) phone = "+" + phone;
-                            print(phone);
+                            mezDbgPrint(phone);
                             if (phone.isPhoneNumber) {
                               dynamic response =
                                   await controller.sendOTPForLogin(phone);
-                              print("++++++++++++ response >>> $response");
+                              mezDbgPrint(
+                                  "++++++++++++ response >>> $response");
                               if (response == null) {
                                 mezcalmosSnackBar("Error", "Null response !");
                               } else if (response['status'] == "Success") {
@@ -387,7 +388,7 @@ class PhoneNumberScreen extends GetView<AuthController> {
 //         ),
 //       ),
 //       onTap: () {
-//         print("this button clicked");
+//         mezDbgPrint("this button clicked");
 //       },
 //     );
 //   }

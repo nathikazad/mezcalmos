@@ -24,7 +24,7 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
 
     final sw = MediaQuery.of(context).size.width;
     final sh = MediaQuery.of(context).size.height;
-    // print("---------------- orders len > ${controller.orders.length}");
+    // mezDbgPrint("---------------- orders len > ${controller.orders.length}");
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -99,7 +99,7 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                     IncomingOrdersController __ =
                                         Get.put<IncomingOrdersController>(
                                             IncomingOrdersController());
-                                    print(
+                                    mezDbgPrint(
                                         "Clicked on order::${controller.orders[i].id}");
                                     controller.selectedIncommingOrderKey =
                                         controller.orders[i].id;
@@ -163,8 +163,9 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                             backgroundImage: NetworkImage(
                                                 controller.orders[i]
                                                     .customer['image']),
-                                            onBackgroundImageError: (e, s) => print(
-                                                "Failed loading Customer openOrder::id::${controller.orders[i].id}"),
+                                            onBackgroundImageError: (e, s) =>
+                                                mezDbgPrint(
+                                                    "Failed loading Customer openOrder::id::${controller.orders[i].id}"),
                                           ),
                                         ),
                                         // Positioned(

@@ -21,8 +21,8 @@ class MezSideMenu extends GetWidget<AuthController> {
 
   @override
   Widget build(BuildContext context) {
-    print("=========> ImgUrl ======<  ${controller.user?.image}");
-    print(controller.user!.phone);
+    mezDbgPrint("=========> ImgUrl ======<  ${controller.user?.image}");
+    mezDbgPrint(controller.user!.phone);
 
     final sw = MediaQuery.of(context).size.width;
     final sh = MediaQuery.of(context).size.height;

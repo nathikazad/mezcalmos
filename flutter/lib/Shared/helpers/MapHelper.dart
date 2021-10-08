@@ -1,38 +1,8 @@
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-import 'package:get/state_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'dart:math' show cos, sqrt, sin, pi, atan2;
 import 'package:mezcalmos/Shared/models/Order.dart';
-import 'package:mezcalmos/Shared/utilities/Extensions.dart';
-
-void cancelMarkersSubs(Iterable<CustomMarker> customMarkers) =>
-    customMarkers.forEach((element) => element.cancelSubscriptions());
-
-class CustomMarker with MezDisposable {
-  String id;
-  Rx<LocationData>? locationStream;
-  LatLng position;
-  BitmapDescriptor icon;
-  bool fitInBounds;
-
-  CustomMarker(this.id, this.icon, this.position,
-      {this.fitInBounds = false, this.locationStream}) {
-    if (locationStream != null) {
-      locationStream!.listen((newLoc) {
-        print("[ CustomMarker::$id ] New position => $position");
-        this.position = new LatLng(newLoc.latitude!, newLoc.longitude!);
-      }).canceledBy(this);
-    }
-  }
-
-  Marker marker() => new Marker(
-      visible: true,
-      markerId: MarkerId(this.id),
-      position: this.position,
-      icon: this.icon,
-      draggable: false);
-}
 
 LatLngBounds createMapBounds(List<LatLng> positions) {
   final southwestLat = positions.map((p) => p.latitude).reduce(
@@ -78,12 +48,6 @@ class MapHelper {
             sin(dLon / 2);
     var c = 2 * atan2(sqrt(a), sqrt(1 - a));
     var res = R * c; // this is in km
-
-    // print(
-    //     "[ LOCATION DATA FROM ] -------\n${from.latitude} | ${from.longitude}\n");
-    // print(
-    //     "[ LOCATION DATA TO ] -------\n${to.latitude} | ${to.longitude}\n\n\n");
-    // print(res);
 
     return res;
   }

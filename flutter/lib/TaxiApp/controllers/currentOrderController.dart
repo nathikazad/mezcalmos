@@ -21,10 +21,12 @@ class CurrentOrderController extends GetxController with MezDisposable {
       Get.put<FBTaxiNotificationsController>(FBTaxiNotificationsController());
 
   String? lastOrderStatus;
+
   CurrentOrderEvent? currentEvent;
   Rxn<CurrentOrder> _currentOrderStream = Rxn();
   CurrentOrder? get currentOrderStream => _currentOrderStream.value;
   Rxn<CurrentOrder> get currentOrderStreamRx => _currentOrderStream;
+
   @override
   void onInit() {
     super.onInit();
@@ -33,8 +35,6 @@ class CurrentOrderController extends GetxController with MezDisposable {
         .child(orderId(_taxiAuthController.currentOrderId))
         .onValue
         .listen((event) {
-      final _lastDriverLocation =
-          _currentOrderStream.value?.order.driver['location']['position'];
       _currentOrderStream.value = new CurrentOrder.fromSnapshot(event.snapshot);
       _currentOrderStream.value?.event = currentEvent;
       if (_currentOrderStream.value?.order.status != null &&
@@ -49,7 +49,7 @@ class CurrentOrderController extends GetxController with MezDisposable {
         currentEvent = _currentOrderStream.value?.event;
 
         mezDbgPrint(
-            "\nFront Listener of CurrentORderController :: \n${_currentOrderStream.value?.toJson()}\n");
+            "\from Listener of CurrentORderController :: \n${_currentOrderStream.value?.toJson()}\n");
       }
     }).canceledBy(this);
   }
@@ -57,33 +57,11 @@ class CurrentOrderController extends GetxController with MezDisposable {
   void clearEvent() {
     this.currentEvent = null;
   }
-  // void dispatchCurrentOrder() {
-
-  //       .listen((event) async {
-  //     print(
-  //         "CurrentOrderController :: DispatchCurrentOrder :: _taxiAuthController.currentOrderId ${_taxiAuthController.currentOrderId}");
-  //     if (event.snapshot.value != null) {
-  //       bool dirty = event.snapshot.value['status'] == _model.value.status;
-
-  //       print(
-  //           "CurrentOrderController::onValue Invoked >> ${event.snapshot.key} : ${event.snapshot.value['status']}");
-  //        {
-  //         await MezcalmosSharedWidgets.mezcalmosDialogOrderCancelled(
-  //             55, Get.height, Get.width);
-  //       } else {
-  //         _model.value =
-  //         _model.value.id =
-  //       }
-  //       return "dsf";
-  //     }
-  //   });
-  //   _currentOrderListener.onData((data) { })
-  // }
 
   Future<void> cancelTaxi(String? reason) async {
     HttpsCallable cancelTaxiFunction =
         FirebaseFunctions.instance.httpsCallable('cancelTaxiFromDriver');
-    print("Cancel Taxi Called");
+    mezDbgPrint("Cancel Taxi Called");
     try {
       // _waitingResponse.value = true;
       HttpsCallableResult response = await cancelTaxiFunction
@@ -104,14 +82,14 @@ class CurrentOrderController extends GetxController with MezDisposable {
     } catch (e) {
       mezcalmosSnackBar("Notice ~", "Failed to Cancel the Taxi Request :( ");
       // _waitingResponse.value = false;
-      print("Exception happend in cancelTaxi : $e");
+      mezDbgPrint("Exception happend in cancelTaxi : $e");
     }
   }
 
   Future<void> startRide() async {
     HttpsCallable startRideFunction =
         FirebaseFunctions.instance.httpsCallable('startTaxiRide');
-    print("Start Taxi Called");
+    mezDbgPrint("Start Taxi Called");
     try {
       // _waitingResponse.value = true;
       HttpsCallableResult response = await startRideFunction
@@ -126,14 +104,14 @@ class CurrentOrderController extends GetxController with MezDisposable {
     } catch (e) {
       mezcalmosSnackBar("Notice ~", "Failed to Start The ride :( ");
       // _waitingResponse.value = false;
-      print("Exception happend in startRide : $e");
+      mezDbgPrint("Exception happend in startRide : $e");
     }
   }
 
   Future<void> finishRide() async {
     HttpsCallable finishRideFunction =
         FirebaseFunctions.instance.httpsCallable('finishTaxiRide');
-    print("Finish Taxi Called");
+    mezDbgPrint("Finish Taxi Called");
     try {
       // _waitingResponse.value = true;
       HttpsCallableResult response = await finishRideFunction
@@ -152,7 +130,7 @@ class CurrentOrderController extends GetxController with MezDisposable {
     } catch (e) {
       mezcalmosSnackBar("Notice ~", "Failed to finish The ride :( ");
       // _waitingResponse.value = false;
-      print("Exception happend in finishRide : $e");
+      mezDbgPrint("Exception happend in finishRide : $e");
     }
   }
 
@@ -164,7 +142,8 @@ class CurrentOrderController extends GetxController with MezDisposable {
   void onClose() async {
     cancelSubscriptions();
     detachListeners();
-    print("--------------------> CurrentOrderController::onClose called  !");
+    mezDbgPrint(
+        "--------------------> CurrentOrderController::onClose called  !");
 
     super.onClose();
   }

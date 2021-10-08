@@ -53,7 +53,7 @@ class TaxiAuthController extends GetxController with MezDisposable {
   */
 
   void testFunc(String? s) {
-    print("test func !");
+    mezDbgPrint("test func !");
   }
 
   @override
@@ -64,10 +64,10 @@ class TaxiAuthController extends GetxController with MezDisposable {
     Get.lazyPut(() => IncomingOrdersController());
     // ------------------------------------------------------------------------
 
-    print("User from TaxiAuthController >> ${_authController.user?.uid}");
-    print("authorizedTaxi from TaxiAuthController >> ${authorizedTaxi}");
-    print("currentOrderId from TaxiAuthController >> ${currentOrderId}");
-    print(
+    mezDbgPrint("User from TaxiAuthController >> ${_authController.user?.uid}");
+    mezDbgPrint("authorizedTaxi from TaxiAuthController >> ${authorizedTaxi}");
+    mezDbgPrint("currentOrderId from TaxiAuthController >> ${currentOrderId}");
+    mezDbgPrint(
         "TaxiAuthController  Messaging Token>> ${await _messagingController.getToken()}");
 
     if (_authController.user != null) {
@@ -97,7 +97,7 @@ class TaxiAuthController extends GetxController with MezDisposable {
         if (_checkedAppVersion == false) {
           if (_model.value.isAuthorized == true) {
             String VERSION = GetStorage().read(version);
-            print("[+] TaxiDriver Currently using App v$VERSION");
+            mezDbgPrint("[+] TaxiDriver Currently using App v$VERSION");
             _databaseHelper.firebaseDatabase
                 .reference()
                 .child(taxiDriverAppVersionNode(_authController.user!.uid))
@@ -112,14 +112,14 @@ class TaxiAuthController extends GetxController with MezDisposable {
                 _model.value.isLooking == false)) {
           await Location().enableBackgroundMode(enable: false);
           _locationListener?.pause();
-          // print(
+          // mezDbgPrint(
           //     " [=] ---------------------------------> Paused locationListener !");
         } else {
           if (!(await Location().isBackgroundModeEnabled()))
             await Location().enableBackgroundMode(enable: true);
 
           _locationListener?.resume();
-          // print(
+          // mezDbgPrint(
           //     " [=] ---------------------------------> Resumed locationListener !");
         }
       }).canceledBy(this);
@@ -133,7 +133,7 @@ class TaxiAuthController extends GetxController with MezDisposable {
             .set(<String, String>{
           'deviceNotificationToken': deviceNotificationToken
         });
-      print(
+      mezDbgPrint(
           "/////////////////////////////////////////////${_model.value.toJson()}////////////////////////////////////////////////////");
       _listenForLocation();
     }
@@ -141,7 +141,7 @@ class TaxiAuthController extends GetxController with MezDisposable {
 
   Future<void> _listenForLocation() async {
     if (_authController.user == null) {
-      print("User is not signed in !");
+      mezDbgPrint("User is not signed in !");
     } else {
       Location location = Location();
 
@@ -153,8 +153,7 @@ class TaxiAuthController extends GetxController with MezDisposable {
         if (currentTime.difference(lastLocationUpdatedTime).inSeconds > 5 &&
             currentLocation.latitude != null &&
             currentLocation.longitude != null) {
-          mezDbgPrint(
-              "-- -- -- onLocationChanged :: $currentLocation -- -- --");
+          mezDbgPrint("\t\t [TAXI AUTH CONTROLLER] LOCATION GOT UPDAAAATED !!");
           lastLocationUpdatedTime = currentTime;
           _currentLocation.value = currentLocation;
 
@@ -165,7 +164,7 @@ class TaxiAuthController extends GetxController with MezDisposable {
               "lng": currentLocation.longitude
             }
           };
-          // print(positionUpdate);
+          // mezDbgPrint(positionUpdate);
           _databaseHelper.firebaseDatabase
               .reference()
               .child(taxiAuthNode(_authController.user?.uid ?? ''))
@@ -186,7 +185,7 @@ class TaxiAuthController extends GetxController with MezDisposable {
 
   @override
   void dispose() async {
-    print("[+] TaxiAuthController::dispose ---------> Was invoked !");
+    mezDbgPrint("[+] TaxiAuthController::dispose ---------> Was invoked !");
     // await _locationListener?.cancel();
     cancelSubscriptions();
     // Get.find<CurrentOrderController>().dispose();
@@ -200,7 +199,7 @@ class TaxiAuthController extends GetxController with MezDisposable {
         .child(taxiIsLookingField(_authController.user!.uid))
         .set(false)
         .catchError((err) {
-      print("Error turning [ isLooking = false ] -> $err");
+      mezDbgPrint("Error turning [ isLooking = false ] -> $err");
       mezcalmosSnackBar("Error ~", "Failed turning it off!");
     });
   }
@@ -211,7 +210,7 @@ class TaxiAuthController extends GetxController with MezDisposable {
         .child(taxiIsLookingField(_authController.user!.uid))
         .set(true)
         .catchError((err) {
-      print("Error turning [ isLooking = true ] -> $err");
+      mezDbgPrint("Error turning [ isLooking = true ] -> $err");
       mezcalmosSnackBar("Error ~", "Failed turning_listenForLocation it on!");
     });
   }

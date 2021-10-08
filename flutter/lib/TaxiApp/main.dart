@@ -27,7 +27,7 @@ class TaxiApp extends GetView<SettingsController> {
     return GetMaterialApp(
       onInit: () async => await _initializeConfig()
           .then((_) => GetStorage().write("app_ready", true)),
-      onReady: () => print("[++] MaterialApp -------> ready !"),
+      onReady: () => mezDbgPrint("[++] MaterialApp -------> ready !"),
       debugShowCheckedModeBanner: false,
       title: 'mezcalmos',
       theme: ThemeData(

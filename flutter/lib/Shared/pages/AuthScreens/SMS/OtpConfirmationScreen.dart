@@ -183,7 +183,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                             canConfirmOtp.value && !clickedSignInOtp.value
                                 ? () async {
                                     clickedSignInOtp.value = true;
-                                    print(
+                                    mezDbgPrint(
                                         "${Get.arguments ?? _phonePassed} -------------- $otpCode ");
                                     await controller.signInUsingOTP(
                                         Get.arguments ?? _phonePassed, otpCode);

@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart'
+    show mezDbgPrint;
 
 class MezDisposable {
   List<StreamSubscription> _subscriptions = [];
@@ -13,7 +15,7 @@ class MezDisposable {
   }
 
   void addSubscription(StreamSubscription subscription) {
-    print(
+    mezDbgPrint(
         "\n\n[ MEZ-DISPOSABLE EXTENSION ] :: ADDED SUBSCRIPTION :: ${subscription.toString()} \n\n");
     _subscriptions.add(subscription);
   }

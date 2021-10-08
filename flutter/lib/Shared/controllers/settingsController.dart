@@ -3,6 +3,7 @@ import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
 import 'package:mezcalmos/Shared/controllers/themeContoller.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 class SettingsController extends GetxController {
   late final ThemeController _appTheme;
@@ -25,7 +26,7 @@ class SettingsController extends GetxController {
 
     // this is to make sure that the use already Granted the App the permission to use the location !
     PermissionStatus _tempLoca = await Location().hasPermission();
-    print(
+    mezDbgPrint(
         "-------------> SettingsController :: onInit :: LocationPermissionStatus :: $_tempLoca");
     if (_tempLoca == PermissionStatus.granted ||
         _tempLoca == PermissionStatus.grantedLimited) {

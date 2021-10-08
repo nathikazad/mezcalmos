@@ -21,9 +21,9 @@ class FBTaxiNotificationsController extends FBNotificationsController
               .listen((event) {
         notifications.clear();
         if (event.snapshot.value != null) {
-          print(
+          mezDbgPrint(
               "=========> FBNotificationController :: onInit :: Listener :: Invoked --> \n");
-          print("New notif : ${event.snapshot.value}");
+          mezDbgPrint("New notif : ${event.snapshot.value}");
           event.snapshot.value.forEach((dynamic key, dynamic value) {
             MezNotification.Notification _notif =
                 MezNotification.Notification.fromJson(key, value);
@@ -32,7 +32,7 @@ class FBTaxiNotificationsController extends FBNotificationsController
             // THIS EVENT HANDLER IS FOR TAXI APP, please move to notification controller of taxi app
             // and make it register a callback to here which gets called on new message
             if (_notif.notificationType == "newMessage") {
-              print("\n\n\n ${_notif.toJson()} \n\n\n");
+              mezDbgPrint("\n\n\n ${_notif.toJson()} \n\n\n");
               // taxiAuthListenerCallbacks.forEach((callback) {
               // this is much more dynamic :D
               if (Get.currentRoute != kMessagesRoute &&
@@ -52,7 +52,7 @@ class FBTaxiNotificationsController extends FBNotificationsController
             }
             notifications.add(_notif);
 
-            print(notifications.toJson());
+            mezDbgPrint(notifications.toJson());
           });
         }
       }))
@@ -66,9 +66,9 @@ class FBTaxiNotificationsController extends FBNotificationsController
     // if (taxiAuthListener != null) {
     //   taxiAuthListener!
     //       .cancel()
-    //       .then((value) => print(
+    //       .then((value) => mezDbgPrint(
     //           "A listener was disposed on currentOrderController::detachListeners !"))
-    //       .catchError((err) => print(
+    //       .catchError((err) => mezDbgPrint(
     //           "Error happend while trying to dispose currentOrderController::detachListeners !"));
     // }
     super.onClose();

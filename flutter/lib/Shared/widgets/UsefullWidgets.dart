@@ -175,7 +175,7 @@ class MezcalmosSharedWidgets {
                 width: 32,
                 child: GestureDetector(
                   onTap: () {
-                    print("Taped Drawer btn !");
+                    mezDbgPrint("Taped Drawer btn !");
                     onTapFunction();
                   },
                   child: Container(

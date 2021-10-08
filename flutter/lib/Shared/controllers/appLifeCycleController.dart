@@ -8,7 +8,6 @@ class AppLifeCycleController extends GetxController
   Map<AppLifecycleState, VoidCallback> callbacks = {
     AppLifecycleState.detached: () => null,
     AppLifecycleState.inactive: () => null,
-    
     AppLifecycleState.paused: () => null,
     AppLifecycleState.resumed: () => null,
   };
@@ -55,6 +54,6 @@ class AppLifeCycleController extends GetxController
     _appState.value = state;
     callbacks[state]!();
     // if (this.logs)
-    //   print("[+] AppLifeCycleController :: AppStateChanged :: $state");
+    //   mezDbgPrint("[+] AppLifeCycleController :: AppStateChanged :: $state");
   }
 }
