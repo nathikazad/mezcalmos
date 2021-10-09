@@ -116,6 +116,7 @@ class Launcher:
         if not os.path.exists('flutter_hooks/pre-main'):
             PRINTLN("[!] Error - No pre-main file neither in launcher files or flutter files !")
             exit(DW_EXIT_REASONS.ROOT_MAIN_DART_FILE_NOT_FOUND)
+        
         PRINTLN("[+] No ../lib/pre-main.dart found .. generating a new one !")
         
         prem = open('flutter_hooks/pre-main' , encoding='utf-8' , errors='ignore').read()
@@ -124,7 +125,7 @@ class Launcher:
     def __patcher__(self):
         PRINTLN("[+] Patching ../lib/pre-main.dart !")
         f_root_main = open('../lib/pre-main.dart' , encoding='utf-8' , errors='ignore').read()
-        f_root_main = f_root_main.replace("<app-name>", self.user_args['app'])
+        f_root_main = f_root_main.replace("<app-name>", self.user_args['app']).replace("<database>" , self.user_args['db']).replace("<launch-mode>" , self.user_args['lmode'])
         # PRINTLN(f"\t|_ last_app = {self.last_app}\n\t|_ launching_app = {self.user_args['app']}")
 
         # Writing new Valid App.
@@ -622,10 +623,7 @@ class Config:
             # if r.lower() != 'y':
             #     exit(DW_EXIT_REASONS.NORMAL)
             
-            pre_main = open("flutter_hooks/pre-main").read()
-            pre_main = pre_main.replace("<database>" , self.user_args['db']).replace("<launch-mode>" , self.user_args['lmode'])
-    
-            open('../lib/pre-main.dart' , 'w+').write(pre_main)
+          
 
             v_ = self.__get_arg_value__('version=')
             if v_:
