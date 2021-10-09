@@ -37,7 +37,7 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
 
   // }
 
-  void updateMarkers() {
+  void animateAndUpdateBounds() {
     List<LatLng> _bnds = [];
 
     widget.markers.forEach((cmarker) {
@@ -57,14 +57,13 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
       _bnds.addAll(_getLatLngBoundsFromPolyline(widget.polylines));
     }
 
-    if (mounted) {
-      setState(() {
-        if (_bnds.isNotEmpty) widget.bounds = createMapBounds(_bnds);
-        if (_controller != null && widget.bounds != null) {
-          _controller?.animateCamera(
-              CameraUpdate.newLatLngBounds(widget.bounds!, 100));
-        }
-      });
+    setState(() {
+      if (_bnds.isNotEmpty) widget.bounds = createMapBounds(_bnds);
+    });
+
+    if (_controller != null && widget.bounds != null) {
+      _controller
+          ?.animateCamera(CameraUpdate.newLatLngBounds(widget.bounds!, 100));
     }
   }
 
@@ -87,19 +86,19 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
 
   @override
   void didUpdateWidget(covariant MGoogleMap oldWidget) {
-    updateMarkers();
+    animateAndUpdateBounds();
     super.didUpdateWidget(oldWidget);
   }
 
   @override
   void initState() {
-    updateMarkers();
+    animateAndUpdateBounds();
 
     widget.idWithSubscription.forEach((markerId, stream) {
       stream.listen((newLoc) {
+        int i = widget.markers
+            .indexWhere((element) => element.markerId.value == markerId);
         setState(() {
-          int i = widget.markers
-              .indexWhere((element) => element.markerId.value == markerId);
           widget.markers[i] = Marker(
               markerId: MarkerId(markerId),
               icon: widget.markers[i].icon,

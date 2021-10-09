@@ -188,11 +188,18 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                             ? null
                             : () async {
                                 clickedLaunchOnMap.value = true;
-                                await mapLauncher(
-                                    controller.currentOrderStreamRx.value?.order
-                                        .to.latitude,
-                                    controller.currentOrderStreamRx.value?.order
-                                        .to.longitude);
+                                controller.currentOrderStreamRx.value?.order.status ==
+                                        "onTheWay"
+                                    ? await mapLauncher(
+                                        controller.currentOrderStreamRx.value
+                                            ?.order.from.latitude,
+                                        controller.currentOrderStreamRx.value
+                                            ?.order.from.longitude)
+                                    : await mapLauncher(
+                                        controller.currentOrderStreamRx.value
+                                            ?.order.to.latitude,
+                                        controller.currentOrderStreamRx.value
+                                            ?.order.to.longitude);
                                 clickedLaunchOnMap.value = false;
                               },
                         child: Container(
@@ -236,9 +243,16 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                           await fbNotificationsController
                               .setAllMessagesAsReadInDb();
 
-                          Get.toNamed(kMessagesRoute)?.then((_) =>
-                              fbNotificationsController
-                                  .clearAllMessageNotification());
+                          Get.toNamed(kMessagesRoute,
+                              arguments: <String, dynamic>{
+                                "oId": controller
+                                    .currentOrderStreamRx.value?.order.id,
+                                "rImg": controller.currentOrderStreamRx.value
+                                    ?.order.customer['image'],
+                                "rName": controller.currentOrderStreamRx.value
+                                    ?.order.customer['name']
+                              })?.then((_) => fbNotificationsController
+                              .clearAllMessageNotification());
                         },
                         child: Container(
                           height: getSizeRelativeToScreen(

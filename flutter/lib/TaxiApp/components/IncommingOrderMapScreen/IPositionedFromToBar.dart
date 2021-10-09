@@ -60,25 +60,15 @@ class IncomingPositionedFromToTopBar extends StatelessWidget {
                                     ""),
                             child: Text(
                               controller.selectedIncommingOrder?.from?.address
-                                          ?.toString()
-                                          .length ==
+                                          ?.toString() ==
                                       null
                                   ? "........."
-                                  : controller.selectedIncommingOrder!.from!
-                                              .address!
-                                              .toString()
-                                              .length >
-                                          13
-                                      ? (controller.selectedIncommingOrder?.from
-                                                  ?.address
-                                                  .toString()
-                                                  .substring(0, 13) ??
-                                              "..........") +
-                                          " .."
-                                      : controller
-                                          .selectedIncommingOrder!.from!.address
-                                          .toString(),
-                              style: TextStyle(fontSize: 16, fontFamily: 'psr'),
+                                  : controller
+                                      .selectedIncommingOrder!.from!.address
+                                      .toString(),
+                              style: TextStyle(fontSize: 15, fontFamily: 'psr'),
+                              maxLines: 1,
+                              softWrap: false,
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
@@ -141,7 +131,7 @@ class IncomingPositionedFromToTopBar extends StatelessWidget {
                         () => Text(
                           lang.strings['shared']['inputLocation']["to"],
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 15,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -154,24 +144,14 @@ class IncomingPositionedFromToTopBar extends StatelessWidget {
                                   ""),
                           child: Text(
                             controller.selectedIncommingOrder?.to?.address
-                                        ?.toString()
-                                        .length ==
+                                        ?.toString() ==
                                     null
                                 ? "........."
-                                : controller.selectedIncommingOrder!.to!
-                                            .address!
-                                            .toString()
-                                            .length >
-                                        13
-                                    ? (controller.selectedIncommingOrder?.to
-                                                ?.address
-                                                .toString()
-                                                .substring(0, 13) ??
-                                            "..........") +
-                                        " .."
-                                    : controller.selectedIncommingOrder?.to
-                                        ?.address, //13+..
+                                : controller
+                                    .selectedIncommingOrder?.to?.address,
                             style: TextStyle(fontSize: 16, fontFamily: 'psr'),
+                            maxLines: 1,
+                            softWrap: false,
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),

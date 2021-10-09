@@ -44,7 +44,10 @@ class IncommingOrderScreenView extends GetWidget<IncomingOrdersController>
 
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       controller.orders.listen((_) async {
-        if (controller.selectedIncommingOrder?.id == null) {
+        mezDbgPrint("\t\t\t\t STILL LISTENING INCOMMINGORDERVIEW ---- !!!!");
+        if (controller.selectedIncommingOrder?.id == null &&
+            !showLoading.value &&
+            Get.currentRoute == kSelectedIcommingOrder) {
           cancelSubscriptions();
           Get.back();
           await MezcalmosSharedWidgets.mezcalmosDialogOrderNoMoreAvailable(
@@ -92,10 +95,13 @@ class IncommingOrderScreenView extends GetWidget<IncomingOrdersController>
                             controller
                                 .acceptTaxi(
                                     controller.selectedIncommingOrder?.id)
-                                .whenComplete(() {
-                              showLoading.value = false;
-                              Get.back(closeOverlays: true);
-                            });
+                                .then((isSuccess) {
+                              if (isSuccess) {
+                                cancelSubscriptions();
+                                showLoading.value = false;
+                                Get.back(closeOverlays: true);
+                              }
+                            }).whenComplete(() {});
                           }
                         : () => null,
                     child: !showLoading.value

@@ -6,17 +6,25 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
-import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart'
-    show mezDbgPrint;
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 // Extends GetView<MessagingController> after Nathik implements the controller
 class MessagingScreen extends GetView<MessageController> {
+  String? orderId;
+  String? recepientImg;
+  String? recepientName;
+
+  MessagingScreen() {
+    this.orderId = Get.arguments['oId'];
+    this.recepientImg = Get.arguments['rImg'];
+    this.recepientName = Get.arguments['rName'];
+
+    mezDbgPrint(Get.arguments);
+  }
+
   AuthController _authController = Get.find<AuthController>();
   LanguageController _languageController = Get.find<LanguageController>();
 
-  CurrentOrderController _currentOrderController =
-      Get.find<CurrentOrderController>();
   TextEditingController _textEditingController = new TextEditingController();
   ScrollController _listViewScrollController = new ScrollController();
   RxList<Widget> chatLines = <Widget>[].obs;
@@ -148,8 +156,7 @@ class MessagingScreen extends GetView<MessageController> {
       scrollDown(mezChatScrollDuration: timeStamp);
     });
 
-    controller.loadChat(_authController.user!.uid,
-        _currentOrderController.currentOrderStream?.order.id);
+    // controller.loadChat(_authController.user!.uid, orderId);
 
     void _fillCallBack() {
       mezDbgPrint(
@@ -166,8 +173,7 @@ class MessagingScreen extends GetView<MessageController> {
       scrollDown();
     }
 
-    controller.loadChat(_authController.user!.uid,
-        _currentOrderController.currentOrderStream?.order.id,
+    controller.loadChat(_authController.user!.uid, orderId!,
         onValueCallBack: _fillCallBack);
 
     return Scaffold(
@@ -180,13 +186,6 @@ class MessagingScreen extends GetView<MessageController> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Padding(
-              //   padding: EdgeInsets.only(left: 15, bottom: 25, top: 10),
-              //   child: Text(
-              //     'Message',
-              //     style: TextStyle(fontFamily: 'psr', fontSize: 50),
-              //   ),
-              // ),
               Container(
                   width: Get.width,
                   padding: EdgeInsets.only(top: 15, bottom: 15),
@@ -203,13 +202,8 @@ class MessagingScreen extends GetView<MessageController> {
                         child: CircleAvatar(
                           radius: 23,
                           backgroundColor: Colors.grey.shade200,
-                          backgroundImage: _currentOrderController
-                                      .currentOrderStream
-                                      ?.order
-                                      .customer['image'] !=
-                                  null
-                              ? NetworkImage(_currentOrderController
-                                  .currentOrderStream?.order.customer['image'])
+                          backgroundImage: recepientImg != null
+                              ? NetworkImage(recepientImg!)
                               : AssetImage(aDefaultAvatar) as ImageProvider,
                         ),
                       ),
@@ -217,14 +211,9 @@ class MessagingScreen extends GetView<MessageController> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Obx(
-                            () => Text(
-                              _currentOrderController.currentOrderStream?.order
-                                      .customer['name'] ??
-                                  ".....",
-                              style:
-                                  TextStyle(fontFamily: 'psb', fontSize: 16.5),
-                            ),
+                          Text(
+                            recepientName ?? ".....",
+                            style: TextStyle(fontFamily: 'psb', fontSize: 16.5),
                           ),
                           SizedBox(
                             height: 5,

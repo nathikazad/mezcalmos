@@ -61,8 +61,7 @@ class CurrentPositionedFromToTopBar extends StatelessWidget {
                             child: Text(
                               controller.currentOrderStreamRx.value?.order.from
                                           ?.address
-                                          ?.toString()
-                                          .length ==
+                                          ?.toString() ==
                                       null
                                   ? "........."
                                   : controller.currentOrderStreamRx.value!.order
@@ -70,6 +69,7 @@ class CurrentPositionedFromToTopBar extends StatelessWidget {
                                       .toString(),
                               style: TextStyle(fontSize: 15, fontFamily: 'psr'),
                               maxLines: 1,
+                              softWrap: false,
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
@@ -148,8 +148,7 @@ class CurrentPositionedFromToTopBar extends StatelessWidget {
                             child: Text(
                               controller.currentOrderStreamRx.value?.order.to
                                           ?.address
-                                          ?.toString()
-                                          .length ==
+                                          ?.toString() ==
                                       null
                                   ? "........."
                                   : controller.currentOrderStreamRx.value!.order
@@ -157,6 +156,7 @@ class CurrentPositionedFromToTopBar extends StatelessWidget {
                                       .toString(), //13+..
                               style: TextStyle(fontSize: 15, fontFamily: 'psr'),
                               maxLines: 1,
+                              softWrap: false,
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
