@@ -157,7 +157,7 @@ class MezSideMenu extends GetWidget<AuthController> {
               height: Get.height * 0.12,
               child: Center(
                 child: Text(
-                  'v1.0.8' + (lmd != "prod" ? " $lmd" : " "),
+                  VERSION + (lmd != "prod" ? " $lmd" : " "),
                 ),
               ),
             )
