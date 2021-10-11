@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ItemComponent extends StatelessWidget {
   final String? imgUrl;
   final String? title;
   final String? subtitle;
   final String? restaurantId;
+  final bool? withBorder;
   // final int? index;
-  ItemComponent({this.imgUrl, this.title, this.subtitle, this.restaurantId});
+  ItemComponent(
+      {this.imgUrl,
+      this.title,
+      this.subtitle,
+      this.restaurantId,
+      this.withBorder = false});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +28,7 @@ class ItemComponent extends StatelessWidget {
         //  width: Get.width,
         height: 60,
         decoration: BoxDecoration(
-            border: (subtitle != null)
+            border: (withBorder == false)
                 ? null
                 : Border.all(color: const Color(0x410d0d0d), width: 0.5),
             borderRadius: BorderRadius.circular(8),
@@ -50,12 +57,14 @@ class ItemComponent extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text("$title",
-                    style: const TextStyle(
-                        color: const Color(0xff000f1c),
-                        fontWeight: FontWeight.w500,
-                        fontFamily: "ProductSans",
-                        fontStyle: FontStyle.normal,
-                        fontSize: 18.0),
+                    style: GoogleFonts.sourceSansPro(
+                      textStyle: TextStyle(
+                          color: const Color(0xff000f1c),
+                          fontWeight: FontWeight.w600,
+                          fontFamily: "ProductSans",
+                          fontStyle: FontStyle.normal,
+                          fontSize: 18.0),
+                    ),
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.left),
                 (subtitle != null)

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/CustomerApp/components/ItemComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
 import 'package:mezcalmos/CustomerApp/models/restaurant.dart';
@@ -36,12 +37,14 @@ class ListRestaurantsScreen extends GetView<RestaurantsInfoController> {
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
           width: Get.width,
           child: Text("Restaurants",
-              style: const TextStyle(
-                  color: const Color(0xfd1d1d1d),
-                  fontWeight: FontWeight.w400,
-                  fontFamily: "ProductSans",
-                  fontStyle: FontStyle.normal,
-                  fontSize: 40.0),
+              style: GoogleFonts.sourceSansPro(
+                textStyle: TextStyle(
+                    color: const Color(0xfd1d1d1d),
+                    fontWeight: FontWeight.w500,
+                    fontFamily: "ProductSans",
+                    fontStyle: FontStyle.normal,
+                    fontSize: 40.0),
+              ),
               textAlign: TextAlign.left),
         ),
         Expanded(
@@ -54,6 +57,7 @@ class ListRestaurantsScreen extends GetView<RestaurantsInfoController> {
                         imgUrl: restaurant.photo!,
                         title: restaurant.name!,
                         restaurantId: restaurant.id!,
+                        withBorder: true,
                       )))
                   .toList())),
         ),
