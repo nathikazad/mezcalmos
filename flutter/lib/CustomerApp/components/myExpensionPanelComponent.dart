@@ -77,6 +77,8 @@ class _MyExpensionPanelComponentState extends State<MyExpensionPanelComponent>
     return Container(
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
             decoration: BoxDecoration(
@@ -87,6 +89,7 @@ class _MyExpensionPanelComponentState extends State<MyExpensionPanelComponent>
                 Row(
                   children: [
                     widget.child,
+                    Spacer(),
                     InkWell(
                       child: Container(
                         width: 28,
@@ -134,7 +137,10 @@ class _MyExpensionPanelComponentState extends State<MyExpensionPanelComponent>
                         ),
                       ),
                       onTap: _handleTap,
-                    )
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
                   ],
                 ),
                 SizedBox(
