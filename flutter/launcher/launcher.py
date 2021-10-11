@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
 import os , json
-from sys import argv
+from sys import argv, stderr, stdout
 from enum import Enum
 import subprocess as proc
+from termcolor import colored
 
 
 # GLOBAL CONSTANTS !
@@ -81,6 +82,7 @@ class DW_EXIT_REASONS(Enum):
     FOUND_MULTI_VERSION_CODE_IN_LOCAL_PROPERTIES = -34
     LAUNCH_PROC_WITH_NONE_BINARY = -35
     FILTER_FILE_NOT_FOUND = -36
+    FLUTTER_STDERR = -37
 
     REACH_THE_LAZY_SAAD = -10000
 
@@ -326,17 +328,23 @@ class Config:
     @staticmethod
     def launch_flutter_app(binary , filter_file=None, filter_mode=OUTPUT_FILTERS.SHOW):
         ff = []
+        start_filtering = False
         if binary != None:
             if filter_file != None:
                 if os.path.exists(f"output_filters/{filter_file}"):
                     ff = open(f"output_filters/{filter_file}").readlines()
                     PRINTLN(f"[+] Using {filter_mode} on {ff.__len__()} filters specified in => output_filters/{filter_file}")
-                    with proc.Popen(binary, stdout=proc.PIPE, universal_newlines=True) as p:
-                        for line in p.stdout:  
-                            for f in ff:
-                                if f.strip() in line and filter_mode == OUTPUT_FILTERS.SHOW:
-                                    print(line)
-
+                    with proc.Popen(binary, stderr=stderr , stdout=proc.PIPE, universal_newlines=True) as p:
+                        for line in p.stdout:
+                            if start_filtering:
+                                for f in ff:
+                                    if f.strip() in line and filter_mode == OUTPUT_FILTERS.SHOW:
+                                        print(line , end="")
+                            else:
+                                if "I/flutter" in line:
+                                    start_filtering = True
+                                else:
+                                    print(line , end="")
                 else:
                     PRINTLN(f"[!] Error there is no such filter file in output_filters/{filter_file} !")
                     exit(DW_EXIT_REASONS.FILTER_FILE_NOT_FOUND)
