@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CheckBoxComponent extends StatefulWidget {
   final String? title;
@@ -79,12 +80,14 @@ class _CheckBoxComponentState extends State<CheckBoxComponent> {
             Expanded(
                 child: Container(
               child: Text("${widget.title}",
-                  style: const TextStyle(
-                      color: const Color(0xff000000),
-                      fontWeight: FontWeight.w400,
-                      fontFamily: "ProductSans",
-                      fontStyle: FontStyle.normal,
-                      fontSize: 17.0),
+                  style: GoogleFonts.mulish(
+                    textStyle: TextStyle(
+                        color: const Color(0xff000000),
+                        fontWeight: FontWeight.w400,
+                        fontFamily: "ProductSans",
+                        fontStyle: FontStyle.normal,
+                        fontSize: 17.0),
+                  ),
                   textAlign: TextAlign.left),
             ))
           ],

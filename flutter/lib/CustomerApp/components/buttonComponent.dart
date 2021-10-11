@@ -28,7 +28,6 @@ class ButtonComponent extends StatelessWidget {
             ),
             child: widget),
         onTap: () {
-          print("hey inside");
           function!();
         },
       ),
