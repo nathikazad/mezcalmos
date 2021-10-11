@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 //import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen.dart';
 
 class ItemMenuComponents extends StatelessWidget {
@@ -15,7 +16,7 @@ class ItemMenuComponents extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       width: Get.width,
       height: 63,
       decoration: BoxDecoration(
@@ -61,23 +62,25 @@ class ItemMenuComponents extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "\$$price",
-                      style: const TextStyle(
-                          color: const Color(0xff000f1c),
-                          fontWeight: FontWeight.w400,
-                          fontFamily: "ProductSans",
-                          fontStyle: FontStyle.normal,
-                          fontSize: 18.0),
-                    ),
-                    Text(
                       "T$title",
-                      style: const TextStyle(
-                          color: const Color(0xff000f1c),
-                          fontWeight: FontWeight.w400,
-                          fontFamily: "ProductSans",
-                          fontStyle: FontStyle.normal,
-                          fontSize: 14.0),
+                      style: GoogleFonts.mulish(
+                        textStyle: TextStyle(
+                            color: const Color(0xff000f1c),
+                            fontWeight: FontWeight.w500,
+                            fontFamily: "ProductSans",
+                            fontStyle: FontStyle.normal,
+                            fontSize: 18.0),
+                      ),
                     ),
+                    Text("\$$price",
+                        style: GoogleFonts.mulish(
+                          textStyle: TextStyle(
+                              color: const Color(0xff000f1c),
+                              fontWeight: FontWeight.w400,
+                              fontFamily: "ProductSans",
+                              fontStyle: FontStyle.normal,
+                              fontSize: 14.0),
+                        )),
                   ],
                 ),
               ),
@@ -108,7 +111,7 @@ class ItemMenuComponents extends StatelessWidget {
                       height: 43,
                       child: Icon(
                         Icons.add,
-                        color: Color(0xff5c7fff),
+                        color: Color.fromARGB(255, 103, 122, 253),
                       ),
                     ),
                   )

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 
-Widget restaurantAppBarComponent(String type, Function func) {
+Widget restaurantAppBarComponent(String type, Function? func) {
   return Container(
     margin: EdgeInsets.only(top: 15),
     // height: 48,
@@ -13,21 +14,30 @@ Widget restaurantAppBarComponent(String type, Function func) {
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Container(
-          margin: const EdgeInsets.all(10),
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            gradient: LinearGradient(colors: [
-              Color.fromRGBO(81, 132, 255, 1),
-              Color.fromRGBO(206, 73, 252, 1)
-            ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+        InkWell(
+          child: Container(
+            margin: const EdgeInsets.all(10),
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              gradient: LinearGradient(colors: [
+                Color.fromRGBO(81, 132, 255, 1),
+                Color.fromRGBO(206, 73, 252, 1)
+              ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+            ),
+            child: (type == "back")
+                ? Icon(
+                    Icons.arrow_back_ios_new,
+                    size: 16,
+                    color: Colors.white,
+                  )
+                : Container(),
           ),
-          child: Icon(
-            Icons.arrow_back_ios_new,
-            size: 16,
-            color: Colors.white,
-          ),
+          onTap: (type == "back")
+              ? () {
+                  Get.back();
+                }
+              : func!(),
         ),
         Expanded(
           child: Container(
@@ -112,40 +122,33 @@ Widget restaurantAppBarComponent(String type, Function func) {
         SizedBox(
           width: 5,
         ),
-        InkWell(
-          child: Stack(
-            children: [
-              Opacity(
-                opacity: 0.10000000149011612,
-                child: Container(
-                  width: 30,
-                  height: 30,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    gradient: LinearGradient(
-                      begin: Alignment(0.1689453125, 0),
-                      end: Alignment(1, 1),
-                      colors: [
-                        const Color(0xff5582ff),
-                        const Color(0xffc54efc)
-                      ],
-                    ),
-                  ),
-                ),
+        GestureDetector(
+          child: Container(
+            height: 30,
+            width: 30,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+              gradient: LinearGradient(
+                begin: Alignment(0.1689453125, 0),
+                end: Alignment(1, 1),
+                colors: [
+                  const Color(0xff5582ff).withOpacity(0.10000000149011612),
+                  const Color(0xffc54efc).withOpacity(0.10000000149011612)
+                ],
               ),
-              Container(
-                height: 30,
-                width: 30,
-                alignment: Alignment.center,
-                child: Icon(
-                  Icons.shopping_cart_outlined,
-                  size: 18,
-                  color: Color(0xff5582ff),
-                ),
-              )
-            ],
+            ),
+            child: Icon(
+              Icons.shopping_cart_outlined,
+              size: 18,
+              color: Color(0xff5582ff),
+            ),
           ),
-          onTap: () {},
+          onTap: () {
+            print("hey");
+            Get.to(ViewCartScreen(),
+                duration: Duration(seconds: 1),
+                transition: Transition.rightToLeft);
+          },
         ),
         SizedBox(
           width: 10,
