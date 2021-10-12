@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/CustomerApp/models/Cart.dart';
+import 'package:mezcalmos/CustomerApp/models/cart.dart';
 import 'package:mezcalmos/CustomerApp/models/Order.dart';
 
 class Customer {

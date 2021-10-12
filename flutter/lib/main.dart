@@ -100,8 +100,7 @@ class _SPointState extends State<SPoint> {
         await GetStorage().write(version, pInfos.version);
       } else
         print("[ GET STORAGE ] FAILED TO INITIALIZE !");
-      AuthController auCtrl =
-          Get.put<AuthController>(
+      AuthController auCtrl = Get.put<AuthController>(
           AuthController(signInCallback, signOutCallback),
           permanent: true);
       Get.put<SettingsController>(SettingsController(), permanent: true);

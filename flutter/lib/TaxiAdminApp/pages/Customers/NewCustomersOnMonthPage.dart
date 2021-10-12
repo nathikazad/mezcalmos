@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiAdminApp/Models/NbCustomers.dart';
 import 'package:mezcalmos/TaxiAdminApp/Models/NbOrders.dart';
-import 'package:mezcalmos/TaxiAdminApp/controller/customersController.dart';
+import 'package:mezcalmos/TaxiAdminApp/controller/CustomersController.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:charts_flutter/flutter.dart' as charts;

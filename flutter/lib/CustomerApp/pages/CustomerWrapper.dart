@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:mezcalmos/CustomerApp/components/appbarComponent.dart';
 import 'package:mezcalmos/CustomerApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantOrderController.dart';
@@ -51,17 +52,22 @@ class CustomerWrapper extends GetWidget<AuthController>
       });
     });
     return Scaffold(
-        key: _sideMenuDrawerController.getNewKey(),
-        drawer: MezSideMenu(),
-        backgroundColor: Colors.white,
-        appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
-            "menu", _sideMenuDrawerController.openMenu),
-        body: Column(
-          children: [
-            OutlinedButton(
-                onPressed: () => Get.to(ListRestaurantsScreen()),
-                child: Text("Restaurants"))
-          ],
-        ));
+      // key: _sideMenuDrawerController.getNewKey(),
+      // drawer: MezSideMenu(),
+      // backgroundColor: Colors.white,
+      // appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
+      //     "menu", _sideMenuDrawerController.openMenu),
+
+      body: SafeArea(
+        child: Container(
+          child: Column(children: [
+            restaurantAppBarComponent("back", () {}),
+            Expanded(
+              child: ListRestaurantsScreen(),
+            ),
+          ]),
+        ),
+      ),
+    );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:mezcalmos/CustomerApp/models/Restaurant.dart';
+import 'package:mezcalmos/CustomerApp/models/restaurant.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:get/get.dart';
 import 'dart:async';
