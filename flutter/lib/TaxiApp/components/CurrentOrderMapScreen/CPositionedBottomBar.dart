@@ -5,7 +5,6 @@ import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/constants/routes.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
@@ -23,7 +22,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
   CurrentPositionedBottomBar(this.controller);
   TaxiAuthController taxiAuthController = Get.find<TaxiAuthController>();
   LanguageController lang = Get.find<LanguageController>();
-  FBNotificationsController fbNotificationsController =
+  FBTaxiNotificationsController fbNotificationsController =
       Get.find<FBTaxiNotificationsController>();
 
   @override

@@ -3,21 +3,20 @@ import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/fbTaxiNotificationsController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 class AuthHooks {
   static Future<void> onSignOutHook() async {
     print("[+] CustomerApp::AuthHooks::onSignOutHook -> Callback Executed.");
     await Get.delete<TaxiAuthController>();
-    await Get.delete<DeviceNotificationsController>();
+    await Get.delete<DeviceNotificationsController>(force: true);
     await Get.delete<MessageController>();
-    await Get.delete<FBNotificationsController>();
+    await Get.delete<FBTaxiNotificationsController>();
   }
 
   static void onSignInHook() {
     print("[+] CustomerApp::AuthHooks::onSignInHook -> Callback Executed.");
     Get.lazyPut(() => TaxiAuthController());
-    Get.lazyPut(() => DeviceNotificationsController());
+    Get.lazyPut(() => DeviceNotificationsController(), fenix: true);
     Get.lazyPut(() => MessageController());
     Get.lazyPut(() => FBTaxiNotificationsController());
   }

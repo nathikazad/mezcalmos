@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/SharedEnums.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
+import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/TaxiApp/models/TaxiDriver.dart';
@@ -27,7 +28,7 @@ class TaxiAuthController extends GetxController with MezDisposable {
       <String, dynamic>{"latitude": 15.851385, "longitude": -97.046429}).obs;
   RxBool _locationEnabled = false.obs;
   DeviceNotificationsController _messagingController =
-      Get.put<DeviceNotificationsController>(DeviceNotificationsController());
+      Get.find<DeviceNotificationsController>();
 
   Rx<AgentDataEvent> taxiDriverDataEventRx = AgentDataEvent.Null.obs;
 
@@ -60,7 +61,7 @@ class TaxiAuthController extends GetxController with MezDisposable {
   void onInit() async {
     super.onInit();
     // Injecting all our c here
-    // Get.lazyPut(() => CurrentOrderController());
+    Get.lazyPut(() => CurrentOrderController(), fenix: true);
     Get.lazyPut(() => IncomingOrdersController());
     // ------------------------------------------------------------------------
 
@@ -186,6 +187,8 @@ class TaxiAuthController extends GetxController with MezDisposable {
   @override
   void dispose() async {
     mezDbgPrint("[+] TaxiAuthController::dispose ---------> Was invoked !");
+    Get.delete<CurrentOrderController>(force: true);
+    Get.delete<IncomingOrdersController>(force: true);
     // await _locationListener?.cancel();
     cancelSubscriptions();
     // Get.find<CurrentOrderController>().dispose();

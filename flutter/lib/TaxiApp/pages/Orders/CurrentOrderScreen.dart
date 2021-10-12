@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
@@ -6,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
@@ -23,10 +21,10 @@ import 'package:mezcalmos/TaxiApp/controllers/fbTaxiNotificationsController.dart
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 
-class CurrentOrderScreen extends GetView {
+class CurrentOrderScreen extends GetWidget<CurrentOrderController> {
   final LanguageController lang = Get.find<LanguageController>();
   final FBNotificationsController fbNotificationsController =
-      Get.put<FBNotificationsController>(FBTaxiNotificationsController());
+      Get.find<FBTaxiNotificationsController>();
 
   TaxiAuthController taxiAuthController = Get.find<TaxiAuthController>();
 
@@ -50,76 +48,78 @@ class CurrentOrderScreen extends GetView {
   }
 
   Widget build(BuildContext context) {
-    final CurrentOrderController _controller =
-        Get.put<CurrentOrderController>(CurrentOrderController());
-    return Stack(
-      alignment: Alignment.topCenter,
-      children: [
-        StreamBuilder(
-            stream: _controller.currentOrderStreamRx.stream,
-            builder: (_, AsyncSnapshot<CurrentOrder?> snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                mezDbgPrint(
-                    "Inside TaxiWrapper::StreamBuilder::ConnectionState.waiting");
+    // final CurrentOrderController controller =
+    //     Get.find<CurrentOrderController>();
+    mezDbgPrint("CTRL $controller");
 
-                return Center(
-                  child: Container(
-                    height: 200,
-                    width: 200,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle, color: Colors.white),
-                    child:
-                        Transform.scale(scale: .8, child: MezLogoAnimation()),
-                  ),
-                );
-              } else if (snapshot.connectionState == ConnectionState.active ||
-                  snapshot.connectionState == ConnectionState.done) {
-                if (snapshot.hasError) {
-                  return const Center(
-                    child: Icon(
-                      Icons.wifi_off_outlined,
-                      size: 40,
-                    ),
-                  );
-                } else if (snapshot.hasData) {
-                  hotReladCallback(_controller);
-                  return Obx(() => MGoogleMap(
-                        customMarkers,
-                        initialCameraPosition.value,
-                        polylines: polylines,
-                        idWithSubscription: {
-                          "taxi": taxiAuthController.currentLocationRx.stream
-                        },
-                      ));
-                } else {
-                  mezDbgPrint(
-                      "Inside TaxiWrapper::StreamBuilder::ConnectionState.done|active::EmptyData");
-                  return const Center(
-                    child: Icon(
-                      Icons.hourglass_empty_sharp,
-                      color: Colors.grey,
-                      size: 40,
-                    ),
-                  );
-                }
-              } else {
-                mezDbgPrint(
-                    "Else : Inside TaxiWrapper::StreamBuilder::ConnectionState.${snapshot.connectionState}");
-                return const Center(
-                  child: Icon(
-                    Icons.error,
-                    color: Colors.purpleAccent,
-                    size: 40,
-                  ),
-                );
-              }
-            }),
+    return StreamBuilder(
+        stream: controller.currentOrderStreamRx.stream,
+        builder: (_, AsyncSnapshot<CurrentOrder?> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            mezDbgPrint(
+                "Inside TaxiWrapper::StreamBuilder::ConnectionState.waiting");
 
-        // no need for obx here.
-        CurrentPositionedBottomBar(_controller),
-        CurrentPositionedFromToTopBar()
-      ],
-    );
+            return Center(
+              child: Container(
+                height: 200,
+                width: 200,
+                decoration:
+                    BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+                child: Transform.scale(scale: .8, child: MezLogoAnimation()),
+              ),
+            );
+          } else if (snapshot.connectionState == ConnectionState.active ||
+              snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasError) {
+              return const Center(
+                child: Icon(
+                  Icons.wifi_off_outlined,
+                  size: 40,
+                ),
+              );
+            } else if (snapshot.hasData) {
+              mezDbgPrint(snapshot.data?.event?.eventDetails);
+              hotReladCallback(controller);
+              return Obx(() {
+                return Stack(
+                  alignment: Alignment.topCenter,
+                  children: [
+                    MGoogleMap(
+                      customMarkers,
+                      initialCameraPosition.value,
+                      polylines: polylines,
+                      idWithSubscription: {
+                        "taxi": taxiAuthController.currentLocationRx.stream
+                      },
+                    ), // no need for obx here.
+                    CurrentPositionedBottomBar(controller),
+                    CurrentPositionedFromToTopBar()
+                  ],
+                );
+              });
+            } else {
+              mezDbgPrint(
+                  "Inside TaxiWrapper::StreamBuilder::ConnectionState.done|active::EmptyData");
+              return const Center(
+                child: Icon(
+                  Icons.hourglass_empty_sharp,
+                  color: Colors.grey,
+                  size: 40,
+                ),
+              );
+            }
+          } else {
+            mezDbgPrint(
+                "Else : Inside TaxiWrapper::StreamBuilder::ConnectionState.${snapshot.connectionState}");
+            return const Center(
+              child: Icon(
+                Icons.error,
+                color: Colors.purpleAccent,
+                size: 40,
+              ),
+            );
+          }
+        });
   }
 
   // Handling Event ------------------------------------------------------------------------------------

@@ -62,7 +62,7 @@ class MessageController extends GetxController with MezDisposable {
   }
 
   Participant? recipient() {
-    Participant? recipient = null;
+    Participant? recipient;
     _model.value.participants.forEach((key, value) {
       if (key != _authController.user!.uid) {
         recipient = value;

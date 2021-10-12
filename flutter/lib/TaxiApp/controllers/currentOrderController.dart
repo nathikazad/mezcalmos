@@ -140,6 +140,12 @@ class CurrentOrderController extends GetxController with MezDisposable {
 
   @override
   void onClose() async {
+    mezDbgPrint("cuRRENT CONTROLLER :: ::: :: :: : :   : :::::: DISPOSE !");
+    // try {
+    //   Get.delete<CurrentOrderController>();
+    // } catch (e) {
+    //   mezDbgPrint(e);
+    // }
     cancelSubscriptions();
     detachListeners();
     mezDbgPrint(

@@ -35,8 +35,8 @@ class TaxiApp extends GetView<SettingsController> {
           visualDensity: VisualDensity.adaptivePlatformDensity),
       color: Colors.white,
       getPages: XRouter.mainRoutes,
-      enableLog: true,
-      logWriterCallback: mezcalmosLogger,
+      enableLog: false,
+      // logWriterCallback: mezcalmosLogger,
       initialRoute: kMainAuthWrapperRoute,
     );
   }
