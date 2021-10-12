@@ -4,38 +4,34 @@ import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoCont
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/Restaurant.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
-import 'dart:async';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen.dart';
+import 'package:mezcalmos/CustomerApp/router.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
 
+enum ViewItemScreenMode { AddItemMode, EditItemMode }
+
 class ViewItemScreen extends GetView<RestaurantsInfoController> {
-  String restaurantId;
-  String itemId;
+  ViewItemScreenMode viewItemScreenMode;
   Rxn<CartItem> cartItem = Rxn();
-  RestaurantCartController? restaurantCartController;
-  ViewItemScreen(this.restaurantId, this.itemId, this.restaurantCartController);
+  late RestaurantCartController restaurantCartController;
 
-  factory ViewItemScreen.forNewItem(String restaurantId, String itemId) {
+  ViewItemScreen(this.viewItemScreenMode) {
     Get.put<RestaurantsInfoController>(RestaurantsInfoController());
-    ViewItemScreen viewItemScreen = ViewItemScreen(restaurantId, itemId,
-        Get.put<RestaurantCartController>(RestaurantCartController()));
-
-    viewItemScreen.controller.getItem(restaurantId, itemId).then((value) {
-      viewItemScreen.cartItem.value = CartItem(value, restaurantId);
-    });
-    return viewItemScreen;
-  }
-
-  factory ViewItemScreen.forAlreadyInCartItem(CartItem cartItem) {
-    Get.put<RestaurantsInfoController>(RestaurantsInfoController());
-    ViewItemScreen viewItemScreen = ViewItemScreen(
-        cartItem.restaurantId,
-        cartItem.item.id!,
-        Get.put<RestaurantCartController>(RestaurantCartController()));
-    viewItemScreen.cartItem.value = CartItem.clone(cartItem);
-    return viewItemScreen;
+    restaurantCartController =
+        Get.put<RestaurantCartController>(RestaurantCartController());
+    if (this.viewItemScreenMode == ViewItemScreenMode.AddItemMode) {
+      String restaurantId = Get.parameters['restaurantId']!;
+      String itemId = Get.parameters['itemId']!;
+      this.controller.getItem(restaurantId, itemId).then((value) {
+        this.cartItem.value = CartItem(value, restaurantId);
+      });
+    } else {
+      this.cartItem.value = CartItem.clone(restaurantCartController
+          .cart.value!.items
+          .firstWhere((item) => item.id == Get.parameters["cartItemId"]));
+    }
   }
 
   @override
@@ -45,7 +41,11 @@ class ViewItemScreen extends GetView<RestaurantsInfoController> {
           title: Obx(() => Text("${cartItem.value?.item.name ?? 'Loading'}")),
           actions: [
             TextButton(
-                onPressed: () => Get.to(ViewCartScreen()), child: Text("Cart"))
+                onPressed: () =>
+                    (this.viewItemScreenMode == ViewItemScreenMode.AddItemMode)
+                        ? Get.toNamed(kCartRoute)
+                        : Get.back(),
+                child: Text("Cart"))
           ],
         ),
         body: LayoutBuilder(builder:
@@ -70,7 +70,10 @@ class ViewItemScreen extends GetView<RestaurantsInfoController> {
                             incrementQuantityButton(),
                             Text(
                                 "\$${currency.format(cartItem.value!.totalCost())}"),
-                            addItemButton()
+                            (this.viewItemScreenMode ==
+                                    ViewItemScreenMode.AddItemMode)
+                                ? addItemButton()
+                                : editItemButton()
                           ] else
                             Text("Loading")
                         ],
@@ -125,7 +128,7 @@ class ViewItemScreen extends GetView<RestaurantsInfoController> {
       }
       chooseManyWidgetArray.add(CheckboxListTile(
         title: Text(name),
-        value: cartItem.value!.chosenManyOptions[chooseManyOption.id!],
+        value: cartItem.value!.chosenManyOptions[chooseManyOption.id!] ?? false,
         onChanged: (newValue) {
           cartItem.value!.chosenManyOptions[chooseManyOption.id!] =
               newValue ?? false;
@@ -151,8 +154,17 @@ class ViewItemScreen extends GetView<RestaurantsInfoController> {
     return OutlinedButton(
         child: Text("Add item to cart"),
         onPressed: () {
-          restaurantCartController?.addItem(cartItem.value!, this.restaurantId);
+          restaurantCartController.addItem(cartItem.value!);
           Get.off(ViewCartScreen());
+        });
+  }
+
+  Widget editItemButton() {
+    return OutlinedButton(
+        child: Text("Edit item"),
+        onPressed: () {
+          restaurantCartController.addItem(cartItem.value!);
+          Get.back();
         });
   }
 }

@@ -1,11 +1,8 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
 import 'package:mezcalmos/CustomerApp/models/Restaurant.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen.dart';
+import 'package:mezcalmos/CustomerApp/router.dart';
 
 class ListRestaurantsScreen extends GetView<RestaurantsInfoController> {
   RxList<Restaurant> restaurants = <Restaurant>[].obs;
@@ -14,7 +11,7 @@ class ListRestaurantsScreen extends GetView<RestaurantsInfoController> {
     RestaurantsInfoController controller =
         Get.put<RestaurantsInfoController>(RestaurantsInfoController());
     controller.getRestaurants().then((value) {
-      restaurants.value = value as List<Restaurant>;
+      restaurants.value = value;
     });
   }
 
@@ -25,7 +22,7 @@ class ListRestaurantsScreen extends GetView<RestaurantsInfoController> {
           title: Text("Restaurant list"),
           actions: [
             TextButton(
-                onPressed: () => Get.to(ViewCartScreen()), child: Text("Cart"))
+                onPressed: () => Get.toNamed(kCartRoute), child: Text("Cart"))
           ],
         ),
         body: _getBody());
@@ -35,7 +32,8 @@ class ListRestaurantsScreen extends GetView<RestaurantsInfoController> {
     return Obx(() => Column(
         children: restaurants
             .map((restaurant) => TextButton(
-                onPressed: () => Get.to(ViewRestaurantScreen(restaurant.id!)),
+                onPressed: () =>
+                    Get.toNamed(getRestaurantRoute(restaurant.id!)), 
                 child: Text(restaurant.name!)))
             .toList()));
   }

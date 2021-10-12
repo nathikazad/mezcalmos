@@ -8,7 +8,9 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
 import 'dart:async';
 
-class RestaurantCartController extends GetxController {
+import 'package:mezcalmos/Shared/utilities/Extensions.dart';
+
+class RestaurantCartController extends GetxController with MezDisposable {
   DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
   AuthController _authController = Get.find<AuthController>();
 
@@ -18,37 +20,36 @@ class RestaurantCartController extends GetxController {
   void onInit() {
     super.onInit();
     print("--------------------> RestaurantsCartController Initialized !");
-    if (_authController.user != null) {
-      _databaseHelper.firebaseDatabase
-          .reference()
-          .child(customerCart(_authController.user!.uid))
-          .onValue
-          .listen((event) async {
-        dynamic cartData = event.snapshot.value;
-        print(cartData);
-        // check if cart has data
-        if (cartData != null) {
-          // check if cart data is for restaurant
-          if (cartData["orderType"] == "restaurant") {
-            // check if already associated restaurant with cart is the same as current restaurant,
-            // if not clear the old associated restaurant
-            if (associatedRestaurant != null) {
-              if (cartData["serviceProviderId"] != associatedRestaurant!.id) {
-                associatedRestaurant = null;
-              }
+
+    _databaseHelper.firebaseDatabase
+        .reference()
+        .child(customerCart(_authController.fireAuthUser!.uid))
+        .onValue
+        .listen((event) async {
+      dynamic cartData = event.snapshot.value;
+      // print(cartData);
+      // check if cart has data
+      if (cartData != null) {
+        // check if cart data is for restaurant
+        if (cartData["orderType"] == "restaurant") {
+          // check if already associated restaurant with cart is the same as current restaurant,
+          // if not clear the old associated restaurant
+          if (associatedRestaurant != null) {
+            if (cartData["serviceProviderId"] != associatedRestaurant!.id) {
+              associatedRestaurant = null;
             }
-            // if no associated restaurant data is saved, then fetch it from database
-            if (associatedRestaurant == null) {
-              associatedRestaurant =
-                  await getAssociatedRestaurant(cartData["serviceProviderId"]);
-            }
-            cart.value = Cart.fromCartData(cartData, associatedRestaurant!);
           }
-        } else {
-          cart.value = null;
+          // if no associated restaurant data is saved, then fetch it from database
+          if (associatedRestaurant == null) {
+            associatedRestaurant =
+                await getAssociatedRestaurant(cartData["serviceProviderId"]);
+          }
+          cart.value = Cart.fromCartData(cartData, associatedRestaurant!);
         }
-      });
-    }
+      } else {
+        cart.value = null;
+      }
+    }).canceledBy(this);
   }
 
   Future<Restaurant> getAssociatedRestaurant(String restaurantId) async {
@@ -59,7 +60,8 @@ class RestaurantCartController extends GetxController {
     return Restaurant.fromRestaurantData(snapshot.value, id: restaurantId);
   }
 
-  void addItem(CartItem cartItem, String restaurantId) async {
+  void addItem(CartItem cartItem) async {
+    String restaurantId = cartItem.restaurantId;
     if (associatedRestaurant == null) {
       associatedRestaurant = await getAssociatedRestaurant(restaurantId);
     } else if (associatedRestaurant!.id != restaurantId) {
@@ -73,6 +75,7 @@ class RestaurantCartController extends GetxController {
     }
 
     cart.value?.addItem(cartItem);
+    // print(customerCart(_authController.user!.uid));
     _databaseHelper.firebaseDatabase
         .reference()
         .child(customerCart(_authController.user!.uid))
@@ -107,5 +110,12 @@ class RestaurantCartController extends GetxController {
         "errorCode": "serverError"
       };
     }
+  }
+
+  @override
+  void onClose() async {
+    print("[+] RestaurantCartController::onClose ---------> Was invoked !");
+    cancelSubscriptions();
+    super.onClose();
   }
 }

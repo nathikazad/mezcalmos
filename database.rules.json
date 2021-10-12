@@ -50,16 +50,15 @@
       }
     },
     "customers": {
-      "$uid": {
-        ".read": "$uid === auth.uid",
-        "cart": {
-          ".write": "true"
-        },
-        "notificationInfo": {
+      "info": {
+        "$uid": {
+          ".read": "$uid === auth.uid",
           ".write": "$uid === auth.uid"
-        },
-        "versionNumber": {
-          ".write": "$uid === auth.uid"
+        }
+      },
+      "orders": {
+        "$uid": {
+          ".read": "$uid === auth.uid"
         }
       }
     },
