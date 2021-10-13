@@ -25,9 +25,6 @@ class AppPreInit {
     await GetStorage().write('destination_descriptor',
         await BitmapDescriptorLoader(purple_destination_marker_asset, 60, 60));
 
-    // Loading map asset !
-    await rootBundle.loadString(map_style_asset).then(
-        (jsonString) => GetStorage().write(getxMapStyleJsonKey, jsonString));
     mezDbgPrint("[+] L O A D I N G .... DONE !");
   }
 }

@@ -22,14 +22,14 @@ class Wrapper extends StatelessWidget {
               if (snapUser.data == null) {
                 return SignIn();
               } else {
-                return Obx(() {
+                // return Obx(() {
                   if (_settingsController.hasLocationPermissions.value == false)
                     return LocationPermissionScreen();
                   else {
                     mezDbgPrint("Init Taxi Wrapper");
                     return TaxiWrapper();
                   }
-                });
+                // });
               }
             }));
   }

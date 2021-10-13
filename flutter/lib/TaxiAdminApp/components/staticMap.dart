@@ -115,7 +115,6 @@ class _StaticMapState extends State<StaticMap> {
                 ),
               ]);
               _googleMapController = _gController;
-              await _gController.setMapStyle(GetStorage().read('map_style'));
               await _gController.animateCamera(CameraUpdate.newLatLngBounds(
                   LatLngBounds(
                       southwest: widget.pickUpLocation,

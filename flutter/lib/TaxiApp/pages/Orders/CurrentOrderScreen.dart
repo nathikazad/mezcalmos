@@ -39,95 +39,92 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
   RxList<Marker> customMarkers = <Marker>[].obs;
   //====================================================================
 
-  void hotReladCallback(CurrentOrderController _controller) {
+  Future<void> hotReladCallback() async {
     mezDbgPrint("CurrentOrderScreen :: addPostFrameCallback :: called !");
     mezDbgPrint("StreamBuilder----HasData start map loading!");
-    _loadPolyline(_controller);
-    _handleEvent(_controller);
+    _loadPolyline();
+    await _handleEvent();
     mezDbgPrint("StreamBuilder----HasData Ended map loading!");
   }
 
   Widget build(BuildContext context) {
-    // final CurrentOrderController controller =
-    //     Get.find<CurrentOrderController>();
-    mezDbgPrint("CTRL $controller");
-
     return Stack(
       alignment: Alignment.topCenter,
       children: [
-        StreamBuilder(
-            stream: controller.currentOrderStreamRx.stream.where((event) {
-          // mezDbgPrint("Stream filter");
-          // mezDbgPrint(event);
-          // mezDbgPrint(event?.event);
-          return (event != null) && (event.event != null);
-        }), builder: (_, AsyncSnapshot<CurrentOrder?> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            mezDbgPrint(
-                "Inside CurrentOrder::StreamBuilder::ConnectionState.waiting");
+        FutureBuilder(
+            future: loadMapAssets(),
+            builder: (_, AsyncSnapshot<CurrentOrder?> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                mezDbgPrint(
+                    "Inside CurrentOrder::StreamBuilder::ConnectionState.waiting");
 
-            return Center(
-              child: Container(
-                height: 200,
-                width: 200,
-                decoration:
-                    BoxDecoration(shape: BoxShape.circle, color: Colors.white),
-                child: Transform.scale(scale: .8, child: MezLogoAnimation()),
-              ),
-            );
-          } else if (snapshot.connectionState == ConnectionState.active ||
-              snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasError) {
-              return const Center(
-                child: Icon(
-                  Icons.wifi_off_outlined,
-                  size: 40,
-                ),
-              );
-            } else if (snapshot.hasData) {
-              mezDbgPrint("INSIDE STREAM BUILDER");
-              mezDbgPrint(snapshot.data?.event);
-              hotReladCallback(controller);
-              return MGoogleMap(
-                customMarkers,
-                initialCameraPosition.value,
-                polylines: polylines,
-                idWithSubscription: {
-                  "taxi": taxiAuthController.currentLocationRx.stream
-                },
-              );
-            } else {
-              mezDbgPrint(
-                  "Inside TaxiWrapper::StreamBuilder::ConnectionState.done|active::EmptyData");
-              return const Center(
-                child: Icon(
-                  Icons.hourglass_empty_sharp,
-                  color: Colors.grey,
-                  size: 40,
-                ),
-              );
-            }
-          } else {
-            mezDbgPrint(
-                "Else : Inside TaxiWrapper::StreamBuilder::ConnectionState.${snapshot.connectionState}");
-            return const Center(
-              child: Icon(
-                Icons.error,
-                color: Colors.purpleAccent,
-                size: 40,
-              ),
-            );
-          }
-        }), // no need for obx here.
+                return Center(
+                  child: Container(
+                    height: 200,
+                    width: 200,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, color: Colors.white),
+                    child:
+                        Transform.scale(scale: .8, child: MezLogoAnimation()),
+                  ),
+                );
+              } else if (snapshot.connectionState == ConnectionState.active ||
+                  snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.hasError) {
+                  return const Center(
+                    child: Icon(
+                      Icons.wifi_off_outlined,
+                      size: 40,
+                    ),
+                  );
+                } else if (snapshot.hasData) {
+                  mezDbgPrint("INSIDE STREAM BUILDER");
+                  mezDbgPrint(snapshot.data?.event);
+                  return MGoogleMap(
+                    customMarkers,
+                    initialCameraPosition.value,
+                    polylines: polylines,
+                    idWithSubscription: {
+                      "taxi": taxiAuthController.currentLocationRx.stream
+                    },
+                  );
+                } else {
+                  mezDbgPrint(
+                      "Inside TaxiWrapper::StreamBuilder::ConnectionState.done|active::EmptyData");
+                  return const Center(
+                    child: Icon(
+                      Icons.hourglass_empty_sharp,
+                      color: Colors.grey,
+                      size: 40,
+                    ),
+                  );
+                }
+              } else {
+                mezDbgPrint(
+                    "Else : Inside TaxiWrapper::StreamBuilder::ConnectionState.${snapshot.connectionState}");
+                return const Center(
+                  child: Icon(
+                    Icons.error,
+                    color: Colors.purpleAccent,
+                    size: 40,
+                  ),
+                );
+              }
+            }), // no need for obx here.
         CurrentPositionedBottomBar(controller),
         CurrentPositionedFromToTopBar()
       ],
     );
   }
 
+  Future<CurrentOrder> loadMapAssets() {
+    return controller.getOrder().then((currentOrder) {
+      return hotReladCallback().then((_) => currentOrder);
+    });
+  }
   // Handling Event ------------------------------------------------------------------------------------
 
-  Future<void> _handleEvent(CurrentOrderController controller) async {
+  Future<void> _handleEvent() async {
     mezDbgPrint("_handleEvent called !");
     if (controller.currentOrderStreamRx.value?.event != null) {
       mezDbgPrint("_handleEvent -> Event != null check passed ");
@@ -151,20 +148,20 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
             "onTheWay") {
           mezDbgPrint("_handleEvent -> calling _loadMarkersForOTW() ");
 
-          await _loadMarkersForOTW(controller);
+          await _loadMarkersForOTW();
         } else if (controller.currentOrderStreamRx.value?.order.status ==
             "inTransit") {
           mezDbgPrint("_handleEvent -> calling _loadMarkersForIT() ");
 
           mezDbgPrint("_handleEvent called 5!");
 
-          await _loadMarkersForIT(controller);
+          await _loadMarkersForIT();
         }
       }
     }
   }
 
-  void _loadPolyline(CurrentOrderController controller) {
+  void _loadPolyline() {
     // check if polyline is empty
     if (polylines.isEmpty) {
       // check if event.order has data
@@ -190,10 +187,10 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
   }
 
   // onTheWay - state
-  Future<void> _loadMarkersForOTW(CurrentOrderController controller) async {
+  Future<void> _loadMarkersForOTW() async {
     mezDbgPrint("_loadMarkersForOTW called !");
 
-    await _loadBitmapDescriptors(controller);
+    await _loadBitmapDescriptors();
 
     initialCameraPosition.value = LatLng(
         taxiAuthController.currentLocation.latitude!,
@@ -237,10 +234,10 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
   }
 
   // inTransit - state
-  Future<void> _loadMarkersForIT(CurrentOrderController controller) async {
+  Future<void> _loadMarkersForIT() async {
     mezDbgPrint("_loadMarkersForIT called !");
 
-    await _loadBitmapDescriptors(controller);
+    await _loadBitmapDescriptors();
 
     initialCameraPosition.value = LatLng(
         taxiAuthController.currentLocation.latitude!,
@@ -275,7 +272,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
         "_loadMarkersForIT -> Markers filling is done -> $customMarkers!");
   }
 
-  Future<void> _loadBitmapDescriptors(CurrentOrderController controller) async {
+  Future<void> _loadBitmapDescriptors() async {
     mezDbgPrint("_loadBitmapDescriptors called !");
 
     // customer marker's Image

@@ -62,7 +62,6 @@ class _SPointState extends State<SPoint> {
   bool _initialized = false;
   bool _error = false;
   bool timerDone = false;
-  late StreamSubscription<bool> onAuthStateNotifierInvoked;
 
   initializeSetup() async {
     try {
@@ -100,26 +99,21 @@ class _SPointState extends State<SPoint> {
         await GetStorage().write(version, pInfos.version);
       } else
         print("[ GET STORAGE ] FAILED TO INITIALIZE !");
-      AuthController auCtrl =
-          Get.put<AuthController>(
-          AuthController(signInCallback, signOutCallback),
+      
+      Get.put<AuthController>(AuthController(signInCallback, signOutCallback),
           permanent: true);
       Get.put<SettingsController>(SettingsController(), permanent: true);
       // set to logs=false if you don't need the logs anymore.
       Get.put<AppLifeCycleController>(AppLifeCycleController(logs: true),
           permanent: true);
 
-      // this listenes on authStateNotifierInvoked changes and affect it's value to our _initialized StateVariable and rebuild the state of this Spoint.
-      onAuthStateNotifierInvoked =
-          auCtrl.authStateNotifierInvoked.listen((value) {
-        if (value) {
-          setState(() => _initialized = value);
-          Timer(
-              Duration(seconds: nSplashScreenTimer),
-              () => setState(() {
-                    timerDone = true;
-                  }));
-        }
+      FirebaseAuth.instance.authStateChanges().first.then((value) {
+        setState(() => _initialized = true);
+        Timer(
+            Duration(seconds: nSplashScreenTimer),
+            () => setState(() {
+                  timerDone = true;
+                }));
       });
     } catch (e) {
       print("[+] Error Happend =======> $e");
@@ -156,8 +150,6 @@ class _SPointState extends State<SPoint> {
     if (!_initialized || !timerDone) {
       return SplashScreen();
     } else {
-      // we don't need to keep this listener there anymore
-      onAuthStateNotifierInvoked.cancel();
       return widget._app;
     }
   }

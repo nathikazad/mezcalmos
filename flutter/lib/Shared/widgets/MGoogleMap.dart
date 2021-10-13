@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
@@ -51,7 +53,7 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
     *
     *   if all markers have fitInBounds = false  (we don't care about them in the fitBounds)
     *   or all markers have firBounds = true  (We have to show all of them in the fitbounds)
-    *   then we will include the Polyline's Bounds , 
+    *   then we will include the Polyline's Bounds ,
     *   else we will just fit the markers with fitInBounds = True.
     *
     */
@@ -94,9 +96,15 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
     super.didUpdateWidget(oldWidget);
   }
 
+
+
   @override
   void initState() {
     mezDbgPrint("MGoogleMap initstate ${this.hashCode}");
+    Get.find<AppLifeCycleController>().attachCallback(AppLifecycleState.resumed,
+        () {
+      _controller?.setMapStyle(json.encode(mapStyle));
+    });
     animateAndUpdateBounds();
 
     widget.idWithSubscription.forEach((markerId, stream) {
@@ -147,10 +155,12 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
                 tilt: 9.440717697143555,
                 zoom: 5.151926040649414),
             onMapCreated: (GoogleMapController _gController) async {
-              await _gController.setMapStyle(GetStorage().read('map_style'));
+        await _gController.setMapStyle(json.encode(mapStyle));
+              print("onMapCreated");
+              print(widget.bounds?.toJson());
               _controller = _gController;
 
-              if (widget.bounds != null && _controller != null) {
+        if (widget.bounds != null && _controller != null) {
                 await _controller!.animateCamera(
                     CameraUpdate.newLatLngBounds(widget.bounds!, 100));
               }
@@ -167,3 +177,135 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
           );
   }
 }
+
+
+List<Map<String, dynamic>> mapStyle = [
+  {
+    "featureType": "all",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {"weight": "2.00"}
+    ]
+  },
+  {
+    "featureType": "all",
+    "elementType": "geometry.stroke",
+    "stylers": [
+      {"color": "#9c9c9c"}
+    ]
+  },
+  {
+    "featureType": "all",
+    "elementType": "labels.text",
+    "stylers": [
+      {"visibility": "on"}
+    ]
+  },
+  {
+    "featureType": "landscape",
+    "elementType": "all",
+    "stylers": [
+      {"color": "#f2f2f2"}
+    ]
+  },
+  {
+    "featureType": "landscape",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {"color": "#ffffff"}
+    ]
+  },
+  {
+    "featureType": "landscape.man_made",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {"color": "#ffffff"}
+    ]
+  },
+  {
+    "featureType": "poi",
+    "elementType": "all",
+    "stylers": [
+      {"visibility": "off"}
+    ]
+  },
+  {
+    "featureType": "road",
+    "elementType": "all",
+    "stylers": [
+      {"saturation": -100},
+      {"lightness": 45}
+    ]
+  },
+  {
+    "featureType": "road",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {"color": "#eeeeee"}
+    ]
+  },
+  {
+    "featureType": "road",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {"color": "#7b7b7b"}
+    ]
+  },
+  {
+    "featureType": "road",
+    "elementType": "labels.text.stroke",
+    "stylers": [
+      {"color": "#ffffff"}
+    ]
+  },
+  {
+    "featureType": "road.highway",
+    "elementType": "all",
+    "stylers": [
+      {"visibility": "simplified"}
+    ]
+  },
+  {
+    "featureType": "road.arterial",
+    "elementType": "labels.icon",
+    "stylers": [
+      {"visibility": "off"}
+    ]
+  },
+  {
+    "featureType": "transit",
+    "elementType": "all",
+    "stylers": [
+      {"visibility": "off"}
+    ]
+  },
+  {
+    "featureType": "water",
+    "elementType": "all",
+    "stylers": [
+      {"color": "#46bcec"},
+      {"visibility": "on"}
+    ]
+  },
+  {
+    "featureType": "water",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {"color": "#c8d7d4"}
+    ]
+  },
+  {
+    "featureType": "water",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {"color": "#070707"}
+    ]
+  },
+  {
+    "featureType": "water",
+    "elementType": "labels.text.stroke",
+    "stylers": [
+      {"color": "#ffffff"}
+    ]
+  }
+];

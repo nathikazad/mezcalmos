@@ -42,7 +42,6 @@ const String tDefaultCustomerName = "Unknown";
 // ----------------- GetStorage Strings ----------------- //
 const String getxLmodeKey = "lmod";
 const String getxGmapBottomPaddingKey = "gmap_bottom_padding";
-const String getxMapStyleJsonKey = "map_style";
 const String getUserId = "userid";
 const String version = "VERSION";
 // ----------------- Assets Strings ----------------- //

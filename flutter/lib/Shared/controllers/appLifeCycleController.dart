@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/state_manager.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 class AppLifeCycleController extends GetxController
     with WidgetsBindingObserver {
   final bool logs;
-  Map<AppLifecycleState, VoidCallback> callbacks = {
-    AppLifecycleState.detached: () => null,
-    AppLifecycleState.inactive: () => null,
-    AppLifecycleState.paused: () => null,
-    AppLifecycleState.resumed: () => null,
+  Map<AppLifecycleState, List<VoidCallback>> callbacks = {
+    AppLifecycleState.detached: [],
+    AppLifecycleState.inactive: [],
+    AppLifecycleState.paused: [],
+    AppLifecycleState.resumed: [],
   };
 
   AppLifeCycleController({this.logs = false});
@@ -18,16 +19,16 @@ class AppLifeCycleController extends GetxController
   AppLifecycleState get appState => _appState.value;
 
   void attachCallback(AppLifecycleState onState, VoidCallback f) {
-    callbacks[onState] = f;
+    callbacks[onState]!.add(f);
   }
 
   void cleanCallback(AppLifecycleState state) {
-    callbacks[state] = () => null;
+    callbacks[state] = [];
   }
 
   void cleanAllCallbacks() {
     callbacks.keys.forEach((element) {
-      callbacks[element] = () => null;
+      callbacks[element] = [];
     });
   }
 
@@ -52,8 +53,10 @@ class AppLifeCycleController extends GetxController
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     _appState.value = state;
-    callbacks[state]!();
-    // if (this.logs)
-    //   mezDbgPrint("[+] AppLifeCycleController :: AppStateChanged :: $state");
+    callbacks[state]!.forEach((f) {
+      f();
+    });
+
+    mezDbgPrint("[+] AppLifeCycleController :: AppStateChanged :: $state");
   }
 }

@@ -39,8 +39,6 @@ String sha256ofString(String input) {
 class AuthController extends GetxController with MezDisposable {
   fireAuth.FirebaseAuth _auth = fireAuth.FirebaseAuth.instance;
   Rxn<User> _user = Rxn<User>();
-  RxBool authStateNotifierInvoked = false
-      .obs; // THIS IS BEING CHECKED ON THE ROOT MAIN.DART To wait for the first invoke!
 
   Function _onSignOutCallback;
   Function _onSignInCallback;
@@ -83,8 +81,6 @@ class AuthController extends GetxController with MezDisposable {
   void onInit() {
     Get.lazyPut(() => LanguageController());
     _auth.authStateChanges().listen((fireAuth.User? user) {
-      authStateNotifierInvoked.value = true;
-      mezDbgPrint("authStateNotifierInvoked ====> $authStateNotifierInvoked");
       _fireAuthUser.value = user;
       if (user == null) {
         mezDbgPrint('User is currently signed out!');

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
 import 'package:mezcalmos/Shared/utilities/Extensions.dart';
@@ -60,6 +61,32 @@ class CurrentOrderController extends GetxController with MezDisposable {
 
   void clearEvent() {
     this.currentEvent = null;
+  }
+
+  Future<CurrentOrder> getOrder() async {
+    DataSnapshot snapshot = await _databaseHelper.firebaseDatabase
+        .reference()
+        .child(orderId(_taxiAuthController.taxiState!.currentOrder!))
+        .once();
+
+    Order order = Order.fromSnapshot(snapshot);
+    CurrentOrderEvent? currentOrderEvent = currentEvent;
+    // _currentOrderStream.value?.event = currentEvent;
+    if (order.status != null && order.status != lastOrderStatus) {
+      mezDbgPrint("NEW EVENTTTTTTTTTT");
+      currentOrderEvent = new CurrentOrderEvent(
+          CurrentOrderEventTypes.OrderStatusChange,
+          eventDetails: <String, String?>{
+            "oldStatus": lastOrderStatus,
+            "newStatus": order.status
+          });
+      lastOrderStatus = order.status;
+      currentEvent = currentOrderEvent;
+
+      mezDbgPrint(
+          "\from Listener of CurrentORderController :: \n${_currentOrderStream.value?.toJson()}\n");
+    }
+    return CurrentOrder(order, event: currentOrderEvent);
   }
 
   Future<void> cancelTaxi(String? reason) async {
