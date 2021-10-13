@@ -8,6 +8,7 @@ import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as MezNotification;
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:soundpool/soundpool.dart';
+import 'package:intl/intl.dart';
 
 class FBTaxiNotificationsController extends FBNotificationsController
     with MezDisposable {
@@ -38,7 +39,8 @@ class FBTaxiNotificationsController extends FBNotificationsController
               // taxiAuthListenerCallbacks.forEach((callback) {
               // this is much more dynamic :D
               if (Get.currentRoute != kMessagesRoute &&
-                  Get.find<TaxiAuthController>().currentOrderId != null) {
+                  Get.find<TaxiAuthController>().taxiState?.currentOrder !=
+                      null) {
                 Soundpool pool = Soundpool.fromOptions(
                     options:
                         SoundpoolOptions(streamType: StreamType.notification));
@@ -50,11 +52,15 @@ class FBTaxiNotificationsController extends FBNotificationsController
                 });
                 int streamId = await pool.play(soundId);
                 mezDbgPrint("Sound played =======> $streamId");
+                DateTime timestamp =
+                    DateTime.parse(_notif.variableParams['time']);
+                String formattedTime =
+                    DateFormat('HH:mm').format(timestamp).toString();
                 notificationSnackBar(
                     _notif.variableParams['sender']['image'],
                     _notif.variableParams['sender']['name'],
                     _notif.variableParams['message'],
-                    _notif.variableParams['time'], () async {
+                    formattedTime, () async {
                   await this.setAllMessagesAsReadInDb();
 
                   Get.toNamed(kMessagesRoute, arguments: <String, dynamic>{

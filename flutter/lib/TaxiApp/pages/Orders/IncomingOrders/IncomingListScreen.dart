@@ -56,7 +56,8 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                 ),
                 Flexible(
                     child: Obx(() => MezSwitch(
-                          initialPosition: _taxiAuthController.isLooking,
+                          initialPosition:
+                              _taxiAuthController.taxiState?.isLooking ?? false,
                           values: ['ON', 'OFF'],
                           onToggleCallback: (v) {
                             // turn ut ON
@@ -66,7 +67,8 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                               _taxiAuthController.turnOff();
                             }
                           },
-                          buttonColor: _taxiAuthController.isLooking == true
+                          buttonColor:
+                              _taxiAuthController.taxiState?.isLooking == true
                               ? Colors.green
                               : Colors.red,
                           backgroundColor: Colors.transparent,
@@ -84,7 +86,7 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                 right: getSizeRelativeToScreen(40, sw, sh)),
 
             // Removed the Native Glow Effect on list !
-            child: Obx(() => _taxiAuthController.isLooking == true
+            child: Obx(() => _taxiAuthController.taxiState?.isLooking == true
                 ? (controller.orders.length > 0
                     // incase there are orders
                     ? MezcalmosSharedWidgets.MezcalmosNoGlowScrollConfiguration(

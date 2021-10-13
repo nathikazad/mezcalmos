@@ -19,134 +19,109 @@ import 'package:mezcalmos/TaxiApp/models/TaxiDriver.dart';
 import 'package:location/location.dart';
 
 class TaxiAuthController extends GetxController with MezDisposable {
-  Rx<TaxiDriver> _model = TaxiDriver.empty().obs;
+  Rxn<TaxiDriver> _model = Rxn();
+  Rxn<TaxiState> _state = Rxn();
   DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
   AuthController _authController = Get.find<AuthController>();
-  // Rx<Widget> _dynamicScreen =
-  //     (Center(child: CircularProgressIndicator()) as Widget).obs;
-  Rx<LocationData> _currentLocation = LocationData.fromMap(
-      <String, dynamic>{"latitude": 15.851385, "longitude": -97.046429}).obs;
-  RxBool _locationEnabled = false.obs;
   DeviceNotificationsController _messagingController =
       Get.find<DeviceNotificationsController>();
 
-  Rx<AgentDataEvent> taxiDriverDataEventRx = AgentDataEvent.Null.obs;
+  TaxiState? get taxiState => _state.value;
 
-  dynamic get currentOrderId => _model.value.currentOrder ?? null;
-  dynamic get authorizedTaxi => _model.value.isAuthorized;
-  bool get isLooking => _model.value.isLooking ?? false;
-  // Widget get dynamicScreen => _dynamicScreen.value;
+  Rx<LocationData> _currentLocation = LocationData.fromMap(
+      <String, dynamic>{"latitude": 15.851385, "longitude": -97.046429}).obs;
+
   LocationData get currentLocation => _currentLocation.value;
-  bool get locationEnabled => _locationEnabled.value;
   Rx<LocationData> get currentLocationRx => _currentLocation;
 
   StreamSubscription<LocationData>? _locationListener;
-  StreamSubscription<LocationData>? get currentLocationStream =>
-      _locationListener;
+
+  DateTime lastLocationUpdatedTime = DateTime.now();
 
   bool _checkedAppVersion = false;
-  DateTime lastLocationUpdatedTime = DateTime.now();
-  /*
-    GetScreen function basically will return on of the 3 right Screens :
-      - AnauthorizedScreen
-      - IncommingOrders
-      - CurrentOrder
-  */
-
-  void testFunc(String? s) {
-    mezDbgPrint("test func !");
-  }
 
   @override
   void onInit() async {
     super.onInit();
-    // Injecting all our c here
-    Get.lazyPut(() => CurrentOrderController(), fenix: true);
-    Get.lazyPut(() => IncomingOrdersController());
     // ------------------------------------------------------------------------
 
-    mezDbgPrint("User from TaxiAuthController >> ${_authController.user?.uid}");
-    mezDbgPrint("authorizedTaxi from TaxiAuthController >> ${authorizedTaxi}");
-    mezDbgPrint("currentOrderId from TaxiAuthController >> ${currentOrderId}");
     mezDbgPrint(
-        "TaxiAuthController  Messaging Token>> ${await _messagingController.getToken()}");
+        "User from TaxiAuthController >> ${_authController.fireAuthUser?.uid}");
 
-    if (_authController.user != null) {
+    if (_authController.fireAuthUser != null) {
       _databaseHelper.firebaseDatabase
           .reference()
-          .child(taxiAuthNode(_authController.user!.uid))
+          .child(taxiAuthNode(_authController.fireAuthUser!.uid))
           .onValue
           .listen((event) async {
         if (event.snapshot.value != null) {
           _model.value = TaxiDriver.fromSnapshot(event.snapshot);
-          if (_model.value.isAuthorized == null) {
-            taxiDriverDataEventRx.value = AgentDataEvent.DataNotLoadedYet;
-          } else if (_model.value.isAuthorized == false) {
-            taxiDriverDataEventRx.value = AgentDataEvent.Unauthorized;
-          } else if (_model.value.currentOrder != null) {
-            taxiDriverDataEventRx.value = AgentDataEvent.InCurrentOrder;
-          } else {
-            taxiDriverDataEventRx.value = AgentDataEvent.Free;
-          }
-          mezDbgPrint(taxiDriverDataEventRx.value.toString());
         } else {
-          _model.value =
-              TaxiDriver(false, false, null, null, null, isEmpty: false);
-          taxiDriverDataEventRx.value = AgentDataEvent.Null;
+          _model.value = null;
+          return;
         }
+        saveAppVersionIfNecessary();
+      }).canceledBy(this);
 
-        if (_checkedAppVersion == false) {
-          if (_model.value.isAuthorized == true) {
-            String VERSION = GetStorage().read(version);
-            mezDbgPrint("[+] TaxiDriver Currently using App v$VERSION");
-            _databaseHelper.firebaseDatabase
-                .reference()
-                .child(taxiDriverAppVersionNode(_authController.user!.uid))
-                .set(VERSION);
-
-            _checkedAppVersion = true;
+      _databaseHelper.firebaseDatabase
+          .reference()
+          .child(taxiStateNode(_authController.fireAuthUser!.uid))
+          .onValue
+          .listen((event) async {
+        if (event.snapshot.value != null) {
+          mezDbgPrint(event.snapshot.value);
+          _state.value = TaxiState.fromSnapshot(event.snapshot.value);
+          if ((_state.value!.currentOrder == null &&
+              _state.value!.isLooking == false)) {
+            await Location().enableBackgroundMode(enable: false);
+            _locationListener?.pause();
           }
-        }
-
-        if (_model.value.isEmpty == true ||
-            (_model.value.currentOrder == null &&
-                _model.value.isLooking == false)) {
-          await Location().enableBackgroundMode(enable: false);
-          _locationListener?.pause();
-          // mezDbgPrint(
-          //     " [=] ---------------------------------> Paused locationListener !");
         } else {
+          _state.value = null;
           if (!(await Location().isBackgroundModeEnabled()))
             await Location().enableBackgroundMode(enable: true);
-
           _locationListener?.resume();
-          // mezDbgPrint(
-          //     " [=] ---------------------------------> Resumed locationListener !");
         }
       }).canceledBy(this);
 
-      String? deviceNotificationToken = await _messagingController.getToken();
-      if (deviceNotificationToken != null)
-        _databaseHelper.firebaseDatabase
-            .reference()
-            .child(
-                '${taxiAuthNode(_authController.user?.uid ?? '')}/notificationInfo/')
-            .set(<String, String>{
-          'deviceNotificationToken': deviceNotificationToken
-        });
+      saveNotificationToken();
       mezDbgPrint(
-          "/////////////////////////////////////////////${_model.value.toJson()}////////////////////////////////////////////////////");
+          "/////////////////////////////////////////////${_model.value?.toJson()}////////////////////////////////////////////////////");
       _listenForLocation();
     }
   }
 
+  void saveNotificationToken() async {
+    mezDbgPrint(
+        "TaxiAuthController  Messaging Token>> ${await _messagingController.getToken()}");
+    String? deviceNotificationToken = await _messagingController.getToken();
+    if (deviceNotificationToken != null)
+      _databaseHelper.firebaseDatabase
+          .reference()
+          .child(
+              '${taxiAuthNode(_authController.fireAuthUser?.uid ?? '')}/notificationInfo/')
+          .set(<String, String>{
+        'deviceNotificationToken': deviceNotificationToken
+      });
+  }
+
+  void saveAppVersionIfNecessary() {
+    if (_checkedAppVersion == false) {
+      String VERSION = GetStorage().read(version);
+      mezDbgPrint("[+] TaxiDriver Currently using App v$VERSION");
+      _databaseHelper.firebaseDatabase
+          .reference()
+          .child(taxiDriverAppVersionNode(_authController.fireAuthUser!.uid))
+          .set(VERSION);
+      _checkedAppVersion = true;
+    }
+  }
+
   Future<void> _listenForLocation() async {
-    if (_authController.user == null) {
+    if (_authController.fireAuthUser == null) {
       mezDbgPrint("User is not signed in !");
     } else {
       Location location = Location();
-
-      _locationEnabled.value = true;
       // location.enableBackgroundMode(enable: true);
       (_locationListener =
               location.onLocationChanged.listen((LocationData currentLocation) {
@@ -168,13 +143,13 @@ class TaxiAuthController extends GetxController with MezDisposable {
           // mezDbgPrint(positionUpdate);
           _databaseHelper.firebaseDatabase
               .reference()
-              .child(taxiAuthNode(_authController.user?.uid ?? ''))
+              .child(taxiAuthNode(_authController.fireAuthUser?.uid ?? ''))
               .child('location')
               .set(positionUpdate);
-          if (_model.value.currentOrder != null) {
+          if (_model.value?.taxiState.currentOrder != null) {
             _databaseHelper.firebaseDatabase
                 .reference()
-                .child(orderId(_model.value.currentOrder))
+                .child(orderId(_model.value!.taxiState.currentOrder!))
                 .child('driver/location')
                 .set(positionUpdate);
           }
@@ -185,21 +160,16 @@ class TaxiAuthController extends GetxController with MezDisposable {
   }
 
   @override
-  void dispose() async {
+  void onClose() async {
     mezDbgPrint("[+] TaxiAuthController::dispose ---------> Was invoked !");
-    Get.delete<CurrentOrderController>(force: true);
-    Get.delete<IncomingOrdersController>(force: true);
-    // await _locationListener?.cancel();
     cancelSubscriptions();
-    // Get.find<CurrentOrderController>().dispose();
-    // Get.find<IncomingOrdersController>().dispose();
     super.onClose();
   }
 
   void turnOff() {
     _databaseHelper.firebaseDatabase
         .reference()
-        .child(taxiIsLookingField(_authController.user!.uid))
+        .child(taxiIsLookingField(_authController.fireAuthUser!.uid))
         .set(false)
         .catchError((err) {
       mezDbgPrint("Error turning [ isLooking = false ] -> $err");
@@ -210,7 +180,7 @@ class TaxiAuthController extends GetxController with MezDisposable {
   void turnOn() {
     _databaseHelper.firebaseDatabase
         .reference()
-        .child(taxiIsLookingField(_authController.user!.uid))
+        .child(taxiIsLookingField(_authController.fireAuthUser!.uid))
         .set(true)
         .catchError((err) {
       mezDbgPrint("Error turning [ isLooking = true ] -> $err");

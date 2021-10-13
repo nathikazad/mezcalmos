@@ -147,6 +147,7 @@ class AuthController extends GetxController with MezDisposable {
 
   Future<void> signOut() async {
     try {
+      mezDbgPrint("User signing out");
       await _onSignOutCallback();
       await cancelSubscriptions();
       await _auth.signOut();

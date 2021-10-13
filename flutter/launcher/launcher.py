@@ -328,7 +328,7 @@ class Config:
     @staticmethod
     def launch_flutter_app(binary , filter_file=None, filter_mode=OUTPUT_FILTERS.SHOW):
         ff = []
-        start_filtering = False
+        start_filtering = 0
         if binary != None:
             if filter_file != None:
                 if os.path.exists(f"output_filters/{filter_file}"):
@@ -336,14 +336,18 @@ class Config:
                     PRINTLN(f"[+] Using {filter_mode} on {ff.__len__()} filters specified in => output_filters/{filter_file}")
                     with proc.Popen(binary, stderr=stderr , stdout=proc.PIPE, universal_newlines=True) as p:
                         for line in p.stdout:
-                            if start_filtering:
+                            if start_filtering >= 2:
                                 for f in ff:
                                     if f.strip() in line and filter_mode == OUTPUT_FILTERS.SHOW:
                                         print(line , end="")
                             else:
-                                if "I/flutter" in line:
-                                    start_filtering = True
+
+                                if "The Flutter DevTools debugger" in line:
+                                    print(line)
+                                    start_filtering += 1
                                 else:
+                                    if(start_filtering == 1):
+                                        start_filtering += 1
                                     print(line , end="")
                 else:
                     PRINTLN(f"[!] Error there is no such filter file in output_filters/{filter_file} !")

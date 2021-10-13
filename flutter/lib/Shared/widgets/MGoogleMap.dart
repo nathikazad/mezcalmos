@@ -6,6 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/utilities/Extensions.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 class MGoogleMap extends StatefulWidget with MezDisposable {
@@ -22,10 +23,11 @@ class MGoogleMap extends StatefulWidget with MezDisposable {
     this.polylines = const <Polyline>{},
     this.bounds,
     this.idWithSubscription = const {},
-  });
-
+  }) {
+    mezDbgPrint("MGoogleMap cosntructor ${this.hashCode}");
+  }
   @override
-  State<StatefulWidget> createState() => _MGoogleMapState();
+  State<MGoogleMap> createState() => _MGoogleMapState();
 }
 
 class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
@@ -38,6 +40,7 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
   // }
 
   void animateAndUpdateBounds() {
+    mezDbgPrint("MGoogleMap animateAndUpdateBounds ${this.hashCode}");
     List<LatLng> _bnds = [];
 
     widget.markers.forEach((cmarker) {
@@ -86,12 +89,14 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
 
   @override
   void didUpdateWidget(covariant MGoogleMap oldWidget) {
+    mezDbgPrint("MGoogleMap didUpdateWidget ${this.hashCode}");
     animateAndUpdateBounds();
     super.didUpdateWidget(oldWidget);
   }
 
   @override
   void initState() {
+    mezDbgPrint("MGoogleMap initstate ${this.hashCode}");
     animateAndUpdateBounds();
 
     widget.idWithSubscription.forEach((markerId, stream) {
@@ -112,6 +117,7 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
 
   @override
   void dispose() {
+    mezDbgPrint("MGoogleMap disposed ${this.hashCode}");
     // favoid keeping listeners in memory.
     cancelSubscriptions();
     // gmapControlelr disposing.
@@ -121,6 +127,8 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
 
   @override
   Widget build(BuildContext context) {
+    mezDbgPrint("Inside MGoogleMap build ${this.hashCode}");
+    // mezDbgPrint(widget.markers.)
     return widget.markers.isNotEmpty
         ? GoogleMap(
             padding: EdgeInsets.all(20),

@@ -30,27 +30,31 @@ class CurrentOrderController extends GetxController with MezDisposable {
   @override
   void onInit() {
     super.onInit();
+    mezDbgPrint("Current Order Controller");
+    mezDbgPrint(_taxiAuthController.taxiState!.currentOrder!);
     _databaseHelper.firebaseDatabase
         .reference()
-        .child(orderId(_taxiAuthController.currentOrderId))
+        .child(orderId(_taxiAuthController.taxiState!.currentOrder!))
         .onValue
         .listen((event) {
-      _currentOrderStream.value = new CurrentOrder.fromSnapshot(event.snapshot);
-      _currentOrderStream.value?.event = currentEvent;
-      if (_currentOrderStream.value?.order.status != null &&
-          _currentOrderStream.value?.order.status != lastOrderStatus) {
-        _currentOrderStream.value?.event = new CurrentOrderEvent(
+      Order order = Order.fromSnapshot(event.snapshot);
+      CurrentOrderEvent? currentOrderEvent = currentEvent;
+      // _currentOrderStream.value?.event = currentEvent;
+      if (order.status != null && order.status != lastOrderStatus) {
+        mezDbgPrint("NEW EVENTTTTTTTTTT");
+        currentOrderEvent = new CurrentOrderEvent(
             CurrentOrderEventTypes.OrderStatusChange,
             eventDetails: <String, String?>{
               "oldStatus": lastOrderStatus,
-              "newStatus": _currentOrderStream.value?.order.status
+              "newStatus": order.status
             });
-        lastOrderStatus = _currentOrderStream.value?.order.status;
-        currentEvent = _currentOrderStream.value?.event;
+        lastOrderStatus = order.status;
+        currentEvent = currentOrderEvent;
 
         mezDbgPrint(
             "\from Listener of CurrentORderController :: \n${_currentOrderStream.value?.toJson()}\n");
       }
+      _currentOrderStream.value = CurrentOrder(order, event: currentOrderEvent);
     }).canceledBy(this);
   }
 

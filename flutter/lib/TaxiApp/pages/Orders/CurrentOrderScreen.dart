@@ -21,7 +21,7 @@ import 'package:mezcalmos/TaxiApp/controllers/fbTaxiNotificationsController.dart
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 
-class CurrentOrderScreen extends GetWidget<CurrentOrderController> {
+class CurrentOrderScreen extends GetView<CurrentOrderController> {
   final LanguageController lang = Get.find<LanguageController>();
   final FBNotificationsController fbNotificationsController =
       Get.find<FBTaxiNotificationsController>();
@@ -52,12 +52,19 @@ class CurrentOrderScreen extends GetWidget<CurrentOrderController> {
     //     Get.find<CurrentOrderController>();
     mezDbgPrint("CTRL $controller");
 
-    return StreamBuilder(
-        stream: controller.currentOrderStreamRx.stream,
-        builder: (_, AsyncSnapshot<CurrentOrder?> snapshot) {
+    return Stack(
+      alignment: Alignment.topCenter,
+      children: [
+        StreamBuilder(
+            stream: controller.currentOrderStreamRx.stream.where((event) {
+          // mezDbgPrint("Stream filter");
+          // mezDbgPrint(event);
+          // mezDbgPrint(event?.event);
+          return (event != null) && (event.event != null);
+        }), builder: (_, AsyncSnapshot<CurrentOrder?> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             mezDbgPrint(
-                "Inside TaxiWrapper::StreamBuilder::ConnectionState.waiting");
+                "Inside CurrentOrder::StreamBuilder::ConnectionState.waiting");
 
             return Center(
               child: Container(
@@ -78,25 +85,17 @@ class CurrentOrderScreen extends GetWidget<CurrentOrderController> {
                 ),
               );
             } else if (snapshot.hasData) {
-              mezDbgPrint(snapshot.data?.event?.eventDetails);
+              mezDbgPrint("INSIDE STREAM BUILDER");
+              mezDbgPrint(snapshot.data?.event);
               hotReladCallback(controller);
-              return Obx(() {
-                return Stack(
-                  alignment: Alignment.topCenter,
-                  children: [
-                    MGoogleMap(
-                      customMarkers,
-                      initialCameraPosition.value,
-                      polylines: polylines,
-                      idWithSubscription: {
-                        "taxi": taxiAuthController.currentLocationRx.stream
-                      },
-                    ), // no need for obx here.
-                    CurrentPositionedBottomBar(controller),
-                    CurrentPositionedFromToTopBar()
-                  ],
-                );
-              });
+              return MGoogleMap(
+                customMarkers,
+                initialCameraPosition.value,
+                polylines: polylines,
+                idWithSubscription: {
+                  "taxi": taxiAuthController.currentLocationRx.stream
+                },
+              );
             } else {
               mezDbgPrint(
                   "Inside TaxiWrapper::StreamBuilder::ConnectionState.done|active::EmptyData");
@@ -119,7 +118,11 @@ class CurrentOrderScreen extends GetWidget<CurrentOrderController> {
               ),
             );
           }
-        });
+        }), // no need for obx here.
+        CurrentPositionedBottomBar(controller),
+        CurrentPositionedFromToTopBar()
+      ],
+    );
   }
 
   // Handling Event ------------------------------------------------------------------------------------
