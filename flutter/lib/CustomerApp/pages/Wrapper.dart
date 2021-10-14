@@ -17,17 +17,6 @@ class Wrapper extends GetWidget<AuthController> {
   Widget build(BuildContext context) {
     SettingsController _settingsController = Get.find<SettingsController>();
 
-    return Obx(() {
-      if (controller.user != null) {
-        Get.lazyPut(() => DeviceNotificationsController());
-        Get.lazyPut(() => MessageController());
-        Get.lazyPut(() => FBTaxiNotificationsController());
-
-        return _settingsController.hasLocationPermissions.value == false
-            ? LocationPermissionScreen()
-            : CustomerWrapper();
-      } else
-        return SignIn();
-    });
+    return SignIn();
   }
 }

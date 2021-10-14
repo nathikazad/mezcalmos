@@ -51,67 +51,95 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
     return Stack(
       alignment: Alignment.topCenter,
       children: [
-        FutureBuilder(
-            future: loadMapAssets(),
-            builder: (_, AsyncSnapshot<CurrentOrder?> snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                mezDbgPrint(
-                    "Inside CurrentOrder::StreamBuilder::ConnectionState.waiting");
+        StreamBuilder<CurrentOrder?>(stream:
+                controller.currentOrderStreamRx.stream.distinct((prev, next) {
+          mezDbgPrint("PREVIOUS ===> $prev");
+          mezDbgPrint("NEXTOS ===> $next");
+          return (prev?.event == next?.event) || next?.event == null;
+        })
+            //     .where((event) {
+            //   // mezDbgPrint("Stream filter");
+            //   // mezDbgPrint(event);
+            //   mezDbgPrint(
+            //       "Inside CurrentOrder::StreamBuilder::Stream::filter => ${event?.event}");
+            //   return (event != null) && (event.event != null);
+            // })
+            , builder: (_, AsyncSnapshot<CurrentOrder?> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            mezDbgPrint(
+                "Inside CurrentOrder::StreamBuilder::ConnectionState.waiting");
 
-                return Center(
-                  child: Container(
-                    height: 200,
-                    width: 200,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle, color: Colors.white),
-                    child:
-                        Transform.scale(scale: .8, child: MezLogoAnimation()),
-                  ),
-                );
-              } else if (snapshot.connectionState == ConnectionState.active ||
-                  snapshot.connectionState == ConnectionState.done) {
-                if (snapshot.hasError) {
-                  return const Center(
-                    child: Icon(
-                      Icons.wifi_off_outlined,
-                      size: 40,
-                    ),
-                  );
-                } else if (snapshot.hasData) {
-                  mezDbgPrint("INSIDE STREAM BUILDER");
-                  mezDbgPrint(snapshot.data?.event);
-                  return MGoogleMap(
-                    customMarkers,
-                    initialCameraPosition.value,
-                    polylines: polylines,
-                    idWithSubscription: {
-                      "taxi": taxiAuthController.currentLocationRx.stream
-                    },
-                  );
-                } else {
-                  mezDbgPrint(
-                      "Inside TaxiWrapper::StreamBuilder::ConnectionState.done|active::EmptyData");
-                  return const Center(
-                    child: Icon(
-                      Icons.hourglass_empty_sharp,
-                      color: Colors.grey,
-                      size: 40,
-                    ),
-                  );
-                }
-              } else {
-                mezDbgPrint(
-                    "Else : Inside TaxiWrapper::StreamBuilder::ConnectionState.${snapshot.connectionState}");
-                return const Center(
-                  child: Icon(
-                    Icons.error,
-                    color: Colors.purpleAccent,
-                    size: 40,
-                  ),
-                );
-              }
-            }), // no need for obx here.
-        CurrentPositionedBottomBar(controller),
+            return Center(
+              child: Container(
+                height: 200,
+                width: 200,
+                decoration:
+                    BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+                child: Transform.scale(scale: .8, child: MezLogoAnimation()),
+              ),
+            );
+          } else if (snapshot.connectionState == ConnectionState.done ||
+              snapshot.connectionState == ConnectionState.active) {
+            if (snapshot.hasError) {
+              return const Center(
+                child: Icon(
+                  Icons.wifi_off_outlined,
+                  size: 40,
+                ),
+              );
+            } else if (snapshot.hasData) {
+              mezDbgPrint("INSIDE STREAM BUILDER :: HAS DATA !");
+              mezDbgPrint(snapshot.data?.event);
+              return FutureBuilder<CurrentOrder>(
+                  future: loadMapAssets(),
+                  builder:
+                      (context, AsyncSnapshot<CurrentOrder> futureSnapshot) {
+                    if (futureSnapshot.connectionState ==
+                        ConnectionState.done) {
+                      return MGoogleMap(
+                        customMarkers,
+                        initialCameraPosition.value,
+                        polylines: polylines,
+                        idWithSubscription: {
+                          "taxi": taxiAuthController.currentLocationRx.stream
+                        },
+                      );
+                    } else {
+                      return Center(
+                        child: Container(
+                            height: 200,
+                            width: 200,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle, color: Colors.white),
+                            child: Transform.scale(
+                                scale: .8, child: MezLogoAnimation())),
+                      );
+                    }
+                  });
+            } else {
+              mezDbgPrint(
+                  "Inside TaxiWrapper::StreamBuilder::ConnectionState.done|active::EmptyData");
+              return const Center(
+                child: Icon(
+                  Icons.hourglass_empty_sharp,
+                  color: Colors.grey,
+                  size: 40,
+                ),
+              );
+            }
+          } else {
+            mezDbgPrint(
+                "Else : Inside TaxiWrapper::StreamBuilder::ConnectionState.${snapshot.connectionState}");
+            return const Center(
+              child: Icon(
+                Icons.error,
+                color: Colors.purpleAccent,
+                size: 40,
+              ),
+            );
+          }
+        }), // no need for obx here.
+        CurrentPositionedBottomBar(),
         CurrentPositionedFromToTopBar()
       ],
     );

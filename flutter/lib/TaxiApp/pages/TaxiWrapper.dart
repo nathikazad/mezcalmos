@@ -41,7 +41,7 @@ class TaxiWrapper extends GetWidget<AuthController> {
               height: 200,
               width: 200,
               decoration:
-                  BoxDecoration(shape: BoxShape.circle, color: Colors.black87),
+                  BoxDecoration(shape: BoxShape.circle, color: Colors.white),
               child: Transform.scale(scale: .8, child: MezLogoAnimation()),
             ),
           );

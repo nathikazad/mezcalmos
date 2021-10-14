@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:get/get.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -12,8 +14,7 @@ class SettingsController extends GetxController {
   ThemeController get appTheme => _appTheme;
   LanguageController get appLanguage => _appLanguage;
 
-  RxBool showCustomersMessages = true.obs;
-  RxBool hasLocationPermissions = false.obs;
+  late Rx<bool> hasLocationPermissions;
 
   @override
   void onInit() async {
@@ -24,14 +25,21 @@ class SettingsController extends GetxController {
     _appLanguage = Get.put(LanguageController(), permanent: true);
     Get.put(SideMenuDraweController(), permanent: false);
 
-    // this is to make sure that the use already Granted the App the permission to use the location !
     PermissionStatus _tempLoca = await Location().hasPermission();
-    mezDbgPrint(
-        "-------------> SettingsController :: onInit :: LocationPermissionStatus :: $_tempLoca");
-    if (_tempLoca == PermissionStatus.granted ||
-        _tempLoca == PermissionStatus.grantedLimited) {
-      hasLocationPermissions.value = true;
-    }
+    hasLocationPermissions = Rx(_tempLoca == PermissionStatus.granted ||
+        _tempLoca == PermissionStatus.grantedLimited);
+
+    Timer.periodic(Duration(seconds: 5), (t) async {
+      PermissionStatus permissionStatus = await Location().hasPermission();
+      hasLocationPermissions.value =
+          (permissionStatus == PermissionStatus.granted ||
+              permissionStatus == PermissionStatus.grantedLimited);
+
+      mezDbgPrint(
+          "SettingsController::Checking LocationPermissions .. ${hasLocationPermissions.value}!");
+    });
+
+    // this is to make sure that the use already Granted the App the permission to use the location !
 
     super.onInit();
   }

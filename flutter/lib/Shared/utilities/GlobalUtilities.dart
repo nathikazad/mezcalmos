@@ -1,7 +1,7 @@
 // Usefull when trying to make Sizes adptable!
 import 'dart:async';
 import 'dart:typed_data';
-
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -11,8 +11,10 @@ import 'package:location/location.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-void mezDbgPrint(dynamic log) =>
-    print("\n[MEZ LOG]\t[${DateTime.now()}] $log\n");
+void mezDbgPrint(dynamic log) {
+  String d = DateFormat('HH:mm:ss').format(DateTime.now());
+  print("\n[MEZ LOG]\t[$d] $log\n");
+}
 
 void mezcalmosLogger(String text, {bool isError = false}) =>
     mezDbgPrint("[ MEZCALMOS ][ GETX ] $text");

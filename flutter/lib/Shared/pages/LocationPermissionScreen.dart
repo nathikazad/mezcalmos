@@ -73,9 +73,7 @@ class LocationPermissionScreen extends StatelessWidget {
                     } while (grantedPermission == false);
                     mezDbgPrint(
                         "Permissions Granted ==========> $grantedPermission");
-                    if (grantedPermission) {
-                      _settingsController.hasLocationPermissions.value = true;
-                    } else {
+                    if (!grantedPermission) {
                       mezDbgPrint("Permission not granted !");
                       mezcalmosSnackBar(
                           'info',

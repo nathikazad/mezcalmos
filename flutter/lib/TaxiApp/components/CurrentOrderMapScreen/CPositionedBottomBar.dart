@@ -17,9 +17,8 @@ class CurrentPositionedBottomBar extends StatelessWidget {
   RxBool showLoadingMapOnClick = false.obs;
   RxBool clickedLaunchOnMap = false.obs;
   bool clickedYesCancelPopUp = false;
-  CurrentOrderController controller;
+  CurrentOrderController controller = Get.find<CurrentOrderController>();
 
-  CurrentPositionedBottomBar(this.controller);
   TaxiAuthController taxiAuthController = Get.find<TaxiAuthController>();
   LanguageController lang = Get.find<LanguageController>();
   FBTaxiNotificationsController fbNotificationsController =

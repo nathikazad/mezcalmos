@@ -96,8 +96,6 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
     super.didUpdateWidget(oldWidget);
   }
 
-
-
   @override
   void initState() {
     mezDbgPrint("MGoogleMap initstate ${this.hashCode}");
@@ -112,6 +110,8 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
         int i = widget.markers
             .indexWhere((element) => element.markerId.value == markerId);
         setState(() {
+          mezDbgPrint(
+              "Inside MgoogleMap::widget.idWithSubscription::listener :: marker id -> ${widget.markers[i].markerId.value}");
           widget.markers[i] = Marker(
               markerId: MarkerId(markerId),
               icon: widget.markers[i].icon,
@@ -155,12 +155,12 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
                 tilt: 9.440717697143555,
                 zoom: 5.151926040649414),
             onMapCreated: (GoogleMapController _gController) async {
-        await _gController.setMapStyle(json.encode(mapStyle));
+              await _gController.setMapStyle(json.encode(mapStyle));
               print("onMapCreated");
               print(widget.bounds?.toJson());
               _controller = _gController;
 
-        if (widget.bounds != null && _controller != null) {
+              if (widget.bounds != null && _controller != null) {
                 await _controller!.animateCamera(
                     CameraUpdate.newLatLngBounds(widget.bounds!, 100));
               }
@@ -177,7 +177,6 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
           );
   }
 }
-
 
 List<Map<String, dynamic>> mapStyle = [
   {
