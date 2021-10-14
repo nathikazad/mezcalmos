@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/constants/routes.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Order.dart';
@@ -66,6 +67,7 @@ class IncommingOrderScreenView extends GetWidget<IncomingOrdersController>
                 ? MGoogleMap(
                     customMarkers,
                     initialCameraPosition.value,
+                    "IncomingViewScreen",
                     polylines: polylines,
                   )
                 : Center(
@@ -97,11 +99,18 @@ class IncommingOrderScreenView extends GetWidget<IncomingOrdersController>
                                     controller.selectedIncommingOrder?.id)
                                 .then((isSuccess) {
                               if (isSuccess) {
-                                cancelSubscriptions();
-                                showLoading.value = false;
-                                Get.back(closeOverlays: true);
+                                mezDbgPrint("Inside then after accept taxi");
+                                // cancelSubscriptions();
+                                // showLoading.value = false;
                               }
-                            }).whenComplete(() {});
+                            }).whenComplete(() {
+                              mezDbgPrint("Inside complete after accept taxi");
+                              Get.until((route) {
+                                mezDbgPrint(route.settings.name);
+                                return route.settings.name ==
+                                    kMainAuthWrapperRoute;
+                              });
+                            });
                           }
                         : () => null,
                     child: !showLoading.value

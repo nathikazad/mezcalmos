@@ -13,7 +13,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 void mezDbgPrint(dynamic log) {
   String d = DateFormat('HH:mm:ss').format(DateTime.now());
-  print("\n[MEZ LOG]\t[$d] $log\n");
+  print("\n[MZL][$d] $log\n");
 }
 
 void mezcalmosLogger(String text, {bool isError = false}) =>

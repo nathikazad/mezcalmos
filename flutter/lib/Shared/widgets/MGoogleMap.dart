@@ -18,15 +18,16 @@ class MGoogleMap extends StatefulWidget with MezDisposable {
   LatLngBounds? bounds;
   RxList<Marker> markers;
   Map<String, Stream<LocationData>> idWithSubscription;
-
+  String parentName;
   MGoogleMap(
     this.markers,
-    this.initialLocation, {
+    this.initialLocation,
+    this.parentName, {
     this.polylines = const <Polyline>{},
     this.bounds,
     this.idWithSubscription = const {},
   }) {
-    mezDbgPrint("MGoogleMap cosntructor ${this.hashCode}");
+    mezDbgPrint("MGoogleMap cosntructor ${this.hashCode} ${this.parentName}");
   }
   @override
   State<MGoogleMap> createState() => _MGoogleMapState();
@@ -91,43 +92,44 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
 
   @override
   void didUpdateWidget(covariant MGoogleMap oldWidget) {
-    mezDbgPrint("MGoogleMap didUpdateWidget ${this.hashCode}");
+    mezDbgPrint(
+        "MGoogleMap didUpdateWidget ${this.hashCode} ${widget.parentName}");
     animateAndUpdateBounds();
     super.didUpdateWidget(oldWidget);
   }
 
   @override
   void initState() {
-    mezDbgPrint("MGoogleMap initstate ${this.hashCode}");
+    mezDbgPrint("MGoogleMap initstate ${this.hashCode} ${widget.parentName}");
     Get.find<AppLifeCycleController>().attachCallback(AppLifecycleState.resumed,
         () {
       _controller?.setMapStyle(json.encode(mapStyle));
     });
     animateAndUpdateBounds();
 
-    widget.idWithSubscription.forEach((markerId, stream) {
-      stream.listen((newLoc) {
-        int i = widget.markers
-            .indexWhere((element) => element.markerId.value == markerId);
-        setState(() {
-          mezDbgPrint(
-              "Inside MgoogleMap::widget.idWithSubscription::listener :: marker id -> ${widget.markers[i].markerId.value}");
-          widget.markers[i] = Marker(
-              markerId: MarkerId(markerId),
-              icon: widget.markers[i].icon,
-              position: LatLng(newLoc.latitude!, newLoc.longitude!));
-        });
-      }).canceledBy(this);
-    });
+    // widget.idWithSubscription.forEach((markerId, stream) {
+    //   stream.listen((newLoc) {
+    //     int i = widget.markers
+    //         .indexWhere((element) => element.markerId.value == markerId);
+    //     setState(() {
+    //       mezDbgPrint(
+    //           "Inside MgoogleMap::widget.idWithSubscription::listener :: marker id -> ${widget.markers[i].markerId.value}");
+    //       widget.markers[i] = Marker(
+    //           markerId: MarkerId(markerId),
+    //           icon: widget.markers[i].icon,
+    //           position: LatLng(newLoc.latitude!, newLoc.longitude!));
+    //     });
+    //   }).canceledBy(this);
+    // });
 
     super.initState();
   }
 
   @override
   void dispose() {
-    mezDbgPrint("MGoogleMap disposed ${this.hashCode}");
+    mezDbgPrint("MGoogleMap disposed ${this.hashCode} ${widget.parentName}");
     // favoid keeping listeners in memory.
-    cancelSubscriptions();
+    // cancelSubscriptions();
     // gmapControlelr disposing.
     _controller?.dispose();
     super.dispose();
@@ -135,7 +137,8 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
 
   @override
   Widget build(BuildContext context) {
-    mezDbgPrint("Inside MGoogleMap build ${this.hashCode}");
+    mezDbgPrint(
+        "Inside MGoogleMap build ${this.hashCode} ${widget.parentName}");
     // mezDbgPrint(widget.markers.)
     return widget.markers.isNotEmpty
         ? GoogleMap(

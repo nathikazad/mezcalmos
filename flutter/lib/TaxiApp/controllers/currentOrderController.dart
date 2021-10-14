@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
 import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/Shared/utilities/SharedEnums.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/controllers/fbTaxiNotificationsController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
@@ -19,74 +18,34 @@ class CurrentOrderController extends GetxController with MezDisposable {
       Get.find<DatabaseHelper>(); // Already Injected in main function
 
   FBNotificationsController _notifications =
-      Get.put<FBTaxiNotificationsController>(FBTaxiNotificationsController());
+      Get.find<FBTaxiNotificationsController>();
 
-  String? lastOrderStatus;
-
-  CurrentOrderEvent? currentEvent;
-  Rxn<CurrentOrder> _currentOrderStream = Rxn();
-  CurrentOrder? get currentOrderStream => _currentOrderStream.value;
-  Rxn<CurrentOrder> get currentOrderStreamRx => _currentOrderStream;
-
+  StreamController<Order> _orderStreamController = StreamController();
+  Stream<Order> get orderStream => _orderStreamController.stream;
+  StreamSubscription? _orderStatusListener;
   @override
   void onInit() {
     super.onInit();
-    mezDbgPrint("Current Order Controller");
+    mezDbgPrint("Current Order Controller init ${this.hashCode}");
     mezDbgPrint(_taxiAuthController.taxiState!.currentOrder!);
-    _databaseHelper.firebaseDatabase
-        .reference()
-        .child(orderId(_taxiAuthController.taxiState!.currentOrder!))
-        .onValue
-        .listen((event) {
-      Order order = Order.fromSnapshot(event.snapshot);
-      CurrentOrderEvent? currentOrderEvent = currentEvent;
-      // _currentOrderStream.value?.event = currentEvent;
-      if (order.status != null && order.status != lastOrderStatus) {
-        mezDbgPrint("NEW EVENTTTTTTTTTT");
-        currentOrderEvent = new CurrentOrderEvent(
-            CurrentOrderEventTypes.OrderStatusChange,
-            eventDetails: <String, String?>{
-              "oldStatus": lastOrderStatus,
-              "newStatus": order.status
-            });
-        lastOrderStatus = order.status;
-        currentEvent = currentOrderEvent;
-
-        mezDbgPrint(
-            "\from Listener of CurrentORderController :: \n${_currentOrderStream.value?.toJson()}\n");
-      }
-      _currentOrderStream.value = CurrentOrder(order, event: currentOrderEvent);
-    }).canceledBy(this);
   }
 
-  void clearEvent() {
-    this.currentEvent = null;
-  }
-
-  Future<CurrentOrder> getOrder() async {
-    DataSnapshot snapshot = await _databaseHelper.firebaseDatabase
-        .reference()
-        .child(orderId(_taxiAuthController.taxiState!.currentOrder!))
-        .once();
-
-    Order order = Order.fromSnapshot(snapshot);
-    CurrentOrderEvent? currentOrderEvent = currentEvent;
-    // _currentOrderStream.value?.event = currentEvent;
-    if (order.status != null && order.status != lastOrderStatus) {
-      mezDbgPrint("NEW EVENTTTTTTTTTT");
-      currentOrderEvent = new CurrentOrderEvent(
-          CurrentOrderEventTypes.OrderStatusChange,
-          eventDetails: <String, String?>{
-            "oldStatus": lastOrderStatus,
-            "newStatus": order.status
-          });
-      lastOrderStatus = order.status;
-      currentEvent = currentOrderEvent;
-
-      mezDbgPrint(
-          "\from Listener of CurrentORderController :: \n${_currentOrderStream.value?.toJson()}\n");
+  Future<void> listenForOrderStatus() async {
+    if (_orderStatusListener != null) {
+      await _orderStatusListener!.cancel();
     }
-    return CurrentOrder(order, event: currentOrderEvent);
+    (_orderStatusListener = _databaseHelper.firebaseDatabase
+            .reference()
+            .child(orderStatus(_taxiAuthController.taxiState!.currentOrder!))
+            .onValue
+            .listen((event) async {
+      DataSnapshot dataSnapshot = await _databaseHelper.firebaseDatabase
+          .reference()
+          .child(orderId(_taxiAuthController.taxiState!.currentOrder!))
+          .once();
+      _orderStreamController.add(Order.fromSnapshot(dataSnapshot));
+    }))
+        .canceledBy(this);
   }
 
   Future<void> cancelTaxi(String? reason) async {
@@ -171,7 +130,8 @@ class CurrentOrderController extends GetxController with MezDisposable {
 
   @override
   void onClose() async {
-    mezDbgPrint("cuRRENT CONTROLLER :: ::: :: :: : :   : :::::: DISPOSE !");
+    mezDbgPrint(
+        "cuRRENT CONTROLLER :: ::: :: :: : :   : :::::: DISPOSE ! ${this.hashCode}");
     // try {
     //   Get.delete<CurrentOrderController>();
     // } catch (e) {

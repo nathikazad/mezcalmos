@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/constants/routes.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
+import 'package:mezcalmos/Shared/models/Order.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
@@ -18,12 +19,12 @@ class CurrentPositionedBottomBar extends StatelessWidget {
   RxBool clickedLaunchOnMap = false.obs;
   bool clickedYesCancelPopUp = false;
   CurrentOrderController controller = Get.find<CurrentOrderController>();
-
   TaxiAuthController taxiAuthController = Get.find<TaxiAuthController>();
   LanguageController lang = Get.find<LanguageController>();
   FBTaxiNotificationsController fbNotificationsController =
       Get.find<FBTaxiNotificationsController>();
-
+  Order order;
+  CurrentPositionedBottomBar(this.order);
   @override
   Widget build(BuildContext context) {
     return Positioned(
@@ -50,16 +51,14 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                 flex: 3,
                 fit: FlexFit.loose,
                 child: Container(
-                  child: Obx(() => TextButton(
+                  child: TextButton(
                         style: ButtonStyle(
                           fixedSize: MaterialStateProperty.all(Size(
                               getSizeRelativeToScreen(
                                   115, Get.height, Get.width),
                               getSizeRelativeToScreen(
                                   12, Get.height, Get.width))),
-                          backgroundColor: controller.currentOrderStreamRx.value
-                                      ?.order.status !=
-                                  "inTransit"
+                          backgroundColor: order.status != OrdersStatus.InTransit
                               ? MaterialStateProperty.all(
                                   Color.fromARGB(255, 79, 168, 35))
                               : MaterialStateProperty.all(
@@ -69,14 +68,12 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                             ? () async {
                                 this.showLoadingMapOnClick.value = true;
 
-                                controller.currentOrderStreamRx.value?.order.status ==
-                                        "inTransit"
+                                order.status == OrdersStatus.InTransit
                                     // ignore: unnecessary_statements
                                     ? (MapHelper.calculateDistance(
                                                 taxiAuthController
                                                     .currentLocation,
-                                                controller.currentOrderStreamRx
-                                                    .value?.order.to.position) >
+                                                order.to.position) >
                                             0.5
                                         ? MezcalmosSharedWidgets.yesNoDefaultConfirmationDialog(
                                                 () async {
@@ -98,10 +95,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                                     : (MapHelper.calculateDistance(
                                                 taxiAuthController
                                                     .currentLocation,
-                                                controller
-                                                    .currentOrderStreamRx
-                                                    .value
-                                                    ?.order
+                                                order
                                                     .from
                                                     .position) >
                                             0.5
@@ -125,9 +119,9 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                         child: Center(
                             child: !this.showLoadingMapOnClick()
                                 ? Text(
-                                    controller.currentOrderStreamRx.value?.order
+                                    order
                                                 .status !=
-                                            "inTransit"
+                                            OrdersStatus.InTransit
                                         ? lang.strings['taxi']['taxiView']
                                             ["startRide"]
                                         : lang.strings['taxi']['taxiView']
@@ -145,7 +139,6 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                                   )),
                       )),
                 ),
-              ),
               Flexible(
                   child: SizedBox(
                 height: getSizeRelativeToScreen(15, Get.height, Get.width),
@@ -155,16 +148,15 @@ class CurrentPositionedBottomBar extends StatelessWidget {
               )),
               Flexible(
                   flex: 2,
-                  child: Obx(
-                    () => Text(
+                  child: Text(
                         '\$' +
-                            (controller.currentOrderStreamRx.value?.order
+                            (order
                                     .estimatedPrice
                                     ?.toString() ??
                                 "00"),
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 18)),
-                  )),
+                  ),
               Flexible(
                   child: SizedBox(
                 height: getSizeRelativeToScreen(15, Get.height, Get.width),
@@ -186,18 +178,12 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                             ? null
                             : () async {
                                 clickedLaunchOnMap.value = true;
-                                controller.currentOrderStreamRx.value?.order.status ==
-                                        "onTheWay"
+                                order.status == OrdersStatus.OnTheWay
                                     ? await mapLauncher(
-                                        controller.currentOrderStreamRx.value
-                                            ?.order.from.latitude,
-                                        controller.currentOrderStreamRx.value
-                                            ?.order.from.longitude)
+                                        order.from.latitude,
+                                        order.from.longitude)
                                     : await mapLauncher(
-                                        controller.currentOrderStreamRx.value
-                                            ?.order.to.latitude,
-                                        controller.currentOrderStreamRx.value
-                                            ?.order.to.longitude);
+                                        order.to.latitude, order.to.longitude);
                                 clickedLaunchOnMap.value = false;
                               },
                         child: Container(
@@ -243,12 +229,9 @@ class CurrentPositionedBottomBar extends StatelessWidget {
 
                           Get.toNamed(kMessagesRoute,
                               arguments: <String, dynamic>{
-                                "oId": controller
-                                    .currentOrderStreamRx.value?.order.id,
-                                "rImg": controller.currentOrderStreamRx.value
-                                    ?.order.customer['image'],
-                                "rName": controller.currentOrderStreamRx.value
-                                    ?.order.customer['name']
+                                "oId": order.id,
+                                "rImg": order.customer['image'],
+                                "rName": order.customer['name']
                               })?.then((_) => fbNotificationsController
                               .clearAllMessageNotification());
                         },

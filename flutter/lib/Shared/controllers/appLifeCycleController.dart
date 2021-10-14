@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/state_manager.dart';
@@ -17,7 +19,8 @@ class AppLifeCycleController extends GetxController
 
   Rx<AppLifecycleState> _appState = AppLifecycleState.resumed.obs;
   AppLifecycleState get appState => _appState.value;
-
+  StreamController<bool> _appResumedStreamController = StreamController<bool>();
+  Stream<bool> get getAppResumedStream => _appResumedStreamController.stream;
   void attachCallback(AppLifecycleState onState, VoidCallback f) {
     callbacks[onState]!.add(f);
   }
@@ -47,6 +50,7 @@ class AppLifeCycleController extends GetxController
   @override
   void dispose() {
     WidgetsBinding.instance!.removeObserver(this);
+    _appResumedStreamController.close();
     super.dispose();
   }
 
@@ -56,6 +60,10 @@ class AppLifeCycleController extends GetxController
     callbacks[state]!.forEach((f) {
       f();
     });
+
+    if (state == AppLifecycleState.resumed) {
+      _appResumedStreamController.add(true);
+    }
 
     mezDbgPrint("[+] AppLifeCycleController :: AppStateChanged :: $state");
   }

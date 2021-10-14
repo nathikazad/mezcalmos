@@ -2,19 +2,25 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:location/location.dart';
+import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
 import 'package:mezcalmos/Shared/controllers/themeContoller.dart';
+import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
-class SettingsController extends GetxController {
+class SettingsController extends GetxController with MezDisposable {
   late final ThemeController _appTheme;
   late final LanguageController _appLanguage;
 
   ThemeController get appTheme => _appTheme;
   LanguageController get appLanguage => _appLanguage;
 
-  late Rx<bool> hasLocationPermissions;
+  StreamController<bool> _hasLocationPermissionStreamController =
+      StreamController<bool>();
+
+  Stream<bool> get locationPermissionStream =>
+      _hasLocationPermissionStreamController.stream;
 
   @override
   void onInit() async {
@@ -25,23 +31,29 @@ class SettingsController extends GetxController {
     _appLanguage = Get.put(LanguageController(), permanent: true);
     Get.put(SideMenuDraweController(), permanent: false);
 
-    PermissionStatus _tempLoca = await Location().hasPermission();
-    hasLocationPermissions = Rx(_tempLoca == PermissionStatus.granted ||
-        _tempLoca == PermissionStatus.grantedLimited);
+    bool locationPermission = await _getLocationPermission();
+    _hasLocationPermissionStreamController.add(locationPermission);
+    mezDbgPrint(
+        "SettingsController::Checking LocationPermissions .. ${locationPermission}!");
 
-    Timer.periodic(Duration(seconds: 5), (t) async {
-      PermissionStatus permissionStatus = await Location().hasPermission();
-      hasLocationPermissions.value =
-          (permissionStatus == PermissionStatus.granted ||
-              permissionStatus == PermissionStatus.grantedLimited);
-
-      mezDbgPrint(
-          "SettingsController::Checking LocationPermissions .. ${hasLocationPermissions.value}!");
+    Timer.periodic(Duration(seconds: 5), (timer) async {
+      bool locationPermission = await _getLocationPermission();
+      _hasLocationPermissionStreamController.add(locationPermission);
+      // mezDbgPrint(
+      //     "SettingsController::Checking LocationPermissions .. ${locationPermission}!");
     });
 
     // this is to make sure that the use already Granted the App the permission to use the location !
 
     super.onInit();
+  }
+
+  Future<bool> _getLocationPermission() async {
+    bool serviceEnabled = await Location().serviceEnabled();
+    if (!serviceEnabled) return false;
+    PermissionStatus _tempLoca = await Location().hasPermission();
+    // mezDbgPrint(_tempLoca);
+    return _tempLoca == PermissionStatus.granted;
   }
 
   @override

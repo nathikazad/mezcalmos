@@ -54,13 +54,14 @@ class IncomingOrdersController extends GetxController with MezDisposable {
           .child(taxiOpenOrdersNode)
           .onValue
           .listen((event) async {
-        orders.value = <Order>[];
+        mezDbgPrint(event.snapshot.value);
+        List<Order> ordersFromSnapshot = <Order>[];
         if (event.snapshot.value != null) {
           event.snapshot.value.forEach((dynamic key, dynamic value) async {
             Order order = Order.fromJson(key, value);
             order.distanceToClient = MapHelper.calculateDistance(
                 order.from.position, _taxiAuthController.currentLocation);
-            orders.add(order);
+            ordersFromSnapshot.add(order);
             if (_appLifeCycleController.appState == AppLifecycleState.resumed)
               _databaseHelper.firebaseDatabase
                   .reference()
@@ -69,9 +70,9 @@ class IncomingOrdersController extends GetxController with MezDisposable {
                   .set(true);
           });
 
-          orders
+          ordersFromSnapshot
               .sort((a, b) => a.distanceToClient.compareTo(b.distanceToClient));
-
+          orders.value = ordersFromSnapshot;
           mezDbgPrint(orders);
         }
         // if (orders
@@ -89,6 +90,7 @@ class IncomingOrdersController extends GetxController with MezDisposable {
 
       _updateOrderDistanceToClient =
           ever(_taxiAuthController.currentLocationRx, (userLocation) {
+        // mezDbgPrint("Updating distances");
         orders.forEach((order) {
           order.distanceToClient = MapHelper.calculateDistance(
               order.from.position, userLocation as LocationData);

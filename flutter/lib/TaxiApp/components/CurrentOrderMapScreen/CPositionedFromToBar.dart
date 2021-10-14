@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Order.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
 
 class CurrentPositionedFromToTopBar extends StatelessWidget {
   CurrentOrderController controller = Get.find<CurrentOrderController>();
   LanguageController lang = Get.find<LanguageController>();
-
+  Order order;
+  CurrentPositionedFromToTopBar(this.order);
   @override
   Widget build(BuildContext context) {
     return Positioned(
@@ -51,20 +53,19 @@ class CurrentPositionedFromToTopBar extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                             )),
-                        Obx(
-                          () => GestureDetector(
+                        GestureDetector(
                             onTap: () => mezcalmosSnackBar(
                                 lang.strings['shared']['inputLocation']["from"],
-                                controller.currentOrderStreamRx.value?.order
+                                order
                                         .from?.address ??
                                     ""),
                             child: Text(
-                              controller.currentOrderStreamRx.value?.order.from
+                              order.from
                                           ?.address
                                           ?.toString() ==
                                       null
                                   ? "........."
-                                  : controller.currentOrderStreamRx.value!.order
+                                  : order
                                       .from!.address!
                                       .toString(),
                               style: TextStyle(fontSize: 15, fontFamily: 'psr'),
@@ -73,7 +74,6 @@ class CurrentPositionedFromToTopBar extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                        ),
                       ]),
                 ),
               ),
@@ -138,20 +138,19 @@ class CurrentPositionedFromToTopBar extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Obx(
-                          () => GestureDetector(
+                        GestureDetector(
                             onTap: () => mezcalmosSnackBar(
                                 lang.strings['shared']['inputLocation']["to"],
-                                controller.currentOrderStreamRx.value?.order.to
+                                order.to
                                         ?.address ??
                                     ""),
                             child: Text(
-                              controller.currentOrderStreamRx.value?.order.to
+                              order.to
                                           ?.address
                                           ?.toString() ==
                                       null
                                   ? "........."
-                                  : controller.currentOrderStreamRx.value!.order
+                                  : order
                                       .to!.address!
                                       .toString(), //13+..
                               style: TextStyle(fontSize: 15, fontFamily: 'psr'),
@@ -160,7 +159,6 @@ class CurrentPositionedFromToTopBar extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                        ),
                       ],
                     )),
               ),

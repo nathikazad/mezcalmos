@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import os , json
-from sys import argv, stderr, stdout
+from sys import argv, stderr, stdout, stdin
 from enum import Enum
 import subprocess as proc
 from termcolor import colored
@@ -334,7 +334,7 @@ class Config:
                 if os.path.exists(f"output_filters/{filter_file}"):
                     ff = open(f"output_filters/{filter_file}").readlines()
                     PRINTLN(f"[+] Using {filter_mode} on {ff.__len__()} filters specified in => output_filters/{filter_file}")
-                    with proc.Popen(binary, stderr=stderr , stdout=proc.PIPE, universal_newlines=True) as p:
+                    with proc.Popen(binary, stdin=stdin, stderr=stderr , stdout=proc.PIPE, universal_newlines=True) as p:
                         for line in p.stdout:
                             if start_filtering >= 2:
                                 for f in ff:

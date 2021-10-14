@@ -11,11 +11,11 @@ class AuthHooks {
   static Future<void> onSignOutHook() async {
     mezDbgPrint(
         "[+] CustomerApp::AuthHooks::onSignOutHook -> Callback Executed.");
+    await Get.delete<CurrentOrderController>(force: true);
     await Get.delete<TaxiAuthController>();
     await Get.delete<DeviceNotificationsController>(force: true);
     await Get.delete<MessageController>();
     await Get.delete<FBTaxiNotificationsController>();
-    await Get.delete<CurrentOrderController>();
     await Get.delete<IncomingOrdersController>();
   }
 
@@ -26,5 +26,6 @@ class AuthHooks {
     Get.lazyPut(() => DeviceNotificationsController(), fenix: true);
     Get.lazyPut(() => MessageController());
     Get.lazyPut(() => FBTaxiNotificationsController());
+    Get.put(CurrentOrderController(), permanent: true);
   }
 }

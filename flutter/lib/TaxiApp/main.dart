@@ -16,7 +16,6 @@ class TaxiApp extends GetView<SettingsController> {
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
     Future<void> _initializeConfig() async {
-      await AppPreInit.bitmapLoading();
     }
 
     return GetMaterialApp(

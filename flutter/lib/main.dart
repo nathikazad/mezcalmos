@@ -102,10 +102,11 @@ class _SPointState extends State<SPoint> {
       
       Get.put<AuthController>(AuthController(signInCallback, signOutCallback),
           permanent: true);
-      Get.put<SettingsController>(SettingsController(), permanent: true);
-      // set to logs=false if you don't need the logs anymore.
       Get.put<AppLifeCycleController>(AppLifeCycleController(logs: true),
           permanent: true);
+      Get.put<SettingsController>(SettingsController(), permanent: true);
+      // set to logs=false if you don't need the logs anymore.
+      
 
       FirebaseAuth.instance.authStateChanges().first.then((value) {
         setState(() => _initialized = true);

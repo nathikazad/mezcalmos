@@ -24,3 +24,7 @@ String taxiIsLookingField(String uid) => "${taxiAuthNode(uid)}/state/isLooking";
 String orderId(String orderId) {
   return 'orders/taxi/$orderId';
 }
+
+String orderStatus(String orderId) {
+  return 'orders/taxi/$orderId/status';
+}

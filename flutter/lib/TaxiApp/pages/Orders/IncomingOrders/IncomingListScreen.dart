@@ -16,6 +16,11 @@ import 'package:mezcalmos/TaxiApp/router.dart';
 
 class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
   LanguageController lang = Get.find<LanguageController>();
+
+
+  IncomingOrdersScreen() {
+    Get.put(IncomingOrdersController());
+  }
   @override
   Widget build(BuildContext context) {
     TaxiAuthController _taxiAuthController =

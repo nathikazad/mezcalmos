@@ -5,12 +5,8 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/utilities/Extensions.dart';
-// import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/Shared/utilities/SharedEnums.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
-import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
-import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/TaxiApp/models/TaxiDriver.dart';
 // import 'package:mezcalmos/Shared/pages/AuthScreens/UnauthorizedScreen.dart';
@@ -35,8 +31,6 @@ class TaxiAuthController extends GetxController with MezDisposable {
   Rx<LocationData> get currentLocationRx => _currentLocation;
 
   StreamSubscription<LocationData>? _locationListener;
-
-  DateTime lastLocationUpdatedTime = DateTime.now();
 
   bool _checkedAppVersion = false;
 
@@ -122,15 +116,14 @@ class TaxiAuthController extends GetxController with MezDisposable {
       mezDbgPrint("User is not signed in !");
     } else {
       Location location = Location();
+      await location.changeSettings(interval: 1000);
       // location.enableBackgroundMode(enable: true);
       (_locationListener =
               location.onLocationChanged.listen((LocationData currentLocation) {
+        // mezDbgPrint("\t\t [TAXI AUTH CONTROLLER] LOCATION GOT UPDAAAATED !!");
         DateTime currentTime = DateTime.now();
-        if (currentTime.difference(lastLocationUpdatedTime).inSeconds > 5 &&
-            currentLocation.latitude != null &&
+        if (currentLocation.latitude != null &&
             currentLocation.longitude != null) {
-          mezDbgPrint("\t\t [TAXI AUTH CONTROLLER] LOCATION GOT UPDAAAATED !!");
-          lastLocationUpdatedTime = currentTime;
           _currentLocation.value = currentLocation;
 
           Map<String, dynamic> positionUpdate = <String, dynamic>{

@@ -5,12 +5,9 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/UnauthorizedScreen.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/Shared/utilities/SharedEnums.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
-import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
-import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/CurrentOrderScreen.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingListScreen.dart';
@@ -50,11 +47,9 @@ class TaxiWrapper extends GetWidget<AuthController> {
           return UnauthorizedScreen();
         } else if (_taxiAuthController.taxiState!.currentOrder != null) {
           mezDbgPrint("InCurrentOrder >");
-          Get.put(CurrentOrderController());
           return CurrentOrderScreen();
         } else {
           mezDbgPrint("Incoming orders >");
-          Get.put(IncomingOrdersController());
           return IncomingOrdersScreen();
         }
       }),

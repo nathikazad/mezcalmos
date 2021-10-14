@@ -23,8 +23,10 @@ class Wrapper extends StatelessWidget {
               if (snapUser.data == null) {
                 return SignIn();
               } else {
+                
                 return StreamBuilder<bool>(
-                    stream: _settingsController.hasLocationPermissions.stream
+                    stream:
+                        _settingsController.locationPermissionStream
                         .distinct(),
                     builder: (context, snapshot) {
                       mezDbgPrint(
