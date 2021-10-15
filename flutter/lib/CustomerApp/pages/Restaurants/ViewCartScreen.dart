@@ -200,7 +200,7 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
                                 (cart.value?.toFirebaseFormattedJson()[
                                             "cost"] !=
                                         null)
-                                    ? "  \$ ${cart.value?.toFirebaseFormattedJson()["cost"]}"
+                                    ? "  \$ ${currency.format(cart.value?.toFirebaseFormattedJson()["cost"] as dynamic)}"
                                     : "0",
                                 style: GoogleFonts.mulish(
                                   textStyle: TextStyle(
@@ -394,7 +394,7 @@ class InCartWidget extends StatelessWidget {
       myWidget.add(
         ItemsCartWidget(
           data: data["$key"],
-          restaurantID: "",
+          itemKey: "$key",
         ),
       );
     });
@@ -606,11 +606,13 @@ class InCartWidget extends StatelessWidget {
 
 class ItemsCartWidget extends StatelessWidget {
   final Map<dynamic, dynamic> data;
-  final String restaurantID;
-  ItemsCartWidget({required this.data, required this.restaurantID});
+  final String? itemKey;
+  //final String restaurantID;
+  ItemsCartWidget({required this.data, required this.itemKey});
 
   @override
   Widget build(BuildContext context) {
+    print(data);
     counter.value = data["totalCost"];
 
     return Container(
@@ -635,8 +637,8 @@ class ItemsCartWidget extends StatelessWidget {
               children: choosenOneOption(data["options"]["chosenOneOptions"]) +
                   choosenMannyOption(data["options"]["chosenManyOptions"]),
               onEdit: () {
-                print("${data["id"]}");
-                Get.toNamed(editCartItemRoute("${data["id"]}"));
+                print(" the data inside the expansion ${data}");
+                Get.toNamed(editCartItemRoute("$itemKey"));
               }),
           SizedBox(
             height: 15,
@@ -656,21 +658,17 @@ class ItemsCartWidget extends StatelessWidget {
                     },
                   ),
                   Spacer(),
-                  Obx(
-                    () {
-                      return Text("\$${currency.format(counter.value)}",
-                          style: GoogleFonts.mulish(
-                            textStyle: TextStyle(
-                                color: const Color(0xff000f1c),
-                                fontWeight: FontWeight.w700,
-                                fontFamily: "ProductSans",
-                                fontStyle: FontStyle.normal,
-                                fontSize: 20.0),
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.right);
-                    },
-                  )
+                  Text("\$${currency.format(counter.value)}",
+                      style: GoogleFonts.mulish(
+                        textStyle: TextStyle(
+                            color: const Color(0xff000f1c),
+                            fontWeight: FontWeight.w700,
+                            fontFamily: "ProductSans",
+                            fontStyle: FontStyle.normal,
+                            fontSize: 20.0),
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.right),
                 ],
               )),
         ],

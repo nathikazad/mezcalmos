@@ -40,9 +40,10 @@ class ViewItemScreen extends GetView<RestaurantsInfoController> {
         this.cartItem.value = CartItem(value, restaurantId);
       });
     } else {
-      this.cartItem.value = CartItem.clone(restaurantCartController
-          .cart.value!.items
-          .firstWhere((item) => item.id == Get.parameters["cartItemId"]));
+      this.cartItem.value = CartItem.clone(
+          restaurantCartController.cart.value!.items.firstWhere((item) {
+        return item.id == Get.parameters["cartItemId"];
+      }));
     }
   }
 
