@@ -15,9 +15,10 @@ class SideMenuDraweController extends GetxController {
 
   @override
   void onInit() {
+    super.onInit();
+
     mezDbgPrint(
         "<<<<<<<<<<<<<<<<<<<<<<<<<<<< [ SideMenuDrawerController Initialized ] >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-    super.onInit();
   }
 
   void openMenu() {

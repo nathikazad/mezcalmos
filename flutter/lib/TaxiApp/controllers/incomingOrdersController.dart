@@ -150,9 +150,9 @@ class IncomingOrdersController extends GetxController with MezDisposable {
   }
 
   @override
-  void dispose() {
+  void onClose() {
     detachListeners();
-    super.dispose();
+    super.onClose();
     mezDbgPrint("--------------------> Incoming Order Controller disposed");
   }
 }

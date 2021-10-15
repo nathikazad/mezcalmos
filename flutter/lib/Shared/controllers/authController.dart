@@ -4,10 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/databaseNodes.dart';
-import 'package:mezcalmos/Shared/constants/routes.dart';
 import 'package:mezcalmos/Shared/utilities/Extensions.dart';
+import 'package:mezcalmos/TaxiApp/router.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -39,6 +38,8 @@ String sha256ofString(String input) {
 class AuthController extends GetxController with MezDisposable {
   fireAuth.FirebaseAuth _auth = fireAuth.FirebaseAuth.instance;
   Rxn<User> _user = Rxn<User>();
+  RxBool authStateNotifierInvoked = false
+      .obs; // THIS IS BEING CHECKED ON THE ROOT MAIN.DART To wait for the first invoke!
 
   Function _onSignOutCallback;
   Function _onSignInCallback;
@@ -65,7 +66,7 @@ class AuthController extends GetxController with MezDisposable {
     Timer.periodic(
       second,
       (Timer __t) {
-        mezDbgPrint(
+        print(
             "OTP Code resending available after $timeBetweenResending Seconds !");
         if (_timeBetweenResending.value == 0)
           __t.cancel();
@@ -81,9 +82,11 @@ class AuthController extends GetxController with MezDisposable {
   void onInit() {
     Get.lazyPut(() => LanguageController());
     _auth.authStateChanges().listen((fireAuth.User? user) {
+      authStateNotifierInvoked.value = true;
+      print("authStateNotifierInvoked ====> $authStateNotifierInvoked");
       _fireAuthUser.value = user;
       if (user == null) {
-        mezDbgPrint('User is currently signed out!');
+        print('User is currently signed out!');
         _user.value = null;
       } else {
         _onSignInCallback();
@@ -115,7 +118,7 @@ class AuthController extends GetxController with MezDisposable {
           .ref("users/${uid}/avatar/${imageFile.path}")
           .putFile(imageFile);
     } on firebase_core.FirebaseException catch (e) {
-      mezDbgPrint("{{{{{{{{{{{{{{{{{{{{" +
+      print("{{{{{{{{{{{{{{{{{{{{" +
           e.message.toString() +
           "}}}}}}}}}}}}}}}}}}}}}}}}}}}}");
     } finally {
@@ -143,11 +146,10 @@ class AuthController extends GetxController with MezDisposable {
 
   Future<void> signOut() async {
     try {
-      mezDbgPrint("User signing out");
       await _onSignOutCallback();
       await cancelSubscriptions();
       await _auth.signOut();
-      // Get.offAllNamed(kMainAuthWrapperRoute);
+      // Get.offAllNamed(kMainWrapper);
     } catch (e) {
       Get.snackbar("Failed to Sign you out!", e.toString(),
           snackPosition: SnackPosition.BOTTOM);
@@ -202,7 +204,7 @@ class AuthController extends GetxController with MezDisposable {
         // 'language': _settings.appLanguage.userLanguageKey,
         'database': _databaseHelper.dbType
       });
-      mezDbgPrint(response);
+      print(response);
       mezcalmosSnackBar(
           "Notice ~",
           responseStatusChecker(response.data,
@@ -213,14 +215,14 @@ class AuthController extends GetxController with MezDisposable {
     } catch (e) {
       // mezcalmosSnackBar("Notice ~", "Failed to send OTP message :( ");
       // _waitingResponse.value = false;
-      mezDbgPrint("Exception happend in sendOTPForLogin : $e"); // i
-      mezDbgPrint(e);
+      print("Exception happend in sendOTPForLogin : $e"); // i
+      print(e);
     }
     return response!.data;
   }
 
   Future<void> signInUsingOTP(String phoneNumber, String otpCode) async {
-    mezDbgPrint("$phoneNumber  < phone ------ otp > $otpCode");
+    print("$phoneNumber  < phone ------ otp > $otpCode");
     HttpsCallable getAuthUsingOTPFunction =
         FirebaseFunctions.instance.httpsCallable('getAuthUsingOTP');
     try {
@@ -235,17 +237,17 @@ class AuthController extends GetxController with MezDisposable {
       });
       // mezcalmosSnackBar("Notice ~", "OTP message has been sent !");
       // _waitingResponse.value = false;
-      mezDbgPrint("GetAuthUsingOTP Response");
-      mezDbgPrint(
+      print("GetAuthUsingOTP Response");
+      print(
           "################################ DATA ###############################\n\n${response.data}\n\n");
       await fireAuth.FirebaseAuth.instance
           .signInWithCustomToken(response.data["token"]);
 
-      await Get.offAllNamed(kMainAuthWrapperRoute);
+      await Get.offAllNamed(kMainWrapper);
     } catch (e) {
       mezcalmosSnackBar("Error", "OTP Code confirmation failed :(");
 
-      mezDbgPrint("Exception happend in GetAuthUsingOTP : $e");
+      print("Exception happend in GetAuthUsingOTP : $e");
     }
   }
 
@@ -254,8 +256,7 @@ class AuthController extends GetxController with MezDisposable {
   Future signInWithFacebook() async {
     // Trigger the sign-in flow
     final LoginResult result = await FacebookAuth.instance.login();
-    mezDbgPrint(
-        " FB AUTH STATUS +++++++++++++++++++++ ${result.status.toString()}");
+    print(" FB AUTH STATUS +++++++++++++++++++++ ${result.status.toString()}");
 
     if (result.status == LoginStatus.success) {
       // Create a credential from the access token
@@ -287,7 +288,7 @@ class AuthController extends GetxController with MezDisposable {
         nonce: nonce,
       );
 
-      mezDbgPrint(appleCredential.authorizationCode);
+      print(appleCredential.authorizationCode);
 
       // Create an `OAuthCredential` from the credential returned by Apple.
       final oauthCredential = fireAuth.OAuthProvider("apple.com").credential(
@@ -299,7 +300,7 @@ class AuthController extends GetxController with MezDisposable {
       // not match the nonce in `appleCredential.identityToken`, sign in will fail.
       fireAuth.FirebaseAuth.instance.signInWithCredential(oauthCredential);
     } catch (exception) {
-      mezDbgPrint(exception);
+      print(exception);
       mezcalmosSnackBar("Notice ~", "Failed SignIn with Apple !");
     }
   }
@@ -308,6 +309,6 @@ class AuthController extends GetxController with MezDisposable {
   void dispose() {
     cancelSubscriptions();
     super.dispose();
-    mezDbgPrint("--------------------> AuthController Auto Disposed !");
+    print("--------------------> AuthController Auto Disposed !");
   }
 }

@@ -6,10 +6,8 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/constants/routes.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
-import 'package:mezcalmos/Shared/models/Order.dart';
 import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
@@ -100,16 +98,15 @@ class IncommingOrderScreenView extends GetWidget<IncomingOrdersController>
                                 .then((isSuccess) {
                               if (isSuccess) {
                                 mezDbgPrint("Inside then after accept taxi");
-                                // cancelSubscriptions();
-                                // showLoading.value = false;
+                                cancelSubscriptions();
+                                showLoading.value = false;
+                                Get.offNamedUntil(kCurrentOrderPage, (route) {
+                                  mezDbgPrint(
+                                      "Nav Stack Routes ===> ${route.settings.name}");
+                                  return route.settings.name ==
+                                      kTaxiWrapperRoute;
+                                });
                               }
-                            }).whenComplete(() {
-                              mezDbgPrint("Inside complete after accept taxi");
-                              Get.until((route) {
-                                mezDbgPrint(route.settings.name);
-                                return route.settings.name ==
-                                    kMainAuthWrapperRoute;
-                              });
                             });
                           }
                         : () => null,

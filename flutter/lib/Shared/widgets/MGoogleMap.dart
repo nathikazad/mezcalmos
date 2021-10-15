@@ -16,7 +16,7 @@ class MGoogleMap extends StatefulWidget with MezDisposable {
   LatLng initialLocation;
   Set<Polyline> polylines;
   LatLngBounds? bounds;
-  RxList<Marker> markers;
+  List<Marker> markers;
   Map<String, Stream<LocationData>> idWithSubscription;
   String parentName;
   MGoogleMap(
@@ -100,6 +100,8 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
 
   @override
   void initState() {
+    super.initState();
+
     mezDbgPrint("MGoogleMap initstate ${this.hashCode} ${widget.parentName}");
     Get.find<AppLifeCycleController>().attachCallback(AppLifecycleState.resumed,
         () {
@@ -121,8 +123,6 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
     //     });
     //   }).canceledBy(this);
     // });
-
-    super.initState();
   }
 
   @override

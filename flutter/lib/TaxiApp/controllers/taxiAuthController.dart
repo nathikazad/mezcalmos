@@ -24,6 +24,8 @@ class TaxiAuthController extends GetxController with MezDisposable {
 
   TaxiState? get taxiState => _state.value;
 
+  Stream<TaxiState?> get stateStream => _state.stream;
+
   Rx<LocationData> _currentLocation = LocationData.fromMap(
       <String, dynamic>{"latitude": 15.851385, "longitude": -97.046429}).obs;
 
@@ -40,9 +42,9 @@ class TaxiAuthController extends GetxController with MezDisposable {
     // ------------------------------------------------------------------------
 
     mezDbgPrint(
-        "User from TaxiAuthController >> ${_authController.fireAuthUser?.uid}");
+        "\t\t\tUser from TaxiAuthController >> ${_authController.user?.uid}");
 
-    if (_authController.fireAuthUser != null) {
+    if (_authController.user != null) {
       _databaseHelper.firebaseDatabase
           .reference()
           .child(taxiAuthNode(_authController.fireAuthUser!.uid))
@@ -153,7 +155,7 @@ class TaxiAuthController extends GetxController with MezDisposable {
   }
 
   @override
-  void onClose() async {
+  void onClose() {
     mezDbgPrint("[+] TaxiAuthController::dispose ---------> Was invoked !");
     cancelSubscriptions();
     super.onClose();

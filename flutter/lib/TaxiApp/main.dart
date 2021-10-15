@@ -2,11 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/constants/routes.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/helpers/appPreInit.dart';
-import 'package:mezcalmos/TaxiApp/pages/Wrapper.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
 
 class TaxiApp extends GetView<SettingsController> {
@@ -16,6 +14,7 @@ class TaxiApp extends GetView<SettingsController> {
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
     Future<void> _initializeConfig() async {
+      await AppPreInit.bitmapLoading();
     }
 
     return GetMaterialApp(
@@ -30,7 +29,7 @@ class TaxiApp extends GetView<SettingsController> {
       getPages: XRouter.mainRoutes,
       enableLog: false,
       // logWriterCallback: mezcalmosLogger,
-      initialRoute: kMainAuthWrapperRoute,
+      initialRoute: kMainWrapper,
     );
   }
 }

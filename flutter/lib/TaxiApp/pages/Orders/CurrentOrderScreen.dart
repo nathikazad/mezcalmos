@@ -7,11 +7,13 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Order.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/components/CurrentOrderMapScreen/CPositionedBottomBar.dart';
 import 'package:mezcalmos/TaxiApp/components/CurrentOrderMapScreen/CPositionedFromToBar.dart';
@@ -20,13 +22,12 @@ import 'package:mezcalmos/TaxiApp/controllers/fbTaxiNotificationsController.dart
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 
-class CurrentOrderScreen extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => _CurrentOrderScreenState();
-}
+// class CurrentOrderScreen extends StatefulWidget {
+//   @override
+//   State<StatefulWidget> createState() => _CurrentOrderScreenState();
+// }
 
-class _CurrentOrderScreenState extends State<CurrentOrderScreen> {
-  late CurrentOrderController controller;
+class CurrentOrderScreen extends GetView<CurrentOrderController> {
   final LanguageController lang = Get.find<LanguageController>();
   final FBNotificationsController fbNotificationsController =
       Get.find<FBTaxiNotificationsController>();
@@ -39,23 +40,22 @@ class _CurrentOrderScreenState extends State<CurrentOrderScreen> {
     "taxiImg": null,
     "destinationImg": null
   };
-  Rx<LatLng> initialCameraPosition = LatLng(0, 0).obs;
-  RxList<Marker> customMarkers = <Marker>[].obs;
-  //====================================================================
+  LatLng initialCameraPosition = LatLng(0, 0);
+  List<Marker> customMarkers = <Marker>[];
+  //======================================  ==============================
 
-  @override
-  void initState() {
-    controller = Get.put(CurrentOrderController());
-    controller.listenForOrderStatus();
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   controller = Get.put(CurrentOrderController());
+  //   controller.listenForOrderStatus();
+  // }
 
-  @override
-  void dispose() async {
-    mezDbgPrint("Dispose of current order screen");
-    await Get.delete<CurrentOrderController>();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   mezDbgPrint("Dispose of current order screen");
+  //   super.dispose();
+  // }
 
   Future<void> hotReladCallback(Order order) async {
     mezDbgPrint("CurrentOrderScreen :: addPostFrameCallback :: called !");
@@ -66,89 +66,108 @@ class _CurrentOrderScreenState extends State<CurrentOrderScreen> {
   }
 
   Widget build(BuildContext context) {
-    return StreamBuilder<Order>(
-        stream: controller.orderStream,
-        builder: (_, AsyncSnapshot<Order> snapshot) {
-          mezDbgPrint("INSIDE STREAMBUILDER");
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            mezDbgPrint(
-                "Inside CurrentOrder::StreamBuilder::ConnectionState.waiting");
+    Future.microtask(() {
+      mezDbgPrint("\t\t CurrentOrderScreen :: microtask !");
+      controller.listenForOrderStatus();
+    });
 
-            return Center(
-              child: Container(
-                height: 200,
-                width: 200,
-                decoration:
-                    BoxDecoration(shape: BoxShape.circle, color: Colors.red),
-                child: Transform.scale(scale: .8, child: MezLogoAnimation()),
-              ),
-            );
-          } else if (snapshot.connectionState == ConnectionState.done ||
-              snapshot.connectionState == ConnectionState.active) {
-            if (snapshot.hasError) {
-              return const Center(
-                child: Icon(
-                  Icons.wifi_off_outlined,
-                  size: 40,
+    // make sure can't be poped, unless we do.
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+          key: Get.find<SideMenuDraweController>().getNewKey(),
+          drawer: MezSideMenu(),
+          backgroundColor: Colors.white,
+          appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
+              "menu", Get.find<SideMenuDraweController>().openMenu),
+          body: StreamBuilder<Order>(
+              stream: controller.orderStream.distinct((_old, _new) {
+            return _new == null || _old == _new;
+          }), builder: (_, AsyncSnapshot<Order> snapshot) {
+            mezDbgPrint("\t\t\t\t S N A P S H O T ===> ${snapshot.data}");
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              mezDbgPrint("INSIDE STREAM BUILDER :: waiting !");
+
+              return Center(
+                child: Container(
+                  height: 200,
+                  width: 200,
+                  decoration:
+                      BoxDecoration(shape: BoxShape.circle, color: Colors.red),
+                  child: Transform.scale(scale: .8, child: MezLogoAnimation()),
                 ),
               );
-            } else if (snapshot.hasData) {
-              mezDbgPrint("INSIDE STREAM BUILDER :: HAS DATA !");
-              mezDbgPrint(snapshot.data!.toJson());
-              return FutureBuilder(
-                  future: hotReladCallback(snapshot.data!),
-                  builder: (context, AsyncSnapshot futureSnapshot) {
-                    mezDbgPrint("INSIDE FUTUREBUILDER");
-                    if (futureSnapshot.connectionState ==
-                        ConnectionState.done) {
-                      return Stack(alignment: Alignment.topCenter, children: [
-                        MGoogleMap(
-                          customMarkers,
-                          initialCameraPosition.value,
-                          "CurrentOrderScreen",
-                          polylines: polylines,
-                          idWithSubscription: {
-                            "taxi": taxiAuthController.currentLocationRx.stream
-                          },
-                        ),
-                        CurrentPositionedBottomBar(snapshot.data!),
-                        CurrentPositionedFromToTopBar(snapshot.data!)
-                      ]);
-                    } else {
-                      return Center(
-                        child: Container(
-                            height: 200,
-                            width: 200,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle, color: Colors.white),
-                            child: Transform.scale(
-                                scale: .8, child: MezLogoAnimation())),
-                      );
-                    }
-                  });
+            } else if (snapshot.connectionState == ConnectionState.done ||
+                snapshot.connectionState == ConnectionState.active) {
+              if (snapshot.hasError) {
+                mezDbgPrint("INSIDE STREAM BUILDER :: HAS ERR !");
+
+                return const Center(
+                  child: Icon(
+                    Icons.wifi_off_outlined,
+                    size: 40,
+                  ),
+                );
+              } else if (snapshot.hasData) {
+                mezDbgPrint("INSIDE STREAM BUILDER :: HAS DATA !");
+                mezDbgPrint(snapshot.data!.toJson());
+                return FutureBuilder<void>(
+                    future: hotReladCallback(snapshot.data!),
+                    builder: (context, AsyncSnapshot futureSnapshot) {
+                      mezDbgPrint(
+                          "INSIDE FUTUREBUILDER CURRENT ORDER CONTROLLER > ${controller.isClosed}");
+                      if (futureSnapshot.connectionState ==
+                          ConnectionState.done) {
+                        return Stack(alignment: Alignment.topCenter, children: [
+                          MGoogleMap(
+                            customMarkers,
+                            initialCameraPosition,
+                            "CurrentOrderScreen",
+                            polylines: polylines,
+                            idWithSubscription: {
+                              "taxi":
+                                  taxiAuthController.currentLocationRx.stream
+                            },
+                          ),
+                          CurrentPositionedBottomBar(snapshot.data!),
+                          CurrentPositionedFromToTopBar(snapshot.data!)
+                        ]);
+                      } else {
+                        return Center(
+                          child: Container(
+                              height: 200,
+                              width: 200,
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle, color: Colors.white),
+                              child: Transform.scale(
+                                  scale: .8, child: MezLogoAnimation())),
+                        );
+                      }
+                    });
+              } else {
+                mezDbgPrint(
+                    "Inside TaxiWrapper::StreamBuilder::ConnectionState.done|active::EmptyData");
+                return const Center(
+                  child: Icon(
+                    Icons.hourglass_empty_sharp,
+                    color: Colors.grey,
+                    size: 40,
+                  ),
+                );
+              }
             } else {
               mezDbgPrint(
-                  "Inside TaxiWrapper::StreamBuilder::ConnectionState.done|active::EmptyData");
+                  "Else : Inside TaxiWrapper::StreamBuilder::ConnectionState.${snapshot.connectionState}");
               return const Center(
                 child: Icon(
-                  Icons.hourglass_empty_sharp,
-                  color: Colors.grey,
+                  Icons.error,
+                  color: Colors.purpleAccent,
                   size: 40,
                 ),
               );
             }
-          } else {
-            mezDbgPrint(
-                "Else : Inside TaxiWrapper::StreamBuilder::ConnectionState.${snapshot.connectionState}");
-            return const Center(
-              child: Icon(
-                Icons.error,
-                color: Colors.purpleAccent,
-                size: 40,
-              ),
-            );
-          }
-        }); // no need for obx here.
+          })),
+    ); // no need for obx here.
   }
   // Handling Event ------------------------------------------------------------------------------------
 
@@ -203,8 +222,7 @@ class _CurrentOrderScreenState extends State<CurrentOrderScreen> {
 
     await _loadBitmapDescriptors(order);
 
-    initialCameraPosition.value = LatLng(
-        taxiAuthController.currentLocation.latitude!,
+    initialCameraPosition = LatLng(taxiAuthController.currentLocation.latitude!,
         taxiAuthController.currentLocation.longitude!);
     mezDbgPrint("_loadMarkersForOTW -> Sat initialCameraPosition's value !");
     // cancelMarkersSubs(customMarkers);
@@ -246,8 +264,7 @@ class _CurrentOrderScreenState extends State<CurrentOrderScreen> {
 
     await _loadBitmapDescriptors(order);
 
-    initialCameraPosition.value = LatLng(
-        taxiAuthController.currentLocation.latitude!,
+    initialCameraPosition = LatLng(taxiAuthController.currentLocation.latitude!,
         taxiAuthController.currentLocation.longitude!);
     mezDbgPrint("_loadMarkersForIT -> Sat initialCameraPosition's value !");
     // cancelMarkersSubs(customMarkers);

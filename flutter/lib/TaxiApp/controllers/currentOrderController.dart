@@ -20,14 +20,15 @@ class CurrentOrderController extends GetxController with MezDisposable {
   FBNotificationsController _notifications =
       Get.find<FBTaxiNotificationsController>();
 
-  StreamController<Order> _orderStreamController = StreamController();
+  StreamController<Order> _orderStreamController = StreamController.broadcast();
   Stream<Order> get orderStream => _orderStreamController.stream;
   StreamSubscription? _orderStatusListener;
+
   @override
   void onInit() {
     super.onInit();
     mezDbgPrint("Current Order Controller init ${this.hashCode}");
-    mezDbgPrint(_taxiAuthController.taxiState!.currentOrder!);
+    mezDbgPrint(_taxiAuthController.taxiState?.currentOrder);
   }
 
   Future<void> listenForOrderStatus() async {
@@ -48,7 +49,7 @@ class CurrentOrderController extends GetxController with MezDisposable {
         .canceledBy(this);
   }
 
-  Future<void> cancelTaxi(String? reason) async {
+  Future<bool> cancelTaxi(String? reason) async {
     HttpsCallable cancelTaxiFunction =
         FirebaseFunctions.instance.httpsCallable('cancelTaxiFromDriver');
     mezDbgPrint("Cancel Taxi Called");
@@ -61,11 +62,12 @@ class CurrentOrderController extends GetxController with MezDisposable {
       });
       dynamic _res = responseStatusChecker(response.data);
       if (_res == null) {
-        throw Exception(
+        mezDbgPrint(
             "Manually thrown Exception - Reason -> Response.data was null !");
+        return Future.value(false);
       } else {
         mezcalmosSnackBar("Notice ~", _res);
-        // Get.delete<CurrentOrderMapController>();
+        return Future.value(true);
       }
 
       // _waitingResponse.value = false;
@@ -73,10 +75,11 @@ class CurrentOrderController extends GetxController with MezDisposable {
       mezcalmosSnackBar("Notice ~", "Failed to Cancel the Taxi Request :( ");
       // _waitingResponse.value = false;
       mezDbgPrint("Exception happend in cancelTaxi : $e");
+      return Future.value(false);
     }
   }
 
-  Future<void> startRide() async {
+  Future<bool> startRide() async {
     HttpsCallable startRideFunction =
         FirebaseFunctions.instance.httpsCallable('startTaxiRide');
     mezDbgPrint("Start Taxi Called");
@@ -86,19 +89,23 @@ class CurrentOrderController extends GetxController with MezDisposable {
           .call(<String, dynamic>{'database': _databaseHelper.dbType});
       dynamic _res = responseStatusChecker(response.data);
 
-      if (_res == null)
-        throw Exception(
+      if (_res == null) {
+        mezDbgPrint(
             "Manually thrown Exception - Reason -> Response.data was null !");
-      // : mezcalmosSnackBar("Notice ~", _res);
-      // _waitingResponse.value = false;
+        return Future.value(false);
+      } else {
+        mezcalmosSnackBar("Notice ~", _res);
+        return Future.value(true);
+      }
     } catch (e) {
       mezcalmosSnackBar("Notice ~", "Failed to Start The ride :( ");
       // _waitingResponse.value = false;
       mezDbgPrint("Exception happend in startRide : $e");
+      return Future.value(false);
     }
   }
 
-  Future<void> finishRide() async {
+  Future<bool> finishRide() async {
     HttpsCallable finishRideFunction =
         FirebaseFunctions.instance.httpsCallable('finishTaxiRide');
     mezDbgPrint("Finish Taxi Called");
@@ -109,11 +116,12 @@ class CurrentOrderController extends GetxController with MezDisposable {
       dynamic _res = responseStatusChecker(response.data);
 
       if (_res == null) {
-        throw Exception(
+        mezDbgPrint(
             "Manually thrown Exception - Reason -> Response.data was null !");
+        return Future.value(false);
       } else {
         mezcalmosSnackBar("Notice ~", _res);
-        // Get.delete<CurrentOrderMapController>();
+        return Future.value(true);
       }
 
       // _waitingResponse.value = false;
@@ -121,6 +129,7 @@ class CurrentOrderController extends GetxController with MezDisposable {
       mezcalmosSnackBar("Notice ~", "Failed to finish The ride :( ");
       // _waitingResponse.value = false;
       mezDbgPrint("Exception happend in finishRide : $e");
+      return Future.value(false);
     }
   }
 
@@ -129,7 +138,7 @@ class CurrentOrderController extends GetxController with MezDisposable {
   }
 
   @override
-  void onClose() async {
+  void onClose() {
     mezDbgPrint(
         "cuRRENT CONTROLLER :: ::: :: :: : :   : :::::: DISPOSE ! ${this.hashCode}");
     // try {

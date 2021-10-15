@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:firebase_database/firebase_database.dart';
+// import 'package:firebase_database/firebase_database.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 // import 'package:mezcalmos/Shared/constants/routes.dart';
@@ -25,7 +25,7 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
 }
 
 void markInDb(String url) async {
-  String? driverId = await GetStorage().read<String>(getUserId);
+  String? driverId = GetStorage().read<String>(getUserId);
   if (driverId != null) {
     url = url.replaceAll("<driverId>", driverId);
     http.put(
@@ -81,7 +81,8 @@ class DeviceNotificationsController extends GetxController {
             "Error happend while trying to dispose deviceNotificationsController!")));
   }
 
-  void dispose() async {
+  @override
+  void onClose() async {
     mezDbgPrint(
         "[+] DeviceNotificationsController::dispose ---------> Was invoked !");
     detachListeners();
@@ -94,7 +95,7 @@ abstract class FBNotificationsController extends GetxController {
   DatabaseHelper databaseHelper = Get.find<DatabaseHelper>();
   RxList<MezNotification.Notification> notifications =
       <MezNotification.Notification>[].obs;
-  StreamSubscription<Event>? taxiAuthListener;
+  // StreamSubscription<Event>? taxiAuthListener;
   // List taxiAuthListenerCallbacks = [];
   RxBool _hasNewNotification = false.obs;
   LanguageController lang = Get.find<LanguageController>();
@@ -104,8 +105,8 @@ abstract class FBNotificationsController extends GetxController {
 
   @override
   void onInit() async {
-    mezDbgPrint("Hi from FBNOTIFICONTROLLER !");
     super.onInit();
+    mezDbgPrint("Hi from FBNOTIFICONTROLLER !");
   }
 
   // using this we can register our callbacks from diffrent places , and invoke them onValue !

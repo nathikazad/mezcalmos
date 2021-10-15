@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/constants/routes.dart';
 import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
@@ -17,11 +17,11 @@ class FBTaxiNotificationsController extends FBNotificationsController
     super.onInit();
 
     if (authController.user != null) {
-      (taxiAuthListener = databaseHelper.firebaseDatabase
-              .reference()
-              .child(notificationsNode(authController.user!.uid))
-              .onValue
-              .listen((event) async {
+      (databaseHelper.firebaseDatabase
+          .reference()
+          .child(notificationsNode(authController.user!.uid))
+          .onValue
+          .listen((event) async {
         notifications.clear();
         if (event.snapshot.value != null) {
           mezDbgPrint(
@@ -88,8 +88,7 @@ class FBTaxiNotificationsController extends FBNotificationsController
             mezDbgPrint(notifications.toJson());
           });
         }
-      }))
-          .canceledBy(this);
+      })).canceledBy(this);
     }
   }
 

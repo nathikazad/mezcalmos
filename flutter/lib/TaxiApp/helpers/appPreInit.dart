@@ -24,7 +24,5 @@ class AppPreInit {
 
     await GetStorage().write('destination_descriptor',
         await BitmapDescriptorLoader(purple_destination_marker_asset, 60, 60));
-
-    mezDbgPrint("[+] L O A D I N G .... DONE !");
   }
 }

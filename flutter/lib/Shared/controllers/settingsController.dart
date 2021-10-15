@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:location/location.dart';
-import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
+// import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
 import 'package:mezcalmos/Shared/controllers/themeContoller.dart';
@@ -24,7 +24,8 @@ class SettingsController extends GetxController with MezDisposable {
 
   @override
   void onInit() async {
-    // TODO : ADD CHECK IF THERE IS STORED LANGUAGE IN LOCAL ALREADY
+    super.onInit();
+
     // here --------
     // FOR NOW WE SET IT TO EN (default  if not passed to LangController)
     _appTheme = Get.put(ThemeController(), permanent: true);
@@ -34,7 +35,7 @@ class SettingsController extends GetxController with MezDisposable {
     bool locationPermission = await _getLocationPermission();
     _hasLocationPermissionStreamController.add(locationPermission);
     mezDbgPrint(
-        "SettingsController::Checking LocationPermissions .. ${locationPermission}!");
+        "SettingsController::Checking LocationPermissions .. $locationPermission!");
 
     Timer.periodic(Duration(seconds: 5), (timer) async {
       bool locationPermission = await _getLocationPermission();
@@ -44,8 +45,6 @@ class SettingsController extends GetxController with MezDisposable {
     });
 
     // this is to make sure that the use already Granted the App the permission to use the location !
-
-    super.onInit();
   }
 
   Future<bool> _getLocationPermission() async {

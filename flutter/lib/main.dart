@@ -20,7 +20,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
-import 'package:mezcalmos/TaxiApp/helpers/authHooks.dart';
 import 'package:mezcalmos/pre-main.dart';
 import 'package:package_info/package_info.dart';
 
@@ -34,25 +33,25 @@ void main() {
   const _db =
       bool.hasEnvironment('DB') ? String.fromEnvironment('DB') : defaultDb;
 
-  const _launch_mode = bool.hasEnvironment('LMODE')
+  const _launchMode = bool.hasEnvironment('LMODE')
       ? String.fromEnvironment('LMODE')
       : defaultLaunchMode;
 
   print('SP -> ${startPoint.toString()}');
   print('host  -> $_host');
   print('db  -> $_db');
-  print('mode  -> $_launch_mode');
+  print('mode  -> $_launchMode');
 
-  runApp(SPoint(launcherApp, _host, _db, _launch_mode));
+  runApp(SPoint(launcherApp, _host, _db, _launchMode));
 }
 
 class SPoint extends StatefulWidget {
   final Widget _app;
   final String _host;
   final String _db;
-  final String _launch_mode;
+  final String _launchMode;
 
-  SPoint(this._app, this._host, this._db, this._launch_mode);
+  SPoint(this._app, this._host, this._db, this._launchMode);
 
   @override
   _SPointState createState() => _SPointState();
@@ -69,9 +68,9 @@ class _SPointState extends State<SPoint> {
       print("[+] App Initialized under Name ${_app.name} .");
       late FirebaseDatabase firebaseDb;
 
-      if (widget._launch_mode == "prod") {
+      if (widget._launchMode == "prod") {
         firebaseDb = FirebaseDatabase(app: _app);
-      } else if (widget._launch_mode == "dev") {
+      } else if (widget._launchMode == "dev") {
         // Firebase !
         firebaseDb =
             FirebaseDatabase(app: _app, databaseURL: widget._host + dbRoot);
@@ -93,20 +92,19 @@ class _SPointState extends State<SPoint> {
       // GetStorage
       if (await GetStorage.init()) {
         print("[ GET STORAGE ] INITIALIZED !");
-        await GetStorage().write(getxLmodeKey, widget._launch_mode);
+        await GetStorage().write(getxLmodeKey, widget._launchMode);
         // Get the VersionNumber
         PackageInfo pInfos = await PackageInfo.fromPlatform();
         await GetStorage().write(version, pInfos.version);
       } else
         print("[ GET STORAGE ] FAILED TO INITIALIZE !");
-      
+
       Get.put<AuthController>(AuthController(signInCallback, signOutCallback),
           permanent: true);
       Get.put<AppLifeCycleController>(AppLifeCycleController(logs: true),
           permanent: true);
       Get.put<SettingsController>(SettingsController(), permanent: true);
       // set to logs=false if you don't need the logs anymore.
-      
 
       FirebaseAuth.instance.authStateChanges().first.then((value) {
         setState(() => _initialized = true);
@@ -126,9 +124,9 @@ class _SPointState extends State<SPoint> {
 
   @override
   void initState() {
+    super.initState();
     // INjecting this here cuz we will need it For language / them ... etc
     initializeSetup();
-    super.initState();
   }
 
   @override
