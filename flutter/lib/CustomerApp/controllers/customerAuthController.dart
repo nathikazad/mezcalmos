@@ -13,12 +13,11 @@ class CustomerAuthController extends GetxController with MezDisposable {
   Rxn<Customer> _customer = Rxn();
   DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
   AuthController _authController = Get.find<AuthController>();
-
+  
   RxBool _locationEnabled = false.obs;
   DeviceNotificationsController _messagingController =
       Get.put<DeviceNotificationsController>(DeviceNotificationsController());
 
-  List<Order> get currentOrders => _customer.value?.currentOrders ?? [];
   Rxn<Customer> get customerStream => _customer;
   bool _checkedAppVersion = false;
 

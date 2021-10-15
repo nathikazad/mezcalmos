@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/appbarComponent.dart';
-import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantOrderController.dart';
+import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/models/Order.dart';
-import 'package:mezcalmos/CustomerApp/models/cart.dart';
 
-import 'dart:async';
-
-class ViewCurrentRestaurantOrderScreen
-    extends GetView<RestaurantOrderController> {
+class ViewCurrentRestaurantOrderScreen extends GetView<OrderController> {
   Rxn<RestaurantOrder> order = Rxn();
 
-  ViewCurrentRestaurantOrderScreen(String orderId) {
-    Get.find<RestaurantOrderController>()
-        .getCurrentOrder(orderId)
-        .listen((event) {
+  ViewCurrentRestaurantOrderScreen() {
+    String orderId = Get.parameters['orderId']!;
+    controller.getCurrentOrder(orderId).listen((event) {
       order.value = event as RestaurantOrder;
     });
   }

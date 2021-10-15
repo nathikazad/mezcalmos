@@ -58,6 +58,13 @@ class RestaurantOrder extends Order {
     });
     return restaurantOrder;
   }
+
+  @override
+  bool inProcess() {
+    return restaurantOrderStatus == RestaurantOrderStatus.PreparingOrder ||
+        restaurantOrderStatus == RestaurantOrderStatus.ReadyForPickup ||
+        restaurantOrderStatus == RestaurantOrderStatus.OnTheWay;
+  }
 }
 
 class RestaurantOrderItem {
@@ -106,7 +113,7 @@ class ChooseManyOption {
       required this.chosenOptionValue});
 }
 
-class Order {
+abstract class Order {
   String orderId;
   OrderType orderType;
   String serviceProviderId;
@@ -120,6 +127,7 @@ class Order {
       required this.paymentType,
       required this.orderTime,
       required this.cost});
+  bool inProcess();
   // Order.orderFromData(dynamic orderId, dynamic orderData){
 
 }
@@ -128,19 +136,22 @@ enum RestaurantOrderStatus {
   PreparingOrder,
   ReadyForPickup,
   OnTheWay,
-  Delivered
+  Delivered,
+  Cancelled
 }
 List<String> restaurantOrderStatusAsStrings = [
   "preparingOrder",
   "readyForPickup",
   "onTheWay",
-  "delivered"
+  "delivered",
+  "cancelled"
 ];
 List<RestaurantOrderStatus> restaurantOrderStatusAsEnum = [
   RestaurantOrderStatus.PreparingOrder,
   RestaurantOrderStatus.ReadyForPickup,
   RestaurantOrderStatus.OnTheWay,
-  RestaurantOrderStatus.Delivered
+  RestaurantOrderStatus.Delivered,
+  RestaurantOrderStatus.Cancelled
 ];
 
 RestaurantOrderStatus convertRestaurantOrderStatusStringToEnum(

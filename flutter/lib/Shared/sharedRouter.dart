@@ -1,6 +1,7 @@
 import 'package:get/get.dart'; // getX
 import 'package:mezcalmos/Shared/bindings/settingsBinding.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
+import 'package:mezcalmos/Shared/pages/LocationPermissionScreen.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/OtpConfirmationScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/PhoneNumberScreen.dart';
@@ -18,6 +19,7 @@ const String kMainAuthWrapperRoute = '/auth_wrapper';
 const String kTaxiWrapperRoute = '/taxi_wrapper';
 const String kSelectedIcommingOrder = '/selected_incomming_order';
 const String kMessagesRoute = '/messages';
+const String kLocationPermissionRoute = '/location_permission';
 
 // GetX based Router (For navigating)
 class SharedRouter {
@@ -29,6 +31,8 @@ class SharedRouter {
     GetPage(name: kSignInRoute, page: () => SignIn()),
     GetPage(name: kOtpRoute, page: () => PhoneNumberScreen()),
     GetPage(name: kOtpConfirmRoute, page: () => OtpConfirmationScreen()),
+    GetPage(
+        name: kLocationPermissionRoute, page: () => LocationPermissionScreen()),
     GetPage(
       name: kMessagesRoute,
       page: () => MessagingScreen(),

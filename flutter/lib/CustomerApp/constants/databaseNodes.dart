@@ -1,28 +1,19 @@
-String customerNode(String? uid) {
-  return 'customers/$uid';
+String customerNode(String uid) {
+  return 'customers/info/$uid/';
 }
 
-String notificationStatusReadNode(String? orderId, String? uid) {
-  return 'notificationStatus/taxi/$orderId/$uid/read';
+String customerCart(String uid) {
+  return 'customers/info/${uid}/cart';
 }
 
-String customerCart(String? uid) {
-  return 'customers/${uid}/cart';
+String customerOrders(String uid) {
+  return 'customers/orders/${uid}';
 }
 
-String customerAppVersionNode(String? uid) {
-  return 'customers/${uid}/versionNumber';
+String customerAppVersionNode(String uid) {
+  return 'customers/info/${uid}/versionNumber';
 }
 
-String customerNotificationInfoNode(String? uid) {
-  return 'customers/${uid}/notificationInfo';
+String customerNotificationInfoNode(String uid) {
+  return 'customers/info/${uid}/notificationInfo';
 }
-
-// String notificationsNode(String? uid) {
-//   return 'notifications/taxi/$uid';
-// }
-
-
-// String orderId(String? orderId) {
-//   return 'orders/taxi/$orderId';
-// }

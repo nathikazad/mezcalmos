@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen.dart';
+import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 
 Widget restaurantAppBarComponent(String type, Function? func) {
@@ -145,9 +146,9 @@ Widget restaurantAppBarComponent(String type, Function? func) {
           ),
           onTap: () {
             print("hey");
-            Get.to(ViewCartScreen(),
-                duration: Duration(seconds: 1),
-                transition: Transition.rightToLeft);
+            Get.toNamed(kCartRoute);
+            // Get.to(ViewCartScreen(),
+            //);
           },
         ),
         SizedBox(

@@ -7,44 +7,43 @@ import 'package:mezcalmos/CustomerApp/components/checkBoxComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/incrementalComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/textFieldComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/titlesComponent.dart';
-import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantCartController.dart';
+import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
 import 'package:mezcalmos/CustomerApp/models/restaurant.dart';
 import 'package:mezcalmos/CustomerApp/models/cart.dart';
 import 'dart:async';
 //import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
+//import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
+import 'package:intl/intl.dart';
+import 'package:mezcalmos/CustomerApp/router.dart';
+
 final currency = new NumberFormat("#,##0.00", "en_US");
 
+enum ViewItemScreenMode { AddItemMode, EditItemMode }
+
 class ViewItemScreen extends GetView<RestaurantsInfoController> {
-  String restaurantId;
-  String itemId;
+  ViewItemScreenMode viewItemScreenMode;
   Rxn<CartItem> cartItem = Rxn();
-  RestaurantCartController? restaurantCartController;
-  ViewItemScreen(this.restaurantId, this.itemId, this.restaurantCartController);
+  late RestaurantCartController restaurantCartController;
 
-  factory ViewItemScreen.forNewItem(String restaurantId, String itemId) {
+  ViewItemScreen(this.viewItemScreenMode) {
     Get.put<RestaurantsInfoController>(RestaurantsInfoController());
-    ViewItemScreen viewItemScreen = ViewItemScreen(restaurantId, itemId,
-        Get.put<RestaurantCartController>(RestaurantCartController()));
-
-    viewItemScreen.controller.getItem(restaurantId, itemId).then((value) {
-      viewItemScreen.cartItem.value = CartItem(value, restaurantId);
-    });
-    return viewItemScreen;
-  }
-
-  factory ViewItemScreen.forAlreadyInCartItem(CartItem cartItem) {
-    Get.put<RestaurantsInfoController>(RestaurantsInfoController());
-    ViewItemScreen viewItemScreen = ViewItemScreen(
-        cartItem.restaurantId,
-        cartItem.item.id!,
-        Get.put<RestaurantCartController>(RestaurantCartController()));
-    viewItemScreen.cartItem.value = CartItem.clone(cartItem);
-    return viewItemScreen;
+    restaurantCartController =
+        Get.put<RestaurantCartController>(RestaurantCartController());
+    if (this.viewItemScreenMode == ViewItemScreenMode.AddItemMode) {
+      String restaurantId = Get.parameters['restaurantId']!;
+      String itemId = Get.parameters['itemId']!;
+      this.controller.getItem(restaurantId, itemId).then((value) {
+        this.cartItem.value = CartItem(value, restaurantId);
+      });
+    } else {
+      this.cartItem.value = CartItem.clone(restaurantCartController
+          .cart.value!.items
+          .firstWhere((item) => item.id == Get.parameters["cartItemId"]));
+    }
   }
 
   @override
@@ -340,11 +339,11 @@ class ViewItemScreen extends GetView<RestaurantsInfoController> {
                               ],
                             ),
                             function: () {
-                              restaurantCartController?.addItem(
-                                  cartItem.value!, this.restaurantId);
-                              Get.off(ViewCartScreen(),
-                                  duration: Duration(seconds: 1),
-                                  transition: Transition.rightToLeft);
+                              restaurantCartController.addItem(cartItem.value!);
+                              Get.back();
+                              //   Get.off(ViewCartScreen(),
+                              //       duration: Duration(seconds: 1),
+                              //       transition: Transition.rightToLeft);
                             })
                       ],
                     ),
@@ -355,6 +354,48 @@ class ViewItemScreen extends GetView<RestaurantsInfoController> {
             ),
           ),
         ));
+    // appBar: AppBar(
+    //   title: Obx(() => Text("${cartItem.value?.item.name ?? 'Loading'}")),
+    //   actions: [
+    //     TextButton(
+    //         onPressed: () =>
+    //             (this.viewItemScreenMode == ViewItemScreenMode.AddItemMode)
+    //                 ? Get.toNamed(kCartRoute)
+    //                 : Get.back(),
+    //         child: Text("Cart"))
+    //   ],
+    // ),
+    // body: LayoutBuilder(builder:
+    //     (BuildContext context, BoxConstraints viewportConstraints) {
+    //   return SingleChildScrollView(
+    //       child: ConstrainedBox(
+    //           constraints: BoxConstraints(
+    //             minHeight: viewportConstraints.maxHeight,
+    //           ),
+    //           child: Obx(() => Column(
+    //                 children: [
+    //                   if (cartItem.value?.item != null) ...[
+    //                     Text(cartItem.value!.item.name!),
+    //                     Text(cartItem.value!.item.description!),
+    //                     Text(
+    //                         "\$${currency.format(cartItem.value!.item.cost)}"),
+    //                     image(cartItem.value!.item.image),
+    //                     chooseOneCheckBoxes(
+    //                         cartItem.value!.item.chooseOneOptions),
+    //                     chooseManyCheckBoxes(
+    //                         cartItem.value!.item.chooseManyOptions),
+    //                     incrementQuantityButton(),
+    //                     Text(
+    //                         "\$${currency.format(cartItem.value!.totalCost())}"),
+    //                     (this.viewItemScreenMode ==
+    //                             ViewItemScreenMode.AddItemMode)
+    //                         ? addItemButton()
+    //                       : editItemButton()
+    //                   ] else
+    //                     Text("Loading")
+    //                 ],
+    //               ))));
+    // }));
   }
 
   Widget image(String? imageLink) {
@@ -469,8 +510,17 @@ class ViewItemScreen extends GetView<RestaurantsInfoController> {
     return OutlinedButton(
         child: Text("Add item to cart"),
         onPressed: () {
-          restaurantCartController?.addItem(cartItem.value!, this.restaurantId);
+          restaurantCartController.addItem(cartItem.value!);
           Get.off(ViewCartScreen());
+        });
+  }
+
+  Widget editItemButton() {
+    return OutlinedButton(
+        child: Text("Edit item"),
+        onPressed: () {
+          restaurantCartController.addItem(cartItem.value!);
+          Get.back();
         });
   }
 }

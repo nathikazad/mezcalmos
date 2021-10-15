@@ -630,53 +630,6 @@
     "minimumCost": 40,
     "perKmCost": 20
   },
-  "taxiCancelledOrders": {
-    "-McjiEzp5I99HCmIxTd7": {
-      "acceptRideTime": "Mon, 21 Jun 2021 17:58:44 GMT",
-      "customer": {
-        "id": "O7jcgQ0UcQbMDRKYRbTjZRLgMnTz",
-        "image": "https://randomuser.me/api/portraits/men/65.jpg",
-        "name": "CustTwo"
-      },
-      "distance": {
-        "text": "4.4 km",
-        "value": 4361
-      },
-      "driver": {
-        "id": "PBcTv6zSy1FUT7C3EOaFj1Rw8dct",
-        "image": "https://randomuser.me/api/portraits/men/79.jpg",
-        "location": {
-          "lastUpdateTime": "Mon, 21 Jun 2021 17:55:03 GMT",
-          "position": {
-            "lat": 15.850639399999999,
-            "lng": -97.0462907
-          }
-        },
-        "name": "Taxi"
-      },
-      "duration": {
-        "text": "12 mins",
-        "value": 734
-      },
-      "estimatedPrice": 40,
-      "from": {
-        "address": "Cristo Rey 181, Reforma, 71994 Puerto Escondido, Oax., Mexico",
-        "by": "search",
-        "lat": 15.8707897710344,
-        "lng": -97.06313679601757
-      },
-      "orderTime": "Mon, 21 Jun 2021 17:58:11 GMT",
-      "orderType": "taxi",
-      "paymentType": "cash",
-      "status": "onTheWay",
-      "to": {
-        "address": "Aeropuerto Internacional De Puerto Escondido, Costera, Aeropuerto, Puerto Escondido, Oaxaca, Mexico",
-        "by": "search",
-        "lat": 15.8744355,
-        "lng": -97.0918734
-      }
-    }
-  },
   "taxiDrivers": {
     "CMuzfW4Jp1vpzUEYvz8al0mT0KbG": {
       "invite": {
@@ -851,74 +804,6 @@
       "state": {
         "authorizationStatus": "authorized",
         "isLooking": true
-      }
-    }
-  },
-  "unfulfilledOrders": {
-    "-McjfmRJzEpbf_yqPfhf": {
-      "customer": {
-        "id": "PBcTv6zSy1FUT7C3EOaFj1Rw8dct",
-        "image": "https://randomuser.me/api/portraits/men/79.jpg",
-        "name": "Taxi"
-      },
-      "distance": {
-        "text": "0.8 km",
-        "value": 797
-      },
-      "duration": {
-        "text": "2 mins",
-        "value": 137
-      },
-      "estimatedPrice": 40,
-      "from": {
-        "address": "Infraganti 23B, Lazaro Cardenas, 70934 Brisas de Zicatela, Oax., Mexico",
-        "by": "search",
-        "lat": 15.850639399999999,
-        "lng": -97.0462907
-      },
-      "orderTime": "Mon, 21 Jun 2021 17:47:25 GMT",
-      "orderType": "taxi",
-      "paymentType": "cash",
-      "reason": "cancelled",
-      "status": "lookingForTaxi",
-      "to": {
-        "address": "Naranjos 300, Los Tamarindos, 70934 Brisas de Zicatela, Oax., Mexico",
-        "by": "search",
-        "lat": 15.846122645891628,
-        "lng": -97.04636564993042
-      }
-    },
-    "-Mcji_otFlm1VLhkttDA": {
-      "customer": {
-        "id": "S4mN56Yf2YeSLbWRzgAOuRJ7HAI8",
-        "image": "https://randomuser.me/api/portraits/men/70.jpg",
-        "name": "Customer"
-      },
-      "distance": {
-        "text": "2.2 km",
-        "value": 2221
-      },
-      "duration": {
-        "text": "6 mins",
-        "value": 365
-      },
-      "estimatedPrice": 40,
-      "from": {
-        "address": "Calle Séptima Nte. 63, Juárez, 71980 Puerto Escondido, Oax., Mexico",
-        "by": "search",
-        "lat": 15.86726125436873,
-        "lng": -97.07462070534697
-      },
-      "orderTime": "Mon, 21 Jun 2021 17:59:40 GMT",
-      "orderType": "taxi",
-      "paymentType": "cash",
-      "reason": "cancelled",
-      "status": "lookingForTaxi",
-      "to": {
-        "address": "El Cafecito, Rinconada, Puerto Escondido, Oaxaca, Mexico",
-        "by": "search",
-        "lat": 15.8616003,
-        "lng": -97.0782013
       }
     }
   },

@@ -9,30 +9,35 @@ class ItemComponent extends StatelessWidget {
   final String? subtitle;
   final String? restaurantId;
   final bool? withBorder;
+  final EdgeInsetsGeometry? padding;
+  final GestureTapCallback? onClick;
+  final EdgeInsetsGeometry? margin;
   // final int? index;
   ItemComponent(
       {this.imgUrl,
       this.title,
       this.subtitle,
       this.restaurantId,
-      this.withBorder = false});
+      this.withBorder = false,
+      this.padding = const EdgeInsets.symmetric(horizontal: 10),
+      this.margin,
+      this.onClick});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       child: Container(
-        padding: (subtitle != null)
-            ? null
-            : const EdgeInsets.symmetric(horizontal: 10),
-        margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
+        padding: padding,
+        margin: margin,
         //  width: Get.width,
         height: 60,
         decoration: BoxDecoration(
-            border: (withBorder == false)
-                ? null
-                : Border.all(color: const Color(0x410d0d0d), width: 0.5),
-            borderRadius: BorderRadius.circular(8),
-            color: const Color(0xffffffff)),
+          border: (withBorder == false)
+              ? null
+              : Border.all(color: const Color(0x410d0d0d), width: 0.5),
+          borderRadius: BorderRadius.circular(8),
+          color: const Color(0xffffffff),
+        ),
         child: Row(
           children: [
             Container(
@@ -85,14 +90,14 @@ class ItemComponent extends StatelessWidget {
           ],
         ),
       ),
-      onTap: (subtitle != null)
-          ? null
-          : () {
-              print("nothing");
-              Get.to(() => ViewRestaurantScreen(restaurantId!),
-                  transition: Transition.rightToLeft,
-                  duration: Duration(milliseconds: 350));
-            },
+      onTap: () {
+        print("nothing");
+        onClick!();
+        // Get.to(() => ViewRestaurantScreen(restaurantId!),
+        //     transition: Transition.rightToLeft,
+        //     duration: Duration(milliseconds: 350));
+      },
     );
+    //
   }
 }

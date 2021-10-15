@@ -40,7 +40,6 @@ class CartItem {
       String chosenId = _chosenOneOptions[chooseOneOption.id]!;
       costPerOne += chooseOneOption.findChooseOneOptionListItem(chosenId)!.cost;
     });
-    print(_chosenManyOptions);
     this.item.chooseManyOptions.forEach((chooseManyOption) {
       if (_chosenManyOptions[chooseManyOption.id] ?? false)
         costPerOne += chooseManyOption.cost;

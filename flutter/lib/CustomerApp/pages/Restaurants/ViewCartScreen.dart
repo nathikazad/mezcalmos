@@ -14,13 +14,19 @@ import 'package:mezcalmos/CustomerApp/models/restaurant.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCurrentOrderScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen.dart';
 import 'dart:async';
+import 'package:intl/intl.dart';
+
+import 'package:mezcalmos/CustomerApp/router.dart';
+
+final currency = new NumberFormat("#,##0.00", "en_US");
+
+Rx<double> counter = 0.0.obs;
 
 class ViewCartScreen extends GetView<RestaurantCartController> {
   Rxn<Cart> cart = Rxn();
 
   ViewCartScreen() {
-    RestaurantCartController controller =
-        Get.put<RestaurantCartController>(RestaurantCartController());
+    RestaurantCartController controller = Get.find<RestaurantCartController>();
     cart = controller.cart;
   }
 
@@ -155,7 +161,7 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
                                     fontSize: 20.0),
                                 textAlign: TextAlign.left),
                             Spacer(),
-                            Text(" \$40.00",
+                            Text(" \$${currency.format(40.00)}",
                                 style: GoogleFonts.mulish(
                                   textStyle: TextStyle(
                                       color: const Color(0xff000f1c),
@@ -288,44 +294,48 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
                 height: 25,
               ),
               ButtonComponent(
-                widget: Center(
-                  child: Text("ORDER NOW",
-                      style: GoogleFonts.sourceSansPro(
-                        textStyle: TextStyle(
-                            color: const Color(0xffffffff),
-                            fontWeight: FontWeight.w600,
-                            fontFamily: "ProductSans",
-                            fontStyle: FontStyle.normal,
-                            fontSize: 16.0),
-                      ),
-                      textAlign: TextAlign.center),
-                ),
-                // function: () async {
-                //   await controller.checkout();
-                //   Get.to(() =>ViewCurrentRestaurantOrderScreen((),
-                //       transition: Transition.rightToLeft,
-                //       duration: Duration(seconds: 1));
-                // },
-                function: () async {
-                  dynamic response = await controller.checkout();
-                  if (response["status"] == "Success")
-                    Get.offAll(
-                        ViewCurrentRestaurantOrderScreen(response["orderId"]));
-                  else {
-                    print(response);
-                    if (response["errorCode"] == "serverError") {
-                      // do something
-                    } else if (response["errorCode"] ==
-                        "inMoreThanThreeOrders") {
-                      // do something
-                    } else if (response["errorCode"] == "restaurantClosed") {
-                      // do something
-                    } else {
-                      // do something
+                  widget: Center(
+                    child: Text("ORDER NOW",
+                        style: GoogleFonts.sourceSansPro(
+                          textStyle: TextStyle(
+                              color: const Color(0xffffffff),
+                              fontWeight: FontWeight.w600,
+                              fontFamily: "ProductSans",
+                              fontStyle: FontStyle.normal,
+                              fontSize: 16.0),
+                        ),
+                        textAlign: TextAlign.center),
+                  ),
+                  // function: () async {
+                  //   await controller.checkout();
+                  //   Get.to(() =>ViewCurrentRestaurantOrderScreen((),
+                  //       transition: Transition.rightToLeft,
+                  //       duration: Duration(seconds: 1));
+                  // },
+                  function: () async {
+                    dynamic response = await controller.checkout();
+                    if (response["status"] == "Success")
+                      Get.offNamedUntil(
+                          getCurrentRestaurantOrderRoute(response["orderId"]),
+                          (Route<dynamic> route) {
+                        print(route.settings.name);
+                        return (route.settings.name == kWrapperRoute);
+                        // return route.;
+                      });
+                    else {
+                      print(response);
+                      if (response["errorCode"] == "serverError") {
+                        // do something
+                      } else if (response["errorCode"] ==
+                          "inMoreThanThreeOrders") {
+                        // do something
+                      } else if (response["errorCode"] == "restaurantClosed") {
+                        // do something
+                      } else {
+                        // do something
+                      }
                     }
-                  }
-                },
-              ),
+                  }),
               SizedBox(
                 height: 25,
               ),
@@ -599,7 +609,6 @@ class ItemsCartWidget extends StatelessWidget {
   final String restaurantID;
   ItemsCartWidget({required this.data, required this.restaurantID});
 
-  Rx<double> counter = 0.0.obs;
   @override
   Widget build(BuildContext context) {
     counter.value = data["totalCost"];
@@ -618,22 +627,17 @@ class ItemsCartWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           MyExpensionPanelComponent(
-            child: ItemComponent(
-              imgUrl: "${data["image"]}",
-              title: "${data["name"]}",
-              // subtitle: "Mushroom,Rice,Beans",
-            ),
-            children: choosenOneOption(data["options"]["chosenOneOptions"]) +
-                choosenMannyOption(data["options"]["chosenManyOptions"]),
-            onEdit: () {
-              Get.to(() => ViewItemScreen.forAlreadyInCartItem(
-                    CartItem(
-                      new Item.itemFromData(data["id"], data as dynamic),
-                      data["id"],
-                    ),
-                  ));
-            },
-          ),
+              child: ItemComponent(
+                imgUrl: "${data["image"]}",
+                title: "${data["name"]}",
+                // subtitle: "Mushroom,Rice,Beans",
+              ),
+              children: choosenOneOption(data["options"]["chosenOneOptions"]) +
+                  choosenMannyOption(data["options"]["chosenManyOptions"]),
+              onEdit: () {
+                print("${data["id"]}");
+                Get.toNamed(editCartItemRoute("${data["id"]}"));
+              }),
           SizedBox(
             height: 15,
           ),
@@ -653,17 +657,19 @@ class ItemsCartWidget extends StatelessWidget {
                   ),
                   Spacer(),
                   Obx(
-                    () => Text("\$$counter",
-                        style: GoogleFonts.mulish(
-                          textStyle: TextStyle(
-                              color: const Color(0xff000f1c),
-                              fontWeight: FontWeight.w700,
-                              fontFamily: "ProductSans",
-                              fontStyle: FontStyle.normal,
-                              fontSize: 20.0),
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.right),
+                    () {
+                      return Text("\$${currency.format(counter.value)}",
+                          style: GoogleFonts.mulish(
+                            textStyle: TextStyle(
+                                color: const Color(0xff000f1c),
+                                fontWeight: FontWeight.w700,
+                                fontFamily: "ProductSans",
+                                fontStyle: FontStyle.normal,
+                                fontSize: 20.0),
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.right);
+                    },
                   )
                 ],
               )),
@@ -732,3 +738,80 @@ class ItemsCartWidget extends StatelessWidget {
     return myWidgets;
   }
 }
+
+// appBar: AppBar(
+//           title: Text("Cart"),
+//         ),
+//         body: LayoutBuilder(builder:
+//             (BuildContext context, BoxConstraints viewportConstraints) {
+//           return SingleChildScrollView(
+//               child: Column(
+//             children: [
+//               OutlinedButton(
+//                   child: Text("Clear cart"),
+//                   onPressed: () {
+//                     controller.clearCart();
+//                   }),
+//               Obx(() {
+//                 if (cart.value == null) {
+//                   return Text("Cart is empty");
+//                 } else {
+//                   return buildCart(cart.value!);
+//                 }
+//               }),
+//               OutlinedButton(
+//                   child: Text("Checkout"),
+// onPressed: () async {
+//   dynamic response = await controller.checkout();
+//   if (response["status"] == "Success")
+//     Get.offNamedUntil(
+//         getCurrentRestaurantOrderRoute(response["orderId"]),
+//         (Route<dynamic> route) {
+//       print(route.settings.name);
+//       return (route.settings.name == kWrapperRoute);
+//       // return route.;
+//     });
+//   else {
+//     print(response);
+//     if (response["errorCode"] == "serverError") {
+//       // do something
+//     } else if (response["errorCode"] ==
+//         "inMoreThanThreeOrders") {
+//       // do something
+//     } else if (response["errorCode"] == "restaurantClosed") {
+//       // do something
+//     } else {
+//       // do something
+//     }
+//   }
+// })
+//             ],
+//           ));
+//         }));
+//   }
+
+//   Widget buildCart(Cart cart) {
+//     return Column(children: [
+//       Text(cart.restaurant.name!),
+//       Text(cart.quantity().toString()),
+//       Text(cart.totalCost().toString()),
+//       buildItems(cart.items)
+//     ]);
+//   }
+
+//   Widget buildItems(List<CartItem> cartItems) {
+//     return Column(
+//       children: cartItems.fold<List<Widget>>(<Widget>[], (children, element) {
+//         children.add(Row(children: [
+//           Text(element.id!),
+//           TextButton(
+//               onPressed: () => Get.toNamed(editCartItemRoute(element.id!)),
+//               child: Text("Edit Item"))
+//         ]
+//         ));
+//         return children;
+//       }),
+//     );
+// >>>>>>> jamalRestaurantApp
+//   }
+// }
