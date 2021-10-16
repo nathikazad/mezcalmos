@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -13,7 +14,23 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 class OtpConfirmationScreen extends GetView<AuthController> {
   LanguageController lang = Get.find<LanguageController>();
   RxBool clickedSignInOtp = false.obs;
-
+    RxInt _timeBetweenResending = 0.obs;
+  int get timeBetweenResending => _timeBetweenResending.value;
+  void resendOtpTimerActivate(int time) {
+    _timeBetweenResending.value = time;
+    const second = const Duration(seconds: 1);
+    Timer.periodic(
+      second,
+      (Timer __t) {
+        print(
+            "OTP Code resending available after $timeBetweenResending Seconds !");
+        if (_timeBetweenResending.value == 0)
+          __t.cancel();
+        else
+          _timeBetweenResending.value--;
+      },
+    );
+  }
   @override
   Widget build(BuildContext context) {
     TextEditingController _otpCodeTextController = TextEditingController();
@@ -136,24 +153,30 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                           ),
                           Obx(
                             () => GestureDetector(
-                                onTap: controller.timeBetweenResending == 0
+                                onTap: timeBetweenResending == 0
                                     ? () async {
                                         // resend code !
                                         canConfirmOtp.value = false;
                                         _otpCodeTextController.clear();
-                                        await controller.sendOTPForLogin(
+                                        dynamic response =
+                                            await controller.sendOTPForLogin(
                                             Get.arguments ?? _phonePassed);
+                                        if (response.data['secondsLeft'] !=
+                                            null) {
+                                          resendOtpTimerActivate(
+                                              response.data['secondsLeft']);
+                                        }
                                       }
                                     : null,
                                 child: Text(
-                                  controller.timeBetweenResending == 0
+                                  timeBetweenResending == 0
                                       ? lang.strings['shared']['login']
                                           ["resend"]
-                                      : "${lang.strings['shared']['login']["resendAfter"]} ${controller.timeBetweenResending} ${lang.strings['shared']['login']["seconds"]}",
+                                      : "${lang.strings['shared']['login']["resendAfter"]} ${timeBetweenResending} ${lang.strings['shared']['login']["seconds"]}",
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                       color:
-                                          controller.timeBetweenResending == 0
+                                          timeBetweenResending == 0
                                               ? Colors.black
                                               : Colors.grey.shade400,
                                       fontSize: 17.5,

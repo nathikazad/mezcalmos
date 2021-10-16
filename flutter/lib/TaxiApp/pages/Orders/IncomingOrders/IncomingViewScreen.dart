@@ -100,12 +100,8 @@ class IncommingOrderScreenView extends GetWidget<IncomingOrdersController>
                                 mezDbgPrint("Inside then after accept taxi");
                                 cancelSubscriptions();
                                 showLoading.value = false;
-                                Get.offNamedUntil(kCurrentOrderPage, (route) {
-                                  mezDbgPrint(
-                                      "Nav Stack Routes ===> ${route.settings.name}");
-                                  return route.settings.name ==
-                                      kTaxiWrapperRoute;
-                                });
+                                Get.offNamedUntil(kCurrentOrderPage,
+                                    ModalRoute.withName(kTaxiWrapperRoute));
                               }
                             });
                           }

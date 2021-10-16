@@ -11,16 +11,16 @@ class AuthHooks {
         "[+] CustomerApp::AuthHooks::onSignOutHook -> Callback Executed.");
     await Get.delete<TaxiAuthController>(force: true);
     await Get.delete<DeviceNotificationsController>(force: true);
-    await Get.delete<MessageController>();
-    await Get.delete<FBTaxiNotificationsController>();
+    await Get.delete<MessageController>(force: true);
+    await Get.delete<FBTaxiNotificationsController>(force: true);
   }
 
   static void onSignInHook() {
     mezDbgPrint(
         "[+] CustomerApp::AuthHooks::onSignInHook -> Callback Executed.");
-    Get.lazyPut(() => TaxiAuthController(), fenix: true);
-    Get.lazyPut(() => DeviceNotificationsController(), fenix: true);
-    Get.lazyPut(() => MessageController());
-    Get.lazyPut(() => FBTaxiNotificationsController());
+    Get.put(DeviceNotificationsController(), permanent: true);
+    Get.put(TaxiAuthController(), permanent: true);
+    Get.put(MessageController(), permanent: true);
+    Get.put(FBTaxiNotificationsController(), permanent: true);
   }
 }

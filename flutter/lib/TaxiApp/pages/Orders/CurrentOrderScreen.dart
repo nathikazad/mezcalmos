@@ -44,18 +44,10 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
   List<Marker> customMarkers = <Marker>[];
   //======================================  ==============================
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   controller = Get.put(CurrentOrderController());
-  //   controller.listenForOrderStatus();
-  // }
-
-  // @override
-  // void dispose() {
-  //   mezDbgPrint("Dispose of current order screen");
-  //   super.dispose();
-  // }
+  CurrentOrderScreen() {
+    Get.put(CurrentOrderController());
+    controller.listenForOrderStatus();
+  }
 
   Future<void> hotReladCallback(Order order) async {
     mezDbgPrint("CurrentOrderScreen :: addPostFrameCallback :: called !");
@@ -66,11 +58,6 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
   }
 
   Widget build(BuildContext context) {
-    Future.microtask(() {
-      mezDbgPrint("\t\t CurrentOrderScreen :: microtask !");
-      controller.listenForOrderStatus();
-    });
-
     // make sure can't be poped, unless we do.
     return WillPopScope(
       onWillPop: () async => false,
@@ -88,15 +75,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
             if (snapshot.connectionState == ConnectionState.waiting) {
               mezDbgPrint("INSIDE STREAM BUILDER :: waiting !");
 
-              return Center(
-                child: Container(
-                  height: 200,
-                  width: 200,
-                  decoration:
-                      BoxDecoration(shape: BoxShape.circle, color: Colors.red),
-                  child: Transform.scale(scale: .8, child: MezLogoAnimation()),
-                ),
-              );
+              return MezLogoAnimation(centered: true);
             } else if (snapshot.connectionState == ConnectionState.done ||
                 snapshot.connectionState == ConnectionState.active) {
               if (snapshot.hasError) {

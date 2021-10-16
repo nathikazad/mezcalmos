@@ -109,20 +109,20 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
     });
     animateAndUpdateBounds();
 
-    // widget.idWithSubscription.forEach((markerId, stream) {
-    //   stream.listen((newLoc) {
-    //     int i = widget.markers
-    //         .indexWhere((element) => element.markerId.value == markerId);
-    //     setState(() {
-    //       mezDbgPrint(
-    //           "Inside MgoogleMap::widget.idWithSubscription::listener :: marker id -> ${widget.markers[i].markerId.value}");
-    //       widget.markers[i] = Marker(
-    //           markerId: MarkerId(markerId),
-    //           icon: widget.markers[i].icon,
-    //           position: LatLng(newLoc.latitude!, newLoc.longitude!));
-    //     });
-    //   }).canceledBy(this);
-    // });
+    widget.idWithSubscription.forEach((markerId, stream) {
+      stream.listen((newLoc) {
+        int i = widget.markers
+            .indexWhere((element) => element.markerId.value == markerId);
+        setState(() {
+          mezDbgPrint(
+              "Inside MgoogleMap::widget.idWithSubscription::listener :: marker id -> ${widget.markers[i].markerId.value}");
+          widget.markers[i] = Marker(
+              markerId: MarkerId(markerId),
+              icon: widget.markers[i].icon,
+              position: LatLng(newLoc.latitude!, newLoc.longitude!));
+        });
+      }).canceledBy(this);
+    });
   }
 
   @override

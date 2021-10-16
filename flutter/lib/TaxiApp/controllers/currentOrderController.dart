@@ -32,9 +32,7 @@ class CurrentOrderController extends GetxController with MezDisposable {
   }
 
   Future<void> listenForOrderStatus() async {
-    if (_orderStatusListener != null) {
-      await _orderStatusListener!.cancel();
-    }
+    await _orderStatusListener?.cancel();
     (_orderStatusListener = _databaseHelper.firebaseDatabase
             .reference()
             .child(orderStatus(_taxiAuthController.taxiState!.currentOrder!))
@@ -140,7 +138,7 @@ class CurrentOrderController extends GetxController with MezDisposable {
   @override
   void onClose() {
     mezDbgPrint(
-        "cuRRENT CONTROLLER :: ::: :: :: : :   : :::::: DISPOSE ! ${this.hashCode}");
+        "CURRENT ORDER CONTROLLER :: ::: :: :: : :   : :::::: DISPOSE ! ${this.hashCode}");
     // try {
     //   Get.delete<CurrentOrderController>();
     // } catch (e) {

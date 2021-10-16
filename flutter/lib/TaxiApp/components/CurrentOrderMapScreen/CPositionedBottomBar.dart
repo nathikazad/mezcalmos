@@ -306,9 +306,10 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                                             this.showLoadingMapOnClick.value =
                                                 false;
                                             // canceled => go back to Wrapper
-                                            Get.until((route) =>
-                                                route.settings.name ==
-                                                kMainWrapper);
+                                            Get.offNamedUntil(
+                                                kOrdersListPage,
+                                                ModalRoute.withName(
+                                                    kTaxiWrapperRoute));
                                           });
                                         }
                                       },

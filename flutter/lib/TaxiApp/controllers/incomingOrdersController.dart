@@ -46,6 +46,7 @@ class IncomingOrdersController extends GetxController with MezDisposable {
   void onInit() async {
     // _selectedIncommingOrder.value = null;
     super.onInit();
+    mezDbgPrint("IncomingOrdersController init");
 
     if (_authController.user != null) {
       // Added Order!
@@ -54,6 +55,7 @@ class IncomingOrdersController extends GetxController with MezDisposable {
           .child(taxiOpenOrdersNode)
           .onValue
           .listen((event) async {
+        mezDbgPrint("Open Orders Node");
         mezDbgPrint(event.snapshot.value);
         List<Order> ordersFromSnapshot = <Order>[];
         if (event.snapshot.value != null) {
@@ -151,8 +153,9 @@ class IncomingOrdersController extends GetxController with MezDisposable {
 
   @override
   void onClose() {
+    mezDbgPrint(
+        "Incoming ORDER CONTROLLER :: ::: :: :: : :   : :::::: DISPOSE ! ${this.hashCode}");
     detachListeners();
     super.onClose();
-    mezDbgPrint("--------------------> Incoming Order Controller disposed");
   }
 }

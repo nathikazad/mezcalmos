@@ -65,7 +65,7 @@ class _SPointState extends State<SPoint> {
   initializeSetup() async {
     try {
       FirebaseApp _app = await Firebase.initializeApp();
-      print("[+] App Initialized under Name ${_app.name} .");
+      mezDbgPrint("[+] App Initialized under Name ${_app.name} .");
       late FirebaseDatabase firebaseDb;
 
       if (widget._launchMode == "prod") {
@@ -80,7 +80,7 @@ class _SPointState extends State<SPoint> {
       }
       // staging
       else {
-        print("[+] Entered Staging check ----.");
+        mezDbgPrint("[+] Entered Staging check ----.");
         firebaseDb = FirebaseDatabase(app: _app, databaseURL: stagingDb);
       }
 
@@ -91,22 +91,23 @@ class _SPointState extends State<SPoint> {
 
       // GetStorage
       if (await GetStorage.init()) {
-        print("[ GET STORAGE ] INITIALIZED !");
+        mezDbgPrint("[ GET STORAGE ] INITIALIZED !");
         await GetStorage().write(getxLmodeKey, widget._launchMode);
         // Get the VersionNumber
         PackageInfo pInfos = await PackageInfo.fromPlatform();
         await GetStorage().write(version, pInfos.version);
       } else
-        print("[ GET STORAGE ] FAILED TO INITIALIZE !");
+        mezDbgPrint("[ GET STORAGE ] FAILED TO INITIALIZE !");
 
       Get.put<AuthController>(AuthController(signInCallback, signOutCallback),
           permanent: true);
+      mezDbgPrint("Putting Auth Controller");
       Get.put<AppLifeCycleController>(AppLifeCycleController(logs: true),
           permanent: true);
       Get.put<SettingsController>(SettingsController(), permanent: true);
       // set to logs=false if you don't need the logs anymore.
 
-      FirebaseAuth.instance.authStateChanges().first.then((value) {
+      Get.find<AuthController>().authStateChange.first.then((value) {
         setState(() => _initialized = true);
         Timer(
             Duration(seconds: nSplashScreenTimer),
@@ -115,7 +116,7 @@ class _SPointState extends State<SPoint> {
                 }));
       });
     } catch (e) {
-      print("[+] Error Happend =======> $e");
+      mezDbgPrint("[+] Error Happend =======> $e");
       setState(() {
         _error = true;
       });
@@ -144,7 +145,6 @@ class _SPointState extends State<SPoint> {
         ),
       );
     }
-
     // Show a SplashScreen until setup is full done and initialized!
     if (!_initialized || !timerDone) {
       return SplashScreen();

@@ -70,17 +70,20 @@ class LocationPermissionScreen extends StatelessWidget {
                     bool grantedPermission = false;
                     do {
                       grantedPermission = await getLocationPermission();
+                      mezDbgPrint(
+                          "Permissions Granted ==========> $grantedPermission");
+                      if (!grantedPermission) {
+                        mezDbgPrint("Permission not granted !");
+                        mezcalmosSnackBar(
+                            'info',
+                            _settingsController.appLanguage.strings['taxi']
+                                ['permissions']['locationPermissionDenied'],
+                            position: SnackPosition.TOP);
+                      } else {
+                        break;
+                      }
                     } while (grantedPermission == false);
-                    mezDbgPrint(
-                        "Permissions Granted ==========> $grantedPermission");
-                    if (!grantedPermission) {
-                      mezDbgPrint("Permission not granted !");
-                      mezcalmosSnackBar(
-                          'info',
-                          _settingsController.appLanguage.strings['taxi']
-                              ['permissions']['locationPermissionDenied'],
-                          position: SnackPosition.TOP);
-                    }
+                    Get.back(closeOverlays: true);
                   },
                   child: Container(
                     height: getSizeRelativeToScreen(25, Get.height, Get.width),
