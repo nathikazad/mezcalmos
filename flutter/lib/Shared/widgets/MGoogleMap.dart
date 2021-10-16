@@ -129,7 +129,7 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
   void dispose() {
     mezDbgPrint("MGoogleMap disposed ${this.hashCode} ${widget.parentName}");
     // favoid keeping listeners in memory.
-    // cancelSubscriptions();
+    cancelSubscriptions();
     // gmapControlelr disposing.
     _controller?.dispose();
     super.dispose();

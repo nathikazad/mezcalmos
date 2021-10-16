@@ -30,7 +30,7 @@ class IncomingOrdersController extends GetxController with MezDisposable {
   RxString _selectedIncommingOrderKey = "".obs;
 
   // Storing all the needed Listeners here
-  late Worker _updateOrderDistanceToClient;
+  Worker? _updateOrderDistanceToClient;
 
   Order? get selectedIncommingOrder => (_selectedIncommingOrderKey.value != "")
       ? orders.firstWhere(
@@ -91,7 +91,7 @@ class IncomingOrdersController extends GetxController with MezDisposable {
         //   }
         // }
       }).canceledBy(this);
-
+      _updateOrderDistanceToClient?.dispose();
       _updateOrderDistanceToClient =
           ever(_taxiAuthController.currentLocationRx, (userLocation) {
         // mezDbgPrint("Updating distances");
@@ -118,7 +118,7 @@ class IncomingOrdersController extends GetxController with MezDisposable {
   // I added this to avoid possible dangling pointers ...
   void detachListeners() {
     cancelSubscriptions();
-    _updateOrderDistanceToClient.dispose();
+    _updateOrderDistanceToClient?.dispose();
     _appLifeCycleController.cleanAllCallbacks();
   }
 

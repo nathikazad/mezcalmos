@@ -16,7 +16,6 @@ class TaxiApp extends GetView<SettingsController> {
     Future<void> _initializeConfig() async {
       await AppPreInit.bitmapLoading();
     }
-
     return GetMaterialApp(
       onInit: () async => await _initializeConfig(),
       onReady: () => mezDbgPrint("[++] MaterialApp -------> ready !"),
