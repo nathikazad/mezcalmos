@@ -76,6 +76,8 @@ class IncomingOrdersController extends GetxController with MezDisposable {
               .sort((a, b) => a.distanceToClient.compareTo(b.distanceToClient));
           orders.value = ordersFromSnapshot;
           mezDbgPrint(orders);
+        } else {
+          orders.value = [];
         }
         // if (orders
         //         .where(

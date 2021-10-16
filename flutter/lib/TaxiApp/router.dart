@@ -30,30 +30,20 @@ class XRouter {
         GetPage(name: kOrdersListPage, page: () => IncomingOrdersScreen()),
         GetPage(name: kMainWrapper, page: () => Wrapper()),
         GetPage(name: kAunauthorizedRoute, page: () => UnauthorizedScreen()),
+        GetPage(name: kSplashRoute, page: () => SplashScreen()),
+        GetPage(name: kTaxiWrapperRoute, page: () => TaxiWrapper()),
         GetPage(
-            name: kSplashRoute,
-            page: () => SplashScreen(),
-            binding: SettingsBinding()),
-        GetPage(
-            name: kTaxiWrapperRoute,
-            page: () => TaxiWrapper(),
-            binding: BindingsBuilder(
-                () => Get.put<TaxiAuthController>(TaxiAuthController()))),
-        GetPage(
-          name: kSelectedIcommingOrder,
-          page: () => IncommingOrderScreenView(),
-        ),
+            name: kSelectedIcommingOrder,
+            page: () => IncommingOrderScreenView()),
         GetPage(name: kSignInRoute, page: () => SignIn()),
         GetPage(name: kOtpRoute, page: () => PhoneNumberScreen()),
         GetPage(name: kOtpConfirmRoute, page: () => OtpConfirmationScreen()),
         GetPage(
           name: kMessagesRoute,
-          page: () => MessagingScreen(),
-          binding: BindingsBuilder(() => Get.put<MessageController>(
-              MessageController())), // add here our messagingController using bindingBuilder
+          page: () =>
+              MessagingScreen(), // add here our messagingController using bindingBuilder
           transition: Transition.rightToLeftWithFade,
           transitionDuration: Duration(milliseconds: 500),
-          // customTransition:
         )
       ] +
       SharedRouter.sharedRoutes;

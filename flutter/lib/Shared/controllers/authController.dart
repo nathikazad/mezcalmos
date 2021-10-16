@@ -36,34 +36,41 @@ class AuthController extends GetxController {
   StreamSubscription? _userNodeListener;
 
   Rxn<fireAuth.User> _userRx = Rxn();
-  ValueStream<fireAuth.User?> get authStateChange =>
-      _authStateStream.autoConnect();
+  StreamController<fireAuth.User?> _authStateStream =
+      StreamController.broadcast();
+  // _authStateStream.addStream(_auth.authStateChanges());
+  Stream<fireAuth.User?> get authStateChange => _authStateStream.stream;
 
   DatabaseHelper _databaseHelper =
       Get.find<DatabaseHelper>(); // Already Injected in main function
 
-  late ValueConnectableStream<fireAuth.User?> _authStateStream;
-
-  AuthController(this._onSignInCallback, this._onSignOutCallback) {
-    _authStateStream = ValueConnectableStream(_auth.authStateChanges());
-  }
-  
-
+  AuthController(this._onSignInCallback, this._onSignOutCallback);
+  String? _previousUserValue = "init";
   @override
   void onInit() {
     super.onInit();
+    // _authStateStream.addStream(_auth.authStateChanges());
     mezDbgPrint('Auth controller init!');
     Get.lazyPut(() => LanguageController());
-    _authStateStream.autoConnect().listen((fireAuth.User? user) {
-      mezDbgPrint('Auth state change!');
+    _auth.authStateChanges().listen((fireAuth.User? user) {
+      if (user?.toString() == _previousUserValue) {
+        mezDbgPrint(
+            'Authcontroller:: same sign in event fired again, skipping it');
+        return;
+      }
+      _previousUserValue = user?.toString();
+      _authStateStream.add(user);
+      mezDbgPrint('Authcontroller:: Auth state change!');
+      mezDbgPrint(user?.hashCode);
+      mezDbgPrint(user ?? "empty");
       _fireAuthUser.value = user;
       if (user == null) {
-        mezDbgPrint('User is currently signed out!');
+        mezDbgPrint('AuthController: User is currently signed out!');
         _userNodeListener?.cancel();
         _userNodeListener = null;
         _user.value = null;
       } else {
-        mezDbgPrint('User is currently signed in!');
+        mezDbgPrint('AuthController: User is currently signed in!');
         _onSignInCallback();
         _userNodeListener = _databaseHelper.firebaseDatabase
             .reference()
@@ -121,11 +128,14 @@ class AuthController extends GetxController {
 
   Future<void> signOut() async {
     try {
+      mezDbgPrint("AuthController: Sign out function");
       await _onSignOutCallback();
+      mezDbgPrint("AuthController: Sign out callbacks finished");
       _userNodeListener?.cancel();
       _userNodeListener = null;
+      _user.value = null;
       await _auth.signOut();
-      // Get.offAllNamed(kMainWrapper);
+      mezDbgPrint("AuthController: Sign out finished");
     } catch (e) {
       Get.snackbar("Failed to Sign you out!", e.toString(),
           snackPosition: SnackPosition.BOTTOM);

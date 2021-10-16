@@ -13,6 +13,7 @@ import 'package:mezcalmos/TaxiApp/models/TaxiDriver.dart';
 // import 'package:mezcalmos/TaxiApp/pages/Orders/CurrentOrderScreen.dart';
 // import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingListScreen.dart';
 import 'package:location/location.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class TaxiAuthController extends GetxController {
   Rxn<TaxiState> _state = Rxn();
@@ -32,43 +33,70 @@ class TaxiAuthController extends GetxController {
 
   StreamSubscription<LocationData>? _locationListener;
   StreamSubscription? _taxiStateNodeListener;
+  StreamSubscription? _authStateChangeListener;
 
   bool _checkedAppVersion = false;
+  String? _previousStateValue = "init";
 
   @override
   void onInit() async {
     super.onInit();
     // ------------------------------------------------------------------------
 
-    mezDbgPrint(
-        "\t\t\tUser from TaxiAuthController >> ${_authController.user?.uid}");
-    Get.find<AuthController>().authStateChange.listen((user) {
-      _taxiStateNodeListener?.cancel();
-      _taxiStateNodeListener = _databaseHelper.firebaseDatabase
-          .reference()
-          .child(taxiStateNode(_authController.fireAuthUser!.uid))
-          .onValue
-          .listen((event) async {
-        if (event.snapshot.value != null) {
-          mezDbgPrint(event.snapshot.value);
-          _state.value = TaxiState.fromSnapshot(event.snapshot.value);
-          if ((_state.value!.currentOrder == null &&
-              _state.value!.isLooking == false)) {
-            await Location().enableBackgroundMode(enable: false);
-            _locationListener?.pause();
-          }
-        } else {
-          _state.value = null;
-          if (!(await Location().isBackgroundModeEnabled()))
-            await Location().enableBackgroundMode(enable: true);
-          _locationListener?.resume();
-        }
-      });
-      saveNotificationToken();
+    mezDbgPrint("TaxiAuthController: init ${this.hashCode}");
+    mezDbgPrint("TaxiAuthController: calling handle state change first time");
+    handleStateChange(Get.find<AuthController>().fireAuthUser);
+    _authStateChangeListener =
+        Get.find<AuthController>().authStateChange.listen((user) {
       mezDbgPrint(
-          "/////////////////////////////////////////////${_state.value?.toJson()}////////////////////////////////////////////////////");
-      _listenForLocation();
+          "TaxiAuthController: calling handle state change from listener");
+      handleStateChange(user);
     });
+  }
+
+  void handleStateChange(User? user) async {
+    mezDbgPrint("TaxiAuthController: handle state change user value");
+    mezDbgPrint(user);
+    // mezDbgPrint(_authController.fireAuthUser);
+    await _taxiStateNodeListener?.cancel();
+    _taxiStateNodeListener = null;
+    await _locationListener?.cancel();
+    _locationListener = null;
+    if (user == null) return;
+    mezDbgPrint(
+        "TaxiAuthController: _taxiStateNodeListener init ${taxiStateNode(user.uid)}");
+    _taxiStateNodeListener = _databaseHelper.firebaseDatabase
+        .reference()
+        .child(taxiStateNode(user.uid))
+        .onValue
+        .listen((event) async {
+      mezDbgPrint(
+          "TaxiAuthController${this.hashCode}: _taxiStateNodeListener event");
+      if (event.snapshot.value.toString() == _previousStateValue) {
+        mezDbgPrint(
+            'TaxiAuthController:: same state event fired again, skipping it');
+        return;
+      }
+      _previousStateValue = event.snapshot.value.toString();
+      if (event.snapshot.value != null) {
+        mezDbgPrint(event.snapshot.value);
+        _state.value = TaxiState.fromSnapshot(event.snapshot.value);
+        if ((_state.value!.currentOrder == null &&
+            _state.value!.isLooking == false)) {
+          await Location().enableBackgroundMode(enable: false);
+          _locationListener?.pause();
+        }
+      } else {
+        _state.value = null;
+        if (!(await Location().isBackgroundModeEnabled()))
+          await Location().enableBackgroundMode(enable: true);
+        _locationListener?.resume();
+      }
+    });
+    saveNotificationToken();
+    mezDbgPrint(
+        "/////////////////////////////////////////////${_state.value?.toJson()}////////////////////////////////////////////////////");
+    _locationListener = await _listenForLocation();
   }
 
   void saveNotificationToken() async {
@@ -97,57 +125,55 @@ class TaxiAuthController extends GetxController {
     }
   }
 
-  Future<void> _listenForLocation() async {
-    if (_authController.fireAuthUser == null) {
-      mezDbgPrint("User is not signed in !");
-    } else {
-      mezDbgPrint("Listening for location !");
-      Location location = Location();
-      await location.changeSettings(interval: 1000);
-      // location.enableBackgroundMode(enable: true);
-      await _locationListener?.cancel();
-      _locationListener =
-          location.onLocationChanged.listen((LocationData currentLocation) {
-        mezDbgPrint("\t\t [TAXI AUTH CONTROLLER] LOCATION GOT UPDAAAATED !!");
-        DateTime currentTime = DateTime.now();
-        if (currentLocation.latitude != null &&
-            currentLocation.longitude != null) {
-          _currentLocation.value = currentLocation;
+  Future<StreamSubscription<LocationData>> _listenForLocation() async {
+    mezDbgPrint("Listening for location !");
+    Location location = Location();
+    await location.changeSettings(interval: 1000);
+    // location.enableBackgroundMode(enable: true);
+    return location.onLocationChanged.listen((LocationData currentLocation) {
+      // mezDbgPrint("\t\t [TAXI AUTH CONTROLLER] LOCATION GOT UPDAAAATED !!");
+      DateTime currentTime = DateTime.now();
+      if (currentLocation.latitude != null &&
+          currentLocation.longitude != null) {
+        _currentLocation.value = currentLocation;
 
-          Map<String, dynamic> positionUpdate = <String, dynamic>{
-            "lastUpdateTime": currentTime.toUtc().toString(),
-            "position": <String, dynamic>{
-              "lat": currentLocation.latitude,
-              "lng": currentLocation.longitude
-            }
-          };
-          mezDbgPrint(positionUpdate);
+        Map<String, dynamic> positionUpdate = <String, dynamic>{
+          "lastUpdateTime": currentTime.toUtc().toString(),
+          "position": <String, dynamic>{
+            "lat": currentLocation.latitude,
+            "lng": currentLocation.longitude
+          }
+        };
+        // mezDbgPrint(positionUpdate);
+        _databaseHelper.firebaseDatabase
+            .reference()
+            .child(taxiAuthNode(_authController.fireAuthUser?.uid ?? ''))
+            .child('location')
+            .set(positionUpdate);
+        if (_state.value?.currentOrder != null) {
           _databaseHelper.firebaseDatabase
               .reference()
-              .child(taxiAuthNode(_authController.fireAuthUser?.uid ?? ''))
-              .child('location')
+              .child(orderId(_state.value!.currentOrder!))
+              .child('driver/location')
               .set(positionUpdate);
-          if (_state.value?.currentOrder != null) {
-            _databaseHelper.firebaseDatabase
-                .reference()
-                .child(orderId(_state.value!.currentOrder!))
-                .child('driver/location')
-                .set(positionUpdate);
-          }
         }
-      });
-    }
+      }
+    });
   }
 
   @override
   void onClose() {
-    mezDbgPrint("[+] TaxiAuthController::dispose ---------> Was invoked !");
+    mezDbgPrint(
+        "[+] TaxiAuthController::dispose ---------> Was invoked ! ${this.hashCode}");
 
     _taxiStateNodeListener?.cancel();
     _taxiStateNodeListener = null;
 
     _locationListener?.cancel();
     _locationListener = null;
+
+    _authStateChangeListener?.cancel();
+    _authStateChangeListener = null;
     super.onClose();
   }
 

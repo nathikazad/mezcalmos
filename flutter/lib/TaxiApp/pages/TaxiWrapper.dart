@@ -11,34 +11,44 @@ import 'package:mezcalmos/TaxiApp/models/TaxiDriver.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
 
 class TaxiWrapper extends StatelessWidget {
-  void handleStateChange(TaxiState? state) {
+  void handleState(TaxiState? state) {
+    mezDbgPrint("TaxiWrapper::handleState $state");
     if (state != null) {
       if (!state.isAuthorized) {
-        mezDbgPrint("going to unauthorized");
+        mezDbgPrint("TaxiWrapper::handleState going to unauthorized");
         Get.toNamed(kAunauthorizedRoute);
       } else if (state.currentOrder != null) {
-        mezDbgPrint("going to current order");
+        mezDbgPrint("TaxiWrapper::handleState going to current order");
         Get.toNamed(kCurrentOrderPage);
       } else {
-        mezDbgPrint("going to incoming orders");
+        mezDbgPrint("TaxiWrapper::handleState going to incoming orders");
         Get.toNamed(kOrdersListPage);
       }
+    } else {
+      mezDbgPrint("TaxiWrapper::handleState state is null, ERROR");
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    mezDbgPrint("TaxiWrapper:: build");
     Future.microtask(() {
-      handleStateChange(Get.find<TaxiAuthController>().taxiState);
-      mezDbgPrint("TaxiWrapper init state change");
+      mezDbgPrint("TaxiWrapper::microtask handleState first time");
+      TaxiState? taxiState = Get.find<TaxiAuthController>().taxiState;
+      if (taxiState != null)
+        handleState(taxiState);
+      else
+        Get.find<TaxiAuthController>()
+            .stateStream
+            .first
+            .then((taxiState) => handleState(taxiState));
     });
-    mezDbgPrint("Inside TaxiWrapper Builder");
     return Scaffold(
-            key: Get.find<SideMenuDraweController>().getNewKey(),
-            drawer: MezSideMenu(),
-            backgroundColor: Colors.white,
-            appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
-                "menu", Get.find<SideMenuDraweController>().openMenu),
-            body: MezLogoAnimation(centered: true));
+        key: Get.find<SideMenuDraweController>().getNewKey(),
+        drawer: MezSideMenu(),
+        backgroundColor: Colors.white,
+        appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
+            "menu", Get.find<SideMenuDraweController>().openMenu),
+        body: MezLogoAnimation(centered: true));
   }
 }

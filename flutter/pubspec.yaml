@@ -34,7 +34,6 @@ dependencies:
   flutter_facebook_auth: ^3.5.0
   pin_code_fields: ^7.2.0
   firebase_messaging: ^10.0.3
-  rxdart: ^0.27.2 
   # font_awesome_flutter: '>= 4.7.0'
   location: ^4.2.0
   url_launcher: ^6.0.9

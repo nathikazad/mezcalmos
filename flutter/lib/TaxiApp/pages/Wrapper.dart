@@ -18,18 +18,20 @@ class Wrapper extends StatefulWidget {
 class _WrapperState extends State<Wrapper> {
   @override
   void initState() {
-    mezDbgPrint("Inside Wrapper(::initState::)");
+    mezDbgPrint("Wrapper: (::initState::)");
     Future.delayed(Duration.zero, () {
+      mezDbgPrint("Wrapper: calling handleAuthStateChange first time");
+      handleAuthStateChange(Get.find<AuthController>().fireAuthUser);
       Get.find<AuthController>().authStateChange.listen((user) {
-        mezDbgPrint("Inside Wrapper(::authStateChangeListener::) => $user");
-        handleSignIn(user);
+        mezDbgPrint("Wrapper: calling handleAuthStateChange in listener");
+        handleAuthStateChange(user);
       });
       Get.find<SettingsController>()
           .locationPermissionStream
           .distinct()
           .listen((locationPermission) {
         mezDbgPrint(
-            "Inside Wrapper(::locationListener::) => $locationPermission");
+            "Wrapper: location permission => $locationPermission");
         if (locationPermission == false &&
             Get.currentRoute != kLocationPermissionPage) {
           Get.toNamed(kLocationPermissionPage);
@@ -39,13 +41,13 @@ class _WrapperState extends State<Wrapper> {
     super.initState();
   }
 
-  void handleSignIn(User? user) {
-    mezDbgPrint("Handling user sign in");
+  void handleAuthStateChange(User? user) {
+    mezDbgPrint("Wrapper: handleAuthStateChange $user");
     if (user == null) {
-      mezDbgPrint("going to sign in route");
+      mezDbgPrint("Wrapper::handleAuthStateChange:: going to sign in route");
       Get.offNamedUntil(kSignInRoute, ModalRoute.withName(kMainWrapper));
     } else {
-      mezDbgPrint("going to taxi wrapper");
+      mezDbgPrint("Wrapper::handleAuthStateChange:: going to taxi wrapper");
       Get.offNamedUntil(kTaxiWrapperRoute, ModalRoute.withName(kMainWrapper));
     }
   }
