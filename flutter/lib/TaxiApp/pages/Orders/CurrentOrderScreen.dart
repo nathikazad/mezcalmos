@@ -101,12 +101,12 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                           MGoogleMap(
                             customMarkers,
                             initialCameraPosition,
-                            "CurrentOrderScreen",
                             polylines: polylines,
                             idWithSubscription: {
                               "taxi":
                                   taxiAuthController.currentLocationRx.stream
                             },
+                            debugString: "CurrentOrderScreen",
                           ),
                           CurrentPositionedBottomBar(snapshot.data!),
                           CurrentPositionedFromToTopBar(snapshot.data!)

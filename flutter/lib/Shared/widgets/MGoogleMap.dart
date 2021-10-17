@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,16 +19,16 @@ class MGoogleMap extends StatefulWidget with MezDisposable {
   LatLngBounds? bounds;
   List<Marker> markers;
   Map<String, Stream<LocationData>> idWithSubscription;
-  String parentName;
+  String debugString;
   MGoogleMap(
     this.markers,
-    this.initialLocation,
-    this.parentName, {
+    this.initialLocation, {
+    this.debugString = "",
     this.polylines = const <Polyline>{},
     this.bounds,
     this.idWithSubscription = const {},
   }) {
-    mezDbgPrint("MGoogleMap cosntructor ${this.hashCode} ${this.parentName}");
+    mezDbgPrint("MGoogleMap cosntructor ${this.hashCode} ${this.debugString}");
   }
   @override
   State<MGoogleMap> createState() => _MGoogleMapState();
@@ -36,11 +37,8 @@ class MGoogleMap extends StatefulWidget with MezDisposable {
 class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
   GoogleMapController? _controller;
   Completer<GoogleMapController> _completer = Completer();
-
-  // LatLng getMapCenter()
-  // {
-
-  // }
+  // to make sure each marker gets fully handled when the new data comes on it's corresponding stream!
+  List<String> _markersCurrentlyBeingUpdated = <String>[];
 
   void animateAndUpdateBounds() {
     mezDbgPrint("MGoogleMap animateAndUpdateBounds ${this.hashCode}");
@@ -93,7 +91,7 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
   @override
   void didUpdateWidget(covariant MGoogleMap oldWidget) {
     mezDbgPrint(
-        "MGoogleMap didUpdateWidget ${this.hashCode} ${widget.parentName}");
+        "MGoogleMap didUpdateWidget ${this.hashCode} ${widget.debugString}");
     animateAndUpdateBounds();
     super.didUpdateWidget(oldWidget);
   }
@@ -102,7 +100,7 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
   void initState() {
     super.initState();
 
-    mezDbgPrint("MGoogleMap initstate ${this.hashCode} ${widget.parentName}");
+    mezDbgPrint("MGoogleMap initstate ${this.hashCode} ${widget.debugString}");
     Get.find<AppLifeCycleController>().attachCallback(AppLifecycleState.resumed,
         () {
       _controller?.setMapStyle(json.encode(mapStyle));
@@ -111,23 +109,29 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
 
     widget.idWithSubscription.forEach((markerId, stream) {
       stream.listen((newLoc) {
-        int i = widget.markers
-            .indexWhere((element) => element.markerId.value == markerId);
-        setState(() {
-          mezDbgPrint(
-              "Inside MgoogleMap::widget.idWithSubscription::listener :: marker id -> ${widget.markers[i].markerId.value}");
-          widget.markers[i] = Marker(
-              markerId: MarkerId(markerId),
-              icon: widget.markers[i].icon,
-              position: LatLng(newLoc.latitude!, newLoc.longitude!));
-        });
+        if (!_markersCurrentlyBeingUpdated.contains(markerId)) {
+          _markersCurrentlyBeingUpdated.add(markerId);
+          int i = widget.markers
+              .indexWhere((element) => element.markerId.value == markerId);
+          setState(() {
+            mezDbgPrint(
+                "Inside MgoogleMap::widget.idWithSubscription::listener :: marker id -> ${widget.markers[i].markerId.value}");
+            widget.markers[i] = Marker(
+                markerId: MarkerId(markerId),
+                icon: widget.markers[i].icon,
+                position: LatLng(newLoc.latitude!, newLoc.longitude!));
+
+            _markersCurrentlyBeingUpdated.remove(markerId);
+          });
+        }
+        // we skip if that markerId is already being handled .
       }).canceledBy(this);
     });
   }
 
   @override
   void dispose() {
-    mezDbgPrint("MGoogleMap disposed ${this.hashCode} ${widget.parentName}");
+    mezDbgPrint("MGoogleMap disposed ${this.hashCode} ${widget.debugString}");
     // favoid keeping listeners in memory.
     cancelSubscriptions();
     // gmapControlelr disposing.
@@ -138,7 +142,7 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
   @override
   Widget build(BuildContext context) {
     mezDbgPrint(
-        "Inside MGoogleMap build ${this.hashCode} ${widget.parentName}");
+        "Inside MGoogleMap build ${this.hashCode} ${widget.debugString}");
     // mezDbgPrint(widget.markers.)
     return widget.markers.isNotEmpty
         ? GoogleMap(

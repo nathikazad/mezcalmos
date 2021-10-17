@@ -36,11 +36,14 @@ class IncommingOrderScreenView extends GetWidget<IncomingOrdersController>
   Rx<LatLng> initialCameraPosition = LatLng(0, 0).obs;
   RxList<Marker> customMarkers = <Marker>[].obs;
   //==================================
+
+  Future<void> loadPolyLineAndMarkers() async {
+    _loadPolyline();
+    await _loadMarkers();
+  }
+
   @override
   Widget build(BuildContext context) {
-    _loadPolyline();
-    _loadMarkers();
-
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       controller.orders.listen((_) async {
         mezDbgPrint("\t\t\t\t STILL LISTENING INCOMMINGORDERVIEW ---- !!!!");
@@ -61,23 +64,20 @@ class IncommingOrderScreenView extends GetWidget<IncomingOrdersController>
         child: Stack(
           alignment: Alignment.topCenter,
           children: [
-            Obx(() => !showLoading()
-                ? MGoogleMap(
-                    customMarkers,
-                    initialCameraPosition.value,
-                    "IncomingViewScreen",
-                    polylines: polylines,
-                  )
-                : Center(
-                    child: Container(
-                      height: 200,
-                      width: 200,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle, color: Colors.white),
-                      child:
-                          Transform.scale(scale: .8, child: MezLogoAnimation()),
-                    ),
-                  )),
+            FutureBuilder<void>(
+                future: loadPolyLineAndMarkers(),
+                builder: (contexto, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return MGoogleMap(
+                      customMarkers,
+                      initialCameraPosition.value,
+                      polylines: polylines,
+                      debugString: "IncomingViewScreen",
+                    );
+                  }
+
+                  return MezLogoAnimation(centered: true);
+                }),
             IncommingPositionedBottomBar(),
             Positioned(
               bottom: GetStorage().read(getxGmapBottomPaddingKey),
@@ -114,7 +114,7 @@ class IncommingOrderScreenView extends GetWidget<IncomingOrdersController>
                               fontWeight: FontWeight.w700,
                             ),
                           )
-                        : SizedBox(
+                        : const SizedBox(
                             child: CircularProgressIndicator(
                               color: Colors.white,
                             ),
@@ -146,7 +146,6 @@ class IncommingOrderScreenView extends GetWidget<IncomingOrdersController>
     }
   }
 
-// onTheWay - state
   Future<void> _loadMarkers() async {
     await _loadBitmapDescriptors();
 
