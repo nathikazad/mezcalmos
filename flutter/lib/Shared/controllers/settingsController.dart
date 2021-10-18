@@ -9,10 +9,16 @@ import 'package:mezcalmos/Shared/controllers/themeContoller.dart';
 import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
+enum AppName { TaxiApp, CustomerApp, RestaurantApp }
+AppName convertStringToAppName(String str) {
+  return AppName.values.firstWhere((e) => e.toString().split('.').last == str);
+}
+
 class SettingsController extends GetxController with MezDisposable {
   late final ThemeController _appTheme;
   late final LanguageController _appLanguage;
-
+  // String appName;
+  late AppName appName;
   ThemeController get appTheme => _appTheme;
   LanguageController get appLanguage => _appLanguage;
 
@@ -22,6 +28,10 @@ class SettingsController extends GetxController with MezDisposable {
   Stream<bool> get locationPermissionStream =>
       _hasLocationPermissionStreamController.stream;
 
+  SettingsController(String appName) {
+    this.appName = convertStringToAppName(appName);
+  }
+  
   @override
   void onInit() async {
     super.onInit();

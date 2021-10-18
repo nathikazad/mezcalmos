@@ -14,6 +14,17 @@ enum OrdersStatus {
   Invalid
 }
 
+extension ParseToString on OrdersStatus {
+  String toShortString() {
+    return this.toString().split('.').last;
+  }
+}
+
+OrdersStatus convertStringToOrderStatus(String str) {
+  return OrdersStatus.values
+      .firstWhere((e) => e.toString().toLowerCase() == str.toLowerCase());
+}
+
 class Order {
   dynamic id;
   dynamic customer;

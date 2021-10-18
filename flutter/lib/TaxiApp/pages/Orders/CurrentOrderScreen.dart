@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Order.dart';
@@ -18,19 +18,11 @@ import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/components/CurrentOrderMapScreen/CPositionedBottomBar.dart';
 import 'package:mezcalmos/TaxiApp/components/CurrentOrderMapScreen/CPositionedFromToBar.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
-import 'package:mezcalmos/TaxiApp/controllers/fbTaxiNotificationsController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 
-// class CurrentOrderScreen extends StatefulWidget {
-//   @override
-//   State<StatefulWidget> createState() => _CurrentOrderScreenState();
-// }
-
 class CurrentOrderScreen extends GetView<CurrentOrderController> {
   final LanguageController lang = Get.find<LanguageController>();
-  final FBNotificationsController fbNotificationsController =
-      Get.find<FBTaxiNotificationsController>();
 
   TaxiAuthController taxiAuthController = Get.find<TaxiAuthController>();
   // map stuff ========================================================
@@ -47,6 +39,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
   CurrentOrderScreen() {
     Get.put(CurrentOrderController());
     controller.listenForOrderStatus();
+    controller.clearOrderNotifications();
   }
 
   Future<void> hotReladCallback(Order order) async {

@@ -8,3 +8,4 @@ const String defaultLaunchMode = "<launch-mode>";
 <app-name> launcherApp = new <app-name>();
 Function signInCallback = AuthHooks.onSignInHook;
 Function signOutCallback = AuthHooks.onSignOutHook;
+String appName = "<app-name>";

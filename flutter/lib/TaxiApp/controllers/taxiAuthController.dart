@@ -2,16 +2,12 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
+import 'package:mezcalmos/Shared/controllers/deviceNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/TaxiApp/models/TaxiDriver.dart';
-// import 'package:mezcalmos/Shared/pages/AuthScreens/UnauthorizedScreen.dart';
-// import 'package:mezcalmos/TaxiApp/pages/Orders/CurrentOrderScreen.dart';
-// import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingListScreen.dart';
 import 'package:location/location.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

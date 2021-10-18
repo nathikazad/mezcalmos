@@ -104,7 +104,7 @@ class _SPointState extends State<SPoint> {
       mezDbgPrint("Putting Auth Controller");
       Get.put<AppLifeCycleController>(AppLifeCycleController(logs: true),
           permanent: true);
-      Get.put<SettingsController>(SettingsController(), permanent: true);
+      Get.put<SettingsController>(SettingsController(appName), permanent: true);
       // set to logs=false if you don't need the logs anymore.
 
       Get.find<AuthController>().authStateChange.first.then((value) {

@@ -10,15 +10,12 @@ import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 // Extends GetView<MessagingController> after Nathik implements the controller
 class MessagingScreen extends GetView<MessageController> {
-  String? orderId;
-  String? recepientImg;
-  String? recepientName;
+  late String orderId;
 
   MessagingScreen() {
-    this.orderId = Get.arguments['oId'];
-    this.recepientImg = Get.arguments['rImg'];
-    this.recepientName = Get.arguments['rName'];
-
+    Get.put<MessageController>(MessageController());
+    this.orderId = Get.arguments['orderId'];
+    controller.clearMessageNotifications();
     mezDbgPrint(Get.arguments);
   }
 
@@ -173,7 +170,7 @@ class MessagingScreen extends GetView<MessageController> {
       scrollDown();
     }
 
-    controller.loadChat(_authController.user!.uid, orderId!,
+    controller.loadChat(_authController.user!.uid, orderId,
         onValueCallBack: _fillCallBack);
 
     return Scaffold(
@@ -202,8 +199,8 @@ class MessagingScreen extends GetView<MessageController> {
                         child: CircleAvatar(
                           radius: 23,
                           backgroundColor: Colors.grey.shade200,
-                          backgroundImage: recepientImg != null
-                              ? NetworkImage(recepientImg!)
+                          backgroundImage: controller.recipient() != null
+                              ? NetworkImage(controller.recipient()!.image)
                               : AssetImage(aDefaultAvatar) as ImageProvider,
                         ),
                       ),
@@ -212,7 +209,7 @@ class MessagingScreen extends GetView<MessageController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            recepientName ?? ".....",
+                            controller.recipient()?.name ?? ".....",
                             style: TextStyle(fontFamily: 'psb', fontSize: 16.5),
                           ),
                           SizedBox(

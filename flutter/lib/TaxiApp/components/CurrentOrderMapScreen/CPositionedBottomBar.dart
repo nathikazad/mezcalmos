@@ -11,7 +11,7 @@ import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
-import 'package:mezcalmos/TaxiApp/controllers/fbTaxiNotificationsController.dart';
+import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
 
@@ -22,8 +22,8 @@ class CurrentPositionedBottomBar extends StatelessWidget {
   CurrentOrderController controller = Get.find<CurrentOrderController>();
   TaxiAuthController taxiAuthController = Get.find<TaxiAuthController>();
   LanguageController lang = Get.find<LanguageController>();
-  FBTaxiNotificationsController fbNotificationsController =
-      Get.find<FBTaxiNotificationsController>();
+  FBNotificationsController fbNotificationsController =
+      Get.find<FBNotificationsController>();
   Order order;
   CurrentPositionedBottomBar(this.order);
   @override
@@ -223,16 +223,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                       Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
                       GestureDetector(
                         onTap: () async {
-                          await fbNotificationsController
-                              .setAllMessagesAsReadInDb();
-
-                          Get.toNamed(kMessagesRoute,
-                              arguments: <String, dynamic>{
-                                "oId": order.id,
-                                "rImg": order.customer['image'],
-                                "rName": order.customer['name']
-                              })?.then((_) => fbNotificationsController
-                              .clearAllMessageNotification());
+                          Get.toNamed(getMessagesRoute(order.id));
                         },
                         child: Container(
                           height: getSizeRelativeToScreen(
@@ -254,8 +245,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                             child: Stack(
                               children: [
                                 Obx(
-                                  () => fbNotificationsController
-                                          .hasNewNotification
+                                  () => controller.hasNewMessageNotification()
                                       ? Positioned(
                                           top: 5,
                                           right: 5,
