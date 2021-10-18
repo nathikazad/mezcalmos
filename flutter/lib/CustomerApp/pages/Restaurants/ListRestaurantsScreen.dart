@@ -32,7 +32,7 @@ class ListRestaurantsScreen extends GetView<RestaurantsInfoController> {
         SizedBox(
           height: Get.height * 0.02,
         ),
-        restaurantAppBarComponent("back", () {}),
+        restaurantAppBarComponent("back", () {}, ["messages", "carts"]),
         Container(
           padding: const EdgeInsets.symmetric(
             horizontal: 10,

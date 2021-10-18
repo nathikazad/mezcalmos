@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:mezcalmos/CustomerApp/components/appbarComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/models/Order.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
@@ -67,21 +68,123 @@ class CustomerWrapper extends GetWidget<AuthController>
         key: _sideMenuDrawerController.getNewKey(),
         drawer: MezSideMenu(),
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: Text("Mezcalmos"),
-          actions: [
-            TextButton(
-                onPressed: () => Get.toNamed(kOrdersRoute),
-                child: Obx(() =>
-                    Text("Orders" + numberOfCurrentOrders.value.toString())))
-          ],
-        ),
-        body: Column(
-          children: [
-            OutlinedButton(
-                onPressed: () => Get.toNamed(kRestaurantsRoute),
-                child: Text("Restaurants"))
-          ],
+        // appBar: AppBar(
+        //   title: Text("Mezcalmos"),
+        //   actions: [
+        //     TextButton(
+        //         onPressed: () => Get.toNamed(kOrdersRoute),
+        //         child: Obx(() =>
+        //             Text("Orders" + numberOfCurrentOrders.value.toString())))
+        //   ],
+        // ),
+        body: SafeArea(
+          child: Column(
+            children: [
+              SizedBox(
+                height: Get.height * 0.005,
+              ),
+              restaurantAppBarComponent(
+                  "menu",
+                  () => _sideMenuDrawerController.openMenu(),
+                  ["notifications", "oredrs"]),
+              SizedBox(
+                height: 25,
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                alignment: Alignment.centerLeft,
+                child: Text("Services",
+                    style: const TextStyle(
+                        color: const Color(0xff1d1d1d),
+                        fontWeight: FontWeight.w400,
+                        fontFamily: "ProductSans",
+                        fontStyle: FontStyle.normal,
+                        fontSize: 45.0),
+                    textAlign: TextAlign.left),
+              ),
+              Expanded(
+                child: Container(
+                  width: Get.width,
+                  margin: const EdgeInsets.symmetric(horizontal: 10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                    color: const Color(0xfffceb4d).withOpacity(0.25),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                          height: 47,
+                          width: 47,
+                          child: Image.asset("assets/images/Taxi.png")),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        child: Text("Taxi",
+                            style: const TextStyle(
+                                color: const Color(0xff000f1c),
+                                fontWeight: FontWeight.w500,
+                                fontFamily: "ProductSans",
+                                fontStyle: FontStyle.normal,
+                                fontSize: 16.0),
+                            textAlign: TextAlign.left),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              Expanded(
+                child: InkWell(
+                  child: Container(
+                    width: Get.width,
+                    margin: const EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(12)),
+                      color: const Color(0xff5582ff).withOpacity(0.25),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                            height: 47,
+                            width: 47,
+                            child: Image.asset("assets/images/Restaurant.png")),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          child: Text("Food",
+                              style: const TextStyle(
+                                  color: const Color(0xff000f1c),
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: "ProductSans",
+                                  fontStyle: FontStyle.normal,
+                                  fontSize: 16.0),
+                              textAlign: TextAlign.left),
+                        )
+                      ],
+                    ),
+                  ),
+                  onTap: () => Get.toNamed(kRestaurantsRoute),
+                ),
+              ),
+              SizedBox(
+                height: 25,
+              ),
+
+              // OutlinedButton(
+              //     onPressed: () ,
+              //     child: Text("Restaurants"))
+            ],
+          ),
         ));
   }
 }

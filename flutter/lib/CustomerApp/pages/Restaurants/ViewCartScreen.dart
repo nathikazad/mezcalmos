@@ -36,10 +36,7 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                restaurantAppBarComponent(
-                  "back",
-                  () {},
-                ),
+                restaurantAppBarComponent("back", () {}, ["messages", "carts"]),
                 SizedBox(
                   height: 15,
                 ),
