@@ -122,7 +122,9 @@ class IncomingOrdersController extends GetxController with MezDisposable {
     _appLifeCycleController.cleanAllCallbacks();
   }
 
-  Future<bool> acceptTaxi(String orderId) async {
+  // return List[isSuccess , failedCause=<default:null>]
+  //
+  Future<List<dynamic>> acceptTaxi(String orderId) async {
     HttpsCallable acceptTaxiFunction =
         FirebaseFunctions.instance.httpsCallable('acceptTaxiOrder');
     try {
@@ -135,21 +137,16 @@ class IncomingOrdersController extends GetxController with MezDisposable {
       // _selectedIncommingOrderKey.value = "";
       // Get.back(closeOverlays: true);
       mezDbgPrint(response.data);
-
-      bool success = response.data['status'] == 'Success';
-
-      if (success) {
-        mezcalmosSnackBar("Notice ~", "A new Order has been accpeted !");
-        return Future.value(true);
-      } else {
-        mezcalmosSnackBar("Notice ~", "Failed Accepting the order !");
-        return Future.value(false);
-      }
+      return [
+        response.data['status'] == 'Success',
+        responseStatusChecker(response.data,
+            onErrorMessage: "Failed accepting the Order !",
+            onSuccessMessage: "Successfully accepted the order !")
+      ];
     } catch (e) {
       // _waitingResponse.value = false;
-      mezcalmosSnackBar("Notice ~", "Failed to accept the taxi order :( ");
       mezDbgPrint("Exception happend in acceptTaxi : $e");
-      return Future.value(false);
+      return [false, "Failed accepting the order !"];
     }
   }
 

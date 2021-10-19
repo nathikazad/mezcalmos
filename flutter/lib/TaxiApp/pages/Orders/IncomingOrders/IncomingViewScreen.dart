@@ -55,11 +55,14 @@ class IncommingOrderScreenView extends GetWidget<IncomingOrdersController>
           await MezcalmosSharedWidgets.mezcalmosDialogOrderNoMoreAvailable(
               55, Get.height, Get.width);
         }
-      }).canceledBy(this);
+      }).canceledBy(this, debugId: "selectedOrderViewStream!");
     });
 
     return Scaffold(
-      appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back()),
+      appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () {
+        cancelSubscriptions();
+        Get.back();
+      }),
       body: SafeArea(
         child: Stack(
           alignment: Alignment.topCenter,
@@ -96,12 +99,17 @@ class IncommingOrderScreenView extends GetWidget<IncomingOrdersController>
                                 .acceptTaxi(
                                     controller.selectedIncommingOrder?.id)
                                 .then((isSuccess) {
-                              if (isSuccess) {
+                              cancelSubscriptions();
+                              if (isSuccess[0]) {
                                 mezDbgPrint("Inside then after accept taxi");
-                                cancelSubscriptions();
+                                mezcalmosSnackBar("Success", isSuccess[1]);
                                 showLoading.value = false;
                                 Get.offNamedUntil(kCurrentOrderPage,
                                     ModalRoute.withName(kTaxiWrapperRoute));
+                              } else {
+                                // in case Taxi User failed accepting the order.
+                                Get.back();
+                                mezcalmosSnackBar("Failed", isSuccess[1]);
                               }
                             });
                           }

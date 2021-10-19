@@ -35,7 +35,7 @@ class AuthController extends GetxController {
 
   StreamSubscription? _userNodeListener;
 
-  Rxn<fireAuth.User> _userRx = Rxn();
+  // Rxn<fireAuth.User> _userRx = Rxn();
   StreamController<fireAuth.User?> _authStateStream =
       StreamController.broadcast();
   // _authStateStream.addStream(_auth.authStateChanges());

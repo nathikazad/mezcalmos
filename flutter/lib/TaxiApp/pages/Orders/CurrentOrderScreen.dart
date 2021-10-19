@@ -64,11 +64,11 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
               "menu", Get.find<SideMenuDraweController>().openMenu),
           body: StreamBuilder<Order>(
               stream: controller.orderStream.distinct((_old, _new) {
+            mezDbgPrint(
+                "\n\n\n\n old = ${_old.status} | new ${_new.status} \n\n\n\n");
             return _new == null || _old == _new;
           }), builder: (_, AsyncSnapshot<Order> snapshot) {
             mezDbgPrint("\t\t\t\t S N A P S H O T ===> ${snapshot.data}");
-            mezDbgPrint(
-                "\n\n\t\tNOTIFICATIONS ====> ${fbNotificationsController.notifications}\n\n");
             if (snapshot.connectionState == ConnectionState.waiting) {
               mezDbgPrint("INSIDE STREAM BUILDER :: waiting !");
 
@@ -152,12 +152,13 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
     mezDbgPrint("_handleEvent -> Event == OrderStatusChange , passed ");
 
     mezDbgPrint("\t\tORDER STATUS CHANGED ${order.toJson()}");
-    if (order.status == OrdersStatus.Cancelled &&
-        order.cancelledBy == "customer") {
+    if (order.status == OrdersStatus.Cancelled) {
       mezDbgPrint("======> Canceeeeeeeled =======>${order.toJson()}");
-      await MezcalmosSharedWidgets.mezcalmosDialogOrderCancelled(
-          55, Get.height, Get.width);
-      Get.until((route) => route.settings.name == kOrdersListPage);
+
+      MezcalmosSharedWidgets.mezcalmosDialogOrderCancelled(
+              55, Get.height, Get.width)
+          .then(
+              (_) => Get.until((route) => route.settings.name == kMainWrapper));
     } else if (order.status == OrdersStatus.OnTheWay) {
       mezDbgPrint("_handleEvent -> calling _loadMarkersForOTW() ");
 

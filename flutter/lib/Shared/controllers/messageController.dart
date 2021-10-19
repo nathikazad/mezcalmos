@@ -19,8 +19,9 @@ class MessageController extends GetxController {
   DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
   AuthController _authController = Get.find<AuthController>();
   StreamSubscription? chatListener;
-  late String _orderId;
+  // String? _orderId;
   late AppName appName;
+
   @override
   void onInit() {
     super.onInit();
@@ -30,7 +31,7 @@ class MessageController extends GetxController {
 
   void loadChat(String userId, String orderId,
       {VoidCallback? onValueCallBack}) {
-    _orderId = orderId;
+    // _orderId = orderId;
     chatListener?.cancel();
     chatListener = _databaseHelper.firebaseDatabase
         .reference()
@@ -49,10 +50,10 @@ class MessageController extends GetxController {
     });
   }
 
-  void sendMessage(String message) {
+  void sendMessage(String message, String orderId) {
     _databaseHelper.firebaseDatabase
         .reference()
-        .child('${orderChatNode(_orderId)}/messages')
+        .child('${orderChatNode(orderId)}/messages')
         .push()
         .set(<String, dynamic>{
       "message": message,
@@ -69,6 +70,7 @@ class MessageController extends GetxController {
   Participant? recipient() {
     Participant? recipient;
     _model.value.participants.forEach((key, value) {
+      mezDbgPrint("$key ----- $value");
       if (key != _authController.user!.uid) {
         recipient = value;
       }
@@ -76,13 +78,14 @@ class MessageController extends GetxController {
     return recipient;
   }
 
-  void clearMessageNotifications() {
+  void clearMessageNotifications(String orderId) {
     FBNotificationsController fbNotificationsController =
         Get.find<FBNotificationsController>();
-    fbNotificationsController.notifications.value
+    fbNotificationsController
+        .notifications()
         .where((notification) =>
             notification.notificationType == NotificationType.NewMessage &&
-            (notification as NewMessageNotification).orderId == _orderId)
+            (notification as NewMessageNotification).orderId == orderId)
         .forEach((notification) {
       fbNotificationsController.removeNotification(notification.id);
     });
