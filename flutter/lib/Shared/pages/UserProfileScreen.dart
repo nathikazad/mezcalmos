@@ -299,7 +299,9 @@ class UserProfile extends StatelessWidget {
                       auth.editUserProfile(textController.text.trim(), xUrl);
                     } else {
                       mezDbgPrint("the path is empty");
-                      auth.editUserProfile(textController.text.trim(), "");
+
+                      auth.editUserProfile(
+                          textController.text.trim(), user.value!.image);
                     }
                   }
                 },
