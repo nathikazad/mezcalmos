@@ -7,11 +7,13 @@ class IncrementalComponent extends StatefulWidget {
   int value;
   final int? maxVal;
   final int? minVal;
+  final ValueChanged<bool>? onChangedToZero;
   IncrementalComponent(
       {Key? key,
       required this.increment,
       required this.value,
       required this.decrement,
+      this.onChangedToZero,
       this.maxVal = 100,
       this.minVal = 0})
       : super(key: key);
@@ -35,11 +37,16 @@ class _IncrementalComponentState extends State<IncrementalComponent> {
 
     void _decrement() {
       print("the max value is ${widget.minVal}");
-      if (widget.value > widget.minVal!)
+      if (widget.value >= widget.minVal!) {
         setState(() {
           widget.value--;
         });
-      else
+        if (widget.value == 0) {
+          print("the value ${widget.value}");
+          widget.onChangedToZero?.call(true);
+        } else
+          widget.onChangedToZero?.call(false);
+      } else
         return;
     }
 

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewNotifications.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrders.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
@@ -95,6 +97,7 @@ Widget restaurantAppBarComponent(
             ),
             onTap: () {
               print("notification");
+              Get.to(() => ViewNotifications());
               //Get.toNamed(kCartRoute);
               // Get.to(ViewCartScreen(),
               //);
@@ -125,6 +128,7 @@ Widget restaurantAppBarComponent(
             ),
             onTap: () {
               print("orders");
+              Get.to(() => ViewOrders());
               //Get.toNamed(kCartRoute);
               // Get.to(ViewCartScreen(),
               //);
@@ -139,6 +143,7 @@ Widget restaurantAppBarComponent(
     });
   }
   return Container(
+    height: 30,
     width: Get.width,
     margin: EdgeInsets.only(top: 15),
     // height: 48,
@@ -182,6 +187,13 @@ Widget restaurantAppBarComponent(
                     func!();
                   },
           ),
+          (trailigIcons.length == 0)
+              ? SizedBox(
+                  width: Get.width * 0.1,
+                )
+              : SizedBox(
+                  width: 0,
+                ),
           Container(
             height: 29,
             width: 29,
@@ -218,7 +230,11 @@ Widget restaurantAppBarComponent(
               ],
             )),
           ),
-          for (var i = 0; i < trailigIcons.length; i++) trailigIcons[i],
+          (trailigIcons.length == 0)
+              ? SizedBox(
+                  width: Get.width * 0.15,
+                )
+              : buildIcons(trailigIcons),
           SizedBox(
             width: 5,
           )
@@ -227,4 +243,11 @@ Widget restaurantAppBarComponent(
       fit: BoxFit.fitWidth,
     ),
   );
+}
+
+Widget buildIcons(List<Widget> widgets) {
+  return Container(
+      child: Row(
+    children: widgets,
+  ));
 }

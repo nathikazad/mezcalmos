@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:mezcalmos/CustomerApp/components/appbarComponent.dart';
+import 'package:mezcalmos/CustomerApp/components/imagesComponents.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/models/Order.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
@@ -102,6 +103,9 @@ class CustomerWrapper extends GetWidget<AuthController>
                         fontSize: 45.0),
                     textAlign: TextAlign.left),
               ),
+              SizedBox(
+                height: 25,
+              ),
               Expanded(
                 child: Container(
                   width: Get.width,
@@ -115,10 +119,10 @@ class CustomerWrapper extends GetWidget<AuthController>
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Container(
-                          height: 47,
-                          width: 47,
-                          child: Image.asset("assets/images/Taxi.png")),
+                      TaxiImage(
+                        sw: 47,
+                        sh: 47,
+                      ),
                       SizedBox(
                         height: 10,
                       ),
@@ -153,10 +157,10 @@ class CustomerWrapper extends GetWidget<AuthController>
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Container(
-                            height: 47,
-                            width: 47,
-                            child: Image.asset("assets/images/Restaurant.png")),
+                        FoodImage(
+                          sw: 47,
+                          sh: 47,
+                        ),
                         SizedBox(
                           height: 10,
                         ),

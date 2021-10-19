@@ -102,6 +102,7 @@ class RestaurantCartController extends GetxController with MezDisposable {
     try {
       HttpsCallableResult response = await checkoutRestaurantCart
           .call({"from": "home", "paymentType": "cash"});
+
       return response.data;
     } catch (e) {
       return <String, dynamic>{

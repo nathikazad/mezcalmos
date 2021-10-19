@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/CustomerApp/components/ItemComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/appbarComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/buttonComponent.dart';
+import 'package:mezcalmos/CustomerApp/components/dailogComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/incrementalComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/myExpensionPanelComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/textFieldComponent.dart';
@@ -31,249 +32,257 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Obx(
-        () => SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                restaurantAppBarComponent("back", () {}, ["messages", "carts"]),
-                SizedBox(
-                  height: 15,
-                ),
-                (cart.value != null)
-                    ? Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          buildCart(cart.value!),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          buildItems(cart.value!.items),
-                          SizedBox(
-                            height: 20,
-                          ),
-                        ],
-                      )
-                    : Container(),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  alignment: Alignment.centerLeft,
-                  child: Text("Total Cost",
-                      style: const TextStyle(
-                          color: const Color(0xff000f1c),
-                          fontWeight: FontWeight.w700,
-                          fontFamily: "ProductSans",
-                          fontStyle: FontStyle.normal,
-                          fontSize: 14.0),
-                      textAlign: TextAlign.left),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 15),
-                  width: Get.width,
-                  height: 113,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(4)),
-                    border:
-                        Border.all(color: const Color(0xffececec), width: 0.5),
-                    color: const Color(0x80ffffff),
+      body: GetBuilder<RestaurantCartController>(
+        // specify type as Controller
+        init: RestaurantCartController(), // intialize with the Controller
+        builder: (restaurant) => Obx(
+          () => SafeArea(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  restaurantAppBarComponent(
+                      "back", () {}, ["messages", "carts"]),
+                  SizedBox(
+                    height: 15,
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 15),
-                          child: Row(
-                            children: [
-                              Text("Delivery cost",
-                                  style: const TextStyle(
-                                      color: const Color(0xff000f1c),
-                                      fontWeight: FontWeight.w400,
-                                      fontFamily: "ProductSans",
-                                      fontStyle: FontStyle.normal,
-                                      fontSize: 20.0),
-                                  textAlign: TextAlign.left),
-                              Spacer(),
-                              Text(" \$${currency.format(40.00)}",
-                                  style: GoogleFonts.mulish(
-                                    textStyle: TextStyle(
-                                        color: const Color(0xff000f1c),
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: "ProductSans",
-                                        fontStyle: FontStyle.normal,
-                                        fontSize: 20.0),
-                                  ),
-                                  textAlign: TextAlign.right)
-                            ],
-                          ),
-                        ),
-                      ),
-                      Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 15),
-                          width: Get.width,
-                          height: 0.5,
-                          decoration:
-                              BoxDecoration(color: const Color(0xffececec))),
-                      Expanded(
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 15),
-                          child: Row(
-                            children: [
-                              // Total
-                              Text("Total",
-                                  style: const TextStyle(
-                                      color: const Color(0xff000f1c),
-                                      fontWeight: FontWeight.w400,
-                                      fontFamily: "ProductSans",
-                                      fontStyle: FontStyle.normal,
-                                      fontSize: 20.0),
-                                  textAlign: TextAlign.left),
-                              Spacer(),
-                              Text(
-                                  (cart.value?.toFirebaseFormattedJson()[
-                                              "cost"] !=
-                                          null)
-                                      ? "  \$ ${currency.format(cart.value?.toFirebaseFormattedJson()["cost"] as dynamic)}"
-                                      : "0",
-                                  style: GoogleFonts.mulish(
-                                    textStyle: TextStyle(
-                                        color: const Color(0xff000f1c),
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: "ProductSans",
-                                        fontStyle: FontStyle.normal,
-                                        fontSize: 20.0),
-                                  ),
-                                  textAlign: TextAlign.right)
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
+                  (cart.value != null)
+                      ? Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            buildCart(cart.value!),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            buildItems(cart.value!.items),
+                            SizedBox(
+                              height: 20,
+                            ),
+                          ],
+                        )
+                      : Container(),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    alignment: Alignment.centerLeft,
+                    child: Text("Total Cost",
+                        style: const TextStyle(
+                            color: const Color(0xff000f1c),
+                            fontWeight: FontWeight.w700,
+                            fontFamily: "ProductSans",
+                            fontStyle: FontStyle.normal,
+                            fontSize: 14.0),
+                        textAlign: TextAlign.left),
                   ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  alignment: Alignment.centerLeft,
-                  child: Text("Delivery Location",
-                      style: const TextStyle(
-                          color: const Color(0xff000f1c),
-                          fontWeight: FontWeight.w700,
-                          fontFamily: "ProductSans",
-                          fontStyle: FontStyle.normal,
-                          fontSize: 14.0),
-                      textAlign: TextAlign.left),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 15,
+                  SizedBox(
+                    height: 10,
                   ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-                  decoration: BoxDecoration(
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 15),
+                    width: Get.width,
+                    height: 113,
+                    decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(4)),
                       border: Border.all(
                           color: const Color(0xffececec), width: 0.5),
-                      color: const Color(0x80ffffff)),
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton<String>(
-                      value: null,
-                      isDense: true,
-                      isExpanded: true,
-                      hint: Text("Pick Location",
-                          style: const TextStyle(
-                              color: const Color(0xff000f1c),
-                              fontWeight: FontWeight.w500,
-                              fontFamily: "FontAwesome5Pro",
-                              fontStyle: FontStyle.normal,
-                              fontSize: 12.0),
-                          textAlign: TextAlign.left),
-                      icon: Icon(Icons.expand_more),
-                      items: [
-                        DropdownMenuItem(child: Text("home"), value: "home"),
-                        DropdownMenuItem(
-                            child: Text("office"), value: "office"),
+                      color: const Color(0x80ffffff),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child: Row(
+                              children: [
+                                Text("Delivery cost",
+                                    style: const TextStyle(
+                                        color: const Color(0xff000f1c),
+                                        fontWeight: FontWeight.w400,
+                                        fontFamily: "ProductSans",
+                                        fontStyle: FontStyle.normal,
+                                        fontSize: 20.0),
+                                    textAlign: TextAlign.left),
+                                Spacer(),
+                                Text(" \$${currency.format(40.00)}",
+                                    style: GoogleFonts.mulish(
+                                      textStyle: TextStyle(
+                                          color: const Color(0xff000f1c),
+                                          fontWeight: FontWeight.w700,
+                                          fontFamily: "ProductSans",
+                                          fontStyle: FontStyle.normal,
+                                          fontSize: 20.0),
+                                    ),
+                                    textAlign: TextAlign.right)
+                              ],
+                            ),
+                          ),
+                        ),
+                        Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 15),
+                            width: Get.width,
+                            height: 0.5,
+                            decoration:
+                                BoxDecoration(color: const Color(0xffececec))),
+                        Expanded(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child: Row(
+                              children: [
+                                // Total
+                                Text("Total",
+                                    style: const TextStyle(
+                                        color: const Color(0xff000f1c),
+                                        fontWeight: FontWeight.w400,
+                                        fontFamily: "ProductSans",
+                                        fontStyle: FontStyle.normal,
+                                        fontSize: 20.0),
+                                    textAlign: TextAlign.left),
+                                Spacer(),
+                                Obx(
+                                  () => Text(
+                                      (cart.value?.toFirebaseFormattedJson()[
+                                                  "cost"] !=
+                                              null)
+                                          ? "  \$ ${currency.format(cart.value?.toFirebaseFormattedJson()["cost"] as dynamic)}"
+                                          : "0",
+                                      style: GoogleFonts.mulish(
+                                        textStyle: TextStyle(
+                                            color: const Color(0xff000f1c),
+                                            fontWeight: FontWeight.w700,
+                                            fontFamily: "ProductSans",
+                                            fontStyle: FontStyle.normal,
+                                            fontSize: 20.0),
+                                      ),
+                                      textAlign: TextAlign.right),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                       ],
-                      onChanged: (newValue) {},
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  alignment: Alignment.centerLeft,
-                  child: Text("Notes",
-                      style: const TextStyle(
-                          color: const Color(0xff000f1c),
-                          fontWeight: FontWeight.w700,
-                          fontFamily: "ProductSans",
-                          fontStyle: FontStyle.normal,
-                          fontSize: 14.0),
-                      textAlign: TextAlign.left),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                TextFieldComponent(
-                  hint: "Write Notes",
-                ),
-                SizedBox(
-                  height: 25,
-                ),
-                ButtonComponent(
-                    widget: Center(
-                      child: Text("ORDER NOW",
-                          style: GoogleFonts.sourceSansPro(
-                            textStyle: TextStyle(
-                                color: const Color(0xffffffff),
-                                fontWeight: FontWeight.w600,
-                                fontFamily: "ProductSans",
-                                fontStyle: FontStyle.normal,
-                                fontSize: 16.0),
-                          ),
-                          textAlign: TextAlign.center),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    alignment: Alignment.centerLeft,
+                    child: Text("Delivery Location",
+                        style: const TextStyle(
+                            color: const Color(0xff000f1c),
+                            fontWeight: FontWeight.w700,
+                            fontFamily: "ProductSans",
+                            fontStyle: FontStyle.normal,
+                            fontSize: 14.0),
+                        textAlign: TextAlign.left),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 15,
                     ),
-                    function: () async {
-                      dynamic response = await controller.checkout();
-                      if (response["status"] == "Success")
-                        Get.offNamedUntil(
-                            getCurrentRestaurantOrderRoute(response["orderId"]),
-                            (Route<dynamic> route) {
-                          print(route.settings.name);
-                          return (route.settings.name == kWrapperRoute);
-                          // return route.;
-                        });
-                      else {
-                        print(response);
-                        if (response["errorCode"] == "serverError") {
-                          // do something
-                        } else if (response["errorCode"] ==
-                            "inMoreThanThreeOrders") {
-                          // do something
-                        } else if (response["errorCode"] ==
-                            "restaurantClosed") {
-                          // do something
-                        } else {
-                          // do something
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(4)),
+                        border: Border.all(
+                            color: const Color(0xffececec), width: 0.5),
+                        color: const Color(0x80ffffff)),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        value: null,
+                        isDense: true,
+                        isExpanded: true,
+                        hint: Text("Pick Location",
+                            style: const TextStyle(
+                                color: const Color(0xff000f1c),
+                                fontWeight: FontWeight.w500,
+                                fontFamily: "FontAwesome5Pro",
+                                fontStyle: FontStyle.normal,
+                                fontSize: 12.0),
+                            textAlign: TextAlign.left),
+                        icon: Icon(Icons.expand_more),
+                        items: [
+                          DropdownMenuItem(child: Text("home"), value: "home"),
+                          DropdownMenuItem(
+                              child: Text("office"), value: "office"),
+                        ],
+                        onChanged: (newValue) {},
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    alignment: Alignment.centerLeft,
+                    child: Text("Notes",
+                        style: const TextStyle(
+                            color: const Color(0xff000f1c),
+                            fontWeight: FontWeight.w700,
+                            fontFamily: "ProductSans",
+                            fontStyle: FontStyle.normal,
+                            fontSize: 14.0),
+                        textAlign: TextAlign.left),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  TextFieldComponent(
+                    hint: "Write Notes",
+                  ),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  ButtonComponent(
+                      widget: Center(
+                        child: Text("ORDER NOW",
+                            style: GoogleFonts.sourceSansPro(
+                              textStyle: TextStyle(
+                                  color: const Color(0xffffffff),
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: "ProductSans",
+                                  fontStyle: FontStyle.normal,
+                                  fontSize: 16.0),
+                            ),
+                            textAlign: TextAlign.center),
+                      ),
+                      function: () async {
+                        dynamic response = await controller.checkout();
+                        print(response["errorCode"].toString());
+                        if (response["status"] == "Success")
+                          Get.offNamedUntil(
+                              getCurrentRestaurantOrderRoute(
+                                  response["orderId"]), (Route<dynamic> route) {
+                            print(route.settings.name);
+                            return (route.settings.name == kWrapperRoute);
+                            // return route.;
+                          });
+                        else {
+                          print(response);
+                          if (response["errorCode"] == "serverError") {
+                            // do something
+                          } else if (response["errorCode"] ==
+                              "inMoreThanThreeOrders") {
+                            // do something
+                          } else if (response["errorCode"] ==
+                              "restaurantClosed") {
+                            // do something
+                          } else {
+                            // do something
+                          }
                         }
-                      }
-                    }),
-                SizedBox(
-                  height: 25,
-                ),
-              ],
+                      }),
+                  SizedBox(
+                    height: 25,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -390,129 +399,14 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
                   ),
                 ),
                 onTap: () {
-                  Get.defaultDialog(
-                    radius: 4,
-                    title: "",
-                    content: Container(
-                      color: const Color(0xffffffff),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            child: Icon(
-                              Icons.highlight_off,
-                              size: 65,
-                              color: Color(0xffdb2846),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Text("Clear Cart",
-                              style: const TextStyle(
-                                  color: const Color(0xff000f1c),
-                                  fontWeight: FontWeight.w700,
-                                  fontFamily: "ProductSans",
-                                  fontStyle: FontStyle.normal,
-                                  fontSize: 25.0),
-                              textAlign: TextAlign.center),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Text("Are you sure you want \nto clear cart?",
-                              style: const TextStyle(
-                                  color: const Color(0xff1d1d1d),
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: "ProductSans",
-                                  fontStyle: FontStyle.normal,
-                                  fontSize: 15.0),
-                              textAlign: TextAlign.center),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Container(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                InkWell(
-                                  child: Container(
-                                    width: 88,
-                                    height: 35,
-                                    decoration: BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(4)),
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: const Color(0x2eff0000),
-                                            offset: Offset(0, 6),
-                                            blurRadius: 10,
-                                            spreadRadius: 0)
-                                      ],
-                                      color: const Color(0xffdb2846),
-                                    ),
-                                    child: Center(
-                                      child: Text("Yes",
-                                          style: const TextStyle(
-                                              color: const Color(0xffffffff),
-                                              fontWeight: FontWeight.w700,
-                                              fontFamily: "ProductSans",
-                                              fontStyle: FontStyle.normal,
-                                              fontSize: 14.0),
-                                          textAlign: TextAlign.center),
-                                    ),
-                                  ),
-                                  onTap: () {
-                                    controller.clearCart();
-                                    Get.back();
-                                  },
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                InkWell(
-                                  child: Container(
-                                    width: 88,
-                                    height: 35,
-                                    decoration: BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(4)),
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: const Color(0x334c504a),
-                                            offset: Offset(0, 6),
-                                            blurRadius: 10,
-                                            spreadRadius: 0)
-                                      ],
-                                      color: const Color(0xfffdfdfd),
-                                    ),
-                                    child: Center(
-                                      child: Text("No",
-                                          style: const TextStyle(
-                                              color: const Color(0xff000000),
-                                              fontWeight: FontWeight.w700,
-                                              fontFamily: "ProductSans",
-                                              fontStyle: FontStyle.normal,
-                                              fontSize: 14.0),
-                                          textAlign: TextAlign.center),
-                                    ),
-                                  ),
-                                  onTap: () {
-                                    Get.back();
-                                  },
-                                )
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
+                  dailogComponent(
+                      "Clear Cart", "Are you sure you want \nto clear cart?",
+                      () {
+                    controller.clearCart();
+                    Get.back();
+                  }, () {
+                    Get.back();
+                  });
                 },
               )
             ],
@@ -524,56 +418,25 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
       ],
     );
   }
-}
 
-List<Widget> choosenOneOption(Map<dynamic, dynamic> data) {
-  List<Widget> myWidgets = [
-    SizedBox(
-      height: 15,
-    )
-  ];
-  print("hhh this is a test" + data.toString());
-  data.forEach((key, value) {
-    myWidgets.add(MenuTitles(
-      title: "${key}".toUpperCase(),
-    ));
+  List<Widget> choosenOneOption(Map<dynamic, dynamic> data) {
+    List<Widget> myWidgets = [
+      SizedBox(
+        height: 15,
+      )
+    ];
 
-    myWidgets.add(
-      Container(
-        width: Get.width,
-        alignment: Alignment.centerLeft,
-        padding: const EdgeInsets.only(left: 25, top: 10),
-        child: Text("${data["${key}"]}",
-            style: const TextStyle(
-                color: const Color(0xff000000),
-                fontWeight: FontWeight.w400,
-                fontFamily: "ProductSans",
-                fontStyle: FontStyle.normal,
-                fontSize: 17.0),
-            textAlign: TextAlign.left),
-      ),
-    );
-  });
-  return myWidgets;
-}
+    data.forEach((key, value) {
+      myWidgets.add(MenuTitles(
+        title: "${key}".toUpperCase(),
+      ));
 
-List<Widget> choosenMannyOption(Map<dynamic, dynamic> data) {
-  print("fdkkjdkf" + data.toString());
-  List<Widget> myWidgets = [
-    SizedBox(
-      height: 15,
-    ),
-    MenuTitles(title: "OPTIONS"),
-  ];
-
-  data.forEach((key, value) {
-    if (value == true) {
       myWidgets.add(
         Container(
           width: Get.width,
           alignment: Alignment.centerLeft,
           padding: const EdgeInsets.only(left: 25, top: 10),
-          child: Text("${key}",
+          child: Text("${data["${key}"]}",
               style: const TextStyle(
                   color: const Color(0xff000000),
                   fontWeight: FontWeight.w400,
@@ -583,81 +446,131 @@ List<Widget> choosenMannyOption(Map<dynamic, dynamic> data) {
               textAlign: TextAlign.left),
         ),
       );
-    }
-  });
-  return myWidgets;
-}
+    });
+    return myWidgets;
+  }
 
-Widget buildItems(List<CartItem> cartItems) {
-  print(cartItems.toString());
-  return Column(
-    children: cartItems.fold<List<Widget>>(<Widget>[], (children, element) {
-      var counter = element.item.cost.obs;
-      print("${element.item.name}");
-      children.add(
-        Container(
-          padding: const EdgeInsets.only(bottom: 15),
-          margin: const EdgeInsets.only(bottom: 10),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            border: Border.all(color: const Color(0xffececec), width: 0.5),
-            color: const Color(0x80ffffff),
+  List<Widget> choosenMannyOption(Map<dynamic, dynamic> data) {
+    List<Widget> myWidgets = [
+      SizedBox(
+        height: 15,
+      ),
+      MenuTitles(title: "OPTIONS"),
+    ];
+
+    data.forEach((key, value) {
+      if (value == true) {
+        myWidgets.add(
+          Container(
+            width: Get.width,
+            alignment: Alignment.centerLeft,
+            padding: const EdgeInsets.only(left: 25, top: 10),
+            child: Text("${key}",
+                style: const TextStyle(
+                    color: const Color(0xff000000),
+                    fontWeight: FontWeight.w400,
+                    fontFamily: "ProductSans",
+                    fontStyle: FontStyle.normal,
+                    fontSize: 17.0),
+                textAlign: TextAlign.left),
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              MyExpensionPanelComponent(
-                  child: ItemComponent(
-                    imgUrl: "${element.item.image}",
-                    title: "${element.item.name}",
-                  ),
-                  children: choosenOneOption(element.chosenOneOptions) +
-                      choosenMannyOption(element.chosenManyOptions),
-                  onEdit: () {
-                    print(
-                        " the data inside the expansion ${element.toFirebaseFunctionFormattedJson()}");
-                    Get.toNamed(editCartItemRoute("${element.id}"));
-                  }),
-              SizedBox(
-                height: 15,
-              ),
-              Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Row(
-                    children: [
-                      IncrementalComponent(
-                        minVal: 1,
-                        increment: () {
-                          counter.value = counter.value + element.costPerOne();
-                        },
-                        value: element.quantity,
-                        decrement: () {
-                          counter.value = counter.value - element.costPerOne();
-                        },
-                      ),
-                      Spacer(),
-                      Obx(
-                        () => Text("\$${currency.format(counter.value)}",
-                            style: GoogleFonts.mulish(
-                              textStyle: TextStyle(
-                                  color: const Color(0xff000f1c),
-                                  fontWeight: FontWeight.w700,
-                                  fontFamily: "ProductSans",
-                                  fontStyle: FontStyle.normal,
-                                  fontSize: 20.0),
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.right),
-                      ),
-                    ],
-                  )),
-            ],
+        );
+      }
+    });
+    return myWidgets;
+  }
+
+  Widget buildItems(List<CartItem> cartItems) {
+    print(cartItems.toString());
+    return Column(
+      children: cartItems.fold<List<Widget>>(<Widget>[], (children, element) {
+        var counter = element.totalCost().obs;
+        print("${element.toFirebaseFunctionFormattedJson()}");
+        children.add(
+          Container(
+            padding: const EdgeInsets.only(bottom: 15),
+            margin: const EdgeInsets.only(bottom: 10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(4)),
+              border: Border.all(color: const Color(0xffececec), width: 0.5),
+              color: const Color(0x80ffffff),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                MyExpensionPanelComponent(
+                    child: ItemComponent(
+                      imgUrl: "${element.item.image}",
+                      title: "${element.item.name}",
+                    ),
+                    children: choosenOneOption(element.chosenOneOptions) +
+                        choosenMannyOption(element.chosenManyOptions),
+                    onEdit: () {
+                      print(
+                          " the data inside the expansion ${element.toFirebaseFunctionFormattedJson()}");
+                      Get.toNamed(editCartItemRoute("${element.id}"));
+                    }),
+                SizedBox(
+                  height: 15,
+                ),
+                Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Row(
+                      children: [
+                        IncrementalComponent(
+                          minVal: 1,
+                          increment: () {
+                            counter.value =
+                                counter.value + element.costPerOne();
+                            print("${element.item.id}");
+                            controller.changeQuantityOfItem("${element.id}", 1);
+                            controller.refresh();
+                          },
+                          onChangedToZero: (val) {
+                            if (val) {
+                              dailogComponent(
+                                "Delete This Item",
+                                "Would you like to delete this item",
+                                () => Get.back(),
+                                () => Get.back(),
+                              );
+                            }
+                          },
+                          value: element.quantity,
+                          decrement: () {
+                            if (counter.value >= 0) {
+                              counter.value =
+                                  counter.value - element.costPerOne();
+                              controller.changeQuantityOfItem(
+                                  "${element.id}", -1);
+                              controller.refresh();
+                            } else {}
+                          },
+                        ),
+                        Spacer(),
+                        Obx(
+                          () => Text("\$${currency.format(counter.value)}",
+                              style: GoogleFonts.mulish(
+                                textStyle: TextStyle(
+                                    color: const Color(0xff000f1c),
+                                    fontWeight: FontWeight.w700,
+                                    fontFamily: "ProductSans",
+                                    fontStyle: FontStyle.normal,
+                                    fontSize: 20.0),
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.right),
+                        ),
+                      ],
+                    )),
+              ],
+            ),
           ),
-        ),
-      );
-      return children;
-    }),
-  );
+        );
+        return children;
+      }),
+    );
+  }
 }
