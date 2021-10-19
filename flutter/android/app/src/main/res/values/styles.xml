@@ -15,4 +15,15 @@
     <style name="NormalTheme" parent="@android:style/Theme.Light.NoTitleBar">
         <item name="android:windowBackground">?android:colorBackground</item>
     </style>
+
+    <!-- 
+        I had to add this to fix some problems with some phone's custom AppGalleries.
+        which was raising this exception : java.lang.IllegalStateException: You need to use a Theme.AppCompat theme (or descendant) with this activity.
+    -->
+    <style name="AppFullScreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
 </resources>

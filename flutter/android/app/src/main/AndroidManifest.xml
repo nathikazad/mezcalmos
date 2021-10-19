@@ -38,7 +38,17 @@
           </intent-filter>
       </activity>
 
-
+      <!-- 
+        Had to add these , seems like they got deleted some how!
+        Thus , this Exception was being raised : android.content.ActivityNotFoundException: 
+        Unable to find explicit activity class {com.meztaxi.stagingDriver/com.yalantis.ucrop.UCropActivity}; 
+        have you declared this activity in your AndroidManifest.xml?
+       -->
+      <activity android:name="com.android.camera.CropImage"/>
+      <activity 
+          android:name="com.yalantis.ucrop.UCropActivity" 
+          android:theme="@style/AppFullScreenTheme" 
+      />
 
 
      <activity
