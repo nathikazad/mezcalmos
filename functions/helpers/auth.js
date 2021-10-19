@@ -242,7 +242,7 @@ async function sendOTP(firebase, data, userId) {
 
   let newCodeEntry = {
     OTPCode: OTPCode,
-    codeGeneratedTime: new Date().toUTCString(),
+    codeGeneratedTime: new Date().toISOString(),
     attempts: 0,
     messageType: data.messageType
   }

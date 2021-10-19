@@ -61,7 +61,7 @@ async function start(firebase, uid, hasura) {
   
     let update = {
       status: "inTransit",
-      rideStartTime: (new Date()).toUTCString()
+      rideStartTime: (new Date()).toISOString()
     }
     firebase.database().ref(`/orders/taxi/${orderId}`).update(update)
     firebase.database().ref(`/users/${order.customer.id}/orders/${orderId}`).update(update);

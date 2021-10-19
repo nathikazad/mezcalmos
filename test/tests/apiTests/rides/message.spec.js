@@ -70,7 +70,7 @@ describe('Mezcalmos', () => {
       orderId: orderId,
       message: "Hey",
       userId: customer.id,
-      timestamp: (new Date()).toUTCString()
+      timestamp: (new Date()).toISOString()
     }
 
     response = await customer.sendMessage(orderId, newMessage)

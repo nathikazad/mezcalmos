@@ -33,7 +33,10 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
         .notificationsStream
         .listen((notification) {
       mezDbgPrint("TaxiWrapper: ${notification.toJson()}");
-      _displayNotification(notification);
+      if (DateTime.now().difference(notification.timestamp) <
+          Duration(minutes: 5)) {
+        _displayNotification(notification);
+      }
     });
     Future.microtask(() {
       mezDbgPrint("TaxiWrapper::microtask handleState first time");

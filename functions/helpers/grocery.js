@@ -32,7 +32,7 @@ async function request(firebase, data, uid) {
   }
   payload.orderType = "grocery";
   payload.status = "lookingForDriver";
-  payload.orderTime = (new Date()).toUTCString();
+  payload.orderTime = (new Date()).toISOString();
   let orderRef = await firebase.database().ref(`/orders/grocery`).push(payload);
   firebase.database().ref(`/users/${uid}/orders/${orderRef.key}`).set({
     orderType: "grocery",
@@ -87,7 +87,7 @@ async function accept(firebase, data, uid) {
       if (order.status == "lookingForDriver") {
         //console.log(`${data.orderId} lookingForDriver`)
         order.status = 'onTheWayToStore';
-        order.acceptOrderTime = (new Date()).toUTCString()
+        order.acceptOrderTime = (new Date()).toISOString()
         order.driver = {
           id: uid,
           name: driver.displayName.split(' ')[0],
@@ -169,7 +169,7 @@ async function itemsPicked(firebase, data, uid) {
 
   let update = {
     status: "itemsPickedUp",
-    itemsPickedTime: (new Date()).toUTCString()
+    itemsPickedTime: (new Date()).toISOString()
   }
   firebase.database().ref(`/orders/grocery/${data.orderId}`).update(update)
   firebase.database().ref(`/users/${order.customer.id}/orders/${data.orderId}`).update(update);
@@ -211,7 +211,7 @@ async function finish(firebase, data, uid) {
 
   let update = {
     status: "droppedOff",
-    deliveryTime: (new Date()).toUTCString()
+    deliveryTime: (new Date()).toISOString()
   }
   firebase.database().ref(`/orders/grocery/${data.orderId}`).update(update)
   firebase.database().ref(`/users/${order.customer.id}/orders/${data.orderId}`).update(update);

@@ -51,7 +51,7 @@ async function expireOrder(firebase, orderId, customerId, hasura, fcm) {
   firebase.database().ref(`/chat/${orderId}`).remove();
   await firebase.database().ref(`/orders/taxi/${orderId}`).update({
     status: "expired",
-    rideFinishTime: (new Date()).toUTCString(),
+    rideFinishTime: (new Date()).toISOString(),
   })
   order = (await firebase.database().ref(`/orders/taxi/${orderId}`).once('value')).val()
   //update order
@@ -70,7 +70,7 @@ async function expireOrder(firebase, orderId, customerId, hasura, fcm) {
     notificationType: "orderStatusChange",
     orderId: orderId,
     orderType: "taxi",
-    rideFinishTime: (new Date()).toUTCString()
+    rideFinishTime: (new Date()).toISOString()
   })
   await firebase.database().ref(`orders/taxi/${orderId}/lock`).remove()
 

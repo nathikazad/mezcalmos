@@ -59,7 +59,7 @@ async function request(firebase, uid, data, hasura) {
     },
     orderType: "taxi",
     status: "lookingForTaxi",
-    orderTime: (new Date()).toUTCString(),
+    orderTime: (new Date()).toISOString(),
     paymentType: data.paymentType,
     routeInformation: {
       duration: data.duration,

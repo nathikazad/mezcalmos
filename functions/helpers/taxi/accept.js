@@ -65,7 +65,7 @@ async function accept(firebase, uid, data, hasura) {
     }
 
     order.status = 'onTheWay';
-    order.acceptRideTime = (new Date()).toUTCString()
+    order.acceptRideTime = (new Date()).toISOString()
     order.driver = {
       id: uid,
       name: driver.displayName.split(' ')[0],

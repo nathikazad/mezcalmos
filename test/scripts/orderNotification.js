@@ -129,7 +129,7 @@ async function addOrder(){
       order: {
       orderId: 'orderId100',
       customerId: customer.id,
-      orderTime: (new Date()).toUTCString(), 
+        orderTime: (new Date()).toISOString(),
     
       }    
     })
@@ -140,12 +140,12 @@ async function insertListOfNotifications(){
             {
                 orderId: "orderId100",
                 driverId: driver.id,
-                sentTime: (new Date()).toUTCString(), 
+            sentTime: (new Date()).toISOString(),
             },
             {
                 orderId: "orderId100",
                 driverId: secondDriver.id,
-                sentTime: (new Date()).toUTCString(), 
+              sentTime: (new Date()).toISOString(),
             }
         ]
     })

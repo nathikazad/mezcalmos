@@ -45,7 +45,8 @@ class CurrentOrderController extends GetxController {
   }
 
   bool hasNewMessageNotification() {
-    return _fbNotificationsController.notifications.value
+    return _fbNotificationsController
+            .notifications()
             .where((notification) =>
                 notification.notificationType == NotificationType.NewMessage &&
                 (notification as NewMessageNotification).orderId ==
@@ -57,7 +58,8 @@ class CurrentOrderController extends GetxController {
   void clearOrderNotifications() {
     FBNotificationsController fbNotificationsController =
         Get.find<FBNotificationsController>();
-    fbNotificationsController.notifications.value
+    fbNotificationsController
+        .notifications()
         .where((notification) =>
             notification.notificationType ==
                 NotificationType.OrderStatusChange &&

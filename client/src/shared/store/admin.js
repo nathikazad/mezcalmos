@@ -42,7 +42,7 @@ export default {
       let newMessage = {
         message: payload.message,
         userId: userId,
-        timestamp: (new Date()).toUTCString()
+        timestamp: (new Date()).toISOString()
       }
       firebaseDatabase().ref(`adminChat/${userType}/current/${userId}/${chatId}/messages`).push(newMessage);
     },
