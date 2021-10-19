@@ -17,7 +17,7 @@ void mezDbgPrint(dynamic log) {
 }
 
 void mezcalmosLogger(String text, {bool isError = false}) =>
-    mezDbgPrint("[ MEZCALMOS ][ GETX ] $text");
+    mezDbgPrint("[MZL][ GETX ] $text");
 
 double getSizeRelativeToScreen(
         double v, double screenHeight, double screenWidth) =>

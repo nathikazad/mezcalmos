@@ -20,6 +20,7 @@ import 'package:mezcalmos/TaxiApp/components/CurrentOrderMapScreen/CPositionedFr
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
+import 'package:mezcalmos/TaxiApp/router.dart';
 
 class CurrentOrderScreen extends GetView<CurrentOrderController> {
   final LanguageController lang = Get.find<LanguageController>();
@@ -52,6 +53,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
 
   Widget build(BuildContext context) {
     // make sure can't be poped, unless we do.
+
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -65,6 +67,8 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
             return _new == null || _old == _new;
           }), builder: (_, AsyncSnapshot<Order> snapshot) {
             mezDbgPrint("\t\t\t\t S N A P S H O T ===> ${snapshot.data}");
+            mezDbgPrint(
+                "\n\n\t\tNOTIFICATIONS ====> ${fbNotificationsController.notifications}\n\n");
             if (snapshot.connectionState == ConnectionState.waiting) {
               mezDbgPrint("INSIDE STREAM BUILDER :: waiting !");
 
@@ -147,12 +151,13 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
     mezDbgPrint("_handleEvent called !");
     mezDbgPrint("_handleEvent -> Event == OrderStatusChange , passed ");
 
+    mezDbgPrint("\t\tORDER STATUS CHANGED ${order.toJson()}");
     if (order.status == OrdersStatus.Cancelled &&
         order.cancelledBy == "customer") {
       mezDbgPrint("======> Canceeeeeeeled =======>${order.toJson()}");
       await MezcalmosSharedWidgets.mezcalmosDialogOrderCancelled(
           55, Get.height, Get.width);
-      // Get.back(closeOverlays: true);
+      Get.until((route) => route.settings.name == kOrdersListPage);
     } else if (order.status == OrdersStatus.OnTheWay) {
       mezDbgPrint("_handleEvent -> calling _loadMarkersForOTW() ");
 
