@@ -22,6 +22,9 @@ import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
 import 'package:mezcalmos/pre-main.dart';
 import 'package:package_info/package_info.dart';
+////
+// import 'package:device_preview/device_preview.dart';
+// import 'package:device_preview/plugins.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,7 +45,17 @@ void main() {
   print('db  -> $_db');
   print('mode  -> $_launchMode');
 
-  runApp(SPoint(launcherApp, _host, _db, _launchMode));
+  runApp(
+    // DevicePreview(
+    //   enabled: true,
+    //   plugins: [
+    //     const ScreenshotPlugin(),
+    //     const FileExplorerPlugin(),
+    //     const SharedPreferencesExplorerPlugin(),
+    //   ],
+    //   builder: (context) =>
+    SPoint(launcherApp, _host, _db, _launchMode),
+  );
 }
 
 class SPoint extends StatefulWidget {

@@ -22,7 +22,7 @@ class ViewCurrentRestaurantOrderScreen extends GetView<OrderController> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              restaurantAppBarComponent("back", () {}),
+              restaurantAppBarComponent("back", () {}, ["messages", "carts"]),
 
               SizedBox(
                 height: 25,

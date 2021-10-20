@@ -133,7 +133,7 @@
             "loginWithApple": "INICIAR CON APPLE",
             "verifyCountryCode": "Verifique el código de su país",
             "verifyPhoneNumber": "Verifique su número de teléfono",
-            "OtpConfirmation": "Confirmación del código OTP",
+            "OtpConfirmation": "Confirmación del \ncódigo OTP",
             "enterOtpCode": "Ingrese el código OTP enviado a",
             "resend": "Reenviar",
             "resendAfter": "Reenviar después",
