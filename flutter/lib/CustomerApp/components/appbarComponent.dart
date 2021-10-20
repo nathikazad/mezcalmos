@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewNotifications.dart';
@@ -90,7 +91,7 @@ Widget restaurantAppBarComponent(
                 ),
               ),
               child: Icon(
-                Icons.notifications_outlined,
+                FontAwesomeIcons.bell,
                 size: 18,
                 color: Color(0xff5582ff),
               ),
@@ -121,8 +122,8 @@ Widget restaurantAppBarComponent(
                 ),
               ),
               child: Icon(
-                Icons.history,
-                size: 18,
+                FontAwesomeIcons.history,
+                size: 14,
                 color: Color(0xff5582ff),
               ),
             ),

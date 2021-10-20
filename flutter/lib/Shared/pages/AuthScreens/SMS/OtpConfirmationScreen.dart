@@ -34,13 +34,16 @@ class OtpConfirmationScreen extends GetView<AuthController> {
               padding: const EdgeInsets.only(left: 10, right: 10, top: 40),
               // height: double.infinity,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Obx(
-                    () => Text(
-                        lang.strings['shared']['login']["OtpConfirmation"],
-                        style: TextStyle(
-                            fontWeight: FontWeight.w400, fontSize: 45)),
+                    () => FittedBox(
+                      child: Text(
+                          lang.strings['shared']['login']["OtpConfirmation"],
+                          style: TextStyle(
+                              fontWeight: FontWeight.w400, fontSize: 45)),
+                      fit: BoxFit.fitWidth,
+                    ),
                   ),
                   SizedBox(
                     height: 20,
@@ -191,24 +194,26 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                                     clickedSignInOtp.value = false;
                                   }
                                 : null,
-                        child: clickedSignInOtp.value
-                            ? SizedBox(
-                                height: 15,
-                                width: 15,
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                  strokeWidth: 2,
+                        child: Container(
+                          child: clickedSignInOtp.value
+                              ? SizedBox(
+                                  height: 15,
+                                  width: 15,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                    strokeWidth: 2,
+                                  ),
+                                )
+                              : Obx(
+                                  () => Text(
+                                    lang.strings['shared']['login']["confirm"],
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 15),
+                                  ),
                                 ),
-                              )
-                            : Obx(
-                                () => Text(
-                                  lang.strings['shared']['login']["confirm"],
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 15),
-                                ),
-                              ),
+                        ),
                         style: ButtonStyle(
                             fixedSize:
                                 MaterialStateProperty.all(Size(Get.width, 50)),

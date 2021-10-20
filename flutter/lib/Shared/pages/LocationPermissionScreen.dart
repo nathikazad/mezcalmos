@@ -15,28 +15,29 @@ class LocationPermissionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     print("Onlocation screeeeeen !");
     return Scaffold(
-        appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
-            "menu", () => _sideMenuDraweController.openMenu()),
-        resizeToAvoidBottomInset: false,
-        key: _sideMenuDraweController.getNewKey(),
-        drawer: MezSideMenu(),
-        backgroundColor: Colors.white,
-        body: Container(
+      appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
+          "menu", () => _sideMenuDraweController.openMenu()),
+      resizeToAvoidBottomInset: false,
+      key: _sideMenuDraweController.getNewKey(),
+      drawer: MezSideMenu(),
+      backgroundColor: Colors.white,
+      body: Center(
+        child: Container(
+          alignment: Alignment.center,
           padding: EdgeInsets.symmetric(horizontal: 20),
           height: Get.height,
           width: Get.width,
-          child: Center(
-            child: Flex(
-              direction: Axis.vertical,
+          child: SingleChildScrollView(
+            child: Column(
+              // direction: Axis.vertical,
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Center(
+                Container(
                   child: Container(
                     height: getSizeRelativeToScreen(100, Get.height, Get.width),
                     width: getSizeRelativeToScreen(100, Get.height, Get.width),
                     decoration: BoxDecoration(
-                        // color: Colors.grey,
                         image: DecorationImage(
                             image: AssetImage(aLocationPermissionAsset))),
                   ),
@@ -117,6 +118,8 @@ class LocationPermissionScreen extends StatelessWidget {
               ],
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

@@ -143,12 +143,14 @@ class ViewOrders extends StatelessWidget {
                                         ),
                                       ),
                                       Text("\$15.00",
-                                          style: const TextStyle(
-                                              color: const Color(0xff000f1c),
-                                              fontWeight: FontWeight.w400,
-                                              fontFamily: "ProductSans",
-                                              fontStyle: FontStyle.normal,
-                                              fontSize: 13.0),
+                                          style: GoogleFonts.mulish(
+                                            textStyle: TextStyle(
+                                                color: const Color(0xff000f1c),
+                                                fontWeight: FontWeight.w400,
+                                                fontFamily: "ProductSans",
+                                                fontStyle: FontStyle.normal,
+                                                fontSize: 13.0),
+                                          ),
                                           textAlign: TextAlign.right)
                                     ],
                                   )
@@ -232,12 +234,14 @@ class ViewOrders extends StatelessWidget {
                                         ),
                                       ),
                                       Text("\$15.00",
-                                          style: const TextStyle(
-                                              color: const Color(0xff000f1c),
-                                              fontWeight: FontWeight.w400,
-                                              fontFamily: "ProductSans",
-                                              fontStyle: FontStyle.normal,
-                                              fontSize: 13.0),
+                                          style: GoogleFonts.mulish(
+                                            textStyle: TextStyle(
+                                                color: const Color(0xff000f1c),
+                                                fontWeight: FontWeight.w400,
+                                                fontFamily: "ProductSans",
+                                                fontStyle: FontStyle.normal,
+                                                fontSize: 13.0),
+                                          ),
                                           textAlign: TextAlign.right)
                                     ],
                                   )
