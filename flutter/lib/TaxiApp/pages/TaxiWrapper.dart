@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
@@ -55,11 +56,11 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
   }
 
   void handleState(TaxiState? state) {
-    mezDbgPrint("TaxiWrapper::handleState $state");
     if (state != null) {
+      mezDbgPrint("TaxiWrapper::handleState ${state.toJson().toString()}");
       if (!state.isAuthorized) {
         mezDbgPrint("TaxiWrapper::handleState going to unauthorized");
-        Get.toNamed(kAunauthorizedRoute);
+        Get.toNamed(kUnauthorizedRoute);
       } else if (state.currentOrder != null) {
         mezDbgPrint("TaxiWrapper::handleState going to current order");
         Get.toNamed(kCurrentOrderPage);

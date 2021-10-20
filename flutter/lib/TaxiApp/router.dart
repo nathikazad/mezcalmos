@@ -14,7 +14,6 @@ const String kSelectedIcommingOrder = '/selected_incomming_order';
 const String kCurrentOrderPage = '/current_order';
 const String kOrdersListPage = '/orders_list';
 const String kMainWrapper = '/main_wrapper';
-const String kAunauthorizedRoute = '/aunauthorized';
 
 // GetX based Router (For navigating)
 class XRouter {

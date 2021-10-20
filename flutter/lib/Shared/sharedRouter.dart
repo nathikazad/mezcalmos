@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart'; // getX
+import 'package:mezcalmos/Shared/pages/AuthScreens/UnauthorizedScreen.dart';
 import 'package:mezcalmos/Shared/pages/LocationPermissionScreen.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/OtpConfirmationScreen.dart';
@@ -15,7 +16,7 @@ const String kLocationPermissionPage = '/location_permission';
 const String kOtpRoute = '/sign_in_otp';
 const String kOtpConfirmRoute = '/sign_in_otp_confirm';
 const String kMessagesRoute = '/messages/:orderId';
-
+const String kUnauthorizedRoute = '/unauthorized';
 getMessagesRoute(String orderId) {
   return kMessagesRoute.replaceFirst(":orderId", orderId);
 }
@@ -35,6 +36,7 @@ class SharedRouter {
       transition: Transition.rightToLeftWithFade,
       transitionDuration: Duration(milliseconds: 500),
       // customTransition:
-    )
+    ),
+    GetPage(name: kUnauthorizedRoute, page: () => UnauthorizedScreen())
   ];
 }

@@ -223,10 +223,9 @@ class AuthController extends GetxController {
       print("GetAuthUsingOTP Response");
       print(
           "################################ DATA ###############################\n\n${response.data}\n\n");
-      await fireAuth.FirebaseAuth.instance
+      fireAuth.FirebaseAuth.instance
           .signInWithCustomToken(response.data["token"]);
 
-      await Get.offAllNamed(kMainWrapper);
     } catch (e) {
       mezcalmosSnackBar("Error", "OTP Code confirmation failed :(");
 
