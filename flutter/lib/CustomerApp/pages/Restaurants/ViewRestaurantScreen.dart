@@ -118,7 +118,7 @@ class ViewRestaurantScreen extends GetView<RestaurantsInfoController> {
                           ),
                         )),
                         SlidingUpPanel(
-                          maxHeight: Get.height * 0.85,
+                          maxHeight: Get.height * 0.87,
                           minHeight: Get.height * 0.45,
                           parallaxEnabled: true,
                           parallaxOffset: 1,
