@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
-import 'package:mezcalmos/Shared/constants/routes.dart';
 
 const mypadding = EdgeInsets.only(left: 15, right: 15);
 
@@ -133,7 +132,7 @@ class PhoneNumberScreen extends GetView<AuthController> {
                                           } else {
                                             canSendOtp.value = false;
                                           }
-                                          print(canSendOtp.value);
+                                          mezDbgPrint(canSendOtp.value);
                                         },
                                         textAlign: TextAlign.center,
                                         decoration: InputDecoration(
@@ -189,7 +188,7 @@ class PhoneNumberScreen extends GetView<AuthController> {
                                   } else {
                                     canSendOtp.value = false;
                                   }
-                                  print(canSendOtp.value);
+                                  mezDbgPrint(canSendOtp.value);
                                 },
                                 //maxLength: 10,
                                 keyboardType: TextInputType.number,
@@ -258,11 +257,12 @@ class PhoneNumberScreen extends GetView<AuthController> {
                             String phone =
                                 "${_prefixTextFieldController.text}${_numberTextFieldController.text}";
                             if (!phone.startsWith('+')) phone = "+" + phone;
-                            print(phone);
+                            mezDbgPrint(phone);
                             if (phone.isPhoneNumber) {
                               dynamic response =
                                   await controller.sendOTPForLogin(phone);
-                              print("++++++++++++ response >>> $response");
+                              mezDbgPrint(
+                                  "++++++++++++ response >>> $response");
                               if (response == null) {
                                 mezcalmosSnackBar("Error", "Null response !");
                               } else if (response['status'] == "Success") {
@@ -387,7 +387,7 @@ class PhoneNumberScreen extends GetView<AuthController> {
 //         ),
 //       ),
 //       onTap: () {
-//         print("this button clicked");
+//         mezDbgPrint("this button clicked");
 //       },
 //     );
 //   }

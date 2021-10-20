@@ -28,8 +28,8 @@ class _MezSwitchState extends State<MezSwitch> {
 
   @override
   void initState() {
-    initialPosition = widget.initialPosition;
     super.initState();
+    initialPosition = widget.initialPosition;
   }
 
   @override

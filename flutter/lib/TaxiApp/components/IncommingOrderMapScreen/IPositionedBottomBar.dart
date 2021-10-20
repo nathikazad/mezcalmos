@@ -3,16 +3,15 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 
-class IncommingPositionedBottomBar extends StatelessWidget {
-  IncomingOrdersController controller;
-  LanguageController lang;
-
-  IncommingPositionedBottomBar(this.controller, this.lang);
+class IncommingPositionedBottomBar extends StatelessWidget with MezDisposable {
+  IncomingOrdersController controller = Get.find<IncomingOrdersController>();
+  LanguageController lang = Get.find<LanguageController>();
 
   @override
   Widget build(BuildContext context) {

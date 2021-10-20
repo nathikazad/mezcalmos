@@ -1,6 +1,6 @@
 // ----------------- CONNECTIVITY STRINGS ----------------- //
 // PLEASE DO NOT TOUCH ANYTHING IN CONNECTIVITY STRINGS , UNLESS YOU INFORM OTHERS.
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 
 const String db = "mezcalmos-31f1c-default-rtdb";
 const String stagingDb =
@@ -9,8 +9,7 @@ const String localhost = "http://127.0.0.1";
 const String authPort = ":9099";
 const String dbRoot = ":9000/?ns=$db";
 const String functionPort = ":5001";
-const String defaultDb = "prod";
-const String defaultLaunchMode = "prod"; // can be dev / prod
+// can be dev / prod
 
 // ----------------- TEST STRINGS ----------------- //
 
@@ -43,7 +42,6 @@ const String tDefaultCustomerName = "Unknown";
 // ----------------- GetStorage Strings ----------------- //
 const String getxLmodeKey = "lmod";
 const String getxGmapBottomPaddingKey = "gmap_bottom_padding";
-const String getxMapStyleJsonKey = "map_style";
 const String getUserId = "userid";
 const String version = "VERSION";
 // ----------------- Assets Strings ----------------- //

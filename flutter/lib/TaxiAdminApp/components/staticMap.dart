@@ -40,6 +40,8 @@ class _StaticMapState extends State<StaticMap> {
   final Set<Polyline> _polyline = {};
   @override
   void initState() {
+    super.initState();
+
     _polyline.add(
       Polyline(
         color: ui.Color.fromARGB(255, 172, 89, 252),
@@ -52,7 +54,6 @@ class _StaticMapState extends State<StaticMap> {
         // geodesic: true,
       ),
     );
-    super.initState();
   }
 
   // dynamic getCorespondingController() {
@@ -115,7 +116,6 @@ class _StaticMapState extends State<StaticMap> {
                 ),
               ]);
               _googleMapController = _gController;
-              await _gController.setMapStyle(GetStorage().read('map_style'));
               await _gController.animateCamera(CameraUpdate.newLatLngBounds(
                   LatLngBounds(
                       southwest: widget.pickUpLocation,

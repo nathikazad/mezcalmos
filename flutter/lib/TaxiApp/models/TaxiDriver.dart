@@ -1,51 +1,50 @@
 import 'package:firebase_database/firebase_database.dart';
 
+class TaxiState {
+  bool isAuthorized;
+  bool isLooking;
+  String? currentOrder;
+  TaxiState(this.isAuthorized, this.isLooking, this.currentOrder);
+
+  factory TaxiState.fromSnapshot(dynamic data) {
+    bool isAuthorized =
+        data == null ? false : data['authorizationStatus'] == "authorized";
+    bool isLooking = data == null ? false : data['isLooking'] == true;
+    String? currentOrder = data == null ? null : data['currentOrder'];
+    return TaxiState(isAuthorized, isLooking, currentOrder);
+  }
+
+  Map<String, dynamic> toJson() => {
+        "authorizationStatus": this.isAuthorized,
+        "isLooking": this.isLooking,
+        "currentOrder": this.currentOrder,
+      };
+}
+
 class TaxiDriver {
-  bool? isAuthorized;
-  bool? isLooking;
-  dynamic currentOrder;
+  TaxiState taxiState;
   dynamic driverLocation;
   dynamic lastLocationUpdateTime;
   dynamic isEmpty = false;
 
-  TaxiDriver(this.isAuthorized, this.isLooking, this.currentOrder,
-      this.driverLocation, this.lastLocationUpdateTime,
-      {this.isEmpty});
+  TaxiDriver(this.taxiState, this.driverLocation, this.lastLocationUpdateTime);
 
-  TaxiDriver.empty() {
-    isEmpty = true;
+  factory TaxiDriver.fromSnapshot(DataSnapshot snapshot) {
+    TaxiState taxiState = TaxiState.fromSnapshot(snapshot.value['state']);
+    dynamic driverLocation = snapshot.value['location'] == null
+        ? null
+        : snapshot.value['location']['position'];
+    dynamic lastLocationUpdateTime = snapshot.value['location'] == null
+        ? null
+        : snapshot.value['location']['lastUpdateTime'];
+    return TaxiDriver(taxiState, driverLocation, lastLocationUpdateTime);
   }
-
-  // Parse Json comming from the server
-  // TaxiDriver.fromJson(dynamic value)
-  //     : isAuthorized = value['state']['authorizationStatus'] == "authorized",
-  //       isLooking = value['state']['isLooking'] == true,
-  //       currentOrder = value['state']['currentOrder'],
-  //       driverLocation = value['location']['position'],
-  //       lastLocationUpdateTime = value['location']['lastUpdateTime'];
-
-  TaxiDriver.fromSnapshot(DataSnapshot snapshot)
-      : isAuthorized = snapshot.value['state'] == null
-            ? false
-            : snapshot.value['state']['authorizationStatus'] == "authorized",
-        isLooking = snapshot.value['state'] == null
-            ? false
-            : snapshot.value['state']['isLooking'] == true,
-        currentOrder = snapshot.value['state'] == null
-            ? null
-            : snapshot.value['state']['currentOrder'],
-        driverLocation = snapshot.value['location'] == null
-            ? null
-            : snapshot.value['location']['position'],
-        lastLocationUpdateTime = snapshot.value['location'] == null
-            ? null
-            : snapshot.value['location']['lastUpdateTime'];
 
   // Added for Debugging Perposes - Don't delete for now
   Map<String, dynamic> toJson() => {
-        "authorizationStatus": isAuthorized,
-        "isLooking": isLooking,
-        "currentOrder": currentOrder,
+        "authorizationStatus": this.taxiState.isAuthorized,
+        "isLooking": this.taxiState.isLooking,
+        "currentOrder": this.taxiState.currentOrder,
         "driverLocation": driverLocation,
         "lastLocationUpdateTime": lastLocationUpdateTime
       };

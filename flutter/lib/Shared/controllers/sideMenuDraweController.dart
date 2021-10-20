@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 class SideMenuDraweController extends GetxController {
   GlobalKey<ScaffoldState>? _scaffoldKey;
@@ -14,24 +15,25 @@ class SideMenuDraweController extends GetxController {
 
   @override
   void onInit() {
-    print(
-        "<<<<<<<<<<<<<<<<<<<<<<<<<<<< [ SideMenuDrawerController Initialized ] >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
     super.onInit();
+
+    mezDbgPrint(
+        "<<<<<<<<<<<<<<<<<<<<<<<<<<<< [ SideMenuDrawerController Initialized ] >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
   }
 
   void openMenu() {
-    print("Opened menu  ${_scaffoldKey?.currentState?.toString()}! ");
+    mezDbgPrint("Opened menu  ${_scaffoldKey?.currentState?.toString()}! ");
     _scaffoldKey?.currentState?.openDrawer();
   }
 
   void cloeseMenu() {
-    print("Closed menu!");
+    mezDbgPrint("Closed menu!");
     _scaffoldKey?.currentState?.openEndDrawer();
   }
 
   @override
   void onClose() {
-    print(
+    mezDbgPrint(
         "<<<<<<<<<<<<<<<<<<<<<<<<<<<< [ SideMenuDrawerController Closed ] >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
     super.onClose();
   }

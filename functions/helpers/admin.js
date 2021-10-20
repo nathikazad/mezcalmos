@@ -28,7 +28,7 @@ async function createChat(firebase, params) {
   
   userInfo = (await firebase.database().ref(`/users/${params.userId}/info`).once('value')).val();
   let chat = {}
-  chat.createdTime = (new Date()).toUTCString()
+  chat.createdTime = (new Date()).toISOString()
   if(params.fromAdmin){
     chat.createdBy = "admin"
   } else {
@@ -74,7 +74,7 @@ async function resolve(firebase, params) {
     return { status: "Error", errorMessage: "Chat does not exist for user." }
   }
   let currentChatId = Object.keys(currentChat)[0]
-  currentChat[currentChatId].resolvedTime = (new Date()).toUTCString()
+  currentChat[currentChatId].resolvedTime = (new Date()).toISOString()
   currentChat[currentChatId].resolvedAdmin = params.adminId
   await firebase.database().ref(`/adminChat/${params.userType}/past/${params.userId}`).update(currentChat);
   await firebase.database().ref(`/adminChat/${params.userType}/current/${params.userId}`).remove()

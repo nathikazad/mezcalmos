@@ -4,10 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/databaseNodes.dart';
-import 'package:mezcalmos/Shared/constants/routes.dart';
 import 'package:mezcalmos/Shared/utilities/Extensions.dart';
+import 'package:mezcalmos/TaxiApp/router.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -21,77 +21,59 @@ import 'package:crypto/crypto.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
 
-String generateNonce([int length = 32]) {
-  final charset =
-      '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
-  final random = Random.secure();
-  return List.generate(length, (_) => charset[random.nextInt(charset.length)])
-      .join();
-}
-
-/// Returns the sha256 hash of [input] in hex notation.
-String sha256ofString(String input) {
-  final bytes = utf8.encode(input);
-  final digest = sha256.convert(bytes);
-  return digest.toString();
-}
-
-class AuthController extends GetxController with MezDisposable {
+class AuthController extends GetxController {
   fireAuth.FirebaseAuth _auth = fireAuth.FirebaseAuth.instance;
-  Rxn<User> _user = Rxn<User>();
-  RxBool authStateNotifierInvoked = false
-      .obs; // THIS IS BEING CHECKED ON THE ROOT MAIN.DART To wait for the first invoke!
 
   Function _onSignOutCallback;
   Function _onSignInCallback;
 
+  Rxn<User> _user = Rxn<User>();
   User? get user => _user.value;
+
   Rxn<fireAuth.User> _fireAuthUser = Rxn<fireAuth.User>();
-  fireAuth.FirebaseAuth get auth => _auth;
   fireAuth.User? get fireAuthUser => _fireAuthUser.value;
 
-  // RxInt _isWaitingRresponse = 0.obs;
+  StreamSubscription? _userNodeListener;
+
+  // Rxn<fireAuth.User> _userRx = Rxn();
+  StreamController<fireAuth.User?> _authStateStream =
+      StreamController.broadcast();
+  // _authStateStream.addStream(_auth.authStateChanges());
+  Stream<fireAuth.User?> get authStateChange => _authStateStream.stream;
 
   DatabaseHelper _databaseHelper =
       Get.find<DatabaseHelper>(); // Already Injected in main function
 
-  // # REGION ------------- OTP Code ---------------
-  RxInt _timeBetweenResending = 0.obs;
-  int get timeBetweenResending => _timeBetweenResending.value;
-
   AuthController(this._onSignInCallback, this._onSignOutCallback);
-
-  void resendOtpTimerActivate(int time) {
-    _timeBetweenResending.value = time;
-    const second = const Duration(seconds: 1);
-    Timer.periodic(
-      second,
-      (Timer __t) {
-        print(
-            "OTP Code resending available after $timeBetweenResending Seconds !");
-        if (_timeBetweenResending.value == 0)
-          __t.cancel();
-        else
-          _timeBetweenResending.value--;
-      },
-    );
-  }
-
-  //------------------------------------------------
-
+  String? _previousUserValue = "init";
   @override
   void onInit() {
+    super.onInit();
+    // _authStateStream.addStream(_auth.authStateChanges());
+    mezDbgPrint('Auth controller init!');
     Get.lazyPut(() => LanguageController());
     _auth.authStateChanges().listen((fireAuth.User? user) {
-      authStateNotifierInvoked.value = true;
-      print("authStateNotifierInvoked ====> $authStateNotifierInvoked");
+      if (user?.toString() == _previousUserValue) {
+        mezDbgPrint(
+            'Authcontroller:: same sign in event fired again, skipping it');
+        return;
+      }
+      _previousUserValue = user?.toString();
+      _authStateStream.add(user);
+      mezDbgPrint('Authcontroller:: Auth state change!');
+      mezDbgPrint(user?.hashCode);
+      mezDbgPrint(user ?? "empty");
       _fireAuthUser.value = user;
       if (user == null) {
-        print('User is currently signed out!');
+        mezDbgPrint('AuthController: User is currently signed out!');
+        _userNodeListener?.cancel();
+        _userNodeListener = null;
         _user.value = null;
       } else {
+        mezDbgPrint('AuthController: User is currently signed in!');
         _onSignInCallback();
-        _databaseHelper.firebaseDatabase
+        _userNodeListener?.cancel();
+        _userNodeListener = _databaseHelper.firebaseDatabase
             .reference()
             .child(userInfo(user.uid))
             .onValue
@@ -105,7 +87,7 @@ class AuthController extends GetxController with MezDisposable {
           Get.find<LanguageController>()
               .userLanguageChanged(_user.value!.language);
           GetStorage().write(getUserId, user.uid);
-        }).canceledBy(this);
+        });
       }
     });
     super.onInit();
@@ -147,10 +129,14 @@ class AuthController extends GetxController with MezDisposable {
 
   Future<void> signOut() async {
     try {
+      mezDbgPrint("AuthController: Sign out function");
       await _onSignOutCallback();
-      await cancelSubscriptions();
+      mezDbgPrint("AuthController: Sign out callbacks finished");
+      _userNodeListener?.cancel();
+      _userNodeListener = null;
+      _user.value = null;
       await _auth.signOut();
-      // Get.offAllNamed(kMainAuthWrapperRoute);
+      mezDbgPrint("AuthController: Sign out finished");
     } catch (e) {
       Get.snackbar("Failed to Sign you out!", e.toString(),
           snackPosition: SnackPosition.BOTTOM);
@@ -210,9 +196,6 @@ class AuthController extends GetxController with MezDisposable {
           "Notice ~",
           responseStatusChecker(response.data,
               onSuccessMessage: "OTP message has been sent !"));
-      if (response.data['secondsLeft'] != null) {
-        resendOtpTimerActivate(response.data['secondsLeft']);
-      }
     } catch (e) {
       // mezcalmosSnackBar("Notice ~", "Failed to send OTP message :( ");
       // _waitingResponse.value = false;
@@ -244,7 +227,7 @@ class AuthController extends GetxController with MezDisposable {
       await fireAuth.FirebaseAuth.instance
           .signInWithCustomToken(response.data["token"]);
 
-      await Get.offAllNamed(kMainAuthWrapperRoute);
+      await Get.offAllNamed(kMainWrapper);
     } catch (e) {
       mezcalmosSnackBar("Error", "OTP Code confirmation failed :(");
 
@@ -308,8 +291,24 @@ class AuthController extends GetxController with MezDisposable {
 
   @override
   void dispose() {
-    cancelSubscriptions();
+    _userNodeListener?.cancel();
+    _userNodeListener = null;
     super.dispose();
     print("--------------------> AuthController Auto Disposed !");
   }
+}
+
+String generateNonce([int length = 32]) {
+  final charset =
+      '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
+  final random = Random.secure();
+  return List.generate(length, (_) => charset[random.nextInt(charset.length)])
+      .join();
+}
+
+/// Returns the sha256 hash of [input] in hex notation.
+String sha256ofString(String input) {
+  final bytes = utf8.encode(input);
+  final digest = sha256.convert(bytes);
+  return digest.toString();
 }

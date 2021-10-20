@@ -2,7 +2,29 @@
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:location/location.dart';
-import 'package:mezcalmos/Shared/utilities/SharedEnums.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+
+enum OrdersStatus {
+  DroppedOff,
+  Cancelled,
+  Expired,
+  OnTheWay,
+  InTransit,
+  IsLooking,
+  Invalid
+}
+
+extension ParseToString on OrdersStatus {
+  String toShortString() {
+    return this.toString().split('.').last;
+  }
+}
+
+OrdersStatus convertStringToOrderStatus(String str) {
+  mezDbgPrint(str);
+  return OrdersStatus.values
+  .firstWhere((e) => e.toShortString().toLowerCase() == str.toLowerCase());
+}
 
 class Order {
   dynamic id;
@@ -22,7 +44,7 @@ class Order {
   dynamic orderType;
   dynamic rideFinishTime;
   dynamic rideStartTime;
-  dynamic status;
+  OrdersStatus status;
   dynamic polyline;
   double distanceToClient = 0;
   dynamic cancelledBy;
@@ -53,26 +75,11 @@ class Order {
       [id, from, to, orderTime, paymentType, routeInformation];
 
   // Empty Order Constructor!
-  Order.empty({this.polyline = ""});
+  Order.empty({this.polyline = "", this.status = OrdersStatus.Invalid});
 
-  Order.fromSnapshot(DataSnapshot snapshot)
-      : id = snapshot.key ?? "",
-        driver = snapshot.value['driver'],
-        distance = snapshot.value['distance'],
-        duration = snapshot.value['duration'],
-        customer = snapshot.value['customer'],
-        rideFinishTime = snapshot.value['rideFinishTime'],
-        rideStartTime = snapshot.value['rideStartTime'],
-        status = snapshot.value['status'],
-        orderType = snapshot.value['orderType'],
-        acceptRideTime = snapshot.value['acceptRideTime'],
-        estimatedPrice = snapshot.value['estimatedPrice'],
-        from = Location(snapshot.value['from']),
-        to = Location(snapshot.value['to']),
-        orderTime = snapshot.value['orderTime'],
-        paymentType = snapshot.value['paymentType'],
-        routeInformation = snapshot.value['routeInformation'],
-        polyline = snapshot.value['polyline'] ?? "";
+  factory Order.fromSnapshot(DataSnapshot snapshot) {
+    return Order.fromJson(snapshot.key, snapshot.value);
+  }
 
   Order.fromJson(dynamic key, dynamic value)
       : id = key,
@@ -82,7 +89,7 @@ class Order {
         customer = value['customer'],
         rideFinishTime = value['rideFinishTime'],
         rideStartTime = value['rideStartTime'],
-        status = value['status'],
+        status = convertOrderStatusFromStringToEnum(value['status']),
         orderType = value['orderType'],
         acceptRideTime = value['acceptRideTime'],
         estimatedPrice = value['estimatedPrice'],
@@ -124,26 +131,22 @@ class Location {
   dynamic get longitude => position.longitude;
 }
 
-// CurrentOrder
-class CurrentOrder {
-  Order order;
-  CurrentOrderEvent? event;
-  CurrentOrder(this.order, {this.event});
-
-  Map toJson() =>
-      <dynamic, dynamic>{"event": event?.toJson(), "order": order.toJson()};
-
-  CurrentOrder.fromSnapshot(DataSnapshot snapshot)
-      : this.order = Order.fromSnapshot(snapshot);
-}
-
-class CurrentOrderEvent {
-  CurrentOrderEventTypes eventType;
-  dynamic eventDetails;
-  CurrentOrderEvent(this.eventType, {this.eventDetails});
-
-  Map toJson() => <dynamic, dynamic>{
-        eventType: eventType.toString(),
-        eventDetails: eventDetails.toString()
-      };
+OrdersStatus convertOrderStatusFromStringToEnum(String orderStatusString) {
+  mezDbgPrint(orderStatusString);
+  switch (orderStatusString) {
+    case "isLooking":
+      return OrdersStatus.IsLooking;
+    case "onTheWay":
+      return OrdersStatus.OnTheWay;
+    case "inTransit":
+      return OrdersStatus.InTransit;
+    case "droppedOff":
+      return OrdersStatus.DroppedOff;
+    case "cancelled":
+      return OrdersStatus.Cancelled;
+    case "expired":
+      return OrdersStatus.Expired;
+    default:
+      return OrdersStatus.Invalid;
+  }
 }

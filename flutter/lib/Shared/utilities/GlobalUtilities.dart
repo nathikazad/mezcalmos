@@ -1,7 +1,7 @@
 // Usefull when trying to make Sizes adptable!
 import 'dart:async';
 import 'dart:typed_data';
-
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -11,12 +11,67 @@ import 'package:location/location.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+void mezDbgPrint(dynamic log) {
+  String d = DateFormat('HH:mm:ss').format(DateTime.now());
+  print("\n[MZL][$d] $log\n");
+}
+
 void mezcalmosLogger(String text, {bool isError = false}) =>
-    print("[ MEZCALMOS ][ GETX ] $text");
+    mezDbgPrint("[MZL][ GETX ] $text");
 
 double getSizeRelativeToScreen(
         double v, double screenHeight, double screenWidth) =>
     (screenHeight / screenWidth) * v;
+
+void notificationSnackBar(
+    String imgUrl, String title, String msg, String time, Function onClick) {
+  Get.rawSnackbar(
+      onTap: (_) async {
+        mezDbgPrint("ONTAP ====> $_");
+        await onClick();
+      },
+      maxWidth: Get.width,
+      margin: EdgeInsets.all(0),
+      duration: Duration(milliseconds: 5000),
+      icon: Container(
+        height: 50,
+        width: 10,
+        clipBehavior: Clip.antiAlias,
+        decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(
+                color: Colors.grey.shade100,
+                width: 1,
+                style: BorderStyle.solid)),
+        child: imgUrl.startsWith("http")
+            ? Image.network(
+                imgUrl,
+                fit: BoxFit.cover,
+                height: 50,
+                width: 10,
+              )
+            : Image.asset(imgUrl),
+      ),
+      backgroundColor: Colors.white,
+      borderWidth: 1,
+      borderColor: const Color(0xECECEC),
+      borderRadius: 0,
+      messageText: Text(msg),
+      titleText: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            title,
+            style: TextStyle(fontFamily: 'psb'),
+          ),
+          Text(time)
+        ],
+      ),
+      padding: EdgeInsets.all(25),
+      snackPosition: SnackPosition.TOP,
+      snackStyle: SnackStyle.GROUNDED);
+}
 
 //Our default snackBar
 void mezcalmosSnackBar(String _title, String _msg,
@@ -31,16 +86,16 @@ dynamic responseStatusChecker(dynamic resp,
     {String? onSuccessMessage, String? onErrorMessage}) {
   // basically
   if (resp == null) {
-    print("Given Response is null !");
+    mezDbgPrint("Given Response is null !");
     return null;
   } else if (resp['status'] == "Error") {
-    print("[RESPONSE ERROR] -> $resp['status'] ");
+    mezDbgPrint("[RESPONSE ERROR] -> $resp['status'] ");
     return resp['errorMessage'] ?? onErrorMessage ?? resp['status'];
   } else if (resp['status'] == "Success") {
-    print("[RESPONSE SUCCESS] -> $resp['status'] ");
+    mezDbgPrint("[RESPONSE SUCCESS] -> $resp['status'] ");
     return onSuccessMessage ?? resp['status'];
   } else {
-    print("[RESPONSE UNKNOWN] -> $resp['status'] ");
+    mezDbgPrint("[RESPONSE UNKNOWN] -> $resp['status'] ");
     return null;
   }
 }
@@ -134,7 +189,7 @@ Future<bool> getLocationPermission() async {
       return false;
     }
   }
-  print("[+] Location Service Enabled !");
+  mezDbgPrint("[+] Location Service Enabled !");
   _permissionGranted = await location.hasPermission();
 
   if (_permissionGranted == PermissionStatus.denied ||
@@ -147,6 +202,6 @@ Future<bool> getLocationPermission() async {
       return false;
     }
   }
-  print("[+] Location Permissions Granted !");
+  mezDbgPrint("[+] Location Permissions Granted !");
   return true;
 }

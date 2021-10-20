@@ -3,30 +3,30 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/constants/routes.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Order.dart';
+import 'package:mezcalmos/Shared/models/ServerResponse.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
+import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
+import 'package:mezcalmos/TaxiApp/router.dart';
 
 class CurrentPositionedBottomBar extends StatelessWidget {
-  RxBool showLoadingMapOnClick = false.obs;
-  RxBool clickedLaunchOnMap = false.obs;
+  RxBool showLoadingCircleInButton = false.obs;
+  RxBool waitingForMapToOpen = false.obs;
   bool clickedYesCancelPopUp = false;
-
-  CurrentOrderController controller;
-  TaxiAuthController taxiAuthController;
-  LanguageController lang;
-  FBNotificationsController fbNotificationsController;
-
-  CurrentPositionedBottomBar(this.controller, this.taxiAuthController,
-      this.lang, this.fbNotificationsController);
-
+  CurrentOrderController controller = Get.find<CurrentOrderController>();
+  TaxiAuthController taxiAuthController = Get.find<TaxiAuthController>();
+  LanguageController lang = Get.find<LanguageController>();
+  FBNotificationsController fbNotificationsController =
+      Get.find<FBNotificationsController>();
+  Order order;
+  CurrentPositionedBottomBar(this.order);
   @override
   Widget build(BuildContext context) {
     return Positioned(
@@ -50,98 +50,53 @@ class CurrentPositionedBottomBar extends StatelessWidget {
             direction: Axis.horizontal,
             children: [
               Flexible(
-                flex: 3,
-                fit: FlexFit.loose,
-                child: Container(
-                  child: Obx(() => TextButton(
+                  flex: 3,
+                  fit: FlexFit.loose,
+                  child: Container(
+                    child: TextButton(
                         style: ButtonStyle(
                           fixedSize: MaterialStateProperty.all(Size(
                               getSizeRelativeToScreen(
                                   115, Get.height, Get.width),
                               getSizeRelativeToScreen(
                                   12, Get.height, Get.width))),
-                          backgroundColor: controller.currentOrderStreamRx.value
-                                      ?.order.status !=
-                                  "inTransit"
-                              ? MaterialStateProperty.all(
-                                  Color.fromARGB(255, 79, 168, 35))
-                              : MaterialStateProperty.all(
-                                  Color.fromARGB(255, 234, 51, 38)),
+                          backgroundColor:
+                              order.status != OrdersStatus.InTransit
+                                  ? MaterialStateProperty.all(
+                                      Color.fromARGB(255, 79, 168, 35))
+                                  : MaterialStateProperty.all(
+                                      Color.fromARGB(255, 234, 51, 38)),
                         ),
-                        onPressed: !this.showLoadingMapOnClick()
+                        onPressed: !this.showLoadingCircleInButton.value
                             ? () async {
-                                this.showLoadingMapOnClick.value = true;
-
-                                controller.currentOrderStreamRx.value?.order.status ==
-                                        "inTransit"
-                                    // ignore: unnecessary_statements
-                                    ? (MapHelper.calculateDistance(
-                                                taxiAuthController
-                                                    .currentLocation,
-                                                controller.currentOrderStreamRx
-                                                    .value?.order.to.position) >
-                                            0.5
-                                        ? MezcalmosSharedWidgets.yesNoDefaultConfirmationDialog(
-                                                () async {
-                                            Get.back();
-                                            await controller.finishRide();
-                                          },
-                                                lang.strings['taxi']['taxiView']
-                                                    ["tooFarFromfinishRide"])
-                                            .then((_) {
-                                            if (!_) {
-                                              this.showLoadingMapOnClick.value =
-                                                  false;
-                                              Get.back();
-                                            }
-                                            Get.back(closeOverlays: true);
-                                          })
-                                        : await controller.finishRide())
-                                    // ignore: unnecessary_statements
-                                    : (MapHelper.calculateDistance(
-                                                taxiAuthController
-                                                    .currentLocation,
-                                                controller
-                                                    .currentOrderStreamRx
-                                                    .value
-                                                    ?.order
-                                                    .from
-                                                    .position) >
-                                            0.5
-                                        ? MezcalmosSharedWidgets.yesNoDefaultConfirmationDialog(
-                                                () async {
-                                            Get.back();
-                                            await controller.startRide();
-                                          }, lang.strings['taxi']['taxiView']["tooFarFromstartRide"])
-                                            .then((_) {})
-                                            .whenComplete(() => this.showLoadingMapOnClick.value = false)
-                                        : await controller.startRide().whenComplete(() => this.showLoadingMapOnClick.value = false));
+                                showLoadingAnimation();
+                                await clickButton();
+                                removeLoadingAnimation();
                               }
                             : () => null,
-                        child: Center(
-                            child: !this.showLoadingMapOnClick()
-                                ? Text(
-                                    controller.currentOrderStreamRx.value?.order
-                                                .status !=
-                                            "inTransit"
-                                        ? lang.strings['taxi']['taxiView']
-                                            ["startRide"]
-                                        : lang.strings['taxi']['taxiView']
-                                            ["finishRide"],
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: Colors.white, fontFamily: 'psr'),
-                                  )
-                                : SizedBox(
-                                    child: CircularProgressIndicator(
-                                      color: Colors.white,
-                                    ),
-                                    height: 20,
-                                    width: 20,
-                                  )),
-                      )),
-                ),
-              ),
+                        child: Obx(
+                          () => Center(
+                              child: !this.showLoadingCircleInButton.value
+                                  ? Text(
+                                      order.status != OrdersStatus.InTransit
+                                          ? lang.strings['taxi']['taxiView']
+                                              ["startRide"]
+                                          : lang.strings['taxi']['taxiView']
+                                              ["finishRide"],
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontFamily: 'psr'),
+                                    )
+                                  : SizedBox(
+                                      child: CircularProgressIndicator(
+                                        color: Colors.white,
+                                      ),
+                                      height: 20,
+                                      width: 20,
+                                    )),
+                        )),
+                  )),
               Flexible(
                   child: SizedBox(
                 height: getSizeRelativeToScreen(15, Get.height, Get.width),
@@ -150,17 +105,11 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                     ),
               )),
               Flexible(
-                  flex: 2,
-                  child: Obx(
-                    () => Text(
-                        '\$' +
-                            (controller.currentOrderStreamRx.value?.order
-                                    .estimatedPrice
-                                    ?.toString() ??
-                                "00"),
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 18)),
-                  )),
+                flex: 2,
+                child: Text('\$' + (order.estimatedPrice?.toString() ?? "00"),
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+              ),
               Flexible(
                   child: SizedBox(
                 height: getSizeRelativeToScreen(15, Get.height, Get.width),
@@ -178,16 +127,16 @@ class CurrentPositionedBottomBar extends StatelessWidget {
 
                     children: [
                       GestureDetector(
-                        onTap: clickedLaunchOnMap.value
+                        onTap: waitingForMapToOpen.value
                             ? null
                             : () async {
-                                clickedLaunchOnMap.value = true;
-                                await mapLauncher(
-                                    controller.currentOrderStreamRx.value?.order
-                                        .to.latitude,
-                                    controller.currentOrderStreamRx.value?.order
-                                        .to.longitude);
-                                clickedLaunchOnMap.value = false;
+                                waitingForMapToOpen.value = true;
+                                order.status == OrdersStatus.OnTheWay
+                                    ? await mapLauncher(order.from.latitude,
+                                        order.from.longitude)
+                                    : await mapLauncher(
+                                        order.to.latitude, order.to.longitude);
+                                waitingForMapToOpen.value = false;
                               },
                         child: Container(
                           height: getSizeRelativeToScreen(
@@ -206,19 +155,10 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                             ],
                           ),
                           child: Center(
-                            child: Obx(
-                              () => clickedLaunchOnMap.value
-                                  ? SizedBox(
-                                      height: 10,
-                                      width: 10,
-                                      child: CircularProgressIndicator(
-                                        color: Colors.purple.shade400,
-                                      ))
-                                  : Icon(
-                                      MezcalmosIcons.location_arrow,
-                                      color: Color.fromARGB(255, 103, 121, 254),
-                                      size: 16,
-                                    ),
+                            child: Icon(
+                              MezcalmosIcons.location_arrow,
+                              color: Color.fromARGB(255, 103, 121, 254),
+                              size: 16,
                             ),
                           ),
                         ),
@@ -227,12 +167,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                       Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
                       GestureDetector(
                         onTap: () async {
-                          await fbNotificationsController
-                              .setAllMessagesAsReadInDb();
-
-                          Get.toNamed(kMessagesRoute)?.then((_) =>
-                              fbNotificationsController
-                                  .clearAllMessageNotification());
+                          Get.toNamed(getMessagesRoute(order.id));
                         },
                         child: Container(
                           height: getSizeRelativeToScreen(
@@ -254,8 +189,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                             child: Stack(
                               children: [
                                 Obx(
-                                  () => fbNotificationsController
-                                          .hasNewNotification
+                                  () => controller.hasNewMessageNotification()
                                       ? Positioned(
                                           top: 5,
                                           right: 5,
@@ -300,21 +234,16 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                                   TextButton(
                                       onPressed: () {
                                         if (!clickedYesCancelPopUp) {
-                                          this.showLoadingMapOnClick.value =
-                                              true;
-                                          controller
-                                              .cancelTaxi(null)
-                                              .then((_) =>
-                                                  Get.back(closeOverlays: true))
-                                              .catchError((onError) {
-                                            clickedYesCancelPopUp = false;
-                                          }).whenComplete(() => this
-                                                  .showLoadingMapOnClick
-                                                  .value = false);
+                                          showLoadingAnimation();
+                                          controller.cancelTaxi(null).then((_) {
+                                            removeLoadingAnimation();
+                                            Get.offNamedUntil(
+                                                kOrdersListPage,
+                                                ModalRoute.withName(
+                                                    kTaxiWrapperRoute));
+                                          });
                                         }
                                       },
-                                      // Navigator.of(context)
-                                      //     .pop()),
                                       child: Text(lang.strings?['taxi']
                                               ?['taxiView']?['yes'] ??
                                           'Si')),
@@ -351,5 +280,67 @@ class CurrentPositionedBottomBar extends StatelessWidget {
             ],
           ),
         ));
+  }
+
+  void showLoadingAnimation() {
+    this.showLoadingCircleInButton.value = true;
+  }
+
+  void removeLoadingAnimation() {
+    this.showLoadingCircleInButton.value = false;
+  }
+
+  Future<void> clickButton() async {
+    if (order.status == OrdersStatus.InTransit) {
+      if ((MapHelper.calculateDistance(
+              taxiAuthController.currentLocation, order.to.position) >
+          0.5)) {
+        bool clickedYes =
+            await MezcalmosSharedWidgets.yesNoDefaultConfirmationDialog(
+                lang.strings['taxi']['taxiView']["tooFarFromfinishRide"]);
+
+        mezDbgPrint("CurrentPositionedBottomBar clickedYes: $clickedYes");
+        if (clickedYes) {
+          await finishRide();
+        }
+      } else {
+        await finishRide();
+      }
+    } else {
+      if (MapHelper.calculateDistance(
+              taxiAuthController.currentLocation, order.from.position) >
+          0.5) {
+        bool clickedYes =
+            await MezcalmosSharedWidgets.yesNoDefaultConfirmationDialog(
+                lang.strings['taxi']['taxiView']["tooFarFromstartRide"]);
+        if (clickedYes) {
+          await startRide();
+        }
+      } else {
+        await startRide();
+      }
+    }
+  }
+
+  Future<void> finishRide() async {
+    mezDbgPrint("CurrentPositionedBottomBar finishRide");
+    ServerResponse serverResponse = await controller.finishRide();
+    if (serverResponse.success) {
+      mezDbgPrint("CurrentPositionedBottomBar finishRide success");
+      Get.offNamedUntil(
+          kOrdersListPage, ModalRoute.withName(kTaxiWrapperRoute));
+    } else {
+      // todo: SHOW ERROR MESSAGE
+    }
+  }
+
+  Future<void> startRide() async {
+    mezDbgPrint("CurrentPositionedBottomBar startRide");
+    ServerResponse serverResponse = await controller.startRide();
+    if (serverResponse.success) {
+      mezDbgPrint("CurrentPositionedBottomBar startRide success");
+    } else {
+      // todo: SHOW ERROR MESSAGE
+    }
   }
 }

@@ -5,14 +5,13 @@ import 'package:get/get.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/Shared/models/Order.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
-import 'package:mezcalmos/TaxiApp/router.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 
 class IncomingOrdersController extends GetxController with MezDisposable {
@@ -32,16 +31,13 @@ class IncomingOrdersController extends GetxController with MezDisposable {
   RxString _selectedIncommingOrderKey = "".obs;
 
   // Storing all the needed Listeners here
-  late Worker _updateOrderDistanceToClient;
-
-  // dynamic get waitingResponse => _waitingResponse.value;
+  Worker? _updateOrderDistanceToClient;
 
   Order? get selectedIncommingOrder => (_selectedIncommingOrderKey.value != "")
       ? orders.firstWhere(
           (element) => element.id == _selectedIncommingOrderKey.value,
           orElse: () => Order.empty())
       : null;
-  Function fillMarkersCallback = () => null; // returns null by default
 
   set selectedIncommingOrderKey(String selectedOrderKey) {
     _selectedIncommingOrderKey.value = selectedOrderKey;
@@ -51,6 +47,7 @@ class IncomingOrdersController extends GetxController with MezDisposable {
   void onInit() async {
     // _selectedIncommingOrder.value = null;
     super.onInit();
+    mezDbgPrint("IncomingOrdersController init");
 
     if (_authController.user != null) {
       // Added Order!
@@ -59,13 +56,15 @@ class IncomingOrdersController extends GetxController with MezDisposable {
           .child(taxiOpenOrdersNode)
           .onValue
           .listen((event) async {
-        orders.value = <Order>[];
+        mezDbgPrint("Open Orders Node");
+        mezDbgPrint(event.snapshot.value);
+        List<Order> ordersFromSnapshot = <Order>[];
         if (event.snapshot.value != null) {
           event.snapshot.value.forEach((dynamic key, dynamic value) async {
             Order order = Order.fromJson(key, value);
             order.distanceToClient = MapHelper.calculateDistance(
                 order.from.position, _taxiAuthController.currentLocation);
-            orders.add(order);
+            ordersFromSnapshot.add(order);
             if (_appLifeCycleController.appState == AppLifecycleState.resumed)
               _databaseHelper.firebaseDatabase
                   .reference()
@@ -74,8 +73,12 @@ class IncomingOrdersController extends GetxController with MezDisposable {
                   .set(true);
           });
 
-          orders
+          ordersFromSnapshot
               .sort((a, b) => a.distanceToClient.compareTo(b.distanceToClient));
+          orders.value = ordersFromSnapshot;
+          mezDbgPrint(orders);
+        } else {
+          orders.value = [];
         }
         // if (orders
         //         .where(
@@ -89,9 +92,10 @@ class IncomingOrdersController extends GetxController with MezDisposable {
         //   }
         // }
       }).canceledBy(this);
-
+      _updateOrderDistanceToClient?.dispose();
       _updateOrderDistanceToClient =
           ever(_taxiAuthController.currentLocationRx, (userLocation) {
+        // mezDbgPrint("Updating distances");
         orders.forEach((order) {
           order.distanceToClient = MapHelper.calculateDistance(
               order.from.position, userLocation as LocationData);
@@ -101,7 +105,7 @@ class IncomingOrdersController extends GetxController with MezDisposable {
     }
 
     _appLifeCycleController.attachCallback(AppLifecycleState.resumed, () {
-      print("[+] Callback executed :: app resumed !");
+      mezDbgPrint("[+] Callback executed :: app resumed !");
       orders.forEach((element) {
         _databaseHelper.firebaseDatabase
             .reference()
@@ -115,36 +119,31 @@ class IncomingOrdersController extends GetxController with MezDisposable {
   // I added this to avoid possible dangling pointers ...
   void detachListeners() {
     cancelSubscriptions();
-    _updateOrderDistanceToClient.dispose();
+    _updateOrderDistanceToClient?.dispose();
     _appLifeCycleController.cleanAllCallbacks();
   }
 
-  Future<void> acceptTaxi(String orderId) async {
+  Future<ServerResponse> acceptTaxi(String orderId) async {
+    mezDbgPrint("Accept Taxi Called");
     HttpsCallable acceptTaxiFunction =
         FirebaseFunctions.instance.httpsCallable('acceptTaxiOrder');
     try {
-      // _waitingResponse.value = true;
-      HttpsCallableResult response = await acceptTaxiFunction
-          .call(<String, dynamic>{
-        'orderId': orderId,
-        'database': _databaseHelper.dbType
-      });
-      _selectedIncommingOrderKey.value = "";
-      Get.back(closeOverlays: true);
-      mezcalmosSnackBar("Notice ~", "A new Order has been accpeted !");
-      print("Accept Taxi Response");
-      print(response.data);
+      HttpsCallableResult response =
+          await acceptTaxiFunction.call(<String, dynamic>{'orderId': orderId});
+      mezDbgPrint(response.data.toString());
+      return ServerResponse.fromJson(response.data);
     } catch (e) {
-      // _waitingResponse.value = false;
-      mezcalmosSnackBar("Notice ~", "Failed to accept the taxi order :( ");
-      print("Exception happend in acceptTaxi : $e");
+      mezDbgPrint(e.toString());
+      return ServerResponse(ResponseStatus.Error,
+          errorMessage: "Server Error", errorCode: "serverError");
     }
   }
 
   @override
-  void dispose() {
+  void onClose() {
+    mezDbgPrint(
+        "Incoming ORDER CONTROLLER :: ::: :: :: : :   : :::::: DISPOSE ! ${this.hashCode}");
     detachListeners();
-    super.dispose();
-    print("--------------------> Incoming Order Controller disposed");
+    super.onClose();
   }
 }

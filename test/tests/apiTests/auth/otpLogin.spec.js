@@ -127,7 +127,7 @@ describe('Mezcalmos', () => {
           expect(response.status).toBe('Success')
           //verifications:
           authInfo = (await admin.database().ref(`users/${userId}/auth`).once('value')).val()
-          validTimeForNextCodeGeneration = validTimeForNextCodeGeneration.toUTCString()
+      validTimeForNextCodeGeneration = validTimeForNextCodeGeneration.toISOString()
           expect(authInfo.codeGeneratedTime).toBe(validTimeForNextCodeGeneration)
     
     });

@@ -6,6 +6,8 @@ import 'package:gql/ast.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart'
+    show mezDbgPrint;
 
 class HasuraHelper {
   late final GraphQLClient graphQLClient;
@@ -16,8 +18,9 @@ class HasuraHelper {
   }
 
   initializeHasura() async {
-    print("Inside Hasura Helper");
-    print("Firebase auth user is ${_authController.fireAuthUser?.displayName}");
+    mezDbgPrint("Inside Hasura Helper");
+    mezDbgPrint(
+        "Firebase auth user is ${_authController.fireAuthUser?.displayName}");
     if (_authController.fireAuthUser != null) {
       String hasuraAuthToken =
           await _getAuthorizationToken(_authController.fireAuthUser!);
@@ -70,10 +73,10 @@ class HasuraHelper {
   Future<String> _getAuthorizationToken(User user) async {
     IdTokenResult? tokenResult = await user.getIdTokenResult();
     if (tokenResult.claims?['https://hasura.io/jwt/claims'] == null) {
-      print("No token, calling addHasuraClaims");
+      mezDbgPrint("No token, calling addHasuraClaims");
       await FirebaseFunctions.instance.httpsCallable('addHasuraClaims').call();
     } else if (await _checkIfAdminNeededButNotGiven(tokenResult)) {
-      print("Need admin priveleges, calling addHasuraClaims");
+      mezDbgPrint("Need admin priveleges, calling addHasuraClaims");
       await FirebaseFunctions.instance.httpsCallable('addHasuraClaims').call();
     }
 

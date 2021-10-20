@@ -102,7 +102,7 @@ function notifyDrivers(orderNotificationsList) {
 
       if (!notificationStatus[orderId][driverId].sent) {
         notificationStatus[orderId][driverId].sent = true
-        notificationStatus[orderId][driverId].sentTime = (new Date()).toUTCString()
+        notificationStatus[orderId][driverId].sentTime = (new Date()).toISOString()
         notificationStatus[orderId][driverId].sentCount = 1
       } else {
         notificationStatus[orderId][driverId].sentCount =
@@ -132,10 +132,10 @@ function checkForStatusChange(orderId) {
     for (driverId in notificationStatus[orderId]) {
       let driver = notificationStatus[orderId][driverId]
       if (driver.received && !notificationStatus[orderId][driverId].receievedTime) {
-        notificationStatus[orderId][driverId].receievedTime = (new Date()).toUTCString()
+        notificationStatus[orderId][driverId].receievedTime = (new Date()).toISOString()
       }
       if (driver.read && !notificationStatus[orderId][driverId].readTime) {
-        notificationStatus[orderId][driverId].readTime = (new Date()).toUTCString()
+        notificationStatus[orderId][driverId].readTime = (new Date()).toISOString()
         // if read for one order, assum read for all other open orders
         for (let openOrderId in openOrders) {
           notificationStatus[openOrderId][driverId].read = true

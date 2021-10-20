@@ -43,7 +43,7 @@ async function cancelTaxiFromDriver(firebase, uid, data, hasura) {
   
     let update = {
       status: "cancelled",
-      rideFinishTime: (new Date()).toUTCString()
+      rideFinishTime: (new Date()).toISOString()
     }
   
     if(data.reason){

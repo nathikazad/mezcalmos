@@ -100,7 +100,7 @@ export default {
       let newMessage = {
         message: payload.message,
         adminId: adminId,
-        timestamp: (new Date()).toUTCString()
+        timestamp: (new Date()).toISOString()
       }
       firebaseDatabase().ref(`adminChat/${userType}/current/${userId}/${chatId}/messages`).push(newMessage);
       if (!chatObject["admins"] || !chatObject["admins"][adminId]) {

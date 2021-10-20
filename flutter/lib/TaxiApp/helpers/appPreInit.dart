@@ -9,7 +9,7 @@ import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 
 class AppPreInit {
   static bitmapLoading() async {
-    print("[+] L O A D I N G .... BITMAP_DESCRIPTORS !");
+    mezDbgPrint("[+] L O A D I N G .... BITMAP_DESCRIPTORS !");
     await GetStorage()
         // .write(getxGmapBottomPaddingKey, Platform.isAndroid ? 38.0 : 63.0);
         .write(getxGmapBottomPaddingKey,
@@ -24,10 +24,5 @@ class AppPreInit {
 
     await GetStorage().write('destination_descriptor',
         await BitmapDescriptorLoader(purple_destination_marker_asset, 60, 60));
-
-    // Loading map asset !
-    await rootBundle.loadString(map_style_asset).then(
-        (jsonString) => GetStorage().write(getxMapStyleJsonKey, jsonString));
-    print("[+] L O A D I N G .... DONE !");
   }
 }

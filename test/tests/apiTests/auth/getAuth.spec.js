@@ -139,7 +139,7 @@ describe('Mezcalmos', () => {
                 "OTPCode": "333333",
                 "attempts": "0",
                 "messageType": 'whatsApp',
-                "codeGeneratedTime": new Date(2021, 4, 30, 11, 20, 21, 22).toUTCString()
+              "codeGeneratedTime": new Date(2021, 4, 30, 11, 20, 21, 22).toISOString()
             }
             data = {
               
@@ -187,7 +187,7 @@ describe('Mezcalmos', () => {
 
           //Test when all conditions are respected:
             let newDate = new Date(Date.now())
-            let newCodeGeneratedTime = newDate.toUTCString()
+      let newCodeGeneratedTime = newDate.toISOString()
             //console.log(newCodeGeneratedTime);
             admin.database().ref(`/users/${testUserId}/auth/attempts`).set(2);
             admin.database().ref(`/users/${testUserId}/auth/codeGeneratedTime`).set(newCodeGeneratedTime);

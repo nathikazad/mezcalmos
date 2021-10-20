@@ -43,7 +43,7 @@ async function cancelTaxiFromCustomer(firebase, uid, data, hasura) {
     await firebase.database().ref(`/users/${order.customer.id}/state/currentOrder`).remove()
     let update = {
       status: "cancelled",
-      rideFinishTime: (new Date()).toUTCString(),
+      rideFinishTime: (new Date()).toISOString(),
       cancelledBy: "customer"
     }
     update.reason = (data.reason) ? data.reason : null

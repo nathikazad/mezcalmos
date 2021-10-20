@@ -1,4 +1,3 @@
-import 'dart:io' show Platform;
 import 'dart:typed_data';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -9,16 +8,21 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
+import 'package:mezcalmos/Shared/models/ServerResponse.dart';
+import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
+import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/components/IncommingOrderMapScreen/IPositionedBottomBar.dart';
 import 'package:mezcalmos/TaxiApp/components/IncommingOrderMapScreen/IPositionedFromToBar.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
+import 'package:mezcalmos/TaxiApp/router.dart';
 
-class IncommingOrderScreenView extends GetWidget<IncomingOrdersController> {
+class IncommingOrderScreenView extends GetWidget<IncomingOrdersController>
+    with MezDisposable {
   LanguageController lang = Get.find<LanguageController>();
   // when clicking on accept .. etc
   RxBool showLoading = false.obs;
@@ -31,51 +35,105 @@ class IncommingOrderScreenView extends GetWidget<IncomingOrdersController> {
     "destinationImg": null
   };
   Rx<LatLng> initialCameraPosition = LatLng(0, 0).obs;
-  List<CustomMarker> customMarkers = <CustomMarker>[];
+  RxList<Marker> customMarkers = <Marker>[].obs;
   //==================================
+
+  Future<void> loadPolyLineAndMarkers() async {
+    _loadPolyline();
+    await _loadMarkers();
+  }
+
   @override
   Widget build(BuildContext context) {
-    _loadPolyline();
-    _loadMarkers();
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      controller.orders.listen((_) async {
+        mezDbgPrint("\t\t\t\t STILL LISTENING INCOMMINGORDERVIEW ---- !!!!");
+        if (controller.selectedIncommingOrder?.id == null &&
+            !showLoading.value &&
+            Get.currentRoute == kSelectedIcommingOrder) {
+          cancelSubscriptions();
+          Get.back();
+          await MezcalmosSharedWidgets.mezcalmosDialogOrderNoMoreAvailable(
+              55, Get.height, Get.width);
+        }
+      }).canceledBy(this, debugId: "selectedOrderViewStream!");
+    });
 
     return Scaffold(
-      appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back()),
+      appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () {
+        cancelSubscriptions();
+        Get.back();
+      }),
       body: SafeArea(
         child: Stack(
           alignment: Alignment.topCenter,
           children: [
-            Obx(() => MGoogleMap(
-                  customMarkers,
-                  initialCameraPosition.value,
-                  polylines: polylines,
-                )),
-            IncommingPositionedBottomBar(controller, lang),
+            FutureBuilder<void>(
+                future: loadPolyLineAndMarkers(),
+                builder: (contexto, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return MGoogleMap(
+                      customMarkers,
+                      initialCameraPosition.value,
+                      polylines: polylines,
+                      debugString: "IncomingViewScreen",
+                    );
+                  }
+
+                  return MezLogoAnimation(centered: true);
+                }),
+            IncommingPositionedBottomBar(),
             Positioned(
               bottom: GetStorage().read(getxGmapBottomPaddingKey),
-              child: TextButton(
-                style: ButtonStyle(
-                  fixedSize: MaterialStateProperty.all(Size(Get.width / 1.05,
-                      getSizeRelativeToScreen(20, Get.height, Get.width))),
-                  backgroundColor: MaterialStateProperty.all(
-                      Color.fromARGB(255, 79, 168, 35)),
-                ),
-                onPressed: () {
-                  showLoading.value = true;
-                  controller
-                      .acceptTaxi(controller.selectedIncommingOrder?.id)
-                      .then((_) => Get.back())
-                      .whenComplete(() => showLoading.value = true);
-                },
-                child: Text(
-                  lang.strings['taxi']['taxiView']["acceptOrders"],
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
+              child: Obx(() => TextButton(
+                    style: ButtonStyle(
+                      fixedSize: MaterialStateProperty.all(Size(
+                          Get.width / 1.05,
+                          getSizeRelativeToScreen(20, Get.height, Get.width))),
+                      backgroundColor: MaterialStateProperty.all(
+                          Color.fromARGB(255, 79, 168, 35)),
+                    ),
+                    onPressed: !showLoading.value
+                        ? () {
+                            showLoading.value = true;
+                            controller
+                                .acceptTaxi(
+                                    controller.selectedIncommingOrder?.id)
+                                .then((serverResponse) {
+                              cancelSubscriptions();
+                              if (serverResponse.success) {
+                                mezDbgPrint("Inside then after accept taxi");
+                                // mezcalmosSnackBar("Success", "");
+                                showLoading.value = false;
+                                Get.offNamedUntil(kCurrentOrderPage,
+                                    ModalRoute.withName(kTaxiWrapperRoute));
+                              } else {
+                                // in case Taxi User failed accepting the order.
+                                Get.back();
+                                mezcalmosSnackBar(
+                                    "Failed", serverResponse.errorMessage!);
+                              }
+                            });
+                          }
+                        : () => null,
+                    child: !showLoading.value
+                        ? Text(
+                            lang.strings['taxi']['taxiView']["acceptOrders"],
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          )
+                        : const SizedBox(
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                            height: 20,
+                            width: 20,
+                          ),
+                  )),
             ),
-            IncomingPositionedFromToTopBar(controller, lang)
+            IncomingPositionedFromToTopBar()
           ],
         ),
       ),
@@ -98,7 +156,6 @@ class IncommingOrderScreenView extends GetWidget<IncomingOrdersController> {
     }
   }
 
-// onTheWay - state
   Future<void> _loadMarkers() async {
     await _loadBitmapDescriptors();
 
@@ -106,19 +163,19 @@ class IncommingOrderScreenView extends GetWidget<IncomingOrdersController> {
         controller.selectedIncommingOrder?.from.latitude,
         controller.selectedIncommingOrder?.from.longitude);
 
-    customMarkers.assignAll(<CustomMarker>[
+    customMarkers.assignAll(<Marker>[
       // Customer's Marker
-      CustomMarker(
-          "customer",
-          bitmapDescriptors["customerImg"]!,
-          LatLng(controller.selectedIncommingOrder?.from.latitude,
+      Marker(
+          markerId: MarkerId("customer"),
+          icon: bitmapDescriptors["customerImg"]!,
+          position: LatLng(controller.selectedIncommingOrder?.from.latitude,
               controller.selectedIncommingOrder?.from.longitude)),
 
       // Destination Marker
-      CustomMarker(
-          "destination",
-          bitmapDescriptors["destinationImg"]!,
-          LatLng(controller.selectedIncommingOrder?.to.latitude,
+      Marker(
+          markerId: MarkerId("destination"),
+          icon: bitmapDescriptors["destinationImg"]!,
+          position: LatLng(controller.selectedIncommingOrder?.to.latitude,
               controller.selectedIncommingOrder?.to.longitude)),
     ]);
   }

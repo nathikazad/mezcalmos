@@ -20,7 +20,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
-import 'package:mezcalmos/TaxiApp/helpers/authHooks.dart';
 import 'package:mezcalmos/pre-main.dart';
 import 'package:package_info/package_info.dart';
 
@@ -34,25 +33,25 @@ void main() {
   const _db =
       bool.hasEnvironment('DB') ? String.fromEnvironment('DB') : defaultDb;
 
-  const _launch_mode = bool.hasEnvironment('LMODE')
+  const _launchMode = bool.hasEnvironment('LMODE')
       ? String.fromEnvironment('LMODE')
       : defaultLaunchMode;
 
   print('SP -> ${startPoint.toString()}');
   print('host  -> $_host');
   print('db  -> $_db');
-  print('mode  -> $_launch_mode');
+  print('mode  -> $_launchMode');
 
-  runApp(SPoint(launcherApp, _host, _db, _launch_mode));
+  runApp(SPoint(launcherApp, _host, _db, _launchMode));
 }
 
 class SPoint extends StatefulWidget {
   final Widget _app;
   final String _host;
   final String _db;
-  final String _launch_mode;
+  final String _launchMode;
 
-  SPoint(this._app, this._host, this._db, this._launch_mode);
+  SPoint(this._app, this._host, this._db, this._launchMode);
 
   @override
   _SPointState createState() => _SPointState();
@@ -62,17 +61,16 @@ class _SPointState extends State<SPoint> {
   bool _initialized = false;
   bool _error = false;
   bool timerDone = false;
-  late StreamSubscription<bool> onAuthStateNotifierInvoked;
 
   initializeSetup() async {
     try {
       FirebaseApp _app = await Firebase.initializeApp();
-      print("[+] App Initialized under Name ${_app.name} .");
+      mezDbgPrint("[+] App Initialized under Name ${_app.name} .");
       late FirebaseDatabase firebaseDb;
 
-      if (widget._launch_mode == "prod") {
+      if (widget._launchMode == "prod") {
         firebaseDb = FirebaseDatabase(app: _app);
-      } else if (widget._launch_mode == "dev") {
+      } else if (widget._launchMode == "dev") {
         // Firebase !
         firebaseDb =
             FirebaseDatabase(app: _app, databaseURL: widget._host + dbRoot);
@@ -82,7 +80,7 @@ class _SPointState extends State<SPoint> {
       }
       // staging
       else {
-        print("[+] Entered Staging check ----.");
+        mezDbgPrint("[+] Entered Staging check ----.");
         firebaseDb = FirebaseDatabase(app: _app, databaseURL: stagingDb);
       }
 
@@ -93,26 +91,32 @@ class _SPointState extends State<SPoint> {
 
       // GetStorage
       if (await GetStorage.init()) {
-        print("[ GET STORAGE ] INITIALIZED !");
-        await GetStorage().write(getxLmodeKey, widget._launch_mode);
+        mezDbgPrint("[ GET STORAGE ] INITIALIZED !");
+        await GetStorage().write(getxLmodeKey, widget._launchMode);
         // Get the VersionNumber
         PackageInfo pInfos = await PackageInfo.fromPlatform();
         await GetStorage().write(version, pInfos.version);
       } else
-        print("[ GET STORAGE ] FAILED TO INITIALIZE !");
-      AuthController auCtrl = Get.put<AuthController>(
-          AuthController(signInCallback, signOutCallback),
+        mezDbgPrint("[ GET STORAGE ] FAILED TO INITIALIZE !");
+
+      Get.put<AuthController>(AuthController(signInCallback, signOutCallback),
           permanent: true);
-      Get.put<SettingsController>(SettingsController(), permanent: true);
-      // set to logs=false if you don't need the logs anymore.
+      mezDbgPrint("Putting Auth Controller");
       Get.put<AppLifeCycleController>(AppLifeCycleController(logs: true),
           permanent: true);
+      Get.put<SettingsController>(SettingsController(appName), permanent: true);
+      // set to logs=false if you don't need the logs anymore.
 
-      // this listenes on authStateNotifierInvoked changes and affect it's value to our _initialized StateVariable and rebuild the state of this Spoint.
-      onAuthStateNotifierInvoked = auCtrl.authStateNotifierInvoked
-          .listen((value) => setState(() => _initialized = value));
+      Get.find<AuthController>().authStateChange.first.then((value) {
+        setState(() => _initialized = true);
+        Timer(
+            Duration(seconds: nSplashScreenTimer),
+            () => setState(() {
+                  timerDone = true;
+                }));
+      });
     } catch (e) {
-      print("[+] Error Happend =======> $e");
+      mezDbgPrint("[+] Error Happend =======> $e");
       setState(() {
         _error = true;
       });
@@ -121,9 +125,9 @@ class _SPointState extends State<SPoint> {
 
   @override
   void initState() {
+    super.initState();
     // INjecting this here cuz we will need it For language / them ... etc
     initializeSetup();
-    super.initState();
   }
 
   @override
@@ -141,24 +145,11 @@ class _SPointState extends State<SPoint> {
         ),
       );
     }
-
     // Show a SplashScreen until setup is full done and initialized!
-    if (!_initialized) {
+    if (!_initialized || !timerDone) {
       return SplashScreen();
-    } else
-      // we don't need to keep this listener there anymore
-      onAuthStateNotifierInvoked.cancel();
-
-    Timer(
-        Duration(seconds: nSplashScreenTimer),
-        () => setState(() {
-              timerDone = true;
-            }));
-
-    // if there is no errors and Initialization is done , we inject Auth right away to not cause the Delay on the wrapper!
-    if (timerDone)
+    } else {
       return widget._app;
-    else
-      return SplashScreen();
+    }
   }
 }

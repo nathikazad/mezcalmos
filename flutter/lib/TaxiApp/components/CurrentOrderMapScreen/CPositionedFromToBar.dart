@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Order.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
 
 class CurrentPositionedFromToTopBar extends StatelessWidget {
-  LanguageController lang;
-  CurrentOrderController controller;
-
-  CurrentPositionedFromToTopBar(this.controller, this.lang);
-
+  CurrentOrderController controller = Get.find<CurrentOrderController>();
+  LanguageController lang = Get.find<LanguageController>();
+  Order order;
+  CurrentPositionedFromToTopBar(this.order);
   @override
   Widget build(BuildContext context) {
     return Positioned(
@@ -53,39 +53,27 @@ class CurrentPositionedFromToTopBar extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                             )),
-                        Obx(
-                          () => GestureDetector(
+                        GestureDetector(
                             onTap: () => mezcalmosSnackBar(
                                 lang.strings['shared']['inputLocation']["from"],
-                                controller.currentOrderStreamRx.value?.order
+                                order
                                         .from?.address ??
                                     ""),
                             child: Text(
-                              controller.currentOrderStreamRx.value?.order.from
+                              order.from
                                           ?.address
-                                          ?.toString()
-                                          .length ==
+                                          ?.toString() ==
                                       null
                                   ? "........."
-                                  : controller.currentOrderStreamRx.value!.order
-                                              .from!.address!
-                                              .toString()
-                                              .length >
-                                          13
-                                      ? (controller.currentOrderStreamRx.value
-                                                  ?.order.from?.address
-                                                  .toString()
-                                                  .substring(0, 13) ??
-                                              "..........") +
-                                          " .."
-                                      : controller.currentOrderStreamRx.value!
-                                          .order.from!.address
-                                          .toString(),
-                              style: TextStyle(fontSize: 16, fontFamily: 'psr'),
+                                  : order
+                                      .from!.address!
+                                      .toString(),
+                              style: TextStyle(fontSize: 15, fontFamily: 'psr'),
+                              maxLines: 1,
+                              softWrap: false,
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                        ),
                       ]),
                 ),
               ),
@@ -133,56 +121,47 @@ class CurrentPositionedFromToTopBar extends StatelessWidget {
             Expanded(
               flex: 2,
               // fit: FlexFit.tight,
-              child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 0, top: 12, bottom: 12, right: 8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Obx(
-                        () => Text(
-                          lang.strings['shared']['inputLocation']["to"],
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+              child: Container(
+                child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: 0, top: 12, bottom: 12, right: 8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Obx(
+                          () => Text(
+                            lang.strings['shared']['inputLocation']["to"],
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                      Obx(
-                        () => GestureDetector(
-                          onTap: () => mezcalmosSnackBar(
-                              lang.strings['shared']['inputLocation']["to"],
-                              controller.currentOrderStreamRx.value?.order.to
-                                      ?.address ??
-                                  ""),
-                          child: Text(
-                            controller.currentOrderStreamRx.value?.order.to
-                                        ?.address
-                                        ?.toString()
-                                        .length ==
-                                    null
-                                ? "........."
-                                : controller.currentOrderStreamRx.value!.order
-                                            .to!.address!
-                                            .toString()
-                                            .length >
-                                        13
-                                    ? (controller.currentOrderStreamRx.value!
-                                                .order.to?.address
-                                                .toString()
-                                                .substring(0, 13) ??
-                                            "..........") +
-                                        " .."
-                                    : controller.currentOrderStreamRx.value
-                                        ?.order.to?.address, //13+..
-                            style: TextStyle(fontSize: 16, fontFamily: 'psr'),
-                            overflow: TextOverflow.ellipsis,
+                        GestureDetector(
+                            onTap: () => mezcalmosSnackBar(
+                                lang.strings['shared']['inputLocation']["to"],
+                                order.to
+                                        ?.address ??
+                                    ""),
+                            child: Text(
+                              order.to
+                                          ?.address
+                                          ?.toString() ==
+                                      null
+                                  ? "........."
+                                  : order
+                                      .to!.address!
+                                      .toString(), //13+..
+                              style: TextStyle(fontSize: 15, fontFamily: 'psr'),
+                              maxLines: 1,
+                              softWrap: false,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
-                        ),
-                      ),
-                    ],
-                  )),
+                      ],
+                    )),
+              ),
             )
           ],
         ),

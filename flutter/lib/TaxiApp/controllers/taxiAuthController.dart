@@ -1,186 +1,185 @@
 import 'dart:async';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
+import 'package:mezcalmos/Shared/controllers/deviceNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/utilities/Extensions.dart';
-// import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
-import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
-import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/TaxiApp/models/TaxiDriver.dart';
-// import 'package:mezcalmos/Shared/pages/AuthScreens/UnauthorizedScreen.dart';
-// import 'package:mezcalmos/TaxiApp/pages/Orders/CurrentOrderScreen.dart';
-// import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingListScreen.dart';
 import 'package:location/location.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class TaxiAuthController extends GetxController with MezDisposable {
-  Rx<TaxiDriver> _model = TaxiDriver.empty().obs;
+class TaxiAuthController extends GetxController {
+  Rxn<TaxiState> _state = Rxn();
   DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
   AuthController _authController = Get.find<AuthController>();
-  // Rx<Widget> _dynamicScreen =
-  //     (Center(child: CircularProgressIndicator()) as Widget).obs;
+  DeviceNotificationsController _notificationsController =
+      Get.find<DeviceNotificationsController>();
+
+  TaxiState? get taxiState => _state.value;
+  Stream<TaxiState?> get stateStream => _state.stream;
+
   Rx<LocationData> _currentLocation = LocationData.fromMap(
       <String, dynamic>{"latitude": 15.851385, "longitude": -97.046429}).obs;
-  RxBool _locationEnabled = false.obs;
-  DeviceNotificationsController _messagingController =
-      Get.put<DeviceNotificationsController>(DeviceNotificationsController());
 
-  dynamic get currentOrderId => _model.value.currentOrder ?? null;
-  dynamic get authorizedTaxi => _model.value.isAuthorized;
-  bool get isLooking => _model.value.isLooking ?? false;
-  // Widget get dynamicScreen => _dynamicScreen.value;
   LocationData get currentLocation => _currentLocation.value;
-  bool get locationEnabled => _locationEnabled.value;
   Rx<LocationData> get currentLocationRx => _currentLocation;
 
   StreamSubscription<LocationData>? _locationListener;
+  StreamSubscription? _taxiStateNodeListener;
+  StreamSubscription? _authStateChangeListener;
+
   bool _checkedAppVersion = false;
-  DateTime lastLocationUpdatedTime = DateTime.now();
-  /*
-    GetScreen function basically will return on of the 3 right Screens :
-      - AnauthorizedScreen
-      - IncommingOrders
-      - CurrentOrder
-  */
+  String? _previousStateValue = "init";
 
   @override
   void onInit() async {
     super.onInit();
-    // Injecting all our c here
-    Get.lazyPut(() => CurrentOrderController());
-    Get.lazyPut(() => IncomingOrdersController());
     // ------------------------------------------------------------------------
 
-    print("User from TaxiAuthController >> ${_authController.user?.uid}");
-    print("authorizedTaxi from TaxiAuthController >> ${authorizedTaxi}");
-    print("currentOrderId from TaxiAuthController >> ${currentOrderId}");
-    print(
-        "TaxiAuthController  Messaging Token>> ${await _messagingController.getToken()}");
+    mezDbgPrint("TaxiAuthController: init ${this.hashCode}");
+    mezDbgPrint("TaxiAuthController: calling handle state change first time");
+    handleStateChange(Get.find<AuthController>().fireAuthUser);
+    _authStateChangeListener =
+        Get.find<AuthController>().authStateChange.listen((user) {
+      mezDbgPrint(
+          "TaxiAuthController: calling handle state change from listener");
+      handleStateChange(user);
+    });
+  }
 
-    if (_authController.user != null) {
-      _databaseHelper.firebaseDatabase
-          .reference()
-          .child(taxiAuthNode(_authController.user!.uid))
-          .onValue
-          .listen((event) async {
-        _model.value = event.snapshot.value != null
-            ? TaxiDriver.fromSnapshot(event.snapshot)
-            : TaxiDriver(false, false, null, null, null, isEmpty: false);
-
-        if (_checkedAppVersion == false) {
-          if (_model.value.isAuthorized == true) {
-            String VERSION = GetStorage().read(version);
-            print("[+] TaxiDriver Currently using App v$VERSION");
-            _databaseHelper.firebaseDatabase
-                .reference()
-                .child(taxiDriverAppVersionNode(_authController.user!.uid))
-                .set(VERSION);
-
-            _checkedAppVersion = true;
-          }
-        }
-        // our magical Trick :p
-        // _dynamicScreen.value = _getScreen();
-
-        if (_model.value.isEmpty == true ||
-            (_model.value.currentOrder == null &&
-                _model.value.isLooking == false)) {
+  void handleStateChange(User? user) async {
+    mezDbgPrint("TaxiAuthController: handle state change user value");
+    mezDbgPrint(user);
+    // mezDbgPrint(_authController.fireAuthUser);
+    await _taxiStateNodeListener?.cancel();
+    _taxiStateNodeListener = null;
+    await _locationListener?.cancel();
+    _locationListener = null;
+    if (user == null) return;
+    mezDbgPrint(
+        "TaxiAuthController: _taxiStateNodeListener init ${taxiStateNode(user.uid)}");
+    _taxiStateNodeListener = _databaseHelper.firebaseDatabase
+        .reference()
+        .child(taxiStateNode(user.uid))
+        .onValue
+        .listen((event) async {
+      mezDbgPrint(
+          "TaxiAuthController${this.hashCode}: _taxiStateNodeListener event");
+      if (event.snapshot.value.toString() == _previousStateValue) {
+        mezDbgPrint(
+            'TaxiAuthController:: same state event fired again, skipping it');
+        return;
+      }
+      _previousStateValue = event.snapshot.value.toString();
+      if (event.snapshot.value != null) {
+        mezDbgPrint(event.snapshot.value);
+        _state.value = TaxiState.fromSnapshot(event.snapshot.value);
+        if ((_state.value!.currentOrder == null &&
+            _state.value!.isLooking == false)) {
           await Location().enableBackgroundMode(enable: false);
           _locationListener?.pause();
-          // print(
-          //     " [=] ---------------------------------> Paused locationListener !");
-        } else {
-          if (!(await Location().isBackgroundModeEnabled()))
-            await Location().enableBackgroundMode(enable: true);
-
-          _locationListener?.resume();
-          // print(
-          //     " [=] ---------------------------------> Resumed locationListener !");
         }
-      }).canceledBy(this);
+      } else {
+        _state.value = null;
+        if (!(await Location().isBackgroundModeEnabled()))
+          await Location().enableBackgroundMode(enable: true);
+        _locationListener?.resume();
+      }
+    });
+    saveNotificationToken();
+    mezDbgPrint(
+        "/////////////////////////////////////////////${_state.value?.toJson()}////////////////////////////////////////////////////");
+    _locationListener = await _listenForLocation();
+  }
 
-      String? deviceNotificationToken = await _messagingController.getToken();
-      if (deviceNotificationToken != null)
-        _databaseHelper.firebaseDatabase
-            .reference()
-            .child(
-                '${taxiAuthNode(_authController.user?.uid ?? '')}/notificationInfo/')
-            .set(<String, String>{
-          'deviceNotificationToken': deviceNotificationToken
-        });
-      print(
-          "/////////////////////////////////////////////${_model.value.toJson()}////////////////////////////////////////////////////");
-      _listenForLocation();
+  void saveNotificationToken() async {
+    mezDbgPrint(
+        "TaxiAuthController  Messaging Token>> ${await _notificationsController.getToken()}");
+    String? deviceNotificationToken = await _notificationsController.getToken();
+    if (deviceNotificationToken != null)
+      _databaseHelper.firebaseDatabase
+          .reference()
+          .child(
+              '${taxiAuthNode(_authController.fireAuthUser?.uid ?? '')}/notificationInfo/')
+          .set(<String, String>{
+        'deviceNotificationToken': deviceNotificationToken
+      });
+  }
+
+  void saveAppVersionIfNecessary() {
+    if (_checkedAppVersion == false) {
+      String VERSION = GetStorage().read(version);
+      mezDbgPrint("[+] TaxiDriver Currently using App v$VERSION");
+      _databaseHelper.firebaseDatabase
+          .reference()
+          .child(taxiDriverAppVersionNode(_authController.fireAuthUser!.uid))
+          .set(VERSION);
+      _checkedAppVersion = true;
     }
   }
 
-  Future<void> _listenForLocation() async {
-    if (_authController.user == null) {
-      print("User is not signed in !");
-    } else {
-      Location location = Location();
+  Future<StreamSubscription<LocationData>> _listenForLocation() async {
+    mezDbgPrint("Listening for location !");
+    Location location = Location();
+    await location.changeSettings(interval: 1000);
+    // location.enableBackgroundMode(enable: true);
+    return location.onLocationChanged.listen((LocationData currentLocation) {
+      // mezDbgPrint("\t\t [TAXI AUTH CONTROLLER] LOCATION GOT UPDAAAATED !!");
+      DateTime currentTime = DateTime.now();
+      if (currentLocation.latitude != null &&
+          currentLocation.longitude != null) {
+        _currentLocation.value = currentLocation;
 
-      _locationEnabled.value = true;
-      // location.enableBackgroundMode(enable: true);
-      (_locationListener =
-              location.onLocationChanged.listen((LocationData currentLocation) {
-        DateTime currentTime = DateTime.now();
-        if (currentTime.difference(lastLocationUpdatedTime).inSeconds > 5 &&
-            currentLocation.latitude != null &&
-            currentLocation.longitude != null) {
-          lastLocationUpdatedTime = currentTime;
-          _currentLocation.value = currentLocation;
-
-          Map<String, dynamic> positionUpdate = <String, dynamic>{
-            "lastUpdateTime": currentTime.toUtc().toString(),
-            "position": <String, dynamic>{
-              "lat": currentLocation.latitude,
-              "lng": currentLocation.longitude
-            }
-          };
-          // print(positionUpdate);
+        Map<String, dynamic> positionUpdate = <String, dynamic>{
+          "lastUpdateTime": currentTime.toUtc().toString(),
+          "position": <String, dynamic>{
+            "lat": currentLocation.latitude,
+            "lng": currentLocation.longitude
+          }
+        };
+        // mezDbgPrint(positionUpdate);
+        _databaseHelper.firebaseDatabase
+            .reference()
+            .child(taxiAuthNode(_authController.fireAuthUser?.uid ?? ''))
+            .child('location')
+            .set(positionUpdate);
+        if (_state.value?.currentOrder != null) {
           _databaseHelper.firebaseDatabase
               .reference()
-              .child(taxiAuthNode(_authController.user?.uid ?? ''))
-              .child('location')
+              .child(orderId(_state.value!.currentOrder!))
+              .child('driver/location')
               .set(positionUpdate);
-          if (_model.value.currentOrder != null) {
-            _databaseHelper.firebaseDatabase
-                .reference()
-                .child(orderId(_model.value.currentOrder))
-                .child('driver/location')
-                .set(positionUpdate);
-          }
         }
-      }))
-          .canceledBy(this);
-    }
+      }
+    });
   }
 
   @override
-  void dispose() async {
-    print("[+] TaxiAuthController::dispose ---------> Was invoked !");
-    // await _locationListener?.cancel();
-    cancelSubscriptions();
-    // Get.find<CurrentOrderController>().dispose();
-    // Get.find<IncomingOrdersController>().dispose();
+  void onClose() {
+    mezDbgPrint(
+        "[+] TaxiAuthController::dispose ---------> Was invoked ! ${this.hashCode}");
+
+    _taxiStateNodeListener?.cancel();
+    _taxiStateNodeListener = null;
+
+    _locationListener?.cancel();
+    _locationListener = null;
+
+    _authStateChangeListener?.cancel();
+    _authStateChangeListener = null;
     super.onClose();
   }
 
   void turnOff() {
     _databaseHelper.firebaseDatabase
         .reference()
-        .child(taxiIsLookingField(_authController.user!.uid))
+        .child(taxiIsLookingField(_authController.fireAuthUser!.uid))
         .set(false)
         .catchError((err) {
-      print("Error turning [ isLooking = false ] -> $err");
+      mezDbgPrint("Error turning [ isLooking = false ] -> $err");
       mezcalmosSnackBar("Error ~", "Failed turning it off!");
     });
   }
@@ -188,10 +187,10 @@ class TaxiAuthController extends GetxController with MezDisposable {
   void turnOn() {
     _databaseHelper.firebaseDatabase
         .reference()
-        .child(taxiIsLookingField(_authController.user!.uid))
+        .child(taxiIsLookingField(_authController.fireAuthUser!.uid))
         .set(true)
         .catchError((err) {
-      print("Error turning [ isLooking = true ] -> $err");
+      mezDbgPrint("Error turning [ isLooking = true ] -> $err");
       mezcalmosSnackBar("Error ~", "Failed turning_listenForLocation it on!");
     });
   }

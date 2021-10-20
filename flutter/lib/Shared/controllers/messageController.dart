@@ -1,53 +1,59 @@
+// import 'dart:async';
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/constants/databaseNodes.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
+import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/utilities/Extensions.dart';
+import 'package:mezcalmos/Shared/models/Notification.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
-class MessageController extends GetxController with MezDisposable {
+class MessageController extends GetxController {
   Rx<Chat> _model = Chat("", "", {}, [], "").obs;
   Chat? get value => _model.value;
   DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
   AuthController _authController = Get.find<AuthController>();
-
-  late String _dbAddress;
+  StreamSubscription? chatListener;
+  // String? _orderId;
+  late AppName appName;
 
   @override
   void onInit() {
     super.onInit();
-    print("--------------------> messageController Initialized !");
+    mezDbgPrint("--------------------> messageController Initialized !");
+    this.appName = Get.find<SettingsController>().appName;
   }
 
   void loadChat(String userId, String orderId,
       {VoidCallback? onValueCallBack}) {
-    _dbAddress = orderChatNode(orderId);
-
-    _databaseHelper.firebaseDatabase
+    // _orderId = orderId;
+    chatListener?.cancel();
+    chatListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(orderChatNode(orderId))
         .onValue
         .listen((event) {
       if (event.snapshot.value != null) {
-        // print("\n\n\n ${event.snapshot.value} \n\n\n");
+        // mezDbgPrint("\n\n\n ${event.snapshot.value} \n\n\n");
         Chat res = Chat.fromJson(event.snapshot.key, event.snapshot.value);
 
         _model.value = res;
         if (onValueCallBack != null) onValueCallBack();
-        // print(
+        // mezDbgPrint(
         //     "--------------------> messageController Listener Invoked with Messages > ${_model.value.messages} ");
       }
-    }).canceledBy(this);
+    });
   }
 
-  void sendMessage(String message) {
+  void sendMessage(String message, String orderId) {
     _databaseHelper.firebaseDatabase
         .reference()
-        .child('$_dbAddress/messages')
+        .child('${orderChatNode(orderId)}/messages')
         .push()
         .set(<String, dynamic>{
       "message": message,
@@ -62,13 +68,27 @@ class MessageController extends GetxController with MezDisposable {
   }
 
   Participant? recipient() {
-    Participant? recipient = null;
+    Participant? recipient;
     _model.value.participants.forEach((key, value) {
+      mezDbgPrint("$key ----- $value");
       if (key != _authController.user!.uid) {
         recipient = value;
       }
     });
     return recipient;
+  }
+
+  void clearMessageNotifications(String orderId) {
+    FBNotificationsController fbNotificationsController =
+        Get.find<FBNotificationsController>();
+    fbNotificationsController
+        .notifications()
+        .where((notification) =>
+            notification.notificationType == NotificationType.NewMessage &&
+            (notification as NewMessageNotification).orderId == orderId)
+        .forEach((notification) {
+      fbNotificationsController.removeNotification(notification.id);
+    });
   }
 
   // using onClose better , since  the getter of GetX invoke it automatically.
@@ -77,7 +97,8 @@ class MessageController extends GetxController with MezDisposable {
 
   @override
   void onClose() {
-    cancelSubscriptions();
+    chatListener?.cancel();
+    chatListener = null;
     super.onClose();
   }
 }

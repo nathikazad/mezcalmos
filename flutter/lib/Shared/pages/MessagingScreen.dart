@@ -6,15 +6,29 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
-import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 // Extends GetView<MessagingController> after Nathik implements the controller
 class MessagingScreen extends GetView<MessageController> {
+  String? orderId;
+
+  MessagingScreen() {
+    print("inside messaginScreen constructor !");
+    Get.put<MessageController>(MessageController());
+    this.orderId = Get.parameters['orderId'];
+    // we make sure that the orderId is never null somehow.
+    // because we depend on it , on the controller side!
+    if (this.orderId == null) {
+      Get.snackbar("Error", "Failed retrieving this Order's messages!");
+      Get.back();
+    }
+    controller.clearMessageNotifications(this.orderId!);
+    mezDbgPrint(Get.parameters);
+  }
+
   AuthController _authController = Get.find<AuthController>();
   LanguageController _languageController = Get.find<LanguageController>();
 
-  CurrentOrderController _currentOrderController =
-      Get.find<CurrentOrderController>();
   TextEditingController _textEditingController = new TextEditingController();
   ScrollController _listViewScrollController = new ScrollController();
   RxList<Widget> chatLines = <Widget>[].obs;
@@ -52,19 +66,11 @@ class MessagingScreen extends GetView<MessageController> {
                 child: CircleAvatar(
                   radius: 23,
                   backgroundColor: Colors.grey.shade200,
-                  backgroundImage: userImage == null
+                  backgroundImage: userImage == null || userImage == ""
                       ? AssetImage(aDefaultAvatar) as ImageProvider
                       : NetworkImage(userImage),
                 ),
               ),
-              // SizedBox(
-              //   width: 50,
-              // ),
-              // Positioned(
-              //   left: isMe ? 65 : 0,
-              //   right: isMe ? 0 : 65,
-              //   top: 0,
-              //   child:
               Wrap(
                 spacing: 10,
                 direction: Axis.vertical,
@@ -146,26 +152,28 @@ class MessagingScreen extends GetView<MessageController> {
       scrollDown(mezChatScrollDuration: timeStamp);
     });
 
-    controller.loadChat(_authController.user!.uid,
-        _currentOrderController.currentOrderStream?.order.id);
+    // controller.loadChat(_authController.user!.uid, orderId);
 
     void _fillCallBack() {
-      print(
+      mezDbgPrint(
           "--------------------- >>>>> FillCallback Executed  >> Messages Count >> ${controller.value?.messages.length}!");
       chatLines.assignAll(controller.value!.messages.map(
-        (e) => singleChatComponent(
-          e.message,
-          e.formatedTime,
-          e.userId == _authController.user!.uid,
-          userImage: controller.value!.participants[e.userId]?.image,
-        ),
+        (e) {
+          mezDbgPrint(
+              " \t\t ${controller.value!.participants[e.userId]?.image}");
+          return singleChatComponent(
+            e.message,
+            e.formatedTime,
+            e.userId == _authController.user!.uid,
+            userImage: controller.value!.participants[e.userId]?.image,
+          );
+        },
       ));
 
       scrollDown();
     }
 
-    controller.loadChat(_authController.user!.uid,
-        _currentOrderController.currentOrderStream?.order.id,
+    controller.loadChat(_authController.user!.uid, orderId!,
         onValueCallBack: _fillCallBack);
 
     return Scaffold(
@@ -178,13 +186,6 @@ class MessagingScreen extends GetView<MessageController> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Padding(
-              //   padding: EdgeInsets.only(left: 15, bottom: 25, top: 10),
-              //   child: Text(
-              //     'Message',
-              //     style: TextStyle(fontFamily: 'psr', fontSize: 50),
-              //   ),
-              // ),
               Container(
                   width: Get.width,
                   padding: EdgeInsets.only(top: 15, bottom: 15),
@@ -198,44 +199,40 @@ class MessagingScreen extends GetView<MessageController> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(left: 15),
-                        child: CircleAvatar(
-                          radius: 23,
-                          backgroundColor: Colors.grey.shade200,
-                          backgroundImage: _currentOrderController
-                                      .currentOrderStream
-                                      ?.order
-                                      .customer['image'] !=
-                                  null
-                              ? NetworkImage(_currentOrderController
-                                  .currentOrderStream?.order.customer['image'])
-                              : AssetImage(aDefaultAvatar) as ImageProvider,
+                        child: Obx(
+                          () => CircleAvatar(
+                            radius: 23,
+                            backgroundColor: Colors.grey.shade200,
+                            backgroundImage: controller.recipient()?.image !=
+                                    null
+                                ? NetworkImage(controller.recipient()!.image)
+                                : AssetImage(aDefaultAvatar) as ImageProvider,
+                          ),
                         ),
                       ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Obx(
-                            () => Text(
-                              _currentOrderController.currentOrderStream?.order
-                                      .customer['name'] ??
-                                  ".....",
+                      Obx(
+                        () => Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              controller.recipient()?.name ?? "Customer",
                               style:
                                   TextStyle(fontFamily: 'psb', fontSize: 16.5),
                             ),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            _languageController.strings['shared']['messages']
-                                ['available'],
-                            style: TextStyle(
-                                fontFamily: 'psr',
-                                fontSize: 13,
-                                color: Color.fromARGB(255, 79, 168, 35)),
-                          ),
-                        ],
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              _languageController.strings['shared']['messages']
+                                  ['available'],
+                              style: TextStyle(
+                                  fontFamily: 'psr',
+                                  fontSize: 13,
+                                  color: Color.fromARGB(255, 79, 168, 35)),
+                            ),
+                          ],
+                        ),
                       )
                     ],
                   )),
@@ -286,7 +283,8 @@ class MessagingScreen extends GetView<MessageController> {
                                       .length >
                                   0;
                               if (msgReady2Send) {
-                                controller.sendMessage(_typedMsg.value);
+                                controller.sendMessage(
+                                    _typedMsg.value, this.orderId!);
                                 _textEditingController.clear();
                                 _typedMsg.value = "";
                               } else {

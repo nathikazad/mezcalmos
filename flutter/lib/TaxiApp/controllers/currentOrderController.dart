@@ -1,86 +1,81 @@
 import 'dart:async';
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
-import 'package:mezcalmos/Shared/utilities/Extensions.dart';
+import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
+import 'package:mezcalmos/Shared/models/Notification.dart';
+import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/Shared/utilities/SharedEnums.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
-import 'package:mezcalmos/TaxiApp/controllers/fbTaxiNotificationsController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/Shared/models/Order.dart';
 
-class CurrentOrderController extends GetxController with MezDisposable {
+class CurrentOrderController extends GetxController {
   TaxiAuthController _taxiAuthController =
-      Get.find<TaxiAuthController>(); // since it's already injected .
+      Get.find<TaxiAuthController>(); 
   DatabaseHelper _databaseHelper =
-      Get.find<DatabaseHelper>(); // Already Injected in main function
+      Get.find<DatabaseHelper>();
+  FBNotificationsController _fbNotificationsController =
+      Get.find<FBNotificationsController>(); 
 
-  FBNotificationsController _notifications =
-      Get.put<FBNotificationsController>(FBTaxiNotificationsController());
+  StreamController<Order> _orderStreamController = StreamController.broadcast();
+  Stream<Order> get orderStream => _orderStreamController.stream;
+  StreamSubscription? _orderStatusListener;
 
-  String? lastOrderStatus;
-  CurrentOrderEvent? currentEvent;
-  Rxn<CurrentOrder> _currentOrderStream = Rxn();
-  CurrentOrder? get currentOrderStream => _currentOrderStream.value;
-  Rxn<CurrentOrder> get currentOrderStreamRx => _currentOrderStream;
   @override
   void onInit() {
     super.onInit();
-    _databaseHelper.firebaseDatabase
+    mezDbgPrint("Current Order Controller init ${this.hashCode}");
+    mezDbgPrint(_taxiAuthController.taxiState?.currentOrder);
+  }
+
+  Future<void> listenForOrderStatus() async {
+    await _orderStatusListener?.cancel();
+    _orderStatusListener = _databaseHelper.firebaseDatabase
         .reference()
-        .child(orderId(_taxiAuthController.currentOrderId))
+        .child(orderStatus(_taxiAuthController.taxiState!.currentOrder!))
         .onValue
-        .listen((event) {
-      _currentOrderStream.value = new CurrentOrder.fromSnapshot(event.snapshot);
-      _currentOrderStream.value?.event = currentEvent;
-      if (_currentOrderStream.value?.order.status != null &&
-          _currentOrderStream.value?.order.status != lastOrderStatus) {
-        _currentOrderStream.value?.event = new CurrentOrderEvent(
-            CurrentOrderEventTypes.OrderStatusChange,
-            eventDetails: <String, String?>{
-              "oldStatus": lastOrderStatus,
-              "newStatus": _currentOrderStream.value?.order.status
-            });
-        lastOrderStatus = _currentOrderStream.value?.order.status;
-        currentEvent = _currentOrderStream.value?.event;
-      }
-    }).canceledBy(this);
+        .listen((event) async {
+      DataSnapshot dataSnapshot = await _databaseHelper.firebaseDatabase
+          .reference()
+          .child(orderId(_taxiAuthController.taxiState!.currentOrder!))
+          .once();
+      _orderStreamController.add(Order.fromSnapshot(dataSnapshot));
+    });
   }
 
-  void clearEvent() async {
-    currentEvent = null;
+  bool hasNewMessageNotification() {
+    return _fbNotificationsController
+            .notifications()
+            .where((notification) =>
+                notification.notificationType == NotificationType.NewMessage &&
+                (notification as NewMessageNotification).orderId ==
+                    _taxiAuthController.taxiState!.currentOrder!)
+            .length >
+        0;
   }
-  // void dispatchCurrentOrder() {
 
-  //       .listen((event) async {
-  //     print(
-  //         "CurrentOrderController :: DispatchCurrentOrder :: _taxiAuthController.currentOrderId ${_taxiAuthController.currentOrderId}");
-  //     if (event.snapshot.value != null) {
-  //       bool dirty = event.snapshot.value['status'] == _model.value.status;
+  void clearOrderNotifications() {
+    FBNotificationsController fbNotificationsController =
+        Get.find<FBNotificationsController>();
+    fbNotificationsController
+        .notifications()
+        .where((notification) =>
+            notification.notificationType ==
+                NotificationType.OrderStatusChange &&
+            (notification as OrderStatusChangeNotification).orderId ==
+                _taxiAuthController.taxiState!.currentOrder!)
+        .forEach((notification) {
+      fbNotificationsController.removeNotification(notification.id);
+    });
+  }
 
-  //       print(
-  //           "CurrentOrderController::onValue Invoked >> ${event.snapshot.key} : ${event.snapshot.value['status']}");
-  //        {
-  //         await MezcalmosSharedWidgets.mezcalmosDialogOrderCancelled(
-  //             55, Get.height, Get.width);
-  //       } else {
-  //         _model.value =
-  //         _model.value.id =
-  //       }
-  //       return "dsf";
-  //     }
-  //   });
-  //   _currentOrderListener.onData((data) { })
-  // }
-
-  Future<void> cancelTaxi(String? reason) async {
+  Future<bool> cancelTaxi(String? reason) async {
     HttpsCallable cancelTaxiFunction =
         FirebaseFunctions.instance.httpsCallable('cancelTaxiFromDriver');
-    print("Cancel Taxi Called");
+    mezDbgPrint("Cancel Taxi Called");
     try {
-      // _waitingResponse.value = true;
       HttpsCallableResult response = await cancelTaxiFunction
           .call(<String, dynamic>{
         'reason': reason,
@@ -88,77 +83,58 @@ class CurrentOrderController extends GetxController with MezDisposable {
       });
       dynamic _res = responseStatusChecker(response.data);
       if (_res == null) {
-        throw Exception(
+        mezDbgPrint(
             "Manually thrown Exception - Reason -> Response.data was null !");
+        return Future.value(false);
       } else {
         mezcalmosSnackBar("Notice ~", _res);
-        // Get.delete<CurrentOrderMapController>();
+        return Future.value(true);
       }
 
-      // _waitingResponse.value = false;
     } catch (e) {
       mezcalmosSnackBar("Notice ~", "Failed to Cancel the Taxi Request :( ");
-      // _waitingResponse.value = false;
-      print("Exception happend in cancelTaxi : $e");
+      mezDbgPrint("Exception happend in cancelTaxi : $e");
+      return Future.value(false);
     }
   }
 
-  Future<void> startRide() async {
+  Future<ServerResponse> startRide() async {
+    mezDbgPrint("Start Taxi Called");
     HttpsCallable startRideFunction =
         FirebaseFunctions.instance.httpsCallable('startTaxiRide');
-    print("Start Taxi Called");
     try {
-      // _waitingResponse.value = true;
       HttpsCallableResult response = await startRideFunction
-          .call(<String, dynamic>{'database': _databaseHelper.dbType});
-      dynamic _res = responseStatusChecker(response.data);
-
-      if (_res == null)
-        throw Exception(
-            "Manually thrown Exception - Reason -> Response.data was null !");
-      // : mezcalmosSnackBar("Notice ~", _res);
-      // _waitingResponse.value = false;
+          .call();
+      return ServerResponse.fromJson(response.data);
     } catch (e) {
-      mezcalmosSnackBar("Notice ~", "Failed to Start The ride :( ");
-      // _waitingResponse.value = false;
-      print("Exception happend in startRide : $e");
+      return ServerResponse(ResponseStatus.Error,
+          errorMessage: "Server Error", errorCode: "serverError");
     }
   }
 
-  Future<void> finishRide() async {
+  Future<ServerResponse> finishRide() async {
+    mezDbgPrint("Finish Taxi Called");
     HttpsCallable finishRideFunction =
         FirebaseFunctions.instance.httpsCallable('finishTaxiRide');
-    print("Finish Taxi Called");
     try {
-      // _waitingResponse.value = true;
       HttpsCallableResult response = await finishRideFunction
-          .call(<String, dynamic>{'database': _databaseHelper.dbType});
-      dynamic _res = responseStatusChecker(response.data);
-
-      if (_res == null) {
-        throw Exception(
-            "Manually thrown Exception - Reason -> Response.data was null !");
-      } else {
-        mezcalmosSnackBar("Notice ~", _res);
-        // Get.delete<CurrentOrderMapController>();
-      }
-
-      // _waitingResponse.value = false;
+          .call();
+      return ServerResponse.fromJson(response.data);
     } catch (e) {
-      mezcalmosSnackBar("Notice ~", "Failed to finish The ride :( ");
-      // _waitingResponse.value = false;
-      print("Exception happend in finishRide : $e");
+      return ServerResponse(ResponseStatus.Error,
+          errorMessage: "Server Error", errorCode: "serverError");
     }
-  }
-
-  void detachListeners() {
-    _notifications.clearAllMessageNotification();
   }
 
   @override
-  void onClose() async {
-    cancelSubscriptions();
-    detachListeners();
+  void onClose() {
+    mezDbgPrint(
+        "CURRENT ORDER CONTROLLER :: ::: :: :: : :   : :::::: DISPOSE ! ${this.hashCode}");
+    _orderStatusListener?.cancel();
+    _orderStatusListener = null;
+    mezDbgPrint(
+        "--------------------> CurrentOrderController::onClose called  !");
+
     super.onClose();
   }
 }

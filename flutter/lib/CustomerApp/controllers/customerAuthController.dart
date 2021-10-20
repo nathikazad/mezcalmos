@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/CustomerApp/constants/databaseNodes.dart';
-import 'package:mezcalmos/CustomerApp/models/Order.dart';
+
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/notificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/deviceNotificationsController.dart';
 import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
@@ -15,8 +15,8 @@ class CustomerAuthController extends GetxController with MezDisposable {
   AuthController _authController = Get.find<AuthController>();
   
   RxBool _locationEnabled = false.obs;
-  DeviceNotificationsController _messagingController =
-      Get.put<DeviceNotificationsController>(DeviceNotificationsController());
+  DeviceNotificationsController _notificationsController =
+      Get.find<DeviceNotificationsController>();
 
   Rxn<Customer> get customerStream => _customer;
   bool _checkedAppVersion = false;
@@ -29,7 +29,7 @@ class CustomerAuthController extends GetxController with MezDisposable {
 
     print("User from CustomerAuthController >> ${_authController.user?.uid}");
     print(
-        "CustomerAuthController  Messaging Token>> ${await _messagingController.getToken()}");
+        "CustomerAuthController  Messaging Token>> ${await _notificationsController.getToken()}");
 
     if (_authController.user != null) {
       _databaseHelper.firebaseDatabase
@@ -51,7 +51,8 @@ class CustomerAuthController extends GetxController with MezDisposable {
         }
       }).canceledBy(this);
 
-      String? deviceNotificationToken = await _messagingController.getToken();
+      String? deviceNotificationToken =
+          await _notificationsController.getToken();
       if (deviceNotificationToken != null)
         _databaseHelper.firebaseDatabase
             .reference()

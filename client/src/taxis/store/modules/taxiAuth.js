@@ -160,7 +160,7 @@ const updateDriverPosition = async (context) => {
   let userId = context.rootGetters.userId
   let locationUpdate = {
     position: driverLocation,
-    lastUpdateTime: lastUpdateTime.toUTCString()
+    lastUpdateTime: lastUpdateTime.toISOString()
   }
   firebaseDatabase().ref(`taxiDrivers/${userId}/location`).set(locationUpdate)
   console.log(driverLocation.lat, driverLocation.lng)
@@ -216,7 +216,7 @@ const updateRouteInformation = async (context) => {
           firebaseDatabase().ref(`orders/taxi/${order.id}/driver/location`).update({
             distanceToLocation: distance,
             timeToLocation: duration,
-            estimatedArrivalTime: eta.toUTCString(),
+            estimatedArrivalTime: eta.toISOString(),
             polyline: polyline
           })
         }

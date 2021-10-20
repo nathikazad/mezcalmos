@@ -45,7 +45,7 @@ async function finish(firebase, uid, hasura) {
 
   let update = {
     status: "droppedOff",
-    rideFinishTime: (new Date()).toUTCString()
+    rideFinishTime: (new Date()).toISOString()
   }
   firebase.database().ref(`/orders/taxi/${orderId}`).update(update)
   firebase.database().ref(`/users/${order.customer.id}/orders/${orderId}`).update(update);

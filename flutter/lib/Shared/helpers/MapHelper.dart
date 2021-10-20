@@ -1,39 +1,8 @@
-import 'dart:async';
-
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-import 'package:get/state_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'dart:math' show cos, sqrt, sin, pi, atan2;
 import 'package:mezcalmos/Shared/models/Order.dart';
-
-class CustomMarker {
-  String id;
-  Rx<LocationData>? locationStream;
-  LatLng position;
-  BitmapDescriptor icon;
-
-  CustomMarker(this.id, this.icon, this.position, {this.locationStream}) {
-    if (locationStream != null) {
-      locationStream!.listen((newLoc) {
-        print("[ CustomMarker::$id ] New position => $position");
-        this.position = new LatLng(newLoc.latitude!, newLoc.longitude!);
-      });
-    }
-  }
-
-  // this is needed when releasing the Resources!
-  void cancelSub() {
-    if (locationStream != null) locationStream!.close();
-  }
-
-  Marker marker() => new Marker(
-      visible: true,
-      markerId: MarkerId(this.id),
-      position: this.position,
-      icon: this.icon,
-      draggable: false);
-}
 
 LatLngBounds createMapBounds(List<LatLng> positions) {
   final southwestLat = positions.map((p) => p.latitude).reduce(
@@ -79,12 +48,6 @@ class MapHelper {
             sin(dLon / 2);
     var c = 2 * atan2(sqrt(a), sqrt(1 - a));
     var res = R * c; // this is in km
-
-    // print(
-    //     "[ LOCATION DATA FROM ] -------\n${from.latitude} | ${from.longitude}\n");
-    // print(
-    //     "[ LOCATION DATA TO ] -------\n${to.latitude} | ${to.longitude}\n\n\n");
-    // print(res);
 
     return res;
   }

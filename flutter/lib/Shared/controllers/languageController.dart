@@ -21,7 +21,7 @@ class LanguageController extends GetxController {
   LanguageController() {
     final lang = Platform.localeName.substring(0, 2);
 
-    // print("\n\n\n\n\nUSER LANGUAGE [[ $lang ]]\n\n\n\n\n");
+    // mezDbgPrint("\n\n\n\n\nUSER LANGUAGE [[ $lang ]]\n\n\n\n\n");
     if (lang == "en")
       _userLanguageKey.value =
           lang; // to avoid diffrent other languages diffrent than en and es
