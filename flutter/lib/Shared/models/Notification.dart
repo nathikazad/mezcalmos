@@ -31,7 +31,7 @@ abstract class Notification {
 
   List<Object> get props => [id, notificationType, variableParams];
   String get formattedTime =>
-      DateFormat('HH:mm').format(this.timestamp).toString();
+      DateFormat('HH:mm').format(this.timestamp.toLocal()).toString();
   String get title;
   String get body;
   String get imgUrl;
@@ -56,7 +56,7 @@ abstract class Notification {
             id: key,
             notificationType: notificationType,
             orderId: value['orderId'],
-            newOrdersStatus: convertStringToOrderStatus(value['orderStatus']),
+            newOrdersStatus: convertStringToOrderStatus(value['status']),
             timestamp: timestamp);
       default:
         throw StateError("Invalid Notification Type");
@@ -81,10 +81,10 @@ class OrderStatusChangeNotification extends Notification {
       required DateTime timestamp})
       : super(id: id, notificationType: notificationType, timestamp: timestamp);
 
-  String get title => this.newOrdersStatus.toString();
+  String get title => this.newOrdersStatus.toShortString();
   String get body => 'Order is now ${newOrdersStatus.toShortString()}';
   String get imgUrl =>
-      "assets/sounds/cancel.png"; //has to be made dynamic for customer app
+      "assets/images/cancel.png"; //has to be made dynamic for customer app
   String get linkUrl =>
       kCurrentOrderPage; //has to be made dynamic for customer app
 }

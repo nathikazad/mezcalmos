@@ -21,8 +21,9 @@ extension ParseToString on OrdersStatus {
 }
 
 OrdersStatus convertStringToOrderStatus(String str) {
+  mezDbgPrint(str);
   return OrdersStatus.values
-      .firstWhere((e) => e.toString().toLowerCase() == str.toLowerCase());
+  .firstWhere((e) => e.toShortString().toLowerCase() == str.toLowerCase());
 }
 
 class Order {

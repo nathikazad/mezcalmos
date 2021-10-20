@@ -4,6 +4,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
+import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
@@ -97,54 +98,31 @@ class CurrentOrderController extends GetxController {
     }
   }
 
-  Future<bool> startRide() async {
+  Future<ServerResponse> startRide() async {
+    mezDbgPrint("Start Taxi Called");
     HttpsCallable startRideFunction =
         FirebaseFunctions.instance.httpsCallable('startTaxiRide');
-    mezDbgPrint("Start Taxi Called");
     try {
-      // _waitingResponse.value = true;
       HttpsCallableResult response = await startRideFunction
-          .call(<String, dynamic>{'database': _databaseHelper.dbType});
-      dynamic _res = responseStatusChecker(response.data);
-
-      if (_res == null) {
-        mezDbgPrint(
-            "Manually thrown Exception - Reason -> Response.data was null !");
-        return Future.value(false);
-      } else {
-        mezcalmosSnackBar("Notice ~", _res);
-        return Future.value(true);
-      }
+          .call();
+      return ServerResponse.fromJson(response.data);
     } catch (e) {
-      mezcalmosSnackBar("Notice ~", "Failed to Start The ride :( ");
-      // _waitingResponse.value = false;
-      mezDbgPrint("Exception happend in startRide : $e");
-      return Future.value(false);
+      return ServerResponse(ResponseStatus.Error,
+          errorMessage: "Server Error", errorCode: "serverError");
     }
   }
 
-  Future<bool> finishRide() async {
+  Future<ServerResponse> finishRide() async {
+    mezDbgPrint("Finish Taxi Called");
     HttpsCallable finishRideFunction =
         FirebaseFunctions.instance.httpsCallable('finishTaxiRide');
-    mezDbgPrint("Finish Taxi Called");
     try {
-      // _waitingResponse.value = true;
       HttpsCallableResult response = await finishRideFunction
-          .call(<String, dynamic>{'database': _databaseHelper.dbType});
-      dynamic _res = responseStatusChecker(response.data);
-
-      if (_res == null) {
-        mezDbgPrint(
-            "Manually thrown Exception - Reason -> Response.data was null !");
-        return Future.value(false);
-      } else {
-        mezcalmosSnackBar("Notice ~", _res);
-        return Future.value(true);
-      }
+          .call();
+      return ServerResponse.fromJson(response.data);
     } catch (e) {
-      mezcalmosSnackBar("Notice ~", "Failed to finish The ride :( ");
-      mezDbgPrint("Exception happend in finishRide : $e");
-      return Future.value(false);
+      return ServerResponse(ResponseStatus.Error,
+          errorMessage: "Server Error", errorCode: "serverError");
     }
   }
 

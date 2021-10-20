@@ -24,8 +24,7 @@ double getSizeRelativeToScreen(
     (screenHeight / screenWidth) * v;
 
 void notificationSnackBar(
-    String imgUrl, String title, String msg, String time, Function onClick,
-    {bool isLink = false}) {
+    String imgUrl, String title, String msg, String time, Function onClick) {
   Get.rawSnackbar(
       onTap: (_) async {
         mezDbgPrint("ONTAP ====> $_");
@@ -44,7 +43,7 @@ void notificationSnackBar(
                 color: Colors.grey.shade100,
                 width: 1,
                 style: BorderStyle.solid)),
-        child: isLink
+        child: imgUrl.startsWith("http")
             ? Image.network(
                 imgUrl,
                 fit: BoxFit.cover,

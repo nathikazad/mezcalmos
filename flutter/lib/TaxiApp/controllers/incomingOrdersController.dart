@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
@@ -122,31 +123,19 @@ class IncomingOrdersController extends GetxController with MezDisposable {
     _appLifeCycleController.cleanAllCallbacks();
   }
 
-  // return List[isSuccess , failedCause=<default:null>]
-  //
-  Future<List<dynamic>> acceptTaxi(String orderId) async {
+  Future<ServerResponse> acceptTaxi(String orderId) async {
+    mezDbgPrint("Accept Taxi Called");
     HttpsCallable acceptTaxiFunction =
         FirebaseFunctions.instance.httpsCallable('acceptTaxiOrder');
     try {
-      // _waitingResponse.value = true;
-      HttpsCallableResult response = await acceptTaxiFunction
-          .call(<String, dynamic>{
-        'orderId': orderId,
-        'database': _databaseHelper.dbType
-      });
-      // _selectedIncommingOrderKey.value = "";
-      // Get.back(closeOverlays: true);
-      mezDbgPrint(response.data);
-      return [
-        response.data['status'] == 'Success',
-        responseStatusChecker(response.data,
-            onErrorMessage: "Failed accepting the Order !",
-            onSuccessMessage: "Successfully accepted the order !")
-      ];
+      HttpsCallableResult response =
+          await acceptTaxiFunction.call(<String, dynamic>{'orderId': orderId});
+      mezDbgPrint(response.data.toString());
+      return ServerResponse.fromJson(response.data);
     } catch (e) {
-      // _waitingResponse.value = false;
-      mezDbgPrint("Exception happend in acceptTaxi : $e");
-      return [false, "Failed accepting the order !"];
+      mezDbgPrint(e.toString());
+      return ServerResponse(ResponseStatus.Error,
+          errorMessage: "Server Error", errorCode: "serverError");
     }
   }
 

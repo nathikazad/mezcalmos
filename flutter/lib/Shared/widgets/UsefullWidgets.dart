@@ -274,7 +274,7 @@ class MezcalmosSharedWidgets {
               ['customerCancelled']);
 
   // THIS BELONGS TO TAXI
-  static Future<bool> yesNoDefaultConfirmationDialog(onYes, String text) async {
+  static Future<bool> yesNoDefaultConfirmationDialog(String text) async {
     bool res = true;
 
     await Get.defaultDialog<bool>(
@@ -317,7 +317,10 @@ class MezcalmosSharedWidgets {
                           (Size(double.infinity, 50))),
                       backgroundColor: MaterialStateProperty.all<Color>(
                           (Colors.grey.shade300))),
-                  onPressed: onYes,
+                  onPressed: () {
+                    res = true;
+                    Get.back();
+                  },
                   child: Obx(() => Text(
                       Get.find<LanguageController>().strings['taxi']['taxiView']
                           ['yes'],

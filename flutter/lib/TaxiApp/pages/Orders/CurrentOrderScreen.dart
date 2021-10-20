@@ -155,10 +155,19 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
     if (order.status == OrdersStatus.Cancelled) {
       mezDbgPrint("======> Canceeeeeeeled =======>${order.toJson()}");
 
-      MezcalmosSharedWidgets.mezcalmosDialogOrderCancelled(
+      Future.microtask(() {
+        mezDbgPrint("CurrentOrderScreen showing dialog");
+        MezcalmosSharedWidgets.mezcalmosDialogOrderCancelled(
               55, Get.height, Get.width)
-          .then(
-              (_) => Get.until((route) => route.settings.name == kMainWrapper));
+          .then((value) {
+          mezDbgPrint(
+              "CurrentOrderScreen after cancel navigating to kOrdersListPage");
+          Get.offNamedUntil(
+              kOrdersListPage, ModalRoute.withName(kTaxiWrapperRoute));
+          ;
+        });
+      });
+      
     } else if (order.status == OrdersStatus.OnTheWay) {
       mezDbgPrint("_handleEvent -> calling _loadMarkersForOTW() ");
 

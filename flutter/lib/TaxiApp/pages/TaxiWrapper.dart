@@ -34,7 +34,7 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
         .listen((notification) {
       mezDbgPrint("TaxiWrapper: ${notification.toJson()}");
       if (DateTime.now().difference(notification.timestamp) <
-          Duration(minutes: 5)) {
+          Duration(minutes: 10)) {
         _displayNotification(notification);
       }
     });
@@ -51,6 +51,7 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
     });
     Get.find<FBNotificationsController>()
         .startListeningForNotifications(notificationsNode(userId));
+    super.initState();
   }
 
   void handleState(TaxiState? state) {
@@ -101,9 +102,10 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
     });
     int streamId = await pool.play(soundId);
 
+    mezDbgPrint(notification.imgUrl);
     notificationSnackBar(notification.imgUrl, notification.title,
         notification.body, notification.formattedTime, () async {
       Get.toNamed(notification.linkUrl);
-    }, isLink: true);
+    });
   }
 }

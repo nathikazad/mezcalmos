@@ -8,6 +8,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
+import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
@@ -98,18 +99,19 @@ class IncommingOrderScreenView extends GetWidget<IncomingOrdersController>
                             controller
                                 .acceptTaxi(
                                     controller.selectedIncommingOrder?.id)
-                                .then((isSuccess) {
+                                .then((serverResponse) {
                               cancelSubscriptions();
-                              if (isSuccess[0]) {
+                              if (serverResponse.success) {
                                 mezDbgPrint("Inside then after accept taxi");
-                                mezcalmosSnackBar("Success", isSuccess[1]);
+                                // mezcalmosSnackBar("Success", "");
                                 showLoading.value = false;
                                 Get.offNamedUntil(kCurrentOrderPage,
                                     ModalRoute.withName(kTaxiWrapperRoute));
                               } else {
                                 // in case Taxi User failed accepting the order.
                                 Get.back();
-                                mezcalmosSnackBar("Failed", isSuccess[1]);
+                                mezcalmosSnackBar(
+                                    "Failed", serverResponse.errorMessage!);
                               }
                             });
                           }

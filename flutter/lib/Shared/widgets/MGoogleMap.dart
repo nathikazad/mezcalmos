@@ -136,6 +136,7 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
     cancelSubscriptions();
     // gmapControlelr disposing.
     _controller?.dispose();
+    _controller = null;
     super.dispose();
   }
 
