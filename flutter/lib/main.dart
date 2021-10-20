@@ -23,6 +23,10 @@ import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
 import 'package:mezcalmos/pre-main.dart';
 import 'package:package_info/package_info.dart';
 
+///// multiple device testing screen package
+// import 'package:device_preview/device_preview.dart';
+// import 'package:device_preview/plugins.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -42,7 +46,14 @@ void main() {
   print('db  -> $_db');
   print('mode  -> $_launchMode');
 
-  runApp(SPoint(launcherApp, _host, _db, _launchMode));
+  runApp(
+    //// for testing in diffrent screens
+    // DevicePreview(
+    //   enabled: false,
+    //   builder: (context) =>
+    SPoint(launcherApp, _host, _db, _launchMode),
+    // ),
+  );
 }
 
 class SPoint extends StatefulWidget {

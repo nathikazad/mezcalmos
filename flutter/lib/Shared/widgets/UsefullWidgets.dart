@@ -166,47 +166,52 @@ class MezcalmosSharedWidgets {
         automaticallyImplyLeading: false,
         title: Container(
           width: Get.width,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                height: 32,
-                width: 32,
-                child: GestureDetector(
-                  onTap: () {
-                    mezDbgPrint("Taped Drawer btn !");
-                    onTapFunction();
-                  },
-                  child: Container(
-                    height: 32,
-                    width: 32,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color.fromARGB(255, 216, 225, 249),
-                          spreadRadius: 0,
-                          blurRadius: 7,
-                          offset: Offset(0, 7), // changes position of shadow
-                        ),
-                      ],
-                      gradient: LinearGradient(colors: [
-                        Color.fromARGB(255, 97, 127, 255),
-                        Color.fromARGB(255, 198, 90, 252),
-                      ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+          child: FittedBox(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  height: 32,
+                  width: 32,
+                  child: GestureDetector(
+                    onTap: () {
+                      mezDbgPrint("Taped Drawer btn !");
+                      onTapFunction();
+                    },
+                    child: Container(
+                      height: 32,
+                      width: 32,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color.fromARGB(255, 216, 225, 249),
+                            spreadRadius: 0,
+                            blurRadius: 7,
+                            offset: Offset(0, 7), // changes position of shadow
+                          ),
+                        ],
+                        gradient: LinearGradient(
+                            colors: [
+                              Color.fromARGB(255, 97, 127, 255),
+                              Color.fromARGB(255, 198, 90, 252),
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight),
+                      ),
+                      child: btn_icon,
                     ),
-                    child: btn_icon,
                   ),
                 ),
-              ),
-              // Positioned(
-              //     right: getSizeRelativeToScreen(40, Get.height, Get.width),
-              //     child: fillTitle())
-              SizedBox(
-                  width: getSizeRelativeToScreen(20, Get.height, Get.width)),
-              fillTitle(),
-            ],
+                // Positioned(
+                //     right: getSizeRelativeToScreen(40, Get.height, Get.width),
+                //     child: fillTitle())
+                SizedBox(
+                    width: getSizeRelativeToScreen(20, Get.height, Get.width)),
+                fillTitle(),
+              ],
+            ),
           ),
         ));
   }
