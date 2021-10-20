@@ -38,7 +38,7 @@ class FBNotificationsController extends GetxController {
         .child(notificationNode)
         .onChildAdded
         .listen((event) {
-          mezDbgPrint(event.snapshot.value);
+      mezDbgPrint(event.snapshot.value);
       Notification _notification =
           Notification.fromJson(event.snapshot.key, event.snapshot.value);
       bool shouldSave = (Get.currentRoute != _notification.linkUrl);
@@ -68,14 +68,14 @@ class FBNotificationsController extends GetxController {
   void removeNotification(String notificationId) {
     _databaseHelper.firebaseDatabase
         .reference()
-        .child("${_notificationNode}/${notificationId}")
+        .child("$_notificationNode/$notificationId")
         .remove();
   }
 
   void clearAllMessageNotification() {
     mezDbgPrint(
         "fbNotificationsController: Clearing All Messages Notifications");
-    notifications.value
+    notifications()
         .where((notification) =>
             notification.notificationType == NotificationType.NewMessage)
         .forEach((element) {
@@ -87,7 +87,7 @@ class FBNotificationsController extends GetxController {
     mezDbgPrint("fbNotificationsController: Clearing All Notifications");
     _databaseHelper.firebaseDatabase
         .reference()
-        .child("${_notificationNode}")
+        .child("$_notificationNode")
         .remove();
   }
 

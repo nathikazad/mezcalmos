@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
-import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
@@ -30,8 +28,7 @@ class _WrapperState extends State<Wrapper> {
           .locationPermissionStream
           .distinct()
           .listen((locationPermission) {
-        mezDbgPrint(
-            "Wrapper: location permission => $locationPermission");
+        mezDbgPrint("Wrapper: location permission => $locationPermission");
         if (locationPermission == false &&
             Get.currentRoute != kLocationPermissionPage) {
           Get.toNamed(kLocationPermissionPage);

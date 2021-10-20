@@ -105,6 +105,8 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
     mezDbgPrint(notification.imgUrl);
     notificationSnackBar(notification.imgUrl, notification.title,
         notification.body, notification.formattedTime, () async {
+      mezDbgPrint("Notification route ===> ${notification.linkUrl} !");
+      // Get.back();
       Get.toNamed(notification.linkUrl);
     });
   }

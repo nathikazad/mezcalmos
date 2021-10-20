@@ -62,87 +62,92 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
           backgroundColor: Colors.white,
           appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
               "menu", Get.find<SideMenuDraweController>().openMenu),
-          body: StreamBuilder<Order>(
-              stream: controller.orderStream.distinct((_old, _new) {
-            mezDbgPrint(
-                "\n\n\n\n old = ${_old.status} | new ${_new.status} \n\n\n\n");
-            return _new == null || _old == _new;
-          }), builder: (_, AsyncSnapshot<Order> snapshot) {
-            mezDbgPrint("\t\t\t\t S N A P S H O T ===> ${snapshot.data}");
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              mezDbgPrint("INSIDE STREAM BUILDER :: waiting !");
+          body: SafeArea(
+            child: StreamBuilder<Order>(
+                stream: controller.orderStream.distinct((_old, _new) {
+              mezDbgPrint(
+                  "\n\n\n\n old = ${_old.status} | new ${_new.status} \n\n\n\n");
+              return _new == null || _old == _new;
+            }), builder: (_, AsyncSnapshot<Order> snapshot) {
+              mezDbgPrint("\t\t\t\t S N A P S H O T ===> ${snapshot.data}");
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                mezDbgPrint("INSIDE STREAM BUILDER :: waiting !");
 
-              return MezLogoAnimation(centered: true);
-            } else if (snapshot.connectionState == ConnectionState.done ||
-                snapshot.connectionState == ConnectionState.active) {
-              if (snapshot.hasError) {
-                mezDbgPrint("INSIDE STREAM BUILDER :: HAS ERR !");
+                return MezLogoAnimation(centered: true);
+              } else if (snapshot.connectionState == ConnectionState.done ||
+                  snapshot.connectionState == ConnectionState.active) {
+                if (snapshot.hasError) {
+                  mezDbgPrint("INSIDE STREAM BUILDER :: HAS ERR !");
 
-                return const Center(
-                  child: Icon(
-                    Icons.wifi_off_outlined,
-                    size: 40,
-                  ),
-                );
-              } else if (snapshot.hasData) {
-                mezDbgPrint("INSIDE STREAM BUILDER :: HAS DATA !");
-                mezDbgPrint(snapshot.data!.toJson());
-                return FutureBuilder<void>(
-                    future: hotReladCallback(snapshot.data!),
-                    builder: (context, AsyncSnapshot futureSnapshot) {
-                      mezDbgPrint(
-                          "INSIDE FUTUREBUILDER CURRENT ORDER CONTROLLER > ${controller.isClosed}");
-                      if (futureSnapshot.connectionState ==
-                          ConnectionState.done) {
-                        return Stack(alignment: Alignment.topCenter, children: [
-                          MGoogleMap(
-                            customMarkers,
-                            initialCameraPosition,
-                            polylines: polylines,
-                            idWithSubscription: {
-                              "taxi":
-                                  taxiAuthController.currentLocationRx.stream
-                            },
-                            debugString: "CurrentOrderScreen",
-                          ),
-                          CurrentPositionedBottomBar(snapshot.data!),
-                          CurrentPositionedFromToTopBar(snapshot.data!)
-                        ]);
-                      } else {
-                        return Center(
-                          child: Container(
-                              height: 200,
-                              width: 200,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle, color: Colors.white),
-                              child: Transform.scale(
-                                  scale: .8, child: MezLogoAnimation())),
-                        );
-                      }
-                    });
+                  return const Center(
+                    child: Icon(
+                      Icons.wifi_off_outlined,
+                      size: 40,
+                    ),
+                  );
+                } else if (snapshot.hasData) {
+                  mezDbgPrint("INSIDE STREAM BUILDER :: HAS DATA !");
+                  mezDbgPrint(snapshot.data!.toJson());
+                  return FutureBuilder<void>(
+                      future: hotReladCallback(snapshot.data!),
+                      builder: (context, AsyncSnapshot futureSnapshot) {
+                        mezDbgPrint(
+                            "INSIDE FUTUREBUILDER CURRENT ORDER CONTROLLER > ${controller.isClosed}");
+                        if (futureSnapshot.connectionState ==
+                            ConnectionState.done) {
+                          return Stack(
+                              alignment: Alignment.topCenter,
+                              children: [
+                                MGoogleMap(
+                                  customMarkers,
+                                  initialCameraPosition,
+                                  polylines: polylines,
+                                  idWithSubscription: {
+                                    "taxi": taxiAuthController
+                                        .currentLocationRx.stream
+                                  },
+                                  debugString: "CurrentOrderScreen",
+                                ),
+                                CurrentPositionedBottomBar(snapshot.data!),
+                                CurrentPositionedFromToTopBar(snapshot.data!)
+                              ]);
+                        } else {
+                          return Center(
+                            child: Container(
+                                height: 200,
+                                width: 200,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.white),
+                                child: Transform.scale(
+                                    scale: .8, child: MezLogoAnimation())),
+                          );
+                        }
+                      });
+                } else {
+                  mezDbgPrint(
+                      "Inside TaxiWrapper::StreamBuilder::ConnectionState.done|active::EmptyData");
+                  return const Center(
+                    child: Icon(
+                      Icons.hourglass_empty_sharp,
+                      color: Colors.grey,
+                      size: 40,
+                    ),
+                  );
+                }
               } else {
                 mezDbgPrint(
-                    "Inside TaxiWrapper::StreamBuilder::ConnectionState.done|active::EmptyData");
+                    "Else : Inside TaxiWrapper::StreamBuilder::ConnectionState.${snapshot.connectionState}");
                 return const Center(
                   child: Icon(
-                    Icons.hourglass_empty_sharp,
-                    color: Colors.grey,
+                    Icons.error,
+                    color: Colors.purpleAccent,
                     size: 40,
                   ),
                 );
               }
-            } else {
-              mezDbgPrint(
-                  "Else : Inside TaxiWrapper::StreamBuilder::ConnectionState.${snapshot.connectionState}");
-              return const Center(
-                child: Icon(
-                  Icons.error,
-                  color: Colors.purpleAccent,
-                  size: 40,
-                ),
-              );
-            }
-          })),
+            }),
+          )),
     ); // no need for obx here.
   }
   // Handling Event ------------------------------------------------------------------------------------
@@ -158,8 +163,8 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
       Future.microtask(() {
         mezDbgPrint("CurrentOrderScreen showing dialog");
         MezcalmosSharedWidgets.mezcalmosDialogOrderCancelled(
-              55, Get.height, Get.width)
-          .then((value) {
+                55, Get.height, Get.width)
+            .then((value) {
           mezDbgPrint(
               "CurrentOrderScreen after cancel navigating to kOrdersListPage");
           Get.offNamedUntil(
@@ -167,7 +172,6 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
           ;
         });
       });
-      
     } else if (order.status == OrdersStatus.OnTheWay) {
       mezDbgPrint("_handleEvent -> calling _loadMarkersForOTW() ");
 

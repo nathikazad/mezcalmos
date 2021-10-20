@@ -40,37 +40,31 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
   // to make sure each marker gets fully handled when the new data comes on it's corresponding stream!
   List<String> _markersCurrentlyBeingUpdated = <String>[];
 
-  void animateAndUpdateBounds() {
-    mezDbgPrint("MGoogleMap animateAndUpdateBounds ${this.hashCode}");
-    List<LatLng> _bnds = [];
-
-    widget.markers.forEach((cmarker) {
-      _bnds.add(cmarker.position);
-    });
-
-    /* basically means :
-    *
-    *   if all markers have fitInBounds = false  (we don't care about them in the fitBounds)
-    *   or all markers have firBounds = true  (We have to show all of them in the fitbounds)
-    *   then we will include the Polyline's Bounds ,
-    *   else we will just fit the markers with fitInBounds = True.
-    *
-    */
-
-    if (_bnds.isEmpty) {
-      _bnds.addAll(_getLatLngBoundsFromPolyline(widget.polylines));
-    }
-
-    setState(() {
-      if (_bnds.isNotEmpty) widget.bounds = createMapBounds(_bnds);
-    });
-
-    if (_controller != null && widget.bounds != null) {
-      _controller
-          ?.animateCamera(CameraUpdate.newLatLngBounds(widget.bounds!, 100));
+// Cheker -> Animate first and Double check if the bounds fit well the MapScreen
+  Future<void> _boundsReChecker(CameraUpdate u) async {
+    _controller?.animateCamera(u);
+    _controller?.animateCamera(u);
+    LatLngBounds? l1 = await _controller?.getVisibleRegion();
+    LatLngBounds? l2 = await _controller?.getVisibleRegion();
+    if (l1 != null && l2 != null) {
+      print(l1.toString());
+      print(l2.toString());
+      if (l1.southwest.latitude == -90 || l2.southwest.latitude == -90)
+        await _boundsReChecker(u);
     }
   }
 
+  // Animate the camera using widget.bounds
+  Future<void> _animateCameraWithNewBounds(LatLngBounds? _bounds) async {
+    if (_controller != null && _bounds != null) {
+      CameraUpdate _camUpdate = CameraUpdate.newLatLngBounds(_bounds, 80);
+
+      await _controller?.animateCamera(_camUpdate);
+      await _boundsReChecker(_camUpdate);
+    }
+  }
+
+  // Calculate bounds from the polyline's List of LatLng
   List<LatLng> _getLatLngBoundsFromPolyline(Set<Polyline> p) {
     double minLat = p.first.points.first.latitude;
     double minLong = p.first.points.first.longitude;
@@ -88,13 +82,38 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
     return [LatLng(minLat, minLong), LatLng(maxLat, maxLong)];
   }
 
-  @override
-  void didUpdateWidget(covariant MGoogleMap oldWidget) {
-    mezDbgPrint(
-        "MGoogleMap didUpdateWidget ${this.hashCode} ${widget.debugString}");
-    animateAndUpdateBounds();
-    super.didUpdateWidget(oldWidget);
+  LatLngBounds? _getMarkersAndPolylinesBounds() {
+    List<LatLng> _bnds = [];
+
+    widget.markers.forEach((cmarker) {
+      _bnds.add(cmarker.position);
+    });
+
+    if (widget.polylines.isNotEmpty) {
+      _bnds.addAll(_getLatLngBoundsFromPolyline(widget.polylines));
+    }
+
+    return _bnds.isEmpty ? null : createMapBounds(_bnds);
   }
+
+  // main function for updating the bounds and start the animation
+  Future<void> animateAndUpdateBounds() async {
+    LatLngBounds? _polyMarkersBounds = _getMarkersAndPolylinesBounds();
+    if (_polyMarkersBounds != null) {
+      setState(() {
+        widget.bounds = _polyMarkersBounds;
+      });
+      await _animateCameraWithNewBounds(widget.bounds);
+    }
+  }
+
+  // @override
+  // void didUpdateWidget(covariant MGoogleMap oldWidget) async {
+  //   mezDbgPrint(
+  //       "MGoogleMap didUpdateWidget ${this.hashCode} ${widget.debugString}");
+  //   await animateAndUpdateBounds();
+  //   super.didUpdateWidget(oldWidget);
+  // }
 
   @override
   void initState() {
@@ -123,6 +142,11 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
 
             _markersCurrentlyBeingUpdated.remove(markerId);
           });
+
+          LatLngBounds? _bounds = _getMarkersAndPolylinesBounds();
+          if (_bounds != null) {
+            _animateCameraWithNewBounds(_bounds);
+          }
         }
         // we skip if that markerId is already being handled .
       }).canceledBy(this);
@@ -167,11 +191,8 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
               print("onMapCreated");
               print(widget.bounds?.toJson());
               _controller = _gController;
+              await _animateCameraWithNewBounds(widget.bounds);
 
-              if (widget.bounds != null && _controller != null) {
-                await _controller!.animateCamera(
-                    CameraUpdate.newLatLngBounds(widget.bounds!, 100));
-              }
               _completer.complete(_gController);
             },
           )
