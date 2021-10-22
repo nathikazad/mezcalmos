@@ -6,7 +6,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
@@ -103,50 +103,125 @@ class UserProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     mezDbgPrint("++++++++++ USERPRODILE SCREEEN GOT REBUILT --------");
 
+    responsiveSize(context);
+
     textController.text =
         (auth.user?.displayName == null) ? "user" : "${auth.user?.displayName}";
 
     return WillPopScope(
-      onWillPop: () async {
-        mezDbgPrint("Will popppppopopopopopopopo scope !");
-        textController.dispose();
-        return true;
-      },
-      child: Scaffold(
-        appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () {
+        onWillPop: () async {
+          mezDbgPrint("Will popppppopopopopopopopo scope !");
           textController.dispose();
-          Get.back();
-        }),
-        backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child: Container(
-            height: Get.height * 0.88,
+          return true;
+        },
+        child: Scaffold(
+          appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () {
+            textController.dispose();
+            Get.back();
+          }),
+          bottomNavigationBar: Container(
+            padding: EdgeInsets.only(bottom: 20.sp),
+            child: MaterialButton(
+              onPressed: () async {
+                isEditing.value = !isEditing.value;
+                if (isEditing.value) {
+                  mezDbgPrint("editing" + textController.text);
+                } else {
+                  mezDbgPrint("saved");
+                  auth.user!.displayName = textController.text;
+                  if (imageFile.value.path != "test") {
+                    var xUrl =
+                        await auth.getImageUrl(imageFile.value, auth.user!.uid);
+                    mezDbgPrint(xUrl);
+                    auth.user!.image = xUrl;
+                    auth.editUserProfile(textController.text.trim(), xUrl);
+                  } else {
+                    mezDbgPrint("the path is empty");
+
+                    auth.editUserProfile(
+                        textController.text.trim(), auth.user!.image);
+                  }
+                }
+              },
+              padding: EdgeInsets.only(left: 0, right: 0),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Container(
+                  height: 48.sp,
+                  width: (Get.width - 20).sp,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    gradient: LinearGradient(colors: [
+                      Color.fromRGBO(81, 132, 255, 1),
+                      Color.fromRGBO(206, 73, 252, 1)
+                    ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                  ),
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Obx(() => Icon(
+                              (!isEditing.value)
+                                  ? Icons.edit_outlined
+                                  : Icons.save_outlined,
+                              color: Colors.white,
+                              size: 19,
+                            )),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Obx(
+                          () => Text(
+                            (!isEditing.value)
+                                ? lang.strings['shared']['userInfo']["editBtn"]
+                                : lang.strings['shared']['userInfo']["saveBtn"],
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          backgroundColor: Colors.white,
+          body: SingleChildScrollView(
+            physics: ClampingScrollPhysics(),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Spacer(),
+                SizedBox(
+                  height: 35.sp,
+                ),
                 Container(
                   child: Text(
                     lang.strings['shared']['userInfo']["title"],
-                    style: TextStyle(color: Colors.black, fontSize: 45),
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 40.sp,
+                        fontFamily: 'psr'),
                     textAlign: TextAlign.center,
                   ),
                 ),
-                // SizedBox(
-                //   height: Get.height * 0.05,
-                // ),
-                Spacer(),
+                SizedBox(
+                  height: 50.sp,
+                ),
+                // Spacer(),
                 Container(
-                  height: 161,
-                  width: 161,
+                  height: 161.h,
+                  width: 161.w,
                   child: Stack(
                     children: [
                       ClipOval(
                         child: Container(
-                            height: 161,
-                            width: 161,
+                            height: 161.w,
+                            width: 161.h,
                             color: Color.fromRGBO(243, 243, 243, 1),
                             child: Obx(() => (imageFile.value.path == "test")
                                 ? (auth.user!.image == null ||
@@ -169,12 +244,12 @@ class UserProfile extends StatelessWidget {
                       ),
                       Obx(() => (isEditing.value)
                           ? Positioned(
-                              left: 124,
-                              top: 124,
+                              left: 124.sp,
+                              top: 124.sp,
                               child: InkWell(
                                   child: Container(
-                                    height: 35,
-                                    width: 35,
+                                    height: 35.sp,
+                                    width: 35.sp,
                                     child: ClipOval(
                                       child: Container(
                                         child: _buildButtonIcon(),
@@ -198,7 +273,7 @@ class UserProfile extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: Get.height * 0.05,
+                  height: 50.sp,
                 ),
                 Container(
                   child: Obx(() => (!isEditing.value)
@@ -216,14 +291,14 @@ class UserProfile extends StatelessWidget {
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontFamily: 'psb',
-                                      fontSize: 35,
+                                      fontSize: 35.sp,
                                     ),
                                   ),
                                 ),
                               ),
                             ),
                             SizedBox(
-                              height: Get.height * 0.025,
+                              height: 50.sp,
                             ),
                           ],
                         )
@@ -239,7 +314,7 @@ class UserProfile extends StatelessWidget {
                               ),
                             ),
                             SizedBox(
-                              height: Get.height * 0.025,
+                              height: 10.sp,
                             ),
                             Container(
                               margin: EdgeInsets.symmetric(horizontal: 15),
@@ -257,86 +332,12 @@ class UserProfile extends StatelessWidget {
                           ],
                         )),
                 ),
-                Spacer(),
-                MaterialButton(
-                  onPressed: () async {
-                    isEditing.value = !isEditing.value;
-                    if (isEditing.value) {
-                      mezDbgPrint("editing" + textController.text);
-                    } else {
-                      mezDbgPrint("saved");
-                      auth.user!.displayName = textController.text;
-                      if (imageFile.value.path != "test") {
-                        var xUrl = await auth.getImageUrl(
-                            imageFile.value, auth.user!.uid);
-                        mezDbgPrint(xUrl);
-                        auth.user!.image = xUrl;
-                        auth.editUserProfile(textController.text.trim(), xUrl);
-                      } else {
-                        mezDbgPrint("the path is empty");
-
-                        auth.editUserProfile(
-                            textController.text.trim(), auth.user!.image);
-                      }
-                    }
-                  },
-                  padding: EdgeInsets.only(left: 0, right: 0),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Container(
-                      height: 48,
-                      width: Get.width,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        gradient: LinearGradient(
-                            colors: [
-                              Color.fromRGBO(81, 132, 255, 1),
-                              Color.fromRGBO(206, 73, 252, 1)
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight),
-                      ),
-                      child: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Obx(() => Icon(
-                                  (!isEditing.value)
-                                      ? Icons.edit_outlined
-                                      : Icons.save_outlined,
-                                  color: Colors.white,
-                                  size: 19,
-                                )),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            Obx(
-                              () => Text(
-                                (!isEditing.value)
-                                    ? lang.strings['shared']['userInfo']
-                                        ["editBtn"]
-                                    : lang.strings['shared']['userInfo']
-                                        ["saveBtn"],
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w700),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
                 SizedBox(
-                  height: 10,
+                  height: 50.sp,
                 ),
               ],
             ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }
