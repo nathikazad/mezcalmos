@@ -8,9 +8,11 @@ import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/PhoneNumberScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen.dart';
+import 'package:mezcalmos/Shared/pages/Wrapper.dart';
 
 // Routes Keys.
-
+const String kWrapperRoute = '/wrapper';
+const String kHomeRoute = '/';
 const String kSplashRoute = '/splash';
 const String kSignInRoute = '/sign_in';
 const String kLocationPermissionPage = '/location_permission';
@@ -28,10 +30,9 @@ getMessagesRoute(String orderId) {
 class SharedRouter {
   static List<GetPage> sharedRoutes = [
     GetPage(name: kUserProfile, page: () => UserProfile()),
+    GetPage(name: kWrapperRoute, page: () => Wrapper()),
     GetPage(name: kSplashRoute, page: () => SplashScreen()),
     GetPage(name: kSignInRoute, page: () => SignIn()),
-    GetPage(
-        name: kLocationPermissionPage, page: () => LocationPermissionScreen()),
     GetPage(name: kOtpRoute, page: () => PhoneNumberScreen()),
     GetPage(name: kOtpConfirmRoute, page: () => OtpConfirmationScreen()),
     GetPage(

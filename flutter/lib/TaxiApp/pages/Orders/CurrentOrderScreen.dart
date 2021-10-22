@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Order.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
@@ -168,7 +169,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
           mezDbgPrint(
               "CurrentOrderScreen after cancel navigating to kOrdersListPage");
           Get.offNamedUntil(
-              kOrdersListPage, ModalRoute.withName(kTaxiWrapperRoute));
+              kOrdersListPage, ModalRoute.withName(kHomeRoute));
           ;
         });
       });

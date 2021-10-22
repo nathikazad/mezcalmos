@@ -240,7 +240,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                                             Get.offNamedUntil(
                                                 kOrdersListPage,
                                                 ModalRoute.withName(
-                                                    kTaxiWrapperRoute));
+                                                    kHomeRoute));
                                           });
                                         }
                                       },
@@ -328,7 +328,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
     if (serverResponse.success) {
       mezDbgPrint("CurrentPositionedBottomBar finishRide success");
       Get.offNamedUntil(
-          kOrdersListPage, ModalRoute.withName(kTaxiWrapperRoute));
+          kOrdersListPage, ModalRoute.withName(kHomeRoute));
     } else {
       // todo: SHOW ERROR MESSAGE
     }

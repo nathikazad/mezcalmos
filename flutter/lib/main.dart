@@ -21,6 +21,9 @@ import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
 import 'package:mezcalmos/pre-main.dart';
 import 'package:package_info/package_info.dart';
+import 'package:get/route_manager.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,7 +44,7 @@ void main() {
   print('mode  -> $_launchMode');
 
   runApp(
-    SPoint(launcherApp, _host, _db, _launchMode),
+    SPoint(new App(), _host, _db, _launchMode),
   );
 }
 
@@ -151,5 +154,32 @@ class _SPointState extends State<SPoint> {
     } else {
       return widget._app;
     }
+  }
+}
+
+
+
+class App extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    Future<void> _initializeConfig() async {
+      // We will use this to Initialize anything at MaterialApp root init of app
+      BitmapDescriptor desc = await BitmapDescriptor.fromAssetImage(
+          ImageConfiguration(), 'assets/images/purple_circle.png');
+
+      await GetStorage().write('markerCircle', desc);
+      print("[+] InitializedConfig -- the $appName !");
+    }
+
+    return GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        onInit: () async => await _initializeConfig(),
+        title: appName,
+        theme: ThemeData(
+            primaryColor: Colors.white,
+            visualDensity: VisualDensity.adaptivePlatformDensity),
+        color: Colors.white,
+        getPages: routes,
+        initialRoute: kWrapperRoute);
   }
 }
