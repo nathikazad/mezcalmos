@@ -99,8 +99,8 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                               alignment: Alignment.topCenter,
                               children: [
                                 MGoogleMap(
-                                  customMarkers,
-                                  initialCameraPosition,
+                                  markers: customMarkers,
+                                  initialLocation: initialCameraPosition,
                                   polylines: polylines,
                                   idWithSubscription: {
                                     "taxi": taxiAuthController

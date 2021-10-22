@@ -1,6 +1,5 @@
 // BELONGS TO TAXI APP, please move
 
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
@@ -18,28 +17,15 @@ class UnauthorizedScreen extends StatefulWidget {
   _UnauthorizedScreenState createState() => _UnauthorizedScreenState();
 }
 
-class _UnauthorizedScreenState extends State<UnauthorizedScreen>
-    with TickerProviderStateMixin {
-  late AnimationController _animeCtrl;
-  late Animation<double> animation;
-
+class _UnauthorizedScreenState extends State<UnauthorizedScreen> {
   @override
   void initState() {
     super.initState();
-    _animeCtrl = new AnimationController(
-        duration: const Duration(seconds: 2), vsync: this)
-      ..repeat();
-    animation = Tween<double>(begin: 0, end: 2).animate(_animeCtrl);
-
-    animation.addListener(() {
-      setState(() {});
-      //set animation listiner and set state to update UI on every animation value change
-    });
   }
 
   @override
   void dispose() {
-    _animeCtrl.dispose();
+    // _animeCtrl.dispose();
     super.dispose();
   }
 
@@ -72,17 +58,12 @@ class _UnauthorizedScreenState extends State<UnauthorizedScreen>
                   padding: EdgeInsets.all(0),
                   margin: EdgeInsets.all(0),
                   decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage(taxiAnauthorizedAsset),
-                          fit: BoxFit.contain),
-                      color: Colors.white,
-                      shape: BoxShape.circle,
-                      boxShadow: <BoxShadow>[
-                        BoxShadow(
-                            color: Color.fromARGB(255, 97, 127, 255),
-                            blurRadius: animation.value,
-                            spreadRadius: animation.value)
-                      ]),
+                    image: DecorationImage(
+                        image: AssetImage(taxiAnauthorizedAsset),
+                        fit: BoxFit.contain),
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                  ),
                 ),
                 SizedBox(
                   height: 20,
@@ -97,7 +78,7 @@ class _UnauthorizedScreenState extends State<UnauthorizedScreen>
                 ),
                 InkWell(
                   onTap: () async {
-                    if (!await launch('https://meztaxi.com'))
+                    if (!(await launch('https://meztaxi.com')))
                       mezcalmosSnackBar('Error',
                           "Failed launching https://meztaxi.com on browser , maybe try to browse to it manually ? ");
                   },

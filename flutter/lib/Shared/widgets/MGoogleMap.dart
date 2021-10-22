@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -10,21 +9,22 @@ import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MGoogleMap extends StatefulWidget with MezDisposable {
   // List<CustomMarker> customMarkers;
   LatLng initialLocation;
   Set<Polyline> polylines;
-  LatLngBounds? bounds;
   List<Marker> markers;
   Map<String, Stream<LocationData>> idWithSubscription;
+  Duration rerenderDuration;
   String debugString;
-  MGoogleMap(
-    this.markers,
-    this.initialLocation, {
+  MGoogleMap({
+    required this.markers,
+    required this.initialLocation,
+    this.rerenderDuration = const Duration(seconds: 2),
     this.debugString = "",
     this.polylines = const <Polyline>{},
-    this.bounds,
     this.idWithSubscription = const {},
   }) {
     mezDbgPrint("MGoogleMap cosntructor ${this.hashCode} ${this.debugString}");
@@ -34,6 +34,7 @@ class MGoogleMap extends StatefulWidget with MezDisposable {
 }
 
 class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
+  late Timer _reRendringTimer;
   GoogleMapController? _controller;
   Completer<GoogleMapController> _completer = Completer();
   List<LatLng> _polylinesLatLngBounds = [];
@@ -55,7 +56,7 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
   // Animate the camera using widget.bounds
   Future<void> _animateCameraWithNewBounds(LatLngBounds? _bounds) async {
     if (_controller != null && _bounds != null) {
-      CameraUpdate _camUpdate = CameraUpdate.newLatLngBounds(_bounds, 130);
+      CameraUpdate _camUpdate = CameraUpdate.newLatLngBounds(_bounds, 100.sp);
       await _controller!.animateCamera(_camUpdate);
       await _boundsReChecker(_camUpdate);
     }
@@ -100,10 +101,10 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
 
   @override
   void didUpdateWidget(MGoogleMap oldWidget) {
+    super.didUpdateWidget(oldWidget);
     mezDbgPrint(
         "MGoogleMap didUpdateWidget ${this.hashCode} ${widget.debugString}");
     animateAndUpdateBounds();
-    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -113,16 +114,19 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
     // one time polylines LatLng points extraction.
     _polylinesLatLngBounds = _getLatLngBoundsFromPolyline(widget.polylines);
     animateAndUpdateBounds();
-
+    // attach Callback onResume to avoid Map going black in some devices after going back from background to foreGround.
     Get.find<AppLifeCycleController>().attachCallback(AppLifecycleState.resumed,
         () {
       _controller?.setMapStyle(mezMapStyle);
     });
+    // control our re-rendring Separately;
+    _reRendringTimer = Timer.periodic(widget.rerenderDuration, (_) {
+      animateAndUpdateBounds();
+    });
 
     widget.idWithSubscription.forEach((markerId, stream) {
-      stream.listen((newLoc) async {
-        if (!_markersCurrentlyBeingUpdated.contains(markerId) ||
-            !this.mounted) {
+      stream.listen((newLoc) {
+        if (!_markersCurrentlyBeingUpdated.contains(markerId)) {
           mezDbgPrint("N E W    L O C A T I O N");
           _markersCurrentlyBeingUpdated.add(markerId);
           int i = widget.markers
@@ -136,6 +140,7 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
                 position: LatLng(newLoc.latitude!, newLoc.longitude!));
           });
           _markersCurrentlyBeingUpdated.remove(markerId);
+          // animateAndUpdateBounds();
           mezDbgPrint(" E N D  -  L O C A T I O N");
         }
         // we skip if that markerId is already being handled .
@@ -146,6 +151,7 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
   @override
   void dispose() {
     mezDbgPrint("MGoogleMap disposed ${this.hashCode} ${widget.debugString}");
+    _reRendringTimer.cancel();
     // favoid keeping listeners in memory.
     cancelSubscriptions();
     // gmapControlelr disposing.
@@ -158,7 +164,7 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
   Widget build(BuildContext context) {
     mezDbgPrint(
         "Inside MGoogleMap build ${this.hashCode} ${widget.debugString}");
-
+    responsiveSize(context);
     return widget.markers.isNotEmpty
         ? GoogleMap(
             padding: EdgeInsets.all(20),
@@ -166,7 +172,7 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
             myLocationButtonEnabled: false,
             // minMaxZoomPreference: MinMaxZoomPreference(10, 30),
             buildingsEnabled: false,
-            markers: Set<Marker>.from(widget.markers),
+            markers: widget.markers.toSet(),
             polylines: widget.polylines,
             zoomControlsEnabled: false,
             compassEnabled: false,
