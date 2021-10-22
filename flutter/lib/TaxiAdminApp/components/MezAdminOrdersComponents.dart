@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/utilities/SharedEnums.dart';
+import 'package:mezcalmos/TaxiAdminApp/Models/NbOrders.dart';
 import 'package:mezcalmos/TaxiAdminApp/pages/Driver/DriverPage.dart';
 import 'package:mezcalmos/TaxiAdminApp/pages/Orders/OrderViewPage.dart';
 
