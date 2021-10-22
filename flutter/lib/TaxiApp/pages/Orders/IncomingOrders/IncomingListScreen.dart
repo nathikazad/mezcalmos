@@ -24,12 +24,15 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
 
   @override
   Widget build(BuildContext context) {
+    print(
+        " width :${MediaQuery.of(context).size.width}  height :${MediaQuery.of(context).size.height} ");
     TaxiAuthController _taxiAuthController = Get.find<TaxiAuthController>();
 
     responsiveSize(context);
 
     final sw = MediaQuery.of(context).size.width.w;
     final sh = MediaQuery.of(context).size.height.h;
+    print("$sw");
     // mezDbgPrint("---------------- orders len > ${controller.orders.length}");
     return WillPopScope(
       onWillPop: () async => false,
@@ -215,6 +218,7 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                                   )),
 
                                               // info line
+
                                               Positioned(
                                                 left: 50,
                                                 bottom: 5,
@@ -224,29 +228,43 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                                   runSpacing:
                                                       4.0, // gap between lines
                                                   children: <Widget>[
-                                                    Icon(
-                                                        MezcalmosIcons
-                                                            .map_marker,
-                                                        size:
-                                                            getSizeRelativeToScreen(
-                                                                32, sw, sh)),
-                                                    Text(
-                                                      controller.orders[i].from
-                                                              .address
-                                                              .substring(0, 5) +
-                                                          "... ",
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      maxLines: 1,
-                                                      softWrap: false,
-                                                      style: TextStyle(
-                                                          fontFamily: 'psr',
-                                                          fontSize: 14),
-                                                    ),
+                                                    (Get.width <= 310)
+                                                        ? Icon(
+                                                            MezcalmosIcons
+                                                                .map_marker,
+                                                            size:
+                                                                getSizeRelativeToScreen(
+                                                                        32,
+                                                                        sw,
+                                                                        sh)
+                                                                    .w)
+                                                        : Container(),
+                                                    (Get.width <= 310)
+                                                        ? Text(
+                                                            controller
+                                                                    .orders[i]
+                                                                    .from
+                                                                    .address
+                                                                    .substring(
+                                                                        0, 5) +
+                                                                "... ",
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            maxLines: 1,
+                                                            softWrap: false,
+                                                            style: TextStyle(
+                                                                fontFamily:
+                                                                    'psr',
+                                                                fontSize:
+                                                                    14.sp),
+                                                          )
+                                                        : Container(),
                                                     Icon(MezcalmosIcons.map_pin,
                                                         size:
                                                             getSizeRelativeToScreen(
-                                                                32, sw, sh)),
+                                                                    32, sw, sh)
+                                                                .w),
                                                     SizedBox(
                                                       width: 2,
                                                     ),
@@ -262,7 +280,7 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                                       softWrap: false,
                                                       style: TextStyle(
                                                           fontFamily: 'psr',
-                                                          fontSize: 14),
+                                                          fontSize: 14.sp),
                                                     ),
                                                     SizedBox(
                                                       width: 5,
@@ -270,9 +288,10 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                                     Icon(MezcalmosIcons.route,
                                                         size:
                                                             getSizeRelativeToScreen(
-                                                                32, sw, sh)),
+                                                                    32, sw, sh)
+                                                                .w),
                                                     SizedBox(
-                                                      width: 2,
+                                                      width: 2.w,
                                                     ),
                                                     Text(
                                                       controller.orders[i]
@@ -285,30 +304,43 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                                       softWrap: false,
                                                       style: TextStyle(
                                                           fontFamily: 'psr',
-                                                          fontSize: 14),
+                                                          fontSize: 14.sp),
                                                     ),
-                                                    Icon(
-                                                        MezcalmosIcons
-                                                            .stopwatch,
-                                                        size:
-                                                            getSizeRelativeToScreen(
-                                                                32, sw, sh)),
+                                                    (Get.width <= 310)
+                                                        ? Icon(
+                                                            MezcalmosIcons
+                                                                .stopwatch,
+                                                            size:
+                                                                getSizeRelativeToScreen(
+                                                                        32,
+                                                                        sw,
+                                                                        sh)
+                                                                    .w)
+                                                        : Container(),
                                                     SizedBox(
-                                                      width: 2,
+                                                      width: (Get.width <= 310)
+                                                          ? 2.w
+                                                          : 0,
                                                     ),
-                                                    Text(
-                                                      controller.orders[i]
-                                                                  .routeInformation[
-                                                              'duration']['text'] ??
-                                                          "? mins",
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      maxLines: 1,
-                                                      softWrap: false,
-                                                      style: TextStyle(
-                                                          fontFamily: 'psr',
-                                                          fontSize: 14),
-                                                    ),
+                                                    (Get.width <= 310)
+                                                        ? Text(
+                                                            controller.orders[i]
+                                                                            .routeInformation[
+                                                                        'duration']
+                                                                    ['text'] ??
+                                                                "? mins",
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            maxLines: 1,
+                                                            softWrap: false,
+                                                            style: TextStyle(
+                                                                fontFamily:
+                                                                    'psr',
+                                                                fontSize:
+                                                                    14.sp),
+                                                          )
+                                                        : Container(),
                                                   ],
                                                 ),
                                               )

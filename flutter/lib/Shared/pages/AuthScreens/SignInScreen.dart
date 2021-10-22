@@ -48,12 +48,12 @@ class SignIn extends GetWidget<AuthController> {
                   Center(
                     child: Container(
                       child: MezcalmosSharedWidgets.logo(
-                          size: getSizeRelativeToScreen(60, sh, sw)),
+                          size: getSizeRelativeToScreen(60.w, sh, sw)),
                     ),
                   ),
                   SizedBox(height: (Get.height * 0.05).h),
                   MezcalmosSharedWidgets.mezcalmos(
-                      textSize: getSizeRelativeToScreen(25, sh, sw).sp,
+                      textSize: getSizeRelativeToScreen(25.sp, sh, sw).sp,
                       isBold: true),
                   SizedBox(
                     height: (Get.height * 0.05).h,
@@ -67,7 +67,7 @@ class SignIn extends GetWidget<AuthController> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: 'psb',
-                          fontSize: getSizeRelativeToScreen(18, sh, sw).sp,
+                          fontSize: getSizeRelativeToScreen(16, sh, sw).sp,
                         ),
                       ),
                     ),
@@ -92,8 +92,8 @@ class SignIn extends GetWidget<AuthController> {
                           child: clickedLogin.value
                               ? Center(
                                   child: SizedBox(
-                                    height: 18,
-                                    width: 18,
+                                    height: 18.h,
+                                    width: 18.w,
                                     child: CircularProgressIndicator(
                                       color: Colors.white,
                                       strokeWidth: 2,
@@ -120,6 +120,7 @@ class SignIn extends GetWidget<AuthController> {
                                           softWrap: true,
                                           textAlign: TextAlign.center,
                                           maxLines: 1,
+                                          //style: TextStyle(fontSize: 20.sp),
                                           overflow: TextOverflow.ellipsis,
                                           textScaleFactor: 0.9,
                                         ))
@@ -130,11 +131,11 @@ class SignIn extends GetWidget<AuthController> {
                             textStyle: MaterialStateProperty.all<TextStyle>(
                                 new TextStyle(
                                     fontSize:
-                                        getSizeRelativeToScreen(10, sh, sw),
+                                        getSizeRelativeToScreen(10, sh, sw).sp,
                                     fontWeight: FontWeight.bold)),
                             fixedSize: MaterialStateProperty.all<Size>(new Size(
-                                getSizeRelativeToScreen(150, sh, sw),
-                                getSizeRelativeToScreen(25, sh, sw))),
+                                getSizeRelativeToScreen(150, sh, sw).w,
+                                getSizeRelativeToScreen(25, sh, sw).h)),
                             elevation: MaterialStateProperty.all<double>(2),
                             backgroundColor: MaterialStateProperty.all<Color>(
                                 Color.fromARGB(255, 58, 85, 159)),
@@ -191,11 +192,11 @@ class SignIn extends GetWidget<AuthController> {
                             textStyle: MaterialStateProperty.all<TextStyle>(
                                 new TextStyle(
                                     fontSize:
-                                        getSizeRelativeToScreen(10, sh, sw),
+                                        getSizeRelativeToScreen(10, sh, sw).sp,
                                     fontWeight: FontWeight.bold)),
                             fixedSize: MaterialStateProperty.all<Size>(new Size(
-                                getSizeRelativeToScreen(150, sh, sw),
-                                getSizeRelativeToScreen(25, sh, sw))),
+                                getSizeRelativeToScreen(150, sh, sw).w,
+                                getSizeRelativeToScreen(25, sh, sw).h)),
                             elevation: MaterialStateProperty.all<double>(2),
                             backgroundColor: MaterialStateProperty.all<Color>(
                                 Color.fromARGB(255, 92, 127, 255)),

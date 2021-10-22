@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class IncommingPositionedBottomBar extends StatelessWidget with MezDisposable {
   IncomingOrdersController controller = Get.find<IncomingOrdersController>();
@@ -15,11 +16,12 @@ class IncommingPositionedBottomBar extends StatelessWidget with MezDisposable {
 
   @override
   Widget build(BuildContext context) {
+    responsiveSize(context);
     return Positioned(
         bottom: GetStorage().read(getxGmapBottomPaddingKey) + 55,
         child: Container(
-          height: getSizeRelativeToScreen(30, Get.height, Get.width),
-          width: Get.width / 1.05,
+          height: getSizeRelativeToScreen(30, Get.height, Get.width).h,
+          width: (Get.width / 1.05),
           decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(5),
@@ -76,7 +78,7 @@ class IncommingPositionedBottomBar extends StatelessWidget with MezDisposable {
                   controller.selectedIncommingOrder?.customer['name'] ??
                       "Customer",
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 16.sp,
                     fontFamily: 'psb',
                   ),
                 ),
@@ -88,7 +90,7 @@ class IncommingPositionedBottomBar extends StatelessWidget with MezDisposable {
                   () => Text(
                     "${controller.selectedIncommingOrder?.distanceToClient.toStringAsFixed(1) ?? '? '} km ${lang.strings['taxi']['incoming']["far"]}",
                     style: TextStyle(
-                        fontSize: 14, fontFamily: 'psr', color: Colors.grey),
+                        fontSize: 14.sp, fontFamily: 'psr', color: Colors.grey),
                   ),
                 ),
               ),
@@ -96,7 +98,7 @@ class IncommingPositionedBottomBar extends StatelessWidget with MezDisposable {
                   bottom: 10,
                   top: 10,
                   right:
-                      getSizeRelativeToScreen(180, Get.height, Get.width) / 3.5,
+                      getSizeRelativeToScreen(150, Get.height, Get.width) / 3.5,
                   child: VerticalDivider(
                     width: 0.5,
                     color: Color.fromARGB(255, 236, 236, 236),
@@ -106,7 +108,7 @@ class IncommingPositionedBottomBar extends StatelessWidget with MezDisposable {
                   bottom: 10,
                   top: 10,
                   right:
-                      getSizeRelativeToScreen(180, Get.height, Get.width) / 1.9,
+                      getSizeRelativeToScreen(150, Get.height, Get.width) / 1.9,
                   child: VerticalDivider(
                     width: 0.5,
                     color: Color.fromARGB(255, 236, 236, 236),
@@ -114,7 +116,7 @@ class IncommingPositionedBottomBar extends StatelessWidget with MezDisposable {
                   )),
               Positioned(
                   right:
-                      getSizeRelativeToScreen(180, Get.height, Get.width) / 3.2,
+                      getSizeRelativeToScreen(150, Get.height, Get.width) / 3.2,
                   child: Wrap(
                     alignment: WrapAlignment.center,
                     crossAxisAlignment: WrapCrossAlignment.center,
@@ -123,10 +125,10 @@ class IncommingPositionedBottomBar extends StatelessWidget with MezDisposable {
                     direction: Axis.horizontal,
                     children: [
                       Transform.scale(
-                          scale: 2,
+                          scale: (Get.width <= 310) ? 2 : 1.5,
                           child: Container(
-                            height: 10,
-                            width: 50,
+                            height: 10.h,
+                            width: 50.w,
                             decoration: BoxDecoration(
                                 image: DecorationImage(
                               image: AssetImage(money_asset),
@@ -136,7 +138,7 @@ class IncommingPositionedBottomBar extends StatelessWidget with MezDisposable {
                         () => Text(
                           "${controller.selectedIncommingOrder?.estimatedPrice?.toString() ?? '? \$'}",
                           style: TextStyle(
-                              fontSize: 16,
+                              fontSize: (Get.width <= 310) ? 10.sp : 16.sp,
                               fontFamily: 'psb',
                               color: Colors.black),
                         ),
@@ -159,7 +161,7 @@ class IncommingPositionedBottomBar extends StatelessWidget with MezDisposable {
                       Text(
                         "${controller.selectedIncommingOrder?.routeInformation['distance']['text'] ?? '? km'}",
                         style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 14.sp,
                             fontFamily: 'psr',
                             color: Colors.black),
                       ),
@@ -178,9 +180,9 @@ class IncommingPositionedBottomBar extends StatelessWidget with MezDisposable {
                         size: 16,
                       ),
                       Text(
-                        "${controller.selectedIncommingOrder?.routeInformation['duration']['text'] ?? '? mins'}",
+                        "${getRightTextSize(controller.selectedIncommingOrder?.routeInformation['duration']['text'] ?? '? mins')}",
                         style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 14.sp,
                             fontFamily: 'psr',
                             color: Colors.black),
                       ),
@@ -190,4 +192,15 @@ class IncommingPositionedBottomBar extends StatelessWidget with MezDisposable {
           ),
         ));
   }
+}
+
+String? getRightTextSize(String? value) {
+  print(value);
+  if (value!.length >= 10) {
+    var words = value.split(" ");
+    if (words.length >= 3) {
+      return "${words[0]} ${words[1]}";
+    }
+  } else
+    return value;
 }
