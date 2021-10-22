@@ -77,7 +77,7 @@ class StatsIndexPage extends GetView {
             ),
             OutlinedButton(
                 child: Text("Log Out"),
-                onPressed: () async => await authController.auth.signOut()),
+                onPressed: () async => await authController.signOut()),
             Divider(),
             OutlinedButton(
                 child: Text("Langauge"),
