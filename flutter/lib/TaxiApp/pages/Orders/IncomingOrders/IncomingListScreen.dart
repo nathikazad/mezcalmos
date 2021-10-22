@@ -13,6 +13,7 @@ import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
   LanguageController lang = Get.find<LanguageController>();
@@ -20,13 +21,18 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
   IncomingOrdersScreen() {
     Get.put(IncomingOrdersController());
   }
-  
+
   @override
   Widget build(BuildContext context) {
+    print(
+        " width :${MediaQuery.of(context).size.width}  height :${MediaQuery.of(context).size.height} ");
     TaxiAuthController _taxiAuthController = Get.find<TaxiAuthController>();
 
-    final sw = MediaQuery.of(context).size.width;
-    final sh = MediaQuery.of(context).size.height;
+    responsiveSize(context);
+
+    final sw = MediaQuery.of(context).size.width.w;
+    final sh = MediaQuery.of(context).size.height.h;
+    print("$sw");
     // mezDbgPrint("---------------- orders len > ${controller.orders.length}");
     return WillPopScope(
       onWillPop: () async => false,
@@ -42,50 +48,53 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
             children: [
               Container(
                 margin: EdgeInsets.only(
-                    left: getSizeRelativeToScreen(40, sw, sh),
-                    right: getSizeRelativeToScreen(40, sw, sh)),
+                    left: getSizeRelativeToScreen(40.w, sw, sh),
+                    right: getSizeRelativeToScreen(40.w, sw, sh)),
                 child: Container(
-                  height: getSizeRelativeToScreen(300, sw, sh),
+                  height: getSizeRelativeToScreen(300.h, sw, sh),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Flexible(
-                        child: Transform.scale(
-                          scale: 1.15,
-                          child: Obx(
-                            () => Text(
-                              lang.strings['taxi']['incoming']["title"],
-                              style: TextStyle(
-                                  // fontSize: getSizeRelativeToScreen(70, sw, sh),
-                                  fontSize: 38.5,
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: 'psr'),
-                            ),
+                        child: Obx(
+                          () => Text(
+                            lang.strings['taxi']['incoming']["title"],
+                            style: TextStyle(
+                                // fontSize: getSizeRelativeToScreen(70, sw, sh),
+                                fontSize: 38.5.sp,
+                                fontFamily: 'psr'),
                           ),
                         ),
                       ),
                       Flexible(
-                          child: Obx(() => MezSwitch(
-                                initialPosition:
-                                    _taxiAuthController.taxiState?.isLooking ??
-                                        false,
-                                values: ['ON', 'OFF'],
-                                onToggleCallback: (v) {
-                                  // turn ut ON
-                                  if (v == 0) {
-                                    _taxiAuthController.turnOn();
-                                  } else {
-                                    _taxiAuthController.turnOff();
-                                  }
-                                },
-                                buttonColor:
-                                    _taxiAuthController.taxiState?.isLooking ==
-                                            true
-                                        ? Colors.green
-                                        : Colors.red,
-                                backgroundColor: Colors.transparent,
-                                textColor: const Color(0xFFFFFFFF),
+                          child: Obx(() => Container(
+                                // color: Colors.black87,
+                                // height: Get.height * 0.33,
+                                height: 50.sp,
+                                width: 115.sp,
+                                child: MezSwitch(
+                                  buttonSize: Size(60.sp, 50.sp),
+                                  initialPosition: _taxiAuthController
+                                          .taxiState?.isLooking ??
+                                      false,
+                                  values: ['ON', 'OFF'],
+                                  onToggleCallback: (v) {
+                                    // turn ut ON
+                                    if (v == 0) {
+                                      _taxiAuthController.turnOn();
+                                    } else {
+                                      _taxiAuthController.turnOff();
+                                    }
+                                  },
+                                  buttonColor: _taxiAuthController
+                                              .taxiState?.isLooking ==
+                                          true
+                                      ? Colors.green
+                                      : Colors.red,
+                                  backgroundColor: Colors.transparent,
+                                  textColor: const Color(0xFFFFFFFF),
+                                ),
                               )))
                     ],
                   ),
@@ -113,9 +122,8 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                           vertical: 2),
                                       child: GestureDetector(
                                         onTap: () async {
-                                          IncomingOrdersController __ =
-                                              Get.put<IncomingOrdersController>(
-                                                  IncomingOrdersController());
+                                          Get.put<IncomingOrdersController>(
+                                              IncomingOrdersController());
                                           mezDbgPrint(
                                               "Clicked on order::${controller.orders[i].id}");
                                           controller.selectedIncommingOrderKey =
@@ -124,7 +132,6 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                         },
                                         child: Container(
                                           height: 70,
-
                                           decoration: BoxDecoration(
                                               border: Border.all(
                                                   color: Color.fromARGB(
@@ -211,6 +218,7 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                                   )),
 
                                               // info line
+
                                               Positioned(
                                                 left: 50,
                                                 bottom: 5,
@@ -220,29 +228,43 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                                   runSpacing:
                                                       4.0, // gap between lines
                                                   children: <Widget>[
-                                                    Icon(
-                                                        MezcalmosIcons
-                                                            .map_marker,
-                                                        size:
-                                                            getSizeRelativeToScreen(
-                                                                32, sw, sh)),
-                                                    Text(
-                                                      controller.orders[i].from
-                                                              .address
-                                                              .substring(0, 5) +
-                                                          "... ",
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      maxLines: 1,
-                                                      softWrap: false,
-                                                      style: TextStyle(
-                                                          fontFamily: 'psr',
-                                                          fontSize: 14),
-                                                    ),
+                                                    (Get.width <= 310)
+                                                        ? Icon(
+                                                            MezcalmosIcons
+                                                                .map_marker,
+                                                            size:
+                                                                getSizeRelativeToScreen(
+                                                                        32,
+                                                                        sw,
+                                                                        sh)
+                                                                    .w)
+                                                        : Container(),
+                                                    (Get.width <= 310)
+                                                        ? Text(
+                                                            controller
+                                                                    .orders[i]
+                                                                    .from
+                                                                    .address
+                                                                    .substring(
+                                                                        0, 5) +
+                                                                "... ",
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            maxLines: 1,
+                                                            softWrap: false,
+                                                            style: TextStyle(
+                                                                fontFamily:
+                                                                    'psr',
+                                                                fontSize:
+                                                                    14.sp),
+                                                          )
+                                                        : Container(),
                                                     Icon(MezcalmosIcons.map_pin,
                                                         size:
                                                             getSizeRelativeToScreen(
-                                                                32, sw, sh)),
+                                                                    32, sw, sh)
+                                                                .w),
                                                     SizedBox(
                                                       width: 2,
                                                     ),
@@ -258,7 +280,7 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                                       softWrap: false,
                                                       style: TextStyle(
                                                           fontFamily: 'psr',
-                                                          fontSize: 14),
+                                                          fontSize: 14.sp),
                                                     ),
                                                     SizedBox(
                                                       width: 5,
@@ -266,9 +288,10 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                                     Icon(MezcalmosIcons.route,
                                                         size:
                                                             getSizeRelativeToScreen(
-                                                                32, sw, sh)),
+                                                                    32, sw, sh)
+                                                                .w),
                                                     SizedBox(
-                                                      width: 2,
+                                                      width: 2.w,
                                                     ),
                                                     Text(
                                                       controller.orders[i]
@@ -281,30 +304,43 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                                       softWrap: false,
                                                       style: TextStyle(
                                                           fontFamily: 'psr',
-                                                          fontSize: 14),
+                                                          fontSize: 14.sp),
                                                     ),
-                                                    Icon(
-                                                        MezcalmosIcons
-                                                            .stopwatch,
-                                                        size:
-                                                            getSizeRelativeToScreen(
-                                                                32, sw, sh)),
+                                                    (Get.width <= 310)
+                                                        ? Icon(
+                                                            MezcalmosIcons
+                                                                .stopwatch,
+                                                            size:
+                                                                getSizeRelativeToScreen(
+                                                                        32,
+                                                                        sw,
+                                                                        sh)
+                                                                    .w)
+                                                        : Container(),
                                                     SizedBox(
-                                                      width: 2,
+                                                      width: (Get.width <= 310)
+                                                          ? 2.w
+                                                          : 0,
                                                     ),
-                                                    Text(
-                                                      controller.orders[i]
-                                                                  .routeInformation[
-                                                              'duration']['text'] ??
-                                                          "? mins",
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      maxLines: 1,
-                                                      softWrap: false,
-                                                      style: TextStyle(
-                                                          fontFamily: 'psr',
-                                                          fontSize: 14),
-                                                    ),
+                                                    (Get.width <= 310)
+                                                        ? Text(
+                                                            controller.orders[i]
+                                                                            .routeInformation[
+                                                                        'duration']
+                                                                    ['text'] ??
+                                                                "? mins",
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            maxLines: 1,
+                                                            softWrap: false,
+                                                            style: TextStyle(
+                                                                fontFamily:
+                                                                    'psr',
+                                                                fontSize:
+                                                                    14.sp),
+                                                          )
+                                                        : Container(),
                                                   ],
                                                 ),
                                               )
@@ -318,7 +354,7 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                           // in case no order found
                           : Center(
                               child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Expanded(
@@ -329,6 +365,9 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                                 noOrdersFound_asset))),
                                   ),
                                 ),
+                                SizedBox(
+                                  height: 15.sp,
+                                ),
                                 Expanded(
                                   child: Flex(
                                     direction: Axis.vertical,
@@ -336,28 +375,29 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                         CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      Flexible(
-                                        child: Obx(
-                                          () => Text(
-                                            lang.strings['taxi']['incoming']
-                                                ["noOrdersTitle"],
-                                            style: TextStyle(
-                                                fontSize: 38.5,
-                                                fontFamily: 'psr'),
-                                          ),
+                                      Obx(
+                                        () => Text(
+                                          lang.strings['taxi']['incoming']
+                                              ["noOrdersTitle"],
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              fontSize: 25.5.sp,
+                                              fontFamily: 'psr'),
                                         ),
                                       ),
-                                      Flexible(
-                                        child: Obx(
-                                          () => Text(
-                                            lang.strings['taxi']['incoming']
-                                                ["noOrdersDesc"],
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                fontFamily: 'psr',
-                                                color: Color.fromARGB(
-                                                    255, 168, 168, 168)),
-                                          ),
+                                      SizedBox(
+                                        height: 10.sp,
+                                      ),
+                                      Obx(
+                                        () => Text(
+                                          lang.strings['taxi']['incoming']
+                                              ["noOrdersDesc"],
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              fontSize: 16.sp,
+                                              fontFamily: 'psr',
+                                              color: Color.fromARGB(
+                                                  255, 168, 168, 168)),
                                         ),
                                       ),
                                     ],
@@ -378,6 +418,9 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                         image: AssetImage(turnOn_asset))),
                               ),
                             ),
+                            SizedBox(
+                              height: 15.sp,
+                            ),
                             Expanded(
                               child: Flex(
                                 direction: Axis.vertical,
@@ -388,16 +431,21 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                     () => Text(
                                       lang.strings['taxi']['incoming']
                                           ["toggleTitle"],
+                                      textAlign: TextAlign.center,
                                       style: TextStyle(
-                                          fontSize: 25.5, fontFamily: 'psr'),
+                                          fontSize: 25.5.sp, fontFamily: 'psr'),
                                     ),
+                                  ),
+                                  SizedBox(
+                                    height: 10.sp,
                                   ),
                                   Obx(
                                     () => Text(
                                       lang.strings['taxi']['incoming']
                                           ["toggleDesc"],
+                                      textAlign: TextAlign.center,
                                       style: TextStyle(
-                                          fontSize: 16,
+                                          fontSize: 16.sp,
                                           fontFamily: 'psr',
                                           color: Color.fromARGB(
                                               255, 168, 168, 168)),

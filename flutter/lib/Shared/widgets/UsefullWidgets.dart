@@ -131,11 +131,18 @@ class MezcalmosSharedWidgets {
     );
   }
 
-  static Widget fillTitle() => Row(
-        children: [
-          logo(size: getSizeRelativeToScreen(85, Get.width, Get.height)),
-          Padding(padding: EdgeInsets.only(left: 10), child: mezcalmos()),
-        ],
+  static Widget fillTitle() => Container(
+        width: Get.width * 0.55,
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.centerLeft,
+          child: Row(
+            children: [
+              logo(size: getSizeRelativeToScreen(80, Get.width, Get.height)),
+              Padding(padding: EdgeInsets.only(left: 10), child: mezcalmos()),
+            ],
+          ),
+        ),
       );
 
   static AppBar mezcalmosAppBar(String btnType, Function onTapFunction,
@@ -160,55 +167,70 @@ class MezcalmosSharedWidgets {
         );
         break;
     }
+    mezDbgPrint("Getx => ScreenSize ========> ${Get.width} x ${Get.height} !!");
     return AppBar(
-        toolbarHeight: 80,
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        title: Container(
-          width: Get.width,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                height: 32,
-                width: 32,
-                child: GestureDetector(
-                  onTap: () {
-                    mezDbgPrint("Taped Drawer btn !");
-                    onTapFunction();
-                  },
-                  child: Container(
-                    height: 32,
-                    width: 32,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color.fromARGB(255, 216, 225, 249),
-                          spreadRadius: 0,
-                          blurRadius: 7,
-                          offset: Offset(0, 7), // changes position of shadow
-                        ),
-                      ],
-                      gradient: LinearGradient(colors: [
-                        Color.fromARGB(255, 97, 127, 255),
-                        Color.fromARGB(255, 198, 90, 252),
-                      ], begin: Alignment.topLeft, end: Alignment.bottomRight),
-                    ),
-                    child: btn_icon,
+      toolbarHeight: 80,
+      elevation: 0,
+      automaticallyImplyLeading: false,
+      title: Container(
+        // width: Get.width,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              height: 32,
+              width: 32,
+              child: GestureDetector(
+                onTap: () {
+                  mezDbgPrint("Taped Drawer btn !");
+                  onTapFunction();
+                },
+                child: Container(
+                  height: 32,
+                  width: 32,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color.fromARGB(255, 216, 225, 249),
+                        spreadRadius: 0,
+                        blurRadius: 7,
+                        offset: Offset(0, 7), // changes position of shadow
+                      ),
+                    ],
+                    gradient: LinearGradient(colors: [
+                      Color.fromARGB(255, 97, 127, 255),
+                      Color.fromARGB(255, 198, 90, 252),
+                    ], begin: Alignment.topLeft, end: Alignment.bottomRight),
                   ),
+                  child: btn_icon,
                 ),
               ),
-              // Positioned(
-              //     right: getSizeRelativeToScreen(40, Get.height, Get.width),
-              //     child: fillTitle())
-              SizedBox(
-                  width: getSizeRelativeToScreen(20, Get.height, Get.width)),
-              fillTitle(),
-            ],
-          ),
-        ));
+            ),
+            // Positioned(
+            //     right: getSizeRelativeToScreen(40, Get.height, Get.width),
+            //     child: fillTitle())
+            SizedBox(width: getSizeRelativeToScreen(20, Get.height, Get.width)),
+            fillTitle()
+            // LayoutBuilder(builder: (ctx, constraints) {
+            //   mezDbgPrint(
+            //       "Inside layoutbuilder  ${constraints.maxWidth} x ${constraints.maxHeight} !!");
+            //   mezDbgPrint(
+            //       "Getx => Inside layoutbuilder  ${Get.width} x ${Get.height} !!");
+            //   if (constraints.maxWidth <= 320) {
+            //     mezDbgPrint("------- Small phone !!");
+            //     // responsiveSize(ctx);
+            //     return fillTitle(isSmallPhone: true);
+            //   } else {
+            //     mezDbgPrint(" ------- Big phone !!");
+            //     return fillTitle();
+            //   }
+            // }),
+          ],
+        ),
+      ),
+    );
   }
 
   static Future<void> mezcalmosDialog(

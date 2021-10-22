@@ -1,11 +1,13 @@
 // DO NOT TOUCH THIS PLEASE !
-import 'package:mezcalmos/<app-name>/main.dart';
 import 'package:mezcalmos/<app-name>/helpers/authHooks.dart';
+import 'package:get/route_manager.dart';
+import 'package:mezcalmos/<app-name>/router.dart';
 
 const String defaultDb = "<database>";
 const String defaultLaunchMode = "<launch-mode>";
 
-<app-name> launcherApp = new <app-name>();
 Function signInCallback = AuthHooks.onSignInHook;
 Function signOutCallback = AuthHooks.onSignOutHook;
 String appName = "<app-name>";
+List<GetPage<dynamic>> routes = XRouter.mainRoutes;
+

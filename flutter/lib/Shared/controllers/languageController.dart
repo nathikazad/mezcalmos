@@ -36,6 +36,7 @@ class LanguageController extends GetxController {
   String get langImage => languageDetails[_userLanguageKey.value].langImage;
   dynamic get strings => _jsonStrings[_userLanguageKey.value];
 
+  String get oppositLangKey => _userLanguageKey.value == "en" ? "es" : "en";
   String get oppositToLang =>
       _userLanguageKey.value == "en" ? "A Español" : "To English";
   String get oppositFlag =>
@@ -43,12 +44,20 @@ class LanguageController extends GetxController {
 
   void changeUserLanguage([String? language]) {
     if (language == null) {
-      if (_authController.user!.language == "es") {
+      if (_authController.user?.language == "es") {
         language = "en";
       } else {
         language = "es";
       }
-      _authController.changeLanguage(language);
+      if (_authController.user != null) {
+        // we need that because in case user clicked change lang from SideMenu , we really don't
+        // need to execute that one because there is no user SIgnedIn yet!
+        // we have to make some kind of queue that will handle stuff once the user SignedIn.
+        _authController.changeLanguage(language);
+      } else {
+        // welse so we can still update the user language locally but not in db!
+        _userLanguageKey.value = oppositLangKey;
+      }
     } else if (_authController.user == null) {
       _userLanguageKey.value = language;
     }

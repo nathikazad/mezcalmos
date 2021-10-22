@@ -1,12 +1,14 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 class TaxiState {
   bool isAuthorized;
   bool isLooking;
   String? currentOrder;
-  TaxiState(this.isAuthorized, this.isLooking, this.currentOrder);
+  TaxiState(this.isAuthorized, this.isLooking, [this.currentOrder]);
 
   factory TaxiState.fromSnapshot(dynamic data) {
+    mezDbgPrint("TaxiDriver ${data}");
     bool isAuthorized =
         data == null ? false : data['authorizationStatus'] == "authorized";
     bool isLooking = data == null ? false : data['isLooking'] == true;

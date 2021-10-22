@@ -54,7 +54,7 @@
     },
     "taxi": {
         "incoming": {
-            "title": " Incoming  Orders",
+            "title": "Incoming  Orders",
             "loading": "Loading",
             "services": "All Services",
             "isInTax": "Please finish|your ride|to accept new orders",
@@ -165,10 +165,10 @@
             "clear": "Clear"
         },
         "userInfo": {
-            "title": " User   Information ",
-            "editInfo": "Edit    Information",
+            "title": " User Information",
+            "editInfo": "Edit Information",
             "editPhoneNumber": "Change Phone Number",
-            "addInfo": "Add    Information",
+            "addInfo": "Add Information",
             "editBtn": "EDIT INFORMATION",
             "deleteBtn": "Delete Account",
             "saveBtn": "SAVE",
