@@ -6,6 +6,7 @@ upload_certificate.pem
 
 android/app/google-services.json
 ios/Runner/GoogleService-Info.plist
+*.lock
 # -- patched files
 
 pre-main.dart
