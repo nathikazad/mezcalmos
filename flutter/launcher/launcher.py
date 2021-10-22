@@ -128,8 +128,11 @@ class Launcher:
         PRINTLN("[+] Patching ../lib/pre-main.dart !")
         f_root_main = open('../lib/pre-main.dart' , encoding='utf-8' , errors='ignore').read()
         f_root_main = f_root_main.replace("<app-name>", self.user_args['app']).replace("<database>" , self.user_args['db']).replace("<launch-mode>" , self.user_args['lmode'])
-        # PRINTLN(f"\t|_ last_app = {self.last_app}\n\t|_ launching_app = {self.user_args['app']}")
-
+        if self.user_args["preview"] == True:
+            f_root_main = f_root_main.replace("<import-device-preview>" , "import 'package:device_preview/device_preview.dart';").replace("<device-preview>" , "DevicePreview(builder: (context) => ").replace("</device-preview>" , ")")
+        else:
+            f_root_main = f_root_main.replace("<import-device-preview>" , "").replace("<device-preview>" , "").replace("</device-preview>" , "")
+            
         # Writing new Valid App.
         open('../lib/pre-main.dart' , 'w+').write(f_root_main)
         PRINTLN("[+] Pacthed ../lib/pre-main.dart successfully !")
@@ -315,9 +318,10 @@ class Config:
         + filter=<FileName.filter>  : just pass the filter file name you created under output_filters.
         + fmode=<filter_mode> : Default is 'show' , can be 'hide' depend on how you want to use the filter file!
         + --lan : in case you want to launch to another device connected to the same network.
+        + --preview : Passing this along , will result on launching the app in the device-preview for testing an try many resolutions.
         + --build=<mode> : to order the launcher to build where mode is [apk, appbundle]
         + --set-version=<version> : Used to set the project's version to a specific version , this will set the version and quit.
-        
+
         === only in build ===
         + version=<version> : example : 1.0.15+11
 
@@ -555,7 +559,11 @@ class Config:
             if _fm :
                 self.user_args['fmode']  = _fm
 
-
+        # preview mode !
+        if '--preview' in args:
+            self.user_args['preview'] = True
+        else :
+            self.user_args['preview'] = False
 
         # in case of a launch and run in lan :
         if self.user_args['pymode'] == "launch":

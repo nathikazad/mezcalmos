@@ -5,7 +5,6 @@
 // =============================
 
 import 'dart:async';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_functions/cloud_functions.dart';
@@ -25,13 +24,9 @@ import 'package:package_info/package_info.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-////
-// import 'package:device_preview/device_preview.dart';
-// import 'package:device_preview/plugins.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-
   const startPoint =
       bool.hasEnvironment('APP_SP') ? String.fromEnvironment('APP_SP') : null;
   const _host =
@@ -49,14 +44,6 @@ void main() {
   print('mode  -> $_launchMode');
 
   runApp(
-    // DevicePreview(
-    //   enabled: true,
-    //   plugins: [
-    //     const ScreenshotPlugin(),
-    //     const FileExplorerPlugin(),
-    //     const SharedPreferencesExplorerPlugin(),
-    //   ],
-    //   builder: (context) =>
     SPoint(new App(), _host, _db, _launchMode),
   );
 }

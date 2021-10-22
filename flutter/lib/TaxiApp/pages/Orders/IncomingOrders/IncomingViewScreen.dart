@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
@@ -73,8 +74,8 @@ class IncommingOrderScreenView extends GetWidget<IncomingOrdersController>
                 builder: (contexto, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     return MGoogleMap(
-                      customMarkers,
-                      initialCameraPosition.value,
+                      markers: customMarkers,
+                      initialLocation: initialCameraPosition.value,
                       polylines: polylines,
                       debugString: "IncomingViewScreen",
                     );
@@ -106,7 +107,7 @@ class IncommingOrderScreenView extends GetWidget<IncomingOrdersController>
                                 // mezcalmosSnackBar("Success", "");
                                 showLoading.value = false;
                                 Get.offNamedUntil(kCurrentOrderPage,
-                                    ModalRoute.withName(kTaxiWrapperRoute));
+                                    ModalRoute.withName(kHomeRoute));
                               } else {
                                 // in case Taxi User failed accepting the order.
                                 Get.back();

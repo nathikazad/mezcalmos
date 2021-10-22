@@ -30,7 +30,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-        bottom: GetStorage().read(getxGmapBottomPaddingKey),
+        bottom: GetStorage().read(getxGmapBottomPaddingKey) + 20,
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 5),
           height: getSizeRelativeToScreen(25, Get.height, Get.width),
@@ -240,7 +240,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                                             Get.offNamedUntil(
                                                 kOrdersListPage,
                                                 ModalRoute.withName(
-                                                    kTaxiWrapperRoute));
+                                                    kHomeRoute));
                                           });
                                         }
                                       },
@@ -328,7 +328,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
     if (serverResponse.success) {
       mezDbgPrint("CurrentPositionedBottomBar finishRide success");
       Get.offNamedUntil(
-          kOrdersListPage, ModalRoute.withName(kTaxiWrapperRoute));
+          kOrdersListPage, ModalRoute.withName(kHomeRoute));
     } else {
       // todo: SHOW ERROR MESSAGE
     }

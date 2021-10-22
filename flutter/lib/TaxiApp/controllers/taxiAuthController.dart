@@ -83,7 +83,7 @@ class TaxiAuthController extends GetxController {
           _locationListener?.pause();
         }
       } else {
-        _state.value = null;
+        _state.value = TaxiState(false, false);
         if (!(await Location().isBackgroundModeEnabled()))
           await Location().enableBackgroundMode(enable: true);
         _locationListener?.resume();

@@ -10,10 +10,20 @@ import 'package:location/location.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void mezDbgPrint(dynamic log) {
   String d = DateFormat('HH:mm:ss').format(DateTime.now());
-  print("\n[MZL][$d] $log\n");
+  print("\n\n[MZL][$d] $log\n\n");
+}
+
+void responsiveSize(BuildContext context) {
+  ScreenUtil.init(
+      BoxConstraints(
+          maxWidth: MediaQuery.of(context).size.width,
+          maxHeight: MediaQuery.of(context).size.height),
+      designSize: Size(375, 667),
+      orientation: Orientation.portrait);
 }
 
 void mezcalmosLogger(String text, {bool isError = false}) =>

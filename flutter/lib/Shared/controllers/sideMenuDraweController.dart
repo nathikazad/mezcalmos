@@ -23,12 +23,16 @@ class SideMenuDraweController extends GetxController {
 
   void openMenu() {
     mezDbgPrint("Opened menu  ${_scaffoldKey?.currentState?.toString()}! ");
+    if (_scaffoldKey?.currentState?.isDrawerOpen == true)
+      _scaffoldKey?.currentState?.openEndDrawer();
+
     _scaffoldKey?.currentState?.openDrawer();
   }
 
   void cloeseMenu() {
     mezDbgPrint("Closed menu!");
-    _scaffoldKey?.currentState?.openEndDrawer();
+    if (_scaffoldKey?.currentState?.isDrawerOpen == false)
+      _scaffoldKey?.currentState?.openEndDrawer();
   }
 
   @override

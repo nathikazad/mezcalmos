@@ -164,10 +164,10 @@
             "clear": "Borrar"
         },
         "userInfo": {
-            "title": " Información   del usuario ",
-            "editInfo": "Editar    Información",
+            "title": " Información del usuario ",
+            "editInfo": "Editar Información",
             "editPhoneNumber": "Cambiar número de teléfono",
-            "addInfo": "Agregar   Información",
+            "addInfo": "Agregar Información",
             "editBtn": "EDITAR INFORMACION",
             "deleteBtn": "Borrar cuenta",
             "saveBtn": "GUARDAR",

@@ -54,6 +54,7 @@ dependencies:
   charts_flutter: ^0.11.0
   toggle_switch: ^1.2.0
   soundpool: ^2.2.0
+  flutter_screenutil: ^5.0.0+2
   
 # dependency_overrides:
 #   font_awesome_flutter:
@@ -61,6 +62,7 @@ dependencies:
 
 dev_dependencies:
   flutter_launcher_icons: "^0.9.1"
+  device_preview: ^0.7.4
   flutter_test:
     sdk: flutter
 

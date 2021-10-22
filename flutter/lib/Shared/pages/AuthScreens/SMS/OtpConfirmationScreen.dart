@@ -11,10 +11,12 @@ import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 class OtpConfirmationScreen extends GetView<AuthController> {
   LanguageController lang = Get.find<LanguageController>();
   RxBool clickedSignInOtp = false.obs;
-    RxInt _timeBetweenResending = 0.obs;
+  RxInt _timeBetweenResending = 0.obs;
   int get timeBetweenResending => _timeBetweenResending.value;
   void resendOtpTimerActivate(int time) {
     _timeBetweenResending.value = time;
@@ -31,6 +33,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
       },
     );
   }
+
   @override
   Widget build(BuildContext context) {
     TextEditingController _otpCodeTextController = TextEditingController();
@@ -38,29 +41,30 @@ class OtpConfirmationScreen extends GetView<AuthController> {
     String otpCode = "";
     String _phonePassed = Get.arguments;
 
+    responsiveSize(context);
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () {
           Get.back();
         }),
         body: Container(
-            // height: double.infinity,
-
             alignment: Alignment.topCenter,
             child: Container(
-              padding: const EdgeInsets.only(left: 10, right: 10, top: 40),
+              padding: const EdgeInsets.only(left: 10, right: 10),
               // height: double.infinity,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  SizedBox(
+                    height: Get.height * 0.02,
+                  ),
                   Obx(
-                    () => FittedBox(
-                      child: Text(
-                          lang.strings['shared']['login']["OtpConfirmation"],
-                          style: TextStyle(
-                              fontWeight: FontWeight.w400, fontSize: 45)),
-                      fit: BoxFit.fitWidth,
-                    ),
+                    () => Text(
+                        lang.strings['shared']['login']["OtpConfirmation"],
+                        overflow: TextOverflow.visible,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400, fontSize: 45.sp)),
                   ),
                   SizedBox(
                     height: 20,
@@ -85,7 +89,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                                 style: TextStyle(
                                     fontFamily: 'psr',
                                     color: Colors.black,
-                                    fontSize: 20,
+                                    fontSize: 20.sp,
                                     fontWeight: FontWeight.w500),
                                 children: <TextSpan>[
                                   new TextSpan(
@@ -94,7 +98,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                                     style: TextStyle(
                                       color: Colors.black87,
                                       fontWeight: FontWeight.w400,
-                                      fontSize: 16,
+                                      fontSize: 16.sp,
                                     ),
                                   ),
                                   new TextSpan(
@@ -102,7 +106,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                                     style: TextStyle(
                                       color: Colors.blue,
                                       fontWeight: FontWeight.w400,
-                                      fontSize: 16,
+                                      fontSize: 16.sp,
                                     ),
                                   )
                                 ],
@@ -137,8 +141,8 @@ class OtpConfirmationScreen extends GetView<AuthController> {
 
                             cursorColor: Colors.purpleAccent,
                             keyboardType: TextInputType.number,
-                            textStyle:
-                                TextStyle(fontSize: 18, color: Colors.black87),
+                            textStyle: TextStyle(
+                                fontSize: 18.sp, color: Colors.black87),
                             pinTheme: PinTheme(
                               borderRadius: BorderRadius.circular(5),
                               borderWidth: 0.0,
@@ -163,7 +167,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                                         _otpCodeTextController.clear();
                                         dynamic response =
                                             await controller.sendOTPForLogin(
-                                            Get.arguments ?? _phonePassed);
+                                                Get.arguments ?? _phonePassed);
                                         if (response.data['secondsLeft'] !=
                                             null) {
                                           resendOtpTimerActivate(
@@ -178,11 +182,10 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                                       : "${lang.strings['shared']['login']["resendAfter"]} ${timeBetweenResending} ${lang.strings['shared']['login']["seconds"]}",
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
-                                      color:
-                                          timeBetweenResending == 0
-                                              ? Colors.black
-                                              : Colors.grey.shade400,
-                                      fontSize: 17.5,
+                                      color: timeBetweenResending == 0
+                                          ? Colors.black
+                                          : Colors.grey.shade400,
+                                      fontSize: 17.5.sp,
                                       decoration: TextDecoration.underline),
                                 )),
                           )
@@ -196,7 +199,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                       () => Text(
                         lang.strings['shared']['login']["twilioNote"],
                         style: TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: 11),
+                            fontWeight: FontWeight.w500, fontSize: 11.sp),
                       ),
                     ),
                   ),
@@ -204,6 +207,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                   Obx(
                     () => Container(
                       padding: const EdgeInsets.only(bottom: 10),
+                      width: double.infinity,
                       child: TextButton(
                         onPressed:
                             canConfirmOtp.value && !clickedSignInOtp.value
@@ -217,24 +221,22 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                                     clickedSignInOtp.value = false;
                                   }
                                 : null,
-                        child: Container(
-                          child: clickedSignInOtp.value
-                              ? SizedBox(
-                                  height: 15,
-                                  width: 15,
-                                  child: CircularProgressIndicator(
-                                    color: Colors.white,
-                                    strokeWidth: 2,
-                                  ),
-                                )
-                              : Obx(
-                                  () => Text(
-                                    lang.strings['shared']['login']["confirm"],
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 15),
-                                  ),
+                        child: clickedSignInOtp.value
+                            ? SizedBox(
+                                height: 15,
+                                width: 15,
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                  strokeWidth: 2,
+                                ),
+                              )
+                            : Obx(
+                                () => Text(
+                                  lang.strings['shared']['login']["confirm"],
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 15.sp),
                                 ),
                         ),
                         style: ButtonStyle(
@@ -247,7 +249,10 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                                     : Colors.grey)),
                       ),
                     ),
-                  )
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.005,
+                  ),
                 ],
               ),
             )));

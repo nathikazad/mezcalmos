@@ -2,7 +2,6 @@ import 'package:get/get.dart'; // getX
 import 'package:mezcalmos/CustomerApp/pages/Orders/ListOrdersScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCurrentOrderScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen.dart';
-import 'package:mezcalmos/CustomerApp/pages/Wrapper.dart';
 
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustomerWrapper.dart';
@@ -12,7 +11,6 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen.dar
 
 // Routes Keys.
 const String kWrapperRoute = '/wrapper';
-const String kCustomerWrapperRoute = '/';
 const String kTaxisRoute = '/taxi';
 const String kNotificationsRoute = '/notifications';
 const String kOrdersRoute = '/orders';
@@ -49,8 +47,7 @@ getPastRestaurantOrderRoute(String orderId) {
 // GetX based Router (For navigating)
 class XRouter {
   static dynamic mainRoutes = [
-        GetPage(name: kWrapperRoute, page: () => Wrapper()),
-        GetPage(name: kCustomerWrapperRoute, page: () => CustomerWrapper()),
+        GetPage(name: kHomeRoute, page: () => CustomerWrapper()),
         GetPage(name: kOrdersRoute, page: () => ListOrdersScreen()),
         GetPage(name: kRestaurantsRoute, page: () => ListRestaurantsScreen()),
         GetPage(name: kRestaurantRoute, page: () => ViewRestaurantScreen()),

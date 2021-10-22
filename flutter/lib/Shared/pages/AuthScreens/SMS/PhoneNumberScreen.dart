@@ -5,6 +5,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 const mypadding = EdgeInsets.only(left: 15, right: 15);
 
@@ -25,6 +26,7 @@ class PhoneNumberScreen extends GetView<AuthController> {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       _prefixTextFieldController..text = "+52";
     });
+    responsiveSize(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
 
@@ -50,13 +52,13 @@ class PhoneNumberScreen extends GetView<AuthController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 35,
+                  height: 25.h,
                 ),
                 Obx(() => Container(
                       padding: mypadding,
                       child: Text(lang.strings['shared']['login']["otpCode"],
                           style: TextStyle(
-                              fontWeight: FontWeight.w400, fontSize: 45)),
+                              fontWeight: FontWeight.w400, fontSize: 45.sp)),
                     )),
                 SizedBox(
                   height: 30,
@@ -66,7 +68,8 @@ class PhoneNumberScreen extends GetView<AuthController> {
                   child: Text(
                     ///****add ths to lan file */
                     lang.strings['shared']['login']["otpSubtitleNumber"],
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                    style:
+                        TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w700),
                   ),
                 ),
                 SizedBox(
@@ -93,7 +96,7 @@ class PhoneNumberScreen extends GetView<AuthController> {
                           style: TextStyle(
                             color: Colors.black87,
                             fontWeight: FontWeight.w400,
-                            fontSize: 16,
+                            fontSize: 16.sp,
                           ),
                         ),
                       ),
@@ -234,8 +237,8 @@ class PhoneNumberScreen extends GetView<AuthController> {
                     padding: EdgeInsets.only(left: 15, right: 15, top: 15),
                     child: Text(
                       lang.strings['shared']['login']["twilioNote"],
-                      style:
-                          TextStyle(fontWeight: FontWeight.w500, fontSize: 11),
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500, fontSize: 11.sp),
                     ),
                   ),
                 ),
@@ -283,7 +286,7 @@ class PhoneNumberScreen extends GetView<AuthController> {
                                 "${_prefixTextFieldController.text}${_numberTextFieldController.text}"),
                     child: Container(
                         height: 50,
-                        width: Get.width,
+                        width: double.infinity,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
                           gradient: LinearGradient(
@@ -296,10 +299,10 @@ class PhoneNumberScreen extends GetView<AuthController> {
                         ),
                         child: Center(
                           child: Text(
-                            "SUBMIT",
+                            lang.strings['shared']['login']["submit"],
                             style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 16,
+                                fontSize: 16.sp,
                                 fontWeight: FontWeight.w700),
                           ),
                         )),
