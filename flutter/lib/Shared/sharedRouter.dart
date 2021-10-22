@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/OtpConfirmationScreen.dar
 import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/PhoneNumberScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
+import 'package:mezcalmos/Shared/pages/UserProfileScreen.dart';
 
 // Routes Keys.
 
@@ -17,6 +18,8 @@ const String kOtpRoute = '/sign_in_otp';
 const String kOtpConfirmRoute = '/sign_in_otp_confirm';
 const String kMessagesRoute = '/messages/:orderId';
 const String kUnauthorizedRoute = '/unauthorized';
+const String kUserProfile = '/user_profile';
+
 getMessagesRoute(String orderId) {
   return kMessagesRoute.replaceFirst(":orderId", orderId);
 }
@@ -24,6 +27,7 @@ getMessagesRoute(String orderId) {
 // GetX based Router (For navigating)
 class SharedRouter {
   static List<GetPage> sharedRoutes = [
+    GetPage(name: kUserProfile, page: () => UserProfile()),
     GetPage(name: kSplashRoute, page: () => SplashScreen()),
     GetPage(name: kSignInRoute, page: () => SignIn()),
     GetPage(

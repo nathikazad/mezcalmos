@@ -1,11 +1,13 @@
 // DO NOT TOUCH THIS PLEASE !
 import 'package:mezcalmos/<app-name>/main.dart';
 import 'package:mezcalmos/<app-name>/helpers/authHooks.dart';
+import 'package:flutter/material.dart' show Widget;
+<import-device-preview>
 
 const String defaultDb = "<database>";
 const String defaultLaunchMode = "<launch-mode>";
-
-<app-name> launcherApp = new <app-name>();
+    
+Widget launcherApp = <device-preview><app-name>()</device-preview>;
 Function signInCallback = AuthHooks.onSignInHook;
 Function signOutCallback = AuthHooks.onSignOutHook;
 String appName = "<app-name>";

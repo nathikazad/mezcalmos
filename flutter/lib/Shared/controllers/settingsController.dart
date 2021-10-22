@@ -23,7 +23,7 @@ class SettingsController extends GetxController with MezDisposable {
   LanguageController get appLanguage => _appLanguage;
 
   StreamController<bool> _hasLocationPermissionStreamController =
-      StreamController<bool>();
+      StreamController<bool>.broadcast();
 
   Stream<bool> get locationPermissionStream =>
       _hasLocationPermissionStreamController.stream;
@@ -31,7 +31,7 @@ class SettingsController extends GetxController with MezDisposable {
   SettingsController(String appName) {
     this.appName = convertStringToAppName(appName);
   }
-  
+
   @override
   void onInit() async {
     super.onInit();

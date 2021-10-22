@@ -1,4 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -14,7 +15,16 @@ class Wrapper extends StatefulWidget {
 }
 
 class _WrapperState extends State<Wrapper> {
+  StreamSubscription<bool>? _locationStreamSub;
+  StreamSubscription<fireAuth.User?>? _userStreamSub;
+
   @override
+  void dispose() {
+    _locationStreamSub?.cancel();
+    _userStreamSub?.cancel();
+    super.dispose();
+  }
+
   void initState() {
     mezDbgPrint("Wrapper: (::initState::)");
     Future.delayed(Duration.zero, () {
@@ -24,7 +34,21 @@ class _WrapperState extends State<Wrapper> {
         mezDbgPrint("Wrapper: calling handleAuthStateChange in listener");
         handleAuthStateChange(user);
       });
-      Get.find<SettingsController>()
+    });
+    super.initState();
+  }
+
+  void handleAuthStateChange(fireAuth.User? user) {
+    mezDbgPrint("Wrapper: handleAuthStateChange $user");
+    if (user == null) {
+      _locationStreamSub?.cancel();
+      _locationStreamSub = null;
+      mezDbgPrint("Wrapper::handleAuthStateChange:: going to sign in route");
+      Get.offNamedUntil(kSignInRoute, ModalRoute.withName(kMainWrapper));
+    } else {
+      mezDbgPrint(
+          "Wrapper::handleAuthStateChange:: Checking Location if enabled !");
+      _locationStreamSub = Get.find<SettingsController>()
           .locationPermissionStream
           .distinct()
           .listen((locationPermission) {
@@ -32,20 +56,12 @@ class _WrapperState extends State<Wrapper> {
         if (locationPermission == false &&
             Get.currentRoute != kLocationPermissionPage) {
           Get.toNamed(kLocationPermissionPage);
+        } else {
+          mezDbgPrint("going to taxi wrapper !");
+          Get.offNamedUntil(
+              kTaxiWrapperRoute, ModalRoute.withName(kMainWrapper));
         }
       });
-    });
-    super.initState();
-  }
-
-  void handleAuthStateChange(User? user) {
-    mezDbgPrint("Wrapper: handleAuthStateChange $user");
-    if (user == null) {
-      mezDbgPrint("Wrapper::handleAuthStateChange:: going to sign in route");
-      Get.offNamedUntil(kSignInRoute, ModalRoute.withName(kMainWrapper));
-    } else {
-      mezDbgPrint("Wrapper::handleAuthStateChange:: going to taxi wrapper");
-      Get.offNamedUntil(kTaxiWrapperRoute, ModalRoute.withName(kMainWrapper));
     }
   }
 

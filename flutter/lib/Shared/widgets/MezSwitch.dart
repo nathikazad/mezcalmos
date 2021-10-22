@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class MezSwitch extends StatefulWidget {
-  final initialPosition;
+  // this was the problem.
+  bool initialPosition;
   final List<String> values;
   final ValueChanged onToggleCallback;
   final Color backgroundColor;
+  final Size buttonSize;
   @required
   Color buttonColor;
   @required
@@ -15,6 +17,7 @@ class MezSwitch extends StatefulWidget {
     required this.initialPosition,
     required this.values,
     required this.onToggleCallback,
+    required this.buttonSize,
     this.backgroundColor = const Color(0xFFe7e7e8),
     this.buttonColor = const Color(0xFFFFFFFF),
     this.textColor = const Color(0xFF000000),
@@ -24,62 +27,52 @@ class MezSwitch extends StatefulWidget {
 }
 
 class _MezSwitchState extends State<MezSwitch> {
-  bool initialPosition = false;
-
-  @override
-  void initState() {
-    super.initState();
-    initialPosition = widget.initialPosition;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
       // color: Colors.black,
-      width: 125,
-      height: 65,
+      width: widget.buttonSize.height,
+      height: widget.buttonSize.width,
       // margin: EdgeInsets.all(0),
       child: Stack(
-        fit: StackFit.loose,
+        // fit: StackFit.loose,
+        alignment: Alignment.center,
+        fit: StackFit.passthrough,
+
         children: <Widget>[
           GestureDetector(
             onTap: () {
-              initialPosition = !initialPosition;
-              var index = 0;
-              if (!initialPosition) {
-                index = 1;
-              }
-              widget.onToggleCallback(index);
-              // I missed the old setState hhhh
               setState(() {
-                if (initialPosition)
+                widget.initialPosition = !widget.initialPosition;
+                var index = 0;
+                if (!widget.initialPosition) {
+                  index = 1;
+                }
+                widget.onToggleCallback(index);
+                if (widget.initialPosition)
                   widget.buttonColor = Colors.green;
                 else
                   widget.buttonColor = Colors.red;
               });
             },
             child: Container(
-              // width: 130,
               height: 80,
               decoration: ShapeDecoration(
-                // color: widget.backgroundColor,
+                // color: Colors.black,
                 gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     colors: <Color>[
                       Color.fromARGB(10, 81, 133, 255),
                       Color.fromARGB(10, 207, 73, 252)
                     ]),
-                // color: Colors.blueAccent,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(Get.width * 0.1),
                 ),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-                // crossAxisAlignment: CrossAxisAlignment.center,
-                children: List.generate(
-                  widget.values.length,
-                  (index) => Text(
+                children: List.generate(widget.values.length, (index) {
+                  return Text(
                     widget.values[index],
                     style: TextStyle(
                       fontFamily: 'psb',
@@ -87,22 +80,21 @@ class _MezSwitchState extends State<MezSwitch> {
                       // fontWeight: FontWeight.bold,
                       color: index == 0 ? Colors.green : Colors.red,
                     ),
-                  ),
-                ),
+                  );
+                }),
               ),
             ),
           ),
           AnimatedAlign(
             duration: const Duration(milliseconds: 250),
             curve: Curves.decelerate,
-            alignment:
-                initialPosition ? Alignment.centerLeft : Alignment.centerRight,
+            alignment: widget.initialPosition
+                ? Alignment.centerLeft
+                : Alignment.centerRight,
             child: Container(
               transformAlignment: Alignment.topLeft,
-              // width: Get.width * 0.16,
-              // height: Get.width * 0.13,
-              height: 80,
-              width: 72,
+              height: widget.buttonSize.height,
+              width: widget.buttonSize.width,
               decoration: ShapeDecoration(
                 color: widget.buttonColor,
                 shape: RoundedRectangleBorder(
@@ -110,7 +102,7 @@ class _MezSwitchState extends State<MezSwitch> {
                 ),
               ),
               child: Text(
-                initialPosition ? widget.values[0] : widget.values[1],
+                widget.initialPosition ? widget.values[0] : widget.values[1],
                 style: TextStyle(
                   fontFamily: 'Rubik',
                   fontSize: Get.width * 0.040,

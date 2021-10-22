@@ -134,9 +134,11 @@ class MezcalmosSharedWidgets {
   static Widget fillTitle() => Container(
         width: Get.width * 0.55,
         child: FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.centerLeft,
           child: Row(
             children: [
-              logo(size: getSizeRelativeToScreen(85, Get.width, Get.height)),
+              logo(size: getSizeRelativeToScreen(80, Get.width, Get.height)),
               Padding(padding: EdgeInsets.only(left: 10), child: mezcalmos()),
             ],
           ),
@@ -165,12 +167,13 @@ class MezcalmosSharedWidgets {
         );
         break;
     }
+    mezDbgPrint("Getx => ScreenSize ========> ${Get.width} x ${Get.height} !!");
     return AppBar(
       toolbarHeight: 80,
       elevation: 0,
       automaticallyImplyLeading: false,
       title: Container(
-        width: Get.width,
+        // width: Get.width,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -209,7 +212,21 @@ class MezcalmosSharedWidgets {
             //     right: getSizeRelativeToScreen(40, Get.height, Get.width),
             //     child: fillTitle())
             SizedBox(width: getSizeRelativeToScreen(20, Get.height, Get.width)),
-            fillTitle(),
+            fillTitle()
+            // LayoutBuilder(builder: (ctx, constraints) {
+            //   mezDbgPrint(
+            //       "Inside layoutbuilder  ${constraints.maxWidth} x ${constraints.maxHeight} !!");
+            //   mezDbgPrint(
+            //       "Getx => Inside layoutbuilder  ${Get.width} x ${Get.height} !!");
+            //   if (constraints.maxWidth <= 320) {
+            //     mezDbgPrint("------- Small phone !!");
+            //     // responsiveSize(ctx);
+            //     return fillTitle(isSmallPhone: true);
+            //   } else {
+            //     mezDbgPrint(" ------- Big phone !!");
+            //     return fillTitle();
+            //   }
+            // }),
           ],
         ),
       ),
