@@ -18,19 +18,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
   LanguageController lang = Get.find<LanguageController>();
 
-  Widget emptyOrWidget({Widget? empty, required Widget child}) {
-    if (Get.width > 320) {
-      return child;
-    } else {
-      return empty == null
-          ? SizedBox(
-              height: 0,
-              width: 0,
-            )
-          : empty;
-    }
-  }
-
   IncomingOrdersScreen() {
     Get.put(IncomingOrdersController());
   }
@@ -213,12 +200,7 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                                           "Failed loading Customer openOrder::id::${controller.orders[i].id}"),
                                                 ),
                                               ),
-                                              // Positioned(
-                                              //     child: Container(
-                                              //   height: 38.5,
-                                              //   width: 38.5,
-                                              //   decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.red),
-                                              // )),
+
                                               Positioned(
                                                   left: 50,
                                                   top: 10,
@@ -242,7 +224,7 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                                   runSpacing:
                                                       4.0, // gap between lines
                                                   children: <Widget>[
-                                                    emptyOrWidget(
+                                                    emptyOrWidgetSmallPhones(
                                                         child: Icon(
                                                             MezcalmosIcons
                                                                 .map_marker,
@@ -252,7 +234,7 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                                                         sw,
                                                                         sh)
                                                                     .w)),
-                                                    emptyOrWidget(
+                                                    emptyOrWidgetSmallPhones(
                                                         child: Text(
                                                       controller.orders[i].from
                                                               .address
@@ -324,10 +306,12 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                                                 .w),
                                                     SizedBox(width: 2.w),
                                                     Text(
-                                                      controller.orders[i]
-                                                                  .routeInformation[
-                                                              'duration']['text'] ??
-                                                          "? mins",
+                                                      hoursMinsShortner(controller
+                                                                      .orders[i]
+                                                                      .routeInformation[
+                                                                  'duration']
+                                                              ['text']) ??
+                                                          "0.0 mins",
                                                       overflow:
                                                           TextOverflow.ellipsis,
                                                       maxLines: 1,
