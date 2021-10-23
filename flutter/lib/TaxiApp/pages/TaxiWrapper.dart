@@ -1,12 +1,11 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/utilities/NotificationsDisplayer.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
@@ -16,7 +15,6 @@ import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/models/TaxiDriver.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as MezNotification;
 import 'package:mezcalmos/TaxiApp/router.dart';
-import 'package:soundpool/soundpool.dart';
 
 class TaxiWrapper extends StatefulWidget {
   @override
@@ -30,15 +28,7 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
   @override
   void initState() {
     String userId = Get.find<AuthController>().fireAuthUser!.uid;
-    _notificationsStreamListener = Get.find<FBNotificationsController>()
-        .notificationsStream
-        .listen((notification) {
-      mezDbgPrint("TaxiWrapper: ${notification.toJson()}");
-      if (DateTime.now().difference(notification.timestamp) <
-          Duration(minutes: 10)) {
-        _displayNotification(notification);
-      }
-    });
+    _notificationsStreamListener = listenForNotifications();
     Future.microtask(() {
       mezDbgPrint("TaxiWrapper::microtask handleState first time");
       TaxiState? taxiState = Get.find<TaxiAuthController>().taxiState;
@@ -90,25 +80,5 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
     _notificationsStreamListener?.cancel();
     _notificationsStreamListener = null;
     super.dispose();
-  }
-
-  void _displayNotification(MezNotification.Notification notification) async {
-    Soundpool pool = Soundpool.fromOptions(
-        options: SoundpoolOptions(streamType: StreamType.notification));
-
-    int soundId = await rootBundle
-        .load("assets/sounds/notif-alert.mp3")
-        .then((ByteData soundData) {
-      return pool.load(soundData);
-    });
-    int streamId = await pool.play(soundId);
-
-    mezDbgPrint(notification.imgUrl);
-    notificationSnackBar(notification.imgUrl, notification.title,
-        notification.body, notification.formattedTime, () async {
-      mezDbgPrint("Notification route ===> ${notification.linkUrl} !");
-      // Get.back();
-      Get.toNamed(notification.linkUrl);
-    });
   }
 }

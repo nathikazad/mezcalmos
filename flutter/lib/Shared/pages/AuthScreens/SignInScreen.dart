@@ -53,7 +53,10 @@ class SignIn extends GetWidget<AuthController> {
                   ),
                   SizedBox(height: (Get.height * 0.05).h),
                   MezcalmosSharedWidgets.mezcalmos(
-                      textSize: getSizeRelativeToScreen(25.sp, sh, sw).sp,
+                      // textSize: getSizeRelativeToScreen(25, sh, sw).sp,
+                      textSize: Get.width >= 320
+                          ? getSizeRelativeToScreen(25, sh, sw).sp
+                          : 45.sp,
                       isBold: true),
                   SizedBox(
                     height: (Get.height * 0.05).h,
@@ -92,8 +95,8 @@ class SignIn extends GetWidget<AuthController> {
                           child: clickedLogin.value
                               ? Center(
                                   child: SizedBox(
-                                    height: 18.h,
-                                    width: 18.w,
+                                    height: 18,
+                                    width: 18,
                                     child: CircularProgressIndicator(
                                       color: Colors.white,
                                       strokeWidth: 2,
@@ -131,11 +134,11 @@ class SignIn extends GetWidget<AuthController> {
                             textStyle: MaterialStateProperty.all<TextStyle>(
                                 new TextStyle(
                                     fontSize:
-                                        getSizeRelativeToScreen(10, sh, sw).sp,
+                                        getSizeRelativeToScreen(10, sh, sw),
                                     fontWeight: FontWeight.bold)),
                             fixedSize: MaterialStateProperty.all<Size>(new Size(
-                                getSizeRelativeToScreen(150, sh, sw).w,
-                                getSizeRelativeToScreen(25, sh, sw).h)),
+                                getSizeRelativeToScreen(150, sh, sw),
+                                getSizeRelativeToScreen(25, sh, sw))),
                             elevation: MaterialStateProperty.all<double>(2),
                             backgroundColor: MaterialStateProperty.all<Color>(
                                 Color.fromARGB(255, 58, 85, 159)),
@@ -192,11 +195,11 @@ class SignIn extends GetWidget<AuthController> {
                             textStyle: MaterialStateProperty.all<TextStyle>(
                                 new TextStyle(
                                     fontSize:
-                                        getSizeRelativeToScreen(10, sh, sw).sp,
+                                        getSizeRelativeToScreen(10, sh, sw),
                                     fontWeight: FontWeight.bold)),
                             fixedSize: MaterialStateProperty.all<Size>(new Size(
-                                getSizeRelativeToScreen(150, sh, sw).w,
-                                getSizeRelativeToScreen(25, sh, sw).h)),
+                                getSizeRelativeToScreen(150, sh, sw),
+                                getSizeRelativeToScreen(25, sh, sw))),
                             elevation: MaterialStateProperty.all<double>(2),
                             backgroundColor: MaterialStateProperty.all<Color>(
                                 Color.fromARGB(255, 92, 127, 255)),
