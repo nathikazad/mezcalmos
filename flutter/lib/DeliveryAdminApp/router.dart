@@ -23,7 +23,7 @@ getOrderRoute(String orderId) {
 // GetX based Router (For navigating)
 class XRouter {
   static List<GetPage<dynamic>> mainRoutes = [
-        GetPage(name: kHomeRoute, page: () => CustomerWrapper()),
+        GetPage(name: kHomeRoute, page: () => AdminWrapper()),
         GetPage(name: kOrdersRoute, page: () => ListOrdersScreen()),
         GetPage(name: kOrderRoute, page: () => ViewOrderScreen()),
         GetPage(name: kRestaurantsRoute, page: () => ListRestaurantsScreen()),

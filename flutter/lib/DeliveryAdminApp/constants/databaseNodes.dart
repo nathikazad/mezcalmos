@@ -1,19 +1,11 @@
-String customerNode(String uid) {
-  return 'customers/info/$uid/';
+String adminNode(String uid) {
+  return 'deliveryAdmins/$uid/';
 }
 
-String customerCart(String uid) {
-  return 'customers/info/${uid}/cart';
+String adminNotificationInfoNode(String uid) {
+  return 'deliveryAdmins/${uid}/notificationInfo';
 }
 
-String customerOrders(String uid) {
-  return 'customers/orders/${uid}';
-}
-
-String customerAppVersionNode(String uid) {
-  return 'customers/info/${uid}/versionNumber';
-}
-
-String customerNotificationInfoNode(String uid) {
-  return 'customers/info/${uid}/notificationInfo';
+String notificationsNode(String uid) {
+  return 'notifications/deliveryAdmin/$uid';
 }
