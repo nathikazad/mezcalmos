@@ -14,7 +14,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void mezDbgPrint(dynamic log) {
   String d = DateFormat('HH:mm:ss').format(DateTime.now());
-  print("\n\n[MZL][$d] $log\n\n");
+  print("[MZL][$d] $log\n");
 }
 
 void responsiveSize(BuildContext context) {

@@ -18,6 +18,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
   LanguageController lang = Get.find<LanguageController>();
 
+  Widget emptyOrWidget({Widget? empty, required Widget child}) {
+    if (Get.width > 320) {
+      return child;
+    } else {
+      return empty == null
+          ? SizedBox(
+              height: 0,
+              width: 0,
+            )
+          : empty;
+    }
+  }
+
   IncomingOrdersScreen() {
     Get.put(IncomingOrdersController());
   }
@@ -48,10 +61,11 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
             children: [
               Container(
                 margin: EdgeInsets.only(
+                    top: 15.sp,
                     left: getSizeRelativeToScreen(40.w, sw, sh),
                     right: getSizeRelativeToScreen(40.w, sw, sh)),
                 child: Container(
-                  height: getSizeRelativeToScreen(300.h, sw, sh),
+                  height: 100.sp,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -103,7 +117,7 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
               Expanded(
                 child: Container(
                   margin: EdgeInsets.only(
-                      top: getSizeRelativeToScreen(60, sw, sh),
+                      top: 25.sp,
                       left: getSizeRelativeToScreen(40, sw, sh),
                       right: getSizeRelativeToScreen(40, sw, sh)),
 
@@ -228,8 +242,8 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                                   runSpacing:
                                                       4.0, // gap between lines
                                                   children: <Widget>[
-                                                    (Get.width <= 310)
-                                                        ? Icon(
+                                                    emptyOrWidget(
+                                                        child: Icon(
                                                             MezcalmosIcons
                                                                 .map_marker,
                                                             size:
@@ -237,29 +251,21 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                                                         32,
                                                                         sw,
                                                                         sh)
-                                                                    .w)
-                                                        : Container(),
-                                                    (Get.width <= 310)
-                                                        ? Text(
-                                                            controller
-                                                                    .orders[i]
-                                                                    .from
-                                                                    .address
-                                                                    .substring(
-                                                                        0, 5) +
-                                                                "... ",
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                            maxLines: 1,
-                                                            softWrap: false,
-                                                            style: TextStyle(
-                                                                fontFamily:
-                                                                    'psr',
-                                                                fontSize:
-                                                                    14.sp),
-                                                          )
-                                                        : Container(),
+                                                                    .w)),
+                                                    emptyOrWidget(
+                                                        child: Text(
+                                                      controller.orders[i].from
+                                                              .address
+                                                              .substring(0, 5) +
+                                                          "... ",
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      maxLines: 1,
+                                                      softWrap: false,
+                                                      style: TextStyle(
+                                                          fontFamily: 'psr',
+                                                          fontSize: 14.sp),
+                                                    )),
                                                     Icon(MezcalmosIcons.map_pin,
                                                         size:
                                                             getSizeRelativeToScreen(
@@ -306,41 +312,30 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                                           fontFamily: 'psr',
                                                           fontSize: 14.sp),
                                                     ),
-                                                    (Get.width <= 310)
-                                                        ? Icon(
-                                                            MezcalmosIcons
-                                                                .stopwatch,
-                                                            size:
-                                                                getSizeRelativeToScreen(
-                                                                        32,
-                                                                        sw,
-                                                                        sh)
-                                                                    .w)
-                                                        : Container(),
                                                     SizedBox(
-                                                      width: (Get.width <= 310)
-                                                          ? 2.w
-                                                          : 0,
+                                                      width: 5,
                                                     ),
-                                                    (Get.width <= 310)
-                                                        ? Text(
-                                                            controller.orders[i]
-                                                                            .routeInformation[
-                                                                        'duration']
-                                                                    ['text'] ??
-                                                                "? mins",
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                            maxLines: 1,
-                                                            softWrap: false,
-                                                            style: TextStyle(
-                                                                fontFamily:
-                                                                    'psr',
-                                                                fontSize:
-                                                                    14.sp),
-                                                          )
-                                                        : Container(),
+                                                    Icon(
+                                                        MezcalmosIcons
+                                                            .stopwatch,
+                                                        size:
+                                                            getSizeRelativeToScreen(
+                                                                    32, sw, sh)
+                                                                .w),
+                                                    SizedBox(width: 2.w),
+                                                    Text(
+                                                      controller.orders[i]
+                                                                  .routeInformation[
+                                                              'duration']['text'] ??
+                                                          "? mins",
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      maxLines: 1,
+                                                      softWrap: false,
+                                                      style: TextStyle(
+                                                          fontFamily: 'psr',
+                                                          fontSize: 14.sp),
+                                                    )
                                                   ],
                                                 ),
                                               )
