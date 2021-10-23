@@ -15,6 +15,7 @@ import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
 import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CurrentPositionedBottomBar extends StatelessWidget {
   RxBool showLoadingCircleInButton = false.obs;
@@ -29,6 +30,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
   CurrentPositionedBottomBar(this.order);
   @override
   Widget build(BuildContext context) {
+    responsiveSize(context);
     return Positioned(
         bottom: GetStorage().read(getxGmapBottomPaddingKey) + 20,
         child: Container(
@@ -106,9 +108,8 @@ class CurrentPositionedBottomBar extends StatelessWidget {
               )),
               Flexible(
                 flex: 2,
-                child: Text('\$' + (order.estimatedPrice?.toString() ?? "00"),
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                child: Text('\$' + (order.estimatedPrice?.toString() ?? " 0"),
+                    style: TextStyle(fontFamily: "psb", fontSize: 17.sp)),
               ),
               Flexible(
                   child: SizedBox(
@@ -327,8 +328,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
     ServerResponse serverResponse = await controller.finishRide();
     if (serverResponse.success) {
       mezDbgPrint("CurrentPositionedBottomBar finishRide success");
-      Get.offNamedUntil(
-          kOrdersListPage, ModalRoute.withName(kHomeRoute));
+      Get.offNamedUntil(kOrdersListPage, ModalRoute.withName(kHomeRoute));
     } else {
       // todo: SHOW ERROR MESSAGE
     }
