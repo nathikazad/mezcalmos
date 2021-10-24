@@ -47,7 +47,11 @@ class _WrapperState extends State<Wrapper> {
       Get.offNamedUntil(kSignInRoute, ModalRoute.withName(kWrapperRoute));
     } else {
       mezDbgPrint(
-          "Wrapper::handleAuthStateChange:: Checking Location if enabled !");
+          "Wrapper::handleAuthStateChange:: signed in, so going to taxi wrapper !");
+      Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
+      mezDbgPrint(
+          "Wrapper::handleAuthStateChange:: setting location handler !");
+      _locationStreamSub?.cancel();
       _locationStreamSub = Get.find<SettingsController>()
           .locationPermissionStream
           .distinct()
@@ -56,9 +60,6 @@ class _WrapperState extends State<Wrapper> {
         if (locationPermission == false &&
             Get.currentRoute != kLocationPermissionPage) {
           Get.toNamed(kLocationPermissionPage);
-        } else {
-          mezDbgPrint("going to taxi wrapper !");
-          Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
         }
       });
     }

@@ -13,26 +13,8 @@ XOR_VALUE = 100
 CONFIG_FILE = "config.json"
 ACTIVE_DEBUG = True
 PRINTLN = lambda x : print(x) if ACTIVE_DEBUG else None
-DEFAULTS = {
-    "APP"   : "TaxiApp",
-    "DB"    : "test",   
-    "LMODE" : "stage"
-}
 
 VALID_CONFIG_KEYS_LEN = 2
-
-POSSIBLE_APPS = [
-    'TaxiApp',
-    'CustomerApp',
-    'DeliveryApp',
-    'MezAdmin'
-]
-
-POSSIBLE_DBS = [
-    'test',
-    'production',
-    'dev'
-]
 
 POSSIBLE_LMODES = [
     'stage',
@@ -107,35 +89,31 @@ class Launcher:
                     if self.user_args['fmode'] == "hide":
                         fmd = OUTPUT_FILTERS.HIDE
 
-            binary = ['flutter' , 'run']
+            binary = ['flutter' , 'run', '-t', 'lib/'+user_args['app']+'/main.dart']
             binary.extend(f_args)
 
             Config.launch_flutter_app(binary=binary , filter_file=ff , filter_mode=fmd)
         except KeyboardInterrupt:
             print("Exiting the launcher .... bye bye!")
     
-    def __f_checker__(self):
-        if not os.path.exists('flutter_hooks/pre-main'):
-            PRINTLN("[!] Error - No pre-main file neither in launcher files or flutter files !")
-            exit(DW_EXIT_REASONS.ROOT_MAIN_DART_FILE_NOT_FOUND)
+    # def __f_checker__(self):
+    #     if not os.path.exists('flutter_hooks/pre-main'):
+    #         PRINTLN("[!] Error - No pre-main file neither in launcher files or flutter files !")
+    #         exit(DW_EXIT_REASONS.ROOT_MAIN_DART_FILE_NOT_FOUND)
         
-        PRINTLN("[+] No ../lib/pre-main.dart found .. generating a new one !")
+    #     PRINTLN("[+] No ../lib/pre-main.dart found .. generating a new one !")
         
-        prem = open('flutter_hooks/pre-main' , encoding='utf-8' , errors='ignore').read()
-        open('../lib/pre-main.dart' , 'w+').write(prem) 
+    #     prem = open('flutter_hooks/pre-main' , encoding='utf-8' , errors='ignore').read()
+    #     open('../lib/pre-main.dart' , 'w+').write(prem) 
 
     def __patcher__(self):
-        PRINTLN("[+] Patching ../lib/pre-main.dart !")
-        f_root_main = open('../lib/pre-main.dart' , encoding='utf-8' , errors='ignore').read()
-        f_root_main = f_root_main.replace("<app-name>", self.user_args['app']).replace("<database>" , self.user_args['db']).replace("<launch-mode>" , self.user_args['lmode'])
-        if self.user_args["preview"] == True:
-            f_root_main = f_root_main.replace("<import-device-preview>" , "import 'package:device_preview/device_preview.dart';").replace("<device-preview>" , "DevicePreview(builder: (context) => ").replace("</device-preview>" , ")")
-        else:
-            f_root_main = f_root_main.replace("<import-device-preview>" , "").replace("<device-preview>" , "").replace("</device-preview>" , "")
-            
+        # PRINTLN("[+] Patching ../lib/pre-main.dart !")
+        # f_root_main = open('../lib/pre-main.dart' , encoding='utf-8' , errors='ignore').read()
+        self.user_args['lmode']
+ 
         # Writing new Valid App.
-        open('../lib/pre-main.dart' , 'w+').write(f_root_main)
-        PRINTLN("[+] Pacthed ../lib/pre-main.dart successfully !")
+        # open('../lib/pre-main.dart' , 'w+').write(f_root_main)
+        # PRINTLN("[+] Pacthed ../lib/pre-main.dart successfully !")
 
         # Writing Valid launcher.xml
         _launcherXmlFile = self.conf['settings']['launcher.xml']
@@ -206,14 +184,14 @@ class Launcher:
 
 
     def __set_flutter_args__(self):
-        self.flutter_setup = f"--dart-define=APP_SP={self.user_args['app']} --dart-define=HOST={self.user_args['host']} --dart-define=LMODE={self.user_args['lmode']} --dart-define=DB={self.user_args['db']}"
+        self.flutter_setup = f"--dart-define=APP_SP={self.user_args['app']} --dart-define=HOST={self.user_args['host']} --dart-define=LMODE={self.user_args['lmode']}"
     
     def __build_temp(self):
         # Auto versioning checks.
         os.system(f'flutter build {self.user_args["build"]}')
 
     def __launch__(self):
-        self.__f_checker__()
+        # self.__f_checker__()
         
         self.__patcher__()
         self.__patch_gs__()
@@ -331,6 +309,7 @@ class Config:
     
     @staticmethod
     def launch_flutter_app(binary , filter_file=None, filter_mode=OUTPUT_FILTERS.SHOW):
+        PRINTLN(f"\n[~] binary has : {binary} \n\n")
         ff = []
         start_filtering = 0
         if binary != None:
@@ -558,6 +537,8 @@ class Config:
             self.user_args['filter'] = _
             if _fm :
                 self.user_args['fmode']  = _fm
+        else:
+            self.user_args['filter'] = "mez_dbg_print.filter"
 
         # preview mode !
         if '--preview' in args:
@@ -582,33 +563,29 @@ class Config:
             self.user_args['app'] = DEFAULTS['APP']
 
         # if using globals from json jump lmode and db checks
-        _ = self.__get_arg_value__('env=')
-        if _:
-            if _ not in self.conf['settings']['envs'].keys():
-                PRINTLN(f'[!] env={_} : Invalid environment used !')
-                exit(DW_EXIT_REASONS.WRONG_ENV_USED)
+        if self.__get_arg_value__('env=') not in POSSIBLE_LMODES:
+            PRINTLN(f'[!] lmode={_} : Error This launch mode is wrong !')
+            exit(DW_EXIT_REASONS.CONF_FILE_LMODENAME_WRONG)
+        self.user_args['lmode'] = self.__get_arg_value__('env=')
+        # if _:
+        #     if _ not in self.conf['settings']['envs'].keys():
+        #         PRINTLN(f'[!] env={_} : Invalid environment used !')
+        #         exit(DW_EXIT_REASONS.WRONG_ENV_USED)
 
-            self.user_args['lmode'] = self.conf['settings']['envs'][_]['lmode']
-            self.user_args['db'] = self.conf['settings']['envs'][_]['db']
+        #      = self.conf['settings']['envs'][_]['lmode']
 
-            # check if lmode was tampered
-            if self.user_args['lmode'] not in POSSIBLE_LMODES:
-                PRINTLN(f'[!] lmode={self.user_args["lmode"]} : Error This launch mode is wrong !')
-                exit(DW_EXIT_REASONS.CONF_FILE_LMODENAME_WRONG)
+        #     # check if lmode was tampered
+        #     if self.user_args['lmode'] not in POSSIBLE_LMODES:
+        #         PRINTLN(f'[!] lmode={self.user_args["lmode"]} : Error This launch mode is wrong !')
+        #         exit(DW_EXIT_REASONS.CONF_FILE_LMODENAME_WRONG)
 
-            # check if db was tampered
-            if self.user_args['db'] not in POSSIBLE_DBS:
-                    PRINTLN(f'[!] db={self.user_args["db"]} : Error This Database mode is wrong !')
-                    exit(DW_EXIT_REASONS.CONF_FILE_LMODENAME_WRONG)
         
-            PRINTLN(f"[+] You are using globals::{_} with :")
-            PRINTLN(f"\t\t|_ Lmode => {self.user_args['lmode']}")
-            PRINTLN(f"\t\t|_ Database => {self.user_args['db']}")
+        #     PRINTLN(f"[+] You are using globals::{_} with :")
+        #     PRINTLN(f"\t\t|_ Lmode => {self.user_args['lmode']}")
 
         # Else get default lmode / db if not given by user.
-        else:
-            self.user_args['lmode'] = DEFAULTS['LMODE']
-            self.user_args['db'] = DEFAULTS['DB']
+        # else:
+        #     self.user_args['lmode'] = DEFAULTS['LMODE']
             # _ = self.__get_arg_value__('lmode=')
             # if _:
             #     if _ not in POSSIBLE_LMODES:

@@ -31,19 +31,17 @@ const String tMez = "MEZ";
 const String tCalmos = "CALMOS";
 const String tMezcalmos = "MEZCALMOS";
 
-const String tConnectMessage = "Connect using Facebook or using OTP !";
-const String tFacebookSigning = "Sign in with Facebook";
-const String tSmsSigning = "Sign in with SMS";
-const String tDefaultUserName = "";
-const String tDisconnect = "Logout";
-const String tIncommingOrders = "Incoming Orders";
+const String tDefaultUserName = "Unknown";
 const String tDefaultCustomerName = "Unknown";
 
 // ----------------- GetStorage Strings ----------------- //
 const String getxLmodeKey = "lmod";
 const String getxGmapBottomPaddingKey = "gmap_bottom_padding";
+const String getxUserDescriptionPlaceHolder = "user_descriptor_placeholder";
+const String getxTaxiDescriptor = "taxi_descriptor";
+const String getxDestinationDescriptor = "destination_descriptor";
 const String getUserId = "userid";
-const String version = "VERSION";
+const String version = "version";
 // ----------------- Assets Strings ----------------- //
 
 const String aLogoPath = "assets/images/logo.png";

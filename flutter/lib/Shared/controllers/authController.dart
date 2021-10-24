@@ -189,7 +189,6 @@ class AuthController extends GetxController {
         'messageType': 'SMS',
         'language': tDefaultLanguage,
         // 'language': _settings.appLanguage.userLanguageKey,
-        'database': _databaseHelper.dbType
       });
       print(response);
       mezcalmosSnackBar(
@@ -217,7 +216,6 @@ class AuthController extends GetxController {
         'OTPCode': otpCode,
         'language': tDefaultLanguage,
         // 'language': _settings.appLanguage.userLanguageKey,
-        'database': _databaseHelper.dbType
       });
       // mezcalmosSnackBar("Notice ~", "OTP message has been sent !");
       // _waitingResponse.value = false;

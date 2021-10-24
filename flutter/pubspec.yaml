@@ -42,7 +42,7 @@ dependencies:
   progress_indicators: ^1.0.0
   font_awesome_flutter: ^9.1.0
   package_info: ^2.0.2
-  rive: ^0.7.28
+  rive: 0.7.28
   image_cropper: ^1.4.1
   image_picker: ^0.8.4
   sliding_up_panel: ^2.0.0+1

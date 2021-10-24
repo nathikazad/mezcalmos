@@ -80,8 +80,7 @@ class CurrentOrderController extends GetxController {
     try {
       HttpsCallableResult response = await cancelTaxiFunction
           .call(<String, dynamic>{
-        'reason': reason,
-        'database': _databaseHelper.dbType
+        'reason': reason
       });
       dynamic _res = responseStatusChecker(response.data);
       if (_res == null) {

@@ -42,6 +42,8 @@ class SharedRouter {
       transitionDuration: Duration(milliseconds: 500),
       // customTransition:
     ),
-    GetPage(name: kUnauthorizedRoute, page: () => UnauthorizedScreen())
+    GetPage(name: kUnauthorizedRoute, page: () => UnauthorizedScreen()),
+    GetPage(
+        name: kLocationPermissionPage, page: () => LocationPermissionScreen())
   ];
 }
