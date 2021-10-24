@@ -54,7 +54,7 @@ class SignIn extends GetWidget<AuthController> {
                   SizedBox(height: (Get.height * 0.05).h),
                   MezcalmosSharedWidgets.mezcalmos(
                       // textSize: getSizeRelativeToScreen(25, sh, sw).sp,
-                      textSize: Get.width >= 320
+                      textSize: Get.width > 320
                           ? getSizeRelativeToScreen(25, sh, sw).sp
                           : 45.sp,
                       isBold: true),

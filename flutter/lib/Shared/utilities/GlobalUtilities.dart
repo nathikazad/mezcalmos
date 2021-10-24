@@ -17,6 +17,27 @@ void mezDbgPrint(dynamic log) {
   print("[MZL][$d] $log\n");
 }
 
+Widget emptyOrWidgetSmallPhones({Widget? empty, required Widget child}) {
+  if (Get.width > 320) {
+    return child;
+  } else {
+    return empty == null
+        ? SizedBox(
+            height: 0,
+            width: 0,
+          )
+        : empty;
+  }
+}
+
+String? hoursMinsShortner(String? original) {
+  return original
+      ?.replaceFirst('hours', 'hr')
+      .replaceFirst('hour', 'hr')
+      .replaceFirst('mins', 'min')
+      .replaceFirst('min', 'min');
+}
+
 void responsiveSize(BuildContext context) {
   ScreenUtil.init(
       BoxConstraints(
