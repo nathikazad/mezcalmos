@@ -32,10 +32,10 @@ Widget emptyOrWidgetSmallPhones({Widget? empty, required Widget child}) {
 
 String? hoursMinsShortner(String? original) {
   return original
-      ?.replaceFirst('hours', 'h')
-      .replaceFirst('hour', 'h')
-      .replaceFirst('mins', 'm')
-      .replaceFirst('min', 'm');
+      ?.replaceFirst('hours', 'hr')
+      .replaceFirst('hour', 'hr')
+      .replaceFirst('mins', 'min')
+      .replaceFirst('min', 'min');
 }
 
 void responsiveSize(BuildContext context) {
