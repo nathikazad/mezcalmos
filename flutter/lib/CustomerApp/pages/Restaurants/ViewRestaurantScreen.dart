@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/appbarComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/itemMenuComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
-import 'package:mezcalmos/CustomerApp/models/restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 

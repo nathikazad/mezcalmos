@@ -126,9 +126,9 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                           Get.put<IncomingOrdersController>(
                                               IncomingOrdersController());
                                           mezDbgPrint(
-                                              "Clicked on order::${controller.orders[i].id}");
+                                              "Clicked on order::${controller.orders[i].orderId}");
                                           controller.selectedIncommingOrderKey =
-                                              controller.orders[i].id;
+                                              controller.orders[i].orderId;
                                           Get.toNamed(kSelectedIcommingOrder);
                                         },
                                         child: Container(
@@ -197,7 +197,7 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                                           .customer['image']),
                                                   onBackgroundImageError:
                                                       (e, s) => mezDbgPrint(
-                                                          "Failed loading Customer openOrder::id::${controller.orders[i].id}"),
+                                                          "Failed loading Customer openOrder::id::${controller.orders[i].orderId}"),
                                                 ),
                                               ),
 

@@ -10,11 +10,7 @@ import 'package:mezcalmos/CustomerApp/components/myExpensionPanelComponent.dart'
 import 'package:mezcalmos/CustomerApp/components/textFieldComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/titlesComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantCartController.dart';
-import 'package:mezcalmos/CustomerApp/models/cart.dart';
-import 'package:mezcalmos/CustomerApp/models/restaurant.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCurrentOrderScreen.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen.dart';
-import 'dart:async';
+import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:intl/intl.dart';
 
 import 'package:mezcalmos/CustomerApp/router.dart';

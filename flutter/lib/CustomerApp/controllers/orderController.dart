@@ -1,5 +1,6 @@
 import 'package:mezcalmos/CustomerApp/constants/databaseNodes.dart';
-import 'package:mezcalmos/CustomerApp/models/Order.dart';
+import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:cloud_functions/cloud_functions.dart';

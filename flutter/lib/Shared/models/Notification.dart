@@ -1,4 +1,4 @@
-import 'package:mezcalmos/Shared/models/Order.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';

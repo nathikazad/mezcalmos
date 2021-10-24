@@ -5,11 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
-import 'package:mezcalmos/Shared/models/Order.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
@@ -44,7 +43,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
     controller.clearOrderNotifications();
   }
 
-  Future<void> hotReladCallback(Order order) async {
+  Future<void> hotReladCallback(TaxiOrder order) async {
     mezDbgPrint("CurrentOrderScreen :: addPostFrameCallback :: called !");
     mezDbgPrint("StreamBuilder----HasData start map loading!");
     _loadPolyline(order);
@@ -64,12 +63,12 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
           appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
               "menu", Get.find<SideMenuDraweController>().openMenu),
           body: SafeArea(
-            child: StreamBuilder<Order>(
+            child: StreamBuilder<TaxiOrder>(
                 stream: controller.orderStream.distinct((_old, _new) {
               mezDbgPrint(
                   "\n\n\n\n old = ${_old.status} | new ${_new.status} \n\n\n\n");
               return _new == null || _old == _new;
-            }), builder: (_, AsyncSnapshot<Order> snapshot) {
+            }), builder: (_, AsyncSnapshot<TaxiOrder> snapshot) {
               mezDbgPrint("\t\t\t\t S N A P S H O T ===> ${snapshot.data}");
               if (snapshot.connectionState == ConnectionState.waiting) {
                 mezDbgPrint("INSIDE STREAM BUILDER :: waiting !");
@@ -153,7 +152,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
   }
   // Handling Event ------------------------------------------------------------------------------------
 
-  Future<void> _handleEvent(Order order) async {
+  Future<void> _handleEvent(TaxiOrder order) async {
     mezDbgPrint("_handleEvent called !");
     mezDbgPrint("_handleEvent -> Event == OrderStatusChange , passed ");
 
@@ -186,7 +185,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
     }
   }
 
-  void _loadPolyline(Order order) {
+  void _loadPolyline(TaxiOrder order) {
     // check if polyline is empty
     if (polylines.isEmpty) {
       // check if event.order has dat
@@ -197,7 +196,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
         color: Color.fromARGB(255, 172, 89, 252),
         polylineId: PolylineId("polyline"),
         jointType: JointType.round,
-        points: loadUpPolyline(order),
+        points: loadUpPolyline(order.polyline),
         width: 2,
         startCap: Cap.buttCap,
         endCap: Cap.roundCap,
@@ -209,7 +208,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
   }
 
   // onTheWay - state
-  Future<void> _loadMarkersForOTW(Order order) async {
+  Future<void> _loadMarkersForOTW(TaxiOrder order) async {
     mezDbgPrint("_loadMarkersForOTW called !");
 
     await _loadBitmapDescriptors(order);
@@ -251,7 +250,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
   }
 
   // inTransit - state
-  Future<void> _loadMarkersForIT(Order order) async {
+  Future<void> _loadMarkersForIT(TaxiOrder order) async {
     mezDbgPrint("_loadMarkersForIT called !");
 
     await _loadBitmapDescriptors(order);
@@ -286,7 +285,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
         "_loadMarkersForIT -> Markers filling is done -> $customMarkers!");
   }
 
-  Future<void> _loadBitmapDescriptors(Order order) async {
+  Future<void> _loadBitmapDescriptors(TaxiOrder order) async {
     mezDbgPrint("_loadBitmapDescriptors called !");
 
     // customer marker's Image

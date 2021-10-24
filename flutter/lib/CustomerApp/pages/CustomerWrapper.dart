@@ -4,7 +4,7 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:mezcalmos/CustomerApp/components/appbarComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/imagesComponents.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
-import 'package:mezcalmos/CustomerApp/models/Order.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';

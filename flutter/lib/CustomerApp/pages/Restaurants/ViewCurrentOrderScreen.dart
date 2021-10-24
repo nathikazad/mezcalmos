@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/appbarComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
-import 'package:mezcalmos/CustomerApp/models/Order.dart';
+import 'package:mezcalmos/Shared/models/Orders/Restaurantorder.dart';
 
 class ViewCurrentRestaurantOrderScreen extends GetView<OrderController> {
   Rxn<RestaurantOrder> order = Rxn();

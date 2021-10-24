@@ -1,4 +1,4 @@
-import 'package:mezcalmos/CustomerApp/models/restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'dart:math';
 
 class CartItem {

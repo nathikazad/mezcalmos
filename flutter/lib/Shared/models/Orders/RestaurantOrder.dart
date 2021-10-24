@@ -1,3 +1,5 @@
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+
 class RestaurantOrder extends Order {
   RestaurantOrderStatus restaurantOrderStatus;
   int quantity;
@@ -59,6 +61,7 @@ class RestaurantOrder extends Order {
     return restaurantOrder;
   }
 
+  String get restaurantId => this.serviceProviderId!;
   @override
   bool inProcess() {
     return restaurantOrderStatus == RestaurantOrderStatus.PreparingOrder ||
@@ -113,24 +116,13 @@ class ChooseManyOption {
       required this.chosenOptionValue});
 }
 
-abstract class Order {
-  String orderId;
-  OrderType orderType;
-  String serviceProviderId;
-  PaymentType paymentType;
-  DateTime orderTime;
-  num cost;
-  Order(
-      {required this.orderId,
-      required this.orderType,
-      required this.serviceProviderId,
-      required this.paymentType,
-      required this.orderTime,
-      required this.cost});
-  bool inProcess();
-  // Order.orderFromData(dynamic orderId, dynamic orderData){
-
-}
+List<String> restaurantOrderStatusAsStrings = [
+  "preparingOrder",
+  "readyForPickup",
+  "onTheWay",
+  "delivered",
+  "cancelled"
+];
 
 enum RestaurantOrderStatus {
   PreparingOrder,
@@ -139,13 +131,7 @@ enum RestaurantOrderStatus {
   Delivered,
   Cancelled
 }
-List<String> restaurantOrderStatusAsStrings = [
-  "preparingOrder",
-  "readyForPickup",
-  "onTheWay",
-  "delivered",
-  "cancelled"
-];
+
 List<RestaurantOrderStatus> restaurantOrderStatusAsEnum = [
   RestaurantOrderStatus.PreparingOrder,
   RestaurantOrderStatus.ReadyForPickup,
@@ -164,28 +150,4 @@ String convertRestaurantOrderStatusEnumToString(
     RestaurantOrderStatus orderStatus) {
   return restaurantOrderStatusAsStrings[
       restaurantOrderStatusAsEnum.indexOf(orderStatus)];
-}
-
-enum OrderType { Taxi, Restaurant, Laundry, Water }
-List<String> orderTypeAsStrings = ["taxi", "restaurant", "laundry", "water"];
-List<OrderType> orderTypeAsEnum = [
-  OrderType.Taxi,
-  OrderType.Restaurant,
-  OrderType.Laundry,
-  OrderType.Water
-];
-
-OrderType convertOrderTypeStringToEnum(String orderType) {
-  return orderTypeAsEnum[orderTypeAsStrings.indexOf(orderType)];
-}
-
-String convertOrderTypeEnumToString(OrderType orderType) {
-  return orderTypeAsStrings[orderTypeAsEnum.indexOf(orderType)];
-}
-
-enum PaymentType { Cash, Card }
-PaymentType convertPaymentType(String paymentType) {
-  if (paymentType == "cash") return PaymentType.Cash;
-  if (paymentType == "card") return PaymentType.Card;
-  throw Error();
 }

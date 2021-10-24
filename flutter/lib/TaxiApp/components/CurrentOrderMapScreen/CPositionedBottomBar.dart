@@ -5,7 +5,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
-import 'package:mezcalmos/Shared/models/Order.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
@@ -26,7 +26,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
   LanguageController lang = Get.find<LanguageController>();
   FBNotificationsController fbNotificationsController =
       Get.find<FBNotificationsController>();
-  Order order;
+  TaxiOrder order;
   CurrentPositionedBottomBar(this.order);
   @override
   Widget build(BuildContext context) {
@@ -168,7 +168,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                       Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
                       GestureDetector(
                         onTap: () async {
-                          Get.toNamed(getMessagesRoute(order.id));
+                          Get.toNamed(getMessagesRoute(order.orderId));
                         },
                         child: Container(
                           height: getSizeRelativeToScreen(

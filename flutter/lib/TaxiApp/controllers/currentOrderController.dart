@@ -9,7 +9,7 @@ import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
-import 'package:mezcalmos/Shared/models/Order.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 
 class CurrentOrderController extends GetxController {
   TaxiAuthController _taxiAuthController =
@@ -19,14 +19,15 @@ class CurrentOrderController extends GetxController {
   FBNotificationsController _fbNotificationsController =
       Get.find<FBNotificationsController>(); 
 
-  StreamController<Order> _orderStreamController = StreamController.broadcast();
-  Stream<Order> get orderStream => _orderStreamController.stream;
+  StreamController<TaxiOrder> _orderStreamController =
+      StreamController.broadcast();
+  Stream<TaxiOrder> get orderStream => _orderStreamController.stream;
   StreamSubscription? _orderStatusListener;
 
   @override
   void onInit() {
     super.onInit();
-    mezDbgPrint("Current Order Controller init ${this.hashCode}");
+    mezDbgPrint("Current TaxiOrder Controller init ${this.hashCode}");
     mezDbgPrint(_taxiAuthController.taxiState?.currentOrder);
   }
 
@@ -41,7 +42,8 @@ class CurrentOrderController extends GetxController {
           .reference()
           .child(orderId(_taxiAuthController.taxiState!.currentOrder!))
           .once();
-      _orderStreamController.add(Order.fromSnapshot(dataSnapshot));
+      _orderStreamController
+          .add(TaxiOrder.fromData(dataSnapshot.key, dataSnapshot.value));
     });
   }
 

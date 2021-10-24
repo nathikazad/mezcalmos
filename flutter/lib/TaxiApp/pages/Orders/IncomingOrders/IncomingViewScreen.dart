@@ -8,7 +8,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
-import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
@@ -49,7 +48,7 @@ class IncommingOrderScreenView extends GetWidget<IncomingOrdersController>
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       controller.orders.listen((_) async {
         mezDbgPrint("\t\t\t\t STILL LISTENING INCOMMINGORDERVIEW ---- !!!!");
-        if (controller.selectedIncommingOrder?.id == null &&
+        if (controller.selectedIncommingOrder?.orderId == null &&
             !showLoading.value &&
             Get.currentRoute == kSelectedIcommingOrder) {
           cancelSubscriptions();
@@ -99,7 +98,7 @@ class IncommingOrderScreenView extends GetWidget<IncomingOrdersController>
                             showLoading.value = true;
                             controller
                                 .acceptTaxi(
-                                    controller.selectedIncommingOrder?.id)
+                                    controller.selectedIncommingOrder!.orderId)
                                 .then((serverResponse) {
                               cancelSubscriptions();
                               if (serverResponse.success) {
@@ -148,7 +147,7 @@ class IncommingOrderScreenView extends GetWidget<IncomingOrdersController>
         color: Color.fromARGB(255, 172, 89, 252),
         polylineId: PolylineId("polyline"),
         jointType: JointType.round,
-        points: loadUpPolyline(controller.selectedIncommingOrder),
+        points: loadUpPolyline(controller.selectedIncommingOrder?.polyline),
         width: 2,
         startCap: Cap.buttCap,
         endCap: Cap.roundCap,

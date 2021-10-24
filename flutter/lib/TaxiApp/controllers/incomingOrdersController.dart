@@ -10,12 +10,12 @@ import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
-import 'package:mezcalmos/Shared/models/Order.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 
 class IncomingOrdersController extends GetxController with MezDisposable {
-  RxList<Order> orders = <Order>[]
+  RxList<TaxiOrder> orders = <TaxiOrder>[]
       .obs; // this is observable which will be constaintly changing in realtime .
   AuthController _authController =
       Get.find<AuthController>(); // since it's already injected .
@@ -33,10 +33,10 @@ class IncomingOrdersController extends GetxController with MezDisposable {
   // Storing all the needed Listeners here
   Worker? _updateOrderDistanceToClient;
 
-  Order? get selectedIncommingOrder => (_selectedIncommingOrderKey.value != "")
+  TaxiOrder? get selectedIncommingOrder =>
+      (_selectedIncommingOrderKey.value != "")
       ? orders.firstWhere(
-          (element) => element.id == _selectedIncommingOrderKey.value,
-          orElse: () => Order.empty())
+          (element) => element.orderId == _selectedIncommingOrderKey.value)
       : null;
 
   set selectedIncommingOrderKey(String selectedOrderKey) {
@@ -50,7 +50,7 @@ class IncomingOrdersController extends GetxController with MezDisposable {
     mezDbgPrint("IncomingOrdersController init");
 
     if (_authController.user != null) {
-      // Added Order!
+      // Added TaxiOrder!
       _databaseHelper.firebaseDatabase
           .reference()
           .child(taxiOpenOrdersNode)
@@ -58,10 +58,10 @@ class IncomingOrdersController extends GetxController with MezDisposable {
           .listen((event) async {
         mezDbgPrint("Open Orders Node");
         mezDbgPrint(event.snapshot.value);
-        List<Order> ordersFromSnapshot = <Order>[];
+        List<TaxiOrder> ordersFromSnapshot = <TaxiOrder>[];
         if (event.snapshot.value != null) {
           event.snapshot.value.forEach((dynamic key, dynamic value) async {
-            Order order = Order.fromJson(key, value);
+            TaxiOrder order = TaxiOrder.fromData(key, value);
             order.distanceToClient = MapHelper.calculateDistance(
                 order.from.position, _taxiAuthController.currentLocation);
             ordersFromSnapshot.add(order);
@@ -110,7 +110,7 @@ class IncomingOrdersController extends GetxController with MezDisposable {
         _databaseHelper.firebaseDatabase
             .reference()
             .child(notificationStatusReadNode(
-                element.id, _authController.user!.uid))
+                element.orderId, _authController.user!.uid))
             .set(true);
       });
     });

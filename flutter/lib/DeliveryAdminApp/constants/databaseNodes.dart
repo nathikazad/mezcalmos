@@ -9,3 +9,7 @@ String adminNotificationInfoNode(String uid) {
 String notificationsNode(String uid) {
   return 'notifications/deliveryAdmin/$uid';
 }
+
+String inProcessOrdersNode() {
+  return 'inProcessOrders/restaurant';
+}

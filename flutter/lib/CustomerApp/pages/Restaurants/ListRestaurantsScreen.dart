@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/CustomerApp/components/ItemComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/appbarComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
-import 'package:mezcalmos/CustomerApp/models/restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 
 class ListRestaurantsScreen extends GetView<RestaurantsInfoController> {

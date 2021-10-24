@@ -2,7 +2,7 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'dart:math' show cos, sqrt, sin, pi, atan2;
-import 'package:mezcalmos/Shared/models/Order.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 
 LatLngBounds createMapBounds(List<LatLng> positions) {
   final southwestLat = positions.map((p) => p.latitude).reduce(
@@ -21,13 +21,13 @@ LatLngBounds createMapBounds(List<LatLng> positions) {
       northeast: LatLng(northeastLat, northeastLon));
 }
 
-List<LatLng> loadUpPolyline(Order? _o) {
+List<LatLng> loadUpPolyline(String? polyline) {
   // Polylines stuff.
-  if (_o == null || _o.id == null) return <LatLng>[];
+  if (polyline == null) return <LatLng>[];
   List<LatLng> pLineCoords = [];
 
   List<PointLatLng> res = PolylinePoints()
-      .decodePolyline(_o.routeInformation?['polyline'] ?? _o.polyline);
+      .decodePolyline(polyline);
 
   res.forEach((PointLatLng point) =>
       pLineCoords.add(LatLng(point.latitude, point.longitude)));

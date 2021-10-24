@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Order.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
 
 class CurrentPositionedFromToTopBar extends StatelessWidget {
   CurrentOrderController controller = Get.find<CurrentOrderController>();
   LanguageController lang = Get.find<LanguageController>();
-  Order order;
+  TaxiOrder order;
   CurrentPositionedFromToTopBar(this.order);
   @override
   Widget build(BuildContext context) {
