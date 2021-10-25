@@ -188,7 +188,7 @@ class Launcher:
     
     def __build_temp(self):
         # Auto versioning checks.
-        os.system(f'flutter build {self.user_args["build"]}')
+        os.system(f'flutter build {self.user_args["build"]} -t lib/{self.user_args["app"]}/main.dart --dart-define=LMODE={self.user_args["lmode"]}')
 
     def __launch__(self):
         # self.__f_checker__()

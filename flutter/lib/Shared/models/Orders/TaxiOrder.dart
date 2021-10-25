@@ -8,7 +8,7 @@ enum OrdersStatus {
   Expired,
   OnTheWay,
   InTransit,
-  IsLooking,
+  LookingForTaxi,
   Invalid
 }
 
@@ -19,7 +19,6 @@ extension ParseToString on OrdersStatus {
 }
 
 OrdersStatus convertStringToOrderStatus(String str) {
-  mezDbgPrint(str);
   return OrdersStatus.values
       .firstWhere((e) => e.toShortString().toLowerCase() == str.toLowerCase());
 }
@@ -55,7 +54,6 @@ class TaxiOrder extends Order {
       required this.distance,
       required this.duration,
       required this.acceptRideTime,
-      required OrderType orderType,
       required this.rideFinishTime,
       required this.rideStartTime,
       required this.status,
@@ -67,7 +65,6 @@ class TaxiOrder extends Order {
             paymentType: paymentType,
             orderType: OrderType.Taxi,
             cost: 0);
-
   // Get props as list.
   List<Object> get props =>
       [orderId, from, to, orderTime, paymentType, routeInformation];
@@ -82,13 +79,12 @@ class TaxiOrder extends Order {
         rideFinishTime: data['rideFinishTime'],
         rideStartTime: data['rideStartTime'],
         status: convertStringToOrderStatus(data['status']),
-        orderType: data['orderType'],
         acceptRideTime: data['acceptRideTime'],
         estimatedPrice: data['estimatedPrice'],
         from: Location(data['from']),
         to: Location(data['to']),
-        orderTime: data['orderTime'],
-        paymentType: data['paymentType'],
+        orderTime: DateTime.parse(data["orderTime"]),
+        paymentType: convertPaymentType(data["paymentType"]),
         routeInformation: data['routeInformation'],
         polyline: data['polyline'] ?? "");
     return taxiOrder;
@@ -111,7 +107,7 @@ class TaxiOrder extends Order {
   @override
   bool inProcess() {
     return status == OrdersStatus.InTransit ||
-        status == OrdersStatus.IsLooking ||
+        status == OrdersStatus.LookingForTaxi ||
         status == OrdersStatus.OnTheWay;
   }
 }
