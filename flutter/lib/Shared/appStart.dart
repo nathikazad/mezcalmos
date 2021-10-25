@@ -105,12 +105,21 @@ class _SPointState extends State<SPoint> {
     return;
   }
 
+  void hookOnFlutterErrorsStdout() {
+    FlutterError.onError = (FlutterErrorDetails details) {
+      for (var item in details.toString().split('\n')) {
+        mezDbgPrint(item);
+      }
+    };
+  }
+
   void initializeSetup() async {
     try {
       await setupFirebase();
       await setGlobalVariables();
       putControllers();
       await waitForInitialization();
+      hookOnFlutterErrorsStdout();
       setState(() => _initialized = true);
     } catch (e) {
       mezDbgPrint("[+] Error Happend =======> $e");

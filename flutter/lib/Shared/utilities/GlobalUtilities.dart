@@ -1,5 +1,6 @@
 // Usefull when trying to make Sizes adptable!
 import 'dart:async';
+import 'dart:io';
 import 'dart:typed_data';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';

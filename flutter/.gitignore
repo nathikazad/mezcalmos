@@ -3,22 +3,22 @@
 key.properties
 upload_certificate.pem
 
+# flutter plugins related files
+generated_plugin_registrant.dart
 
-android/app/google-services.json
-ios/Runner/GoogleService-Info.plist
+#.lock files
 *.lock
-# -- patched files
 
+# -- patched files
 pre-main.dart
 android/launcherPackage.properties
 android/app/src/main/res/values/launcher.xml
-
 google-services.json
 GoogleService-Info.plist
 
-.launcher_output/*.apk
-.launcher_output/*.aab
+# font awesome
 font_awesome_flutter/
+
 # Files and directories created by pub
 .dart_tool/
 .packages

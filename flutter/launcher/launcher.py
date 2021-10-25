@@ -16,11 +16,11 @@ PRINTLN = lambda x : print(x) if ACTIVE_DEBUG else None
 
 VALID_CONFIG_KEYS_LEN = 2
 
-POSSIBLE_LMODES = [
-    'stage',
-    'dev',
-    'prod'
-]
+# POSSIBLE_LMODES = [
+#     'stage',
+#     'dev',
+#     'prod'
+# ]
 
 class OUTPUT_FILTERS(Enum):
     SHOW = 0
@@ -65,6 +65,7 @@ class DW_EXIT_REASONS(Enum):
     LAUNCH_PROC_WITH_NONE_BINARY = -35
     FILTER_FILE_NOT_FOUND = -36
     FLUTTER_STDERR = -37
+    NO_APP_SPECIFIED = -38
 
     REACH_THE_LAZY_SAAD = -10000
 
@@ -290,7 +291,7 @@ class Config:
     def __help__(self):
         print(f"""
         
-        + app=<AppName>  `Default is {DEFAULTS['APP']}`
+        + app=<AppName>
         + env=<Environment> `default is stage`
         + version
         + filter=<FileName.filter>  : just pass the filter file name you created under output_filters.
@@ -560,12 +561,15 @@ class Config:
                 exit(DW_EXIT_REASONS.CONF_FILE_APPNAME_WRONG)
             self.user_args['app'] = _
         else:
-            self.user_args['app'] = DEFAULTS['APP']
+           PRINTLN("No app specified !")
+           exit(DW_EXIT_REASONS.NO_APP_SPECIFIED)
 
         # if using globals from json jump lmode and db checks
-        if self.__get_arg_value__('env=') not in POSSIBLE_LMODES:
-            PRINTLN(f'[!] lmode={_} : Error This launch mode is wrong !')
-            exit(DW_EXIT_REASONS.CONF_FILE_LMODENAME_WRONG)
+        _ = self.__get_arg_value__('env=')
+        if _ not in self.conf['settings']['envs'].keys():
+            PRINTLN(f'[!] env={_} : Invalid environment used !')
+            exit(DW_EXIT_REASONS.WRONG_ENV_USED)
+
         self.user_args['lmode'] = self.__get_arg_value__('env=')
         # if _:
         #     if _ not in self.conf['settings']['envs'].keys():
