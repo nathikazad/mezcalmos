@@ -76,7 +76,8 @@ class _SPointState extends State<SPoint> {
   }
 
   Future<void> setGlobalVariables() async {
-    String _launchMode = String.fromEnvironment('LMODE');
+    const String _launchMode =
+        String.fromEnvironment('LMODE', defaultValue: "prod");
     if (await GetStorage.init()) {
       mezDbgPrint("[ GET STORAGE ] INITIALIZED !");
       await GetStorage().write(getxLmodeKey, _launchMode);

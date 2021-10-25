@@ -25,7 +25,7 @@ class SignIn extends GetWidget<AuthController> {
 
     final sw = MediaQuery.of(context).size.width.w;
     final sh = MediaQuery.of(context).size.height.h;
-    final lmode = GetStorage().read("lmod");
+    final lmode = GetStorage().read(getxLmodeKey);
 
     return WillPopScope(
       onWillPop: () async => false,
