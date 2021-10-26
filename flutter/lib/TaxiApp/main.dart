@@ -3,7 +3,6 @@ import 'package:get/route_manager.dart';
 import 'package:mezcalmos/Shared/appStart.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
 import 'package:mezcalmos/TaxiApp/authHooks.dart';
-import 'dart:io';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
@@ -19,9 +18,9 @@ List<GetPage<dynamic>> routes = XRouter.mainRoutes;
 
 void main() {
   loadBitmaps();
-  runApp(
-    SPoint(appName, signInCallback, signOutCallback, routes),
-  );
+  runMainGuarded(() => runApp(
+        SPoint(appName, signInCallback, signOutCallback, routes),
+      ));
 }
 
 void loadBitmaps() async {

@@ -1,6 +1,5 @@
 // Usefull when trying to make Sizes adptable!
 import 'dart:async';
-import 'dart:io';
 import 'dart:typed_data';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +15,24 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 void mezDbgPrint(dynamic log) {
   String d = DateFormat('HH:mm:ss').format(DateTime.now());
   print("[MZL][$d] $log\n");
+}
+
+// This is to get all kind of exception in our code!
+runMainGuarded(Function runMain) {
+  runZonedGuarded(() async {
+    runMain();
+  }, (error, stacktrace) {
+    mezDbgPrint("========== [ START MEZ EXCEPTION ] ==========");
+    mezDbgPrint("\tError :\n");
+    for (var line in error.toString().split("\n")) {
+      mezDbgPrint(line);
+    }
+    mezDbgPrint("\tStackTrace :\n");
+    for (var line in stacktrace.toString().split("\n")) {
+      mezDbgPrint(line);
+    }
+    mezDbgPrint("========== [ END MEZ EXCEPTION ] ==========");
+  });
 }
 
 Widget emptyOrWidgetSmallPhones({Widget? empty, required Widget child}) {
