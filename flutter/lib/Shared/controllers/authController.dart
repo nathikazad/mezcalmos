@@ -72,6 +72,7 @@ class AuthController extends GetxController {
       } else {
         mezDbgPrint('AuthController: User is currently signed in!');
         _onSignInCallback();
+        GetStorage().write(getxUserId, user.uid);
         _userNodeListener?.cancel();
         _userNodeListener = _databaseHelper.firebaseDatabase
             .reference()
@@ -86,7 +87,6 @@ class AuthController extends GetxController {
           _user.value = User.fromSnapshot(user, event.snapshot);
           Get.find<LanguageController>()
               .userLanguageChanged(_user.value!.language);
-          GetStorage().write(getUserId, user.uid);
         });
       }
     });

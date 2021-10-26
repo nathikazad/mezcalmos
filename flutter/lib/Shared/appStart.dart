@@ -58,6 +58,7 @@ class _SPointState extends State<SPoint> {
     if (_launchMode == "prod") {
       firebaseDb = FirebaseDatabase(app: _app);
     } else if (_launchMode == "dev") {
+      mezDbgPrint("DEV MODE");
       firebaseDb = FirebaseDatabase(app: _app, databaseURL: _host + dbRoot);
       await FirebaseAuth.instance.useEmulator(_host + authPort);
       FirebaseFunctions.instance
@@ -83,7 +84,8 @@ class _SPointState extends State<SPoint> {
       await GetStorage().write(getxLmodeKey, _launchMode);
       // Get the VersionNumber
       PackageInfo pInfos = await PackageInfo.fromPlatform();
-      await GetStorage().write(version, pInfos.version);
+      mezDbgPrint("[ GET STORAGE ] version number ${pInfos.version}");
+      await GetStorage().write(getxVersion, pInfos.version);
       await GetStorage().write(getxGmapBottomPaddingKey,
           Platform.isAndroid ? 38.0 : Get.height / 20);
     } else
@@ -127,6 +129,7 @@ class _SPointState extends State<SPoint> {
       setState(() {
         _error = true;
       });
+      rethrow;
     }
   }
 

@@ -16,7 +16,7 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
 }
 
 void markInDb(String url) async {
-  String? driverId = GetStorage().read<String>(getUserId);
+  String? driverId = GetStorage().read<String>(getxUserId);
   if (driverId != null) {
     url = url.replaceAll("<driverId>", driverId);
     http.put(
@@ -36,6 +36,7 @@ class DeviceNotificationsController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+    mezDbgPrint("DeviceNotificationsController onInit");
     NotificationSettings settings = await requestPermission();
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);

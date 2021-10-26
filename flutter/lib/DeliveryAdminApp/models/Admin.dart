@@ -1,6 +1,6 @@
 class Admin {
   bool authorized = false;
-  String? notificationInfo;
+  dynamic notificationInfo;
   dynamic data;
   Admin.fromSnapshot(dynamic data) {
     this.data = data;

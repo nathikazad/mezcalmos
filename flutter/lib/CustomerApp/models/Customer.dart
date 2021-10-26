@@ -1,11 +1,13 @@
 class Customer {
   // List<Order> currentOrders = [];
   String? appVersion;
+  dynamic notificationInfo;
   // Cart? cart;
   dynamic data;
   Customer.fromSnapshot(dynamic data) {
     this.data = data;
     this.appVersion = data["versionNumber"];
+    this.notificationInfo = data["notificationInfo"];
     // if (data["info"]?["currentOrders"] != null) {
     //   data["info"]["currentOrders"]
     //       .forEach((dynamic orderId, dynamic orderData) {
@@ -20,6 +22,6 @@ class Customer {
   }
 
   Map<String, dynamic> toJson() {
-    return <String, dynamic>{};
+    return <String, dynamic>{"notificationInfo": this.notificationInfo};
   }
 }

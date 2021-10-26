@@ -9,7 +9,7 @@ import 'package:mezcalmos/Shared/controllers/themeContoller.dart';
 import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
-enum AppName { TaxiApp, CustomerApp, RestaurantApp }
+enum AppName { TaxiApp, CustomerApp, RestaurantApp, DeliveryAdminApp }
 AppName convertStringToAppName(String str) {
   return AppName.values.firstWhere((e) => e.toString().split('.').last == str);
 }

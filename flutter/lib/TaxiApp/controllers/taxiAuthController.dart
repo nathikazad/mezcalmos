@@ -29,7 +29,6 @@ class TaxiAuthController extends GetxController {
 
   StreamSubscription<LocationData>? _locationListener;
   StreamSubscription? _taxiStateNodeListener;
-  StreamSubscription? _authStateChangeListener;
 
   bool _checkedAppVersion = false;
   String? _previousStateValue = "init";
@@ -41,26 +40,17 @@ class TaxiAuthController extends GetxController {
 
     mezDbgPrint("TaxiAuthController: init ${this.hashCode}");
     mezDbgPrint("TaxiAuthController: calling handle state change first time");
-    handleStateChange(Get.find<AuthController>().fireAuthUser);
-    _authStateChangeListener =
-        Get.find<AuthController>().authStateChange.listen((user) {
-      mezDbgPrint(
-          "TaxiAuthController: calling handle state change from listener");
-      handleStateChange(user);
-    });
+    setupTaxi(Get.find<AuthController>().fireAuthUser!);
   }
 
-  void handleStateChange(User? user) async {
+  void setupTaxi(User user) async {
     mezDbgPrint("TaxiAuthController: handle state change user value");
     mezDbgPrint(user);
     // mezDbgPrint(_authController.fireAuthUser);
-    await _taxiStateNodeListener?.cancel();
-    _taxiStateNodeListener = null;
-    await _locationListener?.cancel();
-    _locationListener = null;
-    if (user == null) return;
+    
     mezDbgPrint(
         "TaxiAuthController: _taxiStateNodeListener init ${taxiStateNode(user.uid)}");
+    await _taxiStateNodeListener?.cancel();
     _taxiStateNodeListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(taxiStateNode(user.uid))
@@ -92,6 +82,7 @@ class TaxiAuthController extends GetxController {
     saveNotificationToken();
     mezDbgPrint(
         "/////////////////////////////////////////////${_state.value?.toJson()}////////////////////////////////////////////////////");
+    await _locationListener?.cancel();
     _locationListener = await _listenForLocation();
   }
 
@@ -111,7 +102,7 @@ class TaxiAuthController extends GetxController {
 
   void saveAppVersionIfNecessary() {
     if (_checkedAppVersion == false) {
-      String VERSION = GetStorage().read(version);
+      String VERSION = GetStorage().read(getxVersion);
       mezDbgPrint("[+] TaxiDriver Currently using App v$VERSION");
       _databaseHelper.firebaseDatabase
           .reference()
@@ -143,7 +134,7 @@ class TaxiAuthController extends GetxController {
         // mezDbgPrint(positionUpdate);
         _databaseHelper.firebaseDatabase
             .reference()
-            .child(taxiAuthNode(_authController.fireAuthUser?.uid ?? ''))
+            .child(taxiAuthNode(_authController.fireAuthUser!.uid))
             .child('location')
             .set(positionUpdate);
         if (_state.value?.currentOrder != null) {
@@ -167,9 +158,6 @@ class TaxiAuthController extends GetxController {
 
     _locationListener?.cancel();
     _locationListener = null;
-
-    _authStateChangeListener?.cancel();
-    _authStateChangeListener = null;
     super.onClose();
   }
 

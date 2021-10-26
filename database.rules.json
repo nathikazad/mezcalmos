@@ -140,6 +140,12 @@
         ".write": "false"
       }
     },
+    "deliveryAdmins": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid"
+      }
+    },
     "adminChat": {
       ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true",
       ".write": "false",

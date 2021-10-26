@@ -4,6 +4,7 @@ const firebaseAdmin = require("firebase-admin");
 const firebase = firebaseAdmin.initializeApp();
 
 const keys = require("./helpers/keys").keys()
+
 const hasuraModule = require("./helpers/hasura");
 
 const hasura = new hasuraModule.Hasura(keys.hasura)
