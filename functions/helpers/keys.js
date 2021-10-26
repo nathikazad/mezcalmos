@@ -17,6 +17,10 @@ function keys() {
       },
       "stripe": {
         "secretkey": "sk_dummy"
+      },
+      "hasura": {
+        "key": 'rOTavdgkE13VvHckk2AsK5FEMvkCLx5EriEBQF2GJaRLrCw55gv44uATzneQiEMN',
+        "url": 'https://testing-mezc.hasura.app/v1/graphql'
       }
     }
   }
