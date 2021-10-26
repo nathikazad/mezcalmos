@@ -9,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/services.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -142,6 +143,8 @@ class _SPointState extends State<SPoint> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     if (_error) {
       mezcalmosSnackBar("Error", "Server connection failed !");
       return MaterialApp(

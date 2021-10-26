@@ -63,6 +63,7 @@ class ItemMenuComponents extends StatelessWidget {
                   children: [
                     Text(
                       "T$title",
+                      overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.mulish(
                         textStyle: TextStyle(
                             color: const Color(0xff000f1c),
@@ -73,6 +74,7 @@ class ItemMenuComponents extends StatelessWidget {
                       ),
                     ),
                     Text("\$$price",
+                        overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.mulish(
                           textStyle: TextStyle(
                               color: const Color(0xff000f1c),

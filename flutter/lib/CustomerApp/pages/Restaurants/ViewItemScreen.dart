@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
 import 'package:mezcalmos/CustomerApp/components/appbarComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/buttonComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/checkBoxComponent.dart';
@@ -10,15 +11,18 @@ import 'package:mezcalmos/CustomerApp/components/titlesComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantCartController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-import 'package:mezcalmos/CustomerApp/models/Cart.dart';
+import 'package:mezcalmos/CustomerApp/models/cart.dart';
 import 'dart:async';
 //import 'package:google_fonts/google_fonts.dart';
 //import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
 
@@ -49,61 +53,30 @@ class ViewItemScreen extends GetView<RestaurantsInfoController> {
 
   @override
   Widget build(BuildContext context) {
+    responsiveSize(context);
     // print("${cartItem.value?.item}");
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Obx(() => Text("${cartItem.value?.item.name ?? 'Loading'}")),
-      //   actions: [
-      //     TextButton(
-      //         onPressed: () => Get.to(ViewCartScreen()), child: Text("Cart"))
-      //   ],
-      // ),
-      // body: LayoutBuilder(builder:
-      //     (BuildContext context, BoxConstraints viewportConstraints) {
-      //   return SingleChildScrollView(
-      //       child: ConstrainedBox(
-      //           constraints: BoxConstraints(
-      //             minHeight: viewportConstraints.maxHeight,
-      //           ),
-      //           child: Obx(() => Column(
-      //                 children: [
-      //                   if (cartItem.value?.item != null) ...[
-      //                     Text(cartItem.value!.item.name!),
-      //                     Text(cartItem.value!.item.description!),
-      //                     Text(
-      //                         "\$${currency.format(cartItem.value!.item.cost)}"),
-      //                     image(cartItem.value!.item.image),
-      //                     chooseOneCheckBoxes(
-      //                         cartItem.value!.item.chooseOneOptions),
-      //                     chooseManyCheckBoxes(
-      //                         cartItem.value!.item.chooseManyOptions),
-      // incrementQuantityButton(),
-      //                     Text(
-      //                         "\$${currency.format(cartItem.value!.totalCost())}"),
-      //                  addItemButton()
-      //                   ] else
-      //                     Text("Loading")
-      //                 ],
-      //               ))),
-      //               );
-      // }),
-      body: Obx(
-        () => (cartItem.value?.item == null)
-            ? Center(
-                child: CircularProgressIndicator(),
-              )
-            : SafeArea(
-                child: Column(
+      resizeToAvoidBottomInset: true,
+      appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back(),
+          actionIcons: [
+            ActionIconsComponents.cartIcon(),
+            ActionIconsComponents.notificationIcon(),
+            ActionIconsComponents.orderIcon()
+          ]),
+      body: Obx(() => (cartItem.value?.item == null)
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : SafeArea(
+              child: Column(
                 children: [
-                  restaurantAppBarComponent(
-                      "back", () {}, ["messages", "carts"]),
                   Expanded(
                     child: Stack(
                       children: [
                         Positioned(
                             child: Container(
                           // alignment: Alignment.center,
-                          margin: const EdgeInsets.only(top: 20),
+                          margin: const EdgeInsets.only(top: 10),
 
                           height: Get.height,
                           width: Get.width,
@@ -150,16 +123,19 @@ class ViewItemScreen extends GetView<RestaurantsInfoController> {
                                 ),
                               ),
                               Positioned(
-                                  top: Get.height * 0.325,
+                                  top: Get.height * 0.32,
                                   child: Container(
                                     width: Get.width,
                                     child: Text("${cartItem.value?.item.name}",
-                                        style: const TextStyle(
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        softWrap: false,
+                                        style: TextStyle(
                                             color: const Color(0xffffffff),
-                                            fontWeight: FontWeight.w400,
-                                            fontFamily: "ProductSans",
-                                            fontStyle: FontStyle.normal,
-                                            fontSize: 25.0),
+                                            // fontWeight: FontWeight.w400,
+                                            fontFamily: "psr",
+                                            // fontStyle: FontStyle.normal,
+                                            fontSize: 25.0.sp),
                                         textAlign: TextAlign.center),
                                   )),
                             ],
@@ -185,8 +161,8 @@ class ViewItemScreen extends GetView<RestaurantsInfoController> {
                     ),
                   ),
                 ],
-              )),
-      ),
+              ),
+            )),
     );
   }
 
@@ -207,6 +183,7 @@ class ViewItemScreen extends GetView<RestaurantsInfoController> {
               color: const Color(0xfff6f6f6)),
           child: SingleChildScrollView(
             controller: sc,
+            //clipBehavior: ,
             child: Container(
               decoration: BoxDecoration(
                   boxShadow: [

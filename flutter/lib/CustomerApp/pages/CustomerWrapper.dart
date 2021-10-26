@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:mezcalmos/CustomerApp/components/appbarComponent.dart';
@@ -8,7 +9,10 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomerWrapper extends GetWidget<AuthController>
     with WidgetsBindingObserver {
@@ -57,6 +61,7 @@ class CustomerWrapper extends GetWidget<AuthController>
 
   @override
   Widget build(BuildContext context) {
+    responsiveSize(context);
     print("CustomWrapper Build callabck");
     // Navigate to current orders if any after build
     Future.microtask(() {
@@ -78,33 +83,124 @@ class CustomerWrapper extends GetWidget<AuthController>
         //             Text("Orders" + numberOfCurrentOrders.value.toString())))
         //   ],
         // ),
+        appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
+            "menu", () => _sideMenuDrawerController.openMenu(),
+            actionIcons: [
+              GestureDetector(
+                child: Container(
+                  height: 30,
+                  width: 30,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    gradient: LinearGradient(
+                      begin: Alignment(0.1689453125, 0),
+                      end: Alignment(1, 1),
+                      colors: [
+                        const Color(0xff5582ff)
+                            .withOpacity(0.10000000149011612),
+                        const Color(0xffc54efc).withOpacity(0.10000000149011612)
+                      ],
+                    ),
+                  ),
+                  child: Icon(
+                    FontAwesomeIcons.history,
+                    size: 14,
+                    color: Color(0xff5582ff),
+                  ),
+                ),
+                onTap: () {
+                  print("orders");
+                  // Get.to(() => ViewOrders());
+                  //Get.toNamed(kCartRoute);
+                  // Get.to(ViewCartScreen(),
+                  //);
+                },
+              ),
+              GestureDetector(
+                child: Container(
+                  height: 30,
+                  width: 30,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    gradient: LinearGradient(
+                      begin: Alignment(0.1689453125, 0),
+                      end: Alignment(1, 1),
+                      colors: [
+                        const Color(0xff5582ff)
+                            .withOpacity(0.10000000149011612),
+                        const Color(0xffc54efc).withOpacity(0.10000000149011612)
+                      ],
+                    ),
+                  ),
+                  child: Icon(
+                    FontAwesomeIcons.history,
+                    size: 14,
+                    color: Color(0xff5582ff),
+                  ),
+                ),
+                onTap: () {
+                  print("orders");
+                  //  Get.to(() => ViewOrders());
+                  //Get.toNamed(kCartRoute);
+                  // Get.to(ViewCartScreen(),
+                  //);
+                },
+              ),
+              GestureDetector(
+                child: Container(
+                  height: 30,
+                  width: 30,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    gradient: LinearGradient(
+                      begin: Alignment(0.1689453125, 0),
+                      end: Alignment(1, 1),
+                      colors: [
+                        const Color(0xff5582ff)
+                            .withOpacity(0.10000000149011612),
+                        const Color(0xffc54efc).withOpacity(0.10000000149011612)
+                      ],
+                    ),
+                  ),
+                  child: Icon(
+                    FontAwesomeIcons.history,
+                    size: 14,
+                    color: Color(0xff5582ff),
+                  ),
+                ),
+                onTap: () {
+                  print("orders");
+                  // Get.to(() => ViewOrders());
+                  //Get.toNamed(kCartRoute);
+                  // Get.to(ViewCartScreen(),
+                  //);
+                },
+              )
+            ]),
         body: SafeArea(
           child: Column(
             children: [
-              SizedBox(
-                height: Get.height * 0.005,
-              ),
-              restaurantAppBarComponent(
-                  "menu",
-                  () => _sideMenuDrawerController.openMenu(),
-                  ["notifications", "oredrs"]),
-              SizedBox(
-                height: 25,
-              ),
+              // SizedBox(
+              //   height: Get.height * 0.005,
+              // ),
+              // restaurantAppBarComponent(
+              //     "menu",
+              //   ,
+              //   ["notifications", "oredrs"]),
+
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
+                padding: EdgeInsets.symmetric(horizontal: 10),
                 alignment: Alignment.centerLeft,
                 child: Text("Services",
-                    style: const TextStyle(
-                        color: const Color(0xff1d1d1d),
-                        fontWeight: FontWeight.w400,
-                        fontFamily: "ProductSans",
-                        fontStyle: FontStyle.normal,
-                        fontSize: 45.0),
+                    style: TextStyle(
+                        color: Color(0xff1d1d1d),
+                        // fontWeight: FontWeight.w400,
+                        fontFamily: "psr",
+                        fontSize: 45.sp),
                     textAlign: TextAlign.left),
               ),
               SizedBox(
-                height: 25,
+                height: 25.h,
               ),
               Expanded(
                 child: Container(
@@ -141,7 +237,7 @@ class CustomerWrapper extends GetWidget<AuthController>
                 ),
               ),
               SizedBox(
-                height: 25,
+                height: 25.h,
               ),
               Expanded(
                 child: InkWell(
@@ -181,7 +277,7 @@ class CustomerWrapper extends GetWidget<AuthController>
                 ),
               ),
               SizedBox(
-                height: 25,
+                height: 25.h,
               ),
 
               // OutlinedButton(

@@ -57,6 +57,7 @@ class _CheckBoxComponentState extends State<CheckBoxComponent> {
                         setState(() {
                           isTure = !isTure;
                         });
+                        widget.onValueChanged!.call(isTure);
                       },
                     ),
                   ),

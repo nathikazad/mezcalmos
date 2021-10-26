@@ -3,8 +3,10 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
 import 'package:mezcalmos/CustomerApp/components/appbarComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/imagesComponents.dart';
+import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 
 class ViewOrders extends StatelessWidget {
   const ViewOrders({Key? key}) : super(key: key);
@@ -12,15 +14,15 @@ class ViewOrders extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-          child: Container(
+      appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back(),
+          actionIcons: [
+            ActionIconsComponents.cartIcon(),
+            ActionIconsComponents.notificationIcon(),
+            ActionIconsComponents.orderIcon()
+          ]),
+      body: Container(
         child: Column(
           children: [
-            ///appbar
-            restaurantAppBarComponent("back", () {}, []),
-            SizedBox(
-              height: Get.height * 0.005,
-            ),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
               width: Get.width,
@@ -258,7 +260,7 @@ class ViewOrders extends StatelessWidget {
             ))
           ],
         ),
-      )),
+      ),
     );
   }
 }

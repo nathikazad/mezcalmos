@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -131,22 +132,25 @@ class MezcalmosSharedWidgets {
     );
   }
 
-  static Widget fillTitle() => Container(
-        width: Get.width * 0.55,
-        child: FittedBox(
-          fit: BoxFit.scaleDown,
-          alignment: Alignment.centerLeft,
-          child: Row(
-            children: [
-              logo(size: getSizeRelativeToScreen(80, Get.width, Get.height)),
-              Padding(padding: EdgeInsets.only(left: 10), child: mezcalmos()),
-            ],
-          ),
+  static Widget fillTitle(int actionLength) {
+    return Container(
+      width: Get.width * (actionLength >= 3 && Get.width <= 320 ? 0.45 : 0.55),
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        alignment: Alignment.centerLeft,
+        child: Row(
+          children: [
+            logo(size: getSizeRelativeToScreen(80, Get.width, Get.height)),
+            Padding(padding: EdgeInsets.only(left: 10), child: mezcalmos()),
+          ],
         ),
-      );
+      ),
+    );
+  }
 
   static AppBar mezcalmosAppBar(String btnType, Function onTapFunction,
-      {dynamic bgColor = Colors.white}) {
+      {dynamic bgColor = Colors.white,
+      List<Widget> actionIcons = const <Widget>[]}) {
     Widget btn_icon;
 
     switch (btnType) {
@@ -179,16 +183,16 @@ class MezcalmosSharedWidgets {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Container(
-              height: 32,
-              width: 32,
+              height: 30,
+              width: 30,
               child: GestureDetector(
                 onTap: () {
                   mezDbgPrint("Taped Drawer btn !");
                   onTapFunction();
                 },
                 child: Container(
-                  height: 32,
-                  width: 32,
+                  height: 30,
+                  width: 30,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     boxShadow: [
@@ -211,22 +215,17 @@ class MezcalmosSharedWidgets {
             // Positioned(
             //     right: getSizeRelativeToScreen(40, Get.height, Get.width),
             //     child: fillTitle())
-            SizedBox(width: getSizeRelativeToScreen(20, Get.height, Get.width)),
-            fillTitle()
-            // LayoutBuilder(builder: (ctx, constraints) {
-            //   mezDbgPrint(
-            //       "Inside layoutbuilder  ${constraints.maxWidth} x ${constraints.maxHeight} !!");
-            //   mezDbgPrint(
-            //       "Getx => Inside layoutbuilder  ${Get.width} x ${Get.height} !!");
-            //   if (constraints.maxWidth <= 320) {
-            //     mezDbgPrint("------- Small phone !!");
-            //     // responsiveSize(ctx);
-            //     return fillTitle(isSmallPhone: true);
-            //   } else {
-            //     mezDbgPrint(" ------- Big phone !!");
-            //     return fillTitle();
-            //   }
-            // }),
+            //SizedBox(width: getSizeRelativeToScreen(20, Get.height, Get.width)),
+            Spacer(),
+            fillTitle(actionIcons.length),
+            Spacer(),
+            for (var i = 0; i < actionIcons.length; i++) ...[
+              SizedBox(width: 5),
+              actionIcons[i]
+            ]
+            //  actionIcons==null?Spacer():(actionIcons!.map((e) {
+            //    return <Widget>[Spacer(),e];
+            //  }))
           ],
         ),
       ),
