@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
 import 'package:mezcalmos/CustomerApp/components/appbarComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/imagesComponents.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
@@ -84,99 +85,10 @@ class CustomerWrapper extends GetWidget<AuthController>
         //   ],
         // ),
         appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
-            "menu", () => _sideMenuDrawerController.openMenu(),
-            actionIcons: [
-              GestureDetector(
-                child: Container(
-                  height: 30,
-                  width: 30,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    gradient: LinearGradient(
-                      begin: Alignment(0.1689453125, 0),
-                      end: Alignment(1, 1),
-                      colors: [
-                        const Color(0xff5582ff)
-                            .withOpacity(0.10000000149011612),
-                        const Color(0xffc54efc).withOpacity(0.10000000149011612)
-                      ],
-                    ),
-                  ),
-                  child: Icon(
-                    FontAwesomeIcons.history,
-                    size: 14,
-                    color: Color(0xff5582ff),
-                  ),
-                ),
-                onTap: () {
-                  print("orders");
-                  // Get.to(() => ViewOrders());
-                  //Get.toNamed(kCartRoute);
-                  // Get.to(ViewCartScreen(),
-                  //);
-                },
-              ),
-              GestureDetector(
-                child: Container(
-                  height: 30,
-                  width: 30,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    gradient: LinearGradient(
-                      begin: Alignment(0.1689453125, 0),
-                      end: Alignment(1, 1),
-                      colors: [
-                        const Color(0xff5582ff)
-                            .withOpacity(0.10000000149011612),
-                        const Color(0xffc54efc).withOpacity(0.10000000149011612)
-                      ],
-                    ),
-                  ),
-                  child: Icon(
-                    FontAwesomeIcons.history,
-                    size: 14,
-                    color: Color(0xff5582ff),
-                  ),
-                ),
-                onTap: () {
-                  print("orders");
-                  //  Get.to(() => ViewOrders());
-                  //Get.toNamed(kCartRoute);
-                  // Get.to(ViewCartScreen(),
-                  //);
-                },
-              ),
-              GestureDetector(
-                child: Container(
-                  height: 30,
-                  width: 30,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    gradient: LinearGradient(
-                      begin: Alignment(0.1689453125, 0),
-                      end: Alignment(1, 1),
-                      colors: [
-                        const Color(0xff5582ff)
-                            .withOpacity(0.10000000149011612),
-                        const Color(0xffc54efc).withOpacity(0.10000000149011612)
-                      ],
-                    ),
-                  ),
-                  child: Icon(
-                    FontAwesomeIcons.history,
-                    size: 14,
-                    color: Color(0xff5582ff),
-                  ),
-                ),
-                onTap: () {
-                  print("orders");
-                  // Get.to(() => ViewOrders());
-                  //Get.toNamed(kCartRoute);
-                  // Get.to(ViewCartScreen(),
-                  //);
-                },
-              )
-            ]),
+            "menu", () => _sideMenuDrawerController.openMenu(), actionIcons: [
+          ActionIconsComponents.notificationIcon(),
+          ActionIconsComponents.orderIcon()
+        ]),
         body: SafeArea(
           child: Column(
             children: [

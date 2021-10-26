@@ -13,12 +13,10 @@ class ViewNotifications extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back(),
-          actionIcons: [
-            ActionIconsComponents.cartIcon(),
-            ActionIconsComponents.notificationIcon(),
-            ActionIconsComponents.orderIcon()
-          ]),
+      appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
+        "back",
+        () => Get.back(),
+      ),
       body: Container(
         child: Column(
           children: [
