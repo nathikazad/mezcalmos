@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
@@ -46,17 +47,12 @@ class CustomerWrapper extends GetWidget<AuthController>
     print("navigateToOrdersIfNecessary");
     if (currentOrders.length == 1) {
       if (currentOrders[0].orderType == OrderType.Restaurant)
-        Get.offNamedUntil(
-            getCurrentRestaurantOrderRoute(currentOrders[0].orderId),
-            (Route<dynamic> route) {
-          return (route.settings.name == kWrapperRoute);
-        });
+        popEverythingAndNavigateTo(
+            getCurrentRestaurantOrderRoute(currentOrders[0].orderId));
       else
         print("Navigate to other order type");
     } else if (currentOrders.length > 1) {
-      Get.offNamedUntil(kOrdersRoute, (Route<dynamic> route) {
-        return (route.settings.name == kWrapperRoute);
-      });
+      popEverythingAndNavigateTo(kOrdersRoute);
     }
   }
 

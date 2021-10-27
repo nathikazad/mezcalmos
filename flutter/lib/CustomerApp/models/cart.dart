@@ -8,6 +8,7 @@ class CartItem {
   Map<String, String> _chosenOneOptions = {};
   Map<String, bool> _chosenManyOptions = {};
   int quantity;
+  String? notes;
   Map<String, String> get chosenOneOptions => _chosenOneOptions;
   Map<String, bool> get chosenManyOptions => _chosenManyOptions;
 
@@ -61,6 +62,7 @@ class CartItem {
       "name": this.item.name,
       "image": this.item.image,
       "options": {"chosenOneOptions": {}, "chosenManyOptions": {}},
+      "notes": notes
     };
     this.item.chooseOneOptions.forEach((e) {
       ChooseOneOption? chooseOneOption = this.item.findChooseOneOption(e.id!);
@@ -93,6 +95,7 @@ class CartItem {
 class Cart {
   List<CartItem> items = [];
   Restaurant restaurant;
+  String? notes;
   Cart(this.restaurant);
   Cart.fromCartData(dynamic cartData, this.restaurant) {
     cartData["items"].forEach((dynamic itemId, dynamic itemData) {
@@ -152,7 +155,8 @@ class Cart {
       "serviceProviderId": restaurant.id,
       "quantity": this.quantity(),
       "cost": this.totalCost(),
-      "items": items
+      "items": items,
+      "notes": notes
     };
   }
 }

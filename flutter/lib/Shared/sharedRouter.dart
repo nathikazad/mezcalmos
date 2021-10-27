@@ -26,6 +26,15 @@ getMessagesRoute(String orderId) {
   return kMessagesRoute.replaceFirst(":orderId", orderId);
 }
 
+void popEverythingAndNavigateTo(dynamic route) {
+  popUntilAndNavigateTo(kHomeRoute, route);
+}
+
+void popUntilAndNavigateTo(dynamic untilRoute, dynamic toRoute) {
+  Get.offNamedUntil(toRoute, (Route<dynamic> route) {
+    return (route.settings.name == untilRoute);
+  });
+}
 // GetX based Router (For navigating)
 class SharedRouter {
   static List<GetPage> sharedRoutes = [

@@ -50,7 +50,7 @@ class OrderController extends GetxController {
     });
   }
 
-  Stream<Order> getCurrentOrder(String orderId) {
+  Stream<Order> getCurrentOrderStream(String orderId) {
     return getCurrentOrders().map<Order>((currentOrders) {
       return currentOrders
           .firstWhere((currentOrder) => currentOrder.orderId == orderId);
@@ -59,7 +59,7 @@ class OrderController extends GetxController {
 
   Future<void> cancelOrder(String orderId) async {
     HttpsCallable cancelOrder =
-        FirebaseFunctions.instance.httpsCallable('cancelOrder');
+        FirebaseFunctions.instance.httpsCallable('cancelOrderFromCustomer');
     try {
       HttpsCallableResult response =
           await cancelOrder.call({"orderId": orderId});

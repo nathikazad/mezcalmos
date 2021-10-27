@@ -4,6 +4,7 @@ class RestaurantOrder extends Order {
   RestaurantOrderStatus restaurantOrderStatus;
   int quantity;
   List<RestaurantOrderItem> items = [];
+  String? notes;
   dynamic from;
   RestaurantOrder(
       {required String orderId,
@@ -12,7 +13,8 @@ class RestaurantOrder extends Order {
       required String serviceProviderId,
       required PaymentType paymentType,
       required DateTime orderTime,
-      required num cost})
+      required num cost,
+      this.notes})
       : super(
             orderId: orderId,
             orderType: OrderType.Restaurant,
@@ -29,7 +31,8 @@ class RestaurantOrder extends Order {
         serviceProviderId: id,
         paymentType: convertPaymentType(data["paymentType"]),
         orderTime: DateTime.parse(data["orderTime"]),
-        cost: data["cost"]);
+        cost: data["cost"],
+        notes: data["notes"]);
     data["items"].forEach((dynamic itemId, dynamic itemData) {
       RestaurantOrderItem restaurantOrderItem = RestaurantOrderItem(
           costPerOne: itemData["costPerOne"],
@@ -38,7 +41,8 @@ class RestaurantOrder extends Order {
           idInRestaurant: itemData["id"],
           name: itemData["name"],
           image: itemData["image"],
-          quantity: itemData["quantity"]);
+          quantity: itemData["quantity"],
+          notes: itemData["notes"]);
       itemData["options"]["chosenManyOptions"]
           .forEach((dynamic id, dynamic data) {
         restaurantOrderItem.chooseManyOptions.add(ChooseManyOption(
@@ -78,6 +82,7 @@ class RestaurantOrderItem {
   String name;
   String image;
   int quantity;
+  String? notes;
   List<ChooseManyOption> chooseManyOptions = [];
   List<ChooseOneOption> chooseOneOptions = [];
   RestaurantOrderItem(
@@ -87,7 +92,8 @@ class RestaurantOrderItem {
       required this.idInRestaurant,
       required this.name,
       required this.image,
-      required this.quantity});
+      required this.quantity,
+      this.notes});
 }
 
 class ChooseOneOption {

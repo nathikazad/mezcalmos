@@ -1,6 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:mezcalmos/CustomerApp/constants/databaseNodes.dart';
-import 'package:mezcalmos/CustomerApp/models/cart.dart';
+import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
@@ -101,7 +101,7 @@ class RestaurantCartController extends GetxController with MezDisposable {
         FirebaseFunctions.instance.httpsCallable('checkoutRestaurantCart');
     try {
       HttpsCallableResult response = await checkoutRestaurantCart
-          .call({"from": "home", "paymentType": "cash"});
+          .call(cart.value?.toFirebaseFormattedJson());
 
       return response.data;
     } catch (e) {

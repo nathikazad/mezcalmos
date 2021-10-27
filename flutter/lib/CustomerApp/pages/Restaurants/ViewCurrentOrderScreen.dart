@@ -9,7 +9,9 @@ class ViewCurrentRestaurantOrderScreen extends GetView<OrderController> {
 
   ViewCurrentRestaurantOrderScreen() {
     String orderId = Get.parameters['orderId']!;
-    controller.getCurrentOrder(orderId).listen((event) {
+    order.value = controller.allOrders
+        .firstWhere((element) => element.orderId == orderId) as RestaurantOrder;
+    controller.getCurrentOrderStream(orderId).listen((event) {
       order.value = event as RestaurantOrder;
     });
   }
