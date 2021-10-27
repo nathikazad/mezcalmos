@@ -155,14 +155,14 @@ class Cart {
       items[element.id!] = element.toFirebaseFunctionFormattedJson();
     });
     return <String, dynamic>{
-      "orderType": OrderType.Restaurant.toShortString(),
+      "orderType": OrderType.Restaurant.toFirebaseFormatString(),
       "serviceProviderId": restaurant?.id,
       "quantity": this.quantity(),
       "cost": this.totalCost(),
       "items": items,
       "notes": notes,
       "to": this.toLocation?.toFirebaseFormattedJson(),
-      "paymentType": paymentType.toShortString()
+      "paymentType": paymentType.toFirebaseFormatString()
     };
   }
 }

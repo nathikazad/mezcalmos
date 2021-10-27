@@ -20,24 +20,28 @@ abstract class Order {
 enum OrderType { Taxi, Restaurant, Laundry, Water }
 
 extension ParseOrderTypeToString on OrderType {
-  String toShortString() {
-    return this.toString().split('.').last;
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
   }
 }
 
 OrderType convertOrderTypeStringToEnum(String orderType) {
-  return OrderType.values.firstWhere((e) => e.toShortString() == orderType);
+  return OrderType.values
+      .firstWhere((e) => e.toFirebaseFormatString().toLowerCase() == orderType);
 }
 
 
 
 enum PaymentType { Cash, Card }
 extension ParsePaymentTypeToString on PaymentType {
-  String toShortString() {
-    return this.toString().split('.').last;
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
   }
 }
 
 PaymentType convertPaymentType(String paymentType) {
-  return PaymentType.values.firstWhere((e) => e.toShortString() == paymentType);
+  return PaymentType.values.firstWhere((e) =>
+      e.toFirebaseFormatString().toLowerCase() == paymentType.toLowerCase());
 }

@@ -1,4 +1,5 @@
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 class RestaurantOrder extends Order {
   RestaurantOrderStatus restaurantOrderStatus;
@@ -131,13 +132,14 @@ enum RestaurantOrderStatus {
 }
 
 extension ParseRestaurantOrderStatusToString on RestaurantOrderStatus {
-  String toShortString() {
-    return this.toString().split('.').last;
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
   }
 }
 
 RestaurantOrderStatus convertRestaurantOrderStatusStringToEnum(
     String restaurantOrderStatus) {
-  return RestaurantOrderStatus.values.firstWhere((e) =>
-      e.toShortString().toLowerCase() == restaurantOrderStatus.toLowerCase());
+  return RestaurantOrderStatus.values
+      .firstWhere((e) => e.toFirebaseFormatString() == restaurantOrderStatus);
 }
