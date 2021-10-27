@@ -15,7 +15,7 @@ class RestaurantCartController extends GetxController with MezDisposable {
   AuthController _authController = Get.find<AuthController>();
 
   Restaurant? associatedRestaurant;
-  Rxn<Cart> cart = Rxn();
+  Rx<Cart> cart = Cart().obs;
   @override
   void onInit() {
     super.onInit();
@@ -47,7 +47,7 @@ class RestaurantCartController extends GetxController with MezDisposable {
           cart.value = Cart.fromCartData(cartData, associatedRestaurant!);
         }
       } else {
-        cart.value = null;
+        cart.value = Cart();
       }
     }).canceledBy(this);
   }
@@ -67,19 +67,16 @@ class RestaurantCartController extends GetxController with MezDisposable {
     } else if (associatedRestaurant!.id != restaurantId) {
       // In future, throw items from another restaurant in cart error
       // for now clear cart and associate new restaurant
-      cart.value = Cart(associatedRestaurant!);
+      cart.value = Cart(restaurant: associatedRestaurant!);
       associatedRestaurant = await getAssociatedRestaurant(restaurantId);
     }
-    if (cart.value == null) {
-      cart.value = Cart(associatedRestaurant!);
-    }
 
-    cart.value?.addItem(cartItem);
+    cart.value.addItem(cartItem);
     // print(customerCart(_authController.user!.uid));
     _databaseHelper.firebaseDatabase
         .reference()
         .child(customerCart(_authController.user!.uid))
-        .set(cart.value?.toFirebaseFormattedJson());
+        .set(cart.value.toFirebaseFormattedJson());
   }
 
   void clearCart() {
@@ -89,19 +86,12 @@ class RestaurantCartController extends GetxController with MezDisposable {
         .remove();
   }
 
-  void changeQuantityOfItem(
-    String itemId,
-    int quantity,
-  ) {
-    cart.value?.incrementItem(itemId, quantity);
-  }
-
   Future<dynamic> checkout() async {
     HttpsCallable checkoutRestaurantCart =
         FirebaseFunctions.instance.httpsCallable('checkoutRestaurantCart');
     try {
       HttpsCallableResult response = await checkoutRestaurantCart
-          .call(cart.value?.toFirebaseFormattedJson());
+          .call(cart.value.toFirebaseFormattedJson());
 
       return response.data;
     } catch (e) {

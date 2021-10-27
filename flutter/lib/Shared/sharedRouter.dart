@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/pages/MessagingScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/OtpConfirmationScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/PhoneNumberScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
+import 'package:mezcalmos/Shared/pages/PickToLocation.dart';
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen.dart';
 import 'package:mezcalmos/Shared/pages/Wrapper.dart';
@@ -21,6 +22,7 @@ const String kOtpConfirmRoute = '/sign_in_otp_confirm';
 const String kMessagesRoute = '/messages/:orderId';
 const String kUnauthorizedRoute = '/unauthorized';
 const String kUserProfile = '/user_profile';
+const String kPickToLocation = '/pick_to_location';
 
 getMessagesRoute(String orderId) {
   return kMessagesRoute.replaceFirst(":orderId", orderId);
@@ -35,6 +37,7 @@ void popUntilAndNavigateTo(dynamic untilRoute, dynamic toRoute) {
     return (route.settings.name == untilRoute);
   });
 }
+
 // GetX based Router (For navigating)
 class SharedRouter {
   static List<GetPage> sharedRoutes = [
@@ -53,6 +56,7 @@ class SharedRouter {
     ),
     GetPage(name: kUnauthorizedRoute, page: () => UnauthorizedScreen()),
     GetPage(
-        name: kLocationPermissionPage, page: () => LocationPermissionScreen())
+        name: kLocationPermissionPage, page: () => LocationPermissionScreen()),
+    GetPage(name: kPickToLocation, page: () => PickToLocation())
   ];
 }

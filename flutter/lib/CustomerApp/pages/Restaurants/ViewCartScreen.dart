@@ -11,23 +11,18 @@ import 'package:mezcalmos/CustomerApp/components/myExpensionPanelComponent.dart'
 import 'package:mezcalmos/CustomerApp/components/textFieldComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/titlesComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantCartController.dart';
-import 'package:mezcalmos/CustomerApp/models/cart.dart';
+import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:intl/intl.dart';
 
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/models/Location.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
 
 class ViewCartScreen extends GetView<RestaurantCartController> {
-  Rxn<Cart> cart = Rxn();
-
-  ViewCartScreen() {
-    RestaurantCartController controller = Get.find<RestaurantCartController>();
-    cart = controller.cart;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,15 +38,15 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
           () => SingleChildScrollView(
             child: Column(
               children: [
-                (cart.value != null)
+                (controller.cart.value != null)
                     ? Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          buildCart(cart.value!),
+                          buildCart(controller.cart.value),
                           SizedBox(
                             height: 15,
                           ),
-                          buildItems(cart.value!.items),
+                          buildItems(controller.cart.value.items),
                           SizedBox(
                             height: 20,
                           ),
@@ -139,10 +134,11 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
                               Spacer(),
                               Obx(
                                 () => Text(
-                                    (cart.value?.toFirebaseFormattedJson()[
+                                    (controller.cart.value
+                                                    .toFirebaseFormattedJson()[
                                                 "cost"] !=
                                             null)
-                                        ? "  \$ ${currency.format(cart.value?.toFirebaseFormattedJson()["cost"] as dynamic)}"
+                                        ? "  \$ ${currency.format(controller.cart.value.toFirebaseFormattedJson()["cost"] as dynamic)}"
                                         : "0",
                                     style: GoogleFonts.mulish(
                                       textStyle: TextStyle(
@@ -208,8 +204,19 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
                         DropdownMenuItem(child: Text("home"), value: "home"),
                         DropdownMenuItem(
                             child: Text("office"), value: "office"),
+                        DropdownMenuItem(
+                            child: Text("Pick New Location"),
+                            value: "pickNewLocation"),
                       ],
-                      onChanged: (newValue) {},
+                      onChanged: (newValue) async {
+                        if (newValue == "pickNewLocation") {
+                          controller.cart.value.toLocation =
+                              await Get.toNamed<Location?>(kPickToLocation);
+                        }
+                        // } else {
+                        // assing to already saved location
+                        // }
+                      },
                     ),
                   ),
                 ),
@@ -255,13 +262,9 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
                       dynamic response = await controller.checkout();
                       print(response["errorCode"].toString());
                       if (response["status"] == "Success")
-                        Get.offNamedUntil(
-                            getCurrentRestaurantOrderRoute(response["orderId"]),
-                            (Route<dynamic> route) {
-                          print(route.settings.name);
-                          return (route.settings.name == kWrapperRoute);
-                          // return route.;
-                        });
+                        popEverythingAndNavigateTo(
+                            getCurrentRestaurantOrderRoute(
+                                response["orderId"]));
                       else {
                         print(response);
                         if (response["errorCode"] == "serverError") {
@@ -523,7 +526,7 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
                             counter.value =
                                 counter.value + element.costPerOne();
                             print("${element.item.id}");
-                            controller.changeQuantityOfItem("${element.id}", 1);
+                            controller.cart.value.incrementItem(element.id!, 1);
                             controller.refresh();
                           },
                           onChangedToZero: (val) {
@@ -541,9 +544,8 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
                             if (counter.value >= 0) {
                               counter.value =
                                   counter.value - element.costPerOne();
-                              controller.changeQuantityOfItem(
-                                  "${element.id}", -1);
-                              controller.refresh();
+                              controller.cart.value
+                                  .incrementItem(element.id!, -1);
                             } else {}
                           },
                         ),

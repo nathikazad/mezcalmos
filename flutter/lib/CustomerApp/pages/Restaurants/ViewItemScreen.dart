@@ -11,7 +11,7 @@ import 'package:mezcalmos/CustomerApp/components/titlesComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantCartController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-import 'package:mezcalmos/CustomerApp/models/cart.dart';
+import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'dart:async';
 //import 'package:google_fonts/google_fonts.dart';
 //import 'package:intl/intl.dart';
@@ -45,7 +45,7 @@ class ViewItemScreen extends GetView<RestaurantsInfoController> {
       });
     } else {
       this.cartItem.value = CartItem.clone(
-          restaurantCartController.cart.value!.items.firstWhere((item) {
+          restaurantCartController.cart.value.items.firstWhere((item) {
         return item.id == Get.parameters["cartItemId"];
       }));
     }

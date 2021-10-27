@@ -14,4 +14,13 @@ class Location {
 
   dynamic get latitude => position.latitude;
   dynamic get longitude => position.longitude;
+
+
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "address": address,
+      "lat": position.latitude,
+      "lng": position.longitude
+    };
+  }
 }
