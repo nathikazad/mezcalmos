@@ -28,7 +28,7 @@ const fakeRestaurantData = require("../../data/restaurant")
 let restaurantData = fakeRestaurantData.restaurantData
 let restaurantInfo = fakeRestaurantData.restaurantInfo
 let itemOne = fakeRestaurantData.item
-let itemToAdd = fakeRestaurantData.itemToAdd
+let cart = fakeRestaurantData.sampleCart
 
 let customer, restaurantUser, restaurant, itemOneId
 describe('Mezcalmos', () => {
@@ -43,25 +43,22 @@ describe('Mezcalmos', () => {
 
   it('Should not allow checkout', async () => {
     // if no from provided
-    let response = await customer.callFunction("checkoutCart");
+    let response = await customer.callFunction("checkoutRestaurantCart");
     expect(response.result.status).toBe("Error");
     expect(response.result.errorMessage).toBe("No from address or payment type");
     // if cart is empty
-    response = await customer.callFunction("checkoutCart", {
+    response = await customer.callFunction("checkoutRestaurantCart", {
       from: "fromAddress",
       paymentType: "cash"
     });
     expect(response.result.status).toBe("Error");
     expect(response.result.errorMessage).toBe("Cart does not exist");
     // restaurantId is invalid
-    response = await customer.callFunction("addRestaurantItemToCart", {
-      restaurantId: restaurantUser.id,
-      itemId: itemOneId,
-      ...itemToAdd
-    })
-    let cart = await customer.db.get(`users/${customer.id}/cart`);
-    await admin.database().ref(`users/${customer.id}/cart/serviceProviderId`).set("invalid");
-    response = await customer.callFunction("checkoutCart", {
+    cart.serviceProviderId = restaurantUser.id;
+    cart.items["BCQWR"].id = itemOneId;
+    await customer.db.set(`customers/info/${customer.id}/cart`, cart)
+    await admin.database().ref(`customers/info/${customer.id}/cart/serviceProviderId`).set("invalid");
+    response = await customer.callFunction("checkoutRestaurantCart", {
       from: "fromAddress",
       paymentType: "cash"
     });
@@ -69,8 +66,8 @@ describe('Mezcalmos', () => {
     expect(response.result.errorMessage).toBe("Invalid restaurant id");
     // restaurant is closed
     await admin.database()
-      .ref(`users/${customer.id}/cart/serviceProviderId`).set(restaurantUser.id);
-    response = await customer.callFunction("checkoutCart", {
+      .ref(`customers/info/${customer.id}/cart/serviceProviderId`).set(restaurantUser.id);
+    response = await customer.callFunction("checkoutRestaurantCart", {
       from: "fromAddress",
       paymentType: "cash"
     });
@@ -81,13 +78,15 @@ describe('Mezcalmos', () => {
 
   it('Should allow checkout', async () => {
     await admin.database()
-      .ref(`/restaurants/${restaurantUser.id}/state/open`).set(true);
-    response = await customer.callFunction("checkoutCart", {
+      .ref(`/restaurants/info/${restaurantUser.id}/state/open`).set(true);
+    response = await customer.callFunction("checkoutRestaurantCart", {
       from: "fromAddress",
       paymentType: "cash"
     });
+    console.log(response);
     expect(response.result.status).toBe("Success");
-    cart = await customer.db.get(`users/${customer.id}/cart`);
+
+    cart = await customer.db.get(`customers/info/${customer.id}/cart`);
     expect(cart).toBeNull()
   })
   afterAll(() => {

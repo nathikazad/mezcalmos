@@ -11,7 +11,63 @@ module.exports.restaurantInfo = {
   state: {
     authorizationStatus: true,
     open: false,
+  },
+  details: {
+    name: "Basic Food",
+    photo: "image",
+    phoneNumber: "900"
   }
+}
+
+
+module.exports.sampleCart = {
+  "cost": 5.99,
+  "items": {
+    "BCQWR": {
+      "costPerOne": 5.99,
+      "id": "-MkjUGzBopdBjNme7tnq",
+      "image": "https://imagenes.elpais.com/resizer/aIHR-EpBhcuUzFOObwnjcKr7HoA=/1960x0/arc-anglerfish-eu-central-1-prod-prisa.s3.amazonaws.com/public/24ESUXKGCOFX7UGZFVTU2W2BPI.jpg",
+      "name": "normal burger",
+      "options": {
+        "chosenManyOptions": {
+          "lettuce": {
+            "chosenValue": true,
+            "chosenValueCost": 0,
+            "name": "Lettuce"
+          },
+          "onion": {
+            "chosenValue": true,
+            "chosenValueCost": 0,
+            "name": "Onion"
+          },
+          "tomato": {
+            "chosenValue": true,
+            "chosenValueCost": 0,
+            "name": "Tomato"
+          }
+        },
+        "chosenOneOptions": {
+          "cheese": {
+            "chosenOptionCost": 0,
+            "chosenOptionId": "american",
+            "chosenOptionName": "American",
+            "name": "Cheese"
+          },
+          "meat": {
+            "chosenOptionCost": 0,
+            "chosenOptionId": "chicken",
+            "chosenOptionName": "Chicken",
+            "name": "Meat"
+          }
+        }
+      },
+      "quantity": 1,
+      "totalCost": 5.99
+    }
+  },
+  "orderType": "restaurant",
+  "quantity": 1,
+  "serviceProviderId": "6Hr3Hc2hkkZa7LX7slnFo3zOTdxx"
 }
 
 module.exports.itemToAdd = {
