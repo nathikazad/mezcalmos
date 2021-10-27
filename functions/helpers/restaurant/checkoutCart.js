@@ -18,10 +18,10 @@ module.exports = functions.https.onCall(async (data, context) => {
 
 async function checkoutCart(uid, data) {
 
-  if (!data.from || !data.paymentType) {
+  if (!data.to || !data.paymentType) {
     return {
       status: "Error",
-      errorMessage: `No from address or payment type`,
+      errorMessage: `No to address or payment type`,
       errorCode: "invalidParams"
     }
   }
@@ -65,7 +65,7 @@ async function checkoutCart(uid, data) {
   let user = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val();
 
   let payload = {
-    from: data.from,
+    to: data.to,
     customer: {
       id: uid,
       name: user.displayName.split(' ')[0],
@@ -81,7 +81,7 @@ async function checkoutCart(uid, data) {
   let orderRef = await firebase.database().ref(`/orders/restaurant`).push(payload);
   firebase.database().ref(`/customers/orders/${uid}/${orderRef.key}`).set(payload);
   firebase.database().ref(`/restaurants/orders/${cart.serviceProviderId}/${orderRef.key}`).set(payload);
-  firebase.database().ref(`/openOrders/restaurant/${orderRef.key}`).set(payload);
+  firebase.database().ref(`/inProcessOrders/restaurant/${orderRef.key}`).set(payload);
 
   let chat = {
     participants: {},

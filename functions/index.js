@@ -1,7 +1,14 @@
 const functions = require("firebase-functions");
 const firebaseAdmin = require("firebase-admin");
 
-const firebase = firebaseAdmin.initializeApp();
+let firebase;
+if (process.env.FUNCTIONS_EMULATOR === true) {
+  firebase = firebaseAdmin.initializeApp({
+    databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com"
+  });
+} else {
+  firebase = firebaseAdmin.initializeApp()
+}
 
 const keys = require("./helpers/keys").keys()
 

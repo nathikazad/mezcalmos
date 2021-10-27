@@ -122,14 +122,6 @@ class ChooseManyOption {
       required this.chosenOptionValue});
 }
 
-List<String> restaurantOrderStatusAsStrings = [
-  "preparingOrder",
-  "readyForPickup",
-  "onTheWay",
-  "delivered",
-  "cancelled"
-];
-
 enum RestaurantOrderStatus {
   PreparingOrder,
   ReadyForPickup,
@@ -138,22 +130,14 @@ enum RestaurantOrderStatus {
   Cancelled
 }
 
-List<RestaurantOrderStatus> restaurantOrderStatusAsEnum = [
-  RestaurantOrderStatus.PreparingOrder,
-  RestaurantOrderStatus.ReadyForPickup,
-  RestaurantOrderStatus.OnTheWay,
-  RestaurantOrderStatus.Delivered,
-  RestaurantOrderStatus.Cancelled
-];
-
-RestaurantOrderStatus convertRestaurantOrderStatusStringToEnum(
-    String orderStatus) {
-  return restaurantOrderStatusAsEnum[
-      restaurantOrderStatusAsStrings.indexOf(orderStatus)];
+extension ParseRestaurantOrderStatusToString on RestaurantOrderStatus {
+  String toShortString() {
+    return this.toString().split('.').last;
+  }
 }
 
-String convertRestaurantOrderStatusEnumToString(
-    RestaurantOrderStatus orderStatus) {
-  return restaurantOrderStatusAsStrings[
-      restaurantOrderStatusAsEnum.indexOf(orderStatus)];
+RestaurantOrderStatus convertRestaurantOrderStatusStringToEnum(
+    String restaurantOrderStatus) {
+  return RestaurantOrderStatus.values.firstWhere((e) =>
+      e.toShortString().toLowerCase() == restaurantOrderStatus.toLowerCase());
 }

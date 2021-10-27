@@ -1,4 +1,5 @@
 import 'package:mezcalmos/Shared/models/Location.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'dart:math';
 
@@ -98,6 +99,7 @@ class Cart {
   Location? toLocation;
   Restaurant? restaurant;
   String? notes;
+  PaymentType paymentType = PaymentType.Cash;
   Cart({this.restaurant});
   Cart.fromCartData(dynamic cartData, this.restaurant) {
     cartData["items"].forEach((dynamic itemId, dynamic itemData) {
@@ -153,13 +155,14 @@ class Cart {
       items[element.id!] = element.toFirebaseFunctionFormattedJson();
     });
     return <String, dynamic>{
-      "orderType": "restaurant",
+      "orderType": OrderType.Restaurant.toShortString(),
       "serviceProviderId": restaurant?.id,
       "quantity": this.quantity(),
       "cost": this.totalCost(),
       "items": items,
       "notes": notes,
-      "to": this.toLocation?.toFirebaseFormattedJson()
+      "to": this.toLocation?.toFirebaseFormattedJson(),
+      "paymentType": paymentType.toShortString()
     };
   }
 }

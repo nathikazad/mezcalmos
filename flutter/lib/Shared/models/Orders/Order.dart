@@ -18,25 +18,26 @@ abstract class Order {
 }
 
 enum OrderType { Taxi, Restaurant, Laundry, Water }
-List<String> orderTypeAsStrings = ["taxi", "restaurant", "laundry", "water"];
-List<OrderType> orderTypeAsEnum = [
-  OrderType.Taxi,
-  OrderType.Restaurant,
-  OrderType.Laundry,
-  OrderType.Water
-];
+
+extension ParseOrderTypeToString on OrderType {
+  String toShortString() {
+    return this.toString().split('.').last;
+  }
+}
 
 OrderType convertOrderTypeStringToEnum(String orderType) {
-  return orderTypeAsEnum[orderTypeAsStrings.indexOf(orderType)];
+  return OrderType.values.firstWhere((e) => e.toShortString() == orderType);
 }
 
-String convertOrderTypeEnumToString(OrderType orderType) {
-  return orderTypeAsStrings[orderTypeAsEnum.indexOf(orderType)];
-}
+
 
 enum PaymentType { Cash, Card }
+extension ParsePaymentTypeToString on PaymentType {
+  String toShortString() {
+    return this.toString().split('.').last;
+  }
+}
+
 PaymentType convertPaymentType(String paymentType) {
-  if (paymentType == "cash") return PaymentType.Cash;
-  if (paymentType == "card") return PaymentType.Card;
-  throw Error();
+  return PaymentType.values.firstWhere((e) => e.toShortString() == paymentType);
 }

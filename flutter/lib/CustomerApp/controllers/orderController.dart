@@ -25,8 +25,7 @@ class OrderController extends GetxController {
       List<Order> orders = [];
       if (event.snapshot.value != null) {
         event.snapshot.value.forEach((dynamic orderId, dynamic orderData) {
-          if (orderData["orderType"] ==
-              convertOrderTypeEnumToString(OrderType.Restaurant)) {
+          if (orderData["orderType"] == OrderType.Restaurant.toShortString()) {
             orders.add(RestaurantOrder.fromData(orderId, orderData));
           }
         });
