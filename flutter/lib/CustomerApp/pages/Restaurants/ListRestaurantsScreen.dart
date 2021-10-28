@@ -11,7 +11,13 @@ import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 
-class ListRestaurantsScreen extends GetView<RestaurantsInfoController> {
+
+class ListRestaurantsScreen extends StatefulWidget {
+  @override
+  _ListRestaurantsScreen createState() => _ListRestaurantsScreen();
+}
+
+class _ListRestaurantsScreen extends State<ListRestaurantsScreen> {
   RxList<Restaurant> restaurants = <Restaurant>[].obs;
 
   ListRestaurantsScreen() {

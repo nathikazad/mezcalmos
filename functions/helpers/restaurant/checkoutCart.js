@@ -71,16 +71,21 @@ async function checkoutCart(uid, data) {
       name: user.displayName.split(' ')[0],
       image: user.photo
     },
+    serviceProvider: {
+      id: cart.serviceProviderId,
+      name: restaurant.details.name,
+      image: restaurant.details.photo
+    },
     orderType: "restaurant",
-    status: "preparingOrder",
+    status: "orderReceieved",
     orderTime: (new Date()).toISOString(),
     paymentType: data.paymentType,
     ...cart
   }
   console.log(payload)
   let orderRef = await firebase.database().ref(`/orders/restaurant`).push(payload);
-  firebase.database().ref(`/customers/orders/${uid}/${orderRef.key}`).set(payload);
-  firebase.database().ref(`/restaurants/orders/${cart.serviceProviderId}/${orderRef.key}`).set(payload);
+  firebase.database().ref(`/customers/inProcessOrders/${uid}/${orderRef.key}`).set(payload);
+  firebase.database().ref(`/restaurants/inProcessOrders/${cart.serviceProviderId}/${orderRef.key}`).set(payload);
   firebase.database().ref(`/inProcessOrders/restaurant/${orderRef.key}`).set(payload);
 
   let chat = {

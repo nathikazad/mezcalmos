@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 import 'dart:async';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/models/ServerResponse.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 class OrderController extends GetxController {
   DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
@@ -29,6 +31,7 @@ class OrderController extends GetxController {
       inProcessOrders = orders;
       return orders;
     });
+    super.onInit();
   }
 
   Stream<Order> getCurrentOrder(String orderId) {
@@ -38,44 +41,69 @@ class OrderController extends GetxController {
     });
   }
 
-  Future<void> cancelOrder(String orderId) async {
+  Future<ServerResponse> cancelOrder(String orderId) async {
     HttpsCallable cancelOrder =
-        FirebaseFunctions.instance.httpsCallable('cancelOrder');
+        FirebaseFunctions.instance.httpsCallable('cancelOrderFromAdmin');
     try {
       HttpsCallableResult response =
           await cancelOrder.call({"orderId": orderId});
-      print(response.data);
-    } catch (e) {}
+      return ServerResponse.fromJson(response.data);
+    } catch (e) {
+      return ServerResponse(ResponseStatus.Error,
+          errorMessage: "Server Error", errorCode: "serverError");
+    }
   }
 
-  Future<void> prepareOrder(String orderId) async {
-    HttpsCallable cancelOrder =
-        FirebaseFunctions.instance.httpsCallable('cancelOrder');
+  Future<ServerResponse> prepareOrder(String orderId) async {
+    mezDbgPrint("prepare order");
+    HttpsCallable prepareOrderFunction =
+        FirebaseFunctions.instance.httpsCallable('prepareOrder');
     try {
       HttpsCallableResult response =
-          await cancelOrder.call({"orderId": orderId});
-      print(response.data);
-    } catch (e) {}
+          await prepareOrderFunction.call({"orderId": orderId});
+      return ServerResponse.fromJson(response.data);
+    } catch (e) {
+      return ServerResponse(ResponseStatus.Error,
+          errorMessage: "Server Error", errorCode: "serverError");
+    }
   }
 
-  Future<void> deliverOrder(String orderId) async {
-    HttpsCallable cancelOrder =
-        FirebaseFunctions.instance.httpsCallable('cancelOrder');
+  Future<ServerResponse> readyForPickupOrder(String orderId) async {
+    HttpsCallable readyForPickupOrderFunction =
+        FirebaseFunctions.instance.httpsCallable('readyForPickupOrder');
     try {
       HttpsCallableResult response =
-          await cancelOrder.call({"orderId": orderId});
-      print(response.data);
-    } catch (e) {}
+          await readyForPickupOrderFunction.call({"orderId": orderId});
+      return ServerResponse.fromJson(response.data);
+    } catch (e) {
+      return ServerResponse(ResponseStatus.Error,
+          errorMessage: "Server Error", errorCode: "serverError");
+    }
   }
 
-
-  Future<void> dropOrder(String orderId) async {
-    HttpsCallable cancelOrder =
-        FirebaseFunctions.instance.httpsCallable('cancelOrder');
+  Future<ServerResponse> deliverOrder(String orderId) async {
+    HttpsCallable deliverOrderFunction =
+        FirebaseFunctions.instance.httpsCallable('deliverOrder');
     try {
       HttpsCallableResult response =
-          await cancelOrder.call({"orderId": orderId});
-      print(response.data);
-    } catch (e) {}
+          await deliverOrderFunction.call({"orderId": orderId});
+      return ServerResponse.fromJson(response.data);
+    } catch (e) {
+      return ServerResponse(ResponseStatus.Error,
+          errorMessage: "Server Error", errorCode: "serverError");
+    }
+  }
+
+  Future<ServerResponse> dropOrder(String orderId) async {
+    HttpsCallable dropOrderFunction =
+        FirebaseFunctions.instance.httpsCallable('dropOrder');
+    try {
+      HttpsCallableResult response =
+          await dropOrderFunction.call({"orderId": orderId});
+      return ServerResponse.fromJson(response.data);
+    } catch (e) {
+      return ServerResponse(ResponseStatus.Error,
+          errorMessage: "Server Error", errorCode: "serverError");
+    }
   }
 }

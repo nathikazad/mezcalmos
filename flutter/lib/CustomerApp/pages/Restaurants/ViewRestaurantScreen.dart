@@ -15,7 +15,13 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ViewRestaurantScreen extends GetView<RestaurantsInfoController> {
+
+class ViewRestaurantScreen extends StatefulWidget {
+  @override
+  _ViewRestaurantScreen createState() => _ViewRestaurantScreen();
+}
+
+class _ViewRestaurantScreen extends State<ViewRestaurantScreen> {
   late String restaurantId;
   Rxn<Restaurant> restaurant = Rxn();
 

@@ -124,6 +124,7 @@ class ChooseManyOption {
 }
 
 enum RestaurantOrderStatus {
+  OrderReceieved,
   PreparingOrder,
   ReadyForPickup,
   OnTheWay,

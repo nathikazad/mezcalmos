@@ -28,16 +28,22 @@ final currency = new NumberFormat("#,##0.00", "en_US");
 
 enum ViewItemScreenMode { AddItemMode, EditItemMode }
 
-class ViewItemScreen extends GetView<RestaurantsInfoController> {
+class ViewItemScreen extends StatefulWidget {
   ViewItemScreenMode viewItemScreenMode;
+  ViewItemScreen(this.viewItemScreenMode);
+  @override
+  _ViewItemScreen createState() => _ViewItemScreen();
+}
+
+class _ViewItemScreen extends State<ViewItemScreen> {
   Rxn<CartItem> cartItem = Rxn();
   late RestaurantCartController restaurantCartController;
-
-  ViewItemScreen(this.viewItemScreenMode) {
+  RestaurantsInfoController controller = Get.find<RestaurantsInfoController>();
+  ViewItemScreen() {
     Get.put<RestaurantsInfoController>(RestaurantsInfoController());
     restaurantCartController =
         Get.put<RestaurantCartController>(RestaurantCartController());
-    if (this.viewItemScreenMode == ViewItemScreenMode.AddItemMode) {
+    if (widget.viewItemScreenMode == ViewItemScreenMode.AddItemMode) {
       String restaurantId = Get.parameters['restaurantId']!;
       String itemId = Get.parameters['itemId']!;
       this.controller.getItem(restaurantId, itemId).then((value) {

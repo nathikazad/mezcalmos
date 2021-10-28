@@ -3,6 +3,7 @@ import 'package:mezcalmos/CustomerApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
@@ -92,7 +93,7 @@ class RestaurantCartController extends GetxController {
         .remove();
   }
 
-  Future<dynamic> checkout() async {
+  Future<ServerResponse> checkout() async {
     HttpsCallable checkoutRestaurantCart =
         FirebaseFunctions.instance.httpsCallable('checkoutRestaurantCart');
     try {
@@ -104,14 +105,10 @@ class RestaurantCartController extends GetxController {
       });
       HttpsCallableResult response = await checkoutRestaurantCart
           .call(cart.value.toFirebaseFormattedJson());
-
-      return response.data;
+      return ServerResponse.fromJson(response.data);
     } catch (e) {
-      return <String, dynamic>{
-        "status": "Error",
-        "errorMessage": "Server Error",
-        "errorCode": "serverError"
-      };
+      return ServerResponse(ResponseStatus.Error,
+          errorMessage: "Server Error", errorCode: "serverError");
     }
   }
 

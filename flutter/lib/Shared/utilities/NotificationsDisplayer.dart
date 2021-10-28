@@ -10,7 +10,7 @@ StreamSubscription<Notification> listenForNotifications() {
   return Get.find<FBNotificationsController>()
       .notificationsStream
       .listen((notification) {
-    mezDbgPrint("AdminWrapper: ${notification.toJson()}");
+    mezDbgPrint("Notification Displayer: ${notification.toJson()}");
     if (DateTime.now().difference(notification.timestamp) <
         Duration(minutes: 10)) {
       _displayNotification(notification);

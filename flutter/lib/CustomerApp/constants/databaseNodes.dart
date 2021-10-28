@@ -6,8 +6,12 @@ String customerCart(String uid) {
   return 'customers/info/${uid}/cart';
 }
 
-String customerOrders(String uid) {
+String customerPastOrders(String uid) {
   return 'customers/orders/${uid}';
+}
+
+String customerInProcessOrders(String uid) {
+  return 'customers/inProcessOrders/${uid}';
 }
 
 String customerAppVersionNode(String uid) {

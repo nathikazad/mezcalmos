@@ -47,7 +47,7 @@ class TaxiAuthController extends GetxController {
     mezDbgPrint("TaxiAuthController: handle state change user value");
     mezDbgPrint(user);
     // mezDbgPrint(_authController.fireAuthUser);
-    
+
     mezDbgPrint(
         "TaxiAuthController: _taxiStateNodeListener init ${taxiStateNode(user.uid)}");
     await _taxiStateNodeListener?.cancel();
@@ -78,10 +78,13 @@ class TaxiAuthController extends GetxController {
           await Location().enableBackgroundMode(enable: true);
         _locationListener?.resume();
       }
+      mezDbgPrint(
+          "/////////////////////////////////////////////${_state.value?.toJson()}////////////////////////////////////////////////////");
+      if (_state.value?.isAuthorized ?? false) {
+        saveAppVersionIfNecessary();
+        saveNotificationToken();
+      }
     });
-    saveNotificationToken();
-    mezDbgPrint(
-        "/////////////////////////////////////////////${_state.value?.toJson()}////////////////////////////////////////////////////");
     await _locationListener?.cancel();
     _locationListener = await _listenForLocation();
   }

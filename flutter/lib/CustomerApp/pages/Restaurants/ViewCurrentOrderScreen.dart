@@ -3,14 +3,27 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/appbarComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
-class ViewCurrentRestaurantOrderScreen extends GetView<OrderController> {
+
+class ViewCurrentRestaurantOrderScreen extends StatefulWidget {
+  @override
+  _ViewCurrentRestaurantOrderScreen createState() =>
+      _ViewCurrentRestaurantOrderScreen();
+}
+
+class _ViewCurrentRestaurantOrderScreen
+    extends State<ViewCurrentRestaurantOrderScreen> {
   Rxn<RestaurantOrder> order = Rxn();
-
+  OrderController controller = Get.find<OrderController>();
   ViewCurrentRestaurantOrderScreen() {
     String orderId = Get.parameters['orderId']!;
-    order.value = controller.allOrders
-        .firstWhere((element) => element.orderId == orderId) as RestaurantOrder;
+    try {
+      order.value = controller.currentOrders
+          .firstWhere((order) => order.orderId == orderId) as RestaurantOrder;
+    } on StateError catch (_) {
+      // do nothing
+    }
     controller.getCurrentOrderStream(orderId).listen((event) {
       order.value = event as RestaurantOrder;
     });

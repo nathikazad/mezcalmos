@@ -5,21 +5,25 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'dart:async';
+
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 class OrderController extends GetxController {
   DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
   AuthController _authController = Get.find<AuthController>();
-  late Stream<List<Order>> ordersStream;
-  List<Order> allOrders = [];
+  late Stream<List<Order>> pastOrdersStream;
+  late Stream<List<Order>> currentOrdersStream;
+  
   List<Order> currentOrders = [];
   List<Order> pastOrders = [];
   @override
-  void onInit() {
+  OrderController() {
     print("--------------------> RestaurantsOrderController Initialized !");
-    ordersStream = _databaseHelper.firebaseDatabase
+    pastOrdersStream = _databaseHelper.firebaseDatabase
         .reference()
-        .child(customerOrders(_authController.fireAuthUser!.uid))
+        .child(customerPastOrders(_authController.fireAuthUser!.uid))
         .onValue
         .map<List<Order>>((event) {
       List<Order> orders = [];
@@ -31,40 +35,48 @@ class OrderController extends GetxController {
           }
         });
       }
-      allOrders = orders;
+      pastOrders = orders;
+      return orders;
+    });
+
+    currentOrdersStream = _databaseHelper.firebaseDatabase
+        .reference()
+        .child(customerInProcessOrders(_authController.fireAuthUser!.uid))
+        .onValue
+        .map<List<Order>>((event) {
+      List<Order> orders = [];
+      if (event.snapshot.value != null) {
+        event.snapshot.value.forEach((dynamic orderId, dynamic orderData) {
+          if (orderData["orderType"] ==
+              OrderType.Restaurant.toFirebaseFormatString()) {
+            orders.add(RestaurantOrder.fromData(orderId, orderData));
+          }
+        });
+      }
+      currentOrders = orders;
       return orders;
     });
   }
 
-  Stream<List<Order>> getCurrentOrders() {
-    return ordersStream.map<List<Order>>((orders) {
-      currentOrders = orders.where((Order order) => order.inProcess()).toList();
-      return orders.where((Order order) => order.inProcess()).toList();
-    });
-  }
-
-  Stream<List<Order>> getPastOrders() {
-    return ordersStream.map<List<Order>>((orders) {
-      pastOrders = orders.where((Order order) => !order.inProcess()).toList();
-      return orders.where((Order order) => !order.inProcess()).toList();
-    });
-  }
 
   Stream<Order> getCurrentOrderStream(String orderId) {
-    return getCurrentOrders().map<Order>((currentOrders) {
+    return currentOrdersStream.map<Order>((currentOrders) {
       return currentOrders
           .firstWhere((currentOrder) => currentOrder.orderId == orderId);
     });
   }
 
-  Future<void> cancelOrder(String orderId) async {
+  Future<ServerResponse> cancelOrder(String orderId) async {
     HttpsCallable cancelOrder =
         FirebaseFunctions.instance.httpsCallable('cancelOrderFromCustomer');
     try {
       HttpsCallableResult response =
           await cancelOrder.call({"orderId": orderId});
       print(response.data);
-      // handle restaurantClosed error
-    } catch (e) {}
+      return ServerResponse.fromJson(response.data);
+    } catch (e) {
+      return ServerResponse(ResponseStatus.Error,
+          errorMessage: "Server Error", errorCode: "serverError");
+    }
   }
 }

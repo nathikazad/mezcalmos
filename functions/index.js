@@ -243,3 +243,7 @@ exports.sendTestNotification = functions.https.onCall(async (data, context) => {
 // exports.changeItemCountInCart = require("./helpers/cart/changeItemCount");
 // exports.clearCart = require("./helpers/cart/clearCart");
 exports.checkoutRestaurantCart = require("./helpers/restaurant/checkoutCart");
+exports.prepareOrder = require("./helpers/restaurant/adminStatusChanges").prepareOrder;
+exports.readyForPickupOrder = require("./helpers/restaurant/adminStatusChanges").readyForPickupOrder;
+exports.deliverOrder = require("./helpers/restaurant/adminStatusChanges").deliverOrder;
+exports.dropOrder = require("./helpers/restaurant/adminStatusChanges").dropOrder;

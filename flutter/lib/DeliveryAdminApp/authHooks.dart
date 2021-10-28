@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:mezcalmos/DeliveryAdminApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/controllers/deviceNotificationsController.dart';
@@ -10,7 +11,7 @@ class AuthHooks {
     mezDbgPrint(
         "[+] DeliveryAdminApp::AuthHooks::onSignOutHook -> Callback Executed.");
     await Get.delete<AdminAuthController>(force: true);
-    // await Get.delete<OrderController>(force: true);
+    await Get.delete<OrderController>(force: true);
     await Get.delete<DeviceNotificationsController>(force: true);
     await Get.delete<MessageController>(force: true);
     await Get.delete<FBNotificationsController>(force: true);
@@ -24,7 +25,7 @@ class AuthHooks {
     Get.put<DeviceNotificationsController>(DeviceNotificationsController(),
         permanent: true);
     Get.put<AdminAuthController>(AdminAuthController(), permanent: true);
-    // Get.put<OrderController>(OrderController(), permanent: true);
+    Get.put<OrderController>(OrderController(), permanent: true);
     Get.put<MessageController>(MessageController(), permanent: true);
     Get.put<FBNotificationsController>(FBNotificationsController(),
         permanent: true);

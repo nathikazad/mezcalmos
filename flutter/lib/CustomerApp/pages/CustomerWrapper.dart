@@ -25,7 +25,7 @@ class CustomerWrapper extends GetWidget<AuthController>
   DateTime? appClosedTime;
   CustomerWrapper() {
     WidgetsBinding.instance!.addObserver(this);
-    _orderController.getCurrentOrders().listen((currentOrders) {
+    _orderController.currentOrdersStream.listen((currentOrders) {
       numberOfCurrentOrders.value = currentOrders.length;
     });
   }
@@ -62,7 +62,7 @@ class CustomerWrapper extends GetWidget<AuthController>
     print("CustomWrapper Build callabck");
     // Navigate to current orders if any after build
     Future.microtask(() {
-      _orderController.getCurrentOrders().first.then((currentOrders) {
+      _orderController.currentOrdersStream.first.then((currentOrders) {
         print("CustomWrapper Build callabck first");
         navigateToOrdersIfNecessary(currentOrders);
       });

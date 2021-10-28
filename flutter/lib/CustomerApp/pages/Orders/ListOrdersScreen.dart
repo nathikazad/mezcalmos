@@ -10,10 +10,11 @@ class ListOrdersScreen extends GetView {
   OrderController controller = Get.find<OrderController>();
   ListOrdersScreen() {
     currentOrders.value = controller.currentOrders;
-    controller.getCurrentOrders().listen((event) {
+    controller.currentOrdersStream.listen((event) {
       currentOrders.value = event;
     });
-    controller.getPastOrders().listen((event) => pastOrders.value = event);
+    pastOrders.value = controller.pastOrders;
+    controller.pastOrdersStream.listen((event) => pastOrders.value = event);
   }
 
   @override

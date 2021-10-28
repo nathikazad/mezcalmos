@@ -40,29 +40,34 @@ class AdminAuthController extends GetxController {
         .listen((event) async {
       mezDbgPrint(event.snapshot.value);
       _admin.value = Admin.fromSnapshot(event.snapshot.value);
+      if (_admin.value?.authorized ?? false) {
+        if (_checkedAppVersion == false) {
+          String appVersion = GetStorage().read(getxVersion);
+          print("[+] Customer currently using App v$appVersion");
+          _databaseHelper.firebaseDatabase
+              .reference()
+              .child(adminAppVersionNode(_authController.fireAuthUser!.uid))
+              .set(appVersion);
 
-      if (_checkedAppVersion == false) {
-        String appVersion = GetStorage().read(getxVersion);
-        print("[+] Customer currently using App v$appVersion");
-        _databaseHelper.firebaseDatabase
-            .reference()
-            .child(adminAppVersionNode(_authController.fireAuthUser!.uid))
-            .set(appVersion);
+          _checkedAppVersion = true;
+        }
 
-        _checkedAppVersion = true;
-      }
+        String? deviceNotificationToken =
+            await _notificationsController.getToken();
+        mezDbgPrint(
+            "AdminAuthController  Messaging Token>> ${deviceNotificationToken}");
+        if (deviceNotificationToken != null)
+          _databaseHelper.firebaseDatabase
+              .reference()
+              .child(
+                  adminNotificationInfoNode(_authController.fireAuthUser!.uid))
+              .set(<String, String>{
+            'deviceNotificationToken': deviceNotificationToken
+          });
+        }
     });
 
-    String? deviceNotificationToken = await _notificationsController.getToken();
-    mezDbgPrint(
-        "AdminAuthController  Messaging Token>> ${deviceNotificationToken}");
-    if (deviceNotificationToken != null)
-      _databaseHelper.firebaseDatabase
-          .reference()
-          .child(adminNotificationInfoNode(_authController.fireAuthUser!.uid))
-          .set(<String, String>{
-        'deviceNotificationToken': deviceNotificationToken
-      });
+    
   }
 
   @override

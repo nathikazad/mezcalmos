@@ -4,8 +4,10 @@ class Admin {
   dynamic data;
   Admin.fromSnapshot(dynamic data) {
     this.data = data;
-    this.authorized = data["authorized"];
-    this.notificationInfo = data["notificationInfo"];
+    if (data != null) {
+      this.authorized = data["authorized"] ?? false;
+      this.notificationInfo = data["notificationInfo"];
+    }
   }
 
   Map<String, dynamic> toJson() {
