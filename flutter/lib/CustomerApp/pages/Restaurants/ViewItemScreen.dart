@@ -19,9 +19,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
@@ -29,24 +27,33 @@ final currency = new NumberFormat("#,##0.00", "en_US");
 enum ViewItemScreenMode { AddItemMode, EditItemMode }
 
 class ViewItemScreen extends StatefulWidget {
-  ViewItemScreenMode viewItemScreenMode;
+  final ViewItemScreenMode? viewItemScreenMode;
   ViewItemScreen(this.viewItemScreenMode);
   @override
-  _ViewItemScreen createState() => _ViewItemScreen();
+  _ViewItemScreenState createState() => _ViewItemScreenState();
 }
 
-class _ViewItemScreen extends State<ViewItemScreen> {
+class _ViewItemScreenState extends State<ViewItemScreen> {
   Rxn<CartItem> cartItem = Rxn();
   late RestaurantCartController restaurantCartController;
   RestaurantsInfoController controller = Get.find<RestaurantsInfoController>();
-  ViewItemScreen() {
+
+  @override
+  void initState() {
+    mezDbgPrint("Args : ${Get.arguments.toString()}");
+    mezDbgPrint("params : ${Get.parameters.toString()}");
+
     Get.put<RestaurantsInfoController>(RestaurantsInfoController());
     restaurantCartController =
         Get.put<RestaurantCartController>(RestaurantCartController());
+    mezDbgPrint("widget.viewItemScreenMode => ${widget.viewItemScreenMode}");
     if (widget.viewItemScreenMode == ViewItemScreenMode.AddItemMode) {
-      String restaurantId = Get.parameters['restaurantId']!;
-      String itemId = Get.parameters['itemId']!;
-      this.controller.getItem(restaurantId, itemId).then((value) {
+      String? restaurantId = Get.parameters['restaurantId'];
+      mezDbgPrint("got rest id param => $restaurantId");
+      String? itemId = Get.parameters['itemId'];
+      mezDbgPrint("got item id param => $itemId");
+
+      this.controller.getItem(restaurantId!, itemId!).then((value) {
         this.cartItem.value = CartItem(value, restaurantId);
       });
     } else {
@@ -55,6 +62,7 @@ class _ViewItemScreen extends State<ViewItemScreen> {
         return item.id == Get.parameters["cartItemId"];
       }));
     }
+    super.initState();
   }
 
   @override

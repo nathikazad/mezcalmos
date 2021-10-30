@@ -61,6 +61,8 @@ class _SPointState extends State<SPoint> {
     } else if (_launchMode == "dev") {
       mezDbgPrint("DEV MODE");
       firebaseDb = FirebaseDatabase(app: _app, databaseURL: _host + dbRoot);
+      await FirebaseDatabase.instance.setPersistenceEnabled(true);
+      await FirebaseDatabase.instance.setPersistenceCacheSizeBytes(10000000);
       await FirebaseAuth.instance.useEmulator(_host + authPort);
       FirebaseFunctions.instance
           .useFunctionsEmulator(origin: _host + functionPort);

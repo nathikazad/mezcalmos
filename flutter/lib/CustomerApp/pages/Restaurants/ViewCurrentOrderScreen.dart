@@ -4,24 +4,23 @@ import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 
 class ViewCurrentRestaurantOrderScreen extends StatefulWidget {
   @override
-  _ViewCurrentRestaurantOrderScreen createState() =>
-      _ViewCurrentRestaurantOrderScreen();
+  _ViewCurrentRestaurantOrderScreenState createState() =>
+      _ViewCurrentRestaurantOrderScreenState();
 }
 
-class _ViewCurrentRestaurantOrderScreen
+class _ViewCurrentRestaurantOrderScreenState
     extends State<ViewCurrentRestaurantOrderScreen> {
   Rxn<RestaurantOrder> order = Rxn();
   OrderController controller = Get.find<OrderController>();
   SideMenuDraweController _sideMenuDraweController =
       Get.find<SideMenuDraweController>();
 
-  ViewCurrentRestaurantOrderScreen() {
+  _ViewCurrentRestaurantOrderScreenState() {
     String orderId = Get.parameters['orderId']!;
     try {
       order.value = controller.currentOrders

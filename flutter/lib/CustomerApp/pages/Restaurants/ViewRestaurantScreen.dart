@@ -16,24 +16,29 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
 class ViewRestaurantScreen extends StatefulWidget {
   @override
-  _ViewRestaurantScreen createState() => _ViewRestaurantScreen();
+  _ViewRestaurantScreenState createState() => _ViewRestaurantScreenState();
 }
 
-class _ViewRestaurantScreen extends State<ViewRestaurantScreen> {
+class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
   late String restaurantId;
-  Rxn<Restaurant> restaurant = Rxn();
+  Restaurant? restaurant;
   LanguageController _lang = Get.find<LanguageController>();
+  RestaurantsInfoController controller =
+      Get.put<RestaurantsInfoController>(RestaurantsInfoController());
 
-  ViewRestaurantScreen() {
+  @override
+  void initState() {
     this.restaurantId = Get.parameters['restaurantId']!;
-    RestaurantsInfoController controller =
-        Get.put<RestaurantsInfoController>(RestaurantsInfoController());
+    mezDbgPrint("param rest_id ===> $restaurantId");
     controller.getRestaurant(restaurantId).then((value) {
-      restaurant.value = value;
+      mezDbgPrint("Fetched ===> $value");
+      setState(() {
+        restaurant = value;
+      });
     });
+    super.initState();
   }
 
   @override
@@ -46,119 +51,116 @@ class _ViewRestaurantScreen extends State<ViewRestaurantScreen> {
               ActionIconsComponents.notificationIcon(),
               ActionIconsComponents.orderIcon()
             ]),
-        body: Obx(() {
-          List<Item> items = restaurant.value?.items ?? [];
-          print(items.length);
+        body: (restaurant?.items == null)
+            ? Container(
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              )
+            : SafeArea(
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Stack(
+                        children: [
+                          Positioned(
+                              child: Container(
+                            // alignment: Alignment.center,
+                            margin: const EdgeInsets.only(top: 10),
 
-          return (restaurant.value?.items == null)
-              ? Container(
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                )
-              : SafeArea(
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: Stack(
-                          children: [
-                            Positioned(
-                                child: Container(
-                              // alignment: Alignment.center,
-                              margin: const EdgeInsets.only(top: 10),
-
-                              height: Get.height,
-                              width: Get.width,
-                              alignment: Alignment.topCenter,
-                              child: Stack(
-                                children: [
-                                  Container(
-                                    height: Get.height * 0.45,
-                                    width: Get.width,
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(25),
-                                          topRight: Radius.circular(25)),
-                                      child: Image.network(
-                                        "${restaurant.value!.photo}",
-                                        fit: BoxFit.cover,
-                                      ),
+                            height: Get.height,
+                            width: Get.width,
+                            alignment: Alignment.topCenter,
+                            child: Stack(
+                              children: [
+                                Container(
+                                  height: Get.height * 0.45,
+                                  width: Get.width,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(25),
+                                        topRight: Radius.circular(25)),
+                                    child: Image.network(
+                                      "${restaurant!.photo}",
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
-                                  Container(
-                                    height: Get.height * 0.45,
-                                    width: Get.width,
-                                    decoration: BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(25)),
-                                      border: Border.all(
-                                          color: const Color(0x5c707070),
-                                          width: 1),
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: const Color(0x29000000),
-                                            offset: Offset(0, -2),
-                                            blurRadius: 6,
-                                            spreadRadius: 0)
-                                      ],
-                                      gradient: LinearGradient(
-                                        begin: Alignment(0.5, 0),
-                                        end: Alignment(0.5, 0.8458111882209778),
-                                        colors: [
-                                          const Color(0x00000f1c),
-                                          const Color(0xad000f1c),
-                                          const Color(0xff000f1c)
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Positioned(
-                                      top: Get.height * 0.32,
-                                      child: Container(
-                                        width: Get.width,
-                                        child: Text("${restaurant.value!.name}",
-                                            maxLines: 1,
-                                            softWrap: false,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                                color: const Color(0xffffffff),
-                                                // fontWeight: FontWeight.w400,
-                                                fontFamily: "psr",
-                                                fontSize: 25.0.sp),
-                                            textAlign: TextAlign.center),
-                                      ))
-                                ],
-                              ),
-                            )),
-                            SlidingUpPanel(
-                              maxHeight: Get.height * 0.87,
-                              minHeight: Get.height * 0.45,
-                              parallaxEnabled: true,
-                              parallaxOffset: 1,
-                              body: Container(
-                                decoration: BoxDecoration(
-                                  color: Color(0x36fafafa),
                                 ),
-                              ),
-                              panelBuilder: (sc) => _panel(sc, context, items),
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(18.0),
-                                  topRight: Radius.circular(18.0)),
+                                Container(
+                                  height: Get.height * 0.45,
+                                  width: Get.width,
+                                  decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(25)),
+                                    border: Border.all(
+                                        color: const Color(0x5c707070),
+                                        width: 1),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: const Color(0x29000000),
+                                          offset: Offset(0, -2),
+                                          blurRadius: 6,
+                                          spreadRadius: 0)
+                                    ],
+                                    gradient: LinearGradient(
+                                      begin: Alignment(0.5, 0),
+                                      end: Alignment(0.5, 0.8458111882209778),
+                                      colors: [
+                                        const Color(0x00000f1c),
+                                        const Color(0xad000f1c),
+                                        const Color(0xff000f1c)
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                    top: Get.height * 0.32,
+                                    child: Container(
+                                      width: Get.width,
+                                      child: Text("${restaurant!.name}",
+                                          maxLines: 1,
+                                          softWrap: false,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              color: const Color(0xffffffff),
+                                              // fontWeight: FontWeight.w400,
+                                              fontFamily: "psr",
+                                              fontSize: 25.0.sp),
+                                          textAlign: TextAlign.center),
+                                    ))
+                              ],
                             ),
-                          ],
-                        ),
+                          )),
+                          SlidingUpPanel(
+                            maxHeight: Get.height * 0.87,
+                            minHeight: Get.height * 0.45,
+                            parallaxEnabled: true,
+                            parallaxOffset: 1,
+                            body: Container(
+                              decoration: BoxDecoration(
+                                color: Color(0x36fafafa),
+                              ),
+                            ),
+                            panelBuilder: (sc) => _panel(
+                                sc, context, restaurant?.items ?? <Item>[]),
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(18.0),
+                                topRight: Radius.circular(18.0)),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                );
-          // return Column(
-          //     children: items
-          //         .map((item) => TextButton(
-          //             onPressed: () => Get.to(
-          //                 ViewItemScreen.forNewItem(restaurantId, item.id!)),
-          //             child: Text(item.name!)))
-          //         .toList());
-        }));
+                    ),
+                  ],
+                ),
+              )
+        // return Column(
+        //     children: items
+        //         .map((item) => TextButton(
+        //             onPressed: () => Get.to(
+        //                 ViewItemScreen.forNewItem(restaurantId, item.id!)),
+        //             child: Text(item.name!)))
+        //         .toList());
+        );
   }
 
   Widget _panel(ScrollController sc, BuildContext context, List<Item> items) {

@@ -21,8 +21,9 @@ class MezSideMenu extends GetWidget<AuthController> {
 
   @override
   Widget build(BuildContext context) {
-    mezDbgPrint("=========> ImgUrl ======<  ${controller.user?.image}");
-    mezDbgPrint(controller.user?.phone);
+    mezDbgPrint(
+        "=========> ImgUrl ======<  ${controller.fireAuthUser?.photoURL}");
+    mezDbgPrint(controller.fireAuthUser?.phoneNumber);
 
     responsiveSize(context);
 
@@ -54,8 +55,8 @@ class MezSideMenu extends GetWidget<AuthController> {
                   width: 120.sp,
                   child: ClipOval(
                     clipBehavior: Clip.antiAlias,
-                    child: controller.user?.image == null ||
-                            controller.user?.image == ""
+                    child: controller.fireAuthUser?.photoURL == null ||
+                            controller.fireAuthUser?.photoURL == ""
                         ? Image.asset(
                             aDefaultAvatar,
                             width: getSizeRelativeToScreen(300, sw, sh).sp,
@@ -63,7 +64,7 @@ class MezSideMenu extends GetWidget<AuthController> {
                             fit: BoxFit.contain,
                           )
                         : Image.network(
-                            controller.user!.image! + "?type=large",
+                            controller.fireAuthUser!.photoURL! + "?type=large",
                             fit: BoxFit.cover,
                             height: getSizeRelativeToScreen(300, sw, sh).sp,
                             width: getSizeRelativeToScreen(300, sw, sh).sp,
@@ -75,7 +76,7 @@ class MezSideMenu extends GetWidget<AuthController> {
                 ),
                 Container(
                   child: Text(
-                    controller.user?.displayName ?? tDefaultUserName,
+                    controller.fireAuthUser?.displayName ?? tDefaultUserName,
                     textAlign: TextAlign.center,
                     style: TextStyle(fontFamily: 'psb', fontSize: 25.5.sp),
                   ),
@@ -89,7 +90,7 @@ class MezSideMenu extends GetWidget<AuthController> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Obx(() => controller.user != null
+                Obx(() => controller.fireAuthUser != null
                     ? ListTile(
                         onTap: () {
                           _drawerController.cloeseMenu();
@@ -106,7 +107,7 @@ class MezSideMenu extends GetWidget<AuthController> {
                                 TextStyle(fontFamily: 'psb', fontSize: 16.sp)),
                       )
                     : SizedBox()),
-                Obx(() => controller.user != null
+                Obx(() => controller.fireAuthUser != null
                     ? ListTile(
                         onTap: () async {
                           _drawerController.cloeseMenu();

@@ -55,7 +55,6 @@ dependencies:
   toggle_switch: ^1.2.0
   soundpool: ^2.2.0
   flutter_screenutil: ^5.0.0+2
-  geolocator: ^7.7.1
   geocoding: ^2.0.1
   
 # dependency_overrides:
