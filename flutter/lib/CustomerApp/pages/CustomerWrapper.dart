@@ -6,6 +6,7 @@ import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
 import 'package:mezcalmos/CustomerApp/components/appbarComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/imagesComponents.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -18,6 +19,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomerWrapper extends GetWidget<AuthController>
     with WidgetsBindingObserver {
+  LanguageController lang = Get.find<LanguageController>();
   SideMenuDraweController _sideMenuDrawerController =
       Get.find<SideMenuDraweController>();
   OrderController _orderController = Get.find<OrderController>();
@@ -99,7 +101,7 @@ class CustomerWrapper extends GetWidget<AuthController>
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 alignment: Alignment.centerLeft,
-                child: Text("Services",
+                child: Text("${lang.strings['customer']['home']['services']}",
                     style: TextStyle(
                         color: Color(0xff1d1d1d),
                         // fontWeight: FontWeight.w400,
@@ -131,12 +133,11 @@ class CustomerWrapper extends GetWidget<AuthController>
                         height: 10,
                       ),
                       Container(
-                        child: Text("Taxi",
+                        child: Text(
+                            "${lang.strings['customer']['home']['taxi']}",
                             style: const TextStyle(
                                 color: const Color(0xff000f1c),
-                                fontWeight: FontWeight.w500,
-                                fontFamily: "ProductSans",
-                                fontStyle: FontStyle.normal,
+                                fontFamily: "psr",
                                 fontSize: 16.0),
                             textAlign: TextAlign.left),
                       )
@@ -169,12 +170,11 @@ class CustomerWrapper extends GetWidget<AuthController>
                           height: 10,
                         ),
                         Container(
-                          child: Text("Food",
+                          child: Text(
+                              "${lang.strings['customer']['home']['food']}",
                               style: const TextStyle(
                                   color: const Color(0xff000f1c),
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: "ProductSans",
-                                  fontStyle: FontStyle.normal,
+                                  fontFamily: "psr",
                                   fontSize: 16.0),
                               textAlign: TextAlign.left),
                         )

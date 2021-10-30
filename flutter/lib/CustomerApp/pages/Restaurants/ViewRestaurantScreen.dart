@@ -4,6 +4,7 @@ import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
 import 'package:mezcalmos/CustomerApp/components/appbarComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/itemMenuComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
@@ -18,6 +19,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class ViewRestaurantScreen extends GetView<RestaurantsInfoController> {
   late String restaurantId;
   Rxn<Restaurant> restaurant = Rxn();
+  LanguageController lang = Get.find<LanguageController>();
 
   ViewRestaurantScreen() {
     this.restaurantId = Get.parameters['restaurantId']!;
@@ -182,7 +184,8 @@ class ViewRestaurantScreen extends GetView<RestaurantsInfoController> {
                   Container(
                     alignment: Alignment.centerLeft,
                     padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Text("Menu",
+                    child: Text(
+                        "${lang.strings['customer']['restaurant']['menu']['menu']}",
                         style: TextStyle(
                             color: const Color(0xff000f1c),
                             // fontWeight: FontWeight.w700,
@@ -238,4 +241,11 @@ class ViewRestaurantScreen extends GetView<RestaurantsInfoController> {
     //           .toList());
     // }));
   }
+}
+
+extension CapExtension on String {
+  String get inCaps => '${this[0].toUpperCase()}${this.substring(1)}';
+  String get allInCaps => this.toUpperCase();
+  String get capitalizeFirstofEach =>
+      this.split(" ").map((str) => str.capitalize).join(" ");
 }

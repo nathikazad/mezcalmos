@@ -29,7 +29,7 @@ class RestaurantOrder extends Order {
         restaurantOrderStatus:
             convertRestaurantOrderStatusStringToEnum(data["status"]),
         quantity: data["quantity"],
-        serviceProviderId: id,
+        serviceProviderId: data["serviceProviderId"],
         paymentType: convertPaymentType(data["paymentType"]),
         orderTime: DateTime.parse(data["orderTime"]),
         cost: data["cost"],

@@ -7,6 +7,8 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
 import 'dart:async';
 
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+
 class OrderController extends GetxController {
   DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
   AuthController _authController = Get.find<AuthController>();
@@ -64,6 +66,7 @@ class OrderController extends GetxController {
       HttpsCallableResult response =
           await cancelOrder.call({"orderId": orderId});
       print(response.data);
+
       // handle restaurantClosed error
     } catch (e) {}
   }

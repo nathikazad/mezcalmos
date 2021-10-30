@@ -65,10 +65,7 @@ class ActionIconsComponents {
       ),
       onTap: () {
         print("orders");
-        Get.to(() => ViewOrders());
-        //Get.toNamed(kCartRoute);
-        // Get.to(ViewCartScreen(),
-        //);
+        Get.toNamed(kOrdersRoute);
       },
     );
   }
@@ -98,9 +95,6 @@ class ActionIconsComponents {
       ),
       onTap: () {
         print("messages");
-        //Get.toNamed(kCartRoute);
-        // Get.to(ViewCartScreen(),
-        //);
       },
     );
   }

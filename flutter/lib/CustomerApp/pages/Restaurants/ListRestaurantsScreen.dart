@@ -5,6 +5,7 @@ import 'package:mezcalmos/CustomerApp/components/ItemComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
 import 'package:mezcalmos/CustomerApp/components/appbarComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
@@ -12,6 +13,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 
 class ListRestaurantsScreen extends GetView<RestaurantsInfoController> {
+  LanguageController lang = Get.find<LanguageController>();
   RxList<Restaurant> restaurants = <Restaurant>[].obs;
 
   ListRestaurantsScreen() {
@@ -30,13 +32,6 @@ class ListRestaurantsScreen extends GetView<RestaurantsInfoController> {
               ActionIconsComponents.notificationIcon(),
               ActionIconsComponents.orderIcon()
             ]),
-        // appBar: AppBar(
-        //   title: Text("Restaurant list"),
-        //   actions: [
-        //     TextButton(
-        //         onPressed: () => Get.to(ViewCartScreen()), child: Text("Cart"))
-        //   ],
-        // ),
         body: Column(
           children: [
             Container(
@@ -44,12 +39,11 @@ class ListRestaurantsScreen extends GetView<RestaurantsInfoController> {
                 horizontal: 10,
               ),
               width: Get.width,
-              child: Text("Restaurants",
+              child: Text(
+                  "${lang.strings['customer']['restaurant']['restaurants']}",
                   style: TextStyle(
                       color: const Color(0xfd1d1d1d),
-                      //fontWeight: FontWeight.w500,
                       fontFamily: "psr",
-                      //fontStyle: FontStyle.normal,
                       fontSize: 40.0.sp),
                   textAlign: TextAlign.left),
             ),

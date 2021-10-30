@@ -61,17 +61,18 @@ class ItemComponent extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("$title",
-                    style: GoogleFonts.sourceSansPro(
-                      textStyle: TextStyle(
+                Container(
+                  width: Get.width * 0.45,
+                  child: Text("$title",
+                      style: TextStyle(
                           color: const Color(0xff000f1c),
-                          fontWeight: FontWeight.w600,
-                          fontFamily: "ProductSans",
-                          fontStyle: FontStyle.normal,
+                          //fontWeight: FontWeight.w500,
+                          fontFamily: "psr",
+                          //fontStyle: FontStyle.normal,
                           fontSize: 18.0),
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.left),
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.left),
+                ),
                 (subtitle != null)
                     ? Text("Mushroom,Rice,Beans",
                         style: const TextStyle(

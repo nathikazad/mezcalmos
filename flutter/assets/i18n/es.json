@@ -3,7 +3,35 @@
         "home": {
             "taxi": "Taxi",
             "groceries": "Comestibles",
-            "services": "Todos los servicios"
+            "services": "Servicios",
+            "food": "Comida"
+        },
+        "restaurant": {
+            "restaurants": "Restaurantes",
+            "menu": {
+                "menu": "Menú",
+                "description": "Descripción",
+                "notes": "Notas",
+                "quantity": "Cantidad",
+                "addToCart": "AÑADIR AL CARRITO",
+                "modifyItem": "Modificar artículo"
+            },
+            "cart": {
+                "cart": "Carro",
+                "inCart":"En El Carrito",
+                "clear":"Claro",
+                "totalCost":"Coste Total",
+                "deliveryCost":"Coste de envío",
+                "total":"Total",
+                "deliveryLocation":"Lugar De Entrega",
+                "pickLocation":"Elegir Ubicación",
+                "orderNow":"ORDENAR AHORA"
+            },
+            "checkout":{
+            
+                "orderItems":"Encargar Artículos",
+                "cancel":"Cancelar"
+            }
         },
         "inviteCode": {
             "inviteCodQuestion": "Tienes un código de invitación?",

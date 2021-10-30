@@ -3,7 +3,35 @@
         "home": {
             "taxi": "Taxi",
             "groceries": "Groceries",
-            "services": "All Services"
+            "services": "Services",
+            "food": "Food"
+        },
+        "restaurant": {
+            "restaurants": "Restaurants",
+            "menu": {
+                "menu": "Menu",
+                "description": "Description",
+                "notes": "Notes",
+                "quantity": "Quantity",
+                "addToCart": "ADD TO CART",
+                "modifyItem": "Modify item"
+            },
+            "cart": {
+                "cart": "Cart",
+                "inCart":"In Cart",
+                "clear":"Clear",
+                "totalCost":"Total Cost",
+                "deliveryCost":"Delivery Cost",
+                "total":"Total",
+                "deliveryLocation":"Delivery Location",
+                "pickLocation":"Pick Location",
+                "orderNow":"ORDER NOW"
+            },
+            "checkout":{
+            
+                "orderItems":"Order Items",
+                "cancel":"Cancelar"
+            }
         },
         "inviteCode": {
             "inviteCodQuestion": "Do You Have An Invite Code?",

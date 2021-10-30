@@ -1,6 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:mezcalmos/CustomerApp/constants/databaseNodes.dart';
-import 'package:mezcalmos/CustomerApp/models/Cart.dart';
+import 'package:mezcalmos/CustomerApp/models/cart.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
@@ -83,6 +83,14 @@ class RestaurantCartController extends GetxController {
         .reference()
         .child(customerCart(_authController.user!.uid))
         .set(cart.value.toFirebaseFormattedJson());
+  }
+
+  void deleteItemFromCart(String documentId) {
+    mezDbgPrint(customerCart(_authController.user!.uid) + "/items/$documentId");
+    _databaseHelper.firebaseDatabase
+        .reference()
+        .child(customerCart(_authController.user!.uid) + "/items/$documentId")
+        .remove();
   }
 
   void clearCart() {

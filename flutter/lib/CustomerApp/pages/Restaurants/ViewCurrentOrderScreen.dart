@@ -1,33 +1,63 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
 import 'package:mezcalmos/CustomerApp/components/appbarComponent.dart';
+import 'package:mezcalmos/CustomerApp/components/dailogComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
+import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
+import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
+import 'package:rive/rive.dart' as rive;
+import 'package:intl/intl.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+final currency = new NumberFormat("#,##0.00", "en_US");
+final f = new DateFormat('dd/MM/yyyy hh:ss').add_jm();
 
 class ViewCurrentRestaurantOrderScreen extends GetView<OrderController> {
+  LanguageController lang = Get.find<LanguageController>();
+
   Rxn<RestaurantOrder> order = Rxn();
+  Rxn<Restaurant> restaurantInfo = Rxn();
+  RestaurantsInfoController restaurantsInfoController =
+      Get.put(RestaurantsInfoController());
 
   ViewCurrentRestaurantOrderScreen() {
     String orderId = Get.parameters['orderId']!;
     order.value = controller.allOrders
         .firstWhere((element) => element.orderId == orderId) as RestaurantOrder;
+
     controller.getCurrentOrderStream(orderId).listen((event) {
       order.value = event as RestaurantOrder;
     });
+    getRestaurantInfo(order.value!.serviceProviderId.toString());
+  }
+  void getRestaurantInfo(String id) async {
+    restaurantInfo.value = await restaurantsInfoController.getRestaurant(id);
+    mezDbgPrint(restaurantInfo.value!.items);
   }
 
   @override
   Widget build(BuildContext context) {
-    print(order.value.toString() + "hey");
+    responsiveSize(context);
+    mezDbgPrint(order.value!.restaurantOrderStatus);
+    mezDbgPrint(order.value!.serviceProviderId);
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
+      appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back(),
+          actionIcons: [
+            ActionIconsComponents.notificationIcon(),
+            ActionIconsComponents.orderIcon()
+          ]),
+      body: GetBuilder<OrderController>(builder: (mycontoller) {
+        return SingleChildScrollView(
           child: Column(
             children: [
-              restaurantAppBarComponent("back", () {}, ["messages", "carts"]),
-
               SizedBox(
-                height: 25,
+                height: 15,
               ),
               //===================================>prepering orders===========================
               Container(
@@ -41,48 +71,15 @@ class ViewCurrentRestaurantOrderScreen extends GetView<OrderController> {
                 ),
                 child: Column(
                   children: [
-                    Container(
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 10),
-                      height: 43,
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 55,
-                            height: 43,
-                            decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(3),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: Get.width * 0.05,
-                          ),
-                          Expanded(
-                              child: Container(
-                            child: Text("Sylvia's Vegan Food",
-                                style: const TextStyle(
-                                    color: const Color(0xff000f1c),
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: "ProductSans",
-                                    fontStyle: FontStyle.normal,
-                                    fontSize: 18.0),
-                                textAlign: TextAlign.left),
-                          )),
-                          Container(
-                            child: Icon(
-                              Icons.chat_bubble_outline,
-                              color: Color(0xff5c7fff),
-                            ),
-                          ),
-                          SizedBox(
-                            width: Get.width * 0.05,
-                          ),
-                        ],
-                      ),
-                    ),
+                    Obx(() => restaurantInfo.value == null
+                        ? Container()
+                        : CheckoutInfoComponent(
+                            url: restaurantInfo.value!.photo != null
+                                ? "${restaurantInfo.value!.photo}"
+                                : "",
+                            title: restaurantInfo.value!.name != null
+                                ? "${restaurantInfo.value!.name}"
+                                : "")),
                     Container(
                       width: Get.width,
                       height: 1,
@@ -92,7 +89,9 @@ class ViewCurrentRestaurantOrderScreen extends GetView<OrderController> {
                     ),
                     Container(
                       child: Container(
-                        height: 43,
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Obx(() => _buildWigetOnOrderStatus(
+                            order.value!.restaurantOrderStatus)),
                       ),
                     )
                   ],
@@ -101,207 +100,26 @@ class ViewCurrentRestaurantOrderScreen extends GetView<OrderController> {
               SizedBox(
                 height: 15,
               ),
-              //=====================================>Driver=========================================
-              Container(
-                alignment: Alignment.centerLeft,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                child: Text("Driver",
-                    style: const TextStyle(
-                        color: const Color(0xff000f1c),
-                        fontWeight: FontWeight.w700,
-                        fontFamily: "ProductSans",
-                        fontStyle: FontStyle.normal,
-                        fontSize: 14.0),
-                    textAlign: TextAlign.left),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 10),
-                width: Get.width,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(4)),
-                  border:
-                      Border.all(color: const Color(0xffececec), width: 0.5),
-                  color: const Color(0x9affffff),
-                ),
-                child: Container(
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                  height: 43,
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 55,
-                        height: 43,
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(3),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: Get.width * 0.05,
-                      ),
-                      Expanded(
-                          child: Container(
-                        child: Text("Joaquin",
-                            style: const TextStyle(
-                                color: const Color(0xff000f1c),
-                                fontWeight: FontWeight.w400,
-                                fontFamily: "ProductSans",
-                                fontStyle: FontStyle.normal,
-                                fontSize: 18.0),
-                            textAlign: TextAlign.left),
-                      )),
-                      Container(
-                        child: Icon(
-                          Icons.chat_bubble_outline,
-                          color: Color(0xff5c7fff),
-                        ),
-                      ),
-                      SizedBox(
-                        width: Get.width * 0.05,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
+
               //=================================>Orders Items=============================>
               //Order Items
               Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 alignment: Alignment.centerLeft,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                child: Text("Order Items",
+                child: Text(
+                    "${lang.strings['customer']['restaurant']['checkout']['orderItems']}",
                     style: const TextStyle(
                         color: const Color(0xff000f1c),
                         fontWeight: FontWeight.w700,
-                        fontFamily: "ProductSans",
+                        fontFamily: "psb",
                         fontStyle: FontStyle.normal,
                         fontSize: 14.0),
                     textAlign: TextAlign.left),
               ),
               SizedBox(
-                height: 15,
+                height: 10,
               ),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 10),
-                width: Get.width,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(4)),
-                  border:
-                      Border.all(color: const Color(0xffececec), width: 0.5),
-                  color: const Color(0x9affffff),
-                ),
-                child: Column(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 10),
-                      height: 43,
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 55,
-                            height: 43,
-                            decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(3),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: Get.width * 0.05,
-                          ),
-                          Expanded(
-                              child: Container(
-                            child: Text("Sylvia's Vegan Food",
-                                style: const TextStyle(
-                                    color: const Color(0xff000f1c),
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: "ProductSans",
-                                    fontStyle: FontStyle.normal,
-                                    fontSize: 18.0),
-                                textAlign: TextAlign.left),
-                          )),
-                          Container(
-                            child: Stack(
-                              children: [
-                                Opacity(
-                                  opacity: 0.05000000074505806,
-                                  child: Container(
-                                      width: 25,
-                                      height: 25,
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(65)),
-                                          gradient: LinearGradient(
-                                              begin: Alignment(0.1689453125, 0),
-                                              end: Alignment(1, 1),
-                                              colors: [
-                                                const Color(0xff5582ff),
-                                                const Color(0xffc54efc)
-                                              ]))),
-                                ),
-                                Container(
-                                  alignment: Alignment.center,
-                                  width: 25,
-                                  height: 25,
-                                  child: // 2
-                                      Text("2",
-                                          overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(
-                                            color: const Color(0xff5c7fff),
-                                            fontWeight: FontWeight.w400,
-                                            fontFamily: "ProductSans",
-                                            fontStyle: FontStyle.normal,
-                                            fontSize: 20.0,
-                                          ),
-                                          textAlign: TextAlign.center),
-                                )
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            width: Get.width * 0.05,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      width: Get.width,
-                      height: 1,
-                      decoration: BoxDecoration(
-                        color: const Color(0xffececec),
-                      ),
-                    ),
-                    Container(
-                      child: Container(
-                        padding: const EdgeInsets.only(right: 10),
-                        height: 43,
-                        child: Container(
-                            alignment: Alignment.centerRight,
-                            child: Text("\$80.00",
-                                style: const TextStyle(
-                                    color: const Color(0xff000f1c),
-                                    fontWeight: FontWeight.w700,
-                                    fontFamily: "ProductSans",
-                                    fontStyle: FontStyle.normal,
-                                    fontSize: 20.0),
-                                textAlign: TextAlign.right)),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              buildOrdersItems(order.value!.items),
               SizedBox(
                 height: 15,
               ),
@@ -310,11 +128,11 @@ class ViewCurrentRestaurantOrderScreen extends GetView<OrderController> {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 alignment: Alignment.centerLeft,
-                child: Text("Total Cost",
-                    style: const TextStyle(
+                child: Text(
+                    "${lang.strings['customer']['restaurant']['cart']['totalCost']}",
+                    style: TextStyle(
                         color: const Color(0xff000f1c),
-                        fontWeight: FontWeight.w700,
-                        fontFamily: "ProductSans",
+                        fontFamily: "psb",
                         fontStyle: FontStyle.normal,
                         fontSize: 14.0),
                     textAlign: TextAlign.left),
@@ -342,22 +160,21 @@ class ViewCurrentRestaurantOrderScreen extends GetView<OrderController> {
                         padding: const EdgeInsets.symmetric(horizontal: 15),
                         child: Row(
                           children: [
-                            Text("Delivery cost",
+                            Text(
+                                "${lang.strings['customer']['restaurant']['cart']['deliveryCost']}",
                                 style: const TextStyle(
                                     color: const Color(0xff000f1c),
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: "ProductSans",
+                                    fontFamily: "psr",
                                     fontStyle: FontStyle.normal,
                                     fontSize: 20.0),
                                 textAlign: TextAlign.left),
                             Spacer(),
                             Text(" \$40.00",
-                                style: const TextStyle(
+                                style: TextStyle(
                                     color: const Color(0xff000f1c),
-                                    fontWeight: FontWeight.w700,
-                                    fontFamily: "ProductSans",
+                                    fontFamily: "psb",
                                     fontStyle: FontStyle.normal,
-                                    fontSize: 20.0),
+                                    fontSize: 20.0.sp),
                                 textAlign: TextAlign.right)
                           ],
                         ),
@@ -375,22 +192,21 @@ class ViewCurrentRestaurantOrderScreen extends GetView<OrderController> {
                         child: Row(
                           children: [
                             // Total
-                            Text("Total",
+                            Text(
+                                "${lang.strings['customer']['restaurant']['cart']['total']}",
                                 style: const TextStyle(
                                     color: const Color(0xff000f1c),
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: "ProductSans",
+                                    fontFamily: "psr",
                                     fontStyle: FontStyle.normal,
                                     fontSize: 20.0),
                                 textAlign: TextAlign.left),
                             Spacer(),
-                            Text("  \$220.00",
-                                style: const TextStyle(
+                            Text("  \$${currency.format(order.value!.cost)}",
+                                style: TextStyle(
                                     color: const Color(0xff000f1c),
-                                    fontWeight: FontWeight.w700,
-                                    fontFamily: "ProductSans",
+                                    fontFamily: "psb",
                                     fontStyle: FontStyle.normal,
-                                    fontSize: 20.0),
+                                    fontSize: 20.0.sp),
                                 textAlign: TextAlign.right)
                           ],
                         ),
@@ -406,11 +222,11 @@ class ViewCurrentRestaurantOrderScreen extends GetView<OrderController> {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 alignment: Alignment.centerLeft,
-                child: Text("Delivery Location",
+                child: Text(
+                    "${lang.strings['customer']['restaurant']['cart']['deliveryLocation']}",
                     style: const TextStyle(
                         color: const Color(0xff000f1c),
-                        fontWeight: FontWeight.w700,
-                        fontFamily: "ProductSans",
+                        fontFamily: "psb",
                         fontStyle: FontStyle.normal,
                         fontSize: 14.0),
                     textAlign: TextAlign.left),
@@ -434,9 +250,8 @@ class ViewCurrentRestaurantOrderScreen extends GetView<OrderController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Icon(
-                      Icons.location_on_outlined,
+                      MezcalmosIcons.map_marker,
                       size: 16,
-                      color: Color(0xff000f1c),
                     ),
                     SizedBox(
                       width: 10,
@@ -444,11 +259,12 @@ class ViewCurrentRestaurantOrderScreen extends GetView<OrderController> {
                     Container(
                       width: Get.width * 0.75,
                       child: Text(
-                        "18744 Jonas Shore New Zechariahland, NV 34739-4286",
+                        order.value!.from == null
+                            ? "Home"
+                            : "${order.value!.from}",
                         style: const TextStyle(
                             color: const Color(0xff000f1c),
-                            fontWeight: FontWeight.w300,
-                            fontFamily: "FontAwesome5Pro",
+                            fontFamily: "psr",
                             fontStyle: FontStyle.normal,
                             fontSize: 16.0),
                       ),
@@ -463,11 +279,11 @@ class ViewCurrentRestaurantOrderScreen extends GetView<OrderController> {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 alignment: Alignment.centerLeft,
-                child: Text("Notes",
+                child: Text(
+                    "${lang.strings['customer']['restaurant']['menu']['notes']}",
                     style: const TextStyle(
                         color: const Color(0xff000f1c),
-                        fontWeight: FontWeight.w700,
-                        fontFamily: "ProductSans",
+                        fontFamily: "psb",
                         fontStyle: FontStyle.normal,
                         fontSize: 14.0),
                     textAlign: TextAlign.left),
@@ -489,11 +305,13 @@ class ViewCurrentRestaurantOrderScreen extends GetView<OrderController> {
                 ),
                 child: Container(
                   alignment: Alignment.centerLeft,
-                  child: Text("Please ring the doorbell ",
+                  child: Text(
+                      order.value!.notes == null
+                          ? "Nothing"
+                          : "${order.value!.notes} ",
                       style: const TextStyle(
                           color: const Color(0xff000f1c),
-                          fontWeight: FontWeight.w400,
-                          fontFamily: "ProductSans",
+                          fontFamily: "psr",
                           fontStyle: FontStyle.normal,
                           fontSize: 16.0),
                       textAlign: TextAlign.left),
@@ -503,44 +321,59 @@ class ViewCurrentRestaurantOrderScreen extends GetView<OrderController> {
                 height: 30,
               ),
               //===============================>button cancel===========================
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 10),
-                width: Get.width,
-                height: 48,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(4)),
-                  boxShadow: [
-                    BoxShadow(
-                        color: const Color(0x332362f1),
-                        offset: Offset(0, 6),
-                        blurRadius: 10,
-                        spreadRadius: 0)
-                  ],
-                  gradient: LinearGradient(
-                    begin: Alignment(-0.10374055057764053, 0),
-                    end: Alignment(1.1447703838348389, 1.1694844961166382),
-                    colors: [const Color(0xede21132), const Color(0xdbd11835)],
+              InkWell(
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 10),
+                  width: Get.width,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(4)),
+                    boxShadow: [
+                      BoxShadow(
+                          color: const Color(0x332362f1),
+                          offset: Offset(0, 6),
+                          blurRadius: 10,
+                          spreadRadius: 0)
+                    ],
+                    gradient: LinearGradient(
+                      begin: Alignment(-0.10374055057764053, 0),
+                      end: Alignment(1.1447703838348389, 1.1694844961166382),
+                      colors: [
+                        const Color(0xede21132),
+                        const Color(0xdbd11835)
+                      ],
+                    ),
+                  ),
+                  child: Center(
+                    child: // CANCEL
+                        Text(
+                            "${lang.strings['customer']['restaurant']['checkout']['cancel'].toString().toUpperCase()}",
+                            style: const TextStyle(
+                                color: const Color(0xffffffff),
+                                fontFamily: "psb",
+                                fontStyle: FontStyle.normal,
+                                fontSize: 16.0),
+                            textAlign: TextAlign.center),
                   ),
                 ),
-                child: Center(
-                  child: // CANCEL
-                      Text("CANCEL",
-                          style: const TextStyle(
-                              color: const Color(0xffffffff),
-                              fontWeight: FontWeight.w700,
-                              fontFamily: "ProductSans",
-                              fontStyle: FontStyle.normal,
-                              fontSize: 16.0),
-                          textAlign: TextAlign.center),
-                ),
+                onTap: () {
+                  dailogComponent("Cancel Order",
+                      "Are you sure you want to cancel this order?", () {
+                    controller.cancelOrder(Get.parameters['orderId']!);
+
+                    Get.back();
+                  }, () {
+                    Get.back();
+                  });
+                },
               ),
               SizedBox(
                 height: 30,
               ),
             ],
           ),
-        ),
-      ),
+        );
+      }),
     );
     // List<Item> items = restaurant.value?.items ?? [];
     // return Column(
@@ -551,4 +384,315 @@ class ViewCurrentRestaurantOrderScreen extends GetView<OrderController> {
     //             child: Text(item.name!)))
     //         .toList());
   }
+
+  Widget _buildWigetOnOrderStatus(RestaurantOrderStatus status) {
+    // to do
+    // check the status of each
+    Widget? myWidget;
+    switch (status) {
+      case RestaurantOrderStatus.PreparingOrder:
+        mezDbgPrint("PreparingOrder");
+        myWidget = Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 61,
+              height: 35,
+              child: rive.RiveAnimation.asset(
+                "assets/animation/cooking.riv",
+                fit: BoxFit.cover,
+              ),
+            ),
+            Container(
+              child: Text("Preparing the order",
+                  style: const TextStyle(
+                      color: const Color(0xff7e7a7a),
+                      fontWeight: FontWeight.w400,
+                      fontFamily: "ProductSans",
+                      fontStyle: FontStyle.normal,
+                      fontSize: 18.0),
+                  textAlign: TextAlign.center),
+            )
+          ],
+        );
+        break;
+      case RestaurantOrderStatus.ReadyForPickup:
+        mezDbgPrint("ReadyForPickup");
+        myWidget = Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+                width: 61,
+                height: 35,
+                child: Icon(
+                  Icons.check,
+                  color: Colors.green,
+                )),
+            Container(
+              child: Text("Ready For Pickup",
+                  style: const TextStyle(
+                      color: const Color(0xff7e7a7a),
+                      fontWeight: FontWeight.w400,
+                      fontFamily: "ProductSans",
+                      fontStyle: FontStyle.normal,
+                      fontSize: 18.0),
+                  textAlign: TextAlign.center),
+            )
+          ],
+        );
+        break;
+      case RestaurantOrderStatus.OnTheWay:
+        mezDbgPrint("OnTheWay");
+        myWidget = Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              child: Text("On The Way",
+                  style: const TextStyle(
+                      color: const Color(0xff7e7a7a),
+                      fontWeight: FontWeight.w400,
+                      fontFamily: "ProductSans",
+                      fontStyle: FontStyle.normal,
+                      fontSize: 18.0),
+                  textAlign: TextAlign.center),
+            ),
+            Container(
+              width: 61,
+              height: 35,
+              child: rive.RiveAnimation.asset(
+                "assets/animation/CookingandDelivery2.riv",
+                fit: BoxFit.cover,
+              ),
+            ),
+          ],
+        );
+        break;
+      case RestaurantOrderStatus.Delivered:
+        mezDbgPrint("Delivered");
+        myWidget = Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+                width: 61,
+                height: 35,
+                child: Icon(
+                  Icons.check_circle,
+                  color: Colors.green,
+                )),
+            Container(
+              child: Text("Delivered ${f.format(order.value!.orderTime)}",
+                  style: const TextStyle(
+                      color: const Color(0xff7e7a7a),
+                      fontWeight: FontWeight.w400,
+                      fontFamily: "ProductSans",
+                      fontStyle: FontStyle.normal,
+                      fontSize: 18.0),
+                  textAlign: TextAlign.center),
+            )
+          ],
+        );
+        break;
+      case RestaurantOrderStatus.Cancelled:
+        mezDbgPrint("Cancelled");
+        myWidget = Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+                width: 61,
+                height: 35,
+                child: Icon(
+                  Icons.close_rounded,
+                  color: Colors.red,
+                )),
+            Container(
+              child: Text("Cancelled",
+                  style: const TextStyle(
+                      color: const Color(0xff7e7a7a),
+                      fontWeight: FontWeight.w400,
+                      fontFamily: "ProductSans",
+                      fontStyle: FontStyle.normal,
+                      fontSize: 18.0),
+                  textAlign: TextAlign.center),
+            )
+          ],
+        );
+        break;
+      default:
+    }
+    return Container(
+      child: myWidget!,
+    );
+  }
+}
+
+class CheckoutInfoComponent extends StatelessWidget {
+  final String url;
+  final String title;
+  final bool? isMessageIcon;
+  final int? quantity;
+  const CheckoutInfoComponent(
+      {required this.url,
+      required this.title,
+      this.isMessageIcon = true,
+      this.quantity,
+      Key? key})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      height: 43,
+      child: Row(
+        children: [
+          Container(
+            width: 55,
+            height: 43,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(
+                Radius.circular(3),
+              ),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.all(
+                Radius.circular(3),
+              ),
+              child: Image.network(
+                "$url",
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          SizedBox(
+            width: Get.width * 0.05,
+          ),
+          Expanded(
+              child: Container(
+            child: Text("$title",
+                style: const TextStyle(
+                    color: const Color(0xff000f1c),
+                    fontWeight: FontWeight.w400,
+                    fontFamily: "ProductSans",
+                    fontStyle: FontStyle.normal,
+                    fontSize: 18.0),
+                textAlign: TextAlign.left),
+          )),
+          (isMessageIcon == true)
+              ? Container(
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.chat_bubble_outline,
+                      color: Color(0xff5c7fff),
+                    ),
+                    onPressed: () {},
+                  ),
+                )
+              : Container(
+                  width: 25,
+                  height: 25,
+                  child: Text("$quantity",
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        color: const Color(0xff5c7fff),
+                        fontWeight: FontWeight.w400,
+                        fontFamily: "ProductSans",
+                        fontStyle: FontStyle.normal,
+                        fontSize: 20.0,
+                      ),
+                      textAlign: TextAlign.center),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(65)),
+                      gradient: LinearGradient(
+                          begin: Alignment(0.1689453125, 0),
+                          end: Alignment(1, 1),
+                          colors: [
+                            const Color(0xff5582ff)
+                                .withOpacity(0.05000000074505806),
+                            const Color(0xffc54efc)
+                                .withOpacity(0.05000000074505806)
+                          ]))),
+        ],
+      ),
+    );
+  }
+}
+
+Widget buildOrdersItems(List<RestaurantOrderItem> items) {
+  return Container(
+      child: Column(
+    children: items.fold<List<Widget>>(<Widget>[], (children, element) {
+      children.add(
+        Column(
+          children: [
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 10),
+              width: Get.width,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(4)),
+                border: Border.all(color: const Color(0xffececec), width: 0.5),
+                color: const Color(0x9affffff),
+              ),
+              child: Column(
+                children: [
+                  Container(
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                      ),
+                      //height: 43,
+                      child: CheckoutInfoComponent(
+                        title: "${element.name.inCaps}",
+                        url: "${element.image}",
+                        isMessageIcon: false,
+                        quantity: element.quantity,
+                      )),
+                  Container(
+                    width: Get.width,
+                    height: 1,
+                    decoration: BoxDecoration(
+                      color: const Color(0xffececec),
+                    ),
+                  ),
+                  Container(
+                    child: Container(
+                      padding:
+                          const EdgeInsets.only(right: 10, top: 15, bottom: 15),
+                      child: Container(
+                          alignment: Alignment.centerRight,
+                          child: Text("\$${currency.format(element.totalCost)}",
+                              style: TextStyle(
+                                  color: const Color(0xff000f1c),
+                                  fontFamily: "psb",
+                                  fontSize: 20.0.sp),
+                              textAlign: TextAlign.right)),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            )
+          ],
+        ),
+      );
+      return children;
+    }),
+  ));
+}
+
+extension CapExtension on String {
+  String get inCaps => '${this[0].toUpperCase()}${this.substring(1)}';
+  String get allInCaps => this.toUpperCase();
+  String get capitalizeFirstofEach =>
+      this.split(" ").map((str) => str.capitalize).join(" ");
 }

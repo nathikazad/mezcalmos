@@ -10,8 +10,9 @@ import 'package:mezcalmos/CustomerApp/components/textFieldComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/titlesComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantCartController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-import 'package:mezcalmos/CustomerApp/models/Cart.dart';
+import 'package:mezcalmos/CustomerApp/models/cart.dart';
 import 'dart:async';
 //import 'package:google_fonts/google_fonts.dart';
 //import 'package:intl/intl.dart';
@@ -29,9 +30,12 @@ final currency = new NumberFormat("#,##0.00", "en_US");
 enum ViewItemScreenMode { AddItemMode, EditItemMode }
 
 class ViewItemScreen extends GetView<RestaurantsInfoController> {
+  LanguageController lang = Get.find<LanguageController>();
+
   ViewItemScreenMode viewItemScreenMode;
   Rxn<CartItem> cartItem = Rxn();
   late RestaurantCartController restaurantCartController;
+  TextEditingController textcontoller = new TextEditingController();
 
   ViewItemScreen(this.viewItemScreenMode) {
     Get.put<RestaurantsInfoController>(RestaurantsInfoController());
@@ -126,7 +130,8 @@ class ViewItemScreen extends GetView<RestaurantsInfoController> {
                                   top: Get.height * 0.32,
                                   child: Container(
                                     width: Get.width,
-                                    child: Text("${cartItem.value?.item.name}",
+                                    child: Text(
+                                        "${cartItem.value?.item.name![0].toUpperCase()}${cartItem.value?.item.name!.substring(1)}",
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                         softWrap: false,
@@ -201,7 +206,8 @@ class ViewItemScreen extends GetView<RestaurantsInfoController> {
                     height: 15,
                   ),
                   MenuTitles(
-                    title: "Description",
+                    title:
+                        "${lang.strings['customer']['restaurant']['menu']['description']}",
                   ),
 
                   SizedBox(
@@ -243,12 +249,14 @@ class ViewItemScreen extends GetView<RestaurantsInfoController> {
                           height: 20,
                         ),
                         MenuTitles(
-                          title: "Notes",
+                          title:
+                              "${lang.strings['customer']['restaurant']['menu']['notes']}",
                         ),
                         SizedBox(
                           height: 10,
                         ),
                         TextFieldComponent(
+                          textController: textcontoller,
                           hint: "Write Notes",
                         ),
                         SizedBox(
@@ -258,12 +266,11 @@ class ViewItemScreen extends GetView<RestaurantsInfoController> {
                           padding: const EdgeInsets.symmetric(horizontal: 15),
                           child: Row(
                             children: [
-                              Text("Quantity",
+                              Text(
+                                  "${lang.strings['customer']['restaurant']['menu']['quantity']}",
                                   style: const TextStyle(
                                       color: const Color(0xff000f1c),
-                                      fontWeight: FontWeight.w400,
-                                      fontFamily: "ProductSans",
-                                      fontStyle: FontStyle.normal,
+                                      fontFamily: "psr",
                                       fontSize: 20.0),
                                   textAlign: TextAlign.left),
                               Spacer(),
@@ -294,21 +301,25 @@ class ViewItemScreen extends GetView<RestaurantsInfoController> {
                                         textStyle: TextStyle(
                                             color: const Color(0xffffffff),
                                             fontWeight: FontWeight.w500,
-                                            fontFamily: "FontAwesome5Pro",
+                                            fontFamily: "psb",
                                             fontStyle: FontStyle.normal,
                                             fontSize: 20.0),
                                       ),
-                                      text: "+"),
+                                      text: (ViewItemScreenMode.AddItemMode ==
+                                              viewItemScreenMode)
+                                          ? "+"
+                                          : ""),
                                   TextSpan(
                                       style: GoogleFonts.sourceSansPro(
                                         textStyle: TextStyle(
                                             color: const Color(0xffffffff),
-                                            fontWeight: FontWeight.w700,
-                                            fontFamily: "ProductSans",
-                                            fontStyle: FontStyle.normal,
+                                            fontFamily: "psr",
                                             fontSize: 16.0),
                                       ),
-                                      text: "  ADD TO CART")
+                                      text: ViewItemScreenMode.AddItemMode ==
+                                              viewItemScreenMode
+                                          ? "  ADD TO CART"
+                                          : "Modify item")
                                 ])),
                                 Spacer(),
                                 Text(
@@ -324,15 +335,23 @@ class ViewItemScreen extends GetView<RestaurantsInfoController> {
                                     textAlign: TextAlign.center)
                               ],
                             ),
-                            function: () {
-                              restaurantCartController.addItem(cartItem.value!);
-                              Get.back();
-                              //   Get.off(ViewCartScreen(),
-                              //       duration: Duration(seconds: 1),
-                              //       transition: Transition.rightToLeft);
-                            })
+                            function: (ViewItemScreenMode.AddItemMode ==
+                                    viewItemScreenMode)
+                                ? () {
+                                    restaurantCartController
+                                        .addItem(cartItem.value!);
+                                    Get.off(ViewCartScreen());
+                                  }
+                                : () {
+                                    restaurantCartController
+                                        .addItem(cartItem.value!);
+                                    Get.back();
+                                  }),
                       ],
                     ),
+                  ),
+                  SizedBox(
+                    height: 10,
                   )
                   // Expanded(child: Container())
                 ],
