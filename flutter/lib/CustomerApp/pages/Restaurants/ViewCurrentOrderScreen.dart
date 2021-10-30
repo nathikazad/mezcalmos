@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/appbarComponent.dart';
+import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-
+import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 
 class ViewCurrentRestaurantOrderScreen extends StatefulWidget {
   @override
@@ -16,6 +18,9 @@ class _ViewCurrentRestaurantOrderScreen
     extends State<ViewCurrentRestaurantOrderScreen> {
   Rxn<RestaurantOrder> order = Rxn();
   OrderController controller = Get.find<OrderController>();
+  SideMenuDraweController _sideMenuDraweController =
+      Get.find<SideMenuDraweController>();
+
   ViewCurrentRestaurantOrderScreen() {
     String orderId = Get.parameters['orderId']!;
     try {
@@ -33,11 +38,18 @@ class _ViewCurrentRestaurantOrderScreen
   Widget build(BuildContext context) {
     print(order.value.toString() + "hey");
     return Scaffold(
+      key: _sideMenuDraweController.getNewKey(),
+      drawer: MezSideMenu(),
+      appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back(),
+          actionIcons: [
+            ActionIconsComponents.notificationIcon(),
+            ActionIconsComponents.orderIcon()
+          ]),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
-              restaurantAppBarComponent("back", () {}, ["messages", "carts"]),
+              // restaurantAppBarComponent("back", () {}, ["messages", "carts"]),
 
               SizedBox(
                 height: 25,

@@ -3,7 +3,7 @@
         "home": {
             "taxi": "Taxi",
             "groceries": "Groceries",
-            "services": "All Services"
+            "services": "Services"
         },
         "inviteCode": {
             "inviteCodQuestion": "Do You Have An Invite Code?",
@@ -48,6 +48,7 @@
             "item": "Item|Items",
             "onTheWay": "On the way",
             "inTransit": "In Transit",
+            "inProcess": "In Process",
             "searching": "Searching",
             "noOrders": "No orders found"
         }

@@ -1,4 +1,5 @@
 import 'package:get/get.dart'; // getX
+import 'package:mezcalmos/CustomerApp/pages/MapViews/PickLocationView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Orders/ListOrdersScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCurrentOrderScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen.dart';
@@ -21,6 +22,7 @@ const String kCurrentRestaurantOrderRoute = '/currentRestaurantOrders/:orderId';
 const String kPastRestaurantOrderRoute = '/pastRestaurantOrders/:orderId';
 const String kCartRoute = '/cart';
 const String kCartItemRoute = '/cart/:cartItemId';
+const String kPickLocationRoute = '/pickLocationFromMap';
 
 getRestaurantRoute(String restaurantId) {
   return kRestaurantRoute.replaceFirst(":restaurantId", restaurantId);
@@ -64,7 +66,8 @@ class XRouter {
             transition: Transition.rightToLeft),
         GetPage(
             name: kCurrentRestaurantOrderRoute,
-            page: () => ViewCurrentRestaurantOrderScreen())
+            page: () => ViewCurrentRestaurantOrderScreen()),
+        GetPage(name: kPickLocationRoute, page: () => PickLocationView())
       ] +
       SharedRouter.sharedRoutes;
 }

@@ -13,7 +13,6 @@ import 'package:mezcalmos/CustomerApp/components/titlesComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:intl/intl.dart';
-
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -23,6 +22,37 @@ import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 final currency = new NumberFormat("#,##0.00", "en_US");
 
 class ViewCartScreen extends GetView<RestaurantCartController> {
+  Rxn<Cart> cart = Rxn();
+  // this is used for DropDown Value  (basically the key of dropDownItems)
+  RxString _dropDownValue = "_pick_".obs;
+  // this is the final newly updated user location pick
+  Location? _pickedLocation;
+
+  // DrowpDown Items
+  RxList<DropdownMenuItem<String>> _dropDownItemsList =
+      <DropdownMenuItem<String>>[].obs;
+
+  void updateDropDown(Location? _newLocation) {
+    if (_pickedLocation != _newLocation) {
+      _dropDownItemsList.removeWhere(
+          (element) => element.value == _pickedLocation.toString());
+      _dropDownItemsList.add(DropdownMenuItem<String>(
+          child: Text(_newLocation!.address), value: _newLocation.toString()));
+      _pickedLocation = _newLocation;
+      _dropDownValue.value = _newLocation.toString();
+    }
+  }
+
+  ViewCartScreen() {
+    // by default it contains one .
+    _dropDownItemsList.value = <DropdownMenuItem<String>>[
+      DropdownMenuItem(
+        child: Text("Pick from Map"),
+        value: "_pick_",
+      ),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -188,10 +218,11 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
                       color: const Color(0x80ffffff)),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton<String>(
-                      value: null,
-                      isDense: true,
+                      value: _dropDownValue.value,
+                      // changed this to show the address much more clearly.
+                      isDense: false,
                       isExpanded: true,
-                      hint: Text("Pick Location",
+                      hint: Text("Select Location",
                           style: const TextStyle(
                               color: const Color(0xff000f1c),
                               fontWeight: FontWeight.w500,
@@ -200,22 +231,18 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
                               fontSize: 12.0),
                           textAlign: TextAlign.left),
                       icon: Icon(Icons.expand_more),
-                      items: [
-                        DropdownMenuItem(child: Text("home"), value: "home"),
-                        DropdownMenuItem(
-                            child: Text("office"), value: "office"),
-                        DropdownMenuItem(
-                            child: Text("Pick New Location"),
-                            value: "pickNewLocation"),
-                      ],
+                      items: _dropDownItemsList(),
                       onChanged: (newValue) async {
-                        if (newValue == "pickNewLocation") {
-                          controller.cart.value.toLocation =
-                              await Get.toNamed<Location?>(kPickToLocation);
+                        // we will route the user back to the Map
+                        if (newValue == "_pick_") {
+                          dynamic _loc = await Get.toNamed(kPickLocationRoute);
+                          if (_loc != null) {
+                            mezDbgPrint("Get.back executed with  res : $_loc");
+                            updateDropDown(_loc);
+                          } else {
+                            mezDbgPrint("Pick map view returned Null !!!");
+                          }
                         }
-                        // } else {
-                        // assing to already saved location
-                        // }
                       },
                     ),
                   ),

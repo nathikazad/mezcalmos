@@ -3,7 +3,7 @@
         "home": {
             "taxi": "Taxi",
             "groceries": "Comestibles",
-            "services": "Todos los servicios"
+            "services": "Servicios"
         },
         "inviteCode": {
             "inviteCodQuestion": "Tienes un código de invitación?",

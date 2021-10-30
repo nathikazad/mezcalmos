@@ -16,7 +16,6 @@ class CustomerAuthController extends GetxController {
   DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
   AuthController _authController = Get.find<AuthController>();
 
-  RxBool _locationEnabled = false.obs;
   DeviceNotificationsController _notificationsController =
       Get.find<DeviceNotificationsController>();
 

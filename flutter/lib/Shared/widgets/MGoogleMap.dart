@@ -8,33 +8,38 @@ import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MGoogleMap extends StatefulWidget with MezDisposable {
-  // List<CustomMarker> customMarkers;
   LatLng initialLocation;
   Set<Polyline> polylines;
   List<Marker> markers;
   Map<String, Stream<LocationData>> idWithSubscription;
   Duration rerenderDuration;
   String debugString;
+  MinMaxZoomPreference minMaxZoomPrefs;
+  // this is used when we don't want to re-render the map periodically.
+  bool periodicRedrendring;
+  bool myLocationButtonEnabled;
   MGoogleMap({
+    Key? key,
+    this.periodicRedrendring = true,
+    this.myLocationButtonEnabled = false,
+    this.minMaxZoomPrefs = const MinMaxZoomPreference(16, 17),
     required this.markers,
     required this.initialLocation,
     this.rerenderDuration = const Duration(seconds: 2),
     this.debugString = "",
     this.polylines = const <Polyline>{},
     this.idWithSubscription = const {},
-  }) {
-    mezDbgPrint("MGoogleMap cosntructor ${this.hashCode} ${this.debugString}");
-  }
+  }) : super(key: key);
+
   @override
-  State<MGoogleMap> createState() => _MGoogleMapState();
+  State<MGoogleMap> createState() => MGoogleMapState();
 }
 
-class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
-  late Timer _reRendringTimer;
+class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
+  Timer? _reRendringTimer;
   GoogleMapController? _controller;
   Completer<GoogleMapController> _completer = Completer();
   List<LatLng> _polylinesLatLngBounds = [];
@@ -53,6 +58,23 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
     }
   }
 
+  Future<LatLng> getMapCenter() async {
+    LatLngBounds? visibleRegion = await _controller?.getVisibleRegion();
+
+    LatLng centerLatLng = visibleRegion == null
+        ? LatLng(0, 0)
+        : LatLng(
+            (visibleRegion.northeast.latitude +
+                    visibleRegion.southwest.latitude) /
+                2,
+            (visibleRegion.northeast.longitude +
+                    visibleRegion.southwest.longitude) /
+                2,
+          );
+
+    return centerLatLng;
+  }
+
   // Animate the camera using widget.bounds
   Future<void> _animateCameraWithNewBounds(LatLngBounds? _bounds) async {
     if (_controller != null && _bounds != null) {
@@ -65,20 +87,24 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
   // Calculate bounds from the polyline's List of LatLng
   // we're using this onInit (one time calculation since we have the polyline always the same)
   List<LatLng> _getLatLngBoundsFromPolyline(Set<Polyline> p) {
-    double minLat = p.first.points.first.latitude;
-    double minLong = p.first.points.first.longitude;
-    double maxLat = p.first.points.first.latitude;
-    double maxLong = p.first.points.first.longitude;
-    p.forEach((poly) {
-      poly.points.forEach((point) {
-        if (point.latitude < minLat) minLat = point.latitude;
-        if (point.latitude > maxLat) maxLat = point.latitude;
-        if (point.longitude < minLong) minLong = point.longitude;
-        if (point.longitude > maxLong) maxLong = point.longitude;
+    if (p.isNotEmpty) {
+      double minLat = p.first.points.first.latitude;
+      double minLong = p.first.points.first.longitude;
+      double maxLat = p.first.points.first.latitude;
+      double maxLong = p.first.points.first.longitude;
+      p.forEach((poly) {
+        poly.points.forEach((point) {
+          if (point.latitude < minLat) minLat = point.latitude;
+          if (point.latitude > maxLat) maxLat = point.latitude;
+          if (point.longitude < minLong) minLong = point.longitude;
+          if (point.longitude > maxLong) maxLong = point.longitude;
+        });
       });
-    });
 
-    return [LatLng(minLat, minLong), LatLng(maxLat, maxLong)];
+      return [LatLng(minLat, minLong), LatLng(maxLat, maxLong)];
+    } else {
+      return [];
+    }
   }
 
   // adds up the markers the new markers latLn ot polyline's and calculate out of them all the latLngbounds
@@ -97,6 +123,10 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
       // widget.bounds = _polyMarkersBounds;
       await _animateCameraWithNewBounds(_polyMarkersBounds);
     }
+  }
+
+  Future<void> moveToNewLatLng(double lat, double lng) async {
+    await _controller?.animateCamera(CameraUpdate.newLatLng(LatLng(lat, lng)));
   }
 
   @override
@@ -120,9 +150,11 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
       _controller?.setMapStyle(mezMapStyle);
     });
     // control our re-rendring Separately;
-    _reRendringTimer = Timer.periodic(widget.rerenderDuration, (_) {
-      animateAndUpdateBounds();
-    });
+    _reRendringTimer = widget.periodicRedrendring
+        ? Timer.periodic(widget.rerenderDuration, (_) {
+            animateAndUpdateBounds();
+          })
+        : null;
 
     widget.idWithSubscription.forEach((markerId, stream) {
       stream.listen((newLoc) {
@@ -151,7 +183,7 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
   @override
   void dispose() {
     mezDbgPrint("MGoogleMap disposed ${this.hashCode} ${widget.debugString}");
-    _reRendringTimer.cancel();
+    _reRendringTimer?.cancel();
     // favoid keeping listeners in memory.
     cancelSubscriptions();
     // gmapControlelr disposing.
@@ -165,46 +197,40 @@ class _MGoogleMapState extends State<MGoogleMap> with MezDisposable {
     mezDbgPrint(
         "Inside MGoogleMap build ${this.hashCode} ${widget.debugString}");
     responsiveSize(context);
-    return widget.markers.isNotEmpty
-        ? GoogleMap(
-            padding: EdgeInsets.all(20),
-            mapToolbarEnabled: false,
-            myLocationButtonEnabled: false,
-            // minMaxZoomPreference: MinMaxZoomPreference(10, 30),
-            buildingsEnabled: false,
-            markers: widget.markers.toSet(),
-            polylines: widget.polylines,
-            zoomControlsEnabled: false,
-            compassEnabled: false,
-            mapType: MapType.normal,
-            tiltGesturesEnabled: true,
-
-            initialCameraPosition: CameraPosition(
-                target: widget.initialLocation,
-                tilt: 9.440717697143555,
-                zoom: 5.151926040649414),
-
-            onMapCreated: (GoogleMapController _gController) async {
-              mezDbgPrint(
-                  "\n\n\n\n\n o n   m a p   c r e a t e d !\n\n\n\n\n\n");
-              _controller = _gController;
-              await _gController.setMapStyle(mezMapStyle);
-              // await _controller!.setMapStyle(mezMapStyle);
-              // LatLngBounds? _bounds = _getMarkersAndPolylinesBounds();
-              // if (_bounds != null) {
-              //   await _animateCameraWithNewBounds(_bounds);
-              // }
-              await animateAndUpdateBounds();
-              _completer.complete(_gController);
-            },
-          )
-        : Center(
-            child: Container(
-                height: 200,
-                width: 200,
-                decoration:
-                    BoxDecoration(shape: BoxShape.circle, color: Colors.white),
-                child: Transform.scale(scale: .8, child: MezLogoAnimation())),
-          );
+    // return widget.markers.isNotEmpty
+    //     ?
+    return GoogleMap(
+      padding: EdgeInsets.all(20),
+      mapToolbarEnabled: false,
+      myLocationButtonEnabled: widget.myLocationButtonEnabled,
+      myLocationEnabled: widget.myLocationButtonEnabled,
+      minMaxZoomPreference: widget.minMaxZoomPrefs,
+      buildingsEnabled: false,
+      markers: widget.markers.toSet(),
+      polylines: widget.polylines,
+      zoomControlsEnabled: false,
+      compassEnabled: false,
+      mapType: MapType.normal,
+      tiltGesturesEnabled: true,
+      initialCameraPosition: CameraPosition(
+          target: widget.initialLocation,
+          tilt: 9.440717697143555,
+          zoom: 5.151926040649414),
+      onMapCreated: (GoogleMapController _gController) async {
+        mezDbgPrint("\n\n\n\n\n o n   m a p   c r e a t e d !\n\n\n\n\n\n");
+        _controller = _gController;
+        await _gController.setMapStyle(mezMapStyle);
+        await animateAndUpdateBounds();
+        _completer.complete(_gController);
+      },
+    );
+    // : Center(
+    //     child: Container(
+    //         height: 200,
+    //         width: 200,
+    //         decoration:
+    //             BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+    //         child: Transform.scale(scale: .8, child: MezLogoAnimation())),
+    //   );
   }
 }

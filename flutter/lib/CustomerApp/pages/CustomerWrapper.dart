@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
-import 'package:mezcalmos/CustomerApp/components/appbarComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/imagesComponents.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -21,6 +20,7 @@ class CustomerWrapper extends GetWidget<AuthController>
   SideMenuDraweController _sideMenuDrawerController =
       Get.find<SideMenuDraweController>();
   OrderController _orderController = Get.find<OrderController>();
+  LanguageController _lang = Get.find<LanguageController>();
   RxInt numberOfCurrentOrders = RxInt(0);
   DateTime? appClosedTime;
   CustomerWrapper() {
@@ -67,45 +67,30 @@ class CustomerWrapper extends GetWidget<AuthController>
         navigateToOrdersIfNecessary(currentOrders);
       });
     });
-    return Scaffold(
-        key: _sideMenuDrawerController.getNewKey(),
-        drawer: MezSideMenu(),
-        backgroundColor: Colors.white,
-        // appBar: AppBar(
-        //   title: Text("Mezcalmos"),
-        //   actions: [
-        //     TextButton(
-        //         onPressed: () => Get.toNamed(kOrdersRoute),
-        //         child: Obx(() =>
-        //             Text("Orders" + numberOfCurrentOrders.value.toString())))
-        //   ],
-        // ),
-        appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
-            "menu", () => _sideMenuDrawerController.openMenu(), actionIcons: [
-          ActionIconsComponents.notificationIcon(),
-          ActionIconsComponents.orderIcon()
-        ]),
-        body: SafeArea(
-          child: Column(
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+          key: _sideMenuDrawerController.getNewKey(),
+          drawer: MezSideMenu(),
+          appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
+              "menu", () => _sideMenuDrawerController.openMenu(), actionIcons: [
+            ActionIconsComponents.notificationIcon(),
+            ActionIconsComponents.orderIcon()
+          ]),
+          body: Column(
             children: [
-              // SizedBox(
-              //   height: Get.height * 0.005,
-              // ),
-              // restaurantAppBarComponent(
-              //     "menu",
-              //   ,
-              //   ["notifications", "oredrs"]),
-
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 alignment: Alignment.centerLeft,
-                child: Text("Services",
-                    style: TextStyle(
-                        color: Color(0xff1d1d1d),
-                        // fontWeight: FontWeight.w400,
-                        fontFamily: "psr",
-                        fontSize: 45.sp),
-                    textAlign: TextAlign.left),
+                child: Obx(
+                  () => Text(_lang.strings["customer"]["home"]["services"],
+                      style: TextStyle(
+                          color: Color(0xff1d1d1d),
+                          // fontWeight: FontWeight.w400,
+                          fontFamily: "psr",
+                          fontSize: 45.sp),
+                      textAlign: TextAlign.left),
+                ),
               ),
               SizedBox(
                 height: 25.h,
@@ -131,14 +116,16 @@ class CustomerWrapper extends GetWidget<AuthController>
                         height: 10,
                       ),
                       Container(
-                        child: Text("Taxi",
-                            style: const TextStyle(
-                                color: const Color(0xff000f1c),
-                                fontWeight: FontWeight.w500,
-                                fontFamily: "ProductSans",
-                                fontStyle: FontStyle.normal,
-                                fontSize: 16.0),
-                            textAlign: TextAlign.left),
+                        child: Obx(
+                          () => Text(_lang.strings["customer"]["home"]["taxi"],
+                              style: const TextStyle(
+                                  color: const Color(0xff000f1c),
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: "ProductSans",
+                                  fontStyle: FontStyle.normal,
+                                  fontSize: 16.0),
+                              textAlign: TextAlign.left),
+                        ),
                       )
                     ],
                   ),
@@ -169,14 +156,17 @@ class CustomerWrapper extends GetWidget<AuthController>
                           height: 10,
                         ),
                         Container(
-                          child: Text("Food",
-                              style: const TextStyle(
-                                  color: const Color(0xff000f1c),
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: "ProductSans",
-                                  fontStyle: FontStyle.normal,
-                                  fontSize: 16.0),
-                              textAlign: TextAlign.left),
+                          child: Obx(
+                            () => Text(
+                                _lang.strings["customer"]["home"]["groceries"],
+                                style: const TextStyle(
+                                    color: const Color(0xff000f1c),
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: "ProductSans",
+                                    fontStyle: FontStyle.normal,
+                                    fontSize: 16.0),
+                                textAlign: TextAlign.left),
+                          ),
                         )
                       ],
                     ),
@@ -192,7 +182,7 @@ class CustomerWrapper extends GetWidget<AuthController>
               //     onPressed: () ,
               //     child: Text("Restaurants"))
             ],
-          ),
-        ));
+          )),
+    );
   }
 }

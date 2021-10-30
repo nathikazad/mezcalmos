@@ -184,6 +184,8 @@ Widget mainApp(String appName, List<GetPage<dynamic>> routes) {
           primaryColor: Colors.white,
           visualDensity: VisualDensity.adaptivePlatformDensity),
       color: Colors.white,
+      enableLog: true,
+      // logWriterCallback: ,
       getPages: routes,
       initialRoute: kWrapperRoute);
 }
