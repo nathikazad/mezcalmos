@@ -15,32 +15,26 @@ async function push(firebase, userId, message, particpantType = "customer") {
   firebase.database().ref(`/notifications/${particpantType}/${userId}`).push(message)
   let subscription
   if (particpantType == "customer") {
-    subscription = (await firebase.database().ref(`/users/${userId}/notificationInfo`).once('value')).val();
+    subscription = (await firebase.database().ref(`/customers/info/${userId}/notificationInfo`).once('value')).val();
   } else if (particpantType == "taxi") {
     subscription = (await firebase.database().ref(`/taxiDrivers/${userId}/notificationInfo`).once('value')).val();
+  } else if (particpantType == "deliveryAdmin") {
+    subscription = (await firebase.database().ref(`/deliveryAdmins/info/${userId}/notificationInfo`).once('value')).val();
   }
-  if (subscription) {
-    if (subscription.deviceNotificationToken) {
-      if (particpantType == "taxi") {
-
-        if (message.notificationType == "orderStatusChange") {
-          let notificationMessage = await buildDeviceNotificationMessage(firebase, userId, message)
-          sender.sendToDevice(subscription.deviceNotificationToken, notificationMessage, firebase)
-        } else if (message.notificationType == "newMessage") {
-          let notificationMessage = await buildDeviceNotificationMessage(firebase, userId, message)
-          console.log(notificationMessage)
-          let newMessage = {
-            title: `${notificationMessage.title}${message.sender.name}`,
-            body: message.message
-          }
-          console.log(newMessage)
-          sender.sendToDevice(subscription.deviceNotificationToken, newMessage, firebase)
-        }
+  if (subscription && subscription.deviceNotificationToken) {
+    if (message.notificationType == "orderStatusChange") {
+      let notificationMessage = await buildDeviceNotificationMessage(firebase, userId, message)
+      sender.sendToDevice(subscription.deviceNotificationToken, notificationMessage, firebase)
+    } else if (message.notificationType == "newMessage") {
+      let notificationMessage = await buildDeviceNotificationMessage(firebase, userId, message)
+      console.log(notificationMessage)
+      let newMessage = {
+        title: `${notificationMessage.title}${message.sender.name}`,
+        body: message.message
       }
-    } else {
-      sender.sendToBrowser(subscription, message)
+      console.log(newMessage)
+      sender.sendToDevice(subscription.deviceNotificationToken, newMessage, firebase)
     }
-
   }
 }
 
