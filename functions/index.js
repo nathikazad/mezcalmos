@@ -7,7 +7,9 @@ if (process.env.FUNCTIONS_EMULATOR === true) {
     databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com"
   });
 } else {
-  firebase = firebaseAdmin.initializeApp()
+  firebase = firebaseAdmin.initializeApp({
+    databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com"
+  })
 }
 
 const keys = require("./helpers/keys").keys()
@@ -243,3 +245,7 @@ exports.sendTestNotification = functions.https.onCall(async (data, context) => {
 // exports.changeItemCountInCart = require("./helpers/cart/changeItemCount");
 // exports.clearCart = require("./helpers/cart/clearCart");
 exports.checkoutRestaurantCart = require("./helpers/restaurant/checkoutCart");
+exports.prepareOrder = require("./helpers/restaurant/adminStatusChanges").prepareOrder;
+exports.readyForPickupOrder = require("./helpers/restaurant/adminStatusChanges").readyForPickupOrder;
+exports.deliverOrder = require("./helpers/restaurant/adminStatusChanges").deliverOrder;
+exports.dropOrder = require("./helpers/restaurant/adminStatusChanges").dropOrder;

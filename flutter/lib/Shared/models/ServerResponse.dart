@@ -17,14 +17,17 @@ class ServerResponse {
   ResponseStatus status;
   String? errorMessage;
   String? errorCode;
-  ServerResponse(this.status, {this.errorMessage, this.errorCode});
+  dynamic data;
+  ServerResponse(this.status, {this.errorMessage, this.errorCode, this.data});
   bool get success => this.status == ResponseStatus.Success;
   factory ServerResponse.fromJson(dynamic json) {
+    mezDbgPrint("printing the data inside ServerResponse");
     mezDbgPrint(json);
     ResponseStatus status = convertStringToResponseStatus(json["status"]);
     String? errorMessage = json["errorMessage"] ?? null;
     String? errorCode = json["errorCode"] ?? null;
+    dynamic data = json;
     return ServerResponse(status,
-        errorMessage: errorMessage, errorCode: errorCode);
+        errorMessage: errorMessage, errorCode: errorCode, data: json);
   }
 }

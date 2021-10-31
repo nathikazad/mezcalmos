@@ -20,31 +20,43 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
 
 enum ViewItemScreenMode { AddItemMode, EditItemMode }
 
-class ViewItemScreen extends GetView<RestaurantsInfoController> {
-  LanguageController lang = Get.find<LanguageController>();
+class ViewItemScreen extends StatefulWidget {
+  final ViewItemScreenMode? viewItemScreenMode;
+  ViewItemScreen(this.viewItemScreenMode);
+  @override
+  _ViewItemScreenState createState() => _ViewItemScreenState();
+}
 
-  ViewItemScreenMode viewItemScreenMode;
+class _ViewItemScreenState extends State<ViewItemScreen> {
+  LanguageController lang = Get.find<LanguageController>();
+  TextEditingController textcontoller = new TextEditingController();
   Rxn<CartItem> cartItem = Rxn();
   late RestaurantCartController restaurantCartController;
-  TextEditingController textcontoller = new TextEditingController();
+  RestaurantsInfoController controller = Get.find<RestaurantsInfoController>();
 
-  ViewItemScreen(this.viewItemScreenMode) {
+  @override
+  void initState() {
+    mezDbgPrint("Args : ${Get.arguments.toString()}");
+    mezDbgPrint("params : ${Get.parameters.toString()}");
+
     Get.put<RestaurantsInfoController>(RestaurantsInfoController());
     restaurantCartController =
         Get.put<RestaurantCartController>(RestaurantCartController());
-    if (this.viewItemScreenMode == ViewItemScreenMode.AddItemMode) {
-      String restaurantId = Get.parameters['restaurantId']!;
-      String itemId = Get.parameters['itemId']!;
-      this.controller.getItem(restaurantId, itemId).then((value) {
+    mezDbgPrint("widget.viewItemScreenMode => ${widget.viewItemScreenMode}");
+    if (widget.viewItemScreenMode == ViewItemScreenMode.AddItemMode) {
+      String? restaurantId = Get.parameters['restaurantId'];
+      mezDbgPrint("got rest id param => $restaurantId");
+      String? itemId = Get.parameters['itemId'];
+      mezDbgPrint("got item id param => $itemId");
+
+      this.controller.getItem(restaurantId!, itemId!).then((value) {
         this.cartItem.value = CartItem(value, restaurantId);
       });
     } else {
@@ -53,6 +65,7 @@ class ViewItemScreen extends GetView<RestaurantsInfoController> {
         return item.id == Get.parameters["cartItemId"];
       }));
     }
+    super.initState();
   }
 
   @override
@@ -306,7 +319,7 @@ class ViewItemScreen extends GetView<RestaurantsInfoController> {
                                             fontSize: 20.0),
                                       ),
                                       text: (ViewItemScreenMode.AddItemMode ==
-                                              viewItemScreenMode)
+                                              widget.viewItemScreenMode)
                                           ? "+"
                                           : ""),
                                   TextSpan(
@@ -317,7 +330,7 @@ class ViewItemScreen extends GetView<RestaurantsInfoController> {
                                             fontSize: 16.0),
                                       ),
                                       text: ViewItemScreenMode.AddItemMode ==
-                                              viewItemScreenMode
+                                              widget.viewItemScreenMode
                                           ? "  ADD TO CART"
                                           : "Modify item")
                                 ])),
@@ -336,7 +349,7 @@ class ViewItemScreen extends GetView<RestaurantsInfoController> {
                               ],
                             ),
                             function: (ViewItemScreenMode.AddItemMode ==
-                                    viewItemScreenMode)
+                                    widget.viewItemScreenMode)
                                 ? () {
                                     restaurantCartController
                                         .addItem(cartItem.value!);

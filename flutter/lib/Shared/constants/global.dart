@@ -9,6 +9,7 @@ const String localhost = "http://127.0.0.1";
 const String authPort = ":9099";
 const String dbRoot = ":9000/?ns=$db";
 const String functionPort = ":5001";
+const String placesApikey = "AIzaSyACS-jr0KWCzCN0WFqbltolpX1dqhB2OjY";
 // can be dev / prod
 
 // ----------------- TEST STRINGS ----------------- //

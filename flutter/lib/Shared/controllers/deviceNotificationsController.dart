@@ -53,7 +53,8 @@ class DeviceNotificationsController extends GetxController {
       provisional: false,
       sound: true,
     );
-    mezDbgPrint('User granted permission: ${settings.authorizationStatus}');
+    mezDbgPrint(
+        'User granted notification permission: ${settings.authorizationStatus}');
     return settings;
   }
 

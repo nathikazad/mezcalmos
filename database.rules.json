@@ -94,7 +94,7 @@
       }
     },
     "inProcessOrders": {
-      ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true"
+      ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true || root.child('deliveryAdmins/' + auth.uid + '/authorized').val() === true"
     },
     "orders": {
       ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true",

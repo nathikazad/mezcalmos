@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
+import 'package:mezcalmos/Shared/widgets/MezPickGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/MezSwitch.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';

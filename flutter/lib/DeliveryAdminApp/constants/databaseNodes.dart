@@ -7,7 +7,7 @@ String adminNotificationInfoNode(String uid) {
 }
 
 String adminAppVersionNode(String uid) {
-  return 'deliveryAdmins/info/${uid}/versionNumber';
+  return 'deliveryAdmins/${uid}/versionNumber';
 }
 
 String notificationsNode(String uid) {

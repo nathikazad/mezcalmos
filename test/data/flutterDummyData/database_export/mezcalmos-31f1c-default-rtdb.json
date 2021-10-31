@@ -1448,5 +1448,10 @@
         "currentOrder": "-McjgOAiBh8Nbr8T0sy6"
       }
     }
+  },
+  "deliveryAdmins": {
+    "PBcTv6zSy1FUT7C3EOaFj1Rw8dct": {
+      "authorized": true
+    }
   }
 }

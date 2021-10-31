@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
+
 import 'package:mezcalmos/CustomerApp/components/appbarComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/dailogComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
@@ -15,22 +16,42 @@ import 'package:rive/rive.dart' as rive;
 import 'package:intl/intl.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
+import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
+
 final currency = new NumberFormat("#,##0.00", "en_US");
 final f = new DateFormat('dd/MM/yyyy hh:ss').add_jm();
 
-class ViewCurrentRestaurantOrderScreen extends GetView<OrderController> {
-  LanguageController lang = Get.find<LanguageController>();
+////////////===========
 
-  Rxn<RestaurantOrder> order = Rxn();
-  Rxn<Restaurant> restaurantInfo = Rxn();
+class ViewCurrentRestaurantOrderScreen extends StatefulWidget {
+  @override
+  _ViewCurrentRestaurantOrderScreenState createState() =>
+      _ViewCurrentRestaurantOrderScreenState();
+}
+
+class _ViewCurrentRestaurantOrderScreenState
+    extends State<ViewCurrentRestaurantOrderScreen> {
   RestaurantsInfoController restaurantsInfoController =
       Get.put(RestaurantsInfoController());
+  LanguageController lang = Get.find<LanguageController>();
+  Rxn<RestaurantOrder> order = Rxn();
+  Rxn<Restaurant> restaurantInfo = Rxn();
+  OrderController controller = Get.find<OrderController>();
+  SideMenuDraweController _sideMenuDraweController =
+      Get.find<SideMenuDraweController>();
 
-  ViewCurrentRestaurantOrderScreen() {
+  _ViewCurrentRestaurantOrderScreenState() {
     String orderId = Get.parameters['orderId']!;
-    order.value = controller.allOrders
-        .firstWhere((element) => element.orderId == orderId) as RestaurantOrder;
-
+    try {
+      order.value = controller.currentOrders
+          .firstWhere((order) => order.orderId == orderId) as RestaurantOrder;
+    } on StateError catch (_) {
+      // do nothing
+    }
     controller.getCurrentOrderStream(orderId).listen((event) {
       order.value = event as RestaurantOrder;
     });

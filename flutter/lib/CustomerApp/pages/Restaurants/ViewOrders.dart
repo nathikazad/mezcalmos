@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
-import 'package:mezcalmos/CustomerApp/components/appbarComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/imagesComponents.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 
 class ViewOrders extends StatelessWidget {
-  const ViewOrders({Key? key}) : super(key: key);
+  LanguageController _lang = Get.find<LanguageController>();
 
   @override
   Widget build(BuildContext context) {
@@ -26,16 +24,18 @@ class ViewOrders extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
               width: Get.width,
-              child: Text("Orders",
-                  style: GoogleFonts.dmSans(
-                    textStyle: TextStyle(
-                        color: const Color(0xfd1d1d1d),
-                        fontWeight: FontWeight.w500,
-                        fontFamily: "ProductSans",
-                        fontStyle: FontStyle.normal,
-                        fontSize: 40.0),
-                  ),
-                  textAlign: TextAlign.left),
+              child: Obx(
+                () => Text(_lang.strings["customer"]["orders"]["title"],
+                    style: GoogleFonts.dmSans(
+                      textStyle: TextStyle(
+                          color: const Color(0xfd1d1d1d),
+                          fontWeight: FontWeight.w500,
+                          fontFamily: "ProductSans",
+                          fontStyle: FontStyle.normal,
+                          fontSize: 40.0),
+                    ),
+                    textAlign: TextAlign.left),
+              ),
             ),
             SizedBox(
               height: Get.height * 0.015,
@@ -62,14 +62,17 @@ class ViewOrders extends StatelessWidget {
                     children: [
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Text("In Process",
-                            style: const TextStyle(
-                                color: const Color(0xff000f1c),
-                                fontWeight: FontWeight.w700,
-                                fontFamily: "ProductSans",
-                                fontStyle: FontStyle.normal,
-                                fontSize: 12.0),
-                            textAlign: TextAlign.left),
+                        child: Obx(
+                          () => Text(
+                              _lang.strings["customer"]["orders"]["inProcess"],
+                              style: const TextStyle(
+                                  color: const Color(0xff000f1c),
+                                  fontWeight: FontWeight.w700,
+                                  fontFamily: "psr",
+                                  fontStyle: FontStyle.normal,
+                                  fontSize: 12.0),
+                              textAlign: TextAlign.left),
+                        ),
                       ),
                       SizedBox(
                         height: 10,

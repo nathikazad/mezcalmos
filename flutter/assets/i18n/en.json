@@ -76,6 +76,7 @@
             "item": "Item|Items",
             "onTheWay": "On the way",
             "inTransit": "In Transit",
+            "inProcess": "In Process",
             "searching": "Searching",
             "noOrders": "No orders found"
         }

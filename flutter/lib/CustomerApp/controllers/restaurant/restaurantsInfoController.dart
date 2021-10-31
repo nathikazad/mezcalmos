@@ -4,6 +4,8 @@ import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:get/get.dart';
 import 'dart:async';
 
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+
 class RestaurantsInfoController extends GetxController {
   DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
   @override
@@ -12,22 +14,24 @@ class RestaurantsInfoController extends GetxController {
     print("--------------------> RestaurantsInfoController Initialized !");
   }
 
-  Future<List<Restaurant>> getRestaurants() {
-    return _databaseHelper.firebaseDatabase
+  Future<List<Restaurant>> getRestaurants() async {
+    mezDbgPrint("Called 1");
+
+    DataSnapshot snapshot = await _databaseHelper.firebaseDatabase
         .reference()
         .child('restaurants/info')
-        .once()
-        .then<List<Restaurant>>((snapshot) {
-      List<Restaurant> restaurants = [];
-      snapshot.value.forEach((dynamic key, dynamic value) {
-        try {
-          restaurants.add(Restaurant.fromRestaurantData(value, id: key));
-        } catch (e) {
-          print(e);
-        }
-      });
-      return restaurants;
+        .once();
+
+    mezDbgPrint("Got restorantes ===> ${snapshot.value}");
+    List<Restaurant> restaurants = [];
+    snapshot.value.forEach((dynamic key, dynamic value) {
+      try {
+        restaurants.add(Restaurant.fromRestaurantData(value, id: key));
+      } catch (e) {
+        mezDbgPrint("FREAKING EXCEPTION ===> $e");
+      }
     });
+    return restaurants;
   }
 
   Future<Restaurant> getRestaurant(String restaurantId) async {

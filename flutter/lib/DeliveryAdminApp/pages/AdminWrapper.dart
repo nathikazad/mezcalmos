@@ -49,7 +49,7 @@ class _AdminWrapperState extends State<AdminWrapper> {
   void handleAuthorization(bool authorized) {
     if (authorized) {
       mezDbgPrint("AdminWrapper::handleState going to in process orders");
-      Get.toNamed(kOrderRoute);
+      Get.toNamed(kOrdersRoute);
     } else {
       mezDbgPrint("AdminWrapper::handleState going to unauthorized");
       Get.toNamed(kUnauthorizedRoute);

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/CustomerApp/components/ItemComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
-import 'package:mezcalmos/CustomerApp/components/appbarComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/buttonComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/dailogComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/incrementalComponent.dart';
@@ -14,7 +12,6 @@ import 'package:mezcalmos/CustomerApp/components/titlesComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/cart.dart';
 import 'package:intl/intl.dart';
-
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
@@ -29,6 +26,37 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
   LanguageController lang = Get.find<LanguageController>();
 
   TextEditingController textcontoller = new TextEditingController();
+  Rxn<Cart> cart = Rxn();
+  // this is used for DropDown Value  (basically the key of dropDownItems)
+  RxString _dropDownValue = "_pick_".obs;
+  // this is the final newly updated user location pick
+  Location? _pickedLocation;
+
+  // DrowpDown Items
+  RxList<DropdownMenuItem<String>> _dropDownItemsList =
+      <DropdownMenuItem<String>>[].obs;
+
+  void updateDropDown(Location? _newLocation) {
+    if (_pickedLocation != _newLocation) {
+      _dropDownItemsList.removeWhere(
+          (element) => element.value == _pickedLocation.toString());
+      _dropDownItemsList.add(DropdownMenuItem<String>(
+          child: Text(_newLocation!.address), value: _newLocation.toString()));
+      _pickedLocation = _newLocation;
+      _dropDownValue.value = _newLocation.toString();
+    }
+  }
+
+  ViewCartScreen() {
+    // by default it contains one .
+    _dropDownItemsList.value = <DropdownMenuItem<String>>[
+      DropdownMenuItem(
+        child: Text("Pick from Map"),
+        value: "_pick_",
+      ),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     responsiveSize(context);
@@ -189,34 +217,33 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
                         color: const Color(0x80ffffff)),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton<String>(
-                        value: null,
-                        isDense: true,
+                        value: _dropDownValue.value,
+                        // changed this to show the address much more clearly.
+                        isDense: false,
                         isExpanded: true,
-                        hint: Text(
-                            "${lang.strings['customer']['restaurant']['cart']['pickLocation']}",
+                        hint: Text("Select Location",
                             style: const TextStyle(
                                 color: const Color(0xff000f1c),
-                                fontFamily: "psr",
+                                fontWeight: FontWeight.w500,
+                                fontFamily: "FontAwesome5Pro",
                                 fontStyle: FontStyle.normal,
                                 fontSize: 12.0),
                             textAlign: TextAlign.left),
                         icon: Icon(Icons.expand_more),
-                        items: [
-                          DropdownMenuItem(child: Text("home"), value: "home"),
-                          DropdownMenuItem(
-                              child: Text("office"), value: "office"),
-                          DropdownMenuItem(
-                              child: Text("Pick New Location"),
-                              value: "pickNewLocation"),
-                        ],
+                        items: _dropDownItemsList(),
                         onChanged: (newValue) async {
-                          if (newValue == "pickNewLocation") {
-                            controller.cart.value.toLocation =
-                                await Get.toNamed<Location?>(kPickToLocation);
+                          // we will route the user back to the Map
+                          if (newValue == "_pick_") {
+                            dynamic _loc =
+                                await Get.toNamed(kPickLocationRoute);
+                            if (_loc != null) {
+                              mezDbgPrint(
+                                  "Get.back executed with  res : $_loc");
+                              updateDropDown(_loc);
+                            } else {
+                              mezDbgPrint("Pick map view returned Null !!!");
+                            }
                           }
-                          // } else {
-                          // assing to already saved location
-                          // }
                         },
                       ),
                     ),
@@ -263,22 +290,21 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
                             .toFirebaseFormattedJson()
                             .toString());
 
-                        dynamic response = await controller.checkout();
-                        print(response["errorCode"].toString());
-                        if (response["status"] == "Success") {
+                        var response = await controller.checkout();
+                        print(response.errorCode.toString());
+                        if (response.success) {
                           controller.clearCart();
                           popEverythingAndNavigateTo(
                               getCurrentRestaurantOrderRoute(
-                                  response["orderId"]));
+                                  response.data["orderId"]));
                         } else {
                           print(response);
-                          if (response["errorCode"] == "serverError") {
+                          if (response.errorCode == "serverError") {
                             // do something
-                          } else if (response["errorCode"] ==
+                          } else if (response.errorCode ==
                               "inMoreThanThreeOrders") {
                             // do something
-                          } else if (response["errorCode"] ==
-                              "restaurantClosed") {
+                          } else if (response.errorCode == "restaurantClosed") {
                             // do something
                           } else {
                             // do something

@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
+import 'package:mezcalmos/DeliveryAdminApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 
-class ListOrdersScreen extends GetView {
-  RxList<Order> currentOrders = RxList.empty();
-  RxList<Order> pastOrders = RxList.empty();
+class ListOrdersScreen extends StatefulWidget {
+  @override
+  _ListOrdersScreen createState() => _ListOrdersScreen();
+}
+
+class _ListOrdersScreen extends State<ListOrdersScreen> {
+  RxList<Order> inProcessOrders = RxList.empty();
   OrderController controller = Get.find<OrderController>();
   ListOrdersScreen() {
-    currentOrders.value = controller.currentOrders;
-    controller.getCurrentOrders().listen((event) {
-      currentOrders.value = event;
+    inProcessOrders.value = controller.inProcessOrders;
+    controller.ordersStream.listen((event) {
+      inProcessOrders.value = event;
     });
-    controller.getPastOrders().listen((event) => pastOrders.value = event);
   }
 
   @override
@@ -30,13 +33,13 @@ class ListOrdersScreen extends GetView {
   Widget buildOrders() {
     return Column(
       children:
-          currentOrders.fold<List<Widget>>(<Widget>[], (children, element) {
+          inProcessOrders.fold<List<Widget>>(<Widget>[], (children, element) {
         children.add(Row(children: [
           Text(element.orderId),
           Text(element.cost.toString()),
           TextButton(
               onPressed: () =>
-                  Get.toNamed(getCurrentRestaurantOrderRoute(element.orderId)),
+                  Get.toNamed(getRestaurantOrderRoute(element.orderId)),
               child: Text("View Order"))
         ]));
         return children;
