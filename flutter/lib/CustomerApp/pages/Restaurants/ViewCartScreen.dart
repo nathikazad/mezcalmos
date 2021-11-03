@@ -72,8 +72,7 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
         builder: (restaurant) => Obx(
           () {
             mezDbgPrint(
-                controller.cart.value.toFirebaseFormattedJson().toString() +
-                    "hhhhhhhhhhhhhh");
+                controller.cart.value.toFirebaseFormattedJson().toString());
             return SingleChildScrollView(
               child: Column(
                 children: [
@@ -569,18 +568,28 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
                                   controller.refresh();
                                   Get.back();
                                 },
-                                () => Get.back(),
+                                () {
+                                  counter.value =
+                                      counter.value + element.costPerOne();
+                                  controller.cart.value
+                                      .incrementItem(element.id!, 1);
+                                  controller.refresh();
+                                  Get.back();
+                                },
                               );
                             }
                           },
                           value: element.quantity,
                           decrement: () {
-                            if (counter.value >= 0) {
+                            if (counter.value <= 0) {
+                              mezDbgPrint(
+                                  "this is the value of counter ${counter.value}");
+                            } else {
                               counter.value =
                                   counter.value - element.costPerOne();
                               controller.cart.value
                                   .incrementItem(element.id!, -1);
-                            } else {}
+                            }
                           },
                         ),
                         Spacer(),
