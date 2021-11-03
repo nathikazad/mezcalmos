@@ -6,11 +6,16 @@ import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/constants/mapConstants.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
+import 'package:mezcalmos/Shared/models/Location.dart' as LocationModel;
 import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mezcalmos/TaxiAdminApp/components/infoCardComponent.dart';
+
+typedef LocationChangesNotifier = void Function(LocationModel.Location msg);
 
 class MGoogleMap extends StatefulWidget with MezDisposable {
+  final LocationChangesNotifier notifyParent;
   LatLng initialLocation;
   Set<Polyline> polylines;
   List<Marker> markers;
@@ -23,6 +28,7 @@ class MGoogleMap extends StatefulWidget with MezDisposable {
   bool myLocationButtonEnabled;
   MGoogleMap({
     Key? key,
+    required this.notifyParent,
     this.periodicRedrendring = true,
     this.myLocationButtonEnabled = false,
     this.minMaxZoomPrefs = const MinMaxZoomPreference(16, 17),
@@ -192,6 +198,31 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
     super.dispose();
   }
 
+  Future<LocationData?> _currentLocation() async {
+    LocationData? currentLocation;
+    var location = new Location();
+    try {
+      currentLocation = await location.getLocation();
+      String? address = await getAdressFromLatLng(
+          LatLng(currentLocation.latitude!, currentLocation.longitude!));
+
+      if (address == null) {
+        address =
+            "Location : ${currentLocation.latitude} , ${currentLocation.longitude}";
+      }
+
+      widget.notifyParent(LocationModel.Location({
+        "lat": currentLocation.latitude,
+        "lng": currentLocation.longitude,
+        "address": address
+      }));
+    } on Exception {
+      currentLocation = null;
+    }
+    return currentLocation;
+  }
+
+  bool userTaped = false;
   @override
   Widget build(BuildContext context) {
     mezDbgPrint(
@@ -199,30 +230,103 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
     responsiveSize(context);
     // return widget.markers.isNotEmpty
     //     ?
-    return GoogleMap(
-      padding: EdgeInsets.all(20),
-      mapToolbarEnabled: false,
-      myLocationButtonEnabled: widget.myLocationButtonEnabled,
-      myLocationEnabled: widget.myLocationButtonEnabled,
-      minMaxZoomPreference: widget.minMaxZoomPrefs,
-      buildingsEnabled: false,
-      markers: widget.markers.toSet(),
-      polylines: widget.polylines,
-      zoomControlsEnabled: false,
-      compassEnabled: false,
-      mapType: MapType.normal,
-      tiltGesturesEnabled: true,
-      initialCameraPosition: CameraPosition(
-          target: widget.initialLocation,
-          tilt: 9.440717697143555,
-          zoom: 5.151926040649414),
-      onMapCreated: (GoogleMapController _gController) async {
-        mezDbgPrint("\n\n\n\n\n o n   m a p   c r e a t e d !\n\n\n\n\n\n");
-        _controller = _gController;
-        await _gController.setMapStyle(mezMapStyle);
-        await animateAndUpdateBounds();
-        _completer.complete(_gController);
-      },
+    return Stack(
+      children: [
+        GestureDetector(
+          onTapDown: (_) {
+            mezDbgPrint("Tap Down !!");
+            userTaped = true;
+          },
+          // onTapCancel: () async {
+          //   mezDbgPrint("Tap cancel !!");
+
+          //   if (userTaped) {
+          //     mezDbgPrint("Tap Down Confirmed !!");
+
+          //     userTaped = false;
+          //     mezDbgPrint("Camera New position .. getting the center !!");
+          //     LatLng _center = await getMapCenter();
+          //     widget.notifyParent(LocationModel.Location({
+          //       "lat": _center.latitude,
+          //       "lng": _center.longitude,
+          //       "address": "M_center position!"
+          //     }));
+          //   }
+          // },
+          // onTapUp: (_) async {
+
+          // },
+          child: GoogleMap(
+            onCameraIdle: () async {
+              if (userTaped) {
+                mezDbgPrint("Tap Down Confirmed !!");
+                userTaped = false;
+                mezDbgPrint("Camera New position .. getting the center !!");
+                LatLng _center = await getMapCenter();
+                String? address = await getAdressFromLatLng(_center);
+
+                if (address == null) {
+                  address =
+                      "Location : ${_center.latitude} , ${_center.longitude}";
+                }
+
+                widget.notifyParent(LocationModel.Location({
+                  "lat": _center.latitude,
+                  "lng": _center.longitude,
+                  "address": address
+                }));
+              }
+            },
+            padding: EdgeInsets.all(20),
+            mapToolbarEnabled: false,
+            minMaxZoomPreference: widget.minMaxZoomPrefs,
+            myLocationButtonEnabled: false,
+            buildingsEnabled: false,
+            markers: widget.markers.toSet(),
+            polylines: widget.polylines,
+            zoomControlsEnabled: false,
+            compassEnabled: false,
+            mapType: MapType.normal,
+            tiltGesturesEnabled: true,
+            initialCameraPosition: CameraPosition(
+                target: widget.initialLocation,
+                tilt: 9.440717697143555,
+                zoom: 5.151926040649414),
+            onMapCreated: (GoogleMapController _gController) async {
+              mezDbgPrint(
+                  "\n\n\n\n\n o n   m a p   c r e a t e d !\n\n\n\n\n\n");
+              _controller = _gController;
+              await _gController.setMapStyle(mezMapStyle);
+              await animateAndUpdateBounds();
+              _completer.complete(_gController);
+            },
+          ),
+        ),
+        Positioned(
+          right: 10,
+          bottom: 10,
+          child: FloatingActionButton(
+            backgroundColor: Color(0xffffffff),
+            onPressed: () async {
+              LocationData? _tmpCurrentLoc = await _currentLocation();
+              if (_tmpCurrentLoc != null) {
+                _controller?.animateCamera(CameraUpdate.newCameraPosition(
+                  CameraPosition(
+                    target: LatLng(
+                        _tmpCurrentLoc.latitude!, _tmpCurrentLoc.longitude!),
+                  ),
+                ));
+              }
+            },
+            child: Center(
+              child: Icon(
+                Icons.gps_fixed_rounded,
+                color: Color(0xffa8a8a8),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
     // : Center(
     //     child: Container(

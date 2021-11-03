@@ -15,6 +15,7 @@ class AutoCompleteTextView extends StatefulWidget {
   final tfTextAlign;
   //Suggestiondrop Down properties
   final suggestionStyle;
+  final String? tfInitialText;
   final suggestionTextAlign;
   final onTapCallback;
   final enabled;
@@ -27,6 +28,7 @@ class AutoCompleteTextView extends StatefulWidget {
   AutoCompleteTextView(
       {required this.controller,
       this.onTapCallback,
+      this.tfInitialText = null,
       this.enabled = true,
       this.maxHeight = 200,
       this.tfCursorColor = Colors.white,
@@ -164,6 +166,12 @@ class _AutoCompleteTextViewState extends State<AutoCompleteTextView> {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      if (widget.controller.text.isEmpty && widget.tfInitialText != null) {
+        widget.controller.text = widget.tfInitialText!;
+      }
+    });
+
     return CompositedTransformTarget(
       link: this._layerLink,
       child: TextField(

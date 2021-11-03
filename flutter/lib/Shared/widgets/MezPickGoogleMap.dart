@@ -8,10 +8,16 @@ import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 
+typedef LocationChangesNotifier = void Function(Location msg);
+
 // Google Map Pick Widget
 class MezPickGoogleMap extends StatefulWidget {
   final LatLng location;
-  MezPickGoogleMap({Key? key, required this.location}) : super(key: key);
+  final LocationChangesNotifier notifyParent;
+
+  MezPickGoogleMap(
+      {Key? key, required this.location, required this.notifyParent})
+      : super(key: key);
   @override
   MezPickGoogleMapState createState() => MezPickGoogleMapState();
 }
@@ -86,6 +92,10 @@ class MezPickGoogleMapState extends State<MezPickGoogleMap> {
     );
   }
 
+  void _notifierLocationChange(Location newLoc) {
+    widget.notifyParent(newLoc);
+  }
+
   @override
   Widget build(BuildContext context) {
     return _showLoading == false
@@ -93,6 +103,7 @@ class MezPickGoogleMapState extends State<MezPickGoogleMap> {
             alignment: Alignment.center,
             children: [
               MGoogleMap(
+                notifyParent: _notifierLocationChange,
                 markers: markers,
                 initialLocation: widget.location,
                 key: mGoogleMapKey,

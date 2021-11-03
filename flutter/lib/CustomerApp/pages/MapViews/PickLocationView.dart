@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
@@ -16,6 +17,7 @@ class PickLocationView extends StatefulWidget {
 
 class _PickLocationViewState<T> extends State<PickLocationView> {
   Location? _selectedLocation;
+  bool viewBuilding = false;
 
   void onPickButtonClick() {
     Get.back<Location>(result: _selectedLocation, closeOverlays: true);
@@ -25,11 +27,20 @@ class _PickLocationViewState<T> extends State<PickLocationView> {
   void initState() {
     GeoLoc.Location().getLocation().then((locData) {
       mezDbgPrint("Sat to current Location $locData!");
-      setState(() {
-        _selectedLocation = Location({
-          "address": "Current Location",
-          "lat": locData.latitude,
-          "lng": locData.longitude,
+      String? address;
+      getAdressFromLatLng(LatLng(locData.latitude!, locData.longitude!))
+          .then((_address) {
+        if (_address == null) {
+          address = "Location : ${locData.latitude!} , ${locData.longitude}";
+        } else
+          address = _address;
+
+        setState(() {
+          _selectedLocation = Location({
+            "address": address,
+            "lat": locData.latitude,
+            "lng": locData.longitude,
+          });
         });
       });
     });
@@ -39,6 +50,8 @@ class _PickLocationViewState<T> extends State<PickLocationView> {
 
   @override
   Widget build(BuildContext context) {
+    // WidgetsBinding.instance?.
+
     return Scaffold(
       appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back()),
       backgroundColor: Colors.white,
@@ -61,6 +74,7 @@ class _PickLocationViewState<T> extends State<PickLocationView> {
               padding: EdgeInsets.only(top: 10),
               child: LocationSearchComponent(
                   label: "To",
+                  text: _selectedLocation?.address,
                   onClear: () {},
                   notifyParent: (Location location) {
                     mezDbgPrint(
@@ -81,6 +95,11 @@ class _PickLocationViewState<T> extends State<PickLocationView> {
                           color: Colors.grey.shade200),
                       child: _selectedLocation != null
                           ? MezPickGoogleMap(
+                              notifyParent: (Location location) {
+                                setState(() {
+                                  _selectedLocation = location;
+                                });
+                              },
                               location: LatLng(_selectedLocation!.latitude,
                                   _selectedLocation!.longitude))
                           : Center(
@@ -103,10 +122,11 @@ class _PickLocationViewState<T> extends State<PickLocationView> {
                   style: ButtonStyle(
                     fixedSize: MaterialStateProperty.all(Size(Get.width,
                         getSizeRelativeToScreen(20, Get.height, Get.width))),
-                    backgroundColor:
-                        MaterialStateProperty.all(Colors.transparent),
+                    backgroundColor: !viewBuilding
+                        ? MaterialStateProperty.all(Colors.transparent)
+                        : MaterialStateProperty.all(Color(0xffa8a8a8)),
                   ),
-                  onPressed: onPickButtonClick,
+                  onPressed: !viewBuilding ? onPickButtonClick : () {},
                   child: Text("Pick",
                       style: TextStyle(
                         fontFamily: 'psr',

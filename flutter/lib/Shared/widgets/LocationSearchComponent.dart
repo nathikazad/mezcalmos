@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:http/http.dart' as http;
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
@@ -15,9 +16,11 @@ class LocationSearchComponent extends StatefulWidget {
   final String label;
   final LocationChangesNotifier notifyParent;
   final Function onClear;
+  String? text;
 
   LocationSearchComponent(
       {required this.label,
+      this.text = null,
       required this.notifyParent,
       required this.onClear,
       Key? key})
@@ -40,53 +43,29 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
     super.dispose();
   }
 
-  Future<Map<String, String>> _getLocationsSuggestions(String search) async {
-    String url =
-        "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$search&language=${_lang.userLanguageKey}&components=country:mx&key=$placesApikey";
-
-    http.Response resp = await http.get(Uri.parse(url));
-    Map<String, dynamic> respJson = json.decode(resp.body);
-    Map<String, String> _returnedPredictions = <String, String>{};
-
-    if (respJson["status"] == "OK") {
-      respJson["predictions"].forEach((pred) {
-        if (pred["description"].toLowerCase().contains(search.toLowerCase())) {
-          _returnedPredictions[pred["place_id"]] = pred["description"];
-        }
-      });
-    }
-
-    mezDbgPrint(_returnedPredictions.length);
-
-    return _returnedPredictions;
-  }
-
-  Future<void> _getLocationFromPlaceId(String placeId, String name) async {
-    String url =
-        "https://maps.googleapis.com/maps/api/place/details/json?placeid=$placeId&key=$placesApikey";
-    http.Response resp = await http.get(Uri.parse(url));
-    Map<String, dynamic> respJson = json.decode(resp.body);
-
-    if (respJson["status"] == "OK") {
-      double lat = respJson["result"]["geometry"]["location"]["lat"];
-      double lng = respJson["result"]["geometry"]["location"]["lng"];
-      String address = respJson["result"]["formatted_address"];
-      widget
-          .notifyParent(Location({"address": address, "lat": lat, "lng": lng}));
-
-      setState(() {
-        // isTfEnabled = false;
-        _showClearBtn = true;
-      });
-    } else {
-      // in case there is a problem on request!
-
+  @override
+  void didUpdateWidget(covariant LocationSearchComponent oldWidget) {
+    if (widget.text != oldWidget.text && widget.text != null) {
       _controller.clear();
+      setState(() {
+        _controller.text = widget.text!;
+      });
+      ;
     }
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      if (widget.text != null) {
+        setState(() {
+          _showClearBtn = true;
+        });
+        widget.text = null;
+      }
+    });
+
     return Column(
       children: <Widget>[
         Container(
@@ -107,10 +86,11 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
                 height: 20,
               ),
               AutoCompleteTextView(
+                tfInitialText: widget.text,
                 tfCursorColor: Colors.black,
                 controller: _controller,
                 suggestionsApiFetchDelay: 1,
-                getSuggestionsMethod: _getLocationsSuggestions,
+                getSuggestionsMethod: getLocationsSuggestions,
                 focusGained: () {
                   mezDbgPrint("Focus Gained on TF !");
                 },
@@ -130,7 +110,16 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
                     });
                   }
                 },
-                onTapCallback: _getLocationFromPlaceId,
+                onTapCallback: (String placeId, String name) async {
+                  Location? _loc = await getLocationFromPlaceId(placeId);
+                  if (_loc != null) {
+                    widget.notifyParent(_loc);
+                    setState(() {
+                      // isTfEnabled = false;
+                      _showClearBtn = true;
+                    });
+                  }
+                },
                 tfTextDecoration: InputDecoration(
                   hintText: "Enter Address",
                   border: InputBorder.none,
