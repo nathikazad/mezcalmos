@@ -44,6 +44,8 @@ class OrderController extends GetxController {
         .child(customerInProcessOrders(_authController.fireAuthUser!.uid))
         .onValue
         .map<List<Order>>((event) {
+      mezDbgPrint(
+          "Current Order Controller ====> ${event.snapshot.toString()}");
       List<Order> orders = [];
       if (event.snapshot.value != null) {
         event.snapshot.value.forEach((dynamic orderId, dynamic orderData) {

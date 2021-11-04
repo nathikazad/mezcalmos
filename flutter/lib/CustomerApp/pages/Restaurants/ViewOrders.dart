@@ -12,6 +12,7 @@ class ViewOrders extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xffffffff),
       appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back(),
           actionIcons: [
             ActionIconsComponents.cartIcon(),

@@ -45,6 +45,7 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
   Widget build(BuildContext context) {
     responsiveSize(context);
     return Scaffold(
+        backgroundColor: const Color(0xffffffff),
         appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back(),
             actionIcons: [
               ActionIconsComponents.cartIcon(),

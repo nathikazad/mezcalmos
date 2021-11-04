@@ -102,7 +102,7 @@ class Cart {
   PaymentType paymentType = PaymentType.Cash;
   Cart({this.restaurant});
   Cart.fromCartData(dynamic cartData, this.restaurant) {
-    cartData["items"].forEach((dynamic itemId, dynamic itemData) {
+    cartData["items"]?.forEach((dynamic itemId, dynamic itemData) {
       Map<String, String> chosenOneOptions = {};
       itemData["options"]["chosenOneOptions"]
           .forEach((dynamic id, dynamic data) {

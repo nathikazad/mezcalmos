@@ -44,22 +44,31 @@ class _ViewCurrentRestaurantOrderScreenState
   SideMenuDraweController _sideMenuDraweController =
       Get.find<SideMenuDraweController>();
 
-  _ViewCurrentRestaurantOrderScreenState() {
+  void getRestaurantInfo(String id) async {
+    restaurantInfo.value = await restaurantsInfoController.getRestaurant(id);
+    mezDbgPrint(restaurantInfo.value!.items);
+  }
+
+  @override
+  void initState() {
     String orderId = Get.parameters['orderId']!;
     try {
-      order.value = controller.currentOrders
-          .firstWhere((order) => order.orderId == orderId) as RestaurantOrder;
+      mezDbgPrint(" ==> Order id param ========> $orderId");
+      mezDbgPrint(
+          " Len of currentOrders ==> ${controller.currentOrders.length}");
+
+      order.value = controller.currentOrders.firstWhere((order) {
+        return order.orderId == orderId;
+      }) as RestaurantOrder;
     } on StateError catch (_) {
       // do nothing
     }
     controller.getCurrentOrderStream(orderId).listen((event) {
       order.value = event as RestaurantOrder;
     });
+    mezDbgPrint("=========> ${order.value}");
     getRestaurantInfo(order.value!.serviceProviderId.toString());
-  }
-  void getRestaurantInfo(String id) async {
-    restaurantInfo.value = await restaurantsInfoController.getRestaurant(id);
-    mezDbgPrint(restaurantInfo.value!.items);
+    super.initState();
   }
 
   @override
@@ -68,6 +77,7 @@ class _ViewCurrentRestaurantOrderScreenState
     mezDbgPrint(order.value!.restaurantOrderStatus);
     mezDbgPrint(order.value!.serviceProviderId);
     return Scaffold(
+      backgroundColor: const Color(0xffffffff),
       appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back(),
           actionIcons: [
             ActionIconsComponents.notificationIcon(),

@@ -50,6 +50,10 @@ class RestaurantCartController extends GetxController {
             associatedRestaurant =
                 await getAssociatedRestaurant(cartData["serviceProviderId"]);
           }
+          mezDbgPrint(" =====> $cartData");
+          if (cartData == null) {
+            cart.value = Cart();
+          }
           cart.value = Cart.fromCartData(cartData, associatedRestaurant!);
         }
       } else {

@@ -74,6 +74,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
     // print("${cartItem.value?.item}");
     return Scaffold(
       resizeToAvoidBottomInset: true,
+      backgroundColor: const Color(0xffffffff),
       appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back(),
           actionIcons: [
             ActionIconsComponents.cartIcon(),
@@ -92,9 +93,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                       children: [
                         Positioned(
                             child: Container(
-                          // alignment: Alignment.center,
                           margin: const EdgeInsets.only(top: 10),
-
                           height: Get.height,
                           width: Get.width,
                           alignment: Alignment.topCenter,
@@ -351,6 +350,9 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                             function: (ViewItemScreenMode.AddItemMode ==
                                     widget.viewItemScreenMode)
                                 ? () {
+                                    String _notes = textcontoller.text;
+                                    cartItem.value?.notes =
+                                        _notes.length > 0 ? _notes : "";
                                     restaurantCartController
                                         .addItem(cartItem.value!);
                                     Get.off(ViewCartScreen());

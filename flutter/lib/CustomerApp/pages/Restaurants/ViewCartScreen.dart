@@ -24,25 +24,27 @@ final currency = new NumberFormat("#,##0.00", "en_US");
 
 class ViewCartScreen extends GetView<RestaurantCartController> {
   LanguageController lang = Get.find<LanguageController>();
+  RestaurantCartController _restaurantCartController =
+      Get.find<RestaurantCartController>();
 
   TextEditingController textcontoller = new TextEditingController();
   Rxn<Cart> cart = Rxn();
   // this is used for DropDown Value  (basically the key of dropDownItems)
   RxString _dropDownValue = "_pick_".obs;
   // this is the final newly updated user location pick
-  Location? _pickedLocation;
+  Rxn<Location> _pickedLocation = Rxn();
 
   // DrowpDown Items
   RxList<DropdownMenuItem<String>> _dropDownItemsList =
       <DropdownMenuItem<String>>[].obs;
 
   void updateDropDown(Location? _newLocation) {
-    if (_pickedLocation != _newLocation) {
+    if (_pickedLocation.value != _newLocation) {
       _dropDownItemsList.removeWhere(
-          (element) => element.value == _pickedLocation.toString());
+          (element) => element.value == _pickedLocation.value.toString());
       _dropDownItemsList.add(DropdownMenuItem<String>(
           child: Text(_newLocation!.address), value: _newLocation.toString()));
-      _pickedLocation = _newLocation;
+      _pickedLocation.value = _newLocation;
       _dropDownValue.value = _newLocation.toString();
     }
   }
@@ -61,264 +63,282 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
   Widget build(BuildContext context) {
     responsiveSize(context);
     return Scaffold(
+      backgroundColor: const Color(0xffffffff),
       appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back(),
           actionIcons: [
             ActionIconsComponents.notificationIcon(),
             ActionIconsComponents.orderIcon()
           ]),
-      body: GetBuilder<RestaurantCartController>(
-        // specify type as Controller
-        init: RestaurantCartController(), // intialize with the Controller
-        builder: (restaurant) => Obx(
-          () {
-            mezDbgPrint(
-                controller.cart.value.toFirebaseFormattedJson().toString());
-            return SingleChildScrollView(
-              child: Column(
-                children: [
-                  (controller.cart.value != null)
-                      ? Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            buildCart(controller.cart.value),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            buildItems(controller.cart.value.items),
-                            SizedBox(
-                              height: 20,
-                            ),
-                          ],
-                        )
-                      : Container(),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                        "${lang.strings['customer']['restaurant']['cart']['totalCost']}",
-                        style: const TextStyle(
-                            color: const Color(0xff000f1c),
-                            fontFamily: "psb",
-                            fontSize: 14.0),
-                        textAlign: TextAlign.left),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 15),
-                    width: Get.width,
-                    height: 113,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                      border: Border.all(
-                          color: const Color(0xffececec), width: 0.5),
-                      color: const Color(0x80ffffff),
-                    ),
+      body: Obx(() => controller.cart.value.items.length > 0
+          ? GetBuilder<RestaurantCartController>(
+              // specify type as Controller
+              init: RestaurantCartController(), // intialize with the Controller
+              builder: (_) => SingleChildScrollView(
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Expanded(
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 15),
-                            child: Row(
-                              children: [
-                                Text(
-                                    "${lang.strings['customer']['restaurant']['cart']['deliveryCost']}",
-                                    style: const TextStyle(
-                                        color: const Color(0xff000f1c),
-                                        fontFamily: "psr",
-                                        fontSize: 20.0),
-                                    textAlign: TextAlign.left),
-                                Spacer(),
-                                Text(" \$${currency.format(40.00)}",
-                                    style: TextStyle(
-                                        color: const Color(0xff000f1c),
-                                        fontFamily: "psb",
-                                        fontSize: 20.0.sp),
-                                    textAlign: TextAlign.right)
-                              ],
+                        (controller.cart.value.quantity() >= 1)
+                            ? Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  buildCart(controller.cart.value),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  buildItems(controller.cart.value.items),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                ],
+                              )
+                            : Container(),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                              "${lang.strings['customer']['restaurant']['cart']['totalCost']}",
+                              style: const TextStyle(
+                                  color: const Color(0xff000f1c),
+                                  fontFamily: "psb",
+                                  fontSize: 14.0),
+                              textAlign: TextAlign.left),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 15),
+                          width: Get.width,
+                          height: 113,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                            border: Border.all(
+                                color: const Color(0xffececec), width: 0.5),
+                            color: const Color(0x80ffffff),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                          "${lang.strings['customer']['restaurant']['cart']['deliveryCost']}",
+                                          style: const TextStyle(
+                                              color: const Color(0xff000f1c),
+                                              fontFamily: "psr",
+                                              fontSize: 20.0),
+                                          textAlign: TextAlign.left),
+                                      Spacer(),
+                                      Text(" \$${currency.format(40.00)}",
+                                          style: TextStyle(
+                                              color: const Color(0xff000f1c),
+                                              fontFamily: "psb",
+                                              fontSize: 20.0.sp),
+                                          textAlign: TextAlign.right)
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 15),
+                                  width: Get.width,
+                                  height: 0.5,
+                                  decoration: BoxDecoration(
+                                      color: const Color(0xffececec))),
+                              Expanded(
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15),
+                                  child: Row(
+                                    children: [
+                                      // Total
+                                      Text(
+                                          "${lang.strings['customer']['restaurant']['cart']['total']}",
+                                          style: const TextStyle(
+                                              color: const Color(0xff000f1c),
+                                              fontFamily: "psr",
+                                              fontSize: 20.0),
+                                          textAlign: TextAlign.left),
+                                      Spacer(),
+                                      Obx(
+                                        () => Text(
+                                            (controller.cart.value
+                                                            .toFirebaseFormattedJson()[
+                                                        "cost"] !=
+                                                    null)
+                                                ? "  \$ ${currency.format(controller.cart.value.toFirebaseFormattedJson()["cost"] as dynamic)}"
+                                                : "0",
+                                            style: TextStyle(
+                                                color: const Color(0xff000f1c),
+                                                fontFamily: "psb",
+                                                fontStyle: FontStyle.normal,
+                                                fontSize: 20.0.sp),
+                                            textAlign: TextAlign.right),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                              "${lang.strings['customer']['restaurant']['cart']['deliveryLocation']}",
+                              style: const TextStyle(
+                                  color: const Color(0xff000f1c),
+                                  fontFamily: "psb",
+                                  fontStyle: FontStyle.normal,
+                                  fontSize: 14.0),
+                              textAlign: TextAlign.left),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Container(
+                          margin: const EdgeInsets.symmetric(
+                            horizontal: 15,
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 8),
+                          decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(4)),
+                              border: Border.all(
+                                  color: const Color(0xffececec), width: 0.5),
+                              color: const Color(0x80ffffff)),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton<String>(
+                              value: _dropDownValue.value,
+                              // changed this to show the address much more clearly.
+                              isDense: false,
+                              isExpanded: true,
+                              hint: Text("Select Location",
+                                  style: const TextStyle(
+                                      color: const Color(0xff000f1c),
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily: "FontAwesome5Pro",
+                                      fontStyle: FontStyle.normal,
+                                      fontSize: 12.0),
+                                  textAlign: TextAlign.left),
+                              icon: Icon(Icons.expand_more),
+                              items: _dropDownItemsList(),
+                              onChanged: (newValue) async {
+                                // we will route the user back to the Map
+                                if (newValue == "_pick_") {
+                                  dynamic _loc =
+                                      await Get.toNamed(kPickLocationRoute);
+                                  if (_loc != null) {
+                                    mezDbgPrint(
+                                        "Get.back executed with  res : ${(_loc as Location?)!.toString()}");
+                                    updateDropDown(_loc);
+                                    controller.refresh();
+                                  } else {
+                                    mezDbgPrint(
+                                        "Pick map view returned Null !!!");
+                                  }
+                                }
+                              },
                             ),
                           ),
                         ),
+                        SizedBox(
+                          height: 15,
+                        ),
                         Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 15),
-                            width: Get.width,
-                            height: 0.5,
-                            decoration:
-                                BoxDecoration(color: const Color(0xffececec))),
-                        Expanded(
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 15),
-                            child: Row(
-                              children: [
-                                // Total
-                                Text(
-                                    "${lang.strings['customer']['restaurant']['cart']['total']}",
-                                    style: const TextStyle(
-                                        color: const Color(0xff000f1c),
-                                        fontFamily: "psr",
-                                        fontSize: 20.0),
-                                    textAlign: TextAlign.left),
-                                Spacer(),
-                                Obx(
-                                  () => Text(
-                                      (controller.cart.value
-                                                      .toFirebaseFormattedJson()[
-                                                  "cost"] !=
-                                              null)
-                                          ? "  \$ ${currency.format(controller.cart.value.toFirebaseFormattedJson()["cost"] as dynamic)}"
-                                          : "0",
-                                      style: TextStyle(
-                                          color: const Color(0xff000f1c),
-                                          fontFamily: "psb",
-                                          fontStyle: FontStyle.normal,
-                                          fontSize: 20.0.sp),
-                                      textAlign: TextAlign.right),
-                                ),
-                              ],
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                              "${lang.strings['customer']['restaurant']['menu']['notes']}",
+                              style: const TextStyle(
+                                  color: const Color(0xff000f1c),
+                                  fontFamily: "psb",
+                                  fontStyle: FontStyle.normal,
+                                  fontSize: 14.0),
+                              textAlign: TextAlign.left),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        TextFieldComponent(
+                          textController: textcontoller,
+                          hint: "Write Notes",
+                        ),
+                        SizedBox(
+                          height: 25,
+                        ),
+                        ButtonComponent(
+                            bgColor: _pickedLocation.value == null
+                                ? const Color(0xdddddddd)
+                                : const Color(0xffac59fc),
+                            widget: Center(
+                              child: Text(
+                                  "${lang.strings['customer']['restaurant']['cart']['orderNow']}",
+                                  style: TextStyle(
+                                      color: const Color(0xffffffff),
+                                      fontFamily: "psb",
+                                      fontStyle: FontStyle.normal,
+                                      fontSize: 16.0),
+                                  textAlign: TextAlign.center),
                             ),
-                          ),
+                            function: _pickedLocation.value != null
+                                ? () async {
+                                    if (_pickedLocation.value != null) {
+                                      controller.cart.value.notes =
+                                          textcontoller.text;
+                                      controller.cart.value.toLocation =
+                                          _pickedLocation.value;
+
+                                      mezDbgPrint(controller.cart.value
+                                          .toFirebaseFormattedJson()
+                                          .toString());
+
+                                      var response =
+                                          await controller.checkout();
+                                      print(response.errorCode.toString());
+                                      if (response.success) {
+                                        controller.clearCart();
+                                        popEverythingAndNavigateTo(
+                                            getCurrentRestaurantOrderRoute(
+                                                response.data["orderId"]));
+                                      } else {
+                                        print(response);
+                                        if (response.errorCode ==
+                                            "serverError") {
+                                          // do something
+                                        } else if (response.errorCode ==
+                                            "inMoreThanThreeOrders") {
+                                          // do something
+                                        } else if (response.errorCode ==
+                                            "restaurantClosed") {
+                                          // do something
+                                        } else {
+                                          // do something
+                                        }
+                                      }
+                                    }
+                                  }
+                                : () {
+                                    // TODO : maybe add a pop up notifying the user that he/she should pick lcoation !
+                                  }),
+                        SizedBox(
+                          height: 25,
                         ),
                       ],
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                        "${lang.strings['customer']['restaurant']['cart']['deliveryLocation']}",
-                        style: const TextStyle(
-                            color: const Color(0xff000f1c),
-                            fontFamily: "psb",
-                            fontStyle: FontStyle.normal,
-                            fontSize: 14.0),
-                        textAlign: TextAlign.left),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 15,
-                    ),
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(4)),
-                        border: Border.all(
-                            color: const Color(0xffececec), width: 0.5),
-                        color: const Color(0x80ffffff)),
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
-                        value: _dropDownValue.value,
-                        // changed this to show the address much more clearly.
-                        isDense: false,
-                        isExpanded: true,
-                        hint: Text("Select Location",
-                            style: const TextStyle(
-                                color: const Color(0xff000f1c),
-                                fontWeight: FontWeight.w500,
-                                fontFamily: "FontAwesome5Pro",
-                                fontStyle: FontStyle.normal,
-                                fontSize: 12.0),
-                            textAlign: TextAlign.left),
-                        icon: Icon(Icons.expand_more),
-                        items: _dropDownItemsList(),
-                        onChanged: (newValue) async {
-                          // we will route the user back to the Map
-                          if (newValue == "_pick_") {
-                            dynamic _loc =
-                                await Get.toNamed(kPickLocationRoute);
-                            if (_loc != null) {
-                              mezDbgPrint(
-                                  "Get.back executed with  res : $_loc");
-                              updateDropDown(_loc);
-                            } else {
-                              mezDbgPrint("Pick map view returned Null !!!");
-                            }
-                          }
-                        },
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                        "${lang.strings['customer']['restaurant']['menu']['notes']}",
-                        style: const TextStyle(
-                            color: const Color(0xff000f1c),
-                            fontFamily: "psb",
-                            fontStyle: FontStyle.normal,
-                            fontSize: 14.0),
-                        textAlign: TextAlign.left),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  TextFieldComponent(
-                    textController: textcontoller,
-                    hint: "Write Notes",
-                  ),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  ButtonComponent(
-                      widget: Center(
-                        child: Text(
-                            "${lang.strings['customer']['restaurant']['cart']['orderNow']}",
-                            style: TextStyle(
-                                color: const Color(0xffffffff),
-                                fontFamily: "psb",
-                                fontStyle: FontStyle.normal,
-                                fontSize: 16.0),
-                            textAlign: TextAlign.center),
-                      ),
-                      function: () async {
-                        controller.cart.value.notes = textcontoller.text;
-                        mezDbgPrint(controller.cart.value
-                            .toFirebaseFormattedJson()
-                            .toString());
-
-                        var response = await controller.checkout();
-                        print(response.errorCode.toString());
-                        if (response.success) {
-                          controller.clearCart();
-                          popEverythingAndNavigateTo(
-                              getCurrentRestaurantOrderRoute(
-                                  response.data["orderId"]));
-                        } else {
-                          print(response);
-                          if (response.errorCode == "serverError") {
-                            // do something
-                          } else if (response.errorCode ==
-                              "inMoreThanThreeOrders") {
-                            // do something
-                          } else if (response.errorCode == "restaurantClosed") {
-                            // do something
-                          } else {
-                            // do something
-                          }
-                        }
-                      }),
-                  SizedBox(
-                    height: 25,
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
-      ),
+                  ))
+          : Center(child: Text("EMPTY"))),
     );
   }
 
@@ -419,15 +439,18 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
                     ],
                   ),
                 ),
-                onTap: () {
-                  dailogComponent(
+                onTap: () async {
+                  bool yesNoRes = await dailogComponent(
                       "Clear Cart", "Are you sure you want \nto clear cart?",
                       () {
-                    controller.clearCart();
-                    Get.back();
+                    Get.back(result: true);
                   }, () {
-                    Get.back();
+                    Get.back(result: false);
                   });
+
+                  if (yesNoRes) {
+                    controller.clearCart();
+                  }
                 },
               )
             ],
@@ -549,49 +572,60 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
                     child: Row(
                       children: [
                         IncrementalComponent(
-                          minVal: 1,
-                          increment: () {
-                            counter.value =
-                                counter.value + element.costPerOne();
-                            print("${element.item.id}");
-                            controller.cart.value.incrementItem(element.id!, 1);
-                            controller.refresh();
-                          },
-                          onChangedToZero: (val) {
-                            if (val) {
-                              dailogComponent(
-                                "Delete This Item",
-                                "Would you like to delete this item",
-                                () {
+                            minVal: 0,
+                            increment: () {
+                              counter.value =
+                                  counter.value + element.costPerOne();
+                              print("${element.item.id}");
+                              controller.cart.value
+                                  .incrementItem(element.id!, 1);
+                              controller.refresh();
+                            },
+                            onChangedToZero: (isZero) async {
+                              if (isZero) {
+                                controller.refresh();
+                                bool yesNoResult = await dailogComponent(
+                                  "Delete This Item",
+                                  "Would you like to delete this item",
+                                  () {
+                                    Get.back(result: true);
+                                  },
+                                  () {
+                                    Get.back(result: false);
+                                  },
+                                );
+                                mezDbgPrint(
+                                    " the returend value from the dailog $yesNoResult");
+                                if (yesNoResult == true) {
                                   controller
                                       .deleteItemFromCart("${element.id}");
-                                  controller.refresh();
-                                  Get.back();
-                                },
-                                () {
-                                  counter.value =
-                                      counter.value + element.costPerOne();
-                                  controller.cart.value
-                                      .incrementItem(element.id!, 1);
-                                  controller.refresh();
-                                  Get.back();
-                                },
-                              );
+                                  // controller.refresh();
+                                }
+                              }
+                            },
+                            value: element.quantity,
+                            decrement: () {
+                              if (element.quantity <= 1) {
+                              } else {
+                                counter.value =
+                                    counter.value + element.costPerOne();
+                                controller.cart.value
+                                    .incrementItem(element.id!, -1);
+                                controller.refresh();
+                              }
                             }
-                          },
-                          value: element.quantity,
-                          decrement: () {
-                            if (counter.value <= 0) {
-                              mezDbgPrint(
-                                  "this is the value of counter ${counter.value}");
-                            } else {
-                              counter.value =
-                                  counter.value - element.costPerOne();
-                              controller.cart.value
-                                  .incrementItem(element.id!, -1);
-                            }
-                          },
-                        ),
+                            // decrement: () {
+                            //   if (counter.value <= 0) {
+                            //     mezDbgPrint(
+                            //         "this is the value of counter ${counter.value}");
+                            //   } else {
+                            //     counter.value =
+                            //         counter.value - element.costPerOne();
+                            //     controller.cart.value
+                            //         .incrementItem(element.id!, -1);
+                            //   }
+                            // },
+                            ),
                         Spacer(),
                         Obx(
                           () => Text("\$${currency.format(counter.value)}",
