@@ -60,6 +60,11 @@
         "$uid": {
           ".read": "$uid === auth.uid"
         }
+      },
+      "inProcessOrders": {
+        "$uid": {
+          ".read": "$uid === auth.uid"
+        }
       }
     },
     "taxiDrivers": {

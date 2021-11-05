@@ -33,12 +33,13 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
   initState() {
     mezDbgPrint("ListOrdersScreen: onInit");
     currentOrders.value = controller.currentOrders;
-    controller.currentOrders.listen((event) {
+    controller.currentOrdersStream.listen((orders) {
       mezDbgPrint("ListOrdersScreen: new current order");
-      currentOrders.value = event;
+      mezDbgPrint(orders.length);
+      currentOrders.value = orders;
     });
     pastOrders.value = controller.pastOrders;
-    controller.pastOrders.listen((event) => pastOrders.value = event);
+    controller.pastOrdersStream.listen((orders) => pastOrders.value = orders);
     super.initState();
   }
 

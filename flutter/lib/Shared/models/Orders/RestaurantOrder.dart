@@ -36,7 +36,7 @@ class RestaurantOrder extends Order {
         orderTime: DateTime.parse(data["orderTime"]),
         cost: data["cost"],
         notes: data["notes"],
-        restaurant: ServiceProviderInfo.fromData(data["serviceProvider"]));
+        restaurant: ServiceProviderInfo.fromData(data["restaurant"]));
     data["items"].forEach((dynamic itemId, dynamic itemData) {
       RestaurantOrderItem restaurantOrderItem = RestaurantOrderItem(
           costPerOne: itemData["costPerOne"],

@@ -15,6 +15,7 @@ import 'package:rive/rive.dart' as rive;
 import 'package:intl/intl.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
+
 final currency = new NumberFormat("#,##0.00", "en_US");
 final f = new DateFormat('dd/MM/yyyy hh:ss').add_jm();
 
@@ -34,10 +35,16 @@ class _ViewCurrentRestaurantOrderScreenState
   SideMenuDraweController _sideMenuDraweController =
       Get.find<SideMenuDraweController>();
 
-
   @override
   void initState() {
     String orderId = Get.parameters['orderId']!;
+    try {
+      order.value = controller.currentOrders
+              .firstWhere((element) => element.orderId == orderId)
+          as RestaurantOrder;
+    } on StateError {
+      //do nothing
+    }
     controller.getCurrentOrderStream(orderId).listen((order) {
       mezDbgPrint("ViewCurrentOrderScreen: new order data");
       setState(() {
@@ -401,6 +408,7 @@ class _ViewCurrentRestaurantOrderScreenState
     Widget? myWidget;
     switch (status) {
       case RestaurantOrderStatus.PreparingOrder:
+      case RestaurantOrderStatus.OrderReceieved:
         mezDbgPrint("PreparingOrder");
         myWidget = Row(
           mainAxisAlignment: MainAxisAlignment.center,

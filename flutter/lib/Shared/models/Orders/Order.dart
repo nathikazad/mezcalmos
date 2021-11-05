@@ -1,3 +1,5 @@
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+
 abstract class Order {
   String orderId;
   OrderType orderType;
