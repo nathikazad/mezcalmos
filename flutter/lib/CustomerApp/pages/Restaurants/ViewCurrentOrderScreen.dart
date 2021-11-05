@@ -17,7 +17,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
-final f = new DateFormat('dd/MM/yyyy hh:ss').add_jm();
+final f = new DateFormat('dd/MM/yyyy HH:mm');
 
 ////////////===========
 
@@ -407,7 +407,6 @@ class _ViewCurrentRestaurantOrderScreenState
     Widget? myWidget;
     switch (status) {
       case RestaurantOrderStatus.PreparingOrder:
-      case RestaurantOrderStatus.OrderReceieved:
         mezDbgPrint("PreparingOrder");
         myWidget = Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -491,6 +490,7 @@ class _ViewCurrentRestaurantOrderScreenState
         );
         break;
       case RestaurantOrderStatus.Delivered:
+        var xDate = f.format(order.value!.orderTime).toString().split(" ");
         mezDbgPrint("Delivered");
         myWidget = Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -498,18 +498,48 @@ class _ViewCurrentRestaurantOrderScreenState
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-                width: 61,
-                height: 35,
                 child: Icon(
-                  Icons.check_circle,
-                  color: Colors.green,
-                )),
+              Icons.check_circle,
+              color: Colors.green,
+            )),
+            SizedBox(
+              width: 15,
+            ),
             Container(
-              child: Text("Delivered ${f.format(order.value!.orderTime)}",
+              child: Text(
+                  "Delivered ${xDate[0]} ${xDate[2]}${xDate[3].toLowerCase()}",
                   style: const TextStyle(
                       color: const Color(0xff7e7a7a),
-                      fontWeight: FontWeight.w400,
-                      fontFamily: "ProductSans",
+                      fontFamily: "prs",
+                      fontStyle: FontStyle.normal,
+                      fontSize: 18.0),
+                  textAlign: TextAlign.center),
+            )
+          ],
+        );
+        break;
+      case RestaurantOrderStatus.OrderReceieved:
+        var xDate = f.format(order.value!.orderTime).toString().split(" ");
+        mezDbgPrint("Order Receieved");
+        myWidget = Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+                child: Icon(
+              Icons.check_circle,
+              color: Colors.green,
+            )),
+            SizedBox(
+              width: 15,
+            ),
+            Container(
+              child: Text(
+                  "Receieved ${xDate[0]} ${xDate[2]}${xDate[3].toLowerCase()}",
+                  style: const TextStyle(
+                      color: const Color(0xff7e7a7a),
+                      fontFamily: "prs",
                       fontStyle: FontStyle.normal,
                       fontSize: 18.0),
                   textAlign: TextAlign.center),
