@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-void dailogComponent(
-    String title, String subTitle, Function onConform, Function onCancel) {
-  Get.defaultDialog(
+Future<bool> dailogComponent(String title, String subTitle, Function onConform,
+    Function onCancel) async {
+  return await Get.defaultDialog(
     radius: 4,
     title: "",
     content: Container(

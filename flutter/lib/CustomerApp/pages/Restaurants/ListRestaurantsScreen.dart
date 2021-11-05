@@ -31,6 +31,7 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
   Widget build(BuildContext context) {
     responsiveSize(context);
     return Scaffold(
+        backgroundColor: const Color(0xffffffff),
         appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back(),
             actionIcons: [
               ActionIconsComponents.notificationIcon(),

@@ -23,9 +23,9 @@ class SideMenuDraweController extends GetxController {
 
   void openMenu() {
     if (_scaffoldKey?.currentState?.isEndDrawerOpen == false) {
-      _scaffoldKey?.currentState!.openDrawer();
+      _scaffoldKey?.currentState?.openDrawer();
     } else {
-      _scaffoldKey?.currentState!.openEndDrawer();
+      _scaffoldKey?.currentState?.openEndDrawer();
     }
   }
 

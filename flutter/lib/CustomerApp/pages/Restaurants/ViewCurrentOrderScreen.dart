@@ -28,15 +28,15 @@ class ViewCurrentRestaurantOrderScreen extends StatefulWidget {
 
 class _ViewCurrentRestaurantOrderScreenState
     extends State<ViewCurrentRestaurantOrderScreen> {
-  RestaurantsInfoController restaurantsInfoController =
-      Get.put(RestaurantsInfoController());
   LanguageController lang = Get.find<LanguageController>();
   Rxn<RestaurantOrder> order = Rxn();
   OrderController controller = Get.find<OrderController>();
   SideMenuDraweController _sideMenuDraweController =
       Get.find<SideMenuDraweController>();
 
-  _ViewCurrentRestaurantOrderScreenState() {
+
+  @override
+  void initState() {
     String orderId = Get.parameters['orderId']!;
     controller.getCurrentOrderStream(orderId).listen((order) {
       mezDbgPrint("ViewCurrentOrderScreen: new order data");
@@ -44,6 +44,8 @@ class _ViewCurrentRestaurantOrderScreenState
         this.order.value = order as RestaurantOrder;
       });
     });
+    mezDbgPrint("=========> ${order.value}");
+    super.initState();
   }
 
   @override
@@ -60,6 +62,7 @@ class _ViewCurrentRestaurantOrderScreenState
     mezDbgPrint(order.value?.restaurantOrderStatus);
     mezDbgPrint(order.value?.serviceProviderId);
     return Scaffold(
+      backgroundColor: const Color(0xffffffff),
       appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back(),
           actionIcons: [
             ActionIconsComponents.notificationIcon(),

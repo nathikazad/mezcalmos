@@ -3,8 +3,14 @@ import 'package:get/get.dart';
 
 class ButtonComponent extends StatelessWidget {
   final Widget? widget;
+  final Color bgColor;
+
   final GestureTapCallback? function;
-  ButtonComponent({this.widget, this.function});
+  ButtonComponent({
+    this.widget,
+    this.function,
+    this.bgColor = const Color(0xffac59fc),
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +30,7 @@ class ButtonComponent extends StatelessWidget {
                     blurRadius: 10,
                     spreadRadius: 0)
               ],
-              color: const Color(0xffac59fc),
+              color: this.bgColor,
             ),
             child: widget),
         onTap: () {

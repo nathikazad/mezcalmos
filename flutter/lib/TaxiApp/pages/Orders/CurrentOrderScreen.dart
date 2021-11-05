@@ -99,6 +99,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                               alignment: Alignment.topCenter,
                               children: [
                                 MGoogleMap(
+                                  notifyParent: (newLoc) {},
                                   markers: customMarkers,
                                   initialLocation: initialCameraPosition,
                                   polylines: polylines,
@@ -167,8 +168,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
             .then((value) {
           mezDbgPrint(
               "CurrentOrderScreen after cancel navigating to kOrdersListPage");
-          Get.offNamedUntil(
-              kOrdersListPage, ModalRoute.withName(kHomeRoute));
+          Get.offNamedUntil(kOrdersListPage, ModalRoute.withName(kHomeRoute));
           ;
         });
       });
