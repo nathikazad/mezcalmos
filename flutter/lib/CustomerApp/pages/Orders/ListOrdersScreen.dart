@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/CustomerApp/components/imagesComponents.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrders.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
@@ -17,24 +16,35 @@ import 'package:intl/intl.dart';
 final f = new DateFormat('MM.dd.yyyy');
 final currency = new NumberFormat("#,##0.00", "en_US");
 
-class ListOrdersScreen extends GetView {
+class ListOrdersScreen extends StatefulWidget {
+  @override
+  _ListOrdersScreen createState() => _ListOrdersScreen();
+}
+
+class _ListOrdersScreen extends State<ListOrdersScreen> {
   LanguageController _lang = Get.find<LanguageController>();
 
   RxList<Order> currentOrders = RxList.empty();
   RxList<Order> pastOrders = RxList.empty();
   OrderController controller = Get.find<OrderController>();
   AuthController auth = Get.find<AuthController>();
-  ListOrdersScreen() {
+
+  @override
+  initState() {
+    mezDbgPrint("ListOrdersScreen: onInit");
     currentOrders.value = controller.currentOrders;
-    controller.currentOrdersStream.listen((event) {
+    controller.currentOrders.listen((event) {
+      mezDbgPrint("ListOrdersScreen: new current order");
       currentOrders.value = event;
     });
     pastOrders.value = controller.pastOrders;
-    controller.pastOrdersStream.listen((event) => pastOrders.value = event);
+    controller.pastOrders.listen((event) => pastOrders.value = event);
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    mezDbgPrint("ListOrdersScreen: build");
     return Scaffold(
         // appBar: AppBar(
         //   title: Text("List Orders"),
@@ -95,7 +105,6 @@ class ListOrdersScreen extends GetView {
                 url: "${auth.user!.image}",
                 onPress: () {
                   Get.toNamed(getCurrentRestaurantOrderRoute(element.orderId));
-                  mezDbgPrint("hhhhhhhhhhhhhh");
                 },
               ),
             );

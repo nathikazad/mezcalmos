@@ -31,9 +31,8 @@ OrderType convertOrderTypeStringToEnum(String orderType) {
       .firstWhere((e) => e.toFirebaseFormatString().toLowerCase() == orderType);
 }
 
-
-
 enum PaymentType { Cash, Card }
+
 extension ParsePaymentTypeToString on PaymentType {
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;
@@ -44,4 +43,14 @@ extension ParsePaymentTypeToString on PaymentType {
 PaymentType convertPaymentType(String paymentType) {
   return PaymentType.values.firstWhere((e) =>
       e.toFirebaseFormatString().toLowerCase() == paymentType.toLowerCase());
+}
+
+class ServiceProviderInfo {
+  String id;
+  String name;
+  String image;
+  ServiceProviderInfo(this.id, this.name, this.image);
+  factory ServiceProviderInfo.fromData(dynamic data) {
+    return ServiceProviderInfo(data["id"], data["name"], data["image"]);
+  }
 }

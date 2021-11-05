@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewNotifications.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrders.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+
 
 import '../router.dart';
 
@@ -64,7 +65,7 @@ class ActionIconsComponents {
         ),
       ),
       onTap: () {
-        print("orders");
+        mezDbgPrint("ActionIconsComponent: orders icon clicked");
         Get.toNamed(kOrdersRoute);
       },
     );

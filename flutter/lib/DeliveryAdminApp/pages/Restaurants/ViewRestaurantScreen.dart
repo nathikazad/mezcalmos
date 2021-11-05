@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/appbarComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/itemMenuComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-
+import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen.dart';
 
 import 'package:mezcalmos/CustomerApp/router.dart';
@@ -27,13 +25,8 @@ class ViewRestaurantScreen extends GetView<RestaurantsInfoController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // appBar: AppBar(
-        //   title: Obx(() => Text("${restaurant.value?.name ?? 'Loading'}")),
-        //   actions: [
-        //     TextButton(
-        //         onPressed: () => Get.to(ViewCartScreen()), child: Text("Cart"))
-        //   ],
-        // ),
+       appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back(),
+            actionIcons: []),
         body: Obx(() {
       List<Item> items = restaurant.value?.items ?? [];
       print(items.length);
@@ -47,8 +40,6 @@ class ViewRestaurantScreen extends GetView<RestaurantsInfoController> {
           : SafeArea(
               child: Column(
                 children: [
-                  restaurantAppBarComponent(
-                      "back", () {}, ["carts", "notifications", "oredrs"]),
                   Expanded(
                     child: Stack(
                       children: [

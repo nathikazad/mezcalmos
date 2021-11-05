@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/CustomerApp/components/ItemComponent.dart';
-import 'package:mezcalmos/CustomerApp/components/appbarComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 
 class ListRestaurantsScreen extends GetView<RestaurantsInfoController> {
   RxList<Restaurant> restaurants = <Restaurant>[].obs;
@@ -20,19 +20,13 @@ class ListRestaurantsScreen extends GetView<RestaurantsInfoController> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-        // appBar: AppBar(
-        //   title: Text("Restaurant list"),
-        //   actions: [
-        //     TextButton(
-        //         onPressed: () => Get.to(ViewCartScreen()), child: Text("Cart"))
-        //   ],
-        // ),
+       appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back(),
+            actionIcons: []),
         body: Column(
       children: [
         SizedBox(
           height: Get.height * 0.03,
         ),
-        restaurantAppBarComponent("back", () {}, ["messages", "carts"]),
         SizedBox(
           height: Get.height * 0.03,
         ),

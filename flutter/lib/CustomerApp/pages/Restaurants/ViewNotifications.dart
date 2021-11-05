@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
-import 'package:mezcalmos/CustomerApp/components/appbarComponent.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 

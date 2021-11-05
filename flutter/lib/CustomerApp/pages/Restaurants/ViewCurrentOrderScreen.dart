@@ -1,27 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
-
-import 'package:mezcalmos/CustomerApp/components/appbarComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/dailogComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
+import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:rive/rive.dart' as rive;
 import 'package:intl/intl.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
-import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
-import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
-
 final currency = new NumberFormat("#,##0.00", "en_US");
 final f = new DateFormat('dd/MM/yyyy hh:ss').add_jm();
 
@@ -39,34 +32,33 @@ class _ViewCurrentRestaurantOrderScreenState
       Get.put(RestaurantsInfoController());
   LanguageController lang = Get.find<LanguageController>();
   Rxn<RestaurantOrder> order = Rxn();
-  Rxn<Restaurant> restaurantInfo = Rxn();
   OrderController controller = Get.find<OrderController>();
   SideMenuDraweController _sideMenuDraweController =
       Get.find<SideMenuDraweController>();
 
   _ViewCurrentRestaurantOrderScreenState() {
     String orderId = Get.parameters['orderId']!;
-    try {
-      order.value = controller.currentOrders
-          .firstWhere((order) => order.orderId == orderId) as RestaurantOrder;
-    } on StateError catch (_) {
-      // do nothing
-    }
-    controller.getCurrentOrderStream(orderId).listen((event) {
-      order.value = event as RestaurantOrder;
+    controller.getCurrentOrderStream(orderId).listen((order) {
+      mezDbgPrint("ViewCurrentOrderScreen: new order data");
+      setState(() {
+        this.order.value = order as RestaurantOrder;
+      });
     });
-    getRestaurantInfo(order.value!.serviceProviderId.toString());
-  }
-  void getRestaurantInfo(String id) async {
-    restaurantInfo.value = await restaurantsInfoController.getRestaurant(id);
-    mezDbgPrint(restaurantInfo.value!.items);
   }
 
   @override
   Widget build(BuildContext context) {
     responsiveSize(context);
-    mezDbgPrint(order.value!.restaurantOrderStatus);
-    mezDbgPrint(order.value!.serviceProviderId);
+    if (order.value == null) {
+      mezDbgPrint("Order not loaded yet");
+      return Scaffold(
+          body: MezLogoAnimation(
+        centered: true,
+      ));
+    }
+
+    mezDbgPrint(order.value?.restaurantOrderStatus);
+    mezDbgPrint(order.value?.serviceProviderId);
     return Scaffold(
       appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back(),
           actionIcons: [
@@ -92,15 +84,9 @@ class _ViewCurrentRestaurantOrderScreenState
                 ),
                 child: Column(
                   children: [
-                    Obx(() => restaurantInfo.value == null
-                        ? Container()
-                        : CheckoutInfoComponent(
-                            url: restaurantInfo.value!.photo != null
-                                ? "${restaurantInfo.value!.photo}"
-                                : "",
-                            title: restaurantInfo.value!.name != null
-                                ? "${restaurantInfo.value!.name}"
-                                : "")),
+                    CheckoutInfoComponent(
+                        url: "${order.value!.restaurant.image}",
+                        title: "${order.value!.restaurant.name}"),
                     Container(
                       width: Get.width,
                       height: 1,

@@ -7,6 +7,7 @@ class RestaurantOrder extends Order {
   List<RestaurantOrderItem> items = [];
   String? notes;
   dynamic from;
+  ServiceProviderInfo restaurant;
   RestaurantOrder(
       {required String orderId,
       required this.restaurantOrderStatus,
@@ -15,6 +16,7 @@ class RestaurantOrder extends Order {
       required PaymentType paymentType,
       required DateTime orderTime,
       required num cost,
+      required this.restaurant,
       this.notes})
       : super(
             orderId: orderId,
@@ -33,7 +35,8 @@ class RestaurantOrder extends Order {
         paymentType: convertPaymentType(data["paymentType"]),
         orderTime: DateTime.parse(data["orderTime"]),
         cost: data["cost"],
-        notes: data["notes"]);
+        notes: data["notes"],
+        restaurant: ServiceProviderInfo.fromData(data["serviceProvider"]));
     data["items"].forEach((dynamic itemId, dynamic itemData) {
       RestaurantOrderItem restaurantOrderItem = RestaurantOrderItem(
           costPerOne: itemData["costPerOne"],

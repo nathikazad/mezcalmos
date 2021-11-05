@@ -72,8 +72,8 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
         builder: (restaurant) => Obx(
           () {
             mezDbgPrint(
-                controller.cart.value.toFirebaseFormattedJson().toString() +
-                    "hhhhhhhhhhhhhh");
+                "ViewCartScreen: " +
+                controller.cart.value.toFirebaseFormattedJson().toString());
             return SingleChildScrollView(
               child: Column(
                 children: [
