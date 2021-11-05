@@ -3,6 +3,8 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'dart:math';
 
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+
 class CartItem {
   String restaurantId;
   String? id;
@@ -160,7 +162,7 @@ class Cart {
       "quantity": this.quantity(),
       "cost": this.totalCost(),
       "items": items,
-      "notes": notes,
+      "notes": "${this.notes}",
       "to": this.toLocation?.toFirebaseFormattedJson(),
       "paymentType": paymentType.toFirebaseFormatString()
     };

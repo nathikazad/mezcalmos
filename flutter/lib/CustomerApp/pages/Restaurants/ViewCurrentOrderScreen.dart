@@ -47,9 +47,8 @@ class _ViewCurrentRestaurantOrderScreenState
     }
     controller.getCurrentOrderStream(orderId).listen((order) {
       mezDbgPrint("ViewCurrentOrderScreen: new order data");
-      setState(() {
-        this.order.value = order as RestaurantOrder;
-      });
+
+      this.order.value = order as RestaurantOrder;
     });
     mezDbgPrint("=========> ${order.value}");
     super.initState();
@@ -278,7 +277,7 @@ class _ViewCurrentRestaurantOrderScreenState
                       child: Text(
                         order.value!.from == null
                             ? "Home"
-                            : "${order.value!.from}",
+                            : "${order.value!.from["address"]}",
                         style: const TextStyle(
                             color: const Color(0xff000f1c),
                             fontFamily: "psr",

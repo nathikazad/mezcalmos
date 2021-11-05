@@ -110,11 +110,12 @@ class RestaurantCartController extends GetxController {
         FirebaseFunctions.instance.httpsCallable('checkoutRestaurantCart');
     try {
       // fake location, needs to be updated with real later
-      cart.value.toLocation = Location(<String, dynamic>{
-        "address": "address",
-        "latitude": 0,
-        "longitude": 0
-      });
+      // cart.value.toLocation = Location(<String, dynamic>{
+      //   "address": "address",
+      //   "latitude": 0,
+      //   "longitude": 0
+      // });
+      mezDbgPrint(cart.value.toFirebaseFormattedJson());
       HttpsCallableResult response = await checkoutRestaurantCart
           .call(cart.value.toFirebaseFormattedJson());
       return ServerResponse.fromJson(response.data);
