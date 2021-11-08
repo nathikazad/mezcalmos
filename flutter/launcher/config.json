@@ -149,7 +149,7 @@
                 },
                 "dev": {
                     "appName": "Mezdelivery Admin Dev",
-                    "packageName": "com.meztaxi.admin",
+                    "packageName": "com.meztaxi.driver",
                     "googe-service-file": "services/prod.google-services.json",
                     "apple-service-file": "services/prod.GoogleService-Info.plist"
                 }
