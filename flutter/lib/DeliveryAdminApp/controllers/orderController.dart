@@ -16,7 +16,8 @@ class OrderController extends GetxController {
   List<Order> inProcessOrders = [];
   @override
   void onInit() {
-    print("--------------------> RestaurantsOrderController Initialized !");
+    mezDbgPrint(
+        "--------------------> RestaurantsOrderController Initialized !");
     ordersStream = _databaseHelper.firebaseDatabase
         .reference()
         .child(inProcessOrdersNode())

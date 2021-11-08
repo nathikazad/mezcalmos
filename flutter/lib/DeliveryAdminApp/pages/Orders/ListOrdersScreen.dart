@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 class ListOrdersScreen extends StatefulWidget {
   @override
@@ -12,10 +13,17 @@ class ListOrdersScreen extends StatefulWidget {
 class _ListOrdersScreen extends State<ListOrdersScreen> {
   RxList<Order> inProcessOrders = RxList.empty();
   OrderController controller = Get.find<OrderController>();
-  ListOrdersScreen() {
+
+  @override
+  void initState() {
+    super.initState();
     inProcessOrders.value = controller.inProcessOrders;
+    mezDbgPrint("ListOrdersScreen:init value");
+    mezDbgPrint(controller.inProcessOrders);
     controller.ordersStream.listen((event) {
       inProcessOrders.value = event;
+      mezDbgPrint("ListOrdersScreen:listener value");
+      mezDbgPrint(controller.inProcessOrders);
     });
   }
 
