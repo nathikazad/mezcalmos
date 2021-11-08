@@ -4,9 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
-import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 
 typedef LocationChangesNotifier = void Function(Location msg);
 
@@ -14,9 +12,12 @@ typedef LocationChangesNotifier = void Function(Location msg);
 class MezPickGoogleMap extends StatefulWidget {
   final LatLng location;
   final LocationChangesNotifier notifyParent;
-
+  bool showBlackScreen;
   MezPickGoogleMap(
-      {Key? key, required this.location, required this.notifyParent})
+      {Key? key,
+      required this.location,
+      required this.notifyParent,
+      this.showBlackScreen = true})
       : super(key: key);
   @override
   MezPickGoogleMapState createState() => MezPickGoogleMapState();
@@ -26,7 +27,6 @@ class MezPickGoogleMapState extends State<MezPickGoogleMap> {
   // shared original google map Key
   final GlobalKey<MGoogleMapState> mGoogleMapKey = GlobalKey();
 
-  bool _showBlackScreen = false;
   bool _showFakeMarker = true;
   bool _showLoading = false;
 
@@ -46,7 +46,7 @@ class MezPickGoogleMapState extends State<MezPickGoogleMap> {
         mGoogleMapKey.currentState?.moveToNewLatLng(
             widget.location.latitude, widget.location.longitude);
         _showLoading = false;
-        _showBlackScreen = true;
+        // _showBlackScreen = true;
       });
     }
 
@@ -111,11 +111,11 @@ class MezPickGoogleMapState extends State<MezPickGoogleMap> {
                 myLocationButtonEnabled: true,
               ),
               _showFakeMarker ? pickerMarker() : SizedBox(),
-              _showBlackScreen
+              widget.showBlackScreen
                   ? GestureDetector(
                       onTap: () {
                         setState(() {
-                          _showBlackScreen = false;
+                          widget.showBlackScreen = false;
                         });
                       },
                       child: Container(

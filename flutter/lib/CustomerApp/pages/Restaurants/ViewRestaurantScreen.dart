@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
 import 'package:mezcalmos/CustomerApp/components/itemMenuComponent.dart';
+import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantCartController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
@@ -46,7 +47,11 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
         backgroundColor: const Color(0xffffffff),
         appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back(),
             actionIcons: [
-              ActionIconsComponents.cartIcon(),
+              Obx(() =>
+                  Get.find<RestaurantCartController>().cart.value.items.length >
+                          0
+                      ? ActionIconsComponents.cartIcon()
+                      : SizedBox()),
               ActionIconsComponents.notificationIcon(),
               ActionIconsComponents.orderIcon()
             ]),

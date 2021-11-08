@@ -338,7 +338,9 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
                       ],
                     ),
                   ))
-          : Center(child: Text("EMPTY"))),
+          : Center(
+              child: Icon(Icons.no_meals_outlined,
+                  color: Colors.black, size: 30))),
     );
   }
 
@@ -450,6 +452,7 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
 
                   if (yesNoRes) {
                     controller.clearCart();
+                    Get.back();
                   }
                 },
               )

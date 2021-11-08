@@ -203,18 +203,18 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
     var location = new Location();
     try {
       currentLocation = await location.getLocation();
-      String? address = await getAdressFromLatLng(
-          LatLng(currentLocation.latitude!, currentLocation.longitude!));
+      // String? address = await getAdressFromLatLng(
+      //     LatLng(currentLocation.latitude!, currentLocation.longitude!));
 
-      if (address == null) {
-        address =
-            "Location : ${currentLocation.latitude} , ${currentLocation.longitude}";
-      }
+      // if (address == null) {
+      //   address =
+      //       "Location : ${currentLocation.latitude} , ${currentLocation.longitude}";
+      // }
 
       widget.notifyParent(LocationModel.Location({
         "lat": currentLocation.latitude,
         "lng": currentLocation.longitude,
-        "address": address
+        "address": "Current Location"
       }));
     } on Exception {
       currentLocation = null;
@@ -263,17 +263,17 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
                 userTaped = false;
                 mezDbgPrint("Camera New position .. getting the center !!");
                 LatLng _center = await getMapCenter();
-                String? address = await getAdressFromLatLng(_center);
+                // String? address = await getAdressFromLatLng(_center);
 
-                if (address == null) {
-                  address =
-                      "Location : ${_center.latitude} , ${_center.longitude}";
-                }
+                // if (address == null) {
+                //   address =
+                //       "Location : ${_center.latitude} , ${_center.longitude}";
+                // }
 
                 widget.notifyParent(LocationModel.Location({
                   "lat": _center.latitude,
                   "lng": _center.longitude,
-                  "address": address
+                  "address": ""
                 }));
               }
             },

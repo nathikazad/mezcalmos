@@ -7,7 +7,6 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'dart:async';
-
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 class OrderController extends GetxController {

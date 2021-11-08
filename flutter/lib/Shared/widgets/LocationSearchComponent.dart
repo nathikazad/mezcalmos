@@ -1,15 +1,14 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
-import 'package:http/http.dart' as http;
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/AutoCompleteTextField.dart';
 
-typedef LocationChangesNotifier = void Function(Location msg);
+typedef LocationChangesNotifier = void Function(
+  Location location,
+);
 
 // Location Search component
 class LocationSearchComponent extends StatefulWidget {
@@ -115,8 +114,7 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
                   if (_loc != null) {
                     widget.notifyParent(_loc);
                     setState(() {
-                      // isTfEnabled = false;
-                      _showClearBtn = true;
+                      _showClearBtn = false;
                     });
                   }
                 },

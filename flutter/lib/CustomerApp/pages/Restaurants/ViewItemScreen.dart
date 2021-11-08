@@ -76,7 +76,9 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
       backgroundColor: const Color(0xffffffff),
       appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back(),
           actionIcons: [
-            ActionIconsComponents.cartIcon(),
+            Obx(() => restaurantCartController.cart.value.items.length > 0
+                ? ActionIconsComponents.cartIcon()
+                : SizedBox()),
             ActionIconsComponents.notificationIcon(),
             ActionIconsComponents.orderIcon()
           ]),

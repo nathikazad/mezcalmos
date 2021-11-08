@@ -17,9 +17,17 @@ class PickLocationView extends StatefulWidget {
 
 class _PickLocationViewState<T> extends State<PickLocationView> {
   Location? _selectedLocation;
-  bool viewBuilding = false;
+  bool showBlackScreen = true;
 
-  void onPickButtonClick() {
+  void onPickButtonClick() async {
+    if (_selectedLocation!.address == "") {
+      String? address = await getAdressFromLatLng(
+          LatLng(_selectedLocation!.latitude!, _selectedLocation!.latitude!));
+
+      _selectedLocation!.address = address ??
+          "Location : ${_selectedLocation!.latitude}, ${_selectedLocation!.longitude}";
+    }
+
     Get.back<Location>(result: _selectedLocation, closeOverlays: true);
   }
 
@@ -27,22 +35,30 @@ class _PickLocationViewState<T> extends State<PickLocationView> {
   void initState() {
     GeoLoc.Location().getLocation().then((locData) {
       mezDbgPrint("Sat to current Location $locData!");
-      String? address;
-      getAdressFromLatLng(LatLng(locData.latitude!, locData.longitude!))
-          .then((_address) {
-        if (_address == null) {
-          address = "Location : ${locData.latitude!} , ${locData.longitude}";
-        } else
-          address = _address;
-
-        setState(() {
-          _selectedLocation = Location({
-            "address": address,
-            "lat": locData.latitude,
-            "lng": locData.longitude,
-          });
+      setState(() {
+        _selectedLocation = Location({
+          "address": "",
+          "lat": locData.latitude,
+          "lng": locData.longitude,
         });
       });
+
+      // String? address;
+      // getAdressFromLatLng(LatLng(locData.latitude!, locData.longitude!))
+      //     .then((_address) {
+      //   if (_address == null) {
+      //     address = "Location : ${locData.latitude!} , ${locData.longitude}";
+      //   } else
+      //     address = _address;
+
+      //   setState(() {
+      //     _selectedLocation = Location({
+      //       "address": address,
+      //       "lat": locData.latitude,
+      //       "lng": locData.longitude,
+      //     });
+      //   });
+      // });
     });
 
     super.initState();
@@ -50,8 +66,6 @@ class _PickLocationViewState<T> extends State<PickLocationView> {
 
   @override
   Widget build(BuildContext context) {
-    // WidgetsBinding.instance?.
-
     return Scaffold(
       appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back()),
       backgroundColor: Colors.white,
@@ -80,6 +94,7 @@ class _PickLocationViewState<T> extends State<PickLocationView> {
                     mezDbgPrint(
                         "Ontap on suggestion  => ${location.toJson()} ");
                     setState(() {
+                      showBlackScreen = true;
                       _selectedLocation = location;
                     });
                   }),
@@ -95,8 +110,10 @@ class _PickLocationViewState<T> extends State<PickLocationView> {
                           color: Colors.grey.shade200),
                       child: _selectedLocation != null
                           ? MezPickGoogleMap(
+                              showBlackScreen: showBlackScreen,
                               notifyParent: (Location location) {
                                 setState(() {
+                                  showBlackScreen = false;
                                   _selectedLocation = location;
                                 });
                               },
@@ -120,13 +137,14 @@ class _PickLocationViewState<T> extends State<PickLocationView> {
               ),
               child: TextButton(
                   style: ButtonStyle(
-                    fixedSize: MaterialStateProperty.all(Size(Get.width,
-                        getSizeRelativeToScreen(20, Get.height, Get.width))),
-                    backgroundColor: !viewBuilding
-                        ? MaterialStateProperty.all(Colors.transparent)
-                        : MaterialStateProperty.all(Color(0xffa8a8a8)),
-                  ),
-                  onPressed: !viewBuilding ? onPickButtonClick : () {},
+                      fixedSize: MaterialStateProperty.all(Size(Get.width,
+                          getSizeRelativeToScreen(20, Get.height, Get.width))),
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.transparent)
+
+                      // MaterialStateProperty.all(Color(0xffa8a8a8)),
+                      ),
+                  onPressed: onPickButtonClick,
                   child: Text("Pick",
                       style: TextStyle(
                         fontFamily: 'psr',
