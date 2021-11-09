@@ -86,6 +86,7 @@ class RestaurantCartController extends GetxController {
     mezDbgPrint(" REST ID == > ${associatedRestaurant?.toJson()}");
 
     cart.value.addItem(cartItem);
+    mezDbgPrint("Cart => ${cart.value.toFirebaseFormattedJson()} ");
     // print(customerCart(_authController.user!.uid));
     _databaseHelper.firebaseDatabase
         .reference()
@@ -118,6 +119,7 @@ class RestaurantCartController extends GetxController {
       //   "latitude": 0,
       //   "longitude": 0
       // });
+      mezDbgPrint(cart.value.notes);
       mezDbgPrint(cart.value.toFirebaseFormattedJson());
       HttpsCallableResult response = await checkoutRestaurantCart
           .call(cart.value.toFirebaseFormattedJson());

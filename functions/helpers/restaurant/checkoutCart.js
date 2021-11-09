@@ -18,6 +18,9 @@ module.exports = functions.https.onCall(async (data, context) => {
 
 async function checkoutCart(uid, data) {
 
+
+  
+
   if (!data.to || !data.paymentType) {
     return {
       status: "Error",
@@ -36,19 +39,19 @@ async function checkoutCart(uid, data) {
   //   }
   // }
 
-  let cart = (await firebase.database().ref(`/customers/info/${uid}/cart`).once('value')).val();
-  console.log("======< CART CLONE >====== \n")
-  console.log(cart)
-  console.log("======< CART END CLONE >====== \n")
-  if (cart == null) {
-    return {
-      status: "Error",
-      errorMessage: `Cart does not exist`,
-      errorCode: "cartDontExist"
-    }
-  }
+  // let cart = (await firebase.database().ref(`/customers/info/${uid}/cart`).once('value')).val();
+  // console.log("======< CART CLONE >====== \n")
+  // console.log(cart)
+  // console.log("======< CART END CLONE >====== \n")
+  // if (cart == null) {
+  //   return {
+  //     status: "Error",
+  //     errorMessage: `Cart does not exist`,
+  //     errorCode: "cartDontExist"
+  //   }
+  // }
 
-  let restaurant = (await firebase.database().ref(`/restaurants/info/${cart.serviceProviderId}`).once('value')).val();
+  let restaurant = (await firebase.database().ref(`/restaurants/info/${data.serviceProviderId}`).once('value')).val();
   if (restaurant == null) {
     return {
       status: "Error",
@@ -68,27 +71,30 @@ async function checkoutCart(uid, data) {
   let user = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val();
 
   let payload = {
-    to: data.to,
+    // to: data.to,
     customer: {
       id: uid,
       name: user.displayName.split(' ')[0],
       image: user.photo
     },
     restaurant: {
-      id: cart.serviceProviderId,
+      id: data.serviceProviderId,
       name: restaurant.details.name,
       image: restaurant.details.photo
     },
     orderType: "restaurant",
     status: "orderReceieved",
     orderTime: (new Date()).toISOString(),
-    paymentType: data.paymentType,
-    ...cart
+    // paymentType: data.paymentType,
+    // ...cart
+    ...data
+
   }
+
   console.log(payload)
   let orderRef = await firebase.database().ref(`/orders/restaurant`).push(payload);
   await firebase.database().ref(`/customers/inProcessOrders/${uid}/${orderRef.key}`).set(payload);
-  firebase.database().ref(`/restaurants/inProcessOrders/${cart.serviceProviderId}/${orderRef.key}`).set(payload);
+  firebase.database().ref(`/restaurants/inProcessOrders/${data.serviceProviderId}/${orderRef.key}`).set(payload);
   firebase.database().ref(`/inProcessOrders/restaurant/${orderRef.key}`).set(payload);
 
   let chat = {
@@ -102,7 +108,7 @@ async function checkoutCart(uid, data) {
     particpantType: "customer",
     phoneNumber: (user.phoneNumber) ? user.phoneNumber : null
   }
-  chat.participants[cart.serviceProviderId] = {
+  chat.participants[data.serviceProviderId] = {
     name: restaurant.details.name,
     image: (restaurant.details.photo) ? restaurant.details.photo : null,
     particpantType: "restaurant",
