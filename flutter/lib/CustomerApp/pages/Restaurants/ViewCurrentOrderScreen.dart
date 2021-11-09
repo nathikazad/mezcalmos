@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
+import 'package:mezcalmos/CustomerApp/components/basicCellComponent.dart';
+import 'package:mezcalmos/CustomerApp/components/buildWidgetOnOrderStatus.dart';
 import 'package:mezcalmos/CustomerApp/components/dailogComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
-import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -11,13 +12,11 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
-import 'package:rive/rive.dart' as rive;
 import 'package:intl/intl.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
-final f = new DateFormat('dd/MM/yyyy hh:mm a');
 ////////////===========
 
 class ViewCurrentRestaurantOrderScreen extends StatefulWidget {
@@ -28,8 +27,6 @@ class ViewCurrentRestaurantOrderScreen extends StatefulWidget {
 
 class _ViewCurrentRestaurantOrderScreenState
     extends State<ViewCurrentRestaurantOrderScreen> {
-  RestaurantsInfoController restaurantsInfoController =
-      Get.put(RestaurantsInfoController());
   LanguageController lang = Get.find<LanguageController>();
   Rxn<RestaurantOrder> order = Rxn();
   OrderController controller = Get.find<OrderController>();
@@ -88,10 +85,23 @@ class _ViewCurrentRestaurantOrderScreenState
                 ),
                 child: Column(
                   children: [
-                    CheckoutInfoComponent(
-                        url: "${order.value!.restaurant.image}",
-                        title: "${order.value!.restaurant.name}",
-                        orderId: order.value!.orderId),
+                    BasicCellComponent(
+                      url: "${order.value!.restaurant.image}",
+                      title: "${order.value!.restaurant.name}",
+                      traillingIcon: Container(
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.chat_bubble_outline,
+                            color: Color(0xff5c7fff),
+                          ),
+                          onPressed: () {
+                            //TODO: Navigate to messages screen
+                            Get.toNamed(getMessagesRoute(order.value!.orderId),
+                                arguments: ParticipantType.Restaurant);
+                          },
+                        ),
+                      ),
+                    ),
                     Container(
                       width: Get.width,
                       height: 1,
@@ -102,8 +112,9 @@ class _ViewCurrentRestaurantOrderScreenState
                     Container(
                       child: Container(
                         padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Obx(() => _buildWigetOnOrderStatus(
-                            order.value!.restaurantOrderStatus)),
+                        child: Obx(() => buildWigetOnOrderStatus(
+                            order.value!.restaurantOrderStatus,
+                            order.value!.orderTime)),
                       ),
                     )
                   ],
@@ -387,290 +398,6 @@ class _ViewCurrentRestaurantOrderScreenState
         );
       }),
     );
-    // List<Item> items = restaurant.value?.items ?? [];
-    // return Column(
-    //     children: items
-    //         .map((item) => TextButton(
-    //             onPressed: () =>
-    //                 Get.to(ViewItemScreen(restaurantId, item.id!)),
-    //             child: Text(item.name!)))
-    //         .toList());
-  }
-
-  Widget _buildWigetOnOrderStatus(RestaurantOrderStatus status) {
-    // to do
-    // check the status of each
-    Widget? myWidget;
-    switch (status) {
-      case RestaurantOrderStatus.PreparingOrder:
-        mezDbgPrint("PreparingOrder");
-        myWidget = Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 61,
-              height: 35,
-              child: rive.RiveAnimation.asset(
-                "assets/animation/cooking.riv",
-                fit: BoxFit.cover,
-              ),
-            ),
-            Container(
-              child: Text("Preparing the order",
-                  style: const TextStyle(
-                      color: const Color(0xff7e7a7a),
-                      fontWeight: FontWeight.w400,
-                      fontFamily: "ProductSans",
-                      fontStyle: FontStyle.normal,
-                      fontSize: 18.0),
-                  textAlign: TextAlign.center),
-            )
-          ],
-        );
-        break;
-      case RestaurantOrderStatus.ReadyForPickup:
-        mezDbgPrint("ReadyForPickup");
-        myWidget = Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-                width: 61,
-                height: 35,
-                child: Icon(
-                  Icons.check,
-                  color: Colors.green,
-                )),
-            Container(
-              child: Text("Ready For Pickup",
-                  style: const TextStyle(
-                      color: const Color(0xff7e7a7a),
-                      fontWeight: FontWeight.w400,
-                      fontFamily: "ProductSans",
-                      fontStyle: FontStyle.normal,
-                      fontSize: 18.0),
-                  textAlign: TextAlign.center),
-            )
-          ],
-        );
-        break;
-      case RestaurantOrderStatus.OnTheWay:
-        mezDbgPrint("OnTheWay");
-        myWidget = Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              child: Text("On The Way",
-                  style: const TextStyle(
-                      color: const Color(0xff7e7a7a),
-                      fontWeight: FontWeight.w400,
-                      fontFamily: "ProductSans",
-                      fontStyle: FontStyle.normal,
-                      fontSize: 18.0),
-                  textAlign: TextAlign.center),
-            ),
-            Container(
-              width: 61,
-              height: 35,
-              child: rive.RiveAnimation.asset(
-                "assets/animation/CookingandDelivery2.riv",
-                fit: BoxFit.cover,
-              ),
-            ),
-          ],
-        );
-        break;
-      case RestaurantOrderStatus.Delivered:
-        mezDbgPrint("Delivered");
-        myWidget = Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-                width: 61,
-                height: 35,
-                child: Icon(
-                  Icons.check_circle,
-                  color: Colors.green,
-                )),
-            Container(
-              child: Text("Delivered ${f.format(order.value!.orderTime)}",
-                  style: const TextStyle(
-                      color: const Color(0xff7e7a7a),
-                      fontWeight: FontWeight.w400,
-                      fontFamily: "ProductSans",
-                      fontStyle: FontStyle.normal,
-                      fontSize: 18.0),
-                  textAlign: TextAlign.center),
-            )
-          ],
-        );
-        break;
-      case RestaurantOrderStatus.Cancelled:
-        mezDbgPrint("Cancelled");
-        myWidget = Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-                width: 61,
-                height: 35,
-                child: Icon(
-                  Icons.close_rounded,
-                  color: Colors.red,
-                )),
-            Container(
-              child: Text("Cancelled",
-                  style: const TextStyle(
-                      color: const Color(0xff7e7a7a),
-                      fontWeight: FontWeight.w400,
-                      fontFamily: "ProductSans",
-                      fontStyle: FontStyle.normal,
-                      fontSize: 18.0),
-                  textAlign: TextAlign.center),
-            )
-          ],
-        );
-        break;
-
-      case RestaurantOrderStatus.OrderReceieved:
-        mezDbgPrint("Order Receieved");
-        myWidget = Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-                child: Icon(
-              Icons.check_circle,
-              color: Colors.green,
-            )),
-            SizedBox(
-              width: 15,
-            ),
-            Container(
-              child: Text(
-                  "Receieved ${f.format(order.value!.orderTime).toString()}",
-                  style: const TextStyle(
-                      color: const Color(0xff7e7a7a),
-                      fontFamily: "prs",
-                      fontStyle: FontStyle.normal,
-                      fontSize: 16.0),
-                  textAlign: TextAlign.center),
-            )
-          ],
-        );
-        break;
-      default:
-    }
-    return Container(
-      child: myWidget!,
-    );
-  }
-}
-
-class CheckoutInfoComponent extends StatelessWidget {
-  final String url;
-  final String title;
-  final bool? isMessageIcon;
-  final int? quantity;
-  final String? orderId;
-  const CheckoutInfoComponent(
-      {required this.url,
-      required this.title,
-      this.orderId,
-      this.isMessageIcon = true,
-      this.quantity,
-      Key? key})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      height: 43,
-      child: Row(
-        children: [
-          Container(
-            width: 55,
-            height: 43,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(
-                Radius.circular(3),
-              ),
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.all(
-                Radius.circular(3),
-              ),
-              child: Image.network(
-                "$url",
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          SizedBox(
-            width: Get.width * 0.05,
-          ),
-          Expanded(
-              child: Container(
-            child: Text("$title",
-                style: const TextStyle(
-                    color: const Color(0xff000f1c),
-                    fontWeight: FontWeight.w400,
-                    fontFamily: "ProductSans",
-                    fontStyle: FontStyle.normal,
-                    fontSize: 18.0),
-                textAlign: TextAlign.left),
-          )),
-          (isMessageIcon == true)
-              ? Container(
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.chat_bubble_outline,
-                      color: Color(0xff5c7fff),
-                    ),
-                    onPressed: () {
-                      mezDbgPrint("Message clicked");
-                      Get.toNamed(getMessagesRoute(orderId!),
-                          arguments: ParticipantType.Restaurant);
-                    },
-                  ),
-                )
-              : Container(
-                  width: 25,
-                  height: 25,
-                  child: Text("$quantity",
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        color: const Color(0xff5c7fff),
-                        fontWeight: FontWeight.w400,
-                        fontFamily: "ProductSans",
-                        fontStyle: FontStyle.normal,
-                        fontSize: 20.0,
-                      ),
-                      textAlign: TextAlign.center),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(65)),
-                      gradient: LinearGradient(
-                          begin: Alignment(0.1689453125, 0),
-                          end: Alignment(1, 1),
-                          colors: [
-                            const Color(0xff5582ff)
-                                .withOpacity(0.05000000074505806),
-                            const Color(0xffc54efc)
-                                .withOpacity(0.05000000074505806)
-                          ]))),
-        ],
-      ),
-    );
   }
 }
 
@@ -696,11 +423,35 @@ Widget buildOrdersItems(List<RestaurantOrderItem> items) {
                         horizontal: 10,
                       ),
                       //height: 43,
-                      child: CheckoutInfoComponent(
+                      child: BasicCellComponent(
                         title: "${element.name.inCaps}",
                         url: "${element.image}",
-                        isMessageIcon: false,
-                        quantity: element.quantity,
+                        traillingIcon: Container(
+                          width: 25,
+                          height: 25,
+                          child: Text("${element.quantity}",
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                color: const Color(0xff5c7fff),
+                                fontWeight: FontWeight.w400,
+                                fontFamily: "ProductSans",
+                                fontStyle: FontStyle.normal,
+                                fontSize: 20.0,
+                              ),
+                              textAlign: TextAlign.center),
+                          decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(65)),
+                              gradient: LinearGradient(
+                                  begin: Alignment(0.1689453125, 0),
+                                  end: Alignment(1, 1),
+                                  colors: [
+                                    const Color(0xff5582ff)
+                                        .withOpacity(0.05000000074505806),
+                                    const Color(0xffc54efc)
+                                        .withOpacity(0.05000000074505806)
+                                  ])),
+                        ),
                       )),
                   Container(
                     width: Get.width,

@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-void dailogComponent(
-    String title, String subTitle, Function onConform, Function onCancel) {
-  Get.defaultDialog(
+Future<bool> dailogComponent(
+  String title,
+  String subTitle,
+  Function onConform,
+  Function onCancel,
+  Widget? icon,
+  LinearGradient onConformBGColor,
+) async {
+  return await Get.defaultDialog(
     radius: 4,
     title: "",
     content: Container(
@@ -14,13 +20,15 @@ void dailogComponent(
           SizedBox(
             height: 10,
           ),
-          Container(
-            child: Icon(
-              Icons.highlight_off,
-              size: 65,
-              color: Color(0xffdb2846),
-            ),
-          ),
+          (icon == null)
+              ? Container(
+                  child: Icon(
+                    Icons.highlight_off,
+                    size: 65,
+                    color: Color(0xffdb2846),
+                  ),
+                )
+              : icon,
           SizedBox(
             height: 15,
           ),
@@ -63,7 +71,7 @@ void dailogComponent(
                             blurRadius: 10,
                             spreadRadius: 0)
                       ],
-                      color: const Color(0xffdb2846),
+                      gradient: onConformBGColor,
                     ),
                     child: Center(
                       child: Text("Yes",
