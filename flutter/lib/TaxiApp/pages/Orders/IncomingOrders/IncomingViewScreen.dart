@@ -187,7 +187,7 @@ class IncommingOrderScreenView extends GetWidget<IncomingOrdersController>
       // Create the BitmapDescriptor Object for the customer marker using the images's bytes.
       bitmapDescriptors["customerImg"] = await BitmapDescriptorLoader(
           (await cropRonded((await http.get(Uri.parse(
-                  controller.selectedIncommingOrder?.customer['image'])))
+                  controller.selectedIncommingOrder!.customer.image)))
               .bodyBytes) as Uint8List),
           60,
           60,

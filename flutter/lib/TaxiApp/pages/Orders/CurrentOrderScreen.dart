@@ -294,7 +294,8 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
 
       // Create the BitmapDescriptor Object for the customer marker using the images's bytes.
       bitmapDescriptors["customerImg"] = await BitmapDescriptorLoader(
-          (await cropRonded((await http.get(Uri.parse(order.customer['image'])))
+          (await cropRonded(
+                  (await http.get(Uri.parse(order.customer.image)))
               .bodyBytes) as Uint8List),
           60,
           60,

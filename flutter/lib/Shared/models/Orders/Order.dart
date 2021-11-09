@@ -4,6 +4,7 @@ abstract class Order {
   String? serviceProviderId;
   PaymentType paymentType;
   DateTime orderTime;
+  UserInfo customer;
   num cost;
   Order(
       {required this.orderId,
@@ -11,7 +12,8 @@ abstract class Order {
       this.serviceProviderId,
       required this.paymentType,
       required this.orderTime,
-      required this.cost});
+      required this.cost,
+      required this.customer});
   bool inProcess();
   // Order.orderFromData(dynamic orderId, dynamic orderData){
 
@@ -49,12 +51,12 @@ extension ParseStringToPaymentType on String {
   }
 }
 
-class ServiceProviderInfo {
+class UserInfo {
   String id;
   String name;
   String image;
-  ServiceProviderInfo(this.id, this.name, this.image);
-  factory ServiceProviderInfo.fromData(dynamic data) {
-    return ServiceProviderInfo(data["id"], data["name"], data["image"]);
+  UserInfo(this.id, this.name, this.image);
+  factory UserInfo.fromData(dynamic data) {
+    return UserInfo(data["id"], data["name"], data["image"]);
   }
 }

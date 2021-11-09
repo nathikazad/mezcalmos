@@ -195,7 +195,7 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                                   backgroundColor: Colors.grey,
                                                   backgroundImage: NetworkImage(
                                                       controller.orders[i]
-                                                          .customer['image']),
+                                                          .customer.image),
                                                   onBackgroundImageError:
                                                       (e, s) => mezDbgPrint(
                                                           "Failed loading Customer openOrder::id::${controller.orders[i].orderId}"),
@@ -207,8 +207,7 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                                   top: 10,
                                                   child: Text(
                                                     controller.orders[i]
-                                                            .customer['name'] ??
-                                                        tDefaultCustomerName,
+                                                            .customer.name,
                                                     style: TextStyle(
                                                         fontFamily: 'psb',
                                                         fontSize: 16),

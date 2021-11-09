@@ -25,7 +25,6 @@ extension ParseStringToOrderStatus on String {
 }
 
 class TaxiOrder extends Order {
-  dynamic customer;
   dynamic estimatedPrice;
   dynamic
       from; // this must not be late  , especcially since  we are using Order.emty
@@ -44,7 +43,6 @@ class TaxiOrder extends Order {
 
   TaxiOrder(
       {required String orderId,
-      required this.customer,
       required this.estimatedPrice,
       required this.from,
       required this.to,
@@ -59,13 +57,15 @@ class TaxiOrder extends Order {
       required this.rideStartTime,
       required this.status,
       required this.polyline,
+      required UserInfo customer,
       dynamic cancelledBy})
       : super(
             orderTime: orderTime,
             orderId: orderId,
             paymentType: paymentType,
             orderType: OrderType.Taxi,
-            cost: 0);
+            cost: 0,
+            customer: customer);
   // Get props as list.
   List<Object> get props =>
       [orderId, from, to, orderTime, paymentType, routeInformation];
@@ -76,7 +76,7 @@ class TaxiOrder extends Order {
         driver: data['driver'],
         distance: data['distance'],
         duration: data['duration'],
-        customer: data['customer'],
+        customer: UserInfo.fromData(data["customer"]),
         rideFinishTime: data['rideFinishTime'],
         rideStartTime: data['rideStartTime'],
         status: data['status'].toString().toOrderStatus(),
