@@ -28,7 +28,7 @@ class FBNotificationsController extends GetxController {
     mezDbgPrint("fbNotificationsController: Init");
   }
 
-  void startListeningForNotifications(String notificationNode) {
+  void startListeningForNotificationsFromFirebase(String notificationNode) {
     mezDbgPrint("FBNotificationsController:startListeningForNotifications");
     mezDbgPrint(notificationNode);
     this._notificationNode = notificationNode;

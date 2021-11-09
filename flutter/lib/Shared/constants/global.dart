@@ -2,6 +2,8 @@
 // PLEASE DO NOT TOUCH ANYTHING IN CONNECTIVITY STRINGS , UNLESS YOU INFORM OTHERS.
 // import 'package:flutter/material.dart';
 
+import 'package:mezcalmos/Shared/models/Chat.dart';
+
 const String db = "mezcalmos-31f1c-default-rtdb";
 const String stagingDb =
     "https://mezcalmos-staging-default-rtdb.firebaseio.com";
@@ -15,7 +17,9 @@ const String placesApikey =
 
 // ----------------- TEST STRINGS ----------------- //
 
-const String tEmailTestValue = "taxi.two@mezcalmos.com";
+const String tTestTaxiValue = "taxi.one@mezcalmos.com";
+const String tTestCustomerValue = "customer.one@mezcalmos.com";
+const String tTestAdminValue = "admin@mezcalmos.com";
 const String tEmailTestPassword = "password";
 
 // ----------------- Costants Numbers ----------------- //
@@ -55,3 +59,32 @@ const String aLocationPermissionAsset =
 
 const String aPurpleLocationCircle = "assets/images/PurpleLocationCircle.png";
 const String aLocationPicker = "assets/images/PurpleLocationPicker.png";
+
+enum AppType { CustomerApp, TaxiApp, TaxiAdminApp, DeliveryAdminApp }
+
+extension ParseOrderTypeToString on AppType {
+  String toShortString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+
+  ParticipantType? toParticipantType() {
+    switch (this) {
+      case AppType.CustomerApp:
+        return ParticipantType.Customer;
+      case AppType.TaxiApp:
+        return ParticipantType.Taxi;
+      case AppType.TaxiAdminApp:
+        return ParticipantType.TaxiAdmin;
+      case AppType.DeliveryAdminApp:
+        return ParticipantType.DeliveryAdmin;
+      default:
+    }
+  }
+}
+
+extension StringToParseOrderType on String {
+  AppType convertStringToAppType() {
+    return AppType.values.firstWhere((e) => e.toShortString() == this);
+  }
+}

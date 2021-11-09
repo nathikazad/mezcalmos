@@ -21,3 +21,7 @@ String customerAppVersionNode(String uid) {
 String customerNotificationInfoNode(String uid) {
   return 'customers/info/${uid}/notificationInfo';
 }
+
+String notificationsNode(String uid) {
+  return 'notifications/customer/$uid';
+}

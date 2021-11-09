@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart'; // getX
+import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/UnauthorizedScreen.dart';
 import 'package:mezcalmos/Shared/pages/LocationPermissionScreen.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen.dart';
@@ -24,7 +25,9 @@ const String kUnauthorizedRoute = '/unauthorized';
 const String kUserProfile = '/user_profile';
 const String kPickToLocation = '/pick_to_location';
 
-getMessagesRoute(String orderId) {
+String getMessagesRoute(
+  String orderId,
+) {
   return kMessagesRoute.replaceFirst(":orderId", orderId);
 }
 

@@ -1,17 +1,29 @@
-// import 'dart:collection';
 import 'package:intl/intl.dart';
-// import 'package:firebase_database/firebase_database.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+
+enum ParticipantType { Customer, Taxi, TaxiAdmin, DeliveryAdmin, Restaurant }
+
+extension ParseParticipantTypeToString on ParticipantType {
+  String toFirebaseFormattedString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringToParticipantType on String {
+  ParticipantType toParticipantType() {
+    mezDbgPrint(ParticipantType.values);
+    mezDbgPrint(this);
+    return ParticipantType.values
+        .firstWhere((e) => e.toFirebaseFormattedString() == this);
+  }
+}
 
 class Participant {
-  late String image;
-  late String name;
-  dynamic participantType;
-
-  Participant(image, name, participantType) {
-    this.image = image;
-    this.name = name;
-    this.participantType = participantType;
-  }
+  String image;
+  String name;
+  ParticipantType participantType;
+  Participant(this.image, this.name, this.participantType);
 }
 
 class Message {
@@ -40,25 +52,15 @@ class Chat {
       this.orderId);
 
   Chat.fromJson(key, _value) {
-    // mezDbgPrint("1 >>>$_value");
-
     Map<String, dynamic> value = new Map<String, dynamic>.from(_value);
-    // mezDbgPrint("2 >>>$value");
 
     Map<String, Participant> _participants = {};
     List<Message> _messages = [];
 
     value['participants']?.forEach((key, p) {
-      _participants[key] =
-          Participant(p['image'], p['name'], p['participantType']);
+      _participants[key] = Participant(p['image'], p['name'],
+          p['particpantType'].toString().toParticipantType());
     });
-    // for (var participantId in value['participants']) {
-    //   dynamic p = value['participants'][participantId];
-    //   mezDbgPrint(p);
-    //   mezDbgPrint("/n/n ${value['participants']}");
-    //   participants[participantId] =
-    //       Participant(p.image, p.name, p.participantType);
-    // }
 
     value['messages']?.forEach((key, m) {
       try {
@@ -75,11 +77,6 @@ class Chat {
       else
         return before.timeStamp!.compareTo(after.timeStamp!);
     });
-
-    // for (var messageId in value['messages']) {
-    //   dynamic m = value['messages'][messageId];
-    //   messages.add(Message(m.message, DateTime.parse(m.timestamp), m.userId));
-    // }
 
     this.chatType = value['chatType'];
     this.orderId = key;

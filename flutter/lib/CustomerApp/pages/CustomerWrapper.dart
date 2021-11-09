@@ -1,9 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
 import 'package:mezcalmos/CustomerApp/components/imagesComponents.dart';
+import 'package:mezcalmos/CustomerApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
+import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
@@ -11,12 +15,23 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/utilities/NotificationsDisplayer.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mezcalmos/Shared/models/Notification.dart' as MezNotification;
 
-class CustomerWrapper extends GetWidget<AuthController>
+class CustomerWrapper extends StatefulWidget {
+  @override
+  _CustomerWrapperState createState() => _CustomerWrapperState();
+}
+
+class _CustomerWrapperState extends State<CustomerWrapper>
     with WidgetsBindingObserver {
+  StreamSubscription<MezNotification.Notification>?
+      _notificationsStreamListener;
+
+  
   LanguageController lang = Get.find<LanguageController>();
   SideMenuDraweController _sideMenuDrawerController =
       Get.find<SideMenuDraweController>();
@@ -24,11 +39,16 @@ class CustomerWrapper extends GetWidget<AuthController>
   LanguageController _lang = Get.find<LanguageController>();
   RxInt numberOfCurrentOrders = RxInt(0);
   DateTime? appClosedTime;
-  CustomerWrapper() {
+  @override
+  void initState() {
     WidgetsBinding.instance!.addObserver(this);
-    // _orderController.currentOrdersStream.listen((currentOrders) {
-    //   numberOfCurrentOrders.value = currentOrders.length;
-    // });
+    _orderController.currentOrdersStream.listen((currentOrders) {
+      numberOfCurrentOrders.value = currentOrders.length;
+    });
+    String userId = Get.find<AuthController>().fireAuthUser!.uid;
+    _notificationsStreamListener = initializeShowNotificationsListener();
+    Get.find<FBNotificationsController>()
+        .startListeningForNotificationsFromFirebase(notificationsNode(userId));
   }
 
   @override
@@ -62,12 +82,12 @@ class CustomerWrapper extends GetWidget<AuthController>
     responsiveSize(context);
     print("CustomWrapper Build callabck");
     // Navigate to current orders if any after build
-    // Future.microtask(() {
-    //   _orderController.currentOrders.stream.first.then((currentOrders) {
-    //     print("CustomWrapper Build callabck first");
-    //     navigateToOrdersIfNecessary(currentOrders);
-    //   });
-    // });
+    Future.microtask(() {
+      _orderController.currentOrdersStream.first.then((currentOrders) {
+        print("CustomWrapper Build callabck first");
+        navigateToOrdersIfNecessary(currentOrders);
+      });
+    });
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -182,5 +202,12 @@ class CustomerWrapper extends GetWidget<AuthController>
             ],
           )),
     );
+  }
+
+  @override
+  void dispose() {
+    _notificationsStreamListener?.cancel();
+    _notificationsStreamListener = null;
+    super.dispose();
   }
 }

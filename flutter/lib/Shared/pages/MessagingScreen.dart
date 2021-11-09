@@ -5,17 +5,27 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 // Extends GetView<MessagingController> after Nathik implements the controller
-class MessagingScreen extends GetView<MessageController> {
-  String? orderId;
+class MessagingScreen extends StatefulWidget {
+  @override
+  _MessagingScreenState createState() => _MessagingScreenState();
+}
 
-  MessagingScreen() {
-    print("inside messaginScreen constructor !");
-    Get.put<MessageController>(MessageController());
+class _MessagingScreenState extends State<MessagingScreen> {
+  String? orderId;
+  ParticipantType? recipientParticipantType;
+  MessageController controller =
+      Get.put<MessageController>(MessageController());
+  @override
+  void initState() {
+    super.initState();
+    print("inside messaginScreen onInitState !");
     this.orderId = Get.parameters['orderId'];
+    if (Get.arguments != null) this.recipientParticipantType = Get.arguments!;
     // we make sure that the orderId is never null somehow.
     // because we depend on it , on the controller side!
     if (this.orderId == null) {
@@ -42,7 +52,7 @@ class MessagingScreen extends GetView<MessageController> {
     String? userImage,
   }) =>
       Container(
-        alignment: isMe ? Alignment.centerLeft : Alignment.centerRight,
+        alignment: !isMe ? Alignment.centerLeft : Alignment.centerRight,
         // width: double.infinity,
         // color: Colors.black,
         // margin: const EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 30),
@@ -50,11 +60,11 @@ class MessagingScreen extends GetView<MessageController> {
             const EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 20),
         // const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
         child: Wrap(
-            // alignment: isMe ? Alignment.topLeft : Alignment.topRight,
-            alignment: isMe ? WrapAlignment.start : WrapAlignment.end,
-            runAlignment: isMe ? WrapAlignment.start : WrapAlignment.end,
+            // alignment: !isMe ? Alignment.topLeft : Alignment.topRight,
+            alignment: !isMe ? WrapAlignment.start : WrapAlignment.end,
+            runAlignment: !isMe ? WrapAlignment.start : WrapAlignment.end,
             crossAxisAlignment: WrapCrossAlignment.start,
-            textDirection: isMe ? TextDirection.ltr : TextDirection.rtl,
+            textDirection: !isMe ? TextDirection.ltr : TextDirection.rtl,
             spacing: 20,
             clipBehavior: Clip.none,
             children: [
@@ -75,19 +85,19 @@ class MessagingScreen extends GetView<MessageController> {
                 spacing: 10,
                 direction: Axis.vertical,
                 // alignment: WrapAlignment.spaceEvenly,
-                runAlignment: isMe ? WrapAlignment.start : WrapAlignment.end,
+                runAlignment: !isMe ? WrapAlignment.start : WrapAlignment.end,
                 // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 
                 children: [
                   Container(
                       constraints: BoxConstraints(maxWidth: 170),
-                      padding: isMe
+                      padding: !isMe
                           ? EdgeInsets.all(15)
                           : EdgeInsets.only(
                               left: 25, top: 16, bottom: 16, right: 15),
                       // width: Get.width / 2,
                       decoration: BoxDecoration(
-                          gradient: isMe
+                          gradient: !isMe
                               ? LinearGradient(colors: [
                                   Color.fromARGB(255, 248, 248, 248),
                                   Color.fromARGB(255, 248, 248, 248)
@@ -96,7 +106,7 @@ class MessagingScreen extends GetView<MessageController> {
                                   Color.fromARGB(255, 92, 127, 255),
                                   Color.fromARGB(255, 172, 89, 252)
                                 ]),
-                          borderRadius: isMe
+                          borderRadius: !isMe
                               ? BorderRadius.only(
                                   topLeft: Radius.zero,
                                   topRight: Radius.circular(30),
@@ -112,7 +122,7 @@ class MessagingScreen extends GetView<MessageController> {
                         style: TextStyle(
                             fontFamily: 'psr',
                             fontSize: 12,
-                            color: isMe
+                            color: !isMe
                                 ? Color.fromARGB(255, 0, 15, 28)
                                 : Colors.white),
                       )),
@@ -123,7 +133,7 @@ class MessagingScreen extends GetView<MessageController> {
                       ? Padding(
                           padding: const EdgeInsets.only(left: 5.0),
                           child: Text(
-                            (isMe ? 'Seen In' : 'Sent In') + '    $time',
+                            (!isMe ? 'Seen In' : 'Sent In') + '    $time',
                             style: TextStyle(
                                 fontFamily: 'psr',
                                 fontSize: 10,
@@ -159,8 +169,8 @@ class MessagingScreen extends GetView<MessageController> {
           "--------------------- >>>>> FillCallback Executed  >> Messages Count >> ${controller.value?.messages.length}!");
       chatLines.assignAll(controller.value!.messages.map(
         (e) {
-          mezDbgPrint(
-              " \t\t ${controller.value!.participants[e.userId]?.image}");
+          // mezDbgPrint(
+          //     " \t\t ${controller.value!.participants[e.userId]?.image}");
           return singleChatComponent(
             e.message,
             e.formatedTime,
@@ -203,9 +213,17 @@ class MessagingScreen extends GetView<MessageController> {
                           () => CircleAvatar(
                             radius: 23,
                             backgroundColor: Colors.grey.shade200,
-                            backgroundImage: controller.recipient()?.image !=
+                            backgroundImage: controller
+                                        .recipient(
+                                            participantType:
+                                                recipientParticipantType)
+                                        ?.image !=
                                     null
-                                ? NetworkImage(controller.recipient()!.image)
+                                ? NetworkImage(controller
+                                    .recipient(
+                                        participantType:
+                                            recipientParticipantType)!
+                                    .image)
                                 : AssetImage(aDefaultAvatar) as ImageProvider,
                           ),
                         ),
@@ -216,7 +234,12 @@ class MessagingScreen extends GetView<MessageController> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              controller.recipient()?.name ?? "Customer",
+                              controller
+                                      .recipient(
+                                          participantType:
+                                              recipientParticipantType)
+                                      ?.name ??
+                                  "Customer",
                               style:
                                   TextStyle(fontFamily: 'psb', fontSize: 16.5),
                             ),

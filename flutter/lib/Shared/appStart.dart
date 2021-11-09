@@ -27,11 +27,11 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'dart:io';
 
 class SPoint extends StatefulWidget {
-  String appName;
+  AppType appType;
   Function signInCallback;
   Function signOutCallback;
   List<GetPage<dynamic>> routes;
-  SPoint(this.appName, this.signInCallback, this.signOutCallback, this.routes);
+  SPoint(this.appType, this.signInCallback, this.signOutCallback, this.routes);
 
   @override
   _SPointState createState() => _SPointState();
@@ -102,7 +102,7 @@ class _SPointState extends State<SPoint> {
     mezDbgPrint("Putting Auth Controller");
     Get.put<AppLifeCycleController>(AppLifeCycleController(logs: true),
         permanent: true);
-    Get.put<SettingsController>(SettingsController(widget.appName),
+    Get.put<SettingsController>(SettingsController(widget.appType),
         permanent: true);
   }
 
@@ -163,25 +163,25 @@ class _SPointState extends State<SPoint> {
     if (!_initialized) {
       return SplashScreen();
     } else {
-      return mainApp(widget.appName, widget.routes);
+      return mainApp(widget.appType, widget.routes);
     }
   }
 }
 
-Widget mainApp(String appName, List<GetPage<dynamic>> routes) {
+Widget mainApp(AppType appType, List<GetPage<dynamic>> routes) {
   Future<void> _initializeConfig() async {
     // We will use this to Initialize anything at MaterialApp root init of app
     BitmapDescriptor desc = await BitmapDescriptor.fromAssetImage(
         ImageConfiguration(), 'assets/images/purple_circle.png');
 
     await GetStorage().write('markerCircle', desc);
-    print("[+] InitializedConfig -- the $appName !");
+    print("[+] InitializedConfig -- the ${appType.toShortString()} !");
   }
 
   return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       onInit: () async => await _initializeConfig(),
-      title: appName,
+      title: appType.toShortString(),
       theme: ThemeData(
           primaryColor: Colors.white,
           visualDensity: VisualDensity.adaptivePlatformDensity),

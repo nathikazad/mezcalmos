@@ -27,8 +27,6 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
 
   @override
   void initState() {
-    String userId = Get.find<AuthController>().fireAuthUser!.uid;
-    _notificationsStreamListener = listenForNotifications();
     Future.microtask(() {
       mezDbgPrint("TaxiWrapper::microtask handleState first time");
       TaxiState? taxiState = Get.find<TaxiAuthController>().taxiState;
@@ -40,8 +38,10 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
             .first
             .then((taxiState) => handleState(taxiState));
     });
+    String userId = Get.find<AuthController>().fireAuthUser!.uid;
+    _notificationsStreamListener = initializeShowNotificationsListener();
     Get.find<FBNotificationsController>()
-        .startListeningForNotifications(notificationsNode(userId));
+        .startListeningForNotificationsFromFirebase(notificationsNode(userId));
     super.initState();
   }
 

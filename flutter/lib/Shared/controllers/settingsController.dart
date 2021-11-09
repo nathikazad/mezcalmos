@@ -2,23 +2,16 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:location/location.dart';
-// import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
 import 'package:mezcalmos/Shared/controllers/themeContoller.dart';
-import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-
-enum AppName { TaxiApp, CustomerApp, RestaurantApp, DeliveryAdminApp }
-AppName convertStringToAppName(String str) {
-  return AppName.values.firstWhere((e) => e.toString().split('.').last == str);
-}
 
 class SettingsController extends GetxController {
   late final ThemeController _appTheme;
   late final LanguageController _appLanguage;
-  // String appName;
-  late AppName appName;
+  AppType appType;
   ThemeController get appTheme => _appTheme;
   LanguageController get appLanguage => _appLanguage;
 
@@ -28,9 +21,7 @@ class SettingsController extends GetxController {
   Stream<bool> get locationPermissionStream =>
       _hasLocationPermissionStreamController.stream;
 
-  SettingsController(String appName) {
-    this.appName = convertStringToAppName(appName);
-  }
+  SettingsController(this.appType);
 
   @override
   void onInit() async {

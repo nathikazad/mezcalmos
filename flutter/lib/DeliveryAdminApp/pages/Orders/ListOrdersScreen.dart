@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/orderController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 
 class ListOrdersScreen extends StatefulWidget {
   @override
@@ -29,13 +32,16 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text("List Orders"),
-        ),
+     return WillPopScope(
+        onWillPop: () async => false,
+        child: Scaffold(
+            key: Get.find<SideMenuDraweController>().getNewKey(),
+            appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
+                "menu", Get.find<SideMenuDraweController>().openMenu),
+            drawer: MezSideMenu(),
         body: Obx(() {
           return buildOrders();
-        }));
+        })));
   }
 
   Widget buildOrders() {

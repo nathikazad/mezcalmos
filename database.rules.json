@@ -119,11 +119,14 @@
     },
     "chat": {
       "$orderId": {
-        ".read": "root.child('chat/' + $orderId + '/participants/' + auth.uid).exists()",
+        ".read": "root.child('chat/' + $orderId + '/participants/' + auth.uid).exists() || root.child('admins/' + auth.uid + '/authorized').val() === true || root.child('deliveryAdmins/' + auth.uid + '/authorized').val() === true",
         "messages": {
           "$messageId": {
             ".write": "root.child('chat/' + $orderId + '/participants/' + auth.uid).exists()"
           }
+        },
+        "participants": {
+          ".write": "root.child('admins/' + auth.uid + '/authorized').val() === true || root.child('deliveryAdmins/' + auth.uid + '/authorized').val() === true"
         }
       }
     },

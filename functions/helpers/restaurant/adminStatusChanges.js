@@ -1,9 +1,6 @@
 const functions = require("firebase-functions");
 const firebase = require("firebase-admin");
-
-
-const keys = require("../keys").keys()
-const hasuraModule = require("../hasura");
+const admin = require("../admin");
 
 statusArrayInSeq =
   ["orderReceieved",
@@ -50,7 +47,10 @@ function expectedPreviousStatus(status) {
 
 async function changeStatus(uid, data, newStatus) {
 
-  // Check if user is admin
+  let response = await admin.checkAdmin(firebase, { adminId: uid })
+  if (response) {
+    return response;
+  }
 
   if (data.orderId == null) {
     return {
@@ -60,9 +60,9 @@ async function changeStatus(uid, data, newStatus) {
     }
   }
 
-  let orderId = data.orderId
+  let orderId = data.orderId;
 
-  let order = (await firebase.database().ref(`/customers/inProcessOrders/${uid}/${orderId}`).once('value')).val();
+  let order = (await firebase.database().ref(`/inProcessOrders/restaurant/${orderId}`).once('value')).val();
   if (order == null) {
     return {
       status: "Error",
@@ -82,7 +82,7 @@ async function changeStatus(uid, data, newStatus) {
   order.status = newStatus
 
   firebase.database().ref(`/orders/restaurant/${orderId}`).update(order);
-  firebase.database().ref(`/customers/inProcessOrders/${uid}/${orderId}`).update(order);
+  firebase.database().ref(`/customers/inProcessOrders/${order.customer.id}/${orderId}`).update(order);
   firebase.database().ref(`/restaurants/inProcessOrders/${order.serviceProviderId}/${orderId}`).update(order);
   firebase.database().ref(`/inProcessOrders/restaurant/${orderId}`).update(order);
 

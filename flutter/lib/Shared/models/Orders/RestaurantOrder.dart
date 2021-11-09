@@ -31,10 +31,10 @@ class RestaurantOrder extends Order {
     RestaurantOrder restaurantOrder = RestaurantOrder(
         orderId: id,
         restaurantOrderStatus:
-            convertRestaurantOrderStatusStringToEnum(data["status"]),
+            data["status"].toString().toRestaurantOrderStatus(),
         quantity: data["quantity"],
         serviceProviderId: data["serviceProviderId"],
-        paymentType: convertPaymentType(data["paymentType"]),
+        paymentType: data["paymentType"].toString().toPaymentType(),
         orderTime: DateTime.parse(data["orderTime"]),
         cost: data["cost"],
         notes: data["notes"],
@@ -145,8 +145,9 @@ extension ParseRestaurantOrderStatusToString on RestaurantOrderStatus {
   }
 }
 
-RestaurantOrderStatus convertRestaurantOrderStatusStringToEnum(
-    String restaurantOrderStatus) {
-  return RestaurantOrderStatus.values
-      .firstWhere((e) => e.toFirebaseFormatString() == restaurantOrderStatus);
+extension ParseStringToRestaurantOrderStatus on String {
+  RestaurantOrderStatus toRestaurantOrderStatus() {
+    return RestaurantOrderStatus.values
+        .firstWhere((e) => e.toFirebaseFormatString() == this);
+  }
 }

@@ -12,11 +12,11 @@ const String kRestaurantOrderRoute = '/orders/:orderId';
 const String kRestaurantsRoute = '/restaurants';
 const String kRestaurantRoute = '/restaurants/:restaurantId';
 
-getRestaurantRoute(String restaurantId) {
+String getRestaurantRoute(String restaurantId) {
   return kRestaurantRoute.replaceFirst(":restaurantId", restaurantId);
 }
 
-getRestaurantOrderRoute(String orderId) {
+String getRestaurantOrderRoute(String orderId) {
   return kRestaurantOrderRoute.replaceFirst(":orderId", orderId);
 }
 

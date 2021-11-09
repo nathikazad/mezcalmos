@@ -1,6 +1,5 @@
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 enum OrdersStatus {
   DroppedOff,
@@ -12,15 +11,17 @@ enum OrdersStatus {
   Invalid
 }
 
-extension ParseToString on OrdersStatus {
+extension ParseOrderStatusToString on OrdersStatus {
   String toShortString() {
     return this.toString().split('.').last;
   }
 }
 
-OrdersStatus convertStringToOrderStatus(String str) {
-  return OrdersStatus.values
-      .firstWhere((e) => e.toShortString().toLowerCase() == str.toLowerCase());
+extension ParseStringToOrderStatus on String {
+  OrdersStatus toOrderStatus() {
+    return OrdersStatus.values.firstWhere(
+        (e) => e.toShortString().toLowerCase() == this.toLowerCase());
+  }
 }
 
 class TaxiOrder extends Order {
@@ -78,13 +79,13 @@ class TaxiOrder extends Order {
         customer: data['customer'],
         rideFinishTime: data['rideFinishTime'],
         rideStartTime: data['rideStartTime'],
-        status: convertStringToOrderStatus(data['status']),
+        status: data['status'].toString().toOrderStatus(),
         acceptRideTime: data['acceptRideTime'],
         estimatedPrice: data['estimatedPrice'],
         from: Location(data['from']),
         to: Location(data['to']),
         orderTime: DateTime.parse(data["orderTime"]),
-        paymentType: convertPaymentType(data["paymentType"]),
+        paymentType: data["paymentType"].toString().toPaymentType(),
         routeInformation: data['routeInformation'],
         polyline: data['polyline'] ?? "");
     return taxiOrder;

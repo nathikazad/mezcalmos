@@ -13,13 +13,12 @@ const String defaultLaunchMode = "stage";
 
 Function signInCallback = AuthHooks.onSignInHook;
 Function signOutCallback = AuthHooks.onSignOutHook;
-String appName = "TaxiApp";
 List<GetPage<dynamic>> routes = XRouter.mainRoutes;
 
 void main() {
   loadBitmaps();
   runMainGuarded(() => runApp(
-        SPoint(appName, signInCallback, signOutCallback, routes),
+        SPoint(AppType.TaxiApp, signInCallback, signOutCallback, routes),
       ));
 }
 

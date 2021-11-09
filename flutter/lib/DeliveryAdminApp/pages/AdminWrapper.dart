@@ -28,8 +28,6 @@ class _AdminWrapperState extends State<AdminWrapper> {
 
   @override
   void initState() {
-    String userId = Get.find<AuthController>().fireAuthUser!.uid;
-    _notificationsStreamListener = listenForNotifications();
     Future.microtask(() {
       mezDbgPrint("AdminWrapper::microtask handleState first time");
       Admin? admin = Get.find<AdminAuthController>().admin;
@@ -41,8 +39,10 @@ class _AdminWrapperState extends State<AdminWrapper> {
             .first
             .then((admin) => handleAuthorization(admin?.authorized ?? false));
     });
+    String userId = Get.find<AuthController>().fireAuthUser!.uid;
+    _notificationsStreamListener = initializeShowNotificationsListener();
     Get.find<FBNotificationsController>()
-        .startListeningForNotifications(notificationsNode(userId));
+        .startListeningForNotificationsFromFirebase(notificationsNode(userId));
     super.initState();
   }
 

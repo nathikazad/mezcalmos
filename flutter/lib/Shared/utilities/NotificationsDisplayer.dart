@@ -6,7 +6,7 @@ import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:soundpool/soundpool.dart';
 import 'package:get/get.dart';
 
-StreamSubscription<Notification> listenForNotifications() {
+StreamSubscription<Notification> initializeShowNotificationsListener() {
   return Get.find<FBNotificationsController>()
       .notificationsStream
       .listen((notification) {

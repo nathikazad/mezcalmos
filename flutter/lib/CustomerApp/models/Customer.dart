@@ -6,7 +6,7 @@ class Customer {
   dynamic data;
   Customer.fromSnapshot(dynamic data) {
     this.data = data;
-    this.appVersion = data["versionNumber"];
+    this.appVersion = data["versionNumber"] ?? null;
     this.notificationInfo = data["notificationInfo"];
     // if (data["info"]?["currentOrders"] != null) {
     //   data["info"]["currentOrders"]

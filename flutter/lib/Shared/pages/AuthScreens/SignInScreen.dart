@@ -88,8 +88,32 @@ class SignIn extends GetWidget<AuthController> {
                                   clickedLogin.value = true;
                                   lmode != "dev"
                                       ? await controller.signInWithFacebook()
-                                      : await controller.signIn(
-                                          tEmailTestValue, tEmailTestPassword);
+                                      : await Get.defaultDialog(
+                                          title: "Choose Test User",
+                                          content: Column(
+                                            children: [
+                                              TextButton(
+                                                  onPressed: () =>
+                                                      controller.signIn(
+                                                          tTestCustomerValue,
+                                                          tEmailTestPassword),
+                                                  child:
+                                                      Text(tTestCustomerValue)),
+                                              TextButton(
+                                                  onPressed: () =>
+                                                      controller.signIn(
+                                                          tTestTaxiValue,
+                                                          tEmailTestPassword),
+                                                  child: Text(tTestTaxiValue)),
+                                              TextButton(
+                                                  onPressed: () =>
+                                                      controller.signIn(
+                                                          tTestAdminValue,
+                                                          tEmailTestPassword),
+                                                  child: Text(tTestAdminValue))
+                                            ],
+                                          ));
+                                  
                                   clickedLogin.value = false;
                                 },
                           child: clickedLogin.value

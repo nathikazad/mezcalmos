@@ -1,5 +1,3 @@
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-
 abstract class Order {
   String orderId;
   OrderType orderType;
@@ -28,9 +26,11 @@ extension ParseOrderTypeToString on OrderType {
   }
 }
 
-OrderType convertOrderTypeStringToEnum(String orderType) {
-  return OrderType.values
-      .firstWhere((e) => e.toFirebaseFormatString().toLowerCase() == orderType);
+extension ParseStringToOrderType on String {
+  OrderType convertOrderTypeStringToEnum() {
+    return OrderType.values
+        .firstWhere((e) => e.toFirebaseFormatString().toLowerCase() == this);
+  }
 }
 
 enum PaymentType { Cash, Card }
@@ -42,9 +42,11 @@ extension ParsePaymentTypeToString on PaymentType {
   }
 }
 
-PaymentType convertPaymentType(String paymentType) {
-  return PaymentType.values.firstWhere((e) =>
-      e.toFirebaseFormatString().toLowerCase() == paymentType.toLowerCase());
+extension ParseStringToPaymentType on String {
+  PaymentType toPaymentType() {
+    return PaymentType.values.firstWhere(
+        (e) => e.toFirebaseFormatString().toLowerCase() == this.toLowerCase());
+  }
 }
 
 class ServiceProviderInfo {

@@ -24,25 +24,25 @@ const String kCartRoute = '/cart';
 const String kCartItemRoute = '/cart/:cartItemId';
 const String kPickLocationRoute = '/pickLocationFromMap';
 
-getRestaurantRoute(String restaurantId) {
+String getRestaurantRoute(String restaurantId) {
   return kRestaurantRoute.replaceFirst(":restaurantId", restaurantId);
 }
 
-getItemRoute(String restaurantId, String itemId) {
+String getItemRoute(String restaurantId, String itemId) {
   return kViewRestaurantItemRoute
       .replaceFirst(":restaurantId", restaurantId)
       .replaceFirst(":itemId", itemId);
 }
 
-editCartItemRoute(String cartItemId) {
+String editCartItemRoute(String cartItemId) {
   return kCartItemRoute.replaceFirst(":cartItemId", cartItemId);
 }
 
-getCurrentRestaurantOrderRoute(String orderId) {
+String getCurrentRestaurantOrderRoute(String orderId) {
   return kCurrentRestaurantOrderRoute.replaceFirst(":orderId", orderId);
 }
 
-getPastRestaurantOrderRoute(String orderId) {
+String getPastRestaurantOrderRoute(String orderId) {
   return kPastRestaurantOrderRoute.replaceFirst(":orderId", orderId);
 }
 

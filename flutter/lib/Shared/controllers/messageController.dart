@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/constants/databaseNodes.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
@@ -19,19 +20,17 @@ class MessageController extends GetxController {
   DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
   AuthController _authController = Get.find<AuthController>();
   StreamSubscription? chatListener;
-  // String? _orderId;
-  late AppName appName;
+  late AppType appType;
 
   @override
   void onInit() {
     super.onInit();
     mezDbgPrint("--------------------> messageController Initialized !");
-    this.appName = Get.find<SettingsController>().appName;
+    this.appType = Get.find<SettingsController>().appType;
   }
 
   void loadChat(String userId, String orderId,
       {VoidCallback? onValueCallBack}) {
-    // _orderId = orderId;
     chatListener?.cancel();
     chatListener = _databaseHelper.firebaseDatabase
         .reference()
@@ -50,7 +49,21 @@ class MessageController extends GetxController {
     });
   }
 
-  void sendMessage(String message, String orderId) {
+  void sendMessage(String message, String orderId) async {
+    // check if user id is in participants, if not try to write to participants node
+    if (!_model.value.participants.containsKey(_authController.user!.uid)) {
+      mezDbgPrint("Message partcipants does not contain user's id");
+      _databaseHelper.firebaseDatabase
+          .reference()
+          .child(
+              '${orderChatNode(orderId)}/participants/${_authController.user!.uid}')
+          .set(<String, dynamic>{
+        "particpantType":
+            this.appType.toParticipantType()!.toFirebaseFormattedString(),
+        "name": _authController.user!.displayName,
+        "image": _authController.user!.image
+      });
+    }
     _databaseHelper.firebaseDatabase
         .reference()
         .child('${orderChatNode(orderId)}/messages')
@@ -67,15 +80,22 @@ class MessageController extends GetxController {
     return _model.value.participants[_authController.user!.uid];
   }
 
-  Participant? recipient() {
-    Participant? recipient;
-    _model.value.participants.forEach((key, value) {
-      mezDbgPrint("$key ----- $value");
-      if (key != _authController.user!.uid) {
-        recipient = value;
+  Participant? recipient({ParticipantType? participantType}) {
+    if (participantType != null) {
+      for (String key in _model.value.participants.keys.toList()) {
+        Participant recipient = _model.value.participants[key]!;
+        if (recipient.participantType == participantType) {
+          return recipient;
+        }
       }
-    });
-    return recipient;
+    }
+
+    for (String key in _model.value.participants.keys.toList()) {
+      Participant recipient = _model.value.participants[key]!;
+      if (key != _authController.user!.uid) {
+        return recipient;
+      }
+    }
   }
 
   void clearMessageNotifications(String orderId) {

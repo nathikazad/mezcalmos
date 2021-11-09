@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/orderController.dart';
+import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 import 'package:flutter/material.dart';
@@ -53,6 +55,13 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
             List<Widget> children = <Widget>[
               Text(order.value!.orderId),
               Text(order.value!.orderTime.toString()),
+              OutlinedButton(
+                  onPressed: () {
+                    mezDbgPrint("Message clicked");
+                    Get.toNamed(getMessagesRoute(order.value!.orderId),
+                        arguments: ParticipantType.Customer);
+                  },
+                  child: Text("Message"))
             ];
             if (changeStatusButton() != null)
               children.add(changeStatusButton()!);

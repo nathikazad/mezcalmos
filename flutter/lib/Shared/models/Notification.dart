@@ -6,15 +6,17 @@ import 'package:mezcalmos/TaxiApp/router.dart';
 
 enum NotificationType { NewMessage, NewAdminMessage, OrderStatusChange }
 
-extension ParseToString on NotificationType {
+extension ParseNotificationTypeToString on NotificationType {
   String toLowerCaseString() {
     return this.toString().split('.').last.toLowerCase();
   }
 }
 
-NotificationType convertStringToNotificationType(String str) {
-  return NotificationType.values
-      .firstWhere((e) => e.toLowerCaseString() == str.toLowerCase());
+extension ParseStringToNotificationType on String {
+  NotificationType toNotificationType() {
+    return NotificationType.values
+        .firstWhere((e) => e.toLowerCaseString() == this.toLowerCase());
+  }
 }
 
 abstract class Notification {
@@ -38,7 +40,7 @@ abstract class Notification {
   String get linkUrl;
   factory Notification.fromJson(dynamic key, dynamic value) {
     NotificationType notificationType =
-        convertStringToNotificationType(value['notificationType']);
+        value['notificationType'].toString().toNotificationType();
     DateTime timestamp = DateTime.parse(value['time']);
     mezDbgPrint(notificationType.toString());
     switch (notificationType) {
@@ -56,7 +58,7 @@ abstract class Notification {
             id: key,
             notificationType: notificationType,
             orderId: value['orderId'],
-            newOrdersStatus: convertStringToOrderStatus(value['status']),
+            newOrdersStatus: value['status'].toString().toOrderStatus(),
             timestamp: timestamp);
       default:
         throw StateError("Invalid Notification Type");

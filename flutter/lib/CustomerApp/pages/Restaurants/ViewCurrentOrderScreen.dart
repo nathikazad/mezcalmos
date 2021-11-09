@@ -5,8 +5,10 @@ import 'package:mezcalmos/CustomerApp/components/dailogComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
@@ -95,7 +97,8 @@ class _ViewCurrentRestaurantOrderScreenState
                   children: [
                     CheckoutInfoComponent(
                         url: "${order.value!.restaurant.image}",
-                        title: "${order.value!.restaurant.name}"),
+                        title: "${order.value!.restaurant.name}",
+                        orderId: order.value!.orderId),
                     Container(
                       width: Get.width,
                       height: 1,
@@ -519,7 +522,6 @@ class _ViewCurrentRestaurantOrderScreenState
         );
         break;
       case RestaurantOrderStatus.OrderReceieved:
-        var xDate = f.format(order.value!.orderTime).toString().split(" ");
         mezDbgPrint("Order Receieved");
         myWidget = Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -536,7 +538,7 @@ class _ViewCurrentRestaurantOrderScreenState
             ),
             Container(
               child: Text(
-                  "Receieved ${xDate[0]} ${xDate[2]}${xDate[3].toLowerCase()}",
+                  "Receieved ${f.format(order.value!.orderTime).toString()}",
                   style: const TextStyle(
                       color: const Color(0xff7e7a7a),
                       fontFamily: "prs",
@@ -587,9 +589,11 @@ class CheckoutInfoComponent extends StatelessWidget {
   final String title;
   final bool? isMessageIcon;
   final int? quantity;
+  final String? orderId;
   const CheckoutInfoComponent(
       {required this.url,
       required this.title,
+      this.orderId,
       this.isMessageIcon = true,
       this.quantity,
       Key? key})
@@ -641,7 +645,11 @@ class CheckoutInfoComponent extends StatelessWidget {
                       Icons.chat_bubble_outline,
                       color: Color(0xff5c7fff),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      mezDbgPrint("Message clicked");
+                      Get.toNamed(getMessagesRoute(orderId!),
+                          arguments: ParticipantType.Restaurant);
+                    },
                   ),
                 )
               : Container(
