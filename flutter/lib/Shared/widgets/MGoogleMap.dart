@@ -10,9 +10,9 @@ import 'package:mezcalmos/Shared/models/Location.dart' as LocationModel;
 import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mezcalmos/TaxiAdminApp/components/infoCardComponent.dart';
 
-typedef LocationChangesNotifier = void Function(LocationModel.Location msg);
+typedef LocationChangesNotifier = void Function(
+    LocationModel.Location location, bool showBlackScreen);
 
 class MGoogleMap extends StatefulWidget with MezDisposable {
   final LocationChangesNotifier notifyParent;
@@ -126,7 +126,6 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
   Future<void> animateAndUpdateBounds() async {
     LatLngBounds? _polyMarkersBounds = _getMarkersAndPolylinesBounds();
     if (_polyMarkersBounds != null) {
-      // widget.bounds = _polyMarkersBounds;
       await _animateCameraWithNewBounds(_polyMarkersBounds);
     }
   }
@@ -203,19 +202,13 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
     var location = new Location();
     try {
       currentLocation = await location.getLocation();
-      // String? address = await getAdressFromLatLng(
-      //     LatLng(currentLocation.latitude!, currentLocation.longitude!));
-
-      // if (address == null) {
-      //   address =
-      //       "Location : ${currentLocation.latitude} , ${currentLocation.longitude}";
-      // }
-
-      widget.notifyParent(LocationModel.Location({
-        "lat": currentLocation.latitude,
-        "lng": currentLocation.longitude,
-        "address": "Current Location"
-      }));
+      widget.notifyParent(
+          LocationModel.Location({
+            "lat": currentLocation.latitude,
+            "lng": currentLocation.longitude,
+            "address": ""
+          }),
+          true);
     } on Exception {
       currentLocation = null;
     }
@@ -228,8 +221,6 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
     mezDbgPrint(
         "Inside MGoogleMap build ${this.hashCode} ${widget.debugString}");
     responsiveSize(context);
-    // return widget.markers.isNotEmpty
-    //     ?
     return Stack(
       children: [
         GestureDetector(
@@ -237,25 +228,6 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
             mezDbgPrint("Tap Down !!");
             userTaped = true;
           },
-          // onTapCancel: () async {
-          //   mezDbgPrint("Tap cancel !!");
-
-          //   if (userTaped) {
-          //     mezDbgPrint("Tap Down Confirmed !!");
-
-          //     userTaped = false;
-          //     mezDbgPrint("Camera New position .. getting the center !!");
-          //     LatLng _center = await getMapCenter();
-          //     widget.notifyParent(LocationModel.Location({
-          //       "lat": _center.latitude,
-          //       "lng": _center.longitude,
-          //       "address": "M_center position!"
-          //     }));
-          //   }
-          // },
-          // onTapUp: (_) async {
-
-          // },
           child: GoogleMap(
             onCameraIdle: () async {
               if (userTaped) {
@@ -263,18 +235,13 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
                 userTaped = false;
                 mezDbgPrint("Camera New position .. getting the center !!");
                 LatLng _center = await getMapCenter();
-                // String? address = await getAdressFromLatLng(_center);
-
-                // if (address == null) {
-                //   address =
-                //       "Location : ${_center.latitude} , ${_center.longitude}";
-                // }
-
-                widget.notifyParent(LocationModel.Location({
-                  "lat": _center.latitude,
-                  "lng": _center.longitude,
-                  "address": ""
-                }));
+                widget.notifyParent(
+                    LocationModel.Location({
+                      "lat": _center.latitude,
+                      "lng": _center.longitude,
+                      "address": ""
+                    }),
+                    false);
               }
             },
             padding: EdgeInsets.all(20),
@@ -328,13 +295,5 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
         ),
       ],
     );
-    // : Center(
-    //     child: Container(
-    //         height: 200,
-    //         width: 200,
-    //         decoration:
-    //             BoxDecoration(shape: BoxShape.circle, color: Colors.white),
-    //         child: Transform.scale(scale: .8, child: MezLogoAnimation())),
-    //   );
   }
 }

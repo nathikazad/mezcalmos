@@ -73,7 +73,7 @@ class IncommingOrderScreenView extends GetWidget<IncomingOrdersController>
                 builder: (contexto, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     return MGoogleMap(
-                      notifyParent: (newLoc) {},
+                      notifyParent: (newLoc, _) {},
                       markers: customMarkers,
                       initialLocation: initialCameraPosition.value,
                       polylines: polylines,

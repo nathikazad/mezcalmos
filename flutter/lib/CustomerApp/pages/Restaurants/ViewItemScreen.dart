@@ -9,6 +9,7 @@ import 'package:mezcalmos/CustomerApp/components/textFieldComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/titlesComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantCartController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
+import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/CustomerApp/models/cart.dart';
@@ -35,7 +36,7 @@ class ViewItemScreen extends StatefulWidget {
 
 class _ViewItemScreenState extends State<ViewItemScreen> {
   LanguageController lang = Get.find<LanguageController>();
-  TextEditingController textcontoller = new TextEditingController();
+  TextEditingController textcontoller = TextEditingController();
   Rxn<CartItem> cartItem = Rxn();
   late RestaurantCartController restaurantCartController;
   RestaurantsInfoController controller = Get.find<RestaurantsInfoController>();
@@ -348,21 +349,21 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                                     textAlign: TextAlign.center)
                               ],
                             ),
-                            function: (ViewItemScreenMode.AddItemMode ==
-                                    widget.viewItemScreenMode)
-                                ? () {
-                                    String _notes = textcontoller.text;
-                                    cartItem.value?.notes =
-                                        _notes.length > 0 ? _notes : "";
-                                    restaurantCartController
-                                        .addItem(cartItem.value!);
-                                    Get.off(ViewCartScreen());
-                                  }
-                                : () {
-                                    restaurantCartController
-                                        .addItem(cartItem.value!);
-                                    Get.back();
-                                  }),
+                            function: () {
+                              if (ViewItemScreenMode.AddItemMode ==
+                                  widget.viewItemScreenMode) {
+                                String _notes = textcontoller.text;
+                                cartItem.value!.notes =
+                                    _notes.length > 0 ? _notes : "";
+                                restaurantCartController
+                                    .addItem(cartItem.value!);
+                                Get.offNamed(kCartRoute);
+                              } else {
+                                restaurantCartController
+                                    .addItem(cartItem.value!);
+                                Get.back();
+                              }
+                            }),
                       ],
                     ),
                   ),

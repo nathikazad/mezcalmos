@@ -18,8 +18,13 @@ class PickLocationView extends StatefulWidget {
 class _PickLocationViewState<T> extends State<PickLocationView> {
   Location? _selectedLocation;
   bool showBlackScreen = true;
+  String hint = "Move to pick position";
 
   void onPickButtonClick() async {
+    mezDbgPrint(
+        "Last Location Stored Address ==> ${_selectedLocation!.address}");
+    mezDbgPrint("Last Location Stored Lat ==> ${_selectedLocation!.latitude}");
+    mezDbgPrint("Last Location Stored Lng ==> ${_selectedLocation!.longitude}");
     if (_selectedLocation!.address == "") {
       String? address = await getAdressFromLatLng(
           LatLng(_selectedLocation!.latitude!, _selectedLocation!.latitude!));
@@ -87,14 +92,15 @@ class _PickLocationViewState<T> extends State<PickLocationView> {
             Container(
               padding: EdgeInsets.only(top: 10),
               child: LocationSearchComponent(
-                  label: "To",
+                  label: "",
+                  hint: hint,
                   text: _selectedLocation?.address,
                   onClear: () {},
-                  notifyParent: (Location location) {
+                  notifyParent: (Location location, bool showBlackScreen) {
                     mezDbgPrint(
                         "Ontap on suggestion  => ${location.toJson()} ");
                     setState(() {
-                      showBlackScreen = true;
+                      this.showBlackScreen = showBlackScreen;
                       _selectedLocation = location;
                     });
                   }),
@@ -111,9 +117,11 @@ class _PickLocationViewState<T> extends State<PickLocationView> {
                       child: _selectedLocation != null
                           ? MezPickGoogleMap(
                               showBlackScreen: showBlackScreen,
-                              notifyParent: (Location location) {
+                              notifyParent:
+                                  (Location location, bool showBlackScreen) {
                                 setState(() {
-                                  showBlackScreen = false;
+                                  this.showBlackScreen = showBlackScreen;
+                                  hint = "Enter Address";
                                   _selectedLocation = location;
                                 });
                               },

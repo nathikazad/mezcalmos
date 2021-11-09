@@ -8,17 +8,20 @@ import 'package:mezcalmos/Shared/widgets/AutoCompleteTextField.dart';
 
 typedef LocationChangesNotifier = void Function(
   Location location,
+  bool showBlackScreen,
 );
 
 // Location Search component
 class LocationSearchComponent extends StatefulWidget {
   final String label;
+  final String hint;
   final LocationChangesNotifier notifyParent;
   final Function onClear;
   String? text;
 
   LocationSearchComponent(
       {required this.label,
+      this.hint = "",
       this.text = null,
       required this.notifyParent,
       required this.onClear,
@@ -43,8 +46,10 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
   }
 
   @override
-  void didUpdateWidget(covariant LocationSearchComponent oldWidget) {
-    if (widget.text != oldWidget.text && widget.text != null) {
+  void didUpdateWidget(LocationSearchComponent oldWidget) {
+    if (widget.text != oldWidget.text &&
+        widget.text != null &&
+        widget.text!.length >= 1) {
       _controller.clear();
       setState(() {
         _controller.text = widget.text!;
@@ -57,11 +62,11 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-      if (widget.text != null) {
+      if (widget.text != null && widget.text!.length >= 1) {
         setState(() {
           _showClearBtn = true;
+          widget.text = null;
         });
-        widget.text = null;
       }
     });
 
@@ -112,14 +117,14 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
                 onTapCallback: (String placeId, String name) async {
                   Location? _loc = await getLocationFromPlaceId(placeId);
                   if (_loc != null) {
-                    widget.notifyParent(_loc);
+                    widget.notifyParent(_loc, true);
                     setState(() {
                       _showClearBtn = false;
                     });
                   }
                 },
                 tfTextDecoration: InputDecoration(
-                  hintText: "Enter Address",
+                  hintText: widget.hint,
                   border: InputBorder.none,
                   suffixIconConstraints: BoxConstraints(
                     maxWidth: 20,

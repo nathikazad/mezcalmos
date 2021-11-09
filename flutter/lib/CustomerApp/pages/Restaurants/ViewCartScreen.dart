@@ -50,6 +50,11 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
   }
 
   ViewCartScreen() {
+    _restaurantCartController.cart.value.items.map((item) {
+      mezDbgPrint(
+          "+++ From ViewCartScreen ==> ${item.id} <= notes => ${item.notes}");
+    });
+
     // by default it contains one .
     _dropDownItemsList.value = <DropdownMenuItem<String>>[
       DropdownMenuItem(

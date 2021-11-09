@@ -27,16 +27,18 @@ class CartItem {
     });
   }
   CartItem.withData(this.item, this.restaurantId, this.id, this.quantity,
-      this._chosenOneOptions, this._chosenManyOptions);
+      this.notes, this._chosenOneOptions, this._chosenManyOptions);
 
   factory CartItem.clone(CartItem cartItem) {
     return CartItem.withData(
-        cartItem.item,
-        cartItem.restaurantId,
-        cartItem.id,
-        cartItem.quantity,
-        cartItem._chosenOneOptions,
-        cartItem._chosenManyOptions);
+      cartItem.item,
+      cartItem.restaurantId,
+      cartItem.id,
+      cartItem.quantity,
+      cartItem.notes,
+      cartItem._chosenOneOptions,
+      cartItem._chosenManyOptions,
+    );
   }
 
   num costPerOne() {
@@ -116,8 +118,14 @@ class Cart {
         chosenManyOptions[id] = data["chosenValue"];
       });
       Item item = this.restaurant!.findItemById(itemData["id"]);
-      CartItem cartItem = CartItem.withData(item, restaurant!.id!, itemId,
-          itemData["quantity"], chosenOneOptions, chosenManyOptions);
+      CartItem cartItem = CartItem.withData(
+          item,
+          restaurant!.id!,
+          itemId,
+          itemData["quantity"],
+          itemData["notes"],
+          chosenOneOptions,
+          chosenManyOptions);
       this.items.add(cartItem);
     });
   }
@@ -156,13 +164,15 @@ class Cart {
     this.items.forEach((element) {
       items[element.id!] = element.toFirebaseFunctionFormattedJson();
     });
+
+    mezDbgPrint("+ from model REST ID ==> ${restaurant?.id}");
     return <String, dynamic>{
       "orderType": OrderType.Restaurant.toFirebaseFormatString(),
       "serviceProviderId": restaurant?.id,
       "quantity": this.quantity(),
       "cost": this.totalCost(),
       "items": items,
-      "notes": "${this.notes}",
+      "notes": notes,
       "to": this.toLocation?.toFirebaseFormattedJson(),
       "paymentType": paymentType.toFirebaseFormatString()
     };

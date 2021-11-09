@@ -24,9 +24,11 @@ class AutoCompleteTextView extends StatefulWidget {
   final Function focusLost;
   final int suggestionsApiFetchDelay;
   final Function onValueChanged;
+  final String tfHint;
 
   AutoCompleteTextView(
       {required this.controller,
+      this.tfHint = "",
       this.onTapCallback,
       this.tfInitialText = null,
       this.enabled = true,

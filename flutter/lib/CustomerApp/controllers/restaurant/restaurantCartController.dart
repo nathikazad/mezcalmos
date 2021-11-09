@@ -45,12 +45,13 @@ class RestaurantCartController extends GetxController {
               associatedRestaurant = null;
             }
           }
+          mezDbgPrint(" =====> $cartData \n");
+
           // if no associated restaurant data is saved, then fetch it from database
           if (associatedRestaurant == null) {
             associatedRestaurant =
                 await getAssociatedRestaurant(cartData["serviceProviderId"]);
           }
-          mezDbgPrint(" =====> $cartData");
           if (cartData == null) {
             cart.value = Cart();
           }
@@ -81,6 +82,8 @@ class RestaurantCartController extends GetxController {
       associatedRestaurant = await getAssociatedRestaurant(restaurantId);
       cart.value = Cart(restaurant: associatedRestaurant!);
     }
+
+    mezDbgPrint(" REST ID == > ${associatedRestaurant?.toJson()}");
 
     cart.value.addItem(cartItem);
     // print(customerCart(_authController.user!.uid));

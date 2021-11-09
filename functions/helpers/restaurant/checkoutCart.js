@@ -37,6 +37,9 @@ async function checkoutCart(uid, data) {
   // }
 
   let cart = (await firebase.database().ref(`/customers/info/${uid}/cart`).once('value')).val();
+  console.log("======< CART CLONE >====== \n")
+  console.log(cart)
+  console.log("======< CART END CLONE >====== \n")
   if (cart == null) {
     return {
       status: "Error",

@@ -6,12 +6,10 @@ import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
-import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:rive/rive.dart' as rive;
 import 'package:intl/intl.dart';
@@ -19,8 +17,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
-final f = new DateFormat('dd/MM/yyyy HH:mm');
-
+final f = new DateFormat('dd/MM/yyyy hh:mm a');
 ////////////===========
 
 class ViewCurrentRestaurantOrderScreen extends StatefulWidget {
@@ -31,6 +28,8 @@ class ViewCurrentRestaurantOrderScreen extends StatefulWidget {
 
 class _ViewCurrentRestaurantOrderScreenState
     extends State<ViewCurrentRestaurantOrderScreen> {
+  RestaurantsInfoController restaurantsInfoController =
+      Get.put(RestaurantsInfoController());
   LanguageController lang = Get.find<LanguageController>();
   Rxn<RestaurantOrder> order = Rxn();
   OrderController controller = Get.find<OrderController>();
@@ -41,16 +40,18 @@ class _ViewCurrentRestaurantOrderScreenState
   void initState() {
     String orderId = Get.parameters['orderId']!;
     try {
-      order.value = controller.currentOrders
-              .firstWhere((element) => element.orderId == orderId)
-          as RestaurantOrder;
-    } on StateError {
-      //do nothing
-    }
-    controller.getCurrentOrderStream(orderId).listen((order) {
-      mezDbgPrint("ViewCurrentOrderScreen: new order data");
+      mezDbgPrint(" ==> Order id param ========> $orderId");
+      mezDbgPrint(
+          " Len of currentOrders ==> ${controller.currentOrders.length}");
 
-      this.order.value = order as RestaurantOrder;
+      order.value = controller.currentOrders.firstWhere((order) {
+        return order.orderId == orderId;
+      }) as RestaurantOrder;
+    } on StateError catch (_) {
+      // do nothing
+    }
+    controller.getCurrentOrderStream(orderId).listen((event) {
+      order.value = event as RestaurantOrder;
     });
     mezDbgPrint("=========> ${order.value}");
     super.initState();
@@ -59,16 +60,8 @@ class _ViewCurrentRestaurantOrderScreenState
   @override
   Widget build(BuildContext context) {
     responsiveSize(context);
-    if (order.value == null) {
-      mezDbgPrint("Order not loaded yet");
-      return Scaffold(
-          body: MezLogoAnimation(
-        centered: true,
-      ));
-    }
-
-    mezDbgPrint(order.value?.restaurantOrderStatus);
-    mezDbgPrint(order.value?.serviceProviderId);
+    mezDbgPrint(order.value!.restaurantOrderStatus);
+    mezDbgPrint(order.value!.serviceProviderId);
     return Scaffold(
       backgroundColor: const Color(0xffffffff),
       appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back(),
@@ -280,7 +273,7 @@ class _ViewCurrentRestaurantOrderScreenState
                       child: Text(
                         order.value!.from == null
                             ? "Home"
-                            : "${order.value!.from["address"]}",
+                            : "${order.value!.from['address']}",
                         style: const TextStyle(
                             color: const Color(0xff000f1c),
                             fontFamily: "psr",
@@ -493,7 +486,6 @@ class _ViewCurrentRestaurantOrderScreenState
         );
         break;
       case RestaurantOrderStatus.Delivered:
-        var xDate = f.format(order.value!.orderTime).toString().split(" ");
         mezDbgPrint("Delivered");
         myWidget = Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -501,47 +493,18 @@ class _ViewCurrentRestaurantOrderScreenState
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
+                width: 61,
+                height: 35,
                 child: Icon(
-              Icons.check_circle,
-              color: Colors.green,
-            )),
-            SizedBox(
-              width: 15,
-            ),
+                  Icons.check_circle,
+                  color: Colors.green,
+                )),
             Container(
-              child: Text(
-                  "Delivered ${xDate[0]} ${xDate[2]}${xDate[3].toLowerCase()}",
+              child: Text("Delivered ${f.format(order.value!.orderTime)}",
                   style: const TextStyle(
                       color: const Color(0xff7e7a7a),
-                      fontFamily: "prs",
-                      fontStyle: FontStyle.normal,
-                      fontSize: 18.0),
-                  textAlign: TextAlign.center),
-            )
-          ],
-        );
-        break;
-      case RestaurantOrderStatus.OrderReceieved:
-        mezDbgPrint("Order Receieved");
-        myWidget = Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-                child: Icon(
-              Icons.check_circle,
-              color: Colors.green,
-            )),
-            SizedBox(
-              width: 15,
-            ),
-            Container(
-              child: Text(
-                  "Receieved ${f.format(order.value!.orderTime).toString()}",
-                  style: const TextStyle(
-                      color: const Color(0xff7e7a7a),
-                      fontFamily: "prs",
+                      fontWeight: FontWeight.w400,
+                      fontFamily: "ProductSans",
                       fontStyle: FontStyle.normal,
                       fontSize: 18.0),
                   textAlign: TextAlign.center),
@@ -571,6 +534,35 @@ class _ViewCurrentRestaurantOrderScreenState
                       fontFamily: "ProductSans",
                       fontStyle: FontStyle.normal,
                       fontSize: 18.0),
+                  textAlign: TextAlign.center),
+            )
+          ],
+        );
+        break;
+
+      case RestaurantOrderStatus.OrderReceieved:
+        mezDbgPrint("Order Receieved");
+        myWidget = Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+                child: Icon(
+              Icons.check_circle,
+              color: Colors.green,
+            )),
+            SizedBox(
+              width: 15,
+            ),
+            Container(
+              child: Text(
+                  "Receieved ${f.format(order.value!.orderTime).toString()}",
+                  style: const TextStyle(
+                      color: const Color(0xff7e7a7a),
+                      fontFamily: "prs",
+                      fontStyle: FontStyle.normal,
+                      fontSize: 16.0),
                   textAlign: TextAlign.center),
             )
           ],

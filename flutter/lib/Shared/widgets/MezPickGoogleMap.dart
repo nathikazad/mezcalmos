@@ -6,7 +6,8 @@ import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 
-typedef LocationChangesNotifier = void Function(Location msg);
+typedef LocationChangesNotifier = void Function(
+    Location location, bool showBlackScreen);
 
 // Google Map Pick Widget
 class MezPickGoogleMap extends StatefulWidget {
@@ -53,18 +54,6 @@ class MezPickGoogleMapState extends State<MezPickGoogleMap> {
     super.didUpdateWidget(oldWidget);
   }
 
-  // void notifyNewSearchResult(double lat, double lng) {
-  //   mezDbgPrint("Called from View 1 !!!");
-  //   setState(() {
-  //     mezDbgPrint("Called from View 2 !!!");
-
-  //     initialLoc = LatLng(lat, lng);
-  //     mezDbgPrint("Called from View 3!!!");
-
-  //     mezDbgPrint("Called from View 4!!!");
-  //   });
-  // }
-
   Widget pickerMarker() {
     return Center(
       child: Container(
@@ -79,21 +68,11 @@ class MezPickGoogleMapState extends State<MezPickGoogleMap> {
           ),
         ),
       ),
-      // child: Container(
-
-      //     // margin: EdgeInsets.only(bottom: 30 / 2),
-      //     height: 30,
-      //     width: 30,
-      //     decoration: BoxDecoration(
-      //         color: Colors.black,
-      //         image: DecorationImage(
-      //             image:
-      //                 AssetImage("assets/images/PurpleLocationPicker.png")))),
     );
   }
 
-  void _notifierLocationChange(Location newLoc) {
-    widget.notifyParent(newLoc);
+  void _notifierLocationChange(Location newLoc, bool showBlackScreen) {
+    widget.notifyParent(newLoc, showBlackScreen);
   }
 
   @override
