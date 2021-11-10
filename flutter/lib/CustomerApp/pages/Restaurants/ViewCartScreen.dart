@@ -23,10 +23,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
 
-class ViewCartScreen extends GetView<RestaurantCartController> {
+class ViewCartScreen extends StatefulWidget {
+  @override
+  _ViewCartScreenState createState() => _ViewCartScreenState();
+}
+
+class _ViewCartScreenState extends State<ViewCartScreen> {
   LanguageController lang = Get.find<LanguageController>();
-  RestaurantCartController _restaurantCartController =
-      Get.find<RestaurantCartController>();
+  RestaurantCartController controller = Get.find<RestaurantCartController>();
 
   TextEditingController textcontoller = new TextEditingController();
   Rxn<Cart> cart = Rxn();
@@ -50,8 +54,10 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
     }
   }
 
-  ViewCartScreen() {
-    _restaurantCartController.cart.value.items.map((item) {
+  @override
+  void initState() {
+    super.initState();
+    controller.cart.value.items.map((item) {
       mezDbgPrint(
           "+++ From ViewCartScreen ==> ${item.id} <= notes => ${item.notes}");
     });
@@ -591,9 +597,8 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
                             increment: () {
                               counter.value =
                                   counter.value + element.costPerOne();
-                              mezDbgPrint("${element.item.id}");
-                              controller.cart.value
-                                  .incrementItem(element.id!, 1);
+                              print("${element.item.id}");
+                              controller.incrementItem(element.id!, 1);
                               controller.refresh();
                             },
                             onChangedToZero: (isZero) async {
@@ -614,8 +619,7 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
                                 mezDbgPrint(
                                     " the returend value from the dailog $yesNoResult");
                                 if (yesNoResult == true) {
-                                  controller
-                                      .deleteItemFromCart("${element.id}");
+                                  controller.deleteItem("${element.id}");
                                   // controller.refresh();
                                 }
                               }
@@ -626,8 +630,7 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
                               } else {
                                 counter.value =
                                     counter.value + element.costPerOne();
-                                controller.cart.value
-                                    .incrementItem(element.id!, -1);
+                                controller.incrementItem(element.id!, -1);
                                 controller.refresh();
                               }
                             }),

@@ -146,13 +146,17 @@ class Cart {
       int index = this.items.indexWhere((element) => element.id == cartItem.id);
       this.items.removeAt(index);
     }
-
     this.items.add(CartItem.clone(cartItem));
   }
 
   void incrementItem(String id, int quantity) {
     CartItem item = getItem(id);
     item.quantity += quantity;
+  }
+
+  void deleteItem(String itemId) {
+    int index = this.items.indexWhere((element) => element.id == itemId);
+    this.items.removeAt(index);
   }
 
   CartItem getItem(String id) {

@@ -83,23 +83,27 @@ class RestaurantCartController extends GetxController {
       cart.value = Cart(restaurant: associatedRestaurant!);
     }
 
-    mezDbgPrint(" REST ID == > ${associatedRestaurant?.toJson()}");
-
     cart.value.addItem(cartItem);
-    mezDbgPrint("Cart => ${cart.value.toFirebaseFormattedJson()} ");
-    // print(customerCart(_authController.user!.uid));
     _databaseHelper.firebaseDatabase
         .reference()
         .child(customerCart(_authController.user!.uid))
         .set(cart.value.toFirebaseFormattedJson());
   }
 
-  void deleteItemFromCart(String documentId) {
-    mezDbgPrint(customerCart(_authController.user!.uid) + "/items/$documentId");
+  void incrementItem(String itemId, int quantity) {
+    cart.value.incrementItem(itemId, quantity);
     _databaseHelper.firebaseDatabase
         .reference()
-        .child(customerCart(_authController.user!.uid) + "/items/$documentId")
-        .remove();
+        .child(customerCart(_authController.user!.uid))
+        .set(cart.value.toFirebaseFormattedJson());
+  }
+
+  void deleteItem(String itemId) {
+    cart.value.deleteItem(itemId);
+    _databaseHelper.firebaseDatabase
+        .reference()
+        .child(customerCart(_authController.user!.uid))
+        .set(cart.value.toFirebaseFormattedJson());
   }
 
   void clearCart() {
@@ -113,12 +117,6 @@ class RestaurantCartController extends GetxController {
     HttpsCallable checkoutRestaurantCart =
         FirebaseFunctions.instance.httpsCallable('checkoutRestaurantCart');
     try {
-      // fake location, needs to be updated with real later
-      // cart.value.toLocation = Location(<String, dynamic>{
-      //   "address": "address",
-      //   "latitude": 0,
-      //   "longitude": 0
-      // });
       mezDbgPrint(cart.value.notes);
       mezDbgPrint(cart.value.toFirebaseFormattedJson());
       HttpsCallableResult response = await checkoutRestaurantCart
