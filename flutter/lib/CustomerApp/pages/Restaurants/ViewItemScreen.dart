@@ -24,7 +24,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
-
+var widgetHieght = 20;
 enum ViewItemScreenMode { AddItemMode, EditItemMode }
 
 class ViewItemScreen extends StatefulWidget {
@@ -69,10 +69,17 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     responsiveSize(context);
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
+      // resizeToAvoidBottomInset: true,
+      //    resizeToAvoidBottomPadding: false, //
       backgroundColor: const Color(0xffffffff),
       appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back(),
           actionIcons: [
@@ -375,7 +382,12 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                   ),
                   SizedBox(
                     height: 20,
-                  )
+                  ),
+
+                  SizedBox(
+                    height: MediaQuery.of(context).viewInsets.bottom,
+                  ),
+
                   // Expanded(child: Container())
                 ],
               ),
