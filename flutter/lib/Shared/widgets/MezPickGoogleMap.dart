@@ -123,7 +123,7 @@ class MezPickGoogleMapState extends State<MezPickGoogleMap> {
                             ),
                             Expanded(
                               child: Text(
-                                "You can Move the map if position is not precise.",
+                                "You can move the map if position is not precise.",
                                 overflow: TextOverflow.visible,
                                 softWrap: true,
                                 textAlign: TextAlign.center,

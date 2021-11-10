@@ -44,7 +44,7 @@ class _PickLocationViewState extends State<PickLocationView> {
     GeoLoc.Location().getLocation().then((locData) {
       mezDbgPrint("Sat to current Location $locData!");
       setState(() {
-        _selectedLocation = Location({
+        _selectedLocation = Location.fromData({
           "address": "",
           "lat": locData.latitude,
           "lng": locData.longitude,

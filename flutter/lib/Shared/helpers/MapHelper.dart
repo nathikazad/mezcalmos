@@ -45,7 +45,8 @@ Future<LocModel.Location?> getLocationFromPlaceId(String placeId) async {
     double lng = respJson["result"]["geometry"]["location"]["lng"];
     String address = respJson["result"]["formatted_address"];
 
-    return LocModel.Location({"address": address, "lat": lat, "lng": lng});
+    return LocModel.Location.fromData(
+        {"address": address, "lat": lat, "lng": lng});
   } else {
     return null;
     // in case there is a problem on request!

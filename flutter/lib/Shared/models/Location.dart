@@ -1,15 +1,15 @@
 import 'package:location/location.dart';
 
 class Location {
-  late String address;
-  late LocationData position;
-
-  Location(dynamic location) {
-    this.address = location["address"];
-    this.position = LocationData.fromMap(<String, dynamic>{
+  String address;
+  LocationData position;
+  Location(this.address, this.position);
+  factory Location.fromData(dynamic location) {
+    LocationData position = LocationData.fromMap(<String, dynamic>{
       "latitude": location["lat"],
       "longitude": location["lng"]
     });
+    return Location(location["address"], position);
   }
 
   Map<String, String> toJson() =>
@@ -17,7 +17,6 @@ class Location {
 
   dynamic get latitude => position.latitude;
   dynamic get longitude => position.longitude;
-
 
   Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{

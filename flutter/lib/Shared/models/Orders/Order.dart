@@ -1,3 +1,5 @@
+import 'package:mezcalmos/Shared/models/Location.dart';
+
 abstract class Order {
   String orderId;
   OrderType orderType;
@@ -5,6 +7,8 @@ abstract class Order {
   PaymentType paymentType;
   DateTime orderTime;
   UserInfo customer;
+  UserInfo? serviceProvider;
+  Location to;
   num cost;
   Order(
       {required this.orderId,
@@ -13,7 +17,9 @@ abstract class Order {
       required this.paymentType,
       required this.orderTime,
       required this.cost,
-      required this.customer});
+      required this.customer,
+      this.serviceProvider,
+      required this.to});
   bool inProcess();
   // Order.orderFromData(dynamic orderId, dynamic orderData){
 

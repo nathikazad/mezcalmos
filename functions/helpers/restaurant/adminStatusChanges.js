@@ -86,5 +86,14 @@ async function changeStatus(uid, data, newStatus) {
   firebase.database().ref(`/restaurants/inProcessOrders/${order.serviceProviderId}/${orderId}`).update(order);
   firebase.database().ref(`/inProcessOrders/restaurant/${orderId}`).update(order);
 
+  let update = {
+    status: newStatus,
+    time: (new Date()).toISOString(),
+    notificationType: "orderStatusChange",
+    orderType: "restaurant",
+    orderId: orderId,
+  }
+
+  notification.push(firebase, order.customer.id, update)
   return { status: "Success" }
 }

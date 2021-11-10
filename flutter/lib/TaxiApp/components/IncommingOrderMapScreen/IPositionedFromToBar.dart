@@ -55,17 +55,12 @@ class IncomingPositionedFromToTopBar extends StatelessWidget {
                           () => GestureDetector(
                             onTap: () => mezcalmosSnackBar(
                                 lang.strings['shared']['inputLocation']["from"],
-                                controller.selectedIncommingOrder?.from
-                                        ?.address ??
+                                controller
+                                        .selectedIncommingOrder?.from.address ??
                                     ""),
                             child: Text(
-                              controller.selectedIncommingOrder?.from?.address
-                                          ?.toString() ==
-                                      null
-                                  ? "........."
-                                  : controller
-                                      .selectedIncommingOrder!.from!.address
-                                      .toString(),
+                              controller.selectedIncommingOrder?.from.address ??
+                                  ".........",
                               style: TextStyle(fontSize: 15, fontFamily: 'psr'),
                               maxLines: 1,
                               softWrap: false,
@@ -140,15 +135,11 @@ class IncomingPositionedFromToTopBar extends StatelessWidget {
                         () => GestureDetector(
                           onTap: () => mezcalmosSnackBar(
                               lang.strings['shared']['inputLocation']["to"],
-                              controller.selectedIncommingOrder?.to?.address ??
+                              controller.selectedIncommingOrder?.to.address ??
                                   ""),
                           child: Text(
-                            controller.selectedIncommingOrder?.to?.address
-                                        ?.toString() ==
-                                    null
-                                ? "........."
-                                : controller
-                                    .selectedIncommingOrder?.to?.address,
+                            controller.selectedIncommingOrder?.to.address ??
+                                ".........",
                             style: TextStyle(fontSize: 16, fontFamily: 'psr'),
                             maxLines: 1,
                             softWrap: false,

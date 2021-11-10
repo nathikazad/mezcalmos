@@ -1,3 +1,4 @@
+import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
 class RestaurantOrder extends Order {
@@ -5,9 +6,7 @@ class RestaurantOrder extends Order {
   int quantity;
   List<RestaurantOrderItem> items = [];
   String? notes;
-  dynamic from;
-
-  UserInfo restaurant;
+  UserInfo get restaurant => this.serviceProvider!;
   RestaurantOrder(
       {required String orderId,
       required this.restaurantOrderStatus,
@@ -16,9 +15,9 @@ class RestaurantOrder extends Order {
       required PaymentType paymentType,
       required DateTime orderTime,
       required num cost,
-      required this.restaurant,
+      required UserInfo restaurant,
       required UserInfo customer,
-      this.from,
+      required Location to,
       this.notes})
       : super(
             orderId: orderId,
@@ -27,7 +26,9 @@ class RestaurantOrder extends Order {
             paymentType: paymentType,
             orderTime: orderTime,
             cost: cost,
-            customer: customer);
+            customer: customer,
+            serviceProvider: restaurant,
+            to: to);
   factory RestaurantOrder.fromData(dynamic id, dynamic data) {
     RestaurantOrder restaurantOrder = RestaurantOrder(
         orderId: id,
@@ -39,7 +40,7 @@ class RestaurantOrder extends Order {
         orderTime: DateTime.parse(data["orderTime"]),
         cost: data["cost"],
         notes: data["notes"],
-        from: data['to'],
+        to: Location.fromData(data['to']),
         restaurant: UserInfo.fromData(data["restaurant"]),
         customer: UserInfo.fromData(data["customer"]));
     data["items"].forEach((dynamic itemId, dynamic itemData) {

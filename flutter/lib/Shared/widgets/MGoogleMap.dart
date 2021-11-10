@@ -203,7 +203,7 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
     try {
       currentLocation = await location.getLocation();
       widget.notifyParent(
-          LocationModel.Location({
+          LocationModel.Location.fromData({
             "lat": currentLocation.latitude,
             "lng": currentLocation.longitude,
             "address": ""
@@ -236,7 +236,7 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
                 mezDbgPrint("Camera New position .. getting the center !!");
                 LatLng _center = await getMapCenter();
                 widget.notifyParent(
-                    LocationModel.Location({
+                    LocationModel.Location.fromData({
                       "lat": _center.latitude,
                       "lng": _center.longitude,
                       "address": ""

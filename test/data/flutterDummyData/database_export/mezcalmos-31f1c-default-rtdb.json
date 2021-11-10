@@ -1451,7 +1451,11 @@
   },
   "deliveryAdmins": {
     "soJ5WrpYtQ2R2ssZNMYBYNBVNyZ9": {
-      "authorized": true
+      "authorized": true,
+      "info": {
+        "name": "Admin One",
+        "photo": "https://randomuser.me/api/portraits/men/75.jpg"
+      }
     }
   }
 }

@@ -67,44 +67,44 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
     currentOrders().sort((a, b) => b.orderTime.compareTo(a.orderTime));
     return Column(
       children:
-          currentOrders().fold<List<Widget>>(<Widget>[], (children, element) {
-        checkTime(element.orderTime);
-        mezDbgPrint(element.orderTime);
-        if (dd.isSameDate(element.orderTime)) {
+          currentOrders().fold<List<Widget>>(<Widget>[], (children, order) {
+        checkTime(order.orderTime);
+        mezDbgPrint(order.serviceProvider!.name);
+        if (dd.isSameDate(order.orderTime)) {
           todayList.add(
             OrderCardComponenet(
-              title: "${auth.user!.displayName}",
-              subTitle: "Home",
+              title: order.serviceProvider!.name,
+              subTitle: order.to.address.substring(0, 15),
               date:
-                  "${DateFormat.jm().format(DateFormat("hh:mm").parse("${element.orderTime.hour}:${element.orderTime.minute}"))}",
-              price: "${currency.format(element.cost)}",
-              type: element.orderType,
-              url: "${auth.user!.image}",
+                  "${DateFormat.jm().format(DateFormat("hh:mm").parse("${order.orderTime.hour}:${order.orderTime.minute}"))}",
+              price: "${currency.format(order.cost)}",
+              type: order.orderType,
+              url: order.serviceProvider!.image,
               onPress: () {
-                Get.toNamed(getCurrentRestaurantOrderRoute(element.orderId));
+                Get.toNamed(getCurrentRestaurantOrderRoute(order.orderId));
               },
             ),
           );
         } else {
-          dd = element.orderTime;
+          dd = order.orderTime;
           todayList.add(
             DateTitleComponent(
               date: "${f.format(dd)}",
             ),
           );
 
-          if (dd.isSameDate(element.orderTime)) {
+          if (dd.isSameDate(order.orderTime)) {
             todayList.add(
               OrderCardComponenet(
-                title: "${auth.user!.displayName}",
-                subTitle: "Home",
+                title: order.serviceProvider!.name,
+                subTitle: order.to.address.substring(0, 15),
                 date:
-                    "${DateFormat.jm().format(DateFormat("hh:mm").parse("${element.orderTime.hour}:${element.orderTime.minute}"))}",
-                price: "${currency.format(element.cost)}",
-                type: element.orderType,
-                url: "${auth.user!.image}",
+                    "${DateFormat.jm().format(DateFormat("hh:mm").parse("${order.orderTime.hour}:${order.orderTime.minute}"))}",
+                price: "${currency.format(order.cost)}",
+                type: order.orderType,
+                url: order.serviceProvider!.image,
                 onPress: () {
-                  Get.toNamed(getCurrentRestaurantOrderRoute(element.orderId));
+                  Get.toNamed(getCurrentRestaurantOrderRoute(order.orderId));
                 },
               ),
             );

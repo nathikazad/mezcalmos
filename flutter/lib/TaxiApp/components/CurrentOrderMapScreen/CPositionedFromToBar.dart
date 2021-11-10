@@ -56,18 +56,9 @@ class CurrentPositionedFromToTopBar extends StatelessWidget {
                         GestureDetector(
                             onTap: () => mezcalmosSnackBar(
                                 lang.strings['shared']['inputLocation']["from"],
-                                order
-                                        .from?.address ??
-                                    ""),
+                                order.from.address),
                             child: Text(
-                              order.from
-                                          ?.address
-                                          ?.toString() ==
-                                      null
-                                  ? "........."
-                                  : order
-                                      .from!.address!
-                                      .toString(),
+                              order.from.address,
                               style: TextStyle(fontSize: 15, fontFamily: 'psr'),
                               maxLines: 1,
                               softWrap: false,
@@ -141,18 +132,9 @@ class CurrentPositionedFromToTopBar extends StatelessWidget {
                         GestureDetector(
                             onTap: () => mezcalmosSnackBar(
                                 lang.strings['shared']['inputLocation']["to"],
-                                order.to
-                                        ?.address ??
-                                    ""),
+                                order.to.address),
                             child: Text(
-                              order.to
-                                          ?.address
-                                          ?.toString() ==
-                                      null
-                                  ? "........."
-                                  : order
-                                      .to!.address!
-                                      .toString(), //13+..
+                              order.to.address, //13+..
                               style: TextStyle(fontSize: 15, fontFamily: 'psr'),
                               maxLines: 1,
                               softWrap: false,

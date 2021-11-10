@@ -26,11 +26,8 @@ extension ParseStringToOrderStatus on String {
 
 class TaxiOrder extends Order {
   dynamic estimatedPrice;
-  dynamic
-      from; // this must not be late  , especcially since  we are using Order.emty
-  dynamic to; // this too .
-  dynamic routeInformation; // Map<String , Map<String, dynamic>>
-  dynamic driver;
+  Location from;
+  dynamic routeInformation; 
   dynamic distance;
   dynamic duration;
   dynamic acceptRideTime;
@@ -40,16 +37,16 @@ class TaxiOrder extends Order {
   dynamic polyline;
   double distanceToClient = 0;
   dynamic cancelledBy;
-
+  UserInfo? get driver => this.serviceProvider;
   TaxiOrder(
       {required String orderId,
       required this.estimatedPrice,
       required this.from,
-      required this.to,
+      required Location to,
       required DateTime orderTime,
       required PaymentType paymentType,
       required this.routeInformation,
-      required this.driver,
+      UserInfo? driver,
       required this.distance,
       required this.duration,
       required this.acceptRideTime,
@@ -65,7 +62,9 @@ class TaxiOrder extends Order {
             paymentType: paymentType,
             orderType: OrderType.Taxi,
             cost: 0,
-            customer: customer);
+            customer: customer,
+            serviceProvider: driver,
+            to: to);
   // Get props as list.
   List<Object> get props =>
       [orderId, from, to, orderTime, paymentType, routeInformation];
@@ -73,7 +72,8 @@ class TaxiOrder extends Order {
   factory TaxiOrder.fromData(dynamic id, dynamic data) {
     TaxiOrder taxiOrder = TaxiOrder(
         orderId: id,
-        driver: data['driver'],
+        driver:
+            (data["driver"] != null) ? UserInfo.fromData(data["driver"]) : null,
         distance: data['distance'],
         duration: data['duration'],
         customer: UserInfo.fromData(data["customer"]),
@@ -82,8 +82,8 @@ class TaxiOrder extends Order {
         status: data['status'].toString().toOrderStatus(),
         acceptRideTime: data['acceptRideTime'],
         estimatedPrice: data['estimatedPrice'],
-        from: Location(data['from']),
-        to: Location(data['to']),
+        from: Location.fromData(data['from']),
+        to: Location.fromData(data['to']),
         orderTime: DateTime.parse(data["orderTime"]),
         paymentType: data["paymentType"].toString().toPaymentType(),
         routeInformation: data['routeInformation'],

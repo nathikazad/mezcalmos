@@ -358,9 +358,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                         Container(
                           width: Get.width * 0.70,
                           child: Text(
-                            order.value!.from == null
-                                ? "Home"
-                                : "${order.value!.from["address"]}",
+                            order.value!.to.address,
                             style: const TextStyle(
                                 color: const Color(0xff000f1c),
                                 fontFamily: "psr",

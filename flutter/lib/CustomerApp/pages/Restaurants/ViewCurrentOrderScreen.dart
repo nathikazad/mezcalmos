@@ -282,9 +282,9 @@ class _ViewCurrentRestaurantOrderScreenState
                     Container(
                       width: Get.width * 0.75,
                       child: Text(
-                        order.value!.from == null
+                        order.value!.to == null
                             ? lang.strings['shared']['placeHolders']['home']
-                            : order.value!.from['address'],
+                            : order.value!.to.address,
                         style: const TextStyle(
                             color: const Color(0xff000f1c),
                             fontFamily: "psr",

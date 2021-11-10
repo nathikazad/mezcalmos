@@ -43,7 +43,7 @@ async function buildDeviceNotificationMessage(firebase, userId, message) {
   if (!userLang)
     userLang = "es";
   if (message.notificationType == "orderStatusChange") {
-    return notificationMessages[message.notificationType][message.status][userLang]
+    return notificationMessages[message.notificationType][message.orderType][message.status][userLang]
   } else {
     return notificationMessages[message.notificationType][userLang]
   }

@@ -17,10 +17,6 @@ module.exports = functions.https.onCall(async (data, context) => {
 
 
 async function checkoutCart(uid, data) {
-
-
-  
-
   if (!data.to || !data.paymentType) {
     return {
       status: "Error",
@@ -29,25 +25,13 @@ async function checkoutCart(uid, data) {
     }
   }
 
-  // TODO
+  // TODO limit number of active orders
   // let customerCurrentOrder = (await firebase.database().ref(`/customers/${uid}/state/currentOrders`).once('value')).val();
   // if (customerCurrentOrder && Object.keys(customerCurrentOrder).length >= 3) {
   //   return {
   //     status: "Error",
   //     errorMessage: "Customer is already in three orders",
   //     errorCode: "inMoreThanThreeOrders"
-  //   }
-  // }
-
-  // let cart = (await firebase.database().ref(`/customers/info/${uid}/cart`).once('value')).val();
-  // console.log("======< CART CLONE >====== \n")
-  // console.log(cart)
-  // console.log("======< CART END CLONE >====== \n")
-  // if (cart == null) {
-  //   return {
-  //     status: "Error",
-  //     errorMessage: `Cart does not exist`,
-  //     errorCode: "cartDontExist"
   //   }
   // }
 
@@ -71,7 +55,7 @@ async function checkoutCart(uid, data) {
   let user = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val();
 
   let payload = {
-    // to: data.to,
+    ...data,
     customer: {
       id: uid,
       name: user.displayName.split(' ')[0],
@@ -85,17 +69,13 @@ async function checkoutCart(uid, data) {
     orderType: "restaurant",
     status: "orderReceieved",
     orderTime: (new Date()).toISOString(),
-    // paymentType: data.paymentType,
-    // ...cart
-    ...data
-
   }
 
-  console.log(payload)
   let orderRef = await firebase.database().ref(`/orders/restaurant`).push(payload);
   await firebase.database().ref(`/customers/inProcessOrders/${uid}/${orderRef.key}`).set(payload);
   firebase.database().ref(`/restaurants/inProcessOrders/${data.serviceProviderId}/${orderRef.key}`).set(payload);
   firebase.database().ref(`/inProcessOrders/restaurant/${orderRef.key}`).set(payload);
+  await firebase.database().ref(`/customers/info/${uid}/cart`).remove();
 
   let chat = {
     participants: {},
@@ -114,8 +94,46 @@ async function checkoutCart(uid, data) {
     particpantType: "restaurant",
     phoneNumber: (restaurant.details.phoneNumber) ? restaurant.details.phoneNumber : null
   }
-  firebase.database().ref(`/chat/${orderRef.key}`).set(chat);
-  await firebase.database().ref(`/customers/info/${uid}/cart`).remove();
+  firebase.database().ref(`/deliveryAdmins`).once('value', (snapshot) => {
+    const deliveryAdmins = snapshot.val();
+    for (var deliveryAdminId in deliveryAdmins) {
+      chat.participants[deliveryAdminId] = {
+        name: deliveryAdmins[deliveryAdminId].info.name,
+        image: deliveryAdmins[deliveryAdminId].info.photo,
+        particpantType: "deliveryAdmin",
+      }
+    }
+    firebase.database().ref(`/chat/${orderRef.key}`).set(chat);
+    notifyAdminsNewOrder(deliveryAdmins, firebase, orderRef.key)
+  });
+
   let response = { status: "Success", orderId: orderRef.key }
   return response
+}
+
+async function notifyAdminsNewOrder(admins, firebase, orderId) {
+  let message = {
+    time: (new Date()).toISOString(),
+    notificationType: "newOrder",
+    orderType: "restaurant",
+    orderId: orderId,
+  }
+  for (let adminId in admins) {
+    firebase.database().ref(`/notifications/deliveryAdmin/${adminId}`).push(message)
+    let admin = admins[adminId]
+    if (admin.notificationInfo) {
+      let payload = {
+        notification: {
+          title: "Nueva Pedido",
+          body: `Hay una nueva orden de alimento`,
+          tag: "newOrder"
+        }
+      };
+      let options = {
+        collapse_key: "newOrder",
+        priority: "high"
+      }
+      await firebase.messaging().sendToDevice(driver.notificationInfo.deviceNotificationToken, payload, options)
+    }
+  }
 }
