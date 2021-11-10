@@ -247,3 +247,5 @@ exports.prepareOrder = require("./helpers/restaurant/adminStatusChanges").prepar
 exports.readyForPickupOrder = require("./helpers/restaurant/adminStatusChanges").readyForPickupOrder;
 exports.deliverOrder = require("./helpers/restaurant/adminStatusChanges").deliverOrder;
 exports.dropOrder = require("./helpers/restaurant/adminStatusChanges").dropOrder;
+exports.cancelRestaurantOrderFromCustomer = require("./helpers/restaurant/cancelOrder").cancelOrderFromCustomer;
+exports.cancelRestaurantOrderFromAdmin = require("./helpers/restaurant/cancelOrder").cancelOrderFromAdmin;

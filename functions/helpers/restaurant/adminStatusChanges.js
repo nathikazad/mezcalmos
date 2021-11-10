@@ -95,5 +95,11 @@ async function changeStatus(uid, data, newStatus) {
   }
 
   notification.push(firebase, order.customer.id, update)
+
+  if (newStatus == "delivered") {
+    // move from customer inProcess to Past
+    // move from restaurant inProcess to Past
+    // remove from root inProcess
+  }
   return { status: "Success" }
 }

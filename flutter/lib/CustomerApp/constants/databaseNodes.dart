@@ -7,7 +7,7 @@ String customerCart(String uid) {
 }
 
 String customerPastOrders(String uid) {
-  return 'customers/orders/${uid}';
+  return 'customers/pastOrders/${uid}';
 }
 
 String customerInProcessOrders(String uid) {

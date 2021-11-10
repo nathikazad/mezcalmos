@@ -78,7 +78,8 @@ class RestaurantOrder extends Order {
   String get restaurantId => this.serviceProviderId!;
   @override
   bool inProcess() {
-    return restaurantOrderStatus == RestaurantOrderStatus.PreparingOrder ||
+    return restaurantOrderStatus == RestaurantOrderStatus.OrderReceieved ||
+        restaurantOrderStatus == RestaurantOrderStatus.PreparingOrder ||
         restaurantOrderStatus == RestaurantOrderStatus.ReadyForPickup ||
         restaurantOrderStatus == RestaurantOrderStatus.OnTheWay;
   }

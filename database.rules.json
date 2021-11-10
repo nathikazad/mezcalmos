@@ -56,7 +56,7 @@
           ".write": "$uid === auth.uid"
         }
       },
-      "orders": {
+      "pastOrders": {
         "$uid": {
           ".read": "$uid === auth.uid"
         }
@@ -243,7 +243,13 @@
           }
         }
       },
-      "orders": {
+      "pastOrders": {
+        "$uid": {
+          ".write": "false",
+          ".read": "$uid === auth.uid"
+        }
+      },
+      "inProcessOrders": {
         "$uid": {
           ".write": "false",
           ".read": "$uid === auth.uid"
