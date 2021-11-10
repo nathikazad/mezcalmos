@@ -21,7 +21,7 @@ class LocationSearchComponent extends StatefulWidget {
 
   LocationSearchComponent(
       {required this.label,
-      this.hint = "",
+      this.hint = "Enter Address",
       this.text = null,
       required this.notifyParent,
       required this.onClear,

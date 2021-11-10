@@ -5,6 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 typedef LocationChangesNotifier = void Function(
     Location location, bool showBlackScreen);
@@ -77,6 +78,7 @@ class MezPickGoogleMapState extends State<MezPickGoogleMap> {
 
   @override
   Widget build(BuildContext context) {
+    responsiveSize(context);
     return _showLoading == false
         ? Stack(
             alignment: Alignment.center,
@@ -105,12 +107,16 @@ class MezPickGoogleMapState extends State<MezPickGoogleMap> {
                             EdgeInsets.only(bottom: 50, left: 20, right: 20),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(
-                              Icons.open_with,
-                              color: Colors.white,
-                              size: 20,
+                            Padding(
+                              padding: const EdgeInsets.only(top: 2.0),
+                              child: Icon(
+                                Icons.open_with,
+                                color: Colors.white,
+                                size: 20,
+                              ),
                             ),
                             SizedBox(
                               width: 10,
@@ -120,11 +126,12 @@ class MezPickGoogleMapState extends State<MezPickGoogleMap> {
                                 "You can Move the map if position is not precise.",
                                 overflow: TextOverflow.visible,
                                 softWrap: true,
+                                textAlign: TextAlign.center,
                                 // maxLines: ,
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontFamily: 'psb',
-                                    fontSize: 20),
+                                    fontSize: 20.sp),
                               ),
                             )
                           ],

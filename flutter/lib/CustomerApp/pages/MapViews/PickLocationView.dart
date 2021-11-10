@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
@@ -9,16 +10,18 @@ import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
 import 'package:mezcalmos/Shared/widgets/MezPickGoogleMap.dart';
 import 'package:location/location.dart' as GeoLoc;
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PickLocationView extends StatefulWidget {
   @override
   _PickLocationViewState createState() => _PickLocationViewState();
 }
 
-class _PickLocationViewState<T> extends State<PickLocationView> {
+class _PickLocationViewState extends State<PickLocationView> {
   Location? _selectedLocation;
   bool showBlackScreen = true;
-  String hint = "Move to pick position";
+
+  LanguageController _lang = Get.find<LanguageController>();
 
   void onPickButtonClick() async {
     mezDbgPrint(
@@ -27,10 +30,10 @@ class _PickLocationViewState<T> extends State<PickLocationView> {
     mezDbgPrint("Last Location Stored Lng ==> ${_selectedLocation!.longitude}");
     if (_selectedLocation!.address == "") {
       String? address = await getAdressFromLatLng(
-          LatLng(_selectedLocation!.latitude!, _selectedLocation!.latitude!));
+          LatLng(_selectedLocation!.latitude!, _selectedLocation!.longitude!));
 
       _selectedLocation!.address = address ??
-          "Location : ${_selectedLocation!.latitude}, ${_selectedLocation!.longitude}";
+          "${_lang.strings['shared']['pickLocation']['address']} : ${_selectedLocation!.latitude}, ${_selectedLocation!.longitude}";
     }
 
     Get.back<Location>(result: _selectedLocation, closeOverlays: true);
@@ -47,23 +50,6 @@ class _PickLocationViewState<T> extends State<PickLocationView> {
           "lng": locData.longitude,
         });
       });
-
-      // String? address;
-      // getAdressFromLatLng(LatLng(locData.latitude!, locData.longitude!))
-      //     .then((_address) {
-      //   if (_address == null) {
-      //     address = "Location : ${locData.latitude!} , ${locData.longitude}";
-      //   } else
-      //     address = _address;
-
-      //   setState(() {
-      //     _selectedLocation = Location({
-      //       "address": address,
-      //       "lat": locData.latitude,
-      //       "lng": locData.longitude,
-      //     });
-      //   });
-      // });
     });
 
     super.initState();
@@ -71,6 +57,7 @@ class _PickLocationViewState<T> extends State<PickLocationView> {
 
   @override
   Widget build(BuildContext context) {
+    responsiveSize(context);
     return Scaffold(
       appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back()),
       backgroundColor: Colors.white,
@@ -82,7 +69,7 @@ class _PickLocationViewState<T> extends State<PickLocationView> {
           children: [
             Container(
               padding: EdgeInsets.only(top: 10),
-              child: Text("Address",
+              child: Text(_lang.strings["shared"]["pickLocation"]["address"],
                   style: TextStyle(fontFamily: "psb", fontSize: 12)),
             ),
             SizedBox(
@@ -93,7 +80,6 @@ class _PickLocationViewState<T> extends State<PickLocationView> {
               padding: EdgeInsets.only(top: 10),
               child: LocationSearchComponent(
                   label: "",
-                  hint: hint,
                   text: _selectedLocation?.address,
                   onClear: () {},
                   notifyParent: (Location location, bool showBlackScreen) {
@@ -121,7 +107,6 @@ class _PickLocationViewState<T> extends State<PickLocationView> {
                                   (Location location, bool showBlackScreen) {
                                 setState(() {
                                   this.showBlackScreen = showBlackScreen;
-                                  hint = "Enter Address";
                                   _selectedLocation = location;
                                 });
                               },
@@ -153,11 +138,11 @@ class _PickLocationViewState<T> extends State<PickLocationView> {
                       // MaterialStateProperty.all(Color(0xffa8a8a8)),
                       ),
                   onPressed: onPickButtonClick,
-                  child: Text("Pick",
+                  child: Text(_lang.strings["shared"]["pickLocation"]["pick"],
                       style: TextStyle(
                         fontFamily: 'psr',
                         color: Colors.white,
-                        fontSize: 18,
+                        fontSize: 18.sp,
                       ))),
             ),
           ],

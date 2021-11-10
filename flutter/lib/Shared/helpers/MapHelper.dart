@@ -56,7 +56,9 @@ Future<LocModel.Location?> getLocationFromPlaceId(String placeId) async {
 Future<String?> getAdressFromLatLng(LatLng latlng) async {
   //TODO: ALL HTTP CALLS MUST BE IMPLEMENTED INSIDE OF A TRY CATCH BLOCK!
   String url =
-      "https://maps.googleapis.com/maps/api/geocode/json?latlng=${latlng.latitude},${latlng.latitude}&key=$placesApikey";
+      "https://maps.googleapis.com/maps/api/geocode/json?latlng=${latlng.latitude},${latlng.longitude}&key=$placesApikey";
+
+  mezDbgPrint(url);
 
   http.Response resp = await http.get(Uri.parse(url));
   Map<String, dynamic> respJson = json.decode(resp.body);

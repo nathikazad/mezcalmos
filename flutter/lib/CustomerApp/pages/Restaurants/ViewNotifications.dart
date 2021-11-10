@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 
 class ViewNotifications extends StatelessWidget {
-  const ViewNotifications({Key? key}) : super(key: key);
+  ViewNotifications({Key? key}) : super(key: key);
+
+  LanguageController lang = Get.find<LanguageController>();
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +23,7 @@ class ViewNotifications extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
               width: Get.width,
-              child: Text("Notifications",
+              child: Text(lang.strings['shared']['notification']['title'],
                   style: GoogleFonts.dmSans(
                     textStyle: TextStyle(
                         color: const Color(0xfd1d1d1d),
@@ -40,7 +43,7 @@ class ViewNotifications extends StatelessWidget {
                 children: [
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Text("Today",
+                    child: Text(lang.strings['shared']['notification']['today'],
                         style: const TextStyle(
                             color: const Color(0xff000f1c),
                             fontWeight: FontWeight.w700,

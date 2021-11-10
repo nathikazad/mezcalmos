@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:rive/rive.dart' as rive;
@@ -9,6 +11,8 @@ final f = new DateFormat('dd/MM/yyyy hh:mm a');
 Widget buildWigetOnOrderStatus(
     RestaurantOrderStatus status, DateTime orderTime) {
   Widget? myWidget;
+  LanguageController lang = Get.find<LanguageController>();
+
   switch (status) {
     case RestaurantOrderStatus.PreparingOrder:
       mezDbgPrint("PreparingOrder");
@@ -26,7 +30,9 @@ Widget buildWigetOnOrderStatus(
             ),
           ),
           Container(
-            child: Text("Preparing the order",
+            child: Text(
+                lang.strings['customer']['restaurant']['orderStatus']
+                    ['preparing'],
                 style: const TextStyle(
                     color: const Color(0xff7e7a7a),
                     fontWeight: FontWeight.w400,
@@ -53,7 +59,9 @@ Widget buildWigetOnOrderStatus(
                 color: Colors.green,
               )),
           Container(
-            child: Text("Ready For Pickup",
+            child: Text(
+                lang.strings['customer']['restaurant']['orderStatus']
+                    ['readyForPickUp'],
                 style: const TextStyle(
                     color: const Color(0xff7e7a7a),
                     fontWeight: FontWeight.w400,
@@ -73,7 +81,9 @@ Widget buildWigetOnOrderStatus(
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            child: Text("On The Way",
+            child: Text(
+                lang.strings['customer']['restaurant']['orderStatus']
+                    ['onTheWay'],
                 style: const TextStyle(
                     color: const Color(0xff7e7a7a),
                     fontWeight: FontWeight.w400,
@@ -109,7 +119,8 @@ Widget buildWigetOnOrderStatus(
             width: 15,
           ),
           Container(
-            child: Text("Delivered ${f.format(orderTime).toString()}",
+            child: Text(
+                "${lang.strings['customer']['restaurant']['orderStatus']['delivered']} ${f.format(orderTime)}",
                 style: const TextStyle(
                     color: const Color(0xff7e7a7a),
                     fontFamily: "prs",
@@ -136,7 +147,8 @@ Widget buildWigetOnOrderStatus(
             width: 15,
           ),
           Container(
-            child: Text("Receieved ${f.format(orderTime).toString()}",
+            child: Text(
+                "${lang.strings['customer']['restaurant']['orderStatus']['recievied']} ${f.format(orderTime).toString()}",
                 style: const TextStyle(
                     color: const Color(0xff7e7a7a),
                     fontFamily: "prs",
@@ -162,7 +174,9 @@ Widget buildWigetOnOrderStatus(
                 color: Colors.red,
               )),
           Container(
-            child: Text("Cancelled",
+            child: Text(
+                lang.strings['customer']['restaurant']['orderStatus']
+                    ['canceled'],
                 style: const TextStyle(
                     color: const Color(0xff7e7a7a),
                     fontWeight: FontWeight.w400,

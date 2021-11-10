@@ -17,6 +17,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -58,7 +59,7 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
     // by default it contains one .
     _dropDownItemsList.value = <DropdownMenuItem<String>>[
       DropdownMenuItem(
-        child: Text("Pick from Map"),
+        child: Text(lang.strings["shared"]["inputLocation"]["pickFromMap"]),
         value: "_pick_",
       ),
     ];
@@ -229,7 +230,9 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
                               // changed this to show the address much more clearly.
                               isDense: false,
                               isExpanded: true,
-                              hint: Text("Select Location",
+                              hint: Text(
+                                  lang.strings["customer"]["restaurant"]["cart"]
+                                      ["pickLocation"],
                                   style: const TextStyle(
                                       color: const Color(0xff000f1c),
                                       fontWeight: FontWeight.w500,
@@ -278,7 +281,8 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
                         ),
                         TextFieldComponent(
                           textController: textcontoller,
-                          hint: "Write Notes",
+                          hint: lang.strings["customer"]["restaurant"]["menu"]
+                              ["notes"],
                         ),
                         SizedBox(
                           height: 25,
@@ -343,9 +347,9 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
                       ],
                     ),
                   ))
-          : Center(
-              child: Icon(Icons.no_meals_outlined,
-                  color: Colors.black, size: 30))),
+          : MezLogoAnimation(
+              centered: true,
+            )),
     );
   }
 
@@ -436,7 +440,7 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
                         color: Color(0xffdb2846),
                       ),
                       Text(
-                        "${lang.strings['customer']['restaurant']['cart']['clear']}",
+                        lang.strings['customer']['restaurant']['cart']['clear'],
                         style: TextStyle(
                             color: const Color(0xffdb2846),
                             fontWeight: FontWeight.w500,
@@ -448,8 +452,10 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
                 ),
                 onTap: () async {
                   bool yesNoRes = await dailogComponent(
-                      "Clear Cart", "Are you sure you want \nto clear cart?",
-                      () {
+                      lang.strings["customer"]["restaurant"]["cart"]
+                          ["clearCart"],
+                      lang.strings["customer"]["restaurant"]["cart"]
+                          ["clearCartConfirm"], () {
                     Get.back(result: true);
                   }, () {
                     Get.back(result: false);
@@ -510,7 +516,8 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
       SizedBox(
         height: 5,
       ),
-      MenuTitles(title: "OPTIONS"),
+      MenuTitles(
+          title: lang.strings["customer"]["restaurant"]["cart"]["options"]),
     ];
 
     data.forEach((key, value) {
@@ -568,7 +575,7 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
                     children: choosenOneOption(element.chosenOneOptions) +
                         choosenMannyOption(element.chosenManyOptions),
                     onEdit: () {
-                      print(
+                      mezDbgPrint(
                           " the data inside the expansion ${element.toFirebaseFunctionFormattedJson()}");
                       Get.toNamed(editCartItemRoute("${element.id}"));
                     }),
@@ -584,7 +591,7 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
                             increment: () {
                               counter.value =
                                   counter.value + element.costPerOne();
-                              print("${element.item.id}");
+                              mezDbgPrint("${element.item.id}");
                               controller.cart.value
                                   .incrementItem(element.id!, 1);
                               controller.refresh();
@@ -593,8 +600,10 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
                               if (isZero) {
                                 controller.refresh();
                                 bool yesNoResult = await dailogComponent(
-                                  "Delete This Item",
-                                  "Would you like to delete this item",
+                                  lang.strings["customer"]["restaurant"]["cart"]
+                                      ["deleteItem"],
+                                  lang.strings["customer"]["restaurant"]["cart"]
+                                      ["deleteItemConfirm"],
                                   () {
                                     Get.back(result: true);
                                   },
@@ -621,19 +630,7 @@ class ViewCartScreen extends GetView<RestaurantCartController> {
                                     .incrementItem(element.id!, -1);
                                 controller.refresh();
                               }
-                            }
-                            // decrement: () {
-                            //   if (counter.value <= 0) {
-                            //     mezDbgPrint(
-                            //         "this is the value of counter ${counter.value}");
-                            //   } else {
-                            //     counter.value =
-                            //         counter.value - element.costPerOne();
-                            //     controller.cart.value
-                            //         .incrementItem(element.id!, -1);
-                            //   }
-                            // },
-                            ),
+                            }),
                         Spacer(),
                         Obx(
                           () => Text("\$${currency.format(counter.value)}",

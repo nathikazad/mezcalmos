@@ -71,7 +71,6 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
   @override
   Widget build(BuildContext context) {
     responsiveSize(context);
-    // print("${cartItem.value?.item}");
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: const Color(0xffffffff),
@@ -118,8 +117,9 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                                 height: Get.height * 0.45,
                                 width: Get.width,
                                 decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(25)),
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(25),
+                                      topRight: Radius.circular(25)),
                                   border: Border.all(
                                       color: const Color(0x5c707070), width: 1),
                                   boxShadow: [
@@ -141,7 +141,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                                 ),
                               ),
                               Positioned(
-                                  top: Get.height * 0.32,
+                                  top: Get.height * 0.34,
                                   child: Container(
                                     width: Get.width,
                                     child: Text(
@@ -162,7 +162,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                         )),
                         SlidingUpPanel(
                           maxHeight: Get.height * 0.87,
-                          minHeight: Get.height * 0.45,
+                          minHeight: Get.height * 0.40,
                           parallaxEnabled: true,
                           parallaxOffset: 1,
                           body: Container(
@@ -191,7 +191,8 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
         removeTop: true,
         child: Container(
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(18)),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(18), topRight: Radius.circular(18)),
               boxShadow: [
                 BoxShadow(
                     color: const Color(0x29000000),
@@ -225,7 +226,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                   ),
 
                   SizedBox(
-                    height: 15,
+                    height: 15.sp,
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -239,42 +240,43 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                         textAlign: TextAlign.left),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 20.sp,
                   ),
                   chooseOneCheckBoxes(item.chooseOneOptions),
                   SizedBox(
-                    height: 20,
+                    height: 20.sp,
                   ),
                   chooseManyCheckBoxes(item.chooseManyOptions),
                   SizedBox(
-                    height: 10,
+                    height: 10.sp,
                   ),
 
                   Container(
                     width: Get.width,
-                    height: 313,
+                    // height: 313.sp,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(25)),
+                      // borderRadius: BorderRadius.all(Radius.circular(25)),
                       color: const Color.fromRGBO(240, 242, 245, 1),
                     ),
                     child: Column(
                       children: [
                         SizedBox(
-                          height: 20,
+                          height: 20.sp,
                         ),
                         MenuTitles(
                           title:
                               "${lang.strings['customer']['restaurant']['menu']['notes']}",
                         ),
                         SizedBox(
-                          height: 10,
+                          height: 20.sp,
                         ),
                         TextFieldComponent(
                           textController: textcontoller,
-                          hint: "Write Notes",
+                          hint: lang.strings['customer']['restaurant']['menu']
+                              ['notes'],
                         ),
                         SizedBox(
-                          height: 15,
+                          height: 20.sp,
                         ),
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -282,10 +284,10 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                             children: [
                               Text(
                                   "${lang.strings['customer']['restaurant']['menu']['quantity']}",
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                       color: const Color(0xff000f1c),
                                       fontFamily: "psr",
-                                      fontSize: 20.0),
+                                      fontSize: 20.sp),
                                   textAlign: TextAlign.left),
                               Spacer(),
                               IncrementalComponent(
@@ -303,7 +305,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: 15,
+                          height: 20.sp,
                         ),
                         ButtonComponent(
                             widget: Row(
@@ -317,7 +319,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                                             fontWeight: FontWeight.w500,
                                             fontFamily: "psb",
                                             fontStyle: FontStyle.normal,
-                                            fontSize: 20.0),
+                                            fontSize: 20.0.sp),
                                       ),
                                       text: (ViewItemScreenMode.AddItemMode ==
                                               widget.viewItemScreenMode)
@@ -328,12 +330,16 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                                         textStyle: TextStyle(
                                             color: const Color(0xffffffff),
                                             fontFamily: "psr",
-                                            fontSize: 16.0),
+                                            fontSize: 16.0.sp),
                                       ),
                                       text: ViewItemScreenMode.AddItemMode ==
                                               widget.viewItemScreenMode
-                                          ? "  ADD TO CART"
-                                          : "Modify item")
+                                          ? lang.strings['customer']
+                                                  ['restaurant']['menu']
+                                              ['addToCart']
+                                          : lang.strings['customer']
+                                                  ['restaurant']['menu']
+                                              ['modifyItem'])
                                 ])),
                                 Spacer(),
                                 Text(
@@ -344,7 +350,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                                           fontWeight: FontWeight.w500,
                                           fontFamily: "ProductSans",
                                           fontStyle: FontStyle.normal,
-                                          fontSize: 16.0),
+                                          fontSize: 16.0.sp),
                                     ),
                                     textAlign: TextAlign.center)
                               ],
@@ -368,7 +374,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 20,
                   )
                   // Expanded(child: Container())
                 ],
@@ -376,55 +382,15 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
             ),
           ),
         ));
-    // appBar: AppBar(
-    //   title: Obx(() => Text("${cartItem.value?.item.name ?? 'Loading'}")),
-    //   actions: [
-    //     TextButton(
-    //         onPressed: () =>
-    //             (this.viewItemScreenMode == ViewItemScreenMode.AddItemMode)
-    //                 ? Get.toNamed(kCartRoute)
-    //                 : Get.back(),
-    //         child: Text("Cart"))
-    //   ],
-    // ),
-    // body: LayoutBuilder(builder:
-    //     (BuildContext context, BoxConstraints viewportConstraints) {
-    //   return SingleChildScrollView(
-    //       child: ConstrainedBox(
-    //           constraints: BoxConstraints(
-    //             minHeight: viewportConstraints.maxHeight,
-    //           ),
-    //           child: Obx(() => Column(
-    //                 children: [
-    //                   if (cartItem.value?.item != null) ...[
-    //                     Text(cartItem.value!.item.name!),
-    //                     Text(cartItem.value!.item.description!),
-    //                     Text(
-    //                         "\$${currency.format(cartItem.value!.item.cost)}"),
-    //                     image(cartItem.value!.item.image),
-    //                     chooseOneCheckBoxes(
-    //                         cartItem.value!.item.chooseOneOptions),
-    //                     chooseManyCheckBoxes(
-    //                         cartItem.value!.item.chooseManyOptions),
-    //                     incrementQuantityButton(),
-    //                     Text(
-    //                         "\$${currency.format(cartItem.value!.totalCost())}"),
-    //                     (this.viewItemScreenMode ==
-    //                             ViewItemScreenMode.AddItemMode)
-    //                         ? addItemButton()
-    //                       : editItemButton()
-    //                   ] else
-    //                     Text("Loading")
-    //                 ],
-    //               ))));
-    // }));
   }
 
   Widget image(String? imageLink) {
     if (imageLink != null)
       return Image.network(imageLink, height: 40);
     else
-      return Text("Loading");
+      return Center(
+        child: CircularProgressIndicator(),
+      );
   }
 
   Widget chooseOneCheckBoxes(List<ChooseOneOption> chooseOneOptions) {
@@ -450,18 +416,6 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
               cartItem.refresh();
             },
           ),
-          // CheckboxListTile(
-          //   title: Text(name),
-          //   value: cartItem.value!.chosenOneOptions[chooseOneOption.id!] ==
-          //       chooseOneOptionListItem.id,
-          //   onChanged: (newValue) {
-          //     cartItem.value!.chosenOneOptions[chooseOneOption.id!] =
-          //         chooseOneOptionListItem.id!;
-          //     cartItem.refresh();
-          //   },
-          //   controlAffinity:
-          //       ListTileControlAffinity.leading, //  <-- leading Checkbox
-          // ),
         );
       });
       chooseOneWidgetArray.add(Column(
@@ -481,7 +435,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
   Widget chooseManyCheckBoxes(List<ChooseManyOption> chooseManyOptions) {
     List<Widget> chooseManyWidgetArray = [
       MenuTitles(
-        title: "Optional",
+        title: lang.strings['shared']['inputLocation']['optional'],
       ),
       SizedBox(
         height: 5,
@@ -503,17 +457,6 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
             cartItem.refresh();
           },
         ),
-        // CheckboxListTile(
-        //   title: Text(name),
-        //   value: cartItem.value!.chosenManyOptions[chooseManyOption.id!],
-        //   onChanged: (newValue) {
-        //     cartItem.value!.chosenManyOptions[chooseManyOption.id!] =
-        //         newValue ?? false;
-        //     cartItem.refresh();
-        //   },
-        //   controlAffinity:
-        //       ListTileControlAffinity.leading, //  <-- leading Checkbox
-        // ),
       );
     });
     return Column(children: chooseManyWidgetArray);
@@ -530,7 +473,8 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
 
   Widget addItemButton() {
     return OutlinedButton(
-        child: Text("Add item to cart"),
+        child:
+            Text(lang.strings['customer']['restaurant']['menu']['addToCart']),
         onPressed: () {
           restaurantCartController.addItem(cartItem.value!);
           Get.off(ViewCartScreen());
@@ -539,7 +483,8 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
 
   Widget editItemButton() {
     return OutlinedButton(
-        child: Text("Edit item"),
+        child:
+            Text(lang.strings['customer']['restaurant']['menu']['modifyItem']),
         onPressed: () {
           restaurantCartController.addItem(cartItem.value!);
           Get.back();

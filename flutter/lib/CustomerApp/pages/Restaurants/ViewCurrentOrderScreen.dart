@@ -283,8 +283,8 @@ class _ViewCurrentRestaurantOrderScreenState
                       width: Get.width * 0.75,
                       child: Text(
                         order.value!.from == null
-                            ? "Home"
-                            : "${order.value!.from['address']}",
+                            ? lang.strings['shared']['placeHolders']['home']
+                            : order.value!.from['address'],
                         style: const TextStyle(
                             color: const Color(0xff000f1c),
                             fontFamily: "psr",
@@ -303,7 +303,7 @@ class _ViewCurrentRestaurantOrderScreenState
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 alignment: Alignment.centerLeft,
                 child: Text(
-                    "${lang.strings['customer']['restaurant']['menu']['notes']}",
+                    lang.strings['customer']['restaurant']['menu']['notes'],
                     style: const TextStyle(
                         color: const Color(0xff000f1c),
                         fontFamily: "psb",
@@ -330,7 +330,7 @@ class _ViewCurrentRestaurantOrderScreenState
                   alignment: Alignment.centerLeft,
                   child: Text(
                       order.value!.notes == null
-                          ? "Nothing"
+                          ? ""
                           : "${order.value!.notes} ",
                       style: const TextStyle(
                           color: const Color(0xff000f1c),
@@ -370,7 +370,10 @@ class _ViewCurrentRestaurantOrderScreenState
                   child: Center(
                     child: // CANCEL
                         Text(
-                            "${lang.strings['customer']['restaurant']['checkout']['cancel'].toString().toUpperCase()}",
+                            lang.strings['customer']['restaurant']['checkout']
+                                    ['cancel']
+                                .toString()
+                                .toUpperCase(),
                             style: const TextStyle(
                                 color: const Color(0xffffffff),
                                 fontFamily: "psb",
@@ -380,8 +383,11 @@ class _ViewCurrentRestaurantOrderScreenState
                   ),
                 ),
                 onTap: () {
-                  dailogComponent("Cancel Order",
-                      "Are you sure you want to cancel this order?", () {
+                  dailogComponent(
+                      lang.strings['customer']['restaurant']['checkout']
+                          ['cancelOrder'],
+                      lang.strings['customer']['restaurant']['checkout']
+                          ['cancelOrderConfirm'], () {
                     controller.cancelOrder(Get.parameters['orderId']!);
 
                     Get.back();

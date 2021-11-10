@@ -1,3 +1,6 @@
+# todo files
+*.todo
+ 
 # Keys
 *.jks
 key.properties

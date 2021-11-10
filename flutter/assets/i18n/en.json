@@ -20,17 +20,32 @@
                 "cart": "Cart",
                 "inCart":"In Cart",
                 "clear":"Clear",
+                "clearCart":"Clear Cart",
+                "clearCartConfirm" : "Are you sure you want to clear the cart ?",
+                "deleteItem" : "Delete This Item.",
+                "deleteItemConfirm" : "Would you like to delete this item?",
                 "totalCost":"Total Cost",
                 "deliveryCost":"Delivery Cost",
                 "total":"Total",
                 "deliveryLocation":"Delivery Location",
                 "pickLocation":"Pick Location",
-                "orderNow":"ORDER NOW"
+                "orderNow":"ORDER NOW",
+                "options":"Options"
             },
             "checkout":{
             
                 "orderItems":"Order Items",
-                "cancel":"Cancelar"
+                "cancel":"Cancel",
+                "cancelOrder": "Cancel the order",
+                "cancelOrderConfirm": "Are you sure you want to cancel this order?"
+            },
+            "orderStatus":{
+                "preparing" :"Preparing the order",
+                "readyForPickUp" : "Ready For Pickup",
+                "onTheWay": "On The Way",
+                "delivered": "Delivered",
+                "canceled" : "Canceled",
+                "recievied" : "Receieved"
             }
         },
         "inviteCode": {
@@ -239,9 +254,11 @@
             "name": "Name",
             "address": "Address",
             "searching": "Searching",
-            "pick": "PICK"
+            "pick": "PICK",
+            "location": "Location"
         },
         "placeHolders": {
+            "home" : "Home",
             "address": "Enter Address",
             "name": "Enter Name",
             "search": "Search",

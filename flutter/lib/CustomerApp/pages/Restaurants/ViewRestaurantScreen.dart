@@ -118,7 +118,7 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
                                   ),
                                 ),
                                 Positioned(
-                                    top: Get.height * 0.32,
+                                    top: Get.height * 0.34,
                                     child: Container(
                                       width: Get.width,
                                       child: Text("${restaurant!.name}",
@@ -131,13 +131,13 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
                                               fontFamily: "psr",
                                               fontSize: 25.0.sp),
                                           textAlign: TextAlign.center),
-                                    ))
+                                    )),
                               ],
                             ),
                           )),
                           SlidingUpPanel(
                             maxHeight: Get.height * 0.87,
-                            minHeight: Get.height * 0.45,
+                            minHeight: Get.height * 0.40,
                             parallaxEnabled: true,
                             parallaxOffset: 1,
                             body: Container(
@@ -156,102 +156,77 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
                     ),
                   ],
                 ),
-              )
-        // return Column(
-        //     children: items
-        //         .map((item) => TextButton(
-        //             onPressed: () => Get.to(
-        //                 ViewItemScreen.forNewItem(restaurantId, item.id!)),
-        //             child: Text(item.name!)))
-        //         .toList());
-        );
+              ));
   }
 
   Widget _panel(ScrollController sc, BuildContext context, List<Item> items) {
     return MediaQuery.removePadding(
-        context: context,
-        removeTop: true,
-        child: Container(
-          height: Get.height * 0.82,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(18)),
-            boxShadow: [
-              BoxShadow(
-                  color: const Color(0x29000000),
-                  offset: Offset(0, -5),
-                  blurRadius: 6,
-                  spreadRadius: 0)
-            ],
-            color: Color(0xfffbfbfb),
-          ),
-          child: SingleChildScrollView(
-            controller: sc,
-            child: Container(
-              height: Get.height * 0.82,
-              child: Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Text(
-                        "${lang.strings['customer']['restaurant']['menu']['menu']}",
-                        style: TextStyle(
-                            color: const Color(0xff000f1c),
-                            // fontWeight: FontWeight.w700,
-                            fontFamily: "psb",
-                            fontStyle: FontStyle.normal,
-                            fontSize: 14.0),
-                        textAlign: TextAlign.left),
-                  ),
-                  SizedBox(
-                    height: 7,
-                  ),
-                  Expanded(
-                      child: Container(
-                    child: ListView.builder(
-                        itemCount: items.length,
-                        itemBuilder: (context, index) {
-                          return ItemMenuComponents(
-                            itemID: items[index].id,
-                            photo: items[index].image,
-                            price: items[index].cost,
-                            title: items[index].name,
-                            function: () {
-                              Get.toNamed(
-                                  getItemRoute(restaurantId, items[index].id!),
-                                  arguments: {
-                                    "mode": ViewItemScreenMode.AddItemMode
-                                  });
-                            },
-                          );
-                        }),
-                  ))
-                ],
-              ),
+      removeTop: true,
+      context: context,
+      child: Container(
+        height: Get.height * 0.80.sp,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(18)),
+          boxShadow: [
+            BoxShadow(
+                color: const Color(0x29000000),
+                offset: Offset(0, -5),
+                blurRadius: 6,
+                spreadRadius: 0)
+          ],
+          color: Color(0xfffbfbfb),
+        ),
+        child: SingleChildScrollView(
+          controller: sc,
+          child: Container(
+            height: Get.height * 0.82.sp,
+            child: Column(
+              children: <Widget>[
+                SizedBox(
+                  height: 15.sp,
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Text(
+                      "${lang.strings['customer']['restaurant']['menu']['menu']}",
+                      style: TextStyle(
+                          color: const Color(0xff000f1c),
+                          // fontWeight: FontWeight.w700,
+                          fontFamily: "psb",
+                          fontStyle: FontStyle.normal,
+                          fontSize: 14.0.sp),
+                      textAlign: TextAlign.left),
+                ),
+                SizedBox(
+                  height: 7,
+                ),
+                Expanded(
+                    child: Container(
+                  child: ListView.builder(
+                      itemCount: items.length,
+                      itemBuilder: (context, index) {
+                        return ItemMenuComponents(
+                          itemID: items[index].id,
+                          photo: items[index].image,
+                          price: items[index].cost,
+                          title: items[index].name,
+                          function: () {
+                            Get.toNamed(
+                                getItemRoute(restaurantId, items[index].id!),
+                                arguments: {
+                                  "mode": ViewItemScreenMode.AddItemMode
+                                });
+                          },
+                        );
+                      }),
+                ))
+              ],
             ),
           ),
-        ));
-    // appBar: AppBar(
-    //   title: Obx(() => Text("${restaurant.value?.name ?? 'Loading'}")),
-    //   actions: [
-    //     TextButton(
-    //         onPressed: () => Get.toNamed(kCartRoute), child: Text("Cart"))
-    //   ],
-    // ),
-    // body: Obx(() {
-    //   List<Item> items = restaurant.value?.items ?? [];
-    //   return Column(
-    //       children: items
-    //           .map((item) => TextButton(
-    //               onPressed: () => Get.toNamed(
-    //                   getItemRoute(restaurantId, item.id!),
-    //                   arguments: {"mode": ViewItemScreenMode.AddItemMode}),
-    //               child: Text(item.name!)))
-    //           .toList());
-    // }));
+        ),
+      ),
+    );
   }
 }
 

@@ -19,18 +19,36 @@
             "cart": {
                 "cart": "Carro",
                 "inCart":"En El Carrito",
-                "clear":"Claro",
+                "clear":"Limpiar",
+                "clearCart":"Limpiar carrito",
+                "clearCartConfirm" : "¿Está seguro de que desea limpiar el carrito?",
+                "deleteItem" : "Eliminar este artículo.",
+                "deleteItemConfirm" : "¿Quieres eliminar este artículo?",
                 "totalCost":"Coste Total",
                 "deliveryCost":"Coste de envío",
                 "total":"Total",
                 "deliveryLocation":"Lugar De Entrega",
                 "pickLocation":"Elegir Ubicación",
-                "orderNow":"ORDENAR AHORA"
+                "orderNow":"ORDENAR AHORA",
+                "options":"Opciones"
+
             },
             "checkout":{
             
                 "orderItems":"Encargar Artículos",
-                "cancel":"Cancelar"
+                "cancel":"Cancelar",
+                "cancelOrder": "Cancelar el pedido",
+                "cancelOrderConfirm": "¿Estás segura de que deseas cancelar este pedido?"
+            },
+
+            "orderStatus":{
+
+                "preparing" :"Preparando el pedido",
+                "readyForPickUp" : "Lista para recoger",
+                "onTheWay": "En camino",
+                "delivered": "Entregado",
+                "canceled" : "Cancelada",
+                "recievied" : "Recibida"
             }
         },
         "inviteCode": {
@@ -237,9 +255,11 @@
             "name": "Nombre",
             "address": "Dirección",
             "searching": "ELEGIR",
-            "pick": "ELIGE"
+            "pick": "ELIGE",
+            "location" : "localización"
         },
         "placeHolders": {
+            "home" : "Hogar",
             "address": "Ingresa Dirección",
             "name": "Ingresa Nombre",
             "search": "Busca",

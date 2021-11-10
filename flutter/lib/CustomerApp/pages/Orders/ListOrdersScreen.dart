@@ -64,10 +64,10 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
     List<Widget> todayList = [
       DateTitleComponent(date: "Today", showIcon: false),
     ];
-    currentOrders.value.sort((a, b) => b.orderTime.compareTo(a.orderTime));
+    currentOrders().sort((a, b) => b.orderTime.compareTo(a.orderTime));
     return Column(
-      children: currentOrders.value.fold<List<Widget>>(<Widget>[],
-          (children, element) {
+      children:
+          currentOrders().fold<List<Widget>>(<Widget>[], (children, element) {
         checkTime(element.orderTime);
         mezDbgPrint(element.orderTime);
         if (dd.isSameDate(element.orderTime)) {
@@ -87,7 +87,6 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
           );
         } else {
           dd = element.orderTime;
-          mezDbgPrint(dd.toString() + "kkkk");
           todayList.add(
             DateTitleComponent(
               date: "${f.format(dd)}",
