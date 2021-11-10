@@ -62,37 +62,23 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
   Widget buildOrders() {
     var dd = DateTime.now();
     List<Widget> todayList = [
-      DateTitleComponent(date: "Today", showIcon: false),
+      DateTitleComponent(date: "In Process", showIcon: false),
     ];
     currentOrders().sort((a, b) => b.orderTime.compareTo(a.orderTime));
-    return Column(
-      children:
-          currentOrders().fold<List<Widget>>(<Widget>[], (children, order) {
-        checkTime(order.orderTime);
-        mezDbgPrint(order.serviceProvider!.name);
-        if (dd.isSameDate(order.orderTime)) {
-          todayList.add(
-            OrderCardComponenet(
-              title: order.serviceProvider!.name,
-              subTitle: order.to.address.substring(0, 15),
-              date:
-                  "${DateFormat.jm().format(DateFormat("hh:mm").parse("${order.orderTime.hour}:${order.orderTime.minute}"))}",
-              price: "${currency.format(order.cost)}",
-              type: order.orderType,
-              url: order.serviceProvider!.image,
-              onPress: () {
-                Get.toNamed(getCurrentRestaurantOrderRoute(order.orderId));
-              },
-            ),
-          );
-        } else {
-          dd = order.orderTime;
-          todayList.add(
-            DateTitleComponent(
-              date: "${f.format(dd)}",
-            ),
-          );
-
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      decoration: BoxDecoration(boxShadow: [
+        BoxShadow(
+            color: const Color(0x29000000),
+            offset: Offset(1, 1),
+            blurRadius: 6,
+            spreadRadius: 0)
+      ], color: const Color(0xffe8f5ec)),
+      child: Column(
+        children:
+            currentOrders().fold<List<Widget>>(<Widget>[], (children, order) {
+          checkTime(order.orderTime);
+          mezDbgPrint(order.serviceProvider!.name);
           if (dd.isSameDate(order.orderTime)) {
             todayList.add(
               OrderCardComponenet(
@@ -108,12 +94,36 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                 },
               ),
             );
-          }
-        }
+          } else {
+            dd = order.orderTime;
+            todayList.add(
+              DateTitleComponent(
+                date: "${f.format(dd)}",
+              ),
+            );
 
-        children = todayList;
-        return children;
-      }),
+            if (dd.isSameDate(order.orderTime)) {
+              todayList.add(
+                OrderCardComponenet(
+                  title: order.serviceProvider!.name,
+                  subTitle: order.to.address.substring(0, 15),
+                  date:
+                      "${DateFormat.jm().format(DateFormat("hh:mm").parse("${order.orderTime.hour}:${order.orderTime.minute}"))}",
+                  price: "${currency.format(order.cost)}",
+                  type: order.orderType,
+                  url: order.serviceProvider!.image,
+                  onPress: () {
+                    Get.toNamed(getCurrentRestaurantOrderRoute(order.orderId));
+                  },
+                ),
+              );
+            }
+          }
+
+          children = todayList;
+          return children;
+        }),
+      ),
     );
   }
 }
@@ -228,10 +238,11 @@ class TowAvatars extends StatelessWidget {
             child: Container(
               width: 40,
               height: 40,
-              child: CircleAvatar(
-                backgroundColor: Colors.white,
-                child: ClipOval(child: Image.network("$url")),
-              ),
+              child: ClipOval(
+                  child: Image.network(
+                "$url",
+                fit: BoxFit.cover,
+              )),
             ),
           )
         ],
