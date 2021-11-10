@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
+import 'package:mezcalmos/DeliveryAdminApp/constants/global.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -13,6 +14,8 @@ import 'package:mezcalmos/DeliveryAdminApp/components/TwoAvatarsComponent.dart';
 import 'package:intl/intl.dart';
 
 final f = new DateFormat('hh:mm a');
+
+final currency = new NumberFormat("#,##0.00", "en_US");
 
 class ListOrdersScreen extends StatefulWidget {
   @override
@@ -84,11 +87,11 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                 status: s.restaurantOrderStatus,
                 url: s.restaurant.image,
                 //TODO: add user infos
-                image: "https://randomuser.me/api/portraits/men/79.jpg",
-                userName: "Jammy",
+                image: "${s.customer.image}",
+                userName: "${s.customer.name}",
                 //============
                 title: "${s.restaurant.name}",
-                price: "${element.cost}",
+                price: "${currency.format(element.cost)}",
                 quantity: "${element.quantity}",
                 date: "${f.format(element.orderTime)}",
                 ontap: () =>
@@ -217,6 +220,9 @@ class DeliveryAdminOrderComponent extends StatelessWidget {
                 ],
               ),
             ),
+            Expanded(
+              child: _getOrderIcon(status!),
+            )
           ],
         ),
       ),
@@ -255,4 +261,33 @@ class DeliveryAdminOrderComponent extends StatelessWidget {
 
     return myDecoration!;
   }
+}
+
+Widget _getOrderIcon(RestaurantOrderStatus status) {
+  Widget? myWidget;
+
+  switch (status) {
+    case RestaurantOrderStatus.PreparingOrder:
+      myWidget = Container(
+        child: Image.asset(stoveIcon),
+      );
+      break;
+    case RestaurantOrderStatus.Cancelled:
+      myWidget = Container(
+        child: Image.asset(waiting),
+      );
+      break;
+    case RestaurantOrderStatus.OrderReceieved:
+    case RestaurantOrderStatus.ReadyForPickup:
+    case RestaurantOrderStatus.OnTheWay:
+    case RestaurantOrderStatus.Delivered:
+    case RestaurantOrderStatus.OrderReceieved:
+      myWidget = Container(
+        child: Image.asset(truck),
+      );
+
+      break;
+    default:
+  }
+  return myWidget!;
 }
