@@ -7,9 +7,7 @@ if (process.env.FUNCTIONS_EMULATOR === true) {
     databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com"
   });
 } else {
-  firebase = firebaseAdmin.initializeApp({
-    databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com"
-  })
+  firebase = firebaseAdmin.initializeApp()
 }
 
 const keys = require("./helpers/keys").keys()
