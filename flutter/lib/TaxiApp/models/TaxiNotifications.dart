@@ -19,15 +19,31 @@ Notification taxiNotificationHandler(String key, dynamic value) {
 Notification orderStatusChangeNotificationHandler(String key, dynamic value) {
   TaxiOrdersStatus newOrdersStatus =
       value['status'].toString().toTaxiOrderStatus();
+  Map<String, dynamic> dynamicFields =
+      getTaxiOrderStatusFields(newOrdersStatus)!;
   return Notification(
       id: key,
       linkUrl: kCurrentOrderPage,
-      body: 'Order is now ${newOrdersStatus.toFirebaseFormatString()}',
-      imgUrl: "assets/images/cancel.png",
-      title: newOrdersStatus.toFirebaseFormatString(),
+      body: dynamicFields["body"],
+      imgUrl: dynamicFields["imgUrl"],
+      title: dynamicFields["title"],
       timestamp: DateTime.parse(value['time']),
       notificationType: NotificationType.OrderStatusChange,
       variableParams: value);
+}
+
+Map<String, dynamic>? getTaxiOrderStatusFields(
+    TaxiOrdersStatus taxiOrderStatus) {
+  switch (taxiOrderStatus) {
+    case TaxiOrdersStatus.Cancelled:
+      return <String, dynamic>{
+        "title": "Preparing Order",
+        "body": "Order is being prepared",
+        "imgUrl": "assets/images/cancel.png"
+      };
+    default:
+    // do nothing
+  }
 }
 
 Notification newMessageNotification(String key, dynamic value) {

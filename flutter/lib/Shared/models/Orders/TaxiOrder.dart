@@ -7,8 +7,7 @@ enum TaxiOrdersStatus {
   Expired,
   OnTheWay,
   InTransit,
-  LookingForTaxi,
-  Invalid
+  LookingForTaxi
 }
 
 extension ParseOrderStatusToString on TaxiOrdersStatus {

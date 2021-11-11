@@ -32,16 +32,56 @@ Notification restaurantOrderStatusChangeNotificationHandler(
     String key, dynamic value) {
   RestaurantOrderStatus newOrdersStatus =
       value['status'].toString().toRestaurantOrderStatus();
+  Map<String, dynamic> dynamicFields =
+      getRestaurantOrderStatusFields(newOrdersStatus)!;
   return Notification(
       id: key,
       linkUrl: getCurrentRestaurantOrderRoute(value['orderId']),
-      body: 'Order is now ${newOrdersStatus.toFirebaseFormatString()}',
-      imgUrl: "assets/images/cancel.png",
-      title: newOrdersStatus.toFirebaseFormatString().capitalize(),
+      body: dynamicFields["body"],
+      imgUrl: dynamicFields["imgUrl"],
+      title: dynamicFields["title"],
       timestamp: DateTime.parse(value['time']),
       notificationType: NotificationType.OrderStatusChange,
       variableParams: value,
       showIfOnLinkPage: true);
+}
+
+Map<String, dynamic>? getRestaurantOrderStatusFields(
+    RestaurantOrderStatus restaurantOrderStatus) {
+  switch (restaurantOrderStatus) {
+    case RestaurantOrderStatus.PreparingOrder:
+      return <String, dynamic>{
+        "title": "Preparing Order",
+        "body": "Order is being prepared",
+        "imgUrl": "assets/images/cancel.png"
+      };
+    case RestaurantOrderStatus.ReadyForPickup:
+      return <String, dynamic>{
+        "title": "Preparing Order",
+        "body": "Order is being prepared",
+        "imgUrl": "assets/images/cancel.png"
+      };
+    case RestaurantOrderStatus.OnTheWay:
+      return <String, dynamic>{
+        "title": "Preparing Order",
+        "body": "Order is being prepared",
+        "imgUrl": "assets/images/cancel.png"
+      };
+    case RestaurantOrderStatus.Delivered:
+      return <String, dynamic>{
+        "title": "Preparing Order",
+        "body": "Order is being prepared",
+        "imgUrl": "assets/images/cancel.png"
+      };
+    case RestaurantOrderStatus.Cancelled:
+      return <String, dynamic>{
+        "title": "Preparing Order",
+        "body": "Order is being prepared",
+        "imgUrl": "assets/images/cancel.png"
+      };
+    default:
+    // do nothing
+  }
 }
 
 Notification newMessageNotification(String key, dynamic value) {
