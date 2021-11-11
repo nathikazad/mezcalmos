@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mezcalmos/CustomerApp/components/dateTitleComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/imagesComponents.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -55,16 +56,23 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
           () => Get.back(),
         ),
         body: Obx(() {
-          return SingleChildScrollView(child: buildOrders());
+          return SingleChildScrollView(
+              child: Column(
+            children: [
+              buildInProcessOrders(),
+              SizedBox(height: 20),
+              buildPastOrders()
+            ],
+          ));
         }));
   }
 
-  Widget buildOrders() {
-    var dd = DateTime.now();
-    List<Widget> todayList = [
-      DateTitleComponent(date: "In Process", showIcon: false),
+  Widget buildInProcessOrders() {
+    List<Widget> inProcessOrdersWidget = [
+      DateTitleComponent(
+        date: "In Process",
+      ),
     ];
-    currentOrders().sort((a, b) => b.orderTime.compareTo(a.orderTime));
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(boxShadow: [
@@ -75,12 +83,71 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
             spreadRadius: 0)
       ], color: const Color(0xffe8f5ec)),
       child: Column(
-        children:
-            currentOrders().fold<List<Widget>>(<Widget>[], (children, order) {
-          checkTime(order.orderTime);
-          mezDbgPrint(order.serviceProvider!.name);
+          children: currentOrders().fold<List<Widget>>(
+        <Widget>[],
+        (children, order) {
+          inProcessOrdersWidget.add(OrderCardComponenet(
+            title: order.serviceProvider!.name,
+            subTitle: order.to.address.substring(0, 15),
+            date:
+                "${DateFormat.jm().format(DateFormat("hh:mm").parse("${order.orderTime.hour}:${order.orderTime.minute}"))}",
+            price: "${currency.format(order.cost)}",
+            type: order.orderType,
+            url: order.serviceProvider!.image,
+            onPress: () {
+              Get.toNamed(getCurrentRestaurantOrderRoute(order.orderId));
+            },
+          ));
+          children = inProcessOrdersWidget;
+          return children;
+        },
+      )),
+    );
+  }
+
+  Widget buildPastOrders() {
+    //
+    var dd = DateTime.now();
+    List<Widget> pastOrdersWidget = [
+      DateTitleComponent(
+        date: "Today",
+      ),
+    ];
+    currentOrders().sort((a, b) => b.orderTime.compareTo(a.orderTime));
+    return Column(
+      children:
+          currentOrders().fold<List<Widget>>(<Widget>[], (children, order) {
+        checkTime(order.orderTime);
+        mezDbgPrint(order.serviceProvider!.name);
+        if (dd.isSameDate(order.orderTime)) {
+          pastOrdersWidget.add(
+            OrderCardComponenet(
+              title: order.serviceProvider!.name,
+              subTitle: order.to.address.substring(0, 15),
+              date:
+                  "${DateFormat.jm().format(DateFormat("hh:mm").parse("${order.orderTime.hour}:${order.orderTime.minute}"))}",
+              price: "${currency.format(order.cost)}",
+              type: order.orderType,
+              url: order.serviceProvider!.image,
+              onPress: () {
+                Get.toNamed(getCurrentRestaurantOrderRoute(order.orderId));
+              },
+            ),
+          );
+        } else {
+          dd = order.orderTime;
+          pastOrdersWidget.add(
+            DateTitleComponent(
+              date: "${f.format(dd)}",
+              dateIcon: FaIcon(
+                FontAwesomeIcons.calendarAlt,
+                size: 12,
+              ),
+            ),
+          );
+
           if (dd.isSameDate(order.orderTime)) {
-            todayList.add(
+            pastOrdersWidget.add(
               OrderCardComponenet(
                 title: order.serviceProvider!.name,
                 subTitle: order.to.address.substring(0, 15),
@@ -94,36 +161,12 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                 },
               ),
             );
-          } else {
-            dd = order.orderTime;
-            todayList.add(
-              DateTitleComponent(
-                date: "${f.format(dd)}",
-              ),
-            );
-
-            if (dd.isSameDate(order.orderTime)) {
-              todayList.add(
-                OrderCardComponenet(
-                  title: order.serviceProvider!.name,
-                  subTitle: order.to.address.substring(0, 15),
-                  date:
-                      "${DateFormat.jm().format(DateFormat("hh:mm").parse("${order.orderTime.hour}:${order.orderTime.minute}"))}",
-                  price: "${currency.format(order.cost)}",
-                  type: order.orderType,
-                  url: order.serviceProvider!.image,
-                  onPress: () {
-                    Get.toNamed(getCurrentRestaurantOrderRoute(order.orderId));
-                  },
-                ),
-              );
-            }
           }
+        }
 
-          children = todayList;
-          return children;
-        }),
-      ),
+        children = pastOrdersWidget;
+        return children;
+      }),
     );
   }
 }
@@ -142,49 +185,6 @@ String checkTime(DateTime date) {
 extension DateOnlyCompare on DateTime {
   bool isSameDate(DateTime other) {
     return year == other.year && month == other.month && day == other.day;
-  }
-}
-
-class DateTitleComponent extends StatelessWidget {
-  final String date;
-  final bool? showIcon;
-  const DateTitleComponent({required this.date, this.showIcon = true, Key? key})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              (showIcon!)
-                  ? FaIcon(
-                      FontAwesomeIcons.calendarAlt,
-                      size: 12,
-                    )
-                  : Container(),
-              Container(
-                alignment: Alignment.centerLeft,
-                padding: const EdgeInsets.symmetric(horizontal: 5),
-                child: Text("$date",
-                    style: const TextStyle(
-                        color: const Color(0xff000f1c),
-                        fontWeight: FontWeight.w700,
-                        fontFamily: "ProductSans",
-                        fontStyle: FontStyle.normal,
-                        fontSize: 12.0),
-                    textAlign: TextAlign.left),
-              )
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          )
-        ],
-      ),
-    );
   }
 }
 

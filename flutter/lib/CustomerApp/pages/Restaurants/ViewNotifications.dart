@@ -1,579 +1,282 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mezcalmos/CustomerApp/components/dateTitleComponent.dart';
+import 'package:mezcalmos/CustomerApp/constants/databaseNodes.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
+import 'package:mezcalmos/Shared/models/Notification.dart' as notifs;
+import 'package:intl/intl.dart';
 
-class ViewNotifications extends StatelessWidget {
+final f = new DateFormat('hh:mm a');
+final ff = new DateFormat('MM.dd.yyyy');
+
+class ViewNotifications extends StatefulWidget {
   ViewNotifications({Key? key}) : super(key: key);
 
+  @override
+  _ViewNotificationsState createState() => _ViewNotificationsState();
+}
+
+class _ViewNotificationsState extends State<ViewNotifications> {
+  // RxList<notifs.Notification> currentNotifs = RxList.empty();
+  FBNotificationsController controller = Get.find<FBNotificationsController>();
   LanguageController lang = Get.find<LanguageController>();
+  AuthController authController = Get.find<AuthController>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    controller.startListeningForNotificationsFromFirebase(
+        notificationsNode(authController.user!.uid));
+    mezDbgPrint("ListOfNotifs : onInit");
+    //controller.notifications;
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    mezDbgPrint(
+        "build function building the list ${controller.notifications.value.length}");
+    controller.notifications.value.forEach((element) {
+      mezDbgPrint(element.notificationType);
+    });
+
     return Scaffold(
       backgroundColor: const Color(0xffffffff),
       appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
         "back",
         () => Get.back(),
       ),
-      body: Container(
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-              width: Get.width,
-              child: Text(lang.strings['shared']['notification']['title'],
-                  style: GoogleFonts.dmSans(
-                    textStyle: TextStyle(
-                        color: const Color(0xfd1d1d1d),
-                        fontWeight: FontWeight.w500,
-                        fontFamily: "ProductSans",
-                        fontStyle: FontStyle.normal,
-                        fontSize: 40.0),
-                  ),
-                  textAlign: TextAlign.left),
+      body: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+            width: Get.width,
+            child: Text(lang.strings['shared']['notification']['title'],
+                style: GoogleFonts.dmSans(
+                  textStyle: TextStyle(
+                      color: const Color(0xfd1d1d1d),
+                      fontWeight: FontWeight.w500,
+                      fontFamily: "ProductSans",
+                      fontStyle: FontStyle.normal,
+                      fontSize: 40.0),
+                ),
+                textAlign: TextAlign.left),
+          ),
+          SizedBox(
+            height: Get.height * 0.015,
+          ),
+          Expanded(
+              child: Container(
+            child: SingleChildScrollView(
+              child: _buildNotification(controller.notifications.value),
             ),
+          ))
+        ],
+      ),
+    );
+  }
+
+  Widget _buildNotification(List<notifs.Notification> notifications) {
+    var dd = DateTime.now();
+    List<Widget> myWidgets = [];
+    return Column(
+      children: notifications.fold<List<Widget>>(<Widget>[],
+          (children, notification) {
+        mezDbgPrint(
+            "this is from the the list of notifications ${notification.notificationType}");
+        if (dd.isSameDate(notification.timestamp)) {
+          myWidgets.addAll([
+            _checkTheNotifsTypeAndReturnWidget(notification),
             SizedBox(
-              height: Get.height * 0.015,
+              height: 10,
+            )
+          ]);
+        } else {
+          dd = notification.timestamp;
+          myWidgets.add(DateTitleComponent(
+            date: "${ff.format(dd)}",
+            dateIcon: FaIcon(
+              FontAwesomeIcons.calendarAlt,
+              size: 12,
             ),
-            Expanded(
-                child: Container(
-              child: ListView(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Text(lang.strings['shared']['notification']['today'],
-                        style: const TextStyle(
-                            color: const Color(0xff000f1c),
-                            fontWeight: FontWeight.w700,
-                            fontFamily: "ProductSans",
-                            fontStyle: FontStyle.normal,
-                            fontSize: 12.0),
-                        textAlign: TextAlign.left),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    width: Get.width,
-                    height: 63,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                      border: Border.all(
-                          color: const Color(0xffececec), width: 0.5),
-                      color: const Color(0xffffffff),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 31,
-                          width: 31,
-                          child: CircleAvatar(
-                            backgroundColor: Colors.red,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                        child: Container(
-                                      child: Text(
-                                          "Preparing your Order jf dfhjfdhj hdfjgfhd djdgfhj dbsjdfhgj ",
-                                          overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(
-                                              color: const Color(0xff000f1c),
-                                              fontWeight: FontWeight.w700,
-                                              fontFamily: "ProductSans",
-                                              fontStyle: FontStyle.normal,
-                                              fontSize: 13.0),
-                                          textAlign: TextAlign.left),
-                                    )),
-                                    Container(
-                                      child: Container(
-                                        child: Row(
-                                          children: [
-                                            Icon(
-                                              Icons.query_builder,
-                                              size: 12,
-                                              color: Color(0xff000f1c),
-                                            ),
-                                            SizedBox(
-                                              width: 5,
-                                            ),
-                                            Text(
-                                              "4:50 PM",
-                                              style: TextStyle(
-                                                  color:
-                                                      const Color(0xff000f1c),
-                                                  fontWeight: FontWeight.w400,
-                                                  fontFamily: "ProductSans",
-                                                  fontStyle: FontStyle.normal,
-                                                  fontSize: 10.0),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 3,
-                              ),
-                              Text(
-                                  "Sylvia’s is preparing your order ghfgh dfjgdfh fbjdfj fbjdfj dbfjbdj dfdbjd",
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                      color: const Color(0xff000f1c),
-                                      fontWeight: FontWeight.w400,
-                                      fontFamily: "ProductSans",
-                                      fontStyle: FontStyle.normal,
-                                      fontSize: 12.0),
-                                  textAlign: TextAlign.left)
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    width: Get.width,
-                    height: 63,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                      border: Border.all(
-                          color: const Color(0xffececec), width: 0.5),
-                      color: const Color(0xffffffff),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 31,
-                          width: 31,
-                          child: CircleAvatar(
-                            backgroundColor: Colors.red,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                        child: Container(
-                                      child: Text(
-                                          "Preparing your Order jf dfhjfdhj hdfjgfhd djdgfhj dbsjdfhgj ",
-                                          overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(
-                                              color: const Color(0xff000f1c),
-                                              fontWeight: FontWeight.w700,
-                                              fontFamily: "ProductSans",
-                                              fontStyle: FontStyle.normal,
-                                              fontSize: 13.0),
-                                          textAlign: TextAlign.left),
-                                    )),
-                                    Container(
-                                      child: Container(
-                                        child: Row(
-                                          children: [
-                                            Icon(
-                                              Icons.query_builder,
-                                              size: 12,
-                                              color: Color(0xff000f1c),
-                                            ),
-                                            SizedBox(
-                                              width: 5,
-                                            ),
-                                            Text(
-                                              "4:50 PM",
-                                              style: TextStyle(
-                                                  color:
-                                                      const Color(0xff000f1c),
-                                                  fontWeight: FontWeight.w400,
-                                                  fontFamily: "ProductSans",
-                                                  fontStyle: FontStyle.normal,
-                                                  fontSize: 10.0),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 3,
-                              ),
-                              Text(
-                                  "Sylvia’s is preparing your order ghfgh dfjgdfh fbjdfj fbjdfj dbfjbdj dfdbjd",
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                      color: const Color(0xff000f1c),
-                                      fontWeight: FontWeight.w400,
-                                      fontFamily: "ProductSans",
-                                      fontStyle: FontStyle.normal,
-                                      fontSize: 12.0),
-                                  textAlign: TextAlign.left)
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    width: Get.width,
-                    height: 63,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                      border: Border.all(
-                          color: const Color(0xffececec), width: 0.5),
-                      color: const Color(0xffffffff),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 31,
-                          width: 31,
-                          child: CircleAvatar(
-                            backgroundColor: Colors.red,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                        child: Container(
-                                      child: Text(
-                                          "Preparing your Order jf dfhjfdhj hdfjgfhd djdgfhj dbsjdfhgj ",
-                                          overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(
-                                              color: const Color(0xff000f1c),
-                                              fontWeight: FontWeight.w700,
-                                              fontFamily: "ProductSans",
-                                              fontStyle: FontStyle.normal,
-                                              fontSize: 13.0),
-                                          textAlign: TextAlign.left),
-                                    )),
-                                    Container(
-                                      child: Container(
-                                        child: Row(
-                                          children: [
-                                            Icon(
-                                              Icons.query_builder,
-                                              size: 12,
-                                              color: Color(0xff000f1c),
-                                            ),
-                                            SizedBox(
-                                              width: 5,
-                                            ),
-                                            Text(
-                                              "4:50 PM",
-                                              style: TextStyle(
-                                                  color:
-                                                      const Color(0xff000f1c),
-                                                  fontWeight: FontWeight.w400,
-                                                  fontFamily: "ProductSans",
-                                                  fontStyle: FontStyle.normal,
-                                                  fontSize: 10.0),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 3,
-                              ),
-                              Text(
-                                  "Sylvia’s is preparing your order ghfgh dfjgdfh fbjdfj fbjdfj dbfjbdj dfdbjd",
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                      color: const Color(0xff000f1c),
-                                      fontWeight: FontWeight.w400,
-                                      fontFamily: "ProductSans",
-                                      fontStyle: FontStyle.normal,
-                                      fontSize: 12.0),
-                                  textAlign: TextAlign.left)
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    width: Get.width,
-                    height: 63,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                      border: Border.all(
-                          color: const Color(0xffececec), width: 0.5),
-                      color: const Color(0xffffffff),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 31,
-                          width: 31,
-                          child: CircleAvatar(
-                            backgroundColor: Colors.red,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                        child: Container(
-                                      child: Text(
-                                          "Preparing your Order jf dfhjfdhj hdfjgfhd djdgfhj dbsjdfhgj ",
-                                          overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(
-                                              color: const Color(0xff000f1c),
-                                              fontWeight: FontWeight.w700,
-                                              fontFamily: "ProductSans",
-                                              fontStyle: FontStyle.normal,
-                                              fontSize: 13.0),
-                                          textAlign: TextAlign.left),
-                                    )),
-                                    Container(
-                                      child: Container(
-                                        child: Row(
-                                          children: [
-                                            Icon(
-                                              Icons.query_builder,
-                                              size: 12,
-                                              color: Color(0xff000f1c),
-                                            ),
-                                            SizedBox(
-                                              width: 5,
-                                            ),
-                                            Text(
-                                              "4:50 PM",
-                                              style: TextStyle(
-                                                  color:
-                                                      const Color(0xff000f1c),
-                                                  fontWeight: FontWeight.w400,
-                                                  fontFamily: "ProductSans",
-                                                  fontStyle: FontStyle.normal,
-                                                  fontSize: 10.0),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 3,
-                              ),
-                              Text(
-                                  "Sylvia’s is preparing your order ghfgh dfjgdfh fbjdfj fbjdfj dbfjbdj dfdbjd",
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                      color: const Color(0xff000f1c),
-                                      fontWeight: FontWeight.w400,
-                                      fontFamily: "ProductSans",
-                                      fontStyle: FontStyle.normal,
-                                      fontSize: 12.0),
-                                  textAlign: TextAlign.left)
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.calendar_today_outlined,
-                          size: 12,
-                        ),
-                        SizedBox(
-                          width: 3,
-                        ),
-                        Text("3.23.2021",
+          ));
+          if (dd.isSameDate(notification.timestamp)) {
+            myWidgets.addAll([
+              _checkTheNotifsTypeAndReturnWidget(notification),
+              SizedBox(
+                height: 10,
+              )
+            ]);
+          }
+        }
+
+        children = myWidgets;
+        return children;
+      }),
+    );
+  }
+}
+
+Widget _checkTheNotifsTypeAndReturnWidget(notifs.Notification notification) {
+  switch (notification.notificationType) {
+    case notifs.NotificationType.NewMessage:
+      return NotificationComponent(
+        title: (notification as notifs.NewMessageNotification).title,
+        subtitle: (notification as notifs.NewMessageNotification).body,
+        date:
+            "${f.format((notification as notifs.NewMessageNotification).timestamp)}",
+        notifIcon: Container(
+          width: 31,
+          height: 31,
+          child: Center(
+              child: Image.network(
+            "${(notification as notifs.NewMessageNotification).imgUrl}",
+            fit: BoxFit.cover,
+          )),
+        ),
+      );
+    case notifs.NotificationType.NewAdminMessage:
+      //TODO:
+      break;
+    case notifs.NotificationType.OrderStatusChange:
+      return NotificationComponent(
+        title: (notification as notifs.OrderStatusChangeNotification).title,
+        subtitle: (notification as notifs.OrderStatusChangeNotification).body,
+        date:
+            "${f.format((notification as notifs.OrderStatusChangeNotification).timestamp)}",
+        notifIcon: Container(
+          width: 31,
+          height: 31,
+          color: Color(0xfff7a029).withOpacity(0.3156430125236511),
+          child: Center(
+              child: Image.asset(
+            "assets/images/stoveIcon.png",
+            height: 16,
+            width: 16,
+            fit: BoxFit.cover,
+          )),
+        ),
+      );
+
+    default:
+  }
+  return Container();
+}
+
+class NotificationComponent extends StatelessWidget {
+  final String? title;
+  final String? subtitle;
+  final String? date;
+  final Widget? notifIcon;
+  NotificationComponent(
+      {this.title, this.subtitle, this.date, this.notifIcon, Key? key})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      width: Get.width,
+      height: 63,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(4)),
+        border: Border.all(color: const Color(0xffececec), width: 0.5),
+        color: const Color(0xffffffff),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            height: 31,
+            width: 31,
+            child: ClipOval(
+              child: notifIcon,
+            ),
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Expanded(
+                          child: Container(
+                        child: Text("$title",
+                            overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
                                 color: const Color(0xff000f1c),
                                 fontWeight: FontWeight.w700,
                                 fontFamily: "ProductSans",
                                 fontStyle: FontStyle.normal,
-                                fontSize: 12.0),
+                                fontSize: 13.0),
                             textAlign: TextAlign.left),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    width: Get.width,
-                    height: 63,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                      border: Border.all(
-                          color: const Color(0xffececec), width: 0.5),
-                      color: const Color(0xffffffff),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 31,
-                          width: 31,
-                          child: CircleAvatar(
-                            backgroundColor: Colors.red,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                      )),
+                      Container(
+                        child: Container(
+                          child: Row(
                             children: [
-                              Container(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                        child: Container(
-                                      child: Text(
-                                          "Preparing your Order jf dfhjfdhj hdfjgfhd djdgfhj dbsjdfhgj ",
-                                          overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(
-                                              color: const Color(0xff000f1c),
-                                              fontWeight: FontWeight.w700,
-                                              fontFamily: "ProductSans",
-                                              fontStyle: FontStyle.normal,
-                                              fontSize: 13.0),
-                                          textAlign: TextAlign.left),
-                                    )),
-                                    Container(
-                                      child: Container(
-                                        child: Row(
-                                          children: [
-                                            Icon(
-                                              Icons.query_builder,
-                                              size: 12,
-                                              color: Color(0xff000f1c),
-                                            ),
-                                            SizedBox(
-                                              width: 5,
-                                            ),
-                                            Text(
-                                              "4:50 PM",
-                                              style: TextStyle(
-                                                  color:
-                                                      const Color(0xff000f1c),
-                                                  fontWeight: FontWeight.w400,
-                                                  fontFamily: "ProductSans",
-                                                  fontStyle: FontStyle.normal,
-                                                  fontSize: 10.0),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
+                              Icon(
+                                Icons.query_builder,
+                                size: 12,
+                                color: Color(0xff000f1c),
                               ),
                               SizedBox(
-                                height: 3,
+                                width: 5,
                               ),
                               Text(
-                                  "Sylvia’s is preparing your order ghfgh dfjgdfh fbjdfj fbjdfj dbfjbdj dfdbjd",
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                      color: const Color(0xff000f1c),
-                                      fontWeight: FontWeight.w400,
-                                      fontFamily: "ProductSans",
-                                      fontStyle: FontStyle.normal,
-                                      fontSize: 12.0),
-                                  textAlign: TextAlign.left)
+                                "$date",
+                                style: TextStyle(
+                                    color: const Color(0xff000f1c),
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: "ProductSans",
+                                    fontStyle: FontStyle.normal,
+                                    fontSize: 10.0),
+                              )
                             ],
                           ),
                         ),
-                      ],
-                    ),
+                      )
+                    ],
                   ),
-                ],
-              ),
-            ))
-          ],
-        ),
+                ),
+                SizedBox(
+                  height: 3,
+                ),
+                Text("$subtitle",
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                        color: const Color(0xff000f1c),
+                        fontWeight: FontWeight.w400,
+                        fontFamily: "ProductSans",
+                        fontStyle: FontStyle.normal,
+                        fontSize: 12.0),
+                    textAlign: TextAlign.left)
+              ],
+            ),
+          ),
+        ],
       ),
     );
+  }
+}
+
+extension DateOnlyCompare on DateTime {
+  bool isSameDate(DateTime other) {
+    return year == other.year && month == other.month && day == other.day;
   }
 }
