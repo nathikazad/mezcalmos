@@ -34,7 +34,6 @@ class FBNotificationsController extends GetxController {
     mezDbgPrint(notificationNode);
     this._notificationNode = notificationNode;
     _notificationNodeAddListener?.cancel();
-    _notificationNodeAddListener = null;
     _notificationNodeAddListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(notificationNode)

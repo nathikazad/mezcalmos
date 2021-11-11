@@ -22,12 +22,6 @@ Notification customerNotificationHandler(String key, dynamic value) {
   }
 }
 
-extension StringExtension on String {
-  String capitalize() {
-    return "${this[0].toUpperCase()}${this.substring(1)}";
-  }
-}
-
 Notification restaurantOrderStatusChangeNotificationHandler(
     String key, dynamic value) {
   RestaurantOrderStatus newOrdersStatus =
@@ -52,31 +46,31 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
     case RestaurantOrderStatus.PreparingOrder:
       return <String, dynamic>{
         "title": "Preparing Order",
-        "body": "Order is being prepared",
+        "body": "Your order is being prepared",
         "imgUrl": "assets/images/cancel.png"
       };
     case RestaurantOrderStatus.ReadyForPickup:
       return <String, dynamic>{
-        "title": "Preparing Order",
-        "body": "Order is being prepared",
+        "title": "Ready For Pickup",
+        "body": "Your order is ready for pickup",
         "imgUrl": "assets/images/cancel.png"
       };
     case RestaurantOrderStatus.OnTheWay:
       return <String, dynamic>{
-        "title": "Preparing Order",
-        "body": "Order is being prepared",
+        "title": "On the Way",
+        "body": "Your order is on the way",
         "imgUrl": "assets/images/cancel.png"
       };
     case RestaurantOrderStatus.Delivered:
       return <String, dynamic>{
-        "title": "Preparing Order",
-        "body": "Order is being prepared",
+        "title": "Delivered",
+        "body": "Your order has been delivered",
         "imgUrl": "assets/images/cancel.png"
       };
     case RestaurantOrderStatus.Cancelled:
       return <String, dynamic>{
-        "title": "Preparing Order",
-        "body": "Order is being prepared",
+        "title": "Order Cancelled",
+        "body": "Your order has been cancelled",
         "imgUrl": "assets/images/cancel.png"
       };
     default:

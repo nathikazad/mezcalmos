@@ -78,8 +78,8 @@ class OrderController extends GetxController {
   }
 
   Future<ServerResponse> cancelOrder(String orderId) async {
-    HttpsCallable cancelOrder =
-        FirebaseFunctions.instance.httpsCallable('cancelOrderFromAdmin');
+    HttpsCallable cancelOrder = FirebaseFunctions.instance
+        .httpsCallable('cancelRestaurantOrderFromAdmin');
     try {
       HttpsCallableResult response =
           await cancelOrder.call({"orderId": orderId});
@@ -133,6 +133,7 @@ class OrderController extends GetxController {
   Future<ServerResponse> dropOrder(String orderId) async {
     HttpsCallable dropOrderFunction =
         FirebaseFunctions.instance.httpsCallable('dropOrder');
+    mezDbgPrint("Drop order");
     try {
       HttpsCallableResult response =
           await dropOrderFunction.call({"orderId": orderId});

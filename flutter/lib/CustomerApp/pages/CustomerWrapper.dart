@@ -32,7 +32,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   StreamSubscription<MezNotification.Notification>?
       _notificationsStreamListener;
 
-  
   LanguageController lang = Get.find<LanguageController>();
   SideMenuDraweController _sideMenuDrawerController =
       Get.find<SideMenuDraweController>();
@@ -42,6 +41,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   DateTime? appClosedTime;
   @override
   void initState() {
+    super.initState();
     WidgetsBinding.instance!.addObserver(this);
     _orderController.currentOrdersStream.listen((currentOrders) {
       numberOfCurrentOrders.value = currentOrders.length;

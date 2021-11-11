@@ -54,9 +54,9 @@ class _WrapperState extends State<Wrapper> {
       _locationStreamSub?.cancel();
       _locationStreamSub = Get.find<SettingsController>()
           .locationPermissionStream
-          .distinct()
+          // .distinct()
           .listen((locationPermission) {
-        mezDbgPrint("Wrapper: location permission => $locationPermission");
+        // mezDbgPrint("Wrapper: location permission => $locationPermission");
         if (locationPermission == false &&
             Get.currentRoute != kLocationPermissionPage) {
           Get.toNamed(kLocationPermissionPage);

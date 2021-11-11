@@ -48,6 +48,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
           return false;
         },
         child: Scaffold(
+            key: Get.find<SideMenuDraweController>().getNewKey(),
             appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
                 "menu", Get.find<SideMenuDraweController>().openMenu),
             drawer: MezSideMenu(),

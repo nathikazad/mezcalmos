@@ -169,7 +169,6 @@ class Cart {
       items[element.id!] = element.toFirebaseFunctionFormattedJson();
     });
 
-    mezDbgPrint("+ from model REST ID ==> ${restaurant?.id}");
     return <String, dynamic>{
       "orderType": OrderType.Restaurant.toFirebaseFormatString(),
       "serviceProviderId": restaurant?.id,

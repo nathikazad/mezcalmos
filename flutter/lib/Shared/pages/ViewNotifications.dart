@@ -69,7 +69,9 @@ class _ViewNotificationsState extends State<ViewNotifications> {
           Expanded(
               child: Container(
             child: SingleChildScrollView(
-              child: _buildNotification(controller.notifications.value),
+              child: Obx(
+              () => _buildNotification(controller.notifications()),
+            )
             ),
           ))
         ],
@@ -131,102 +133,109 @@ class NotificationComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      margin: const EdgeInsets.symmetric(horizontal: 10),
-      width: Get.width,
-      height: 63,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(4)),
-        border: Border.all(color: const Color(0xffececec), width: 0.5),
-        color: const Color(0xffffffff),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            height: 31,
-            width: 31,
-            child: ClipOval(
-              child: Container(
-                  width: 31,
-                  height: 31,
-                  child: Center(
-                      child: Image.network(
-                    "${notification.imgUrl}",
-                    fit: BoxFit.cover,
-                  ))),
-            ),
-          ),
-          SizedBox(
-            width: 10,
-          ),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Expanded(
-                          child: Container(
-                        child: Text("${notification.title}",
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                                color: const Color(0xff000f1c),
-                                fontWeight: FontWeight.w700,
-                                fontFamily: "ProductSans",
-                                fontStyle: FontStyle.normal,
-                                fontSize: 13.0),
-                            textAlign: TextAlign.left),
-                      )),
-                      Container(
-                        child: Container(
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.query_builder,
-                                size: 12,
-                                color: Color(0xff000f1c),
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                "${f.format(notification.timestamp)}",
-                                style: TextStyle(
-                                    color: const Color(0xff000f1c),
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: "ProductSans",
-                                    fontStyle: FontStyle.normal,
-                                    fontSize: 10.0),
+    return InkWell(
+      onTap: () => Get.toNamed(notification.linkUrl),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        margin: const EdgeInsets.symmetric(horizontal: 10),
+        width: Get.width,
+        height: 63,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(4)),
+          border: Border.all(color: const Color(0xffececec), width: 0.5),
+          color: const Color(0xffffffff),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              height: 31,
+              width: 31,
+              child: ClipOval(
+                child: Container(
+                    width: 31,
+                    height: 31,
+                    child: Center(
+                        child: notification.imgUrl.startsWith("http")
+                            ? Image.network(
+                                notification.imgUrl,
+                                fit: BoxFit.cover,
+                height: 50,
+                                width: 10,
                               )
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 3,
-                ),
-                Text("${notification.body}",
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                        color: const Color(0xff000f1c),
-                        fontWeight: FontWeight.w400,
-                        fontFamily: "ProductSans",
-                        fontStyle: FontStyle.normal,
-                        fontSize: 12.0),
-                    textAlign: TextAlign.left)
-              ],
+                            : Image.asset(notification.imgUrl))),
+              ),
             ),
-          ),
-        ],
+            SizedBox(
+              width: 10,
+            ),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Expanded(
+                            child: Container(
+                          child: Text("${notification.title}",
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  color: const Color(0xff000f1c),
+                                  fontWeight: FontWeight.w700,
+                                  fontFamily: "ProductSans",
+                                  fontStyle: FontStyle.normal,
+                                  fontSize: 13.0),
+                              textAlign: TextAlign.left),
+                        )),
+                        Container(
+                          child: Container(
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.query_builder,
+                                  size: 12,
+                                  color: Color(0xff000f1c),
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  "${f.format(notification.timestamp)}",
+                                  style: TextStyle(
+                                      color: const Color(0xff000f1c),
+                                      fontWeight: FontWeight.w400,
+                                      fontFamily: "ProductSans",
+                                      fontStyle: FontStyle.normal,
+                                      fontSize: 10.0),
+                                )
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 3,
+                  ),
+                  Text("${notification.body}",
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                          color: const Color(0xff000f1c),
+                          fontWeight: FontWeight.w400,
+                          fontFamily: "ProductSans",
+                          fontStyle: FontStyle.normal,
+                          fontSize: 12.0),
+                      textAlign: TextAlign.left)
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
