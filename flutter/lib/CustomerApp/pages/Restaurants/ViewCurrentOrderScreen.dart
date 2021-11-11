@@ -352,8 +352,7 @@ class _ViewCurrentRestaurantOrderScreenState
                   height: 20,
                 ),
                 //===============================>notes========================>
-                order.value?.notes == null
-                    //  || order.value!.notes!.length <= 0
+                order.value?.notes == null || order.value!.notes!.length <= 0
                     ? SizedBox()
                     : NotesWidget(),
                 //===============================>button cancel===========================

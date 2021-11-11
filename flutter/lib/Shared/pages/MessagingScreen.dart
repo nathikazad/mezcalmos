@@ -66,7 +66,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
             runAlignment: !isMe ? WrapAlignment.start : WrapAlignment.end,
             crossAxisAlignment: WrapCrossAlignment.start,
             textDirection: !isMe ? TextDirection.ltr : TextDirection.rtl,
-            spacing: 20,
+            spacing: 10,
             clipBehavior: Clip.none,
             children: [
               Container(
