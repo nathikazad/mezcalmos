@@ -10,7 +10,7 @@ import 'package:mezcalmos/CustomerApp/components/myExpensionPanelComponent.dart'
 import 'package:mezcalmos/CustomerApp/components/textFieldComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/titlesComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantCartController.dart';
-import 'package:mezcalmos/CustomerApp/models/cart.dart';
+import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';

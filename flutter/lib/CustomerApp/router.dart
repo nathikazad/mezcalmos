@@ -13,7 +13,6 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen.dar
 // Routes Keys.
 const String kWrapperRoute = '/wrapper';
 const String kTaxisRoute = '/taxi';
-const String kNotificationsRoute = '/notifications';
 const String kOrdersRoute = '/orders';
 const String kRestaurantsRoute = '/restaurants';
 const String kRestaurantRoute = '/restaurants/:restaurantId';

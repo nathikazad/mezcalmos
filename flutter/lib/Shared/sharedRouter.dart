@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/pages/PickToLocation.dart';
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen.dart';
+import 'package:mezcalmos/Shared/pages/ViewNotifications.dart';
 import 'package:mezcalmos/Shared/pages/Wrapper.dart';
 
 // Routes Keys.
@@ -24,6 +25,7 @@ const String kMessagesRoute = '/messages/:orderId';
 const String kUnauthorizedRoute = '/unauthorized';
 const String kUserProfile = '/user_profile';
 const String kPickToLocation = '/pick_to_location';
+const String kNotificationsRoute = '/notifications';
 
 String getCustomerMessagesRoute(
   String orderId,
@@ -61,6 +63,7 @@ class SharedRouter {
     GetPage(name: kUnauthorizedRoute, page: () => UnauthorizedScreen()),
     GetPage(
         name: kLocationPermissionPage, page: () => LocationPermissionScreen()),
-    GetPage(name: kPickToLocation, page: () => PickToLocation())
+    GetPage(name: kPickToLocation, page: () => PickToLocation()),
+    GetPage(name: kNotificationsRoute, page: () => ViewNotifications())
   ];
 }

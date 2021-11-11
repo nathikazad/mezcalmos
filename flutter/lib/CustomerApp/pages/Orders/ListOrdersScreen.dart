@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mezcalmos/CustomerApp/components/dateTitleComponent.dart';
+import 'package:mezcalmos/Shared/widgets/DateTitleComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/imagesComponents.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';

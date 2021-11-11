@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewNotifications.dart';
+import 'package:mezcalmos/Shared/pages/ViewNotifications.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 
@@ -33,10 +34,7 @@ class ActionIconsComponents {
       ),
       onTap: () {
         print("notification");
-        Get.to(() => ViewNotifications());
-        //Get.toNamed(kCartRoute);
-        // Get.to(ViewCartScreen(),
-        //);
+        Get.toNamed(kNotificationsRoute);
       },
     );
   }
