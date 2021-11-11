@@ -10,7 +10,7 @@ import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
-import 'package:mezcalmos/TaxiApp/models/TaxiNotifications.dart';
+import 'package:mezcalmos/TaxiApp/notificationHandler.dart';
 
 class CurrentOrderController extends GetxController {
   TaxiAuthController _taxiAuthController = Get.find<TaxiAuthController>();

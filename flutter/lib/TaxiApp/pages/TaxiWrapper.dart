@@ -14,7 +14,7 @@ import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/models/TaxiDriver.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as MezNotification;
-import 'package:mezcalmos/TaxiApp/models/TaxiNotifications.dart';
+import 'package:mezcalmos/TaxiApp/notificationHandler.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
 
 class TaxiWrapper extends StatefulWidget {
