@@ -3,8 +3,6 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'dart:math';
 
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-
 class CartItem {
   String restaurantId;
   String? id;
@@ -105,6 +103,7 @@ class Cart {
   String? notes;
   PaymentType paymentType = PaymentType.Cash;
   Cart({this.restaurant});
+
   Cart.fromCartData(dynamic cartData, this.restaurant) {
     cartData["items"]?.forEach((dynamic itemId, dynamic itemData) {
       Map<String, String> chosenOneOptions = {};
@@ -128,6 +127,9 @@ class Cart {
           chosenManyOptions);
       this.items.add(cartItem);
     });
+    this.toLocation =
+        cartData["to"] != null ? Location.fromData(cartData["to"]) : null;
+    this.notes = cartData["notes"];
   }
   int quantity() {
     if (this.items.length == 0) return 0;

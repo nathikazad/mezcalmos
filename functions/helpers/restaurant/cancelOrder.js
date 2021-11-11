@@ -9,7 +9,7 @@ module.exports.cancelOrderFromCustomer = functions.https.onCall(async (data, con
   if (!context.auth) {
     return notSignedInMessage
   }
-  return changeStatus(context.auth.uid , data, "cancelled");
+  return changeStatus(context.auth.uid, data, "cancelledByCustomer");
 });
 
 // Cancel By Admin !
@@ -17,7 +17,7 @@ module.exports.cancelOrderFromAdmin = functions.https.onCall(async (data, contex
   if (!context.auth) {
     return notSignedInMessage
   }
-  return changeStatus(context.auth.uid , data, "cancelled" , true);
+  return changeStatus(context.auth.uid, data, "cancelledByAdmin", true);
 });
 
 

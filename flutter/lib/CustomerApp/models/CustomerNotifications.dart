@@ -67,7 +67,7 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
         "body": "Your order has been delivered",
         "imgUrl": "assets/images/cancel.png"
       };
-    case RestaurantOrderStatus.Cancelled:
+    case RestaurantOrderStatus.CancelledByAdmin:
       return <String, dynamic>{
         "title": "Order Cancelled",
         "body": "Your order has been cancelled",

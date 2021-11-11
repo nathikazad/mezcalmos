@@ -159,7 +159,8 @@ Widget buildWigetOnOrderStatus(
         ],
       );
       break;
-    case RestaurantOrderStatus.Cancelled:
+    case RestaurantOrderStatus.CancelledByAdmin:
+    case RestaurantOrderStatus.CancelledByCustomer:
       mezDbgPrint("Cancelled");
       myWidget = Row(
         mainAxisAlignment: MainAxisAlignment.center,

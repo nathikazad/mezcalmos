@@ -33,25 +33,22 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   RestaurantCartController controller = Get.find<RestaurantCartController>();
 
   TextEditingController textcontoller = new TextEditingController();
-  Rxn<Cart> cart = Rxn();
-  // this is used for DropDown Value  (basically the key of dropDownItems)
-  RxString _dropDownValue = "_pick_".obs;
-  // this is the final newly updated user location pick
-  Rxn<Location> _pickedLocation = Rxn();
+  // Rxn<Cart> cart = Rxn();
 
-  // DrowpDown Items
-  RxList<DropdownMenuItem<String>> _dropDownItemsList =
-      <DropdownMenuItem<String>>[].obs;
-
-  void updateDropDown(Location? _newLocation) {
-    if (_pickedLocation.value != _newLocation) {
-      _dropDownItemsList.removeWhere(
-          (element) => element.value == _pickedLocation.value.toString());
-      _dropDownItemsList.add(DropdownMenuItem<String>(
-          child: Text(_newLocation!.address), value: _newLocation.toString()));
-      _pickedLocation.value = _newLocation;
-      _dropDownValue.value = _newLocation.toString();
+  List<DropdownMenuItem<String>> pickLocationDropDownList() {
+    List<DropdownMenuItem<String>> dropDownList = <DropdownMenuItem<String>>[
+      DropdownMenuItem(
+        child: Text(lang.strings["shared"]["inputLocation"]["pickFromMap"]),
+        value: "_pick_",
+      ),
+    ];
+    mezDbgPrint(controller.cart.value.toFirebaseFormattedJson());
+    if (controller.cart.value.toLocation != null) {
+      dropDownList.add(DropdownMenuItem<String>(
+          child: Text(controller.cart.value.toLocation!.address),
+          value: controller.cart.value.toLocation.toString()));
     }
+    return dropDownList;
   }
 
   @override
@@ -61,14 +58,6 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
       mezDbgPrint(
           "+++ From ViewCartScreen ==> ${item.id} <= notes => ${item.notes}");
     });
-
-    // by default it contains one .
-    _dropDownItemsList.value = <DropdownMenuItem<String>>[
-      DropdownMenuItem(
-        child: Text(lang.strings["shared"]["inputLocation"]["pickFromMap"]),
-        value: "_pick_",
-      ),
-    ];
   }
 
   @override
@@ -231,40 +220,45 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                                   color: const Color(0xffececec), width: 0.5),
                               color: const Color(0x80ffffff)),
                           child: DropdownButtonHideUnderline(
-                            child: DropdownButton<String>(
-                              value: _dropDownValue.value,
-                              // changed this to show the address much more clearly.
-                              isDense: false,
-                              isExpanded: true,
-                              hint: Text(
-                                  lang.strings["customer"]["restaurant"]["cart"]
-                                      ["pickLocation"],
-                                  style: const TextStyle(
-                                      color: const Color(0xff000f1c),
-                                      fontWeight: FontWeight.w500,
-                                      fontFamily: "FontAwesome5Pro",
-                                      fontStyle: FontStyle.normal,
-                                      fontSize: 12.0),
-                                  textAlign: TextAlign.left),
-                              icon: Icon(Icons.expand_more),
-                              items: _dropDownItemsList(),
-                              onChanged: (newValue) async {
-                                // we will route the user back to the Map
-                                if (newValue == "_pick_") {
-                                  dynamic _loc =
-                                      await Get.toNamed(kPickLocationRoute);
-                                  if (_loc != null) {
-                                    mezDbgPrint(
-                                        "Get.back executed with  res : ${(_loc as Location?)!.toString()}");
-                                    updateDropDown(_loc);
-                                    controller.refresh();
-                                  } else {
-                                    mezDbgPrint(
-                                        "Pick map view returned Null !!!");
+                            child: Obx(() {
+                              return DropdownButton<String>(
+                                value: controller.cart.value.toLocation
+                                        ?.toString() ??
+                                    "_pick_",
+                                // changed this to show the address much more clearly.
+                                isDense: false,
+                                isExpanded: true,
+                                hint: Text(
+                                    lang.strings["customer"]["restaurant"]
+                                        ["cart"]["pickLocation"],
+                                    style: const TextStyle(
+                                        color: const Color(0xff000f1c),
+                                        fontWeight: FontWeight.w500,
+                                        fontFamily: "FontAwesome5Pro",
+                                        fontStyle: FontStyle.normal,
+                                        fontSize: 12.0),
+                                    textAlign: TextAlign.left),
+                                icon: Icon(Icons.expand_more),
+                                items: pickLocationDropDownList(),
+                                onChanged: (newValue) async {
+                                  // we will route the user back to the Map
+                                  if (newValue == "_pick_") {
+                                    Location _loc =
+                                        await Get.toNamed(kPickLocationRoute);
+                                    if (_loc != null) {
+                                      mezDbgPrint(
+                                          "Get.back executed with  res : ${(_loc as Location?)!.toString()}");
+                                      controller.cart.value.toLocation = _loc;
+                                      controller.saveCart();
+                                      controller.refresh();
+                                    } else {
+                                      mezDbgPrint(
+                                          "Pick map view returned Null !!!");
+                                    }
                                   }
-                                }
-                              },
-                            ),
+                                },
+                              );
+                            }),
                           ),
                         ),
                         SizedBox(
@@ -294,7 +288,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                           height: 25,
                         ),
                         ButtonComponent(
-                            bgColor: _pickedLocation.value == null
+                            bgColor: controller.cart.value.toLocation == null
                                 ? const Color(0xdddddddd)
                                 : const Color(0xffac59fc),
                             widget: Center(
@@ -307,14 +301,12 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                                       fontSize: 16.0),
                                   textAlign: TextAlign.center),
                             ),
-                            function: _pickedLocation.value != null
+                            function: controller.cart.value.toLocation != null
                                 ? () async {
-                                    if (_pickedLocation.value != null) {
+                                    if (controller.cart.value.toLocation !=
+                                        null) {
                                       controller.cart.value.notes =
                                           textcontoller.text;
-                                      controller.cart.value.toLocation =
-                                          _pickedLocation.value;
-
                                       mezDbgPrint(controller.cart.value
                                           .toFirebaseFormattedJson()
                                           .toString());

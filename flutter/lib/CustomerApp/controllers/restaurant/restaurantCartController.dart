@@ -70,6 +70,13 @@ class RestaurantCartController extends GetxController {
     return Restaurant.fromRestaurantData(snapshot.value, id: restaurantId);
   }
 
+  void saveCart() {
+    _databaseHelper.firebaseDatabase
+        .reference()
+        .child(customerCart(_authController.user!.uid))
+        .set(cart.value.toFirebaseFormattedJson());
+  }
+
   void addItem(CartItem cartItem) async {
     String restaurantId = cartItem.restaurantId;
     if (associatedRestaurant == null) {
@@ -83,26 +90,17 @@ class RestaurantCartController extends GetxController {
     }
 
     cart.value.addItem(cartItem);
-    _databaseHelper.firebaseDatabase
-        .reference()
-        .child(customerCart(_authController.user!.uid))
-        .set(cart.value.toFirebaseFormattedJson());
+    saveCart();
   }
 
   void incrementItem(String itemId, int quantity) {
     cart.value.incrementItem(itemId, quantity);
-    _databaseHelper.firebaseDatabase
-        .reference()
-        .child(customerCart(_authController.user!.uid))
-        .set(cart.value.toFirebaseFormattedJson());
+    saveCart();
   }
 
   void deleteItem(String itemId) {
     cart.value.deleteItem(itemId);
-    _databaseHelper.firebaseDatabase
-        .reference()
-        .child(customerCart(_authController.user!.uid))
-        .set(cart.value.toFirebaseFormattedJson());
+    saveCart();
   }
 
   void clearCart() {
