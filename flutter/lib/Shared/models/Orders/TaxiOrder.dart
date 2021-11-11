@@ -1,7 +1,7 @@
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
-enum OrdersStatus {
+enum TaxiOrdersStatus {
   DroppedOff,
   Cancelled,
   Expired,
@@ -11,16 +11,16 @@ enum OrdersStatus {
   Invalid
 }
 
-extension ParseOrderStatusToString on OrdersStatus {
-  String toShortString() {
+extension ParseOrderStatusToString on TaxiOrdersStatus {
+  String toFirebaseFormatString() {
     return this.toString().split('.').last;
   }
 }
 
 extension ParseStringToOrderStatus on String {
-  OrdersStatus toOrderStatus() {
-    return OrdersStatus.values.firstWhere(
-        (e) => e.toShortString().toLowerCase() == this.toLowerCase());
+  TaxiOrdersStatus toTaxiOrderStatus() {
+    return TaxiOrdersStatus.values.firstWhere(
+        (e) => e.toFirebaseFormatString().toLowerCase() == this.toLowerCase());
   }
 }
 
@@ -33,7 +33,7 @@ class TaxiOrder extends Order {
   dynamic acceptRideTime;
   dynamic rideFinishTime;
   dynamic rideStartTime;
-  OrdersStatus status;
+  TaxiOrdersStatus status;
   dynamic polyline;
   double distanceToClient = 0;
   dynamic cancelledBy;
@@ -79,7 +79,7 @@ class TaxiOrder extends Order {
         customer: UserInfo.fromData(data["customer"]),
         rideFinishTime: data['rideFinishTime'],
         rideStartTime: data['rideStartTime'],
-        status: data['status'].toString().toOrderStatus(),
+        status: data['status'].toString().toTaxiOrderStatus(),
         acceptRideTime: data['acceptRideTime'],
         estimatedPrice: data['estimatedPrice'],
         from: Location.fromData(data['from']),
@@ -107,8 +107,8 @@ class TaxiOrder extends Order {
 
   @override
   bool inProcess() {
-    return status == OrdersStatus.InTransit ||
-        status == OrdersStatus.LookingForTaxi ||
-        status == OrdersStatus.OnTheWay;
+    return status == TaxiOrdersStatus.InTransit ||
+        status == TaxiOrdersStatus.LookingForTaxi ||
+        status == TaxiOrdersStatus.OnTheWay;
   }
 }

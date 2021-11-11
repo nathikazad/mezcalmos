@@ -25,9 +25,10 @@ class AuthHooks {
     Get.put<DeviceNotificationsController>(DeviceNotificationsController(),
         permanent: true);
     Get.put<AdminAuthController>(AdminAuthController(), permanent: true);
-    Get.put<OrderController>(OrderController(), permanent: true);
-    Get.put<MessageController>(MessageController(), permanent: true);
     Get.put<FBNotificationsController>(FBNotificationsController(),
         permanent: true);
+    Get.put<OrderController>(OrderController(), permanent: true);
+    Get.put<MessageController>(MessageController(), permanent: true);
+
   }
 }

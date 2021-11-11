@@ -14,8 +14,8 @@ import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
-import 'package:mezcalmos/TaxiApp/components/IncommingOrderMapScreen/IPositionedBottomBar.dart';
-import 'package:mezcalmos/TaxiApp/components/IncommingOrderMapScreen/IPositionedFromToBar.dart';
+import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/IPositionedBottomBar.dart';
+import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/IPositionedFromToBar.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
@@ -186,8 +186,8 @@ class IncommingOrderScreenView extends GetWidget<IncomingOrdersController>
     if (bitmapDescriptors["customerImg"] == null) {
       // Create the BitmapDescriptor Object for the customer marker using the images's bytes.
       bitmapDescriptors["customerImg"] = await BitmapDescriptorLoader(
-          (await cropRonded((await http.get(Uri.parse(
-                  controller.selectedIncommingOrder!.customer.image)))
+          (await cropRonded((await http.get(
+                  Uri.parse(controller.selectedIncommingOrder!.customer.image)))
               .bodyBytes) as Uint8List),
           60,
           60,

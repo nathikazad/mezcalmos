@@ -28,7 +28,8 @@ class FBNotificationsController extends GetxController {
     mezDbgPrint("fbNotificationsController: Init");
   }
 
-  void startListeningForNotificationsFromFirebase(String notificationNode) {
+  void startListeningForNotificationsFromFirebase(String notificationNode,
+      Notification Function(String key, dynamic value) notificationHandler) {
     mezDbgPrint("FBNotificationsController:startListeningForNotifications");
     mezDbgPrint(notificationNode);
     this._notificationNode = notificationNode;
@@ -41,9 +42,14 @@ class FBNotificationsController extends GetxController {
         .listen((event) {
       mezDbgPrint(event.snapshot.value);
       Notification _notification =
-          Notification.fromJson(event.snapshot.key, event.snapshot.value);
-      bool shouldSave = (Get.currentRoute != _notification.linkUrl);
-      if (shouldSave) {
+          notificationHandler(event.snapshot.key!, event.snapshot.value);
+      bool alreadyOnLinkPage = (Get.currentRoute == _notification.linkUrl);
+      mezDbgPrint(Get.currentRoute);
+      mezDbgPrint(_notification.linkUrl);
+      if (alreadyOnLinkPage && _notification.showIfOnLinkPage)
+        _notificationsStreamController.add(_notification);
+
+      if (!alreadyOnLinkPage) {
         notifications.add(_notification);
         _notificationsStreamController.add(_notification);
         mezDbgPrint(_notification.toJson());
@@ -59,7 +65,7 @@ class FBNotificationsController extends GetxController {
         .onChildRemoved
         .listen((event) {
       Notification _notifaction =
-          Notification.fromJson(event.snapshot.key, event.snapshot.value);
+          notificationHandler(event.snapshot.key!, event.snapshot.value);
       notifications.value = notifications.value
           .where((element) => element.id != _notifaction.id)
           .toList();
@@ -71,6 +77,10 @@ class FBNotificationsController extends GetxController {
         .reference()
         .child("$_notificationNode/$notificationId")
         .remove();
+  }
+
+  bool hasNewNotifications() {
+    return notifications.value.isNotEmpty;
   }
 
   void clearAllMessageNotification() {

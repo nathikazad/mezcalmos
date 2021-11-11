@@ -49,8 +49,7 @@ class IncommingPositionedBottomBar extends StatelessWidget with MezDisposable {
                           // radius: 30.0,
                           child: ClipOval(
                             clipBehavior: Clip.antiAlias,
-                            child: controller.selectedIncommingOrder
-                                        ?.customer
+                            child: controller.selectedIncommingOrder?.customer
                                         .image ==
                                     null
                                 ? Image.asset(
@@ -62,8 +61,7 @@ class IncommingPositionedBottomBar extends StatelessWidget with MezDisposable {
                                     fit: BoxFit.cover,
                                   )
                                 : Image.network(
-                                    controller.selectedIncommingOrder
-                                            !.customer
+                                    controller.selectedIncommingOrder!.customer
                                             .image +
                                         "?type=large",
                                     fit: BoxFit.cover,
@@ -88,8 +86,7 @@ class IncommingPositionedBottomBar extends StatelessWidget with MezDisposable {
                                 Container(
                                   width: 100.sp,
                                   child: Text(
-                                    controller.selectedIncommingOrder
-                                            ?.customer
+                                    controller.selectedIncommingOrder?.customer
                                             .name ??
                                         "Customer",
                                     style: TextStyle(

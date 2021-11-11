@@ -1,4 +1,6 @@
 import 'package:mezcalmos/CustomerApp/constants/databaseNodes.dart';
+import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
+import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -12,7 +14,8 @@ import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 class OrderController extends GetxController {
   DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
   AuthController _authController = Get.find<AuthController>();
-
+  FBNotificationsController _fbNotificationsController =
+      Get.find<FBNotificationsController>();
   List<Order> currentOrders = [];
   List<Order> pastOrders = [];
 
@@ -70,6 +73,27 @@ class OrderController extends GetxController {
         // do nothing
         return null;
       }
+    });
+  }
+
+  bool orderHaveNewMessageNotifications(String orderId) {
+    return _fbNotificationsController
+        .notifications()
+        .where((notification) =>
+            notification.notificationType == NotificationType.NewMessage &&
+            notification.orderId! == orderId)
+        .isNotEmpty;
+  }
+
+  void clearOrderNotifications(String orderId) {
+    _fbNotificationsController
+        .notifications()
+        .where((notification) =>
+            notification.notificationType ==
+                NotificationType.OrderStatusChange &&
+            notification.orderId! == orderId)
+        .forEach((notification) {
+      _fbNotificationsController.removeNotification(notification.id);
     });
   }
 

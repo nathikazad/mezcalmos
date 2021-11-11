@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/DeliveryAdminApp/models/AdminNotifications.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
@@ -42,7 +43,8 @@ class _AdminWrapperState extends State<AdminWrapper> {
     String userId = Get.find<AuthController>().fireAuthUser!.uid;
     _notificationsStreamListener = initializeShowNotificationsListener();
     Get.find<FBNotificationsController>()
-        .startListeningForNotificationsFromFirebase(notificationsNode(userId));
+        .startListeningForNotificationsFromFirebase(
+            notificationsNode(userId), deliveryAdminNotificationHandler);
     super.initState();
   }
 

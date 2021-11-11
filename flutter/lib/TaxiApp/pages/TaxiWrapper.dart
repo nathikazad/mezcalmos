@@ -14,6 +14,7 @@ import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/models/TaxiDriver.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as MezNotification;
+import 'package:mezcalmos/TaxiApp/models/TaxiNotifications.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
 
 class TaxiWrapper extends StatefulWidget {
@@ -41,7 +42,8 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
     String userId = Get.find<AuthController>().fireAuthUser!.uid;
     _notificationsStreamListener = initializeShowNotificationsListener();
     Get.find<FBNotificationsController>()
-        .startListeningForNotificationsFromFirebase(notificationsNode(userId));
+        .startListeningForNotificationsFromFirebase(
+            notificationsNode(userId), taxiNotificationHandler);
     super.initState();
   }
 

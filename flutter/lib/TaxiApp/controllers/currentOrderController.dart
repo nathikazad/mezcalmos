@@ -10,14 +10,13 @@ import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
+import 'package:mezcalmos/TaxiApp/models/TaxiNotifications.dart';
 
 class CurrentOrderController extends GetxController {
-  TaxiAuthController _taxiAuthController =
-      Get.find<TaxiAuthController>(); 
-  DatabaseHelper _databaseHelper =
-      Get.find<DatabaseHelper>();
+  TaxiAuthController _taxiAuthController = Get.find<TaxiAuthController>();
+  DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
   FBNotificationsController _fbNotificationsController =
-      Get.find<FBNotificationsController>(); 
+      Get.find<FBNotificationsController>();
 
   StreamController<TaxiOrder> _orderStreamController =
       StreamController.broadcast();
@@ -49,27 +48,24 @@ class CurrentOrderController extends GetxController {
 
   bool hasNewMessageNotification() {
     return _fbNotificationsController
-            .notifications()
-            .where((notification) =>
-                notification.notificationType == NotificationType.NewMessage &&
-                (notification as NewMessageNotification).orderId ==
-                    _taxiAuthController.taxiState!.currentOrder!)
-            .length >
-        0;
+        .notifications()
+        .where((notification) =>
+            notification.notificationType == NotificationType.NewMessage &&
+            notification.orderId! ==
+                _taxiAuthController.taxiState!.currentOrder!)
+        .isNotEmpty;
   }
 
   void clearOrderNotifications() {
-    FBNotificationsController fbNotificationsController =
-        Get.find<FBNotificationsController>();
-    fbNotificationsController
+    _fbNotificationsController
         .notifications()
         .where((notification) =>
             notification.notificationType ==
                 NotificationType.OrderStatusChange &&
-            (notification as OrderStatusChangeNotification).orderId ==
+            notification.orderId! ==
                 _taxiAuthController.taxiState!.currentOrder!)
         .forEach((notification) {
-      fbNotificationsController.removeNotification(notification.id);
+      _fbNotificationsController.removeNotification(notification.id);
     });
   }
 
@@ -78,10 +74,8 @@ class CurrentOrderController extends GetxController {
         FirebaseFunctions.instance.httpsCallable('cancelTaxiFromDriver');
     mezDbgPrint("Cancel Taxi Called");
     try {
-      HttpsCallableResult response = await cancelTaxiFunction
-          .call(<String, dynamic>{
-        'reason': reason
-      });
+      HttpsCallableResult response =
+          await cancelTaxiFunction.call(<String, dynamic>{'reason': reason});
       dynamic _res = responseStatusChecker(response.data);
       if (_res == null) {
         mezDbgPrint(
@@ -91,7 +85,6 @@ class CurrentOrderController extends GetxController {
         mezcalmosSnackBar("Notice ~", _res);
         return Future.value(true);
       }
-
     } catch (e) {
       mezcalmosSnackBar("Notice ~", "Failed to Cancel the Taxi Request :( ");
       mezDbgPrint("Exception happend in cancelTaxi : $e");
@@ -104,8 +97,7 @@ class CurrentOrderController extends GetxController {
     HttpsCallable startRideFunction =
         FirebaseFunctions.instance.httpsCallable('startTaxiRide');
     try {
-      HttpsCallableResult response = await startRideFunction
-          .call();
+      HttpsCallableResult response = await startRideFunction.call();
       return ServerResponse.fromJson(response.data);
     } catch (e) {
       return ServerResponse(ResponseStatus.Error,
@@ -118,8 +110,7 @@ class CurrentOrderController extends GetxController {
     HttpsCallable finishRideFunction =
         FirebaseFunctions.instance.httpsCallable('finishTaxiRide');
     try {
-      HttpsCallableResult response = await finishRideFunction
-          .call();
+      HttpsCallableResult response = await finishRideFunction.call();
       return ServerResponse.fromJson(response.data);
     } catch (e) {
       return ServerResponse(ResponseStatus.Error,

@@ -3,7 +3,7 @@ import 'package:mezcalmos/CustomerApp/pages/MapViews/PickLocationView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Orders/ListOrdersScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCurrentOrderScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen.dart';
-
+import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustomerWrapper.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ListRestaurantsScreen.dart';
@@ -44,6 +44,13 @@ String getCurrentRestaurantOrderRoute(String orderId) {
 
 String getPastRestaurantOrderRoute(String orderId) {
   return kPastRestaurantOrderRoute.replaceFirst(":orderId", orderId);
+}
+
+String getRestaurantMessagesRoute(
+  String orderId,
+) {
+  return kMessagesRoute.replaceFirst(":orderId", orderId) +
+      "?recipientType=${ParticipantType.Restaurant.toFirebaseFormattedString()}";
 }
 
 // GetX based Router (For navigating)

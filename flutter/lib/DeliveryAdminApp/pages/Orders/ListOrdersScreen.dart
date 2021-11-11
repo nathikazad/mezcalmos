@@ -29,20 +29,24 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
   @override
   void initState() {
     super.initState();
+    controller.clearNewOrderNotifications();
     inProcessOrders.value = controller.inProcessOrders;
-    mezDbgPrint("ListOrdersScreen:init value");
-    mezDbgPrint(controller.inProcessOrders);
+    // mezDbgPrint("ListOrdersScreen:init value");
+    // mezDbgPrint(controller.inProcessOrders);
     controller.ordersStream.listen((event) {
       inProcessOrders.value = event;
-      mezDbgPrint("ListOrdersScreen:listener value");
-      mezDbgPrint(controller.inProcessOrders);
+      // mezDbgPrint("ListOrdersScreen:listener value");
+      // mezDbgPrint(controller.inProcessOrders);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: () async => false,
+        onWillPop: () async {
+          controller.clearNewOrderNotifications();
+          return false;
+        },
         child: Scaffold(
             appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
                 "menu", Get.find<SideMenuDraweController>().openMenu),
@@ -81,7 +85,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
           switch (element.orderType) {
             case OrderType.Restaurant:
               var s = element as RestaurantOrder;
-              mezDbgPrint("${s.restaurantOrderStatus}");
+              // mezDbgPrint("${s.restaurantOrderStatus}");
               children.add(DeliveryAdminOrderComponent(
                 type: OrderType.Restaurant,
                 status: s.restaurantOrderStatus,

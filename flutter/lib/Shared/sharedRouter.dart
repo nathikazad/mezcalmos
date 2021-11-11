@@ -25,10 +25,11 @@ const String kUnauthorizedRoute = '/unauthorized';
 const String kUserProfile = '/user_profile';
 const String kPickToLocation = '/pick_to_location';
 
-String getMessagesRoute(
+String getCustomerMessagesRoute(
   String orderId,
 ) {
-  return kMessagesRoute.replaceFirst(":orderId", orderId);
+  return kMessagesRoute.replaceFirst(":orderId", orderId) +
+      "?recipientType=${ParticipantType.Customer.toFirebaseFormattedString()}";
 }
 
 void popEverythingAndNavigateTo(dynamic route) {

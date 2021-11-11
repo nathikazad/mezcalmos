@@ -90,7 +90,7 @@ async function checkoutCart(uid, data) {
   }
   chat.participants[data.serviceProviderId] = {
     name: restaurant.details.name,
-    image: (restaurant.details.photo) ? restaurant.details.photo : null,
+    image: restaurant.details.photo,
     particpantType: "restaurant",
     phoneNumber: (restaurant.details.phoneNumber) ? restaurant.details.phoneNumber : null
   }
@@ -104,19 +104,23 @@ async function checkoutCart(uid, data) {
       }
     }
     firebase.database().ref(`/chat/${orderRef.key}`).set(chat);
-    notifyAdminsNewOrder(deliveryAdmins, firebase, orderRef.key)
+    notifyAdminsNewOrder(deliveryAdmins, firebase, orderRef.key, restaurant)
   });
 
   let response = { status: "Success", orderId: orderRef.key }
   return response
 }
 
-async function notifyAdminsNewOrder(admins, firebase, orderId) {
+async function notifyAdminsNewOrder(admins, firebase, orderId, restaurant) {
   let message = {
     time: (new Date()).toISOString(),
     notificationType: "newOrder",
     orderType: "restaurant",
     orderId: orderId,
+    restaurant: {
+      name: restaurant.details.name,
+      image: restaurant.details.photo
+    }
   }
   for (let adminId in admins) {
     firebase.database().ref(`/notifications/deliveryAdmin/${adminId}`).push(message)
@@ -133,7 +137,7 @@ async function notifyAdminsNewOrder(admins, firebase, orderId) {
         collapse_key: "newOrder",
         priority: "high"
       }
-      await firebase.messaging().sendToDevice(driver.notificationInfo.deviceNotificationToken, payload, options)
+      await firebase.messaging().sendToDevice(admin.notificationInfo.deviceNotificationToken, payload, options)
     }
   }
 }

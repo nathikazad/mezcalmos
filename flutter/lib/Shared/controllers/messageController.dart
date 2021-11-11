@@ -99,13 +99,14 @@ class MessageController extends GetxController {
   }
 
   void clearMessageNotifications(String orderId) {
+    mezDbgPrint("Clearing message notifications");
     FBNotificationsController fbNotificationsController =
         Get.find<FBNotificationsController>();
     fbNotificationsController
         .notifications()
         .where((notification) =>
             notification.notificationType == NotificationType.NewMessage &&
-            (notification as NewMessageNotification).orderId == orderId)
+            notification.orderId! == orderId)
         .forEach((notification) {
       fbNotificationsController.removeNotification(notification.id);
     });

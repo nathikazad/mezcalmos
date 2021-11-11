@@ -1,8 +1,10 @@
 import 'package:mezcalmos/DeliveryAdminApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'dart:async';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -12,6 +14,8 @@ import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 class OrderController extends GetxController {
   DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
   AuthController _authController = Get.find<AuthController>();
+  FBNotificationsController _fbNotificationsController =
+      Get.find<FBNotificationsController>();
   late Stream<List<Order>> ordersStream;
   List<Order> inProcessOrders = [];
   @override
@@ -39,6 +43,37 @@ class OrderController extends GetxController {
     return ordersStream.map<Order>((orders) {
       return orders
           .firstWhere((currentOrder) => currentOrder.orderId == orderId);
+    });
+  }
+
+  void clearNewOrderNotifications() {
+    mezDbgPrint(
+        "Clear new order notifications ${_fbNotificationsController.notifications.value.length}");
+    _fbNotificationsController.notifications.value.forEach((element) {
+      mezDbgPrint(element.notificationType.toFirebaseFormatString());
+    });
+    _fbNotificationsController.notifications.value
+        .where((notification) =>
+            notification.notificationType == NotificationType.NewOrder)
+        .forEach((notification) {
+      mezDbgPrint(notification.id);
+      _fbNotificationsController.removeNotification(notification.id);
+    });
+
+    mezDbgPrint(
+        "Clear new order notifications ${_fbNotificationsController.notifications.value.length}");
+  }
+
+  void clearOrderNotifications(String orderId) {
+    _fbNotificationsController
+        .notifications()
+        .where((notification) =>
+            (notification.notificationType ==
+                    NotificationType.OrderStatusChange ||
+                notification.notificationType == NotificationType.NewOrder) &&
+            notification.orderId! == orderId)
+        .forEach((notification) {
+      _fbNotificationsController.removeNotification(notification.id);
     });
   }
 

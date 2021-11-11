@@ -57,6 +57,7 @@ class RestaurantCartController extends GetxController {
         }
       } else {
         cart.value = Cart();
+        associatedRestaurant = null;
       }
     });
   }

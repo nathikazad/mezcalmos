@@ -15,11 +15,11 @@ import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
-import 'package:mezcalmos/TaxiApp/components/CurrentOrderMapScreen/CPositionedBottomBar.dart';
-import 'package:mezcalmos/TaxiApp/components/CurrentOrderMapScreen/CPositionedFromToBar.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
+import 'package:mezcalmos/TaxiApp/pages/Orders/CurrentOrderScreen/CPositionedBottomBar.dart';
+import 'package:mezcalmos/TaxiApp/pages/Orders/CurrentOrderScreen/CPositionedFromToBar.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
 
 class CurrentOrderScreen extends GetView<CurrentOrderController> {
@@ -158,7 +158,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
     mezDbgPrint("_handleEvent -> Event == OrderStatusChange , passed ");
 
     mezDbgPrint("\t\tORDER STATUS CHANGED ${order.toJson()}");
-    if (order.status == OrdersStatus.Cancelled) {
+    if (order.status == TaxiOrdersStatus.Cancelled) {
       mezDbgPrint("======> Canceeeeeeeled =======>${order.toJson()}");
 
       Future.microtask(() {
@@ -172,11 +172,11 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
           ;
         });
       });
-    } else if (order.status == OrdersStatus.OnTheWay) {
+    } else if (order.status == TaxiOrdersStatus.OnTheWay) {
       mezDbgPrint("_handleEvent -> calling _loadMarkersForOTW() ");
 
       await _loadMarkersForOTW(order);
-    } else if (order.status == OrdersStatus.InTransit) {
+    } else if (order.status == TaxiOrdersStatus.InTransit) {
       mezDbgPrint("_handleEvent -> calling _loadMarkersForIT() ");
 
       mezDbgPrint("_handleEvent called 5!");
@@ -295,8 +295,8 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
       // Create the BitmapDescriptor Object for the customer marker using the images's bytes.
       bitmapDescriptors["customerImg"] = await BitmapDescriptorLoader(
           (await cropRonded(
-                  (await http.get(Uri.parse(order.customer.image)))
-              .bodyBytes) as Uint8List),
+                  (await http.get(Uri.parse(order.customer.image))).bodyBytes)
+              as Uint8List),
           60,
           60,
           isBytes: true);

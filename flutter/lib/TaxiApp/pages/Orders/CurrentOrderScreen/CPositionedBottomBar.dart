@@ -63,7 +63,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                               getSizeRelativeToScreen(
                                   12, Get.height, Get.width))),
                           backgroundColor:
-                              order.status != OrdersStatus.InTransit
+                              order.status != TaxiOrdersStatus.InTransit
                                   ? MaterialStateProperty.all(
                                       Color.fromARGB(255, 79, 168, 35))
                                   : MaterialStateProperty.all(
@@ -80,7 +80,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                           () => Center(
                               child: !this.showLoadingCircleInButton.value
                                   ? Text(
-                                      order.status != OrdersStatus.InTransit
+                                      order.status != TaxiOrdersStatus.InTransit
                                           ? lang.strings['taxi']['taxiView']
                                               ["startRide"]
                                           : lang.strings['taxi']['taxiView']
@@ -132,7 +132,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                             ? null
                             : () async {
                                 waitingForMapToOpen.value = true;
-                                order.status == OrdersStatus.OnTheWay
+                                order.status == TaxiOrdersStatus.OnTheWay
                                     ? await mapLauncher(order.from.latitude,
                                         order.from.longitude)
                                     : await mapLauncher(
@@ -168,7 +168,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                       Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
                       GestureDetector(
                         onTap: () async {
-                          Get.toNamed(getMessagesRoute(order.orderId));
+                          Get.toNamed(getCustomerMessagesRoute(order.orderId));
                         },
                         child: Container(
                           height: getSizeRelativeToScreen(
@@ -292,7 +292,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
   }
 
   Future<void> clickButton() async {
-    if (order.status == OrdersStatus.InTransit) {
+    if (order.status == TaxiOrdersStatus.InTransit) {
       if ((MapHelper.calculateDistance(
               taxiAuthController.currentLocation, order.to.position) >
           0.5)) {

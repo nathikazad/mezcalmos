@@ -30,12 +30,7 @@ class _ViewNotificationsState extends State<ViewNotifications> {
 
   @override
   void initState() {
-    // TODO: implement initState
-    controller.startListeningForNotificationsFromFirebase(
-        notificationsNode(authController.user!.uid));
     mezDbgPrint("ListOfNotifs : onInit");
-    //controller.notifications;
-
     super.initState();
   }
 
@@ -125,58 +120,14 @@ class _ViewNotificationsState extends State<ViewNotifications> {
 }
 
 Widget _checkTheNotifsTypeAndReturnWidget(notifs.Notification notification) {
-  switch (notification.notificationType) {
-    case notifs.NotificationType.NewMessage:
-      return NotificationComponent(
-        title: (notification as notifs.NewMessageNotification).title,
-        subtitle: (notification as notifs.NewMessageNotification).body,
-        date:
-            "${f.format((notification as notifs.NewMessageNotification).timestamp)}",
-        notifIcon: Container(
-          width: 31,
-          height: 31,
-          child: Center(
-              child: Image.network(
-            "${(notification as notifs.NewMessageNotification).imgUrl}",
-            fit: BoxFit.cover,
-          )),
-        ),
-      );
-    case notifs.NotificationType.NewAdminMessage:
-      //TODO:
-      break;
-    case notifs.NotificationType.OrderStatusChange:
-      return NotificationComponent(
-        title: (notification as notifs.OrderStatusChangeNotification).title,
-        subtitle: (notification as notifs.OrderStatusChangeNotification).body,
-        date:
-            "${f.format((notification as notifs.OrderStatusChangeNotification).timestamp)}",
-        notifIcon: Container(
-          width: 31,
-          height: 31,
-          color: Color(0xfff7a029).withOpacity(0.3156430125236511),
-          child: Center(
-              child: Image.asset(
-            "assets/images/stoveIcon.png",
-            height: 16,
-            width: 16,
-            fit: BoxFit.cover,
-          )),
-        ),
-      );
-
-    default:
-  }
-  return Container();
+  return NotificationComponent(
+    notification: notification,
+  );
 }
 
 class NotificationComponent extends StatelessWidget {
-  final String? title;
-  final String? subtitle;
-  final String? date;
-  final Widget? notifIcon;
-  NotificationComponent(
-      {this.title, this.subtitle, this.date, this.notifIcon, Key? key})
+  final notifs.Notification notification;
+  NotificationComponent({required this.notification, Key? key})
       : super(key: key);
 
   @override
@@ -199,7 +150,14 @@ class NotificationComponent extends StatelessWidget {
             height: 31,
             width: 31,
             child: ClipOval(
-              child: notifIcon,
+              child: Container(
+                  width: 31,
+                  height: 31,
+                  child: Center(
+                      child: Image.network(
+                    "${notification.imgUrl}",
+                    fit: BoxFit.cover,
+                  ))),
             ),
           ),
           SizedBox(
@@ -216,7 +174,7 @@ class NotificationComponent extends StatelessWidget {
                     children: [
                       Expanded(
                           child: Container(
-                        child: Text("$title",
+                        child: Text("${notification.title}",
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
                                 color: const Color(0xff000f1c),
@@ -239,7 +197,7 @@ class NotificationComponent extends StatelessWidget {
                                 width: 5,
                               ),
                               Text(
-                                "$date",
+                                "${f.format(notification.timestamp)}",
                                 style: TextStyle(
                                     color: const Color(0xff000f1c),
                                     fontWeight: FontWeight.w400,
@@ -257,7 +215,7 @@ class NotificationComponent extends StatelessWidget {
                 SizedBox(
                   height: 3,
                 ),
-                Text("$subtitle",
+                Text("${notification.body}",
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                         color: const Color(0xff000f1c),

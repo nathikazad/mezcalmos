@@ -26,11 +26,12 @@ class AuthHooks {
     Get.put<DeviceNotificationsController>(DeviceNotificationsController(),
         permanent: true);
     Get.put<CustomerAuthController>(CustomerAuthController(), permanent: true);
+    Get.put<FBNotificationsController>(FBNotificationsController(),
+        permanent: true);
     Get.put<OrderController>(OrderController(), permanent: true);
     Get.put<RestaurantCartController>(RestaurantCartController(),
         permanent: true);
     Get.put<MessageController>(MessageController(), permanent: true);
-    Get.put<FBNotificationsController>(FBNotificationsController(),
-        permanent: true);
+
   }
 }

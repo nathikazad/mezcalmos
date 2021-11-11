@@ -17,7 +17,7 @@ class MessagingScreen extends StatefulWidget {
 
 class _MessagingScreenState extends State<MessagingScreen> {
   String? orderId;
-  ParticipantType? recipientParticipantType;
+  ParticipantType? recipientType;
   MessageController controller =
       Get.put<MessageController>(MessageController());
   @override
@@ -25,7 +25,8 @@ class _MessagingScreenState extends State<MessagingScreen> {
     super.initState();
     print("inside messaginScreen onInitState !");
     this.orderId = Get.parameters['orderId'];
-    if (Get.arguments != null) this.recipientParticipantType = Get.arguments!;
+    this.recipientType =
+        Get.parameters['recipientType']?.toString().toParticipantType();
     // we make sure that the orderId is never null somehow.
     // because we depend on it , on the controller side!
     if (this.orderId == null) {
@@ -219,13 +220,13 @@ class _MessagingScreenState extends State<MessagingScreen> {
                             backgroundImage: controller
                                         .recipient(
                                             participantType:
-                                                recipientParticipantType)
+                                                recipientType)
                                         ?.image !=
                                     null
                                 ? NetworkImage(controller
                                     .recipient(
                                         participantType:
-                                            recipientParticipantType)!
+                                            recipientType)!
                                     .image)
                                 : AssetImage(aDefaultAvatar) as ImageProvider,
                           ),
@@ -240,7 +241,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
                               controller
                                       .recipient(
                                           participantType:
-                                              recipientParticipantType)
+                                              recipientType)
                                       ?.name ??
                                   "Customer",
                               style:

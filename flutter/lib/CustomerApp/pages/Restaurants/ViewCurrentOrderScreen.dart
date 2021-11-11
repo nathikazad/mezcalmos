@@ -35,10 +35,12 @@ class _ViewCurrentRestaurantOrderScreenState
   OrderController controller = Get.find<OrderController>();
   SideMenuDraweController _sideMenuDraweController =
       Get.find<SideMenuDraweController>();
-
+  // RxBool hasNewMessages = false.obs;
   @override
   void initState() {
+    super.initState();
     String orderId = Get.parameters['orderId']!;
+    controller.clearOrderNotifications(orderId);
     try {
       mezDbgPrint(" ==> Order id param ========> $orderId");
       mezDbgPrint(
@@ -57,7 +59,6 @@ class _ViewCurrentRestaurantOrderScreenState
     }).canceledBy(this);
 
     mezDbgPrint("=========> ${order.value}");
-    super.initState();
   }
 
   Widget NotesWidget() {
@@ -148,12 +149,10 @@ class _ViewCurrentRestaurantOrderScreenState
                               color: Color(0xff5c7fff),
                             ),
                             onPressed: () {
-                              //TODO: Navigate to messages screen
-                              Get.toNamed(
-                                  getMessagesRoute(order.value!.orderId),
-                                  arguments: ParticipantType.Restaurant);
-                            },
-                          ),
+                            //TODO: Navigate to messages screen
+                            Get.toNamed(getRestaurantMessagesRoute(
+                                order.value!.orderId));
+                          }),
                         ),
                       ),
                       Container(

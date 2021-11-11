@@ -31,9 +31,13 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
   Rxn<RestaurantOrder> order = Rxn();
   OrderController controller = Get.find<OrderController>();
   late String orderId;
-  _ViewRestaurantOrderScreen() {
+
+  @override
+  void initState() {
+    super.initState();
     mezDbgPrint("ViewOrderScreen");
     orderId = Get.parameters['orderId']!;
+    controller.clearOrderNotifications(orderId);
     try {
       order.value = controller.inProcessOrders
           .firstWhere((order) => order.orderId == orderId) as RestaurantOrder;
@@ -150,8 +154,8 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                               onPressed: () {
                                 //TODO: Navigate to messages screen
                                 Get.toNamed(
-                                    getMessagesRoute(order.value!.orderId),
-                                    arguments: ParticipantType.Customer);
+                                    getCustomerMessagesRoute(
+                                    order.value!.orderId));
                               },
                             ),
                           ),

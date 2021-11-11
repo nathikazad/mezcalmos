@@ -35,7 +35,7 @@ extension ParseOrderTypeToString on OrderType {
 }
 
 extension ParseStringToOrderType on String {
-  OrderType convertOrderTypeStringToEnum() {
+  OrderType toOrderType() {
     return OrderType.values
         .firstWhere((e) => e.toFirebaseFormatString().toLowerCase() == this);
   }
