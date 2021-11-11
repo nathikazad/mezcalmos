@@ -161,8 +161,6 @@ class NotificationComponent extends StatelessWidget {
                             ? Image.network(
                                 notification.imgUrl,
                                 fit: BoxFit.cover,
-                height: 50,
-                                width: 10,
                               )
                             : Image.asset(notification.imgUrl))),
               ),

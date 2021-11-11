@@ -75,9 +75,9 @@
                 "stage": {
 
                     "appName" : "MezcustomerStaging",
-                    "packageName": "com.meztaxi.stagingDriver",
-                    "googe-service-file": "services/staging.google-services.json",
-                    "apple-service-file": "services/staging.GoogleService-Info.plist"
+                    "packageName": "com.mezstaging.customer",
+                    "googe-service-file": "services/staging-android-customer-app.json",
+                    "apple-service-file": "services/staging-ios-customer-app.plist"
 
                 },
 

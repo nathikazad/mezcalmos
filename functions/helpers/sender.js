@@ -75,7 +75,7 @@ async function sendToDevice(notifKey, message, firebase) {
     let response = await firebase.messaging().sendToDevice(notifKey, payload)
     // console.log(response);
   } catch (e) {
-    console.log(`Send to devices error `, e);
+    console.log(`Send to devices error `);
   }
 }
 
