@@ -1,6 +1,7 @@
 const functions = require("firebase-functions");
 const firebase = require("firebase-admin");
 const admin = require("../admin");
+const notification = require("../notification");
 
 statusArrayInSeq =
   ["orderReceieved",
@@ -97,9 +98,16 @@ async function changeStatus(uid, data, newStatus) {
   notification.push(firebase, order.customer.id, update)
 
   if (newStatus == "delivered") {
-    // move from customer inProcess to Past
-    // move from restaurant inProcess to Past
-    // remove from root inProcess
+    // moving the order node from /customers/inProcessOrders => /customers/pastOrders/
+    await firebase.database().ref(`/customers/inProcessOrders/${order.customer.id}/${data.orderId}`).remove();
+    await firebase.database().ref(`/customers/pastOrders/${order.customer.id}/${data.orderId}`).set(order)
+
+    // moving the order node from /restaurants/inProcessOrders => /restaurants/pastOrders/
+    await firebase.database().ref(`/restaurants/inProcessOrders/${order.serviceProviderId}/${data.orderId}`).remove();
+    await firebase.database().ref(`/restaurants/pastOrders/${order.serviceProviderId}/${data.orderId}`).set(order)
+
+    // and finally remove from root /inProcessOrders   
+    await firebase.database().ref(`/inProcessOrders/restaurant/${data.orderId}`).remove();
   }
   return { status: "Success" }
 }
