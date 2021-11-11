@@ -27,6 +27,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
 
   RxList<Order> currentOrders = RxList.empty();
   RxList<Order> pastOrders = RxList.empty();
+
   OrderController controller = Get.find<OrderController>();
   AuthController auth = Get.find<AuthController>();
 
@@ -48,6 +49,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
   Widget build(BuildContext context) {
     mezDbgPrint("ListOrdersScreen: build");
     return Scaffold(
+        backgroundColor: Colors.white,
         // appBar: AppBar(
         //   title: Text("List Orders"),
         // ),
@@ -57,13 +59,14 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
         ),
         body: Obx(() {
           return SingleChildScrollView(
+              physics: ClampingScrollPhysics(),
               child: Column(
-            children: [
-              buildInProcessOrders(),
-              SizedBox(height: 20),
-              buildPastOrders()
-            ],
-          ));
+                children: [
+                  buildInProcessOrders(),
+                  SizedBox(height: 20),
+                  buildPastOrders()
+                ],
+              ));
         }));
   }
 

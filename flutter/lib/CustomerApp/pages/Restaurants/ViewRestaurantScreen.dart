@@ -177,6 +177,7 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
           color: Color(0xfffbfbfb),
         ),
         child: SingleChildScrollView(
+          physics: ClampingScrollPhysics(),
           controller: sc,
           child: Container(
             height: Get.height * 0.82.sp,

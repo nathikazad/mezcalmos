@@ -151,6 +151,7 @@ class _AutoCompleteTextViewState extends State<AutoCompleteTextView> {
 
                                       suggestionsStreamController.sink.add([]);
                                       // placeId along with name.
+                                      _focusNode.unfocus();
                                       widget.onTapCallback(
                                           placeId, widget.controller.text);
                                     },

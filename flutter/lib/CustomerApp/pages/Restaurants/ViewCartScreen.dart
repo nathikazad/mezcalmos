@@ -620,6 +620,8 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                                     " the returend value from the dailog $yesNoResult");
                                 if (yesNoResult == true) {
                                   controller.deleteItem("${element.id}");
+                                  Get.until((route) =>
+                                      route.settings.name == kHomeRoute);
                                   // controller.refresh();
                                 }
                               }

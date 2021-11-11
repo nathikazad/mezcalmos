@@ -11,7 +11,7 @@ class FBNotificationsController extends GetxController {
   DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
 
   RxList<Notification> notifications = RxList();
-  LanguageController lang = Get.find<LanguageController>();
+  LanguageController _lang = Get.find<LanguageController>();
 
   StreamSubscription? _notificationNodeAddListener;
   StreamSubscription? _notificationNodeRemoveListener;
@@ -33,6 +33,7 @@ class FBNotificationsController extends GetxController {
     mezDbgPrint(notificationNode);
     this._notificationNode = notificationNode;
     _notificationNodeAddListener?.cancel();
+    _notificationNodeAddListener = null;
     _notificationNodeAddListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(notificationNode)

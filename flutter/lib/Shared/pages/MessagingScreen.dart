@@ -57,7 +57,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
         // color: Colors.black,
         // margin: const EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 30),
         padding:
-            const EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 20),
+            const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
         // const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
         child: Wrap(
             // alignment: !isMe ? Alignment.topLeft : Alignment.topRight,
@@ -82,7 +82,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
                 ),
               ),
               Wrap(
-                spacing: 10,
+                spacing: 5,
                 direction: Axis.vertical,
                 // alignment: WrapAlignment.spaceEvenly,
                 runAlignment: !isMe ? WrapAlignment.start : WrapAlignment.end,
@@ -90,11 +90,12 @@ class _MessagingScreenState extends State<MessagingScreen> {
 
                 children: [
                   Container(
-                      constraints: BoxConstraints(maxWidth: 170),
+                      margin: EdgeInsets.only(top: 5),
+                      constraints: BoxConstraints(maxWidth: 170, minWidth: 80),
                       padding: !isMe
                           ? EdgeInsets.all(15)
                           : EdgeInsets.only(
-                              left: 25, top: 16, bottom: 16, right: 15),
+                              left: 25, top: 10, bottom: 10, right: 15),
                       // width: Get.width / 2,
                       decoration: BoxDecoration(
                           gradient: !isMe
@@ -119,9 +120,10 @@ class _MessagingScreenState extends State<MessagingScreen> {
                                   bottomLeft: Radius.circular(30))),
                       child: Text(
                         message,
+                        softWrap: true,
                         style: TextStyle(
                             fontFamily: 'psr',
-                            fontSize: 12,
+                            fontSize: 15,
                             color: !isMe
                                 ? Color.fromARGB(255, 0, 15, 28)
                                 : Colors.white),
@@ -149,10 +151,11 @@ class _MessagingScreenState extends State<MessagingScreen> {
   void scrollDown({Duration? mezChatScrollDuration}) {
     Timer(mezChatScrollDuration ?? Duration(milliseconds: 200), () {
       if (_listViewScrollController.hasClients)
-        _listViewScrollController.animateTo(
-            _listViewScrollController.position.maxScrollExtent,
-            duration: Duration(seconds: 1),
-            curve: Curves.fastOutSlowIn);
+        _listViewScrollController.jumpTo(
+          _listViewScrollController.position.maxScrollExtent,
+          // duration: Duration(seconds: 1),
+          // curve: Curves.fastOutSlowIn
+        );
     });
   }
 
@@ -263,6 +266,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
                 child: Obx(
                   () => ListView(
                     // reverse: true,
+
                     shrinkWrap: true,
                     padding: EdgeInsets.only(top: 20, bottom: 0),
                     controller: _listViewScrollController,

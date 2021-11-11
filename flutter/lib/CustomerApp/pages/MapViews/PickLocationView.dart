@@ -59,6 +59,7 @@ class _PickLocationViewState extends State<PickLocationView> {
   Widget build(BuildContext context) {
     responsiveSize(context);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back()),
       backgroundColor: Colors.white,
       body: Container(

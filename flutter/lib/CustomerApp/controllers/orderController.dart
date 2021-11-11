@@ -19,7 +19,6 @@ class OrderController extends GetxController {
   late Stream<List<Order>> pastOrdersStream;
   late Stream<List<Order>> currentOrdersStream;
 
-
   @override
   OrderController() {
     print("--------------------> RestaurantsOrderController Initialized !");
@@ -61,19 +60,26 @@ class OrderController extends GetxController {
     });
   }
 
-  Stream<Order> getCurrentOrderStream(String orderId) {
-    return currentOrdersStream.map<Order>((currentOrders) {
-      return currentOrders
-          .firstWhere((currentOrder) => currentOrder.orderId == orderId);
+  Stream<Order?> getCurrentOrderStream(String orderId) {
+    return currentOrdersStream.map<Order?>((currentOrders) {
+      try {
+        return currentOrders.firstWhere(
+          (currentOrder) => currentOrder.orderId == orderId,
+        );
+      } on StateError catch (_) {
+        // do nothing
+        return null;
+      }
     });
   }
 
   Future<ServerResponse> cancelOrder(String orderId) async {
-    HttpsCallable cancelOrder =
-        FirebaseFunctions.instance.httpsCallable('cancelOrderFromCustomer');
+    HttpsCallable cancelOrder = FirebaseFunctions.instance
+        .httpsCallable('cancelRestaurantOrderFromCustomer');
     try {
       HttpsCallableResult response =
           await cancelOrder.call({"orderId": orderId});
+      mezDbgPrint(response.toString());
       print(response.data);
       return ServerResponse.fromJson(response.data);
     } catch (e) {
