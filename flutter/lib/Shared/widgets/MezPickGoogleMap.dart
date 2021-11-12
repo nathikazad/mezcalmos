@@ -88,6 +88,7 @@ class MezPickGoogleMapState extends State<MezPickGoogleMap> {
                 markers: markers,
                 initialLocation: widget.location,
                 key: mGoogleMapKey,
+                minMaxZoomPrefs: MinMaxZoomPreference(16, 17),
                 periodicRedrendring: false,
                 myLocationButtonEnabled: true,
               ),

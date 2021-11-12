@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class ButtonComponent extends StatelessWidget {
   final Widget? widget;
@@ -25,11 +24,11 @@ class ButtonComponent extends StatelessWidget {
                       blurRadius: 10,
                       spreadRadius: 0)
                 ],
-                gradient: gradient!),
+                gradient: gradient == null
+                    ? LinearGradient(colors: [Colors.white])
+                    : gradient!),
             child: Center(child: widget)),
-        onTap: () {
-          function!();
-        },
+        onTap: function == null ? () => null : function,
       ),
     );
   }

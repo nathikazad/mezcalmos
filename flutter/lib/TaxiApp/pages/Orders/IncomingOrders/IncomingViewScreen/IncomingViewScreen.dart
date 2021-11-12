@@ -78,6 +78,7 @@ class IncommingOrderScreenView extends GetWidget<IncomingOrdersController>
                       initialLocation: initialCameraPosition.value,
                       polylines: polylines,
                       debugString: "IncomingViewScreen",
+                      myLocationButtonEnabled: false,
                     );
                   }
 

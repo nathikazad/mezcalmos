@@ -175,7 +175,8 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                                   Expanded(
                                     child: ButtonComponent(
                                       widget: Text(
-                                          "${lang.strings["customer"]["checkout"]["cancel"]}"
+                                          lang.strings["customer"]["restaurant"]
+                                                  ["checkout"]["cancel"]
                                               .toUpperCase(),
                                           style: const TextStyle(
                                               color: const Color(0xffffffff),

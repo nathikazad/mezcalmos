@@ -40,6 +40,7 @@ class SettingsController extends GetxController {
 
     Timer.periodic(Duration(seconds: 5), (timer) async {
       bool locationPermission = await _getLocationPermission();
+
       _hasLocationPermissionStreamController.add(locationPermission);
       // mezDbgPrint(
       //     "SettingsController::Checking LocationPermissions .. ${locationPermission}!");

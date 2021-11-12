@@ -61,8 +61,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                   Container(
                     padding: const EdgeInsets.only(left: 10),
                     alignment: Alignment.centerLeft,
-                    child: Text(
-                        "${lang.strings["customer"]["taxi"]["orders"]["title"]}",
+                    child: Text(lang.strings["customer"]["orders"]["title"],
                         style: const TextStyle(
                             color: const Color(0xff1d1d1d),
                             fontFamily: "psr",

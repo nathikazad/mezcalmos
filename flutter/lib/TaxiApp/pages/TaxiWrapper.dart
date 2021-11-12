@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
@@ -25,6 +26,7 @@ class TaxiWrapper extends StatefulWidget {
 class _TaxiWrapperState extends State<TaxiWrapper> {
   StreamSubscription<MezNotification.Notification>?
       _notificationsStreamListener;
+  StreamSubscription<bool>? _locationStreamSub;
 
   @override
   void initState() {
@@ -41,10 +43,23 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
     });
     String userId = Get.find<AuthController>().fireAuthUser!.uid;
     _notificationsStreamListener = initializeShowNotificationsListener();
+    listenForLocationPermissions();
     Get.find<FBNotificationsController>()
         .startListeningForNotificationsFromFirebase(
             notificationsNode(userId), taxiNotificationHandler);
     super.initState();
+  }
+
+  void listenForLocationPermissions() {
+    _locationStreamSub?.cancel();
+    _locationStreamSub = Get.find<SettingsController>().locationPermissionStream
+        // .distinct()
+        .listen((locationPermission) {
+      if (locationPermission == false &&
+          Get.currentRoute != kLocationPermissionPage) {
+        Get.toNamed(kLocationPermissionPage);
+      }
+    });
   }
 
   void handleState(TaxiState? state) {
@@ -81,6 +96,8 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
   void dispose() {
     _notificationsStreamListener?.cancel();
     _notificationsStreamListener = null;
+    _locationStreamSub?.cancel();
+    _locationStreamSub = null;
     super.dispose();
   }
 }

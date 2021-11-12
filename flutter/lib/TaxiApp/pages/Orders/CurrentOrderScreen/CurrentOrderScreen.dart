@@ -103,6 +103,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                                   markers: customMarkers,
                                   initialLocation: initialCameraPosition,
                                   polylines: polylines,
+                                  myLocationButtonEnabled: false,
                                   idWithSubscription: {
                                     "taxi": taxiAuthController
                                         .currentLocationRx.stream

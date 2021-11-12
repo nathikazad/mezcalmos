@@ -352,12 +352,7 @@ class _ViewCurrentRestaurantOrderScreenState
                     ? SizedBox()
                     : NotesWidget(),
                 //===============================>button cancel===========================
-                order.value!.restaurantOrderStatus !=
-                            RestaurantOrderStatus.Delivered &&
-                        order.value!.restaurantOrderStatus !=
-                            RestaurantOrderStatus.OnTheWay &&
-                        order.value!.restaurantOrderStatus !=
-                            RestaurantOrderStatus.ReadyForPickup
+                order.value!.inProcess()
                     ? InkWell(
                         child: Container(
                           margin: const EdgeInsets.symmetric(horizontal: 10),

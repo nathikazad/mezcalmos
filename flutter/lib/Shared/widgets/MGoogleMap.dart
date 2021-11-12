@@ -29,9 +29,9 @@ class MGoogleMap extends StatefulWidget with MezDisposable {
   MGoogleMap({
     Key? key,
     required this.notifyParent,
+    this.minMaxZoomPrefs = MinMaxZoomPreference.unbounded,
     this.periodicRedrendring = true,
     this.myLocationButtonEnabled = false,
-    this.minMaxZoomPrefs = const MinMaxZoomPreference(16, 17),
     required this.markers,
     required this.initialLocation,
     this.rerenderDuration = const Duration(seconds: 2),
@@ -269,41 +269,45 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
             },
           ),
         ),
-        Positioned(
-          right: 10,
-          bottom: 10,
-          child: InkWell(
-            onTap: () async {
-              LocationData? _tmpCurrentLoc = await _currentLocation();
-              if (_tmpCurrentLoc != null) {
-                _controller?.animateCamera(CameraUpdate.newCameraPosition(
-                  CameraPosition(
-                    target: LatLng(
-                        _tmpCurrentLoc.latitude!, _tmpCurrentLoc.longitude!),
+        widget.myLocationButtonEnabled
+            ? Positioned(
+                right: 10,
+                bottom: 10,
+                child: InkWell(
+                  onTap: () async {
+                    LocationData? _tmpCurrentLoc = await _currentLocation();
+                    if (_tmpCurrentLoc != null) {
+                      _controller?.animateCamera(CameraUpdate.newCameraPosition(
+                        CameraPosition(
+                          target: LatLng(_tmpCurrentLoc.latitude!,
+                              _tmpCurrentLoc.longitude!),
+                        ),
+                      ));
+                    }
+                  },
+                  child: Container(
+                    height: 50.sp,
+                    width: 50.sp,
+                    decoration: BoxDecoration(
+                      color: Color(0xffffffff),
+                      boxShadow: <BoxShadow>[
+                        BoxShadow(
+                            blurRadius: 8,
+                            color: Colors.black38,
+                            spreadRadius: 1)
+                      ],
+                      shape: BoxShape.circle,
+                    ),
+                    child: Center(
+                      child: Icon(
+                        Icons.gps_fixed_rounded,
+                        color: Color(0xffa8a8a8),
+                      ),
+                    ),
                   ),
-                ));
-              }
-            },
-            child: Container(
-              height: 50.sp,
-              width: 50.sp,
-              decoration: BoxDecoration(
-                color: Color(0xffffffff),
-                boxShadow: <BoxShadow>[
-                  BoxShadow(
-                      blurRadius: 8, color: Colors.black38, spreadRadius: 1)
-                ],
-                shape: BoxShape.circle,
-              ),
-              child: Center(
-                child: Icon(
-                  Icons.gps_fixed_rounded,
-                  color: Color(0xffa8a8a8),
                 ),
-              ),
-            ),
-          ),
-        ),
+              )
+            : SizedBox(),
       ],
     );
   }
