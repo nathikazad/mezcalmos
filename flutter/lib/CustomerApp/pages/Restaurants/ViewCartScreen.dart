@@ -66,11 +66,10 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
     responsiveSize(context);
     return Scaffold(
       backgroundColor: const Color(0xffffffff),
-      appBar: mezcalmosAppBar("back", () => Get.back(),
-          actionIcons: [
-            ActionIconsComponents.notificationIcon(),
-            ActionIconsComponents.orderIcon()
-          ]),
+      appBar: mezcalmosAppBar("back", () => Get.back(), actionIcons: [
+        ActionIconsComponents.notificationIcon(),
+        ActionIconsComponents.orderIcon()
+      ]),
       body: Obx(() => controller.cart.value.items.length > 0
           ? GetBuilder<RestaurantCartController>(
               // specify type as Controller

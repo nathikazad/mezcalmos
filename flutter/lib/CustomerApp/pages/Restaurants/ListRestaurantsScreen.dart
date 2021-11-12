@@ -32,11 +32,10 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
     responsiveSize(context);
     return Scaffold(
         backgroundColor: const Color(0xffffffff),
-        appBar: mezcalmosAppBar("back", () => Get.back(),
-            actionIcons: [
-              ActionIconsComponents.notificationIcon(),
-              ActionIconsComponents.orderIcon()
-            ]),
+        appBar: mezcalmosAppBar("back", () => Get.back(), actionIcons: [
+          ActionIconsComponents.notificationIcon(),
+          ActionIconsComponents.orderIcon()
+        ]),
         body: Column(children: [
           Container(
             padding: const EdgeInsets.symmetric(

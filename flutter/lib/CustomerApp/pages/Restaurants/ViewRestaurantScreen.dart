@@ -43,16 +43,14 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
     responsiveSize(context);
     return Scaffold(
         backgroundColor: const Color(0xffffffff),
-        appBar: mezcalmosAppBar("back", () => Get.back(),
-            actionIcons: [
-              Obx(() =>
-                  Get.find<RestaurantCartController>().cart.value.items.length >
-                          0
-                      ? ActionIconsComponents.cartIcon()
-                      : SizedBox()),
-              ActionIconsComponents.notificationIcon(),
-              ActionIconsComponents.orderIcon()
-            ]),
+        appBar: mezcalmosAppBar("back", () => Get.back(), actionIcons: [
+          Obx(() =>
+              Get.find<RestaurantCartController>().cart.value.items.length > 0
+                  ? ActionIconsComponents.cartIcon()
+                  : SizedBox()),
+          ActionIconsComponents.notificationIcon(),
+          ActionIconsComponents.orderIcon()
+        ]),
         body: (restaurant?.items == null)
             ? Container(
                 child: Center(

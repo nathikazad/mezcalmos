@@ -6,6 +6,7 @@ import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantCartController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+
 class AuthHooks {
   static Future<void> onSignOutHook() async {
     mezDbgPrint(
@@ -32,6 +33,5 @@ class AuthHooks {
     Get.put<RestaurantCartController>(RestaurantCartController(),
         permanent: true);
     Get.put<MessageController>(MessageController(), permanent: true);
-
   }
 }

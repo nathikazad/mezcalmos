@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ItemComponent extends StatelessWidget {
   final String? imgUrl;
