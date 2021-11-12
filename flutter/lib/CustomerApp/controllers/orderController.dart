@@ -16,55 +16,69 @@ class OrderController extends GetxController {
   AuthController _authController = Get.find<AuthController>();
   FBNotificationsController _fbNotificationsController =
       Get.find<FBNotificationsController>();
-  List<Order> currentOrders = [];
-  List<Order> pastOrders = [];
+  RxList<Order> currentOrders = <Order>[].obs;
+  RxList<Order> pastOrders = <Order>[].obs;
 
-  late Stream<List<Order>> pastOrdersStream;
-  late Stream<List<Order>> currentOrdersStream;
+  StreamSubscription? _currentOrdersListener;
+  StreamSubscription? _pastOrdersListener;
 
   @override
   OrderController() {
     print("--------------------> RestaurantsOrderController Initialized !");
-    pastOrdersStream = _databaseHelper.firebaseDatabase
+    _pastOrdersListener?.cancel();
+    _pastOrdersListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(customerPastOrders(_authController.fireAuthUser!.uid))
         .onValue
-        .map<List<Order>>((event) {
-      List<Order> orders = [];
+        .listen((event) async {
+      pastOrders.clear();
       if (event.snapshot.value != null) {
         event.snapshot.value.forEach((dynamic orderId, dynamic orderData) {
           if (orderData["orderType"] ==
               OrderType.Restaurant.toFirebaseFormatString()) {
-            orders.add(RestaurantOrder.fromData(orderId, orderData));
+            pastOrders.add(RestaurantOrder.fromData(orderId, orderData));
           }
         });
       }
-      pastOrders = orders;
-      return orders;
     });
 
-    currentOrdersStream = _databaseHelper.firebaseDatabase
+    _currentOrdersListener?.cancel();
+    _currentOrdersListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(customerInProcessOrders(_authController.fireAuthUser!.uid))
         .onValue
-        .map<List<Order>>((event) {
-      List<Order> orders = [];
+        .listen((event) async {
+      currentOrders.clear();
       if (event.snapshot.value != null) {
         mezDbgPrint("orderController: new incoming order data");
         event.snapshot.value.forEach((dynamic orderId, dynamic orderData) {
           if (orderData["orderType"] ==
               OrderType.Restaurant.toFirebaseFormatString()) {
-            orders.add(RestaurantOrder.fromData(orderId, orderData));
+            currentOrders.add(RestaurantOrder.fromData(orderId, orderData));
           }
         });
       }
-      currentOrders = orders;
-      return orders;
     });
   }
 
+  Order? getOrder(String orderId) {
+    try {
+      return currentOrders.firstWhere((order) {
+        return order.orderId == orderId;
+      }) as RestaurantOrder;
+    } on StateError {
+      try {
+        return pastOrders.firstWhere((order) {
+          return order.orderId == orderId;
+        }) as RestaurantOrder;
+      } on StateError {
+        return null;
+      }
+    }
+  }
+
   Stream<Order?> getCurrentOrderStream(String orderId) {
-    return currentOrdersStream.map<Order?>((currentOrders) {
+    return currentOrders.stream.map<Order?>((_) {
       try {
         return currentOrders.firstWhere(
           (currentOrder) => currentOrder.orderId == orderId,
@@ -110,5 +124,16 @@ class OrderController extends GetxController {
       return ServerResponse(ResponseStatus.Error,
           errorMessage: "Server Error", errorCode: "serverError");
     }
+  }
+
+  
+  @override
+  void onClose() async {
+    print("[+] Orderontroller::onClose ---------> Was invoked !");
+    _currentOrdersListener?.cancel();
+    _currentOrdersListener = null;
+    _pastOrdersListener?.cancel();
+    _pastOrdersListener = null;
+    super.onClose();
   }
 }

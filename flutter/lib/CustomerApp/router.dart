@@ -1,7 +1,7 @@
 import 'package:get/get.dart'; // getX
 import 'package:mezcalmos/CustomerApp/pages/MapViews/PickLocationView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Orders/ListOrdersScreen.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCurrentOrderScreen.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -17,8 +17,7 @@ const String kOrdersRoute = '/orders';
 const String kRestaurantsRoute = '/restaurants';
 const String kRestaurantRoute = '/restaurants/:restaurantId';
 const String kViewRestaurantItemRoute = '/items/:restaurantId/:itemId';
-const String kCurrentRestaurantOrderRoute = '/currentRestaurantOrders/:orderId';
-const String kPastRestaurantOrderRoute = '/pastRestaurantOrders/:orderId';
+const String kRestaurantOrderRoute = '/currentRestaurantOrders/:orderId';
 const String kCartRoute = '/cart';
 const String kCartItemRoute = '/cart/:cartItemId';
 const String kPickLocationRoute = '/pickLocationFromMap';
@@ -37,12 +36,8 @@ String editCartItemRoute(String cartItemId) {
   return kCartItemRoute.replaceFirst(":cartItemId", cartItemId);
 }
 
-String getCurrentRestaurantOrderRoute(String orderId) {
-  return kCurrentRestaurantOrderRoute.replaceFirst(":orderId", orderId);
-}
-
-String getPastRestaurantOrderRoute(String orderId) {
-  return kPastRestaurantOrderRoute.replaceFirst(":orderId", orderId);
+String getRestaurantOrderRoute(String orderId) {
+  return kRestaurantOrderRoute.replaceFirst(":orderId", orderId);
 }
 
 String getRestaurantMessagesRoute(
@@ -71,8 +66,8 @@ class XRouter {
             transitionDuration: Duration(seconds: 1),
             transition: Transition.rightToLeft),
         GetPage(
-            name: kCurrentRestaurantOrderRoute,
-            page: () => ViewCurrentRestaurantOrderScreen()),
+            name: kRestaurantOrderRoute,
+            page: () => ViewRestaurantOrderScreen()),
         GetPage(name: kPickLocationRoute, page: () => PickLocationView())
       ] +
       SharedRouter.sharedRoutes;

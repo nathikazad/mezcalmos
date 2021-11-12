@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -31,18 +33,29 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
   OrderController controller = Get.find<OrderController>();
   AuthController auth = Get.find<AuthController>();
 
+  StreamSubscription? currentOrdersListener;
+  StreamSubscription? pastOrdersListener;
   @override
   initState() {
     mezDbgPrint("ListOrdersScreen: onInit");
-    currentOrders.value = controller.currentOrders;
-    controller.currentOrdersStream.listen((orders) {
-      mezDbgPrint("ListOrdersScreen: new current order");
-      mezDbgPrint(orders.length);
-      currentOrders.value = orders;
+    currentOrdersListener = controller.currentOrders.stream.listen((_) {
+      currentOrders.value = controller.currentOrders;
     });
-    pastOrders.value = controller.pastOrders;
-    controller.pastOrdersStream.listen((orders) => pastOrders.value = orders);
+
+    pastOrdersListener = controller.pastOrders.stream.listen((_) {
+      pastOrders.value = controller.pastOrders;
+    });
+
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    currentOrdersListener?.cancel();
+    currentOrdersListener = null;
+    pastOrdersListener?.cancel();
+    pastOrdersListener = null;
+    super.dispose();
   }
 
   @override
@@ -100,7 +113,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
             type: order.orderType,
             url: order.serviceProvider!.image,
             onPress: () {
-              Get.toNamed(getCurrentRestaurantOrderRoute(order.orderId));
+              Get.toNamed(getRestaurantOrderRoute(order.orderId));
             },
           ));
           children = inProcessOrdersWidget;
@@ -129,7 +142,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
               type: order.orderType,
               url: order.serviceProvider!.image,
               onPress: () {
-                Get.toNamed(getPastRestaurantOrderRoute(order.orderId));
+                Get.toNamed(getRestaurantOrderRoute(order.orderId));
               },
             ),
           );
@@ -156,7 +169,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                 type: order.orderType,
                 url: order.serviceProvider!.image,
                 onPress: () {
-                  Get.toNamed(getPastRestaurantOrderRoute(order.orderId));
+                  Get.toNamed(getRestaurantOrderRoute(order.orderId));
                 },
               ),
             );

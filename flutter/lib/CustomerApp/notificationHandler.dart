@@ -32,7 +32,7 @@ Notification restaurantOrderStatusChangeNotificationHandler(
       getRestaurantOrderStatusFields(newOrdersStatus)!;
   return Notification(
       id: key,
-      linkUrl: getCurrentRestaurantOrderRoute(value['orderId']),
+      linkUrl: getRestaurantOrderRoute(value['orderId']),
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],

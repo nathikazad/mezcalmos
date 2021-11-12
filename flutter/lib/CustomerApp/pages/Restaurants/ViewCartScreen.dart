@@ -318,7 +318,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                                       if (response.success) {
                                         controller.clearCart();
                                         popEverythingAndNavigateTo(
-                                            getCurrentRestaurantOrderRoute(
+                                            getRestaurantOrderRoute(
                                                 response.data["orderId"]));
                                       } else {
                                         print(response);

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
@@ -9,7 +11,6 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
 import 'package:mezcalmos/Shared/widgets/CancelAlertDailog.dart';
@@ -20,40 +21,46 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 final currency = new NumberFormat("#,##0.00", "en_US");
 ////////////===========
 
-class ViewCurrentRestaurantOrderScreen extends StatefulWidget {
+class ViewRestaurantOrderScreen extends StatefulWidget {
   @override
-  _ViewCurrentRestaurantOrderScreenState createState() =>
-      _ViewCurrentRestaurantOrderScreenState();
+  _ViewRestaurantOrderScreenState createState() =>
+      _ViewRestaurantOrderScreenState();
 }
 
-class _ViewCurrentRestaurantOrderScreenState
-    extends State<ViewCurrentRestaurantOrderScreen> with MezDisposable {
+class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
   LanguageController lang = Get.find<LanguageController>();
   Rxn<RestaurantOrder> order = Rxn();
   OrderController controller = Get.find<OrderController>();
+  StreamSubscription? orderListener;
   @override
   void initState() {
     super.initState();
     String orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
-    try {
-      mezDbgPrint(" ==> Order id param ========> $orderId");
-      mezDbgPrint(
-          " Len of currentOrders ==> ${controller.currentOrders.length}");
 
-      order.value = controller.currentOrders.firstWhere((order) {
-        return order.orderId == orderId;
-      }) as RestaurantOrder;
-    } on StateError catch (_) {
-      // do nothing
-    }
-    controller.getCurrentOrderStream(orderId).listen((event) {
-      if (event != null) {
-        order.value = event as RestaurantOrder;
+    order.value = controller.getOrder(orderId) as RestaurantOrder;
+
+    if (order.value == null) {
+      Get.back();
+    } else {
+      if (order.value!.inProcess()) {
+        orderListener =
+            controller.getCurrentOrderStream(orderId).listen((event) {
+          if (event != null) {
+            order.value = event as RestaurantOrder;
+          }
+        });
       }
-    }).canceledBy(this);
 
-    mezDbgPrint("=========> ${order.value}");
+      mezDbgPrint("=========> ${order.value}");
+    }
+  }
+
+  @override
+  void dispose() {
+    orderListener?.cancel();
+    orderListener = null;
+    super.dispose();
   }
 
   Widget NotesWidget() {
@@ -107,11 +114,10 @@ class _ViewCurrentRestaurantOrderScreenState
     mezDbgPrint(order.value!.serviceProviderId);
     return Scaffold(
       backgroundColor: const Color(0xffffffff),
-      appBar: mezcalmosAppBar("back", () => Get.back(),
-          actionIcons: [
-            ActionIconsComponents.notificationIcon(),
-            ActionIconsComponents.orderIcon()
-          ]),
+      appBar: mezcalmosAppBar("back", () => Get.back(), actionIcons: [
+        ActionIconsComponents.notificationIcon(),
+        ActionIconsComponents.orderIcon()
+      ]),
       body: GetBuilder<OrderController>(builder: (mycontoller) {
         return Container(
           height: Get.height,

@@ -41,13 +41,13 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   LanguageController _lang = Get.find<LanguageController>();
   RxInt numberOfCurrentOrders = RxInt(0);
   DateTime? appClosedTime;
-
+  StreamSubscription? _orderCountListener;
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance!.addObserver(this);
-    _orderController.currentOrdersStream.listen((currentOrders) {
-      numberOfCurrentOrders.value = currentOrders.length;
+    _orderCountListener = _orderController.currentOrders.stream.listen((_) {
+      numberOfCurrentOrders.value = _orderController.currentOrders.length;
     });
     String userId = Get.find<AuthController>().fireAuthUser!.uid;
     _notificationsStreamListener = initializeShowNotificationsListener();
@@ -57,6 +57,17 @@ class _CustomerWrapperState extends State<CustomerWrapper>
         .startListeningForNotificationsFromFirebase(
             notificationsNode(userId), customerNotificationHandler);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _orderCountListener?.cancel();
+    _orderCountListener = null;
+    _notificationsStreamListener?.cancel();
+    _notificationsStreamListener = null;
+    _locationStreamSub?.cancel();
+    _locationStreamSub = null;
+    super.dispose();
   }
 
   void listenForLocationPermissions() {
@@ -90,7 +101,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     if (currentOrders.length == 1) {
       if (currentOrders[0].orderType == OrderType.Restaurant)
         popEverythingAndNavigateTo(
-            getCurrentRestaurantOrderRoute(currentOrders[0].orderId));
+            getRestaurantOrderRoute(currentOrders[0].orderId));
       else
         mezDbgPrint("Navigate to other order type");
     } else if (currentOrders.length > 1) {
@@ -104,10 +115,8 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     print("CustomWrapper Build callabck");
     // Navigate to current orders if any after build
     Future.microtask(() {
-      _orderController.currentOrdersStream.first.then((currentOrders) {
-        print("CustomWrapper Build callabck first");
-        navigateToOrdersIfNecessary(currentOrders);
-      });
+      print("CustomWrapper Build callabck first");
+      navigateToOrdersIfNecessary(_orderController.currentOrders);
     });
     return WillPopScope(
       onWillPop: () async => false,
@@ -224,14 +233,5 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             ],
           )),
     );
-  }
-
-  @override
-  void dispose() {
-    _notificationsStreamListener?.cancel();
-    _notificationsStreamListener = null;
-    _locationStreamSub?.cancel();
-    _locationStreamSub = null;
-    super.dispose();
   }
 }
