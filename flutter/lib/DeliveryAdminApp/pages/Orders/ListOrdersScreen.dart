@@ -251,10 +251,24 @@ class DeliveryAdminOrderComponent extends StatelessWidget {
             color: const Color(0x26db3434));
         break;
       case RestaurantOrderStatus.OrderReceieved:
-      case RestaurantOrderStatus.ReadyForPickup:
-      case RestaurantOrderStatus.OnTheWay:
+        myDecoration = BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(5)),
+            border: Border.all(color: const Color(0xffececec), width: 0.5),
+            color: const Color(0x26db3434));
+        break;
       case RestaurantOrderStatus.Delivered:
-      case RestaurantOrderStatus.OrderReceieved:
+        myDecoration = BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(5)),
+            border: Border.all(color: const Color(0xffececec), width: 0.5),
+            color: const Color(0x3328af37));
+        break;
+      case RestaurantOrderStatus.ReadyForPickup:
+        myDecoration = BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(5)),
+            border: Border.all(color: const Color(0xffececec), width: 0.5),
+            color: const Color(0x65d3962b));
+        break;
+      case RestaurantOrderStatus.OnTheWay:
         myDecoration = BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(5)),
             border: Border.all(color: const Color(0xffececec), width: 0.5),
@@ -279,16 +293,27 @@ Widget _getOrderIcon(RestaurantOrderStatus status) {
       break;
     case RestaurantOrderStatus.CancelledByCustomer:
       myWidget = Container(
-        child: Image.asset(waiting),
+        child: Image.asset(circularCancel),
+      );
+      break;
+    case RestaurantOrderStatus.ReadyForPickup:
+      myWidget = Container(
+        child: Image.asset(box),
+      );
+      break;
+    case RestaurantOrderStatus.OnTheWay:
+      myWidget = Container(
+        child: Image.asset(truck),
+      );
+      break;
+    case RestaurantOrderStatus.Delivered:
+      myWidget = Container(
+        child: Image.asset(tick),
       );
       break;
     case RestaurantOrderStatus.OrderReceieved:
-    case RestaurantOrderStatus.ReadyForPickup:
-    case RestaurantOrderStatus.OnTheWay:
-    case RestaurantOrderStatus.Delivered:
-    case RestaurantOrderStatus.OrderReceieved:
       myWidget = Container(
-        child: Image.asset(truck),
+        child: Image.asset(waiting),
       );
 
       break;

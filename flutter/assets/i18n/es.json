@@ -18,37 +18,58 @@
             },
             "cart": {
                 "cart": "Carro",
-                "inCart":"En El Carrito",
-                "clear":"Limpiar",
-                "clearCart":"Limpiar carrito",
-                "clearCartConfirm" : "¿Está seguro de que desea limpiar el carrito?",
-                "deleteItem" : "Eliminar este artículo.",
-                "deleteItemConfirm" : "¿Quieres eliminar este artículo?",
-                "totalCost":"Coste Total",
-                "deliveryCost":"Coste de envío",
-                "total":"Total",
-                "deliveryLocation":"Lugar De Entrega",
-                "pickLocation":"Elegir Ubicación",
-                "orderNow":"ORDENAR AHORA",
-                "options":"Opciones"
-
+                "inCart": "En El Carrito",
+                "clear": "Limpiar",
+                "clearCart": "Limpiar carrito",
+                "clearCartConfirm": "¿Está seguro de que desea limpiar el carrito?",
+                "deleteItem": "Eliminar este artículo.",
+                "deleteItemConfirm": "¿Quieres eliminar este artículo?",
+                "totalCost": "Coste Total",
+                "deliveryCost": "Coste de envío",
+                "total": "Total",
+                "deliveryLocation": "Lugar De Entrega",
+                "pickLocation": "Elegir Ubicación",
+                "orderNow": "ORDENAR AHORA",
+                "options": "Opciones"
             },
-            "checkout":{
-            
-                "orderItems":"Encargar Artículos",
-                "cancel":"Cancelar",
+            "checkout": {
+                "orderItems": "Encargar Artículos",
+                "cancel": "Cancelar",
                 "cancelOrder": "Cancelar el pedido",
                 "cancelOrderConfirm": "¿Estás segura de que deseas cancelar este pedido?"
             },
-
-            "orderStatus":{
-
-                "preparing" :"Preparando el pedido",
-                "readyForPickUp" : "Lista para recoger",
+            "orderStatus": {
+                "preparing": "Preparando el pedido",
+                "readyForPickUp": "Lista para recoger",
                 "onTheWay": "En camino",
                 "delivered": "Entregado",
-                "canceled" : "Cancelada",
-                "recievied" : "Recibida"
+                "canceled": "Cancelada",
+                "recievied": "Recibida"
+            },
+            "deliveryAdminApp": {
+                "ordersButton": {
+                    "preparing": "PREPARAR",
+                    "readyForPickUp": "ALIMENTOS LISTOS",
+                    "deliver": "INICIAR ENTREGA",
+                    "canceled": "CANCELAR",
+                    "received": "ABANDONÓ"
+                },
+                "prepareAlert": {
+                    "title": "Preparar Orden",
+                    "subTitle": "Estás seguro de que quieres preparar el pedido?"
+                },
+                "readyAlert": {
+                    "title": "LISTO",
+                    "subTitle": "Está seguro de que desea marcar el pedido como listo?"
+                },
+                "onTheWayAlert": {
+                    "title": "En Camino",
+                    "subTitle": "Está seguro de que desea iniciar la entrega del pedido?"
+                },
+                "deliveredAlert": {
+                    "title": "Entregar",
+                    "subTitle": "Estás seguro de que quieres entregar el pedido?"
+                }
             }
         },
         "inviteCode": {
@@ -161,7 +182,6 @@
             "alreadyMember": "Ya eres un usuario?",
             "yes": "SI"
         }
-       
     },
     "shared": {
         "permissions": {
@@ -169,9 +189,8 @@
             "askForNotif": "La aplicación usa tu ubicación para conectarte con los mejores viajes y compartir tu ubicación con los clientes, incluso cuando la aplicación está en segundo plano",
             "permissionBtn": "ACTIVAR AHORA",
             "locationPermissionDenied": "Oops, lamentablemente, sin permisos de ubicación, ¡no puede usar nuestra aplicación!",
-            "locationPermissionDeniedForever" : "¡Los permisos de ubicación se niegan para siempre! Por favor cámbielo."
+            "locationPermissionDeniedForever": "¡Los permisos de ubicación se niegan para siempre! Por favor cámbielo."
         },
-        
         "login": {
             "title": "Conéctese usando Facebook o usando SMS! ",
             "owner": " Inicie sesión con   Facebook para   hacer un pedido ",
@@ -212,8 +231,8 @@
             "item": "Artículo|Artículos",
             "clear": "Borrar",
             "alertClearNotification": {
-                "title":"Eliminar todas las notificaciones",
-                "subTitle":"Estás seguro de que quieres eliminar las notificaciones?"
+                "title": "Eliminar todas las notificaciones",
+                "subTitle": "Estás seguro de que quieres eliminar las notificaciones?"
             },
             "notificationType": {
                 "preparingOrder": {
@@ -236,7 +255,6 @@
                     "title": "Orden Cancelada",
                     "body": "Tu pedido ha sido cancelado"
                 }
-
             }
         },
         "userInfo": {
@@ -286,10 +304,10 @@
             "address": "Dirección",
             "searching": "ELEGIR",
             "pick": "ELIGE",
-            "location" : "localización"
+            "location": "localización"
         },
         "placeHolders": {
-            "home" : "Hogar",
+            "home": "Hogar",
             "address": "Ingresa Dirección",
             "name": "Ingresa Nombre",
             "search": "Busca",

@@ -109,7 +109,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
             title: order.serviceProvider!.name,
             subTitle: order.to.address.substring(0, 15),
             date:
-                "${DateFormat.jm().format(DateFormat("hh:mm").parse("${order.orderTime.hour}:${order.orderTime.minute}"))}",
+                "${DateFormat.jm().format(DateFormat("hh:mm").parse("${order.orderTime.toLocal().hour}:${order.orderTime.toLocal().minute}"))}",
             price: "${currency.format(order.cost)}",
             type: order.orderType,
             url: order.serviceProvider!.image,

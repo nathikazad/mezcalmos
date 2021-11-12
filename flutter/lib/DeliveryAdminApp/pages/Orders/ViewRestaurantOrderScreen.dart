@@ -7,6 +7,7 @@ import 'package:mezcalmos/CustomerApp/components/basicCellComponent.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/buildWidgetOnOrderStatus.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/buttonComponent.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/dailogComponent.dart';
+import 'package:mezcalmos/DeliveryAdminApp/constants/global.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -68,6 +69,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
           ActionIconsComponents.notificationIcon(),
           ActionIconsComponents.orderIcon(),
         ]),
+        backgroundColor: Colors.white,
         body: Obx(() {
           mezDbgPrint(order.value.toString());
           if (order.value == null) {
@@ -423,12 +425,11 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
             widget: Text(
                 lang.strings["customer"]["restaurant"]["checkout"]["cancel"]
                     .toUpperCase(),
-                style: const TextStyle(
+                style: TextStyle(
                     color: const Color(0xffffffff),
-                    fontWeight: FontWeight.w700,
-                    fontFamily: "ProductSans",
+                    fontFamily: "psb",
                     fontStyle: FontStyle.normal,
-                    fontSize: 16.0),
+                    fontSize: 16.0.sp),
                 textAlign: TextAlign.center),
             gradient: const LinearGradient(
                 begin: Alignment(-0.10374055057764053, 0),
@@ -447,13 +448,14 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
     switch (order.value!.restaurantOrderStatus) {
       case RestaurantOrderStatus.OrderReceieved:
         return ButtonComponent(
-          widget: Text("PREPARE",
-              style: const TextStyle(
+          widget: Text(
+              lang.strings["customer"]["restaurant"]["deliveryAdminApp"]
+                  ["ordersButton"]["preparing"],
+              style: TextStyle(
                   color: const Color(0xffffffff),
-                  fontWeight: FontWeight.w700,
-                  fontFamily: "ProductSans",
+                  fontFamily: "psb",
                   fontStyle: FontStyle.normal,
-                  fontSize: 16.0),
+                  fontSize: 16.0.sp),
               textAlign: TextAlign.center),
           gradient: LinearGradient(
               begin: Alignment(-0.10374055057764053, 0),
@@ -461,12 +463,15 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
               colors: [const Color(0xffff9300), const Color(0xdbd15f18)]),
           function: () async {
             var res = await dailogComponent(
-                "Prepare Order", "Are you sure you want to prepare order?", () {
+                lang.strings["customer"]["restaurant"]["deliveryAdminApp"]
+                    ["prepareAlert"]["title"],
+                lang.strings["customer"]["restaurant"]["deliveryAdminApp"]
+                    ["prepareAlert"]["subTitle"], () {
               Get.back(result: true);
             }, () {
               Get.back(result: false);
             },
-                Container(),
+                Container(height: 40, width: 40, child: Image.asset(stoveIcon)),
                 LinearGradient(
                     begin: Alignment(-0.10374055057764053, 0),
                     end: Alignment(1.1447703838348389, 1.1694844961166382),
@@ -482,13 +487,13 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
 
       case RestaurantOrderStatus.PreparingOrder:
         return ButtonComponent(
-          widget: Text("READY ",
-              style: const TextStyle(
+          widget: Text(
+              lang.strings["customer"]["restaurant"]["deliveryAdminApp"]
+                  ["ordersButton"]["readyForPickUp"],
+              style: TextStyle(
                   color: const Color(0xffffffff),
-                  fontWeight: FontWeight.w700,
-                  fontFamily: "ProductSans",
-                  fontStyle: FontStyle.normal,
-                  fontSize: 16.0),
+                  fontFamily: "psb",
+                  fontSize: 16.0.sp),
               textAlign: TextAlign.center),
           gradient: LinearGradient(
               begin: Alignment(-0.10374055057764053, 0),
@@ -500,13 +505,15 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
               ]),
           function: () async {
             var res = await dailogComponent(
-                "READY", "Are you sure you want to mark the order as ready?",
-                () {
+                lang.strings["customer"]["restaurant"]["deliveryAdminApp"]
+                    ["readyAlert"]["title"],
+                lang.strings["customer"]["restaurant"]["deliveryAdminApp"]
+                    ["readyAlert"]["subTitle"], () {
               Get.back(result: true);
             }, () {
               Get.back(result: false);
             },
-                Container(),
+                Container(height: 40, width: 40, child: Image.asset(box)),
                 LinearGradient(
                     begin: Alignment(-0.10374055057764053, 0),
                     end: Alignment(1.1447703838348389, 1.1694844961166382),
@@ -523,26 +530,29 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
 
       case RestaurantOrderStatus.ReadyForPickup:
         return ButtonComponent(
-          widget: Text("DELIVERY",
-              style: const TextStyle(
+          widget: Text(
+              lang.strings["customer"]["restaurant"]["deliveryAdminApp"]
+                  ["ordersButton"]["deliver"],
+              style: TextStyle(
                   color: const Color(0xffffffff),
-                  fontWeight: FontWeight.w700,
-                  fontFamily: "ProductSans",
-                  fontStyle: FontStyle.normal,
-                  fontSize: 16.0),
+                  fontFamily: "psb",
+                  fontSize: 16.0.sp),
               textAlign: TextAlign.center),
           gradient: LinearGradient(
               begin: Alignment(-0.10374055057764053, 0),
               end: Alignment(1.1447703838348389, 1.1694844961166382),
               colors: [const Color(0xff5572ea), const Color(0xdb1f18d1)]),
           function: () async {
-            var res = await dailogComponent("On the Way",
-                "Are you sure you want to start the order delivery?", () {
+            var res = await dailogComponent(
+                lang.strings["customer"]["restaurant"]["deliveryAdminApp"]
+                    ["onTheWayAlert"]["title"],
+                lang.strings["customer"]["restaurant"]["deliveryAdminApp"]
+                    ["onTheWayAlert"]["subTitle"], () {
               Get.back(result: true);
             }, () {
               Get.back(result: false);
             },
-                Container(),
+                Container(height: 40, width: 40, child: Image.asset(truck)),
                 LinearGradient(
                     begin: Alignment(-0.10374055057764053, 0),
                     end: Alignment(1.1447703838348389, 1.1694844961166382),
@@ -557,13 +567,13 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
         );
       case RestaurantOrderStatus.OnTheWay:
         return ButtonComponent(
-          widget: Text("DROPPED",
-              style: const TextStyle(
+          widget: Text(
+              lang.strings["customer"]["restaurant"]["deliveryAdminApp"]
+                  ["ordersButton"]["received"],
+              style: TextStyle(
                   color: const Color(0xffffffff),
-                  fontWeight: FontWeight.w700,
-                  fontFamily: "ProductSans",
-                  fontStyle: FontStyle.normal,
-                  fontSize: 16.0),
+                  fontFamily: "psb",
+                  fontSize: 16.0.sp),
               textAlign: TextAlign.center),
           gradient: LinearGradient(
               begin: Alignment(-0.10374055057764053, 0),
@@ -571,12 +581,15 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
               colors: [const Color(0xff13cb29), const Color(0xdb219125)]),
           function: () async {
             var res = await dailogComponent(
-                "Deliver", "Are you sure you want to deliver the order?", () {
+                lang.strings["customer"]["restaurant"]["deliveryAdminApp"]
+                    ["deliveredAlert"]["title"],
+                lang.strings["customer"]["restaurant"]["deliveryAdminApp"]
+                    ["deliveredAlert"]["subTitle"], () {
               Get.back(result: true);
             }, () {
               Get.back(result: false);
             },
-                Container(),
+                Container(height: 40, width: 40, child: Image.asset(tick)),
                 LinearGradient(
                     begin: Alignment(-0.10374055057764053, 0),
                     end: Alignment(1.1447703838348389, 1.1694844961166382),

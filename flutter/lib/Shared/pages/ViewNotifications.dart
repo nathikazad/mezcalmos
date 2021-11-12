@@ -54,8 +54,8 @@ class _ViewNotificationsState extends State<ViewNotifications> {
           Row(
             children: [
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                padding: const EdgeInsets.only(
+                    top: 8, bottom: 8, right: 10, left: 10),
                 //width: Get.width,
                 child: Text(lang.strings['shared']['notification']['title'],
                     style: TextStyle(
@@ -87,6 +87,9 @@ class _ViewNotificationsState extends State<ViewNotifications> {
                           }
                         },
                       ),
+              ),
+              SizedBox(
+                width: 10,
               ),
             ],
           ),
@@ -123,7 +126,7 @@ class _ViewNotificationsState extends State<ViewNotifications> {
         } else {
           dd = notification.timestamp;
           myWidgets.add(DateTitleComponent(
-            date: "${ff.format(dd)}",
+            date: "${ff.format(dd.toLocal())}",
             dateIcon: FaIcon(
               FontAwesomeIcons.calendarAlt,
               size: 12,
@@ -228,7 +231,7 @@ class NotificationComponent extends StatelessWidget {
                                   width: 5,
                                 ),
                                 Text(
-                                  "${f.format(notification.timestamp)}",
+                                  "${f.format(notification.timestamp.toLocal())}",
                                   style: TextStyle(
                                       color: const Color(0xff000f1c),
                                       fontWeight: FontWeight.w400,

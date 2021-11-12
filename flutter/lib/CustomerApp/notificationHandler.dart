@@ -52,8 +52,7 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
             "${lang.strings["shared"]["notification"]["notificationType"]["preparingOrder"]["title"]}",
         "body":
             "${lang.strings["shared"]["notification"]["notificationType"]["preparingOrder"]["body"]}",
-        "imgUrl": "assets/images/stoveIcon.png",
-        "bgColor": ""
+        "imgUrl": "assets/images/PrepareOrderNotificationIcon.png",
       };
     case RestaurantOrderStatus.ReadyForPickup:
       return <String, dynamic>{
@@ -61,8 +60,7 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
             "${lang.strings["shared"]["notification"]["notificationType"]["readyForPickup"]["title"]}",
         "body":
             "${lang.strings["shared"]["notification"]["notificationType"]["readyForPickup"]["body"]}",
-        "imgUrl": "assets/images/waiting.png",
-        "bgColor": ""
+        "imgUrl": "assets/images/ReadyOrderNotificationIcon.png",
       };
     case RestaurantOrderStatus.OnTheWay:
       return <String, dynamic>{
@@ -70,8 +68,7 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
             "${lang.strings["shared"]["notification"]["notificationType"]["onTheWay"]["title"]}",
         "body":
             "${lang.strings["shared"]["notification"]["notificationType"]["onTheWay"]["body"]}",
-        "imgUrl": "assets/images/truck.png",
-        "bgColor": ""
+        "imgUrl": "assets/images/OnTheWayOrderNotificationIcon.png",
       };
     case RestaurantOrderStatus.Delivered:
       return <String, dynamic>{
@@ -79,8 +76,7 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
             "${lang.strings["shared"]["notification"]["notificationType"]["delivered"]["title"]}",
         "body":
             "${lang.strings["shared"]["notification"]["notificationType"]["delivered"]["body"]}",
-        "imgUrl": "assets/images/tick.png",
-        "bgColor": ""
+        "imgUrl": "assets/images/DroppedOrderNotificationIcon.png",
       };
     case RestaurantOrderStatus.CancelledByAdmin:
       return <String, dynamic>{
@@ -88,8 +84,7 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
             "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["title"]}",
         "body":
             "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["title"]}",
-        "imgUrl": "assets/images/circularCancel.png",
-        "bgColor": ""
+        "imgUrl": "assets/images/CancelledOrderNotificationIcon.png",
       };
     default:
     // do nothing

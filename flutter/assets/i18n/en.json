@@ -45,6 +45,31 @@
                 "delivered": "Delivered",
                 "canceled": "Canceled",
                 "recievied": "Receieved"
+            },
+            "deliveryAdminApp": {
+                "ordersButton": {
+                    "preparing": "PREPARE",
+                    "readyForPickUp": "FOOD READY",
+                    "deliver": "START DELIVERY",
+                    "canceled": "CANCEL",
+                    "received": "DROPPED"
+                },
+                "prepareAlert":{
+                    "title": "Prepare Order",
+                    "subTitle": "Are you sure you want to prepare order?"
+                },
+                "readyAlert": {
+                    "title": "READY",
+                    "subTitle": "Are you sure you want to mark the order as ready?"
+                },
+                "onTheWayAlert": {
+                    "title": "On the Way",
+                    "subTitle": "Are you sure you want to start the order delivery?"
+                },
+                "deliveredAlert": {
+                    "title": "Deliver",
+                    "subTitle": "Are you sure you want to deliver the order?"
+                }
             }
         },
         "inviteCode": {

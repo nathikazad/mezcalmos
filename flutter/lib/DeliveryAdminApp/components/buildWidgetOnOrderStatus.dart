@@ -33,9 +33,7 @@ Widget buildWigetOnOrderStatus(
                 "${lang.strings["customer"]["restaurant"]["orderStatus"]["preparing"]}",
                 style: const TextStyle(
                     color: const Color(0xff7e7a7a),
-                    fontWeight: FontWeight.w400,
-                    fontFamily: "ProductSans",
-                    fontStyle: FontStyle.normal,
+                    fontFamily: "psr",
                     fontSize: 18.0),
                 textAlign: TextAlign.center),
           )
@@ -50,19 +48,11 @@ Widget buildWigetOnOrderStatus(
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-              width: 61,
-              height: 35,
-              child: Icon(
-                Icons.check,
-                color: Colors.green,
-              )),
-          Container(
             child: Text(
                 "${lang.strings["customer"]["restaurant"]["orderStatus"]["readyForPickUp"]}",
                 style: const TextStyle(
                     color: const Color(0xff7e7a7a),
-                    fontWeight: FontWeight.w400,
-                    fontFamily: "ProductSans",
+                    fontFamily: "psr",
                     fontStyle: FontStyle.normal,
                     fontSize: 18.0),
                 textAlign: TextAlign.center),
@@ -175,8 +165,7 @@ Widget buildWigetOnOrderStatus(
                 "${lang.strings["customer"]["restaurant"]["orderStatus"]["canceled"]} ",
                 style: const TextStyle(
                     color: const Color(0xff7e7a7a),
-                    fontWeight: FontWeight.w400,
-                    fontFamily: "ProductSans",
+                    fontFamily: "psr",
                     fontStyle: FontStyle.normal,
                     fontSize: 18.0),
                 textAlign: TextAlign.center),
