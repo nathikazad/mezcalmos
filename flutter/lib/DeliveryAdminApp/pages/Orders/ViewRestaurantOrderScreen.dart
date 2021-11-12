@@ -222,7 +222,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     alignment: Alignment.centerLeft,
                     child: Text(
-                        "${lang.strings["customer"]["checkout"]["orderItems"]}",
+                        "${lang.strings["customer"]["restaurant"]["checkout"]["orderItems"]}",
                         style: const TextStyle(
                             color: const Color(0xff000f1c),
                             fontWeight: FontWeight.w700,
