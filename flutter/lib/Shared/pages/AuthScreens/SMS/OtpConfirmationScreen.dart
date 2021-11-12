@@ -7,8 +7,8 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
-import 'package:mezcalmos/TaxiApp/router.dart';
+import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -45,7 +45,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
 
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () {
+        appBar: mezcalmosAppBar("back", () {
           Get.back();
         }),
         body: Container(

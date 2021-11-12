@@ -14,13 +14,14 @@ import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
-import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
+import 'package:mezcalmos/TaxiApp/components/taxiDialogs.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/CurrentOrderScreen/CPositionedBottomBar.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/CurrentOrderScreen/CPositionedFromToBar.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 
 class CurrentOrderScreen extends GetView<CurrentOrderController> {
   final LanguageController lang = Get.find<LanguageController>();
@@ -60,7 +61,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
           key: Get.find<SideMenuDraweController>().getNewKey(),
           drawer: MezSideMenu(),
           backgroundColor: Colors.white,
-          appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
+          appBar: mezcalmosAppBar(
               "menu", Get.find<SideMenuDraweController>().openMenu),
           body: SafeArea(
             child: StreamBuilder<TaxiOrder>(
@@ -164,7 +165,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
 
       Future.microtask(() {
         mezDbgPrint("CurrentOrderScreen showing dialog");
-        MezcalmosSharedWidgets.mezcalmosDialogOrderCancelled(
+        mezcalmosDialogOrderCancelled(
                 55, Get.height, Get.width)
             .then((value) {
           mezDbgPrint(

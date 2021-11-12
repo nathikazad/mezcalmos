@@ -6,14 +6,13 @@ import 'package:mezcalmos/DeliveryAdminApp/components/buildWidgetOnOrderStatus.d
 import 'package:mezcalmos/DeliveryAdminApp/components/buttonComponent.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/dailogComponent.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/orderController.dart';
-import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
-import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -48,9 +47,23 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
       // do nothing
     }
     controller.getCurrentOrder(orderId).listen((newOrder) {
-      mezDbgPrint("event");
+      // mezDbgPrint("event");
+      // if (newOrder == null) {
+      //   MezcalmosSharedWidgets.mezcalmosDialogWithImage(
+      //           55,
+      //           Get.height,
+      //           Get.width,
+      //           "Customer has cancelled the order",
+      //           "assets/images/cancel.png")
+      //       .then((value) {
+      //     mezDbgPrint("CurrentOrderScreen recieved cancel, navigating to back");
+      //     Get.back();
+      //     ;
+      //   });
+      // } else {
       order.value = newOrder as RestaurantOrder;
       mezDbgPrint(order.value);
+      // }
     });
   }
 
@@ -59,11 +72,10 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
     responsiveSize(context);
     mezDbgPrint("ViewOrderScreen build");
     return Scaffold(
-        appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back(),
-            actionIcons: [
-              ActionIconsComponents.notificationIcon(),
-              ActionIconsComponents.orderIcon(),
-            ]),
+        appBar: mezcalmosAppBar("back", () => Get.back(), actionIcons: [
+          ActionIconsComponents.notificationIcon(),
+          ActionIconsComponents.orderIcon(),
+        ]),
         body: Obx(() {
           if (order.value == null) {
             // Order Loading ..

@@ -9,7 +9,7 @@ import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
 import 'package:mezcalmos/Shared/widgets/MezPickGoogleMap.dart';
 import 'package:location/location.dart' as GeoLoc;
-import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PickLocationView extends StatefulWidget {
@@ -60,7 +60,7 @@ class _PickLocationViewState extends State<PickLocationView> {
     responsiveSize(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back()),
+      appBar: mezcalmosAppBar("back", () => Get.back()),
       backgroundColor: Colors.white,
       body: Container(
         padding: EdgeInsets.only(left: 20, right: 20),

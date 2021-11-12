@@ -17,15 +17,14 @@ module.exports.cancelOrderFromAdmin = functions.https.onCall(async (data, contex
   if (!context.auth) {
     return notSignedInMessage
   }
-  return changeStatus(context.auth.uid, data, "cancelledByAdmin", true);
+  return changeStatus(context.auth.uid, data, "cancelledByAdmin");
 });
 
 
 
-async function changeStatus(uid, data, newStatus , requireAdmin = false) {
+async function changeStatus(uid, data, newStatus) {
 
-  // checking if the call is from an admin (in case requireAdmin is sat to true)
-  if (requireAdmin) {
+  if (newStatus == "cancelledByAdmin") {
     let response = await admin.checkAdmin(firebase, { adminId: uid })
     if (response) {
       return response;
@@ -54,26 +53,26 @@ async function changeStatus(uid, data, newStatus , requireAdmin = false) {
   order.status = newStatus;
 
   // differs weither is admin or not
-  const _customerId = requireAdmin ? order.customer.id : uid;
-  const _pushNotificationTo = requireAdmin ? "customer" : "deliveryAdmin";
+  // const _pushNotificationTo = requireAdmin ? "customer" : "deliveryAdmin";
 
   // and also updating status on /orders (node for statistics)
   await firebase.database().ref(`/orders/restaurant/${data.orderId}/status`).update(order);
 
   // moving the order node from /customers/inProcessOrders => /customers/pastOrders/
-  await firebase.database().ref(`/customers/inProcessOrders/${_customerId}/${data.orderId}`).remove();
-  await firebase.database().ref(`/customers/pastOrders/${_customerId}/${data.orderId}`).set(order)
+  await firebase.database().ref(`/customers/inProcessOrders/${order.customer.id}/${data.orderId}`).remove();
+  await firebase.database().ref(`/customers/pastOrders/${order.customer.id}/${data.orderId}`).set(order)
 
   // moving the order node from /restaurants/inProcessOrders => /restaurants/pastOrders/
   await firebase.database().ref(`/restaurants/inProcessOrders/${order.serviceProviderId}/${data.orderId}`).remove();
   await firebase.database().ref(`/restaurants/pastOrders/${order.serviceProviderId}/${data.orderId}`).set(order)
 
   // and finally remove from root /inProcessOrders   
-  await firebase.database().ref(`/inProcessOrders/restaurant/${data.orderId}`).remove();
+  // await firebase.database().ref(`/inProcessOrders/restaurant/${data.orderId}`).remove();
+  // await firebase.database().ref(`/finishedOrders/restaurant/${data.orderId}`).set(order);
   
   // notifications part
   let update = {
-    status: "cancelled",
+    status: newStatus,
     time: (new Date()).toISOString(),
     notificationType: "orderStatusChange",
     orderType: "restaurant",
@@ -81,9 +80,37 @@ async function changeStatus(uid, data, newStatus , requireAdmin = false) {
   }
 
   // push !
-  notification.push(firebase, _customerId, update, _pushNotificationTo);
+  if (newStatus == "cancelledByAdmin") {
+    notification.push(firebase, order.customer.id, update, "customer");
+  } else {
+    firebase.database().ref(`/deliveryAdmins`).once('value', (snapshot) => {
+      notifyAdminsCancelledOrder(snapshot.val(), firebase, update)
+    });
+  }
   
   // and return
   return { status: "Success" , orderId : data.orderId , message: "" }
 
+}
+
+
+async function notifyAdminsCancelledOrder(admins, firebase, update) {
+  for (let adminId in admins) {
+    firebase.database().ref(`/notifications/deliveryAdmin/${adminId}`).push(update)
+    let admin = admins[adminId]
+    if (admin.notificationInfo) {
+      let payload = {
+        notification: {
+          title: "Pedido Cancellado",
+          body: `Hay un pedido que es cancelado`,
+          tag: "newOrder"
+        }
+      };
+      let options = {
+        collapse_key: "cancelOrder",
+        priority: "high"
+      }
+      await firebase.messaging().sendToDevice(admin.notificationInfo.deviceNotificationToken, payload, options)
+    }
+  }
 }

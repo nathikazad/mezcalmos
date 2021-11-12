@@ -4,7 +4,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 const mypadding = EdgeInsets.only(left: 15, right: 15);
@@ -36,10 +36,10 @@ class PhoneNumberScreen extends GetView<AuthController> {
 
       // fontWeight: isBold ? FontWeight.bold : FontWeight.w400,
       /// have the same the size to avoid flexing issuses
-      appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () {
+      appBar: mezcalmosAppBar("back", () {
         Get.back();
       }),
-      // MezcalmosSharedWidgets.mezcalmosAppBar(
+      // mezcalmosAppBar(
       //     "back", () => Get.back(closeOverlays: true),
       //     bgColor: Colors.grey[50]),
       body: Column(
@@ -343,7 +343,7 @@ class PhoneNumberScreen extends GetView<AuthController> {
       //   ActionButtons(Icons.history_outlined)
       // ],
 
-      // MezcalmosSharedWidgets.mezcalmosAppBar(
+      // mezcalmosAppBar(
       //     "back", () => Get.back(closeOverlays: true),
       //     bgColor: Colors.grey[50]),
     );

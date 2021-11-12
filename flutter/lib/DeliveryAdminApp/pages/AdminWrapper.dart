@@ -11,7 +11,7 @@ import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/utilities/NotificationsDisplayer.dart';
-import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/adminAuthController.dart';
@@ -65,7 +65,7 @@ class _AdminWrapperState extends State<AdminWrapper> {
         key: Get.find<SideMenuDraweController>().getNewKey(),
         drawer: MezSideMenu(),
         backgroundColor: Colors.white,
-        appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
+        appBar: mezcalmosAppBar(
             "menu", Get.find<SideMenuDraweController>().openMenu),
         body: MezLogoAnimation(centered: true));
   }

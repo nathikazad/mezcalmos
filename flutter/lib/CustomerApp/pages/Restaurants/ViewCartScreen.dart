@@ -9,7 +9,7 @@ import 'package:mezcalmos/CustomerApp/components/myExpensionPanelComponent.dart'
 import 'package:mezcalmos/CustomerApp/components/textFieldComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/titlesComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantCartController.dart';
-import 'package:mezcalmos/CustomerApp/models/cart.dart';
+import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -19,8 +19,8 @@ import 'package:mezcalmos/Shared/widgets/MezClearButton.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
-import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
 
@@ -66,7 +66,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
     responsiveSize(context);
     return Scaffold(
       backgroundColor: const Color(0xffffffff),
-      appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back(),
+      appBar: mezcalmosAppBar("back", () => Get.back(),
           actionIcons: [
             ActionIconsComponents.notificationIcon(),
             ActionIconsComponents.orderIcon()

@@ -6,7 +6,7 @@ import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
-import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 
 class LocationPermissionScreen extends StatelessWidget {
   final SettingsController _settingsController = Get.find<SettingsController>();
@@ -19,7 +19,7 @@ class LocationPermissionScreen extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-          appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
+          appBar: mezcalmosAppBar(
               "menu", () => _sideMenuDraweController.openMenu()),
           resizeToAvoidBottomInset: false,
           key: _sideMenuDraweController.getNewKey(),

@@ -10,7 +10,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
-import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
+import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SignIn extends GetWidget<AuthController> {
@@ -52,7 +52,7 @@ class SignIn extends GetWidget<AuthController> {
                     ),
                   ),
                   SizedBox(height: (Get.height * 0.05).h),
-                  MezcalmosSharedWidgets.mezcalmos(
+                  MezcalmosSharedWidgets.mezcalmosTitle(
                       // textSize: getSizeRelativeToScreen(25, sh, sw).sp,
                       textSize: Get.width > 320
                           ? getSizeRelativeToScreen(25, sh, sw).sp

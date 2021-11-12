@@ -7,7 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 enum AccountState {
@@ -115,7 +115,7 @@ class UserProfile extends StatelessWidget {
           return true;
         },
         child: Scaffold(
-          appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () {
+          appBar: mezcalmosAppBar("back", () {
             textController.dispose();
             Get.back();
           }),

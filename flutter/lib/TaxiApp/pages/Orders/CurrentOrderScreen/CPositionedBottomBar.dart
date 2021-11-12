@@ -10,7 +10,7 @@ import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
-import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
+import 'package:mezcalmos/TaxiApp/components/taxiDialogs.dart';
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
 import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
@@ -297,7 +297,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
               taxiAuthController.currentLocation, order.to.position) >
           0.5)) {
         bool clickedYes =
-            await MezcalmosSharedWidgets.yesNoDefaultConfirmationDialog(
+            await yesNoDefaultConfirmationDialog(
                 lang.strings['taxi']['taxiView']["tooFarFromfinishRide"]);
 
         mezDbgPrint("CurrentPositionedBottomBar clickedYes: $clickedYes");
@@ -312,7 +312,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
               taxiAuthController.currentLocation, order.from.position) >
           0.5) {
         bool clickedYes =
-            await MezcalmosSharedWidgets.yesNoDefaultConfirmationDialog(
+            await yesNoDefaultConfirmationDialog(
                 lang.strings['taxi']['taxiView']["tooFarFromstartRide"]);
         if (clickedYes) {
           await startRide();

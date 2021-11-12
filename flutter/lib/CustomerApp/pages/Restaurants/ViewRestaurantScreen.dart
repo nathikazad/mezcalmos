@@ -7,11 +7,9 @@ import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoCont
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen.dart';
-
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -45,7 +43,7 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
     responsiveSize(context);
     return Scaffold(
         backgroundColor: const Color(0xffffffff),
-        appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back(),
+        appBar: mezcalmosAppBar("back", () => Get.back(),
             actionIcons: [
               Obx(() =>
                   Get.find<RestaurantCartController>().cart.value.items.length >

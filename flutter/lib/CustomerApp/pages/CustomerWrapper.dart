@@ -19,7 +19,7 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/NotificationsDisplayer.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
-import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as MezNotification;
 
@@ -115,7 +115,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
           backgroundColor: Colors.white,
           key: _sideMenuDrawerController.getNewKey(),
           drawer: MezSideMenu(),
-          appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
+          appBar: mezcalmosAppBar(
               "menu", () => _sideMenuDrawerController.openMenu(), actionIcons: [
             ActionIconsComponents.notificationIcon(),
             ActionIconsComponents.orderIcon()

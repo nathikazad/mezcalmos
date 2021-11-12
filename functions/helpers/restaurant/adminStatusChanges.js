@@ -107,7 +107,7 @@ async function changeStatus(uid, data, newStatus) {
     await firebase.database().ref(`/restaurants/pastOrders/${order.serviceProviderId}/${data.orderId}`).set(order)
 
     // and finally remove from root /inProcessOrders   
-    await firebase.database().ref(`/inProcessOrders/restaurant/${data.orderId}`).remove();
+    // await firebase.database().ref(`/inProcessOrders/restaurant/${data.orderId}`).remove();
   }
   return { status: "Success" }
 }

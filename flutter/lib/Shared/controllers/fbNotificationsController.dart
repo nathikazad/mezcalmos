@@ -39,6 +39,7 @@ class FBNotificationsController extends GetxController {
         .child(notificationNode)
         .onChildAdded
         .listen((event) {
+      mezDbgPrint("fbNotificationsController:: NEW NOTIFICATION");
       mezDbgPrint(event.snapshot.value);
       Notification _notification =
           notificationHandler(event.snapshot.key!, event.snapshot.value);

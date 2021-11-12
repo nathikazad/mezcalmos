@@ -8,7 +8,7 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 
 class ListRestaurantsScreen extends StatefulWidget {
   @override
@@ -32,7 +32,7 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
     responsiveSize(context);
     return Scaffold(
         backgroundColor: const Color(0xffffffff),
-        appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back(),
+        appBar: mezcalmosAppBar("back", () => Get.back(),
             actionIcons: [
               ActionIconsComponents.notificationIcon(),
               ActionIconsComponents.orderIcon()

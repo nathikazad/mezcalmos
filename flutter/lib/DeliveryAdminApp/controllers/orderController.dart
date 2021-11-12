@@ -39,16 +39,21 @@ class OrderController extends GetxController {
     super.onInit();
   }
 
-  Stream<Order> getCurrentOrder(String orderId) {
-    return ordersStream.map<Order>((orders) {
-      return orders
-          .firstWhere((currentOrder) => currentOrder.orderId == orderId);
+  Stream<Order?> getCurrentOrder(String orderId) {
+    return ordersStream.map<Order?>((orders) {
+      try {
+        return orders
+            .firstWhere((currentOrder) => currentOrder.orderId == orderId);
+      } on StateError {
+        return null;
+      }
+      // catch (e) {
+      //   mezDbgPrint("Some error");
+      // }
     });
   }
 
   void clearNewOrderNotifications() {
-    mezDbgPrint(
-        "Clear new order notifications ${_fbNotificationsController.notifications.value.length}");
     _fbNotificationsController.notifications.value.forEach((element) {
       mezDbgPrint(element.notificationType.toFirebaseFormatString());
     });
@@ -59,9 +64,6 @@ class OrderController extends GetxController {
       mezDbgPrint(notification.id);
       _fbNotificationsController.removeNotification(notification.id);
     });
-
-    mezDbgPrint(
-        "Clear new order notifications ${_fbNotificationsController.notifications.value.length}");
   }
 
   void clearOrderNotifications(String orderId) {

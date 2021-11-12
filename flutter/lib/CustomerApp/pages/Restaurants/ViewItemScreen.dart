@@ -12,16 +12,13 @@ import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoCont
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-import 'package:mezcalmos/CustomerApp/models/cart.dart';
-import 'dart:async';
-//import 'package:google_fonts/google_fonts.dart';
-//import 'package:intl/intl.dart';
+import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
 var widgetHieght = 20;
@@ -81,14 +78,13 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
       // resizeToAvoidBottomInset: true,
       //    resizeToAvoidBottomPadding: false, //
       backgroundColor: const Color(0xffffffff),
-      appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back(),
-          actionIcons: [
-            Obx(() => restaurantCartController.cart.value.items.length > 0
-                ? ActionIconsComponents.cartIcon()
-                : SizedBox()),
-            ActionIconsComponents.notificationIcon(),
-            ActionIconsComponents.orderIcon()
-          ]),
+      appBar: mezcalmosAppBar("back", () => Get.back(), actionIcons: [
+        Obx(() => restaurantCartController.cart.value.items.length > 0
+            ? ActionIconsComponents.cartIcon()
+            : SizedBox()),
+        ActionIconsComponents.notificationIcon(),
+        ActionIconsComponents.orderIcon()
+      ]),
       body: Obx(() => (cartItem.value?.item == null)
           ? Center(
               child: CircularProgressIndicator(),

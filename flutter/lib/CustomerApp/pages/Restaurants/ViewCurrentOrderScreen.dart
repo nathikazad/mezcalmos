@@ -13,10 +13,9 @@ import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
 import 'package:mezcalmos/Shared/widgets/CancelAlertDailog.dart';
-import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
 ////////////===========
@@ -108,7 +107,7 @@ class _ViewCurrentRestaurantOrderScreenState
     mezDbgPrint(order.value!.serviceProviderId);
     return Scaffold(
       backgroundColor: const Color(0xffffffff),
-      appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back(),
+      appBar: mezcalmosAppBar("back", () => Get.back(),
           actionIcons: [
             ActionIconsComponents.notificationIcon(),
             ActionIconsComponents.orderIcon()

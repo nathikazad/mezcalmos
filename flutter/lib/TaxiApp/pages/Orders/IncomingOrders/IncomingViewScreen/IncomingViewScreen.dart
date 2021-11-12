@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -13,7 +14,7 @@ import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
-import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
+import 'package:mezcalmos/TaxiApp/components/taxiDialogs.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/IPositionedBottomBar.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/IPositionedFromToBar.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
@@ -53,14 +54,14 @@ class IncommingOrderScreenView extends GetWidget<IncomingOrdersController>
             Get.currentRoute == kSelectedIcommingOrder) {
           cancelSubscriptions();
           Get.back();
-          await MezcalmosSharedWidgets.mezcalmosDialogOrderNoMoreAvailable(
+          await mezcalmosDialogOrderNoMoreAvailable(
               55, Get.height, Get.width);
         }
       }).canceledBy(this, debugId: "selectedOrderViewStream!");
     });
 
     return Scaffold(
-      appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () {
+      appBar: mezcalmosAppBar("back", () {
         cancelSubscriptions();
         Get.back();
       }),

@@ -6,7 +6,7 @@ import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
-import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -40,7 +40,7 @@ class _UnauthorizedScreenState extends State<UnauthorizedScreen> {
             key: Get.find<SideMenuDraweController>().getNewKey(),
             drawer: MezSideMenu(),
             backgroundColor: Colors.white,
-            appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
+            appBar: mezcalmosAppBar(
                 "menu", Get.find<SideMenuDraweController>().openMenu),
             body: SafeArea(
                 child: Center(

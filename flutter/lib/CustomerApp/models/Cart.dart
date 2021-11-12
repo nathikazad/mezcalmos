@@ -127,8 +127,13 @@ class Cart {
           chosenManyOptions);
       this.items.add(cartItem);
     });
-    this.toLocation =
-        cartData["to"] != null ? Location.fromData(cartData["to"]) : null;
+    this.toLocation = cartData["to"] != null
+        ? Location.fromData(cartData["to"])
+        : Location.fromData(<String, dynamic>{
+            "lat": 37.33233141,
+            "lng": -122.0312186,
+            "address": "Unnamed Road, Cupertino, CA 95014, USA"
+          });
     this.notes = cartData["notes"];
   }
   int quantity() {

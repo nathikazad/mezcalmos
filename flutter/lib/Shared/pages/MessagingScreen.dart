@@ -6,7 +6,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
-import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 // Extends GetView<MessagingController> after Nathik implements the controller
@@ -191,7 +191,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
     return Scaffold(
         // resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
-        appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
+        appBar: mezcalmosAppBar(
             "back", () => Get.back(result: "clear_notification")),
         body: Container(
           child: Column(

@@ -5,7 +5,7 @@ import 'package:mezcalmos/CustomerApp/components/ItemComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 
 class ListRestaurantsScreen extends GetView<RestaurantsInfoController> {
   RxList<Restaurant> restaurants = <Restaurant>[].obs;
@@ -20,7 +20,7 @@ class ListRestaurantsScreen extends GetView<RestaurantsInfoController> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-       appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back(),
+       appBar: mezcalmosAppBar("back", () => Get.back(),
             actionIcons: []),
         body: Column(
       children: [

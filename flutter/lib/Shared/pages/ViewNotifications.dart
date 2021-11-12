@@ -8,7 +8,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as notifs;
 import 'package:intl/intl.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -45,7 +45,7 @@ class _ViewNotificationsState extends State<ViewNotifications> {
 
     return Scaffold(
       backgroundColor: const Color(0xffffffff),
-      appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
+      appBar: mezcalmosAppBar(
         "back",
         () => Get.back(),
       ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
-import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
+import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 import 'package:mezcalmos/TaxiAdminApp/components/infoCardComponent.dart';
 import 'package:mezcalmos/TaxiAdminApp/components/staticMap.dart';
 import 'package:mezcalmos/TaxiAdminApp/controller/OrdersController.dart';

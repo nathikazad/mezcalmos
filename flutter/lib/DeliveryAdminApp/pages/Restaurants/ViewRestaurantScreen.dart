@@ -4,9 +4,8 @@ import 'package:mezcalmos/CustomerApp/components/itemMenuComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen.dart';
-
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 
 class ViewRestaurantScreen extends GetView<RestaurantsInfoController> {
@@ -25,7 +24,7 @@ class ViewRestaurantScreen extends GetView<RestaurantsInfoController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       appBar: MezcalmosSharedWidgets.mezcalmosAppBar("back", () => Get.back(),
+       appBar: mezcalmosAppBar("back", () => Get.back(),
             actionIcons: []),
         body: Obx(() {
       List<Item> items = restaurant.value?.items ?? [];

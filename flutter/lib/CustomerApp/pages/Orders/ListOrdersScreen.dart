@@ -11,7 +11,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
-import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:intl/intl.dart';
 
 final f = new DateFormat('MM.dd.yyyy');
@@ -54,7 +54,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
         // appBar: AppBar(
         //   title: Text("List Orders"),
         // ),
-        appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
+        appBar: mezcalmosAppBar(
           "back",
           () => Get.back(),
         ),
