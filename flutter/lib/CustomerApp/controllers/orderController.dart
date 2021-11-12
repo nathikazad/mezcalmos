@@ -126,7 +126,6 @@ class OrderController extends GetxController {
     }
   }
 
-  
   @override
   void onClose() async {
     print("[+] Orderontroller::onClose ---------> Was invoked !");

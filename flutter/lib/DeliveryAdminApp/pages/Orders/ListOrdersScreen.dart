@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/constants/global.dart';
@@ -25,19 +27,23 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
   RxList<Order> inProcessOrders = RxList.empty();
   OrderController controller = Get.find<OrderController>();
   LanguageController lang = Get.find<LanguageController>();
+  StreamSubscription? _ordersListener;
 
   @override
   void initState() {
     super.initState();
     controller.clearNewOrderNotifications();
     inProcessOrders.value = controller.inProcessOrders;
-    // mezDbgPrint("ListOrdersScreen:init value");
-    // mezDbgPrint(controller.inProcessOrders);
-    controller.ordersStream.listen((event) {
-      inProcessOrders.value = event;
-      // mezDbgPrint("ListOrdersScreen:listener value");
-      // mezDbgPrint(controller.inProcessOrders);
+    controller.inProcessOrders.stream.listen((_) {
+      inProcessOrders.value = controller.inProcessOrders;
     });
+  }
+
+  @override
+  void dispose() {
+    _ordersListener?.cancel();
+    _ordersListener = null;
+    super.dispose();
   }
 
   @override

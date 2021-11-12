@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
@@ -30,41 +32,31 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
   Rxn<RestaurantOrder> order = Rxn();
   OrderController controller = Get.find<OrderController>();
   late String orderId;
-
+  StreamSubscription? _orderListener;
   @override
   void initState() {
     super.initState();
     mezDbgPrint("ViewOrderScreen");
     orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
-    try {
-      order.value = controller.inProcessOrders
-          .firstWhere((order) => order.orderId == orderId) as RestaurantOrder;
-      mezDbgPrint("order");
-      mezDbgPrint(order.value);
-    } on StateError catch (_) {
-      mezDbgPrint("error");
-      // do nothing
+
+    order.value = controller.getOrder(orderId) as RestaurantOrder;
+    if (order.value == null) {
+      Get.back();
+    } else {
+      _orderListener =
+          controller.getCurrentOrderStream(orderId).listen((newOrder) {
+        order.value = newOrder as RestaurantOrder;
+        mezDbgPrint(order.value);
+      });
     }
-    controller.getCurrentOrder(orderId).listen((newOrder) {
-      // mezDbgPrint("event");
-      // if (newOrder == null) {
-      //   MezcalmosSharedWidgets.mezcalmosDialogWithImage(
-      //           55,
-      //           Get.height,
-      //           Get.width,
-      //           "Customer has cancelled the order",
-      //           "assets/images/cancel.png")
-      //       .then((value) {
-      //     mezDbgPrint("CurrentOrderScreen recieved cancel, navigating to back");
-      //     Get.back();
-      //     ;
-      //   });
-      // } else {
-      order.value = newOrder as RestaurantOrder;
-      mezDbgPrint(order.value);
-      // }
-    });
+  }
+
+  @override
+  void dispose() {
+    _orderListener?.cancel();
+    _orderListener = null;
+    super.dispose();
   }
 
   @override
@@ -77,6 +69,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
           ActionIconsComponents.orderIcon(),
         ]),
         body: Obx(() {
+          mezDbgPrint(order.value.toString());
           if (order.value == null) {
             // Order Loading ..
             return MezLogoAnimation(
@@ -180,36 +173,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                           child: Container(
                               padding: const EdgeInsets.symmetric(vertical: 10),
                               child: Row(
-                                children: [
-                                  Expanded(
-                                    child: changeStatusButton()!,
-                                  ),
-                                  Expanded(
-                                    child: ButtonComponent(
-                                      widget: Text(
-                                          lang.strings["customer"]["restaurant"]
-                                                  ["checkout"]["cancel"]
-                                              .toUpperCase(),
-                                          style: const TextStyle(
-                                              color: const Color(0xffffffff),
-                                              fontWeight: FontWeight.w700,
-                                              fontFamily: "ProductSans",
-                                              fontStyle: FontStyle.normal,
-                                              fontSize: 16.0),
-                                          textAlign: TextAlign.center),
-                                      gradient: const LinearGradient(
-                                          begin: Alignment(
-                                              -0.10374055057764053, 0),
-                                          end: Alignment(1.1447703838348389,
-                                              1.1694844961166382),
-                                          colors: [
-                                            const Color(0xede21132),
-                                            const Color(0xdbd11835)
-                                          ]),
-                                      //  bgColor: Colors.red,
-                                    ),
-                                  )
-                                ],
+                                children: changeStatusbuttons,
                               )),
                         )
                       ],
@@ -448,7 +412,38 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
         }));
   }
 
+  List<Widget> get changeStatusbuttons {
+    if (order.value?.inProcess() ?? false)
+      return [
+        Expanded(
+          child: changeStatusButton()!,
+        ),
+        Expanded(
+          child: ButtonComponent(
+            widget: Text(
+                lang.strings["customer"]["restaurant"]["checkout"]["cancel"]
+                    .toUpperCase(),
+                style: const TextStyle(
+                    color: const Color(0xffffffff),
+                    fontWeight: FontWeight.w700,
+                    fontFamily: "ProductSans",
+                    fontStyle: FontStyle.normal,
+                    fontSize: 16.0),
+                textAlign: TextAlign.center),
+            gradient: const LinearGradient(
+                begin: Alignment(-0.10374055057764053, 0),
+                end: Alignment(1.1447703838348389, 1.1694844961166382),
+                colors: [const Color(0xede21132), const Color(0xdbd11835)]),
+            //  bgColor: Colors.red,
+          ),
+        )
+      ];
+    else
+      return [];
+  }
+
   Widget? changeStatusButton() {
+    mezDbgPrint(order.value);
     switch (order.value!.restaurantOrderStatus) {
       case RestaurantOrderStatus.OrderReceieved:
         return ButtonComponent(

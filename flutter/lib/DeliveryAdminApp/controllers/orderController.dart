@@ -16,40 +16,47 @@ class OrderController extends GetxController {
   AuthController _authController = Get.find<AuthController>();
   FBNotificationsController _fbNotificationsController =
       Get.find<FBNotificationsController>();
-  late Stream<List<Order>> ordersStream;
-  List<Order> inProcessOrders = [];
+  RxList<Order> inProcessOrders = <Order>[].obs;
+  StreamSubscription? _ordersListener;
   @override
   void onInit() {
     mezDbgPrint(
         "--------------------> RestaurantsOrderController Initialized !");
-    ordersStream = _databaseHelper.firebaseDatabase
+    _ordersListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(inProcessOrdersNode())
         .onValue
-        .map<List<Order>>((event) {
-      List<Order> orders = [];
+        .listen((event) {
+      inProcessOrders.clear();
       if (event.snapshot.value != null) {
         event.snapshot.value.forEach((dynamic orderId, dynamic orderData) {
-          orders.add(RestaurantOrder.fromData(orderId, orderData));
+          inProcessOrders.add(RestaurantOrder.fromData(orderId, orderData));
         });
       }
-      inProcessOrders = orders;
-      return orders;
     });
     super.onInit();
   }
 
-  Stream<Order?> getCurrentOrder(String orderId) {
-    return ordersStream.map<Order?>((orders) {
+  Order? getOrder(String orderId) {
+    try {
+      return inProcessOrders.firstWhere((order) {
+        return order.orderId == orderId;
+      }) as RestaurantOrder;
+    } on StateError {
+      return null;
+    }
+  }
+
+  Stream<Order?> getCurrentOrderStream(String orderId) {
+    return inProcessOrders.stream.map<Order?>((_) {
       try {
-        return orders
-            .firstWhere((currentOrder) => currentOrder.orderId == orderId);
-      } on StateError {
+        return inProcessOrders.firstWhere(
+          (currentOrder) => currentOrder.orderId == orderId,
+        );
+      } on StateError catch (_) {
+        // do nothing
         return null;
       }
-      // catch (e) {
-      //   mezDbgPrint("Some error");
-      // }
     });
   }
 

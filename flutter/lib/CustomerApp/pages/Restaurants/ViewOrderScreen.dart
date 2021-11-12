@@ -31,7 +31,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
   LanguageController lang = Get.find<LanguageController>();
   Rxn<RestaurantOrder> order = Rxn();
   OrderController controller = Get.find<OrderController>();
-  StreamSubscription? orderListener;
+  StreamSubscription? _orderListener;
   @override
   void initState() {
     super.initState();
@@ -44,7 +44,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
       Get.back();
     } else {
       if (order.value!.inProcess()) {
-        orderListener =
+        _orderListener =
             controller.getCurrentOrderStream(orderId).listen((event) {
           if (event != null) {
             order.value = event as RestaurantOrder;
@@ -58,8 +58,8 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
 
   @override
   void dispose() {
-    orderListener?.cancel();
-    orderListener = null;
+    _orderListener?.cancel();
+    _orderListener = null;
     super.dispose();
   }
 
