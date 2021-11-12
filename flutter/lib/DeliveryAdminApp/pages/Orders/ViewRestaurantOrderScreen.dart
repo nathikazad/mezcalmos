@@ -141,10 +141,9 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                     ),
                     child: Column(
                       children: [
-                        //TODO: add a ynamic user info
                         BasicCellComponent(
-                          url: "https://randomuser.me/api/portraits/men/79.jpg",
-                          title: "Jammy",
+                          url: (order.value as RestaurantOrder).customer.image,
+                          title: (order.value as RestaurantOrder).customer.name,
                           traillingIcon: Container(
                             child: IconButton(
                               icon: Icon(
@@ -152,9 +151,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                                 color: Color(0xff5c7fff),
                               ),
                               onPressed: () {
-                                //TODO: Navigate to messages screen
-                                Get.toNamed(
-                                    getCustomerMessagesRoute(
+                                Get.toNamed(getCustomerMessagesRoute(
                                     order.value!.orderId));
                               },
                             ),
@@ -177,7 +174,9 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                                   ),
                                   Expanded(
                                     child: ButtonComponent(
-                                      widget: Text("CANCEL",
+                                      widget: Text(
+                                          "${lang.strings["customer"]["checkout"]["cancel"]}"
+                                              .toUpperCase(),
                                           style: const TextStyle(
                                               color: const Color(0xffffffff),
                                               fontWeight: FontWeight.w700,
@@ -209,7 +208,8 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     alignment: Alignment.centerLeft,
-                    child: Text("Order Items",
+                    child: Text(
+                        "${lang.strings["customer"]["checkout"]["orderItems"]}",
                         style: const TextStyle(
                             color: const Color(0xff000f1c),
                             fontWeight: FontWeight.w700,

@@ -4,17 +4,18 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/CustomerApp/components/ItemComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
 import 'package:mezcalmos/CustomerApp/components/buttonComponent.dart';
-import 'package:mezcalmos/CustomerApp/components/dailogComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/incrementalComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/myExpensionPanelComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/textFieldComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/titlesComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantCartController.dart';
-import 'package:mezcalmos/CustomerApp/models/Cart.dart';
+import 'package:mezcalmos/CustomerApp/models/cart.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
+import 'package:mezcalmos/Shared/widgets/CancelAlertDailog.dart';
+import 'package:mezcalmos/Shared/widgets/MezClearButton.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
@@ -413,43 +414,9 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                     textAlign: TextAlign.left),
               ),
               Spacer(),
-              InkWell(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  height: 25,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(6)),
-                    boxShadow: [
-                      BoxShadow(
-                          color: const Color(0x33c5c5c5),
-                          offset: Offset(0, 10),
-                          blurRadius: 10,
-                          spreadRadius: 0)
-                    ],
-                    color: const Color(
-                      0xffffffff,
-                    ),
-                  ),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.delete_outline,
-                        size: 20.sp,
-                        color: Color(0xffdb2846),
-                      ),
-                      Text(
-                        lang.strings['customer']['restaurant']['cart']['clear'],
-                        style: TextStyle(
-                            color: const Color(0xffdb2846),
-                            fontWeight: FontWeight.w500,
-                            fontFamily: "psr",
-                            fontSize: 12.0.sp),
-                      )
-                    ],
-                  ),
-                ),
-                onTap: () async {
-                  bool yesNoRes = await dailogComponent(
+              MezClearButton(
+                onTapFunction: () async {
+                  bool yesNoRes = await cancelAlertDailog(
                       lang.strings["customer"]["restaurant"]["cart"]
                           ["clearCart"],
                       lang.strings["customer"]["restaurant"]["cart"]
@@ -464,7 +431,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                     Get.back();
                   }
                 },
-              )
+              ),
             ],
           ),
         ),
@@ -596,7 +563,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                             onChangedToZero: (isZero) async {
                               if (isZero) {
                                 controller.refresh();
-                                bool yesNoResult = await dailogComponent(
+                                bool yesNoResult = await cancelAlertDailog(
                                   lang.strings["customer"]["restaurant"]["cart"]
                                       ["deleteItem"],
                                   lang.strings["customer"]["restaurant"]["cart"]

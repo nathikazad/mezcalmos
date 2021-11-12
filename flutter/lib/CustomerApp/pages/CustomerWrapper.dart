@@ -93,6 +93,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
+          backgroundColor: Colors.white,
           key: _sideMenuDrawerController.getNewKey(),
           drawer: MezSideMenu(),
           appBar: MezcalmosSharedWidgets.mezcalmosAppBar(

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
 import 'package:mezcalmos/DeliveryAdminApp/constants/global.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/orderController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
@@ -25,6 +26,7 @@ class ListOrdersScreen extends StatefulWidget {
 class _ListOrdersScreen extends State<ListOrdersScreen> {
   RxList<Order> inProcessOrders = RxList.empty();
   OrderController controller = Get.find<OrderController>();
+  LanguageController lang = Get.find<LanguageController>();
 
   @override
   void initState() {
@@ -48,6 +50,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
           return false;
         },
         child: Scaffold(
+            backgroundColor: Colors.white,
             key: Get.find<SideMenuDraweController>().getNewKey(),
             appBar: MezcalmosSharedWidgets.mezcalmosAppBar(
                 "menu", Get.find<SideMenuDraweController>().openMenu),
@@ -58,11 +61,11 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                   Container(
                     padding: const EdgeInsets.only(left: 10),
                     alignment: Alignment.centerLeft,
-                    child: Text("Orders",
+                    child: Text(
+                        "${lang.strings["customer"]["taxi"]["orders"]["title"]}",
                         style: const TextStyle(
                             color: const Color(0xff1d1d1d),
-                            fontWeight: FontWeight.w400,
-                            fontFamily: "ProductSans",
+                            fontFamily: "psr",
                             fontStyle: FontStyle.normal,
                             fontSize: 45.0),
                         textAlign: TextAlign.left),
@@ -83,31 +86,20 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
       child: Column(
         children:
             inProcessOrders.fold<List<Widget>>(<Widget>[], (children, element) {
-          switch (element.orderType) {
-            case OrderType.Restaurant:
-              var s = element as RestaurantOrder;
-              // mezDbgPrint("${s.restaurantOrderStatus}");
-              children.add(DeliveryAdminOrderComponent(
-                type: OrderType.Restaurant,
-                status: s.restaurantOrderStatus,
-                url: s.restaurant.image,
-                //TODO: add user infos
-                image: "${s.customer.image}",
-                userName: "${s.customer.name}",
-                //============
-                title: "${s.restaurant.name}",
-                price: "${currency.format(element.cost)}",
-                quantity: "${element.quantity}",
-                date: "${f.format(element.orderTime)}",
-                ontap: () =>
-                    Get.toNamed(getRestaurantOrderRoute(element.orderId)),
-              ));
-
-              break;
-            // TODO:
-            //add each type to its relevant type order
-            default:
-          }
+          var s = element as RestaurantOrder;
+          // mezDbgPrint("${s.restaurantOrderStatus}");
+          children.add(DeliveryAdminOrderComponent(
+            type: OrderType.Restaurant,
+            status: s.restaurantOrderStatus,
+            url: s.restaurant.image,
+            image: "${s.customer.image}",
+            userName: "${s.customer.name}",
+            title: "${s.restaurant.name}",
+            price: "${currency.format(element.cost)}",
+            quantity: "${element.quantity}",
+            date: "${f.format(element.orderTime.toLocal())}",
+            ontap: () => Get.toNamed(getRestaurantOrderRoute(element.orderId)),
+          ));
 
           return children;
         }),
@@ -156,7 +148,7 @@ class DeliveryAdminOrderComponent extends StatelessWidget {
               customerImage: image,
             ),
             Container(
-              width: Get.width * 0.50,
+              width: Get.width * 0.55,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -225,9 +217,14 @@ class DeliveryAdminOrderComponent extends StatelessWidget {
                 ],
               ),
             ),
+            SizedBox(
+              width: 5,
+            ),
             Expanded(
+                child: Container(
+              padding: const EdgeInsets.only(top: 20),
               child: _getOrderIcon(status!),
-            )
+            ))
           ],
         ),
       ),

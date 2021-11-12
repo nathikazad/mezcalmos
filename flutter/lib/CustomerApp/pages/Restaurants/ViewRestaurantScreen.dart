@@ -174,7 +174,7 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
                 blurRadius: 6,
                 spreadRadius: 0)
           ],
-          color: Color(0xfffbfbfb),
+          color: Color(0xffffffff),
         ),
         child: SingleChildScrollView(
           physics: ClampingScrollPhysics(),

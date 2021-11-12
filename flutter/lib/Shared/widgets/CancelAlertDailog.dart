@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
-Future<bool> dailogComponent(String title, String subTitle, Function onConform,
-    Function onCancel) async {
+Future<bool> cancelAlertDailog(String title, String subTitle,
+    Function onConform, Function onCancel) async {
+  LanguageController lang = Get.find<LanguageController>();
   return await Get.defaultDialog(
     radius: 4,
     title: "",
@@ -66,7 +68,7 @@ Future<bool> dailogComponent(String title, String subTitle, Function onConform,
                       color: const Color(0xffdb2846),
                     ),
                     child: Center(
-                      child: Text("Yes",
+                      child: Text("${lang.strings["taxi"]["taxiView"]["yes"]}",
                           style: const TextStyle(
                               color: const Color(0xffffffff),
                               fontWeight: FontWeight.w700,
@@ -99,7 +101,7 @@ Future<bool> dailogComponent(String title, String subTitle, Function onConform,
                       color: const Color(0xfffdfdfd),
                     ),
                     child: Center(
-                      child: Text("No",
+                      child: Text("${lang.strings["taxi"]["taxiView"]["no"]}",
                           style: const TextStyle(
                               color: const Color(0xff000000),
                               fontWeight: FontWeight.w700,

@@ -120,7 +120,7 @@ Widget buildWigetOnOrderStatus(
           ),
           Container(
             child: Text(
-                "${lang.strings['customer']['restaurant']['orderStatus']['delivered']} ${f.format(orderTime)}",
+                "${lang.strings['customer']['restaurant']['orderStatus']['delivered']} ${f.format(orderTime.toLocal())}",
                 style: const TextStyle(
                     color: const Color(0xff7e7a7a),
                     fontFamily: "prs",
@@ -148,7 +148,7 @@ Widget buildWigetOnOrderStatus(
           ),
           Container(
             child: Text(
-                "${lang.strings['customer']['restaurant']['orderStatus']['recievied']} ${f.format(orderTime).toString()}",
+                "${lang.strings['customer']['restaurant']['orderStatus']['recievied']} ${f.format(orderTime.toLocal()).toString()}",
                 style: const TextStyle(
                     color: const Color(0xff7e7a7a),
                     fontFamily: "prs",

@@ -47,7 +47,8 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
 
   @override
   Widget build(BuildContext context) {
-    mezDbgPrint("ListOrdersScreen: build");
+    mezDbgPrint(
+        "ListOrdersScreen: build the length of past orders is ${pastOrders.value.length} and the length of inprosses is ${currentOrders.value.length}");
     return Scaffold(
         backgroundColor: Colors.white,
         // appBar: AppBar(
@@ -76,6 +77,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
         date: "In Process",
       ),
     ];
+    currentOrders().sort((a, b) => b.orderTime.compareTo(a.orderTime));
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(boxShadow: [
@@ -109,17 +111,11 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
   }
 
   Widget buildPastOrders() {
-    //
-    var dd = DateTime.now();
-    List<Widget> pastOrdersWidget = [
-      DateTitleComponent(
-        date: "Today",
-      ),
-    ];
-    currentOrders().sort((a, b) => b.orderTime.compareTo(a.orderTime));
+    var dd = DateTime.now().toLocal();
+    List<Widget> pastOrdersWidget = [];
+    pastOrders().sort((a, b) => b.orderTime.compareTo(a.orderTime));
     return Column(
-      children:
-          currentOrders().fold<List<Widget>>(<Widget>[], (children, order) {
+      children: pastOrders().fold<List<Widget>>(<Widget>[], (children, order) {
         checkTime(order.orderTime);
         mezDbgPrint(order.serviceProvider!.name);
         if (dd.isSameDate(order.orderTime)) {
@@ -128,17 +124,17 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
               title: order.serviceProvider!.name,
               subTitle: order.to.address.substring(0, 15),
               date:
-                  "${DateFormat.jm().format(DateFormat("hh:mm").parse("${order.orderTime.hour}:${order.orderTime.minute}"))}",
+                  "${DateFormat.jm().format(DateFormat("hh:mm").parse("${order.orderTime.toLocal().hour}:${order.orderTime.toLocal().minute}"))}",
               price: "${currency.format(order.cost)}",
               type: order.orderType,
               url: order.serviceProvider!.image,
               onPress: () {
-                Get.toNamed(getCurrentRestaurantOrderRoute(order.orderId));
+                Get.toNamed(getPastRestaurantOrderRoute(order.orderId));
               },
             ),
           );
         } else {
-          dd = order.orderTime;
+          dd = order.orderTime.toLocal();
           pastOrdersWidget.add(
             DateTitleComponent(
               date: "${f.format(dd)}",
@@ -149,18 +145,18 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
             ),
           );
 
-          if (dd.isSameDate(order.orderTime)) {
+          if (dd.isSameDate(order.orderTime.toLocal())) {
             pastOrdersWidget.add(
               OrderCardComponenet(
                 title: order.serviceProvider!.name,
                 subTitle: order.to.address.substring(0, 15),
                 date:
-                    "${DateFormat.jm().format(DateFormat("hh:mm").parse("${order.orderTime.hour}:${order.orderTime.minute}"))}",
+                    "${DateFormat.jm().format(DateFormat("hh:mm").parse("${order.orderTime.toLocal().hour}:${order.orderTime.toLocal().minute}"))}",
                 price: "${currency.format(order.cost)}",
                 type: order.orderType,
                 url: order.serviceProvider!.image,
                 onPress: () {
-                  Get.toNamed(getCurrentRestaurantOrderRoute(order.orderId));
+                  Get.toNamed(getPastRestaurantOrderRoute(order.orderId));
                 },
               ),
             );

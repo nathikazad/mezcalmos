@@ -18,34 +18,33 @@
             },
             "cart": {
                 "cart": "Cart",
-                "inCart":"In Cart",
-                "clear":"Clear",
-                "clearCart":"Clear Cart",
-                "clearCartConfirm" : "Are you sure you want to clear the cart ?",
-                "deleteItem" : "Delete This Item.",
-                "deleteItemConfirm" : "Would you like to delete this item?",
-                "totalCost":"Total Cost",
-                "deliveryCost":"Delivery Cost",
-                "total":"Total",
-                "deliveryLocation":"Delivery Location",
-                "pickLocation":"Pick Location",
-                "orderNow":"ORDER NOW",
-                "options":"Options"
+                "inCart": "In Cart",
+                "clear": "Clear",
+                "clearCart": "Clear Cart",
+                "clearCartConfirm": "Are you sure you want to clear the cart ?",
+                "deleteItem": "Delete This Item.",
+                "deleteItemConfirm": "Would you like to delete this item?",
+                "totalCost": "Total Cost",
+                "deliveryCost": "Delivery Cost",
+                "total": "Total",
+                "deliveryLocation": "Delivery Location",
+                "pickLocation": "Pick Location",
+                "orderNow": "ORDER NOW",
+                "options": "Options"
             },
-            "checkout":{
-            
-                "orderItems":"Order Items",
-                "cancel":"Cancel",
+            "checkout": {
+                "orderItems": "Order Items",
+                "cancel": "Cancel",
                 "cancelOrder": "Cancel the order",
                 "cancelOrderConfirm": "Are you sure you want to cancel this order?"
             },
-            "orderStatus":{
-                "preparing" :"Preparing the order",
-                "readyForPickUp" : "Ready For Pickup",
+            "orderStatus": {
+                "preparing": "Preparing the order",
+                "readyForPickUp": "Ready For Pickup",
                 "onTheWay": "On The Way",
                 "delivered": "Delivered",
-                "canceled" : "Canceled",
-                "recievied" : "Receieved"
+                "canceled": "Canceled",
+                "recievied": "Receieved"
             }
         },
         "inviteCode": {
@@ -206,7 +205,33 @@
             "yesterday": "Yesterday",
             "older": "Older",
             "item": "Item|Items",
-            "clear": "Clear"
+            "clear": "Clear",
+            "alertClearNotification": {
+                "title":"Clear All Notifications",
+                "subTitle":"Are you sure  you want to clear the notifications"
+            },
+            "notificationType": {
+                "preparingOrder": {
+                    "title": "Preparing Order",
+                    "body": "Your order is being prepared"
+                },
+                "readyForPickup": {
+                    "title": "Ready For Pickup",
+                    "body": "Your order is ready for pickup"
+                },
+                "onTheWay": {
+                    "title": "On the Way",
+                    "body": "Your order is on the way"
+                },
+                "delivered": {
+                    "title": "Delivered",
+                    "body": "Your order has been delivered"
+                },
+                "cancelled": {
+                    "title": "Order Cancelled",
+                    "body": "Your order has been cancelled"
+                }
+            }
         },
         "userInfo": {
             "title": " User Information",
@@ -258,7 +283,7 @@
             "location": "Location"
         },
         "placeHolders": {
-            "home" : "Home",
+            "home": "Home",
             "address": "Enter Address",
             "name": "Enter Name",
             "search": "Search",

@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
 import 'package:mezcalmos/CustomerApp/components/basicCellComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/buildWidgetOnOrderStatus.dart';
-import 'package:mezcalmos/CustomerApp/components/dailogComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -13,6 +12,7 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
+import 'package:mezcalmos/Shared/widgets/CancelAlertDailog.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -143,15 +143,15 @@ class _ViewCurrentRestaurantOrderScreenState
                         title: "${order.value!.restaurant.name}",
                         traillingIcon: Container(
                           child: IconButton(
-                            icon: Icon(
-                              Icons.chat_bubble_outline,
-                              color: Color(0xff5c7fff),
-                            ),
-                            onPressed: () {
-                            //TODO: Navigate to messages screen
-                            Get.toNamed(getRestaurantMessagesRoute(
-                                order.value!.orderId));
-                          }),
+                              icon: Icon(
+                                Icons.chat_bubble_outline,
+                                color: Color(0xff5c7fff),
+                              ),
+                              onPressed: () {
+                                //TODO: Navigate to messages screen
+                                Get.toNamed(getRestaurantMessagesRoute(
+                                    order.value!.orderId));
+                              }),
                         ),
                       ),
                       Container(
@@ -394,7 +394,7 @@ class _ViewCurrentRestaurantOrderScreenState
                     ),
                   ),
                   onTap: () async {
-                    bool yesNoRes = await dailogComponent(
+                    bool yesNoRes = await cancelAlertDailog(
                         lang.strings['customer']['restaurant']['checkout']
                             ['cancelOrder'],
                         lang.strings['customer']['restaurant']['checkout']

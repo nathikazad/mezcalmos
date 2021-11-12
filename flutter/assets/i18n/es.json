@@ -207,7 +207,34 @@
             "yesterday": "Ayer",
             "older": "Antiguos",
             "item": "Artículo|Artículos",
-            "clear": "Borrar"
+            "clear": "Borrar",
+            "alertClearNotification": {
+                "title":"Eliminar todas las notificaciones",
+                "subTitle":"Estás seguro de que quieres eliminar las notificaciones?"
+            },
+            "notificationType": {
+                "preparingOrder": {
+                    "title": "Preparando Orden",
+                    "body": "Se está preparando tu pedido"
+                },
+                "readyForPickup": {
+                    "title": "Listo Para Recoger",
+                    "body": "Tu pedido está listo para ser recogido"
+                },
+                "onTheWay": {
+                    "title": "En Camino",
+                    "body": "Tu pedido está en camino"
+                },
+                "delivered": {
+                    "title": "Entregado",
+                    "body": "Tu pedido ha sido entregado"
+                },
+                "cancelled": {
+                    "title": "Orden Cancelada",
+                    "body": "Tu pedido ha sido cancelado"
+                }
+
+            }
         },
         "userInfo": {
             "title": " Información del usuario ",

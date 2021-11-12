@@ -1,7 +1,9 @@
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:get/get.dart';
 
 Notification customerNotificationHandler(String key, dynamic value) {
   NotificationType notificationType =
@@ -42,36 +44,52 @@ Notification restaurantOrderStatusChangeNotificationHandler(
 
 Map<String, dynamic>? getRestaurantOrderStatusFields(
     RestaurantOrderStatus restaurantOrderStatus) {
+  LanguageController lang = Get.find<LanguageController>();
   switch (restaurantOrderStatus) {
     case RestaurantOrderStatus.PreparingOrder:
       return <String, dynamic>{
-        "title": "Preparing Order",
-        "body": "Your order is being prepared",
-        "imgUrl": "assets/images/cancel.png"
+        "title":
+            "${lang.strings["shared"]["notification"]["notificationType"]["preparingOrder"]["title"]}",
+        "body":
+            "${lang.strings["shared"]["notification"]["notificationType"]["preparingOrder"]["body"]}",
+        "imgUrl": "assets/images/stoveIcon.png",
+        "bgColor": ""
       };
     case RestaurantOrderStatus.ReadyForPickup:
       return <String, dynamic>{
-        "title": "Ready For Pickup",
-        "body": "Your order is ready for pickup",
-        "imgUrl": "assets/images/cancel.png"
+        "title":
+            "${lang.strings["shared"]["notification"]["notificationType"]["readyForPickup"]["title"]}",
+        "body":
+            "${lang.strings["shared"]["notification"]["notificationType"]["readyForPickup"]["body"]}",
+        "imgUrl": "assets/images/waiting.png",
+        "bgColor": ""
       };
     case RestaurantOrderStatus.OnTheWay:
       return <String, dynamic>{
-        "title": "On the Way",
-        "body": "Your order is on the way",
-        "imgUrl": "assets/images/cancel.png"
+        "title":
+            "${lang.strings["shared"]["notification"]["notificationType"]["onTheWay"]["title"]}",
+        "body":
+            "${lang.strings["shared"]["notification"]["notificationType"]["onTheWay"]["body"]}",
+        "imgUrl": "assets/images/truck.png",
+        "bgColor": ""
       };
     case RestaurantOrderStatus.Delivered:
       return <String, dynamic>{
-        "title": "Delivered",
-        "body": "Your order has been delivered",
-        "imgUrl": "assets/images/cancel.png"
+        "title":
+            "${lang.strings["shared"]["notification"]["notificationType"]["delivered"]["title"]}",
+        "body":
+            "${lang.strings["shared"]["notification"]["notificationType"]["delivered"]["body"]}",
+        "imgUrl": "assets/images/tick.png",
+        "bgColor": ""
       };
     case RestaurantOrderStatus.CancelledByAdmin:
       return <String, dynamic>{
-        "title": "Order Cancelled",
-        "body": "Your order has been cancelled",
-        "imgUrl": "assets/images/cancel.png"
+        "title":
+            "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["title"]}",
+        "body":
+            "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["title"]}",
+        "imgUrl": "assets/images/circularCancel.png",
+        "bgColor": ""
       };
     default:
     // do nothing

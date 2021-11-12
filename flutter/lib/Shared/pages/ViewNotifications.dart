@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mezcalmos/Shared/widgets/CancelAlertDailog.dart';
 import 'package:mezcalmos/Shared/widgets/DateTitleComponent.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
@@ -10,6 +11,9 @@ import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as notifs;
 import 'package:intl/intl.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../widgets/MezClearButton.dart';
 
 final f = new DateFormat('hh:mm a');
 final ff = new DateFormat('MM.dd.yyyy');
@@ -35,11 +39,9 @@ class _ViewNotificationsState extends State<ViewNotifications> {
 
   @override
   Widget build(BuildContext context) {
+    responsiveSize(context);
     mezDbgPrint(
         "build function building the list ${controller.notifications.value.length}");
-    controller.notifications.value.forEach((element) {
-      mezDbgPrint(element.notificationType);
-    });
 
     return Scaffold(
       backgroundColor: const Color(0xffffffff),
@@ -49,19 +51,44 @@ class _ViewNotificationsState extends State<ViewNotifications> {
       ),
       body: Column(
         children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-            width: Get.width,
-            child: Text(lang.strings['shared']['notification']['title'],
-                style: GoogleFonts.dmSans(
-                  textStyle: TextStyle(
-                      color: const Color(0xfd1d1d1d),
-                      fontWeight: FontWeight.w500,
-                      fontFamily: "ProductSans",
-                      fontStyle: FontStyle.normal,
-                      fontSize: 40.0),
-                ),
-                textAlign: TextAlign.left),
+          Row(
+            children: [
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                //width: Get.width,
+                child: Text(lang.strings['shared']['notification']['title'],
+                    style: TextStyle(
+                        color: const Color(0xfd1d1d1d),
+                        // fontWeight: FontWeight.w500,
+                        fontFamily: "psr",
+                        fontStyle: FontStyle.normal,
+                        fontSize: 40.0.sp),
+                    textAlign: TextAlign.left),
+              ),
+              Spacer(),
+              Obx(
+                () => (controller.notifications.value.length <= 0)
+                    ? Container()
+                    : MezClearButton(
+                        onTapFunction: () async {
+                          bool yesNoRes = await cancelAlertDailog(
+                              "${lang.strings["shared"]["notification"]["alertClearNotification"]["title"]}",
+                              "${lang.strings["shared"]["notification"]["alertClearNotification"]["title"]}",
+                              () {
+                            Get.back(result: true);
+                          }, () {
+                            Get.back(result: false);
+                          });
+
+                          if (yesNoRes) {
+                            controller.clearAllNotification();
+                            Get.back();
+                          }
+                        },
+                      ),
+              ),
+            ],
           ),
           SizedBox(
             height: Get.height * 0.015,
@@ -69,10 +96,9 @@ class _ViewNotificationsState extends State<ViewNotifications> {
           Expanded(
               child: Container(
             child: SingleChildScrollView(
-              child: Obx(
+                child: Obx(
               () => _buildNotification(controller.notifications()),
-            )
-            ),
+            )),
           ))
         ],
       ),
