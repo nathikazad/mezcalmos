@@ -15,13 +15,13 @@ class Wrapper extends StatefulWidget {
 }
 
 class _WrapperState extends State<Wrapper> {
-  StreamSubscription<bool>? _locationStreamSub;
+  // StreamSubscription<bool>? _locationStreamSub;
   StreamSubscription<fireAuth.User?>? _userStreamSub;
 
   @override
   void dispose() {
-    _locationStreamSub?.cancel();
-    _userStreamSub?.cancel();
+    // _locationStreamSub?.cancel();
+    // _userStreamSub?.cancel();
     super.dispose();
   }
 
@@ -41,27 +41,14 @@ class _WrapperState extends State<Wrapper> {
   void handleAuthStateChange(fireAuth.User? user) {
     mezDbgPrint("Wrapper: handleAuthStateChange $user");
     if (user == null) {
-      _locationStreamSub?.cancel();
-      _locationStreamSub = null;
+      // _locationStreamSub?.cancel();
+      // _locationStreamSub = null;
       mezDbgPrint("Wrapper::handleAuthStateChange:: going to sign in route");
       Get.offNamedUntil(kSignInRoute, ModalRoute.withName(kWrapperRoute));
     } else {
       mezDbgPrint(
           "Wrapper::handleAuthStateChange:: signed in, so going to taxi wrapper !");
       Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
-      mezDbgPrint(
-          "Wrapper::handleAuthStateChange:: setting location handler !");
-      _locationStreamSub?.cancel();
-      _locationStreamSub = Get.find<SettingsController>()
-          .locationPermissionStream
-          // .distinct()
-          .listen((locationPermission) {
-        // mezDbgPrint("Wrapper: location permission => $locationPermission");
-        if (locationPermission == false &&
-            Get.currentRoute != kLocationPermissionPage) {
-          Get.toNamed(kLocationPermissionPage);
-        }
-      });
     }
   }
 

@@ -91,12 +91,10 @@ class _MessagingScreenState extends State<MessagingScreen> {
 
                 children: [
                   Container(
-                      margin: EdgeInsets.only(top: 5),
+                      margin: EdgeInsets.only(top: 10),
                       constraints: BoxConstraints(maxWidth: 170, minWidth: 80),
-                      padding: !isMe
-                          ? EdgeInsets.all(15)
-                          : EdgeInsets.only(
-                              left: 25, top: 10, bottom: 10, right: 15),
+                      padding: EdgeInsets.only(
+                          left: 25, top: 10, bottom: 10, right: 10),
                       // width: Get.width / 2,
                       decoration: BoxDecoration(
                           gradient: !isMe
@@ -219,14 +217,11 @@ class _MessagingScreenState extends State<MessagingScreen> {
                             backgroundColor: Colors.grey.shade200,
                             backgroundImage: controller
                                         .recipient(
-                                            participantType:
-                                                recipientType)
+                                            participantType: recipientType)
                                         ?.image !=
                                     null
                                 ? NetworkImage(controller
-                                    .recipient(
-                                        participantType:
-                                            recipientType)!
+                                    .recipient(participantType: recipientType)!
                                     .image)
                                 : AssetImage(aDefaultAvatar) as ImageProvider,
                           ),
@@ -239,9 +234,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
                           children: [
                             Text(
                               controller
-                                      .recipient(
-                                          participantType:
-                                              recipientType)
+                                      .recipient(participantType: recipientType)
                                       ?.name ??
                                   "Customer",
                               style:

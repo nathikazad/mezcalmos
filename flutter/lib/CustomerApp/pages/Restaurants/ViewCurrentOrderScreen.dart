@@ -32,9 +32,6 @@ class _ViewCurrentRestaurantOrderScreenState
   LanguageController lang = Get.find<LanguageController>();
   Rxn<RestaurantOrder> order = Rxn();
   OrderController controller = Get.find<OrderController>();
-  SideMenuDraweController _sideMenuDraweController =
-      Get.find<SideMenuDraweController>();
-  // RxBool hasNewMessages = false.obs;
   @override
   void initState() {
     super.initState();
@@ -355,68 +352,77 @@ class _ViewCurrentRestaurantOrderScreenState
                     ? SizedBox()
                     : NotesWidget(),
                 //===============================>button cancel===========================
-                InkWell(
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    width: Get.width,
-                    height: 48,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                      boxShadow: [
-                        BoxShadow(
-                            color: const Color(0x332362f1),
-                            offset: Offset(0, 6),
-                            blurRadius: 10,
-                            spreadRadius: 0)
-                      ],
-                      gradient: LinearGradient(
-                        begin: Alignment(-0.10374055057764053, 0),
-                        end: Alignment(1.1447703838348389, 1.1694844961166382),
-                        colors: [
-                          const Color(0xede21132),
-                          const Color(0xdbd11835)
-                        ],
-                      ),
-                    ),
-                    child: Center(
-                      child: // CANCEL
-                          Text(
+                order.value!.restaurantOrderStatus !=
+                            RestaurantOrderStatus.Delivered &&
+                        order.value!.restaurantOrderStatus !=
+                            RestaurantOrderStatus.OnTheWay &&
+                        order.value!.restaurantOrderStatus !=
+                            RestaurantOrderStatus.ReadyForPickup
+                    ? InkWell(
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 10),
+                          width: Get.width,
+                          height: 48,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: const Color(0x332362f1),
+                                  offset: Offset(0, 6),
+                                  blurRadius: 10,
+                                  spreadRadius: 0)
+                            ],
+                            gradient: LinearGradient(
+                              begin: Alignment(-0.10374055057764053, 0),
+                              end: Alignment(
+                                  1.1447703838348389, 1.1694844961166382),
+                              colors: [
+                                const Color(0xede21132),
+                                const Color(0xdbd11835)
+                              ],
+                            ),
+                          ),
+                          child: Center(
+                            child: // CANCEL
+                                Text(
+                                    lang.strings['customer']['restaurant']
+                                            ['checkout']['cancel']
+                                        .toString()
+                                        .toUpperCase(),
+                                    style: const TextStyle(
+                                        color: const Color(0xffffffff),
+                                        fontFamily: "psb",
+                                        fontStyle: FontStyle.normal,
+                                        fontSize: 16.0),
+                                    textAlign: TextAlign.center),
+                          ),
+                        ),
+                        onTap: () async {
+                          bool yesNoRes = await cancelAlertDailog(
                               lang.strings['customer']['restaurant']['checkout']
-                                      ['cancel']
-                                  .toString()
-                                  .toUpperCase(),
-                              style: const TextStyle(
-                                  color: const Color(0xffffffff),
-                                  fontFamily: "psb",
-                                  fontStyle: FontStyle.normal,
-                                  fontSize: 16.0),
-                              textAlign: TextAlign.center),
-                    ),
-                  ),
-                  onTap: () async {
-                    bool yesNoRes = await cancelAlertDailog(
-                        lang.strings['customer']['restaurant']['checkout']
-                            ['cancelOrder'],
-                        lang.strings['customer']['restaurant']['checkout']
-                            ['cancelOrderConfirm'], () {
-                      Get.back(result: true);
-                    }, () {
-                      Get.back(result: false);
-                    });
+                                  ['cancelOrder'],
+                              lang.strings['customer']['restaurant']['checkout']
+                                  ['cancelOrderConfirm'], () {
+                            Get.back(result: true);
+                          }, () {
+                            Get.back(result: false);
+                          });
 
-                    if (yesNoRes) {
-                      mezDbgPrint(Get.parameters.toString());
-                      ServerResponse resp = await controller
-                          .cancelOrder(Get.parameters['orderId']!);
-                      mezDbgPrint(resp.data.toString());
-                      if (resp.success) {
-                        Get.until((route) => route.settings.name == kHomeRoute);
-                      } else {
-                        mezcalmosSnackBar("Error", resp.errorMessage!);
-                      }
-                    }
-                  },
-                ),
+                          if (yesNoRes) {
+                            mezDbgPrint(Get.parameters.toString());
+                            ServerResponse resp = await controller
+                                .cancelOrder(Get.parameters['orderId']!);
+                            mezDbgPrint(resp.data.toString());
+                            if (resp.success) {
+                              Get.until(
+                                  (route) => route.settings.name == kHomeRoute);
+                            } else {
+                              mezcalmosSnackBar("Error", resp.errorMessage!);
+                            }
+                          }
+                        },
+                      )
+                    : SizedBox(),
                 SizedBox(
                   height: 30,
                 ),

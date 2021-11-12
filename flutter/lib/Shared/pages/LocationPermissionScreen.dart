@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
@@ -8,9 +9,10 @@ import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/UsefullWidgets.dart';
 
 class LocationPermissionScreen extends StatelessWidget {
-  SettingsController _settingsController = Get.find<SettingsController>();
-  SideMenuDraweController _sideMenuDraweController =
+  final SettingsController _settingsController = Get.find<SettingsController>();
+  final SideMenuDraweController _sideMenuDraweController =
       Get.find<SideMenuDraweController>();
+
   @override
   Widget build(BuildContext context) {
     mezDbgPrint("Onlocation screeeeeen !");
@@ -47,7 +49,7 @@ class LocationPermissionScreen extends StatelessWidget {
                   ),
                   Obx(
                     () => Text(
-                      _settingsController.appLanguage.strings['taxi']
+                      _settingsController.appLanguage.strings['shared']
                           ['permissions']['locationIsOff'],
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 26, fontFamily: 'psr'),
@@ -59,7 +61,7 @@ class LocationPermissionScreen extends StatelessWidget {
                   Obx(
                     () => Text(
                       // "App can not work without Background Location Permission !",
-                      _settingsController.appLanguage.strings['taxi']
+                      _settingsController.appLanguage.strings['shared']
                           ['permissions']['askForNotif'],
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -73,18 +75,44 @@ class LocationPermissionScreen extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () async {
-                    bool grantedPermission = await getLocationPermission();
-                      mezDbgPrint(
-                          "Permissions Granted ==========> $grantedPermission");
-                      if (!grantedPermission) {
-                        mezDbgPrint("Permission not granted !");
-                        mezcalmosSnackBar(
-                            'info',
-                            _settingsController.appLanguage.strings['taxi']
-                                ['permissions']['locationPermissionDenied'],
-                            position: SnackPosition.TOP);
+                      Location location = Location();
+                      bool _serviceEnabled = await location.requestService();
+                      // if Location Service is enabled!
+                      if (_serviceEnabled) {
+                        PermissionStatus _permissionStatus =
+                            await location.requestPermission();
+                        mezDbgPrint(_permissionStatus);
+                        switch (_permissionStatus) {
+                          // on denied forever User must know cuz it needs manual change in IOS!!
+                          case PermissionStatus.deniedForever:
+                            mezcalmosSnackBar(
+                                'Error :(',
+                                _settingsController.appLanguage
+                                        .strings['shared']['permissions']
+                                    ['locationPermissionDeniedForever'],
+                                position: SnackPosition.TOP);
+                            break;
+
+                          // on granted !
+                          case PermissionStatus.granted:
+                            Get.back(closeOverlays: true);
+                            break;
+
+                          // Default
+                          default:
+                            mezcalmosSnackBar(
+                                'Error :(',
+                                _settingsController
+                                        .appLanguage.strings['shared']
+                                    ['permissions']['locationPermissionDenied'],
+                                position: SnackPosition.TOP);
+                        }
                       } else {
-                        Get.back(closeOverlays: true);
+                        mezcalmosSnackBar(
+                            'Error :(',
+                            _settingsController.appLanguage.strings['shared']
+                                ['permissions']['locationIsOff'],
+                            position: SnackPosition.TOP);
                       }
                     },
                     child: Container(
@@ -108,7 +136,7 @@ class LocationPermissionScreen extends StatelessWidget {
                       child: Center(
                           child: Obx(
                         () => Text(
-                          _settingsController.appLanguage.strings['taxi']
+                          _settingsController.appLanguage.strings['shared']
                               ['permissions']['permissionBtn'],
                           textAlign: TextAlign.center,
                           style: TextStyle(

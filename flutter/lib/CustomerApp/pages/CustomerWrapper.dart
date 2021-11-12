@@ -10,6 +10,7 @@ import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
 import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -31,6 +32,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     with WidgetsBindingObserver {
   StreamSubscription<MezNotification.Notification>?
       _notificationsStreamListener;
+  StreamSubscription<bool>? _locationStreamSub;
 
   LanguageController lang = Get.find<LanguageController>();
   SideMenuDraweController _sideMenuDrawerController =
@@ -39,6 +41,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   LanguageController _lang = Get.find<LanguageController>();
   RxInt numberOfCurrentOrders = RxInt(0);
   DateTime? appClosedTime;
+
   @override
   void initState() {
     super.initState();
@@ -48,16 +51,32 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     });
     String userId = Get.find<AuthController>().fireAuthUser!.uid;
     _notificationsStreamListener = initializeShowNotificationsListener();
+    // listening for notification Permissions!
+    listenForLocationPermissions();
     Get.find<FBNotificationsController>()
         .startListeningForNotificationsFromFirebase(
             notificationsNode(userId), customerNotificationHandler);
+    super.initState();
+  }
+
+  void listenForLocationPermissions() {
+    _locationStreamSub?.cancel();
+    _locationStreamSub = Get.find<SettingsController>().locationPermissionStream
+        // .distinct()
+        .listen((locationPermission) {
+      if (locationPermission == false &&
+          Get.currentRoute != kLocationPermissionPage) {
+        Get.toNamed(kLocationPermissionPage);
+      }
+    });
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
       if (appClosedTime != null &&
-          DateTime.now().difference(appClosedTime!) > Duration(seconds: 10)) {
+          DateTime.now().difference(appClosedTime!) > Duration(seconds: 10) &&
+          Get.currentRoute != kLocationPermissionPage) {
         navigateToOrdersIfNecessary(_orderController.currentOrders);
       }
     } else if (state == AppLifecycleState.paused) {
@@ -67,13 +86,13 @@ class _CustomerWrapperState extends State<CustomerWrapper>
 
   // when app resumes check if there are current orders and if yes navigate to orders page
   void navigateToOrdersIfNecessary(List<Order> currentOrders) {
-    print("navigateToOrdersIfNecessary");
+    mezDbgPrint("navigateToOrdersIfNecessary");
     if (currentOrders.length == 1) {
       if (currentOrders[0].orderType == OrderType.Restaurant)
         popEverythingAndNavigateTo(
             getCurrentRestaurantOrderRoute(currentOrders[0].orderId));
       else
-        print("Navigate to other order type");
+        mezDbgPrint("Navigate to other order type");
     } else if (currentOrders.length > 1) {
       popEverythingAndNavigateTo(kOrdersRoute);
     }
@@ -211,6 +230,8 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   void dispose() {
     _notificationsStreamListener?.cancel();
     _notificationsStreamListener = null;
+    _locationStreamSub?.cancel();
+    _locationStreamSub = null;
     super.dispose();
   }
 }
