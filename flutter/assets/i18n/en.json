@@ -164,7 +164,14 @@
       
     },
     "shared": {
+        "snackbars" : {
+            "titleSuccess" : "Success :)",
+            "titleFailed" : "Oops :(",
+            "orderCancelSuccess" : "Order canceled successfully.",
+            "orderCancelFailed" : "Failed to cancel the order."
+            
 
+        },
         "permissions": {
             "locationIsOff": "Location Service Turned Off",
             "permissionBtn": "GIVE PERMISSION",

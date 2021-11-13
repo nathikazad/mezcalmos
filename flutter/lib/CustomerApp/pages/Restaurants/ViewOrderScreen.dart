@@ -8,6 +8,7 @@ import 'package:mezcalmos/CustomerApp/components/buildWidgetOnOrderStatus.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -37,9 +38,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
     super.initState();
     String orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
-
-    order.value = controller.getOrder(orderId) as RestaurantOrder;
-
+    order.value = controller.getOrder(orderId) as RestaurantOrder?;
     if (order.value == null) {
       Get.back();
     } else {
@@ -110,8 +109,8 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
   @override
   Widget build(BuildContext context) {
     responsiveSize(context);
-    mezDbgPrint(order.value!.restaurantOrderStatus);
-    mezDbgPrint(order.value!.serviceProviderId);
+    mezDbgPrint(order.value?.restaurantOrderStatus);
+    mezDbgPrint(order.value?.serviceProviderId);
     return Scaffold(
       backgroundColor: const Color(0xffffffff),
       appBar: mezcalmosAppBar("back", () => Get.back(), actionIcons: [

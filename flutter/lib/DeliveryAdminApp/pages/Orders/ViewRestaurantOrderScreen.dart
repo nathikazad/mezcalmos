@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
@@ -29,6 +28,8 @@ class ViewRestaurantOrderScreen extends StatefulWidget {
 
 class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
   LanguageController lang = Get.find<LanguageController>();
+  // Since we have alot of buttons we check loading by name
+  bool _clickedButton = false;
 
   Rxn<RestaurantOrder> order = Rxn();
   OrderController controller = Get.find<OrderController>();
@@ -41,7 +42,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
     orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
 
-    order.value = controller.getOrder(orderId) as RestaurantOrder;
+    order.value = controller.getOrder(orderId) as RestaurantOrder?;
     if (order.value == null) {
       Get.back();
     } else {
@@ -414,6 +415,37 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
         }));
   }
 
+  Future<void> onTapButtonsShowLoading(Function function) async {
+    if (!_clickedButton) {
+      // set true to show loading button
+      setState(() {
+        _clickedButton = true;
+      });
+
+      await function();
+
+      // after function done set to back to false
+      setState(() {
+        _clickedButton = false;
+      });
+    }
+  }
+
+  Widget getWidgetOrShowLoading(Widget desiredWidget) {
+    if (!_clickedButton) {
+      return desiredWidget;
+    } else {
+      return Container(
+        width: 20,
+        height: 20,
+        child: CircularProgressIndicator(
+          color: Colors.white,
+          strokeWidth: 1.5,
+        ),
+      );
+    }
+  }
+
   List<Widget> get changeStatusbuttons {
     if (order.value?.inProcess() ?? false)
       return [
@@ -422,20 +454,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
         ),
         Expanded(
           child: ButtonComponent(
-            widget: Text(
-                lang.strings["customer"]["restaurant"]["checkout"]["cancel"]
-                    .toUpperCase(),
-                style: TextStyle(
-                    color: const Color(0xffffffff),
-                    fontFamily: "psb",
-                    fontStyle: FontStyle.normal,
-                    fontSize: 16.0.sp),
-                textAlign: TextAlign.center),
-            gradient: const LinearGradient(
-                begin: Alignment(-0.10374055057764053, 0),
-                end: Alignment(1.1447703838348389, 1.1694844961166382),
-                colors: [const Color(0xede21132), const Color(0xdbd11835)]),
-            function: () async {
+            function: () async => await onTapButtonsShowLoading(() async {
               var res = await dailogComponent(
                   lang.strings["deliveryAdminApp"]["cancelAlert"]["title"],
                   lang.strings["deliveryAdminApp"]["cancelAlert"]["subTitle"],
@@ -456,7 +475,32 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
               if (res) {
                 controller.cancelOrder(orderId);
               }
-            },
+              // if (_response.success) {
+              //   Get.until((route) => route.settings.name == kOrdersRoute);
+              //   mezcalmosSnackBar(
+              //       lang.strings["shared"]["snackbars"]["titleSuccess"],
+              //       lang.strings["shared"]["snackbars"]["orderCancelSuccess"],
+              //       position: SnackPosition.TOP);
+              // } else {
+              //   mezcalmosSnackBar(
+              //       lang.strings["shared"]["snackbars"]["titleFailed"],
+              //       lang.strings["shared"]["snackbars"]["orderCancelFailed"],
+              //       position: SnackPosition.TOP);
+              // }
+            }),
+            widget: getWidgetOrShowLoading(Text(
+                lang.strings["customer"]["restaurant"]["checkout"]["cancel"]
+                    .toUpperCase(),
+                style: TextStyle(
+                    color: const Color(0xffffffff),
+                    fontFamily: "psb",
+                    fontStyle: FontStyle.normal,
+                    fontSize: 16.0.sp),
+                textAlign: TextAlign.center)),
+            gradient: const LinearGradient(
+                begin: Alignment(-0.10374055057764053, 0),
+                end: Alignment(1.1447703838348389, 1.1694844961166382),
+                colors: [const Color(0xede21132), const Color(0xdbd11835)]),
           ),
         )
       ];
@@ -469,25 +513,23 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
     switch (order.value!.restaurantOrderStatus) {
       case RestaurantOrderStatus.OrderReceieved:
         return ButtonComponent(
-          widget: Text(
-              lang.strings["deliveryAdminApp"]
-                  ["ordersButton"]["preparing"],
+          widget: getWidgetOrShowLoading(Text(
+              lang.strings["deliveryAdminApp"]["ordersButton"]["preparing"],
               style: TextStyle(
                   color: const Color(0xffffffff),
                   fontFamily: "psb",
                   fontStyle: FontStyle.normal,
                   fontSize: 16.0.sp),
-              textAlign: TextAlign.center),
+              textAlign: TextAlign.center)),
           gradient: LinearGradient(
               begin: Alignment(-0.10374055057764053, 0),
               end: Alignment(1.1447703838348389, 1.1694844961166382),
               colors: [const Color(0xffff9300), const Color(0xdbd15f18)]),
-          function: () async {
+          function: () async => await onTapButtonsShowLoading(() async {
             var res = await dailogComponent(
-                lang.strings["deliveryAdminApp"]
-                    ["prepareAlert"]["title"],
-                lang.strings["deliveryAdminApp"]
-                    ["prepareAlert"]["subTitle"], () {
+                lang.strings["deliveryAdminApp"]["prepareAlert"]["title"],
+                lang.strings["deliveryAdminApp"]["prepareAlert"]["subTitle"],
+                () {
               Get.back(result: true);
             }, () {
               Get.back(result: false);
@@ -500,22 +542,23 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                       const Color(0xffff9300),
                       const Color(0xdbd15f18)
                     ]));
+
             if (res) {
               controller.prepareOrder(orderId);
             }
-          },
+          }),
         );
 
       case RestaurantOrderStatus.PreparingOrder:
         return ButtonComponent(
-          widget: Text(
-              lang.strings["deliveryAdminApp"]
-                  ["ordersButton"]["readyForPickUp"],
+          widget: getWidgetOrShowLoading(Text(
+              lang.strings["deliveryAdminApp"]["ordersButton"]
+                  ["readyForPickUp"],
               style: TextStyle(
                   color: const Color(0xffffffff),
                   fontFamily: "psb",
                   fontSize: 16.0.sp),
-              textAlign: TextAlign.center),
+              textAlign: TextAlign.center)),
           gradient: LinearGradient(
               begin: Alignment(-0.10374055057764053, 0),
               end: Alignment(1.1447703838348389, 1.1694844961166382),
@@ -524,12 +567,10 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                 const Color(0xffd3bc0b),
                 const Color(0xdbd17c18)
               ]),
-          function: () async {
+          function: () async => await onTapButtonsShowLoading(() async {
             var res = await dailogComponent(
-                lang.strings["deliveryAdminApp"]
-                    ["readyAlert"]["title"],
-                lang.strings["deliveryAdminApp"]
-                    ["readyAlert"]["subTitle"], () {
+                lang.strings["deliveryAdminApp"]["readyAlert"]["title"],
+                lang.strings["deliveryAdminApp"]["readyAlert"]["subTitle"], () {
               Get.back(result: true);
             }, () {
               Get.back(result: false);
@@ -546,29 +587,27 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
             if (res) {
               controller.readyForPickupOrder(orderId);
             }
-          },
+          }),
         );
 
       case RestaurantOrderStatus.ReadyForPickup:
         return ButtonComponent(
-          widget: Text(
-              lang.strings["deliveryAdminApp"]
-                  ["ordersButton"]["deliver"],
+          widget: getWidgetOrShowLoading(Text(
+              lang.strings["deliveryAdminApp"]["ordersButton"]["deliver"],
               style: TextStyle(
                   color: const Color(0xffffffff),
                   fontFamily: "psb",
                   fontSize: 16.0.sp),
-              textAlign: TextAlign.center),
+              textAlign: TextAlign.center)),
           gradient: LinearGradient(
               begin: Alignment(-0.10374055057764053, 0),
               end: Alignment(1.1447703838348389, 1.1694844961166382),
               colors: [const Color(0xff5572ea), const Color(0xdb1f18d1)]),
-          function: () async {
+          function: () async => await onTapButtonsShowLoading(() async {
             var res = await dailogComponent(
-                lang.strings["deliveryAdminApp"]
-                    ["onTheWayAlert"]["title"],
-                lang.strings["deliveryAdminApp"]
-                    ["onTheWayAlert"]["subTitle"], () {
+                lang.strings["deliveryAdminApp"]["onTheWayAlert"]["title"],
+                lang.strings["deliveryAdminApp"]["onTheWayAlert"]["subTitle"],
+                () {
               Get.back(result: true);
             }, () {
               Get.back(result: false);
@@ -584,45 +623,45 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
             if (res) {
               controller.deliverOrder(orderId);
             }
-          },
+          }),
         );
       case RestaurantOrderStatus.OnTheWay:
         return ButtonComponent(
-          widget: Text(
-              lang.strings["deliveryAdminApp"]
-                  ["ordersButton"]["received"],
-              style: TextStyle(
-                  color: const Color(0xffffffff),
-                  fontFamily: "psb",
-                  fontSize: 16.0.sp),
-              textAlign: TextAlign.center),
-          gradient: LinearGradient(
-              begin: Alignment(-0.10374055057764053, 0),
-              end: Alignment(1.1447703838348389, 1.1694844961166382),
-              colors: [const Color(0xff13cb29), const Color(0xdb219125)]),
-          function: () async {
-            var res = await dailogComponent(
-                lang.strings["deliveryAdminApp"]
-                    ["deliveredAlert"]["title"],
-                lang.strings["deliveryAdminApp"]
-                    ["deliveredAlert"]["subTitle"], () {
-              Get.back(result: true);
-            }, () {
-              Get.back(result: false);
-            },
-                Container(height: 40, width: 40, child: Image.asset(tick)),
-                LinearGradient(
-                    begin: Alignment(-0.10374055057764053, 0),
-                    end: Alignment(1.1447703838348389, 1.1694844961166382),
-                    colors: [
-                      const Color(0xff13cb29),
-                      const Color(0xdb219125)
-                    ]));
-            if (res) {
-              controller.dropOrder(orderId);
-            }
-          },
-        );
+            widget: getWidgetOrShowLoading(Text(
+                lang.strings["deliveryAdminApp"]["ordersButton"]["received"],
+                style: TextStyle(
+                    color: const Color(0xffffffff),
+                    fontFamily: "psb",
+                    fontSize: 16.0.sp),
+                textAlign: TextAlign.center)),
+            gradient: LinearGradient(
+                begin: Alignment(-0.10374055057764053, 0),
+                end: Alignment(1.1447703838348389, 1.1694844961166382),
+                colors: [const Color(0xff13cb29), const Color(0xdb219125)]),
+            function: () async => await onTapButtonsShowLoading(() async {
+                  var res = await dailogComponent(
+                      lang.strings["deliveryAdminApp"]["deliveredAlert"]
+                          ["title"],
+                      lang.strings["deliveryAdminApp"]["deliveredAlert"]
+                          ["subTitle"], () {
+                    Get.back(result: true);
+                  }, () {
+                    Get.back(result: false);
+                  },
+                      Container(
+                          height: 40, width: 40, child: Image.asset(tick)),
+                      LinearGradient(
+                          begin: Alignment(-0.10374055057764053, 0),
+                          end:
+                              Alignment(1.1447703838348389, 1.1694844961166382),
+                          colors: [
+                            const Color(0xff13cb29),
+                            const Color(0xdb219125)
+                          ]));
+                  if (res) {
+                    controller.dropOrder(orderId);
+                  }
+                }));
 
       default:
         return null;
