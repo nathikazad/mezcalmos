@@ -14,7 +14,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void mezDbgPrint(dynamic log) {
   String d = DateFormat('HH:mm:ss').format(DateTime.now());
-  print("[MZL][$d] $log\n");
+  log.toString().split('\n').forEach((str) {
+    print("[MZL][$d] $str\n");
+  });
 }
 
 // This is to get all kind of exception in our code!

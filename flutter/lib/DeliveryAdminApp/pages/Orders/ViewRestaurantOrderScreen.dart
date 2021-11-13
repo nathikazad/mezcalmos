@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
 import 'package:mezcalmos/CustomerApp/components/basicCellComponent.dart';
@@ -352,7 +353,10 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                         ),
                         Spacer(),
                         InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Clipboard.setData(ClipboardData(
+                                  text: order.value!.clipBoardText));
+                            },
                             child: Icon(
                               Icons.copy,
                               size: 16,

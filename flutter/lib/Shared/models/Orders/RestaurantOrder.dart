@@ -1,5 +1,7 @@
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 class RestaurantOrder extends Order {
   RestaurantOrderStatus restaurantOrderStatus;
@@ -82,6 +84,29 @@ class RestaurantOrder extends Order {
         restaurantOrderStatus == RestaurantOrderStatus.PreparingOrder ||
         restaurantOrderStatus == RestaurantOrderStatus.ReadyForPickup ||
         restaurantOrderStatus == RestaurantOrderStatus.OnTheWay;
+  }
+
+  String get clipBoardText {
+    String text = "";
+    text += "${this.restaurant.name}\n";
+    text += this.items.fold<String>("", (mainString, item) {
+      mainString += "  ${item.name}\n";
+      mainString +=
+          item.chooseOneOptions.fold("", (secondString, chooseOneOption) {
+        return "    ${chooseOneOption.optionName}: ${chooseOneOption.chosenOptionName}\n";
+      });
+      mainString +=
+          item.chooseManyOptions.fold("", (secondString, chooseManyOption) {
+        return "    ${chooseManyOption.optionName}\n";
+      });
+      mainString += "    ${item.notes}\n";
+      return mainString;
+    });
+    text += "${this.customer.name}\n";
+    text += "${this.to.address}\n";
+    text +=
+        "https://www.google.com/maps/@{this.to.latitude},{this.to.longitude},15z";
+    return text;
   }
 }
 
