@@ -548,6 +548,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                     ]));
 
             if (res) {
+              Get.snackbar("Loading", "");
               controller.prepareOrder(orderId);
             }
           }),
@@ -589,6 +590,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                       const Color(0xdbd17c18)
                     ]));
             if (res) {
+              Get.snackbar("Loading", "");
               controller.readyForPickupOrder(orderId);
             }
           }),
@@ -625,6 +627,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                       const Color(0xdb1f18d1)
                     ]));
             if (res) {
+              Get.snackbar("Loading", "");
               controller.deliverOrder(orderId);
             }
           }),
@@ -663,6 +666,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                             const Color(0xdb219125)
                           ]));
                   if (res) {
+                    Get.snackbar("Loading", "");
                     controller.dropOrder(orderId);
                   }
                 }));

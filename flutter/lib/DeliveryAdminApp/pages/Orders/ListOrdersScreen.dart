@@ -85,6 +85,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
   }
 
   Widget buildOrders() {
+    inProcessOrders.value.sort((a, b) => b.orderTime.compareTo(a.orderTime));
     return SingleChildScrollView(
       child: Column(
         children:
@@ -249,7 +250,7 @@ class DeliveryAdminOrderComponent extends StatelessWidget {
         myDecoration = BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(5)),
             border: Border.all(color: const Color(0xffececec), width: 0.5),
-            color: const Color(0x26db3434));
+            color: const Color(0x3bff0000));
         break;
       case RestaurantOrderStatus.OrderReceieved:
         myDecoration = BoxDecoration(
@@ -295,6 +296,8 @@ Widget _getOrderIcon(RestaurantOrderStatus status) {
     case RestaurantOrderStatus.CancelledByCustomer:
     case RestaurantOrderStatus.CancelledByAdmin:
       myWidget = Container(
+        height: 25,
+        width: 25,
         child: Image.asset(circularCancel),
       );
       break;
@@ -315,6 +318,8 @@ Widget _getOrderIcon(RestaurantOrderStatus status) {
       break;
     case RestaurantOrderStatus.OrderReceieved:
       myWidget = Container(
+        height: 25,
+        width: 25,
         child: Image.asset(waiting),
       );
 
