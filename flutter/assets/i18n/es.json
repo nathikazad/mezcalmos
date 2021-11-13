@@ -19,9 +19,9 @@
             "cart": {
                 "cart": "Carro",
                 "inCart": "En El Carrito",
-                "clear": "Limpiar",
-                "clearCart": "Limpiar carrito",
-                "clearCartConfirm": "¿Está seguro de que desea limpiar el carrito?",
+                "clear": "Vaciar",
+                "clearCart": "Vaciar carrito",
+                "clearCartConfirm": "¿Está seguro de que desea vaciar el carrito?",
                 "deleteItem": "Eliminar este artículo.",
                 "deleteItemConfirm": "¿Quieres eliminar este artículo?",
                 "totalCost": "Coste Total",

@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
@@ -114,14 +112,14 @@ class Item {
         itemData["image"],
         itemData["name"][language],
         itemData["cost"]);
-    if (itemData["options"]["chooseOne"] != null) {
+    if (itemData["options"]?["chooseOne"] != null) {
       itemData["options"]["chooseOne"]
           .forEach((dynamic optionId, dynamic optionData) {
         item.chooseOneOptions
             .add(ChooseOneOption.fromData(optionId, optionData, language!));
       });
     }
-    if (itemData["options"]["chooseMany"] != null) {
+    if (itemData["options"]?["chooseMany"] != null) {
       itemData["options"]["chooseMany"]
           .forEach((dynamic optionId, dynamic optionData) {
         item.chooseManyOptions

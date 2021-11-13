@@ -441,14 +441,16 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
   }
 
   Widget chooseManyCheckBoxes(List<ChooseManyOption> chooseManyOptions) {
-    List<Widget> chooseManyWidgetArray = [
-      MenuTitles(
+    List<Widget> chooseManyWidgetArray = [];
+    if (chooseManyOptions.length > 0) {
+      chooseManyWidgetArray.add(MenuTitles(
         title: lang.strings['shared']['inputLocation']['optional'],
-      ),
-      SizedBox(
+      ));
+      chooseManyWidgetArray.add(SizedBox(
         height: 5,
-      )
-    ];
+      ));
+    }
+
     chooseManyOptions.forEach((chooseManyOption) {
       String name = chooseManyOption.name!;
       if (chooseManyOption.cost > 0) {
