@@ -435,7 +435,28 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                 begin: Alignment(-0.10374055057764053, 0),
                 end: Alignment(1.1447703838348389, 1.1694844961166382),
                 colors: [const Color(0xede21132), const Color(0xdbd11835)]),
-            //  bgColor: Colors.red,
+            function: () async {
+              var res = await dailogComponent(
+                  lang.strings["deliveryAdminApp"]["cancelAlert"]["title"],
+                  lang.strings["deliveryAdminApp"]["cancelAlert"]["subTitle"],
+                  () {
+                Get.back(result: true);
+              }, () {
+                Get.back(result: false);
+              },
+                  Container(
+                      height: 40, width: 40, child: Image.asset(cancelIcon)),
+                  LinearGradient(
+                      begin: Alignment(-0.10374055057764053, 0),
+                      end: Alignment(1.1447703838348389, 1.1694844961166382),
+                      colors: [
+                        const Color(0xede21132),
+                        const Color(0xdbd11835)
+                      ]));
+              if (res) {
+                controller.cancelOrder(orderId);
+              }
+            },
           ),
         )
       ];
@@ -449,7 +470,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
       case RestaurantOrderStatus.OrderReceieved:
         return ButtonComponent(
           widget: Text(
-              lang.strings["customer"]["restaurant"]["deliveryAdminApp"]
+              lang.strings["deliveryAdminApp"]
                   ["ordersButton"]["preparing"],
               style: TextStyle(
                   color: const Color(0xffffffff),
@@ -463,9 +484,9 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
               colors: [const Color(0xffff9300), const Color(0xdbd15f18)]),
           function: () async {
             var res = await dailogComponent(
-                lang.strings["customer"]["restaurant"]["deliveryAdminApp"]
+                lang.strings["deliveryAdminApp"]
                     ["prepareAlert"]["title"],
-                lang.strings["customer"]["restaurant"]["deliveryAdminApp"]
+                lang.strings["deliveryAdminApp"]
                     ["prepareAlert"]["subTitle"], () {
               Get.back(result: true);
             }, () {
@@ -488,7 +509,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
       case RestaurantOrderStatus.PreparingOrder:
         return ButtonComponent(
           widget: Text(
-              lang.strings["customer"]["restaurant"]["deliveryAdminApp"]
+              lang.strings["deliveryAdminApp"]
                   ["ordersButton"]["readyForPickUp"],
               style: TextStyle(
                   color: const Color(0xffffffff),
@@ -505,9 +526,9 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
               ]),
           function: () async {
             var res = await dailogComponent(
-                lang.strings["customer"]["restaurant"]["deliveryAdminApp"]
+                lang.strings["deliveryAdminApp"]
                     ["readyAlert"]["title"],
-                lang.strings["customer"]["restaurant"]["deliveryAdminApp"]
+                lang.strings["deliveryAdminApp"]
                     ["readyAlert"]["subTitle"], () {
               Get.back(result: true);
             }, () {
@@ -531,7 +552,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
       case RestaurantOrderStatus.ReadyForPickup:
         return ButtonComponent(
           widget: Text(
-              lang.strings["customer"]["restaurant"]["deliveryAdminApp"]
+              lang.strings["deliveryAdminApp"]
                   ["ordersButton"]["deliver"],
               style: TextStyle(
                   color: const Color(0xffffffff),
@@ -544,9 +565,9 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
               colors: [const Color(0xff5572ea), const Color(0xdb1f18d1)]),
           function: () async {
             var res = await dailogComponent(
-                lang.strings["customer"]["restaurant"]["deliveryAdminApp"]
+                lang.strings["deliveryAdminApp"]
                     ["onTheWayAlert"]["title"],
-                lang.strings["customer"]["restaurant"]["deliveryAdminApp"]
+                lang.strings["deliveryAdminApp"]
                     ["onTheWayAlert"]["subTitle"], () {
               Get.back(result: true);
             }, () {
@@ -568,7 +589,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
       case RestaurantOrderStatus.OnTheWay:
         return ButtonComponent(
           widget: Text(
-              lang.strings["customer"]["restaurant"]["deliveryAdminApp"]
+              lang.strings["deliveryAdminApp"]
                   ["ordersButton"]["received"],
               style: TextStyle(
                   color: const Color(0xffffffff),
@@ -581,9 +602,9 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
               colors: [const Color(0xff13cb29), const Color(0xdb219125)]),
           function: () async {
             var res = await dailogComponent(
-                lang.strings["customer"]["restaurant"]["deliveryAdminApp"]
+                lang.strings["deliveryAdminApp"]
                     ["deliveredAlert"]["title"],
-                lang.strings["customer"]["restaurant"]["deliveryAdminApp"]
+                lang.strings["deliveryAdminApp"]
                     ["deliveredAlert"]["subTitle"], () {
               Get.back(result: true);
             }, () {

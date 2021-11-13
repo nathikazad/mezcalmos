@@ -245,6 +245,7 @@ class DeliveryAdminOrderComponent extends StatelessWidget {
             color: const Color(0x2fff9300));
         break;
       case RestaurantOrderStatus.CancelledByCustomer:
+      case RestaurantOrderStatus.CancelledByAdmin:
         myDecoration = BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(5)),
             border: Border.all(color: const Color(0xffececec), width: 0.5),
@@ -292,6 +293,7 @@ Widget _getOrderIcon(RestaurantOrderStatus status) {
       );
       break;
     case RestaurantOrderStatus.CancelledByCustomer:
+    case RestaurantOrderStatus.CancelledByAdmin:
       myWidget = Container(
         child: Image.asset(circularCancel),
       );

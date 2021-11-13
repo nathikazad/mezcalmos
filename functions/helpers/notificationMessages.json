@@ -93,7 +93,17 @@
           "body": "El conductor ha indicado que ha devuelto su pedido, si ha habido un error, infórmenos."
         }
       },
-      "cancelled": {
+      "cancelledByCustomer": {
+        "en": {
+          "title": "Order has been cancelled",
+          "body": "Sorry to inform you that customer has cancelled the order."
+        },
+        "es": {
+          "title": "Pedido ha sido cancelado",
+          "body": "Lamento informarle que el client ha cancelado el pedido."
+        }
+      },
+      "cancelledByAdmin": {
         "en": {
           "title": "Order has been cancelled",
           "body": "Sorry to inform you that order has been cancelled."
