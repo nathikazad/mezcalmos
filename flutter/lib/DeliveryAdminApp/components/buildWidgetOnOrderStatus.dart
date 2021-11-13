@@ -157,7 +157,7 @@ Widget buildWigetOnOrderStatus(
               width: 61,
               height: 35,
               child: Icon(
-                Icons.close_rounded,
+                Icons.highlight_off,
                 color: Colors.red,
               )),
           Container(
@@ -167,7 +167,7 @@ Widget buildWigetOnOrderStatus(
                     color: const Color(0xff7e7a7a),
                     fontFamily: "psr",
                     fontStyle: FontStyle.normal,
-                    fontSize: 18.0),
+                    fontSize: 16.0),
                 textAlign: TextAlign.center),
           )
         ],

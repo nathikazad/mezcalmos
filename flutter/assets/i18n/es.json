@@ -337,23 +337,23 @@
         },
         "prepareAlert": {
             "title": "Preparar Orden",
-            "subTitle": "Estás seguro de que quieres preparar el pedido?"
+            "subTitle": "Estás seguro de que quieres\npreparar el pedido?"
         },
         "readyAlert": {
             "title": "LISTO",
-            "subTitle": "Está seguro de que desea marcar el pedido como listo?"
+            "subTitle": "Está seguro de que desea marcar\nel pedido como listo?"
         },
         "onTheWayAlert": {
             "title": "En Camino",
-            "subTitle": "Está seguro de que desea iniciar la entrega del pedido?"
+            "subTitle": "Está seguro de que desea iniciar\nla entrega del pedido?"
         },
         "deliveredAlert": {
             "title": "Entregar",
-            "subTitle": "Estás seguro de que quieres entregar el pedido?"
+            "subTitle": "Estás seguro de que quieres\nentregar el pedido?"
         },
         "cancelAlert": {
             "title": "Cancelar",
-            "subTitle": "Estás seguro de que cancelar entregar el pedido?"
+            "subTitle": "Estás seguro de que cancelar\nentregar el pedido?"
         }
     }
 }

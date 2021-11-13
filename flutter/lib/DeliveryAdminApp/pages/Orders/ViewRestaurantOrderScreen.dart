@@ -538,7 +538,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
             }, () {
               Get.back(result: false);
             },
-                Container(height: 40, width: 40, child: Image.asset(stoveIcon)),
+                Container(height: 70, width: 70, child: Image.asset(stoveIcon)),
                 LinearGradient(
                     begin: Alignment(-0.10374055057764053, 0),
                     end: Alignment(1.1447703838348389, 1.1694844961166382),
@@ -579,7 +579,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
             }, () {
               Get.back(result: false);
             },
-                Container(height: 40, width: 40, child: Image.asset(box)),
+                Container(height: 70, width: 70, child: Image.asset(box)),
                 LinearGradient(
                     begin: Alignment(-0.10374055057764053, 0),
                     end: Alignment(1.1447703838348389, 1.1694844961166382),
@@ -616,7 +616,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
             }, () {
               Get.back(result: false);
             },
-                Container(height: 40, width: 40, child: Image.asset(truck)),
+                Container(height: 70, width: 70, child: Image.asset(truck)),
                 LinearGradient(
                     begin: Alignment(-0.10374055057764053, 0),
                     end: Alignment(1.1447703838348389, 1.1694844961166382),
@@ -653,7 +653,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                     Get.back(result: false);
                   },
                       Container(
-                          height: 40, width: 40, child: Image.asset(tick)),
+                          height: 70, width: 70, child: Image.asset(tick)),
                       LinearGradient(
                           begin: Alignment(-0.10374055057764053, 0),
                           end:

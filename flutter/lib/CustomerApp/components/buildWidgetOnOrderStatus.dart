@@ -171,19 +171,20 @@ Widget buildWigetOnOrderStatus(
               width: 61,
               height: 35,
               child: Icon(
-                Icons.close_rounded,
+                Icons.highlight_off,
                 color: Colors.red,
               )),
           Container(
             child: Text(
                 lang.strings['customer']['restaurant']['orderStatus']
-                    ['canceled'],
+                        ['canceled'] +
+                    " ${f.format(orderTime.toLocal())}",
                 style: const TextStyle(
                     color: const Color(0xff7e7a7a),
                     fontWeight: FontWeight.w400,
                     fontFamily: "ProductSans",
                     fontStyle: FontStyle.normal,
-                    fontSize: 18.0),
+                    fontSize: 16.0),
                 textAlign: TextAlign.center),
           )
         ],

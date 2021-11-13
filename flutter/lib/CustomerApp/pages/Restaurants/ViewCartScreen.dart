@@ -303,6 +303,10 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                             ),
                             function: controller.cart.value.toLocation != null
                                 ? () async {
+                                    Get.snackbar(
+                                      "Loading",
+                                      "Please wait to load for you your order",
+                                    );
                                     if (controller.cart.value.toLocation !=
                                         null) {
                                       controller.cart.value.notes =

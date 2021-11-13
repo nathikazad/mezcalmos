@@ -53,13 +53,21 @@ class XRouter {
         GetPage(name: kHomeRoute, page: () => CustomerWrapper()),
         GetPage(name: kOrdersRoute, page: () => ListOrdersScreen()),
         GetPage(name: kRestaurantsRoute, page: () => ListRestaurantsScreen()),
-        GetPage(name: kRestaurantRoute, page: () => ViewRestaurantScreen()),
+        GetPage(
+            name: kRestaurantRoute,
+            page: () => ViewRestaurantScreen(),
+            transitionDuration: Duration(seconds: 1),
+            transition: Transition.rightToLeft),
         GetPage(
             name: kViewRestaurantItemRoute,
-            page: () => ViewItemScreen(ViewItemScreenMode.AddItemMode)),
+            page: () => ViewItemScreen(ViewItemScreenMode.AddItemMode),
+            transitionDuration: Duration(seconds: 1),
+            transition: Transition.rightToLeft),
         GetPage(
             name: kCartItemRoute,
-            page: () => ViewItemScreen(ViewItemScreenMode.EditItemMode)),
+            page: () => ViewItemScreen(ViewItemScreenMode.EditItemMode),
+            transitionDuration: Duration(seconds: 1),
+            transition: Transition.rightToLeft),
         GetPage(
             name: kCartRoute,
             page: () => ViewCartScreen(),

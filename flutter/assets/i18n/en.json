@@ -347,23 +347,23 @@
         },
         "prepareAlert": {
             "title": "Prepare Order",
-            "subTitle": "Are you sure you want to prepare order?"
+            "subTitle": "Are you sure you want\nto prepare order?"
         },
         "readyAlert": {
             "title": "READY",
-            "subTitle": "Are you sure you want to mark the order as ready?"
+            "subTitle": "Are you sure you want\nto mark the order as ready?"
         },
         "onTheWayAlert": {
             "title": "On the Way",
-            "subTitle": "Are you sure you want to start the order delivery?"
+            "subTitle": "Are you sure you want\nto start the order delivery?"
         },
         "deliveredAlert": {
             "title": "Deliver",
-            "subTitle": "Are you sure you want to deliver the order?"
+            "subTitle": "Are you sure you want\nto deliver the order?"
         },
         "cancelAlert": {
             "title": "Cancel",
-            "subTitle": "Are you sure you want to cancel the order?"
+            "subTitle": "Are you sure you want\nto cancel the order?"
         }
     }
 }
