@@ -141,7 +141,7 @@ class DeliveryAdminOrderComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        padding: const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 5),
         margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
         decoration: _getOrderColor(status!),
         child: Row(
@@ -152,7 +152,7 @@ class DeliveryAdminOrderComponent extends StatelessWidget {
               customerImage: image,
             ),
             Container(
-              width: Get.width * 0.55,
+              width: Get.width * 0.50,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -221,9 +221,7 @@ class DeliveryAdminOrderComponent extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(
-              width: 5,
-            ),
+            Spacer(),
             Expanded(
                 child: Container(
               padding: const EdgeInsets.only(top: 20),
@@ -290,36 +288,44 @@ Widget _getOrderIcon(RestaurantOrderStatus status) {
   switch (status) {
     case RestaurantOrderStatus.PreparingOrder:
       myWidget = Container(
+        height: 30,
+        width: 30,
         child: Image.asset(stoveIcon),
       );
       break;
     case RestaurantOrderStatus.CancelledByCustomer:
     case RestaurantOrderStatus.CancelledByAdmin:
       myWidget = Container(
-        height: 25,
-        width: 25,
+        height: 30,
+        width: 30,
         child: Image.asset(circularCancel),
       );
       break;
     case RestaurantOrderStatus.ReadyForPickup:
       myWidget = Container(
+        height: 30,
+        width: 30,
         child: Image.asset(box),
       );
       break;
     case RestaurantOrderStatus.OnTheWay:
       myWidget = Container(
+        height: 30,
+        width: 30,
         child: Image.asset(truck),
       );
       break;
     case RestaurantOrderStatus.Delivered:
       myWidget = Container(
+        height: 30,
+        width: 30,
         child: Image.asset(tick),
       );
       break;
     case RestaurantOrderStatus.OrderReceieved:
       myWidget = Container(
-        height: 25,
-        width: 25,
+        height: 30,
+        width: 30,
         child: Image.asset(waiting),
       );
 
