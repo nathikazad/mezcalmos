@@ -67,9 +67,11 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
     mezDbgPrint("ViewOrderScreen build");
     return Scaffold(
         appBar: mezcalmosAppBar("back", () => Get.back(), actionIcons: [
-          Get.find<FBNotificationsController>().notifications.value.length > 0
-              ? ActionIconsComponents.notificationIcon()
-              : SizedBox(),
+          Obx(() =>
+              Get.find<FBNotificationsController>().notifications.value.length >
+                      0
+                  ? ActionIconsComponents.notificationIcon(true)
+                  : SizedBox()),
           ActionIconsComponents.orderIcon(),
         ]),
         backgroundColor: Colors.white,

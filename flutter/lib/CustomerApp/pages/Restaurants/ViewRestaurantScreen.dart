@@ -50,9 +50,11 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
               Get.find<RestaurantCartController>().cart.value.items.length > 0
                   ? ActionIconsComponents.cartIcon()
                   : SizedBox()),
-          Get.find<FBNotificationsController>().notifications.value.length > 0
-              ? ActionIconsComponents.notificationIcon()
-              : SizedBox(),
+          Obx(() =>
+              Get.find<FBNotificationsController>().notifications.value.length >
+                      0
+                  ? ActionIconsComponents.notificationIcon(true)
+                  : SizedBox()),
           ActionIconsComponents.orderIcon()
         ]),
         body: (restaurant?.items == null)

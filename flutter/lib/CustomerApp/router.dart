@@ -56,22 +56,22 @@ class XRouter {
         GetPage(
             name: kRestaurantRoute,
             page: () => ViewRestaurantScreen(),
-            transitionDuration: Duration(seconds: 1),
+            transitionDuration: Duration(milliseconds: 500),
             transition: Transition.rightToLeft),
         GetPage(
             name: kViewRestaurantItemRoute,
             page: () => ViewItemScreen(ViewItemScreenMode.AddItemMode),
-            transitionDuration: Duration(seconds: 1),
+            transitionDuration: Duration(milliseconds: 500),
             transition: Transition.rightToLeft),
         GetPage(
             name: kCartItemRoute,
             page: () => ViewItemScreen(ViewItemScreenMode.EditItemMode),
-            transitionDuration: Duration(seconds: 1),
+            transitionDuration: Duration(milliseconds: 500),
             transition: Transition.rightToLeft),
         GetPage(
             name: kCartRoute,
             page: () => ViewCartScreen(),
-            transitionDuration: Duration(seconds: 1),
+            transitionDuration: Duration(milliseconds: 500),
             transition: Transition.rightToLeft),
         GetPage(
             name: kRestaurantOrderRoute,

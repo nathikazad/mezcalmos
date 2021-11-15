@@ -82,9 +82,10 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
         Obx(() => restaurantCartController.cart.value.items.length > 0
             ? ActionIconsComponents.cartIcon()
             : SizedBox()),
-        Get.find<FBNotificationsController>().notifications.value.length > 0
-            ? ActionIconsComponents.notificationIcon()
-            : SizedBox(),
+        Obx(() =>
+            Get.find<FBNotificationsController>().notifications.value.length > 0
+                ? ActionIconsComponents.notificationIcon(true)
+                : SizedBox()),
         ActionIconsComponents.orderIcon()
       ]),
       body: Obx(() => (cartItem.value?.item == null)

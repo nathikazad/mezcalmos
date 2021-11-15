@@ -126,13 +126,13 @@ class _CustomerWrapperState extends State<CustomerWrapper>
           appBar: mezcalmosAppBar(
               "menu", () => _sideMenuDrawerController.openMenu(),
               actionIcons: [
-                Get.find<FBNotificationsController>()
+                Obx(() => Get.find<FBNotificationsController>()
                             .notifications
                             .value
                             .length >
                         0
-                    ? ActionIconsComponents.notificationIcon()
-                    : SizedBox(),
+                    ? ActionIconsComponents.notificationIcon(true)
+                    : SizedBox()),
                 ActionIconsComponents.orderIcon()
               ]),
           body: Column(

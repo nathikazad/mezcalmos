@@ -68,9 +68,10 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
     return Scaffold(
       backgroundColor: const Color(0xffffffff),
       appBar: mezcalmosAppBar("back", () => Get.back(), actionIcons: [
-        Get.find<FBNotificationsController>().notifications.value.length > 0
-            ? ActionIconsComponents.notificationIcon()
-            : SizedBox(),
+        Obx(() =>
+            Get.find<FBNotificationsController>().notifications.value.length > 0
+                ? ActionIconsComponents.notificationIcon()
+                : SizedBox()),
         ActionIconsComponents.orderIcon()
       ]),
       body: Obx(() => controller.cart.value.items.length > 0
