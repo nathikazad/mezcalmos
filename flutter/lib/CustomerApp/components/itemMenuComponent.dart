@@ -64,7 +64,7 @@ class ItemMenuComponents extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "T$title",
+                      "$title",
                       overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.mulish(
                         textStyle: TextStyle(

@@ -96,7 +96,11 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                     height: 15,
                   ),
                   Expanded(
-                    child: buildOrders(),
+                    child: inProcessOrders.value.length > 0
+                        ? buildOrders()
+                        : Center(
+                            child: Text("No orders"),
+                          ),
                   ),
                 ],
               );

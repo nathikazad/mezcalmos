@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/ItemComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
+import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
@@ -33,7 +34,9 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
     return Scaffold(
         backgroundColor: const Color(0xffffffff),
         appBar: mezcalmosAppBar("back", () => Get.back(), actionIcons: [
-          ActionIconsComponents.notificationIcon(),
+          Get.find<FBNotificationsController>().notifications.value.length > 0
+              ? ActionIconsComponents.notificationIcon(true)
+              : SizedBox(),
           ActionIconsComponents.orderIcon()
         ]),
         body: Column(children: [

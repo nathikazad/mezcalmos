@@ -4,10 +4,12 @@ import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
 import 'package:mezcalmos/CustomerApp/components/itemMenuComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantCartController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
+import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/TaxiAdminApp/controller/NotificationsController.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
@@ -48,7 +50,9 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
               Get.find<RestaurantCartController>().cart.value.items.length > 0
                   ? ActionIconsComponents.cartIcon()
                   : SizedBox()),
-          ActionIconsComponents.notificationIcon(),
+          Get.find<FBNotificationsController>().notifications.value.length > 0
+              ? ActionIconsComponents.notificationIcon()
+              : SizedBox(),
           ActionIconsComponents.orderIcon()
         ]),
         body: (restaurant?.items == null)
@@ -163,7 +167,7 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
       removeTop: true,
       context: context,
       child: Container(
-        height: Get.height * 0.80.sp,
+        //height: Get.height * 0.80,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(18)),
           boxShadow: [
@@ -179,7 +183,7 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
           physics: ClampingScrollPhysics(),
           controller: sc,
           child: Container(
-            height: Get.height * 0.82.sp,
+            height: Get.height * 0.92,
             child: Column(
               children: <Widget>[
                 SizedBox(
@@ -210,7 +214,7 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
                           itemID: items[index].id,
                           photo: items[index].image,
                           price: items[index].cost,
-                          title: items[index].name,
+                          title: items[index].name!.capitalizeFirstofEach,
                           function: () {
                             Get.toNamed(
                                 getItemRoute(restaurantId, items[index].id!),

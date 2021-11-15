@@ -175,16 +175,38 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                         url: "${order.value!.restaurant.image}",
                         title: "${order.value!.restaurant.name}",
                         traillingIcon: Container(
-                          child: IconButton(
-                              icon: Icon(
-                                Icons.chat_bubble_outline,
-                                color: Color(0xff5c7fff),
-                              ),
-                              onPressed: () {
-                                //TODO: Navigate to messages screen
-                                Get.toNamed(getRestaurantMessagesRoute(
-                                    order.value!.orderId));
-                              }),
+                          child: Stack(
+                            children: [
+                              IconButton(
+                                  icon: Icon(
+                                    Icons.chat_bubble_outline,
+                                    color: Color(0xff5c7fff),
+                                  ),
+                                  onPressed: () {
+                                    //TODO: Navigate to messages screen
+                                    Get.toNamed(getRestaurantMessagesRoute(
+                                        order.value!.orderId));
+                                  }),
+                              Positioned(
+                                  left: 28,
+                                  top: 10,
+                                  child: (mycontoller
+                                          .orderHaveNewMessageNotifications(
+                                              order.value!.orderId))
+                                      ? Container(
+                                          width: 10,
+                                          height: 10,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              border: Border.all(
+                                                  color:
+                                                      const Color(0xfff6efff),
+                                                  width: 2),
+                                              color: const Color(0xffff0000)))
+                                      : Container())
+                            ],
+                          ),
                         ),
                       ),
                       Container(

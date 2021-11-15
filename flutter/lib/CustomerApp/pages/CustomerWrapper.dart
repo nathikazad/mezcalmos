@@ -124,10 +124,17 @@ class _CustomerWrapperState extends State<CustomerWrapper>
           key: _sideMenuDrawerController.getNewKey(),
           drawer: MezSideMenu(),
           appBar: mezcalmosAppBar(
-              "menu", () => _sideMenuDrawerController.openMenu(), actionIcons: [
-            ActionIconsComponents.notificationIcon(),
-            ActionIconsComponents.orderIcon()
-          ]),
+              "menu", () => _sideMenuDrawerController.openMenu(),
+              actionIcons: [
+                Get.find<FBNotificationsController>()
+                            .notifications
+                            .value
+                            .length >
+                        0
+                    ? ActionIconsComponents.notificationIcon()
+                    : SizedBox(),
+                ActionIconsComponents.orderIcon()
+              ]),
           body: Column(
             children: [
               Container(

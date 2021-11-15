@@ -9,6 +9,7 @@ import 'package:mezcalmos/DeliveryAdminApp/components/buttonComponent.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/dailogComponent.dart';
 import 'package:mezcalmos/DeliveryAdminApp/constants/global.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/orderController.dart';
+import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -66,7 +67,9 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
     mezDbgPrint("ViewOrderScreen build");
     return Scaffold(
         appBar: mezcalmosAppBar("back", () => Get.back(), actionIcons: [
-          ActionIconsComponents.notificationIcon(),
+          Get.find<FBNotificationsController>().notifications.value.length > 0
+              ? ActionIconsComponents.notificationIcon()
+              : SizedBox(),
           ActionIconsComponents.orderIcon(),
         ]),
         backgroundColor: Colors.white,
@@ -152,16 +155,36 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                           url: (order.value as RestaurantOrder).customer.image,
                           title: (order.value as RestaurantOrder).customer.name,
                           traillingIcon: Container(
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.chat_bubble_outline,
-                                color: Color(0xff5c7fff),
+                            child: Stack(children: [
+                              IconButton(
+                                icon: Icon(
+                                  Icons.chat_bubble_outline,
+                                  color: Color(0xff5c7fff),
+                                ),
+                                onPressed: () {
+                                  Get.toNamed(getCustomerMessagesRoute(
+                                      order.value!.orderId));
+                                },
                               ),
-                              onPressed: () {
-                                Get.toNamed(getCustomerMessagesRoute(
-                                    order.value!.orderId));
-                              },
-                            ),
+                              Positioned(
+                                  left: 28,
+                                  top: 10,
+                                  child: (controller
+                                          .orderHaveNewMessageNotifications(
+                                              order.value!.orderId))
+                                      ? Container(
+                                          width: 10,
+                                          height: 10,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              border: Border.all(
+                                                  color:
+                                                      const Color(0xfff6efff),
+                                                  width: 2),
+                                              color: const Color(0xffff0000)))
+                                      : Container())
+                            ]),
                           ),
                         ),
                         Container(

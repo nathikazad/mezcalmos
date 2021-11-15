@@ -10,6 +10,7 @@ import 'package:mezcalmos/CustomerApp/components/titlesComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantCartController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
@@ -81,7 +82,9 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
         Obx(() => restaurantCartController.cart.value.items.length > 0
             ? ActionIconsComponents.cartIcon()
             : SizedBox()),
-        ActionIconsComponents.notificationIcon(),
+        Get.find<FBNotificationsController>().notifications.value.length > 0
+            ? ActionIconsComponents.notificationIcon()
+            : SizedBox(),
         ActionIconsComponents.orderIcon()
       ]),
       body: Obx(() => (cartItem.value?.item == null)
@@ -195,32 +198,23 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
         context: context,
         removeTop: true,
         child: Container(
+          // height: Get.height * 0.9,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(18), topRight: Radius.circular(18)),
-              boxShadow: [
-                BoxShadow(
-                    color: const Color(0x29000000),
-                    offset: Offset(0, -5),
-                    blurRadius: 6,
-                    spreadRadius: 0)
-              ],
-              color: const Color(0xfff6f6f6)),
+              color: const Color(0xffffffff)),
           child: SingleChildScrollView(
             controller: sc,
             //clipBehavior: ,
             child: Container(
               decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                        color: const Color(0x29000000),
-                        offset: Offset(0, 2),
-                        blurRadius: 6,
-                        spreadRadius: 0)
-                  ],
-                  color: const Color(0xffffffff),
-                  borderRadius: BorderRadius.all(Radius.circular(18))),
+                color: const Color(0xffffffff),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(18),
+                    topRight: Radius.circular(18)),
+              ),
               child: Column(
+                mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   SizedBox(
                     height: 15,
@@ -376,6 +370,9 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                                 Get.back();
                               }
                             }),
+                        SizedBox(
+                          height: 20,
+                        ),
                       ],
                     ),
                   ),

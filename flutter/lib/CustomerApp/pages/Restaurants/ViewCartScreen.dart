@@ -12,6 +12,7 @@ import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantCartContr
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/widgets/CancelAlertDailog.dart';
@@ -67,7 +68,9 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
     return Scaffold(
       backgroundColor: const Color(0xffffffff),
       appBar: mezcalmosAppBar("back", () => Get.back(), actionIcons: [
-        ActionIconsComponents.notificationIcon(),
+        Get.find<FBNotificationsController>().notifications.value.length > 0
+            ? ActionIconsComponents.notificationIcon()
+            : SizedBox(),
         ActionIconsComponents.orderIcon()
       ]),
       body: Obx(() => controller.cart.value.items.length > 0

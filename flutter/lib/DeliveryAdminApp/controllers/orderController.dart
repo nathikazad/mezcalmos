@@ -62,6 +62,15 @@ class OrderController extends GetxController {
     });
   }
 
+  bool orderHaveNewMessageNotifications(String orderId) {
+    return _fbNotificationsController
+        .notifications()
+        .where((notification) =>
+            notification.notificationType == NotificationType.NewMessage &&
+            notification.orderId! == orderId)
+        .isNotEmpty;
+  }
+
   void clearNewOrderNotifications() {
     _fbNotificationsController.notifications.value.forEach((element) {
       mezDbgPrint(element.notificationType.toFirebaseFormatString());
