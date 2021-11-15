@@ -39,29 +39,28 @@
             "folderName": "TaxiApp",
             "packages": 
             {
-
                 "stage": {
 
                     "appName" : "MeztaxiStaging",
-                    "packageName": "com.meztaxi.stagingDriver",
-                    "googe-service-file": "services/staging.google-services.json",
-                    "apple-service-file": "services/staging.GoogleService-Info.plist"
+                    "packageName": "com.mezstaging.taxi",
+                    "googe-service-file": "services/stage/android/taxi.json",
+                    "apple-service-file": "services/stage/ios/taxi.plist"
                 },
 
                 "prod":{
 
                     "appName" : "Meztaxi",
-                    "packageName": "com.meztaxi.driver",
-                    "googe-service-file": "services/prod.google-services.json",
-                    "apple-service-file": "services/prod.GoogleService-Info.plist"
+                    "packageName": "com.mezcalmos.taxi",
+                    "googe-service-file": "services/prod/android/taxi.json",
+                    "apple-service-file": "services/prod/ios/taxi.plist"
                 },
 
                 "dev" : {
 
                     "appName" : "MeztaxiDev",
-                    "packageName": "com.meztaxi.driver",
-                    "googe-service-file": "services/prod.google-services.json",
-                    "apple-service-file": "services/prod.GoogleService-Info.plist"
+                    "packageName": "com.mezcalmos.taxi",
+                    "googe-service-file": "services/prod/android/taxi.json",
+                    "apple-service-file": "services/prod/ios/taxi.plist"
                 }
             }
         },
@@ -76,25 +75,24 @@
 
                     "appName" : "MezcustomerStaging",
                     "packageName": "com.mezstaging.customer",
-                    "googe-service-file": "services/staging-android-customer-app.json",
-                    "apple-service-file": "services/staging-ios-customer-app.plist"
+                    "googe-service-file": "services/stage/android/customer.json",
+                    "apple-service-file": "services/stage/ios/customer.plist"
 
                 },
 
-                "prod":{
-
+                "prod": {
                     "appName" : "Mezcustomer",
-                    "packageName": "com.meztaxi.driver",
-                    "googe-service-file": "services/prod.google-services.json",
-                    "apple-service-file": "services/prod.GoogleService-Info.plist"
+                    "packageName": "com.mezcalmos.customer",
+                    "googe-service-file": "services/prod/android/customer.json",
+                    "apple-service-file": "services/prod/ios/customer.plist"
                 },
 
                 "dev" : {
 
                     "appName" : "MezcustomerDev",
-                    "packageName": "com.meztaxi.driver",
-                    "googe-service-file": "services/prod.google-services.json",
-                    "apple-service-file": "services/prod.GoogleService-Info.plist"
+                    "packageName": "com.mezcalmos.customer",
+                    "googe-service-file": "services/prod/android/customer.json",
+                    "apple-service-file": "services/prod/ios/customer.plist"
                 }
             }
         },
@@ -104,7 +102,7 @@
             "packages": {
                 "stage": {
                     "name": "com.meztaxi.stagingDriver",
-                    "googe-service-file": "services/staging.google-services.json",
+                    "googe-service-file": "services/staging-android-taxi.google-services.json",
                     "apple-service-file": "services/staging.GoogleService-Info.plist"
                 }
             }
@@ -114,21 +112,21 @@
             "packages": {
                 "stage": {
                     "appName": "Meztaxi Admin Stage",
-                    "packageName": "com.meztaxi.admin",
-                    "googe-service-file": "services/staging.google-services.json",
-                    "apple-service-file": "services/staging.GoogleService-Info.plist"
+                    "packageName": "com.mezstaging.taxiadmin",
+                    "googe-service-file": "services/stage/android/taxiadmin.json",
+                    "apple-service-file": "services/stage/ios/taxiadmin.plist"
                 },
                 "prod": {
                     "appName": "Meztaxi Admin",
-                    "packageName": "com.meztaxi.admin",
-                    "googe-service-file": "services/taxi-admin-google-services.json",
-                    "apple-service-file": "services/prod.GoogleService-Info.plist"
+                    "packageName": "com.mezcalmos.taxiadmin",
+                    "googe-service-file": "services/prod/android/taxiadmin.json",
+                    "apple-service-file": "services/prod/ios/taxiadmin.plist"
                 },
                 "dev": {
                     "appName": "Meztaxi Admin Dev",
-                    "packageName": "com.meztaxi.admin",
-                    "googe-service-file": "services/prod.google-services.json",
-                    "apple-service-file": "services/prod.GoogleService-Info.plist"
+                    "packageName": "com.mezcalmos.taxiadmin",
+                    "googe-service-file": "services/prod/android/taxiadmin.json",
+                    "apple-service-file": "services/prod/ios/taxiadmin.plist"
                 }
             }
         },
@@ -137,21 +135,21 @@
             "packages": {
                 "stage": {
                     "appName": "Mezdelivery admin Stage",
-                    "packageName": "com.meztaxi.admin",
-                    "googe-service-file": "services/staging.google-services.json",
-                    "apple-service-file": "services/staging.GoogleService-Info.plist"
+                    "packageName": "com.mezstaging.deliveryadmin",
+                    "googe-service-file": "services/stage/android/deliveryadmin.json",
+                    "apple-service-file": "services/stage/ios/deliveryadmin.plist"
                 },
                 "prod": {
                     "appName": "Mezdelivery Admin",
-                    "packageName": "com.meztaxi.admin",
-                    "googe-service-file": "services/taxi-admin-google-services.json",
-                    "apple-service-file": "services/prod.GoogleService-Info.plist"
+                    "packageName": "com.mezcalmos.deliveryadmin",
+                    "googe-service-file": "services/prod/android/deliveryadmin.json",
+                    "apple-service-file": "services/prod/ios/deliveryadmin.plist"
                 },
                 "dev": {
                     "appName": "Mezdelivery Admin Dev",
                     "packageName": "com.meztaxi.driver",
-                    "googe-service-file": "services/prod.google-services.json",
-                    "apple-service-file": "services/prod.GoogleService-Info.plist"
+                    "googe-service-file": "services/prod/android/deliveryadmin.json",
+                    "apple-service-file": "services/prod/ios/deliveryadmin.plist"
                 }
             }
         }

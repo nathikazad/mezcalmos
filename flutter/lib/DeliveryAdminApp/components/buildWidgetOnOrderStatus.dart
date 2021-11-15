@@ -146,8 +146,7 @@ Widget buildWigetOnOrderStatus(
       );
       break;
     case RestaurantOrderStatus.CancelledByCustomer:
-    case RestaurantOrderStatus.CancelledByAdmin:
-      mezDbgPrint("Cancelled");
+      mezDbgPrint("Cancelled By Customer");
       myWidget = Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -162,7 +161,34 @@ Widget buildWigetOnOrderStatus(
               )),
           Container(
             child: Text(
-                "${lang.strings["customer"]["restaurant"]["orderStatus"]["canceled"]} ",
+                "${lang.strings["customer"]["restaurant"]["orderStatus"]["canceledByCustomer"]} ",
+                style: const TextStyle(
+                    color: const Color(0xff7e7a7a),
+                    fontFamily: "psr",
+                    fontStyle: FontStyle.normal,
+                    fontSize: 16.0),
+                textAlign: TextAlign.center),
+          )
+        ],
+      );
+      break;
+    case RestaurantOrderStatus.CancelledByAdmin:
+      mezDbgPrint("Cancelled By Admin");
+      myWidget = Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+              width: 61,
+              height: 35,
+              child: Icon(
+                Icons.highlight_off,
+                color: Colors.red,
+              )),
+          Container(
+            child: Text(
+                "${lang.strings["customer"]["restaurant"]["orderStatus"]["canceledByAdmin"]} ",
                 style: const TextStyle(
                     color: const Color(0xff7e7a7a),
                     fontFamily: "psr",

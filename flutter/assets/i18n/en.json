@@ -43,7 +43,8 @@
                 "readyForPickUp": "Ready For Pickup",
                 "onTheWay": "On The Way",
                 "delivered": "Delivered",
-                "canceled": "Canceled",
+                "canceledByAdmin": "Canceled By Admin",
+                "canceledByCustomer": "Canceled By Customer",
                 "recievied": "Receieved"
             }
         },

@@ -3,21 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>606383265109-po5fht6m59q8t0quhh6acnb0pir4ud3j.apps.googleusercontent.com</string>
+	<string>804036698204-15p7emfg6hgneujf4q8ngocer7esvie0.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.606383265109-po5fht6m59q8t0quhh6acnb0pir4ud3j</string>
+	<string>com.googleusercontent.apps.804036698204-15p7emfg6hgneujf4q8ngocer7esvie0</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>804036698204-asifo3thj82e433pt5idptgjcah4rlvs.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCu4xGBCfvX5AQjFpK_VbfV7x9VzdIIUnI</string>
+	<string>AIzaSyCOVuUV0qhw0SbNrQMfMVTBDm-5bJVozYg</string>
 	<key>GCM_SENDER_ID</key>
-	<string>606383265109</string>
+	<string>804036698204</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.mezcalmos.driver</string>
+	<string>com.mezcalmos.customer</string>
 	<key>PROJECT_ID</key>
-	<string>mezcalmos-staging</string>
+	<string>mezcalmos-31f1c</string>
 	<key>STORAGE_BUCKET</key>
-	<string>mezcalmos-staging.appspot.com</string>
+	<string>mezcalmos-31f1c.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +31,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:606383265109:ios:a54195b9f51fe32bd8cbdc</string>
+	<string>1:804036698204:ios:e97d36892952bf0c3f8699</string>
 	<key>DATABASE_URL</key>
-	<string>https://mezcalmos-staging-default-rtdb.firebaseio.com</string>
+	<string>https://mezcalmos-31f1c-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>

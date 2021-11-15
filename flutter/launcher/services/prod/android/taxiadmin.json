@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "804036698204",
+    "firebase_url": "https://mezcalmos-31f1c-default-rtdb.firebaseio.com",
+    "project_id": "mezcalmos-31f1c",
+    "storage_bucket": "mezcalmos-31f1c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:804036698204:android:1f997941dd7daf2f3f8699",
+        "android_client_info": {
+          "package_name": "com.mezstaging.taxiadmin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "804036698204-0u21r6uco7o5udcveioro4rpjlkeh7uh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACS-jr0KWCzCN0WFqbltolpX1dqhB2OjY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "804036698204-0u21r6uco7o5udcveioro4rpjlkeh7uh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "804036698204-15p7emfg6hgneujf4q8ngocer7esvie0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mezcalmos.customer"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -170,12 +170,12 @@ class Launcher:
         
         # loading up json_client
         json_client = json.loads(open(_launcher_google_services).read())
-
+        
         # if - elif - else
         if self.user_args['lmode'] == 'stage':
             PRINTLN("[+] Launching on Staging mode - Patching gServices ...!")   
-            del json_client['client'][0]
-            PRINTLN(f"[+] Applying Client's Package :{json_client['client'][0]['client_info']['android_client_info']}")
+        
+        PRINTLN(f"[+] Applying Client's Package :{json_client['client'][0]['client_info']['android_client_info']}")
         
         # Last phase , which is writing if everything is loaded correctly !
         if not copied_android:
@@ -427,7 +427,7 @@ class Config:
         # pubspect regex check:
         # ex : version: 1.0.4+8
 
-        _res = [i for i,line in enumerate(_pubspec) if re.match(r'version {0,}: {0,}[1-9]+\.[0-9]+\.[0-9]+\+[1-9]+' , line ) != None]
+        _res = [i for i,line in enumerate(_pubspec) if re.match(r'version {0,}: {0,}[0-9]+\.[0-9]+\.[0-9]+\+[0-9]+' , line ) != None]
         if _res.__len__() > 1:
             PRINTLN(f"[?] Found multi version ddffinition in {pubspec} at lines : {[x for x in _res]} ")
             exit(DW_EXIT_REASONS.FOUND_MULTI_VERSIONS_IN_PUBSPEC_YAML)
@@ -444,8 +444,8 @@ class Config:
         # flutter.versionName=1.0.4
         # flutter.versionCode=8
 
-        _versionName = [i for i,line in enumerate(_localProperties) if re.match(r' {0,}flutter\.versionName {0,}= {0,}[1-9]+\.[0-9]+\.[0-9]+' , line ) != None]
-        _versionCode = [i for i,line in enumerate(_localProperties) if re.match(r' {0,}flutter\.versionCode {0,}= {0,}[1-9]+' , line ) != None]
+        _versionName = [i for i,line in enumerate(_localProperties) if re.match(r' {0,}flutter\.versionName {0,}= {0,}[0-9]+\.[0-9]+\.[0-9]+' , line ) != None]
+        _versionCode = [i for i,line in enumerate(_localProperties) if re.match(r' {0,}flutter\.versionCode {0,}= {0,}[0-9]+' , line ) != None]
         
 
         if _versionName.__len__() > 1 :
