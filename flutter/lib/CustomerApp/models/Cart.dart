@@ -107,12 +107,12 @@ class Cart {
   Cart.fromCartData(dynamic cartData, this.restaurant) {
     cartData["items"]?.forEach((dynamic itemId, dynamic itemData) {
       Map<String, String> chosenOneOptions = {};
-      itemData["options"]["chosenOneOptions"]
+      itemData["options"]?["chosenOneOptions"]
           .forEach((dynamic id, dynamic data) {
         chosenOneOptions[id] = data["chosenOptionId"];
       });
       Map<String, bool> chosenManyOptions = {};
-      itemData["options"]["chosenManyOptions"]
+      itemData["options"]?["chosenManyOptions"]
           .forEach((dynamic id, dynamic data) {
         chosenManyOptions[id] = data["chosenValue"];
       });

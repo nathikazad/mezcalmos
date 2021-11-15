@@ -4,6 +4,7 @@ import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 Notification customerNotificationHandler(String key, dynamic value) {
   NotificationType notificationType =
@@ -13,9 +14,12 @@ Notification customerNotificationHandler(String key, dynamic value) {
       return newMessageNotification(key, value);
     case NotificationType.OrderStatusChange:
       OrderType orderType = value['orderType'].toString().toOrderType();
+      mezDbgPrint(value['orderType']);
       switch (orderType) {
         case OrderType.Restaurant:
           return restaurantOrderStatusChangeNotificationHandler(key, value);
+        // case OrderType.Taxi:
+        //   mezDbgPrint("Taxi Notifications");
         default:
           throw StateError("Invalid Notification Type");
       }

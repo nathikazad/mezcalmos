@@ -31,15 +31,17 @@ class OrderController extends GetxController {
         .child(customerPastOrders(_authController.fireAuthUser!.uid))
         .onValue
         .listen((event) async {
-      pastOrders.clear();
+      List<Order> orders = [];
       if (event.snapshot.value != null) {
-        event.snapshot.value.forEach((dynamic orderId, dynamic orderData) {
+        for (var orderId in event.snapshot.value.keys) {
+          dynamic orderData = event.snapshot.value[orderId];
           if (orderData["orderType"] ==
               OrderType.Restaurant.toFirebaseFormatString()) {
-            pastOrders.add(RestaurantOrder.fromData(orderId, orderData));
+            orders.add(RestaurantOrder.fromData(orderId, orderData));
           }
-        });
+        }
       }
+      pastOrders.value = orders;
     });
 
     _currentOrdersListener?.cancel();
@@ -48,16 +50,18 @@ class OrderController extends GetxController {
         .child(customerInProcessOrders(_authController.fireAuthUser!.uid))
         .onValue
         .listen((event) async {
-      currentOrders.clear();
+      List<Order> orders = [];
       if (event.snapshot.value != null) {
         mezDbgPrint("orderController: new incoming order data");
-        event.snapshot.value.forEach((dynamic orderId, dynamic orderData) {
+        for (var orderId in event.snapshot.value.keys) {
+          dynamic orderData = event.snapshot.value[orderId];
           if (orderData["orderType"] ==
               OrderType.Restaurant.toFirebaseFormatString()) {
-            currentOrders.add(RestaurantOrder.fromData(orderId, orderData));
+            orders.add(RestaurantOrder.fromData(orderId, orderData));
           }
-        });
+        }
       }
+      currentOrders.value = orders;
     });
   }
 

@@ -1,6 +1,5 @@
 const functions = require("firebase-functions");
 const firebase = require("firebase-admin");
-const admin = require("../admin");
 const notification = require("../notification");
 
 statusArrayInSeq =
@@ -9,6 +8,14 @@ statusArrayInSeq =
     "readyForPickup",
     "onTheWay",
     "delivered"]
+
+async function checkAdmin(firebase, params) {
+  let isAdmin = (await firebase.database().ref(`deliveryAdmins/${params.adminId}/authorized`).once('value')).val();
+  isAdmin = isAdmin != null && isAdmin == true
+  if (!isAdmin) {
+    return { status: "Error", errorMessage: "Only admins can run this operation" }
+  }
+}
 
 module.exports.prepareOrder = functions.https.onCall(async (data, context) => {
   if (!context.auth) {
@@ -48,7 +55,7 @@ function expectedPreviousStatus(status) {
 
 async function changeStatus(uid, data, newStatus) {
 
-  let response = await admin.checkAdmin(firebase, { adminId: uid })
+  let response = await checkAdmin(firebase, { adminId: uid })
   if (response) {
     return response;
   }

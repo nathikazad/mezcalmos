@@ -27,12 +27,14 @@ class OrderController extends GetxController {
         .child(inProcessOrdersNode())
         .onValue
         .listen((event) {
-      inProcessOrders.clear();
+      List<Order> orders = [];
       if (event.snapshot.value != null) {
-        event.snapshot.value.forEach((dynamic orderId, dynamic orderData) {
-          inProcessOrders.add(RestaurantOrder.fromData(orderId, orderData));
-        });
+        for (var orderId in event.snapshot.value.keys) {
+          dynamic orderData = event.snapshot.value[orderId];
+          orders.add(RestaurantOrder.fromData(orderId, orderData));
+        }
       }
+      inProcessOrders.value = orders;
     });
     super.onInit();
   }

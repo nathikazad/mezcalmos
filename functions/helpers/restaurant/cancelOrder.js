@@ -1,8 +1,15 @@
 const functions = require("firebase-functions");
 const firebase = require("firebase-admin");
-const admin = require("../admin");
 const notification = require("../notification");
 
+
+async function checkAdmin(firebase, params) {
+  let isAdmin = (await firebase.database().ref(`deliveryAdmins/${params.adminId}/authorized`).once('value')).val();
+  isAdmin = isAdmin != null && isAdmin == true
+  if (!isAdmin) {
+    return { status: "Error", errorMessage: "Only admins can run this operation" }
+  }
+}
 
 // Customer Canceling
 module.exports.cancelOrderFromCustomer = functions.https.onCall(async (data, context) => {
@@ -25,7 +32,7 @@ module.exports.cancelOrderFromAdmin = functions.https.onCall(async (data, contex
 async function changeStatus(uid, data, newStatus) {
 
   if (newStatus == "cancelledByAdmin") {
-    let response = await admin.checkAdmin(firebase, { adminId: uid })
+    let response = await checkAdmin(firebase, { adminId: uid })
     if (response) {
       return response;
     }
@@ -49,6 +56,14 @@ async function changeStatus(uid, data, newStatus) {
     }
   }
 
+  if (order.status == "cancelledByAdmin" ||
+    order.status == "cancelledByCustomer" ||
+    order.status == "delivered")
+    return {
+      status: "Error",
+      errorMessage: `Order cannot be cancelled because it is not in process`,
+      errorCode: "orderNotInProcess"
+    }
   // changing the payload.status to newStatus
   order.status = newStatus;
 
@@ -110,7 +125,11 @@ async function notifyAdminsCancelledOrder(admins, firebase, update) {
         collapse_key: "cancelOrder",
         priority: "high"
       }
-      await firebase.messaging().sendToDevice(admin.notificationInfo.deviceNotificationToken, payload, options)
+      try {
+        await firebase.messaging().sendToDevice(admin.notificationInfo.deviceNotificationToken, payload, options)
+      } catch {
+        console.log("Send to devices error");
+      }
     }
   }
 }

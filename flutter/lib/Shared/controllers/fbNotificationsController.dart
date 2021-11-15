@@ -41,20 +41,21 @@ class FBNotificationsController extends GetxController {
         .listen((event) {
       mezDbgPrint("fbNotificationsController:: NEW NOTIFICATION");
       mezDbgPrint(event.snapshot.value);
-      Notification _notification =
-          notificationHandler(event.snapshot.key!, event.snapshot.value);
-      bool alreadyOnLinkPage = (Get.currentRoute == _notification.linkUrl);
-      mezDbgPrint(Get.currentRoute);
-      mezDbgPrint(_notification.linkUrl);
-      if (alreadyOnLinkPage && _notification.showIfOnLinkPage)
-        _notificationsStreamController.add(_notification);
+      try {
+        Notification _notification =
+            notificationHandler(event.snapshot.key!, event.snapshot.value);
+        bool alreadyOnLinkPage = (Get.currentRoute == _notification.linkUrl);
+        if (alreadyOnLinkPage && _notification.showIfOnLinkPage)
+          _notificationsStreamController.add(_notification);
 
-      if (!alreadyOnLinkPage) {
-        notifications.add(_notification);
-        _notificationsStreamController.add(_notification);
-        mezDbgPrint(_notification.toJson());
-      } else {
-        removeNotification(_notification.id);
+        if (!alreadyOnLinkPage) {
+          notifications.add(_notification);
+          _notificationsStreamController.add(_notification);
+        } else {
+          removeNotification(_notification.id);
+        }
+      } on StateError {
+        mezDbgPrint("Invalid notification");
       }
     });
 

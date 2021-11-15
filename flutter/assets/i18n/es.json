@@ -76,7 +76,8 @@
             "noShow": "No vino",
             "mistake": "Error",
             "other": "Otro",
-            "taxiCancelled": "Lamento informarle que el taxi canceló el viaje."
+            "taxiCancelled": "Lamento informarle que el taxi canceló el viaje.",
+            "orderExpired": "Lamento informar que su solicitud de taxi ha caducado."
         },
         "savedLocations": {
             "title": "Ubicaciones guardadas",
@@ -89,6 +90,7 @@
             "item": "Artículo|Artículos",
             "onTheWay": "En camino",
             "inTransit": "En tránsito",
+            "inProcess": "En proceso",
             "searching": "Buscando",
             "noOrders": "Sin pedidos"
         }
@@ -292,7 +294,10 @@
             "address": "Ingresa Dirección",
             "name": "Ingresa Nombre",
             "search": "Busca",
-            "writeHere": "Escriba aquí"
+            "writeHere": "Escriba aquí",
+            "displayName": "Ingresa Nombre",
+            "phone": "Ingresa Numero Telefono",
+            "phoneNumber": "+52123456.."
         }
     },
     "admin": {
@@ -333,7 +338,7 @@
             "readyForPickUp": "ALIMENTOS LISTOS",
             "deliver": "INICIAR ENTREGA",
             "canceled": "CANCELAR",
-            "received": "ABANDONÓ"
+            "received": "ENTREGADO"
         },
         "prepareAlert": {
             "title": "Preparar Orden",

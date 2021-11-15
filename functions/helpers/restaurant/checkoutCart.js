@@ -94,12 +94,13 @@ async function checkoutCart(uid, data) {
     particpantType: "restaurant",
     phoneNumber: (restaurant.details.phoneNumber) ? restaurant.details.phoneNumber : null
   }
-  firebase.database().ref(`/deliveryAdmins`).once('value', (snapshot) => {
+  firebase.database().ref(`/deliveryAdmins`).once('value', async (snapshot) => {
     const deliveryAdmins = snapshot.val();
     for (var deliveryAdminId in deliveryAdmins) {
+      var userInfo = (await firebase.database().ref(`/users/${deliveryAdminId}/info`).once('value')).val();
       chat.participants[deliveryAdminId] = {
-        name: deliveryAdmins[deliveryAdminId].info.name,
-        image: deliveryAdmins[deliveryAdminId].info.photo,
+        name: userInfo.displayName,
+        image: userInfo.photo,
         particpantType: "deliveryAdmin",
       }
     }
@@ -137,7 +138,11 @@ async function notifyAdminsNewOrder(admins, firebase, orderId, restaurant) {
         collapse_key: "newOrder",
         priority: "high"
       }
-      await firebase.messaging().sendToDevice(admin.notificationInfo.deviceNotificationToken, payload, options)
+      try {
+        await firebase.messaging().sendToDevice(admin.notificationInfo.deviceNotificationToken, payload, options)
+      } catch (e) {
+        console.log("Send to devices error");
+      }
     }
   }
 }

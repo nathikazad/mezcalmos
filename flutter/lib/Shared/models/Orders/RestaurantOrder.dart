@@ -55,7 +55,7 @@ class RestaurantOrder extends Order {
           image: itemData["image"],
           quantity: itemData["quantity"],
           notes: itemData["notes"]);
-      itemData["options"]["chosenManyOptions"]
+      itemData["options"]?["chosenManyOptions"]
           .forEach((dynamic id, dynamic data) {
         restaurantOrderItem.chooseManyOptions.add(ChooseManyOption(
             optionId: id,
@@ -63,7 +63,7 @@ class RestaurantOrder extends Order {
             chosenValueCost: data["chosenValueCost"],
             chosenOptionValue: data["chosenValue"]));
       });
-      itemData["options"]["chosenOneOptions"]
+      itemData["options"]?["chosenOneOptions"]
           .forEach((dynamic id, dynamic data) {
         restaurantOrderItem.chooseOneOptions.add(ChooseOneOption(
             optionId: id,
@@ -90,22 +90,26 @@ class RestaurantOrder extends Order {
     String text = "";
     text += "${this.restaurant.name}\n";
     text += this.items.fold<String>("", (mainString, item) {
-      mainString += "  ${item.name}\n";
+      mainString += "  ${item.name} x${item.quantity} ${item.totalCost}\n";
       mainString +=
           item.chooseOneOptions.fold("", (secondString, chooseOneOption) {
-        return "    ${chooseOneOption.optionName}: ${chooseOneOption.chosenOptionName}\n";
+        return "${secondString}    ${chooseOneOption.optionName}: ${chooseOneOption.chosenOptionName}\n";
       });
       mainString +=
           item.chooseManyOptions.fold("", (secondString, chooseManyOption) {
-        return "    ${chooseManyOption.optionName}\n";
+        mezDbgPrint(chooseManyOption.optionName);
+        return "${secondString}    ${chooseManyOption.optionName}\n";
       });
       mainString += "    ${item.notes}\n";
       return mainString;
     });
+    text += "${this.notes}\n";
+    text += "${this.cost}\n";
     text += "${this.customer.name}\n";
     text += "${this.to.address}\n";
     text +=
-        "https://www.google.com/maps/@{this.to.latitude},{this.to.longitude},15z";
+        "https://www.google.com/maps/@${this.to.latitude},${this.to.longitude},15z";
+    mezDbgPrint(text);
     return text;
   }
 }

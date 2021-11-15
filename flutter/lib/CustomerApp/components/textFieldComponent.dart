@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 class TextFieldComponent extends StatelessWidget {
   final TextEditingController textController;
   final String? hint;
-  TextFieldComponent({required this.textController, this.hint});
+  final Function? onChangeCallback;
+  TextFieldComponent(
+      {required this.textController, this.hint, this.onChangeCallback});
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +22,9 @@ class TextFieldComponent extends StatelessWidget {
       ),
       child: TextField(
         controller: textController,
+        onChanged: (String value) {
+          if (onChangeCallback != null) onChangeCallback!(value);
+        },
         decoration: InputDecoration(
           hintText: "$hint",
           hintStyle: TextStyle(

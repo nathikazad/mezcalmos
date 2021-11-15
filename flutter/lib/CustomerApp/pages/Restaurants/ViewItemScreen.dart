@@ -33,7 +33,6 @@ class ViewItemScreen extends StatefulWidget {
 
 class _ViewItemScreenState extends State<ViewItemScreen> {
   LanguageController lang = Get.find<LanguageController>();
-  TextEditingController textcontoller = TextEditingController();
   Rxn<CartItem> cartItem = Rxn();
   late RestaurantCartController restaurantCartController;
   RestaurantsInfoController controller = Get.find<RestaurantsInfoController>();
@@ -274,7 +273,11 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                           height: 20.sp,
                         ),
                         TextFieldComponent(
-                          textController: textcontoller,
+                          textController: TextEditingController(
+                              text: cartItem.value?.notes),
+                          onChangeCallback: (String newNotes) {
+                            cartItem.value?.notes = newNotes;
+                          },
                           hint: lang.strings['customer']['restaurant']['menu']
                               ['notes'],
                         ),
@@ -361,9 +364,6 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                             function: () {
                               if (ViewItemScreenMode.AddItemMode ==
                                   widget.viewItemScreenMode) {
-                                String _notes = textcontoller.text;
-                                cartItem.value!.notes =
-                                    _notes.length > 0 ? _notes : "";
                                 restaurantCartController
                                     .addItem(cartItem.value!);
                                 Get.offNamed(kCartRoute);
