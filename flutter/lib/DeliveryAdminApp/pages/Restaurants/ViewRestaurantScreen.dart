@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/itemMenuComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -58,10 +59,12 @@ class ViewRestaurantScreen extends GetView<RestaurantsInfoController> {
                                       borderRadius: BorderRadius.only(
                                           topLeft: Radius.circular(25),
                                           topRight: Radius.circular(25)),
-                                      child: Image.network(
-                                        "${restaurant.value!.photo}",
-                                        fit: BoxFit.cover,
-                                      ),
+                                      child: handleNetworkImage(
+                                          url: restaurant.value?.photo),
+                                      // Image.network(
+                                      //   "${restaurant.value!.photo}",
+                                      //   fit: BoxFit.cover,
+                                      // ),
                                     ),
                                   ),
                                   Container(

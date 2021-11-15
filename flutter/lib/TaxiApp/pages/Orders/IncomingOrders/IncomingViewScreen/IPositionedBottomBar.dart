@@ -60,15 +60,23 @@ class IncommingPositionedBottomBar extends StatelessWidget with MezDisposable {
                                         100, context.height, context.width),
                                     fit: BoxFit.cover,
                                   )
-                                : Image.network(
-                                    controller.selectedIncommingOrder!.customer
-                                            .image +
+                                : handleNetworkImage(
+                                    url: controller.selectedIncommingOrder!
+                                            .customer.image +
                                         "?type=large",
-                                    fit: BoxFit.cover,
                                     height: getSizeRelativeToScreen(
                                         100, context.height, context.width),
                                     width: getSizeRelativeToScreen(
                                         100, context.height, context.width),
+                                    //  Image.network(
+                                    //     controller.selectedIncommingOrder!.customer
+                                    //             .image +
+                                    //         "?type=large",
+                                    //     fit: BoxFit.cover,
+                                    // height: getSizeRelativeToScreen(
+                                    //     100, context.height, context.width),
+                                    // width: getSizeRelativeToScreen(
+                                    //     100, context.height, context.width),
                                   ),
                           ),
                           backgroundColor: Colors.grey

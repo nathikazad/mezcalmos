@@ -38,13 +38,11 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   SideMenuDraweController _sideMenuDrawerController =
       Get.find<SideMenuDraweController>();
   OrderController _orderController = Get.find<OrderController>();
-  LanguageController _lang = Get.find<LanguageController>();
   RxInt numberOfCurrentOrders = RxInt(0);
   DateTime? appClosedTime;
   StreamSubscription? _orderCountListener;
   @override
   void initState() {
-    super.initState();
     WidgetsBinding.instance!.addObserver(this);
     _orderCountListener = _orderController.currentOrders.stream.listen((_) {
       numberOfCurrentOrders.value = _orderController.currentOrders.length;
@@ -56,6 +54,10 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     Get.find<FBNotificationsController>()
         .startListeningForNotificationsFromFirebase(
             notificationsNode(userId), customerNotificationHandler);
+    Future.microtask(() {
+      // Fix to Input Focus problems ( we had it in build which gets re-executed after any input focus) !
+      navigateToOrdersIfNecessary(_orderController.currentOrders);
+    });
     super.initState();
   }
 
@@ -112,12 +114,9 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   @override
   Widget build(BuildContext context) {
     responsiveSize(context);
-    print("CustomWrapper Build callabck");
+    // mezDbgPrint("CustomWrapper Build callabck");
     // Navigate to current orders if any after build
-    Future.microtask(() {
-      print("CustomWrapper Build callabck first");
-      navigateToOrdersIfNecessary(_orderController.currentOrders);
-    });
+
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(

@@ -252,10 +252,12 @@ class TowAvatars extends StatelessWidget {
               width: 40,
               height: 40,
               child: ClipOval(
-                  child: Image.network(
-                "$url",
-                fit: BoxFit.cover,
-              )),
+                  child: handleNetworkImage(url: url, fit: BoxFit.cover)
+                  //     Image.network(
+                  //   "$url",
+                  //   fit: BoxFit.cover,
+                  // )
+                  ),
             ),
           )
         ],

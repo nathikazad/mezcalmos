@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class TextFieldComponent extends StatelessWidget {
   final TextEditingController textController;

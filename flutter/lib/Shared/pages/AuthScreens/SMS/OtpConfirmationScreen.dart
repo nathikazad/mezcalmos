@@ -44,7 +44,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
     responsiveSize(context);
 
     return Scaffold(
-        resizeToAvoidBottomInset: false,
+        // resizeToAvoidBottomInset: false,
         appBar: mezcalmosAppBar("back", () {
           Get.back();
         }),
@@ -206,7 +206,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                   Spacer(),
                   Obx(
                     () => Container(
-                      padding: const EdgeInsets.only(bottom: 10),
+                      padding: const EdgeInsets.only(bottom: 40),
                       width: double.infinity,
                       child: TextButton(
                         onPressed:
@@ -238,7 +238,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                                       fontWeight: FontWeight.w600,
                                       fontSize: 15.sp),
                                 ),
-                        ),
+                              ),
                         style: ButtonStyle(
                             fixedSize:
                                 MaterialStateProperty.all(Size(Get.width, 50)),

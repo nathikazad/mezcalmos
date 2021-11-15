@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
@@ -28,6 +29,7 @@ class MezPickGoogleMap extends StatefulWidget {
 class MezPickGoogleMapState extends State<MezPickGoogleMap> {
   // shared original google map Key
   final GlobalKey<MGoogleMapState> mGoogleMapKey = GlobalKey();
+  final LanguageController _lang = Get.find<LanguageController>();
 
   bool _showFakeMarker = true;
   bool _showLoading = false;
@@ -35,7 +37,6 @@ class MezPickGoogleMapState extends State<MezPickGoogleMap> {
   RxList<Marker> markers = <Marker>[].obs;
 
   Future<LatLng?> getMapCenter() async {
-    mezDbgPrint("ahahahahahh");
     return await mGoogleMapKey.currentState?.getMapCenter();
   }
 
@@ -108,7 +109,7 @@ class MezPickGoogleMapState extends State<MezPickGoogleMap> {
                             EdgeInsets.only(bottom: 50, left: 20, right: 20),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Padding(
@@ -119,12 +120,11 @@ class MezPickGoogleMapState extends State<MezPickGoogleMap> {
                                 size: 20,
                               ),
                             ),
-                            SizedBox(
-                              width: 10,
-                            ),
                             Expanded(
                               child: Text(
-                                "You can move the map if position is not precise.",
+                                _lang.strings["shared"]["inputLocation"]
+                                    ["moveMapIfNotPrecise"],
+                                // "You can move the map if position is not precise.",
                                 overflow: TextOverflow.visible,
                                 softWrap: true,
                                 textAlign: TextAlign.center,

@@ -1,6 +1,5 @@
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 class RestaurantOrder extends Order {
@@ -45,7 +44,10 @@ class RestaurantOrder extends Order {
         to: Location.fromData(data['to']),
         restaurant: UserInfo.fromData(data["restaurant"]),
         customer: UserInfo.fromData(data["customer"]));
+
     data["items"].forEach((dynamic itemId, dynamic itemData) {
+      mezDbgPrint(itemData.toString());
+
       RestaurantOrderItem restaurantOrderItem = RestaurantOrderItem(
           costPerOne: itemData["costPerOne"],
           totalCost: itemData["totalCost"],

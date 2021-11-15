@@ -477,18 +477,6 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
               if (res) {
                 controller.cancelOrder(orderId);
               }
-              // if (_response.success) {
-              //   Get.until((route) => route.settings.name == kOrdersRoute);
-              //   mezcalmosSnackBar(
-              //       lang.strings["shared"]["snackbars"]["titleSuccess"],
-              //       lang.strings["shared"]["snackbars"]["orderCancelSuccess"],
-              //       position: SnackPosition.TOP);
-              // } else {
-              //   mezcalmosSnackBar(
-              //       lang.strings["shared"]["snackbars"]["titleFailed"],
-              //       lang.strings["shared"]["snackbars"]["orderCancelFailed"],
-              //       position: SnackPosition.TOP);
-              // }
             }),
             widget: getWidgetOrShowLoading(Text(
                 lang.strings["customer"]["restaurant"]["checkout"]["cancel"]

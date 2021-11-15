@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 class TowAvatarsComponent extends StatelessWidget {
   final OrderType type;
@@ -30,13 +32,16 @@ class TowAvatarsComponent extends StatelessWidget {
                       backgroundColor: Colors.white,
                       child: ClipOval(
                         child: Container(
-                          width: 30,
-                          height: 30,
-                          child: Image.network(
-                            "$customerImage",
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+                            width: 30,
+                            height: 30,
+                            child: handleNetworkImage(
+                                url: customerImage,
+                                assetInCaseFailed: aDefaultAvatar)
+                            // Image.network(
+                            //   "$customerImage",
+                            //   fit: BoxFit.cover,
+                            // ),
+                            ),
                       )),
                 ),
               ),
@@ -47,11 +52,12 @@ class TowAvatarsComponent extends StatelessWidget {
             child: Container(
               height: 40,
               width: 40,
-              child: ClipOval(
-                  child: Image.network(
-                "$url",
-                fit: BoxFit.cover,
-              )),
+              child: ClipOval(child: handleNetworkImage(url: url)
+                  //      Image.network(
+                  //   "$url",
+                  //   fit: BoxFit.cover,
+                  // )
+                  ),
             ),
           ),
         ],

@@ -21,9 +21,8 @@ class MezSideMenu extends GetWidget<AuthController> {
 
   @override
   Widget build(BuildContext context) {
-    mezDbgPrint(
-        "=========> ImgUrl ======<  ${controller.fireAuthUser?.photoURL}");
-    mezDbgPrint(controller.fireAuthUser?.phoneNumber);
+    mezDbgPrint("=========> ImgUrl ======<  ${controller.user?.image}");
+    mezDbgPrint(controller.user?.phone);
 
     responsiveSize(context);
 
@@ -54,29 +53,27 @@ class MezSideMenu extends GetWidget<AuthController> {
                   height: 120.sp,
                   width: 120.sp,
                   child: ClipOval(
-                    clipBehavior: Clip.antiAlias,
-                    child: controller.fireAuthUser?.photoURL == null ||
-                            controller.fireAuthUser?.photoURL == ""
-                        ? Image.asset(
-                            aDefaultAvatar,
-                            width: getSizeRelativeToScreen(300, sw, sh).sp,
-                            height: getSizeRelativeToScreen(300, sw, sh).sp,
-                            fit: BoxFit.contain,
-                          )
-                        : Image.network(
-                            controller.fireAuthUser!.photoURL! + "?type=large",
-                            fit: BoxFit.cover,
-                            height: getSizeRelativeToScreen(300, sw, sh).sp,
-                            width: getSizeRelativeToScreen(300, sw, sh).sp,
-                          ),
-                  ),
+                      clipBehavior: Clip.antiAlias,
+                      child: controller.user?.image == null ||
+                              controller.user?.image == ""
+                          ? Image.asset(
+                              aDefaultAvatar,
+                              width: getSizeRelativeToScreen(300, sw, sh).sp,
+                              height: getSizeRelativeToScreen(300, sw, sh).sp,
+                              fit: BoxFit.contain,
+                            )
+                          : handleNetworkImage(
+                              url: controller.user!.image! + "?type=large",
+                              width: getSizeRelativeToScreen(300, sw, sh).sp,
+                              height: getSizeRelativeToScreen(300, sw, sh).sp,
+                              assetInCaseFailed: aDefaultAvatar)),
                 ),
                 SizedBox(
                   height: 30.sp,
                 ),
                 Container(
                   child: Text(
-                    controller.fireAuthUser?.displayName ?? tDefaultUserName,
+                    controller.user?.displayName ?? tDefaultUserName,
                     textAlign: TextAlign.center,
                     style: TextStyle(fontFamily: 'psb', fontSize: 25.5.sp),
                   ),
@@ -90,7 +87,7 @@ class MezSideMenu extends GetWidget<AuthController> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Obx(() => controller.fireAuthUser != null
+                Obx(() => controller.user != null
                     ? ListTile(
                         onTap: () {
                           _drawerController.cloeseMenu();
@@ -107,7 +104,7 @@ class MezSideMenu extends GetWidget<AuthController> {
                                 TextStyle(fontFamily: 'psb', fontSize: 16.sp)),
                       )
                     : SizedBox()),
-                Obx(() => controller.fireAuthUser != null
+                Obx(() => controller.user != null
                     ? ListTile(
                         onTap: () async {
                           _drawerController.cloeseMenu();

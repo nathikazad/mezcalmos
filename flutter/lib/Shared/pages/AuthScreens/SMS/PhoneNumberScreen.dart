@@ -9,26 +9,34 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 const mypadding = EdgeInsets.only(left: 15, right: 15);
 
-class PhoneNumberScreen extends GetView<AuthController> {
+class PhoneNumberScreen extends StatefulWidget {
+  @override
+  State<PhoneNumberScreen> createState() {
+    return _PhoneNumberScreenState();
+  }
+}
+
+class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
   LanguageController lang = Get.find<LanguageController>();
+  AuthController controller = Get.find<AuthController>();
 
   TextEditingController _prefixTextFieldController = TextEditingController();
   TextEditingController _numberTextFieldController = TextEditingController();
-  final phoneNumberFocusNode = FocusNode();
+  // final phoneNumberFocusNode = FocusNode();
 
   RxBool canSendOtp = false.obs;
   RxBool clickedSendOtp = false.obs;
 
+  @override
+  void initState() {
+    _prefixTextFieldController..text = "+52";
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
-    TextEditingController _otpCodeTextController = TextEditingController();
-    RxBool canConfirmOtp = false.obs;
-    String otpCode = "";
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-      _prefixTextFieldController..text = "+52";
-    });
     responsiveSize(context);
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      // resizeToAvoidBottomInset: false,
 
       /// i rewrite the appbar to soleve the title size i thoutht the title shoud be static
 
@@ -347,6 +355,13 @@ class PhoneNumberScreen extends GetView<AuthController> {
       //     "back", () => Get.back(closeOverlays: true),
       //     bgColor: Colors.grey[50]),
     );
+  }
+
+  @override
+  void dispose() {
+    _prefixTextFieldController.dispose();
+    _numberTextFieldController.dispose();
+    super.dispose();
   }
 }
 

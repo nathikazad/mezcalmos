@@ -32,7 +32,7 @@ class ViewCartScreen extends StatefulWidget {
 class _ViewCartScreenState extends State<ViewCartScreen> {
   LanguageController lang = Get.find<LanguageController>();
   RestaurantCartController controller = Get.find<RestaurantCartController>();
-
+  bool _clickedOrderNow = false;
   TextEditingController textcontoller = new TextEditingController();
   // Rxn<Cart> cart = Rxn();
 
@@ -292,57 +292,71 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                                 ? const Color(0xdddddddd)
                                 : const Color(0xffac59fc),
                             widget: Center(
-                              child: Text(
-                                  "${lang.strings['customer']['restaurant']['cart']['orderNow']}",
-                                  style: TextStyle(
-                                      color: const Color(0xffffffff),
-                                      fontFamily: "psb",
-                                      fontStyle: FontStyle.normal,
-                                      fontSize: 16.0),
-                                  textAlign: TextAlign.center),
+                              child: !_clickedOrderNow
+                                  ? Text(
+                                      "${lang.strings['customer']['restaurant']['cart']['orderNow']}",
+                                      style: TextStyle(
+                                          color: const Color(0xffffffff),
+                                          fontFamily: "psb",
+                                          fontStyle: FontStyle.normal,
+                                          fontSize: 16.0),
+                                      textAlign: TextAlign.center)
+                                  : Container(
+                                      height: 20,
+                                      width: 20,
+                                      child: CircularProgressIndicator(
+                                        color: Colors.white,
+                                        strokeWidth: 1,
+                                      ),
+                                    ),
                             ),
-                            function: controller.cart.value.toLocation != null
-                                ? () async {
-                                    Get.snackbar(
-                                      "Loading",
-                                      "Please wait to load for you your order",
-                                    );
-                                    if (controller.cart.value.toLocation !=
-                                        null) {
-                                      controller.cart.value.notes =
-                                          textcontoller.text;
-                                      mezDbgPrint(controller.cart.value
-                                          .toFirebaseFormattedJson()
-                                          .toString());
+                            function:
+                                controller.cart.value.toLocation != null &&
+                                        !_clickedOrderNow
+                                    ? () async {
+                                        if (controller.cart.value.toLocation !=
+                                            null) {
+                                          setState(() {
+                                            _clickedOrderNow = true;
+                                          });
+                                          controller.cart.value.notes =
+                                              textcontoller.text;
+                                          mezDbgPrint(controller.cart.value
+                                              .toFirebaseFormattedJson()
+                                              .toString());
 
-                                      var response =
-                                          await controller.checkout();
-                                      print(response.errorCode.toString());
-                                      if (response.success) {
-                                        controller.clearCart();
-                                        popEverythingAndNavigateTo(
-                                            getRestaurantOrderRoute(
-                                                response.data["orderId"]));
-                                      } else {
-                                        print(response);
-                                        if (response.errorCode ==
-                                            "serverError") {
-                                          // do something
-                                        } else if (response.errorCode ==
-                                            "inMoreThanThreeOrders") {
-                                          // do something
-                                        } else if (response.errorCode ==
-                                            "restaurantClosed") {
-                                          // do something
-                                        } else {
-                                          // do something
+                                          var response =
+                                              await controller.checkout();
+                                          print(response.errorCode.toString());
+                                          if (response.success) {
+                                            controller.clearCart();
+                                            popEverythingAndNavigateTo(
+                                                getRestaurantOrderRoute(
+                                                    response.data["orderId"]));
+                                          } else {
+                                            print(response);
+                                            if (response.errorCode ==
+                                                "serverError") {
+                                              // do something
+                                            } else if (response.errorCode ==
+                                                "inMoreThanThreeOrders") {
+                                              // do something
+                                            } else if (response.errorCode ==
+                                                "restaurantClosed") {
+                                              // do something
+                                            } else {
+                                              // do something
+                                            }
+                                          }
+
+                                          setState(() {
+                                            _clickedOrderNow = false;
+                                          });
                                         }
                                       }
-                                    }
-                                  }
-                                : () {
-                                    // TODO : maybe add a pop up notifying the user that he/she should pick lcoation !
-                                  }),
+                                    : () {
+                                        // TODO : maybe add a pop up notifying the user that he/she should pick lcoation !
+                                      }),
                         SizedBox(
                           height: 25,
                         ),
@@ -408,7 +422,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
             children: [
               Container(
                 child: Text(
-                    "${lang.strings['customer']['restaurant']['cart']['inCart']}",
+                    lang.strings['customer']['restaurant']['cart']['inCart'],
                     style: TextStyle(
                         color: const Color(0xff000f1c),
                         // fontWeight: FontWeight.w700,
@@ -454,7 +468,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
 
     data.forEach((key, value) {
       myWidgets.add(MenuTitles(
-        title: "${key}".toUpperCase(),
+        title: key.toUpperCase(),
       ));
 
       myWidgets.addAll([
@@ -462,7 +476,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
           width: Get.width,
           alignment: Alignment.centerLeft,
           padding: const EdgeInsets.only(left: 25, top: 5),
-          child: Text("${data["${key}"].toString().inCaps}",
+          child: Text(data[key].toString().inCaps,
               style: TextStyle(
                   color: const Color(0xff000000),
                   fontWeight: FontWeight.w400,
@@ -582,8 +596,11 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                                     " the returend value from the dailog $yesNoResult");
                                 if (yesNoResult == true) {
                                   controller.deleteItem("${element.id}");
-                                  Get.until((route) =>
-                                      route.settings.name == kHomeRoute);
+
+                                  if (controller.cart.value.quantity() == 0) {
+                                    Get.until((route) =>
+                                        route.settings.name == kHomeRoute);
+                                  }
                                   // controller.refresh();
                                 }
                               }

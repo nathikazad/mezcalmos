@@ -281,7 +281,8 @@
             "searching": "Buscando",
             "pick": "ELIGE",
             "pickFromMap": "Elige del mapa",
-            "mapPickerExplain": "Mueva el mapa para elegir la ubicación"
+            "moveMapIfNotPrecise" : "Puede mover el mapa si la posición no es precisa.",
+            "moveMapToPick": "Mueva el mapa para elegir la ubicación."
         },
         "pickLocation": {
             "name": "Nombre",

@@ -3,11 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 class Wrapper extends StatefulWidget {
   @override
@@ -15,13 +13,10 @@ class Wrapper extends StatefulWidget {
 }
 
 class _WrapperState extends State<Wrapper> {
-  // StreamSubscription<bool>? _locationStreamSub;
-  StreamSubscription<fireAuth.User?>? _userStreamSub;
+  AuthController _authController = Get.find<AuthController>();
 
   @override
   void dispose() {
-    // _locationStreamSub?.cancel();
-    // _userStreamSub?.cancel();
     super.dispose();
   }
 
@@ -38,16 +33,24 @@ class _WrapperState extends State<Wrapper> {
     super.initState();
   }
 
-  void handleAuthStateChange(fireAuth.User? user) {
+  void handleAuthStateChange(fireAuth.User? user) async {
     mezDbgPrint("Wrapper: handleAuthStateChange $user");
     if (user == null) {
-      // _locationStreamSub?.cancel();
-      // _locationStreamSub = null;
       mezDbgPrint("Wrapper::handleAuthStateChange:: going to sign in route");
       Get.offNamedUntil(kSignInRoute, ModalRoute.withName(kWrapperRoute));
     } else {
       mezDbgPrint(
-          "Wrapper::handleAuthStateChange:: signed in, so going to taxi wrapper !");
+          "Wrapper::handleAuthStateChange:: signed in, Checking if User name are Set !");
+      mezDbgPrint(Get.find<AuthController>().user?.displayName);
+      mezDbgPrint("--------------------------------");
+      mezDbgPrint(Get.find<AuthController>().fireAuthUser?.displayName);
+
+      if (Get.find<AuthController>().isDisplayNameSet()) {
+        mezDbgPrint(
+            "User Signed in but Name or image are null , so  heading to UserInfo Page !");
+        await Get.toNamed(kUserProfile);
+        // Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
+      }
       Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
     }
   }

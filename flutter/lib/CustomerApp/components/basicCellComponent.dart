@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 class BasicCellComponent extends StatelessWidget {
   final String url;
@@ -25,14 +26,15 @@ class BasicCellComponent extends StatelessWidget {
               ),
             ),
             child: ClipRRect(
-              borderRadius: BorderRadius.all(
-                Radius.circular(3),
-              ),
-              child: Image.network(
-                "$url",
-                fit: BoxFit.cover,
-              ),
-            ),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(3),
+                ),
+                child: handleNetworkImage(url: url, fit: BoxFit.cover)
+                // Image.network(
+                //   "$url",
+                //   fit: BoxFit.cover,
+                // ),
+                ),
           ),
           SizedBox(
             width: Get.width * 0.05,

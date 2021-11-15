@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 class ItemComponent extends StatelessWidget {
   final String? imgUrl;
@@ -42,12 +43,13 @@ class ItemComponent extends StatelessWidget {
               width: 55,
               height: 43,
               child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(8)),
-                child: Image.network(
-                  "$imgUrl",
-                  fit: BoxFit.cover,
-                ),
-              ),
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                  child: handleNetworkImage(url: imgUrl)
+                  // Image.network(
+                  //   "$imgUrl",
+                  //   fit: BoxFit.cover,
+                  // ),
+                  ),
             ),
             SizedBox(
               width: 10,

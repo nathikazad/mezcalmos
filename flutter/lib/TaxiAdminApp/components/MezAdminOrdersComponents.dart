@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiAdminApp/Models/NbOrders.dart';
 import 'package:mezcalmos/TaxiAdminApp/pages/Driver/DriverPage.dart';
 import 'package:mezcalmos/TaxiAdminApp/pages/Orders/OrderViewPage.dart';
@@ -179,12 +180,12 @@ class MezAdminOrdersComponents {
                     child: Container(
                       height: 30,
                       width: 30,
-                      child: ClipOval(
-                        child: Image.network(
-                          "${driverImg}",
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+                      child: ClipOval(child: handleNetworkImage(url: driverImg)
+                          //  Image.network(
+                          //   "${driverImg}",
+                          //   fit: BoxFit.cover,
+                          // ),
+                          ),
                     ),
                   )
                 : Center(
@@ -213,12 +214,12 @@ class MezAdminOrdersComponents {
               child: Container(
                   height: 30,
                   width: 30,
-                  child: ClipOval(
-                    child: Image.network(
-                      "${custImg}",
-                      fit: BoxFit.cover,
-                    ),
-                  )),
+                  child: ClipOval(child: handleNetworkImage(url: custImg)
+                      // Image.network(
+                      //   "${custImg}",
+                      //   fit: BoxFit.cover,
+                      // ),
+                      )),
             )),
           ),
           Expanded(
@@ -302,10 +303,11 @@ class MezAdminOrdersComponents {
                       width: 35,
                       child: ClipOval(
                           child: (img != "null")
-                              ? Image.network(
-                                  "${img}",
-                                  fit: BoxFit.cover,
-                                )
+                              ? handleNetworkImage(url: img)
+                              // Image.network(
+                              //     "${img}",
+                              //     fit: BoxFit.cover,
+                              //   )
                               : Container(
                                   padding: const EdgeInsets.all(8),
                                   color: Colors.white,

@@ -4,9 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/databaseNodes.dart';
-import 'package:mezcalmos/Shared/utilities/Extensions.dart';
-import 'package:mezcalmos/TaxiApp/router.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -93,12 +90,16 @@ class AuthController extends GetxController {
     super.onInit();
   }
 
+  bool isDisplayNameSet() {
+    return user?.displayName != null && user!.displayName!.length >= 1;
+  }
+
   Future<String> getImageUrl(File imageFile, String uid) async {
     String x;
 
     try {
       await firebase_storage.FirebaseStorage.instance
-          .ref("users/${uid}/avatar/${imageFile.path}")
+          .ref("users/$uid/avatar/${imageFile.path}")
           .putFile(imageFile);
     } on firebase_core.FirebaseException catch (e) {
       print("{{{{{{{{{{{{{{{{{{{{" +
@@ -106,7 +107,7 @@ class AuthController extends GetxController {
           "}}}}}}}}}}}}}}}}}}}}}}}}}}}}");
     } finally {
       x = await firebase_storage.FirebaseStorage.instance
-          .ref('users/${uid}/avatar/${imageFile.path}')
+          .ref('users/$uid/avatar/${imageFile.path}')
           .getDownloadURL();
     }
 
@@ -224,7 +225,6 @@ class AuthController extends GetxController {
           "################################ DATA ###############################\n\n${response.data}\n\n");
       fireAuth.FirebaseAuth.instance
           .signInWithCustomToken(response.data["token"]);
-
     } catch (e) {
       mezcalmosSnackBar("Error", "OTP Code confirmation failed :(");
 

@@ -106,14 +106,17 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                                 height: Get.height * 0.45,
                                 width: Get.width,
                                 child: ClipRRect(
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(25),
-                                      topRight: Radius.circular(25)),
-                                  child: Image.network(
-                                    "${cartItem.value!.item.image}",
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(25),
+                                        topRight: Radius.circular(25)),
+                                    child: handleNetworkImage(
+                                        url: cartItem.value!.item.image!,
+                                        fit: BoxFit.cover)
+                                    // Image.network(
+                                    //   "${cartItem.value!.item.image}",
+                                    //   fit: BoxFit.cover,
+                                    // ),
+                                    ),
                               ),
                               Container(
                                 height: Get.height * 0.45,
@@ -394,7 +397,11 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
 
   Widget image(String? imageLink) {
     if (imageLink != null)
-      return Image.network(imageLink, height: 40);
+      return handleNetworkImage(
+        url: cartItem.value!.item.image!,
+        height: 40,
+      );
+    //  Image.network(imageLink, height: 40);
     else
       return Center(
         child: CircularProgressIndicator(),

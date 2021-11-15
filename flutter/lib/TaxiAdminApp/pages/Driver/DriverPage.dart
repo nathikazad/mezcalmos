@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 import 'package:mezcalmos/TaxiAdminApp/Models/NbNotifs.dart';
 import 'package:mezcalmos/TaxiAdminApp/Models/NbOrders.dart';
@@ -43,10 +44,11 @@ class DriverPage extends GetView<DriverStatsController> {
                     color: Colors.white,
                     child: ClipOval(
                       child: (data[0]["photo"] != "")
-                          ? Image.network(
-                              "${data[0]["photo"]}",
-                              fit: BoxFit.cover,
-                            )
+                          ? handleNetworkImage(url: data[0]["photo"])
+                          //  Image.network(
+                          //     "${data[0]["photo"]}",
+                          //     fit: BoxFit.cover,
+                          //   )
                           : Image.asset(
                               aLogoPath,
                               height: 50,

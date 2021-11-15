@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 import 'package:mezcalmos/TaxiAdminApp/components/infoCardComponent.dart';
@@ -39,14 +40,16 @@ class OrderViewPage extends GetView<OrderStatsController> {
                       Container(
                         child: ClipOval(
                           child: Container(
-                            // alignment: Alignment.center,
-                            height: Get.width * 0.3,
-                            width: Get.width * 0.3,
-                            child: Image.network(
-                              "${data["orders"][0]["customer"]["photo"]}",
-                              fit: BoxFit.cover,
-                            ),
-                          ),
+                              // alignment: Alignment.center,
+                              height: Get.width * 0.3,
+                              width: Get.width * 0.3,
+                              child: handleNetworkImage(
+                                  url: data["orders"][0]["customer"]["photo"])
+                              // Image.network(
+                              //   "${data["orders"][0]["customer"]["photo"]}",
+                              //   fit: BoxFit.cover,
+                              // ),
+                              ),
                         ),
                       ),
                       SizedBox(
@@ -72,10 +75,13 @@ class OrderViewPage extends GetView<OrderStatsController> {
                             width: Get.width * 0.3,
                             child: (data["orders"][0]["driver"] != null)
                                 ? InkWell(
-                                    child: Image.network(
-                                      "${data["orders"][0]["driver"]["photo"]}",
-                                      fit: BoxFit.cover,
-                                    ),
+                                    child: handleNetworkImage(
+                                        url: data["orders"][0]["driver"]
+                                            ["photo"]),
+                                    // Image.network(
+                                    //   "${data["orders"][0]["driver"]["photo"]}",
+                                    //   fit: BoxFit.cover,
+                                    // ),
                                     onTap: () {
                                       Get.to(() => DriverPage(
                                           "${data["orders"][0]["driver"]["uid"]}"));

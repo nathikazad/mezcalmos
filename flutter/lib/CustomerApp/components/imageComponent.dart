@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 class ImageComponent extends StatelessWidget {
   final String? image;
@@ -44,14 +45,15 @@ class ImageComponent extends StatelessWidget {
                             const Color(0xff000f1c)
                           ])),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(25),
-                        topRight: Radius.circular(25)),
-                    child: Image.network(
-                      "$image",
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(25),
+                          topRight: Radius.circular(25)),
+                      child: handleNetworkImage(url: image, fit: BoxFit.cover)
+                      //  Image.network(
+                      //   "$image",
+                      //   fit: BoxFit.cover,
+                      // ),
+                      ),
                 ),
                 Positioned(
                     top: Get.height * 0.30,

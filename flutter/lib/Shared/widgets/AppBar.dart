@@ -6,7 +6,7 @@ import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 
-AppBar mezcalmosAppBar(String btnType, Function onTapFunction,
+AppBar mezcalmosAppBar(String btnType, Function? onTapFunction,
     {dynamic bgColor = Colors.white,
     List<Widget> actionIcons = const <Widget>[]}) {
   Widget btn_icon;
@@ -46,7 +46,7 @@ AppBar mezcalmosAppBar(String btnType, Function onTapFunction,
             child: GestureDetector(
               onTap: () {
                 mezDbgPrint("Taped Drawer btn !");
-                onTapFunction();
+                if (onTapFunction != null) onTapFunction();
               },
               child: Container(
                 height: 30,
@@ -61,10 +61,15 @@ AppBar mezcalmosAppBar(String btnType, Function onTapFunction,
                       offset: Offset(0, 7), // changes position of shadow
                     ),
                   ],
-                  gradient: LinearGradient(colors: [
-                    Color.fromARGB(255, 97, 127, 255),
-                    Color.fromARGB(255, 198, 90, 252),
-                  ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                  gradient: LinearGradient(
+                      colors: onTapFunction != null
+                          ? [
+                              Color.fromARGB(255, 97, 127, 255),
+                              Color.fromARGB(255, 198, 90, 252),
+                            ]
+                          : [Colors.grey.shade300, Colors.grey.shade300],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight),
                 ),
                 child: btn_icon,
               ),

@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/constants/global.dart';
@@ -29,20 +28,40 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
   LanguageController lang = Get.find<LanguageController>();
   StreamSubscription? _ordersListener;
 
+  // ScrollController _ordersListViewController = ScrollController();
+  // int fetchedOrders = 1;
+  // int ordersCountByScroll = 10;
+  // bool isLoading = false;
+
+  List<Order> fetchByRange() {
+    return controller.inProcessOrders().reversed.toList();
+  }
+
   @override
   void initState() {
-    super.initState();
     controller.clearNewOrderNotifications();
-    inProcessOrders.value = controller.inProcessOrders;
+    inProcessOrders.value = fetchByRange();
     controller.inProcessOrders.stream.listen((_) {
-      inProcessOrders.value = controller.inProcessOrders;
+      inProcessOrders.value = fetchByRange();
     });
+
+    // _ordersListViewController.addListener(() {
+    //   mezDbgPrint(_ordersListViewController.offset);
+    //   if (_ordersListViewController.offset <= 0.1) {
+    //     // to remove that bounce back xd
+    //     _ordersListViewController.position.jumpTo(0.0);
+    //     // then fetch !
+    //     inProcessOrders().addAll(fetchByRange());
+    //   }
+    // });
+    super.initState();
   }
 
   @override
   void dispose() {
     _ordersListener?.cancel();
     _ordersListener = null;
+    // _ordersListViewController.dispose();
     super.dispose();
   }
 
@@ -223,9 +242,13 @@ class DeliveryAdminOrderComponent extends StatelessWidget {
             ),
             Spacer(),
             Expanded(
-                child: Container(
-              padding: const EdgeInsets.only(top: 20),
-              child: _getOrderIcon(status!),
+                child: Center(
+              child: Container(
+                height: 50,
+                width: 50,
+                // padding: const EdgeInsets.only(top: 20),
+                child: _getOrderIcon(status!),
+              ),
             ))
           ],
         ),

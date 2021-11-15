@@ -1,6 +1,7 @@
 // Usefull when trying to make Sizes adptable!
 import 'dart:async';
 import 'dart:typed_data';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +10,7 @@ import 'dart:ui' as ui;
 import 'package:location/location.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -65,6 +67,33 @@ void responsiveSize(BuildContext context) {
           maxHeight: MediaQuery.of(context).size.height),
       designSize: Size(375, 667),
       orientation: Orientation.portrait);
+}
+
+Image handleNetworkImage(
+    {required String? url,
+    double? height,
+    double? width,
+    fit: BoxFit.cover,
+    String assetInCaseFailed = aNoImgAsset}) {
+  Image _img;
+
+  if (url == null || url.toLowerCase().contains('.svg') || !url.isURL) {
+    _img = Image.asset(
+      assetInCaseFailed,
+      height: height,
+      width: width,
+      fit: BoxFit.contain,
+    );
+  } else {
+    _img = Image.network(
+      url,
+      height: height,
+      width: width,
+      fit: fit,
+    );
+  }
+
+  return _img;
 }
 
 void mezcalmosLogger(String text, {bool isError = false}) =>

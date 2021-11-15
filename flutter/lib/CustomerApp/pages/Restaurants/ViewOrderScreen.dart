@@ -8,7 +8,6 @@ import 'package:mezcalmos/CustomerApp/components/buildWidgetOnOrderStatus.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -33,6 +32,39 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
   Rxn<RestaurantOrder> order = Rxn();
   OrderController controller = Get.find<OrderController>();
   StreamSubscription? _orderListener;
+  bool _clickedButton = false;
+
+  Future<void> onTapButtonsShowLoading(Function function) async {
+    if (!_clickedButton) {
+      // set true to show loading button
+      setState(() {
+        _clickedButton = true;
+      });
+
+      await function();
+
+      // after function done set to back to false
+      setState(() {
+        _clickedButton = false;
+      });
+    }
+  }
+
+  Widget getWidgetOrShowLoading(Widget desiredWidget) {
+    if (!_clickedButton) {
+      return desiredWidget;
+    } else {
+      return Container(
+        width: 20,
+        height: 20,
+        child: CircularProgressIndicator(
+          color: Colors.white,
+          strokeWidth: 1.5,
+        ),
+      );
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -356,7 +388,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                     ? SizedBox()
                     : NotesWidget(),
                 //===============================>button cancel===========================
-                order.value!.inProcess()
+                Obx(() => order.value!.inProcess()
                     ? InkWell(
                         child: Container(
                           margin: const EdgeInsets.symmetric(horizontal: 10),
@@ -383,7 +415,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                           ),
                           child: Center(
                             child: // CANCEL
-                                Text(
+                                getWidgetOrShowLoading(Text(
                                     lang.strings['customer']['restaurant']
                                             ['checkout']['cancel']
                                         .toString()
@@ -393,10 +425,11 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                                         fontFamily: "psb",
                                         fontStyle: FontStyle.normal,
                                         fontSize: 16.0),
-                                    textAlign: TextAlign.center),
+                                    textAlign: TextAlign.center)),
                           ),
                         ),
-                        onTap: () async {
+                        onTap: () async =>
+                            await onTapButtonsShowLoading(() async {
                           bool yesNoRes = await cancelAlertDailog(
                               lang.strings['customer']['restaurant']['checkout']
                                   ['cancelOrder'],
@@ -415,13 +448,24 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                             if (resp.success) {
                               Get.until(
                                   (route) => route.settings.name == kHomeRoute);
+                              mezcalmosSnackBar(
+                                  lang.strings["shared"]["snackbars"]
+                                      ["titleSuccess"],
+                                  lang.strings["shared"]["snackbars"]
+                                      ["orderCancelSuccess"],
+                                  position: SnackPosition.TOP);
                             } else {
-                              mezcalmosSnackBar("Error", resp.errorMessage!);
+                              mezcalmosSnackBar(
+                                  lang.strings["shared"]["snackbars"]
+                                      ["titleFailed"],
+                                  lang.strings["shared"]["snackbars"]
+                                      ["orderCancelFailed"],
+                                  position: SnackPosition.TOP);
                             }
                           }
-                        },
+                        }),
                       )
-                    : SizedBox(),
+                    : SizedBox()),
                 SizedBox(
                   height: 30,
                 ),

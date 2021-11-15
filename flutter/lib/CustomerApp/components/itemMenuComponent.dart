@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 //import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen.dart';
 
 class ItemMenuComponents extends StatelessWidget {
@@ -46,10 +47,11 @@ class ItemMenuComponents extends StatelessWidget {
                 borderRadius: BorderRadius.all(
                   Radius.circular(3),
                 ),
-                child: Image.network(
-                  "$photo",
-                  fit: BoxFit.cover,
-                ),
+                child: handleNetworkImage(url: photo, fit: BoxFit.cover),
+                // Image.network(
+                //   "$photo",
+                //   fit: BoxFit.cover,
+                // ),
               ),
             ),
             SizedBox(
