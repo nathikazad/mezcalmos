@@ -11,11 +11,12 @@ class Customer {
     this.appVersion = data["versionNumber"] ?? null;
     this.notificationInfo = data["notificationInfo"];
     List<SavedLocation> newSavedLocations = [];
-    for (var locationId in data["savedLocations"]) {
-      dynamic locationData = data["savedLocations"][locationId];
-      newSavedLocations
-          .add(SavedLocation.fromData(id: locationId, data: locationData));
-    }
+    if(data["savedLocations"] != null)
+      for (var locationId in data["savedLocations"]) {
+        dynamic locationData = data["savedLocations"][locationId];
+        newSavedLocations
+            .add(SavedLocation.fromData(id: locationId, data: locationData));
+      }
   }
 
   Map<String, dynamic> toJson() {

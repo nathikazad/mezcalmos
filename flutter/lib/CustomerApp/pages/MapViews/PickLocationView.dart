@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:mezcalmos/CustomerApp/components/customerAppBar.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
@@ -60,7 +61,7 @@ class _PickLocationViewState extends State<PickLocationView> {
     responsiveSize(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: mezcalmosAppBar("back", () => Get.back()),
+      appBar: customerAppBar(AppBarLeftButtonType.Back),
       backgroundColor: Colors.white,
       body: Container(
         padding: EdgeInsets.only(left: 20, right: 20),

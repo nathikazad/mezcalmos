@@ -2,17 +2,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 
-AppBar mezcalmosAppBar(String btnType, Function? onTapFunction,
+enum AppBarLeftButtonType { Back, Menu }
+
+AppBar mezcalmosAppBar(AppBarLeftButtonType btnType,
     {dynamic bgColor = Colors.white,
     List<Widget> actionIcons = const <Widget>[]}) {
   Widget btn_icon;
-
+  Function onTapFunction;
   switch (btnType) {
-    case "back":
+    case AppBarLeftButtonType.Back:
       btn_icon = Center(
         child: Icon(
           MezcalmosIcons.chevron_left,
@@ -20,13 +23,15 @@ AppBar mezcalmosAppBar(String btnType, Function? onTapFunction,
           size: getSizeRelativeToScreen(35, Get.width, Get.height),
         ),
       );
+      onTapFunction = () => Get.back();
       break;
-    default:
+    case AppBarLeftButtonType.Menu:
       btn_icon = Icon(
         MezcalmosIcons.stream,
         color: Colors.white,
         size: 16,
       );
+      onTapFunction = () => Get.find<SideMenuDraweController>().openMenu();
       break;
   }
   mezDbgPrint("Getx => ScreenSize ========> ${Get.width} x ${Get.height} !!");

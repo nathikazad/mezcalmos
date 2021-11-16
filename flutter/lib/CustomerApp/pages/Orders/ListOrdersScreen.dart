@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mezcalmos/CustomerApp/components/customerAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/DateTitleComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/imagesComponents.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
@@ -68,10 +69,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
         // appBar: AppBar(
         //   title: Text("List Orders"),
         // ),
-        appBar: mezcalmosAppBar(
-          "back",
-          () => Get.back(),
-        ),
+        appBar: customerAppBar(AppBarLeftButtonType.Back),
         body: Obx(() {
           return SingleChildScrollView(
               physics: ClampingScrollPhysics(),

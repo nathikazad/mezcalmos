@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
+import 'package:mezcalmos/CustomerApp/components/customerAppBar.dart';
 import 'package:mezcalmos/CustomerApp/components/imagesComponents.dart';
 import 'package:mezcalmos/CustomerApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
@@ -123,18 +124,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
           backgroundColor: Colors.white,
           key: _sideMenuDrawerController.getNewKey(),
           drawer: MezSideMenu(),
-          appBar: mezcalmosAppBar(
-              "menu", () => _sideMenuDrawerController.openMenu(),
-              actionIcons: [
-                Obx(() => Get.find<FBNotificationsController>()
-                            .notifications
-                            .value
-                            .length >
-                        0
-                    ? ActionIconsComponents.notificationIcon(true)
-                    : SizedBox()),
-                ActionIconsComponents.orderIcon()
-              ]),
+          appBar: customerAppBar(AppBarLeftButtonType.Menu),
           body: Column(
             children: [
               Container(
