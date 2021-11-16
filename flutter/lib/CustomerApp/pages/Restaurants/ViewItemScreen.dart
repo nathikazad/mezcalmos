@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -37,6 +39,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
   Rxn<CartItem> cartItem = Rxn();
   late RestaurantCartController restaurantCartController;
   RestaurantsInfoController controller = Get.find<RestaurantsInfoController>();
+  ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -62,6 +65,8 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
         return item.id == Get.parameters["cartItemId"];
       }));
     }
+    // scroll controller stuff !
+
     super.initState();
   }
 
@@ -77,7 +82,9 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
       resizeToAvoidBottomInset: false,
       // resizeToAvoidBottomInset: true,
       //    resizeToAvoidBottomPadding: false, //
-      backgroundColor: const Color(0xffffffff),
+      // backgroundColor: const Color(0xffffffff),
+      backgroundColor: const Color(0xfff6f6f6),
+
       appBar: mezcalmosAppBar("back", () => Get.back(), actionIcons: [
         Obx(() => restaurantCartController.cart.value.items.length > 0
             ? ActionIconsComponents.cartIcon()
@@ -179,8 +186,9 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                               color: Color(0x36fafafa),
                             ),
                           ),
-                          panelBuilder: (sc) =>
-                              _panel(sc, context, cartItem.value!.item),
+                          panelBuilder: (_) {
+                            return _panel(context, cartItem.value!.item);
+                          },
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(18.0),
                               topRight: Radius.circular(18.0)),
@@ -194,10 +202,11 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
     );
   }
 
-  Widget _panel(ScrollController sc, BuildContext context, Item item) {
+  Widget _panel(BuildContext context, Item item) {
     return MediaQuery.removePadding(
         context: context,
         removeTop: true,
+        removeBottom: true,
         child: Container(
           // height: Get.height * 0.9,
           decoration: BoxDecoration(
@@ -205,9 +214,10 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                   topLeft: Radius.circular(18), topRight: Radius.circular(18)),
               color: const Color(0xffffffff)),
           child: SingleChildScrollView(
-            controller: sc,
+            // controller: _scrollController,
             //clipBehavior: ,
             child: Container(
+              padding: EdgeInsets.only(bottom: 50),
               decoration: BoxDecoration(
                 color: const Color(0xffffffff),
                 borderRadius: BorderRadius.only(
@@ -254,6 +264,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                   Container(
                     width: Get.width,
                     // height: 313.sp,
+                    padding: EdgeInsets.only(bottom: 10),
                     decoration: BoxDecoration(
                       // borderRadius: BorderRadius.all(Radius.circular(25)),
                       color: const Color.fromRGBO(240, 242, 245, 1),
