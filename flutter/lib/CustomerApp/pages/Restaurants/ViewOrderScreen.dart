@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
 import 'package:mezcalmos/CustomerApp/components/basicCellComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/buildWidgetOnOrderStatus.dart';
+import 'package:mezcalmos/CustomerApp/components/customerAppBar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
@@ -146,13 +147,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
     mezDbgPrint(order.value?.serviceProviderId);
     return Scaffold(
       backgroundColor: const Color(0xffffffff),
-      appBar: mezcalmosAppBar("back", () => Get.back(), actionIcons: [
-        Obx(() =>
-            Get.find<FBNotificationsController>().notifications.value.length > 0
-                ? ActionIconsComponents.notificationIcon()
-                : SizedBox()),
-        ActionIconsComponents.orderIcon()
-      ]),
+      appBar: customerAppBar(AppBarLeftButtonType.Back),
       body: GetBuilder<OrderController>(builder: (mycontoller) {
         return Container(
           height: Get.height,

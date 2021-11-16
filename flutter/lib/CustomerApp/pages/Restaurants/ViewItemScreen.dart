@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
 import 'package:mezcalmos/CustomerApp/components/buttonComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/checkBoxComponent.dart';
+import 'package:mezcalmos/CustomerApp/components/customerAppBar.dart';
 import 'package:mezcalmos/CustomerApp/components/incrementalComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/textFieldComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/titlesComponent.dart';
@@ -85,16 +86,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
       // backgroundColor: const Color(0xffffffff),
       backgroundColor: const Color(0xfff6f6f6),
 
-      appBar: mezcalmosAppBar("back", () => Get.back(), actionIcons: [
-        Obx(() => restaurantCartController.cart.value.items.length > 0
-            ? ActionIconsComponents.cartIcon()
-            : SizedBox()),
-        Obx(() =>
-            Get.find<FBNotificationsController>().notifications.value.length > 0
-                ? ActionIconsComponents.notificationIcon(true)
-                : SizedBox()),
-        ActionIconsComponents.orderIcon()
-      ]),
+      appBar: customerAppBar(AppBarLeftButtonType.Back, withCart: true),
       body: Obx(() => (cartItem.value?.item == null)
           ? Center(
               child: CircularProgressIndicator(),

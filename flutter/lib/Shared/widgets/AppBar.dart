@@ -9,12 +9,12 @@ import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 
 enum AppBarLeftButtonType { Back, Menu }
 
-AppBar mezcalmosAppBar(AppBarLeftButtonType btnType,
+AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
     {dynamic bgColor = Colors.white,
     List<Widget> actionIcons = const <Widget>[]}) {
   Widget btn_icon;
   Function onTapFunction;
-  switch (btnType) {
+  switch (leftBtnType) {
     case AppBarLeftButtonType.Back:
       btn_icon = Center(
         child: Icon(

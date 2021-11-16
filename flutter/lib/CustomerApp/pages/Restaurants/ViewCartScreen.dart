@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/CustomerApp/components/ItemComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
 import 'package:mezcalmos/CustomerApp/components/buttonComponent.dart';
+import 'package:mezcalmos/CustomerApp/components/customerAppBar.dart';
 import 'package:mezcalmos/CustomerApp/components/incrementalComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/myExpensionPanelComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/textFieldComponent.dart';
@@ -67,13 +68,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
     responsiveSize(context);
     return Scaffold(
       backgroundColor: const Color(0xffffffff),
-      appBar: mezcalmosAppBar("back", () => Get.back(), actionIcons: [
-        Obx(() =>
-            Get.find<FBNotificationsController>().notifications.value.length > 0
-                ? ActionIconsComponents.notificationIcon()
-                : SizedBox()),
-        ActionIconsComponents.orderIcon()
-      ]),
+      appBar: customerAppBar(AppBarLeftButtonType.Back, withCart: true),
       body: Obx(() => controller.cart.value.items.length > 0
           ? GetBuilder<RestaurantCartController>(
               // specify type as Controller
