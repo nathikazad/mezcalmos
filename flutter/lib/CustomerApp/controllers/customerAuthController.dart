@@ -64,6 +64,30 @@ class CustomerAuthController extends GetxController {
         "/////////////////////////////////////////////${_customer.value?.toJson()}////////////////////////////////////////////////////");
   }
 
+  void saveNewLocation(SavedLocation savedLocation) {
+    _databaseHelper.firebaseDatabase
+        .reference()
+        .child(savedLocationsNode(_authController.fireAuthUser!.uid))
+        .push()
+        .set(savedLocation.toFirebaseFormattedJson());
+  }
+
+  void editLocation(SavedLocation savedLocation) {
+    _databaseHelper.firebaseDatabase
+        .reference()
+        .child(savedLocationNode(
+            _authController.fireAuthUser!.uid, savedLocation.id!))
+        .set(savedLocation.toFirebaseFormattedJson());
+  }
+
+  void deleteLocation(SavedLocation savedLocation) {
+    _databaseHelper.firebaseDatabase
+        .reference()
+        .child(savedLocationNode(
+            _authController.fireAuthUser!.uid, savedLocation.id!))
+        .remove();
+  }
+
   @override
   void onClose() async {
     print("[+] CustomerAuthController::onClose ---------> Was invoked !");

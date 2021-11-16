@@ -10,6 +10,14 @@ String customerPastOrders(String uid) {
   return 'customers/pastOrders/${uid}';
 }
 
+String savedLocationsNode(String uid) {
+  return 'customers/info/$uid/savedLocations';
+}
+
+String savedLocationNode(String uid, String locationId) {
+  return 'customers/info/$uid/savedLocations/${locationId}';
+}
+
 String customerInProcessOrders(String uid) {
   return 'customers/inProcessOrders/${uid}';
 }
