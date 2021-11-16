@@ -45,10 +45,7 @@ class _ViewNotificationsState extends State<ViewNotifications> {
 
     return Scaffold(
       backgroundColor: const Color(0xffffffff),
-      appBar: mezcalmosAppBar(
-        "back",
-        () => Get.back(),
-      ),
+      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back),
       body: Column(
         children: [
           Row(

@@ -40,8 +40,7 @@ class _UnauthorizedScreenState extends State<UnauthorizedScreen> {
             key: Get.find<SideMenuDraweController>().getNewKey(),
             drawer: MezSideMenu(),
             backgroundColor: Colors.white,
-            appBar: mezcalmosAppBar(
-                "menu", Get.find<SideMenuDraweController>().openMenu),
+            appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu),
             body: SafeArea(
                 child: Center(
                     child: Flex(

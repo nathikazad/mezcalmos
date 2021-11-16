@@ -191,8 +191,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
     return Scaffold(
         // resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
-        appBar: mezcalmosAppBar(
-            "back", () => Get.back(result: "clear_notification")),
+        appBar: mezcalmosAppBar(AppBarLeftButtonType.Back),
         body: Container(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,

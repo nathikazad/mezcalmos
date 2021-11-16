@@ -45,9 +45,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
 
     return Scaffold(
         // resizeToAvoidBottomInset: false,
-        appBar: mezcalmosAppBar("back", () {
-          Get.back();
-        }),
+        appBar: mezcalmosAppBar(AppBarLeftButtonType.Back),
         body: Container(
             alignment: Alignment.topCenter,
             child: Container(

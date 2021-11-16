@@ -19,8 +19,7 @@ class LocationPermissionScreen extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-          appBar: mezcalmosAppBar(
-              "menu", () => _sideMenuDraweController.openMenu()),
+          appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu),
           resizeToAvoidBottomInset: false,
           key: _sideMenuDraweController.getNewKey(),
           drawer: MezSideMenu(),

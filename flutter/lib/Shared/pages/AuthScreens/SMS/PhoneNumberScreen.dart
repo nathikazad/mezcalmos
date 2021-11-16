@@ -44,9 +44,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
 
       // fontWeight: isBold ? FontWeight.bold : FontWeight.w400,
       /// have the same the size to avoid flexing issuses
-      appBar: mezcalmosAppBar("back", () {
-        Get.back();
-      }),
+      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back),
       // mezcalmosAppBar(
       //     "back", () => Get.back(closeOverlays: true),
       //     bgColor: Colors.grey[50]),

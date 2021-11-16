@@ -144,8 +144,7 @@ class _UserProfileState extends State<UserProfile> {
           }
         },
         child: Scaffold(
-          appBar: mezcalmosAppBar(
-              "back", auth.isDisplayNameSet() ? Get.back : null),
+          appBar: mezcalmosAppBar(AppBarLeftButtonType.Back),
           backgroundColor: Colors.white,
           body: Center(
             child: SingleChildScrollView(
