@@ -138,6 +138,19 @@ class Launcher:
         _launcherPackageProperties = f"package.name={_appPackageName}"
         open(_launcherPackagePropertiesFile , 'w+').write(_launcherPackageProperties)
         PRINTLN(f"[+] Patched launcherPackage.properties !")
+    
+        # IOS ----
+        # TODO : Handle Versioning !
+        # Patching info.plist & project.pbxproj for IOS!
+        _project_pbxproj_path = "../ios/Runner.xcodeproj/project.pbxproj"
+        _info_plist_path = "../ios/Runner/Info.plist"
+        _cloned = open('patches/ios/project.pbxproj').read().replace('<mez-package>', _appPackageName)
+        open(_project_pbxproj_path , 'w+').write(_cloned)
+        PRINTLN(f"[+] Patched ios/project.pbxproj => {_appPackageName}")
+        _cloned = open(f'patches/ios/{self.user_args["app"].lower().replace("app" , "")}/Info.plist').read().replace('<mez-output-name>', _outputAppName)
+        open(_info_plist_path , 'w+').write(_cloned)
+        PRINTLN(f"[+] Patched ios/Runner/Info.plist => {_outputAppName}!")
+
 
     def __patch_gs__(self):
         '''If its staging mode Patch the Gpoogle-services.json'''
