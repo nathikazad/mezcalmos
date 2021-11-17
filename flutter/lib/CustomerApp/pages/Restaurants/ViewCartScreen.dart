@@ -69,17 +69,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
     responsiveSize(context);
     return Scaffold(
       backgroundColor: const Color(0xffffffff),
-      appBar: customerAppBar(AppBarLeftButtonType.Back, withCart: true),
-      // appBar: mezcalmosAppBar("back", () => Get.back(), actionIcons: [
-      //   Obx(() =>
-      //       Get.find<FBNotificationsController>().notifications.value.length > 0
-      //           ? ActionIconsComponents.notificationIcon()
-      //           : SizedBox()),
-      //   ActionIconsComponents.orderIcon(
-      //       Get.find<OrderController>().currentOrders.value.length > 0
-      //           ? true
-      //           : false)
-      // ]),
+      appBar: customerAppBar(AppBarLeftButtonType.Back, withCart: false),
       body: Obx(() => controller.cart.value.items.length > 0
           ? GetBuilder<RestaurantCartController>(
               // specify type as Controller

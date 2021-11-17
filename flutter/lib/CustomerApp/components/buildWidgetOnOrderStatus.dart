@@ -8,15 +8,16 @@ import 'package:intl/intl.dart';
 
 final f = new DateFormat('dd/MM/yyyy hh:mm a');
 
-Widget buildWigetOnOrderStatus(
+Rxn<Widget> buildWigetOnOrderStatus(
     RestaurantOrderStatus status, DateTime orderTime) {
-  Widget? myWidget;
+  mezDbgPrint("the status order is $status");
+  Rxn<Widget> myWidget = Rxn<Widget>();
   LanguageController lang = Get.find<LanguageController>();
 
   switch (status) {
     case RestaurantOrderStatus.PreparingOrder:
       mezDbgPrint("PreparingOrder");
-      myWidget = Row(
+      myWidget.value = Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
@@ -46,7 +47,7 @@ Widget buildWigetOnOrderStatus(
       break;
     case RestaurantOrderStatus.ReadyForPickup:
       mezDbgPrint("ReadyForPickup");
-      myWidget = Row(
+      myWidget.value = Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
@@ -75,7 +76,7 @@ Widget buildWigetOnOrderStatus(
       break;
     case RestaurantOrderStatus.OnTheWay:
       mezDbgPrint("OnTheWay");
-      myWidget = Row(
+      myWidget.value = Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
@@ -105,7 +106,7 @@ Widget buildWigetOnOrderStatus(
       break;
     case RestaurantOrderStatus.Delivered:
       mezDbgPrint("Delivered");
-      myWidget = Row(
+      myWidget.value = Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
@@ -133,7 +134,7 @@ Widget buildWigetOnOrderStatus(
       break;
     case RestaurantOrderStatus.OrderReceieved:
       mezDbgPrint("Order Receieved");
-      myWidget = Row(
+      myWidget.value = Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
@@ -160,31 +161,65 @@ Widget buildWigetOnOrderStatus(
       );
       break;
     case RestaurantOrderStatus.CancelledByAdmin:
-    case RestaurantOrderStatus.CancelledByCustomer:
-      mezDbgPrint("Cancelled");
-      myWidget = Row(
+      myWidget.value = Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-              width: 61,
-              height: 35,
+              width: 45,
+              height: 45,
               child: Icon(
                 Icons.highlight_off,
                 color: Colors.red,
               )),
-          Container(
+          Expanded(
             child: Text(
                 lang.strings['customer']['restaurant']['orderStatus']
-                        ['canceled'] +
+                        ['canceledByAdmin'] +
                     " ${f.format(orderTime.toLocal())}",
+                softWrap: true,
+                maxLines: 2,
                 style: const TextStyle(
                     color: const Color(0xff7e7a7a),
                     fontWeight: FontWeight.w400,
                     fontFamily: "ProductSans",
                     fontStyle: FontStyle.normal,
                     fontSize: 16.0),
+                overflow: TextOverflow.clip,
+                textAlign: TextAlign.center),
+          )
+        ],
+      );
+      break;
+    case RestaurantOrderStatus.CancelledByCustomer:
+      mezDbgPrint("Cancelled");
+      myWidget.value = Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+              width: 45,
+              height: 45,
+              child: Icon(
+                Icons.highlight_off,
+                color: Colors.red,
+              )),
+          Expanded(
+            child: Text(
+                lang.strings['customer']['restaurant']['orderStatus']
+                        ['canceledByCustomer'] +
+                    " ${f.format(orderTime.toLocal())}",
+                softWrap: true,
+                maxLines: 2,
+                style: const TextStyle(
+                    color: const Color(0xff7e7a7a),
+                    fontWeight: FontWeight.w400,
+                    fontFamily: "ProductSans",
+                    fontStyle: FontStyle.normal,
+                    fontSize: 16.0),
+                overflow: TextOverflow.clip,
                 textAlign: TextAlign.center),
           )
         ],
@@ -192,7 +227,5 @@ Widget buildWigetOnOrderStatus(
       break;
     default:
   }
-  return Container(
-    child: myWidget!,
-  );
+  return myWidget;
 }

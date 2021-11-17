@@ -65,6 +65,16 @@ class OrderController extends GetxController {
     });
   }
 
+  Order? getPastOrderById(String orderId) {
+    try {
+      return pastOrders.firstWhere((order) {
+        return order.orderId == orderId;
+      }) as RestaurantOrder;
+    } on StateError {
+      return null;
+    }
+  }
+
   Order? getOrder(String orderId) {
     try {
       return currentOrders.firstWhere((order) {
@@ -86,6 +96,19 @@ class OrderController extends GetxController {
       try {
         return currentOrders.firstWhere(
           (currentOrder) => currentOrder.orderId == orderId,
+        );
+      } on StateError catch (_) {
+        // do nothing
+        return null;
+      }
+    });
+  }
+
+  Stream<Order?> getPastOrderStream(String orderId) {
+    return pastOrders.stream.map<Order?>((_) {
+      try {
+        return pastOrders.firstWhere(
+          (pastOrder) => pastOrder.orderId == orderId,
         );
       } on StateError catch (_) {
         // do nothing

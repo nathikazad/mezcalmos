@@ -69,7 +69,6 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
 
   @override
   void initState() {
-    super.initState();
     String orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId) as RestaurantOrder?;
@@ -77,16 +76,26 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
       Get.back();
     } else {
       if (order.value!.inProcess()) {
+        controller.getPastOrderStream(orderId).listen((event) {
+          if (event != null) {
+            mezDbgPrint("===================" +
+                (event as RestaurantOrder).restaurantOrderStatus.toString());
+            order.value = event;
+          }
+        });
         _orderListener =
             controller.getCurrentOrderStream(orderId).listen((event) {
           if (event != null) {
-            order.value = event as RestaurantOrder;
+            mezDbgPrint("===================" +
+                (event as RestaurantOrder).restaurantOrderStatus.toString());
+            order.value = event;
           }
         });
-      }
+      } else {}
 
-      mezDbgPrint("=========> ${order.value}");
+      //mezDbgPrint("=========> ${order.value}");
     }
+    super.initState();
   }
 
   @override
@@ -148,355 +157,359 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
     return Scaffold(
       backgroundColor: const Color(0xffffffff),
       appBar: customerAppBar(AppBarLeftButtonType.Back),
-      body: GetBuilder<OrderController>(builder: (mycontoller) {
-        return Container(
-          height: Get.height,
-          child: SingleChildScrollView(
-            physics: ClampingScrollPhysics(),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 15,
+      body:
+          //  GetBuilder<OrderController>(builder: (mycontoller) {
+          //   return
+          Container(
+        height: Get.height,
+        child: SingleChildScrollView(
+          physics: ClampingScrollPhysics(),
+          child: Column(
+            children: [
+              SizedBox(
+                height: 15,
+              ),
+              //===================================>prepering orders===========================
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 10),
+                width: Get.width,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(4)),
+                  border:
+                      Border.all(color: const Color(0xffececec), width: 0.5),
+                  color: const Color(0x9affffff),
                 ),
-                //===================================>prepering orders===========================
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 10),
-                  width: Get.width,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(4)),
-                    border:
-                        Border.all(color: const Color(0xffececec), width: 0.5),
-                    color: const Color(0x9affffff),
-                  ),
-                  child: Column(
-                    children: [
-                      BasicCellComponent(
-                        url: "${order.value!.restaurant.image}",
-                        title: "${order.value!.restaurant.name}",
-                        traillingIcon: Container(
-                          child: Stack(
-                            children: [
-                              IconButton(
-                                  icon: Icon(
-                                    Icons.chat_bubble_outline,
-                                    color: Color(0xff5c7fff),
-                                  ),
-                                  onPressed: () {
-                                    //TODO: Navigate to messages screen
-                                    Get.toNamed(getRestaurantMessagesRoute(
-                                        order.value!.orderId));
-                                  }),
-                              Positioned(
-                                  left: 28,
-                                  top: 10,
-                                  child: (mycontoller
-                                          .orderHaveNewMessageNotifications(
-                                              order.value!.orderId))
-                                      ? Container(
-                                          width: 10,
-                                          height: 10,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              border: Border.all(
-                                                  color:
-                                                      const Color(0xfff6efff),
-                                                  width: 2),
-                                              color: const Color(0xffff0000)))
-                                      : Container())
-                            ],
-                          ),
+                child: Column(
+                  children: [
+                    BasicCellComponent(
+                      url: "${order.value!.restaurant.image}",
+                      title: "${order.value!.restaurant.name}",
+                      traillingIcon: Container(
+                        child: Stack(
+                          children: [
+                            IconButton(
+                                icon: Icon(
+                                  Icons.chat_bubble_outline,
+                                  color: Color(0xff5c7fff),
+                                ),
+                                onPressed: () {
+                                  //TODO: Navigate to messages screen
+                                  Get.toNamed(getRestaurantMessagesRoute(
+                                      order.value!.orderId));
+                                }),
+                            Positioned(
+                                left: 28,
+                                top: 10,
+                                child: (controller
+                                        .orderHaveNewMessageNotifications(
+                                            order.value!.orderId))
+                                    ? Container(
+                                        width: 10,
+                                        height: 10,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            border: Border.all(
+                                                color: const Color(0xfff6efff),
+                                                width: 2),
+                                            color: const Color(0xffff0000)))
+                                    : Container())
+                          ],
                         ),
                       ),
-                      Container(
-                        width: Get.width,
-                        height: 1,
-                        decoration: BoxDecoration(
-                          color: const Color(0xffececec),
-                        ),
+                    ),
+                    Container(
+                      width: Get.width,
+                      height: 1,
+                      decoration: BoxDecoration(
+                        color: const Color(0xffececec),
                       ),
-                      Container(
-                        child: Container(
+                    ),
+                    Container(
+                      child: Container(
                           padding: const EdgeInsets.symmetric(vertical: 10),
-                          child: Obx(() => buildWigetOnOrderStatus(
-                              order.value!.restaurantOrderStatus,
-                              order.value!.orderTime)),
+                          child: Obx(
+                            () => buildWigetOnOrderStatus(
+                                    order.value!.restaurantOrderStatus,
+                                    order.value!.orderTime)
+                                .value!,
+                          )),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+
+              //=================================>Orders Items=============================>
+              //Order Items
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                alignment: Alignment.centerLeft,
+                child: Text(
+                    "${lang.strings['customer']['restaurant']['checkout']['orderItems']}",
+                    style: const TextStyle(
+                        color: const Color(0xff000f1c),
+                        fontWeight: FontWeight.w700,
+                        fontFamily: "psb",
+                        fontStyle: FontStyle.normal,
+                        fontSize: 14.0),
+                    textAlign: TextAlign.left),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              buildOrdersItems(order.value!.items),
+              SizedBox(
+                height: 15,
+              ),
+              //==========================>total cost=====================================
+
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                alignment: Alignment.centerLeft,
+                child: Text(
+                    "${lang.strings['customer']['restaurant']['cart']['totalCost']}",
+                    style: TextStyle(
+                        color: const Color(0xff000f1c),
+                        fontFamily: "psb",
+                        fontStyle: FontStyle.normal,
+                        fontSize: 14.0),
+                    textAlign: TextAlign.left),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 10),
+                width: Get.width,
+                height: 113,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(4)),
+                  border:
+                      Border.all(color: const Color(0xffececec), width: 0.5),
+                  color: const Color(0x80ffffff),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: Row(
+                          children: [
+                            Text(
+                                "${lang.strings['customer']['restaurant']['cart']['deliveryCost']}",
+                                style: const TextStyle(
+                                    color: const Color(0xff000f1c),
+                                    fontFamily: "psr",
+                                    fontStyle: FontStyle.normal,
+                                    fontSize: 20.0),
+                                textAlign: TextAlign.left),
+                            Spacer(),
+                            Text(" \$40.00",
+                                style: TextStyle(
+                                    color: const Color(0xff000f1c),
+                                    fontFamily: "psb",
+                                    fontStyle: FontStyle.normal,
+                                    fontSize: 20.0.sp),
+                                textAlign: TextAlign.right)
+                          ],
                         ),
-                      )
-                    ],
-                  ),
+                      ),
+                    ),
+                    Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 15),
+                        width: Get.width,
+                        height: 0.5,
+                        decoration:
+                            BoxDecoration(color: const Color(0xffececec))),
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: Row(
+                          children: [
+                            // Total
+                            Text(
+                                "${lang.strings['customer']['restaurant']['cart']['total']}",
+                                style: const TextStyle(
+                                    color: const Color(0xff000f1c),
+                                    fontFamily: "psr",
+                                    fontStyle: FontStyle.normal,
+                                    fontSize: 20.0),
+                                textAlign: TextAlign.left),
+                            Spacer(),
+                            Text("  \$${currency.format(order.value!.cost)}",
+                                style: TextStyle(
+                                    color: const Color(0xff000f1c),
+                                    fontFamily: "psb",
+                                    fontStyle: FontStyle.normal,
+                                    fontSize: 20.0.sp),
+                                textAlign: TextAlign.right)
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  height: 15,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              //===================================>Delivery Location==========================>
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                alignment: Alignment.centerLeft,
+                child: Text(
+                    "${lang.strings['customer']['restaurant']['cart']['deliveryLocation']}",
+                    style: const TextStyle(
+                        color: const Color(0xff000f1c),
+                        fontFamily: "psb",
+                        fontStyle: FontStyle.normal,
+                        fontSize: 14.0),
+                    textAlign: TextAlign.left),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                width: Get.width,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(4)),
+                  border:
+                      Border.all(color: const Color(0xffececec), width: 0.5),
+                  color: const Color(0x80ffffff),
                 ),
-
-                //=================================>Orders Items=============================>
-                //Order Items
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                      "${lang.strings['customer']['restaurant']['checkout']['orderItems']}",
-                      style: const TextStyle(
-                          color: const Color(0xff000f1c),
-                          fontWeight: FontWeight.w700,
-                          fontFamily: "psb",
-                          fontStyle: FontStyle.normal,
-                          fontSize: 14.0),
-                      textAlign: TextAlign.left),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(
+                      MezcalmosIcons.map_marker,
+                      size: 16,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Container(
+                      width: Get.width * 0.75,
+                      child: Text(
+                        order.value!.to == null
+                            ? lang.strings['shared']['placeHolders']['home']
+                            : order.value!.to.address,
+                        style: const TextStyle(
+                            color: const Color(0xff000f1c),
+                            fontFamily: "psr",
+                            fontStyle: FontStyle.normal,
+                            fontSize: 16.0),
+                      ),
+                    )
+                  ],
                 ),
-                SizedBox(
-                  height: 10,
-                ),
-                buildOrdersItems(order.value!.items),
-                SizedBox(
-                  height: 15,
-                ),
-                //==========================>total cost=====================================
-
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                      "${lang.strings['customer']['restaurant']['cart']['totalCost']}",
-                      style: TextStyle(
-                          color: const Color(0xff000f1c),
-                          fontFamily: "psb",
-                          fontStyle: FontStyle.normal,
-                          fontSize: 14.0),
-                      textAlign: TextAlign.left),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 10),
-                  width: Get.width,
-                  height: 113,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(4)),
-                    border:
-                        Border.all(color: const Color(0xffececec), width: 0.5),
-                    color: const Color(0x80ffffff),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 15),
-                          child: Row(
-                            children: [
-                              Text(
-                                  "${lang.strings['customer']['restaurant']['cart']['deliveryCost']}",
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              //===============================>notes========================>
+              order.value?.notes == null || order.value!.notes!.length <= 0
+                  ? SizedBox()
+                  : NotesWidget(),
+              //===============================>button cancel===========================
+              Obx(() => order.value!.inProcess() &&
+                      order.value!.restaurantOrderStatus ==
+                          RestaurantOrderStatus.OrderReceieved
+                  ? InkWell(
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 10),
+                        width: Get.width,
+                        height: 48,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
+                          boxShadow: [
+                            BoxShadow(
+                                color: const Color(0x332362f1),
+                                offset: Offset(0, 6),
+                                blurRadius: 10,
+                                spreadRadius: 0)
+                          ],
+                          gradient: LinearGradient(
+                            begin: Alignment(-0.10374055057764053, 0),
+                            end: Alignment(
+                                1.1447703838348389, 1.1694844961166382),
+                            colors: [
+                              const Color(0xede21132),
+                              const Color(0xdbd11835)
+                            ],
+                          ),
+                        ),
+                        child: Center(
+                          child: // CANCEL
+                              getWidgetOrShowLoading(Text(
+                                  lang.strings['customer']['restaurant']
+                                          ['checkout']['cancel']
+                                      .toString()
+                                      .toUpperCase(),
                                   style: const TextStyle(
-                                      color: const Color(0xff000f1c),
-                                      fontFamily: "psr",
-                                      fontStyle: FontStyle.normal,
-                                      fontSize: 20.0),
-                                  textAlign: TextAlign.left),
-                              Spacer(),
-                              Text(" \$40.00",
-                                  style: TextStyle(
-                                      color: const Color(0xff000f1c),
+                                      color: const Color(0xffffffff),
                                       fontFamily: "psb",
                                       fontStyle: FontStyle.normal,
-                                      fontSize: 20.0.sp),
-                                  textAlign: TextAlign.right)
-                            ],
-                          ),
+                                      fontSize: 16.0),
+                                  textAlign: TextAlign.center)),
                         ),
                       ),
-                      Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 15),
-                          width: Get.width,
-                          height: 0.5,
-                          decoration:
-                              BoxDecoration(color: const Color(0xffececec))),
-                      Expanded(
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 15),
-                          child: Row(
-                            children: [
-                              // Total
-                              Text(
-                                  "${lang.strings['customer']['restaurant']['cart']['total']}",
-                                  style: const TextStyle(
-                                      color: const Color(0xff000f1c),
-                                      fontFamily: "psr",
-                                      fontStyle: FontStyle.normal,
-                                      fontSize: 20.0),
-                                  textAlign: TextAlign.left),
-                              Spacer(),
-                              Text("  \$${currency.format(order.value!.cost)}",
-                                  style: TextStyle(
-                                      color: const Color(0xff000f1c),
-                                      fontFamily: "psb",
-                                      fontStyle: FontStyle.normal,
-                                      fontSize: 20.0.sp),
-                                  textAlign: TextAlign.right)
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                //===================================>Delivery Location==========================>
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                      "${lang.strings['customer']['restaurant']['cart']['deliveryLocation']}",
-                      style: const TextStyle(
-                          color: const Color(0xff000f1c),
-                          fontFamily: "psb",
-                          fontStyle: FontStyle.normal,
-                          fontSize: 14.0),
-                      textAlign: TextAlign.left),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 10),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                  width: Get.width,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(4)),
-                    border:
-                        Border.all(color: const Color(0xffececec), width: 0.5),
-                    color: const Color(0x80ffffff),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Icon(
-                        MezcalmosIcons.map_marker,
-                        size: 16,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Container(
-                        width: Get.width * 0.75,
-                        child: Text(
-                          order.value!.to == null
-                              ? lang.strings['shared']['placeHolders']['home']
-                              : order.value!.to.address,
-                          style: const TextStyle(
-                              color: const Color(0xff000f1c),
-                              fontFamily: "psr",
-                              fontStyle: FontStyle.normal,
-                              fontSize: 16.0),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                //===============================>notes========================>
-                order.value?.notes == null || order.value!.notes!.length <= 0
-                    ? SizedBox()
-                    : NotesWidget(),
-                //===============================>button cancel===========================
-                Obx(() => order.value!.inProcess() &&
-                        order.value!.restaurantOrderStatus ==
-                            RestaurantOrderStatus.OrderReceieved
-                    ? InkWell(
-                        child: Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 10),
-                          width: Get.width,
-                          height: 48,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(4)),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: const Color(0x332362f1),
-                                  offset: Offset(0, 6),
-                                  blurRadius: 10,
-                                  spreadRadius: 0)
-                            ],
-                            gradient: LinearGradient(
-                              begin: Alignment(-0.10374055057764053, 0),
-                              end: Alignment(
-                                  1.1447703838348389, 1.1694844961166382),
-                              colors: [
-                                const Color(0xede21132),
-                                const Color(0xdbd11835)
-                              ],
-                            ),
-                          ),
-                          child: Center(
-                            child: // CANCEL
-                                getWidgetOrShowLoading(Text(
-                                    lang.strings['customer']['restaurant']
-                                            ['checkout']['cancel']
-                                        .toString()
-                                        .toUpperCase(),
-                                    style: const TextStyle(
-                                        color: const Color(0xffffffff),
-                                        fontFamily: "psb",
-                                        fontStyle: FontStyle.normal,
-                                        fontSize: 16.0),
-                                    textAlign: TextAlign.center)),
-                          ),
-                        ),
-                        onTap: () async =>
-                            await onTapButtonsShowLoading(() async {
-                          bool yesNoRes = await cancelAlertDailog(
-                              lang.strings['customer']['restaurant']['checkout']
-                                  ['cancelOrder'],
-                              lang.strings['customer']['restaurant']['checkout']
-                                  ['cancelOrderConfirm'], () {
-                            Get.back(result: true);
-                          }, () {
-                            Get.back(result: false);
-                          });
+                      onTap: () async =>
+                          await onTapButtonsShowLoading(() async {
+                        bool yesNoRes = await cancelAlertDailog(
+                            lang.strings['customer']['restaurant']['checkout']
+                                ['cancelOrder'],
+                            lang.strings['customer']['restaurant']['checkout']
+                                ['cancelOrderConfirm'], () {
+                          Get.back(result: true);
+                        }, () {
+                          Get.back(result: false);
+                        });
 
-                          if (yesNoRes) {
-                            mezDbgPrint(Get.parameters.toString());
-                            ServerResponse resp = await controller
-                                .cancelOrder(Get.parameters['orderId']!);
-                            mezDbgPrint(resp.data.toString());
-                            if (resp.success) {
-                              Get.until(
-                                  (route) => route.settings.name == kHomeRoute);
-                              mezcalmosSnackBar(
-                                  lang.strings["shared"]["snackbars"]
-                                      ["titleSuccess"],
-                                  lang.strings["shared"]["snackbars"]
-                                      ["orderCancelSuccess"],
-                                  position: SnackPosition.TOP);
-                            } else {
-                              mezcalmosSnackBar(
-                                  lang.strings["shared"]["snackbars"]
-                                      ["titleFailed"],
-                                  lang.strings["shared"]["snackbars"]
-                                      ["orderCancelFailed"],
-                                  position: SnackPosition.TOP);
-                            }
+                        if (yesNoRes) {
+                          mezDbgPrint(Get.parameters.toString());
+                          ServerResponse resp = await controller
+                              .cancelOrder(Get.parameters['orderId']!);
+                          mezDbgPrint(resp.data.toString());
+                          if (resp.success) {
+                            Get.until(
+                                (route) => route.settings.name == kHomeRoute);
+                            mezcalmosSnackBar(
+                                lang.strings["shared"]["snackbars"]
+                                    ["titleSuccess"],
+                                lang.strings["shared"]["snackbars"]
+                                    ["orderCancelSuccess"],
+                                position: SnackPosition.TOP);
+                          } else {
+                            mezcalmosSnackBar(
+                                lang.strings["shared"]["snackbars"]
+                                    ["titleFailed"],
+                                lang.strings["shared"]["snackbars"]
+                                    ["orderCancelFailed"],
+                                position: SnackPosition.TOP);
                           }
-                        }),
-                      )
-                    : SizedBox()),
-                SizedBox(
-                  height: 30,
-                ),
-              ],
-            ),
+                        }
+                      }),
+                    )
+                  : SizedBox()),
+              SizedBox(
+                height: 30,
+              ),
+            ],
           ),
-        );
-      }),
+        ),
+        // );
+        // }
+      ),
     );
   }
 }

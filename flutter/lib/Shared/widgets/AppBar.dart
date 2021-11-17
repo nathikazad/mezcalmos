@@ -34,7 +34,8 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
       onTapFunction = () => Get.find<SideMenuDraweController>().openMenu();
       break;
   }
-  mezDbgPrint("Getx => ScreenSize ========> ${Get.width} x ${Get.height} !!");
+  mezDbgPrint(
+      "Getx => ScreenSize ========> ${Get.width} x ${Get.height}  the length of actionIcons is ${actionIcons.length}!!");
   return AppBar(
     toolbarHeight: 80,
     elevation: 0,
@@ -88,7 +89,7 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
           MezcalmosSharedWidgets.fillTitle(actionIcons.length),
           Spacer(),
           for (var i = 0; i < actionIcons.length; i++) ...[
-            SizedBox(width: 5),
+            //SizedBox(width: 5),
             actionIcons[i]
           ]
           //  actionIcons==null?Spacer():(actionIcons!.map((e) {

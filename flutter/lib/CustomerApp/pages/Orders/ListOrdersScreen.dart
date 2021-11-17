@@ -27,41 +27,41 @@ class ListOrdersScreen extends StatefulWidget {
 
 class _ListOrdersScreen extends State<ListOrdersScreen> {
   LanguageController _lang = Get.find<LanguageController>();
-  RxList<Order> currentOrders = RxList.empty();
-  RxList<Order> pastOrders = RxList.empty();
+  // RxList<Order> currentOrders = RxList.empty();
+  // RxList<Order> pastOrders = RxList.empty();
   OrderController controller = Get.find<OrderController>();
   AuthController auth = Get.find<AuthController>();
-  StreamSubscription? currentOrdersListener;
-  StreamSubscription? pastOrdersListener;
+  // StreamSubscription? currentOrdersListener;
+  // StreamSubscription? pastOrdersListener;
 
   @override
   initState() {
     mezDbgPrint("ListOrdersScreen: onInit");
-    currentOrders.value = controller.currentOrders;
-    currentOrdersListener = controller.currentOrders.stream.listen((_) {
-      currentOrders.value = controller.currentOrders;
-    });
-    pastOrders.value = controller.pastOrders;
-    pastOrdersListener = controller.pastOrders.stream.listen((_) {
-      pastOrders.value = controller.pastOrders;
-    });
+    // currentOrders.value = controller.currentOrders;
+    // currentOrdersListener = controller.currentOrders.stream.listen((_) {
+    //   currentOrders.value = controller.currentOrders;
+    // });
+    // pastOrders.value = controller.pastOrders;
+    // pastOrdersListener = controller.pastOrders.stream.listen((_) {
+    //   pastOrders.value = controller.pastOrders;
+    // });
 
     super.initState();
   }
 
   @override
   void dispose() {
-    currentOrdersListener?.cancel();
-    currentOrdersListener = null;
-    pastOrdersListener?.cancel();
-    pastOrdersListener = null;
+    // currentOrdersListener?.cancel();
+    // currentOrdersListener = null;
+    // pastOrdersListener?.cancel();
+    // pastOrdersListener = null;
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     mezDbgPrint(
-        "ListOrdersScreen: build the length of past orders is ${pastOrders.value.length} and the length of inprosses is ${currentOrders.value.length}");
+        "ListOrdersScreen: build the length of past orders is ${controller.pastOrders.value.length} and the length of inprosses is ${controller.currentOrders.value.length}");
     return Scaffold(
         backgroundColor: Colors.white,
         // appBar: AppBar(
@@ -85,7 +85,9 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
         date: "In Process",
       ),
     ];
-    currentOrders().sort((a, b) => b.orderTime.compareTo(a.orderTime));
+    controller
+        .currentOrders()
+        .sort((a, b) => b.orderTime.compareTo(a.orderTime));
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(boxShadow: [
@@ -96,7 +98,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
             spreadRadius: 0)
       ], color: const Color(0xffe8f5ec)),
       child: Column(
-          children: currentOrders().fold<List<Widget>>(
+          children: controller.currentOrders().fold<List<Widget>>(
         <Widget>[],
         (children, order) {
           inProcessOrdersWidget.add(OrderCardComponenet(
@@ -121,9 +123,10 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
   Widget buildPastOrders() {
     var dd = DateTime.now().toLocal();
     List<Widget> pastOrdersWidget = [];
-    pastOrders().sort((a, b) => b.orderTime.compareTo(a.orderTime));
+    controller.pastOrders().sort((a, b) => b.orderTime.compareTo(a.orderTime));
     return Column(
-      children: pastOrders().fold<List<Widget>>(<Widget>[], (children, order) {
+      children: controller.pastOrders().fold<List<Widget>>(<Widget>[],
+          (children, order) {
         checkTime(order.orderTime);
         mezDbgPrint(order.serviceProvider!.name);
         if (dd.isSameDate(order.orderTime)) {

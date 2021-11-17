@@ -23,7 +23,7 @@ import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as MezNotification;
-import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
+//import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
 
 class CustomerWrapper extends StatefulWidget {
   @override
@@ -35,7 +35,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   StreamSubscription<MezNotification.Notification>?
       _notificationsStreamListener;
   StreamSubscription<bool>? _locationStreamSub;
-  MyPopupMenuController _popUpController = MyPopupMenuController();
+  // MyPopupMenuController _popUpController = MyPopupMenuController();
 
   LanguageController lang = Get.find<LanguageController>();
   SideMenuDraweController _sideMenuDrawerController =
