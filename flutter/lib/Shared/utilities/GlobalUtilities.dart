@@ -77,7 +77,9 @@ Image handleNetworkImage(
     String assetInCaseFailed = aNoImgAsset}) {
   Image _img;
 
-  if (url == null || url.toLowerCase().contains('.svg') || !url.isURL) {
+  if (url == null ||
+      url.toLowerCase().contains('.svg') ||
+      !url.startsWith('http')) {
     _img = Image.asset(
       assetInCaseFailed,
       height: height,

@@ -77,9 +77,9 @@ class _MessagingScreenState extends State<MessagingScreen> {
                 child: CircleAvatar(
                   radius: 23,
                   backgroundColor: Colors.grey.shade200,
-                  backgroundImage: userImage == null || userImage == ""
-                      ? AssetImage(aDefaultAvatar) as ImageProvider
-                      : NetworkImage(userImage),
+                  backgroundImage: handleNetworkImage(
+                          url: userImage, assetInCaseFailed: aDefaultAvatar)
+                      .image,
                 ),
               ),
               Wrap(

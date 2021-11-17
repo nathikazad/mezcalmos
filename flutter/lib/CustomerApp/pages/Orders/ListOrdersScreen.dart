@@ -27,15 +27,13 @@ class ListOrdersScreen extends StatefulWidget {
 
 class _ListOrdersScreen extends State<ListOrdersScreen> {
   LanguageController _lang = Get.find<LanguageController>();
-
   RxList<Order> currentOrders = RxList.empty();
   RxList<Order> pastOrders = RxList.empty();
-
   OrderController controller = Get.find<OrderController>();
   AuthController auth = Get.find<AuthController>();
-
   StreamSubscription? currentOrdersListener;
   StreamSubscription? pastOrdersListener;
+
   @override
   initState() {
     mezDbgPrint("ListOrdersScreen: onInit");
@@ -70,17 +68,15 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
         //   title: Text("List Orders"),
         // ),
         appBar: customerAppBar(AppBarLeftButtonType.Back),
-        body: Obx(() {
-          return SingleChildScrollView(
-              physics: ClampingScrollPhysics(),
-              child: Column(
-                children: [
-                  buildInProcessOrders(),
-                  SizedBox(height: 20),
-                  buildPastOrders()
-                ],
-              ));
-        }));
+        body: SingleChildScrollView(
+            physics: ClampingScrollPhysics(),
+            child: Column(
+              children: [
+                Obx(() => buildInProcessOrders()),
+                SizedBox(height: 20),
+                Obx(() => buildPastOrders())
+              ],
+            )));
   }
 
   Widget buildInProcessOrders() {
@@ -105,7 +101,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
         (children, order) {
           inProcessOrdersWidget.add(OrderCardComponenet(
             title: order.serviceProvider!.name,
-            subTitle: order.to.address.substring(0, 15),
+            subTitle: order.to.address,
             date:
                 "${DateFormat.jm().format(DateFormat("hh:mm").parse("${order.orderTime.toLocal().hour}:${order.orderTime.toLocal().minute}"))}",
             price: "${currency.format(order.cost)}",
@@ -134,7 +130,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
           pastOrdersWidget.add(
             OrderCardComponenet(
               title: order.serviceProvider!.name,
-              subTitle: order.to.address.substring(0, 15),
+              subTitle: order.to.address,
               date:
                   "${DateFormat.jm().format(DateFormat("hh:mm").parse("${order.orderTime.toLocal().hour}:${order.orderTime.toLocal().minute}"))}",
               price: "${currency.format(order.cost)}",
@@ -161,7 +157,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
             pastOrdersWidget.add(
               OrderCardComponenet(
                 title: order.serviceProvider!.name,
-                subTitle: order.to.address.substring(0, 15),
+                subTitle: order.to.address,
                 date:
                     "${DateFormat.jm().format(DateFormat("hh:mm").parse("${order.orderTime.toLocal().hour}:${order.orderTime.toLocal().minute}"))}",
                 price: "${currency.format(order.cost)}",
@@ -351,6 +347,7 @@ class OrderCardComponenet extends StatelessWidget {
                           Expanded(
                             child: Container(
                               child: Text("$subTitle",
+                                  overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                       color: const Color(0xff000f1c),
                                       fontWeight: FontWeight.w400,
