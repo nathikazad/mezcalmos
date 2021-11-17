@@ -164,14 +164,25 @@ class Launcher:
 
         # profile :
         _project_profile_manifest = "../android/app/src/profile/AndroidManifest.xml"
-        os.system('mv ../android/app/src/profile/AndroidManifest.xml ../android/app/src/profile/AndroidManifest.xml.backup')
+        if not os.path.exists(os.path.dirname(_project_profile_manifest)):
+            os.mkdir(os.path.dirname(_project_profile_manifest))
+        
+        if os.path.exists(_project_profile_manifest):
+            os.system('mv ../android/app/src/profile/AndroidManifest.xml ../android/app/src/profile/AndroidManifest.xml.backup')
+        
         _cloned = open('patches/android/profile/AndroidManifest.xml').read().replace('<mez-package-name>', _appPackageName)
         open(_project_profile_manifest , 'w+').write(_cloned)
 
 
         # debug:
         _project_debug_manifest = "../android/app/src/debug/AndroidManifest.xml"
-        os.system('mv ../android/app/src/debug/AndroidManifest.xml ../android/app/src/debug/AndroidManifest.xml.backup')
+        
+        if not os.path.exists(os.path.dirname(_project_debug_manifest)):
+            os.mkdir(os.path.dirname(_project_debug_manifest))
+        
+        if os.path.exists(_project_debug_manifest):
+            os.system('mv ../android/app/src/debug/AndroidManifest.xml ../android/app/src/debug/AndroidManifest.xml.backup')
+        
         _cloned = open('patches/android/debug/AndroidManifest.xml').read().replace('<mez-package-name>', _appPackageName)
         open(_project_debug_manifest , 'w+').write(_cloned)
         
