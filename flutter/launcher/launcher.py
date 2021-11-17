@@ -1,21 +1,21 @@
 #!/usr/bin/env python3
 
 import os , json
-from sys import argv, stderr, stdout, stdin
+from sys import argv, stderr, platform
 from enum import Enum
 import subprocess as proc
 from termcolor import colored
 
 
 # GLOBAL CONSTANTS !
-VERSION = "1.0.6"
+VERSION = "1.0.7"
 XOR_VALUE = 100
 CONFIG_FILE = "config.json"
 ACTIVE_DEBUG = True
 PRINTLN = lambda x : print(x) if ACTIVE_DEBUG else None
 
 VALID_CONFIG_KEYS_LEN = 2
-
+rm_lambda = lambda path : 'rm -rf {path}*'
 # POSSIBLE_LMODES = [
 #     'stage',
 #     'dev',
@@ -138,7 +138,47 @@ class Launcher:
         _launcherPackageProperties = f"package.name={_appPackageName}"
         open(_launcherPackagePropertiesFile , 'w+').write(_launcherPackageProperties)
         PRINTLN(f"[+] Patched launcherPackage.properties !")
-    
+        
+        # Android ----
+        # Saad : Be careful while changing this guys.
+        # Handling the kotlin - package importing problem !
+        dot_separated_package_name = _appPackageName.split('.')
+        project_kotlin_folder = "../android/app/src/main/kotlin/"
+        main_activity_kt_path = project_kotlin_folder+'/'.join(dot_separated_package_name)+'/'+'MainActivity.kt'
+
+        # if condition to pass this process!
+        if not os.path.exists(os.path.dirname(main_activity_kt_path)):
+            rm_lambda(project_kotlin_folder) # this will delete the tree starting with com folder.
+            # then we create our own correct tree:
+            os.makedirs(os.path.dirname(main_activity_kt_path), exist_ok=True)
+            # then we write our correct Activity.kt
+            _cloned = open('patches/android/MainActivity.kt').read().replace('<mez-package-name>', _appPackageName)
+            open(main_activity_kt_path , 'w+').write(_cloned)
+            PRINTLN(f"[+] Set up of : {main_activity_kt_path} .. done!")
+
+        #  main ManifestXml:
+        _project_main_manifest = "../android/app/src/main/AndroidManifest.xml"
+        os.system('mv ../android/app/src/main/AndroidManifest.xml ../android/app/src/main/AndroidManifest.xml.backup')
+        _cloned = open('patches/android/main/AndroidManifest.xml').read().replace('<mez-package-name>', _appPackageName)
+        open(_project_main_manifest , 'w+').write(_cloned)
+
+        # profile :
+        _project_profile_manifest = "../android/app/src/profile/AndroidManifest.xml"
+        os.system('mv ../android/app/src/profile/AndroidManifest.xml ../android/app/src/profile/AndroidManifest.xml.backup')
+        _cloned = open('patches/android/profile/AndroidManifest.xml').read().replace('<mez-package-name>', _appPackageName)
+        open(_project_profile_manifest , 'w+').write(_cloned)
+
+
+        # debug:
+        _project_debug_manifest = "../android/app/src/debug/AndroidManifest.xml"
+        os.system('mv ../android/app/src/debug/AndroidManifest.xml ../android/app/src/debug/AndroidManifest.xml.backup')
+        _cloned = open('patches/android/debug/AndroidManifest.xml').read().replace('<mez-package-name>', _appPackageName)
+        open(_project_debug_manifest , 'w+').write(_cloned)
+        
+        # Done !
+        PRINTLN("[+] Patched and Backed-up all ../android/app/src/<mode>/AndroidManifest.xml just in case ..!")
+
+
         # IOS ----
         # TODO : Handle Versioning !
         # Patching info.plist & project.pbxproj for IOS!
@@ -201,8 +241,19 @@ class Launcher:
         self.flutter_setup = f"--dart-define=APP_SP={self.user_args['app']} --dart-define=HOST={self.user_args['host']} --dart-define=LMODE={self.user_args['lmode']}"
     
     def __build_temp(self):
-        # Auto versioning checks.
-        os.system(f'flutter build {self.user_args["build"]} -t lib/{self.user_args["app"]}/main.dart --dart-define=LMODE={self.user_args["lmode"]}')
+        # TODO : Auto versioning checks.
+        isVerbose = "--verbose" if self.user_args['verbose'] else ""
+        if not self.user_args['lmode']:
+            PRINTLN("In order to build you have to specify env=<stage, dev, prod>")
+            exit(DW_EXIT_REASONS.WRONG_ENV_USED)
+        elif not self.user_args['app'] :
+            PRINTLN("In order to build you have to specify app=<appName>")
+            exit(DW_EXIT_REASONS.NO_APP_SPECIFIED)
+
+        if self.user_args['build'] == 'ios' :
+            os.system(f'flutter build {self.user_args["build"]} --target lib/{self.user_args["app"]}/main.dart {isVerbose}')
+        else:
+            os.system(f'flutter build {self.user_args["build"]} -t lib/{self.user_args["app"]}/main.dart {isVerbose}')
 
     def __launch__(self):
         # self.__f_checker__()
@@ -215,110 +266,25 @@ class Launcher:
             exit(DW_EXIT_REASONS.NORMAL)
 
         self.__set_flutter_args__()
-        
-
-
-class Builder:
-
-    def __patcher__(self , key):
-        if key in self.VALID_MAIN_KEYS:
-            return self.user_args[key]
-
-        else:
-            PRINTLN(f'[!] flutter_hooks.build.keys::{key} not a valid key !')
-            exit(DW_EXIT_REASONS.HOOKS_BUILD_KEYS_INVALID)
-
-    def __init__(self , user_args , conf) -> None:
-        print("[+] Please don't build anything yet , this will mess things up as long as the builder is not done !")
-        exit(DW_EXIT_REASONS.REACH_THE_LAZY_SAAD)
-        
-        self.user_args = user_args
-        self.conf = conf
-
-        self.VALID_MAIN_KEYS = [
-
-            'app',
-            'host',
-            'lmode',
-            'db'
-
-        ]
-
-        PRINTLN(f"\n[~] Checking flutter app validity .")
-        _path = conf[user_args['app']]['path']
-        _root_main_dart  = os.path.join(_path , '../lib/main.dart')
-        _root_main_dart_backup  = os.path.join(_path , '../lib/main.dart')+'.backup'
-
-        if not os.path.exists(_path):
-            exit(DW_EXIT_REASONS.CONF_FILE_GIVEN_APP_PATH_NOT_FOUND)
-
-        if not os.path.exists(_root_main_dart):
-            exit(DW_EXIT_REASONS.ROOT_MAIN_DART_FILE_NOT_FOUND)
-        else:
-            if not os.path.exists(_root_main_dart_backup):
-                os.rename(_root_main_dart , _root_main_dart_backup)
-                PRINTLN("[+] saved main.dart => main.dart.backup !")
-
-        if not os.path.exists('flutter_hooks/build'):
-            exit(DW_EXIT_REASONS.FLUTTER_HOOKS_LAUNCH_NOT_FOUND)
-        
-        keys_json = json.loads(open('flutter_hooks/build/keys.json').read())
-        py_main_dart = open('flutter_hooks/build/main.dart').read()
-        
-        for k in keys_json:
-            rep = self.__patcher__(k)
-            if not rep == None: 
-                py_main_dart = py_main_dart.replace(keys_json[k] , )
-            else:
-                PRINTLN(f"[!] {k} not in VALIDKEYS , reach saad out xD !")
-                exit(DW_EXIT_REASONS.REACH_THE_LAZY_SAAD)
-        
-        if open(_root_main_dart_backup).read().startswith('//544D'):
-            print("[!] WARNING - lib/main.dart.backup , starts with //544D which means it's generated by the builder !")
-
-        ans = None
-        while True:
-            ans = input("\n\n[!] WARNING - Is the lib/main.dart.backup , the latest main.dart version ? y/n : ").lower()
-            if ans == 'y':
-                break
-            elif ans == 'n':
-                _  = input("\n[!] PS : This will remove the main.dart.backup and make main.dart as backup ! y/n : ").lower()
-                if _ == 'y':
-                    os.remove(_root_main_dart_backup)
-                    os.rename(_root_main_dart , _root_main_dart_backup)
-                    PRINTLN("[+] saved main.dart => main.dart.backup !")
-                else: print("[+] Aborting ...")
-            
-        with open(_root_main_dart , 'w+') as mainDart:
-            mainDart.write(py_main_dart)
-            mainDart.close()
-
-        # Now build !
-
-        print(f"\n[~] Building with : {user_args}")
-
-
-
 class Config:
-
+    
+    possible_args = ['--verbose' , 'help', 'app' , 'env' , 'version', 'filter', 'fmode', '--build', '--lan', '--preview' , '--set-version']
     def __help__(self):
-        print(f"""
-        
+        print(f""" 
         + app=<AppName>
-        + env=<Environment> `default is stage`
-        + version
+        + env=<Environment>
         + filter=<FileName.filter>  : just pass the filter file name you created under output_filters.
         + fmode=<filter_mode> : Default is 'show' , can be 'hide' depend on how you want to use the filter file!
+        + --build=<type> : to order the launcher to build where type is [apk, appbundle, ios] , requires app=<app> and env=<env>.
         + --lan : in case you want to launch to another device connected to the same network.
         + --preview : Passing this along , will result on launching the app in the device-preview for testing an try many resolutions.
-        + --build=<mode> : to order the launcher to build where mode is [apk, appbundle]
         + --set-version=<version> : Used to set the project's version to a specific version , this will set the version and quit.
-
+        + help : show this help menu
+        
         === only in build ===
         + version=<version> : example : 1.0.15+11
 
         PS : if an Error happend Send DW_EXIT_REASON.<NAME>.
-        
         """)
     
     @staticmethod
@@ -414,7 +380,7 @@ class Config:
             #         if _['launchMode'] == None or _['launchMode'] == "":
             #             exit(DW_EXIT_REASONS.CONF_FILE_APP_LMODE_EMPTY)
                     
-            PRINTLN("[+] Config file validated !")
+            # PRINTLN("[+] Config file validated !")
     
     def __patch_version__(self, v):
         '''v=Version , Patch the version!'''
@@ -481,13 +447,31 @@ class Config:
 
         PRINTLN("------------------- [ VERSION PATCHING] -------------------")
 
+    def __check_args_validity__(self):
+        try:
+            for a in self.args[1:] :
+                _a = a.split('=')[0]
+                if _a not in self.possible_args:
+                    PRINTLN(f"[!] Error : Wrong Argument was passed < {_a} >.\n")
+                    exit(DW_EXIT_REASONS.WRONG_ARG)
+        except Exception as e:
+            PRINTLN(e)
+
         
     def __init__(self , args) -> None:
         print(f"\n- MezLauncher v{VERSION}\n")
+        global rm_lambda
+        if platform.startswith('win'):
+            # cuz CMD is dumb xd
+            rm_lambda = lambda path : f'del {path}'# && rd {path}
+
         self.args = args
+        self.__check_args_validity__()
+        
         if 'help' in args:
             self.__help__()
             exit(DW_EXIT_REASONS.NORMAL)
+        
         
             
         self.user_args = {}
@@ -553,6 +537,12 @@ class Config:
                 self.user_args['fmode']  = _fm
         else:
             self.user_args['filter'] = "mez_dbg_print.filter"
+        
+        # if launch with verbose
+        if '--verbose' in args:
+            self.user_args['verbose'] = True
+        else : 
+            self.user_args['verbose'] = False
 
         # preview mode !
         if '--preview' in args:
@@ -626,7 +616,7 @@ class Config:
         # TODO : Implement that using class:Builder
         _ = self.__get_arg_value__('--build=')
         if _:
-            if str(_).lower() not in ['apk' , 'appbundle']:
+            if str(_).lower() not in ['apk' , 'appbundle' , 'ios']:
                 PRINTLN(f'[!] --build={_} : Error Platform unsupported yet!')
                 exit(DW_EXIT_REASONS.PLATFORM_NOT_SUPPORTED_YET)
 
@@ -639,8 +629,6 @@ class Config:
             # r = input("[!] Did you change the defaultLaunchMode and defaultDb in global.dart to the right ones ? y/n : ")
             # if r.lower() != 'y':
             #     exit(DW_EXIT_REASONS.NORMAL)
-            
-          
 
             v_ = self.__get_arg_value__('version=')
             if v_:

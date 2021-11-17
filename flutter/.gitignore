@@ -12,7 +12,12 @@ generated_plugin_registrant.dart
 #.lock files
 *.lock
 
-# -- patched files
+# -- patched files and dirs
+android/app/src/debug/
+android/app/src/profile/
+android/app/src/main/AndroidManifest.xml
+android/app/src/main/kotlin/
+
 pre-main.dart
 android/launcherPackage.properties
 android/app/src/main/res/values/launcher.xml
@@ -20,6 +25,7 @@ google-services.json
 GoogleService-Info.plist
 ios/Runner/info.plist
 ios/Runner.xcodeproj/project.pbxproj
+*.backup
 
 # font awesome
 font_awesome_flutter/
