@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
 import 'package:mezcalmos/CustomerApp/components/customerAppBar.dart';
 import 'package:mezcalmos/CustomerApp/components/itemMenuComponent.dart';
+import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantCartController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
@@ -47,6 +48,21 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
     return Scaffold(
         backgroundColor: const Color(0xffffffff),
         appBar: customerAppBar(AppBarLeftButtonType.Back, withCart: true),
+        // appBar: mezcalmosAppBar("back", () => Get.back(), actionIcons: [
+        //   Obx(() =>
+        //       Get.find<RestaurantCartController>().cart.value.items.length > 0
+        //           ? ActionIconsComponents.cartIcon()
+        //           : SizedBox()),
+        //   Obx(() =>
+        //       Get.find<FBNotificationsController>().notifications.value.length >
+        //               0
+        //           ? ActionIconsComponents.notificationIcon(true)
+        //           : SizedBox()),
+        //   ActionIconsComponents.orderIcon(
+        //       Get.find<OrderController>().currentOrders.value.length > 0
+        //           ? true
+        //           : false)
+        // ]),
         body: (restaurant?.items == null)
             ? Container(
                 child: Center(

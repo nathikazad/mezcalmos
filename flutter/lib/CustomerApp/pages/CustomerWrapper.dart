@@ -23,6 +23,7 @@ import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as MezNotification;
+import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
 
 class CustomerWrapper extends StatefulWidget {
   @override
@@ -34,6 +35,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   StreamSubscription<MezNotification.Notification>?
       _notificationsStreamListener;
   StreamSubscription<bool>? _locationStreamSub;
+  MyPopupMenuController _popUpController = MyPopupMenuController();
 
   LanguageController lang = Get.find<LanguageController>();
   SideMenuDraweController _sideMenuDrawerController =
@@ -125,6 +127,72 @@ class _CustomerWrapperState extends State<CustomerWrapper>
           key: _sideMenuDrawerController.getNewKey(),
           drawer: MezSideMenu(),
           appBar: customerAppBar(AppBarLeftButtonType.Menu),
+          // appBar: mezcalmosAppBar(
+          //     "menu", () => _sideMenuDrawerController.openMenu(),
+          //     actionIcons: [
+          //       // Obx(
+          //       //   () => Get.find<FBNotificationsController>()
+          //       //               .notifications
+          //       //               .value
+          //       //               .length >
+          //       //           0
+          //       //       ? ActionIconsComponents.notificationIcon(true)
+          //       //       : SizedBox(),
+          //       // ),
+          //       // ActionIconsComponents.orderIcon(
+          //       //     _orderController.currentOrders.value.length > 0
+          //       //         ? true
+          //       //         : false),
+          //       ///test====================
+
+          //       MyPopupMenu(
+          //         controller: _popUpController,
+          //         child: Container(
+          //           width: 30,
+          //           height: 30,
+          //           decoration: BoxDecoration(
+          //             color: Colors.green,
+          //             borderRadius: BorderRadius.all(Radius.circular(10)),
+          //           ),
+          //           child: ClipRRect(
+          //             borderRadius: BorderRadius.all(Radius.circular(10)),
+          //             child: Image.network(
+          //               "${Get.find<AuthController>().user!.image}",
+          //               fit: BoxFit.cover,
+          //             ),
+          //           ),
+          //         ),
+          //         menuBuilder: (context) => ClipRRect(
+          //           borderRadius: BorderRadius.circular(5),
+          //           child: Container(
+          //               color: Colors.transparent,
+          //               child: IntrinsicWidth(
+          //                 child: Column(
+          //                     crossAxisAlignment: CrossAxisAlignment.stretch,
+          //                     children: [
+          //                       InkWell(
+          //                         onTap: () {
+          //                           print("first Option");
+          //                           _popUpController.hideMenu();
+          //                         },
+          //                         child: ActionIconsComponents.orderIcon(),
+          //                       ),
+          //                       SizedBox(
+          //                         height: 10,
+          //                       ),
+          //                       InkWell(
+          //                         onTap: () {
+          //                           print("second Option");
+          //                           _popUpController.hideMenu();
+          //                         },
+          //                         child: ActionIconsComponents.orderIcon(),
+          //                       )
+          //                     ]),
+          //               )),
+          //         ),
+          //         pressType: PressType.singleClick,
+          //       )
+          //     ]),
           body: Column(
             children: [
               Container(

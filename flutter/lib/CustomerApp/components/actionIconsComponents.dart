@@ -57,26 +57,54 @@ class ActionIconsComponents {
   }
 
   /// orders icon
-  static Widget orderIcon() {
+  static Widget orderIcon([bool hasInprossesOrders = false]) {
     return GestureDetector(
       child: Container(
+        alignment: Alignment.center,
         height: 30,
         width: 30,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          gradient: LinearGradient(
-            begin: Alignment(0.1689453125, 0),
-            end: Alignment(1, 1),
-            colors: [
-              const Color(0xff5582ff).withOpacity(0.10000000149011612),
-              const Color(0xffc54efc).withOpacity(0.10000000149011612)
-            ],
-          ),
-        ),
-        child: Icon(
-          FontAwesomeIcons.history,
-          size: 14,
-          color: Color(0xff5582ff),
+        child: Stack(
+          children: [
+            Container(
+              height: 30,
+              width: 30,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+                gradient: LinearGradient(
+                  begin: Alignment(0.1689453125, 0),
+                  end: Alignment(1, 1),
+                  colors: [
+                    const Color(0xff5582ff).withOpacity(0.10000000149011612),
+                    const Color(0xffc54efc).withOpacity(0.10000000149011612)
+                  ],
+                ),
+              ),
+              child: Container(
+                child: Icon(
+                  FontAwesomeIcons.history,
+                  size: 14,
+                  color: Color(0xff5582ff),
+                ),
+              ),
+            ),
+            Positioned(
+                top: 5,
+                left: 15,
+                //  bottom: 10,
+                child: hasInprossesOrders
+                    ? Container(
+                        width: 10,
+                        height: 10,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                                color: const Color(0xfff6efff), width: 2),
+                            color: const Color(0xffff0000)))
+                    : SizedBox(
+                        height: 0,
+                        width: 0,
+                      ))
+          ],
         ),
       ),
       onTap: () {

@@ -409,7 +409,9 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                     ? SizedBox()
                     : NotesWidget(),
                 //===============================>button cancel===========================
-                Obx(() => order.value!.inProcess()
+                Obx(() => order.value!.inProcess() &&
+                        order.value!.restaurantOrderStatus ==
+                            RestaurantOrderStatus.OrderReceieved
                     ? InkWell(
                         child: Container(
                           margin: const EdgeInsets.symmetric(horizontal: 10),

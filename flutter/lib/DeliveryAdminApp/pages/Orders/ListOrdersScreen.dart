@@ -75,8 +75,8 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
         child: Scaffold(
             backgroundColor: Colors.white,
             key: Get.find<SideMenuDraweController>().getNewKey(),
-            appBar: mezcalmosAppBar(
-                "menu", Get.find<SideMenuDraweController>().openMenu),
+            // appBar: mezcalmosAppBar(
+            //     "menu", Get.find<SideMenuDraweController>().openMenu),
             drawer: MezSideMenu(),
             body: Obx(() {
               return Column(

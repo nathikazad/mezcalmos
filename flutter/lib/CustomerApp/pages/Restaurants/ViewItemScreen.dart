@@ -10,6 +10,7 @@ import 'package:mezcalmos/CustomerApp/components/customerAppBar.dart';
 import 'package:mezcalmos/CustomerApp/components/incrementalComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/textFieldComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/titlesComponent.dart';
+import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantCartController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
@@ -87,6 +88,20 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
       backgroundColor: const Color(0xfff6f6f6),
 
       appBar: customerAppBar(AppBarLeftButtonType.Back, withCart: true),
+      // backgroundColor: const Color(0xffffffff),
+      // appBar: mezcalmosAppBar("back", () => Get.back(), actionIcons: [
+      //   Obx(() => restaurantCartController.cart.value.items.length > 0
+      //       ? ActionIconsComponents.cartIcon()
+      //       : SizedBox()),
+      //   Obx(() =>
+      //       Get.find<FBNotificationsController>().notifications.value.length > 0
+      //           ? ActionIconsComponents.notificationIcon(true)
+      //           : SizedBox()),
+      //   ActionIconsComponents.orderIcon(
+      //       Get.find<OrderController>().currentOrders.value.length > 0
+      //           ? true
+      //           : false)
+      // ]),
       body: Obx(() => (cartItem.value?.item == null)
           ? Center(
               child: CircularProgressIndicator(),

@@ -4,7 +4,11 @@ description: A rideshare app.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+<<<<<<< Updated upstream
 version: 0.0.1+1
+=======
+version: 1.0.8+17
+>>>>>>> Stashed changes
 
 environment:
   sdk: ">=2.12.0 <3.0.0"

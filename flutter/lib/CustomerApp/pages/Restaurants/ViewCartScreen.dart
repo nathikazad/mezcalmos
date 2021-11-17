@@ -9,6 +9,7 @@ import 'package:mezcalmos/CustomerApp/components/incrementalComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/myExpensionPanelComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/textFieldComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/titlesComponent.dart';
+import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:intl/intl.dart';
@@ -69,6 +70,16 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
     return Scaffold(
       backgroundColor: const Color(0xffffffff),
       appBar: customerAppBar(AppBarLeftButtonType.Back, withCart: true),
+      // appBar: mezcalmosAppBar("back", () => Get.back(), actionIcons: [
+      //   Obx(() =>
+      //       Get.find<FBNotificationsController>().notifications.value.length > 0
+      //           ? ActionIconsComponents.notificationIcon()
+      //           : SizedBox()),
+      //   ActionIconsComponents.orderIcon(
+      //       Get.find<OrderController>().currentOrders.value.length > 0
+      //           ? true
+      //           : false)
+      // ]),
       body: Obx(() => controller.cart.value.items.length > 0
           ? GetBuilder<RestaurantCartController>(
               // specify type as Controller

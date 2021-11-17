@@ -65,8 +65,8 @@ class _AdminWrapperState extends State<AdminWrapper> {
         key: Get.find<SideMenuDraweController>().getNewKey(),
         drawer: MezSideMenu(),
         backgroundColor: Colors.white,
-        appBar: mezcalmosAppBar(
-            "menu", Get.find<SideMenuDraweController>().openMenu),
+        // appBar: mezcalmosAppBar(
+        //     "menu", Get.find<SideMenuDraweController>().openMenu),
         body: MezLogoAnimation(centered: true));
   }
 
