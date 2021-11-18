@@ -2,13 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
 import 'package:mezcalmos/CustomerApp/components/basicCellComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/buildWidgetOnOrderStatus.dart';
 import 'package:mezcalmos/CustomerApp/components/customerAppBar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
@@ -33,7 +31,9 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
   LanguageController lang = Get.find<LanguageController>();
   Rxn<RestaurantOrder> order = Rxn();
   OrderController controller = Get.find<OrderController>();
-  StreamSubscription? _orderListener;
+  StreamSubscription? _currentOrderListener;
+  StreamSubscription? _pastShownOrder;
+
   bool _clickedButton = false;
 
   Future<void> onTapButtonsShowLoading(Function function) async {
@@ -76,14 +76,15 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
       Get.back();
     } else {
       if (order.value!.inProcess()) {
-        controller.getPastOrderStream(orderId).listen((event) {
+        _pastShownOrder =
+            controller.getPastOrderStream(orderId).listen((event) {
           if (event != null) {
             mezDbgPrint("===================" +
                 (event as RestaurantOrder).restaurantOrderStatus.toString());
             order.value = event;
           }
         });
-        _orderListener =
+        _currentOrderListener =
             controller.getCurrentOrderStream(orderId).listen((event) {
           if (event != null) {
             mezDbgPrint("===================" +
@@ -100,8 +101,10 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
 
   @override
   void dispose() {
-    _orderListener?.cancel();
-    _orderListener = null;
+    _currentOrderListener?.cancel();
+    _pastShownOrder?.cancel();
+    _currentOrderListener = null;
+    _pastShownOrder = null;
     super.dispose();
   }
 
