@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
 import 'package:mezcalmos/TaxiAdminApp/controller/NotificationsController.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen.dart';
@@ -23,6 +24,8 @@ class ViewRestaurantScreen extends StatefulWidget {
 }
 
 class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
+  MyPopupMenuController _popUpController = MyPopupMenuController();
+
   late String restaurantId;
   Restaurant? restaurant;
   LanguageController lang = Get.find<LanguageController>();
@@ -43,11 +46,20 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    _popUpController.hideMenu();
+    _popUpController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     responsiveSize(context);
     return Scaffold(
         backgroundColor: const Color(0xffffffff),
-        appBar: customerAppBar(AppBarLeftButtonType.Back, withCart: true),
+        appBar: customerAppBar(AppBarLeftButtonType.Back, _popUpController,
+            withCart: true),
         body: (restaurant?.items == null)
             ? Container(
                 child: Center(
@@ -80,10 +92,6 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
                                     child: handleNetworkImage(
                                         url: restaurant!.photo!,
                                         fit: BoxFit.cover),
-                                    // Image.network(
-                                    //   "${restaurant!.photo}",
-                                    //   fit: BoxFit.cover,
-                                    // ),
                                   ),
                                 ),
                                 Container(

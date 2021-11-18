@@ -23,6 +23,7 @@ import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as MezNotification;
+import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
 //import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
 
 class CustomerWrapper extends StatefulWidget {
@@ -32,6 +33,8 @@ class CustomerWrapper extends StatefulWidget {
 
 class _CustomerWrapperState extends State<CustomerWrapper>
     with WidgetsBindingObserver {
+  MyPopupMenuController _popUpController = MyPopupMenuController();
+
   StreamSubscription<MezNotification.Notification>?
       _notificationsStreamListener;
   StreamSubscription<bool>? _locationStreamSub;
@@ -72,6 +75,8 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     _notificationsStreamListener = null;
     _locationStreamSub?.cancel();
     _locationStreamSub = null;
+    _popUpController.hideMenu();
+    _popUpController.dispose();
     super.dispose();
   }
 
@@ -126,7 +131,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
           backgroundColor: Colors.white,
           key: _sideMenuDrawerController.getNewKey(),
           drawer: MezSideMenu(),
-          appBar: customerAppBar(AppBarLeftButtonType.Menu),
+          appBar: customerAppBar(AppBarLeftButtonType.Menu, _popUpController),
           body: Column(
             children: [
               Container(

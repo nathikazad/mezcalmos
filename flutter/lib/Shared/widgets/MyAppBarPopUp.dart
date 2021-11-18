@@ -1,7 +1,11 @@
 import 'dart:io';
 import 'dart:math' as math;
+import 'package:get/get.dart';
 
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/CustomerApp/components/customerAppBar.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 
 enum PressType {
   longPress,
@@ -35,23 +39,26 @@ class MyPopupMenuController extends ChangeNotifier {
 const Duration _kExpand = Duration(milliseconds: 200);
 
 class MyPopupMenu extends StatefulWidget {
-  MyPopupMenu({
-    required this.child,
-    required this.menuBuilder,
-    required this.pressType,
-    this.controller,
-    this.arrowColor = const Color(0xFF4C4C4C),
-    this.showArrow = true,
-    this.barrierColor = Colors.transparent,
-    this.arrowSize = 10.0,
-    this.horizontalMargin = 10.0,
-    this.verticalMargin = 10.0,
-    this.position,
-    this.menuOnChange,
-  });
+  MyPopupMenu(
+      {required this.child,
+      required this.menuBuilder,
+      required this.pressType,
+      this.controller,
+      this.arrowColor = const Color(0xFF4C4C4C),
+      this.showArrow = true,
+      this.barrierColor = Colors.transparent,
+      this.arrowSize = 10.0,
+      this.horizontalMargin = 10.0,
+      this.verticalMargin = 10.0,
+      this.position,
+      this.menuOnChange,
+      this.appbar,
+      Key? key})
+      : super(key: key);
 
   final Widget child;
   final PressType pressType;
+  final Widget? appbar;
   final bool showArrow;
   final Color arrowColor;
   final Color barrierColor;
@@ -69,8 +76,9 @@ class MyPopupMenu extends StatefulWidget {
 
 class _MyPopupMenuState extends State<MyPopupMenu>
     with SingleTickerProviderStateMixin {
+  GlobalKey keyPic = GlobalKey();
   static final Animatable<double> _easeInTween =
-      CurveTween(curve: Curves.easeIn);
+      CurveTween(curve: Curves.bounceInOut);
   late Animation<double> _heightFactor;
 
   late AnimationController _animatedController;
@@ -84,6 +92,7 @@ class _MyPopupMenuState extends State<MyPopupMenu>
   }
 
   _showMenu() {
+    RenderBox box = keyPic.currentContext!.findRenderObject() as RenderBox;
     print(_heightFactor.value.toString());
     _overlayEntry = OverlayEntry(
       builder: (context) {
@@ -94,7 +103,9 @@ class _MyPopupMenuState extends State<MyPopupMenu>
                 _controller?.hideMenu();
               },
               child: Container(
-                color: widget.barrierColor,
+                color: Colors.transparent,
+
+                //color: Colors.red,
               ),
             ),
             Align(
@@ -109,8 +120,8 @@ class _MyPopupMenuState extends State<MyPopupMenu>
                   delegate: _MenuLayoutDelegate(
                     anchorSize: _childBox!.size,
                     anchorOffset: _childBox!.localToGlobal(
-                      Offset(-widget.horizontalMargin, 0),
-                    ),
+                        // Offset(-widget.horizontalMargin, 0),
+                        Offset(-10, 0)),
                     verticalMargin: widget.verticalMargin,
                     position: widget.position,
                   ),
@@ -131,7 +142,12 @@ class _MyPopupMenuState extends State<MyPopupMenu>
                                       // height: 100,
                                       child: Align(
                                         heightFactor: _heightFactor.value,
-                                        child: widget.menuBuilder(context),
+                                        child: InkWell(
+                                          child: widget.menuBuilder(context),
+                                          onTap: () {
+                                            _controller?.hideMenu();
+                                          },
+                                        ),
                                       )),
                                 ),
                                 color: Colors.transparent,
@@ -142,6 +158,20 @@ class _MyPopupMenuState extends State<MyPopupMenu>
                   ],
                 ),
               ),
+            ),
+            Positioned(
+              left: box.localToGlobal(Offset.zero).dx,
+              top: box.localToGlobal(Offset.zero).dy,
+              // child: Container(
+              //   width: box.size.width,
+              //   height: box.size.height,
+              child: GestureDetector(
+                onTap: () {
+                  _controller?.hideMenu();
+                },
+                child: widget.child,
+              ),
+              // ),
             ),
           ],
         );
@@ -154,8 +184,14 @@ class _MyPopupMenuState extends State<MyPopupMenu>
 
   _hideMenu() {
     if (_overlayEntry != null) {
-      _overlayEntry?.remove();
-      _overlayEntry = null;
+      _animatedController.reverse().then<void>((void value) {
+        if (!mounted) return;
+        setState(() {
+          // Rebuild without widget.children.
+          _overlayEntry?.remove();
+          _overlayEntry = null;
+        });
+      });
     }
   }
 
@@ -206,33 +242,39 @@ class _MyPopupMenuState extends State<MyPopupMenu>
 
   @override
   Widget build(BuildContext context) {
-    var child = Material(
-      child: InkWell(
-        hoverColor: Colors.transparent,
-        focusColor: Colors.transparent,
-        splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
-        child: widget.child,
-        onTap: () {
-          if (widget.pressType == PressType.singleClick) {
-            _animatedController.forward();
-            _controller?.showMenu();
-          }
-        },
-        onLongPress: () {
-          if (widget.pressType == PressType.longPress) {
-            _animatedController.reverse().then<void>((void value) {
-              if (!mounted) return;
-              setState(() {
-                // Rebuild without widget.children.
-              });
-            });
-            _controller?.showMenu();
-          }
-        },
-      ),
-      color: Colors.transparent,
-    );
+    var child = Container(
+        child: Stack(
+      children: [
+        Material(
+          child: InkWell(
+            key: keyPic,
+            hoverColor: Colors.transparent,
+            focusColor: Colors.transparent,
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            child: widget.child,
+            onTap: () {
+              if (widget.pressType == PressType.singleClick) {
+                _animatedController.forward();
+                _controller?.showMenu();
+              }
+            },
+            onLongPress: () {
+              if (widget.pressType == PressType.longPress) {
+                _animatedController.reverse().then<void>((void value) {
+                  if (!mounted) return;
+                  setState(() {
+                    // Rebuild without widget.children.
+                  });
+                });
+                _controller?.showMenu();
+              }
+            },
+          ),
+          color: Colors.transparent,
+        ),
+      ],
+    ));
     if (Platform.isIOS) {
       return child;
     } else {

@@ -20,6 +20,7 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -37,6 +38,8 @@ class ViewItemScreen extends StatefulWidget {
 }
 
 class _ViewItemScreenState extends State<ViewItemScreen> {
+  MyPopupMenuController _popUpController = MyPopupMenuController();
+
   LanguageController lang = Get.find<LanguageController>();
   Rxn<CartItem> cartItem = Rxn();
   late RestaurantCartController restaurantCartController;
@@ -74,6 +77,8 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
 
   @override
   void dispose() {
+    _popUpController.hideMenu();
+    _popUpController.dispose();
     super.dispose();
   }
 
@@ -87,7 +92,8 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
       // backgroundColor: const Color(0xffffffff),
       backgroundColor: const Color(0xfff6f6f6),
 
-      appBar: customerAppBar(AppBarLeftButtonType.Back, withCart: true),
+      appBar: customerAppBar(AppBarLeftButtonType.Back, _popUpController,
+          withCart: true),
 
       body: Obx(() => (cartItem.value?.item == null)
           ? Center(
@@ -155,7 +161,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                                   child: Container(
                                     width: Get.width,
                                     child: Text(
-                                        "${cartItem.value?.item.name![0].toUpperCase()}${cartItem.value?.item.name!.substring(1)}",
+                                        "${cartItem.value?.item.name![0].toUpperCase()}${cartItem.value?.item.name!.substring(1)} \$ ${currency.format(cartItem.value!.totalCost())}",
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                         softWrap: false,
@@ -420,7 +426,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
           .forEach((chooseOneOptionListItem) {
         String name = chooseOneOptionListItem.name!;
         if (chooseOneOptionListItem.cost > 0) {
-          name += " (\$${currency.format(chooseOneOptionListItem.cost)})";
+          name += " +(\$${currency.format(chooseOneOptionListItem.cost)})";
         }
         chooseOneWidgetOptionsArray.add(
           CheckBoxComponent(
@@ -464,7 +470,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
     chooseManyOptions.forEach((chooseManyOption) {
       String name = chooseManyOption.name!;
       if (chooseManyOption.cost > 0) {
-        name += " (\$${currency.format(chooseManyOption.cost)})";
+        name += " +(\$${currency.format(chooseManyOption.cost)})";
       }
       chooseManyWidgetArray.add(
         CheckBoxComponent(

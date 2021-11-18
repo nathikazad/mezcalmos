@@ -17,6 +17,7 @@ import 'package:mezcalmos/Shared/widgets/CancelAlertDailog.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
 ////////////===========
@@ -28,6 +29,8 @@ class ViewRestaurantOrderScreen extends StatefulWidget {
 }
 
 class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
+  MyPopupMenuController _popUpController = MyPopupMenuController();
+
   LanguageController lang = Get.find<LanguageController>();
   Rxn<RestaurantOrder> order = Rxn();
   OrderController controller = Get.find<OrderController>();
@@ -105,6 +108,9 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
     _pastShownOrder?.cancel();
     _currentOrderListener = null;
     _pastShownOrder = null;
+
+    _popUpController.hideMenu();
+    _popUpController.dispose();
     super.dispose();
   }
 
@@ -159,7 +165,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
     mezDbgPrint(order.value?.serviceProviderId);
     return Scaffold(
       backgroundColor: const Color(0xffffffff),
-      appBar: customerAppBar(AppBarLeftButtonType.Back),
+      appBar: customerAppBar(AppBarLeftButtonType.Back, _popUpController),
       body:
           //  GetBuilder<OrderController>(builder: (mycontoller) {
           //   return
@@ -203,20 +209,23 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                             Positioned(
                                 left: 28,
                                 top: 10,
-                                child: (controller
-                                        .orderHaveNewMessageNotifications(
-                                            order.value!.orderId))
-                                    ? Container(
-                                        width: 10,
-                                        height: 10,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            border: Border.all(
-                                                color: const Color(0xfff6efff),
-                                                width: 2),
-                                            color: const Color(0xffff0000)))
-                                    : Container())
+                                child: Obx(
+                                  () => (controller
+                                          .orderHaveNewMessageNotifications(
+                                              order.value!.orderId))
+                                      ? Container(
+                                          width: 10,
+                                          height: 10,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              border: Border.all(
+                                                  color:
+                                                      const Color(0xfff6efff),
+                                                  width: 2),
+                                              color: const Color(0xffff0000)))
+                                      : Container(),
+                                ))
                           ],
                         ),
                       ),

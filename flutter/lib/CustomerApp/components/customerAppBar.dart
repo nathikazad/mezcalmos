@@ -4,29 +4,32 @@ import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantCartController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
 
-AppBar customerAppBar(AppBarLeftButtonType leftBtnType,
+AppBar customerAppBar(
+    AppBarLeftButtonType leftBtnType, MyPopupMenuController _popUpController,
     {bool withCart = false, bool empty = false}) {
-  return mezcalmosAppBar(leftBtnType,
-      actionIcons: [!empty ? getIcons(withCart) : Container()]);
+  return mezcalmosAppBar(leftBtnType, actionIcons: [
+    !empty ? getIcons(withCart, _popUpController) : Container()
+  ]);
 }
 
-Widget getIcons(bool withCart) {
-  MyPopupMenuController _popUpController = MyPopupMenuController();
-  _popUpController.hideMenu();
+Widget getIcons(bool withCart, _popUpController) {
   return Obx(() {
+    _popUpController.hideMenu();
+
     if (Get.find<FBNotificationsController>().notifications.value.length > 0 &&
         withCart &&
         Get.find<RestaurantCartController>().cart.value.items.length > 0) {
       return Row(
         children: [
-          ActionIconsComponents.orderIcon(
-              Get.find<OrderController>().currentOrders.value.length > 0
-                  ? true
-                  : false),
+          ActionIconsComponents.notificationIcon(
+              true, EdgeInsets.symmetric(horizontal: 5), () {
+            _popUpController.hideMenu();
+          }, ButtonColorType.ButtonDarkColor),
           PoPUpMenuComponent(
             controller: _popUpController,
             urlImg: "${Get.find<AuthController>().user!.image}",
@@ -35,8 +38,11 @@ Widget getIcons(bool withCart) {
                 onTap: () {
                   _popUpController.hideMenu();
                 },
-                child: ActionIconsComponents.notificationIcon(
-                    true, EdgeInsets.symmetric(horizontal: 5), () {
+                child: ActionIconsComponents.orderIcon(
+                    Get.find<OrderController>().currentOrders.value.length > 0
+                        ? true
+                        : false,
+                    EdgeInsets.symmetric(horizontal: 5), () {
                   _popUpController.hideMenu();
                 }, ButtonColorType.ButtonDarkColor),
               ),
@@ -57,6 +63,7 @@ Widget getIcons(bool withCart) {
         ],
       );
     } else {
+      _popUpController.hideMenu();
       return Row(
         children: [
           Get.find<FBNotificationsController>().notifications.value.length > 0
@@ -104,13 +111,14 @@ class _PoPUpMenuComponentState extends State<PoPUpMenuComponent> {
   void dispose() {
     // TODO: implement dispose
     widget.controller.hideMenu();
-    widget.controller.dispose();
+    // widget.controller.dispose();
+    mezDbgPrint("this one has been disposed");
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return Container(
       child: MyPopupMenu(
         controller: widget.controller,
         child: Container(
@@ -143,7 +151,6 @@ class _PoPUpMenuComponentState extends State<PoPUpMenuComponent> {
         ),
         pressType: PressType.singleClick,
       ),
-      onTap: () {},
     );
   }
 }

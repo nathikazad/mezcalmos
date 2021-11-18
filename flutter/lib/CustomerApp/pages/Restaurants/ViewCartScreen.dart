@@ -24,6 +24,7 @@ import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
 
@@ -33,6 +34,8 @@ class ViewCartScreen extends StatefulWidget {
 }
 
 class _ViewCartScreenState extends State<ViewCartScreen> {
+  MyPopupMenuController _popUpController = MyPopupMenuController();
+
   LanguageController lang = Get.find<LanguageController>();
   RestaurantCartController controller = Get.find<RestaurantCartController>();
   bool _clickedOrderNow = false;
@@ -65,11 +68,20 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    _popUpController.hideMenu();
+    _popUpController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     responsiveSize(context);
     return Scaffold(
       backgroundColor: const Color(0xffffffff),
-      appBar: customerAppBar(AppBarLeftButtonType.Back, withCart: false),
+      appBar: customerAppBar(AppBarLeftButtonType.Back, _popUpController,
+          withCart: false),
       body: Obx(() => controller.cart.value.items.length > 0
           ? GetBuilder<RestaurantCartController>(
               // specify type as Controller

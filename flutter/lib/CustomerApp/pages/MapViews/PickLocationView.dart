@@ -12,6 +12,7 @@ import 'package:mezcalmos/Shared/widgets/MezPickGoogleMap.dart';
 import 'package:location/location.dart' as GeoLoc;
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
 
 class PickLocationView extends StatefulWidget {
   @override
@@ -19,6 +20,8 @@ class PickLocationView extends StatefulWidget {
 }
 
 class _PickLocationViewState extends State<PickLocationView> {
+  MyPopupMenuController _popUpController = MyPopupMenuController();
+
   Location? _selectedLocation;
   bool showBlackScreen = true;
 
@@ -57,11 +60,19 @@ class _PickLocationViewState extends State<PickLocationView> {
   }
 
   @override
+  void dispose() {
+    _popUpController.hideMenu();
+    _popUpController.dispose();
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     responsiveSize(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: customerAppBar(AppBarLeftButtonType.Back),
+      appBar: customerAppBar(AppBarLeftButtonType.Back, _popUpController),
       backgroundColor: Colors.white,
       body: Container(
         padding: EdgeInsets.only(left: 20, right: 20),

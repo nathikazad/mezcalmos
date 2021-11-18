@@ -72,6 +72,7 @@ class ActionIconsComponents {
         onTap: () {
           print("notification");
           if (function != null) {
+            mezDbgPrint("notification screen called");
             function();
             Get.toNamed(kNotificationsRoute);
           }

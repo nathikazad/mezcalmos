@@ -12,6 +12,7 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
 
 class ListRestaurantsScreen extends StatefulWidget {
   @override
@@ -19,6 +20,8 @@ class ListRestaurantsScreen extends StatefulWidget {
 }
 
 class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
+  MyPopupMenuController _popUpController = MyPopupMenuController();
+
   LanguageController lang = Get.find<LanguageController>();
   List<Restaurant> restaurants = <Restaurant>[];
   RestaurantsInfoController _restaurantsInfoController =
@@ -30,12 +33,18 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
       });
     });
   }
+  @override
+  void dispose() {
+    _popUpController.hideMenu();
+    _popUpController.dispose();
+    super.dispose();
+  }
 
   Widget build(BuildContext context) {
     responsiveSize(context);
     return Scaffold(
         backgroundColor: const Color(0xffffffff),
-        appBar: customerAppBar(AppBarLeftButtonType.Menu),
+        appBar: customerAppBar(AppBarLeftButtonType.Menu, _popUpController),
         body: Column(children: [
           Container(
             padding: const EdgeInsets.symmetric(
