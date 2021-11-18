@@ -55,9 +55,14 @@ class OrderController extends GetxController {
         mezDbgPrint("orderController: new incoming order data");
         for (var orderId in event.snapshot.value.keys) {
           dynamic orderData = event.snapshot.value[orderId];
-          if (orderData["orderType"] ==
-              OrderType.Restaurant.toFirebaseFormatString()) {
-            orders.add(RestaurantOrder.fromData(orderId, orderData));
+          try {
+            if (orderData["orderType"] ==
+                OrderType.Restaurant.toFirebaseFormatString()) {
+              orders.add(RestaurantOrder.fromData(orderId, orderData));
+            }
+          } catch (e) {
+            mezDbgPrint("orderController: adding order error " + orderId);
+            mezDbgPrint(e);
           }
         }
       }

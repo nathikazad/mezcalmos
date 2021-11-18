@@ -46,7 +46,7 @@ class RestaurantOrder extends Order {
         customer: UserInfo.fromData(data["customer"]));
 
     data["items"].forEach((dynamic itemId, dynamic itemData) {
-      mezDbgPrint(itemData.toString());
+      // mezDbgPrint(itemData.toString());
 
       RestaurantOrderItem restaurantOrderItem = RestaurantOrderItem(
           costPerOne: itemData["costPerOne"],
@@ -58,7 +58,7 @@ class RestaurantOrder extends Order {
           quantity: itemData["quantity"],
           notes: itemData["notes"]);
       itemData["options"]?["chosenManyOptions"]
-          .forEach((dynamic id, dynamic data) {
+          ?.forEach((dynamic id, dynamic data) {
         restaurantOrderItem.chooseManyOptions.add(ChooseManyOption(
             optionId: id,
             optionName: data["name"],
@@ -66,7 +66,7 @@ class RestaurantOrder extends Order {
             chosenOptionValue: data["chosenValue"]));
       });
       itemData["options"]?["chosenOneOptions"]
-          .forEach((dynamic id, dynamic data) {
+          ?.forEach((dynamic id, dynamic data) {
         restaurantOrderItem.chooseOneOptions.add(ChooseOneOption(
             optionId: id,
             optionName: data["name"],
