@@ -146,37 +146,40 @@ class _CustomerWrapperState extends State<CustomerWrapper>
                 height: 25.h,
               ),
               Expanded(
-                child: Container(
-                  width: Get.width,
-                  margin: const EdgeInsets.symmetric(horizontal: 10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(12)),
-                    color: const Color(0xfffceb4d).withOpacity(0.25),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      TaxiImage(
-                        sw: 47,
-                        sh: 47,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        child: Obx(
-                          () => Text(
-                              "${lang.strings['customer']['home']['taxi']}",
-                              style: const TextStyle(
-                                  color: const Color(0xff000f1c),
-                                  fontFamily: "psr",
-                                  fontSize: 16.0),
-                              textAlign: TextAlign.left),
+                child: InkWell(
+                  onTap: () => Get.toNamed(kTaxisRoute),
+                  child: Container(
+                    width: Get.width,
+                    margin: const EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(12)),
+                      color: const Color(0xfffceb4d).withOpacity(0.25),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        TaxiImage(
+                          sw: 47,
+                          sh: 47,
                         ),
-                      )
-                    ],
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          child: Obx(
+                            () => Text(
+                                "${lang.strings['customer']['home']['taxi']}",
+                                style: const TextStyle(
+                                    color: const Color(0xff000f1c),
+                                    fontFamily: "psr",
+                                    fontSize: 16.0),
+                                textAlign: TextAlign.left),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
