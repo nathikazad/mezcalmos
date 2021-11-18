@@ -11,6 +11,7 @@ enum AppBarLeftButtonType { Back, Menu }
 
 AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
     {dynamic bgColor = Colors.white,
+    Function? function,
     List<Widget> actionIcons = const <Widget>[]}) {
   Widget btn_icon;
   Function onTapFunction;
@@ -23,7 +24,12 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
           size: getSizeRelativeToScreen(35, Get.width, Get.height),
         ),
       );
-      onTapFunction = () => Get.back();
+      onTapFunction = () {
+        if (function != null) {
+          function();
+        }
+        Get.back();
+      };
       break;
     case AppBarLeftButtonType.Menu:
       btn_icon = Icon(
@@ -31,7 +37,12 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
         color: Colors.white,
         size: 16,
       );
-      onTapFunction = () => Get.find<SideMenuDraweController>().openMenu();
+      onTapFunction = () {
+        if (function != null) {
+          function();
+        }
+        Get.find<SideMenuDraweController>().openMenu();
+      };
       break;
   }
   mezDbgPrint(

@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
+import 'package:mezcalmos/TaxiApp/components/taxiAppBar.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/models/TaxiDriver.dart';
@@ -87,8 +88,7 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
         key: Get.find<SideMenuDraweController>().getNewKey(),
         drawer: MezSideMenu(),
         backgroundColor: Colors.white,
-        appBar: mezcalmosAppBar(
-            "menu", Get.find<SideMenuDraweController>().openMenu),
+        appBar: taxiAppBar(AppBarLeftButtonType.Menu),
         body: MezLogoAnimation(centered: true));
   }
 

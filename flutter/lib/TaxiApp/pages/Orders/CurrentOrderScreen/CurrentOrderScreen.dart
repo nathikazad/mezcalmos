@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+import 'package:mezcalmos/TaxiApp/components/taxiAppBar.dart';
 import 'package:mezcalmos/TaxiApp/components/taxiDialogs.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
@@ -61,8 +62,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
           key: Get.find<SideMenuDraweController>().getNewKey(),
           drawer: MezSideMenu(),
           backgroundColor: Colors.white,
-          appBar: mezcalmosAppBar(
-              "menu", Get.find<SideMenuDraweController>().openMenu),
+          appBar: taxiAppBar(AppBarLeftButtonType.Menu),
           body: SafeArea(
             child: StreamBuilder<TaxiOrder>(
                 stream: controller.orderStream.distinct((_old, _new) {
@@ -165,9 +165,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
 
       Future.microtask(() {
         mezDbgPrint("CurrentOrderScreen showing dialog");
-        mezcalmosDialogOrderCancelled(
-                55, Get.height, Get.width)
-            .then((value) {
+        mezcalmosDialogOrderCancelled(55, Get.height, Get.width).then((value) {
           mezDbgPrint(
               "CurrentOrderScreen after cancel navigating to kOrdersListPage");
           Get.offNamedUntil(kOrdersListPage, ModalRoute.withName(kHomeRoute));

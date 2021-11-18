@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
 import 'package:mezcalmos/CustomerApp/components/basicCellComponent.dart';
+import 'package:mezcalmos/DeliveryAdminApp/components/DeliveryAdminAppbar.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/buildWidgetOnOrderStatus.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/buttonComponent.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/dailogComponent.dart';
@@ -66,15 +67,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
     responsiveSize(context);
     mezDbgPrint("ViewOrderScreen build");
     return Scaffold(
-        // appBar: mezcalmosAppBar("back", () => Get.back(), actionIcons: [
-        //   Obx(() =>
-        //       Get.find<FBNotificationsController>().notifications.value.length >
-        //               0
-        //           ? ActionIconsComponents.notificationIcon(true)
-        //           : SizedBox()),
-        //   ActionIconsComponents.orderIcon(
-        //       controller.inProcessOrders.value.length > 0 ? true : false),
-        // ]),
+        appBar: deliveryAdminAppBar(AppBarLeftButtonType.Back, withOrder: true),
         backgroundColor: Colors.white,
         body: Obx(() {
           mezDbgPrint(order.value.toString());

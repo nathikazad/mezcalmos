@@ -180,15 +180,19 @@ class NotificationComponent extends StatelessWidget {
               width: 31,
               child: ClipOval(
                 child: Container(
-                    width: 31,
-                    height: 31,
-                    child: Center(
-                        child: notification.imgUrl.startsWith("http")
-                            ? Image.network(
-                                notification.imgUrl,
-                                fit: BoxFit.cover,
-                              )
-                            : Image.asset(notification.imgUrl))),
+                  width: 31,
+                  height: 31,
+                  // child: Center(
+                  child: notification.imgUrl.startsWith("http")
+                      ? Image.network(
+                          notification.imgUrl,
+                          fit: BoxFit.cover,
+                        )
+                      : Image.asset(
+                          notification.imgUrl,
+                          fit: BoxFit.cover,
+                        ),
+                ),
               ),
             ),
             SizedBox(

@@ -71,7 +71,10 @@ class ActionIconsComponents {
             )),
         onTap: () {
           print("notification");
-          if (function != null) function();
+          if (function != null) {
+            function();
+            Get.toNamed(kNotificationsRoute);
+          }
           Get.toNamed(kNotificationsRoute);
         },
       ),
@@ -132,7 +135,10 @@ class ActionIconsComponents {
         ),
         onTap: () {
           mezDbgPrint("ActionIconsComponent: orders icon clicked");
-          if (function != null) function();
+          if (function != null) {
+            function();
+            Get.toNamed(kOrdersRoute);
+          }
           Get.toNamed(kOrdersRoute);
         },
       ),
@@ -163,8 +169,10 @@ class ActionIconsComponents {
           ),
         ),
         onTap: () {
-          if (function != null) function();
-          print("messages");
+          if (function != null) {
+            function();
+            print("messages");
+          }
         },
       ),
     );
@@ -195,8 +203,12 @@ class ActionIconsComponents {
         ),
         onTap: () {
           print("cart");
-          if (function != null) function();
+          if (function != null) {
+            function();
+            Get.toNamed(kCartRoute);
+          }
           Get.toNamed(kCartRoute);
+
           // Get.to(ViewCartScreen(),
           //);
         },

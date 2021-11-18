@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:mezcalmos/TaxiApp/components/taxiAppBar.dart';
 import 'package:mezcalmos/TaxiApp/components/taxiDialogs.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/IPositionedBottomBar.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/IPositionedFromToBar.dart';
@@ -54,17 +55,14 @@ class IncommingOrderScreenView extends GetWidget<IncomingOrdersController>
             Get.currentRoute == kSelectedIcommingOrder) {
           cancelSubscriptions();
           Get.back();
-          await mezcalmosDialogOrderNoMoreAvailable(
-              55, Get.height, Get.width);
+          await mezcalmosDialogOrderNoMoreAvailable(55, Get.height, Get.width);
         }
       }).canceledBy(this, debugId: "selectedOrderViewStream!");
     });
 
     return Scaffold(
-      appBar: mezcalmosAppBar("back", () {
-        cancelSubscriptions();
-        Get.back();
-      }),
+      appBar: taxiAppBar(AppBarLeftButtonType.Menu,
+          function: () => cancelSubscriptions()),
       body: SafeArea(
         child: Stack(
           alignment: Alignment.topCenter,

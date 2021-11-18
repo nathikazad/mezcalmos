@@ -67,7 +67,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
         // appBar: AppBar(
         //   title: Text("List Orders"),
         // ),
-        appBar: customerAppBar(AppBarLeftButtonType.Back),
+        appBar: customerAppBar(AppBarLeftButtonType.Back, empty: true),
         body: SingleChildScrollView(
             physics: ClampingScrollPhysics(),
             child: Column(

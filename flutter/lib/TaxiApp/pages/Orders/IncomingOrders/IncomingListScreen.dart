@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/MezSwitch.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
+import 'package:mezcalmos/TaxiApp/components/taxiAppBar.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
@@ -40,8 +41,7 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
           key: Get.find<SideMenuDraweController>().getNewKey(),
           drawer: MezSideMenu(),
           backgroundColor: Colors.white,
-          appBar: mezcalmosAppBar(
-              "menu", Get.find<SideMenuDraweController>().openMenu),
+          appBar: taxiAppBar(AppBarLeftButtonType.Menu),
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -206,7 +206,7 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                                   top: 10,
                                                   child: Text(
                                                     controller.orders[i]
-                                                            .customer.name,
+                                                        .customer.name,
                                                     style: TextStyle(
                                                         fontFamily: 'psb',
                                                         fontSize: 16),

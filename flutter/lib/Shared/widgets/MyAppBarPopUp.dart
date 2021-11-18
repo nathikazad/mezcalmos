@@ -42,7 +42,7 @@ class MyPopupMenu extends StatefulWidget {
     this.controller,
     this.arrowColor = const Color(0xFF4C4C4C),
     this.showArrow = true,
-    this.barrierColor = Colors.black12,
+    this.barrierColor = Colors.transparent,
     this.arrowSize = 10.0,
     this.horizontalMargin = 10.0,
     this.verticalMargin = 10.0,
@@ -178,10 +178,10 @@ class _MyPopupMenuState extends State<MyPopupMenu>
 
   @override
   void initState() {
-    super.initState();
     _animatedController = AnimationController(duration: _kExpand, vsync: this);
     _heightFactor = _animatedController.drive(_easeInTween);
     _controller = widget.controller;
+    _controller?.hideMenu();
     if (_controller == null) _controller = MyPopupMenuController();
     _controller?.addListener(_updateView);
 
@@ -193,6 +193,7 @@ class _MyPopupMenuState extends State<MyPopupMenu>
             Overlay.of(context)?.context.findRenderObject() as RenderBox?;
       }
     });
+    super.initState();
   }
 
   @override

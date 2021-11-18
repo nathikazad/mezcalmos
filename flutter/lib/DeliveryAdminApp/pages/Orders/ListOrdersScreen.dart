@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/DeliveryAdminApp/components/DeliveryAdminAppbar.dart';
 import 'package:mezcalmos/DeliveryAdminApp/constants/global.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -75,6 +76,8 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
         child: Scaffold(
             backgroundColor: Colors.white,
             key: Get.find<SideMenuDraweController>().getNewKey(),
+            appBar: deliveryAdminAppBar(AppBarLeftButtonType.Menu,
+                withOrder: false),
             // appBar: mezcalmosAppBar(
             //     "menu", Get.find<SideMenuDraweController>().openMenu),
             drawer: MezSideMenu(),
