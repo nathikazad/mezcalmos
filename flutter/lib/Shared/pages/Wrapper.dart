@@ -45,7 +45,7 @@ class _WrapperState extends State<Wrapper> {
       mezDbgPrint("--------------------------------");
       mezDbgPrint(Get.find<AuthController>().fireAuthUser?.displayName);
 
-      if (Get.find<AuthController>().isDisplayNameSet()) {
+      if (!Get.find<AuthController>().isDisplayNameSet()) {
         mezDbgPrint(
             "User Signed in but Name or image are null , so  heading to UserInfo Page !");
         await Get.toNamed(kUserProfile);
