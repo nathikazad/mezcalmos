@@ -35,8 +35,10 @@ class AuthController extends GetxController {
   // Rxn<fireAuth.User> _userRx = Rxn();
   StreamController<fireAuth.User?> _authStateStream =
       StreamController.broadcast();
-  // _authStateStream.addStream(_auth.authStateChanges());
   Stream<fireAuth.User?> get authStateChange => _authStateStream.stream;
+
+  // StreamController<User> _databaseUserController = StreamController.broadcast();
+  // Stream<User?> get dbUserStream => _databaseUserController.stream;
 
   DatabaseHelper _databaseHelper =
       Get.find<DatabaseHelper>(); // Already Injected in main function
@@ -56,11 +58,9 @@ class AuthController extends GetxController {
         return;
       }
       _previousUserValue = user?.toString();
-      _authStateStream.add(user);
       mezDbgPrint('Authcontroller:: Auth state change!');
       mezDbgPrint(user?.hashCode);
       mezDbgPrint(user ?? "empty");
-      _fireAuthUser.value = user;
       if (user == null) {
         mezDbgPrint('AuthController: User is currently signed out!');
         _userNodeListener?.cancel();
@@ -68,7 +68,6 @@ class AuthController extends GetxController {
         _user.value = null;
       } else {
         mezDbgPrint('AuthController: User is currently signed in!');
-        _onSignInCallback();
         GetStorage().write(getxUserId, user.uid);
         _userNodeListener?.cancel();
         _userNodeListener = _databaseHelper.firebaseDatabase
@@ -82,6 +81,10 @@ class AuthController extends GetxController {
           }
 
           _user.value = User.fromSnapshot(user, event.snapshot);
+          _fireAuthUser.value = user;
+          _authStateStream.add(user);
+          _onSignInCallback();
+
           Get.find<LanguageController>()
               .userLanguageChanged(_user.value!.language);
         });
@@ -91,7 +94,7 @@ class AuthController extends GetxController {
   }
 
   bool isDisplayNameSet() {
-    return user?.displayName != null && user!.displayName!.length >= 1;
+    return _user.value?.displayName != null;
   }
 
   Future<String> getImageUrl(File imageFile, String uid) async {
