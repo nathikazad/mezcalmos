@@ -181,10 +181,9 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
           color: Color(0xffffffff),
         ),
         child: SingleChildScrollView(
-          physics: ClampingScrollPhysics(),
+          // physics: ClampingScrollPhysics(),
           controller: sc,
           child: Container(
-            height: Get.height * 0.92,
             child: Column(
               children: <Widget>[
                 SizedBox(
@@ -206,26 +205,10 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
                 SizedBox(
                   height: 7,
                 ),
-                Expanded(
-                    child: Container(
-                  child: ListView.builder(
-                      itemCount: items.length,
-                      itemBuilder: (context, index) {
-                        return ItemMenuComponents(
-                          itemID: items[index].id,
-                          photo: items[index].image,
-                          price: items[index].cost,
-                          title: items[index].name!.capitalizeFirstofEach,
-                          function: () {
-                            Get.toNamed(
-                                getItemRoute(restaurantId, items[index].id!),
-                                arguments: {
-                                  "mode": ViewItemScreenMode.AddItemMode
-                                });
-                          },
-                        );
-                      }),
-                ))
+                _buildResturantItems(items, restaurantId),
+                SizedBox(
+                  height: 20,
+                ),
               ],
             ),
           ),
@@ -233,6 +216,25 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
       ),
     );
   }
+}
+
+Widget _buildResturantItems(List<Item> items, String restaurantId) {
+  return Column(
+    children: items.fold<List<Widget>>(<Widget>[], (children, item) {
+      children.add(ItemMenuComponents(
+          itemID: item.id,
+          photo: item.image,
+          price: item.cost,
+          title: item.name!.capitalizeFirstofEach,
+          function: () {
+            Get.toNamed(
+              getItemRoute(restaurantId, item.id!),
+              arguments: {"mode": ViewItemScreenMode.AddItemMode},
+            );
+          }));
+      return children;
+    }),
+  );
 }
 
 extension CapExtension on String {
