@@ -35,8 +35,8 @@
             "checkout": {
                 "orderItems": "Order Items",
                 "cancel": "Cancel",
-                "cancelOrder": "Cancel the order",
-                "cancelOrderConfirm": "Are you sure you want to cancel this order?"
+                "cancelOrder": "Cancel Order",
+                "cancelOrderConfirm": "Are you sure you want to\ncancel this order?"
             },
             "orderStatus": {
                 "preparing": "Preparing the order",

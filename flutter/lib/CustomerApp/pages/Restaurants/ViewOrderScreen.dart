@@ -549,7 +549,7 @@ Widget buildOrdersItems(List<RestaurantOrderItem> items) {
                       ),
                       //height: 43,
                       child: BasicCellComponent(
-                        title: "${element.name.inCaps}",
+                        title: "${element.name.capitalizeFirstofEach}",
                         url: "${element.image}",
                         traillingIcon: Container(
                           width: 25,

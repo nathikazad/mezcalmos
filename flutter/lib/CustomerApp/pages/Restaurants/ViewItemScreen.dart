@@ -217,7 +217,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
             // controller: _scrollController,
             //clipBehavior: ,
             child: Container(
-              padding: EdgeInsets.only(bottom: 50),
+              // padding: EdgeInsets.only(bottom: 50),
               decoration: BoxDecoration(
                 color: const Color(0xffffffff),
                 borderRadius: BorderRadius.only(
@@ -234,7 +234,6 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                     title:
                         "${lang.strings['customer']['restaurant']['menu']['description']}",
                   ),
-
                   SizedBox(
                     height: 15.sp,
                   ),
@@ -260,7 +259,6 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                   SizedBox(
                     height: 10.sp,
                   ),
-
                   Container(
                     width: Get.width,
                     // height: 313.sp,
@@ -391,12 +389,9 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                   SizedBox(
                     height: 20,
                   ),
-
                   SizedBox(
                     height: MediaQuery.of(context).viewInsets.bottom,
                   ),
-
-                  // Expanded(child: Container())
                 ],
               ),
             ),
