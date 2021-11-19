@@ -104,7 +104,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
             offset: Offset(1, 1),
             blurRadius: 6,
             spreadRadius: 0)
-      ], color: const Color(0xffe8f5ec)),
+      ], color: const Color(0xfffcdeb6).withOpacity(0.9966400265693665)),
       child: Column(
           children: controller.currentOrders().fold<List<Widget>>(
         <Widget>[],
@@ -132,6 +132,13 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
     var dd = DateTime.now().toLocal();
     List<Widget> pastOrdersWidget = [];
     controller.pastOrders().sort((a, b) => b.orderTime.compareTo(a.orderTime));
+    if (controller.pastOrders().length > 0) {
+      if (controller.pastOrders()[0].orderTime.toLocal().isSameDate(dd)) {
+        pastOrdersWidget.add(DateTitleComponent(
+          date: "Today",
+        ));
+      }
+    }
     return Column(
       children: controller.pastOrders().fold<List<Widget>>(<Widget>[],
           (children, order) {
