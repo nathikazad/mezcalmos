@@ -23,7 +23,7 @@ android/launcherPackage.properties
 android/app/src/main/res/values/launcher.xml
 google-services.json
 GoogleService-Info.plist
-ios/Runner/info.plist
+ios/Runner/Info.plist
 ios/Runner.xcodeproj/project.pbxproj
 *.backup
 

@@ -2,11 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:http/http.dart';
 import 'package:mezcalmos/CustomerApp/components/customerAppBar.dart';
-import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
@@ -15,66 +14,115 @@ import 'package:location/location.dart' as GeoLoc;
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class OrderTaxiScreen extends StatefulWidget {
-  OrderTaxiScreen() {
-    Get.lazyPut<TaxiController>(() => TaxiController());
-  }
+enum SearchComponentType { From, To }
 
+class OrderTaxiScreen extends StatefulWidget {
   @override
   _OrderTaxiScreenState createState() => _OrderTaxiScreenState();
 }
 
 class _OrderTaxiScreenState extends State<OrderTaxiScreen> {
-  Location? _selectedLocation;
+  Location? _selectedFromLocation;
+  Location? _selectedToLocation;
   bool showBlackScreen = true;
-  RxList<Taxist> _taxists = <Taxist>[].obs;
+  bool _showFakeMarker = false;
+
+  SearchComponentType selectedType = SearchComponentType.From;
+  int _flexValueFrom = 3;
+  int _flexValueTo = 3;
+  bool _fromReadOnly = false;
+  bool _toReadOnly = false;
+
   LanguageController _lang = Get.find<LanguageController>();
   RxList<Marker> _markers = <Marker>[].obs;
+  Set<Polyline> _polylines = {};
+  late Marker _circleMarker;
+  double _locationPickOptionsHeight = 0;
+  FocusNode _fromFocusNode = FocusNode();
+  FocusNode _toFocusNode = FocusNode();
 
-  void onPickButtonClick() async {
-    mezDbgPrint(
-        "Last Location Stored Address ==> ${_selectedLocation!.address}");
-    mezDbgPrint("Last Location Stored Lat ==> ${_selectedLocation!.latitude}");
-    mezDbgPrint("Last Location Stored Lng ==> ${_selectedLocation!.longitude}");
-    if (_selectedLocation!.address == "") {
-      String? address = await getAdressFromLatLng(
-          LatLng(_selectedLocation!.latitude!, _selectedLocation!.longitude!));
+  Future<void> setUpCircleMarker(GeoLoc.LocationData _loc) async {
+    _circleMarker = Marker(
+        markerId: MarkerId(Get.find<AuthController>().user!.uid),
+        icon: await BitmapDescriptor.fromAssetImage(
+            ImageConfiguration(), aPurpleLocationCircle),
+        flat: true,
+        position: LatLng(_loc.latitude!, _loc.longitude!));
 
-      _selectedLocation!.address = address ??
-          "${_lang.strings['shared']['pickLocation']['address']} : ${_selectedLocation!.latitude}, ${_selectedLocation!.longitude}";
+    setState(() {
+      _markers.add(_circleMarker);
+    });
+  }
+
+  Location? getLocationBySelectedField() {
+    if (selectedType == SearchComponentType.To) {
+      return _selectedToLocation;
     }
 
-    Get.back<Location>(result: _selectedLocation, closeOverlays: true);
+    return _selectedFromLocation;
   }
+
+  void setLocationBySelectedField(GeoLoc.LocationData locData,
+      {String address = ""}) {
+    setState(() {
+      if (selectedType == SearchComponentType.To) {
+        _selectedToLocation = Location(address, locData);
+      } else {
+        _selectedFromLocation = Location(address, locData);
+      }
+    });
+  }
+
+  void hideFakeMarkerInCaseEmptyAddress() {
+    if (_selectedToLocation?.address == "" &&
+        _selectedFromLocation?.address == "")
+      setState(() {
+        _showFakeMarker = false;
+      });
+  }
+
+  void unfocusBySelectedField() {
+    if (selectedType == SearchComponentType.To) {
+      _toFocusNode.unfocus();
+    } else {
+      _fromFocusNode.unfocus();
+    }
+  }
+
+  // void buttonPressFunction() {
+  //   if (_polylines.isEmpty) {
+  //     Location loc = getLocationBySelectedField()!;
+  //     setLocationBySelectedField(
+  //         GeoLoc.LocationData.fromMap(
+  //           loc.toJson(),
+  //         ),
+  //         address:
+  //             "${loc.position.latitude.toString()}, ${loc.position.longitude.toString()}");
+  //     unfocusBySelectedField();
+  //   } else {
+  //     // confirm !
+  //     mezDbgPrint("To handle on confirm !");
+  //   }
+  // }
 
   @override
   void initState() {
+    // each depending on other
     GeoLoc.Location().getLocation().then((locData) {
-      mezDbgPrint("Sat to current Location $locData!");
-      setState(() {
-        _selectedLocation = Location.fromData({
-          "address": "",
-          "lat": locData.latitude,
-          "lng": locData.longitude,
+      setUpCircleMarker(locData).then((_) {
+        mezDbgPrint("Sat to current Location $locData!");
+        setState(() {
+          _selectedFromLocation = _selectedToLocation = Location.fromData({
+            "address": "",
+            "lat": locData.latitude,
+            "lng": locData.longitude,
+          });
         });
       });
     });
 
-    // _taxiController.getTaxistsStream().listen((taxi) {
-    //   if (taxi != null) {
-    //     mezDbgPrint("New Data ===> $taxi");
-    //   }
-    // });
     super.initState();
   }
-//  Get.find<TaxiController>().getTaxistsStream().listen((taxists) {
-//       if (taxists.isNotEmpty) {
-//         mezDbgPrint("New Data ===> $taxists");
-//         setState(() {
-//           _taxists.assignAll(taxists);
-//         });
-//       }
-//     });
 
   @override
   Widget build(BuildContext context) {
@@ -90,48 +138,42 @@ class _OrderTaxiScreenState extends State<OrderTaxiScreen> {
             clipBehavior: Clip.none,
             alignment: Alignment.topCenter,
             children: [
-              StreamBuilder<List<Taxist>>(
-                stream: Get.find<TaxiController>().getTaxistsStream(),
-                builder: (ctx, snap) {
-                  if (snap.hasData) {
-                    mezDbgPrint("Stream Has DATA ====> ${snap.data}");
-                    _taxists.assignAll(snap.data!);
-                    _markers.clear();
-                    snap.data!.forEach((taxisto) {
-                      _markers.add(Marker(
-                          markerId: MarkerId(taxisto.id),
-                          icon: BitmapDescriptor.defaultMarker,
-                          position: LatLng(taxisto.location.latitude!,
-                              taxisto.location.longitude!)));
-                    });
-                  }
-                  return Container(
-                    width: Get.width,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: Colors.white),
-                    child: _selectedLocation != null
-                        ? MezPickGoogleMap(
-                            markers: _markers(),
-                            showFakeMarker: false,
-                            showBlackScreen: showBlackScreen,
-                            notifyParent:
-                                (Location location, bool showBlackScreen) {
-                              setState(() {
-                                this.showBlackScreen = showBlackScreen;
-                                _selectedLocation = location;
-                              });
-                            },
-                            location: LatLng(_selectedLocation!.latitude,
-                                _selectedLocation!.longitude))
-                        : Center(
-                            child: CircularProgressIndicator(
-                              color: Colors.black,
-                              strokeWidth: 1,
-                            ),
-                          ),
-                  );
-                },
+              Container(
+                width: Get.width,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: Colors.white),
+                child: _selectedFromLocation != null
+                    ? MezPickGoogleMap(
+                        animateMarkersPolyLinesBounds: false,
+                        markers: _markers(),
+                        myLocationButtonEnabled: false,
+                        showFakeMarker: _showFakeMarker,
+                        showBlackScreen: showBlackScreen,
+                        blackScreenBottomTextMargin: 110,
+                        notifyParent:
+                            (Location location, bool showBlackScreen) {
+                          setState(() {
+                            this.showBlackScreen = showBlackScreen;
+                            if (selectedType == SearchComponentType.From) {
+                              _selectedFromLocation = location;
+                              mezDbgPrint(
+                                  "New < FROM > Location ===> ${location.toFirebaseFormattedJson()}");
+                            } else {
+                              _selectedToLocation = location;
+                              mezDbgPrint(
+                                  "New < TO > Location ===> ${location.toFirebaseFormattedJson()}");
+                            }
+                          });
+                        },
+                        location: LatLng(getLocationBySelectedField()!.latitude,
+                            getLocationBySelectedField()!.longitude))
+                    : Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.black,
+                          strokeWidth: 1,
+                        ),
+                      ),
               ),
               Container(
                 height: 40,
@@ -157,8 +199,12 @@ class _OrderTaxiScreenState extends State<OrderTaxiScreen> {
                   child: Row(
                     children: [
                       Expanded(
-                        flex: 3,
+                        flex: _flexValueFrom,
                         child: LocationSearchComponent(
+                            readOnly: this._fromReadOnly,
+                            focusNode: this._fromFocusNode,
+                            dropDownDxOffset: -10,
+                            dropDownWidth: Get.width - 30,
                             useBorders: false,
                             leftTopRadius: 5,
                             leftBotRaduis: 5,
@@ -166,15 +212,51 @@ class _OrderTaxiScreenState extends State<OrderTaxiScreen> {
                             labelStyle:
                                 TextStyle(fontFamily: 'psb', fontSize: 14),
                             label: "From",
-                            text: _selectedLocation?.address,
-                            onClear: () {},
+                            text: _selectedFromLocation?.address,
+                            onClear: () {
+                              setState(() {
+                                _showFakeMarker = false;
+                                _selectedFromLocation!.address = "";
+                                _fromReadOnly = false;
+                                hideFakeMarkerInCaseEmptyAddress();
+                              });
+                            },
+                            onTextChange: (_) {
+                              if (_.length >= 1) {
+                                setState(() {
+                                  _locationPickOptionsHeight = 0;
+                                });
+                              } else {
+                                setState(() {
+                                  _locationPickOptionsHeight = 100;
+                                });
+                              }
+                            },
+                            onFocus: () {
+                              setState(() {
+                                selectedType = SearchComponentType.From;
+                                _flexValueTo = 1;
+                                if (_locationPickOptionsHeight == 0) {
+                                  _locationPickOptionsHeight = 100;
+                                }
+                              });
+                            },
+                            onFocusLost: () {
+                              setState(() {
+                                _flexValueTo = 3;
+                                _locationPickOptionsHeight = 0;
+                              });
+                            },
                             notifyParent:
                                 (Location location, bool showBlackScreen) {
                               mezDbgPrint(
                                   "Ontap on suggestion  => ${location.toJson()} ");
                               setState(() {
                                 this.showBlackScreen = showBlackScreen;
-                                _selectedLocation = location;
+                                _selectedFromLocation = location;
+                                _fromReadOnly = true;
+                                _flexValueFrom = 3;
+                                _flexValueTo = 3;
                               });
                             }),
                       ),
@@ -221,31 +303,200 @@ class _OrderTaxiScreenState extends State<OrderTaxiScreen> {
                                 ),
                               ])),
                       Expanded(
-                        flex: 3,
+                        flex: _flexValueTo,
                         child: LocationSearchComponent(
+                            readOnly: this._toReadOnly,
+                            focusNode: this._toFocusNode,
                             useBorders: false,
                             rightTopRaduis: 5,
                             rightBotRaduis: 5,
                             bgColor: Colors.white,
+                            // to Controll where to start our dropDown DX (Distance on X axis)
+                            dropDownDxOffset: -(Get.width / 2.5),
+                            dropDownWidth: Get.width - 30,
                             labelStyle:
                                 TextStyle(fontFamily: 'psb', fontSize: 14),
                             label: "To",
-                            text: _selectedLocation?.address,
-                            onClear: () {},
+                            text: _selectedToLocation?.address,
+                            onClear: () {
+                              setState(() {
+                                _selectedToLocation!.address = "";
+                                _toReadOnly = false;
+                                hideFakeMarkerInCaseEmptyAddress();
+                              });
+                            },
+                            onTextChange: (_) {
+                              if (_.length >= 1) {
+                                setState(() {
+                                  _locationPickOptionsHeight = 0;
+                                });
+                              } else {
+                                setState(() {
+                                  _locationPickOptionsHeight = 100;
+                                });
+                              }
+                            },
+                            onFocus: () {
+                              setState(() {
+                                selectedType = SearchComponentType.To;
+                                _flexValueFrom = 1;
+                                if (_locationPickOptionsHeight == 0) {
+                                  _locationPickOptionsHeight = 100;
+                                }
+                              });
+                            },
+                            onFocusLost: () {
+                              setState(() {
+                                _flexValueFrom = 3;
+                                _locationPickOptionsHeight = 0;
+                              });
+                            },
                             notifyParent:
                                 (Location location, bool showBlackScreen) {
                               mezDbgPrint(
-                                  "Ontap on suggestion  => ${location.toJson()} ");
+                                  "notifyParent ===> TO ==> ${location.toFirebaseFormattedJson()} - $showBlackScreen");
                               setState(() {
                                 this.showBlackScreen = showBlackScreen;
-                                _selectedLocation = location;
+                                _selectedToLocation = location;
+                                _toReadOnly = true;
+                                _flexValueFrom = 3;
+                                _flexValueTo = 3;
                               });
                             }),
                       )
                     ],
                   ),
                 ),
-              )
+              ),
+
+              // Choice container :
+              // - Current location
+              // - Pick from map
+              // - Saved locations
+              Positioned(
+                  top: 68,
+                  left: 15,
+                  right: 15,
+                  child: AnimatedContainer(
+                      clipBehavior: Clip.hardEdge,
+                      duration: Duration(milliseconds: 500),
+                      curve: Curves.fastOutSlowIn,
+                      height: _locationPickOptionsHeight,
+                      width: Get.width,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.grey.shade200,
+                            width: 1,
+                          ),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10),
+                            topRight: Radius.circular(0),
+                          )),
+                      child: Wrap(
+                        direction: Axis.vertical,
+                        alignment: WrapAlignment.center,
+                        crossAxisAlignment: WrapCrossAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: 20,
+                          ),
+                          InkWell(
+                            onTap: () async {
+                              unfocusBySelectedField();
+                              GeoLoc.LocationData _loc =
+                                  await GeoLoc.Location().getLocation();
+                              setLocationBySelectedField(_loc,
+                                  address: "Current location.");
+                              setState(() {
+                                _showFakeMarker = true;
+                                _locationPickOptionsHeight = 0;
+                                this.showBlackScreen = true;
+                              });
+                            },
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Icon(Icons.location_on, color: Colors.purple),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  "Current Position.",
+                                  style: TextStyle(fontFamily: 'psb'),
+                                )
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              setState(() {
+                                _locationPickOptionsHeight = 0;
+                                _showFakeMarker = true;
+                                unfocusBySelectedField();
+                              });
+                            },
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Icon(Icons.location_searching_outlined,
+                                    color: Colors.purple),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  "Pick from map.",
+                                  style: TextStyle(fontFamily: 'psb'),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ))),
+              Positioned(
+                bottom: 10,
+                left: 15,
+                right: 15,
+                child: Container(
+                  margin: EdgeInsets.only(bottom: 30),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    gradient: LinearGradient(colors: [
+                      Color.fromRGBO(81, 132, 255, 1),
+                      Color.fromRGBO(206, 73, 252, 1)
+                    ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                  ),
+                  child: TextButton(
+                      style: ButtonStyle(
+                          fixedSize: MaterialStateProperty.all(Size(
+                              Get.width,
+                              getSizeRelativeToScreen(
+                                  20, Get.height, Get.width))),
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.transparent)
+
+                          // MaterialStateProperty.all(Color(0xffa8a8a8)),
+                          ),
+                      onPressed: () {
+                        mezDbgPrint("Not implemented Yet !");
+                      },
+                      child:
+                          Text(_lang.strings["shared"]["pickLocation"]["pick"],
+                              style: TextStyle(
+                                fontFamily: 'psr',
+                                color: Colors.white,
+                                fontSize: 18.sp,
+                              ))),
+                ),
+              ),
             ]),
       ),
     );

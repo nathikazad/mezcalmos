@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -18,20 +19,23 @@ class AutoCompleteTextView extends StatefulWidget {
   final String? tfInitialText;
   final suggestionTextAlign;
   final onTapCallback;
-  final enabled;
+  final readOnly;
   final Function getSuggestionsMethod;
   final Function focusGained;
   final Function focusLost;
   final int suggestionsApiFetchDelay;
   final Function onValueChanged;
   final String tfHint;
+  final double? dropDownWidth;
+  final double? dropDownDxOffset;
+  final FocusNode? focusNode;
 
   AutoCompleteTextView(
       {required this.controller,
       this.tfHint = "",
       this.onTapCallback,
       this.tfInitialText = null,
-      this.enabled = true,
+      this.readOnly = false,
       this.maxHeight = 200,
       this.tfCursorColor = Colors.white,
       this.tfCursorWidth = 2.0,
@@ -43,6 +47,9 @@ class AutoCompleteTextView extends StatefulWidget {
       required this.getSuggestionsMethod,
       required this.focusGained,
       this.suggestionsApiFetchDelay = 0,
+      this.dropDownDxOffset,
+      this.dropDownWidth,
+      this.focusNode,
       required this.focusLost,
       required this.onValueChanged});
   @override
@@ -67,11 +74,16 @@ class _AutoCompleteTextViewState extends State<AutoCompleteTextView> {
 
   Timer? _debounce;
   bool isSearching = true;
+
+  FocusNode getActiveFocusNode() {
+    return widget.focusNode ?? this._focusNode;
+  }
+
   @override
   void initState() {
     super.initState();
-    _focusNode.addListener(() {
-      if (_focusNode.hasFocus) {
+    getActiveFocusNode().addListener(() {
+      if (getActiveFocusNode().hasFocus) {
         this._overlayEntry = this._createOverlayEntry();
         Overlay.of(context)?.insert(this._overlayEntry);
         widget.focusGained();
@@ -106,11 +118,12 @@ class _AutoCompleteTextViewState extends State<AutoCompleteTextView> {
     var size = renderBox.size;
     return OverlayEntry(
         builder: (context) => Positioned(
-              width: size.width,
+              width: widget.dropDownWidth ?? size.width,
               child: CompositedTransformFollower(
                 link: this._layerLink,
                 showWhenUnlinked: false,
-                offset: Offset(0.0, size.height + 5.0),
+                offset:
+                    Offset(widget.dropDownDxOffset ?? 0.0, size.height + 5.0),
                 child: Material(
                   elevation: 4.0,
                   child: StreamBuilder<Object>(
@@ -151,7 +164,7 @@ class _AutoCompleteTextViewState extends State<AutoCompleteTextView> {
 
                                       suggestionsStreamController.sink.add([]);
                                       // placeId along with name.
-                                      _focusNode.unfocus();
+                                      getActiveFocusNode().unfocus();
                                       widget.onTapCallback(
                                           placeId, widget.controller.text);
                                     },
@@ -178,14 +191,14 @@ class _AutoCompleteTextViewState extends State<AutoCompleteTextView> {
     return CompositedTransformTarget(
       link: this._layerLink,
       child: TextField(
-        readOnly: !widget.enabled,
+        readOnly: widget.readOnly,
         controller: widget.controller,
         decoration: widget.tfTextDecoration,
         style: widget.tfStyle,
         cursorColor: widget.tfCursorColor,
         cursorWidth: widget.tfCursorWidth,
         textAlign: widget.tfTextAlign,
-        focusNode: this._focusNode,
+        focusNode: getActiveFocusNode(),
         onChanged: (text) {
           if (text.trim().isNotEmpty) {
             widget.onValueChanged(text);

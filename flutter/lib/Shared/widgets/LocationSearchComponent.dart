@@ -11,6 +11,8 @@ typedef LocationChangesNotifier = void Function(
   bool showBlackScreen,
 );
 
+typedef TextFieldGotUpdated = void Function(String updatedText);
+
 //  useBorders: false,
 //                         borderRaduis : 0,
 //                         bgColor: Colors.white,
@@ -19,6 +21,7 @@ typedef LocationChangesNotifier = void Function(
 // Location Search component
 class LocationSearchComponent extends StatefulWidget {
   final bool useBorders;
+  final bool readOnly;
   // raduis
   final double leftTopRadius;
   final double leftBotRaduis;
@@ -27,15 +30,22 @@ class LocationSearchComponent extends StatefulWidget {
 
   final Color bgColor;
   final TextStyle labelStyle;
+  final Function? onFocus;
+  final Function? onFocusLost;
+  final TextFieldGotUpdated? onTextChange;
+  final double? dropDownWidth;
+  final double? dropDownDxOffset;
 
   final String label;
   final String hint;
   final LocationChangesNotifier notifyParent;
   final Function onClear;
   String? text;
+  final FocusNode? focusNode;
 
   LocationSearchComponent(
       {required this.label,
+      this.readOnly = false,
       this.useBorders = true,
       this.leftTopRadius = 0,
       this.leftBotRaduis = 0,
@@ -47,6 +57,12 @@ class LocationSearchComponent extends StatefulWidget {
       this.text,
       required this.notifyParent,
       required this.onClear,
+      this.onFocus,
+      this.onFocusLost,
+      this.onTextChange,
+      this.dropDownWidth,
+      this.dropDownDxOffset,
+      this.focusNode,
       Key? key})
       : super(key: key);
 
@@ -118,18 +134,21 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
                 height: 20,
               ),
               AutoCompleteTextView(
+                readOnly: widget.readOnly,
+                focusNode: widget.focusNode,
+                dropDownDxOffset: widget.dropDownDxOffset,
+                dropDownWidth: widget.dropDownWidth,
                 tfInitialText: widget.text,
                 tfCursorColor: Colors.black,
                 controller: _controller,
                 suggestionsApiFetchDelay: 1,
                 getSuggestionsMethod: getLocationsSuggestions,
-                focusGained: () {
-                  mezDbgPrint("Focus Gained on TF !");
-                },
-                focusLost: () {
-                  mezDbgPrint("Focus Lost on TF !");
-                },
+                focusGained: widget.onFocus ?? () {},
+                focusLost: widget.onFocusLost ?? () {},
                 onValueChanged: (String value) {
+                  if (widget.onTextChange != null) {
+                    widget.onTextChange!(value);
+                  }
                   if (!_showClearBtn && value.length >= 3) {
                     setState(() {
                       _showClearBtn = true;

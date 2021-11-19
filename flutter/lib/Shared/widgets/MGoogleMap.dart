@@ -22,6 +22,8 @@ class MGoogleMap extends StatefulWidget with MezDisposable {
   Map<String, Stream<LocationData>> idWithSubscription;
   Duration rerenderDuration;
   String debugString;
+  bool animateMarkersPolyLinesBounds;
+
   MinMaxZoomPreference minMaxZoomPrefs;
   // this is used when we don't want to re-render the map periodically.
   bool periodicRedrendring;
@@ -29,6 +31,7 @@ class MGoogleMap extends StatefulWidget with MezDisposable {
   MGoogleMap({
     Key? key,
     required this.notifyParent,
+    this.animateMarkersPolyLinesBounds = true,
     this.minMaxZoomPrefs = MinMaxZoomPreference.unbounded,
     this.periodicRedrendring = true,
     this.myLocationButtonEnabled = false,
@@ -124,7 +127,9 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
 
   // main function for updating the bounds and start the animation
   Future<void> animateAndUpdateBounds() async {
-    LatLngBounds? _polyMarkersBounds = _getMarkersAndPolylinesBounds();
+    LatLngBounds? _polyMarkersBounds = widget.animateMarkersPolyLinesBounds
+        ? _getMarkersAndPolylinesBounds()
+        : null;
     if (_polyMarkersBounds != null) {
       await _animateCameraWithNewBounds(_polyMarkersBounds);
     }
