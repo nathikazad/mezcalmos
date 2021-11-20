@@ -19,8 +19,11 @@ class MezPickGoogleMap extends StatefulWidget {
   double blackScreenBottomTextMargin;
   bool showFakeMarker;
   List<Marker> markers;
+  Set<Polyline> polylines;
   bool myLocationButtonEnabled;
   bool animateMarkersPolyLinesBounds;
+  MinMaxZoomPreference minMaxZoomPrefs;
+
   MezPickGoogleMap(
       {Key? key,
       required this.location,
@@ -29,7 +32,9 @@ class MezPickGoogleMap extends StatefulWidget {
       this.myLocationButtonEnabled = true,
       this.showFakeMarker = true,
       this.showBlackScreen = true,
+      this.polylines = const {},
       this.animateMarkersPolyLinesBounds = true,
+      this.minMaxZoomPrefs = MinMaxZoomPreference.unbounded,
       this.markers = const []})
       : super(key: key);
   @override
@@ -92,13 +97,14 @@ class MezPickGoogleMapState extends State<MezPickGoogleMap> {
             alignment: Alignment.center,
             children: [
               MGoogleMap(
+                polylines: widget.polylines,
                 animateMarkersPolyLinesBounds:
                     widget.animateMarkersPolyLinesBounds,
                 notifyParent: _notifierLocationChange,
                 markers: widget.markers,
                 initialLocation: widget.location,
                 key: mGoogleMapKey,
-                minMaxZoomPrefs: MinMaxZoomPreference(16, 17),
+                minMaxZoomPrefs: widget.minMaxZoomPrefs,
                 periodicRedrendring: false,
                 myLocationButtonEnabled: widget.myLocationButtonEnabled,
               ),
