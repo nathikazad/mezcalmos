@@ -1,7 +1,25 @@
+const logger = require("firebase-functions/lib/logger")
 const notification = require("../notification");
 
+const functions = require("firebase-functions");
+const firebase = require("firebase-admin");
 
-module.exports = ( firebase, uid, data, hasura) => { return finish(firebase, uid, data, hasura) }
+
+const keys = require("../keys").keys()
+const hasuraModule = require("../hasura");
+
+const hasura = new hasuraModule.Hasura(keys.hasura);
+
+module.exports = functions.https.onCall(async (data, context) => {
+  if (!context.auth) {
+    return {
+      status: "Error",
+      errorMessage: "User needs to be signed in"
+    }
+  }
+  let response = await finish(firebase, context.auth.uid, hasura)
+  return response
+});
 
 async function finish(firebase, uid, hasura) {
   

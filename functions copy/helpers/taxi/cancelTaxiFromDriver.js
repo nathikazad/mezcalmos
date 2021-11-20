@@ -1,7 +1,25 @@
+const logger = require("firebase-functions/lib/logger")
 const notification = require("../notification");
 
+const functions = require("firebase-functions");
+const firebase = require("firebase-admin");
 
-module.exports = ( firebase, uid, data, hasura) => { return cancelTaxiFromDriver(firebase, uid, data, hasura) }
+
+const keys = require("../keys").keys()
+const hasuraModule = require("../hasura");
+
+const hasura = new hasuraModule.Hasura(keys.hasura);
+
+module.exports = functions.https.onCall(async (data, context) => {
+  if (!context.auth) {
+    return {
+      status: "Error",
+      errorMessage: "User needs to be signed in"
+    }
+  }
+  let response = await cancelTaxiFromDriver(firebase, context.auth.uid, data, hasura)
+  return response
+});
 
 async function cancelTaxiFromDriver(firebase, uid, data, hasura) {
     let orderId = (await firebase.database().ref(`/taxiDrivers/${uid}/state/currentOrder`).once('value')).val();

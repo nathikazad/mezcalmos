@@ -10,7 +10,7 @@ import 'package:mezcalmos/CustomerApp/components/myExpensionPanelComponent.dart'
 import 'package:mezcalmos/CustomerApp/components/textFieldComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/titlesComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
-import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantCartController.dart';
+import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
@@ -34,7 +34,7 @@ class ViewCartScreen extends StatefulWidget {
 
 class _ViewCartScreenState extends State<ViewCartScreen> {
   LanguageController lang = Get.find<LanguageController>();
-  RestaurantCartController controller = Get.find<RestaurantCartController>();
+  RestaurantController controller = Get.find<RestaurantController>();
   bool _clickedOrderNow = false;
   TextEditingController textcontoller = new TextEditingController();
   // Rxn<Cart> cart = Rxn();
@@ -71,9 +71,9 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
       backgroundColor: const Color(0xffffffff),
       appBar: customerAppBar(AppBarLeftButtonType.Back, withCart: false),
       body: Obx(() => controller.cart.value.items.length > 0
-          ? GetBuilder<RestaurantCartController>(
+          ? GetBuilder<RestaurantController>(
               // specify type as Controller
-              init: RestaurantCartController(), // intialize with the Controller
+              init: RestaurantController(), // intialize with the Controller
               builder: (_) => SingleChildScrollView(
                     child: Column(
                       children: [

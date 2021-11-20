@@ -9,7 +9,10 @@ const hasuraModule = require("../hasura");
 const hasura = new hasuraModule.Hasura(keys.hasura)
 module.exports = functions.https.onCall(async (data, context) => {
   if (!context.auth) {
-    return notSignedInMessage
+    return {
+      status: "Error",
+      errorMessage: "User needs to be signed in"
+    }
   }
   let response = await checkoutCart(context.auth.uid, data)
   return response

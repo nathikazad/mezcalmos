@@ -14,7 +14,10 @@ async function checkAdmin(firebase, params) {
 // Customer Canceling
 module.exports.cancelOrderFromCustomer = functions.https.onCall(async (data, context) => {
   if (!context.auth) {
-    return notSignedInMessage
+    return {
+      status: "Error",
+      errorMessage: "User needs to be signed in"
+    }
   }
   return changeStatus(context.auth.uid, data, "cancelledByCustomer");
 });
@@ -22,7 +25,10 @@ module.exports.cancelOrderFromCustomer = functions.https.onCall(async (data, con
 // Cancel By Admin !
 module.exports.cancelOrderFromAdmin = functions.https.onCall(async (data, context) => {
   if (!context.auth) {
-    return notSignedInMessage
+    return {
+      status: "Error",
+      errorMessage: "User needs to be signed in"
+    }
   }
   return changeStatus(context.auth.uid, data, "cancelledByAdmin");
 });

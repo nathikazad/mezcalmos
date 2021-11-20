@@ -4,7 +4,7 @@ import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/controllers/deviceNotificationsController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
-import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantCartController.dart';
+import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 class AuthHooks {
@@ -13,7 +13,7 @@ class AuthHooks {
         "[+] CustomerApp::AuthHooks::onSignOutHook -> Callback Executed.");
     await Get.delete<CustomerAuthController>(force: true);
     await Get.delete<OrderController>(force: true);
-    await Get.delete<RestaurantCartController>(force: true);
+    await Get.delete<RestaurantController>(force: true);
     await Get.delete<DeviceNotificationsController>(force: true);
     await Get.delete<MessageController>(force: true);
     await Get.delete<FBNotificationsController>(force: true);
@@ -30,7 +30,7 @@ class AuthHooks {
     Get.put<FBNotificationsController>(FBNotificationsController(),
         permanent: true);
     Get.put<OrderController>(OrderController(), permanent: true);
-    Get.put<RestaurantCartController>(RestaurantCartController(),
+    Get.put<RestaurantController>(RestaurantController(),
         permanent: true);
     Get.put<MessageController>(MessageController(), permanent: true);
   }

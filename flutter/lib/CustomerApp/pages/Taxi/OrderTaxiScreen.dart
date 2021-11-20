@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart';
 import 'package:mezcalmos/CustomerApp/components/customerAppBar.dart';
-import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
+import 'package:mezcalmos/CustomerApp/controllers/taxi/taxiController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
@@ -27,7 +27,7 @@ class OrderTaxiScreen extends StatefulWidget {
 class _OrderTaxiScreenState extends State<OrderTaxiScreen> {
   Location? _selectedLocation;
   bool showBlackScreen = true;
-  RxList<Taxist> _taxists = <Taxist>[].obs;
+  // RxList<Taxist> _taxists = <Taxist>[].obs;
   LanguageController _lang = Get.find<LanguageController>();
   RxList<Marker> _markers = <Marker>[].obs;
 
@@ -90,49 +90,6 @@ class _OrderTaxiScreenState extends State<OrderTaxiScreen> {
             clipBehavior: Clip.none,
             alignment: Alignment.topCenter,
             children: [
-              StreamBuilder<List<Taxist>>(
-                stream: Get.find<TaxiController>().getTaxistsStream(),
-                builder: (ctx, snap) {
-                  if (snap.hasData) {
-                    mezDbgPrint("Stream Has DATA ====> ${snap.data}");
-                    _taxists.assignAll(snap.data!);
-                    _markers.clear();
-                    snap.data!.forEach((taxisto) {
-                      _markers.add(Marker(
-                          markerId: MarkerId(taxisto.id),
-                          icon: BitmapDescriptor.defaultMarker,
-                          position: LatLng(taxisto.location.latitude!,
-                              taxisto.location.longitude!)));
-                    });
-                  }
-                  return Container(
-                    width: Get.width,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: Colors.white),
-                    child: _selectedLocation != null
-                        ? MezPickGoogleMap(
-                            markers: _markers(),
-                            showFakeMarker: false,
-                            showBlackScreen: showBlackScreen,
-                            notifyParent:
-                                (Location location, bool showBlackScreen) {
-                              setState(() {
-                                this.showBlackScreen = showBlackScreen;
-                                _selectedLocation = location;
-                              });
-                            },
-                            location: LatLng(_selectedLocation!.latitude,
-                                _selectedLocation!.longitude))
-                        : Center(
-                            child: CircularProgressIndicator(
-                              color: Colors.black,
-                              strokeWidth: 1,
-                            ),
-                          ),
-                  );
-                },
-              ),
               Container(
                 height: 40,
                 width: Get.width,
@@ -251,3 +208,47 @@ class _OrderTaxiScreenState extends State<OrderTaxiScreen> {
     );
   }
 }
+
+// StreamBuilder<List<Taxist>> getTaxistas() {
+//   return StreamBuilder<List<Taxist>>(
+//     stream: Get.find<TaxiController>().getTaxistsStream(),
+//     builder: (ctx, snap) {
+//       if (snap.hasData) {
+//         mezDbgPrint("Stream Has DATA ====> ${snap.data}");
+//         _taxists.assignAll(snap.data!);
+//         _markers.clear();
+//         snap.data!.forEach((taxisto) {
+//           _markers.add(Marker(
+//               markerId: MarkerId(taxisto.id),
+//               icon: BitmapDescriptor.defaultMarker,
+//               position: LatLng(
+//                   taxisto.location.latitude!, taxisto.location.longitude!)));
+//         });
+//       }
+//       return Container(
+//         width: Get.width,
+//         decoration: BoxDecoration(
+//             borderRadius: BorderRadius.circular(5), color: Colors.white),
+//         child: _selectedLocation != null
+//             ? MezPickGoogleMap(
+//                 markers: _markers(),
+//                 showFakeMarker: false,
+//                 showBlackScreen: showBlackScreen,
+//                 notifyParent: (Location location, bool showBlackScreen) {
+//                   setState(() {
+//                     this.showBlackScreen = showBlackScreen;
+//                     _selectedLocation = location;
+//                   });
+//                 },
+//                 location: LatLng(
+//                     _selectedLocation!.latitude, _selectedLocation!.longitude))
+//             : Center(
+//                 child: CircularProgressIndicator(
+//                   color: Colors.black,
+//                   strokeWidth: 1,
+//                 ),
+//               ),
+//       );
+//     },
+//   );
+// }

@@ -30,7 +30,7 @@ exports.processSignUp = functions.auth.user().onCreate(async user => {
   await hasuraModule.setClaim(user.uid);
   if (!user.photoURL)
     user.photoURL = 'https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d'
-  
+
   await firebase.database().ref(`/users/${user.uid}/info`).update({
     displayName: user.displayName,
     photo: user.photoURL,
@@ -39,23 +39,23 @@ exports.processSignUp = functions.auth.user().onCreate(async user => {
 
   await hasura.insertUser({
     user: {
-        uid: user.uid,
-        displayName: user.displayName,
-        photo: user.photoURL,
-      }
+      uid: user.uid,
+      displayName: user.displayName,
+      photo: user.photoURL,
+    }
   })
 });
 
 exports.addName = functions.database.ref(
   '/users/{userId}/info/displayName').onCreate(async (snap, context) => {
     await firebase.auth().updateUser(context.params.userId, { displayName: snap.val() })
-  await hasura.updateUser({
-    uid: context.params.userId,
-    changes: {
-      displayName: snap.val()
-    }
+    await hasura.updateUser({
+      uid: context.params.userId,
+      changes: {
+        displayName: snap.val()
+      }
+    })
   })
-})
 
 exports.changeName = functions.database.ref(
   '/users/{userId}/info/displayName').onUpdate(async (snap, context) => {
@@ -71,13 +71,13 @@ exports.changeName = functions.database.ref(
 exports.addPhoto = functions.database.ref(
   '/users/{userId}/info/photo').onCreate(async (snap, context) => {
     await firebase.auth().updateUser(context.params.userId, { photoURL: snap.val() })
-  await hasura.updateUser({
-    uid: context.params.userId,
-    changes: {
-      photo: snap.val()
-    }
+    await hasura.updateUser({
+      uid: context.params.userId,
+      changes: {
+        photo: snap.val()
+      }
+    })
   })
-})
 
 exports.changePhoto = functions.database.ref(
   '/users/{userId}/info/photo').onUpdate(async (snap, context) => {
@@ -112,60 +112,6 @@ exports.updateTaxiNumber = functions.database.ref(
 
 exports.addHasuraClaims = functions.https.onCall(async (data, context) => {
   let response = hasuraModule.setClaim(firebase, context.auth.uid);
-  return response
-});
-
-const notSignedInMessage = {
-  status: "Error",
-  errorMessage: "User needs to be signed in"
-}
-
-exports.requestTaxi = functions.https.onCall(async (data, context) => {
-  if (!context.auth) {
-    return notSignedInMessage
-  }
-  const request = require("./helpers/taxi/request")
-  let response = await request(firebase, context.auth.uid, data, hasura)
-  return response
-});
-
-exports.acceptTaxiOrder = functions.https.onCall(async (data, context) => {
-  if (!context.auth)
-    return notSignedInMessage
-  const accept = require("./helpers/taxi/accept")
-  let response = await accept(firebase, context.auth.uid, data, hasura)
-  return response
-});
-
-exports.startTaxiRide = functions.https.onCall(async (data, context) => {
-  if (!context.auth)
-    return notSignedInMessage
-  const start = require("./helpers/taxi/start")
-  let response = await start(firebase, context.auth.uid, hasura)
-  return response
-});
-
-exports.cancelTaxiFromCustomer = functions.https.onCall(async (data, context) => {
-  if (!context.auth)
-    return notSignedInMessage;
-  const cancelTaxiFromCustomer = require("./helpers/taxi/cancelTaxiFromCustomer")
-  let response = await cancelTaxiFromCustomer(firebase, context.auth.uid, data, hasura)
-  return response
-});
-
-exports.cancelTaxiFromDriver = functions.https.onCall(async (data, context) => {
-  if (!context.auth)
-    return notSignedInMessage
-  const cancelTaxiFromDriver = require("./helpers/taxi/cancelTaxiFromDriver")
-  let response = await cancelTaxiFromDriver(firebase, context.auth.uid, data, hasura)
-  return response
-});
-
-exports.finishTaxiRide = functions.https.onCall(async (data, context) => {
-  if (!context.auth)
-    return notSignedInMessage
-  const finish = require('./helpers/taxi/finish')
-  let response = await finish(firebase, context.auth.uid, hasura)
   return response
 });
 
@@ -239,13 +185,21 @@ exports.sendTestNotification = functions.https.onCall(async (data, context) => {
   return response
 });
 
-// exports.addRestaurantItemToCart = require("./helpers/restaurant/addItem");
-// exports.changeItemCountInCart = require("./helpers/cart/changeItemCount");
-// exports.clearCart = require("./helpers/cart/clearCart");
-exports.checkoutRestaurantCart = require("./helpers/restaurant/checkoutCart");
-exports.prepareOrder = require("./helpers/restaurant/adminStatusChanges").prepareOrder;
-exports.readyForPickupOrder = require("./helpers/restaurant/adminStatusChanges").readyForPickupOrder;
-exports.deliverOrder = require("./helpers/restaurant/adminStatusChanges").deliverOrder;
-exports.dropOrder = require("./helpers/restaurant/adminStatusChanges").dropOrder;
-exports.cancelRestaurantOrderFromCustomer = require("./helpers/restaurant/cancelOrder").cancelOrderFromCustomer;
-exports.cancelRestaurantOrderFromAdmin = require("./helpers/restaurant/cancelOrder").cancelOrderFromAdmin;
+// Taxi
+exports.requestTaxi = require("./helpers/taxi/request");
+exports.acceptTaxiOrder = require("./helpers/taxi/accept");
+exports.startTaxiRide = require("./helpers/taxi/start");
+exports.cancelTaxiFromCustomer = require("./helpers/taxi/cancelTaxiFromCustomer")
+exports.cancelTaxiFromDriver = require("./helpers/taxi/cancelTaxiFromDriver")
+exports.finishTaxiRide = require('./helpers/taxi/finish')
+
+// Restaurant
+exports.restaurant = {
+  checkoutRestaurantCart: require("./helpers/restaurant/checkoutCart"),
+  prepareOrder: require("./helpers/restaurant/adminStatusChanges").prepareOrder,
+  readyForPickupOrder: require("./helpers/restaurant/adminStatusChanges").readyForPickupOrder,
+  deliverOrder: require("./helpers/restaurant/adminStatusChanges").deliverOrder,
+  dropOrder: require("./helpers/restaurant/adminStatusChanges").dropOrder,
+  cancelRestaurantOrderFromCustomer: require("./helpers/restaurant/cancelOrder").cancelOrderFromCustomer,
+  cancelRestaurantOrderFromAdmin: require("./helpers/restaurant/cancelOrder").cancelOrderFromAdmin
+}

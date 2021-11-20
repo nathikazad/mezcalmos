@@ -19,7 +19,10 @@ async function checkAdmin(firebase, params) {
 
 module.exports.prepareOrder = functions.https.onCall(async (data, context) => {
   if (!context.auth) {
-    return notSignedInMessage
+    return {
+      status: "Error",
+      errorMessage: "User needs to be signed in"
+    }
   }
   let response = changeStatus(context.auth.uid, data, "preparingOrder")
   return response
@@ -27,7 +30,10 @@ module.exports.prepareOrder = functions.https.onCall(async (data, context) => {
 
 module.exports.readyForPickupOrder = functions.https.onCall(async (data, context) => {
   if (!context.auth) {
-    return notSignedInMessage
+    return {
+      status: "Error",
+      errorMessage: "User needs to be signed in"
+    }
   }
   let response = changeStatus(context.auth.uid, data, "readyForPickup")
   return response
@@ -35,7 +41,10 @@ module.exports.readyForPickupOrder = functions.https.onCall(async (data, context
 
 module.exports.deliverOrder = functions.https.onCall(async (data, context) => {
   if (!context.auth) {
-    return notSignedInMessage
+    return {
+      status: "Error",
+      errorMessage: "User needs to be signed in"
+    }
   }
   let response = changeStatus(context.auth.uid, data, "onTheWay")
   return response
@@ -43,7 +52,10 @@ module.exports.deliverOrder = functions.https.onCall(async (data, context) => {
 
 module.exports.dropOrder = functions.https.onCall(async (data, context) => {
   if (!context.auth) {
-    return notSignedInMessage
+    return {
+      status: "Error",
+      errorMessage: "User needs to be signed in"
+    }
   }
   let response = changeStatus(context.auth.uid, data, "delivered")
   return response
@@ -115,6 +127,7 @@ async function changeStatus(uid, data, newStatus) {
 
     // and finally remove from root /inProcessOrders   
     // await firebase.database().ref(`/inProcessOrders/restaurant/${data.orderId}`).remove();
+    // await firebase.database().ref(`/pastOrders/restaurant/${data.orderId}`).set(order)
   }
   return { status: "Success" }
 }

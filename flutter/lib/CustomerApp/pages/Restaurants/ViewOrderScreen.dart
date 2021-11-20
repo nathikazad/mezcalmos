@@ -6,6 +6,7 @@ import 'package:mezcalmos/CustomerApp/components/basicCellComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/buildWidgetOnOrderStatus.dart';
 import 'package:mezcalmos/CustomerApp/components/customerAppBar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
+import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -31,6 +32,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
   LanguageController lang = Get.find<LanguageController>();
   Rxn<RestaurantOrder> order = Rxn();
   OrderController controller = Get.find<OrderController>();
+  RestaurantController restaurantController = Get.find<RestaurantController>();
   StreamSubscription? _currentOrderListener;
   StreamSubscription? _pastShownOrder;
 
@@ -480,7 +482,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
 
                         if (yesNoRes) {
                           mezDbgPrint(Get.parameters.toString());
-                          ServerResponse resp = await controller
+                          ServerResponse resp = await restaurantController
                               .cancelOrder(Get.parameters['orderId']!);
                           mezDbgPrint(resp.data.toString());
                           if (resp.success) {

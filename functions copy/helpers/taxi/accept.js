@@ -1,7 +1,27 @@
+const logger = require("firebase-functions/lib/logger")
 const notification = require("../notification");
-const logger = require("firebase-functions/lib/logger");
 
-module.exports = ( firebase, uid, data, hasura) => { return accept(firebase, uid, data, hasura) }
+const functions = require("firebase-functions");
+const firebase = require("firebase-admin");
+
+
+const keys = require("../keys").keys()
+const hasuraModule = require("../hasura");
+
+const hasura = new hasuraModule.Hasura(keys.hasura);
+
+module.exports = functions.https.onCall(async (data, context) => {
+  if (!context.auth) {
+    return {
+      status: "Error",
+      errorMessage: "User needs to be signed in"
+    }
+  }
+  let response = await accept(firebase, context.auth.uid, data, hasura)
+  return response
+});
+
+
 async function accept(firebase, uid, data, hasura) {
   if (!data.orderId) {
     return {
@@ -27,7 +47,7 @@ async function accept(firebase, uid, data, hasura) {
 
   driver = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val();
 
-  let response = await firebase.database().ref(`/orders/taxi/${data.orderId}`).transaction(function (order) {
+  let response = await firebase.database().ref(`/openOrders/taxi/${data.orderId}`).transaction(function (order) {
     if (order != null) {
       if (order.lock == true) {
         return
@@ -48,8 +68,15 @@ async function accept(firebase, uid, data, hasura) {
     }
     let order = response.snapshot.val();
 
+    if (!order) {
+      return {
+        status: "Error",
+        errorMessage: "Order is is not available anymore"
+      };
+    }
+
     if (order.customer.id == uid) {
-      firebase.database().ref(`orders/taxi/${data.orderId}/lock`).remove()
+      firebase.database().ref(`/openOrders/taxi/${data.orderId}/lock`).remove()
       return {
         status: "Error",
         errorMessage: "Driver and Customer cannot have same id"
@@ -57,7 +84,7 @@ async function accept(firebase, uid, data, hasura) {
     }
 
     if (order.status != "lookingForTaxi") {
-      firebase.database().ref(`orders/taxi/${data.orderId}/lock`).remove()
+      firebase.database().ref(`openOrders/taxi/${data.orderId}/lock`).remove()
       return {
         status: "Error",
         errorMessage: `${data.orderId} status is not lookingForTaxi but ${order.status}`
@@ -73,16 +100,16 @@ async function accept(firebase, uid, data, hasura) {
       taxiNumber: (driver.taxiNumber) ? driver.taxiNumber : null,
     }
 
-    firebase.database().ref(`/orders/taxi/${data.orderId}`).update(order);
+    // firebase.database().ref(`/orders/taxi/${data.orderId}`).update(order);
     firebase.database().ref(`/taxiDrivers/${uid}/orders/${data.orderId}`).set(order);
     firebase.database().ref(`/taxiDrivers/${uid}/state/currentOrder`).set(data.orderId)
-    firebase.database().ref(`/users/${order.customer.id}/orders/${data.orderId}`).update({
+    firebase.database().ref(`/customers/inProcessOrders/${order.customer.id}/${data.orderId}`).update({
       driver: order.driver,
       acceptRideTime: order.acceptRideTime,
       status: order.status,
       taxiNumber: (driver.taxiNumber) ? driver.taxiNumber : null
     });
-    firebase.database().ref(`/inProcessOrders/taxi/${data.orderId}`).set({ driver: order.driver, customer: order.customer });
+    firebase.database().ref(`/inProcessOrders/taxi/${data.orderId}`).set(order);
     firebase.database().ref(`/openOrders/taxi/${data.orderId}`).remove();
     notification.cancelNotificationsForOrderId(firebase, data.orderId);
     firebase.database().ref(`/chat/${data.orderId}/participants/${uid}`).set({
@@ -115,7 +142,6 @@ async function accept(firebase, uid, data, hasura) {
   } catch (e) {
     logger.error(e)
   }
-  firebase.database().ref(`orders/taxi/${data.orderId}/lock`).remove()
   return {
     status: "Success",
     func: "accepted"

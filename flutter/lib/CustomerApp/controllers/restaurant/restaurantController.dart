@@ -12,7 +12,7 @@ import 'dart:async';
 
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
-class RestaurantCartController extends GetxController {
+class RestaurantController extends GetxController {
   DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
   AuthController _authController = Get.find<AuthController>();
 
@@ -112,12 +112,27 @@ class RestaurantCartController extends GetxController {
 
   Future<ServerResponse> checkout() async {
     HttpsCallable checkoutRestaurantCart =
-        FirebaseFunctions.instance.httpsCallable('checkoutRestaurantCart');
+        FirebaseFunctions.instance.httpsCallable("restaurant-checkoutCart");
     try {
       mezDbgPrint(cart.value.notes);
       mezDbgPrint(cart.value.toFirebaseFormattedJson());
       HttpsCallableResult response = await checkoutRestaurantCart
           .call(cart.value.toFirebaseFormattedJson());
+      return ServerResponse.fromJson(response.data);
+    } catch (e) {
+      return ServerResponse(ResponseStatus.Error,
+          errorMessage: "Server Error", errorCode: "serverError");
+    }
+  }
+
+  Future<ServerResponse> cancelOrder(String orderId) async {
+    HttpsCallable cancelOrder = FirebaseFunctions.instance
+        .httpsCallable('cancelRestaurantOrderFromCustomer');
+    try {
+      HttpsCallableResult response =
+          await cancelOrder.call({"orderId": orderId});
+      mezDbgPrint(response.toString());
+      print(response.data);
       return ServerResponse.fromJson(response.data);
     } catch (e) {
       return ServerResponse(ResponseStatus.Error,
