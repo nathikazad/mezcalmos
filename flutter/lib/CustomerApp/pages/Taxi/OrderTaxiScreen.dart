@@ -49,6 +49,11 @@ class _OrderTaxiScreenState extends State<OrderTaxiScreen> {
   bool _animateMarkersAndPolylines = false;
   int _ridePrice = 35;
 
+  // Genetal Widget Utilities ------------------------------------------------------------
+
+  /// This Function sets the Marker's Purple Circle and add it to the [_markers] List!
+  ///
+  /// NOTE : this also Sets the State , In order to refresh the markers and show it on the map.
   Future<void> setUpCircleMarker(GeoLoc.LocationData _loc) async {
     _circleMarker = Marker(
         markerId: MarkerId(Get.find<AuthController>().user!.uid),
@@ -102,21 +107,513 @@ class _OrderTaxiScreenState extends State<OrderTaxiScreen> {
         _selectedFromLocation?.address != "";
   }
 
-  // void buttonPressFunction() {
-  //   if (_polylines.isEmpty) {
-  //     Location loc = getLocationBySelectedField()!;
-  //     setLocationBySelectedField(
-  //         GeoLoc.LocationData.fromMap(
-  //           loc.toJson(),
-  //         ),
-  //         address:
-  //             "${loc.position.latitude.toString()}, ${loc.position.longitude.toString()}");
-  //     unfocusBySelectedField();
-  //   } else {
-  //     // confirm !
-  //     mezDbgPrint("To handle on confirm !");
-  //   }
-  // }
+  // MezPickGoogleMap Callbacks ---------------------------------------------------------------------
+  /// This is A callback used to Notify This widget when MezPickGoogleMap gets it's state Rebuilt.
+  void mezPickGoogleMapNotifyParent(Location location, bool showBlackScreen) {
+    setState(() {
+      this.showBlackScreen = showBlackScreen;
+      if (selectedType == SearchComponentType.From) {
+        _selectedFromLocation = location;
+        mezDbgPrint(
+            "New < FROM > Location ===> ${location.toFirebaseFormattedJson()}");
+      } else {
+        _selectedToLocation = location;
+        mezDbgPrint(
+            "New < TO > Location ===> ${location.toFirebaseFormattedJson()}");
+      }
+    });
+  }
+
+  // From Text Field Callbacks -----------------------------------------------------------------------
+  void fromTextFieldOnClear() {
+    setState(() {
+      _animateMarkersAndPolylines = false;
+      _polylines.clear();
+      _markers.removeWhere((element) => element.markerId.value == "from");
+      _selectedFromLocation!.address = "";
+      _fromReadOnly = false;
+      hideFakeMarkerInCaseEmptyAddress();
+    });
+  }
+
+  void fromTextFieldOnTextChanged(String value) {
+    if (value.length >= 1) {
+      setState(() {
+        _locationPickOptionsHeight = 0;
+      });
+    } else {
+      setState(() {
+        _locationPickOptionsHeight = 100;
+      });
+    }
+  }
+
+  void fromTextFieldOnFocus() {
+    setState(() {
+      selectedType = SearchComponentType.From;
+      _flexValueTo = 1;
+      if (_locationPickOptionsHeight == 0) {
+        _locationPickOptionsHeight = 100;
+      }
+    });
+  }
+
+  void fromTextFieldOnFocusLost() {
+    setState(() {
+      _flexValueTo = 3;
+      _locationPickOptionsHeight = 0;
+    });
+  }
+
+  void fromTextFieldNotifyParent(Location location, bool showBlackScreen) {
+    mezDbgPrint("Ontap on suggestion  => ${location.toJson()} ");
+    setState(() {
+      this.showBlackScreen = showBlackScreen;
+      _selectedFromLocation = location;
+      _fromReadOnly = true;
+      _flexValueFrom = 3;
+      _flexValueTo = 3;
+    });
+  }
+
+// To Text Field Callbacks ---------------------------------------------------------------------------
+  void toTextFieldOnClear() {
+    setState(() {
+      _animateMarkersAndPolylines = false;
+      _polylines.clear();
+      _markers.removeWhere((element) => element.markerId.value == "to");
+      _selectedToLocation!.address = "";
+      _toReadOnly = false;
+      hideFakeMarkerInCaseEmptyAddress();
+    });
+  }
+
+  void toTextFieldOnTextChanged(String value) {
+    if (value.length >= 1) {
+      setState(() {
+        _locationPickOptionsHeight = 0;
+      });
+    } else {
+      setState(() {
+        _locationPickOptionsHeight = 100;
+      });
+    }
+  }
+
+  void toTextFieldOnFocus() {
+    setState(() {
+      selectedType = SearchComponentType.To;
+      _flexValueFrom = 1;
+      if (_locationPickOptionsHeight == 0) {
+        _locationPickOptionsHeight = 100;
+      }
+    });
+  }
+
+  void toTextFieldOnFocusLost() {
+    setState(() {
+      _flexValueFrom = 3;
+      _locationPickOptionsHeight = 0;
+    });
+  }
+
+  void toTextFieldNotifyParent(Location location, bool showBlackScreen) {
+    mezDbgPrint(
+        "notifyParent ===> TO ==> ${location.toFirebaseFormattedJson()} - $showBlackScreen");
+    setState(() {
+      this.showBlackScreen = showBlackScreen;
+      _selectedToLocation = location;
+      _toReadOnly = true;
+      _flexValueFrom = 3;
+      _flexValueTo = 3;
+    });
+  }
+
+// DropDown on TextFields Callbacks ------------------------------------------------------------------
+  /// When the user choses [Current Position] option from the Pick Choices on that DropDown.
+  Future<void> textFieldsCurrentPositioOnTap() async {
+    unfocusBySelectedField();
+    GeoLoc.LocationData _loc = await GeoLoc.Location().getLocation();
+
+    String? formattedAddress =
+        (await getAdressFromLatLng(LatLng(_loc.latitude!, _loc.longitude!))) ??
+            "Current Location";
+
+    setLocationBySelectedField(_loc, address: formattedAddress);
+    setState(() {
+      _showFakeMarker = true;
+      _locationPickOptionsHeight = 0;
+      this.showBlackScreen = true;
+    });
+  }
+
+  /// When the user choses [Pick From Map] option from the Pick Choices on that DropDown.
+  void textFieldsPickFromMapOnTap() {
+    setState(() {
+      _locationPickOptionsHeight = 0;
+      _showFakeMarker = true;
+      unfocusBySelectedField();
+    });
+  }
+
+  // Pick - Confirm Button Click Callback ------------------------------------------------------------
+
+  /// When the user Clicks the button at the Bottom [Pick] / [Confirm]
+  void onConfirmButtonClick() async {
+    if (_polylines.isEmpty) {
+      Location? loc = getLocationBySelectedField();
+      mezDbgPrint(selectedType.toString());
+      mezDbgPrint(loc?.toJson());
+      // get address!
+      String? formattedAddress = (await getAdressFromLatLng(
+              LatLng(loc!.latitude!, loc.longitude!))) ??
+          "${loc.latitude.toString()}, ${loc.position.longitude.toString()}";
+
+      setLocationBySelectedField(
+          GeoLoc.LocationData.fromMap(
+            {'latitude': loc.latitude, 'longitude': loc.longitude},
+          ),
+          address: formattedAddress);
+
+      if (checkIfAllLocationsSet()) {
+        // this is Filled with the decoded Polylines points!.
+        List<LatLng> polylineCoordinates = [];
+        // this is the From Bitmap Marker
+        BitmapDescriptor toMarkerBitmap = await BitmapDescriptorLoader(
+            (await cropRonded(
+                (await rootBundle.load(purple_destination_marker_asset))
+                    .buffer
+                    .asUint8List())),
+            60,
+            60,
+            isBytes: true);
+        BitmapDescriptor fromMarkerBitmap = await BitmapDescriptorLoader(
+            (await cropRonded((await http.get(Uri.parse(
+                    Get.find<AuthController>().user!.image ?? aDefaultAvatar)))
+                .bodyBytes) as Uint8List),
+            60,
+            60,
+            isBytes: true);
+        PolylineResult _resPloyLines = await PolylinePoints()
+            .getRouteBetweenCoordinates(
+                placesApikey,
+                PointLatLng(_selectedToLocation!.position.latitude!,
+                    _selectedToLocation!.position.longitude!),
+                PointLatLng(_selectedFromLocation!.position.latitude!,
+                    _selectedFromLocation!.position.longitude!));
+
+        if (_resPloyLines.points.isNotEmpty) {
+          _resPloyLines.points.forEach((point) {
+            polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+          });
+        }
+
+        setState(() {
+          _showFakeMarker = false;
+          _markers.assignAll([
+            // to Marker
+            Marker(
+                markerId: MarkerId("to"),
+                icon: toMarkerBitmap,
+                position: LatLng(_selectedToLocation!.position.latitude!,
+                    _selectedToLocation!.position.longitude!)),
+
+            // From Marker
+            Marker(
+                markerId: MarkerId("from"),
+                icon: fromMarkerBitmap,
+                position: LatLng(_selectedFromLocation!.position.latitude!,
+                    _selectedFromLocation!.position.longitude!)),
+          ]);
+          // TODO : Generate polylines from-to
+
+          _polylines.add(Polyline(
+              color: Color.fromARGB(255, 172, 89, 252),
+              jointType: JointType.round,
+              width: 2,
+              startCap: Cap.buttCap,
+              endCap: Cap.roundCap,
+              polylineId: PolylineId('_poly_'),
+              visible: true,
+              points: polylineCoordinates));
+          // TODO : Clear the polylines on a SearchField Clear + SET _animateMarkersAndPolylines = FALSE
+
+          _animateMarkersAndPolylines = true;
+        });
+      }
+
+      // unfocusBySelectedField();
+    } else {
+      // confirm !
+      mezDbgPrint("To handle on confirm !");
+    }
+  }
+
+  // Sub Widgets Blocks ------------------------------------------------------------------------------
+  Widget bottomBarWidget() {
+    return Positioned(
+        bottom: 20 + getSizeRelativeToScreen(20, Get.height, Get.width),
+        left: 15,
+        right: 15,
+        child: Container(
+            margin: EdgeInsets.only(bottom: 30),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              gradient: LinearGradient(colors: [
+                Color.fromRGBO(81, 132, 255, 1),
+                Color.fromRGBO(206, 73, 252, 1)
+              ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+            ),
+            child: Container(
+              height: getSizeRelativeToScreen(25, Get.height, Get.width),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: Colors.white,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              if (_ridePrice > 35) {
+                                setState(() {
+                                  _ridePrice -= 5;
+                                });
+                              }
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                      color: Colors.black,
+                                      style: BorderStyle.solid,
+                                      width: 1)),
+                              child: Icon(
+                                Icons.remove,
+                                size: 18,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                          Text(
+                            "${_ridePrice.toString()}\$",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'psb',
+                                fontSize: 20),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              setState(() {
+                                _ridePrice += 5;
+                              });
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                      color: Colors.black,
+                                      style: BorderStyle.solid,
+                                      width: 1)),
+                              child: Icon(
+                                Icons.add,
+                                size: 18,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  VerticalDivider(width: 1, color: Colors.grey.shade300),
+                  Expanded(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text("1 min"),
+                      Text("1 min"),
+                    ],
+                  ))
+                ],
+              ),
+            )));
+  }
+
+  Widget locationPickChoicesWidget() {
+    // Choice DropDown :
+    // - Current location
+    // - Pick from map
+    // - TODO : Saved locations
+    return Positioned(
+        top: 68,
+        left: 15,
+        right: 15,
+        child: AnimatedContainer(
+            clipBehavior: Clip.hardEdge,
+            duration: Duration(milliseconds: 500),
+            curve: Curves.fastOutSlowIn,
+            height: _locationPickOptionsHeight,
+            width: Get.width,
+            decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.grey.shade200,
+                  width: 1,
+                ),
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
+                  topRight: Radius.circular(0),
+                )),
+            child: Wrap(
+              direction: Axis.vertical,
+              alignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.start,
+              children: [
+                SizedBox(
+                  width: 20,
+                ),
+                InkWell(
+                  onTap: textFieldsCurrentPositioOnTap,
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Icon(Icons.location_on, color: Colors.purple),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        "Current Position.",
+                        style: TextStyle(fontFamily: 'psb'),
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                InkWell(
+                  onTap: textFieldsPickFromMapOnTap,
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Icon(Icons.location_searching_outlined,
+                          color: Colors.purple),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        "Pick from map.",
+                        style: TextStyle(fontFamily: 'psb'),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            )));
+  }
+
+  Widget topBarFromTextField() {
+    return Expanded(
+      flex: _flexValueFrom,
+      child: LocationSearchComponent(
+          readOnly: this._fromReadOnly,
+          focusNode: this._fromFocusNode,
+          dropDownDxOffset: -10,
+          dropDownWidth: Get.width - 30,
+          useBorders: false,
+          leftTopRadius: 5,
+          leftBotRaduis: 5,
+          bgColor: Colors.white,
+          labelStyle: TextStyle(fontFamily: 'psb', fontSize: 14),
+          label: "From",
+          text: _selectedFromLocation?.address,
+          onClear: fromTextFieldOnClear,
+          onTextChange: fromTextFieldOnTextChanged,
+          onFocus: fromTextFieldOnFocus,
+          onFocusLost: fromTextFieldOnFocusLost,
+          notifyParent: fromTextFieldNotifyParent),
+    );
+  }
+
+  Widget topBarMiddleLogo() {
+    return Expanded(
+        flex: 1,
+        child: Stack(
+            alignment: Alignment.center,
+            fit: StackFit.passthrough,
+            children: [
+              VerticalDivider(
+                color: Color.fromARGB(255, 236, 236, 236),
+                thickness: 1,
+              ),
+              Container(
+                padding: EdgeInsets.all(
+                    getSizeRelativeToScreen(2.5, Get.height, Get.width)),
+                height: getSizeRelativeToScreen(17, Get.height, Get.width),
+                width: getSizeRelativeToScreen(17, Get.height, Get.width),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  boxShadow: <BoxShadow>[
+                    BoxShadow(
+                        color: Color.fromARGB(255, 216, 225, 249),
+                        spreadRadius: 0,
+                        blurRadius: 5,
+                        offset: Offset(0, 7)),
+                  ],
+                  gradient: LinearGradient(colors: [
+                    Color.fromARGB(255, 97, 127, 255),
+                    Color.fromARGB(255, 198, 90, 252),
+                  ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                ),
+                child: Center(
+                  child: Image.asset('assets/images/logoWhite.png'),
+                ),
+              ),
+            ]));
+  }
+
+  Widget topBarToTextField() {
+    return Expanded(
+      flex: _flexValueTo,
+      child: LocationSearchComponent(
+          readOnly: this._toReadOnly,
+          focusNode: this._toFocusNode,
+          useBorders: false,
+          rightTopRaduis: 5,
+          rightBotRaduis: 5,
+          bgColor: Colors.white,
+          // to Controll where to start our dropDown DX (Distance on X axis)
+          dropDownDxOffset: -(Get.width / 2.5),
+          dropDownWidth: Get.width - 30,
+          labelStyle: TextStyle(fontFamily: 'psb', fontSize: 14),
+          label: "To",
+          text: _selectedToLocation?.address,
+          onClear: toTextFieldOnClear,
+          onTextChange: toTextFieldOnTextChanged,
+          onFocus: toTextFieldOnFocus,
+          onFocusLost: toTextFieldOnFocusLost,
+          notifyParent: toTextFieldNotifyParent),
+    );
+  }
+
+  // ------------------------------------------------------------------------------------------------------------------------
+  /// ------------------------------------------------- [START OF WIDGET]-----------------------------------------------------
+  // ------------------------------------------------------------------------------------------------------------------------
 
   @override
   void initState() {
@@ -169,21 +666,7 @@ class _OrderTaxiScreenState extends State<OrderTaxiScreen> {
                         showFakeMarker: _showFakeMarker,
                         showBlackScreen: showBlackScreen,
                         blackScreenBottomTextMargin: 110,
-                        notifyParent:
-                            (Location location, bool showBlackScreen) {
-                          setState(() {
-                            this.showBlackScreen = showBlackScreen;
-                            if (selectedType == SearchComponentType.From) {
-                              _selectedFromLocation = location;
-                              mezDbgPrint(
-                                  "New < FROM > Location ===> ${location.toFirebaseFormattedJson()}");
-                            } else {
-                              _selectedToLocation = location;
-                              mezDbgPrint(
-                                  "New < TO > Location ===> ${location.toFirebaseFormattedJson()}");
-                            }
-                          });
-                        },
+                        notifyParent: mezPickGoogleMapNotifyParent,
                         location: LatLng(getLocationBySelectedField()!.latitude,
                             getLocationBySelectedField()!.longitude))
                     : Center(
@@ -216,389 +699,15 @@ class _OrderTaxiScreenState extends State<OrderTaxiScreen> {
                   ),
                   child: Row(
                     children: [
-                      Expanded(
-                        flex: _flexValueFrom,
-                        child: LocationSearchComponent(
-                            readOnly: this._fromReadOnly,
-                            focusNode: this._fromFocusNode,
-                            dropDownDxOffset: -10,
-                            dropDownWidth: Get.width - 30,
-                            useBorders: false,
-                            leftTopRadius: 5,
-                            leftBotRaduis: 5,
-                            bgColor: Colors.white,
-                            labelStyle:
-                                TextStyle(fontFamily: 'psb', fontSize: 14),
-                            label: "From",
-                            text: _selectedFromLocation?.address,
-                            onClear: () {
-                              setState(() {
-                                _animateMarkersAndPolylines = false;
-                                _polylines.clear();
-                                _markers.removeWhere((element) =>
-                                    element.markerId.value == "from");
-                                _selectedFromLocation!.address = "";
-                                _fromReadOnly = false;
-                                hideFakeMarkerInCaseEmptyAddress();
-                              });
-                            },
-                            onTextChange: (_) {
-                              if (_.length >= 1) {
-                                setState(() {
-                                  _locationPickOptionsHeight = 0;
-                                });
-                              } else {
-                                setState(() {
-                                  _locationPickOptionsHeight = 100;
-                                });
-                              }
-                            },
-                            onFocus: () {
-                              setState(() {
-                                selectedType = SearchComponentType.From;
-                                _flexValueTo = 1;
-                                if (_locationPickOptionsHeight == 0) {
-                                  _locationPickOptionsHeight = 100;
-                                }
-                              });
-                            },
-                            onFocusLost: () {
-                              setState(() {
-                                _flexValueTo = 3;
-                                _locationPickOptionsHeight = 0;
-                              });
-                            },
-                            notifyParent:
-                                (Location location, bool showBlackScreen) {
-                              mezDbgPrint(
-                                  "Ontap on suggestion  => ${location.toJson()} ");
-                              setState(() {
-                                this.showBlackScreen = showBlackScreen;
-                                _selectedFromLocation = location;
-                                _fromReadOnly = true;
-                                _flexValueFrom = 3;
-                                _flexValueTo = 3;
-                              });
-                            }),
-                      ),
-                      Expanded(
-                          flex: 1,
-                          child: Stack(
-                              alignment: Alignment.center,
-                              fit: StackFit.passthrough,
-                              children: [
-                                VerticalDivider(
-                                  color: Color.fromARGB(255, 236, 236, 236),
-                                  thickness: 1,
-                                ),
-                                Container(
-                                  padding: EdgeInsets.all(
-                                      getSizeRelativeToScreen(
-                                          2.5, Get.height, Get.width)),
-                                  height: getSizeRelativeToScreen(
-                                      17, Get.height, Get.width),
-                                  width: getSizeRelativeToScreen(
-                                      17, Get.height, Get.width),
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    boxShadow: <BoxShadow>[
-                                      BoxShadow(
-                                          color: Color.fromARGB(
-                                              255, 216, 225, 249),
-                                          spreadRadius: 0,
-                                          blurRadius: 5,
-                                          offset: Offset(0, 7)),
-                                    ],
-                                    gradient: LinearGradient(
-                                        colors: [
-                                          Color.fromARGB(255, 97, 127, 255),
-                                          Color.fromARGB(255, 198, 90, 252),
-                                        ],
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight),
-                                  ),
-                                  child: Center(
-                                    child: Image.asset(
-                                        'assets/images/logoWhite.png'),
-                                  ),
-                                ),
-                              ])),
-                      Expanded(
-                        flex: _flexValueTo,
-                        child: LocationSearchComponent(
-                            readOnly: this._toReadOnly,
-                            focusNode: this._toFocusNode,
-                            useBorders: false,
-                            rightTopRaduis: 5,
-                            rightBotRaduis: 5,
-                            bgColor: Colors.white,
-                            // to Controll where to start our dropDown DX (Distance on X axis)
-                            dropDownDxOffset: -(Get.width / 2.5),
-                            dropDownWidth: Get.width - 30,
-                            labelStyle:
-                                TextStyle(fontFamily: 'psb', fontSize: 14),
-                            label: "To",
-                            text: _selectedToLocation?.address,
-                            onClear: () {
-                              setState(() {
-                                _animateMarkersAndPolylines = false;
-                                _polylines.clear();
-                                _markers.removeWhere((element) =>
-                                    element.markerId.value == "to");
-                                _selectedToLocation!.address = "";
-                                _toReadOnly = false;
-                                hideFakeMarkerInCaseEmptyAddress();
-                              });
-                            },
-                            onTextChange: (_) {
-                              if (_.length >= 1) {
-                                setState(() {
-                                  _locationPickOptionsHeight = 0;
-                                });
-                              } else {
-                                setState(() {
-                                  _locationPickOptionsHeight = 100;
-                                });
-                              }
-                            },
-                            onFocus: () {
-                              setState(() {
-                                selectedType = SearchComponentType.To;
-                                _flexValueFrom = 1;
-                                if (_locationPickOptionsHeight == 0) {
-                                  _locationPickOptionsHeight = 100;
-                                }
-                              });
-                            },
-                            onFocusLost: () {
-                              setState(() {
-                                _flexValueFrom = 3;
-                                _locationPickOptionsHeight = 0;
-                              });
-                            },
-                            notifyParent:
-                                (Location location, bool showBlackScreen) {
-                              mezDbgPrint(
-                                  "notifyParent ===> TO ==> ${location.toFirebaseFormattedJson()} - $showBlackScreen");
-                              setState(() {
-                                this.showBlackScreen = showBlackScreen;
-                                _selectedToLocation = location;
-                                _toReadOnly = true;
-                                _flexValueFrom = 3;
-                                _flexValueTo = 3;
-                              });
-                            }),
-                      )
+                      topBarFromTextField(),
+                      topBarMiddleLogo(),
+                      topBarToTextField()
                     ],
                   ),
                 ),
               ),
-
-              // Choice container :
-              // - Current location
-              // - Pick from map
-              // - Saved locations
-              Positioned(
-                  top: 68,
-                  left: 15,
-                  right: 15,
-                  child: AnimatedContainer(
-                      clipBehavior: Clip.hardEdge,
-                      duration: Duration(milliseconds: 500),
-                      curve: Curves.fastOutSlowIn,
-                      height: _locationPickOptionsHeight,
-                      width: Get.width,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.grey.shade200,
-                            width: 1,
-                          ),
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(10),
-                            bottomRight: Radius.circular(10),
-                            topRight: Radius.circular(0),
-                          )),
-                      child: Wrap(
-                        direction: Axis.vertical,
-                        alignment: WrapAlignment.center,
-                        crossAxisAlignment: WrapCrossAlignment.start,
-                        children: [
-                          SizedBox(
-                            width: 20,
-                          ),
-                          InkWell(
-                            onTap: () async {
-                              unfocusBySelectedField();
-                              GeoLoc.LocationData _loc =
-                                  await GeoLoc.Location().getLocation();
-
-                              String? formattedAddress =
-                                  (await getAdressFromLatLng(LatLng(
-                                          _loc.latitude!, _loc.longitude!))) ??
-                                      "Current Location";
-
-                              setLocationBySelectedField(_loc,
-                                  address: formattedAddress);
-                              setState(() {
-                                _showFakeMarker = true;
-                                _locationPickOptionsHeight = 0;
-                                this.showBlackScreen = true;
-                              });
-                            },
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Icon(Icons.location_on, color: Colors.purple),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  "Current Position.",
-                                  style: TextStyle(fontFamily: 'psb'),
-                                )
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          InkWell(
-                            onTap: () {
-                              setState(() {
-                                _locationPickOptionsHeight = 0;
-                                _showFakeMarker = true;
-                                unfocusBySelectedField();
-                              });
-                            },
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Icon(Icons.location_searching_outlined,
-                                    color: Colors.purple),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  "Pick from map.",
-                                  style: TextStyle(fontFamily: 'psb'),
-                                )
-                              ],
-                            ),
-                          )
-                        ],
-                      ))),
-              _polylines.isNotEmpty
-                  ? Positioned(
-                      bottom: 20 +
-                          getSizeRelativeToScreen(20, Get.height, Get.width),
-                      left: 15,
-                      right: 15,
-                      child: Container(
-                          margin: EdgeInsets.only(bottom: 30),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            gradient: LinearGradient(
-                                colors: [
-                                  Color.fromRGBO(81, 132, 255, 1),
-                                  Color.fromRGBO(206, 73, 252, 1)
-                                ],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight),
-                          ),
-                          child: Container(
-                            height: getSizeRelativeToScreen(
-                                25, Get.height, Get.width),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: Colors.white,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 10),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        InkWell(
-                                          onTap: () {
-                                            if (_ridePrice > 35) {
-                                              setState(() {
-                                                _ridePrice -= 5;
-                                              });
-                                            }
-                                          },
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                border: Border.all(
-                                                    color: Colors.black,
-                                                    style: BorderStyle.solid,
-                                                    width: 1)),
-                                            child: Icon(
-                                              Icons.remove,
-                                              size: 18,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ),
-                                        Text(
-                                          "${_ridePrice.toString()}\$",
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontFamily: 'psb',
-                                              fontSize: 20),
-                                        ),
-                                        InkWell(
-                                          onTap: () {
-                                            setState(() {
-                                              _ridePrice += 5;
-                                            });
-                                          },
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                border: Border.all(
-                                                    color: Colors.black,
-                                                    style: BorderStyle.solid,
-                                                    width: 1)),
-                                            child: Icon(
-                                              Icons.add,
-                                              size: 18,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                VerticalDivider(
-                                    width: 1, color: Colors.grey.shade300),
-                                Expanded(
-                                    child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text("1 min"),
-                                    Text("1 min"),
-                                  ],
-                                ))
-                              ],
-                            ),
-                          )))
-                  : SizedBox(),
+              locationPickChoicesWidget(),
+              _polylines.isNotEmpty ? bottomBarWidget() : SizedBox(),
               Positioned(
                 bottom: 10,
                 left: 15,
@@ -619,120 +728,8 @@ class _OrderTaxiScreenState extends State<OrderTaxiScreen> {
                               getSizeRelativeToScreen(
                                   20, Get.height, Get.width))),
                           backgroundColor:
-                              MaterialStateProperty.all(Colors.transparent)
-
-                          // MaterialStateProperty.all(Color(0xffa8a8a8)),
-                          ),
-                      onPressed: () async {
-                        if (_polylines.isEmpty) {
-                          Location? loc = getLocationBySelectedField();
-                          mezDbgPrint(selectedType.toString());
-                          mezDbgPrint(loc?.toJson());
-                          // get address!
-                          String? formattedAddress = (await getAdressFromLatLng(
-                                  LatLng(loc!.latitude!, loc.longitude!))) ??
-                              "${loc.latitude.toString()}, ${loc.position.longitude.toString()}";
-
-                          setLocationBySelectedField(
-                              GeoLoc.LocationData.fromMap(
-                                {
-                                  'latitude': loc.latitude,
-                                  'longitude': loc.longitude
-                                },
-                              ),
-                              address: formattedAddress);
-
-                          if (checkIfAllLocationsSet()) {
-                            // this is Filled with the decoded Polylines points!.
-                            List<LatLng> polylineCoordinates = [];
-                            // this is the From Bitmap Marker
-                            BitmapDescriptor toMarkerBitmap =
-                                await BitmapDescriptorLoader(
-                                    (await cropRonded((await rootBundle.load(
-                                            purple_destination_marker_asset))
-                                        .buffer
-                                        .asUint8List())),
-                                    60,
-                                    60,
-                                    isBytes: true);
-                            BitmapDescriptor fromMarkerBitmap =
-                                await BitmapDescriptorLoader(
-                                    (await cropRonded((await http.get(Uri.parse(
-                                            Get.find<AuthController>()
-                                                    .user!
-                                                    .image ??
-                                                aDefaultAvatar)))
-                                        .bodyBytes) as Uint8List),
-                                    60,
-                                    60,
-                                    isBytes: true);
-                            PolylineResult _resPloyLines =
-                                await PolylinePoints()
-                                    .getRouteBetweenCoordinates(
-                                        placesApikey,
-                                        PointLatLng(
-                                            _selectedToLocation!
-                                                .position.latitude!,
-                                            _selectedToLocation!
-                                                .position.longitude!),
-                                        PointLatLng(
-                                            _selectedFromLocation!
-                                                .position.latitude!,
-                                            _selectedFromLocation!
-                                                .position.longitude!));
-
-                            if (_resPloyLines.points.isNotEmpty) {
-                              _resPloyLines.points.forEach((point) {
-                                polylineCoordinates.add(
-                                    LatLng(point.latitude, point.longitude));
-                              });
-                            }
-
-                            setState(() {
-                              _showFakeMarker = false;
-                              _markers.assignAll([
-                                // to Marker
-                                Marker(
-                                    markerId: MarkerId("to"),
-                                    icon: toMarkerBitmap,
-                                    position: LatLng(
-                                        _selectedToLocation!.position.latitude!,
-                                        _selectedToLocation!
-                                            .position.longitude!)),
-
-                                // From Marker
-                                Marker(
-                                    markerId: MarkerId("from"),
-                                    icon: fromMarkerBitmap,
-                                    position: LatLng(
-                                        _selectedFromLocation!
-                                            .position.latitude!,
-                                        _selectedFromLocation!
-                                            .position.longitude!)),
-                              ]);
-                              // TODO : Generate polylines from-to
-
-                              _polylines.add(Polyline(
-                                  color: Color.fromARGB(255, 172, 89, 252),
-                                  jointType: JointType.round,
-                                  width: 2,
-                                  startCap: Cap.buttCap,
-                                  endCap: Cap.roundCap,
-                                  polylineId: PolylineId('_poly_'),
-                                  visible: true,
-                                  points: polylineCoordinates));
-                              // TODO : Clear the polylines on a SearchField Clear + SET _animateMarkersAndPolylines = FALSE
-
-                              _animateMarkersAndPolylines = true;
-                            });
-                          }
-
-                          // unfocusBySelectedField();
-                        } else {
-                          // confirm !
-                          mezDbgPrint("To handle on confirm !");
-                        }
-                      },
+                              MaterialStateProperty.all(Colors.transparent)),
+                      onPressed: onConfirmButtonClick,
                       child: Text(
                           _polylines.isNotEmpty
                               ? "CONFIRM"
