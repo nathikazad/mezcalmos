@@ -113,7 +113,7 @@ class OrderController extends GetxController {
   Future<ServerResponse> prepareOrder(String orderId) async {
     mezDbgPrint("prepare order");
     HttpsCallable prepareOrderFunction =
-        FirebaseFunctions.instance.httpsCallable('prepareOrder');
+        FirebaseFunctions.instance.httpsCallable('restaurant-prepareOrder');
     try {
       HttpsCallableResult response =
           await prepareOrderFunction.call({"orderId": orderId});

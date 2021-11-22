@@ -74,7 +74,10 @@ async function checkoutCart(uid: string, cart: Cart): Promise<ServerResponse> {
   const deliveryAdmins: Record<string, DeliveryAdmin> = (await deliveryAdminNodes.deliveryAdmins().once('value')).val()
   setChat(customerInfo, uid, cart.serviceProviderId, restaurant, deliveryAdmins, orderRef.key!);
   notifyDeliveryAdminsNewOrder(deliveryAdmins, orderRef.key!, restaurant)
-  let response = { status: ServerResponseStatus.Success, orderId: orderRef.key }
+  let response: ServerResponse = {
+    status: ServerResponseStatus.Success,
+    orderId: orderRef.key
+  }
   return response
 }
 

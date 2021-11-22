@@ -1,4 +1,6 @@
 import { RestaurantOrderStatus } from "../../restaurant/models/RestaurantOrder";
+import { fcmNotification } from "../../utilities/senders/fcm";
+import { Language } from "./Generic";
 import { OrderType } from "./Order";
 import { GenericUser } from "./User";
 
@@ -9,16 +11,23 @@ export enum NotificationType {
 }
 
 export interface Notification {
+  foreground: ForegroundNotification,
+  background: BackgroundNotification
+}
+
+export interface ForegroundNotification {
   time: string,
   notificationType: NotificationType,
 }
 
-export interface NewMessageNotification extends Notification {
+export type BackgroundNotification = Record<Language, fcmNotification>
+
+export interface NewMessageNotification extends ForegroundNotification {
   sender: GenericUser,
   message: string
 }
 
-export interface OrderNotification extends Notification {
+export interface OrderNotification extends ForegroundNotification {
   orderType: OrderType,
   orderId: string,
 }

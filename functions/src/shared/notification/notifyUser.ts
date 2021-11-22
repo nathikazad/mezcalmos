@@ -1,4 +1,3 @@
-const notificationMessages = require('./notificationMessages.json')
 import * as customerNodes from "../databaseNodes/customer";
 import * as deliveryAdminNodes from "../databaseNodes/deliveryAdmin";
 import * as restaurantNodes from "../databaseNodes/restaurant";
@@ -7,8 +6,8 @@ import *  as rootDbNodes from "../databaseNodes/root";
 import { ParticipantType } from "../models/Chat";
 import { Language, NotificationInfo } from "../models/Generic";
 import * as fcm from "../../utilities/senders/fcm";
-import { notificationsNode } from "../databaseNodes/notifications";
-import { NewMessageNotification, Notification, NotificationType, OrderStatusChangeNotification } from "../models/Notification";
+import { Notification } from "../models/Notification";
+import * as foreground from "../../utilities/senders/foreground";
 
 
 let notificationFunctions: Record<ParticipantType, (para: string) => any> = {
@@ -22,20 +21,19 @@ notificationFunctions
 
 
 export async function push(userId: string, notification: Notification, particpantType: ParticipantType = ParticipantType.Customer) {
-  notificationsNode(particpantType, userId).push(notification)
+  foreground.push({
+    particpantType: particpantType,
+    userId: userId,
+    notification: notification.foreground
+  });
   let subscription: NotificationInfo;
-
   subscription = (await notificationFunctions[particpantType](userId).once('value')).val();
   if (subscription != null && subscription.deviceNotificationToken) {
-    let translatedNotificaiton: TranslatedNotificaiton = await buildDeviceNotificationMessage(userId, notification);
-    let fcmMessage: fcm.Message = {
+    let language: Language = (await rootDbNodes.userInfo(userId).once('value')).val().language;
+    let fcmMessage: fcm.fcmPayload = {
       token: subscription.deviceNotificationToken,
       payload: {
-        notification: {
-          title: translatedNotificaiton.title,
-          body: translatedNotificaiton.body,
-          tag: notification.notificationType
-        }
+        notification: notification.background[language]
       },
       options: {
         priority: fcm.NotificationPriority.High
@@ -45,32 +43,10 @@ export async function push(userId: string, notification: Notification, particpan
   }
 }
 
-interface TranslatedNotificaiton {
-  title: string,
-  body: string
-}
-
-async function buildDeviceNotificationMessage(userId: string, notification: Notification): Promise<TranslatedNotificaiton> {
-  let userLang = (await rootDbNodes.userInfo(userId).once('value')).val().language;
-  if (!userLang)
-    userLang = "es";
-  if (notification.notificationType == NotificationType.OrderStatusChange) {
-    return buildOrderStatusMessage(userLang, <OrderStatusChangeNotification>notification)
-  } else if (notification.notificationType == NotificationType.NewMessage) {
-    return buildNewMessage(userLang, <NewMessageNotification>notification)
-  } else {
-    throw "Invalid Notification Type";
-  }
-}
-
-function buildOrderStatusMessage(userLang: Language, notification: OrderStatusChangeNotification): TranslatedNotificaiton {
-  return notificationMessages[notification.notificationType][notification.orderType][notification.status][userLang]
-}
-
-function buildNewMessage(userLang: Language, notification: NewMessageNotification): TranslatedNotificaiton {
-  let notificationMessage = notificationMessages[notification.notificationType][userLang];
-  return {
-    title: `${notificationMessage.title}${notification.sender.name}`,
-    body: notification.message
-  }
-}
+// function buildNewMessage(userLang: Language, notification: NewMessageNotification): TranslatedNotificaiton {
+//   let notificationMessage = notificationMessages[notification.notificationType][userLang];
+//   return {
+//     title: `${notificationMessage.title}${notification.sender.name}`,
+//     body: notification.message
+//   }
+// }

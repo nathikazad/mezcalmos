@@ -10,14 +10,6 @@ if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp()
 }
 
-// // Taxi
-// exports.requestTaxi = require("./helpers/taxi/request");
-// exports.acceptTaxiOrder = require("./helpers/taxi/accept");
-// exports.startTaxiRide = require("./helpers/taxi/start");
-// exports.cancelTaxiFromCustomer = require("./helpers/taxi/cancelTaxiFromCustomer")
-// exports.cancelTaxiFromDriver = require("./helpers/taxi/cancelTaxiFromDriver")
-// exports.finishTaxiRide = require('./helpers/taxi/finish')
-
 import * as restaurantStatusChange from './restaurant/adminStatusChanges'
 export const restaurant = {
   checkoutCart: require("./restaurant/checkoutCart"),
@@ -28,7 +20,6 @@ export const restaurant = {
   cancelOrderFromAdmin: restaurantStatusChange.cancelOrder,
   cancelOrderFromCustomer: require("./restaurant/cancelOrderFromCustomer")
 }
-
 
 import * as userChanges from './utilities/userChanges'
 export const user = {
@@ -45,16 +36,15 @@ export const otp = {
   getAuthUsingOTP: otpAuth.getAuthUsingOTP
 }
 
-
-
-
-// const message = require("./helpers/message");
-// const admin = require("./helpers/admin");
-// const auth = require("./helpers/auth");
-// const notifications = require("./helpers/notification");
-// const { user } = require("firebase-functions/lib/providers/auth");
-
-
+// // Taxi
+export const taxi = {
+  // requestTaxi: require("./helpers/taxi/request"),
+  // acceptTaxiOrder: require("./helpers/taxi/accept"),
+  // startTaxiRide: require("./helpers/taxi/start"),
+  // cancelTaxiFromCustomer: require("./helpers/taxi/cancelTaxiFromCustomer"),
+  // cancelTaxiFromDriver: require("./helpers/taxi/cancelTaxiFromDriver"),
+  // finishTaxiRide: require('./helpers/taxi/finish')
+}
 
 // exports.submitAuthorizationRequest = functions.https.onCall(async (data, context) => {
 //   data.userId = context.auth.uid

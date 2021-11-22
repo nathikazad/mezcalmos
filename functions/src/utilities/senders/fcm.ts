@@ -13,14 +13,17 @@ export interface Notification {
 
 }
 
-export interface Message {
+export interface fcmNotification {
+  title: string,
+  body: string,
+  tag?: string,
+  [key: string]: string | undefined;
+}
+
+export interface fcmPayload {
   token: string | string[],
   payload: {
-    notification: {
-      title: string,
-      body: string,
-      tag?: string
-    },
+    notification: fcmNotification,
     data?: any
   },
   options: {
@@ -30,7 +33,7 @@ export interface Message {
 }
 
 
-export async function push(notification: Message, throughApi: boolean = false) {
+export async function push(notification: fcmPayload, throughApi: boolean = false) {
   try {
     if (process.env.FUNCTIONS_EMULATOR === "true" ||
       throughApi === true) {
@@ -44,7 +47,7 @@ export async function push(notification: Message, throughApi: boolean = false) {
   }
 }
 
-function pushThroughApi(notification: Message) {
+function pushThroughApi(notification: fcmPayload) {
   let message: any = {
     ...notification.payload,
     ...notification.options

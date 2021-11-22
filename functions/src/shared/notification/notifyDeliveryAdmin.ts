@@ -1,17 +1,18 @@
 import { Restaurant } from "../../restaurant/models/Restaurant";
-import { NewRestaurantOrderNotification, NotificationType } from "../models/Notification";
+import { NewRestaurantOrderNotification, NotificationType, OrderNotification, OrderStatusChangeNotification } from "../models/Notification";
 import { OrderType } from "../models/Order";
 import * as fcm from "../../utilities/senders/fcm"
 import { DeliveryAdmin } from "../models/DeliveryAdmin";
-import { notificationsNode } from "../databaseNodes/notifications";
+
 import { ParticipantType } from "../models/Chat";
 import { RestaurantOrderStatus } from "../../restaurant/models/RestaurantOrder";
+import * as foreground from "../../utilities/senders/foreground";
 
 export async function notifyDeliveryAdminsNewOrder(
   deliveryAdmins: Record<string, DeliveryAdmin>,
   orderId: string,
   restaurant: Restaurant) {
-  let message: NewRestaurantOrderNotification = {
+  let foregroundNotificaiton: NewRestaurantOrderNotification = {
     time: (new Date()).toISOString(),
     notificationType: NotificationType.NewOrder,
     orderType: OrderType.Restaurant,
@@ -21,16 +22,9 @@ export async function notifyDeliveryAdminsNewOrder(
       image: restaurant.details.photo
     }
   }
-  let notificationTokens: Array<string> = [];
-  for (let adminId in deliveryAdmins) {
-    notificationsNode(ParticipantType.DeliveryAdmin, adminId).push(message)
-    let admin: DeliveryAdmin = deliveryAdmins[adminId]
-    if (admin.notificationInfo.deviceNotificationToken && admin.notificationInfo.deviceNotificationToken) {
-      notificationTokens.push(admin.notificationInfo.deviceNotificationToken);
-    }
-  }
-  let notification: fcm.Message = {
-    token: notificationTokens,
+
+  let fcmNotification: fcm.fcmPayload = {
+    token: [],
     payload: {
       notification: {
         title: "Nueva Pedido",
@@ -42,28 +36,21 @@ export async function notifyDeliveryAdminsNewOrder(
       priority: fcm.NotificationPriority.High
     }
   };
-  fcm.push(notification);
+  notifyDeliveryAdmins(deliveryAdmins, foregroundNotificaiton, fcmNotification);
 }
 
 export async function notifyDeliveryAdminsCancelledOrder(deliveryAdmins: Record<string, DeliveryAdmin>,
   orderId: string) {
-  let update = {
+  let foregroundNotificaiton: OrderStatusChangeNotification = {
     status: RestaurantOrderStatus.CancelledByCustomer,
     time: (new Date()).toISOString(),
-    notificationType: "orderStatusChange",
-    orderType: "restaurant",
+    notificationType: NotificationType.OrderStatusChange,
+    orderType: OrderType.Restaurant,
     orderId: orderId,
   }
-  let notificationTokens: Array<string> = [];
-  for (let adminId in deliveryAdmins) {
-    notificationsNode(ParticipantType.DeliveryAdmin, adminId).push(update)
-    let admin: DeliveryAdmin = deliveryAdmins[adminId]
-    if (admin.notificationInfo.deviceNotificationToken && admin.notificationInfo.deviceNotificationToken) {
-      notificationTokens.push(admin.notificationInfo.deviceNotificationToken);
-    }
-  }
-  let notification: fcm.Message = {
-    token: notificationTokens,
+
+  let fcmNotification: fcm.fcmPayload = {
+    token: [],
     payload: {
       notification: {
         title: "Pedido Cancellado",
@@ -75,5 +62,26 @@ export async function notifyDeliveryAdminsCancelledOrder(deliveryAdmins: Record<
       priority: fcm.NotificationPriority.High
     }
   };
-  fcm.push(notification);
+  notifyDeliveryAdmins(deliveryAdmins, foregroundNotificaiton, fcmNotification);
+}
+
+async function notifyDeliveryAdmins(
+  deliveryAdmins: Record<string, DeliveryAdmin>,
+  foregroundNotificaiton: OrderNotification,
+  fcmNotification: fcm.fcmPayload) {
+  let notificationTokens: Array<string> = [];
+  for (let adminId in deliveryAdmins) {
+    let payload: foreground.fgPayload = {
+      particpantType: ParticipantType.DeliveryAdmin,
+      userId: adminId,
+      notification: foregroundNotificaiton
+    }
+    foreground.push(payload)
+    let admin: DeliveryAdmin = deliveryAdmins[adminId]
+    if (admin.notificationInfo.deviceNotificationToken && admin.notificationInfo.deviceNotificationToken) {
+      notificationTokens.push(admin.notificationInfo.deviceNotificationToken);
+    }
+  }
+  fcmNotification.token = notificationTokens;
+  fcm.push(fcmNotification);
 }

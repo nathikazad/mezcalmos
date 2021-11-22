@@ -117,9 +117,7 @@ async function sendOTP(data: sendOtpInterface, userId: string): Promise<ServerRe
       return {
         status: ServerResponseStatus.Error,
         errorMessage: (data.language == "es") ? `No puedes generar otro codigo para ${secondsLeft} segundos` : `Cannot generate another code for ${secondsLeft} seconds`,
-        additionalData: {
-          secondsLeft: secondsLeft
-        }
+        secondsLeft: secondsLeft
       }
     }
   }

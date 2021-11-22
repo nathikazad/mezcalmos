@@ -1,5 +1,11 @@
 import * as firebase from "firebase-admin";
 import { OrderType } from "../models/Order";
+import { ParticipantType } from "../models/Chat";
+
+
+export function notificationsNode(particpantType: ParticipantType, userId: string) {
+  return firebase.database().ref(`/notifications/${particpantType}/${userId}`)
+}
 
 export function userInfo(uid: string) {
   return firebase.database().ref(`/users/${uid}/info`)
@@ -20,7 +26,7 @@ export function pastOrders(orderType: OrderType, orderId?: string) {
 enum OrderStatus {
   InProcess = "inProcess",
   Open = "open",
-  PastOrders = "pastOrders"
+  PastOrders = "past"
 }
 
 function orders(orderStatus: OrderStatus, orderType: OrderType, orderId?: string) {
