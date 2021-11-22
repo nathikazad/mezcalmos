@@ -4,18 +4,19 @@
 // const hasura = new hasuraModule.Hasura(keys.hasura)
 
 import * as functions from "firebase-functions";
-import * as firebase from "firebase-admin";
 import { Cart } from './models/Cart';
 import { constructRestaurantOrder, RestaurantOrder } from './models/RestaurantOrder';
 import { Chat, ChatType, ParticipantType } from "../shared/models/Chat";
 import { OrderType } from "../shared/models/Order";
 import { Restaurant } from "./models/Restaurant";
 import { UserInfo } from "../shared/models/User";
-import { DeliveryAdmin, ServerResponse, ServerResponseStatus } from "../shared/models/Generic";
-import { NewRestaurantOrderNotification, NotificationType } from "../shared/models/Notification";
-import * as restaurantNodes from "./databaseNodes";
+import { ServerResponse, ServerResponseStatus } from "../shared/models/Generic";
+import * as restaurantNodes from "../shared/databaseNodes/restaurant";
+import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
 import * as customerNodes from "../shared/databaseNodes/customer";
 import *  as rootDbNodes from "../shared/databaseNodes/root";
+import { notifyDeliveryAdminsNewOrder } from "../shared/notification/notifyDeliveryAdmin";
+import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
 
 export = functions.https.onCall(async (data, context) => {
   if (!context.auth) {
@@ -65,15 +66,14 @@ async function checkoutCart(uid: string, cart: Cart): Promise<ServerResponse> {
     },
   })
 
-  let orderRef = await firebase.database().ref(`/orders/restaurant`).push(order);
-  await customerNodes.inProcessOrders(uid, orderRef.key!).set(order);
+  let orderRef = await customerNodes.inProcessOrders(uid).push(order);
   restaurantNodes.inProcessOrders(cart.serviceProviderId, orderRef.key!).set(order);
   rootDbNodes.inProcessOrders(OrderType.Restaurant, orderRef.key!).set(order);
   await customerNodes.cart(uid).remove();
 
-  const deliveryAdmins: Record<string, DeliveryAdmin> = (await rootDbNodes.deliveryAdmins().once('value')).val()
+  const deliveryAdmins: Record<string, DeliveryAdmin> = (await deliveryAdminNodes.deliveryAdmins().once('value')).val()
   setChat(customerInfo, uid, cart.serviceProviderId, restaurant, deliveryAdmins, orderRef.key!);
-  notifyAdminsNewOrder(deliveryAdmins, orderRef.key!, restaurant)
+  notifyDeliveryAdminsNewOrder(deliveryAdmins, orderRef.key!, restaurant)
   let response = { status: ServerResponseStatus.Success, orderId: orderRef.key }
   return response
 }
@@ -108,7 +108,7 @@ async function setChat(
   }
 
   for (var deliveryAdminId in deliveryAdmins) {
-    var userInfo: UserInfo = (await firebase.database().ref(`/users/${deliveryAdminId}/info`).once('value')).val();
+    var userInfo: UserInfo = (await rootDbNodes.userInfo(deliveryAdminId).once('value')).val();
     chat.participants[deliveryAdminId] = {
       name: userInfo.displayName,
       image: userInfo.photo,
@@ -116,39 +116,7 @@ async function setChat(
       language: userInfo.language
     }
   }
-  firebase.database().ref(`/chat/${orderId}`).set(chat);
+  rootDbNodes.chat(orderId).set(chat);
 }
 
-async function notifyAdminsNewOrder(
-  deliveryAdmins: Record<string, DeliveryAdmin>,
-  orderId: string,
-  restaurant: Restaurant) {
-  let message: NewRestaurantOrderNotification = {
-    time: (new Date()).toISOString(),
-    notificationType: NotificationType.NewOrder,
-    orderType: OrderType.Restaurant,
-    orderId: orderId,
-    restaurant: {
-      name: restaurant.details.name,
-      image: restaurant.details.photo
-    }
-  }
-  for (let adminId in deliveryAdmins) {
-    firebase.database().ref(`/notifications/deliveryAdmin/${adminId}`).push(message)
-    let admin: DeliveryAdmin = deliveryAdmins[adminId]
-    if (admin.notificationInfo) {
-      let payload = {
-        notification: {
-          title: "Nueva Pedido",
-          body: `Hay una nueva orden de alimento`,
-          tag: "newOrder"
-        }
-      };
-      try {
-        await firebase.messaging().sendToDevice(admin.notificationInfo.deviceNotificationToken, payload)
-      } catch (e) {
-        console.log("Send to devices error");
-      }
-    }
-  }
-}
+

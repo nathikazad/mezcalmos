@@ -24,3 +24,7 @@ export function pastOrders(restaurantId: string, orderId?: string) {
 export function info(restaurantId: string) {
   return firebase.database().ref(`/restaurants/info/${restaurantId}`)
 }
+
+export function notificationInfo(restaurantId?: string) {
+  firebase.database().ref(`/restaurants/info/${restaurantId}/notificationInfo`)
+}

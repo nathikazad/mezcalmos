@@ -14,7 +14,7 @@ export enum ChatType {
 export enum ParticipantType {
   Customer = "customer",
   Taxi = "taxi",
-  TaxiAdmin = "taxiAdmin",
+  // TaxiAdmin = "taxiAdmin",
   DeliveryAdmin = "deliveryAdmin",
   Restaurant = "restaurant"
 }

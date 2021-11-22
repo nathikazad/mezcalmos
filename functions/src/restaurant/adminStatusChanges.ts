@@ -2,12 +2,14 @@ import * as functions from "firebase-functions";
 import { AuthData } from "firebase-functions/lib/common/providers/https";
 import { ServerResponse, ServerResponseStatus } from "../shared/models/Generic";
 import { OrderType } from "../shared/models/Order";
-import { RestaurantOrder, RestaurantOrderStatus } from "./models/RestaurantOrder";
-import * as restaurantNodes from "./databaseNodes";
+import { orderInProcess, RestaurantOrder, RestaurantOrderStatus } from "./models/RestaurantOrder";
+import * as restaurantNodes from "../shared/databaseNodes/restaurant";
 import * as customerNodes from "../shared/databaseNodes/customer";
 import *  as rootDbNodes from "../shared/databaseNodes/root";
-import { checkAdmin, isSignedIn } from "../shared/helper/authorizer";
+import { checkDeliveryAdmin, isSignedIn } from "../shared/helper/authorizer";
 import { finishOrder } from "./helper";
+import { NotificationType, OrderStatusChangeNotification } from "../shared/models/Notification";
+import { push } from "../shared/notification/notifyUser";
 
 let statusArrayInSeq: Array<RestaurantOrderStatus> =
   [RestaurantOrderStatus.OrderReceieved,
@@ -55,7 +57,7 @@ async function changeStatus(data: any, newStatus: RestaurantOrderStatus, auth?: 
     return response;
   }
 
-  response = await checkAdmin(auth!.uid)
+  response = await checkDeliveryAdmin(auth!.uid)
   if (response != undefined) {
     return response;
   }
@@ -79,9 +81,7 @@ async function changeStatus(data: any, newStatus: RestaurantOrderStatus, auth?: 
   }
 
   if (newStatus == RestaurantOrderStatus.CancelledByAdmin) {
-    if (order.status == RestaurantOrderStatus.CancelledByAdmin ||
-      order.status == RestaurantOrderStatus.CancelledByCustomer ||
-      order.status == RestaurantOrderStatus.Delivered)
+    if (orderInProcess(order.status))
       return {
         status: ServerResponseStatus.Error,
         errorMessage: `Order cannot be cancelled because it is not in process`,
@@ -97,15 +97,16 @@ async function changeStatus(data: any, newStatus: RestaurantOrderStatus, auth?: 
 
   order.status = newStatus
 
-  //   let update = {
-  //     status: newStatus,
-  //     time: (new Date()).toISOString(),
-  //     notificationType: "orderStatusChange",
-  //     orderType: "restaurant",
-  //     orderId: orderId,
-  //   }
+  let update: OrderStatusChangeNotification = {
+    status: newStatus,
+    time: (new Date()).toISOString(),
+    notificationType: NotificationType.OrderStatusChange,
+    orderType: OrderType.Restaurant,
+    orderId: orderId,
+  }
 
-  //   notification.push(firebase, order.customer.id, update)
+  push(order.customer.id!, update);
+
   if (newStatus == RestaurantOrderStatus.Delivered || newStatus == RestaurantOrderStatus.CancelledByAdmin)
     await finishOrder(order, orderId);
   else {

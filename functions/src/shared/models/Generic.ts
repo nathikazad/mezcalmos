@@ -9,13 +9,9 @@ export enum Language {
   ES = "es",
 }
 
-export interface DeliveryAdmin {
-  authorized: boolean,
-  versionNumber: string,
-  notificationInfo: Record<NotificationType, string>
-}
+export type NotificationInfo = Record<TokenType, string>;
 
-export enum NotificationType {
+export enum TokenType {
   DeviceNotificationToken = "deviceNotificationToken",
 }
 

@@ -1,8 +1,8 @@
 // async function 
-import { deliveryAdmins } from "../databaseNodes/root";
+import { deliveryAdmins } from "../databaseNodes/deliveryAdmin";
 import { ServerResponse, ServerResponseStatus } from "../models/Generic";
 
-export async function checkAdmin(adminId: string): Promise<ServerResponse | undefined> {
+export async function checkDeliveryAdmin(adminId: string): Promise<ServerResponse | undefined> {
   let admin = (await deliveryAdmins(adminId).once('value')).val();
   let isAdmin = admin != null && admin.authorized == true
   if (!isAdmin) {

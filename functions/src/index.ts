@@ -10,16 +10,6 @@ if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp()
 }
 
-export const testGroup = {
-  helloWorld: require('./test')
-}
-
-// functions.https.onRequest((request, response) => {
-//   functions.logger.info("Hello logs!", { structuredData: true });
-//   response.send("Hello from Firebase bro!");
-// });
-
-
 // // Taxi
 // exports.requestTaxi = require("./helpers/taxi/request");
 // exports.acceptTaxiOrder = require("./helpers/taxi/accept");
@@ -35,6 +25,6 @@ export const restaurant = {
   readyForOrderPickup: restaurantStatusChange.readyForPickupOrder,
   deliverOrder: restaurantStatusChange.deliverOrder,
   dropOrder: restaurantStatusChange.dropOrder,
-  //   cancelRestaurantOrderFromCustomer: require("./helpers/restaurant/cancelOrder").cancelOrderFromCustomer,
-  //   cancelRestaurantOrderFromAdmin: require("./helpers/restaurant/cancelOrder").cancelOrderFromAdmin
+  cancelOrderFromAdmin: restaurantStatusChange.cancelOrder,
+  cancelOrderFromCustomer: require("./restaurant/cancelOrderFromCustomer")
 }

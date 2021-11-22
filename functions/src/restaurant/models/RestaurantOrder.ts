@@ -44,3 +44,9 @@ export function constructRestaurantOrder(
     orderTime: (new Date()).toISOString(),
   }
 }
+
+export function orderInProcess(status: RestaurantOrderStatus): boolean {
+  return !(status == RestaurantOrderStatus.CancelledByAdmin ||
+    status == RestaurantOrderStatus.CancelledByCustomer ||
+    status == RestaurantOrderStatus.Delivered)
+}

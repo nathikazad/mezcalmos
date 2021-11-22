@@ -31,10 +31,10 @@ function orders(orderStatus: OrderStatus, orderType: OrderType, orderId?: string
   return firebase.database().ref(dbNode);
 }
 
-export function deliveryAdmins(adminId?: string) {
-  let dbNode: string = `/deliveryAdmins`
-  if (adminId != undefined) {
-    dbNode += `/${adminId}`
+export function chat(orderId?: string) {
+  let dbNode: string = `/chat`
+  if (orderId != undefined) {
+    dbNode += `/${orderId}`
   }
-  return firebase.database().ref(dbNode)
+  return firebase.database().ref(dbNode);
 }

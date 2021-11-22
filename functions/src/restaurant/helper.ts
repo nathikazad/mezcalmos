@@ -1,5 +1,5 @@
 import { RestaurantOrder } from "./models/RestaurantOrder";
-import * as restaurantNodes from "./databaseNodes";
+import * as restaurantNodes from "../shared/databaseNodes/restaurant";
 import * as customerNodes from "../shared/databaseNodes/customer";
 import *  as rootDbNodes from "../shared/databaseNodes/root";
 import { OrderType } from "../shared/models/Order";
