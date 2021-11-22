@@ -28,3 +28,47 @@ export const restaurant = {
   cancelOrderFromAdmin: restaurantStatusChange.cancelOrder,
   cancelOrderFromCustomer: require("./restaurant/cancelOrderFromCustomer")
 }
+
+
+import * as userChanges from './utilities/userChanges'
+export const user = {
+  processSignUp: userChanges.processSignUp,
+  addName: userChanges.addName,
+  changeName: userChanges.changeName,
+  addPhoto: userChanges.addPhoto,
+  changePhoto: userChanges.changePhoto
+}
+
+import * as otpAuth from './utilities/otpAuth'
+export const otp = {
+  sendOTPForLogin: otpAuth.sendOTPForLogin,
+  getAuthUsingOTP: otpAuth.getAuthUsingOTP
+}
+
+
+
+
+// const message = require("./helpers/message");
+// const admin = require("./helpers/admin");
+// const auth = require("./helpers/auth");
+// const notifications = require("./helpers/notification");
+// const { user } = require("firebase-functions/lib/providers/auth");
+
+
+
+// exports.submitAuthorizationRequest = functions.https.onCall(async (data, context) => {
+//   data.userId = context.auth.uid
+//   let response = await admin.submitAuthorizationRequest(firebase, data, hasura)
+//   return response
+// });
+
+// exports.approveAuthorizationRequest = functions.https.onCall(async (data, context) => {
+//   data.adminId = context.auth.uid
+//   let response = await admin.approveAuthorizationRequest(firebase, data, hasura)
+//   return response
+// });
+
+
+
+
+

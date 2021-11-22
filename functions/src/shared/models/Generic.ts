@@ -19,6 +19,7 @@ export interface ServerResponse {
   status: ServerResponseStatus
   errorMessage?: string
   errorCode?: string
+  additionalData?: any
 }
 
 export enum ServerResponseStatus {

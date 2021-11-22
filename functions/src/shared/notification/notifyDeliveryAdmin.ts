@@ -1,7 +1,7 @@
 import { Restaurant } from "../../restaurant/models/Restaurant";
 import { NewRestaurantOrderNotification, NotificationType } from "../models/Notification";
 import { OrderType } from "../models/Order";
-import * as fcm from "../senders/fcm"
+import * as fcm from "../../utilities/senders/fcm"
 import { DeliveryAdmin } from "../models/DeliveryAdmin";
 import { notificationsNode } from "../databaseNodes/notifications";
 import { ParticipantType } from "../models/Chat";

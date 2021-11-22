@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getKeys } from "../keys";
+import { getKeys } from "../../shared/keys";
 import * as firebase from "firebase-admin";
 
 let keys = getKeys();

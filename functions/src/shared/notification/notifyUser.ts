@@ -6,7 +6,7 @@ import * as taxiNodes from "../databaseNodes/taxi";
 import *  as rootDbNodes from "../databaseNodes/root";
 import { ParticipantType } from "../models/Chat";
 import { Language, NotificationInfo } from "../models/Generic";
-import * as fcm from "../senders/fcm";
+import * as fcm from "../../utilities/senders/fcm";
 import { notificationsNode } from "../databaseNodes/notifications";
 import { NewMessageNotification, Notification, NotificationType, OrderStatusChangeNotification } from "../models/Notification";
 
