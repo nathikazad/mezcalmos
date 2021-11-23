@@ -5,7 +5,7 @@ import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoCont
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemScreen.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 

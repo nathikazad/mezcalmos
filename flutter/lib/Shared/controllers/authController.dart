@@ -58,9 +58,12 @@ class AuthController extends GetxController {
         return;
       }
       _previousUserValue = user?.toString();
+      _authStateStream.add(user);
       mezDbgPrint('Authcontroller:: Auth state change!');
       mezDbgPrint(user?.hashCode);
       mezDbgPrint(user ?? "empty");
+      _fireAuthUser.value = user;
+
       if (user == null) {
         mezDbgPrint('AuthController: User is currently signed out!');
         _userNodeListener?.cancel();
@@ -68,6 +71,8 @@ class AuthController extends GetxController {
         _user.value = null;
       } else {
         mezDbgPrint('AuthController: User is currently signed in!');
+        _onSignInCallback();
+
         GetStorage().write(getxUserId, user.uid);
         _userNodeListener?.cancel();
         _userNodeListener = _databaseHelper.firebaseDatabase
@@ -81,9 +86,6 @@ class AuthController extends GetxController {
           }
 
           _user.value = User.fromSnapshot(user, event.snapshot);
-          _fireAuthUser.value = user;
-          _authStateStream.add(user);
-          _onSignInCallback();
 
           Get.find<LanguageController>()
               .userLanguageChanged(_user.value!.language);

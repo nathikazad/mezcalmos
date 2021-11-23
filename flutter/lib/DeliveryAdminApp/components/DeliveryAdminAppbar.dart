@@ -7,10 +7,10 @@ import 'package:get/get.dart';
 AppBar deliveryAdminAppBar(AppBarLeftButtonType leftBtnType,
     {bool withOrder = false}) {
   return mezcalmosAppBar(leftBtnType, actionIcons: [
-    ActionIconsComponents.notificationIcon(
-        Get.find<FBNotificationsController>().notifications.value.length > 0
-            ? true
-            : false),
+    Get.find<FBNotificationsController>().notifications.value.length > 0
+        ? ActionIconsComponents.notificationIcon(
+            hasNewNotif: true, margin: EdgeInsets.all(0))
+        : SizedBox(),
     withOrder ? ActionIconsComponents.cartIcon() : Container()
   ]);
 }

@@ -4,7 +4,7 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/AdminWrapper.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Restaurants/ListRestaurantsScreen.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Restaurants/ViewRestaurantScreen.dart';
-import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ListOrdersScreen.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ListOrdersScreen/ListOrdersScreen.dart';
 
 // Routes Keys.
 const String kOrdersRoute = '/orders';

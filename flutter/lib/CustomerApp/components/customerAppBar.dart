@@ -27,9 +27,12 @@ Widget getIcons(bool withCart, _popUpController) {
       return Row(
         children: [
           ActionIconsComponents.notificationIcon(
-              true, EdgeInsets.symmetric(horizontal: 5), () {
-            _popUpController.hideMenu();
-          }, ButtonColorType.ButtonDarkColor),
+              hasNewNotif: true,
+              margin: EdgeInsets.symmetric(horizontal: 5),
+              function: () {
+                _popUpController.hideMenu();
+              },
+              btnTypeColor: ButtonColorType.ButtonDarkColor),
           PoPUpMenuComponent(
             controller: _popUpController,
             urlImg: "${Get.find<AuthController>().user!.image}",
@@ -39,12 +42,16 @@ Widget getIcons(bool withCart, _popUpController) {
                   _popUpController.hideMenu();
                 },
                 child: ActionIconsComponents.orderIcon(
-                    Get.find<OrderController>().currentOrders.value.length > 0
-                        ? true
-                        : false,
-                    EdgeInsets.symmetric(horizontal: 5), () {
-                  _popUpController.hideMenu();
-                }, ButtonColorType.ButtonDarkColor),
+                    hasInprossesOrders:
+                        Get.find<OrderController>().currentOrders.value.length >
+                                0
+                            ? true
+                            : false,
+                    margin: EdgeInsets.symmetric(horizontal: 5),
+                    function: () {
+                      _popUpController.hideMenu();
+                    },
+                    btnTypeColor: ButtonColorType.ButtonDarkColor),
               ),
               SizedBox(
                 height: 10,
@@ -54,9 +61,11 @@ Widget getIcons(bool withCart, _popUpController) {
                   _popUpController.hideMenu();
                 },
                 child: ActionIconsComponents.cartIcon(
-                    EdgeInsets.symmetric(horizontal: 5), () {
-                  _popUpController.hideMenu();
-                }, ButtonColorType.ButtonDarkColor),
+                    margin: EdgeInsets.symmetric(horizontal: 5),
+                    function: () {
+                      _popUpController.hideMenu();
+                    },
+                    btnTypeColor: ButtonColorType.ButtonDarkColor),
               )
             ],
           )
@@ -67,16 +76,20 @@ Widget getIcons(bool withCart, _popUpController) {
       return Row(
         children: [
           Get.find<FBNotificationsController>().notifications.value.length > 0
-              ? ActionIconsComponents.notificationIcon(true)
+              ? ActionIconsComponents.notificationIcon(
+                  hasNewNotif: true, margin: EdgeInsets.all(0))
               : SizedBox(),
           ActionIconsComponents.orderIcon(
-              Get.find<OrderController>().currentOrders.value.length > 0
-                  ? true
-                  : false),
+              hasInprossesOrders:
+                  Get.find<OrderController>().currentOrders.value.length > 0
+                      ? true
+                      : false,
+              margin: EdgeInsets.only(left: 5, right: 0)),
           withCart &&
                   Get.find<RestaurantCartController>().cart.value.items.length >
                       0
-              ? ActionIconsComponents.cartIcon(EdgeInsets.only(right: 0))
+              ? ActionIconsComponents.cartIcon(
+                  margin: EdgeInsets.only(right: 0, left: 5))
               : Container()
         ],
       );

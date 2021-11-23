@@ -14,7 +14,7 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
 import 'package:mezcalmos/TaxiAdminApp/controller/NotificationsController.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemScreen.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -141,7 +141,7 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
                           )),
                           SlidingUpPanel(
                             maxHeight: Get.height * 0.87,
-                            minHeight: Get.height * 0.40,
+                            minHeight: Get.height * 0.42,
                             parallaxEnabled: true,
                             parallaxOffset: 1,
                             body: Container(

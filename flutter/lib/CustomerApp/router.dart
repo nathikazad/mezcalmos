@@ -1,14 +1,14 @@
 import 'package:get/get.dart'; // getX
-import 'package:mezcalmos/CustomerApp/pages/MapViews/PickLocationView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Orders/ListOrdersScreen.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen.dart';
+import 'package:mezcalmos/CustomerApp/pages/MapViews/PickLocationView/PickLocationView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Orders/ListOrdersScreen/ListOrdersScreen.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/ViewOrderScreen.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemScreen.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustomerWrapper.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ListRestaurantsScreen.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ListRestaurantsScreem/ListRestaurantsScreen.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/ViewCartScreen.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/ViewRestaurantScreen.dart';
 
 // Routes Keys.
 const String kWrapperRoute = '/wrapper';

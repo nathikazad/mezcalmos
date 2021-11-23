@@ -14,6 +14,8 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
 
+import 'components/saveLocationDailog.dart';
+
 class PickLocationView extends StatefulWidget {
   @override
   _PickLocationViewState createState() => _PickLocationViewState();
@@ -28,19 +30,20 @@ class _PickLocationViewState extends State<PickLocationView> {
   LanguageController _lang = Get.find<LanguageController>();
 
   void onPickButtonClick() async {
-    mezDbgPrint(
-        "Last Location Stored Address ==> ${_selectedLocation!.address}");
-    mezDbgPrint("Last Location Stored Lat ==> ${_selectedLocation!.latitude}");
-    mezDbgPrint("Last Location Stored Lng ==> ${_selectedLocation!.longitude}");
-    if (_selectedLocation!.address == "") {
-      String? address = await getAdressFromLatLng(
-          LatLng(_selectedLocation!.latitude!, _selectedLocation!.longitude!));
+    savedLocationDailog(function: () => mezDbgPrint("hey bro"));
+    // mezDbgPrint(
+    //     "Last Location Stored Address ==> ${_selectedLocation!.address}");
+    // mezDbgPrint("Last Location Stored Lat ==> ${_selectedLocation!.latitude}");
+    // mezDbgPrint("Last Location Stored Lng ==> ${_selectedLocation!.longitude}");
+    // if (_selectedLocation!.address == "") {
+    //   String? address = await getAdressFromLatLng(
+    //       LatLng(_selectedLocation!.latitude!, _selectedLocation!.longitude!));
 
-      _selectedLocation!.address = address ??
-          "${_lang.strings['shared']['pickLocation']['address']} : ${_selectedLocation!.latitude}, ${_selectedLocation!.longitude}";
-    }
+    //   _selectedLocation!.address = address ??
+    //       "${_lang.strings['shared']['pickLocation']['address']} : ${_selectedLocation!.latitude}, ${_selectedLocation!.longitude}";
+    // }
 
-    Get.back<Location>(result: _selectedLocation, closeOverlays: true);
+    // Get.back<Location>(result: _selectedLocation, closeOverlays: true);
   }
 
   @override

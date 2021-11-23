@@ -25,6 +25,7 @@ class _SavedLocationViewState extends State<SavedLocationView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: customerAppBar(
         AppBarLeftButtonType.Back,
         _popUpController,
@@ -152,7 +153,7 @@ class SavedLocationComponent extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(4)),
             border: Border.all(color: const Color(0xffececec), width: 0.5),
-            color: const Color(0xfff8f8f8)),
+            color: Colors.white),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,

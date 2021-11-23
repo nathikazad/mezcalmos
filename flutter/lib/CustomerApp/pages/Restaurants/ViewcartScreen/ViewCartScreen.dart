@@ -1,30 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:mezcalmos/CustomerApp/components/ItemComponent.dart';
-import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
 import 'package:mezcalmos/CustomerApp/components/buttonComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/customerAppBar.dart';
-import 'package:mezcalmos/CustomerApp/components/incrementalComponent.dart';
-import 'package:mezcalmos/CustomerApp/components/myExpensionPanelComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/textFieldComponent.dart';
-import 'package:mezcalmos/CustomerApp/components/titlesComponent.dart';
-import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantCartController.dart';
-import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/CustomerApp/models/Customer.dart';
+import 'package:mezcalmos/CustomerApp/pages/MapViews/savedLocationView.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
-import 'package:mezcalmos/Shared/widgets/CancelAlertDailog.dart';
-import 'package:mezcalmos/Shared/widgets/MezClearButton.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
+
+import 'components/buildCart.dart';
+import 'components/buildItems.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
 
@@ -255,8 +249,9 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                                 onChanged: (newValue) async {
                                   // we will route the user back to the Map
                                   if (newValue == "_pick_") {
-                                    Location _loc =
-                                        await Get.toNamed(kPickLocationRoute);
+                                    var _loc;
+                                    // await Get.toNamed(kPickLocationRoute);
+                                    Get.to(() => SavedLocationView());
                                     if (_loc != null) {
                                       mezDbgPrint(
                                           "Get.back executed with  res : ${(_loc as Location?)!.toString()}");
@@ -378,277 +373,6 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
           : MezLogoAnimation(
               centered: true,
             )),
-    );
-  }
-
-  Widget buildCart(Cart cart) {
-    return Column(
-      children: [
-        SizedBox(
-          height: 15.sp,
-        ),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: Row(
-            children: [
-              Text("${lang.strings['customer']['restaurant']['cart']['cart']}",
-                  style: TextStyle(
-                      color: const Color(0xff1d1d1d),
-                      fontFamily: "psr",
-                      fontSize: 45.0.sp),
-                  textAlign: TextAlign.left),
-              Spacer(),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(100)),
-                  gradient: LinearGradient(
-                    begin: Alignment(0.1689453125, 0),
-                    end: Alignment(1, 1),
-                    colors: [
-                      const Color(0xff5582ff).withOpacity(0.05000000074505806),
-                      const Color(0xffc54efc).withOpacity(0.05000000074505806)
-                    ],
-                  ),
-                ),
-                child:
-                    Text((cart.quantity() != null) ? "${cart.quantity()}" : "0",
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          color: const Color(0xff5c7fff),
-                          fontFamily: "psr",
-                          fontSize: 30.0.sp,
-                        ),
-                        textAlign: TextAlign.center),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 25.h,
-        ),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: Row(
-            children: [
-              Container(
-                child: Text(
-                    lang.strings['customer']['restaurant']['cart']['inCart'],
-                    style: TextStyle(
-                        color: const Color(0xff000f1c),
-                        // fontWeight: FontWeight.w700,
-                        fontFamily: "psb",
-                        fontSize: 14.0),
-                    textAlign: TextAlign.left),
-              ),
-              Spacer(),
-              MezClearButton(
-                onTapFunction: () async {
-                  bool yesNoRes = await cancelAlertDailog(
-                      lang.strings["customer"]["restaurant"]["cart"]
-                          ["clearCart"],
-                      lang.strings["customer"]["restaurant"]["cart"]
-                          ["clearCartConfirm"], () {
-                    Get.back(result: true);
-                  }, () {
-                    Get.back(result: false);
-                  });
-
-                  if (yesNoRes) {
-                    controller.clearCart();
-                    Get.back();
-                  }
-                },
-              ),
-            ],
-          ),
-        ),
-        // SizedBox(
-        //   height: 15,
-        // ),
-      ],
-    );
-  }
-
-  List<Widget> choosenOneOption(Map<dynamic, dynamic> data) {
-    List<Widget> myWidgets = [
-      SizedBox(
-        height: 15,
-      )
-    ];
-
-    data.forEach((key, value) {
-      myWidgets.add(MenuTitles(
-        title: key.toUpperCase(),
-      ));
-
-      myWidgets.addAll([
-        Container(
-          width: Get.width,
-          alignment: Alignment.centerLeft,
-          padding: const EdgeInsets.only(left: 25, top: 5),
-          child: Text(data[key].toString().inCaps,
-              style: TextStyle(
-                  color: const Color(0xff000000),
-                  fontWeight: FontWeight.w400,
-                  fontFamily: "psr",
-                  fontStyle: FontStyle.normal,
-                  fontSize: 17.0.sp),
-              textAlign: TextAlign.left),
-        ),
-        SizedBox(
-          height: 10,
-        )
-      ]);
-    });
-    return myWidgets;
-  }
-
-  List<Widget> choosenMannyOption(Map<dynamic, dynamic> data) {
-    List<Widget> myWidgets = [
-      SizedBox(
-        height: 5,
-      ),
-      MenuTitles(
-          title: lang.strings["customer"]["restaurant"]["cart"]["options"]),
-    ];
-
-    data.forEach((key, value) {
-      if (value == true) {
-        myWidgets.add(
-          Container(
-            width: Get.width,
-            alignment: Alignment.centerLeft,
-            padding: const EdgeInsets.only(left: 25, top: 5),
-            child: Text("${key}".inCaps,
-                style: const TextStyle(
-                    color: const Color(0xff000000),
-                    fontWeight: FontWeight.w400,
-                    fontFamily: "ProductSans",
-                    fontStyle: FontStyle.normal,
-                    fontSize: 17.0),
-                textAlign: TextAlign.left),
-          ),
-        );
-      }
-    });
-    return myWidgets;
-  }
-
-  Widget buildItems(List<CartItem> cartItems) {
-    print(cartItems.toString());
-    return Column(
-      children: cartItems.fold<List<Widget>>(<Widget>[], (children, element) {
-        var counter = element.totalCost().obs;
-        print("${element.toFirebaseFunctionFormattedJson()}");
-        mezDbgPrint("${element.id}");
-        children.add(
-          Container(
-            padding: const EdgeInsets.only(bottom: 15),
-            margin: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(4)),
-              border: Border.all(color: const Color(0xffececec), width: 0.5),
-              color: const Color(0x80ffffff),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                MyExpensionPanelComponent(
-                    child: Container(
-                      // width: 200,
-
-                      child: ItemComponent(
-                        imgUrl: "${element.item.image}",
-                        title: "${element.item.name?.inCaps}",
-                      ),
-                    ),
-                    children: choosenOneOption(element.chosenOneOptions) +
-                        choosenMannyOption(element.chosenManyOptions),
-                    onEdit: () {
-                      mezDbgPrint(
-                          " the data inside the expansion ${element.toFirebaseFunctionFormattedJson()}");
-                      Get.toNamed(editCartItemRoute("${element.id}"));
-                    }),
-                SizedBox(
-                  height: 15,
-                ),
-                Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Row(
-                      children: [
-                        IncrementalComponent(
-                            minVal: 0,
-                            increment: () {
-                              counter.value =
-                                  counter.value + element.costPerOne();
-                              print("${element.item.id}");
-                              controller.incrementItem(element.id!, 1);
-                              controller.refresh();
-                            },
-                            onChangedToZero: (isZero) async {
-                              if (isZero) {
-                                controller.refresh();
-                                bool yesNoResult = await cancelAlertDailog(
-                                  lang.strings["customer"]["restaurant"]["cart"]
-                                      ["deleteItem"],
-                                  lang.strings["customer"]["restaurant"]["cart"]
-                                      ["deleteItemConfirm"],
-                                  () {
-                                    Get.back(result: true);
-                                  },
-                                  () {
-                                    Get.back(result: false);
-                                  },
-                                );
-                                mezDbgPrint(
-                                    " the returend value from the dailog $yesNoResult");
-                                if (yesNoResult == true) {
-                                  controller.deleteItem("${element.id}");
-
-                                  if (controller.cart.value.quantity() == 0) {
-                                    Get.until((route) =>
-                                        route.settings.name == kHomeRoute);
-                                  }
-                                  // controller.refresh();
-                                }
-                              }
-                            },
-                            value: element.quantity,
-                            decrement: () {
-                              if (element.quantity <= 1) {
-                              } else {
-                                counter.value =
-                                    counter.value + element.costPerOne();
-                                controller.incrementItem(element.id!, -1);
-                                controller.refresh();
-                              }
-                            }),
-                        Spacer(),
-                        Obx(
-                          () => Text("\$${currency.format(counter.value)}",
-                              style: GoogleFonts.mulish(
-                                textStyle: TextStyle(
-                                    color: const Color(0xff000f1c),
-                                    fontWeight: FontWeight.w700,
-                                    fontFamily: "ProductSans",
-                                    fontStyle: FontStyle.normal,
-                                    fontSize: 20.0),
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.right),
-                        ),
-                      ],
-                    )),
-              ],
-            ),
-          ),
-        );
-        return children;
-      }),
     );
   }
 }

@@ -29,10 +29,10 @@ LinearGradient gradientDarkColor = LinearGradient(
 class ActionIconsComponents {
   /// notification icon
   static Widget notificationIcon(
-      [bool hasNewNotif = false,
+      {bool hasNewNotif = false,
       EdgeInsetsGeometry margin = const EdgeInsets.symmetric(horizontal: 5),
       Function? function,
-      ButtonColorType btnTypeColor = ButtonColorType.ButtonLightColor]) {
+      ButtonColorType btnTypeColor = ButtonColorType.ButtonLightColor}) {
     return Container(
       margin: margin,
       child: GestureDetector(
@@ -84,10 +84,10 @@ class ActionIconsComponents {
 
   /// orders icon
   static Widget orderIcon(
-      [bool hasInprossesOrders = false,
+      {bool hasInprossesOrders = false,
       EdgeInsetsGeometry margin = const EdgeInsets.symmetric(horizontal: 5),
       Function? function,
-      ButtonColorType btnTypeColor = ButtonColorType.ButtonLightColor]) {
+      ButtonColorType btnTypeColor = ButtonColorType.ButtonLightColor}) {
     return Container(
       margin: margin,
       child: GestureDetector(
@@ -148,9 +148,9 @@ class ActionIconsComponents {
 
   /// messages icon
   static Widget messageIcon(
-      [EdgeInsetsGeometry margin = const EdgeInsets.symmetric(horizontal: 5),
+      {EdgeInsetsGeometry margin = const EdgeInsets.symmetric(horizontal: 5),
       Function? function,
-      ButtonColorType btnTypeColor = ButtonColorType.ButtonLightColor]) {
+      ButtonColorType btnTypeColor = ButtonColorType.ButtonLightColor}) {
     return Container(
       margin: margin,
       child: GestureDetector(
@@ -181,9 +181,9 @@ class ActionIconsComponents {
 
   /// cart icon
   static Widget cartIcon(
-      [EdgeInsetsGeometry margin = const EdgeInsets.symmetric(horizontal: 5),
+      {EdgeInsetsGeometry margin = const EdgeInsets.symmetric(horizontal: 5),
       Function? function,
-      ButtonColorType btnTypeColor = ButtonColorType.ButtonLightColor]) {
+      ButtonColorType btnTypeColor = ButtonColorType.ButtonLightColor}) {
     return Container(
       margin: margin,
       child: GestureDetector(

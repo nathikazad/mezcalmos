@@ -19,6 +19,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
 
+import 'components/buildOrdersItem.dart';
+import 'components/notesWidget.dart';
+
 final currency = new NumberFormat("#,##0.00", "en_US");
 ////////////===========
 
@@ -112,50 +115,6 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
     _popUpController.hideMenu();
     _popUpController.dispose();
     super.dispose();
-  }
-
-  Widget NotesWidget() {
-    return Column(children: [
-      Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        alignment: Alignment.centerLeft,
-        child: Text(lang.strings['customer']['restaurant']['menu']['notes'],
-            style: const TextStyle(
-                color: const Color(0xff000f1c),
-                fontFamily: "psb",
-                fontStyle: FontStyle.normal,
-                fontSize: 14.0),
-            textAlign: TextAlign.left),
-      ),
-      SizedBox(
-        height: 15,
-      ),
-      Container(
-        alignment: Alignment.center,
-        margin: const EdgeInsets.symmetric(horizontal: 10),
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        width: Get.width,
-        height: 51,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(4)),
-          border: Border.all(color: const Color(0xffececec), width: 0.5),
-          color: const Color(0x80ffffff),
-        ),
-        child: Container(
-          alignment: Alignment.centerLeft,
-          child: Text(order.value!.notes!,
-              style: const TextStyle(
-                  color: const Color(0xff000f1c),
-                  fontFamily: "psr",
-                  fontStyle: FontStyle.normal,
-                  fontSize: 16.0),
-              textAlign: TextAlign.left),
-        ),
-      ),
-      SizedBox(
-        height: 30,
-      )
-    ]);
   }
 
   @override
@@ -431,7 +390,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
               //===============================>notes========================>
               order.value?.notes == null || order.value!.notes!.length <= 0
                   ? SizedBox()
-                  : NotesWidget(),
+                  : notesWidget(order),
               //===============================>button cancel===========================
               Obx(() => order.value!.inProcess() &&
                       order.value!.restaurantOrderStatus ==
@@ -524,93 +483,6 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
       ),
     );
   }
-}
-
-Widget buildOrdersItems(List<RestaurantOrderItem> items) {
-  return Container(
-      child: Column(
-    children: items.fold<List<Widget>>(<Widget>[], (children, element) {
-      children.add(
-        Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 10),
-              width: Get.width,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(4)),
-                border: Border.all(color: const Color(0xffececec), width: 0.5),
-                color: const Color(0x9affffff),
-              ),
-              child: Column(
-                children: [
-                  Container(
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                      ),
-                      //height: 43,
-                      child: BasicCellComponent(
-                        title: "${element.name.capitalizeFirstofEach}",
-                        url: "${element.image}",
-                        traillingIcon: Container(
-                          width: 25,
-                          height: 25,
-                          child: Text("${element.quantity}",
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                color: const Color(0xff5c7fff),
-                                fontWeight: FontWeight.w400,
-                                fontFamily: "ProductSans",
-                                fontStyle: FontStyle.normal,
-                                fontSize: 20.0,
-                              ),
-                              textAlign: TextAlign.center),
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(65)),
-                              gradient: LinearGradient(
-                                  begin: Alignment(0.1689453125, 0),
-                                  end: Alignment(1, 1),
-                                  colors: [
-                                    const Color(0xff5582ff)
-                                        .withOpacity(0.05000000074505806),
-                                    const Color(0xffc54efc)
-                                        .withOpacity(0.05000000074505806)
-                                  ])),
-                        ),
-                      )),
-                  Container(
-                    width: Get.width,
-                    height: 1,
-                    decoration: BoxDecoration(
-                      color: const Color(0xffececec),
-                    ),
-                  ),
-                  Container(
-                    child: Container(
-                      padding:
-                          const EdgeInsets.only(right: 10, top: 15, bottom: 15),
-                      child: Container(
-                          alignment: Alignment.centerRight,
-                          child: Text("\$${currency.format(element.totalCost)}",
-                              style: TextStyle(
-                                  color: const Color(0xff000f1c),
-                                  fontFamily: "psb",
-                                  fontSize: 20.0.sp),
-                              textAlign: TextAlign.right)),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            )
-          ],
-        ),
-      );
-      return children;
-    }),
-  ));
 }
 
 extension CapExtension on String {

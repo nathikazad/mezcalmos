@@ -18,7 +18,9 @@ class DateTitleComponent extends StatelessWidget {
               (dateIcon == null) ? Container() : dateIcon!,
               Container(
                 alignment: Alignment.centerLeft,
-                padding: const EdgeInsets.symmetric(horizontal: 5),
+                padding: (dateIcon != null)
+                    ? const EdgeInsets.symmetric(horizontal: 5)
+                    : const EdgeInsets.all(0),
                 child: Text("$date",
                     style: const TextStyle(
                         color: const Color(0xff000f1c),
