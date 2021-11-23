@@ -32,13 +32,17 @@ class _AdminWrapperState extends State<AdminWrapper> {
     Future.microtask(() {
       mezDbgPrint("AdminWrapper::microtask handleState first time");
       Admin? admin = Get.find<AdminAuthController>().admin;
-      if (admin != null)
+      if (admin != null) {
+        mezDbgPrint("Admin ===> null");
         handleAuthorization(admin.authorized);
-      else
-        Get.find<AdminAuthController>()
-            .adminStream
-            .first
-            .then((admin) => handleAuthorization(admin?.authorized ?? false));
+      } else {
+        mezDbgPrint("Admin ===> Not null");
+
+        Get.find<AdminAuthController>().adminStream.first.then((admin) {
+          mezDbgPrint("Inside AdminStream.first.then >> $admin");
+          handleAuthorization(admin?.authorized ?? false);
+        });
+      }
     });
     String userId = Get.find<AuthController>().fireAuthUser!.uid;
     _notificationsStreamListener = initializeShowNotificationsListener();
@@ -48,9 +52,15 @@ class _AdminWrapperState extends State<AdminWrapper> {
     super.initState();
   }
 
-  void handleAuthorization(bool authorized) {
+  void handleAuthorization(bool authorized) async {
     if (authorized) {
       mezDbgPrint("AdminWrapper::handleState going to in process orders");
+      if (Get.find<AuthController>().isDisplayNameSet()) {
+        mezDbgPrint(
+            "User Signed in but Name or image are null , so  heading to UserInfo Page !");
+        await Get.toNamed(kUserProfile);
+        // Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
+      }
       Get.toNamed(kOrdersRoute);
     } else {
       mezDbgPrint("AdminWrapper::handleState going to unauthorized");

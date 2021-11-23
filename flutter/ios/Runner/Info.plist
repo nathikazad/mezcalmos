@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>MezcustomerDev</string>
+	<string>Mezdelivery Admin Dev</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -46,14 +46,6 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>App needs location always and when in use to update your Taxi Driver about your location!</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>App needs location always and when in use to update your Taxi Driver about your location, so can the app have location always?</string>
-	<key>NSLocationUsageDescription</key>
-	<string>Older devices need location.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>App needs location when in use to update your Taxi Driver about your location</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app require PhotoLibrary Access</string>
 	<key>UIBackgroundModes</key>

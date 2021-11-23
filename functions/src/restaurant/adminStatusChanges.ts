@@ -82,7 +82,7 @@ async function changeStatus(data: any, newStatus: RestaurantOrderStatus, auth?: 
   }
 
   if (newStatus == RestaurantOrderStatus.CancelledByAdmin) {
-    if (orderInProcess(order.status))
+    if (!orderInProcess(order.status))
       return {
         status: ServerResponseStatus.Error,
         errorMessage: `Order cannot be cancelled because it is not in process`,

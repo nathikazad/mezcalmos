@@ -103,6 +103,14 @@
     },
     "orders": {
       ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true",
+      "inProcess": {
+        ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true || root.child('deliveryAdmins/' + auth.uid + '/authorized').val() === true",
+        ".write": "root.child('admins/' + auth.uid + '/authorized').val() === true || root.child('deliveryAdmins/' + auth.uid + '/authorized').val() === true"
+      },
+      "past": {
+        ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true || root.child('deliveryAdmins/' + auth.uid + '/authorized').val() === true",
+        ".write": "root.child('admins/' + auth.uid + '/authorized').val() === true || root.child('deliveryAdmins/' + auth.uid + '/authorized').val() === true"
+      },
       "$orderType": {
         "$orderId": {
           ".read": "(root.child('orders/' + $orderType + '/' + $orderId + '/status').val() === 'lookingForTaxi' && root.child('taxiDrivers/' + auth.uid + '/state/authorizationStatus').val() === 'authorized') || root.child('orders/' + $orderType + '/' + $orderId + '/customer/id').val() === auth.uid || root.child('orders/' + $orderType + '/' + $orderId + '/driver/id').val() === auth.uid",

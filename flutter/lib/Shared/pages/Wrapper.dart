@@ -39,18 +39,6 @@ class _WrapperState extends State<Wrapper> {
       mezDbgPrint("Wrapper::handleAuthStateChange:: going to sign in route");
       Get.offNamedUntil(kSignInRoute, ModalRoute.withName(kWrapperRoute));
     } else {
-      mezDbgPrint(
-          "Wrapper::handleAuthStateChange:: signed in, Checking if User name are Set !");
-      mezDbgPrint(Get.find<AuthController>().user?.displayName);
-      mezDbgPrint("--------------------------------");
-      mezDbgPrint(Get.find<AuthController>().fireAuthUser?.displayName);
-
-      if (Get.find<AuthController>().isDisplayNameSet()) {
-        mezDbgPrint(
-            "User Signed in but Name or image are null , so  heading to UserInfo Page !");
-        await Get.toNamed(kUserProfile);
-        // Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
-      }
       Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
     }
   }
