@@ -127,7 +127,7 @@ class RestaurantController extends GetxController {
 
   Future<ServerResponse> cancelOrder(String orderId) async {
     HttpsCallable cancelOrder = FirebaseFunctions.instance
-        .httpsCallable('cancelRestaurantOrderFromCustomer');
+        .httpsCallable('restaurant-cancelOrderFromCustomer');
     try {
       HttpsCallableResult response =
           await cancelOrder.call({"orderId": orderId});

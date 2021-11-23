@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -268,19 +269,18 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                             if (!phone.startsWith('+')) phone = "+" + phone;
                             mezDbgPrint(phone);
                             if (phone.isPhoneNumber) {
-                              dynamic response =
+                              ServerResponse response =
                                   await controller.sendOTPForLogin(phone);
                               mezDbgPrint(
                                   "++++++++++++ response >>> $response");
-                              if (response == null) {
-                                mezcalmosSnackBar("Error", "Null response !");
-                              } else if (response['status'] == "Success") {
+
+                              if (response.success) {
                                 mezcalmosSnackBar(
                                     "Notice ~", "OTP Sent code to : $phone");
                                 Get.toNamed(kOtpConfirmRoute, arguments: phone);
                               } else {
-                                mezcalmosSnackBar(
-                                    'Error', response['errorMessage']);
+                                mezcalmosSnackBar(response.errorCode.toString(),
+                                    response.errorMessage.toString());
                               }
                             } else
                               mezcalmosSnackBar(

@@ -11,7 +11,7 @@ import { notifyDeliveryAdminsCancelledOrder } from "../shared/notification/notif
 import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
 
 // Customer Canceling
-module.exports.cancelOrderFromCustomer = functions.https.onCall(async (data, context) => {
+export = functions.https.onCall(async (data, context) => {
   let response = await isSignedIn(context.auth)
   if (response != undefined) {
     return response;

@@ -35,24 +35,27 @@ async function _sendOTPForLogin(data: sendOtpInterface): Promise<ServerResponse>
   try {
     user = await firebase.auth().getUserByPhoneNumber(data.phoneNumber);
   } catch (e) {
-    // if (e.errorInfo.code == "auth/user-not-found") {
-    //   try {
-    //     user = await firebase.auth().createUser({
-    //       phoneNumber: data.phoneNumber
-    //     })
-    //     firebase.database().ref(`/users/${user.uid}/info/phoneNumber`).set(data.phoneNumber);
-    //   } catch (e) {
-    //     return {
-    //       status: "Error",
-    //       errorMessage: e.errorInfo.message,
-    //     }
-    //   }
-    // } else {
+    let a = e as any;
+
+    console.log(a);
+    if (a.errorInfo.code == "auth/user-not-found") {
+      try {
+        user = await firebase.auth().createUser({
+          phoneNumber: data.phoneNumber
+        })
+        firebase.database().ref(`/users/${user.uid}/info/phoneNumber`).set(data.phoneNumber);
+      } catch (e) {
+        return {
+          status: ServerResponseStatus.Error,
+          errorMessage: a.errorInfo.message,
+        }
+      }
+    } else {
     return {
       status: ServerResponseStatus.Error,
       errorMessage: "User not found",
     }
-    // }
+    }
   }
 
   let response = await sendOTP(data, user.uid)
