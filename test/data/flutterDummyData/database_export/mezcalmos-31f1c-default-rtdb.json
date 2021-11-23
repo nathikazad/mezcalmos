@@ -22,8 +22,11 @@
             "en",
             "es"
           ],
-          "name": "Basic Fodd",
-          "photo": "https://food.fnr.sndimg.com/content/dam/images/food/fullset/2018/10/4/1/FN_chain-restaurant-entrees_Applebees_Bourbon-Street-Chicken-Shrimp_s6x4.jpg.rend.hgtvcom.441.294.suffix/1538685780055.jpeg"
+          "info": {
+            "name": "Basic Fodd",
+            "photo": "https://food.fnr.sndimg.com/content/dam/images/food/fullset/2018/10/4/1/FN_chain-restaurant-entrees_Applebees_Bourbon-Street-Chicken-Shrimp_s6x4.jpg.rend.hgtvcom.441.294.suffix/1538685780055.jpeg",
+            "language": "es"
+          }
         },
         "menu": {
           "-MkjUGzBopdBjNme7tnq": {

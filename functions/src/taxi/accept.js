@@ -112,6 +112,7 @@ async function accept(firebase, uid, data, hasura) {
     firebase.database().ref(`/inProcessOrders/taxi/${data.orderId}`).set(order);
     firebase.database().ref(`/openOrders/taxi/${data.orderId}`).remove();
     notification.cancelNotificationsForOrderId(firebase, data.orderId);
+    // let chat: Chat = await buildChat(uid, customerInfo, cart.serviceProviderId, restaurant.details.info, orderRef.key!);
     firebase.database().ref(`/chat/${data.orderId}/participants/${uid}`).set({
       name: driver.displayName.split(' ')[0],
       image: driver.photo,

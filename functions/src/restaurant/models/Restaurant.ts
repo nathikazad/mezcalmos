@@ -1,12 +1,10 @@
 import { Language } from "../../shared/models/Generic";
+import { UserInfo } from "../../shared/models/User";
 
 export interface Details {
   description: Record<Language, string>;
   languages: Language[];
-  language: Language;
-  name: string;
-  photo: string;
-  phoneNumber?: string
+  info: UserInfo;
 }
 
 export interface ChooseManyOption {

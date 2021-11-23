@@ -23,17 +23,21 @@ extension ParseStringToOrderStatus on String {
   }
 }
 
+class RouteInformation {
+  String polyline;
+  String distance;
+  String duration;
+  RouteInformation(this.polyline, this.distance, this.duration);
+}
+
 class TaxiOrder extends Order {
   dynamic estimatedPrice;
   Location from;
-  dynamic routeInformation; 
-  dynamic distance;
-  dynamic duration;
+  RouteInformation routeInformation;
   dynamic acceptRideTime;
   dynamic rideFinishTime;
   dynamic rideStartTime;
   TaxiOrdersStatus status;
-  dynamic polyline;
   double distanceToClient = 0;
   dynamic cancelledBy;
   UserInfo? get driver => this.serviceProvider;
@@ -46,13 +50,10 @@ class TaxiOrder extends Order {
       required PaymentType paymentType,
       required this.routeInformation,
       UserInfo? driver,
-      required this.distance,
-      required this.duration,
       required this.acceptRideTime,
       required this.rideFinishTime,
       required this.rideStartTime,
       required this.status,
-      required this.polyline,
       required UserInfo customer,
       dynamic cancelledBy})
       : super(
@@ -73,8 +74,6 @@ class TaxiOrder extends Order {
         orderId: id,
         driver:
             (data["driver"] != null) ? UserInfo.fromData(data["driver"]) : null,
-        distance: data['distance'],
-        duration: data['duration'],
         customer: UserInfo.fromData(data["customer"]),
         rideFinishTime: data['rideFinishTime'],
         rideStartTime: data['rideStartTime'],
@@ -85,8 +84,10 @@ class TaxiOrder extends Order {
         to: Location.fromData(data['to']),
         orderTime: DateTime.parse(data["orderTime"]),
         paymentType: data["paymentType"].toString().toPaymentType(),
-        routeInformation: data['routeInformation'],
-        polyline: data['polyline'] ?? "");
+        routeInformation: RouteInformation(
+            data['routeInformation']['polyline'],
+            data['routeInformation']['distance']['text'],
+            data['routeInformation']['duration']['text']));
     return taxiOrder;
   }
 
@@ -99,7 +100,6 @@ class TaxiOrder extends Order {
         "to": to,
         "orderTime": orderTime,
         "paymentType": paymentType,
-        "polyline": polyline,
         "routeInformation": routeInformation,
         "distanceToClient": distanceToClient
       };

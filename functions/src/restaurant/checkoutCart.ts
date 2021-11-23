@@ -6,7 +6,7 @@
 import * as functions from "firebase-functions";
 import { Cart } from './models/Cart';
 import { constructRestaurantOrder, RestaurantOrder } from './models/RestaurantOrder';
-import { Chat, ChatType, ParticipantType } from "../shared/models/Chat";
+import { Chat, ParticipantType } from "../shared/models/Chat";
 import { OrderType } from "../shared/models/Order";
 import { Restaurant } from "./models/Restaurant";
 import { UserInfo } from "../shared/models/User";
@@ -14,9 +14,10 @@ import { ServerResponse, ServerResponseStatus } from "../shared/models/Generic";
 import * as restaurantNodes from "../shared/databaseNodes/restaurant";
 import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
 import * as customerNodes from "../shared/databaseNodes/customer";
-import *  as rootDbNodes from "../shared/databaseNodes/root";
+import *  as rootNodes from "../shared/databaseNodes/root";
 import { notifyDeliveryAdminsNewOrder } from "../shared/notification/notifyDeliveryAdmin";
 import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
+import { buildChat } from "../shared/helper/chat";
 
 export = functions.https.onCall(async (data, context) => {
   if (!context.auth) {
@@ -51,7 +52,7 @@ async function checkoutCart(uid: string, cart: Cart): Promise<ServerResponse> {
     }
   }
 
-  let customerInfo: UserInfo = (await rootDbNodes.userInfo(uid).once('value')).val();
+  let customerInfo: UserInfo = (await rootNodes.userInfo(uid).once('value')).val();
   const order: RestaurantOrder = constructRestaurantOrder({
     cart: cart,
     customer: {
@@ -61,19 +62,24 @@ async function checkoutCart(uid: string, cart: Cart): Promise<ServerResponse> {
     },
     restaurant: {
       id: cart.serviceProviderId,
-      name: restaurant.details.name,
-      image: restaurant.details.photo
+      name: restaurant.details.info.displayName.split(' ')[0],
+      image: restaurant.details.info.photo
     },
   })
 
   let orderRef = await customerNodes.inProcessOrders(uid).push(order);
   restaurantNodes.inProcessOrders(cart.serviceProviderId, orderRef.key!).set(order);
-  rootDbNodes.inProcessOrders(OrderType.Restaurant, orderRef.key!).set(order);
+  rootNodes.inProcessOrders(OrderType.Restaurant, orderRef.key!).set(order);
   await customerNodes.cart(uid).remove();
 
-  const deliveryAdmins: Record<string, DeliveryAdmin> = (await deliveryAdminNodes.deliveryAdmins().once('value')).val()
-  setChat(customerInfo, uid, cart.serviceProviderId, restaurant, deliveryAdmins, orderRef.key!);
-  notifyDeliveryAdminsNewOrder(deliveryAdmins, orderRef.key!, restaurant)
+  let chat: Chat = await buildChat(uid, customerInfo, cart.serviceProviderId, restaurant.details.info, orderRef.key!);
+
+  deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
+    let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
+    addDeliveryAdminsToChat(deliveryAdmins, chat, orderRef.key!)
+    notifyDeliveryAdminsNewOrder(deliveryAdmins, orderRef.key!, restaurant)
+  })
+
   let response: ServerResponse = {
     status: ServerResponseStatus.Success,
     orderId: orderRef.key
@@ -82,36 +88,15 @@ async function checkoutCart(uid: string, cart: Cart): Promise<ServerResponse> {
 }
 
 
-async function setChat(
-  customerInfo: UserInfo,
-  customerId: string,
-  restaurantId: string,
-  restaurant: Restaurant,
-  deliveryAdmins: Record<string, DeliveryAdmin>,
-  orderId: string): Promise<any> {
-  let chat: Chat = {
-    chatType: ChatType.Order,
-    orderType: OrderType.Restaurant,
-    participants: {
-      [customerId]: {
-        name: customerInfo.displayName.split(' ')[0],
-        image: customerInfo.photo,
-        particpantType: ParticipantType.Customer,
-        language: customerInfo.language ? customerInfo.language : "en",
-        phoneNumber: (customerInfo.phoneNumber) ? customerInfo.phoneNumber : undefined
-      },
-      [restaurantId]: {
-        name: restaurant.details.name,
-        image: restaurant.details.photo,
-        particpantType: ParticipantType.Restaurant,
-        language: restaurant.details.language ? restaurant.details.language : "en",
-        phoneNumber: (restaurant.details.phoneNumber) ? restaurant.details.phoneNumber : undefined
-      }
-    }
-  }
 
+
+
+async function addDeliveryAdminsToChat(
+  deliveryAdmins: Record<string, DeliveryAdmin>,
+  chat: Chat,
+  orderId: string) {
   for (var deliveryAdminId in deliveryAdmins) {
-    var userInfo: UserInfo = (await rootDbNodes.userInfo(deliveryAdminId).once('value')).val();
+    var userInfo: UserInfo = (await rootNodes.userInfo(deliveryAdminId).once('value')).val();
     chat.participants[deliveryAdminId] = {
       name: userInfo.displayName,
       image: userInfo.photo,
@@ -119,7 +104,5 @@ async function setChat(
       language: userInfo.language
     }
   }
-  rootDbNodes.chat(orderId).set(chat);
+  rootNodes.chat(orderId).set(chat);
 }
-
-

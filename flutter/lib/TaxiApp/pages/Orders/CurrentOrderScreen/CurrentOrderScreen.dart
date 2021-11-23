@@ -196,7 +196,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
         color: Color.fromARGB(255, 172, 89, 252),
         polylineId: PolylineId("polyline"),
         jointType: JointType.round,
-        points: loadUpPolyline(order.polyline),
+        points: loadUpPolyline(order.routeInformation.polyline),
         width: 2,
         startCap: Cap.buttCap,
         endCap: Cap.roundCap,

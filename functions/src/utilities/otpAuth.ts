@@ -105,7 +105,7 @@ async function _getAuthUsingOTP(data: verifyOtpInterface) {
   firebase.database().ref(`users/${user.uid}/auth`).remove()
 
   return {
-    status: "Success",
+    status: ServerResponseStatus.Success,
     token: customToken
   }
 }

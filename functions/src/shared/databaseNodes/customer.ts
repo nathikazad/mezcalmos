@@ -4,6 +4,10 @@ export function cart(customerId: string) {
   return firebase.database().ref(`/customers/info/${customerId}/cart`)
 }
 
+export function lock(customerId: string) {
+  return firebase.database().ref(`/customers/info/${customerId}/lock`)
+}
+
 export function notificationInfo(customerId: string) {
   firebase.database().ref(`/customers/info/${customerId}/notificationInfo`);
 }

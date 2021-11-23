@@ -10,17 +10,6 @@ if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp()
 }
 
-import * as restaurantStatusChange from './restaurant/adminStatusChanges'
-export const restaurant = {
-  checkoutCart: require("./restaurant/checkoutCart"),
-  prepareOrder: restaurantStatusChange.prepareOrder,
-  readyForOrderPickup: restaurantStatusChange.readyForPickupOrder,
-  deliverOrder: restaurantStatusChange.deliverOrder,
-  dropOrder: restaurantStatusChange.dropOrder,
-  cancelOrderFromAdmin: restaurantStatusChange.cancelOrder,
-  cancelOrderFromCustomer: require("./restaurant/cancelOrderFromCustomer")
-}
-
 import * as userChanges from './utilities/userChanges'
 export const user = {
   processSignUp: userChanges.processSignUp,
@@ -36,9 +25,20 @@ export const otp = {
   getAuthUsingOTP: otpAuth.getAuthUsingOTP
 }
 
+import * as restaurantStatusChange from './restaurant/adminStatusChanges'
+export const restaurant = {
+  checkoutCart: require("./restaurant/checkoutCart"),
+  prepareOrder: restaurantStatusChange.prepareOrder,
+  readyForOrderPickup: restaurantStatusChange.readyForPickupOrder,
+  deliverOrder: restaurantStatusChange.deliverOrder,
+  dropOrder: restaurantStatusChange.dropOrder,
+  cancelOrderFromAdmin: restaurantStatusChange.cancelOrder,
+  cancelOrderFromCustomer: require("./restaurant/cancelOrderFromCustomer")
+}
+
 // // Taxi
 export const taxi = {
-  // requestTaxi: require("./helpers/taxi/request"),
+  requestTaxi: require("./taxi/request"),
   // acceptTaxiOrder: require("./helpers/taxi/accept"),
   // startTaxiRide: require("./helpers/taxi/start"),
   // cancelTaxiFromCustomer: require("./helpers/taxi/cancelTaxiFromCustomer"),

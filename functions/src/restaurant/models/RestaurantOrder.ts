@@ -2,6 +2,7 @@
 import { Item, Cart } from './Cart';
 import { OrderType, PaymentType } from '../../shared/models/Order';
 import { GenericUser } from '../../shared/models/User';
+import { Location } from '../../shared/models/Generic';
 
 export interface RestaurantOrder {
   quantity: number;
