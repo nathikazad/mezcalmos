@@ -6,8 +6,20 @@ String customerCart(String uid) {
   return 'customers/info/${uid}/cart';
 }
 
+String customerAppVersionNode(String uid) {
+  return 'customers/info/${uid}/versionNumber';
+}
+
+String customerNotificationInfoNode(String uid) {
+  return 'customers/info/${uid}/notificationInfo';
+}
+
 String customerPastOrders(String uid) {
   return 'customers/pastOrders/${uid}';
+}
+
+String customerInProcessOrders(String uid) {
+  return 'customers/inProcessOrders/${uid}';
 }
 
 String savedLocationsNode(String uid) {
@@ -16,18 +28,6 @@ String savedLocationsNode(String uid) {
 
 String savedLocationNode(String uid, String locationId) {
   return 'customers/info/$uid/savedLocations/${locationId}';
-}
-
-String customerInProcessOrders(String uid) {
-  return 'customers/inProcessOrders/${uid}';
-}
-
-String customerAppVersionNode(String uid) {
-  return 'customers/info/${uid}/versionNumber';
-}
-
-String customerNotificationInfoNode(String uid) {
-  return 'customers/info/${uid}/notificationInfo';
 }
 
 String notificationsNode(String uid) {
