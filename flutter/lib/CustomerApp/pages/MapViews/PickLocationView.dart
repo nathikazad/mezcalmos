@@ -30,7 +30,7 @@ class _PickLocationViewState extends State<PickLocationView> {
     mezDbgPrint("Last Location Stored Lat ==> ${_selectedLocation!.latitude}");
     mezDbgPrint("Last Location Stored Lng ==> ${_selectedLocation!.longitude}");
     if (_selectedLocation!.address == "") {
-      String? address = await getAdressFromLatLng(
+      String? address = await MapHelper.getAdressFromLatLng(
           LatLng(_selectedLocation!.latitude!, _selectedLocation!.longitude!));
 
       _selectedLocation!.address = address ??

@@ -122,7 +122,7 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
     widget.markers.forEach((cmarker) {
       _bnds.add(cmarker.position);
     });
-    return _bnds.isEmpty ? null : createMapBounds(_bnds);
+    return _bnds.isEmpty ? null : MapHelper.createMapBounds(_bnds);
   }
 
   // main function for updating the bounds and start the animation

@@ -1,4 +1,5 @@
 // Example of the View
+import 'dart:async';
 import 'dart:typed_data';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -7,11 +8,14 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/components/customerAppBar.dart';
+import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
+import 'package:mezcalmos/CustomerApp/models/CustomerTaxiOrder.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
+import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
 import 'package:mezcalmos/Shared/widgets/MezPickGoogleMap.dart';
@@ -19,6 +23,7 @@ import 'package:location/location.dart' as GeoLoc;
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
+// import 'package:polyline/polyline.dart' as PolyEncoder;
 
 enum SearchComponentType { From, To }
 
@@ -39,15 +44,17 @@ class _OrderTaxiScreenState extends State<OrderTaxiScreen> {
   bool _fromReadOnly = false;
   bool _toReadOnly = false;
 
+  late TaxiController controller;
   LanguageController _lang = Get.find<LanguageController>();
   RxList<Marker> _markers = <Marker>[].obs;
   Set<Polyline> _polylines = {};
+  List<LatLng> polylinesPoints = [];
   late Marker _circleMarker;
   double _locationPickOptionsHeight = 0;
   FocusNode _fromFocusNode = FocusNode();
   FocusNode _toFocusNode = FocusNode();
   bool _animateMarkersAndPolylines = false;
-  int _ridePrice = 35;
+  StreamSubscription? eventsListener;
 
   // Genetal Widget Utilities ------------------------------------------------------------
 
@@ -105,6 +112,54 @@ class _OrderTaxiScreenState extends State<OrderTaxiScreen> {
   bool checkIfAllLocationsSet() {
     return _selectedToLocation?.address != "" &&
         _selectedFromLocation?.address != "";
+  }
+
+  Future<bool> constructCustomerTaxiOrder() async {
+    // we get the polyline Decoded Result !
+    PolylineResult _resPloyLines = await PolylinePoints()
+        .getRouteBetweenCoordinates(
+            placesApikey,
+            PointLatLng(_selectedToLocation!.position.latitude!,
+                _selectedToLocation!.position.longitude!),
+            PointLatLng(_selectedFromLocation!.position.latitude!,
+                _selectedFromLocation!.position.longitude!));
+
+    if (_resPloyLines.points.isNotEmpty) {
+      // get the duration and destination !
+      Map<String, dynamic> _durationAndDistance =
+          await MapHelper.getDurationAndDistance(
+              _selectedFromLocation!, _selectedToLocation!);
+
+      // Successfully got distance and Duration !
+      if (_durationAndDistance.isNotEmpty) {
+        // we set the estimated price :
+        // TODO : Calculate depending on How many KM.
+        int _estimatedPrice = MapHelper.getEstimatedRidePriceInPesos(
+            _durationAndDistance['distance']['value']);
+
+        // this is used for Encoding.
+        List<List<double>> _pnts = [];
+
+        _resPloyLines.points.forEach((point) {
+          _pnts.add([point.latitude, point.longitude]);
+          polylinesPoints.add(LatLng(point.latitude, point.longitude));
+        });
+
+        /// TODO : Remove this , and get the encoded polyline string from [MapHelper.getDurationAndDistance]
+        var encodedPolyLine = MapHelper.encodePolyline(_pnts, 5);
+        controller.setCustomerTaxiOrder(CustomerTaxiOrder(
+            from: _selectedFromLocation!,
+            to: _selectedToLocation!,
+            distance: RideDistance.fromJson(_durationAndDistance['distance']),
+            duration: RideDuration.fromJson(_durationAndDistance['duration']),
+            estimatedPrice: _estimatedPrice,
+            paymentType: 'cash',
+            polyline: encodedPolyLine));
+
+        return true;
+      }
+    }
+    return false;
   }
 
   // MezPickGoogleMap Callbacks ---------------------------------------------------------------------
@@ -235,9 +290,9 @@ class _OrderTaxiScreenState extends State<OrderTaxiScreen> {
     unfocusBySelectedField();
     GeoLoc.LocationData _loc = await GeoLoc.Location().getLocation();
 
-    String? formattedAddress =
-        (await getAdressFromLatLng(LatLng(_loc.latitude!, _loc.longitude!))) ??
-            "Current Location";
+    String? formattedAddress = (await MapHelper.getAdressFromLatLng(
+            LatLng(_loc.latitude!, _loc.longitude!))) ??
+        "Current Location";
 
     setLocationBySelectedField(_loc, address: formattedAddress);
     setState(() {
@@ -256,7 +311,13 @@ class _OrderTaxiScreenState extends State<OrderTaxiScreen> {
     });
   }
 
-  // Pick - Confirm Button Click Callback ------------------------------------------------------------
+  // Pick - Confirm - Cancel Button Click Callback ------------------------------------------------------------
+
+  void onCancelButtonClick() async {
+    mezcalmosSnackBar("FROM SAAD",
+        "Cancel Order in Cloude Functions does not makes sense , or still not yet made !");
+    // we have to call
+  }
 
   /// When the user Clicks the button at the Bottom [Pick] / [Confirm]
   void onConfirmButtonClick() async {
@@ -265,7 +326,7 @@ class _OrderTaxiScreenState extends State<OrderTaxiScreen> {
       mezDbgPrint(selectedType.toString());
       mezDbgPrint(loc?.toJson());
       // get address!
-      String? formattedAddress = (await getAdressFromLatLng(
+      String? formattedAddress = (await MapHelper.getAdressFromLatLng(
               LatLng(loc!.latitude!, loc.longitude!))) ??
           "${loc.latitude.toString()}, ${loc.position.longitude.toString()}";
 
@@ -277,7 +338,6 @@ class _OrderTaxiScreenState extends State<OrderTaxiScreen> {
 
       if (checkIfAllLocationsSet()) {
         // this is Filled with the decoded Polylines points!.
-        List<LatLng> polylineCoordinates = [];
         // this is the From Bitmap Marker
         BitmapDescriptor toMarkerBitmap = await BitmapDescriptorLoader(
             (await cropRonded(
@@ -294,18 +354,12 @@ class _OrderTaxiScreenState extends State<OrderTaxiScreen> {
             60,
             60,
             isBytes: true);
-        PolylineResult _resPloyLines = await PolylinePoints()
-            .getRouteBetweenCoordinates(
-                placesApikey,
-                PointLatLng(_selectedToLocation!.position.latitude!,
-                    _selectedToLocation!.position.longitude!),
-                PointLatLng(_selectedFromLocation!.position.latitude!,
-                    _selectedFromLocation!.position.longitude!));
 
-        if (_resPloyLines.points.isNotEmpty) {
-          _resPloyLines.points.forEach((point) {
-            polylineCoordinates.add(LatLng(point.latitude, point.longitude));
-          });
+        bool res = await constructCustomerTaxiOrder();
+
+        if (!res) {
+          // failed
+          return;
         }
 
         setState(() {
@@ -325,7 +379,6 @@ class _OrderTaxiScreenState extends State<OrderTaxiScreen> {
                 position: LatLng(_selectedFromLocation!.position.latitude!,
                     _selectedFromLocation!.position.longitude!)),
           ]);
-          // TODO : Generate polylines from-to
 
           _polylines.add(Polyline(
               color: Color.fromARGB(255, 172, 89, 252),
@@ -335,8 +388,7 @@ class _OrderTaxiScreenState extends State<OrderTaxiScreen> {
               endCap: Cap.roundCap,
               polylineId: PolylineId('_poly_'),
               visible: true,
-              points: polylineCoordinates));
-          // TODO : Clear the polylines on a SearchField Clear + SET _animateMarkersAndPolylines = FALSE
+              points: polylinesPoints));
 
           _animateMarkersAndPolylines = true;
         });
@@ -345,11 +397,42 @@ class _OrderTaxiScreenState extends State<OrderTaxiScreen> {
       // unfocusBySelectedField();
     } else {
       // confirm !
-      mezDbgPrint("To handle on confirm !");
+      // CustomerTaxiOrder _taxiOrder = CustomerTaxiOrder(from: _selectedFromLocation!, to: _selectedToLocation!, distance: distance, duration: duration, estimatedPrice: estimatedPrice, paymentType: paymentType, polyline: polyline)
+      ServerResponse resp = await controller.requestTaxi();
+      if (resp.success) {
+        controller.setOrderId(resp.data['orderId']);
+        controller.listenOnCreatedOrderNode();
+        setState(() {});
+      }
+      mezDbgPrint("\n\n");
+      mezDbgPrint(resp.status);
+      mezDbgPrint(resp.data);
+      mezDbgPrint(resp.errorMessage);
+      mezDbgPrint(resp.errorCode);
     }
   }
 
   // Sub Widgets Blocks ------------------------------------------------------------------------------
+  Widget cancelTextButton() {
+    return Container(
+      margin: EdgeInsets.only(bottom: 30),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5), color: Colors.red.shade400),
+      child: TextButton(
+          style: ButtonStyle(
+              fixedSize: MaterialStateProperty.all(Size(Get.width,
+                  getSizeRelativeToScreen(20, Get.height, Get.width))),
+              backgroundColor: MaterialStateProperty.all(Colors.transparent)),
+          onPressed: onCancelButtonClick,
+          child: Text("CANCEL",
+              style: TextStyle(
+                fontFamily: 'psr',
+                color: Colors.white,
+                fontSize: 18.sp,
+              ))),
+    );
+  }
+
   Widget bottomBarWidget() {
     return Positioned(
         bottom: 20 + getSizeRelativeToScreen(20, Get.height, Get.width),
@@ -383,11 +466,8 @@ class _OrderTaxiScreenState extends State<OrderTaxiScreen> {
                         children: [
                           InkWell(
                             onTap: () {
-                              if (_ridePrice > 35) {
-                                setState(() {
-                                  _ridePrice -= 5;
-                                });
-                              }
+                              controller.getCustomerTaxiOrder!.decrementPrice();
+                              setState(() {});
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -403,18 +483,21 @@ class _OrderTaxiScreenState extends State<OrderTaxiScreen> {
                               ),
                             ),
                           ),
-                          Text(
-                            "${_ridePrice.toString()}\$",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontFamily: 'psb',
-                                fontSize: 20),
+                          Obx(
+                            () => Text(
+                              controller.getCustomerTaxiOrder?.estimatedPrice
+                                      .toString() ??
+                                  '-',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontFamily: 'psb',
+                                  fontSize: 20),
+                            ),
                           ),
                           InkWell(
                             onTap: () {
-                              setState(() {
-                                _ridePrice += 5;
-                              });
+                              controller.getCustomerTaxiOrder?.incrementPrice();
+                              setState(() {});
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -436,13 +519,19 @@ class _OrderTaxiScreenState extends State<OrderTaxiScreen> {
                   ),
                   VerticalDivider(width: 1, color: Colors.grey.shade300),
                   Expanded(
-                      child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text("1 min"),
-                      Text("1 min"),
-                    ],
+                      child: Obx(
+                    () => Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(controller.getCustomerTaxiOrder?.distance
+                                .distanceStringInKm ??
+                            "-"),
+                        Text(controller.getCustomerTaxiOrder?.duration
+                                .daysHoursString ??
+                            "-"),
+                      ],
+                    ),
                   ))
                 ],
               ),
@@ -617,6 +706,26 @@ class _OrderTaxiScreenState extends State<OrderTaxiScreen> {
 
   @override
   void initState() {
+    // We Inject the TaxiController !
+    controller = Get.find<TaxiController>();
+
+    eventsListener = controller.eventDispatcher.listen((event) {
+      mezDbgPrint("EventDispatcher ====> $event");
+      if (controller.isOrderRemoved(event)) {
+        controller.cancelOrderListener();
+        setState(() {
+          _polylines.clear();
+          _markers.clear();
+          _animateMarkersAndPolylines = false;
+          _fromReadOnly = false;
+          _toReadOnly = false;
+          _selectedFromLocation!.address = "";
+          _selectedToLocation!.address = "";
+          hideFakeMarkerInCaseEmptyAddress();
+        });
+      }
+      // TODO : handle IsLooking!
+    });
     // each depending on other
     GeoLoc.Location().getLocation().then((locData) {
       setUpCircleMarker(locData).then((_) {
@@ -632,6 +741,16 @@ class _OrderTaxiScreenState extends State<OrderTaxiScreen> {
     });
 
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    // controller.dispose();
+    eventsListener?.cancel();
+    eventsListener = null;
+    mezDbgPrint(
+        "OrderTaxiScreen :: dispose :: TaxiController got disposed !!!!!");
+    super.dispose();
   }
 
   @override
@@ -712,34 +831,41 @@ class _OrderTaxiScreenState extends State<OrderTaxiScreen> {
                 bottom: 10,
                 left: 15,
                 right: 15,
-                child: Container(
-                  margin: EdgeInsets.only(bottom: 30),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    gradient: LinearGradient(colors: [
-                      Color.fromRGBO(81, 132, 255, 1),
-                      Color.fromRGBO(206, 73, 252, 1)
-                    ], begin: Alignment.topLeft, end: Alignment.bottomRight),
-                  ),
-                  child: TextButton(
-                      style: ButtonStyle(
-                          fixedSize: MaterialStateProperty.all(Size(
-                              Get.width,
-                              getSizeRelativeToScreen(
-                                  20, Get.height, Get.width))),
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.transparent)),
-                      onPressed: onConfirmButtonClick,
-                      child: Text(
-                          _polylines.isNotEmpty
-                              ? "CONFIRM"
-                              : _lang.strings["shared"]["pickLocation"]["pick"],
-                          style: TextStyle(
-                            fontFamily: 'psr',
-                            color: Colors.white,
-                            fontSize: 18.sp,
-                          ))),
-                ),
+                child:
+                    Obx(() => controller.getCustomerTaxiOrder?.orderId == null
+                        ? Container(
+                            margin: EdgeInsets.only(bottom: 30),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              gradient: LinearGradient(
+                                  colors: [
+                                    Color.fromRGBO(81, 132, 255, 1),
+                                    Color.fromRGBO(206, 73, 252, 1)
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight),
+                            ),
+                            child: TextButton(
+                                style: ButtonStyle(
+                                    fixedSize: MaterialStateProperty.all(Size(
+                                        Get.width,
+                                        getSizeRelativeToScreen(
+                                            20, Get.height, Get.width))),
+                                    backgroundColor: MaterialStateProperty.all(
+                                        Colors.transparent)),
+                                onPressed: onConfirmButtonClick,
+                                child: Text(
+                                    _polylines.isNotEmpty
+                                        ? "CONFIRM"
+                                        : _lang.strings["shared"]
+                                            ["pickLocation"]["pick"],
+                                    style: TextStyle(
+                                      fontFamily: 'psr',
+                                      color: Colors.white,
+                                      fontSize: 18.sp,
+                                    ))),
+                          )
+                        : cancelTextButton()),
               ),
             ]),
       ),

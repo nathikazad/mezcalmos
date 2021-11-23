@@ -33,3 +33,8 @@ String customerNotificationInfoNode(String uid) {
 String notificationsNode(String uid) {
   return 'notifications/customer/$uid';
 }
+
+//TODO: Apply the correct Node!
+String customerTaxiOrderNode(String id) {
+  return 'orders/taxi/$id';
+}

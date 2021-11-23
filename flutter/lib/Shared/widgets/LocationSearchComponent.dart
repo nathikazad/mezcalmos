@@ -142,7 +142,7 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
                 tfCursorColor: Colors.black,
                 controller: _controller,
                 suggestionsApiFetchDelay: 1,
-                getSuggestionsMethod: getLocationsSuggestions,
+                getSuggestionsMethod: MapHelper.getLocationsSuggestions,
                 focusGained: widget.onFocus ?? () {},
                 focusLost: widget.onFocusLost ?? () {},
                 onValueChanged: (String value) {
@@ -162,7 +162,8 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
                   }
                 },
                 onTapCallback: (String placeId, String name) async {
-                  Location? _loc = await getLocationFromPlaceId(placeId);
+                  Location? _loc =
+                      await MapHelper.getLocationFromPlaceId(placeId);
                   if (_loc != null) {
                     widget.notifyParent(_loc, true);
                     setState(() {
