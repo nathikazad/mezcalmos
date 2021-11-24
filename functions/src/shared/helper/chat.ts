@@ -1,4 +1,3 @@
-
 import { Chat, ChatType, Participant } from "../models/Chat";
 import { OrderType } from "../models/Order";
 import *  as rootNodes from "../databaseNodes/root";

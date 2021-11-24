@@ -1,8 +1,6 @@
-
-// const notification = require("../notification");
 import * as functions from "firebase-functions";
 import { isSignedIn } from "../shared/helper/authorizer";
-import { RestaurantOrder, RestaurantOrderStatus } from "./models/RestaurantOrder";
+import { orderInProcess, RestaurantOrder, RestaurantOrderStatus } from "./models/RestaurantOrder";
 import *  as rootDbNodes from "../shared/databaseNodes/root";
 import { OrderType } from "../shared/models/Order";
 import { ServerResponseStatus } from "../shared/models/Generic";
@@ -44,6 +42,13 @@ export = functions.https.onCall(async (data, context) => {
     }
   }
 
+  if (!orderInProcess(order.status)) {
+    return {
+      status: ServerResponseStatus.Error,
+      errorMessage: `Order cannot be cancelled because it is not in process`,
+      errorCode: "orderNotInProcess"
+    }
+  }
   order.status = RestaurantOrderStatus.CancelledByCustomer;
   await finishOrder(order, orderId);
 

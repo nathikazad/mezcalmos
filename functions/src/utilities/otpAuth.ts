@@ -34,20 +34,19 @@ async function _sendOTPForLogin(data: sendOtpInterface): Promise<ServerResponse>
   let user;
   try {
     user = await firebase.auth().getUserByPhoneNumber(data.phoneNumber);
-  } catch (e) {
-    let a = e as any;
-
-    // console.log(a);
-    if (a.errorInfo.code == "auth/user-not-found") {
+  } catch (a) {
+    let e: any = a;
+    if (e.errorInfo.code == "auth/user-not-found") {
       try {
         user = await firebase.auth().createUser({
           phoneNumber: data.phoneNumber
         })
         firebase.database().ref(`/users/${user.uid}/info/phoneNumber`).set(data.phoneNumber);
-      } catch (e) {
+      } catch (a) {
+        let e: any = a;
         return {
           status: ServerResponseStatus.Error,
-          errorMessage: a.errorInfo.message,
+          errorMessage: e.errorInfo.message,
         }
       }
     } else {
@@ -79,18 +78,19 @@ async function _getAuthUsingOTP(data: verifyOtpInterface) {
   let user
   try {
     user = await firebase.auth().getUserByPhoneNumber(data.phoneNumber)
-  } catch (e) {
-    // if (e.errorInfo.code == 'auth/user-not-found') {
-    //   return {
-    //     status: 'Error',
-    //     errorMessage: 'Invalid OTP Code'
-    //   }
-    // } else {
-    return {
-      status: ServerResponseStatus.Error,
-      // errorMessage: e.errorInfo.message
+  } catch (a) {
+    let e: any = a;
+    if (e.errorInfo.code == 'auth/user-not-found') {
+      return {
+        status: 'Error',
+        errorMessage: 'Invalid OTP Code'
+      }
+    } else {
+      return {
+        status: ServerResponseStatus.Error,
+        // errorMessage: e.errorInfo.message
+      }
     }
-    // }
   }
 
   let response = await confirmOTP(data, user.uid);
@@ -188,6 +188,5 @@ async function confirmOTP(data: verifyOtpInterface, userId: string): Promise<Ser
     }
   }
 
-  firebase.database().ref(`/users/${userId}/info/phoneNumberType`).set(auth.messageType);
   return
 }

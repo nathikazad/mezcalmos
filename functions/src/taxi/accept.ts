@@ -7,7 +7,7 @@ import * as customerNodes from "../shared/databaseNodes/customer";
 import { isSignedIn } from "../shared/helper/authorizer";
 import { AuthorizationStatus, ServerResponseStatus } from "../shared/models/Generic";
 import { OrderType } from "../shared/models/Order";
-import { getUserInfo, UserInfo } from "../shared/models/User";
+import { UserInfo } from "../shared/models/User";
 import { getTaxi, Taxi } from "./models/Taxi";
 import { TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "./models/TaxiOrder";
 import { buildChat } from "../shared/helper/chat";
@@ -15,6 +15,7 @@ import { ParticipantType } from "../shared/models/Chat";
 import { push } from "../shared/notification/notifyUser";
 import { Notification, NotificationType } from "../shared/models/Notification";
 import { taxiOrderStatusChangeMessages } from "./bgNotificationMessages";
+import { getUserInfo } from "../shared/rootController";
 
 export = functions.https.onCall(async (data, context) => {
   let response = isSignedIn(context.auth)

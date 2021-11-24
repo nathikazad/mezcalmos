@@ -1,6 +1,7 @@
 import * as functions from "firebase-functions";
 import * as firebase from "firebase-admin";
-import { setUserInfo } from "../shared/models/User";
+import { setUserInfo } from "../shared/rootController";
+
 
 // Customer Canceling
 export const processSignUp = functions.auth.user().onCreate(async user => {

@@ -1,23 +1,16 @@
 
 import { Item, Cart } from './Cart';
-import { OrderType, PaymentType } from '../../shared/models/Order';
+import { Order, OrderType } from '../../shared/models/Order';
 import { UserInfo } from '../../shared/models/User';
-import { Location } from '../../shared/models/Generic';
 import { OrderNotification } from '../../shared/models/Notification';
 
-export interface RestaurantOrder {
+export interface RestaurantOrder extends Order {
   quantity: number;
-  cost: number;
   notes?: number;
-  paymentType: PaymentType;
-  serviceProviderId: string;
   status: RestaurantOrderStatus;
   orderTime: string;
-  to: Location;
-  orderType: OrderType.Restaurant;
   items: Record<string, Item>;
   restaurant: UserInfo;
-  customer: UserInfo;
 }
 
 export enum RestaurantOrderStatus {

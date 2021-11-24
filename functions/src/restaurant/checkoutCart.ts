@@ -8,8 +8,8 @@ import { Cart } from './models/Cart';
 import { constructRestaurantOrder, RestaurantOrder } from './models/RestaurantOrder';
 import { Chat, ParticipantType } from "../shared/models/Chat";
 import { OrderType } from "../shared/models/Order";
-import { getRestaurant, Restaurant } from "./models/Restaurant";
-import { getUserInfo, UserInfo } from "../shared/models/User";
+import { Restaurant } from "./models/Restaurant";
+import { UserInfo } from "../shared/models/User";
 import { ServerResponseStatus } from "../shared/models/Generic";
 import * as restaurantNodes from "../shared/databaseNodes/restaurant";
 import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
@@ -19,6 +19,8 @@ import { notifyDeliveryAdminsNewOrder } from "../shared/notification/notifyDeliv
 import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
 import { buildChat } from "../shared/helper/chat";
 import { isSignedIn } from "../shared/helper/authorizer";
+import { getRestaurant } from "./restaurantController";
+import { getUserInfo } from "../shared/rootController";
 
 export = functions.https.onCall(async (data, context) => {
 
@@ -55,9 +57,9 @@ export = functions.https.onCall(async (data, context) => {
     restaurant: restaurant.info,
   })
 
-  let orderRef = await customerNodes.inProcessOrders(customerId).push(order);
-  restaurantNodes.inProcessOrders(cart.serviceProviderId, orderRef.key!).set(order);
-  rootNodes.inProcessOrders(OrderType.Restaurant, orderRef.key!).set(order);
+  let orderId: string = (await customerNodes.inProcessOrders(customerId).push(order)).key!;
+  restaurantNodes.inProcessOrders(cart.serviceProviderId, orderId).set(order);
+  rootNodes.inProcessOrders(OrderType.Restaurant, orderId).set(order);
   await customerNodes.cart(customerId).remove();
 
 
@@ -71,17 +73,17 @@ export = functions.https.onCall(async (data, context) => {
       ...restaurant.info,
       particpantType: ParticipantType.Restaurant
     },
-    orderRef.key!);
+    orderId);
 
   deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
     let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
-    addDeliveryAdminsToChat(deliveryAdmins, chat, orderRef.key!)
-    notifyDeliveryAdminsNewOrder(deliveryAdmins, orderRef.key!, restaurant.info)
+    addDeliveryAdminsToChat(deliveryAdmins, chat, orderId)
+    notifyDeliveryAdminsNewOrder(deliveryAdmins, orderId, restaurant.info)
   })
 
   return {
     status: ServerResponseStatus.Success,
-    orderId: orderRef.key
+    orderId: orderId
   }
 })
 

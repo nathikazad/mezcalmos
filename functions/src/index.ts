@@ -38,12 +38,12 @@ export const restaurant = {
 
 // Taxi
 export const taxi = {
-  requestTaxi: require("./taxi/request"),
-  acceptTaxiOrder: require("./taxi/accept"),
-  startTaxiRide: require("./taxi/start")
-  // cancelTaxiFromCustomer: require("./helpers/taxi/cancelTaxiFromCustomer"),
-  // cancelTaxiFromDriver: require("./helpers/taxi/cancelTaxiFromDriver"),
-  // finishTaxiRide: require('./helpers/taxi/finish')
+  requestRide: require("./taxi/request"),
+  acceptRide: require("./taxi/accept"),
+  startRide: require("./taxi/taxiStatusChange").startRide,
+  cancelFromCustomer: require("./taxi/cancelTaxiFromCustomer"),
+  cancelFromDriver: require("./taxi/taxiStatusChange").cancelTaxiFromDriver,
+  finishRide: require("./taxi/taxiStatusChange").finishRide,
 }
 
 // exports.submitAuthorizationRequest = functions.https.onCall(async (data, context) => {

@@ -1,17 +1,12 @@
-import { OrderType, PaymentType } from "../../shared/models/Order"
+import { Order, OrderType } from "../../shared/models/Order"
 import { UserInfo } from "../../shared/models/User"
 import { OrderRequest } from "./OrderRequest"
 import { Location } from '../../shared/models/Generic';
 import { OrderNotification } from "../../shared/models/Notification";
-// status: "lookingForTaxi",
 
-export interface TaxiOrder {
+export interface TaxiOrder extends Order {
   from: Location,
-  to: Location,
-  customer: UserInfo;
-  estimatedPrice: number,
-  paymentType: PaymentType,
-  orderType: OrderType,
+  cost: number,
   orderTime: string,
   status: TaxiOrderStatus,
   routeInformation: {
@@ -39,11 +34,20 @@ export enum TaxiOrderStatus {
   LookingForTaxi = "lookingForTaxi"
 }
 
+export function orderInProcess(status: TaxiOrderStatus): boolean {
+  return !(status == TaxiOrderStatus.CancelledByTaxi ||
+    status == TaxiOrderStatus.CancelledByCustomer ||
+    status == TaxiOrderStatus.DroppedOff)
+}
+
 export function constructTaxiOrder(
   orderRequest: OrderRequest,
   customer: UserInfo): TaxiOrder {
+  let requestCopy: any = orderRequest;
+  delete requestCopy.estimatedPrice;
   return <TaxiOrder>{
-    ...orderRequest,
+    ...requestCopy,
+    cost: orderRequest.estimatedPrice,
     customer: customer,
     orderType: OrderType.Taxi,
     status: TaxiOrderStatus.LookingForTaxi,

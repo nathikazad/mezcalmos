@@ -1,13 +1,13 @@
+import { Location } from "./Generic";
+import { UserInfo } from "./User";
+
 export interface Order {
-  quantity: number;
+  orderType: OrderType,
+  serviceProviderId: string,
   cost: number;
-  notes?: number;
-  // paymentType: PaymentType;
-  serviceProviderId: string;
-  to: Location;
-  orderType: string;
-  // items: Record<string, CartItem>;
-  // smnt: String
+  paymentType: PaymentType,
+  to: Location,
+  customer: UserInfo
 }
 
 export enum OrderType {

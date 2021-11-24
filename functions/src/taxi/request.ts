@@ -1,15 +1,10 @@
-// const notification = require("../notification");
-// const firebase = require("firebase-admin");
-// const keys = require("../keys").keys()
-// const hasuraModule = require("../hasura");
-// const hasura = new hasuraModule.Hasura(keys.hasura)
 import * as functions from "firebase-functions";
 import * as customerNodes from "../shared/databaseNodes/customer";
 import * as rootNodes from "../shared/databaseNodes/root";
 import { isSignedIn } from "../shared/helper/authorizer";
 import { ServerResponseStatus } from "../shared/models/Generic";
 import { OrderType } from "../shared/models/Order";
-import { getUserInfo } from "../shared/models/User";
+import { getUserInfo } from "../shared/rootController";
 import { OrderRequest } from "./models/OrderRequest";
 import { constructTaxiOrder } from "./models/TaxiOrder";
 
