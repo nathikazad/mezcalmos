@@ -1,7 +1,14 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/components/customerAppBar.dart';
+import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
+import 'package:mezcalmos/CustomerApp/models/Customer.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
 
 class SavedLocationView extends StatefulWidget {
@@ -13,13 +20,46 @@ class SavedLocationView extends StatefulWidget {
 
 class _SavedLocationViewState extends State<SavedLocationView> {
   MyPopupMenuController _popUpController = MyPopupMenuController();
+  CustomerAuthController _customerAuthController =
+      Get.find<CustomerAuthController>();
+  List<SavedLocation> savedLocations = <SavedLocation>[];
+  StreamSubscription<List<SavedLocation>>? savedLocationsStreamSub;
+  @override
+  void initState() {
+    // first get the old savedLocations , in-customer snapshot !
+    setState(() {
+      savedLocations.assignAll(
+          _customerAuthController.customerStream.value?.savedLocations ?? []);
+    });
+    // then start a listener in case there are changes in /savedLocations db node!
+    savedLocationsStreamSub = _customerAuthController.customerStream
+        .map<List<SavedLocation>>((customerInstance) {
+      return customerInstance?.savedLocations ?? [];
+    })
+        // distinct here to reduce the listener stream Buggering
+        // .distinct()
+        .listen((_savedLocations) {
+      mezDbgPrint("New Data ! $_savedLocations");
+      setState(() {
+        // set the new locations!
+        savedLocations.assignAll(_savedLocations);
+      });
+    });
+
+    super.initState();
+  }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _popUpController.hideMenu();
     _popUpController.dispose();
+    savedLocationsStreamSub?.cancel();
+    savedLocationsStreamSub = null;
     super.dispose();
+  }
+
+  int getLocationNumbers() {
+    return savedLocations.length;
   }
 
   @override
@@ -32,101 +72,109 @@ class _SavedLocationViewState extends State<SavedLocationView> {
       ),
       body: Container(
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                margin: const EdgeInsets.only(right: 16, bottom: 10, left: 16),
-                child: Row(
-                  children: [
-                    Container(
-                      child: Text("Saved Locations",
-                          style: const TextStyle(
-                              color: const Color(0xff000f1c),
-                              fontFamily: "psr",
-                              fontStyle: FontStyle.normal,
-                              fontSize: 12.0),
-                          textAlign: TextAlign.left),
-                    ),
-                    Spacer(),
-                    Container(
-                      child: Text("3 Location",
-                          style: const TextStyle(
-                              color: const Color(0xff000f1c),
-                              fontFamily: "psr",
-                              fontStyle: FontStyle.normal,
-                              fontSize: 12.0),
-                          textAlign: TextAlign.right),
-                    )
-                  ],
-                ),
-              ),
-              SavedLocationComponent(
-                subTitle: "3944 Coolidge Street, Miles City, MT 59301",
-                title: "Home",
-                onPress: () {},
-              ),
-              SavedLocationComponent(
-                subTitle: "3944 Coolidge Street, Miles City, MT 59301",
-                title: "My Office",
-                onPress: () {},
-              ),
-              SavedLocationComponent(
-                subTitle: "3944 Coolidge Street, Miles City, MT 59301",
-                title: "Penthouse",
-                onPress: () {},
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              Container(
-                margin: const EdgeInsets.only(left: 16, right: 16),
-                width: double.infinity,
-                height: 48,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(4)),
-                  boxShadow: [
-                    BoxShadow(
-                        color: const Color(0x332362f1),
-                        offset: Offset(0, 6),
-                        blurRadius: 10,
-                        spreadRadius: 0)
-                  ],
-                  gradient: LinearGradient(
-                      begin: Alignment(0.1689453125, 0),
-                      end: Alignment(1, 1),
-                      colors: [
-                        const Color(0xff5582ff),
-                        const Color(0xffc54efc)
-                      ]),
-                ),
-                child: Center(
-                  child: RichText(
-                      text: TextSpan(children: [
-                    TextSpan(
+            child: Column(
+          children: [
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              margin: const EdgeInsets.only(right: 16, bottom: 10, left: 16),
+              child: Row(
+                children: [
+                  Container(
+                    child: Text("Saved Locations",
                         style: const TextStyle(
-                            color: const Color(0xffffffff),
-                            fontWeight: FontWeight.w300,
-                            fontFamily: "FontAwesome5Pro",
+                            color: const Color(0xff000f1c),
+                            fontFamily: "psr",
                             fontStyle: FontStyle.normal,
-                            fontSize: 16.0),
-                        text: "+ "),
-                    TextSpan(
+                            fontSize: 12.0),
+                        textAlign: TextAlign.left),
+                  ),
+                  Spacer(),
+                  Container(
+                    child: Text(
+                        "${getLocationNumbers()} Location${getLocationNumbers() > 1 ? 's' : ''}",
                         style: const TextStyle(
-                            color: const Color(0xffffffff),
-                            fontWeight: FontWeight.w700,
-                            fontFamily: "ProductSans",
+                            color: const Color(0xff000f1c),
+                            fontFamily: "psr",
                             fontStyle: FontStyle.normal,
-                            fontSize: 16.0),
-                        text: "     Add New Location")
-                  ])),
-                ),
-              )
-            ],
-          ),
-        ),
+                            fontSize: 12.0),
+                        textAlign: TextAlign.right),
+                  )
+                ],
+              ),
+            ),
+            ...savedLocations.map((savedLocation) => SavedLocationComponent(
+                  subTitle: savedLocation.location.address,
+                  title: savedLocation.name,
+                  locationId: savedLocation.id!,
+                  location: LatLng(savedLocation.location.latitude!,
+                      savedLocation.location.longitude),
+                  onPress: () {
+                    mezcalmosSnackBar(
+                        "_title", "Clicked on ${savedLocation.id!}");
+                  },
+                )),
+            // SavedLocationComponent(
+            //   subTitle: "3944 Coolidge Street, Miles City, MT 59301",
+            //   title: "Home",
+            //   onPress: () {},
+            // ),
+            // SavedLocationComponent(
+            //   subTitle: "3944 Coolidge Street, Miles City, MT 59301",
+            //   title: "My Office",
+            //   onPress: () {},
+            // ),
+            // SavedLocationComponent(
+            //   subTitle: "3944 Coolidge Street, Miles City, MT 59301",
+            //   title: "Penthouse",
+            //   onPress: () {},
+            // ),
+            SizedBox(
+              height: 25,
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 16, right: 16),
+              width: double.infinity,
+              height: 48,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(4)),
+                boxShadow: [
+                  BoxShadow(
+                      color: const Color(0x332362f1),
+                      offset: Offset(0, 6),
+                      blurRadius: 10,
+                      spreadRadius: 0)
+                ],
+                gradient: LinearGradient(
+                    begin: Alignment(0.1689453125, 0),
+                    end: Alignment(1, 1),
+                    colors: [const Color(0xff5582ff), const Color(0xffc54efc)]),
+              ),
+              child: Center(
+                child: RichText(
+                    text: TextSpan(children: [
+                  TextSpan(
+                      style: const TextStyle(
+                          color: const Color(0xffffffff),
+                          fontWeight: FontWeight.w300,
+                          fontFamily: "FontAwesome5Pro",
+                          fontStyle: FontStyle.normal,
+                          fontSize: 16.0),
+                      text: "+ "),
+                  TextSpan(
+                      style: const TextStyle(
+                          color: const Color(0xffffffff),
+                          fontWeight: FontWeight.w700,
+                          fontFamily: "ProductSans",
+                          fontStyle: FontStyle.normal,
+                          fontSize: 16.0),
+                      text: "     Add New Location")
+                ])),
+              ),
+            )
+          ],
+        )),
       ),
     );
   }
@@ -137,10 +185,14 @@ class SavedLocationComponent extends StatelessWidget {
       {required this.title,
       required this.subTitle,
       required this.onPress,
+      required this.locationId,
+      required this.location,
       Key? key})
       : super(key: key);
   final String title;
   final String subTitle;
+  final String locationId;
+  final LatLng location;
   final GestureTapCallback onPress;
 
   @override
@@ -163,7 +215,11 @@ class SavedLocationComponent extends StatelessWidget {
               height: 60,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(3))),
-              child: Placeholder(),
+              child: MGoogleMap(
+                  notifyParent: (_, __) {},
+                  markers: [],
+                  initialLocation: location),
+              //Placeholder(),
             ),
             SizedBox(
               width: 15,

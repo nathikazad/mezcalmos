@@ -1,4 +1,5 @@
 import 'package:mezcalmos/Shared/models/Location.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 class Customer {
   // List<Order> currentOrders = [];
@@ -6,17 +7,25 @@ class Customer {
   dynamic notificationInfo;
   List<SavedLocation> savedLocations = [];
   dynamic data;
-  Customer.fromSnapshot(dynamic data) {
+  Customer.fromSnapshotData(dynamic data) {
     this.data = data;
     this.appVersion = data["versionNumber"] ?? null;
     this.notificationInfo = data["notificationInfo"];
     List<SavedLocation> newSavedLocations = [];
-    if(data["savedLocations"] != null)
-      for (var locationId in data["savedLocations"]) {
-        dynamic locationData = data["savedLocations"][locationId];
-        newSavedLocations
-            .add(SavedLocation.fromData(id: locationId, data: locationData));
-      }
+
+    if (data["savedLocations"] != null) {
+      Map<String, dynamic>.from(data["savedLocations"])
+          .entries
+          .forEach((entry) {
+        savedLocations
+            .add(SavedLocation.fromData(id: entry.key, data: entry.value));
+      });
+    }
+    // for (var locationId in ) {
+    //   dynamic locationData = data["savedLocations"][locationId];
+    //   newSavedLocations
+    //       .add(SavedLocation.fromData(id: locationId, data: locationData));
+    // }
   }
 
   Map<String, dynamic> toJson() {
