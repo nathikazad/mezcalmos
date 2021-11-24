@@ -9,6 +9,7 @@ import * as rootNodes from "../shared/databaseNodes/root";
 import { isSignedIn } from "../shared/helper/authorizer";
 import { ServerResponseStatus } from "../shared/models/Generic";
 import { OrderType } from "../shared/models/Order";
+import { getUserInfo } from "../shared/models/User";
 import { OrderRequest } from "./models/OrderRequest";
 import { constructTaxiOrder } from "./models/TaxiOrder";
 
@@ -48,7 +49,7 @@ export = functions.https.onCall(async (data, context) => {
 
     // notification.notifyDriversNewRequest(firebase);
 
-    let userInfo = (await rootNodes.userInfo(customerId).once('value')).val();
+    let userInfo = await getUserInfo(customerId);
     let order = constructTaxiOrder(orderRequest, userInfo);
     let orderRef = await customerNodes.inProcessOrders(customerId).push(order);
     rootNodes.openOrders(OrderType.Taxi, orderRef.key!).set(order);

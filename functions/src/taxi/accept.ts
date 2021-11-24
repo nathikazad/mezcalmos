@@ -7,8 +7,8 @@ import * as customerNodes from "../shared/databaseNodes/customer";
 import { isSignedIn } from "../shared/helper/authorizer";
 import { AuthorizationStatus, ServerResponseStatus } from "../shared/models/Generic";
 import { OrderType } from "../shared/models/Order";
-import { UserInfo } from "../shared/models/User";
-import { Taxi } from "./models/Taxi";
+import { getUserInfo, UserInfo } from "../shared/models/User";
+import { getTaxiInfo, Taxi } from "./models/Taxi";
 import { TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "./models/TaxiOrder";
 import { buildChat } from "../shared/helper/chat";
 import { ParticipantType } from "../shared/models/Chat";
@@ -29,7 +29,7 @@ export = functions.https.onCall(async (data, context) => {
   }
   let taxiId: string = context.auth!.uid;
   let orderId: string = data.orderId;
-  let taxi: Taxi = (await taxiNodes.info(taxiId).once('value')).val();
+  let taxi: Taxi = (await getTaxiInfo(taxiId));
   if (!taxi || !taxi.state ||
     taxi.state.authorizationStatus != AuthorizationStatus.Authorized) {
     return {
@@ -44,7 +44,7 @@ export = functions.https.onCall(async (data, context) => {
       errorMessage: "Driver is already in another taxi"
     }
   }
-  let driverInfo: UserInfo = (await rootNodes.userInfo(taxiId).once('value')).val();
+  let driverInfo: UserInfo = await getUserInfo(taxiId);
 
   let transactionResponse = await rootNodes.openOrders(OrderType.Taxi, orderId).transaction(function (order) {
     if (order != null) {

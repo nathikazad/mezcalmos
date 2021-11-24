@@ -6,7 +6,3 @@ export function deliveryAdmins(adminId?: string) {
   }
   return firebase.database().ref(dbNode)
 }
-
-export function notificationInfo(adminId?: string) {
-  firebase.database().ref(`/deliveryAdmins/info/${adminId}/notificationInfo`)
-}

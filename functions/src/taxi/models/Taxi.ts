@@ -1,3 +1,4 @@
+import { info } from "../../shared/databaseNodes/taxi";
 import { AuthorizationStatus } from "../../shared/models/Generic";
 
 export interface State {
@@ -13,4 +14,8 @@ export interface Taxi {
 
 export interface TaxiDetails {
   taxiNumber: string
+}
+
+export async function getTaxiInfo(taxiId: string): Promise<Taxi> {
+  return (await info(taxiId).once('value')).val();
 }

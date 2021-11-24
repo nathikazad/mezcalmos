@@ -23,7 +23,3 @@ export function currentOrderIdNode(taxiId: string) {
 export function info(taxiId: string) {
   return firebase.database().ref(`/taxis/info/${taxiId}`)
 }
-
-export function notificationInfo(taxiId?: string) {
-  firebase.database().ref(`/taxis/info/${taxiId}/notificationInfo`)
-}

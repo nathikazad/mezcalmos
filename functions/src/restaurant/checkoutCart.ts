@@ -9,7 +9,7 @@ import { constructRestaurantOrder, RestaurantOrder } from './models/RestaurantOr
 import { Chat, ParticipantType } from "../shared/models/Chat";
 import { OrderType } from "../shared/models/Order";
 import { Restaurant } from "./models/Restaurant";
-import { UserInfo } from "../shared/models/User";
+import { getUserInfo, UserInfo } from "../shared/models/User";
 import { ServerResponseStatus } from "../shared/models/Generic";
 import * as restaurantNodes from "../shared/databaseNodes/restaurant";
 import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
@@ -48,7 +48,7 @@ export = functions.https.onCall(async (data, context) => {
     }
   }
 
-  let customerInfo: UserInfo = (await rootNodes.userInfo(customerId).once('value')).val();
+  let customerInfo: UserInfo = await getUserInfo(customerId);
   const order: RestaurantOrder = constructRestaurantOrder({
     cart: cart,
     customer: customerInfo,
@@ -91,7 +91,7 @@ async function addDeliveryAdminsToChat(
   chat: Chat,
   orderId: string) {
   for (var deliveryAdminId in deliveryAdmins) {
-    var userInfo: UserInfo = (await rootNodes.userInfo(deliveryAdminId).once('value')).val();
+    var userInfo: UserInfo = await getUserInfo(deliveryAdminId);
     chat.participants[deliveryAdminId] = {
       ...userInfo,
       particpantType: ParticipantType.DeliveryAdmin

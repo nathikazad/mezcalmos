@@ -1,17 +1,18 @@
 import * as functions from "firebase-functions";
-import { userInfo } from "../shared/databaseNodes/root";
 import * as firebase from "firebase-admin";
+import { setUserInfo } from "../shared/models/User";
 
 // Customer Canceling
 export const processSignUp = functions.auth.user().onCreate(async user => {
   if (!user.photoURL)
     user.photoURL = 'https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d'
 
-  await userInfo(user.uid).update({
-    displayName: user.displayName,
-    photo: user.photoURL,
-    email: user.email
-  });
+  await setUserInfo(user.uid, {
+    name: user.displayName ?? "No Name",
+    id: user.uid,
+    image: user.photoURL,
+    email: user.email,
+  })
   // await hasuraModule.setClaim(user.uid);
 });
 

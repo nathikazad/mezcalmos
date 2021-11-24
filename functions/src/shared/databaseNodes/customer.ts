@@ -8,10 +8,6 @@ export function lock(customerId: string) {
   return firebase.database().ref(`/customers/info/${customerId}/lock`)
 }
 
-export function notificationInfo(customerId: string) {
-  firebase.database().ref(`/customers/info/${customerId}/notificationInfo`);
-}
-
 export function pastOrders(customerId: string, orderId?: string) {
   let dbNode: string = `/customers/pastOrders/${customerId}`
   if (orderId != undefined) {
