@@ -8,7 +8,7 @@ import { isSignedIn } from "../shared/helper/authorizer";
 import { AuthorizationStatus, ServerResponseStatus } from "../shared/models/Generic";
 import { OrderType } from "../shared/models/Order";
 import { getUserInfo, UserInfo } from "../shared/models/User";
-import { getTaxiInfo, Taxi } from "./models/Taxi";
+import { getTaxi, Taxi } from "./models/Taxi";
 import { TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "./models/TaxiOrder";
 import { buildChat } from "../shared/helper/chat";
 import { ParticipantType } from "../shared/models/Chat";
@@ -29,7 +29,7 @@ export = functions.https.onCall(async (data, context) => {
   }
   let taxiId: string = context.auth!.uid;
   let orderId: string = data.orderId;
-  let taxi: Taxi = (await getTaxiInfo(taxiId));
+  let taxi: Taxi = (await getTaxi(taxiId));
   if (!taxi || !taxi.state ||
     taxi.state.authorizationStatus != AuthorizationStatus.Authorized) {
     return {
@@ -94,7 +94,7 @@ export = functions.https.onCall(async (data, context) => {
     order.acceptRideTime = (new Date()).toISOString()
     order.driver = {
       id: taxiId,
-      name: driverInfo.name.split(' ')[0],
+      name: driverInfo.name,
       image: driverInfo.image,
       language: driverInfo.language,
       taxiNumber: taxi.details.taxiNumber,

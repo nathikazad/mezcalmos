@@ -16,6 +16,6 @@ export interface TaxiDetails {
   taxiNumber: string
 }
 
-export async function getTaxiInfo(taxiId: string): Promise<Taxi> {
+export async function getTaxi(taxiId: string): Promise<Taxi> {
   return (await info(taxiId).once('value')).val();
 }

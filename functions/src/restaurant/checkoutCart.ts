@@ -8,7 +8,7 @@ import { Cart } from './models/Cart';
 import { constructRestaurantOrder, RestaurantOrder } from './models/RestaurantOrder';
 import { Chat, ParticipantType } from "../shared/models/Chat";
 import { OrderType } from "../shared/models/Order";
-import { Restaurant } from "./models/Restaurant";
+import { getRestaurant, Restaurant } from "./models/Restaurant";
 import { getUserInfo, UserInfo } from "../shared/models/User";
 import { ServerResponseStatus } from "../shared/models/Generic";
 import * as restaurantNodes from "../shared/databaseNodes/restaurant";
@@ -38,7 +38,7 @@ export = functions.https.onCall(async (data, context) => {
   //   }
   // }
 
-  let restaurant: Restaurant = (await restaurantNodes.info(cart.serviceProviderId).once('value')).val();
+  let restaurant: Restaurant = await getRestaurant(cart.serviceProviderId);
 
   if (restaurant.state.open == false) {
     return {

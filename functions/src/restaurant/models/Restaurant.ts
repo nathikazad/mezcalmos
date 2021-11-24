@@ -1,3 +1,4 @@
+import { info } from "../../shared/databaseNodes/restaurant";
 import { AuthorizationStatus, Language } from "../../shared/models/Generic";
 import { UserInfo } from "../../shared/models/User";
 
@@ -49,5 +50,7 @@ export interface Restaurant {
   info: UserInfo;
 }
 
-
+export async function getRestaurant(restaurantId: string): Promise<Restaurant> {
+  return (await info(restaurantId).once("value")).val();
+}
 
