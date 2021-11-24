@@ -1,10 +1,9 @@
-import { Language } from "../../shared/models/Generic";
+import { AuthorizationStatus, Language } from "../../shared/models/Generic";
 import { UserInfo } from "../../shared/models/User";
 
 export interface Details {
   description: Record<Language, string>;
   languages: Language[];
-  info: UserInfo;
 }
 
 export interface ChooseManyOption {
@@ -39,7 +38,7 @@ export interface MenuItem {
 }
 
 export interface State {
-  authorizationStatus: boolean;
+  authorizationStatus: AuthorizationStatus;
   open: boolean;
 }
 
@@ -47,6 +46,7 @@ export interface Restaurant {
   details: Details;
   menu: Record<string, MenuItem>;
   state: State;
+  info: UserInfo;
 }
 
 

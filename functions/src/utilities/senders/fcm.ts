@@ -1,16 +1,13 @@
 import axios from "axios";
 import { getKeys } from "../../shared/keys";
 import * as firebase from "firebase-admin";
+import { logger } from "firebase-functions/v1";
 
 let keys = getKeys();
 
 export enum NotificationPriority {
   High = "high",
   Normal = "nomal"
-}
-
-export interface Notification {
-
 }
 
 export interface fcmNotification {
@@ -43,7 +40,7 @@ export async function push(notification: fcmPayload, throughApi: boolean = false
     }
     // console.log(response);
   } catch (e) {
-    console.log(`Send to devices error `);
+    logger.error(`Send to devices error `);
   }
 }
 
@@ -71,8 +68,8 @@ function pushThroughApi(notification: fcmPayload) {
       }
     }
   ).catch(error => {
-    console.log("FCM push error")
-    console.log(message)
-    console.log(error.response.statusText)
+    logger.error("FCM push error")
+    logger.error(message)
+    logger.error(error.response.statusText)
   });
 }

@@ -1,8 +1,9 @@
 
 import { Item, Cart } from './Cart';
 import { OrderType, PaymentType } from '../../shared/models/Order';
-import { GenericUser } from '../../shared/models/User';
+import { UserInfo } from '../../shared/models/User';
 import { Location } from '../../shared/models/Generic';
+import { OrderNotification } from '../../shared/models/Notification';
 
 export interface RestaurantOrder {
   quantity: number;
@@ -15,8 +16,8 @@ export interface RestaurantOrder {
   to: Location;
   orderType: OrderType.Restaurant;
   items: Record<string, Item>;
-  restaurant: GenericUser;
-  customer: GenericUser;
+  restaurant: UserInfo;
+  customer: UserInfo;
 }
 
 export enum RestaurantOrderStatus {
@@ -31,8 +32,8 @@ export enum RestaurantOrderStatus {
 
 interface ConstructRestaurantOrderParameters {
   cart: Cart,
-  customer: GenericUser,
-  restaurant: GenericUser
+  customer: UserInfo,
+  restaurant: UserInfo
 }
 export function constructRestaurantOrder(
   params: ConstructRestaurantOrderParameters): RestaurantOrder {
@@ -50,4 +51,12 @@ export function orderInProcess(status: RestaurantOrderStatus): boolean {
   return !(status == RestaurantOrderStatus.CancelledByAdmin ||
     status == RestaurantOrderStatus.CancelledByCustomer ||
     status == RestaurantOrderStatus.Delivered)
+}
+
+export interface NewRestaurantOrderNotification extends OrderNotification {
+  restaurant: UserInfo
+}
+
+export interface RestaurantOrderStatusChangeNotification extends OrderNotification {
+  status: RestaurantOrderStatus
 }

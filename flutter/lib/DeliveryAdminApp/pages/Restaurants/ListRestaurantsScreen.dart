@@ -51,14 +51,14 @@ class ListRestaurantsScreen extends GetView<RestaurantsInfoController> {
                 padding: const EdgeInsets.only(top: 10),
                 children: restaurants
                     .map((restaurant) => ItemComponent(
-                          imgUrl: restaurant.photo!,
-                          title: restaurant.name!,
-                          restaurantId: restaurant.id!,
+                          imgUrl: restaurant.photo,
+                          title: restaurant.name,
+                          restaurantId: restaurant.id,
                           withBorder: true,
                           margin: const EdgeInsets.symmetric(
                               horizontal: 10, vertical: 5),
                           onClick: () {
-                            Get.toNamed(getRestaurantRoute(restaurant.id!));
+                            Get.toNamed(getRestaurantRoute(restaurant.id));
                           },
                         ))
                     .toList())),

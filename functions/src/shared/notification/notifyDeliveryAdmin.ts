@@ -1,26 +1,23 @@
-import { Restaurant } from "../../restaurant/models/Restaurant";
-import { NewRestaurantOrderNotification, NotificationType, OrderNotification, OrderStatusChangeNotification } from "../models/Notification";
+import { NotificationType, OrderNotification } from "../models/Notification";
 import { OrderType } from "../models/Order";
 import * as fcm from "../../utilities/senders/fcm"
 import { DeliveryAdmin } from "../models/DeliveryAdmin";
 
 import { ParticipantType } from "../models/Chat";
-import { RestaurantOrderStatus } from "../../restaurant/models/RestaurantOrder";
+import { NewRestaurantOrderNotification, RestaurantOrderStatus, RestaurantOrderStatusChangeNotification } from "../../restaurant/models/RestaurantOrder";
 import * as foreground from "../../utilities/senders/foreground";
+import { UserInfo } from "../models/User";
 
 export async function notifyDeliveryAdminsNewOrder(
   deliveryAdmins: Record<string, DeliveryAdmin>,
   orderId: string,
-  restaurant: Restaurant) {
+  restaurant: UserInfo) {
   let foregroundNotificaiton: NewRestaurantOrderNotification = {
     time: (new Date()).toISOString(),
     notificationType: NotificationType.NewOrder,
     orderType: OrderType.Restaurant,
     orderId: orderId,
-    restaurant: {
-      name: restaurant.details.name,
-      image: restaurant.details.photo
-    }
+    restaurant: restaurant
   }
 
   let fcmNotification: fcm.fcmPayload = {
@@ -41,7 +38,7 @@ export async function notifyDeliveryAdminsNewOrder(
 
 export async function notifyDeliveryAdminsCancelledOrder(deliveryAdmins: Record<string, DeliveryAdmin>,
   orderId: string) {
-  let foregroundNotificaiton: OrderStatusChangeNotification = {
+  let foregroundNotificaiton: RestaurantOrderStatusChangeNotification = {
     status: RestaurantOrderStatus.CancelledByCustomer,
     time: (new Date()).toISOString(),
     notificationType: NotificationType.OrderStatusChange,

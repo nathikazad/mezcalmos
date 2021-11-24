@@ -1,30 +1,36 @@
 import { OrderType, PaymentType } from "../../shared/models/Order"
-import { GenericUser } from "../../shared/models/User"
+import { UserInfo } from "../../shared/models/User"
 import { OrderRequest } from "./OrderRequest"
 import { Location } from '../../shared/models/Generic';
+import { OrderNotification } from "../../shared/models/Notification";
 // status: "lookingForTaxi",
 
 export interface TaxiOrder {
   from: Location,
   to: Location,
-  customer: GenericUser;
+  customer: UserInfo;
   estimatedPrice: number,
   paymentType: PaymentType,
   orderType: OrderType,
   orderTime: string,
-  status: TaxiOrdersStatus,
+  status: TaxiOrderStatus,
   routeInformation: {
     duration: string,
     distance: string,
     polyline: string
-  }
+  },
+  acceptRideTime?: string,
+  driver: TaxiInfo;
 }
 
+export interface TaxiInfo extends UserInfo {
+  taxiNumber?: string
+}
 
-
-export enum TaxiOrdersStatus {
+export enum TaxiOrderStatus {
   DroppedOff = "droppedOff",
-  Cancelled = "cancelled",
+  CancelledByCustomer = "cancelledByCustomer",
+  CancelledByTaxi = "cancelledByTaxi",
   Expired = "expired",
   OnTheWay = "onTheWay",
   InTransit = "inTransit",
@@ -33,12 +39,16 @@ export enum TaxiOrdersStatus {
 
 export function constructTaxiOrder(
   orderRequest: OrderRequest,
-  customer: GenericUser): TaxiOrder {
+  customer: UserInfo): TaxiOrder {
   return <TaxiOrder>{
     ...orderRequest,
     customer: customer,
     orderType: OrderType.Taxi,
-    status: TaxiOrdersStatus.LookingForTaxi,
+    status: TaxiOrderStatus.LookingForTaxi,
     orderTime: (new Date()).toISOString(),
   }
+}
+
+export interface TaxiOrderStatusChangeNotification extends OrderNotification {
+  status: TaxiOrderStatus
 }

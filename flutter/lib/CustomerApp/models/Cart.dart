@@ -119,7 +119,7 @@ class Cart {
       Item item = this.restaurant!.findItemById(itemData["id"]);
       CartItem cartItem = CartItem.withData(
           item,
-          restaurant!.id!,
+          restaurant!.id,
           itemId,
           itemData["quantity"],
           itemData["notes"],

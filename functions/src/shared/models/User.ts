@@ -1,16 +1,10 @@
 import { Language } from "./Generic";
 
-
-export interface GenericUser {
-  id?: string;
+export interface UserInfo {
+  id: string;
   image: string;
   name: string;
-}
-
-export interface UserInfo {
-  photo: string;
-  displayName: string;
-  email?: string;
   language: Language;
+  email?: string;
   phoneNumber?: string;
 }

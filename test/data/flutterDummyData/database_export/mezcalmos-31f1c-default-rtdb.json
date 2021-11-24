@@ -21,12 +21,12 @@
           "languages": [
             "en",
             "es"
-          ],
-          "info": {
-            "name": "Basic Fodd",
-            "photo": "https://food.fnr.sndimg.com/content/dam/images/food/fullset/2018/10/4/1/FN_chain-restaurant-entrees_Applebees_Bourbon-Street-Chicken-Shrimp_s6x4.jpg.rend.hgtvcom.441.294.suffix/1538685780055.jpeg",
-            "language": "es"
-          }
+          ]
+        },
+        "info": {
+          "name": "Basic Fodd",
+          "photo": "https://food.fnr.sndimg.com/content/dam/images/food/fullset/2018/10/4/1/FN_chain-restaurant-entrees_Applebees_Bourbon-Street-Chicken-Shrimp_s6x4.jpg.rend.hgtvcom.441.294.suffix/1538685780055.jpeg",
+          "language": "es"
         },
         "menu": {
           "-MkjUGzBopdBjNme7tnq": {
@@ -247,183 +247,54 @@
           }
         },
         "state": {
-          "authorizationStatus": true,
+          "authorizationStatus": "authorized",
           "open": true
         }
       }
     }
   },
-  "taxiDrivers": {
-    "CMuzfW4Jp1vpzUEYvz8al0mT0KbG": {
-      "invite": {
-        "code": "none"
-      },
-      "location": {
-        "lastUpdateTime": "Tue, 06 Jul 2021 20:33:40 GMT",
-        "position": {
-          "lat": 15.8506993,
-          "lng": -97.04627909999999
-        }
-      },
-      "state": {
-        "isLooking": false
-      }
-    },
-    "PBcTv6zSy1FUT7C3EOaFj1Rw8dct": {
-      "invite": {
-        "code": "none"
-      },
-      "location": {
-        "lastUpdateTime": "2021-10-26 22:15:17.578554Z",
-        "position": {
-          "lat": 15.852228,
-          "lng": -97.04657
-        }
-      },
-      "notificationInfo": {
-        "deviceNotificationToken": "cGgugGITjk3FkrWMT-HzVH:APA91bFBmHXuodBMGJsyaQ_WmOTVvS86PIp86k9pxb9PcCx5rfo3MtVN8a9Xivwz75poHKDZJR5WkYIBl4SOhGDA0ymnx5QQF6Fs-ZP471zRRYCgCSWnSwaFryWokw877BL7H5Kj8npg"
-      },
-      "orders": {
-        "-McjiEzp5I99HCmIxTd7": {
-          "acceptRideTime": "Mon, 21 Jun 2021 17:58:44 GMT",
-          "cancelledBy": "driver",
-          "customer": {
-            "id": "O7jcgQ0UcQbMDRKYRbTjZRLgMnTz",
-            "image": "https://randomuser.me/api/portraits/men/65.jpg",
-            "name": "CustTwo"
-          },
-          "estimatedPrice": 40,
-          "paymentType": "cash",
-          "reason": "Other",
-          "rideFinishTime": "Tue, 06 Jul 2021 20:34:02 GMT",
-          "routeInformation": {
-            "distance": {
-              "text": "4.4 km",
-              "value": 4361
-            },
-            "duration": {
-              "text": "12 mins",
-              "value": 734
-            }
-          },
-          "status": "cancelled",
-          "to": {
-            "address": "Aeropuerto Internacional De Puerto Escondido, Costera, Aeropuerto, Puerto Escondido, Oaxaca, Mexico",
-            "by": "search",
-            "lat": 15.8744355,
-            "lng": -97.0918734
+  "taxis": {
+    "info": {
+      "CMuzfW4Jp1vpzUEYvz8al0mT0KbG": {
+        "location": {
+          "lastUpdateTime": "Tue, 06 Jul 2021 20:33:40 GMT",
+          "position": {
+            "lat": 15.8506993,
+            "lng": -97.04627909999999
           }
         },
-        "-MdxX1JQZr1J-tk10g9w": {
-          "acceptRideTime": "Tue, 06 Jul 2021 20:35:30 GMT",
-          "cancelledBy": "driver",
-          "customer": {
-            "id": "O7jcgQ0UcQbMDRKYRbTjZRLgMnTz",
-            "image": "https://randomuser.me/api/portraits/men/65.jpg",
-            "name": "CustTwo"
-          },
-          "distance": {
-            "text": "5.9 km",
-            "value": 5922
-          },
-          "driver": {
-            "id": "PBcTv6zSy1FUT7C3EOaFj1Rw8dct",
-            "image": "https://randomuser.me/api/portraits/men/79.jpg",
-            "name": "Taxi"
-          },
-          "duration": {
-            "text": "14 mins",
-            "value": 851
-          },
-          "estimatedPrice": 118,
-          "from": {
-            "address": "Boulevard Benito Juárez 1, Seccion C, Local 11, Rinconada, 71983 Puerto Escondido, Oax., Mexico",
-            "by": "search",
-            "lat": 15.8616003,
-            "lng": -97.0782013
-          },
-          "orderTime": "Tue, 06 Jul 2021 20:35:12 GMT",
-          "orderType": "taxi",
-          "paymentType": "cash",
-          "polyline": "}~x_BxqooQIiEQwHP}@Tw@Fa@d@mFF_BESHWP_APoAPm@LWnAyA\\e@BOHeAB_Be@L]iDQoBo@kGOc@GIUUWOQIq@EcAqL_@_Fk@eHEgBNwB\\iB|AkEl@gAr@u@f@_@^Oj@QZId@SbCy@|CmAjBcAvDmCvBgBlBaBtPoNnDyCvBgBvBmBdFeEbHeGbJsHhFkExDeD|F{E|EaEvBiBRJZLzBVdBX~Fp@nCb@rAP`O|@hCLhEPdBBD?",
-          "rideFinishTime": "2021-10-26T22:14:45.933Z",
-          "routeInformation": {
-            "distance": {
-              "text": "5.9 km",
-              "value": 5922
-            },
-            "duration": {
-              "text": "14 mins",
-              "value": 851
-            },
-            "polyline": "}~x_BxqooQIiEQwHP}@Tw@Fa@d@mFF_BESHWP_APoAPm@LWnAyA\\e@BOHeAB_Be@L]iDQoBo@kGOc@GIUUWOQIq@EcAqL_@_Fk@eHEgBNwB\\iB|AkEl@gAr@u@f@_@^Oj@QZId@SbCy@|CmAjBcAvDmCvBgBlBaBtPoNnDyCvBgBvBmBdFeEbHeGbJsHhFkExDeD|F{E|EaEvBiBRJZLzBVdBX~Fp@nCb@rAP`O|@hCLhEPdBBD?"
-          },
-          "status": "cancelled",
-          "to": {
-            "address": "Alejandro Cárdenas Peralta S/N, Brisas de Zicatela, 70934 Brisas de Zicatela, Oax., Mexico",
-            "by": "search",
-            "lat": 15.8333863,
-            "lng": -97.0445716
+        "state": {
+          "isLooking": false
+        }
+      },
+      "PBcTv6zSy1FUT7C3EOaFj1Rw8dct": {
+        "location": {
+          "lastUpdateTime": "2021-10-26 22:15:17.578554Z",
+          "position": {
+            "lat": 15.852228,
+            "lng": -97.04657
           }
+        },
+        "notificationInfo": {
+          "deviceNotificationToken": "cGgugGITjk3FkrWMT-HzVH:APA91bFBmHXuodBMGJsyaQ_WmOTVvS86PIp86k9pxb9PcCx5rfo3MtVN8a9Xivwz75poHKDZJR5WkYIBl4SOhGDA0ymnx5QQF6Fs-ZP471zRRYCgCSWnSwaFryWokw877BL7H5Kj8npg"
+        },
+        "state": {
+          "authorizationStatus": "authorized",
+          "isLooking": true
         }
       },
-      "state": {
-        "authorizationStatus": "authorized",
-        "isLooking": true
-      }
-    },
-    "T8AByBxlwcS321zFp8um19fzPwns": {
-      "invite": {
-        "code": "none"
-      },
-      "location": {
-        "lastUpdateTime": "Tue, 06 Jul 2021 20:37:24 GMT",
-        "position": {
-          "lat": 15.8506666,
-          "lng": -97.0462977
-        }
-      },
-      "notificationInfo": {
-        "endpoint": "https://fcm.googleapis.com/fcm/send/cahi3bIOJPg:APA91bEKDG-_yxsf2WZK_yYqVajMxvzEK6IUnPqn3vIXUmSa6KFMr7AIengfh-yKLAh77gHweZxeI8FVkfHek6pHts9g_gLlfI6hLYcu2PB9_3JJ_aUK9sig4m9dEncc-s11vMk4LBA5",
-        "keys": {
-          "auth": "xneNC7DknLJneO1_-yi1lg",
-          "p256dh": "BKedY26d6riQaVqhfY2UFqsQ3x9Ob2AzvwLQYeoS57sCv1PyiEEXWhUU1JsFMnV3ZMwypi94CE-xgwE2hPOC5kA"
-        }
-      },
-      "orders": {
-        "-MbDVGiEJP_PAHkhy02V": {
-          "acceptRideTime": "Wed, 02 Jun 2021 20:54:12 GMT",
-          "customer": {
-            "id": "S4mN56Yf2YeSLbWRzgAOuRJ7HAI8",
-            "image": "https://randomuser.me/api/portraits/men/70.jpg",
-            "name": "Customer"
-          },
-          "estimatedPrice": 53.040000000000006,
-          "paymentType": "cash",
-          "rideFinishTime": "Wed, 02 Jun 2021 20:54:35 GMT",
-          "rideStartTime": "Wed, 02 Jun 2021 20:54:25 GMT",
-          "routeInformation": {
-            "distance": {
-              "text": "2.7 km",
-              "value": 2652
-            },
-            "duration": {
-              "text": "8 mins",
-              "value": 453
-            }
-          },
-          "status": "droppedOff",
-          "to": {
-            "address": "Brisas de Zicatela, Oaxaca, Mexico",
-            "by": "search",
-            "lat": 15.8336944,
-            "lng": -97.0424994
+      "T8AByBxlwcS321zFp8um19fzPwns": {
+        "location": {
+          "lastUpdateTime": "Tue, 06 Jul 2021 20:37:24 GMT",
+          "position": {
+            "lat": 15.8506666,
+            "lng": -97.0462977
           }
+        },
+        "state": {
+          "authorizationStatus": "authorized",
+          "isLooking": true
         }
-      },
-      "state": {
-        "authorizationStatus": "authorized",
-        "isLooking": true
       }
     }
   },

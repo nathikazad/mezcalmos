@@ -10,7 +10,7 @@ import { Chat, ParticipantType } from "../shared/models/Chat";
 import { OrderType } from "../shared/models/Order";
 import { Restaurant } from "./models/Restaurant";
 import { UserInfo } from "../shared/models/User";
-import { ServerResponse, ServerResponseStatus } from "../shared/models/Generic";
+import { ServerResponseStatus } from "../shared/models/Generic";
 import * as restaurantNodes from "../shared/databaseNodes/restaurant";
 import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
 import * as customerNodes from "../shared/databaseNodes/customer";
@@ -18,20 +18,16 @@ import *  as rootNodes from "../shared/databaseNodes/root";
 import { notifyDeliveryAdminsNewOrder } from "../shared/notification/notifyDeliveryAdmin";
 import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
 import { buildChat } from "../shared/helper/chat";
+import { isSignedIn } from "../shared/helper/authorizer";
 
 export = functions.https.onCall(async (data, context) => {
-  if (!context.auth) {
-    return {
-      status: "Error",
-      errorMessage: "User needs to be signed in"
-    }
-  }
-  let response: ServerResponse = await checkoutCart(context.auth.uid, <Cart>data)
-  return response
-});
 
+  let response = isSignedIn(context.auth)
+  if (response != undefined)
+    return response;
 
-async function checkoutCart(uid: string, cart: Cart): Promise<ServerResponse> {
+  let customerId: string = context.auth!.uid;
+  let cart: Cart = <Cart>data;
   // TODO limit number of active orders
   // let customerCurrentOrder = (await firebase.database().ref(`/customers/${uid}/state/currentOrders`).once('value')).val();
   // if (customerCurrentOrder && Object.keys(customerCurrentOrder).length >= 3) {
@@ -52,43 +48,42 @@ async function checkoutCart(uid: string, cart: Cart): Promise<ServerResponse> {
     }
   }
 
-  let customerInfo: UserInfo = (await rootNodes.userInfo(uid).once('value')).val();
+  let customerInfo: UserInfo = (await rootNodes.userInfo(customerId).once('value')).val();
   const order: RestaurantOrder = constructRestaurantOrder({
     cart: cart,
-    customer: {
-      id: uid,
-      name: customerInfo.displayName.split(' ')[0],
-      image: customerInfo.photo
-    },
-    restaurant: {
-      id: cart.serviceProviderId,
-      name: restaurant.details.info.displayName.split(' ')[0],
-      image: restaurant.details.info.photo
-    },
+    customer: customerInfo,
+    restaurant: restaurant.info,
   })
 
-  let orderRef = await customerNodes.inProcessOrders(uid).push(order);
+  let orderRef = await customerNodes.inProcessOrders(customerId).push(order);
   restaurantNodes.inProcessOrders(cart.serviceProviderId, orderRef.key!).set(order);
   rootNodes.inProcessOrders(OrderType.Restaurant, orderRef.key!).set(order);
-  await customerNodes.cart(uid).remove();
+  await customerNodes.cart(customerId).remove();
 
-  let chat: Chat = await buildChat(uid, customerInfo, cart.serviceProviderId, restaurant.details.info, orderRef.key!);
+
+  let chat: Chat = await buildChat(customerId,
+    {
+      ...customerInfo,
+      particpantType: ParticipantType.Customer
+    },
+    cart.serviceProviderId,
+    {
+      ...restaurant.info,
+      particpantType: ParticipantType.Restaurant
+    },
+    orderRef.key!);
 
   deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
     let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
     addDeliveryAdminsToChat(deliveryAdmins, chat, orderRef.key!)
-    notifyDeliveryAdminsNewOrder(deliveryAdmins, orderRef.key!, restaurant)
+    notifyDeliveryAdminsNewOrder(deliveryAdmins, orderRef.key!, restaurant.info)
   })
 
-  let response: ServerResponse = {
+  return {
     status: ServerResponseStatus.Success,
     orderId: orderRef.key
   }
-  return response
-}
-
-
-
+})
 
 
 async function addDeliveryAdminsToChat(
@@ -98,10 +93,8 @@ async function addDeliveryAdminsToChat(
   for (var deliveryAdminId in deliveryAdmins) {
     var userInfo: UserInfo = (await rootNodes.userInfo(deliveryAdminId).once('value')).val();
     chat.participants[deliveryAdminId] = {
-      name: userInfo.displayName,
-      image: userInfo.photo,
-      particpantType: ParticipantType.DeliveryAdmin,
-      language: userInfo.language
+      ...userInfo,
+      particpantType: ParticipantType.DeliveryAdmin
     }
   }
   rootNodes.chat(orderId).set(chat);

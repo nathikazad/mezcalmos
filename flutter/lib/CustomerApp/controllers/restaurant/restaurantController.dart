@@ -67,7 +67,8 @@ class RestaurantController extends GetxController {
         .reference()
         .child('restaurants/info/${restaurantId}')
         .once();
-    return Restaurant.fromRestaurantData(snapshot.value, id: restaurantId);
+    return Restaurant.fromRestaurantData(
+        restaurantId: restaurantId, restaurantData: snapshot.value);
   }
 
   void saveCart() {

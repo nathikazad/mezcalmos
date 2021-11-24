@@ -6,24 +6,21 @@
 import * as functions from "firebase-functions";
 import * as customerNodes from "../shared/databaseNodes/customer";
 import * as rootNodes from "../shared/databaseNodes/root";
-import { ServerResponse, ServerResponseStatus } from "../shared/models/Generic";
+import { isSignedIn } from "../shared/helper/authorizer";
+import { ServerResponseStatus } from "../shared/models/Generic";
 import { OrderType } from "../shared/models/Order";
 import { OrderRequest } from "./models/OrderRequest";
 import { constructTaxiOrder } from "./models/TaxiOrder";
 
 export = functions.https.onCall(async (data, context) => {
-  if (!context.auth) {
-    return {
-      status: "Error",
-      errorMessage: "User needs to be signed in"
-    }
-  }
-  let response = await request(context.auth.uid, <OrderRequest>data)
-  return response
-});
+  let response = isSignedIn(context.auth)
+  if (response != undefined)
+    return response;
 
-async function request(uid: string, orderRequest: OrderRequest): Promise<ServerResponse> {
-  let response = await customerNodes.lock(uid).transaction(function (lock) {
+  let customerId: string = context.auth!.uid;
+  let orderRequest: OrderRequest = <OrderRequest>data;
+
+  let transactionResponse = await customerNodes.lock(customerId).transaction(function (lock) {
     if (lock == true) {
       return
     } else {
@@ -31,7 +28,7 @@ async function request(uid: string, orderRequest: OrderRequest): Promise<ServerR
     }
   })
 
-  if (!response.committed) {
+  if (!transactionResponse.committed) {
     return {
       status: ServerResponseStatus.Error,
       errorMessage: 'Customer lock not available'
@@ -51,21 +48,22 @@ async function request(uid: string, orderRequest: OrderRequest): Promise<ServerR
 
     // notification.notifyDriversNewRequest(firebase);
 
-    let userInfo = (await rootNodes.userInfo(uid).once('value')).val();
+    let userInfo = (await rootNodes.userInfo(customerId).once('value')).val();
     let order = constructTaxiOrder(orderRequest, userInfo);
-    let orderRef = await customerNodes.inProcessOrders(uid).push(order);
+    let orderRef = await customerNodes.inProcessOrders(customerId).push(order);
     rootNodes.openOrders(OrderType.Taxi, orderRef.key!).set(order);
-    await customerNodes.lock(uid).remove();
+
     return {
       status: ServerResponseStatus.Success,
       orderId: orderRef.key!
     }
   } catch (e) {
-    console.log("Order creation error");
-    await customerNodes.lock(uid).remove();
+    functions.logger.error(`Order request error ${customerId}`);
     return {
       status: ServerResponseStatus.Error,
-      orderId: "Order creation error"
+      orderId: "Order request error"
     }
+  } finally {
+    await customerNodes.lock(customerId).remove();
   }
-}
+});

@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
 import 'package:mezcalmos/CustomerApp/components/customerAppBar.dart';
 import 'package:mezcalmos/CustomerApp/components/itemMenuComponent.dart';
-import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
-import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
-import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:mezcalmos/TaxiAdminApp/controller/NotificationsController.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
@@ -78,7 +73,7 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
                                         topLeft: Radius.circular(25),
                                         topRight: Radius.circular(25)),
                                     child: handleNetworkImage(
-                                        url: restaurant!.photo!,
+                                        url: restaurant!.photo,
                                         fit: BoxFit.cover),
                                     // Image.network(
                                     //   "${restaurant!.photo}",

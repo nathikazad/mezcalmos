@@ -37,7 +37,7 @@ async function _sendOTPForLogin(data: sendOtpInterface): Promise<ServerResponse>
   } catch (e) {
     let a = e as any;
 
-    console.log(a);
+    // console.log(a);
     if (a.errorInfo.code == "auth/user-not-found") {
       try {
         user = await firebase.auth().createUser({
@@ -135,7 +135,8 @@ async function sendOTP(data: sendOtpInterface, userId: string): Promise<ServerRe
   try {
     await sms.send(payload)
   } catch (error) {
-    console.log(error)
+    functions.logger.error(error);
+    // console.log(error)
     return {
       status: ServerResponseStatus.Error,
       errorMessage: `SMS Send Error`

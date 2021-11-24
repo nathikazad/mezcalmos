@@ -2,13 +2,13 @@ import * as functions from "firebase-functions";
 import { AuthData } from "firebase-functions/lib/common/providers/https";
 import { ServerResponse, ServerResponseStatus } from "../shared/models/Generic";
 import { OrderType } from "../shared/models/Order";
-import { orderInProcess, RestaurantOrder, RestaurantOrderStatus } from "./models/RestaurantOrder";
+import { orderInProcess, RestaurantOrderStatusChangeNotification, RestaurantOrder, RestaurantOrderStatus } from "./models/RestaurantOrder";
 import * as restaurantNodes from "../shared/databaseNodes/restaurant";
 import * as customerNodes from "../shared/databaseNodes/customer";
 import *  as rootDbNodes from "../shared/databaseNodes/root";
 import { checkDeliveryAdmin, isSignedIn } from "../shared/helper/authorizer";
 import { finishOrder } from "./helper";
-import { Notification, NotificationType, OrderStatusChangeNotification } from "../shared/models/Notification";
+import { Notification, NotificationType } from "../shared/models/Notification";
 import { push } from "../shared/notification/notifyUser";
 import { restaurantOrderStatusChangeMessages } from "./bgNotificationMessages";
 
@@ -99,7 +99,7 @@ async function changeStatus(data: any, newStatus: RestaurantOrderStatus, auth?: 
   order.status = newStatus
 
   let notification: Notification = {
-    foreground: <OrderStatusChangeNotification>{
+    foreground: <RestaurantOrderStatusChangeNotification>{
       status: newStatus,
       time: (new Date()).toISOString(),
       notificationType: NotificationType.OrderStatusChange,

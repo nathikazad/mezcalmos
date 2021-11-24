@@ -1,4 +1,5 @@
 import { OrderType } from "./Order";
+import { UserInfo } from "./User";
 
 
 export interface Chat {
@@ -19,10 +20,6 @@ export enum ParticipantType {
   Restaurant = "restaurant"
 }
 
-export interface Participant {
-  name: string,
-  image: string,
-  particpantType: ParticipantType,
-  language: string,
-  phoneNumber?: string
+export interface Participant extends UserInfo {
+  particpantType: ParticipantType
 }

@@ -26,3 +26,9 @@ export enum ServerResponseStatus {
   Success = "Success",
   Error = "Error"
 }
+
+export enum AuthorizationStatus {
+  InReview = "inReview",
+  Authorized = "authorized",
+  Unauthorized = "unauthorized"
+}
