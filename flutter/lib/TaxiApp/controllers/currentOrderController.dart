@@ -95,7 +95,7 @@ class CurrentOrderController extends GetxController {
   Future<ServerResponse> startRide() async {
     mezDbgPrint("Start Taxi Called");
     HttpsCallable startRideFunction =
-        FirebaseFunctions.instance.httpsCallable('startTaxiRide');
+        FirebaseFunctions.instance.httpsCallable('taxi-startTaxiRide');
     try {
       HttpsCallableResult response = await startRideFunction.call();
       return ServerResponse.fromJson(response.data);

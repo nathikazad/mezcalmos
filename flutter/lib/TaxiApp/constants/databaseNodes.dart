@@ -1,10 +1,10 @@
 const String taxiOpenOrdersNode = "openOrders/taxi";
 String taxiAuthNode(String uid) {
-  return 'taxis/$uid';
+  return 'taxis/info/$uid';
 }
 
 String taxiStateNode(String uid) {
-  return 'taxis/$uid/state';
+  return 'taxis/info/$uid/state';
 }
 
 String notificationStatusReadNode(String orderId, String uid) {

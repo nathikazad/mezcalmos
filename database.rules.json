@@ -67,34 +67,39 @@
         }
       }
     },
-    "taxiDrivers": {
+    "taxis": {
       ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true",
-      "$uid": {
-        ".read": "$uid === auth.uid",
-        "notificationInfo": {
-          ".write": "$uid === auth.uid"
-        },
-        "state": {
-          "isLooking": {
+      "info" : {
+        "$uid": {
+          ".read": "$uid === auth.uid",
+          "notificationInfo": {
+            ".write": "$uid === auth.uid"
+          },
+          "state": {
+            "isLooking": {
+              ".write": "$uid === auth.uid"
+            }
+          },
+          "versionNumber": {
+            ".write": "$uid === auth.uid"
+          },
+          "location": {
             ".write": "$uid === auth.uid"
           }
-        },
-        "versionNumber": {
-          ".write": "$uid === auth.uid"
-        },
-        "location": {
+        }
+      },
+      "inProcessOrders":{
+        ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true",
+        "$uid": {
+          ".read": "$uid === auth.uid",
           ".write": "$uid === auth.uid"
         }
-      }
-    },
-    "openOrders": {
-      ".read": "root.child('taxiDrivers/' + auth.uid + '/state/authorizationStatus').val() === 'authorized' || root.child('admins/' + auth.uid + '/authorized').val() === true",
-      "$orderType": {
-        "$orderId": {
-          "estimatedPrice": {
-            ".read": "root.child('openOrders/' + $orderType + '/' + $orderId + '/customer/id').val() === auth.uid ",
-            ".write": "root.child('openOrders/' + $orderType + '/' + $orderId + '/customer/id').val() === auth.uid "
-          }
+      },
+      "pastOrders":{
+        ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true",
+        "$uid": {
+          ".read": "$uid === auth.uid",
+          ".write": "$uid === auth.uid"
         }
       }
     },
@@ -105,24 +110,27 @@
       ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true",
       "inProcess": {
         ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true || root.child('deliveryAdmins/' + auth.uid + '/authorized').val() === true",
-        ".write": "root.child('admins/' + auth.uid + '/authorized').val() === true || root.child('deliveryAdmins/' + auth.uid + '/authorized').val() === true"
+        "$orderType": {
+          ".write": "root.child('admins/' + auth.uid + '/authorized').val() === true || root.child('deliveryAdmins/' + auth.uid + '/authorized').val() === true",
+          "$orderId": {
+            ".read": "(root.child('orders/' + $orderType + '/' + $orderId + '/status').val() === 'lookingForTaxi' && root.child('taxis/info/' + auth.uid + '/state/authorizationStatus').val() === 'authorized') || root.child('orders/' + $orderType + '/' + $orderId + '/customer/id').val() === auth.uid || root.child('orders/' + $orderType + '/' + $orderId + '/driver/id').val() === auth.uid",
+            "driver": {
+              "location": {
+                ".write": "root.child('orders/' + $orderType + '/' + $orderId + '/driver/id').val() === auth.uid"
+              }
+            },
+            "estimatedPrice": {
+              ".write": "root.child('orders/' + $orderType + '/' + $orderId + '/customer/id').val() === auth.uid && root.child('orders/' + $orderType + '/' + $orderId + '/status').val() === 'lookingForTaxi'"
+            }
+          }
+        }
       },
       "past": {
         ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true || root.child('deliveryAdmins/' + auth.uid + '/authorized').val() === true",
         ".write": "root.child('admins/' + auth.uid + '/authorized').val() === true || root.child('deliveryAdmins/' + auth.uid + '/authorized').val() === true"
       },
-      "$orderType": {
-        "$orderId": {
-          ".read": "(root.child('orders/' + $orderType + '/' + $orderId + '/status').val() === 'lookingForTaxi' && root.child('taxiDrivers/' + auth.uid + '/state/authorizationStatus').val() === 'authorized') || root.child('orders/' + $orderType + '/' + $orderId + '/customer/id').val() === auth.uid || root.child('orders/' + $orderType + '/' + $orderId + '/driver/id').val() === auth.uid",
-          "driver": {
-            "location": {
-              ".write": "root.child('orders/' + $orderType + '/' + $orderId + '/driver/id').val() === auth.uid"
-            }
-          },
-          "estimatedPrice": {
-            ".write": "root.child('orders/' + $orderType + '/' + $orderId + '/customer/id').val() === auth.uid && root.child('orders/' + $orderType + '/' + $orderId + '/status').val() === 'lookingForTaxi'"
-          }
-        }
+      "open" : {
+
       }
     },
     "chat": {

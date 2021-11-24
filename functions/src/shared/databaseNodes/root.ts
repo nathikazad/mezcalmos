@@ -31,11 +31,11 @@ export function inProcessOrders(orderType: OrderType, orderId?: string) {
 }
 
 export function openOrders(orderType: OrderType, orderId?: string) {
-  return orders(OrderStatus.InProcess, orderType, orderId);
+  return orders(OrderStatus.Open, orderType, orderId);
 }
 
 export function pastOrders(orderType: OrderType, orderId?: string) {
-  return orders(OrderStatus.InProcess, orderType, orderId);
+  return orders(OrderStatus.PastOrders, orderType, orderId);
 }
 
 enum OrderStatus {

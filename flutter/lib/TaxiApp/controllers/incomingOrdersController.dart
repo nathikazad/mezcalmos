@@ -35,9 +35,9 @@ class IncomingOrdersController extends GetxController with MezDisposable {
 
   TaxiOrder? get selectedIncommingOrder =>
       (_selectedIncommingOrderKey.value != "")
-      ? orders.firstWhere(
-          (element) => element.orderId == _selectedIncommingOrderKey.value)
-      : null;
+          ? orders.firstWhere(
+              (element) => element.orderId == _selectedIncommingOrderKey.value)
+          : null;
 
   set selectedIncommingOrderKey(String selectedOrderKey) {
     _selectedIncommingOrderKey.value = selectedOrderKey;
@@ -126,7 +126,7 @@ class IncomingOrdersController extends GetxController with MezDisposable {
   Future<ServerResponse> acceptTaxi(String orderId) async {
     mezDbgPrint("Accept Taxi Called");
     HttpsCallable acceptTaxiFunction =
-        FirebaseFunctions.instance.httpsCallable('acceptTaxiOrder');
+        FirebaseFunctions.instance.httpsCallable('taxi-acceptTaxiOrder');
     try {
       HttpsCallableResult response =
           await acceptTaxiFunction.call(<String, dynamic>{'orderId': orderId});
