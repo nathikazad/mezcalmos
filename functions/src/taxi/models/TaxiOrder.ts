@@ -20,7 +20,8 @@ export interface TaxiOrder {
     polyline: string
   },
   acceptRideTime?: string,
-  rideStartTime?: string,
+  startRideTime?: string,
+  finishRideTime?: string,
   driver: TaxiInfo;
 }
 

@@ -103,7 +103,7 @@ export = functions.https.onCall(async (data, context) => {
     rootNodes.inProcessOrders(OrderType.Taxi, orderId).set(order);
     rootNodes.openOrders(OrderType.Taxi, orderId).remove();
 
-    customerNodes.inProcessOrders(order.customer.id!).update(order);
+    customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
 
     taxiNodes.inProcessOrders(taxiId, orderId).set(order);
     taxiNodes.currentOrderIdNode(taxiId).set(orderId);

@@ -36,11 +36,11 @@ export const restaurant = {
   cancelOrderFromCustomer: require("./restaurant/cancelOrderFromCustomer")
 }
 
-// // Taxi
+// Taxi
 export const taxi = {
   requestTaxi: require("./taxi/request"),
-  // acceptTaxiOrder: require("./helpers/taxi/accept"),
-  // startTaxiRide: require("./helpers/taxi/start"),
+  acceptTaxiOrder: require("./taxi/accept"),
+  startTaxiRide: require("./taxi/start")
   // cancelTaxiFromCustomer: require("./helpers/taxi/cancelTaxiFromCustomer"),
   // cancelTaxiFromDriver: require("./helpers/taxi/cancelTaxiFromDriver"),
   // finishTaxiRide: require('./helpers/taxi/finish')

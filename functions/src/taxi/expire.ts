@@ -1,9 +1,6 @@
-import { isSignedIn } from "../shared/helper/authorizer";
 import * as functions from "firebase-functions";
 import * as rootNodes from "../shared/databaseNodes/root";
-import * as taxiNodes from "../shared/databaseNodes/taxi";
 import * as customerNodes from "../shared/databaseNodes/customer";
-import { currentOrderIdNode } from "../shared/databaseNodes/taxi";
 import { ServerResponseStatus } from "../shared/models/Generic";
 import { OrderType } from "../shared/models/Order";
 import { push } from "../shared/notification/notifyUser";
@@ -11,20 +8,7 @@ import { Notification, NotificationType } from "../shared/models/Notification";
 import { TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "./models/TaxiOrder";
 import { taxiOrderStatusChangeMessages } from "./bgNotificationMessages";
 
-export = functions.https.onCall(async (data, context) => {
-  let response = isSignedIn(context.auth)
-  if (response != undefined)
-    return response;
-  let taxiId: string = context.auth!.uid;
-  let orderId = (await currentOrderIdNode(taxiId).once('value')).val();
-  // console.log('the order id', orderId);
-  if (orderId == null) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: "Driver has not accepted any ride"
-    }
-  }
-
+export async function expireOrder(orderId: string) {
   let order = (await rootNodes.inProcessOrders(OrderType.Taxi, orderId).once('value')).val()
   if (order == null) {
     return {
@@ -33,7 +17,7 @@ export = functions.https.onCall(async (data, context) => {
     }
   }
 
-  let transactionResponse = await rootNodes.inProcessOrders(OrderType.Taxi, orderId).transaction(function (order) {
+  let transactionResponse = await rootNodes.openOrders(OrderType.Taxi, orderId).transaction(function (order) {
     if (order != null) {
       if (order.lock == true) {
         return
@@ -55,45 +39,46 @@ export = functions.https.onCall(async (data, context) => {
 
   try {
     let order: TaxiOrder = transactionResponse.snapshot.val()
-    if (order.status != TaxiOrderStatus.OnTheWay) {
+    if (order.status != TaxiOrderStatus.LookingForTaxi) {
       return {
         status: ServerResponseStatus.Error,
-        errorMessage: 'Ride status in not onTheWay but ' + order.status
+        errorMessage: 'cannot expire because order status is not lookingForTaxi'
       }
     }
 
+    order.status = TaxiOrderStatus.Expired;
+    order.finishRideTime = (new Date()).toISOString();
 
-    order.status = TaxiOrderStatus.InTransit;
-    order.startRideTime = (new Date()).toISOString();
-
-    rootNodes.inProcessOrders(OrderType.Taxi, orderId).update(order);
+    rootNodes.openOrders(OrderType.Taxi, orderId).remove();
     customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
-    taxiNodes.inProcessOrders(taxiId, orderId).update(order);
+
 
     let notification: Notification = {
       foreground: <TaxiOrderStatusChangeNotification>{
-        status: TaxiOrderStatus.InTransit,
+        status: TaxiOrderStatus.Expired,
         time: (new Date()).toISOString(),
         notificationType: NotificationType.OrderStatusChange,
         orderType: OrderType.Taxi,
         orderId: orderId
       },
-      background: taxiOrderStatusChangeMessages[TaxiOrderStatus.OnTheWay]
+      background: taxiOrderStatusChangeMessages[TaxiOrderStatus.Expired]
     }
 
     push(order.customer.id!, notification);
 
+
     return {
       status: ServerResponseStatus.Success,
-      message: "started"
-    };
+      message: 'expired'
+    }
+
   } catch (e) {
-    functions.logger.error(`Order start error ${orderId}`);
+    functions.logger.error(`Order request error ${orderId}`);
     return {
       status: ServerResponseStatus.Error,
-      orderId: "Order start error"
+      orderId: "Order accept error"
     }
   } finally {
-    rootNodes.inProcessOrders(OrderType.Taxi, orderId).child("lock").remove();
+    rootNodes.openOrders(OrderType.Taxi, orderId).child("lock").remove();
   }
-});
+}
