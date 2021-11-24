@@ -3,7 +3,8 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
 enum TaxiOrdersStatus {
   DroppedOff,
-  Cancelled,
+  CancelledByCustomer,
+  CancelledByTaxi,
   Expired,
   OnTheWay,
   InTransit,

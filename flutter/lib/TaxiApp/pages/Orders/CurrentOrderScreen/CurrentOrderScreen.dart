@@ -160,7 +160,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
     mezDbgPrint("_handleEvent -> Event == OrderStatusChange , passed ");
 
     mezDbgPrint("\t\tORDER STATUS CHANGED ${order.toJson()}");
-    if (order.status == TaxiOrdersStatus.Cancelled) {
+    if (order.status == TaxiOrdersStatus.CancelledByCustomer) {
       mezDbgPrint("======> Canceeeeeeeled =======>${order.toJson()}");
 
       Future.microtask(() {
