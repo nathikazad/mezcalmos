@@ -58,13 +58,15 @@ export = functions.https.onCall(async (data, context) => {
     return order
   })
 
+
+  if (!transactionResponse.committed) {
+    return {
+      status: ServerResponseStatus.Error,
+      errorMessage: "Order is locked in another request"
+    };
+  }
+
   try {
-    if (!transactionResponse.committed) {
-      return {
-        status: ServerResponseStatus.Error,
-        errorMessage: "Order is locked in another request"
-      };
-    }
     let order: TaxiOrder = transactionResponse.snapshot.val();
 
     if (!order) {
@@ -98,10 +100,11 @@ export = functions.https.onCall(async (data, context) => {
       taxiNumber: taxi.details.taxiNumber,
     }
 
-    rootNodes.openOrders(OrderType.Taxi, orderId).update(order);
-    rootNodes.inProcessOrders(OrderType.Taxi, orderId).remove();
+    rootNodes.inProcessOrders(OrderType.Taxi, orderId).set(order);
+    rootNodes.openOrders(OrderType.Taxi, orderId).remove();
 
     customerNodes.inProcessOrders(order.customer.id!).update(order);
+
     taxiNodes.inProcessOrders(taxiId, orderId).set(order);
     taxiNodes.currentOrderIdNode(taxiId).set(orderId);
 
