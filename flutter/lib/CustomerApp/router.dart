@@ -84,7 +84,13 @@ class XRouter {
             page: () => PickLocationView(PickLocationMode.AddNewLocation)),
         GetPage(
             name: kPickLocationEditRoute,
-            page: () => PickLocationView(PickLocationMode.EditLocation))
+            page: () => PickLocationView(PickLocationMode.EditLocation)),
+        // Taxis Routes
+        GetPage(
+            name: kTaxisRoute,
+            page: () => OrderTaxiScreen(),
+            transitionDuration: Duration(milliseconds: 500),
+            transition: Transition.rightToLeft),
       ] +
       SharedRouter.sharedRoutes;
 }
