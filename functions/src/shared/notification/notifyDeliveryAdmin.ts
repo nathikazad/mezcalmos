@@ -75,7 +75,7 @@ async function notifyDeliveryAdmins(
     }
     foreground.push(payload)
     let admin: DeliveryAdmin = deliveryAdmins[adminId]
-    if (admin.notificationInfo.deviceNotificationToken && admin.notificationInfo.deviceNotificationToken) {
+    if (admin.notificationInfo?.deviceNotificationToken) {
       notificationTokens.push(admin.notificationInfo.deviceNotificationToken);
     }
   }
