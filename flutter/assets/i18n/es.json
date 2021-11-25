@@ -82,9 +82,20 @@
         },
         "savedLocations": {
             "title": "Ubicaciones guardadas",
-            "location": "Ubicacion|Ubicaciones",
+            "location": "Ubicacion",
             "addNewLoc": "Añadir Nueva Ubicación",
-            "editLocation": "Editar ubicación"
+            "editLocation": "Editar ubicación",
+            "locations": "Ubicaciones",
+            "addLocationDialog": {
+                "title": "Si da un nombre, puede guardar la ubicación para uso futuro.",
+                "button": "OK",
+                "textHint": "Nombre del lugar"
+            },
+            "editLocationDialog": {
+                "title": "puede editar el nombre y guardar esta ubicación para usos futuros",
+                "button": "EDITAR",
+                "textHint": "Nombre del lugar"
+            }
         },
         "orders": {
             "title": "Pedidos",
@@ -162,7 +173,7 @@
         }
     },
     "shared": {
-        "snackbars" : {
+        "snackbars": {
             "titleSuccess": "Éxito :)",
             "titleFailed": "Vaya :(",
             "orderCancelSuccess": "El pedido se canceló correctamente.",
@@ -281,7 +292,7 @@
             "searching": "Buscando",
             "pick": "ELIGE",
             "pickFromMap": "Elige del mapa",
-            "moveMapIfNotPrecise" : "Puede mover el mapa si la posición no es precisa.",
+            "moveMapIfNotPrecise": "Puede mover el mapa si la posición no es precisa.",
             "moveMapToPick": "Mueva el mapa para elegir la ubicación."
         },
         "pickLocation": {

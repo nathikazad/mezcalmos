@@ -21,7 +21,8 @@ const String kViewRestaurantItemRoute = '/items/:restaurantId/:itemId';
 const String kRestaurantOrderRoute = '/currentRestaurantOrders/:orderId';
 const String kCartRoute = '/cart';
 const String kCartItemRoute = '/cart/:cartItemId';
-const String kPickLocationRoute = '/pickLocationFromMap';
+const String kPickLocationRoute = '/pickLocationFromMap/addLocation';
+const String kPickLocationEditRoute = '/pickLocationFromMap/editLocation';
 
 String getRestaurantRoute(String restaurantId) {
   return kRestaurantRoute.replaceFirst(":restaurantId", restaurantId);
@@ -78,14 +79,12 @@ class XRouter {
         GetPage(
             name: kRestaurantOrderRoute,
             page: () => ViewRestaurantOrderScreen()),
-        GetPage(name: kPickLocationRoute, page: () => PickLocationView()),
-
-        // Taxis Routes
         GetPage(
-            name: kTaxisRoute,
-            page: () => OrderTaxiScreen(),
-            transitionDuration: Duration(milliseconds: 500),
-            transition: Transition.rightToLeft),
+            name: kPickLocationRoute,
+            page: () => PickLocationView(PickLocationMode.AddNewLocation)),
+        GetPage(
+            name: kPickLocationEditRoute,
+            page: () => PickLocationView(PickLocationMode.EditLocation))
       ] +
       SharedRouter.sharedRoutes;
 }

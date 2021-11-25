@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:mezcalmos/CustomerApp/pages/MapViews/savedLocationView/savedLocationView.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -104,6 +105,21 @@ class MezSideMenu extends GetWidget<AuthController> {
                                 TextStyle(fontFamily: 'psb', fontSize: 16.sp)),
                       )
                     : SizedBox()),
+                ListTile(
+                  onTap: () {
+                    _drawerController.cloeseMenu();
+                    Get.to(() => SavedLocationView(
+                        savedLocationViewMode:
+                            SavedLocationViewMode.SeeSaveLocation));
+                  },
+                  leading: Icon(
+                    Icons.near_me_outlined,
+                    color: Color.fromARGB(255, 103, 121, 254),
+                    size: 25.sp,
+                  ),
+                  title: Text("Saved Locations",
+                      style: TextStyle(fontFamily: 'psb', fontSize: 16.sp)),
+                ),
                 Obx(() => controller.user != null
                     ? ListTile(
                         onTap: () async {

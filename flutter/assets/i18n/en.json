@@ -82,9 +82,20 @@
         },
         "savedLocations": {
             "title": "Saved Locations",
-            "location": "Location|Locations",
+            "location": "Location",
             "addNewLoc": "Add New Location",
-            "editLocation": "Edit Location"
+            "editLocation": "Edit Location",
+            "locations":"Locations",
+            "addLocationDialog":{
+                "title":"If you give a name, you can save the location for future use.",
+                "button":"OK",
+                "textHint":"Location Name"
+            },
+            "editLocationDialog":{
+                "title":"you can edit the name and save this location for furure uses",
+                "button":"EDIT",
+                "textHint":"Location Name"
+            }
         },
         "orders": {
             "title": "Orders",

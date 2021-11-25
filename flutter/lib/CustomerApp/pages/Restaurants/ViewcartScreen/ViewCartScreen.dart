@@ -5,7 +5,8 @@ import 'package:mezcalmos/CustomerApp/components/customerAppBar.dart';
 import 'package:mezcalmos/CustomerApp/components/textFieldComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/CustomerApp/pages/MapViews/savedLocationView.dart';
+import 'package:mezcalmos/CustomerApp/models/Customer.dart';
+import 'package:mezcalmos/CustomerApp/pages/MapViews/savedLocationView/savedLocationView.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
@@ -248,13 +249,20 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                                 onChanged: (newValue) async {
                                   // we will route the user back to the Map
                                   if (newValue == "_pick_") {
-                                    var _loc;
-                                    // await Get.toNamed(kPickLocationRoute);
-                                    Get.to(() => SavedLocationView());
+                                    SavedLocation _loc =
+                                        // await Get.toNamed(kPickLocationRoute);
+                                        await Get.to(() => SavedLocationView(
+                                              savedLocationViewMode:
+                                                  SavedLocationViewMode
+                                                      .GetSavedLocation,
+                                            ));
+                                    mezDbgPrint(
+                                        "the value returnde is ${_loc.location.address}");
                                     if (_loc != null) {
                                       mezDbgPrint(
-                                          "Get.back executed with  res : ${(_loc as Location?)!.toString()}");
-                                      controller.cart.value.toLocation = _loc;
+                                          "Get.back executed with  res : ${_loc.toString()}");
+                                      controller.cart.value.toLocation =
+                                          _loc.location;
                                       controller.saveCart();
                                       controller.refresh();
                                     } else {

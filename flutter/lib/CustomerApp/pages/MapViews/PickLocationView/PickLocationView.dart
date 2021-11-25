@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/components/customerAppBar.dart';
+import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
+import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
@@ -16,7 +18,11 @@ import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
 
 import 'components/saveLocationDailog.dart';
 
+enum PickLocationMode { AddNewLocation, EditLocation }
+
 class PickLocationView extends StatefulWidget {
+  final PickLocationMode? pickLocationMode;
+  PickLocationView(this.pickLocationMode);
   @override
   _PickLocationViewState createState() => _PickLocationViewState();
 }
@@ -25,39 +31,95 @@ class _PickLocationViewState extends State<PickLocationView> {
   MyPopupMenuController _popUpController = MyPopupMenuController();
 
   Location? _selectedLocation;
+  SavedLocation? savedLocation;
   bool showBlackScreen = true;
 
   LanguageController _lang = Get.find<LanguageController>();
+  CustomerAuthController customerAuthController =
+      Get.find<CustomerAuthController>();
 
   void onPickButtonClick() async {
-    mezDbgPrint(
-        "Last Location Stored Address ==> ${_selectedLocation!.address}");
-    mezDbgPrint("Last Location Stored Lat ==> ${_selectedLocation!.latitude}");
-    mezDbgPrint("Last Location Stored Lng ==> ${_selectedLocation!.longitude}");
-    if (_selectedLocation!.address == "") {
-      String? address = await MapHelper.getAdressFromLatLng(
-          LatLng(_selectedLocation!.latitude!, _selectedLocation!.longitude!));
+    if (widget.pickLocationMode == PickLocationMode.AddNewLocation) {
+      var resault =
+          await savedLocationDailog(function: () => mezDbgPrint("hey bro"));
+      if (resault != null && resault != "") {
+        mezDbgPrint("the choosen name is $resault");
+        String? address = await MapHelper.getAdressFromLatLng(LatLng(
+            _selectedLocation!.latitude!, _selectedLocation!.longitude!));
+        _selectedLocation!.address = address ??
+            "${_lang.strings['shared']['pickLocation']['address']} : ${_selectedLocation!.latitude}, ${_selectedLocation!.longitude}";
 
-      //   _selectedLocation!.address = address ??
-      //       "${_lang.strings['shared']['pickLocation']['address']} : ${_selectedLocation!.latitude}, ${_selectedLocation!.longitude}";
-      // }
+        savedLocation =
+            SavedLocation(name: resault, location: _selectedLocation!);
 
-      // Get.back<Location>(result: _selectedLocation, closeOverlays: true);
+        customerAuthController.saveNewLocation(savedLocation!);
+
+        Get.back();
+      }
+    } else {
+      var resault = await savedLocationDailog(
+          function: () => mezDbgPrint("hey bro"), nameVal: savedLocation!.name);
+      if (resault != null && resault != "") {
+        mezDbgPrint("the choosen name is $resault");
+        String? address = await MapHelper.getAdressFromLatLng(LatLng(
+            _selectedLocation!.latitude!, _selectedLocation!.longitude!));
+        _selectedLocation!.address = address ??
+            "${_lang.strings['shared']['pickLocation']['address']} : ${_selectedLocation!.latitude}, ${_selectedLocation!.longitude}";
+
+        savedLocation = SavedLocation(
+            id: savedLocation!.id, name: resault, location: _selectedLocation!);
+
+        customerAuthController.editLocation(savedLocation!);
+
+        Get.back();
+      }
     }
+    // Get.back();
+    // mezDbgPrint(
+    //     "Last Location Stored Address ==> ${_selectedLocation!.address}");
+    // mezDbgPrint("Last Location Stored Lat ==> ${_selectedLocation!.latitude}");
+    // mezDbgPrint("Last Location Stored Lng ==> ${_selectedLocation!.longitude}");
+    // if (_selectedLocation!.address == "") {
+
+    // }
+
+    // Get.back<Location>(result: _selectedLocation, closeOverlays: true);
   }
 
   @override
   void initState() {
-    GeoLoc.Location().getLocation().then((locData) {
-      mezDbgPrint("Sat to current Location $locData!");
-      setState(() {
-        _selectedLocation = Location.fromData({
-          "address": "",
-          "lat": locData.latitude,
-          "lng": locData.longitude,
+    if (widget.pickLocationMode == PickLocationMode.AddNewLocation) {
+      GeoLoc.Location().getLocation().then((locData) {
+        mezDbgPrint("Sat to current Location $locData!");
+        setState(() {
+          _selectedLocation = Location.fromData({
+            "address": "",
+            "lat": locData.latitude,
+            "lng": locData.longitude,
+          });
         });
       });
-    });
+    } else {
+      var x = Get.parameters["id"];
+
+      savedLocation = customerAuthController
+          .customerStream()!
+          .savedLocations
+          .firstWhere((saved) => saved.id == x);
+
+      mezDbgPrint(
+          "the value sanded is ${savedLocation!.toFirebaseFormattedJson()}");
+      GeoLoc.Location().getLocation().then((locData) {
+        mezDbgPrint("Sat to current Location $locData!");
+        setState(() {
+          _selectedLocation = Location.fromData({
+            "address": "${savedLocation!.location.address}",
+            "lat": savedLocation!.location.latitude,
+            "lng": savedLocation!.location.longitude,
+          });
+        });
+      });
+    }
 
     super.initState();
   }
