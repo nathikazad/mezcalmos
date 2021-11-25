@@ -50,6 +50,7 @@ class AuthController extends GetxController {
   void onInit() {
     super.onInit();
     // _authStateStream.addStream(_auth.authStateChanges());
+
     mezDbgPrint('Auth controller init!');
     Get.lazyPut(() => LanguageController());
     _auth.authStateChanges().listen((fireAuth.User? user) {
@@ -60,6 +61,7 @@ class AuthController extends GetxController {
       }
       _previousUserValue = user?.toString();
       _authStateStream.add(user);
+
       mezDbgPrint('Authcontroller:: Auth state change!');
       mezDbgPrint(user?.hashCode);
       mezDbgPrint(user ?? "empty");
@@ -87,6 +89,9 @@ class AuthController extends GetxController {
           }
 
           _user.value = User.fromSnapshot(user, event.snapshot);
+          // _fireAuthUser.value = user;
+          // _authStateStream.add(user);
+          // _onSignInCallback();
 
           Get.find<LanguageController>()
               .userLanguageChanged(_user.value!.language);

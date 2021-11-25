@@ -148,7 +148,7 @@ class IncommingOrderScreenView extends GetWidget<IncomingOrdersController>
         color: Color.fromARGB(255, 172, 89, 252),
         polylineId: PolylineId("polyline"),
         jointType: JointType.round,
-        points: loadUpPolyline(
+        points: MapHelper.loadUpPolyline(
             controller.selectedIncommingOrder?.routeInformation.polyline),
         width: 2,
         startCap: Cap.buttCap,

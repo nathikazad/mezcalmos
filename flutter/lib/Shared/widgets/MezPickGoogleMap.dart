@@ -16,14 +16,25 @@ class MezPickGoogleMap extends StatefulWidget {
   final LatLng location;
   final LocationChangesNotifier notifyParent;
   bool showBlackScreen;
+  double blackScreenBottomTextMargin;
   bool showFakeMarker;
   List<Marker> markers;
+  Set<Polyline> polylines;
+  bool myLocationButtonEnabled;
+  bool animateMarkersPolyLinesBounds;
+  MinMaxZoomPreference minMaxZoomPrefs;
+
   MezPickGoogleMap(
       {Key? key,
       required this.location,
       required this.notifyParent,
+      this.blackScreenBottomTextMargin = 0,
+      this.myLocationButtonEnabled = true,
       this.showFakeMarker = true,
       this.showBlackScreen = true,
+      this.polylines = const {},
+      this.animateMarkersPolyLinesBounds = true,
+      this.minMaxZoomPrefs = MinMaxZoomPreference.unbounded,
       this.markers = const []})
       : super(key: key);
   @override
@@ -86,13 +97,16 @@ class MezPickGoogleMapState extends State<MezPickGoogleMap> {
             alignment: Alignment.center,
             children: [
               MGoogleMap(
+                polylines: widget.polylines,
+                animateMarkersPolyLinesBounds:
+                    widget.animateMarkersPolyLinesBounds,
                 notifyParent: _notifierLocationChange,
                 markers: widget.markers,
                 initialLocation: widget.location,
                 key: mGoogleMapKey,
-                minMaxZoomPrefs: MinMaxZoomPreference(16, 17),
+                minMaxZoomPrefs: widget.minMaxZoomPrefs,
                 periodicRedrendring: false,
-                myLocationButtonEnabled: true,
+                myLocationButtonEnabled: widget.myLocationButtonEnabled,
               ),
               widget.showFakeMarker ? pickerMarker() : SizedBox(),
               widget.showBlackScreen
@@ -106,8 +120,10 @@ class MezPickGoogleMapState extends State<MezPickGoogleMap> {
                         width: Get.width,
                         color: Colors.black45,
                         alignment: Alignment.bottomCenter,
-                        padding:
-                            EdgeInsets.only(bottom: 50, left: 20, right: 20),
+                        padding: EdgeInsets.only(
+                            bottom: widget.blackScreenBottomTextMargin,
+                            left: 10,
+                            right: 10),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
