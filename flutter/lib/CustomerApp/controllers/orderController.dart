@@ -55,8 +55,6 @@ class OrderController extends GetxController {
         mezDbgPrint("orderController: new incoming order data");
         for (var orderId in event.snapshot.value.keys) {
           dynamic orderData = event.snapshot.value[orderId];
-          mezDbgPrint(
-              "check if this correct ${orderData["orderType"]} && this should be ${OrderType.Restaurant.toFirebaseFormatString()}");
           try {
             if (orderData["orderType"] ==
                 OrderType.Restaurant.toFirebaseFormatString()) {
