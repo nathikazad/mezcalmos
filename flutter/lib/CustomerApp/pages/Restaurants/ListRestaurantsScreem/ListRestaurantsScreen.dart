@@ -41,7 +41,7 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
     responsiveSize(context);
     return Scaffold(
         backgroundColor: const Color(0xffffffff),
-        appBar: customerAppBar(AppBarLeftButtonType.Menu, _popUpController),
+        appBar: customerAppBar(AppBarLeftButtonType.Back, _popUpController),
         body: Column(children: [
           Container(
             padding: const EdgeInsets.symmetric(

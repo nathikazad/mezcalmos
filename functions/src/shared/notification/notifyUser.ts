@@ -29,11 +29,3 @@ export async function push(userId: string, notification: Notification, particpan
     fcm.push(fcmMessage);
   }
 }
-
-// function buildNewMessage(userLang: Language, notification: NewMessageNotification): TranslatedNotificaiton {
-//   let notificationMessage = notificationMessages[notification.notificationType][userLang];
-//   return {
-//     title: `${notificationMessage.title}${notification.sender.name}`,
-//     body: notification.message
-//   }
-// }
