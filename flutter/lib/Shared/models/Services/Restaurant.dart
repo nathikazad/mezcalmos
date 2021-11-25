@@ -194,7 +194,7 @@ class Restaurant {
             AuthorizationStatus.Unauthorized,
         restaurantData["state"]?["open"] ?? false);
     String name = restaurantData["info"]["name"];
-    String photo = restaurantData["info"]["photo"];
+    String photo = restaurantData["info"]["image"];
     String description = restaurantData["details"]["description"][language];
     Restaurant restaurant = Restaurant(
         id: restaurantId,

@@ -8,7 +8,7 @@ class Customer {
   List<SavedLocation> savedLocations = [];
   dynamic data;
   Customer.fromSnapshotData(dynamic data) {
-    this.data = data;
+    this.data = data ?? <dynamic, dynamic>{};
     this.appVersion = data["versionNumber"] ?? null;
     this.notificationInfo = data["notificationInfo"];
     List<SavedLocation> newSavedLocations = [];
