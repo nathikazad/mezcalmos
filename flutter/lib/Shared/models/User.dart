@@ -12,7 +12,7 @@ class User {
 
   String uid;
   String? email;
-  String? displayName;
+  String? name;
   String? image;
   String language;
   String? phone;
@@ -21,19 +21,19 @@ class User {
   User(
       {required this.uid,
       required this.email,
-      required this.displayName,
+      required this.name,
       required this.image,
       required this.language,
       this.phone});
 
   // Get props as list.
-  List<dynamic> get props => [uid, email, displayName, image];
+  List<dynamic> get props => [uid, email, name, image];
 
   // Removed parse from json , Since we will be working with Snapshots
   User.fromSnapshot(fireAuth.User user, DataSnapshot snapshot)
       : uid = user.uid,
         email = user.email,
-        displayName = snapshot.value['name'],
+        name = snapshot.value['name'],
         image = snapshot.value['image'],
         language = snapshot.value['language'] == null
             ? "es"
@@ -45,7 +45,7 @@ class User {
   Map<String, dynamic> toJson() => {
         "uid": uid,
         "email": email,
-        "displayName": displayName,
+        "name": name,
         "image": image,
         "language": language
       };

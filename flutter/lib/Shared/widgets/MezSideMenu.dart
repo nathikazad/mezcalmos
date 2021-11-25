@@ -74,7 +74,7 @@ class MezSideMenu extends GetWidget<AuthController> {
                 ),
                 Container(
                   child: Text(
-                    controller.user?.displayName ?? tDefaultUserName,
+                    controller.user?.name ?? tDefaultUserName,
                     textAlign: TextAlign.center,
                     style: TextStyle(fontFamily: 'psb', fontSize: 25.5.sp),
                   ),

@@ -46,7 +46,6 @@ export = functions.https.onCall(async (data, context) => {
 
     let userInfo = await getUserInfo(customerId);
     let order = constructTaxiOrder(orderRequest, userInfo);
-    console.log(order)
     let orderRef = await customerNodes.inProcessOrders(customerId).push(order);
     rootNodes.openOrders(OrderType.Taxi, orderRef.key!).set(order);
 

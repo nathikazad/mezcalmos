@@ -89,9 +89,6 @@ class AuthController extends GetxController {
           }
 
           _user.value = User.fromSnapshot(user, event.snapshot);
-          // _fireAuthUser.value = user;
-          // _authStateStream.add(user);
-          // _onSignInCallback();
 
           Get.find<LanguageController>()
               .userLanguageChanged(_user.value!.language);
@@ -102,7 +99,7 @@ class AuthController extends GetxController {
   }
 
   bool isDisplayNameSet() {
-    return _user.value?.displayName != null;
+    return _fireAuthUser.value?.displayName != null;
   }
 
   Future<String> getImageUrl(File imageFile, String uid) async {
@@ -127,13 +124,13 @@ class AuthController extends GetxController {
 
   // Future<ServerResponse> changeUserName(String? name) {}
 
-  Future<void> editUserProfile(String? displayName, String? photo) async {
+  Future<void> editUserProfile(String? name, String? image) async {
     Map<String, String> newProfileInfo = <String, String>{};
-    if (displayName != null) {
-      newProfileInfo["displayName"] = displayName;
+    if (name != null) {
+      newProfileInfo["name"] = name;
     }
-    if (photo != null) {
-      newProfileInfo["photo"] = photo;
+    if (image != null) {
+      newProfileInfo["image"] = image;
     }
     await _databaseHelper.firebaseDatabase
         .reference()

@@ -8,13 +8,12 @@ class Customer {
   List<SavedLocation> savedLocations = [];
   dynamic data;
   Customer.fromSnapshotData(dynamic data) {
-    this.data = data ?? <dynamic, dynamic>{};
-    this.appVersion = data["versionNumber"] ?? null;
-    this.notificationInfo = data["notificationInfo"];
+    this.appVersion = data?["versionNumber"] ?? null;
+    this.notificationInfo = data?["notificationInfo"];
     List<SavedLocation> newSavedLocations = [];
 
     if (data["savedLocations"] != null) {
-      Map<String, dynamic>.from(data["savedLocations"])
+      Map<String, dynamic>.from(data?["savedLocations"])
           .entries
           .forEach((entry) {
         savedLocations

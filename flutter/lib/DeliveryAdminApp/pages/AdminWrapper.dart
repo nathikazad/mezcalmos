@@ -55,12 +55,6 @@ class _AdminWrapperState extends State<AdminWrapper> {
   void handleAuthorization(bool authorized) async {
     if (authorized) {
       mezDbgPrint("AdminWrapper::handleState going to in process orders");
-      if (Get.find<AuthController>().isDisplayNameSet()) {
-        mezDbgPrint(
-            "User Signed in but Name or image are null , so  heading to UserInfo Page !");
-        await Get.toNamed(kUserProfile);
-        // Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
-      }
       Get.toNamed(kOrdersRoute);
     } else {
       mezDbgPrint("AdminWrapper::handleState going to unauthorized");

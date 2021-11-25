@@ -70,13 +70,6 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
       mezDbgPrint("isAuthorized ====> ${state.isAuthorized}");
       mezDbgPrint("isLooking ====> ${state.isLooking}");
 
-      if (Get.find<AuthController>().isDisplayNameSet()) {
-        mezDbgPrint(
-            "User Signed in but Name or image are null , so  heading to UserInfo Page !");
-        await Get.toNamed(kUserProfile);
-        // Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
-      }
-
       mezDbgPrint("TaxiWrapper::handleState ${state.toJson().toString()}");
       if (!state.isAuthorized) {
         mezDbgPrint("TaxiWrapper::handleState going to unauthorized");

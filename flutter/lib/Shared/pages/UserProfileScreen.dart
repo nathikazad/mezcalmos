@@ -40,7 +40,7 @@ class _UserProfileState extends State<UserProfile> {
     // should only executes once because when state rebuilds upon any focus (This gets re-executes making it impossible to apply userName changes)
     super.initState();
     textController.text =
-        !auth.isDisplayNameSet() ? "" : auth.user!.displayName!;
+        !auth.isDisplayNameSet() ? "" : auth.user!.name!;
   }
 
   Widget _buildButtonIcon() {
@@ -256,10 +256,10 @@ class _UserProfileState extends State<UserProfile> {
                                             Container(
                                               child: Center(
                                                 child: Text(
-                                                  (auth.user!.displayName ==
+                                                  (auth.user!.name ==
                                                           null)
                                                       ? "User"
-                                                      : "${auth.user!.displayName}",
+                                                      : "${auth.user!.name}",
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                     fontFamily: 'psb',
@@ -326,7 +326,7 @@ class _UserProfileState extends State<UserProfile> {
                                           "editing" + textController.text);
                                     } else {
                                       mezDbgPrint("saved");
-                                      auth.user!.displayName =
+                                      auth.user!.name =
                                           textController.text;
                                       if (imageFile.path != "test") {
                                         var xUrl = await auth.getImageUrl(

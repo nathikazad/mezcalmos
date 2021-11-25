@@ -47,13 +47,10 @@ export function constructTaxiOrder(
   customer: UserInfo): TaxiOrder {
     
   let requestCopy: any = orderRequest;
-  console.log(orderRequest)
   requestCopy.cost = orderRequest.estimatedPrice;
   delete requestCopy.estimatedPrice;
-  console.log(requestCopy)
-  return Object.assign(Object.assign({}, requestCopy),
-  {
-    
+  return Object.assign(requestCopy,
+    {
     customer: customer,
     orderType: OrderType.Taxi,
     status: TaxiOrderStatus.LookingForTaxi,

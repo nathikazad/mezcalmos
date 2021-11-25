@@ -15,8 +15,6 @@ class RestaurantsInfoController extends GetxController {
   }
 
   Future<List<Restaurant>> getRestaurants() async {
-    mezDbgPrint("Called 1");
-
     DataSnapshot snapshot = await _databaseHelper.firebaseDatabase
         .reference()
         .child('restaurants/info')

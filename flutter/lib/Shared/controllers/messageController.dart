@@ -50,20 +50,6 @@ class MessageController extends GetxController {
   }
 
   void sendMessage(String message, String orderId) async {
-    // check if user id is in participants, if not try to write to participants node
-    if (!_model.value.participants.containsKey(_authController.user!.uid)) {
-      mezDbgPrint("Message partcipants does not contain user's id");
-      _databaseHelper.firebaseDatabase
-          .reference()
-          .child(
-              '${orderChatNode(orderId)}/participants/${_authController.user!.uid}')
-          .set(<String, dynamic>{
-        "particpantType":
-            this.appType.toParticipantType()!.toFirebaseFormattedString(),
-        "name": _authController.user!.displayName,
-        "image": _authController.user!.image
-      });
-    }
     _databaseHelper.firebaseDatabase
         .reference()
         .child('${orderChatNode(orderId)}/messages')

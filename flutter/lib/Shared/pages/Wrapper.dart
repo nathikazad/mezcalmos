@@ -43,7 +43,7 @@ class _WrapperState extends State<Wrapper> {
     } else {
       mezDbgPrint(
           "Wrapper::handleAuthStateChange:: signed in, Checking if User name are Set !");
-      mezDbgPrint(Get.find<AuthController>().user?.displayName);
+      mezDbgPrint(Get.find<AuthController>().user?.name);
       mezDbgPrint("--------------------------------");
       mezDbgPrint(Get.find<AuthController>().fireAuthUser?.displayName);
 
