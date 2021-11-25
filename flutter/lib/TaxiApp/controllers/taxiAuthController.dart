@@ -143,7 +143,7 @@ class TaxiAuthController extends GetxController {
         if (_state.value?.currentOrder != null) {
           _databaseHelper.firebaseDatabase
               .reference()
-              .child(orderId(_state.value!.currentOrder!))
+              .child(inProcessOrder(_state.value!.currentOrder!))
               .child('driver/location')
               .set(positionUpdate);
         }

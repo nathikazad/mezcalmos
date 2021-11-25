@@ -31,18 +31,38 @@ class CurrentOrderController extends GetxController {
   }
 
   Future<void> listenForOrderStatus() async {
+    mezDbgPrint(
+        "Start listening for currentOrder stat changes : ${_taxiAuthController.taxiState!.currentOrder!}");
+
     await _orderStatusListener?.cancel();
     _orderStatusListener = _databaseHelper.firebaseDatabase
         .reference()
-        .child(orderStatus(_taxiAuthController.taxiState!.currentOrder!))
+        .child(
+            inProcessOrderStatus(_taxiAuthController.taxiState!.currentOrder!))
         .onValue
         .listen((event) async {
-      DataSnapshot dataSnapshot = await _databaseHelper.firebaseDatabase
-          .reference()
-          .child(orderId(_taxiAuthController.taxiState!.currentOrder!))
-          .once();
-      _orderStreamController
-          .add(TaxiOrder.fromData(dataSnapshot.key, dataSnapshot.value));
+      if (event.snapshot.value != null) {
+        mezDbgPrint("Inside CurrentOrderController::if");
+        mezDbgPrint(event.snapshot.value);
+
+        DataSnapshot dataSnapshot = await _databaseHelper.firebaseDatabase
+            .reference()
+            .child(inProcessOrder(_taxiAuthController.taxiState!.currentOrder!))
+            .once();
+
+        _orderStreamController
+            .add(TaxiOrder.fromData(dataSnapshot.key, dataSnapshot.value));
+      } else {
+        mezDbgPrint("Inside CurrentOrderController::else");
+        mezDbgPrint(event.snapshot.value);
+        // check orders/past/taxi/ node!
+        DataSnapshot dataSnapshot = await _databaseHelper.firebaseDatabase
+            .reference()
+            .child(pastOrder(_taxiAuthController.taxiState!.currentOrder!))
+            .once();
+        _orderStreamController
+            .add(TaxiOrder.fromData(dataSnapshot.key, dataSnapshot.value));
+      }
     });
   }
 
@@ -69,36 +89,46 @@ class CurrentOrderController extends GetxController {
     });
   }
 
-  Future<bool> cancelTaxi(String? reason) async {
+  Future<ServerResponse> cancelTaxi(String? reason) async {
     HttpsCallable cancelTaxiFunction =
-        FirebaseFunctions.instance.httpsCallable('cancelTaxiFromDriver');
+        FirebaseFunctions.instance.httpsCallable('taxi-cancelFromDriver');
     mezDbgPrint("Cancel Taxi Called");
     try {
       HttpsCallableResult response =
           await cancelTaxiFunction.call(<String, dynamic>{'reason': reason});
-      dynamic _res = responseStatusChecker(response.data);
-      if (_res == null) {
-        mezDbgPrint(
-            "Manually thrown Exception - Reason -> Response.data was null !");
-        return Future.value(false);
-      } else {
-        mezcalmosSnackBar("Notice ~", _res);
-        return Future.value(true);
-      }
+      var res = ServerResponse.fromJson(response.data);
+      mezDbgPrint(res.data);
+      mezDbgPrint(res.errorMessage);
+      mezDbgPrint(res.errorCode);
+      return res;
+      // dynamic _res = responseStatusChecker(response.data);
+      // if (_res == null) {
+      //   mezDbgPrint(
+      //       "Manually thrown Exception - Reason -> Response.data was null !");
+      //   return Future.value(false);
+      // } else {
+      //   mezcalmosSnackBar("Notice ~", _res);
+      //   return Future.value(true);
+      // }
     } catch (e) {
       mezcalmosSnackBar("Notice ~", "Failed to Cancel the Taxi Request :( ");
       mezDbgPrint("Exception happend in cancelTaxi : $e");
-      return Future.value(false);
+      return ServerResponse(ResponseStatus.Error,
+          errorMessage: "Server Error", errorCode: "serverError");
     }
   }
 
   Future<ServerResponse> startRide() async {
     mezDbgPrint("Start Taxi Called");
     HttpsCallable startRideFunction =
-        FirebaseFunctions.instance.httpsCallable('taxi-startTaxiRide');
+        FirebaseFunctions.instance.httpsCallable('taxi-startRide');
     try {
-      HttpsCallableResult response = await startRideFunction.call();
-      return ServerResponse.fromJson(response.data);
+      HttpsCallableResult response = await startRideFunction.call({});
+      var res = ServerResponse.fromJson(response.data);
+      mezDbgPrint(res.data);
+      mezDbgPrint(res.errorMessage);
+      mezDbgPrint(res.errorCode);
+      return res;
     } catch (e) {
       return ServerResponse(ResponseStatus.Error,
           errorMessage: "Server Error", errorCode: "serverError");
@@ -108,7 +138,7 @@ class CurrentOrderController extends GetxController {
   Future<ServerResponse> finishRide() async {
     mezDbgPrint("Finish Taxi Called");
     HttpsCallable finishRideFunction =
-        FirebaseFunctions.instance.httpsCallable('finishTaxiRide');
+        FirebaseFunctions.instance.httpsCallable('taxi-finishRide');
     try {
       HttpsCallableResult response = await finishRideFunction.call();
       return ServerResponse.fromJson(response.data);

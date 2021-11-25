@@ -12,14 +12,14 @@ class TaxiState {
     bool isAuthorized =
         data == null ? false : data['authorizationStatus'] == "authorized";
     bool isLooking = data == null ? false : data['isLooking'] == true;
-    String? currentOrder = data == null ? null : data['currentOrder'];
+    String? currentOrder = data == null ? null : data['currentOrderId'];
     return TaxiState(isAuthorized, isLooking, currentOrder);
   }
 
   Map<String, dynamic> toJson() => {
         "authorizationStatus": this.isAuthorized,
         "isLooking": this.isLooking,
-        "currentOrder": this.currentOrder,
+        "currentOrderId": this.currentOrder,
       };
 }
 

@@ -33,8 +33,8 @@ class User {
   User.fromSnapshot(fireAuth.User user, DataSnapshot snapshot)
       : uid = user.uid,
         email = user.email,
-        displayName = snapshot.value['displayName'],
-        image = snapshot.value['photo'],
+        displayName = snapshot.value['name'],
+        image = snapshot.value['image'],
         language = snapshot.value['language'] == null
             ? "es"
             : snapshot.value['language'],

@@ -55,12 +55,12 @@ async function changeStatus(data: any, newStatus: TaxiOrderStatus, auth?: AuthDa
 
   let transactionResponse = await rootNodes.inProcessOrders(OrderType.Taxi, orderId).transaction(function (order) {
     if (order != null) {
-      if (order.lock == true) {
-        return
-      } else {
+      // if (order.lock == true) {
+      //   return 
+      // } else {
         order.lock = true
         return order
-      }
+      // }
     }
     return order
   })
@@ -107,7 +107,22 @@ async function changeStatus(data: any, newStatus: TaxiOrderStatus, auth?: AuthDa
       taxiNodes.inProcessOrders(taxiId, orderId).remove();
       taxiNodes.pastOrders(taxiId, orderId).set(order);
     }
-
+    
+    // I think we need a switch here @Nathik
+    // we should set Taxis/info/$taxiId/state/currentOrderId => null
+    switch (newStatus) {
+      case TaxiOrderStatus.CancelledByTaxi:
+        taxiNodes.info(auth!.uid+'/state/currentOrderId').remove()
+        break;
+    
+      case TaxiOrderStatus.CancelledByCustomer:
+        // let customerOrder:TaxiOrder = (await customerNodes.inProcessOrders(order.customer!.id, orderId).once('value')).val();
+        taxiNodes.info(order.driver.id+'/state/currentOrderId').remove()
+          break;
+      default:
+        break;
+    }
+    
     let notification: Notification = {
       foreground: <TaxiOrderStatusChangeNotification>{
         status: newStatus,
@@ -123,7 +138,7 @@ async function changeStatus(data: any, newStatus: TaxiOrderStatus, auth?: AuthDa
 
     return {
       status: ServerResponseStatus.Success,
-      message: "started"
+      message: newStatus.toString()+' Successfully !'
     };
   } catch (e) {
     functions.logger.error(`Order start error ${orderId}`);

@@ -36,7 +36,8 @@ class IncomingOrdersController extends GetxController with MezDisposable {
   TaxiOrder? get selectedIncommingOrder =>
       (_selectedIncommingOrderKey.value != "")
           ? orders.firstWhere(
-              (element) => element.orderId == _selectedIncommingOrderKey.value)
+              (element) => element.orderId == _selectedIncommingOrderKey.value,
+              orElse: null)
           : null;
 
   set selectedIncommingOrderKey(String selectedOrderKey) {
@@ -51,6 +52,7 @@ class IncomingOrdersController extends GetxController with MezDisposable {
 
     if (_authController.user != null) {
       // Added TaxiOrder!
+      mezDbgPrint("Gonna start listen on : $taxiOpenOrdersNode !!");
       _databaseHelper.firebaseDatabase
           .reference()
           .child(taxiOpenOrdersNode)
@@ -126,7 +128,7 @@ class IncomingOrdersController extends GetxController with MezDisposable {
   Future<ServerResponse> acceptTaxi(String orderId) async {
     mezDbgPrint("Accept Taxi Called");
     HttpsCallable acceptTaxiFunction =
-        FirebaseFunctions.instance.httpsCallable('taxi-acceptTaxiOrder');
+        FirebaseFunctions.instance.httpsCallable('taxi-acceptRide');
     try {
       HttpsCallableResult response =
           await acceptTaxiFunction.call(<String, dynamic>{'orderId': orderId});

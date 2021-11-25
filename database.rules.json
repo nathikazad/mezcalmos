@@ -76,6 +76,8 @@
             ".write": "$uid === auth.uid"
           },
           "state": {
+            ".read": "$uid === auth.uid",
+            ".write": "$uid === auth.uid",
             "isLooking": {
               ".write": "$uid === auth.uid"
             }
@@ -109,18 +111,18 @@
     "orders": {
       ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true",
       "inProcess": {
-        ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true || root.child('deliveryAdmins/' + auth.uid + '/authorized').val() === true",
-        "$orderType": {
+        ".read": "true",
+        "taxi": {
           ".write": "root.child('admins/' + auth.uid + '/authorized').val() === true || root.child('deliveryAdmins/' + auth.uid + '/authorized').val() === true",
           "$orderId": {
-            ".read": "(root.child('orders/' + $orderType + '/' + $orderId + '/status').val() === 'lookingForTaxi' && root.child('taxis/info/' + auth.uid + '/state/authorizationStatus').val() === 'authorized') || root.child('orders/' + $orderType + '/' + $orderId + '/customer/id').val() === auth.uid || root.child('orders/' + $orderType + '/' + $orderId + '/driver/id').val() === auth.uid",
+            ".read": "true",
             "driver": {
               "location": {
-                ".write": "root.child('orders/' + $orderType + '/' + $orderId + '/driver/id').val() === auth.uid"
+                ".write": "true"
               }
             },
             "estimatedPrice": {
-              ".write": "root.child('orders/' + $orderType + '/' + $orderId + '/customer/id').val() === auth.uid && root.child('orders/' + $orderType + '/' + $orderId + '/status').val() === 'lookingForTaxi'"
+              ".write": "true"
             }
           }
         }
@@ -130,7 +132,11 @@
         ".write": "root.child('admins/' + auth.uid + '/authorized').val() === true || root.child('deliveryAdmins/' + auth.uid + '/authorized').val() === true"
       },
       "open" : {
-
+        ".read": "true",
+        "taxi" :{
+          ".write": "true",
+          ".read": "true"
+        }
       }
     },
     "chat": {

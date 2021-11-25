@@ -142,6 +142,7 @@ export = functions.https.onCall(async (data, context) => {
       func: "accepted"
     };
   } catch (e) {
+    
     functions.logger.error(`Order request error ${orderId}`);
     return {
       status: ServerResponseStatus.Error,
