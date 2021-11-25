@@ -99,7 +99,7 @@ class OrderController extends GetxController {
 
   Future<ServerResponse> cancelOrder(String orderId) async {
     HttpsCallable cancelOrder = FirebaseFunctions.instance
-        .httpsCallable('cancelRestaurantOrderFromAdmin');
+        .httpsCallable('restaurant-cancelOrderFromAdmin');
     try {
       HttpsCallableResult response =
           await cancelOrder.call({"orderId": orderId});
@@ -113,7 +113,7 @@ class OrderController extends GetxController {
   Future<ServerResponse> prepareOrder(String orderId) async {
     mezDbgPrint("prepare order");
     HttpsCallable prepareOrderFunction =
-        FirebaseFunctions.instance.httpsCallable('prepareOrder');
+        FirebaseFunctions.instance.httpsCallable('restaurant-prepareOrder');
     try {
       HttpsCallableResult response =
           await prepareOrderFunction.call({"orderId": orderId});
@@ -125,8 +125,8 @@ class OrderController extends GetxController {
   }
 
   Future<ServerResponse> readyForPickupOrder(String orderId) async {
-    HttpsCallable readyForPickupOrderFunction =
-        FirebaseFunctions.instance.httpsCallable('readyForPickupOrder');
+    HttpsCallable readyForPickupOrderFunction = FirebaseFunctions.instance
+        .httpsCallable('restaurant-readyForOrderPickup');
     try {
       HttpsCallableResult response =
           await readyForPickupOrderFunction.call({"orderId": orderId});
@@ -139,7 +139,7 @@ class OrderController extends GetxController {
 
   Future<ServerResponse> deliverOrder(String orderId) async {
     HttpsCallable deliverOrderFunction =
-        FirebaseFunctions.instance.httpsCallable('deliverOrder');
+        FirebaseFunctions.instance.httpsCallable('restaurant-deliverOrder');
     try {
       HttpsCallableResult response =
           await deliverOrderFunction.call({"orderId": orderId});
@@ -152,7 +152,7 @@ class OrderController extends GetxController {
 
   Future<ServerResponse> dropOrder(String orderId) async {
     HttpsCallable dropOrderFunction =
-        FirebaseFunctions.instance.httpsCallable('dropOrder');
+        FirebaseFunctions.instance.httpsCallable('restaurant-dropOrder');
     mezDbgPrint("Drop order");
     try {
       HttpsCallableResult response =

@@ -11,8 +11,23 @@ typedef LocationChangesNotifier = void Function(
   bool showBlackScreen,
 );
 
+//  useBorders: false,
+//                         borderRaduis : 0,
+//                         bgColor: Colors.white,
+//                         labelStyle : TextStyle(),
+
 // Location Search component
 class LocationSearchComponent extends StatefulWidget {
+  final bool useBorders;
+  // raduis
+  final double leftTopRadius;
+  final double leftBotRaduis;
+  final double rightTopRaduis;
+  final double rightBotRaduis;
+
+  final Color bgColor;
+  final TextStyle labelStyle;
+
   final String label;
   final String hint;
   final LocationChangesNotifier notifyParent;
@@ -21,8 +36,15 @@ class LocationSearchComponent extends StatefulWidget {
 
   LocationSearchComponent(
       {required this.label,
+      this.useBorders = true,
+      this.leftTopRadius = 0,
+      this.leftBotRaduis = 0,
+      this.rightTopRaduis = 0,
+      this.rightBotRaduis = 0,
+      this.bgColor = const Color(0xfff8f8f8),
+      this.labelStyle = const TextStyle(fontFamily: "psr", fontSize: 14),
       this.hint = "Enter Address",
-      this.text = null,
+      this.text,
       required this.notifyParent,
       required this.onClear,
       Key? key})
@@ -76,15 +98,21 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
           padding: EdgeInsets.only(left: 10, top: 10),
           alignment: Alignment.center,
           decoration: BoxDecoration(
-              border: Border.all(color: const Color(0xffececec), width: 0.5),
-              color: const Color(0xfff8f8f8),
-              borderRadius: BorderRadius.circular(5)),
+              border: widget.useBorders
+                  ? Border.all(color: const Color(0xffececec), width: 0.5)
+                  : null,
+              color: widget.bgColor,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(widget.leftTopRadius),
+                  topRight: Radius.circular(widget.rightTopRaduis),
+                  bottomLeft: Radius.circular(widget.leftBotRaduis),
+                  bottomRight: Radius.circular(widget.rightBotRaduis))),
           child: Stack(
             alignment: Alignment.topLeft,
             children: [
               Text(
                 widget.label,
-                style: TextStyle(fontFamily: "psr", fontSize: 14),
+                style: widget.labelStyle,
               ),
               SizedBox(
                 height: 20,

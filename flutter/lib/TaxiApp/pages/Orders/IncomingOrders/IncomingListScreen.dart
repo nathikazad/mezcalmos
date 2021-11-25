@@ -282,9 +282,8 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                                     ),
                                                     Text(
                                                       controller.orders[i]
-                                                                  .routeInformation[
-                                                              'distance']['text'] ??
-                                                          "? km",
+                                                                  .routeInformation
+                                                          .distance,
                                                       overflow:
                                                           TextOverflow.ellipsis,
                                                       maxLines: 1,
@@ -307,10 +306,8 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                                     Text(
                                                       hoursMinsShortner(controller
                                                                       .orders[i]
-                                                                      .routeInformation[
-                                                                  'duration']
-                                                              ['text']) ??
-                                                          "0.0 mins",
+                                                                      .routeInformation
+                                                              .duration),
                                                       overflow:
                                                           TextOverflow.ellipsis,
                                                       maxLines: 1,

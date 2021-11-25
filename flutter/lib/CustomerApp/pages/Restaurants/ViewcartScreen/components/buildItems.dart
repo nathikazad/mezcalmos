@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/CustomerApp/components/ItemComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/incrementalComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/myExpensionPanelComponent.dart';
-import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantCartController.dart';
+import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/choosenMannyOption.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
@@ -19,7 +19,7 @@ import 'package:intl/intl.dart';
 final currency = new NumberFormat("#,##0.00", "en_US");
 
 Widget buildItems(List<CartItem> cartItems) {
-  RestaurantCartController controller = Get.find<RestaurantCartController>();
+  RestaurantController controller = Get.find<RestaurantController>();
   LanguageController lang = Get.find<LanguageController>();
 
   print(cartItems.toString());

@@ -16,11 +16,15 @@ class MezPickGoogleMap extends StatefulWidget {
   final LatLng location;
   final LocationChangesNotifier notifyParent;
   bool showBlackScreen;
+  bool showFakeMarker;
+  List<Marker> markers;
   MezPickGoogleMap(
       {Key? key,
       required this.location,
       required this.notifyParent,
-      this.showBlackScreen = true})
+      this.showFakeMarker = true,
+      this.showBlackScreen = true,
+      this.markers = const []})
       : super(key: key);
   @override
   MezPickGoogleMapState createState() => MezPickGoogleMapState();
@@ -31,10 +35,7 @@ class MezPickGoogleMapState extends State<MezPickGoogleMap> {
   final GlobalKey<MGoogleMapState> mGoogleMapKey = GlobalKey();
   final LanguageController _lang = Get.find<LanguageController>();
 
-  bool _showFakeMarker = true;
   bool _showLoading = false;
-
-  RxList<Marker> markers = <Marker>[].obs;
 
   Future<LatLng?> getMapCenter() async {
     return await mGoogleMapKey.currentState?.getMapCenter();
@@ -86,14 +87,14 @@ class MezPickGoogleMapState extends State<MezPickGoogleMap> {
             children: [
               MGoogleMap(
                 notifyParent: _notifierLocationChange,
-                markers: markers,
+                markers: widget.markers,
                 initialLocation: widget.location,
                 key: mGoogleMapKey,
                 minMaxZoomPrefs: MinMaxZoomPreference(16, 17),
                 periodicRedrendring: false,
                 myLocationButtonEnabled: true,
               ),
-              _showFakeMarker ? pickerMarker() : SizedBox(),
+              widget.showFakeMarker ? pickerMarker() : SizedBox(),
               widget.showBlackScreen
                   ? GestureDetector(
                       onTap: () {

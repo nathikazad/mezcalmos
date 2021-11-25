@@ -4,7 +4,7 @@ import 'package:mezcalmos/CustomerApp/components/buttonComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/incrementalComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/textFieldComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/titlesComponent.dart';
-import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantCartController.dart';
+import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemScreen.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
@@ -22,8 +22,8 @@ final currency = new NumberFormat("#,##0.00", "en_US");
 Widget buildPanel(BuildContext context, Item item, Rxn<CartItem> cartItem,
     ViewItemScreenMode viewItemScreenMode) {
   LanguageController lang = Get.find<LanguageController>();
-  RestaurantCartController restaurantCartController =
-      Get.find<RestaurantCartController>();
+  RestaurantController restaurantCartController =
+      Get.find<RestaurantController>();
 
   return MediaQuery.removePadding(
       context: context,

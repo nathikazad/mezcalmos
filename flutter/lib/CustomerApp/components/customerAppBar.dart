@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
-import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantCartController.dart';
+import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
@@ -23,7 +23,7 @@ Widget getIcons(bool withCart, _popUpController) {
 
     if (Get.find<FBNotificationsController>().notifications.value.length > 0 &&
         withCart &&
-        Get.find<RestaurantCartController>().cart.value.items.length > 0) {
+        Get.find<RestaurantController>().cart.value.items.length > 0) {
       return Row(
         children: [
           ActionIconsComponents.notificationIcon(
@@ -86,7 +86,7 @@ Widget getIcons(bool withCart, _popUpController) {
                       : false,
               margin: EdgeInsets.only(left: 5, right: 0)),
           withCart &&
-                  Get.find<RestaurantCartController>().cart.value.items.length >
+                  Get.find<RestaurantController>().cart.value.items.length >
                       0
               ? ActionIconsComponents.cartIcon(
                   margin: EdgeInsets.only(right: 0, left: 5))

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/customerAppBar.dart';
-import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantCartController.dart';
+import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
@@ -31,7 +31,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
 
   LanguageController lang = Get.find<LanguageController>();
   Rxn<CartItem> cartItem = Rxn();
-  late RestaurantCartController restaurantCartController;
+  late RestaurantController restaurantCartController;
   RestaurantsInfoController controller = Get.find<RestaurantsInfoController>();
   ScrollController _scrollController = ScrollController();
 
@@ -42,7 +42,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
 
     Get.put<RestaurantsInfoController>(RestaurantsInfoController());
     restaurantCartController =
-        Get.put<RestaurantCartController>(RestaurantCartController());
+        Get.put<RestaurantController>(RestaurantController());
     mezDbgPrint("widget.viewItemScreenMode => ${widget.viewItemScreenMode}");
     if (widget.viewItemScreenMode == ViewItemScreenMode.AddItemMode) {
       String? restaurantId = Get.parameters['restaurantId'];

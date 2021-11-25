@@ -3,9 +3,8 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/buttonComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/customerAppBar.dart';
 import 'package:mezcalmos/CustomerApp/components/textFieldComponent.dart';
-import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantCartController.dart';
+import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/MapViews/savedLocationView.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -31,7 +30,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   MyPopupMenuController _popUpController = MyPopupMenuController();
 
   LanguageController lang = Get.find<LanguageController>();
-  RestaurantCartController controller = Get.find<RestaurantCartController>();
+  RestaurantController controller = Get.find<RestaurantController>();
   bool _clickedOrderNow = false;
   TextEditingController textcontoller = new TextEditingController();
   // Rxn<Cart> cart = Rxn();
@@ -77,9 +76,9 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
       appBar: customerAppBar(AppBarLeftButtonType.Back, _popUpController,
           withCart: false),
       body: Obx(() => controller.cart.value.items.length > 0
-          ? GetBuilder<RestaurantCartController>(
+          ? GetBuilder<RestaurantController>(
               // specify type as Controller
-              init: RestaurantCartController(), // intialize with the Controller
+              init: RestaurantController(), // intialize with the Controller
               builder: (_) => SingleChildScrollView(
                     child: Column(
                       children: [

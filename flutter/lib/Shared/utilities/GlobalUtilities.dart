@@ -52,9 +52,9 @@ Widget emptyOrWidgetSmallPhones({Widget? empty, required Widget child}) {
   }
 }
 
-String? hoursMinsShortner(String? original) {
+String hoursMinsShortner(String original) {
   return original
-      ?.replaceFirst('hours', 'hr')
+      .replaceFirst('hours', 'hr')
       .replaceFirst('hour', 'hr')
       .replaceFirst('mins', 'min')
       .replaceFirst('min', 'min');

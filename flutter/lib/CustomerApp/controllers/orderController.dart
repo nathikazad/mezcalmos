@@ -143,21 +143,6 @@ class OrderController extends GetxController {
     });
   }
 
-  Future<ServerResponse> cancelOrder(String orderId) async {
-    HttpsCallable cancelOrder = FirebaseFunctions.instance
-        .httpsCallable('cancelRestaurantOrderFromCustomer');
-    try {
-      HttpsCallableResult response =
-          await cancelOrder.call({"orderId": orderId});
-      mezDbgPrint(response.toString());
-      print(response.data);
-      return ServerResponse.fromJson(response.data);
-    } catch (e) {
-      return ServerResponse(ResponseStatus.Error,
-          errorMessage: "Server Error", errorCode: "serverError");
-    }
-  }
-
   @override
   void onClose() async {
     print("[+] Orderontroller::onClose ---------> Was invoked !");

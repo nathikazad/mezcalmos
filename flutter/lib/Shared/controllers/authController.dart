@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/databaseNodes.dart';
+import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -119,6 +120,8 @@ class AuthController extends GetxController {
     return x;
   }
 
+  // Future<ServerResponse> changeUserName(String? name) {}
+
   Future<void> editUserProfile(String? displayName, String? photo) async {
     Map<String, String> newProfileInfo = <String, String>{};
     if (displayName != null) {
@@ -184,9 +187,9 @@ class AuthController extends GetxController {
     }));
   }
 
-  dynamic sendOTPForLogin(String phoneNumber) async {
+  Future<ServerResponse> sendOTPForLogin(String phoneNumber) async {
     HttpsCallable sendOTPForLoginFunction =
-        FirebaseFunctions.instance.httpsCallable('sendOTPForLogin');
+        FirebaseFunctions.instance.httpsCallable('otp-sendOTPForLogin');
     HttpsCallableResult? response;
     try {
       // _waitingResponse.value = true;
@@ -196,45 +199,61 @@ class AuthController extends GetxController {
         'language': tDefaultLanguage,
         // 'language': _settings.appLanguage.userLanguageKey,
       });
-      print(response);
-      mezcalmosSnackBar(
-          "Notice ~",
-          responseStatusChecker(response.data,
-              onSuccessMessage: "OTP message has been sent !"));
+      // var c = json.decode(response.data);
+      // mezDbgPrint("-----------------");
+      // mezDbgPrint(c);
+      // mezDbgPrint(response);
+      // mezDbgPrint("-----------------");
+
+      // mezcalmosSnackBar(
+      //     "Notice ~",
+      //     responseStatusChecker(response.data,
+      //         onSuccessMessage: "OTP message has been sent !"));
     } catch (e) {
       // mezcalmosSnackBar("Notice ~", "Failed to send OTP message :( ");
       // _waitingResponse.value = false;
-      print("Exception happend in sendOTPForLogin : $e"); // i
-      print(e);
+      mezDbgPrint("Exception happend in sendOTPForLogin : $e"); // i
+      mezDbgPrint(e);
     }
-    return response!.data;
+    return ServerResponse.fromJson(response?.data ?? {"status": "Error"});
   }
 
-  Future<void> signInUsingOTP(String phoneNumber, String otpCode) async {
+  Future<ServerResponse?> signInUsingOTP(
+      String phoneNumber, String otpCode) async {
     print("$phoneNumber  < phone ------ otp > $otpCode");
     HttpsCallable getAuthUsingOTPFunction =
-        FirebaseFunctions.instance.httpsCallable('getAuthUsingOTP');
+        FirebaseFunctions.instance.httpsCallable('otp-getAuthUsingOTP');
+    HttpsCallableResult? response;
+    ServerResponse? serverResponse;
+
     try {
       // _waitingResponse.value = true;
-      HttpsCallableResult response =
-          await getAuthUsingOTPFunction.call(<String, dynamic>{
+      response = await getAuthUsingOTPFunction.call(<String, dynamic>{
         'phoneNumber': phoneNumber,
         'OTPCode': otpCode,
         'language': tDefaultLanguage,
         // 'language': _settings.appLanguage.userLanguageKey,
       });
-      // mezcalmosSnackBar("Notice ~", "OTP message has been sent !");
-      // _waitingResponse.value = false;
-      print("GetAuthUsingOTP Response");
-      print(
-          "################################ DATA ###############################\n\n${response.data}\n\n");
-      fireAuth.FirebaseAuth.instance
-          .signInWithCustomToken(response.data["token"]);
+
+      serverResponse = ServerResponse.fromJson(response.data ?? {});
+
+      mezDbgPrint('---------------------');
+      mezDbgPrint(serverResponse.status);
+      mezDbgPrint(serverResponse.data);
+      mezDbgPrint(serverResponse.errorMessage);
+      mezDbgPrint(serverResponse.errorCode);
+      mezDbgPrint('---------------------');
+
+      if (serverResponse.success) {
+        fireAuth.FirebaseAuth.instance
+            .signInWithCustomToken(response.data["token"]);
+      }
     } catch (e) {
       mezcalmosSnackBar("Error", "OTP Code confirmation failed :(");
-
       print("Exception happend in GetAuthUsingOTP : $e");
     }
+
+    return serverResponse;
   }
 
   // flutter_facebook_auth Package causes a conflict with GetStorage !

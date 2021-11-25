@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
 
 class Wrapper extends StatefulWidget {
   @override
@@ -21,6 +22,7 @@ class _WrapperState extends State<Wrapper> {
   }
 
   void initState() {
+    Get.put(MyPopupMenuController());
     mezDbgPrint("Wrapper: (::initState::)");
     Future.delayed(Duration.zero, () {
       mezDbgPrint("Wrapper: calling handleAuthStateChange first time");

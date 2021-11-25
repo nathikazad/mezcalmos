@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantCartController.dart';
+// import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantCartController.dart';
+import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/CancelAlertDailog.dart';
@@ -9,7 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 Widget buildCart(Cart cart) {
   LanguageController lang = Get.find<LanguageController>();
-  RestaurantCartController controller = Get.find<RestaurantCartController>();
+  RestaurantController controller = Get.find<RestaurantController>();
 
   return Column(
     children: [

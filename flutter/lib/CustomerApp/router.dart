@@ -3,6 +3,7 @@ import 'package:mezcalmos/CustomerApp/pages/MapViews/PickLocationView/PickLocati
 import 'package:mezcalmos/CustomerApp/pages/Orders/ListOrdersScreen/ListOrdersScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/ViewOrderScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemScreen.dart';
+import 'package:mezcalmos/CustomerApp/pages/Taxi/OrderTaxiScreen.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustomerWrapper.dart';
@@ -51,6 +52,7 @@ String getRestaurantMessagesRoute(
 class XRouter {
   static dynamic mainRoutes = [
         GetPage(name: kHomeRoute, page: () => CustomerWrapper()),
+        // restaurant Routes
         GetPage(name: kOrdersRoute, page: () => ListOrdersScreen()),
         GetPage(name: kRestaurantsRoute, page: () => ListRestaurantsScreen()),
         GetPage(
@@ -76,7 +78,14 @@ class XRouter {
         GetPage(
             name: kRestaurantOrderRoute,
             page: () => ViewRestaurantOrderScreen()),
-        GetPage(name: kPickLocationRoute, page: () => PickLocationView())
+        GetPage(name: kPickLocationRoute, page: () => PickLocationView()),
+
+        // Taxis Routes
+        GetPage(
+            name: kTaxisRoute,
+            page: () => OrderTaxiScreen(),
+            transitionDuration: Duration(milliseconds: 500),
+            transition: Transition.rightToLeft),
       ] +
       SharedRouter.sharedRoutes;
 }

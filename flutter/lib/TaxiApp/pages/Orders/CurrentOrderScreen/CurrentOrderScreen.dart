@@ -160,7 +160,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
     mezDbgPrint("_handleEvent -> Event == OrderStatusChange , passed ");
 
     mezDbgPrint("\t\tORDER STATUS CHANGED ${order.toJson()}");
-    if (order.status == TaxiOrdersStatus.Cancelled) {
+    if (order.status == TaxiOrdersStatus.CancelledByCustomer) {
       mezDbgPrint("======> Canceeeeeeeled =======>${order.toJson()}");
 
       Future.microtask(() {
@@ -196,7 +196,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
         color: Color.fromARGB(255, 172, 89, 252),
         polylineId: PolylineId("polyline"),
         jointType: JointType.round,
-        points: loadUpPolyline(order.polyline),
+        points: loadUpPolyline(order.routeInformation.polyline),
         width: 2,
         startCap: Cap.buttCap,
         endCap: Cap.roundCap,

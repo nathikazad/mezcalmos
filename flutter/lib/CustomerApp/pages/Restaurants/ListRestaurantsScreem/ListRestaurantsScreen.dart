@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/ItemComponent.dart';
-import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
 import 'package:mezcalmos/CustomerApp/components/customerAppBar.dart';
-import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
-import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
@@ -65,15 +62,15 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
                       padding: const EdgeInsets.only(top: 10),
                       children: restaurants
                           .map((restaurant) => ItemComponent(
-                                imgUrl: restaurant.photo!,
-                                title: restaurant.name!,
-                                restaurantId: restaurant.id!,
+                                imgUrl: restaurant.photo,
+                                title: restaurant.name,
+                                restaurantId: restaurant.id,
                                 withBorder: true,
                                 margin: const EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 5),
                                 onClick: () {
                                   Get.toNamed(
-                                      getRestaurantRoute(restaurant.id!));
+                                      getRestaurantRoute(restaurant.id));
                                 },
                               ))
                           .toList())))

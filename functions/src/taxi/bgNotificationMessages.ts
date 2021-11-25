@@ -1,0 +1,79 @@
+import { Language } from "../shared/models/Generic";
+import { BackgroundNotification } from "../shared/models/Notification";
+import { TaxiOrderStatus } from "./models/TaxiOrder";
+
+export const taxiOrderStatusChangeMessages:
+  { [id in TaxiOrderStatus]: BackgroundNotification } = {
+  [TaxiOrderStatus.LookingForTaxi]: {
+    [Language.EN]: {
+      title: "Looking for a ride",
+      body: "We are finding you a taxi."
+    },
+    [Language.ES]: {
+      title: "Buscando para una taxi",
+      body: "Estamos buscandote un taxi"
+    }
+  },
+  [TaxiOrderStatus.Expired]: {
+    [Language.EN]: {
+      title: "Ride request has timed out",
+      body: "Unfortunately we were not able to find you a ride, please try again later."
+    },
+    [Language.ES]: {
+      title: "Tiempo de espera agotado",
+      body: "Lamentablemente, no pudimos encontrarle transporte. Vuelva a intentarlo más tarde."
+    }
+  },
+  [TaxiOrderStatus.OnTheWay]: {
+    [Language.EN]: {
+      title: "Your driver is on the way",
+      body: "Your driver will arrive shortly to pick you up, please be ready."
+    },
+    [Language.ES]: {
+      title: "Tu chofer esta en camino",
+      body: "Tu chofer llegará en breve para recogerlo, esté listo."
+    }
+  },
+  [TaxiOrderStatus.InTransit]: {
+    [Language.EN]: {
+      title: "Your ride has begun",
+      body: "Your driver has indicated that he has picked you up, if there has been an error, please report to us."
+    },
+    [Language.ES]: {
+      title: "Tu viaje ha comenzado",
+      body: "Tu chófer ha indicado que lo ha recogido, si ha habido un error, infórmenos."
+    }
+  },
+  [TaxiOrderStatus.DroppedOff]: {
+    [Language.EN]: {
+      title: "Your ride has finished",
+      body: "Your driver has indicated that he has dropped you off, if there has been an error, please report to us."
+    },
+    [Language.ES]: {
+      title: "Tu viaje ha terminado",
+      body: "Tu chófer ha indicado que lo ha dejado, si ha habido un error, infórmenos."
+    }
+  },
+  [TaxiOrderStatus.CancelledByCustomer]: {
+    [Language.EN]: {
+      title: "Your ride has been cancelled",
+      body: "Sorry to inform you that your ride has been cancelled."
+    },
+    [Language.ES]: {
+      title: "Tu viaje ha sido cancelado",
+      body: "Lamento informarle que su viaje ha sido cancelado."
+    }
+  },
+  [TaxiOrderStatus.CancelledByTaxi]: {
+    [Language.EN]: {
+      title: "Your ride has been cancelled",
+      body: "Sorry to inform you that your ride has been cancelled."
+    },
+    [Language.ES]: {
+      title: "Tu viaje ha sido cancelado",
+      body: "Lamento informarle que su viaje ha sido cancelado."
+    }
+  }
+}
+
+

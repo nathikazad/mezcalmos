@@ -35,7 +35,7 @@ Notification orderStatusChangeNotificationHandler(String key, dynamic value) {
 Map<String, dynamic>? getTaxiOrderStatusFields(
     TaxiOrdersStatus taxiOrderStatus) {
   switch (taxiOrderStatus) {
-    case TaxiOrdersStatus.Cancelled:
+    case TaxiOrdersStatus.CancelledByCustomer:
       return <String, dynamic>{
         "title": "Preparing Order",
         "body": "Order is being prepared",

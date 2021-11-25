@@ -186,7 +186,7 @@ class IncommingPositionedBottomBar extends StatelessWidget with MezDisposable {
                             width: 10.sp,
                           ),
                           Text(
-                            "${hoursMinsShortner(controller.selectedIncommingOrder?.routeInformation['duration']['text'] ?? '? mins')}",
+                            "${hoursMinsShortner(controller.selectedIncommingOrder?.routeInformation.duration ?? '? mins')}",
                             overflow: TextOverflow.ellipsis,
                             softWrap: false,
                             maxLines: 1,
@@ -208,7 +208,7 @@ class IncommingPositionedBottomBar extends StatelessWidget with MezDisposable {
                             width: 10.sp,
                           ),
                           Text(
-                            "${controller.selectedIncommingOrder?.routeInformation['distance']['text'] ?? '? km'}",
+                            "${controller.selectedIncommingOrder?.routeInformation.distance ?? '? km'}",
                             overflow: TextOverflow.ellipsis,
                             softWrap: false,
                             maxLines: 1,

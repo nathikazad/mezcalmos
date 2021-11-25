@@ -1,10 +1,10 @@
-const String taxiOpenOrdersNode = "openOrders/taxi";
+const String taxiOpenOrdersNode = "orders/open/taxi";
 String taxiAuthNode(String uid) {
-  return 'taxiDrivers/$uid';
+  return 'taxis/info/$uid';
 }
 
 String taxiStateNode(String uid) {
-  return 'taxiDrivers/$uid/state';
+  return 'taxis/info/$uid/state';
 }
 
 String notificationStatusReadNode(String orderId, String uid) {
@@ -21,10 +21,14 @@ String notificationsNode(String uid) {
 
 String taxiIsLookingField(String uid) => "${taxiAuthNode(uid)}/state/isLooking";
 
-String orderId(String orderId) {
-  return 'orders/taxi/$orderId';
+String inProcessOrder(String orderId) {
+  return 'orders/inProcess/taxi/$orderId';
 }
 
-String orderStatus(String orderId) {
-  return 'orders/taxi/$orderId/status';
+String pastOrder(String orderId) {
+  return 'orders/past/taxi/$orderId';
+}
+
+String inProcessOrderStatus(String orderId) {
+  return 'orders/inProcess/taxi/$orderId/status';
 }

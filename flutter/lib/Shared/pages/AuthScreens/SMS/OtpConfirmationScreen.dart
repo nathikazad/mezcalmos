@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -18,8 +19,8 @@ class OtpConfirmationScreen extends GetView<AuthController> {
   RxBool clickedSignInOtp = false.obs;
   RxInt _timeBetweenResending = 0.obs;
   int get timeBetweenResending => _timeBetweenResending.value;
-  void resendOtpTimerActivate(int time) {
-    _timeBetweenResending.value = time;
+  void resendOtpTimerActivate(double time) {
+    _timeBetweenResending.value = time.toInt();
     const second = const Duration(seconds: 1);
     Timer.periodic(
       second,
@@ -163,13 +164,17 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                                         // resend code !
                                         canConfirmOtp.value = false;
                                         _otpCodeTextController.clear();
-                                        dynamic response =
+                                        ServerResponse response =
                                             await controller.sendOTPForLogin(
                                                 Get.arguments ?? _phonePassed);
-                                        if (response.data['secondsLeft'] !=
-                                            null) {
-                                          resendOtpTimerActivate(
-                                              response.data['secondsLeft']);
+                                        mezDbgPrint(response.data);
+                                        if (!response.success) {
+                                          resendOtpTimerActivate(response
+                                              .data['secondsLeft'] as double);
+                                          mezcalmosSnackBar(
+                                              response.status.toShortString(),
+                                              response.errorMessage.toString(),
+                                              position: SnackPosition.TOP);
                                         }
                                       }
                                     : null,
@@ -207,18 +212,19 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                       padding: const EdgeInsets.only(bottom: 40),
                       width: double.infinity,
                       child: TextButton(
-                        onPressed:
-                            canConfirmOtp.value && !clickedSignInOtp.value
-                                ? () async {
-                                    clickedSignInOtp.value = true;
-                                    mezDbgPrint(
-                                        "${Get.arguments ?? _phonePassed} -------------- $otpCode ");
+                        onPressed: canConfirmOtp.value &&
+                                !clickedSignInOtp.value
+                            ? () async {
+                                clickedSignInOtp.value = true;
+                                mezDbgPrint(
+                                    "${Get.arguments ?? _phonePassed} -------------- $otpCode ");
+                                ServerResponse? _resp =
                                     await controller.signInUsingOTP(
                                         Get.arguments ?? _phonePassed, otpCode);
 
-                                    clickedSignInOtp.value = false;
-                                  }
-                                : null,
+                                clickedSignInOtp.value = false;
+                              }
+                            : null,
                         child: clickedSignInOtp.value
                             ? SizedBox(
                                 height: 15,
