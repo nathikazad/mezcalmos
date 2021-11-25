@@ -46,6 +46,7 @@ export = functions.https.onCall(async (data, context) => {
 
     let userInfo = await getUserInfo(customerId);
     let order = constructTaxiOrder(orderRequest, userInfo);
+    console.log(order)
     let orderRef = await customerNodes.inProcessOrders(customerId).push(order);
     rootNodes.openOrders(OrderType.Taxi, orderRef.key!).set(order);
 
@@ -54,6 +55,7 @@ export = functions.https.onCall(async (data, context) => {
       orderId: orderRef.key!
     }
   } catch (e) {
+    functions.logger.error(e);
     functions.logger.error(`Order request error ${customerId}`);
     return {
       status: ServerResponseStatus.Error,

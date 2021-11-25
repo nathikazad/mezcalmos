@@ -42,17 +42,23 @@ export function orderInProcess(status: TaxiOrderStatus): boolean {
 
 export function constructTaxiOrder(
   orderRequest: OrderRequest,
+
+  
   customer: UserInfo): TaxiOrder {
+    
   let requestCopy: any = orderRequest;
+  console.log(orderRequest)
+  requestCopy.cost = orderRequest.estimatedPrice;
   delete requestCopy.estimatedPrice;
-  return <TaxiOrder>{
-    ...requestCopy,
-    cost: orderRequest.estimatedPrice,
+  console.log(requestCopy)
+  return Object.assign(Object.assign({}, requestCopy),
+  {
+    
     customer: customer,
     orderType: OrderType.Taxi,
     status: TaxiOrderStatus.LookingForTaxi,
     orderTime: (new Date()).toISOString(),
-  }
+  });
 }
 
 export interface TaxiOrderStatusChangeNotification extends OrderNotification {
