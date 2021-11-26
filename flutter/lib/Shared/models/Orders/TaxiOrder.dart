@@ -32,19 +32,18 @@ class RouteInformation {
 }
 
 class TaxiOrder extends Order {
-  dynamic estimatedPrice;
+  num cost;
   Location from;
   RouteInformation routeInformation;
-  dynamic acceptRideTime;
-  dynamic rideFinishTime;
-  dynamic rideStartTime;
+  String? acceptRideTime;
+  String? rideFinishTime;
+  String? rideStartTime;
   TaxiOrdersStatus status;
   double distanceToClient = 0;
-  dynamic cancelledBy;
   UserInfo? get driver => this.serviceProvider;
   TaxiOrder(
       {required String orderId,
-      required this.estimatedPrice,
+      required this.cost,
       required this.from,
       required Location to,
       required DateTime orderTime,
@@ -80,7 +79,7 @@ class TaxiOrder extends Order {
         rideStartTime: data['rideStartTime'],
         status: data['status'].toString().toTaxiOrderStatus(),
         acceptRideTime: data['acceptRideTime'],
-        estimatedPrice: data['estimatedPrice'],
+        cost: data['estimatedPrice'],
         from: Location.fromData(data['from']),
         to: Location.fromData(data['to']),
         orderTime: DateTime.parse(data["orderTime"]),
@@ -95,7 +94,7 @@ class TaxiOrder extends Order {
   // Added for Debugging Perposes - Don't delete for now
   Map<String, dynamic> toJson() => {
         "customer": customer,
-        "estimatedPrice": estimatedPrice,
+        "estimatedPrice": cost,
         "from": from,
         "status": status,
         "to": to,

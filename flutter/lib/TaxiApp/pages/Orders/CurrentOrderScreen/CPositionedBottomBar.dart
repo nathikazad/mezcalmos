@@ -108,7 +108,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
               )),
               Flexible(
                 flex: 2,
-                child: Text('\$' + (order.estimatedPrice?.toString() ?? " 0"),
+                child: Text('\$' + (order.cost.toString()),
                     style: TextStyle(fontFamily: "psb", fontSize: 17.sp)),
               ),
               Flexible(

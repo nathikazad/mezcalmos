@@ -177,7 +177,7 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                                         )),
                                                     Text(
                                                       controller.orders[i]
-                                                          .estimatedPrice
+                                                          .cost
                                                           .toString(),
                                                       style: TextStyle(
                                                           fontFamily: 'psb',

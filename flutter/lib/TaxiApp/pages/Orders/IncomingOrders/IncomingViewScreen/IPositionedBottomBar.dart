@@ -150,7 +150,7 @@ class IncommingPositionedBottomBar extends StatelessWidget with MezDisposable {
                       ),
                       Obx(
                         () => Text(
-                          "${controller.selectedIncommingOrder?.estimatedPrice?.toString() ?? '? \$'}",
+                          "${controller.selectedIncommingOrder?.cost.toString() ?? '? \$'}",
                           style: TextStyle(
                               fontSize: 16.sp,
                               fontFamily: 'psb',
