@@ -54,7 +54,7 @@ class _PickLocationViewState extends State<PickLocationView> {
 
         customerAuthController.saveNewLocation(savedLocation!);
 
-        Get.back();
+        Get.back(result: savedLocation);
       }
     } else {
       var resault = await savedLocationDailog(

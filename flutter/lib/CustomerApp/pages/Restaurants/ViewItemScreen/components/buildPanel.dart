@@ -20,7 +20,7 @@ import 'package:intl/intl.dart';
 final currency = new NumberFormat("#,##0.00", "en_US");
 
 Widget buildPanel(BuildContext context, Item item, Rxn<CartItem> cartItem,
-    ViewItemScreenMode viewItemScreenMode) {
+    ScrollController scrollController, ViewItemScreenMode viewItemScreenMode) {
   LanguageController lang = Get.find<LanguageController>();
   RestaurantController restaurantCartController =
       Get.find<RestaurantController>();
@@ -36,7 +36,7 @@ Widget buildPanel(BuildContext context, Item item, Rxn<CartItem> cartItem,
                 topLeft: Radius.circular(18), topRight: Radius.circular(18)),
             color: const Color(0xffffffff)),
         child: SingleChildScrollView(
-          // controller: _scrollController,
+          controller: scrollController,
           //clipBehavior: ,
           child: Container(
             // padding: EdgeInsets.only(bottom: 50),
