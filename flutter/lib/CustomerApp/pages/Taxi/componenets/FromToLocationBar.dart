@@ -13,15 +13,6 @@ class FromToLocationBar extends StatefulWidget {
   Rx<TaxiRequest> request;
   SearchLocationNotifier eventNotifier;
   LocationDropDownStateNotifier ddStateNotifier;
-  // int flexValueFrom;
-  // bool fromReadOnly;
-  // FocusNode fromFocusNode;
-  // String? fromLocationAddress;
-  // Function fromTextFieldOnClear;
-  // Function fromTextFieldOnFocus;
-  // Function fromTextFieldOnTextChanged;
-  // Function fromTextFieldOnFocusLost;
-  // Function fromTextFieldNotifyParent;
 
   FromToLocationBar(this.request, this.eventNotifier, this.ddStateNotifier);
 
@@ -70,11 +61,11 @@ class _FromToLocationBarState extends State<FromToLocationBar> {
     });
     mezDbgPrint(
         "====================== TO : $_focusedTextField =======================");
-    if (type == SearchComponentType.From) {
-      widget.eventNotifier(widget.request.value.from, SearchComponentType.From);
-    } else if (type == SearchComponentType.To) {
-      widget.eventNotifier(widget.request.value.to, SearchComponentType.To);
-    }
+    // if (type == SearchComponentType.From) {
+    //   widget.eventNotifier(widget.request.value.from, SearchComponentType.From);
+    // } else if (type == SearchComponentType.To) {
+    //   widget.eventNotifier(widget.request.value.to, SearchComponentType.To);
+    // }
 
     widget.ddStateNotifier(DropDownState.Expand);
   }

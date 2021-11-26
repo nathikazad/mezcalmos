@@ -11,7 +11,7 @@ import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:location/location.dart' as GeoLoc;
 
 typedef SearchLocationNotifier = void Function(
-    Location? location, SearchComponentType locationType);
+    Location location, SearchComponentType locationType);
 
 enum DropDownState { Expand, Collapse }
 
@@ -56,7 +56,7 @@ class LocationChoicesDropDownState extends State<LocationChoicesDropDown> {
               function: () {
                 mezcalmosSnackBar(e.name, e.location.address);
                 Location? _savedLoc = _authController.getLocationById(e.id!);
-                widget.eventNotifier(_savedLoc, textFieldType);
+                widget.eventNotifier(_savedLoc!, textFieldType);
               },
               title: e.name);
         }).toList() ??
