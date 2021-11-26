@@ -13,10 +13,12 @@ class MezPickGoogleMapController {
   void Function()? showBlackScreen;
   void Function()? showFakeMarker;
   void Function(LatLng newLocation)? setLocation;
+  void Function(Set<Polyline> polylines)? setPolylines;
 }
 
 class MezPickGoogleMap extends StatefulWidget {
-  final LocationChangesNotifier notifyParent;
+  final LocationChangesNotifier notifyParentOfPick;
+  final Function notifyParentOfConfirm;
   double blackScreenBottomTextMargin;
   List<Marker> markers;
   Set<Polyline> polylines;
@@ -27,7 +29,8 @@ class MezPickGoogleMap extends StatefulWidget {
 
   MezPickGoogleMap(
       {Key? key,
-      required this.notifyParent,
+      required this.notifyParentOfPick,
+      required this.notifyParentOfConfirm,
       this.blackScreenBottomTextMargin = 0,
       this.myLocationButtonEnabled = true,
       this.polylines = const {},
@@ -59,6 +62,7 @@ class MezPickGoogleMapState extends State<MezPickGoogleMap> {
     mezPickGoogleMapController.showBlackScreen = showBlackScreen;
     mezPickGoogleMapController.showFakeMarker = showFakeMarker;
     mezPickGoogleMapController.setLocation = setLocation;
+    mezPickGoogleMapController.setPolylines = setPolylines;
   }
 
   void showBlackScreen() {
@@ -83,6 +87,10 @@ class MezPickGoogleMapState extends State<MezPickGoogleMap> {
       _showLoading = false;
       _showBlackScreen = true;
     });
+  }
+
+  void setPolylines(Set<Polyline> polylines) {
+    setState(() {});
   }
 
   void initState() async {
@@ -119,7 +127,7 @@ class MezPickGoogleMapState extends State<MezPickGoogleMap> {
                 polylines: widget.polylines,
                 animateMarkersPolyLinesBounds:
                     widget.animateMarkersPolyLinesBounds,
-                notifyParent: widget.notifyParent,
+                notifyParent: widget.notifyParentOfPick,
                 markers: widget.markers,
                 initialLocation: location,
                 key: mGoogleMapKey,
@@ -129,9 +137,49 @@ class MezPickGoogleMapState extends State<MezPickGoogleMap> {
               ),
               _showFakeMarker ? pickerMarker() : SizedBox(),
               _showBlackScreen ? gestureDetector() : SizedBox(),
+              widget.polylines.isEmpty ? pickButton() : confirmButton()
             ],
           )
         : Center(child: CircularProgressIndicator());
+  }
+
+  Widget confirmButton() {
+    return bottomButton("CONFIRM", widget.notifyParentOfPick);
+  }
+
+  Widget pickButton() {
+    return bottomButton(_lang.strings["shared"]["pickLocation"]["pick"],
+        widget.notifyParentOfPick);
+  }
+
+  Widget bottomButton(String buttonText, Function onConfirmButtonClick) {
+    return Positioned(
+        bottom: 10,
+        left: 15,
+        right: 15,
+        child: Container(
+          margin: EdgeInsets.only(bottom: 30),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            gradient: LinearGradient(colors: [
+              Color.fromRGBO(81, 132, 255, 1),
+              Color.fromRGBO(206, 73, 252, 1)
+            ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+          ),
+          child: TextButton(
+              style: ButtonStyle(
+                  fixedSize: MaterialStateProperty.all(Size(Get.width,
+                      getSizeRelativeToScreen(20, Get.height, Get.width))),
+                  backgroundColor:
+                      MaterialStateProperty.all(Colors.transparent)),
+              onPressed: onConfirmButtonClick(),
+              child: Text(buttonText,
+                  style: TextStyle(
+                    fontFamily: 'psr',
+                    color: Colors.white,
+                    fontSize: 18.sp,
+                  ))),
+        ));
   }
 
   GestureDetector gestureDetector() {

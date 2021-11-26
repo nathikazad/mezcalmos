@@ -9,6 +9,12 @@ import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
 
 typedef LocationDropDownStateNotifier = void Function(DropDownState state);
 
+
+// LocationChoicesDropDown(
+//               newLocationFromChildren,
+//                 initialDropDownState: this.ddState,
+//               ),
+
 class FromToLocationBar extends StatefulWidget {
   Rx<TaxiRequest> request;
   SearchLocationNotifier eventNotifier;

@@ -17,7 +17,7 @@ import * as customerNodes from "../shared/databaseNodes/customer";
 import *  as rootNodes from "../shared/databaseNodes/root";
 import { notifyDeliveryAdminsNewOrder } from "../shared/notification/notifyDeliveryAdmin";
 import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
-import { buildChat } from "../shared/helper/chat";
+import { buildChatForOrder } from "../shared/helper/chat";
 import { isSignedIn } from "../shared/helper/authorizer";
 import { getRestaurant } from "./restaurantController";
 import { getUserInfo } from "../shared/rootController";
@@ -63,7 +63,7 @@ export = functions.https.onCall(async (data, context) => {
   await customerNodes.cart(customerId).remove();
 
 
-  let chat: Chat = await buildChat(customerId,
+  let chat: Chat = await buildChatForOrder(customerId,
     {
       ...customerInfo,
       particpantType: ParticipantType.Customer
@@ -73,6 +73,7 @@ export = functions.https.onCall(async (data, context) => {
       ...restaurant.info,
       particpantType: ParticipantType.Restaurant
     },
+    OrderType.Restaurant,
     orderId);
 
   deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {

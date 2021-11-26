@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezPickGoogleMap.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart' as GeoLoc;
@@ -29,30 +30,28 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
   RxList<Marker> _markers = <Marker>[].obs;
   Set<Polyline> _polylines = <Polyline>{};
 
-  DropDownState ddState = DropDownState.Collapse;
-
-  void checkPolylines() {}
-
-  void newLocationFromChildren(
-      Location newLocation, SearchComponentType textFieldType) {
-    // from - to
-    setState(() {
-      _currentFocusedTextField = textFieldType;
-      if (textFieldType == SearchComponentType.From) {
-        taxiRequest.value.to = newLocation;
-      } else if (textFieldType == SearchComponentType.To) {
-        taxiRequest.value.to = newLocation;
-      }
-      mezPickGoogleMapController.setLocation
-          ?.call(LatLng(newLocation.latitude, newLocation.longitude));
-      // centers the map on location
-      // onPick set > from / to
-      // onConfirm only available when both from . to  are set !
-    });
-
-    checkPolylines();
+  void checkPolylines() {
+    // if need for updating polyline
+    // get polyline from gmaps
+    // set mezPickGoogleMapController.setPolylines
   }
 
+  // when one of the dropdowns (pick current location, a saved location or a places suggestion)
+  void newLocationFromSearchBar(
+      Location newLocation, SearchComponentType textFieldType) {
+
+    _currentFocusedTextField = textFieldType;
+    if (textFieldType == SearchComponentType.From) {
+      taxiRequest.value.from = newLocation;
+    } else if (textFieldType == SearchComponentType.To) {
+      taxiRequest.value.to = newLocation;
+    }
+    mezPickGoogleMapController.setLocation
+          ?.call(LatLng(newLocation.latitude, newLocation.longitude));
+
+  }
+
+  // once the confirm button is clicked
   void newLocationFromMezPickGoogleMap(Location location) {
     setState(() {
       if (_currentFocusedTextField == SearchComponentType.From) {
@@ -64,7 +63,12 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
         mezDbgPrint(
             "New < TO > Location ===> ${location.toFirebaseFormattedJson()}");
       }
+      checkPolylines();
     });
+  }
+
+  void routeFinalizedFromMezPickGoogleMap(Location location) {
+    // build order and call controller function
   }
 
 
@@ -87,8 +91,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
                     color: Colors.white),
-                child: taxiRequest.value.from != null
-                    ? MezPickGoogleMap(
+                child: MezPickGoogleMap(
                       mezPickGoogleMapController:
                             this.mezPickGoogleMapController,
                         minMaxZoomPrefs: false
@@ -99,13 +102,9 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                         polylines: _polylines,
                         myLocationButtonEnabled: false,
                       blackScreenBottomTextMargin: 110,
-                      notifyParent: newLocationFromMezPickGoogleMap)
-                    : Center(
-                        child: CircularProgressIndicator(
-                          color: Colors.purple,
-                          strokeWidth: 1,
-                        ),
-                      ),
+                      notifyParentOfPick: newLocationFromMezPickGoogleMap,
+                      notifyParentOfConfirm:
+                          routeFinalizedFromMezPickGoogleMap)
               ),
               Container(
                 height: 40,
@@ -113,57 +112,8 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                 color: Colors.white,
               ),
 
-            FromToLocationBar(taxiRequest, newLocationFromChildren,
-                  (dropDownState) {
-                setState(() {
-                  this.ddState = dropDownState;
-                });
-              }),
-              LocationChoicesDropDown(
-              newLocationFromChildren,
-                initialDropDownState: this.ddState,
-              ),
-              // _polylines.isNotEmpty ? bottomBarWidget() : SizedBox(),
-              // Positioned(
-              //   bottom: 10,
-              //   left: 15,
-              //   right: 15,
-              //   child:
-              //       Obx(() => controller.getCustomerTaxiOrder?.orderId == null
-              //           ? Container(
-              //               margin: EdgeInsets.only(bottom: 30),
-              //               decoration: BoxDecoration(
-              //                 borderRadius: BorderRadius.circular(5),
-              //                 gradient: LinearGradient(
-              //                     colors: [
-              //                       Color.fromRGBO(81, 132, 255, 1),
-              //                       Color.fromRGBO(206, 73, 252, 1)
-              //                     ],
-              //                     begin: Alignment.topLeft,
-              //                     end: Alignment.bottomRight),
-              //               ),
-              //               child: TextButton(
-              //                   style: ButtonStyle(
-              //                       fixedSize: MaterialStateProperty.all(Size(
-              //                           Get.width,
-              //                           getSizeRelativeToScreen(
-              //                               20, Get.height, Get.width))),
-              //                       backgroundColor: MaterialStateProperty.all(
-              //                           Colors.transparent)),
-              //                   onPressed: onConfirmButtonClick,
-              //                   child: Text(
-              //                       _polylines.isNotEmpty
-              //                           ? "CONFIRM"
-              //                           : _lang.strings["shared"]
-              //                               ["pickLocation"]["pick"],
-              //                       style: TextStyle(
-              //                         fontFamily: 'psr',
-              //                         color: Colors.white,
-              //                         fontSize: 18.sp,
-              //                       ))),
-              //             )
-              //           : cancelTextButton()),
-              // ),
+            // FromToLocationBar(taxiRequest, newLocationFromSearchBar)
+
             ]),
       ),
     );
