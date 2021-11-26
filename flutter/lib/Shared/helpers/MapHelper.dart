@@ -11,6 +11,9 @@ import 'package:http/http.dart' as http;
 import 'package:mezcalmos/Shared/models/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
+typedef LocationChangesNotifier = void Function(LocModel.Location location);
+enum SearchComponentType { From, To, None }
+
 class RideDistance {
   String distanceStringInKm;
   int distanceInMeters;

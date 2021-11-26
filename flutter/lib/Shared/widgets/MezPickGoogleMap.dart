@@ -3,13 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Location.dart';
+import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-typedef LocationChangesNotifier = void Function(
-    Location location, bool showBlackScreen);
 
 // Google Map Pick Widget
 class MezPickGoogleMap extends StatefulWidget {
@@ -85,10 +82,6 @@ class MezPickGoogleMapState extends State<MezPickGoogleMap> {
     );
   }
 
-  void _notifierLocationChange(Location newLoc, bool showBlackScreen) {
-    widget.notifyParent(newLoc, showBlackScreen);
-  }
-
   @override
   Widget build(BuildContext context) {
     responsiveSize(context);
@@ -100,7 +93,7 @@ class MezPickGoogleMapState extends State<MezPickGoogleMap> {
                 polylines: widget.polylines,
                 animateMarkersPolyLinesBounds:
                     widget.animateMarkersPolyLinesBounds,
-                notifyParent: _notifierLocationChange,
+                notifyParent: widget.notifyParent,
                 markers: widget.markers,
                 initialLocation: widget.location,
                 key: mGoogleMapKey,

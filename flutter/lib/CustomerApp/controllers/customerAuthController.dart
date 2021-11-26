@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/deviceNotificationsController.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
+import 'package:mezcalmos/Shared/models/Location.dart';
 
 class CustomerAuthController extends GetxController {
   Rxn<Customer> _customer = Rxn();
@@ -16,7 +17,8 @@ class CustomerAuthController extends GetxController {
   DeviceNotificationsController _notificationsController =
       Get.find<DeviceNotificationsController>();
 
-  Rxn<Customer> get customerStream => _customer;
+  Rxn<Customer> get customerRxn => _customer;
+
   bool _checkedAppVersion = false;
 
   StreamSubscription? _customerNodeListener;
@@ -86,6 +88,14 @@ class CustomerAuthController extends GetxController {
         .child(savedLocationNode(
             _authController.fireAuthUser!.uid, savedLocation.id!))
         .remove();
+  }
+
+  Location? getLocationById(String locationId) {
+    // we get the user Location by it's id!
+    return _customer.value?.savedLocations
+        .firstWhere((savedLocation) => savedLocation.id == locationId,
+            orElse: null)
+        .location;
   }
 
   @override

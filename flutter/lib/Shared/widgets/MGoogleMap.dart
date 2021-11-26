@@ -11,9 +11,6 @@ import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-typedef LocationChangesNotifier = void Function(
-    LocationModel.Location location, bool showBlackScreen);
-
 class MGoogleMap extends StatefulWidget with MezDisposable {
   final LocationChangesNotifier notifyParent;
   LatLng initialLocation;
@@ -208,12 +205,12 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
     try {
       currentLocation = await location.getLocation();
       widget.notifyParent(
-          LocationModel.Location.fromData({
-            "lat": currentLocation.latitude,
-            "lng": currentLocation.longitude,
-            "address": ""
-          }),
-          true);
+        LocationModel.Location.fromData({
+          "lat": currentLocation.latitude,
+          "lng": currentLocation.longitude,
+          "address": ""
+        }),
+      );
     } on Exception {
       currentLocation = null;
     }
@@ -241,12 +238,12 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
                 mezDbgPrint("Camera New position .. getting the center !!");
                 LatLng _center = await getMapCenter();
                 widget.notifyParent(
-                    LocationModel.Location.fromData({
-                      "lat": _center.latitude,
-                      "lng": _center.longitude,
-                      "address": ""
-                    }),
-                    false);
+                  LocationModel.Location.fromData({
+                    "lat": _center.latitude,
+                    "lng": _center.longitude,
+                    "address": ""
+                  }),
+                );
               }
             },
             padding: EdgeInsets.all(20),

@@ -103,7 +103,7 @@ class _PickLocationViewState extends State<PickLocationView> {
       var x = Get.parameters["id"];
 
       savedLocation = customerAuthController
-          .customerStream()!
+          .customerRxn()!
           .savedLocations
           .firstWhere((saved) => saved.id == x);
 
@@ -160,7 +160,7 @@ class _PickLocationViewState extends State<PickLocationView> {
                   label: "",
                   text: _selectedLocation?.address,
                   onClear: () {},
-                  notifyParent: (Location location, bool showBlackScreen) {
+                  notifyParent: (Location location) {
                     mezDbgPrint(
                         "Ontap on suggestion  => ${location.toJson()} ");
                     setState(() {
@@ -181,8 +181,7 @@ class _PickLocationViewState extends State<PickLocationView> {
                       child: _selectedLocation != null
                           ? MezPickGoogleMap(
                               showBlackScreen: showBlackScreen,
-                              notifyParent:
-                                  (Location location, bool showBlackScreen) {
+                              notifyParent: (Location location) {
                                 setState(() {
                                   this.showBlackScreen = showBlackScreen;
                                   _selectedLocation = location;
