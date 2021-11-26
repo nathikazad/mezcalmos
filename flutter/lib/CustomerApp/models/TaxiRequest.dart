@@ -1,7 +1,7 @@
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 
-class CustomerTaxiOrder {
+class TaxiRequest {
   String? orderId;
   Location from;
   Location to;
@@ -12,7 +12,7 @@ class CustomerTaxiOrder {
   String polyline;
 
   // No orderId needed in this case, when the user creates
-  CustomerTaxiOrder(
+  TaxiRequest(
       {this.orderId,
       required this.from,
       required this.to,
@@ -23,8 +23,8 @@ class CustomerTaxiOrder {
       required this.polyline});
 
   // User to Get the order from db
-  factory CustomerTaxiOrder.fromSnapShotData(String orderId, dynamic data) {
-    return CustomerTaxiOrder(
+  factory TaxiRequest.fromSnapShotData(String orderId, dynamic data) {
+    return TaxiRequest(
         orderId: orderId,
         from: data['from'],
         to: data['to'],

@@ -4,6 +4,7 @@ import 'package:mezcalmos/CustomerApp/pages/Orders/ListOrdersScreen/ListOrdersSc
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/ViewOrderScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/OrderTaxiScreen.dart';
+import 'package:mezcalmos/CustomerApp/pages/Taxi/RequestTaxiScreen.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustomerWrapper.dart';
@@ -88,7 +89,7 @@ class XRouter {
         // Taxis Routes
         GetPage(
             name: kTaxisRoute,
-            page: () => OrderTaxiScreen(),
+            page: () => RequestTaxiScreen(),
             transitionDuration: Duration(milliseconds: 500),
             transition: Transition.rightToLeft),
       ] +

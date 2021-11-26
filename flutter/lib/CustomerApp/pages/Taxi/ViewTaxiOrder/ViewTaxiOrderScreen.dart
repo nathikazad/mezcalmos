@@ -6,10 +6,11 @@ import 'package:mezcalmos/CustomerApp/components/basicCellComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/buildWidgetOnOrderStatus.dart';
 import 'package:mezcalmos/CustomerApp/components/customerAppBar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
-import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
+import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
@@ -19,9 +20,6 @@ import 'package:intl/intl.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
-
-import 'components/buildOrdersItem.dart';
-import 'components/notesWidget.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
 ////////////===========
@@ -36,11 +34,10 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
   MyPopupMenuController _popUpController = MyPopupMenuController();
 
   LanguageController lang = Get.find<LanguageController>();
-  Rxn<RestaurantOrder> order = Rxn();
+  Rxn<TaxiOrder> order = Rxn();
   OrderController controller = Get.find<OrderController>();
-  RestaurantController restaurantController = Get.find<RestaurantController>();
-  StreamSubscription? _currentOrderListener;
-  StreamSubscription? _pastShownOrder;
+  TaxiController taxiController = Get.find<TaxiController>();
+  StreamSubscription? _orderListener;
 
   bool _clickedButton = false;
 
@@ -79,29 +76,24 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
   void initState() {
     String orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
-    order.value = controller.getOrder(orderId) as RestaurantOrder?;
+    order.value = controller.getOrder(orderId) as TaxiOrder?;
     if (order.value == null) {
       Get.back();
     } else {
       if (order.value!.inProcess()) {
-        _pastShownOrder =
-            controller.getPastOrderStream(orderId).listen((event) {
-          if (event != null) {
-            mezDbgPrint("===================" +
-                (event as RestaurantOrder).restaurantOrderStatus.toString());
-            order.value = event;
-          }
-        });
-        _currentOrderListener =
+        _orderListener =
             controller.getCurrentOrderStream(orderId).listen((event) {
           if (event != null) {
-            mezDbgPrint("===================" +
-                (event as RestaurantOrder).restaurantOrderStatus.toString());
+            mezDbgPrint(
+                "===================" + (event as TaxiOrder).status.toString());
             order.value = event;
+          } else {
+            _orderListener?.cancel();
+            _orderListener = null;
+            order.value = controller.getOrder(orderId) as TaxiOrder?;
           }
         });
-      } else {}
-
+      }
       //mezDbgPrint("=========> ${order.value}");
     }
     super.initState();
@@ -109,10 +101,8 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
 
   @override
   void dispose() {
-    _currentOrderListener?.cancel();
-    _pastShownOrder?.cancel();
-    _currentOrderListener = null;
-    _pastShownOrder = null;
+    _orderListener?.cancel();
+    _orderListener = null;
     _popUpController.hideMenu();
     _popUpController.dispose();
     super.dispose();
@@ -121,7 +111,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
   @override
   Widget build(BuildContext context) {
     responsiveSize(context);
-    mezDbgPrint(order.value?.restaurantOrderStatus);
+    mezDbgPrint(order.value?.status);
     mezDbgPrint(order.value?.serviceProviderId);
     return Scaffold(
       backgroundColor: const Color(0xffffffff),
@@ -150,62 +140,12 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                 ),
                 child: Column(
                   children: [
-                    BasicCellComponent(
-                      url: "${order.value!.restaurant.image}",
-                      title: "${order.value!.restaurant.name}",
-                      traillingIcon: Container(
-                        child: Stack(
-                          children: [
-                            IconButton(
-                                icon: Icon(
-                                  Icons.chat_bubble_outline,
-                                  color: Color(0xff5c7fff),
-                                ),
-                                onPressed: () {
-                                  //TODO: Navigate to messages screen
-                                  Get.toNamed(getRestaurantMessagesRoute(
-                                      order.value!.orderId));
-                                }),
-                            Positioned(
-                                left: 28,
-                                top: 10,
-                                child: Obx(
-                                  () => (controller
-                                          .orderHaveNewMessageNotifications(
-                                              order.value!.orderId))
-                                      ? Container(
-                                          width: 10,
-                                          height: 10,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              border: Border.all(
-                                                  color:
-                                                      const Color(0xfff6efff),
-                                                  width: 2),
-                                              color: const Color(0xffff0000)))
-                                      : Container(),
-                                ))
-                          ],
-                        ),
-                      ),
-                    ),
                     Container(
                       width: Get.width,
                       height: 1,
                       decoration: BoxDecoration(
                         color: const Color(0xffececec),
                       ),
-                    ),
-                    Container(
-                      child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          child: Obx(
-                            () => buildWigetOnOrderStatus(
-                                    order.value!.restaurantOrderStatus,
-                                    order.value!.orderTime)
-                                .value!,
-                          )),
                     )
                   ],
                 ),
@@ -232,7 +172,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
               SizedBox(
                 height: 10,
               ),
-              buildOrdersItems(order.value!.items),
+              // buildOrdersItems(order.value!.items),
               SizedBox(
                 height: 15,
               ),
@@ -389,13 +329,9 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                 height: 20,
               ),
               //===============================>notes========================>
-              order.value?.notes == null || order.value!.notes!.length <= 0
-                  ? SizedBox()
-                  : notesWidget(order),
               //===============================>button cancel===========================
               Obx(() => order.value!.inProcess() &&
-                      order.value!.restaurantOrderStatus ==
-                          RestaurantOrderStatus.OrderReceieved
+                      order.value!.status == TaxiOrdersStatus.LookingForTaxi
                   ? InkWell(
                       child: Container(
                         margin: const EdgeInsets.symmetric(horizontal: 10),
@@ -449,8 +385,8 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
 
                         if (yesNoRes) {
                           mezDbgPrint(Get.parameters.toString());
-                          ServerResponse resp = await restaurantController
-                              .cancelOrder(Get.parameters['orderId']!);
+                          ServerResponse resp = await taxiController
+                              .cancelTaxi(Get.parameters['orderId']!);
                           mezDbgPrint(resp.data.toString());
                           if (resp.success) {
                             Get.until(
