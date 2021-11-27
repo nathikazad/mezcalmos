@@ -48,7 +48,7 @@ class SavedLocation {
   SavedLocation({required this.name, required this.location, this.id});
   factory SavedLocation.fromData({required String id, required dynamic data}) {
     return SavedLocation(
-        name: data["name"], location: Location.fromData(data), id: id);
+        name: data["name"], location: Location.fromFirebaseData(data), id: id);
   }
 
   Map<String, dynamic> toFirebaseFormattedJson() {

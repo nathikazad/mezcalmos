@@ -152,7 +152,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
               ),
               Expanded(
                 child: InkWell(
-                  onTap: () => Get.toNamed(kTaxisRoute),
+                  onTap: () => Get.toNamed(kTaxiRequestRoute),
                   child: Container(
                     width: Get.width,
                     margin: const EdgeInsets.symmetric(horizontal: 10),

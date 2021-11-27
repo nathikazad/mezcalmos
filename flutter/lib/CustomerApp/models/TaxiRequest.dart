@@ -1,5 +1,6 @@
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
 class TaxiRequest {
   String? orderId;
@@ -8,7 +9,7 @@ class TaxiRequest {
   RideDistance? distance;
   RideDuration? duration;
   int estimatedPrice;
-  String? paymentType;
+  PaymentType paymentType;
   String? polyline;
 
   // No orderId needed in this case, when the user creates
@@ -19,7 +20,7 @@ class TaxiRequest {
       this.distance,
       this.duration,
       this.estimatedPrice = 35,
-      this.paymentType,
+      this.paymentType = PaymentType.Cash,
       this.polyline});
 
   // User to Get the order from db
@@ -43,6 +44,18 @@ class TaxiRequest {
     if (estimatedPrice > 35) {
       estimatedPrice -= 5;
     }
+  }
+
+  void setFromLocation(Location? loc) {
+    this.from = loc;
+  }
+
+  void setToLocation(Location? loc) {
+    this.to = loc;
+  }
+
+  bool isFromToSet() {
+    return this.from != null && this.to != null;
   }
 
   Map<String, dynamic> toFirebaseJson() {

@@ -92,7 +92,7 @@ class _PickLocationViewState extends State<PickLocationView> {
       GeoLoc.Location().getLocation().then((locData) {
         mezDbgPrint("Sat to current Location $locData!");
         setState(() {
-          _selectedLocation = Location.fromData({
+          _selectedLocation = Location.fromFirebaseData({
             "address": "",
             "lat": locData.latitude,
             "lng": locData.longitude,
@@ -112,7 +112,7 @@ class _PickLocationViewState extends State<PickLocationView> {
       GeoLoc.Location().getLocation().then((locData) {
         mezDbgPrint("Sat to current Location $locData!");
         setState(() {
-          _selectedLocation = Location.fromData({
+          _selectedLocation = Location.fromFirebaseData({
             "address": "${savedLocation!.location.address}",
             "lat": savedLocation!.location.latitude,
             "lng": savedLocation!.location.longitude,
@@ -160,9 +160,9 @@ class _PickLocationViewState extends State<PickLocationView> {
                   label: "",
                   text: _selectedLocation?.address,
                   onClear: () {},
-                  notifyParent: (Location location) {
+                  notifyParent: (Location? location) {
                     mezDbgPrint(
-                        "Ontap on suggestion  => ${location.toJson()} ");
+                        "Ontap on suggestion  => ${location?.toJson()} ");
                     setState(() {
                       this.showBlackScreen = showBlackScreen;
                       _selectedLocation = location;
@@ -178,23 +178,25 @@ class _PickLocationViewState extends State<PickLocationView> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
                           color: Colors.grey.shade200),
-                      child: _selectedLocation != null
-                          ? MezPickGoogleMap(
-                              showBlackScreen: showBlackScreen,
-                              notifyParent: (Location location) {
-                                setState(() {
-                                  this.showBlackScreen = showBlackScreen;
-                                  _selectedLocation = location;
-                                });
-                              },
-                              location: LatLng(_selectedLocation!.latitude,
-                                  _selectedLocation!.longitude))
-                          : Center(
-                              child: CircularProgressIndicator(
-                                color: Colors.black,
-                                strokeWidth: 1,
-                              ),
-                            ),
+                      child:
+                          // _selectedLocation != null
+                          //     ? MezPickGoogleMap(
+                          //         showBlackScreen: showBlackScreen,
+                          //         notifyParent: (Location location) {
+                          //           setState(() {
+                          //             this.showBlackScreen = showBlackScreen;
+                          //             _selectedLocation = location;
+                          //           });
+                          //         },
+                          //         location: LatLng(_selectedLocation!.latitude,
+                          //             _selectedLocation!.longitude))
+                          //     :
+                          Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.black,
+                          strokeWidth: 1,
+                        ),
+                      ),
                     ))),
             Container(
               margin: EdgeInsets.only(bottom: 30),

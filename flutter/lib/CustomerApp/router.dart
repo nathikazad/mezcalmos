@@ -3,7 +3,8 @@ import 'package:mezcalmos/CustomerApp/pages/MapViews/PickLocationView/PickLocati
 import 'package:mezcalmos/CustomerApp/pages/Orders/ListOrdersScreen/ListOrdersScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/ViewRestaurantOrderScreen.dart';
-import 'package:mezcalmos/CustomerApp/pages/Taxi/RequestTaxiScreen.dart';
+import 'package:mezcalmos/CustomerApp/pages/Taxi/RequestTaxiScreen/RequestTaxiScreen.dart';
+import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrder/ViewTaxiOrderScreen.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustomerWrapper.dart';
@@ -13,7 +14,8 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/Vie
 
 // Routes Keys.
 const String kWrapperRoute = '/wrapper';
-const String kTaxisRoute = '/taxi';
+const String kTaxiRequestRoute = '/taxiRequest';
+const String kTaxiOrderViewRoute = '/taxiOrderView';
 const String kOrdersRoute = '/orders';
 const String kRestaurantsRoute = '/restaurants';
 const String kRestaurantRoute = '/restaurants/:restaurantId';
@@ -87,8 +89,13 @@ class XRouter {
             page: () => PickLocationView(PickLocationMode.EditLocation)),
         // Taxis Routes
         GetPage(
-            name: kTaxisRoute,
+            name: kTaxiRequestRoute,
             page: () => RequestTaxiScreen(),
+            transitionDuration: Duration(milliseconds: 500),
+            transition: Transition.rightToLeft),
+        GetPage(
+            name: kTaxiOrderViewRoute,
+            page: () => ViewTaxiOrderScreen(),
             transitionDuration: Duration(milliseconds: 500),
             transition: Transition.rightToLeft),
       ] +

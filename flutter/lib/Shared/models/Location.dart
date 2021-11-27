@@ -1,15 +1,18 @@
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
 class Location {
   String address;
   LocationData position;
   Location(this.address, this.position);
-  factory Location.fromData(dynamic location) {
-    LocationData position = LocationData.fromMap(<String, dynamic>{
-      "latitude": location["lat"],
-      "longitude": location["lng"]
-    });
+  factory Location.fromFirebaseData(dynamic location) {
+    LocationData position = buildLocationData(location["lat"], location["lng"]);
     return Location(location["address"], position);
+  }
+
+  static LocationData buildLocationData(double lat, double lng) {
+    return LocationData.fromMap(
+        <String, dynamic>{"latitude": lat, "longitude": lng});
   }
 
   Map<String, String> toJson() =>

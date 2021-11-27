@@ -80,8 +80,8 @@ class TaxiOrder extends Order {
         status: data['status'].toString().toTaxiOrderStatus(),
         acceptRideTime: data['acceptRideTime'],
         cost: data['estimatedPrice'],
-        from: Location.fromData(data['from']),
-        to: Location.fromData(data['to']),
+        from: Location.fromFirebaseData(data['from']),
+        to: Location.fromFirebaseData(data['to']),
         orderTime: DateTime.parse(data["orderTime"]),
         paymentType: data["paymentType"].toString().toPaymentType(),
         routeInformation: RouteInformation(

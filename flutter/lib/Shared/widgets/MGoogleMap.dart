@@ -205,7 +205,7 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
     try {
       currentLocation = await location.getLocation();
       widget.notifyParent(
-        LocationModel.Location.fromData({
+        LocationModel.Location.fromFirebaseData({
           "lat": currentLocation.latitude,
           "lng": currentLocation.longitude,
           "address": ""
@@ -225,52 +225,52 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
     responsiveSize(context);
     return Stack(
       children: [
-        GestureDetector(
-          onTapDown: (_) {
-            mezDbgPrint("Tap Down !!");
-            userTaped = true;
+        // GestureDetector(
+        // onTapDown: (_) {
+        //   mezDbgPrint("Tap Down !!");
+        //   userTaped = true;
+        // },
+        // child:
+        GoogleMap(
+          // onCameraIdle: () async {
+          //   if (userTaped) {
+          //     mezDbgPrint("Tap Down Confirmed !!");
+          //     userTaped = false;
+          //     mezDbgPrint("Camera New position .. getting the center !!");
+          //     LatLng _center = await getMapCenter();
+          //     widget.notifyParent(
+          //       LocationModel.Location.fromFirebaseData({
+          //         "lat": _center.latitude,
+          //         "lng": _center.longitude,
+          //         "address": ""
+          //       }),
+          //     );
+          //   }
+          // },
+          padding: EdgeInsets.all(20),
+          mapToolbarEnabled: false,
+          minMaxZoomPreference: widget.minMaxZoomPrefs,
+          myLocationButtonEnabled: false,
+          buildingsEnabled: false,
+          markers: widget.markers.toSet(),
+          polylines: widget.polylines,
+          zoomControlsEnabled: false,
+          compassEnabled: false,
+          mapType: MapType.normal,
+          tiltGesturesEnabled: true,
+          initialCameraPosition: CameraPosition(
+              target: widget.initialLocation,
+              tilt: 9.440717697143555,
+              zoom: 5.151926040649414),
+          onMapCreated: (GoogleMapController _gController) async {
+            mezDbgPrint("\n\n\n\n\n o n   m a p   c r e a t e d !\n\n\n\n\n\n");
+            _controller = _gController;
+            await _gController.setMapStyle(mezMapStyle);
+            await animateAndUpdateBounds();
+            _completer.complete(_gController);
           },
-          child: GoogleMap(
-            onCameraIdle: () async {
-              if (userTaped) {
-                mezDbgPrint("Tap Down Confirmed !!");
-                userTaped = false;
-                mezDbgPrint("Camera New position .. getting the center !!");
-                LatLng _center = await getMapCenter();
-                widget.notifyParent(
-                  LocationModel.Location.fromData({
-                    "lat": _center.latitude,
-                    "lng": _center.longitude,
-                    "address": ""
-                  }),
-                );
-              }
-            },
-            padding: EdgeInsets.all(20),
-            mapToolbarEnabled: false,
-            minMaxZoomPreference: widget.minMaxZoomPrefs,
-            myLocationButtonEnabled: false,
-            buildingsEnabled: false,
-            markers: widget.markers.toSet(),
-            polylines: widget.polylines,
-            zoomControlsEnabled: false,
-            compassEnabled: false,
-            mapType: MapType.normal,
-            tiltGesturesEnabled: true,
-            initialCameraPosition: CameraPosition(
-                target: widget.initialLocation,
-                tilt: 9.440717697143555,
-                zoom: 5.151926040649414),
-            onMapCreated: (GoogleMapController _gController) async {
-              mezDbgPrint(
-                  "\n\n\n\n\n o n   m a p   c r e a t e d !\n\n\n\n\n\n");
-              _controller = _gController;
-              await _gController.setMapStyle(mezMapStyle);
-              await animateAndUpdateBounds();
-              _completer.complete(_gController);
-            },
-          ),
         ),
+        // ),
         widget.myLocationButtonEnabled
             ? Positioned(
                 right: 10,

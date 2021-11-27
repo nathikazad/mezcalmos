@@ -16,8 +16,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void mezDbgPrint(dynamic log) {
   String d = DateFormat('HH:mm:ss').format(DateTime.now());
+  String caller = StackTrace.current.toString().split('\n').lastWhere(
+      (element) => element.contains(':mezcalmos/'),
+      orElse: () => '');
+
+  if (caller != '') caller = caller.split('/').last.replaceAll(')', '');
+
   log.toString().split('\n').forEach((str) {
-    print("[MZL][$d] $str\n");
+    print("[MZL][$caller][$d] $str\n");
   });
 }
 

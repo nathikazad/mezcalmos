@@ -11,7 +11,7 @@ import 'package:http/http.dart' as http;
 import 'package:mezcalmos/Shared/models/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
-typedef LocationChangesNotifier = void Function(LocModel.Location location);
+typedef LocationChangesNotifier = void Function(LocModel.Location? location);
 enum SearchComponentType { From, To, None }
 
 class RideDistance {
@@ -54,6 +54,12 @@ class MapHelper {
     return 35;
   }
 
+  static Future<LocModel.Location> getCurrentLocation() async {
+    LocationData res = (await Location().getLocation());
+    mezDbgPrint("Got current loc ====> $res");
+    return LocModel.Location("", res);
+  }
+
   /// This is for AutoComplete location Search !
   static Future<Map<String, String>> getLocationsSuggestions(
       String search) async {
@@ -89,7 +95,7 @@ class MapHelper {
       double lng = respJson["result"]["geometry"]["location"]["lng"];
       String address = respJson["result"]["formatted_address"];
 
-      return LocModel.Location.fromData(
+      return LocModel.Location.fromFirebaseData(
           {"address": address, "lat": lat, "lng": lng});
     } else {
       return null;

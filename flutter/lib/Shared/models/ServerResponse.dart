@@ -10,13 +10,10 @@ extension ParseResponseStatusToString on ResponseStatus {
 
 extension ParseStringToResponseStatus on String {
   ResponseStatus toResponseStatus() {
-    return ResponseStatus.values
-        .firstWhere(
+    return ResponseStatus.values.firstWhere(
         (e) => e.toShortString().toLowerCase() == this.toLowerCase());
   }
 }
-
-
 
 class ServerResponse {
   ResponseStatus status;
@@ -34,5 +31,10 @@ class ServerResponse {
     dynamic data = json;
     return ServerResponse(status,
         errorMessage: errorMessage, errorCode: errorCode, data: json);
+  }
+
+  @override
+  String toString() {
+    return "ServerResponse : { status: $status , errorCode: $errorCode , errorMessage: $errorMessage , data : $data }";
   }
 }

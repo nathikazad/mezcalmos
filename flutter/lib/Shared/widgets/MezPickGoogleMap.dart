@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
+import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,23 +13,26 @@ import 'package:location/location.dart' as GeoLoc;
 class MezPickGoogleMapController {
   void Function()? showBlackScreen;
   void Function()? showFakeMarker;
-  void Function(LatLng newLocation)? setLocation;
+  void Function(bool shouldShow)? shouldShowConfirmButton;
+  void Function(Location newLocation)? setLocation;
   void Function(Set<Polyline> polylines)? setPolylines;
 }
 
 class MezPickGoogleMap extends StatefulWidget {
-  final LocationChangesNotifier notifyParentOfPick;
-  final Function notifyParentOfConfirm;
+  LocationChangesNotifier notifyParentOfPick;
+  LocationChangesNotifier notifyParentOfConfirm;
   double blackScreenBottomTextMargin;
   List<Marker> markers;
   Set<Polyline> polylines;
   bool myLocationButtonEnabled;
   bool animateMarkersPolyLinesBounds;
   MinMaxZoomPreference minMaxZoomPrefs;
+  // Location location;
   final MezPickGoogleMapController mezPickGoogleMapController;
 
   MezPickGoogleMap(
       {Key? key,
+      // required this.location,
       required this.notifyParentOfPick,
       required this.notifyParentOfConfirm,
       this.blackScreenBottomTextMargin = 0,
@@ -48,11 +52,12 @@ class MezPickGoogleMapState extends State<MezPickGoogleMap> {
   // shared original google map Key
   final GlobalKey<MGoogleMapState> mGoogleMapKey = GlobalKey();
   final LanguageController _lang = Get.find<LanguageController>();
-  late LatLng location;
+  Location? location;
 
   bool _showLoading = false;
   bool _showFakeMarker = true;
   bool _showBlackScreen = true;
+  bool _showPickButton = false;
 
   Future<LatLng?> getMapCenter() async {
     return await mGoogleMapKey.currentState?.getMapCenter();
@@ -63,6 +68,7 @@ class MezPickGoogleMapState extends State<MezPickGoogleMap> {
     mezPickGoogleMapController.showFakeMarker = showFakeMarker;
     mezPickGoogleMapController.setLocation = setLocation;
     mezPickGoogleMapController.setPolylines = setPolylines;
+    mezPickGoogleMapController.shouldShowConfirmButton = shouldShowPickButton;
   }
 
   void showBlackScreen() {
@@ -77,7 +83,13 @@ class MezPickGoogleMapState extends State<MezPickGoogleMap> {
     });
   }
 
-  void setLocation(LatLng newLocation) {
+  void shouldShowPickButton(bool shouldShow) {
+    setState(() {
+      _showPickButton = shouldShow;
+    });
+  }
+
+  void setLocation(Location newLocation) {
     location = newLocation;
     mezDbgPrint("MezPickedGMap did updated => Location changed !!!");
     setState(() {
@@ -93,9 +105,7 @@ class MezPickGoogleMapState extends State<MezPickGoogleMap> {
     setState(() {});
   }
 
-  void initState() async {
-    GeoLoc.LocationData locData = await GeoLoc.Location().getLocation();
-    location = LatLng(locData.latitude!, locData.longitude!);
+  void initState() {
     super.initState();
   }
 
@@ -119,7 +129,7 @@ class MezPickGoogleMapState extends State<MezPickGoogleMap> {
   @override
   Widget build(BuildContext context) {
     responsiveSize(context);
-    return _showLoading == false
+    return _showLoading == false || location != null
         ? Stack(
             alignment: Alignment.center,
             children: [
@@ -129,7 +139,8 @@ class MezPickGoogleMapState extends State<MezPickGoogleMap> {
                     widget.animateMarkersPolyLinesBounds,
                 notifyParent: widget.notifyParentOfPick,
                 markers: widget.markers,
-                initialLocation: location,
+                initialLocation:
+                    LatLng(location!.latitude, location!.longitude),
                 key: mGoogleMapKey,
                 minMaxZoomPrefs: widget.minMaxZoomPrefs,
                 periodicRedrendring: false,
@@ -137,22 +148,46 @@ class MezPickGoogleMapState extends State<MezPickGoogleMap> {
               ),
               _showFakeMarker ? pickerMarker() : SizedBox(),
               _showBlackScreen ? gestureDetector() : SizedBox(),
-              widget.polylines.isEmpty ? pickButton() : confirmButton()
+              widget.polylines.isEmpty
+                  ? _shouldShowPickButton()
+                  : confirmButton()
             ],
           )
         : Center(child: CircularProgressIndicator());
   }
 
   Widget confirmButton() {
-    return bottomButton("CONFIRM", widget.notifyParentOfPick);
+    return bottomButton("CONFIRM", widget.notifyParentOfConfirm);
   }
 
-  Widget pickButton() {
-    return bottomButton(_lang.strings["shared"]["pickLocation"]["pick"],
-        widget.notifyParentOfPick);
+  Widget _shouldShowPickButton() {
+    return _showPickButton
+        ? bottomButton(_lang.strings["shared"]["pickLocation"]["pick"],
+            widget.notifyParentOfPick)
+        : SizedBox();
   }
 
-  Widget bottomButton(String buttonText, Function onConfirmButtonClick) {
+  Future<Location> getCenterAndGeoCode() async {
+    LatLng? _mapCenter = await getMapCenter();
+
+    GeoLoc.LocationData _newLocationData =
+        Location.buildLocationData(_mapCenter!.latitude, _mapCenter.longitude);
+
+    double kmDistance = MapHelper.calculateDistance(_newLocationData,
+        Location.buildLocationData(location!.latitude, location!.longitude));
+
+    String formattedAddress = location!.address;
+
+    if (kmDistance > 0.5) {
+      formattedAddress = await MapHelper.getAdressFromLatLng(LatLng(
+              _newLocationData.latitude!, _newLocationData.longitude!)) ??
+          location!.address;
+    }
+
+    return Future.value(Location(formattedAddress, _newLocationData));
+  }
+
+  Widget bottomButton(String buttonText, LocationChangesNotifier notifier) {
     return Positioned(
         bottom: 10,
         left: 15,
@@ -172,7 +207,15 @@ class MezPickGoogleMapState extends State<MezPickGoogleMap> {
                       getSizeRelativeToScreen(20, Get.height, Get.width))),
                   backgroundColor:
                       MaterialStateProperty.all(Colors.transparent)),
-              onPressed: onConfirmButtonClick(),
+              onPressed: () async {
+                var _loc = await getCenterAndGeoCode();
+                mezDbgPrint("------> Got new address : ${_loc.address}");
+                notifier(_loc);
+                setState(() {
+                  _showFakeMarker = false;
+                  _showPickButton = false;
+                });
+              },
               child: Text(buttonText,
                   style: TextStyle(
                     fontFamily: 'psr',
