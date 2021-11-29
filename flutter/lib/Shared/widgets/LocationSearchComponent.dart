@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
+import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/widgets/AutoCompleteTextField.dart';
 
@@ -27,7 +27,7 @@ class LocationSearchComponent extends StatefulWidget {
 
   final String label;
   final String hint;
-  final LocationChangesNotifier notifyParent;
+  final MapHelper.LocationChangesNotifier notifyParent;
   final Function onClear;
   String? text;
   final FocusNode? focusNode;

@@ -100,7 +100,6 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
                               alignment: Alignment.topCenter,
                               children: [
                                 MGoogleMap(
-                                  notifyParent: (newLoc, _) {},
                                   markers: customMarkers,
                                   initialLocation: initialCameraPosition,
                                   polylines: polylines,

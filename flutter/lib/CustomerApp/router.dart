@@ -15,12 +15,12 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/Vie
 // Routes Keys.
 const String kWrapperRoute = '/wrapper';
 const String kTaxiRequestRoute = '/taxiRequest';
-const String kTaxiOrderViewRoute = '/taxiOrderView';
 const String kOrdersRoute = '/orders';
 const String kRestaurantsRoute = '/restaurants';
 const String kRestaurantRoute = '/restaurants/:restaurantId';
 const String kViewRestaurantItemRoute = '/items/:restaurantId/:itemId';
-const String kRestaurantOrderRoute = '/currentRestaurantOrders/:orderId';
+const String kRestaurantOrderRoute = '/restaurantOrders/:orderId';
+const String kTaxiOrderRoute = '/taxiOrders/:orderId';
 const String kCartRoute = '/cart';
 const String kCartItemRoute = '/cart/:cartItemId';
 const String kPickLocationRoute = '/pickLocationFromMap/addLocation';
@@ -42,6 +42,10 @@ String editCartItemRoute(String cartItemId) {
 
 String getRestaurantOrderRoute(String orderId) {
   return kRestaurantOrderRoute.replaceFirst(":orderId", orderId);
+}
+
+String getTaxiOrderRoute(String orderId) {
+  return kTaxiOrderRoute.replaceFirst(":orderId", orderId);
 }
 
 String getRestaurantMessagesRoute(
@@ -94,7 +98,7 @@ class XRouter {
             transitionDuration: Duration(milliseconds: 500),
             transition: Transition.rightToLeft),
         GetPage(
-            name: kTaxiOrderViewRoute,
+            name: kTaxiOrderRoute,
             page: () => ViewTaxiOrderScreen(),
             transitionDuration: Duration(milliseconds: 500),
             transition: Transition.rightToLeft),

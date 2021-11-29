@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
-import 'package:mezcalmos/CustomerApp/pages/Taxi/RequestTaxiScreen/helper.dart';
-import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
+import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
 
-// typedef LocationDropDownStateNotifier = void Function(DropDownState state);
+enum SearchComponentType { From, To, None }
 
-// LocationChoicesDropDown(
-//               newLocationFromChildren,
-//                 initialDropDownState: this.ddState,
-//               ),
+extension ParseSearchComponentTypeToString on SearchComponentType {
+  String toShortString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
 typedef SearchLocationNotifier = void Function(
     Location? location, SearchComponentType locationType);
 
@@ -26,28 +28,113 @@ class LocationDropDownItem {
       {required this.icon, required this.function, required this.title});
 }
 
-class FromToLocationBar extends StatefulWidget {
-  Rx<TaxiRequest> request;
-  SearchLocationNotifier eventNotifier;
-
-  FromToLocationBar(this.request, this.eventNotifier, {Key? key})
-      : super(key: key);
-
-  @override
-  FromToLocationBarState createState() => FromToLocationBarState();
+class LocationSearchBarController {
+  late void Function() collapseDropdown;
+  late void Function() expandDropdown;
 }
 
-class FromToLocationBarState extends State<FromToLocationBar> {
-  final GlobalKey<FromToLocationBarState> widgetKey = GlobalKey();
-  late FromToLocationBarHelper helper;
+class LocationSearchBar extends StatefulWidget {
+  final Rx<TaxiRequest> request;
+  final SearchLocationNotifier newLocationChosenEvent;
+  final LocationSearchBarController locationSearchBarController;
+  LocationSearchBar(
+      {required this.request,
+      required this.newLocationChosenEvent,
+      required this.locationSearchBarController});
+
+  @override
+  LocationSearchBarState createState() =>
+      LocationSearchBarState(locationSearchBarController);
+}
+
+class LocationSearchBarState extends State<LocationSearchBar> {
   CustomerAuthController _authController = Get.find<CustomerAuthController>();
+  late LocationSearchBarController locationSearchBarController;
+  double pickChoicesDropDownHeight = 0;
   final FocusNode fromTextFieldFocusNode = FocusNode();
   final FocusNode toTextFieldFocusNode = FocusNode();
   SearchComponentType focusedTextField = SearchComponentType.None;
   List<LocationDropDownItem> dropDownItems = [];
 
+  LocationSearchBarState(this.locationSearchBarController) {
+    locationSearchBarController.collapseDropdown = collapseDropdown;
+    locationSearchBarController.expandDropdown = expandDropdown;
+  }
+
+/******************************  Controller functions ************************************/
+  void collapseDropdown() {
+    setState(() {
+      pickChoicesDropDownHeight = 0;
+    });
+  }
+
+  void expandDropdown() {
+    setState(() {
+      pickChoicesDropDownHeight = 100;
+    });
+  }
+
+  /************  Init, build and other overrided function *********************************/
   @override
-  void didUpdateWidget(FromToLocationBar oldWidget) {
+  void initState() {
+    locationSearchBarController = LocationSearchBarController();
+    dropDownItems.addAll([
+      LocationDropDownItem(
+          function: () async {
+            widget.newLocationChosenEvent(
+                await MapHelper.getCurrentLocation(), focusedTextField);
+          },
+          title: "Current location",
+          icon: Icon(Icons.location_on, color: Colors.purple)),
+      LocationDropDownItem(
+          function: () async {
+            widget.newLocationChosenEvent(
+                await MapHelper.getCurrentLocation(), focusedTextField);
+          },
+          title: "Pick From Map",
+          icon: Icon(Icons.location_searching_outlined, color: Colors.purple))
+    ]);
+    dropDownItems.addAll(getSavedLocationsWithCallbacks());
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+        top: 5,
+        left: 10,
+        right: 10,
+        child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.white,
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                    color: Color.fromARGB(60, 0, 0, 0),
+                    spreadRadius: 1,
+                    blurRadius: 4,
+                    offset: Offset(0, 10)),
+              ],
+            ),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    fromTextField(),
+                    middleLogo(),
+                    toTextField(),
+                  ],
+                ),
+                SizedBox(
+                  height: 2,
+                ),
+                pickChoicesDropDown()
+              ],
+            )));
+  }
+
+  @override
+  void didUpdateWidget(LocationSearchBar oldWidget) {
     if (widget.request.value.to?.address != null &&
         widget.request.value.from?.address != null) {
       fromTextFieldFocusNode.unfocus();
@@ -58,67 +145,9 @@ class FromToLocationBarState extends State<FromToLocationBar> {
     super.didUpdateWidget(oldWidget);
   }
 
-// To Text Field Callbacks ---------------------------------------------------------------------------
-  void textFieldOnClear(SearchComponentType _type) {
-    setState(() {
-      // _animateMarkersAndPolylines = false;
-      // _polylines.clear();
-      // _markers.removeWhere((element) => element.markerId.value == "to");
-      if (_type == SearchComponentType.From) {
-        fromTextFieldFocusNode.requestFocus();
-        mezDbgPrint("Cleared From TF !");
-        widget.request.value.from = null;
-      }
-      if (_type == SearchComponentType.To) {
-        fromTextFieldFocusNode.requestFocus();
-        mezDbgPrint("Cleared From TF !");
-        widget.request.value.to = null;
-      }
-      focusedTextField = _type;
+  /******************************  Widgets ************************************/
 
-      widget.eventNotifier(null, focusedTextField);
-
-      // _toReadOnly = false;
-      // hideFakeMarkerInCaseEmptyAddress();
-    });
-  }
-
-  void textFieldOnTextChanged(String value) {
-    if (value.length >= 1) {
-      helper.collapse();
-    } else {
-      helper.expand();
-    }
-  }
-
-  void textFieldOnFocus(SearchComponentType type) {
-    if (type == SearchComponentType.From &&
-        widget.request.value.from?.address == null) {
-      helper.expand();
-      setState(() {
-        focusedTextField = type;
-      });
-    }
-
-    if (type == SearchComponentType.To &&
-        widget.request.value.to?.address == null) {
-      helper.expand();
-      setState(() {
-        focusedTextField = type;
-      });
-    }
-    // if (type == SearchComponentType.From) {
-    //   widget.eventNotifier(widget.request.value.value.from, SearchComponentType.From);
-    // } else if (type == SearchComponentType.To) {
-    //   widget.eventNotifier(widget.request.value.value.to, SearchComponentType.To);
-    // }
-  }
-
-  void textFieldOnFocusLost() {
-    helper.collapse();
-  }
-
-  Widget topBarFromTextField() {
+  Widget fromTextField() {
     return Expanded(
       flex: focusedTextField == SearchComponentType.To ? 1 : 3,
       child: LocationSearchComponent(
@@ -139,13 +168,13 @@ class FromToLocationBarState extends State<FromToLocationBar> {
         onFocusLost: textFieldOnFocusLost,
         notifyParent: (Location? location) {
           // This is notifying the parent when the user Clicks a suggestion from the suggestions list!
-          widget.eventNotifier(location, SearchComponentType.From);
+          widget.newLocationChosenEvent(location, SearchComponentType.From);
         },
       ),
     );
   }
 
-  Widget topBarMiddleLogo() {
+  Widget middleLogo() {
     return Expanded(
         flex: 1,
         child: Stack(
@@ -182,7 +211,7 @@ class FromToLocationBarState extends State<FromToLocationBar> {
             ]));
   }
 
-  Widget topBarToTextField() {
+  Widget toTextField() {
     return Expanded(
       flex: focusedTextField == SearchComponentType.From ? 1 : 3,
       child: LocationSearchComponent(
@@ -203,7 +232,7 @@ class FromToLocationBarState extends State<FromToLocationBar> {
         onFocus: () => textFieldOnFocus(SearchComponentType.To),
         onFocusLost: textFieldOnFocusLost,
         notifyParent: (Location? location) {
-          widget.eventNotifier(location, SearchComponentType.To);
+          widget.newLocationChosenEvent(location, SearchComponentType.To);
         },
       ),
     );
@@ -214,7 +243,7 @@ class FromToLocationBarState extends State<FromToLocationBar> {
         clipBehavior: Clip.hardEdge,
         duration: Duration(milliseconds: 500),
         curve: Curves.fastOutSlowIn,
-        height: helper.pickChoicesDropDownHeight,
+        height: pickChoicesDropDownHeight,
         width: Get.width,
         decoration: BoxDecoration(
             border: Border.all(
@@ -263,6 +292,60 @@ class FromToLocationBarState extends State<FromToLocationBar> {
         ));
   }
 
+/******************************  EVENT HANDLERS ************************************/
+// To Text Field Callbacks ---------------------------------------------------------------------------
+  void textFieldOnClear(SearchComponentType _type) {
+    setState(() {
+      if (_type == SearchComponentType.From) {
+        fromTextFieldFocusNode.requestFocus();
+        mezDbgPrint("Cleared From TF !");
+        widget.request.value.from = null;
+      }
+      if (_type == SearchComponentType.To) {
+        fromTextFieldFocusNode.requestFocus();
+        mezDbgPrint("Cleared From TF !");
+        widget.request.value.to = null;
+      }
+      focusedTextField = _type;
+
+      widget.newLocationChosenEvent(null, focusedTextField);
+
+      // _toReadOnly = false;
+      // hideFakeMarkerInCaseEmptyAddress();
+    });
+  }
+
+  void textFieldOnTextChanged(String value) {
+    if (value.length >= 1) {
+      locationSearchBarController.collapseDropdown();
+    } else {
+      locationSearchBarController.expandDropdown();
+    }
+  }
+
+  void textFieldOnFocus(SearchComponentType type) {
+    if (type == SearchComponentType.From &&
+        widget.request.value.from?.address == null) {
+      locationSearchBarController.expandDropdown();
+      setState(() {
+        focusedTextField = type;
+      });
+    }
+
+    if (type == SearchComponentType.To &&
+        widget.request.value.to?.address == null) {
+      locationSearchBarController.expandDropdown();
+      setState(() {
+        focusedTextField = type;
+      });
+    }
+  }
+
+  void textFieldOnFocusLost() {
+    locationSearchBarController.collapseDropdown();
+  }
+
+  /******************************  helper functions ************************************/
   List<LocationDropDownItem> getSavedLocationsWithCallbacks() {
     return _authController.customerRxn.value?.savedLocations
             .map<LocationDropDownItem>((e) {
@@ -274,7 +357,7 @@ class FromToLocationBarState extends State<FromToLocationBar> {
               function: () {
                 mezcalmosSnackBar(e.name, e.location.address);
                 Location? _savedLoc = _authController.getLocationById(e.id!);
-                widget.eventNotifier(_savedLoc, focusedTextField);
+                widget.newLocationChosenEvent(_savedLoc, focusedTextField);
                 // setState(() {
                 //   _focusedTextField = SearchComponentType.None;
                 // });
@@ -282,68 +365,5 @@ class FromToLocationBarState extends State<FromToLocationBar> {
               title: e.name);
         }).toList() ??
         [];
-  }
-
-  @override
-  void initState() {
-    helper = FromToLocationBarHelper(widgetKey);
-    dropDownItems.addAll([
-      LocationDropDownItem(
-          function: () async {
-            widget.eventNotifier(
-                await MapHelper.getCurrentLocation(), focusedTextField);
-          },
-          title: "Current location",
-          icon: Icon(Icons.location_on, color: Colors.purple)),
-      LocationDropDownItem(
-          function: () async {
-            // we might just return a saved snapshot to reduce the await
-            widget.eventNotifier(
-                await MapHelper.getCurrentLocation(), focusedTextField);
-            // setState(() {
-            //   _focusedTextField = SearchComponentType.None;
-            // });
-          },
-          title: "Pick From Map",
-          icon: Icon(Icons.location_searching_outlined, color: Colors.purple))
-    ]);
-    // adding dynamic savedLocations
-    dropDownItems.addAll(getSavedLocationsWithCallbacks());
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-        top: 5,
-        left: 10,
-        right: 10,
-        child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.white,
-              boxShadow: <BoxShadow>[
-                BoxShadow(
-                    color: Color.fromARGB(60, 0, 0, 0),
-                    spreadRadius: 1,
-                    blurRadius: 4,
-                    offset: Offset(0, 10)),
-              ],
-            ),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    topBarFromTextField(),
-                    topBarMiddleLogo(),
-                    topBarToTextField(),
-                  ],
-                ),
-                SizedBox(
-                  height: 2,
-                ),
-                pickChoicesDropDown()
-              ],
-            )));
   }
 }

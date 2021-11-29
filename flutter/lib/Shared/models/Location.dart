@@ -15,6 +15,10 @@ class Location {
         <String, dynamic>{"latitude": lat, "longitude": lng});
   }
 
+  LatLng toLatLng() {
+    return LatLng(position.latitude!, position.longitude!);
+  }
+
   Map<String, String> toJson() =>
       {"address": this.address, "position": this.position.toString()};
 
