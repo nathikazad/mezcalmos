@@ -5,26 +5,29 @@
 // =============================
 
 import 'dart:async';
+import 'dart:io';
+
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/route_manager.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:mezcalmos/Shared/Themes/CustomerAppTheme.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
-import 'package:package_info/package_info.dart';
-import 'package:get/route_manager.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'dart:io';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:package_info/package_info.dart';
 
 class SPoint extends StatefulWidget {
   AppType appType;
@@ -178,16 +181,31 @@ Widget mainApp(AppType appType, List<GetPage<dynamic>> routes) {
     print("[+] InitializedConfig -- the ${appType.toShortString()} !");
   }
 
-  return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      onInit: () async => await _initializeConfig(),
-      title: appType.toShortString(),
-      theme: ThemeData(
-          primaryColor: Colors.white,
-          visualDensity: VisualDensity.adaptivePlatformDensity),
-      color: Colors.white,
-      enableLog: true,
-      // logWriterCallback: ,
-      getPages: routes,
-      initialRoute: kWrapperRoute);
+  getTheme(AppType appType) {
+    switch (appType) {
+      case AppType.CustomerApp:
+        return CustomerAppTheme.lightTheme;
+
+      default:
+        return ThemeData(
+            primaryColor: Colors.white,
+            visualDensity: VisualDensity.adaptivePlatformDensity);
+    }
+  }
+
+  return ScreenUtilInit(
+      // designSize: Size(360, 690),
+      builder: () => GetMaterialApp(
+          debugShowCheckedModeBanner: false,
+          onInit: () async => await _initializeConfig(),
+          title: appType.toShortString(),
+          theme: getTheme(appType),
+          // theme: ThemeData(
+          //     primaryColor: Colors.white,
+          //     visualDensity: VisualDensity.adaptivePlatformDensity),
+          color: Colors.white,
+          enableLog: true,
+          // logWriterCallback: ,
+          getPages: routes,
+          initialRoute: kWrapperRoute));
 }
