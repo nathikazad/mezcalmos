@@ -68,9 +68,9 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                       borderRadius: BorderRadius.circular(5),
                       color: Colors.white),
                   child: LocationPicker(
-                      mezPickGoogleMapController: this.locationPickerController,
                       myLocationButtonEnabled: false,
                       blackScreenBottomTextMargin: 110,
+                      mezPickGoogleMapController: this.locationPickerController,
                       notifyParentOfLocationFinalized:
                           updateModelAndMaybeCalculateRoute,
                       notifyParentOfConfirm: requestTaxi)),
@@ -81,8 +81,9 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
               ),
               LocationSearchBar(
                   request: taxiRequest,
-                  newLocationChosenEvent: updateModelAndHandoffToLocationPicker,
-                  locationSearchBarController: locationSearchBarController),
+                  locationSearchBarController: locationSearchBarController,
+                  newLocationChosenEvent:
+                      updateModelAndHandoffToLocationPicker),
             ]),
       ),
     );
@@ -98,6 +99,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
       locationPickerController.setLocation(newLocation);
       locationPickerController.showFakeMarkerAndPickButton();
     } else {
+      // Location cleared
       locationPickerController.removeMarker(textFieldType.toShortString());
       locationPickerController.showGrayedOutButton();
     }
@@ -107,12 +109,12 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
 
 // after pick button is clicked after user verifies gps locaiton
   void updateModelAndMaybeCalculateRoute(Location newLocation) {
-    locationSearchBarController.collapseDropdown();
-    locationPickerController.showGrayedOutButton();
     updateModelAndMarker(_currentFocusedTextField, newLocation);
     if (taxiRequest.value.isFromToSet()) {
       updateRouteInformation();
       locationPickerController.showConfirmButton();
+    } else {
+      locationPickerController.showGrayedOutButton();
     }
   }
 
@@ -157,7 +159,6 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
       taxiRequest.value.estimatedPrice = estimatedPrice;
       taxiRequest.value.polyline = route.encodedPolyLine;
       locationPickerController.addPolyline(route.polylineList);
-      locationPickerController.setAnimateMarkersPolyLinesBounds(true);
     } else {
       // TODO:handle route error
     }

@@ -3,7 +3,7 @@ import 'package:mezcalmos/CustomerApp/pages/MapViews/PickLocationView/PickLocati
 import 'package:mezcalmos/CustomerApp/pages/Orders/ListOrdersScreen/ListOrdersScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/ViewRestaurantOrderScreen.dart';
-import 'package:mezcalmos/CustomerApp/pages/Taxi/RequestTaxiScreen/RequestTaxiScreen.dart';
+import 'package:mezcalmos/CustomerApp/pages/Taxi/RequestTaxiScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrder/ViewTaxiOrderScreen.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';

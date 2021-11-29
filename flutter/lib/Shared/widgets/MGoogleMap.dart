@@ -62,7 +62,7 @@ abstract class MGoogleMapController {
   late void Function(String) removeMarker;
   late void Function(List<PointLatLng>) addPolyline;
   late void Function() clearPolyline;
-  late void Function(bool) setAnimateMarkersPolyLinesBounds;
+  // late void Function(bool) setAnimateMarkersPolyLinesBounds;
   late void Function(double lat, double lng) moveToNewLatLng;
   late Future<LatLng> Function() getMapCenter;
 }
@@ -109,8 +109,6 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
     mGoogleMapController.moveToNewLatLng = moveToNewLatLng;
     mGoogleMapController.addPolyline = addPolyline;
     mGoogleMapController.clearPolyline = clearPolyline;
-    mGoogleMapController.setAnimateMarkersPolyLinesBounds =
-        setAnimateMarkersPolyLinesBounds;
     mGoogleMapController.getMapCenter = getMapCenter;
   }
 
@@ -141,18 +139,14 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
           points: polylineList
               .map<LatLng>((e) => LatLng(e.latitude, e.longitude))
               .toList()));
+      animateMarkersPolyLinesBounds = true;
     });
   }
 
   void clearPolyline() {
     setState(() {
       polylines.clear();
-    });
-  }
-
-  void setAnimateMarkersPolyLinesBounds(bool value) {
-    setState(() {
-      animateMarkersPolyLinesBounds = value;
+      animateMarkersPolyLinesBounds = false;
     });
   }
 

@@ -39,7 +39,7 @@ class LocationPicker extends StatefulWidget {
       LocationPickerState(this.mezPickGoogleMapController);
 }
 
-enum BottomButtomToShow { Pick, Confirm, None }
+enum BottomButtomToShow { Pick, Confirm, GrayedOut }
 
 class LocationPickerState extends State<LocationPicker> {
   final LanguageController _lang = Get.find<LanguageController>();
@@ -48,7 +48,7 @@ class LocationPickerState extends State<LocationPicker> {
   bool _showLoading = false;
   bool _showFakeMarker = true;
   bool _showBlackScreen = true;
-  BottomButtomToShow _bottomButtomToShow = BottomButtomToShow.None;
+  BottomButtomToShow _bottomButtomToShow = BottomButtomToShow.GrayedOut;
 
   LocationPickerController _mezPickGoogleMapController;
 
@@ -89,7 +89,7 @@ class LocationPickerState extends State<LocationPicker> {
 
   void showGrayedOutButton() {
     setState(() {
-      _bottomButtomToShow = BottomButtomToShow.None;
+      _bottomButtomToShow = BottomButtomToShow.GrayedOut;
     });
   }
 
@@ -160,7 +160,7 @@ class LocationPickerState extends State<LocationPicker> {
             widget.notifyParentOfLocationFinalized);
       case BottomButtomToShow.Confirm:
         return buildBottomButton("CONFIRM", widget.notifyParentOfConfirm);
-      case BottomButtomToShow.None:
+      case BottomButtomToShow.GrayedOut:
         return SizedBox();
     }
   }
