@@ -70,7 +70,8 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                   child: LocationPicker(
                       myLocationButtonEnabled: false,
                       blackScreenBottomTextMargin: 110,
-                      mezPickGoogleMapController: this.locationPickerController,
+                      locationPickerMapController:
+                          this.locationPickerController,
                       notifyParentOfLocationFinalized:
                           updateModelAndMaybeCalculateRoute,
                       notifyParentOfConfirm: requestTaxi)),

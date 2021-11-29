@@ -26,17 +26,17 @@ class LocationPicker extends StatefulWidget {
   final double blackScreenBottomTextMargin;
   final bool myLocationButtonEnabled;
   // Location location;
-  final LocationPickerController mezPickGoogleMapController;
+  final LocationPickerController locationPickerMapController;
 
   LocationPicker(
       {required this.notifyParentOfLocationFinalized,
       required this.notifyParentOfConfirm,
       this.blackScreenBottomTextMargin = 0,
       this.myLocationButtonEnabled = true,
-      required this.mezPickGoogleMapController});
+      required this.locationPickerMapController});
   @override
   LocationPickerState createState() =>
-      LocationPickerState(this.mezPickGoogleMapController);
+      LocationPickerState(this.locationPickerMapController);
 }
 
 enum BottomButtomToShow { Pick, Confirm, GrayedOut }
