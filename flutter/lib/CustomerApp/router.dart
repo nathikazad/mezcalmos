@@ -3,6 +3,7 @@ import 'package:mezcalmos/CustomerApp/pages/MapViews/PickLocationView/PickLocati
 import 'package:mezcalmos/CustomerApp/pages/Orders/ListOrdersScreen/ListOrdersScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/ViewOrderScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemScreen.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/resaurant_screen_v3.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/OrderTaxiScreen.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -10,6 +11,8 @@ import 'package:mezcalmos/CustomerApp/pages/CustomerWrapper.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ListRestaurantsScreem/ListRestaurantsScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/ViewCartScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/ViewRestaurantScreen.dart';
+
+import 'pages/Restaurants/ViewRestaurantScreen/restaurant_screen_v2.dart';
 
 // Routes Keys.
 const String kWrapperRoute = '/wrapper';
@@ -58,7 +61,7 @@ class XRouter {
         GetPage(name: kRestaurantsRoute, page: () => ListRestaurantsScreen()),
         GetPage(
             name: kRestaurantRoute,
-            page: () => ViewRestaurantScreen(),
+            page: () => Restaurant_screenV3(),
             transitionDuration: Duration(milliseconds: 500),
             transition: Transition.rightToLeft),
         GetPage(
