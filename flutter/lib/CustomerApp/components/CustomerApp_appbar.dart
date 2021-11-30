@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 
 // ignore: must_be_immutable
 class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
-
   Widget? myLeading;
   bool? center;
   Color? color;
@@ -18,6 +20,8 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
       : preferredSize = Size.fromHeight(kToolbarHeight),
         super(key: key);
 
+  // getting user image;
+  String? userImage = Get.find<AuthController>().fireAuthUser!.photoURL;
   @override
   final Size preferredSize;
   @override
@@ -38,8 +42,7 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(15.0))),
           icon: CircleAvatar(
-            backgroundImage: NetworkImage(
-                'https://images.unsplash.com/photo-1552058544-f2b08422138a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=699&q=80'),
+            backgroundImage: NetworkImage(userImage!),
           ),
           itemBuilder: (context) {
             return ['Notifications', 'Orders'].map((item) {

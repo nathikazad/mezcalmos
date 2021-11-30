@@ -19,6 +19,7 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
   MyPopupMenuController _popUpController = MyPopupMenuController();
 
   LanguageController lang = Get.find<LanguageController>();
+
   List<Restaurant> restaurants = <Restaurant>[];
   RestaurantsInfoController _restaurantsInfoController =
       Get.put<RestaurantsInfoController>(RestaurantsInfoController());
