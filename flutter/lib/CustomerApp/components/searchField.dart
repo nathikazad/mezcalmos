@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class SearchField extends StatelessWidget {
@@ -13,7 +12,7 @@ class SearchField extends StatelessWidget {
       child: TextField(
         style: Theme.of(context).textTheme.bodyText2,
         decoration: InputDecoration(
-            label: Text('Search'),
+            labelText: 'Search',
             floatingLabelBehavior: FloatingLabelBehavior.never,
             filled: true,
             fillColor: Colors.white,

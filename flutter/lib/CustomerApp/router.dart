@@ -12,8 +12,6 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ListRestaurantsScreem/Li
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/ViewCartScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/ViewRestaurantScreen.dart';
 
-import 'pages/Restaurants/ViewRestaurantScreen/restaurant_screen_v2.dart';
-
 // Routes Keys.
 const String kWrapperRoute = '/wrapper';
 const String kTaxisRoute = '/taxi';
