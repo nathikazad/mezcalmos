@@ -6,7 +6,7 @@ class CustomerAppTheme {
       scaffoldBackgroundColor: Color(0XFFEDEDED),
       appBarTheme: AppBarTheme(
           backgroundColor: Colors.white,
-          elevation: 0.1,
+          elevation: 0.5,
           centerTitle: true,
           titleSpacing: 16,
           iconTheme: IconThemeData(color: Colors.black),
