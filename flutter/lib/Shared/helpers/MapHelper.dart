@@ -143,7 +143,11 @@ Future<Route?> getDurationAndDistance(
         RideDistance.fromJson(respJson["routes"]?[0]?["legs"]?[0]?["distance"]);
     RideDuration duration =
         RideDuration.fromJson(respJson["routes"]?[0]?["legs"]?[0]?["duration"]);
-    String encodedPolyLine = respJson["routes"]?[0]?["overview_polyline"];
+    String encodedPolyLine =
+        respJson["routes"]?[0]?["overview_polyline"]?['points'];
+
+    mezDbgPrint(encodedPolyLine);
+
     List<PointLatLng> polylinePoints =
         PolylinePoints().decodePolyline(encodedPolyLine);
     return Route(

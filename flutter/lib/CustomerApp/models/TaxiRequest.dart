@@ -3,7 +3,7 @@ import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
 class TaxiRequest {
-  String? orderId;
+  // String? orderId;
   Location? from;
   Location? to;
   RideDistance? distance;
@@ -14,7 +14,8 @@ class TaxiRequest {
 
   // No orderId needed in this case, when the user creates
   TaxiRequest(
-      {this.orderId,
+      {
+      // this.orderId,
       this.from,
       this.to,
       this.distance,
@@ -26,7 +27,7 @@ class TaxiRequest {
   // User to Get the order from db
   factory TaxiRequest.fromSnapShotData(String orderId, dynamic data) {
     return TaxiRequest(
-        orderId: orderId,
+        // orderId: orderId,
         from: data['from'],
         to: data['to'],
         distance: RideDistance.fromJson(data['distance']),
@@ -58,15 +59,17 @@ class TaxiRequest {
     return this.from != null && this.to != null;
   }
 
-  Map<String, dynamic> toFirebaseJson() {
+  Map<String, dynamic> asCloudFunctionParam() {
     return {
-      "from": this.from?.toFirebaseFormattedJson(),
-      "to": this.to?.toFirebaseFormattedJson(),
-      "distance": this.distance?.toJson(),
-      "duration": this.duration?.toJson(),
-      "estimatedPrice": this.estimatedPrice,
-      "paymentType": this.paymentType,
-      "polyline": this.polyline
+      "from": from?.toFirebaseFormattedJson(),
+      "to": to?.toFirebaseFormattedJson(),
+      "estimatedPrice": estimatedPrice,
+      "paymentType": paymentType.toFirebaseFormatString(),
+      "routeInformation": {
+        "duration": duration!.daysHoursString,
+        "distance": distance!.distanceStringInKm,
+        "polyline": polyline
+      }
     };
   }
 }

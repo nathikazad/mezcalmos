@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'dart:async';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
@@ -56,9 +57,15 @@ class OrderController extends GetxController {
         for (var orderId in event.snapshot.value.keys) {
           dynamic orderData = event.snapshot.value[orderId];
           try {
+            // if restaurant order
             if (orderData["orderType"] ==
                 OrderType.Restaurant.toFirebaseFormatString()) {
               orders.add(RestaurantOrder.fromData(orderId, orderData));
+            }
+            // if Taxi order
+            if (orderData["orderType"] ==
+                OrderType.Taxi.toFirebaseFormatString()) {
+              orders.add(TaxiOrder.fromData(orderId, orderData));
             }
           } catch (e) {
             mezDbgPrint("orderController: adding order error " + orderId);
@@ -70,11 +77,17 @@ class OrderController extends GetxController {
     });
   }
 
+  Order? getCurrentTaxiOrder() {
+    return currentOrders.firstWhere(
+        (element) => element.orderType == OrderType.Taxi,
+        orElse: null);
+  }
+
   Order? getPastOrderById(String orderId) {
     try {
       return pastOrders.firstWhere((order) {
         return order.orderId == orderId;
-      }) as RestaurantOrder;
+      });
     } on StateError {
       return null;
     }
@@ -84,12 +97,12 @@ class OrderController extends GetxController {
     try {
       return currentOrders.firstWhere((order) {
         return order.orderId == orderId;
-      }) as RestaurantOrder;
+      });
     } on StateError {
       try {
         return pastOrders.firstWhere((order) {
           return order.orderId == orderId;
-        }) as RestaurantOrder;
+        });
       } on StateError {
         return null;
       }

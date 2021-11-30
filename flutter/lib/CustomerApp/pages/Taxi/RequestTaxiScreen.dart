@@ -3,12 +3,14 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/componenets/LocationSearchBar.dart';
+import 'package:mezcalmos/CustomerApp/pages/Taxi/componenets/MapBottomBar.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/LocationPicker.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart' as GeoLoc;
@@ -20,12 +22,12 @@ class RequestTaxiScreen extends StatefulWidget {
 
 class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
   // MyPopupMenuController _popUpController = MyPopupMenuController();
-  late SearchComponentType _currentFocusedTextField;
+  SearchComponentType _currentFocusedTextField = SearchComponentType.From;
   Rx<TaxiRequest> taxiRequest = TaxiRequest().obs;
   TaxiController controller = Get.find<TaxiController>();
-  LocationPickerController locationPickerController =
+  final LocationPickerController locationPickerController =
       LocationPickerController();
-  LocationSearchBarController locationSearchBarController =
+  final LocationSearchBarController locationSearchBarController =
       LocationSearchBarController();
 
   /******************************  Init and build function ************************************/
@@ -42,6 +44,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                 "${locData.latitude.toString()}, ${locData.longitude.toString()}",
             locData);
         updateModelAndMarker(SearchComponentType.From, taxiRequest.value.from!);
+        setState(() {});
         locationPickerController.setLocation(taxiRequest.value.from!);
       });
     });
@@ -53,7 +56,8 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(),
+      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back),
+      //  AppBar(),
       backgroundColor: Colors.white,
       body: Container(
         color: Colors.white,
@@ -74,7 +78,8 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                           this.locationPickerController,
                       notifyParentOfLocationFinalized:
                           updateModelAndMaybeCalculateRoute,
-                      notifyParentOfConfirm: requestTaxi)),
+                      notifyParentOfConfirm: (Location? _) async =>
+                          await requestTaxi(_))),
               Container(
                 height: 40,
                 width: Get.width,
@@ -85,6 +90,9 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                   locationSearchBarController: locationSearchBarController,
                   newLocationChosenEvent:
                       updateModelAndHandoffToLocationPicker),
+              taxiRequest.value.isFromToSet()
+                  ? MapBottomBar(taxiRequest: taxiRequest)
+                  : SizedBox()
             ]),
       ),
     );
@@ -94,6 +102,10 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
 // when one of the dropdowns (pick current location, a saved location or a places suggestion clicked)
   void updateModelAndHandoffToLocationPicker(
       Location? newLocation, SearchComponentType textFieldType) {
+    mezDbgPrint(
+        "updateModelAndHandoffToLocationPicker textFieldType ===> $textFieldType");
+    mezDbgPrint(
+        "updateModelAndHandoffToLocationPicker Address ===> ${newLocation?.address}");
     if (newLocation != null) {
       _currentFocusedTextField = textFieldType;
       updateModelAndMarker(textFieldType, newLocation);
@@ -103,31 +115,40 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
       // Location cleared
       locationPickerController.removeMarker(textFieldType.toShortString());
       locationPickerController.showGrayedOutButton();
+      mezDbgPrint("showGrayedOutButton");
     }
     locationSearchBarController.collapseDropdown();
     locationPickerController.clearPolyline();
+    setState(() {});
   }
 
 // after pick button is clicked after user verifies gps locaiton
   void updateModelAndMaybeCalculateRoute(Location newLocation) {
+    locationPickerController.hideBlackScreen();
     updateModelAndMarker(_currentFocusedTextField, newLocation);
     if (taxiRequest.value.isFromToSet()) {
       updateRouteInformation();
       locationPickerController.showConfirmButton();
+      mezDbgPrint("++showConfirmButton");
     } else {
+      mezDbgPrint("showGrayedOutButton");
       locationPickerController.showGrayedOutButton();
     }
+    setState(() {});
   }
 
 // after confirm button is clicked on mez pick google map
-  void requestTaxi() async {
+  Future<void> requestTaxi(Location? loc) async {
     // build order and call controller function
     ServerResponse response = await controller.requestTaxi(taxiRequest.value);
     if (response.success) {
-      // we do not pop the RequestTaxiView because the user can cancel after and then we just have to pop the viewOrderRoute
-      popEverythingAndNavigateTo(getTaxiOrderRoute(response.data["orderId"]));
-      mezcalmosSnackBar("Success :)", response.errorMessage!,
-          position: SnackPosition.TOP);
+      String oid = response.data["orderId"];
+      // in case the widget is still mounted , then make dart scheduale this delayed call as soon as possible ,
+      // so we don't fall into assertion error ('!_debugLocked': is not true.)
+      Future.delayed(Duration.zero,
+          () => popEverythingAndNavigateTo(getTaxiOrderRoute(oid))
+          // popUntilAndNavigateTo(kHomeRoute, getTaxiOrderRoute(oid))
+          );
     } else {
       mezcalmosSnackBar("Error :(", "Failed to request a taxi !",
           position: SnackPosition.TOP);
@@ -147,6 +168,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
       locationPickerController.addOrUpdatePurpleDestinationMarker(
           textFieldType.toShortString(), newLocation.toLatLng());
     }
+    setState(() {});
   }
 
   void updateRouteInformation() async {
@@ -160,6 +182,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
       taxiRequest.value.estimatedPrice = estimatedPrice;
       taxiRequest.value.polyline = route.encodedPolyLine;
       locationPickerController.addPolyline(route.polylineList);
+      setState(() {});
     } else {
       // TODO:handle route error
     }

@@ -42,6 +42,15 @@ abstract class MGoogleMapController {
         Marker(markerId: MarkerId(markerId), icon: icon, position: latLng));
   }
 
+  Future<void> addTaxiDriverMarker(String markerId, LatLng latLng) async {
+    this.addOrUpdateMarker(Marker(
+        markerId: MarkerId(markerId),
+        icon: await BitmapDescriptor.fromAssetImage(
+            ImageConfiguration(), taxi_driver_marker_asset),
+        flat: true,
+        position: latLng));
+  }
+
   Future<void> addOrUpdatePurpleDestinationMarker(
       String markerId, LatLng latLng) async {
     BitmapDescriptor icon = await BitmapDescriptorLoader(
@@ -62,13 +71,13 @@ abstract class MGoogleMapController {
   late void Function(String) removeMarker;
   late void Function(List<PointLatLng>) addPolyline;
   late void Function() clearPolyline;
-  // late void Function(bool) setAnimateMarkersPolyLinesBounds;
+  void Function(bool)? setAnimateMarkersPolyLinesBounds;
   late void Function(double lat, double lng) moveToNewLatLng;
   late Future<LatLng> Function() getMapCenter;
 }
 
 class MGoogleMap extends StatefulWidget with MezDisposable {
-  final MapHelper.LocationChangesNotifier? notifyParent;
+  final MapHelper.LocationChangesNotifier? notifyParentOfNewLocation;
   LatLng initialLocation;
   Map<String, Stream<LocationData>> idWithSubscription;
   Duration rerenderDuration;
@@ -79,7 +88,7 @@ class MGoogleMap extends StatefulWidget with MezDisposable {
   bool myLocationButtonEnabled;
   MGoogleMap(
       {Key? key,
-      this.notifyParent,
+      this.notifyParentOfNewLocation,
       this.periodicRedrendring = true,
       this.myLocationButtonEnabled = false,
       required this.initialLocation,
@@ -105,11 +114,19 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
   bool animateMarkersPolyLinesBounds = false;
   MGoogleMapState(MGoogleMapController mGoogleMapController) {
     mGoogleMapController.addOrUpdateMarker = addOrUpdateMarker;
+    mGoogleMapController.setAnimateMarkersPolyLinesBounds =
+        setAnimateMarkersPolyLinesBounds;
     mGoogleMapController.removeMarker = removeMarker;
     mGoogleMapController.moveToNewLatLng = moveToNewLatLng;
     mGoogleMapController.addPolyline = addPolyline;
     mGoogleMapController.clearPolyline = clearPolyline;
     mGoogleMapController.getMapCenter = getMapCenter;
+  }
+
+  void setAnimateMarkersPolyLinesBounds(bool setter) {
+    setState(() {
+      animateMarkersPolyLinesBounds = setter;
+    });
   }
 
   void addOrUpdateMarker(Marker marker) {
@@ -256,6 +273,7 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
     // control our re-rendring Separately;
     _reRendringTimer = widget.periodicRedrendring
         ? Timer.periodic(widget.rerenderDuration, (_) {
+            mezDbgPrint("MGOOGLEMAP ---> RE REN D R ING!");
             animateAndUpdateBounds();
           })
         : null;
@@ -301,7 +319,7 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
     var location = new Location();
     try {
       currentLocation = await location.getLocation();
-      widget.notifyParent?.call(
+      widget.notifyParentOfNewLocation?.call(
         LocationModel.Location.fromFirebaseData({
           "lat": currentLocation.latitude,
           "lng": currentLocation.longitude,

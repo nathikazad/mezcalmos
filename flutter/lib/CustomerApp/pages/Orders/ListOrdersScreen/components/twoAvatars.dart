@@ -6,9 +6,8 @@ import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 class TowAvatars extends StatelessWidget {
   final OrderType type;
-  final String url;
-  TowAvatars({required this.type, required this.url, Key? key})
-      : super(key: key);
+  final String? url;
+  TowAvatars({required this.type, this.url, Key? key}) : super(key: key);
   var widget = null;
   var color = null;
   @override

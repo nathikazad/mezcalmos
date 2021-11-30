@@ -32,4 +32,9 @@ class Location {
       "lng": position.longitude
     };
   }
+
+  @override
+  String toString() {
+    return "{address : $address , position : ${toLatLng()}}";
+  }
 }

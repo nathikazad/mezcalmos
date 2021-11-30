@@ -49,7 +49,7 @@ class LocationSearchBar extends StatefulWidget {
 
 class LocationSearchBarState extends State<LocationSearchBar> {
   CustomerAuthController _authController = Get.find<CustomerAuthController>();
-  late LocationSearchBarController locationSearchBarController;
+  LocationSearchBarController locationSearchBarController;
   double pickChoicesDropDownHeight = 0;
   final FocusNode fromTextFieldFocusNode = FocusNode();
   final FocusNode toTextFieldFocusNode = FocusNode();
@@ -77,7 +77,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
   /************  Init, build and other overrided function *********************************/
   @override
   void initState() {
-    locationSearchBarController = LocationSearchBarController();
+    // locationSearchBarController = LocationSearchBarController();
     dropDownItems.addAll([
       LocationDropDownItem(
           function: () async {
@@ -149,7 +149,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
 
   Widget fromTextField() {
     return Expanded(
-      flex: focusedTextField == SearchComponentType.To ? 1 : 3,
+      flex: fromTextFieldFocusNode.hasFocus ? 3 : 2,
       child: LocationSearchComponent(
         focusNode: fromTextFieldFocusNode,
         readOnly: widget.request.value.from?.address != null,
@@ -213,7 +213,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
 
   Widget toTextField() {
     return Expanded(
-      flex: focusedTextField == SearchComponentType.From ? 1 : 3,
+      flex: toTextFieldFocusNode.hasFocus ? 3 : 2,
       child: LocationSearchComponent(
         focusNode: toTextFieldFocusNode,
         readOnly: widget.request.value.to?.address != null,
@@ -270,6 +270,9 @@ class LocationSearchBarState extends State<LocationSearchBar> {
                       e.function();
                       fromTextFieldFocusNode.unfocus();
                       toTextFieldFocusNode.unfocus();
+                      // focusedTextField = SearchComponentType.None;
+
+                      setState(() {});
                     },
                     child: Row(
                       children: [

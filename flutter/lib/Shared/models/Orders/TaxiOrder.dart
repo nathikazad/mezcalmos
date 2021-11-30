@@ -1,3 +1,5 @@
+import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
+import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
@@ -26,8 +28,8 @@ extension ParseStringToOrderStatus on String {
 
 class RouteInformation {
   String polyline;
-  String distance;
-  String duration;
+  RideDistance distance;
+  RideDuration duration;
   RouteInformation(this.polyline, this.distance, this.duration);
 }
 
@@ -69,6 +71,28 @@ class TaxiOrder extends Order {
   List<Object> get props =>
       [orderId, from, to, orderTime, paymentType, routeInformation];
 
+  /// Convert [TaxiOrder] object to [TaxiRequest] object.
+  TaxiRequest toTaxiRequest() {
+    return TaxiRequest(
+        from: from,
+        to: to,
+        distance: routeInformation.distance,
+        duration: routeInformation.duration,
+        polyline: routeInformation.polyline,
+        estimatedPrice: cost as int,
+        paymentType: paymentType);
+  }
+
+  /// Update this model from [TaxiRequest] object
+  void updateFromTaxiRequest(TaxiRequest taxiRequest) {
+    this.from = taxiRequest.from!;
+    this.to = taxiRequest.to!;
+    this.routeInformation = RouteInformation(
+        taxiRequest.polyline!, taxiRequest.distance!, taxiRequest.duration!);
+    this.cost = taxiRequest.estimatedPrice;
+    this.paymentType = taxiRequest.paymentType;
+  }
+
   factory TaxiOrder.fromData(dynamic id, dynamic data) {
     TaxiOrder taxiOrder = TaxiOrder(
         orderId: id,
@@ -79,15 +103,15 @@ class TaxiOrder extends Order {
         rideStartTime: data['rideStartTime'],
         status: data['status'].toString().toTaxiOrderStatus(),
         acceptRideTime: data['acceptRideTime'],
-        cost: data['estimatedPrice'],
+        cost: data['cost'],
         from: Location.fromFirebaseData(data['from']),
         to: Location.fromFirebaseData(data['to']),
         orderTime: DateTime.parse(data["orderTime"]),
         paymentType: data["paymentType"].toString().toPaymentType(),
         routeInformation: RouteInformation(
             data['routeInformation']['polyline'],
-            data['routeInformation']['distance']['text'],
-            data['routeInformation']['duration']['text']));
+            RideDistance.fromJson(data['routeInformation']['distance']),
+            RideDuration.fromJson(data['routeInformation']['duration'])));
     return taxiOrder;
   }
 
