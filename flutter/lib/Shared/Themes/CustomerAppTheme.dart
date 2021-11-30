@@ -4,6 +4,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class CustomerAppTheme {
   static final lightTheme = ThemeData(
       scaffoldBackgroundColor: Color(0XFFEDEDED),
+      appBarTheme: AppBarTheme(
+          backgroundColor: Colors.white,
+          elevation: 0.1,
+          centerTitle: true,
+          titleSpacing: 16,
+          iconTheme: IconThemeData(color: Colors.black),
+          actionsIconTheme: IconThemeData(color: Colors.black)),
       dividerColor: Colors.grey.withOpacity(0.8),
       brightness: Brightness.light,
       primaryColor: Colors.white,

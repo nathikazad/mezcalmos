@@ -150,6 +150,8 @@ class _SPointState extends State<SPoint> {
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+    SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     if (_error) {
       mezcalmosSnackBar("Error", "Server connection failed !");
       return MaterialApp(
