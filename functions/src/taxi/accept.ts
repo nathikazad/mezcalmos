@@ -13,7 +13,7 @@ import { TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from ".
 import { buildChat } from "../shared/helper/chat";
 import { ParticipantType } from "../shared/models/Chat";
 import { push } from "../shared/notification/notifyUser";
-import { Notification, NotificationType } from "../shared/models/Notification";
+import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { taxiOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { getUserInfo } from "../shared/rootController";
 
@@ -130,6 +130,7 @@ export = functions.https.onCall(async (data, context) => {
         time: (new Date()).toISOString(),
         notificationType: NotificationType.OrderStatusChange,
         orderType: OrderType.Taxi,
+        notificationAction: NotificationAction.ShowSnackBarAlways,
         orderId: orderId
       },
       background: taxiOrderStatusChangeMessages[TaxiOrderStatus.OnTheWay]
