@@ -7,7 +7,7 @@ import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 typedef shouldSaveNotification = bool Function(Notification notification);
 
-class FBNotificationsController extends GetxController {
+class ForegroundNotificationsController extends GetxController {
   DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
 
   RxList<Notification> notifications = RxList();

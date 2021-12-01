@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'package:flutter/services.dart';
-import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:soundpool/soundpool.dart';
 import 'package:get/get.dart';
 
 StreamSubscription<Notification> initializeShowNotificationsListener() {
-  return Get.find<FBNotificationsController>()
+  return Get.find<ForegroundNotificationsController>()
       .notificationsStream
       .listen((notification) {
     mezDbgPrint("Notification Displayer: ${notification.toJson()}");

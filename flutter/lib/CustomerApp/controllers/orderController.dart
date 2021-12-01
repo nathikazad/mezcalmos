@@ -1,5 +1,5 @@
 import 'package:mezcalmos/CustomerApp/constants/databaseNodes.dart';
-import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -15,8 +15,8 @@ import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 class OrderController extends GetxController {
   DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
   AuthController _authController = Get.find<AuthController>();
-  FBNotificationsController _fbNotificationsController =
-      Get.find<FBNotificationsController>();
+  ForegroundNotificationsController _fbNotificationsController =
+      Get.find<ForegroundNotificationsController>();
   RxList<Order> currentOrders = <Order>[].obs;
   RxList<Order> pastOrders = <Order>[].obs;
 

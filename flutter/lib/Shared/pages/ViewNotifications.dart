@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/Shared/widgets/CancelAlertDailog.dart';
 import 'package:mezcalmos/Shared/widgets/DateTitleComponent.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -27,7 +27,8 @@ class ViewNotifications extends StatefulWidget {
 
 class _ViewNotificationsState extends State<ViewNotifications> {
   // RxList<notifs.Notification> currentNotifs = RxList.empty();
-  FBNotificationsController controller = Get.find<FBNotificationsController>();
+  ForegroundNotificationsController controller =
+      Get.find<ForegroundNotificationsController>();
   LanguageController lang = Get.find<LanguageController>();
   AuthController authController = Get.find<AuthController>();
 

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/deviceNotificationsController.dart';
+import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
@@ -15,8 +15,8 @@ class TaxiAuthController extends GetxController {
   Rxn<TaxiState> _state = Rxn();
   DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
   AuthController _authController = Get.find<AuthController>();
-  DeviceNotificationsController _notificationsController =
-      Get.find<DeviceNotificationsController>();
+  BackgroundNotificationsController _notificationsController =
+      Get.find<BackgroundNotificationsController>();
 
   TaxiState? get taxiState => _state.value;
   Stream<TaxiState?> get stateStream => _state.stream;

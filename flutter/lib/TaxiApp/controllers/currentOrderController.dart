@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
@@ -15,8 +15,8 @@ import 'package:mezcalmos/TaxiApp/notificationHandler.dart';
 class CurrentOrderController extends GetxController {
   TaxiAuthController _taxiAuthController = Get.find<TaxiAuthController>();
   DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
-  FBNotificationsController _fbNotificationsController =
-      Get.find<FBNotificationsController>();
+  ForegroundNotificationsController _fbNotificationsController =
+      Get.find<ForegroundNotificationsController>();
 
   StreamController<TaxiOrder> _orderStreamController =
       StreamController.broadcast();

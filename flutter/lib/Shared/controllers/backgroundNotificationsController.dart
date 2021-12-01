@@ -30,7 +30,7 @@ void markInDb(String url) async {
   // .then((value) => mezDbgPrint(jsonDecode(value.body)["data"]));
 }
 
-class DeviceNotificationsController extends GetxController {
+class BackgroundNotificationsController extends GetxController {
   FirebaseMessaging _messaging = FirebaseMessaging.instance;
 
   @override

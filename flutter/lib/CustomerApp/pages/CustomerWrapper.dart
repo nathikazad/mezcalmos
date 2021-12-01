@@ -9,7 +9,7 @@ import 'package:mezcalmos/CustomerApp/components/imagesComponents.dart';
 import 'package:mezcalmos/CustomerApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
-import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -57,7 +57,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     _notificationsStreamListener = initializeShowNotificationsListener();
     // listening for notification Permissions!
     listenForLocationPermissions();
-    Get.find<FBNotificationsController>()
+    Get.find<ForegroundNotificationsController>()
         .startListeningForNotificationsFromFirebase(
             notificationsNode(userId), customerNotificationHandler);
     Future.microtask(() {

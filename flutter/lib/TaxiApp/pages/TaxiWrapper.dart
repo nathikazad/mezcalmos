@@ -10,7 +10,7 @@ import 'package:mezcalmos/Shared/utilities/NotificationsDisplayer.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/TaxiApp/components/taxiAppBar.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
@@ -45,7 +45,7 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
     String userId = Get.find<AuthController>().fireAuthUser!.uid;
     _notificationsStreamListener = initializeShowNotificationsListener();
     listenForLocationPermissions();
-    Get.find<FBNotificationsController>()
+    Get.find<ForegroundNotificationsController>()
         .startListeningForNotificationsFromFirebase(
             notificationsNode(userId), taxiNotificationHandler);
     super.initState();

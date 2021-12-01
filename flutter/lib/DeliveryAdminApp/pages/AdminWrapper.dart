@@ -12,7 +12,7 @@ import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/utilities/NotificationsDisplayer.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/adminAuthController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/models/Admin.dart';
@@ -46,7 +46,7 @@ class _AdminWrapperState extends State<AdminWrapper> {
     });
     String userId = Get.find<AuthController>().fireAuthUser!.uid;
     _notificationsStreamListener = initializeShowNotificationsListener();
-    Get.find<FBNotificationsController>()
+    Get.find<ForegroundNotificationsController>()
         .startListeningForNotificationsFromFirebase(
             notificationsNode(userId), deliveryAdminNotificationHandler);
     super.initState();
