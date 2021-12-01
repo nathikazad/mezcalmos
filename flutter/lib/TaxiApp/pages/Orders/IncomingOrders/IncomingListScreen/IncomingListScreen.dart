@@ -24,6 +24,40 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
     Get.put(IncomingOrdersController());
   }
 
+// Widget build
+// switch
+// if turned on
+//    if more than one order
+//      list of orders using OrderCard
+//    else
+//      NoOrdersScreen
+// else
+//    SwitchTurnedOffScreen
+
+// for item builder
+// Widget OrderCard(data){
+//  orderCardTopHalf()
+//  orderCardBottomHalf()
+//  onClick() {
+//      TODO: navigate using router and use router parameter pass orderId, dont use controller to save the selectedOrderView, use customer app for reference
+//  }
+// }
+
+//Widget orderCardTopHalf() {
+//  circleAvatar()
+//  costWithDollarSign()
+//}
+
+// Widget circleAvatar()
+
+// Widget costWithDollarSign()
+
+//Widget orderCardBottomHalf() {}
+
+// Widget NoOrdersScreen()
+
+// Widget SwitchTurnedOffScreen()
+
   @override
   Widget build(BuildContext context) {
     print(
@@ -123,12 +157,11 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                           vertical: 2),
                                       child: GestureDetector(
                                         onTap: () async {
+                                          // TODO @Saad: //      TODO: navigate using router and use router parameter pass orderId, dont use controller to save the selectedOrderView, use customer app for reference
                                           Get.put<IncomingOrdersController>(
                                               IncomingOrdersController());
                                           mezDbgPrint(
                                               "Clicked on order::${controller.orders[i].orderId}");
-                                          controller.selectedIncommingOrderKey =
-                                              controller.orders[i].orderId;
                                           Get.toNamed(kSelectedIcommingOrder);
                                         },
                                         child: Container(
