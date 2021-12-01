@@ -9,6 +9,12 @@ export enum NotificationType {
   NewMessage = "newMessage"
 }
 
+export enum NotificationAction {
+  ShowPopUp = "showPopUp",
+  ShowSnackBarAlways = "showSnackbarAlways",
+  ShowSnackbarOnlyIfNotOnPage = "showSnackbarOnlyIfNotOnPage"
+}
+
 export interface Notification {
   foreground: ForegroundNotification,
   background: BackgroundNotification
@@ -17,13 +23,14 @@ export interface Notification {
 export interface ForegroundNotification {
   time: string,
   notificationType: NotificationType,
+  notificationAction: NotificationAction
 }
 
 export type BackgroundNotification = Record<Language, fcmNotification>
 
 export interface NewMessageNotification extends ForegroundNotification {
   sender: UserInfo,
-  message: string
+  message: string,
 }
 
 export interface OrderNotification extends ForegroundNotification {

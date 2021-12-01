@@ -1,4 +1,4 @@
-import { NotificationType, OrderNotification } from "../models/Notification";
+import { NotificationAction, NotificationType, OrderNotification } from "../models/Notification";
 import { OrderType } from "../models/Order";
 import * as fcm from "../../utilities/senders/fcm"
 import { DeliveryAdmin } from "../models/DeliveryAdmin";
@@ -17,6 +17,7 @@ export async function notifyDeliveryAdminsNewOrder(
     notificationType: NotificationType.NewOrder,
     orderType: OrderType.Restaurant,
     orderId: orderId,
+    notificationAction: NotificationAction.ShowSnackBarAlways,
     restaurant: restaurant
   }
 
@@ -43,6 +44,7 @@ export async function notifyDeliveryAdminsCancelledOrder(deliveryAdmins: Record<
     time: (new Date()).toISOString(),
     notificationType: NotificationType.OrderStatusChange,
     orderType: OrderType.Restaurant,
+    notificationAction: NotificationAction.ShowPopUp,
     orderId: orderId,
   }
 

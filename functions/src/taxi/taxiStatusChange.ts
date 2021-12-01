@@ -7,7 +7,7 @@ import { currentOrderIdNode } from "../shared/databaseNodes/taxi";
 import { ServerResponse, ServerResponseStatus } from "../shared/models/Generic";
 import { OrderType } from "../shared/models/Order";
 import { push } from "../shared/notification/notifyUser";
-import { Notification, NotificationType } from "../shared/models/Notification";
+import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { orderInProcess, TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "./models/TaxiOrder";
 import { taxiOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { AuthData } from "firebase-functions/lib/common/providers/https";
@@ -106,21 +106,7 @@ async function changeStatus(data: any, newStatus: TaxiOrderStatus, auth?: AuthDa
       customerNodes.pastOrders(order.customer.id!, orderId).set(order);
       taxiNodes.inProcessOrders(taxiId, orderId).remove();
       taxiNodes.pastOrders(taxiId, orderId).set(order);
-    }
-    
-    // I think we need a switch here @Nathik
-    // we should set Taxis/info/$taxiId/state/currentOrderId => null
-    switch (newStatus) {
-      case TaxiOrderStatus.CancelledByTaxi:
-        taxiNodes.info(auth!.uid+'/state/currentOrderId').remove()
-        break;
-    
-      case TaxiOrderStatus.CancelledByCustomer:
-        // let customerOrder:TaxiOrder = (await customerNodes.inProcessOrders(order.customer!.id, orderId).once('value')).val();
-        taxiNodes.info(order.driver.id+'/state/currentOrderId').remove()
-          break;
-      default:
-        break;
+      currentOrderIdNode(taxiId).remove()
     }
     
     let notification: Notification = {
@@ -129,7 +115,9 @@ async function changeStatus(data: any, newStatus: TaxiOrderStatus, auth?: AuthDa
         time: (new Date()).toISOString(),
         notificationType: NotificationType.OrderStatusChange,
         orderType: OrderType.Taxi,
-        orderId: orderId
+        orderId: orderId,
+        notificationAction: newStatus != TaxiOrderStatus.CancelledByTaxi
+          ? NotificationAction.ShowSnackBarAlways : NotificationAction.ShowPopUp,
       },
       background: taxiOrderStatusChangeMessages[newStatus]
     }

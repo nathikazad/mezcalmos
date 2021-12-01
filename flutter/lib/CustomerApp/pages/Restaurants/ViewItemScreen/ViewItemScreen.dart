@@ -165,9 +165,9 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                               color: Color(0x36fafafa),
                             ),
                           ),
-                          panelBuilder: (_) {
+                          panelBuilder: (sc) {
                             return buildPanel(context, cartItem.value!.item,
-                                cartItem, widget.viewItemScreenMode!);
+                                cartItem, sc, widget.viewItemScreenMode!);
                           },
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(18.0),

@@ -48,12 +48,7 @@ class _SavedLocationViewState extends State<SavedLocationView> {
     savedLocationsStreamSub = _customerAuthController.customerRxn
         .map<List<SavedLocation>>((customerInstance) {
       return customerInstance?.savedLocations ?? [];
-    })
-
-        // distinct here to reduce the listener stream Buggering
-
-        // .distinct()
-        .listen((_savedLocations) {
+    }).listen((_savedLocations) {
       mezDbgPrint("==============");
       mezDbgPrint(savedLocations);
       mezDbgPrint("==============");
@@ -135,21 +130,6 @@ class _SavedLocationViewState extends State<SavedLocationView> {
                     }
                   },
                 )),
-            // SavedLocationComponent(
-            //   subTitle: "3944 Coolidge Street, Miles City, MT 59301",
-            //   title: "Home",
-            //   onPress: () {},
-            // ),
-            // SavedLocationComponent(
-            //   subTitle: "3944 Coolidge Street, Miles City, MT 59301",
-            //   title: "My Office",
-            //   onPress: () {},
-            // ),
-            // SavedLocationComponent(
-            //   subTitle: "3944 Coolidge Street, Miles City, MT 59301",
-            //   title: "Penthouse",
-            //   onPress: () {},
-            // ),
             SizedBox(
               height: 25,
             ),

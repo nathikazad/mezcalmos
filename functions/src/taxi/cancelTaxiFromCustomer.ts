@@ -7,7 +7,7 @@ import { push } from "../shared/notification/notifyUser";
 import { OrderType } from "../shared/models/Order";
 import { ServerResponseStatus } from "../shared/models/Generic";
 import { orderInProcess, TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "./models/TaxiOrder";
-import { Notification, NotificationType } from "../shared/models/Notification";
+import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { taxiOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { ParticipantType } from "../shared/models/Chat";
 
@@ -92,7 +92,8 @@ export = functions.https.onCall(async (data, context) => {
         time: (new Date()).toISOString(),
         notificationType: NotificationType.OrderStatusChange,
         orderType: OrderType.Taxi,
-        orderId: orderId
+        orderId: orderId,
+        notificationAction: NotificationAction.ShowPopUp
       },
       background: taxiOrderStatusChangeMessages[TaxiOrderStatus.CancelledByCustomer]
     }

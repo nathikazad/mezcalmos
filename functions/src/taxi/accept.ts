@@ -12,8 +12,8 @@ import { getTaxi, Taxi } from "./models/Taxi";
 import { TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "./models/TaxiOrder";
 import { buildChatForOrder } from "../shared/helper/chat";
 import { ParticipantType } from "../shared/models/Chat";
-import { push as pushNotification } from "../shared/notification/notifyUser";
-import { Notification, NotificationType } from "../shared/models/Notification";
+import { push } from "../shared/notification/notifyUser";
+import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { taxiOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { getUserInfo } from "../shared/rootController";
 
@@ -131,12 +131,13 @@ export = functions.https.onCall(async (data, context) => {
         time: (new Date()).toISOString(),
         notificationType: NotificationType.OrderStatusChange,
         orderType: OrderType.Taxi,
+        notificationAction: NotificationAction.ShowSnackBarAlways,
         orderId: orderId
       },
       background: taxiOrderStatusChangeMessages[TaxiOrderStatus.OnTheWay]
     }
 
-    pushNotification(order.customer.id!, notification);
+    push(order.customer.id!, notification);
 
     return {
       status: ServerResponseStatus.Success,

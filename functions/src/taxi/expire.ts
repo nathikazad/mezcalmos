@@ -4,7 +4,7 @@ import * as customerNodes from "../shared/databaseNodes/customer";
 import { ServerResponseStatus } from "../shared/models/Generic";
 import { OrderType } from "../shared/models/Order";
 import { push } from "../shared/notification/notifyUser";
-import { Notification, NotificationType } from "../shared/models/Notification";
+import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "./models/TaxiOrder";
 import { taxiOrderStatusChangeMessages } from "./bgNotificationMessages";
 
@@ -59,7 +59,8 @@ export async function expireOrder(orderId: string) {
         time: (new Date()).toISOString(),
         notificationType: NotificationType.OrderStatusChange,
         orderType: OrderType.Taxi,
-        orderId: orderId
+        orderId: orderId,
+        notificationAction: NotificationAction.ShowPopUp,
       },
       background: taxiOrderStatusChangeMessages[TaxiOrderStatus.Expired]
     }
