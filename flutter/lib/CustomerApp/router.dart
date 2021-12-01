@@ -1,16 +1,17 @@
 import 'package:get/get.dart'; // getX
 import 'package:mezcalmos/CustomerApp/pages/MapViews/PickLocationView/PickLocationView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Orders/ListOrdersScreen/ListOrdersScreen.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/ViewOrderScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemScreen.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/resaurant_screen_v3.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/ViewOrderScreen.dart';
+// import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemScreen.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/ViewRestaurantScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/OrderTaxiScreen.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustomerWrapper.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ListRestaurantsScreem/ListRestaurantsScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/ViewCartScreen.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/ViewRestaurantScreen.dart';
+// import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/ViewRestaurantScreen.dart';
 
 // Routes Keys.
 const String kWrapperRoute = '/wrapper';
@@ -59,17 +60,19 @@ class XRouter {
         GetPage(name: kRestaurantsRoute, page: () => ListRestaurantsScreen()),
         GetPage(
             name: kRestaurantRoute,
-            page: () => Restaurant_screenV3(),
+            page: () => ViewRestaurantScreen(),
             transitionDuration: Duration(milliseconds: 500),
             transition: Transition.rightToLeft),
         GetPage(
             name: kViewRestaurantItemRoute,
-            page: () => ViewItemScreen(ViewItemScreenMode.AddItemMode),
+            page: () => ViewItemScreen(
+                viewItemScreenMode: ViewItemScreenMode.AddItemMode),
             transitionDuration: Duration(milliseconds: 500),
             transition: Transition.rightToLeft),
         GetPage(
             name: kCartItemRoute,
-            page: () => ViewItemScreen(ViewItemScreenMode.EditItemMode),
+            page: () => ViewItemScreen(
+                viewItemScreenMode: ViewItemScreenMode.EditItemMode),
             transitionDuration: Duration(milliseconds: 500),
             transition: Transition.rightToLeft),
         GetPage(

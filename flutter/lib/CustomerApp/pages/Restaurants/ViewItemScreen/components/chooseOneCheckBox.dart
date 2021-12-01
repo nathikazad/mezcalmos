@@ -6,6 +6,9 @@ import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:intl/intl.dart';
 
+import '../ViewItemScreen.dart';
+import 'ViewItemScreenCartComponent.dart';
+
 final currency = new NumberFormat("#,##0.00", "en_US");
 
 Widget chooseOneCheckBoxes(
@@ -16,30 +19,29 @@ Widget chooseOneCheckBoxes(
     List<Widget> chooseOneWidgetOptionsArray = [];
     chooseOneOption.chooseOneOptionListItems.forEach((chooseOneOptionListItem) {
       String name = chooseOneOptionListItem.name!;
+      String? price;
       if (chooseOneOptionListItem.cost > 0) {
-        name += " +(\$${currency.format(chooseOneOptionListItem.cost)})";
+        price = "\$${currency.format(chooseOneOptionListItem.cost)}";
       }
-      chooseOneWidgetOptionsArray.add(
-        CheckBoxComponent(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-          title: name,
-          intailVal: cartItem.value!.chosenOneOptions[chooseOneOption.id!] ==
-              chooseOneOptionListItem.id,
-          onValueChanged: (newValue) {
-            cartItem.value!.chosenOneOptions[chooseOneOption.id!] =
-                chooseOneOptionListItem.id!;
-            cartItem.refresh();
-          },
-        ),
-      );
+      chooseOneWidgetOptionsArray.add(ViewItemScreenCartComponent(
+        title: name,
+        intailVal: cartItem.value!.chosenOneOptions[chooseOneOption.id!] ==
+            chooseOneOptionListItem.id,
+        price: price,
+        onValueChanged: (val) {
+          cartItem.value!.chosenOneOptions[chooseOneOption.id!] =
+              chooseOneOptionListItem.id!;
+          cartItem.refresh();
+        },
+      ));
     });
     chooseOneWidgetArray.add(Column(
         children: <Widget>[
               MenuTitles(
-                title: chooseOneOption.name!,
+                title: chooseOneOption.name!.capitalizeFirstofEach,
               ),
               SizedBox(
-                height: 5,
+                height: 15,
               )
             ] +
             chooseOneWidgetOptionsArray));

@@ -6,17 +6,11 @@ class MenuTitles extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final txt = Theme.of(context).textTheme;
     return Container(
       alignment: Alignment.centerLeft,
       padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: Text("$title",
-          style: const TextStyle(
-              color: const Color(0x93000000),
-              fontWeight: FontWeight.w700,
-              fontFamily: "ProductSans",
-              fontStyle: FontStyle.normal,
-              fontSize: 14.0),
-          textAlign: TextAlign.center),
+      child: Text("$title", style: txt.headline3!, textAlign: TextAlign.center),
     );
   }
 }
