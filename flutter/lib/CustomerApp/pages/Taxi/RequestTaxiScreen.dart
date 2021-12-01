@@ -177,10 +177,10 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
     if (route != null) {
       int estimatedPrice =
           getEstimatedRidePriceInPesos(route.distance.distanceInMeters);
-      taxiRequest.value.distance = route.distance;
-      taxiRequest.value.duration = route.duration;
+      taxiRequest.value.routeInformation?.distance = route.distance;
+      taxiRequest.value.routeInformation?.duration = route.duration;
       taxiRequest.value.estimatedPrice = estimatedPrice;
-      taxiRequest.value.polyline = route.encodedPolyLine;
+      taxiRequest.value.routeInformation?.polyline = route.encodedPolyLine;
       locationPickerController.addPolyline(route.polylineList);
       setState(() {});
     } else {

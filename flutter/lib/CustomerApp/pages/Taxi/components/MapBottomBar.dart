@@ -101,10 +101,11 @@ class _MapBottomBarState extends State<MapBottomBar> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(widget
-                              .taxiRequest.value.distance?.distanceStringInKm ??
+                      Text(widget.taxiRequest.value.routeInformation?.distance
+                              .distanceStringInKm ??
                           "-"),
-                      Text(widget.taxiRequest.value.duration?.daysHoursString ??
+                      Text(widget.taxiRequest.value.routeInformation?.duration
+                              .daysHoursString ??
                           "-"),
                     ],
                   ))

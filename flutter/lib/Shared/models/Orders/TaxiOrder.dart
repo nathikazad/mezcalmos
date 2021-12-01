@@ -76,9 +76,7 @@ class TaxiOrder extends Order {
     return TaxiRequest(
         from: from,
         to: to,
-        distance: routeInformation.distance,
-        duration: routeInformation.duration,
-        polyline: routeInformation.polyline,
+        routeInformation: this.routeInformation,
         estimatedPrice: cost as int,
         paymentType: paymentType);
   }
@@ -88,7 +86,9 @@ class TaxiOrder extends Order {
     this.from = taxiRequest.from!;
     this.to = taxiRequest.to!;
     this.routeInformation = RouteInformation(
-        taxiRequest.polyline!, taxiRequest.distance!, taxiRequest.duration!);
+        taxiRequest.routeInformation!.polyline,
+        taxiRequest.routeInformation!.distance,
+        taxiRequest.routeInformation!.duration);
     this.cost = taxiRequest.estimatedPrice;
     this.paymentType = taxiRequest.paymentType;
   }
