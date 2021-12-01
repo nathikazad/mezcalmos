@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/notificationHandler.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
@@ -66,7 +66,7 @@ class _AdminWrapperState extends State<AdminWrapper> {
   Widget build(BuildContext context) {
     mezDbgPrint("AdminWrapper:: build");
     return Scaffold(
-        key: Get.find<SideMenuDraweController>().getNewKey(),
+        key: Get.find<SideMenuDrawerController>().getNewKey(),
         drawer: MezSideMenu(),
         backgroundColor: Colors.white,
         // appBar: mezcalmosAppBar(

@@ -15,7 +15,7 @@ import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/NotificationsDisplayer.dart';
@@ -41,8 +41,8 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   // MyPopupMenuController _popUpController = MyPopupMenuController();
 
   LanguageController lang = Get.find<LanguageController>();
-  SideMenuDraweController _sideMenuDrawerController =
-      Get.find<SideMenuDraweController>();
+  SideMenuDrawerController _sideMenuDrawerController =
+      Get.find<SideMenuDrawerController>();
   OrderController _orderController = Get.find<OrderController>();
   RxInt numberOfCurrentOrders = RxInt(0);
   DateTime? appClosedTime;

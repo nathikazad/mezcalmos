@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
-import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/NotificationsDisplayer.dart';
@@ -90,7 +90,7 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
   Widget build(BuildContext context) {
     mezDbgPrint("TaxiWrapper:: build");
     return Scaffold(
-        key: Get.find<SideMenuDraweController>().getNewKey(),
+        key: Get.find<SideMenuDrawerController>().getNewKey(),
         drawer: MezSideMenu(),
         backgroundColor: Colors.white,
         appBar: taxiAppBar(AppBarLeftButtonType.Menu),

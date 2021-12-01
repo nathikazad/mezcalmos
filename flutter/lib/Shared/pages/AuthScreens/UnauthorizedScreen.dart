@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
@@ -37,7 +37,7 @@ class _UnauthorizedScreenState extends State<UnauthorizedScreen> {
     return WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
-            key: Get.find<SideMenuDraweController>().getNewKey(),
+            key: Get.find<SideMenuDrawerController>().getNewKey(),
             drawer: MezSideMenu(),
             backgroundColor: Colors.white,
             appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu),

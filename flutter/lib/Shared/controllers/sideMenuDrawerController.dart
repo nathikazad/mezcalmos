@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
-class SideMenuDraweController extends GetxController {
+class SideMenuDrawerController extends GetxController {
   GlobalKey<ScaffoldState>? _scaffoldKey;
 
   GlobalKey<ScaffoldState>? getNewKey() {
@@ -29,7 +29,7 @@ class SideMenuDraweController extends GetxController {
     }
   }
 
-  void cloeseMenu() {
+  void closeMenu() {
     _scaffoldKey?.currentState?.openEndDrawer();
   }
 

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
@@ -41,7 +41,7 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
         if (function != null) {
           function();
         }
-        Get.find<SideMenuDraweController>().openMenu();
+        Get.find<SideMenuDrawerController>().openMenu();
       };
       break;
   }

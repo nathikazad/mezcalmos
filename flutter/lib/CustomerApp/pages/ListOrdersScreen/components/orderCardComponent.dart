@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mezcalmos/CustomerApp/pages/Orders/ListOrdersScreen/components/twoAvatars.dart';
+import 'package:mezcalmos/CustomerApp/pages/ListOrdersScreen/components/twoAvatars.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
 

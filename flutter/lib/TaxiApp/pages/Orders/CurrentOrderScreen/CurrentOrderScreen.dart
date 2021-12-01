@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -59,7 +59,7 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-          key: Get.find<SideMenuDraweController>().getNewKey(),
+          key: Get.find<SideMenuDrawerController>().getNewKey(),
           drawer: MezSideMenu(),
           backgroundColor: Colors.white,
           appBar: taxiAppBar(AppBarLeftButtonType.Menu),

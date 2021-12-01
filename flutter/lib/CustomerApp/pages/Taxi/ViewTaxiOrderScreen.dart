@@ -2,9 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:mezcalmos/CustomerApp/components/customerAppBar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
-import 'package:mezcalmos/CustomerApp/pages/Taxi/componenets/MapBottomBar.dart';
+import 'package:mezcalmos/CustomerApp/pages/Taxi/components/MapBottomBar.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -176,14 +175,6 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
   }
 
   /// This gets invoked when the order is moved to /past db node
-  ///
-  /// only handling status where we should just uhm .. pop this view.
-  ///
-  /// basically :
-  ///
-  ///  [order being canceled]  : notification > pop the view.
-  ///
-  ///  [order got Expired] : notification > pop the view.
   void pastOrderStatusHandler(TaxiOrdersStatus status) {
     // @Saad, no need to navigate back, should just be enough to show status
     removeMarker(order.value!.driver!.id);

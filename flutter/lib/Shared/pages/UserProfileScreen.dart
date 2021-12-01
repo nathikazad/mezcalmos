@@ -7,11 +7,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
-import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 
 enum AccountState {
   free,
@@ -128,8 +127,8 @@ class _UserProfileState extends State<UserProfile> {
     super.dispose();
   }
 
-  SideMenuDraweController _sideMenuDraweController =
-      Get.find<SideMenuDraweController>();
+  SideMenuDrawerController _sideMenuDraweController =
+      Get.find<SideMenuDrawerController>();
   @override
   Widget build(BuildContext context) {
     responsiveSize(context);

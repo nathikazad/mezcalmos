@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/controllers/themeContoller.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
@@ -31,7 +31,7 @@ class SettingsController extends GetxController {
     // FOR NOW WE SET IT TO EN (default  if not passed to LangController)
     _appTheme = Get.put(ThemeController(), permanent: true);
     _appLanguage = Get.put(LanguageController(), permanent: true);
-    Get.put(SideMenuDraweController(), permanent: false);
+    Get.put(SideMenuDrawerController(), permanent: false);
 
     bool locationPermission = await _getLocationPermission();
     _hasLocationPermissionStreamController.add(locationPermission);

@@ -3,15 +3,15 @@ import 'package:get/get.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
-import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 
 class LocationPermissionScreen extends StatelessWidget {
   final SettingsController _settingsController = Get.find<SettingsController>();
-  final SideMenuDraweController _sideMenuDraweController =
-      Get.find<SideMenuDraweController>();
+  final SideMenuDrawerController _sideMenuDraweController =
+      Get.find<SideMenuDrawerController>();
 
   @override
   Widget build(BuildContext context) {

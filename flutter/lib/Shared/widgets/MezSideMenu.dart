@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:mezcalmos/CustomerApp/pages/MapViews/savedLocationView/savedLocationView.dart';
+import 'package:mezcalmos/CustomerApp/pages/SavedLocations/savedLocationView.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
@@ -13,8 +13,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MezSideMenu extends GetWidget<AuthController> {
-  SideMenuDraweController _drawerController =
-      Get.find<SideMenuDraweController>();
+  SideMenuDrawerController _drawerController =
+      Get.find<SideMenuDrawerController>();
   LanguageController lang = Get.find<LanguageController>();
 
   String lmd = GetStorage().read(getxLmodeKey);
@@ -91,7 +91,7 @@ class MezSideMenu extends GetWidget<AuthController> {
                 Obx(() => controller.user != null
                     ? ListTile(
                         onTap: () {
-                          _drawerController.cloeseMenu();
+                          _drawerController.closeMenu();
                           Get.toNamed(kUserProfile);
                         },
                         leading: Icon(
@@ -105,25 +105,30 @@ class MezSideMenu extends GetWidget<AuthController> {
                                 TextStyle(fontFamily: 'psb', fontSize: 16.sp)),
                       )
                     : SizedBox()),
-                ListTile(
-                  onTap: () {
-                    _drawerController.cloeseMenu();
-                    Get.to(() => SavedLocationView(
-                        savedLocationViewMode:
-                            SavedLocationViewMode.SeeSaveLocation));
-                  },
-                  leading: Icon(
-                    Icons.near_me_outlined,
-                    color: Color.fromARGB(255, 103, 121, 254),
-                    size: 25.sp,
-                  ),
-                  title: Text("Saved Locations",
-                      style: TextStyle(fontFamily: 'psb', fontSize: 16.sp)),
-                ),
+
+//@jamal TODO: pass in a list of listTiles that gets sent by the app at the time of initialization,
+//this datastructure, should basically just have a name and a link
+//and then populate the middle of these tiles using this list
+                // ListTile(
+                //   onTap: () {
+                //     _drawerController.closeMenu();
+                //     Get.to(() => SavedLocationView(
+                //             savedLocationViewMode: savedLocationViewMode)(
+                //         savedLocationViewMode:
+                //             SavedLocationViewMode.SeeSaveLocation));
+                //   },
+                //   leading: Icon(
+                //     Icons.near_me_outlined,
+                //     color: Color.fromARGB(255, 103, 121, 254),
+                //     size: 25.sp,
+                //   ),
+                //   title: Text("Saved Locations",
+                //       style: TextStyle(fontFamily: 'psb', fontSize: 16.sp)),
+                // ),
                 Obx(() => controller.user != null
                     ? ListTile(
                         onTap: () async {
-                          _drawerController.cloeseMenu();
+                          _drawerController.closeMenu();
                           await controller.signOut();
                         },
                         leading: Icon(
@@ -155,7 +160,7 @@ class MezSideMenu extends GetWidget<AuthController> {
                 Obx(() => ListTile(
                     onTap: () {
                       lang.changeUserLanguage();
-                      _drawerController.cloeseMenu();
+                      _drawerController.closeMenu();
                     },
                     leading: Container(
                       height: 31.sp,

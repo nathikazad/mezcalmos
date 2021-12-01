@@ -4,7 +4,6 @@ import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingListScreen/NoScrollGlowBehaviour.dart';
 
 class MezcalmosSharedWidgets {
   // Admin Appbar
