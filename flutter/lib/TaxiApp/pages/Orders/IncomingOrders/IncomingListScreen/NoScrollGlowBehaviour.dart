@@ -16,3 +16,11 @@ class NoScrollGlowBehaviour extends ScrollBehavior {
     return child;
   }
 }
+
+Widget MezcalmosNoGlowScrollConfiguration(Widget child) {
+  return ScrollConfiguration(
+    behavior:
+        NoScrollGlowBehaviour(testCaller: "MezcalmosNoGlowScrollConfiguration"),
+    child: child,
+  );
+}

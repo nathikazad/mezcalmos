@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:mezcalmos/Shared/widgets/CancelAlertDailog.dart';
 import 'package:mezcalmos/Shared/widgets/DateTitleComponent.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
@@ -12,6 +10,7 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as notifs;
 import 'package:intl/intl.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 
 import '../widgets/MezClearButton.dart';
 
@@ -70,14 +69,11 @@ class _ViewNotificationsState extends State<ViewNotifications> {
                     ? Container()
                     : MezClearButton(
                         onTapFunction: () async {
-                          bool yesNoRes = await cancelAlertDailog(
+                          bool yesNoRes = await cancelAlertDialog(
+                              title:
                               "${lang.strings["shared"]["notification"]["alertClearNotification"]["title"]}",
-                              "${lang.strings["shared"]["notification"]["alertClearNotification"]["title"]}",
-                              () {
-                            Get.back(result: true);
-                          }, () {
-                            Get.back(result: false);
-                          });
+                            body:
+                                  "${lang.strings["shared"]["notification"]["alertClearNotification"]["title"]}");
 
                           if (yesNoRes) {
                             controller.clearAllNotification();

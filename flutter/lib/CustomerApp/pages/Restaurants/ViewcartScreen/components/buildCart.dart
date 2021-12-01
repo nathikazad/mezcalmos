@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/widgets/CancelAlertDailog.dart';
 import 'package:mezcalmos/Shared/widgets/MezClearButton.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 
 Widget buildCart(Cart cart) {
   LanguageController lang = Get.find<LanguageController>();
@@ -74,14 +74,11 @@ Widget buildCart(Cart cart) {
             Spacer(),
             MezClearButton(
               onTapFunction: () async {
-                bool yesNoRes = await cancelAlertDailog(
-                    lang.strings["customer"]["restaurant"]["cart"]["clearCart"],
-                    lang.strings["customer"]["restaurant"]["cart"]
-                        ["clearCartConfirm"], () {
-                  Get.back(result: true);
-                }, () {
-                  Get.back(result: false);
-                });
+                bool yesNoRes = await cancelAlertDialog(
+                    title: lang.strings["customer"]["restaurant"]["cart"]
+                        ["clearCart"],
+                    body: lang.strings["customer"]["restaurant"]["cart"]
+                        ["clearCartConfirm"]);
 
                 if (yesNoRes) {
                   controller.clearCart();

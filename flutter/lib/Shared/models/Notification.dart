@@ -22,8 +22,28 @@ extension ParseStringToNotificationType on String {
   }
 }
 
+enum NotificationAction {
+  ShowPopUp,
+  ShowSnackBarAlways,
+  ShowSnackbarOnlyIfNotOnPage
+}
+
+extension ParseNotificationActionToString on NotificationAction {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringNotificationAction on String {
+  NotificationAction toNotificationAction() {
+    return NotificationAction.values
+        .firstWhere((e) => e.toFirebaseFormatString() == this);
+  }
+}
+
 class Notification {
-  dynamic id;
+  String id;
   dynamic variableParams;
   bool isEmpty = false;
   DateTime timestamp;
@@ -32,7 +52,7 @@ class Notification {
   String imgUrl;
   String linkUrl;
   NotificationType notificationType;
-  bool showIfOnLinkPage;
+  NotificationAction notificationAction;
   String? get orderId => variableParams['orderId'];
   String? get orderType => variableParams['orderType'];
   Notification(
@@ -44,7 +64,7 @@ class Notification {
       required this.imgUrl,
       required this.linkUrl,
       required this.notificationType,
-      this.showIfOnLinkPage = false});
+      required this.notificationAction});
 
   String get formattedTime =>
       DateFormat('HH:mm').format(this.timestamp.toLocal()).toString();

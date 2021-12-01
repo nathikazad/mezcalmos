@@ -14,10 +14,10 @@ import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
-import 'package:mezcalmos/Shared/widgets/CancelAlertDailog.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
 
 import 'components/buildOrdersItem.dart';
@@ -429,15 +429,12 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                       ),
                       onTap: () async =>
                           await onTapButtonsShowLoading(() async {
-                        bool yesNoRes = await cancelAlertDailog(
-                            lang.strings['customer']['restaurant']['checkout']
+                        bool yesNoRes = await cancelAlertDialog(
+                            title: lang.strings['customer']['restaurant']
+                                ['checkout']
                                 ['cancelOrder'],
-                            lang.strings['customer']['restaurant']['checkout']
-                                ['cancelOrderConfirm'], () {
-                          Get.back(result: true);
-                        }, () {
-                          Get.back(result: false);
-                        });
+                          body: lang.strings['customer']['restaurant']
+                                ['checkout']['cancelOrderConfirm']);
 
                         if (yesNoRes) {
                           mezDbgPrint(Get.parameters.toString());

@@ -54,8 +54,8 @@ class _CustomerWrapperState extends State<CustomerWrapper>
       numberOfCurrentOrders.value = _orderController.currentOrders.length;
     });
     String userId = Get.find<AuthController>().fireAuthUser!.uid;
-    _notificationsStreamListener = initializeShowNotificationsListener();
     // listening for notification Permissions!
+    _notificationsStreamListener = initializeShowNotificationsListener();
     listenForLocationPermissions();
     Get.find<ForegroundNotificationsController>()
         .startListeningForNotificationsFromFirebase(

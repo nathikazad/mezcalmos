@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 Future<bool> dailogComponent(
   String title,
   String subTitle,
-  Function onConform,
+  Function onConfirm,
   Function onCancel,
   Widget? icon,
   LinearGradient onConformBGColor,
@@ -85,7 +85,7 @@ Future<bool> dailogComponent(
                     ),
                   ),
                   onTap: () {
-                    onConform();
+                    onConfirm();
                   },
                 ),
                 SizedBox(

@@ -7,12 +7,13 @@ import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
-import 'package:mezcalmos/Shared/widgets/MezSwitch.dart';
+import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingListScreen/MezSwitch.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 import 'package:mezcalmos/TaxiApp/components/taxiAppBar.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
+import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingListScreen/NoScrollGlowBehaviour.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -113,8 +114,7 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                           true
                       ? (controller.orders.length > 0
                           // incase there are orders
-                          ? MezcalmosSharedWidgets
-                              .MezcalmosNoGlowScrollConfiguration(
+                          ? MezcalmosNoGlowScrollConfiguration(
                               ListView.builder(
                                   itemCount: controller.orders.length,
                                   itemBuilder: (ctx, i) {
@@ -176,8 +176,7 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                                           )),
                                                         )),
                                                     Text(
-                                                      controller.orders[i]
-                                                          .cost
+                                                      controller.orders[i].cost
                                                           .toString(),
                                                       style: TextStyle(
                                                           fontFamily: 'psb',
@@ -281,9 +280,11 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                                       width: 2.w,
                                                     ),
                                                     Text(
-                                                      controller.orders[i]
-                                                                  .routeInformation
-                                                          .distance,
+                                                      controller
+                                                          .orders[i]
+                                                          .routeInformation
+                                                          .distance
+                                                          .distanceStringInKm,
                                                       overflow:
                                                           TextOverflow.ellipsis,
                                                       maxLines: 1,
@@ -304,10 +305,12 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                                                 .w),
                                                     SizedBox(width: 2.w),
                                                     Text(
-                                                      hoursMinsShortner(controller
-                                                                      .orders[i]
-                                                                      .routeInformation
-                                                              .duration),
+                                                      hoursMinsShortner(
+                                                          controller
+                                                              .orders[i]
+                                                              .routeInformation
+                                                              .duration
+                                                              .daysHoursString),
                                                       overflow:
                                                           TextOverflow.ellipsis,
                                                       maxLines: 1,
