@@ -3,10 +3,10 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
+import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 
 class CurrentPositionedFromToTopBar extends StatelessWidget {
-  CurrentOrderController controller = Get.find<CurrentOrderController>();
+  OrderController controller = Get.find<OrderController>();
   LanguageController lang = Get.find<LanguageController>();
   TaxiOrder order;
   CurrentPositionedFromToTopBar(this.order);

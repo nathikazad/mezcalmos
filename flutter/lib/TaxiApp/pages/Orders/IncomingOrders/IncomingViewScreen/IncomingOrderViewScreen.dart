@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:typed_data';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -6,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
@@ -23,9 +25,19 @@ import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
 
-class IncommingOrderScreenView extends GetWidget<IncomingOrdersController>
-    with MezDisposable {
+class IncomingOrderViewScreen extends StatefulWidget {
+  @override
+  _IncomingOrderViewScreenState createState() =>
+      _IncomingOrderViewScreenState();
+}
+
+class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
   LanguageController lang = Get.find<LanguageController>();
+  Rxn<TaxiOrder> order = Rxn();
+  IncomingOrdersController controller = Get.find<IncomingOrdersController>();
+  StreamSubscription? _orderListener;
+
+  bool _clickedButton = false;
   // when clicking on accept .. etc
   RxBool showLoading = false.obs;
   TaxiAuthController taxiAuthController = Get.find<TaxiAuthController>();
@@ -43,6 +55,36 @@ class IncommingOrderScreenView extends GetWidget<IncomingOrdersController>
   Future<void> loadPolyLineAndMarkers() async {
     _loadPolyline();
     await _loadMarkers();
+  }
+
+  @override
+  void initState() {
+    String orderId = Get.parameters['orderId']!;
+    order.value = controller.getOrder(orderId);
+    if (order.value == null) {
+      Get.back();
+    } else {
+      if (order.value!.inProcess()) {
+        _orderListener =
+            controller.getIncomingOrderStream(orderId).listen((order) {
+          if (order != null) {
+            mezDbgPrint("===================" + order.status.toString());
+            this.order.value = order;
+          } else {
+            // TODO: showpopup and go bacl
+          }
+        });
+      }
+      //mezDbgPrint("=========> ${order.value}");
+    }
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _orderListener?.cancel();
+    _orderListener = null;
+    super.dispose();
   }
 
   @override
@@ -105,7 +147,7 @@ class IncommingOrderScreenView extends GetWidget<IncomingOrdersController>
                                 mezDbgPrint("Inside then after accept taxi");
                                 // mezcalmosSnackBar("Success", "");
                                 showLoading.value = false;
-                                Get.offNamedUntil(kCurrentOrderPage,
+                                Get.offNamedUntil(kCurrentOrderRoute,
                                     ModalRoute.withName(kHomeRoute));
                               } else {
                                 // in case Taxi User failed accepting the order.

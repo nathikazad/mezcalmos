@@ -77,22 +77,6 @@ class OrderController extends GetxController {
     });
   }
 
-  Order? getCurrentTaxiOrder() {
-    return currentOrders.firstWhere(
-        (element) => element.orderType == OrderType.Taxi,
-        orElse: null);
-  }
-
-  Order? getPastOrderById(String orderId) {
-    try {
-      return pastOrders.firstWhere((order) {
-        return order.orderId == orderId;
-      });
-    } on StateError {
-      return null;
-    }
-  }
-
   Order? getOrder(String orderId) {
     try {
       return currentOrders.firstWhere((order) {
@@ -158,7 +142,7 @@ class OrderController extends GetxController {
 
   @override
   void onClose() async {
-    print("[+] Orderontroller::onClose ---------> Was invoked !");
+    print("[+] OrderController::onClose ---------> Was invoked !");
     _currentOrdersListener?.cancel();
     _currentOrdersListener = null;
     _pastOrdersListener?.cancel();

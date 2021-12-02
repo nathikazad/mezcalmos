@@ -17,17 +17,21 @@ import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingListScreen
 import 'package:mezcalmos/TaxiApp/router.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
-  LanguageController lang = Get.find<LanguageController>();
 
-  IncomingOrdersScreen() {
-    Get.put(IncomingOrdersController());
-  }
+
+class IncomingOrdersScreen extends StatefulWidget {
+  @override
+  _IncomingOrdersScreenState createState() => _IncomingOrdersScreenState();
+}
+
+class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
+  LanguageController lang = Get.find<LanguageController>();
+  IncomingOrdersController controller = Get.find<IncomingOrdersController>();
 
 // Widget build
 // switch
 // if turned on
-//    if more than one order
+//    if more than 0 order
 //      list of orders using OrderCard
 //    else
 //      NoOrdersScreen
@@ -157,12 +161,10 @@ class IncomingOrdersScreen extends GetView<IncomingOrdersController> {
                                           vertical: 2),
                                       child: GestureDetector(
                                         onTap: () async {
-                                          // TODO @Saad: //      TODO: navigate using router and use router parameter pass orderId, dont use controller to save the selectedOrderView, use customer app for reference
-                                          Get.put<IncomingOrdersController>(
-                                              IncomingOrdersController());
                                           mezDbgPrint(
                                               "Clicked on order::${controller.orders[i].orderId}");
-                                          Get.toNamed(kSelectedIcommingOrder);
+                                          Get.toNamed(getIncomingOrderRoute(
+                                              controller.orders[i].orderId));
                                         },
                                         child: Container(
                                           height: 70,

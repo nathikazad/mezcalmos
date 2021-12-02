@@ -76,10 +76,10 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
         Get.toNamed(kUnauthorizedRoute);
       } else if (state.currentOrder != null) {
         mezDbgPrint("TaxiWrapper::handleState going to current order");
-        Get.toNamed(kCurrentOrderPage);
+        Get.toNamed(kCurrentOrderRoute);
       } else {
         mezDbgPrint("TaxiWrapper::handleState going to incoming orders");
-        Get.toNamed(kOrdersListPage);
+        Get.toNamed(kIncomingOrdersListRoute);
       }
     } else {
       mezDbgPrint("TaxiWrapper::handleState state is null, ERROR");

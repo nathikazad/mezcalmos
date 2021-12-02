@@ -23,7 +23,7 @@ Notification orderStatusChangeNotificationHandler(String key, dynamic value) {
       getTaxiOrderStatusFields(newOrdersStatus)!;
   return Notification(
       id: key,
-      linkUrl: kCurrentOrderPage,
+      linkUrl: kCurrentOrderRoute,
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],

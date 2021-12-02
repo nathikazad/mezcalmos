@@ -11,7 +11,7 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
 import 'package:mezcalmos/TaxiApp/components/taxiDialogs.dart';
-import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
+import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
@@ -21,7 +21,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
   RxBool showLoadingCircleInButton = false.obs;
   RxBool waitingForMapToOpen = false.obs;
   bool clickedYesCancelPopUp = false;
-  CurrentOrderController controller = Get.find<CurrentOrderController>();
+  OrderController controller = Get.find<OrderController>();
   TaxiAuthController taxiAuthController = Get.find<TaxiAuthController>();
   LanguageController lang = Get.find<LanguageController>();
   ForegroundNotificationsController fbNotificationsController =

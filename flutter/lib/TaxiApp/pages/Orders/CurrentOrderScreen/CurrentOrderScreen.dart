@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
@@ -17,15 +18,26 @@ import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/TaxiApp/components/taxiAppBar.dart';
 import 'package:mezcalmos/TaxiApp/components/taxiDialogs.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
-import 'package:mezcalmos/TaxiApp/controllers/currentOrderController.dart';
+import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/CurrentOrderScreen/CPositionedBottomBar.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/CurrentOrderScreen/CPositionedFromToBar.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 
-class CurrentOrderScreen extends GetView<CurrentOrderController> {
-  final LanguageController lang = Get.find<LanguageController>();
+
+class CurrentOrderScreen extends StatefulWidget {
+  @override
+  _ViewCurrentOrderScreenState createState() => _ViewCurrentOrderScreenState();
+}
+
+class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
+  LanguageController lang = Get.find<LanguageController>();
+  Rxn<TaxiOrder> order = Rxn();
+  OrderController controller = Get.find<OrderController>();
+  StreamSubscription? _orderListener;
+
+  bool _clickedButton = false;
 
   TaxiAuthController taxiAuthController = Get.find<TaxiAuthController>();
   // map stuff ========================================================
@@ -39,10 +51,39 @@ class CurrentOrderScreen extends GetView<CurrentOrderController> {
   List<Marker> customMarkers = <Marker>[];
   //======================================  ==============================
 
-  CurrentOrderScreen() {
-    Get.put(CurrentOrderController());
-    controller.listenForOrderStatus();
+  @override
+  void initState() {
+    String orderId = taxiAuthController.taxiState!.currentOrder!;
     controller.clearOrderNotifications();
+    order.value = controller.getOrder(orderId);
+    if (order.value == null) {
+      Get.back();
+    } else {
+      if (order.value!.inProcess()) {
+        _orderListener =
+            controller.getCurrentOrderStream(orderId).listen((event) {
+          if (event != null) {
+            mezDbgPrint(
+                "===================" + event.status.toFirebaseFormatString());
+            order.value = event;
+          } else {
+            _orderListener?.cancel();
+            _orderListener = null;
+            order.value = controller.getOrder(orderId);
+            //TODO: status change check if status is cancelledByTaxi
+          }
+        });
+      }
+      //mezDbgPrint("=========> ${order.value}");
+    }
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _orderListener?.cancel();
+    _orderListener = null;
+    super.dispose();
   }
 
   Future<void> hotReladCallback(TaxiOrder order) async {
