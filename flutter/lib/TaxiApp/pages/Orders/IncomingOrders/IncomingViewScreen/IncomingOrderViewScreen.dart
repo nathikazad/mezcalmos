@@ -1,26 +1,25 @@
 import 'dart:async';
 import 'dart:typed_data';
 import 'package:flutter/services.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
+import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/TaxiApp/components/taxiAppBar.dart';
-import 'package:mezcalmos/TaxiApp/components/taxiDialogs.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/IPositionedBottomBar.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/IPositionedFromToBar.dart';
-import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
@@ -31,221 +30,161 @@ class IncomingOrderViewScreen extends StatefulWidget {
       _IncomingOrderViewScreenState();
 }
 
-class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
+class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen>
+    with MGoogleMapController {
   LanguageController lang = Get.find<LanguageController>();
-  Rxn<TaxiOrder> order = Rxn();
+  TaxiOrder? order;
   IncomingOrdersController controller = Get.find<IncomingOrdersController>();
   StreamSubscription? _orderListener;
 
   bool _clickedButton = false;
-  // when clicking on accept .. etc
-  RxBool showLoading = false.obs;
   TaxiAuthController taxiAuthController = Get.find<TaxiAuthController>();
-
-  // map stuff ==================================
-  Set<Polyline> polylines = <Polyline>{};
-  Map<String, BitmapDescriptor?> bitmapDescriptors = {
-    "customerImg": null,
-    "destinationImg": null
-  };
-  Rx<LatLng> initialCameraPosition = LatLng(0, 0).obs;
-  RxList<Marker> customMarkers = <Marker>[].obs;
-  //==================================
-
-  Future<void> loadPolyLineAndMarkers() async {
-    _loadPolyline();
-    await _loadMarkers();
-  }
+  List<PointLatLng> _latLngPoints = [];
 
   @override
   void initState() {
     String orderId = Get.parameters['orderId']!;
-    order.value = controller.getOrder(orderId);
-    if (order.value == null) {
+    order = controller.getOrder(orderId);
+    // we do not setState here yet !
+    if (order == null) {
       Get.back();
     } else {
-      if (order.value!.inProcess()) {
+      if (order!.inProcess()) {
+        // populate the LatLngPoints from the encoded PolyLine String + SetState!
+        generatePolyLineLatLngPoints();
+        // add the corresponding markers
+        addOrUpdateUserMarker(order!.customer.id, order!.from.toLatLng());
+        addOrUpdatePurpleDestinationMarker(
+            order!.customer.id, order!.from.toLatLng());
+        // start Listening for the vailability of the order
         _orderListener =
             controller.getIncomingOrderStream(orderId).listen((order) {
           if (order != null) {
-            mezDbgPrint("===================" + order.status.toString());
-            this.order.value = order;
+            // keep updating our Order
+            setState(() {
+              this.order = order;
+            });
           } else {
-            // TODO: showpopup and go bacl
+            // if the Order is no more available , Show a pop up while poping back back !
+            cancelOrderSubscription();
+            Get.back();
+            oneButtonDialog(
+                message: lang.strings['taxi']['cancelOrder']['rideUnavailble'],
+                imagUrl: aOrderUnavailable);
           }
         });
       }
-      //mezDbgPrint("=========> ${order.value}");
     }
     super.initState();
   }
 
   @override
   void dispose() {
-    _orderListener?.cancel();
-    _orderListener = null;
+    cancelOrderSubscription();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-      controller.orders.listen((_) async {
-        mezDbgPrint("\t\t\t\t STILL LISTENING INCOMMINGORDERVIEW ---- !!!!");
-        if (controller.selectedIncommingOrder?.orderId == null &&
-            !showLoading.value &&
-            Get.currentRoute == kSelectedIcommingOrder) {
-          cancelSubscriptions();
-          Get.back();
-          await mezcalmosDialogOrderNoMoreAvailable(55, Get.height, Get.width);
-        }
-      }).canceledBy(this, debugId: "selectedOrderViewStream!");
-    });
-
     return Scaffold(
       appBar: taxiAppBar(AppBarLeftButtonType.Menu,
-          function: () => cancelSubscriptions()),
+          function: cancelOrderSubscription),
       body: SafeArea(
-        child: Stack(
-          alignment: Alignment.topCenter,
-          children: [
-            FutureBuilder<void>(
-                future: loadPolyLineAndMarkers(),
-                builder: (contexto, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    return MGoogleMap(
-                      markers: customMarkers,
-                      initialLocation: initialCameraPosition.value,
-                      polylines: polylines,
-                      debugString: "IncomingViewScreen",
-                      myLocationButtonEnabled: false,
-                    );
-                  }
-
-                  return MezLogoAnimation(centered: true);
-                }),
-            IncommingPositionedBottomBar(),
-            Positioned(
-              bottom: GetStorage().read(getxGmapBottomPaddingKey),
-              child: Obx(() => TextButton(
-                    style: ButtonStyle(
-                      fixedSize: MaterialStateProperty.all(Size(
-                          Get.width / 1.05,
-                          getSizeRelativeToScreen(20, Get.height, Get.width))),
-                      backgroundColor: MaterialStateProperty.all(
-                          Color.fromARGB(255, 79, 168, 35)),
-                    ),
-                    onPressed: !showLoading.value
-                        ? () {
-                            showLoading.value = true;
-                            controller
-                                .acceptTaxi(
-                                    controller.selectedIncommingOrder!.orderId)
-                                .then((serverResponse) {
-                              cancelSubscriptions();
-                              if (serverResponse.success) {
-                                mezDbgPrint("Inside then after accept taxi");
-                                // mezcalmosSnackBar("Success", "");
-                                showLoading.value = false;
-                                Get.offNamedUntil(kCurrentOrderRoute,
-                                    ModalRoute.withName(kHomeRoute));
-                              } else {
-                                // in case Taxi User failed accepting the order.
-                                Get.back();
-                                mezcalmosSnackBar(
-                                    "Failed", serverResponse.errorMessage!);
-                              }
-                            });
-                          }
-                        : () => null,
-                    child: !showLoading.value
-                        ? Text(
-                            lang.strings['taxi']['taxiView']["acceptOrders"],
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          )
-                        : const SizedBox(
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
-                            ),
-                            height: 20,
-                            width: 20,
-                          ),
-                  )),
-            ),
-            IncomingPositionedFromToTopBar()
-          ],
-        ),
+        child: order != null
+            ? Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  MGoogleMap(
+                    mGoogleMapController: this,
+                    // markers: customMarkers,
+                    initialLocation: order!.from.toLatLng(),
+                    // polylines: polylines,
+                    debugString: "IncomingViewScreen",
+                    myLocationButtonEnabled: false,
+                  ),
+                  IncommingPositionedBottomBar(
+                    order: this.order!,
+                  ),
+                  Positioned(
+                      bottom: GetStorage().read(getxGmapBottomPaddingKey),
+                      child: acceptOrderButton(
+                        child: !_clickedButton
+                            ? Text(
+                                lang.strings['taxi']['taxiView']
+                                    ["acceptOrders"],
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              )
+                            : const SizedBox(
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                ),
+                                height: 20,
+                                width: 20,
+                              ),
+                      )),
+                  IncomingPositionedFromToTopBar(
+                    order: this.order!,
+                  )
+                ],
+              )
+            : MezLogoAnimation(
+                centered: true,
+              ),
       ),
     );
   }
 
-  void _loadPolyline() {
-    // check if polyline is empty
-    if (polylines.isEmpty) {
-      polylines.add(Polyline(
-        color: Color.fromARGB(255, 172, 89, 252),
-        polylineId: PolylineId("polyline"),
-        jointType: JointType.round,
-        points: MapHelper.loadUpPolyline(
-            controller.selectedIncommingOrder?.routeInformation.polyline),
-        width: 2,
-        startCap: Cap.buttCap,
-        endCap: Cap.roundCap,
-        // geodesic: true,
-      ));
-    }
+  void cancelOrderSubscription() {
+    _orderListener?.cancel();
+    _orderListener = null;
   }
 
-  Future<void> _loadMarkers() async {
-    await _loadBitmapDescriptors();
-
-    initialCameraPosition.value = LatLng(
-        controller.selectedIncommingOrder?.from.latitude,
-        controller.selectedIncommingOrder?.from.longitude);
-
-    customMarkers.assignAll(<Marker>[
-      // Customer's Marker
-      Marker(
-          markerId: MarkerId("customer"),
-          icon: bitmapDescriptors["customerImg"]!,
-          position: LatLng(controller.selectedIncommingOrder?.from.latitude,
-              controller.selectedIncommingOrder?.from.longitude)),
-
-      // Destination Marker
-      Marker(
-          markerId: MarkerId("destination"),
-          icon: bitmapDescriptors["destinationImg"]!,
-          position: LatLng(controller.selectedIncommingOrder?.to.latitude,
-              controller.selectedIncommingOrder?.to.longitude)),
-    ]);
+  void generatePolyLineLatLngPoints() {
+    setState(() {
+      _latLngPoints.assignAll(
+          MapHelper.loadUpPolyline(order!.routeInformation.polyline)
+              .map<PointLatLng>((e) => PointLatLng(e.latitude, e.longitude))
+              .toList());
+    });
   }
 
-  Future<void> _loadBitmapDescriptors() async {
-    // customer marker's Image
-    if (bitmapDescriptors["customerImg"] == null) {
-      // Create the BitmapDescriptor Object for the customer marker using the images's bytes.
-      bitmapDescriptors["customerImg"] = await BitmapDescriptorLoader(
-          (await cropRonded((await http.get(
-                  Uri.parse(controller.selectedIncommingOrder!.customer.image)))
-              .bodyBytes) as Uint8List),
-          60,
-          60,
-          isBytes: true);
-    }
+  Widget acceptOrderButton({required Widget child}) {
+    return TextButton(
+      style: ButtonStyle(
+        fixedSize: MaterialStateProperty.all(Size(Get.width / 1.05,
+            getSizeRelativeToScreen(20, Get.height, Get.width))),
+        backgroundColor:
+            MaterialStateProperty.all(Color.fromARGB(255, 79, 168, 35)),
+      ),
+      onPressed: !_clickedButton
+          ? () async {
+              setState(() {
+                _clickedButton = true;
+              });
 
-    // destination marker's Image
-    if (bitmapDescriptors["destinationImg"] == null) {
-      bitmapDescriptors["destinationImg"] = await BitmapDescriptorLoader(
-          (await cropRonded(
-              (await rootBundle.load(purple_destination_marker_asset))
-                  .buffer
-                  .asUint8List())),
-          60,
-          60,
-          isBytes: true);
-    }
+              ServerResponse serverResponse =
+                  await controller.acceptTaxi(order!.orderId);
+
+              if (serverResponse.success) {
+                // canceling Subscription Just to Avoid possible Racing Conditions
+                cancelOrderSubscription();
+                // Go to CurrentOrder View !
+                Get.offNamedUntil(
+                    kCurrentOrderRoute, ModalRoute.withName(kHomeRoute));
+                // Notice the User !
+                mezcalmosSnackBar(
+                    serverResponse.status.toShortString(), serverResponse.data);
+              } else {
+                // in case Taxi User failed accepting the order.
+                Get.back();
+                mezcalmosSnackBar("Failed", serverResponse.errorMessage!);
+              }
+            }
+          : () => null,
+      child: child,
+    );
   }
 }
