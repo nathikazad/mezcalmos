@@ -87,7 +87,6 @@ class AuthController extends GetxController {
             event.snapshot.value['language'] =
                 Get.find<LanguageController>().userLanguageKey;
           }
-
           _user.value = User.fromSnapshot(user, event.snapshot);
 
           Get.find<LanguageController>()

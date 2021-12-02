@@ -3,6 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+
+enum TwoButtonDialogButton { Left, Right }
+enum YesNoDialogButton { Yes, No }
+
+extension TwoButtonExtension on TwoButtonDialogButton {
+  /// @param: [right] this is used to bind [YesNoDialogButton] with [TwoButtonDialogButton.Right]
+  ///
+  /// @param: [left] this is used to bind [YesNoDialogButton] with [TwoButtonDialogButton.Left]
+  YesNoDialogButton toYesNo(
+      {required YesNoDialogButton right, required YesNoDialogButton left}) {
+    if (this == TwoButtonDialogButton.Right)
+      return right;
+    else
+      return left;
+  }
+}
 
 // TODO: @Saad make sure network images work
 Future<void> oneButtonDialog(
@@ -26,7 +43,9 @@ Future<void> oneButtonDialog(
               width: Get.width / 2,
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage(imagUrl), fit: BoxFit.contain)),
+                      image: handleIfNetworkImage(url: imagUrl).image,
+                      // image: AssetImage(imagUrl),
+                      fit: BoxFit.contain)),
             )),
         Flexible(
             fit: FlexFit.loose,
@@ -49,8 +68,6 @@ Future<void> oneButtonDialog(
     ),
   );
 }
-
-enum TwoButtonDialogButton { Left, Right }
 
 Future<TwoButtonDialogButton> twoButtonDialog(
     {required String title,
@@ -191,12 +208,22 @@ Future<TwoButtonDialogButton> twoButtonDialog(
   return Future.value(twoButtonDialogButton);
 }
 
-enum YesNoDialogButton { Yes, No }
-
-Future<YesNoDialogButton> yesNoDialog(String text) async {
-  return YesNoDialogButton.No;
+Future<YesNoDialogButton> yesNoDialog(
+    {required String text, required String body, String? imgUrl}) async {
+  //return YesNoDialogButton.No;
   // TODO: @Saad use two button dialog
   // OLD CODE BELOW
+
+  return (await twoButtonDialog(
+    title: text,
+    body: body,
+    imageUrl: imgUrl,
+    rightButtonText: Get.find<LanguageController>().strings['shared']['popUps']
+        ['yes'],
+    leftButtonText: Get.find<LanguageController>().strings['shared']['popUps']
+        ['no'],
+  ))
+      .toYesNo(right: YesNoDialogButton.Yes, left: YesNoDialogButton.No);
 }
 
 // Future<bool> yesNoDefaultConfirmationDialog(String text) async {
@@ -284,14 +311,21 @@ Future<YesNoDialogButton> yesNoDialog(String text) async {
 //   return Future.value(res);
 // }
 
-Future<bool> cancelAlertDialog(
+Future<YesNoDialogButton> cancelAlertDialog(
     {required String title,
     required String body,
     Function? onConform,
     Function? onCancel}) async {
   //TODO: use twobutton dialog to implement this
-  // OLD CODE BELOW
-  return false;
+  return (await twoButtonDialog(
+    title: title,
+    body: body,
+    rightButtonText: Get.find<LanguageController>().strings['shared']['popUps']
+        ['yes'],
+    leftButtonText: Get.find<LanguageController>().strings['shared']['popUps']
+        ['no'],
+  ))
+      .toYesNo(right: YesNoDialogButton.Yes, left: YesNoDialogButton.No);
 }
 
 // import 'package:flutter/material.dart';

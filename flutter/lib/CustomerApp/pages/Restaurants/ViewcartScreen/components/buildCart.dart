@@ -74,13 +74,13 @@ Widget buildCart(Cart cart) {
             Spacer(),
             MezClearButton(
               onTapFunction: () async {
-                bool yesNoRes = await cancelAlertDialog(
+                YesNoDialogButton yesNoRes = await cancelAlertDialog(
                     title: lang.strings["customer"]["restaurant"]["cart"]
                         ["clearCart"],
                     body: lang.strings["customer"]["restaurant"]["cart"]
                         ["clearCartConfirm"]);
 
-                if (yesNoRes) {
+                if (yesNoRes == YesNoDialogButton.Yes) {
                   controller.clearCart();
                   Get.back();
                 }

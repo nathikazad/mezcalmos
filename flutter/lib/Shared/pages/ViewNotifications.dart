@@ -69,13 +69,13 @@ class _ViewNotificationsState extends State<ViewNotifications> {
                     ? Container()
                     : MezClearButton(
                         onTapFunction: () async {
-                          bool yesNoRes = await cancelAlertDialog(
+                          YesNoDialogButton yesNoRes = await cancelAlertDialog(
                               title:
-                              "${lang.strings["shared"]["notification"]["alertClearNotification"]["title"]}",
-                            body:
+                                  "${lang.strings["shared"]["notification"]["alertClearNotification"]["title"]}",
+                              body:
                                   "${lang.strings["shared"]["notification"]["alertClearNotification"]["title"]}");
 
-                          if (yesNoRes) {
+                          if (yesNoRes == YesNoDialogButton.Yes) {
                             controller.clearAllNotification();
                             Get.back();
                           }

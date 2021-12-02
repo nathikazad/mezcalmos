@@ -296,9 +296,8 @@ class CurrentPositionedBottomBar extends StatelessWidget {
       if ((MapHelper.calculateDistance(
               taxiAuthController.currentLocation, order.to.position) >
           0.5)) {
-        bool clickedYes =
-            await yesNoDefaultConfirmationDialog(
-                lang.strings['taxi']['taxiView']["tooFarFromfinishRide"]);
+        bool clickedYes = await yesNoDefaultConfirmationDialog(
+            lang.strings['taxi']['taxiView']["tooFarFromfinishRide"]);
 
         mezDbgPrint("CurrentPositionedBottomBar clickedYes: $clickedYes");
         if (clickedYes) {
@@ -311,9 +310,8 @@ class CurrentPositionedBottomBar extends StatelessWidget {
       if (MapHelper.calculateDistance(
               taxiAuthController.currentLocation, order.from.position) >
           0.5) {
-        bool clickedYes =
-            await yesNoDefaultConfirmationDialog(
-                lang.strings['taxi']['taxiView']["tooFarFromstartRide"]);
+        bool clickedYes = await yesNoDefaultConfirmationDialog(
+            lang.strings['taxi']['taxiView']["tooFarFromstartRide"]);
         if (clickedYes) {
           await startRide();
         }

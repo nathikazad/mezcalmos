@@ -429,14 +429,13 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                       ),
                       onTap: () async =>
                           await onTapButtonsShowLoading(() async {
-                        bool yesNoRes = await cancelAlertDialog(
+                        YesNoDialogButton yesNoRes = await cancelAlertDialog(
                             title: lang.strings['customer']['restaurant']
-                                ['checkout']
-                                ['cancelOrder'],
-                          body: lang.strings['customer']['restaurant']
+                                ['checkout']['cancelOrder'],
+                            body: lang.strings['customer']['restaurant']
                                 ['checkout']['cancelOrderConfirm']);
 
-                        if (yesNoRes) {
+                        if (yesNoRes == YesNoDialogButton.Yes) {
                           mezDbgPrint(Get.parameters.toString());
                           ServerResponse resp = await restaurantController
                               .cancelOrder(Get.parameters['orderId']!);

@@ -78,15 +78,16 @@ Widget buildItems(List<CartItem> cartItems) {
                           onChangedToZero: (isZero) async {
                             if (isZero) {
                               controller.refresh();
-                              bool yesNoResult = await cancelAlertDialog(
-                                  title: lang.strings["customer"]["restaurant"]
-                                      ["cart"]
-                                    ["deleteItem"],
-                                body: lang.strings["customer"]["restaurant"]
-                                      ["cart"]["deleteItemConfirm"]);
+                              YesNoDialogButton yesNoResult =
+                                  await cancelAlertDialog(
+                                      title: lang.strings["customer"]
+                                          ["restaurant"]["cart"]["deleteItem"],
+                                      body: lang.strings["customer"]
+                                              ["restaurant"]["cart"]
+                                          ["deleteItemConfirm"]);
                               mezDbgPrint(
                                   " the returend value from the dailog $yesNoResult");
-                              if (yesNoResult == true) {
+                              if (yesNoResult == YesNoDialogButton.Yes) {
                                 controller.deleteItem("${element.id}");
 
                                 if (controller.cart.value.quantity() == 0) {

@@ -75,7 +75,7 @@ void responsiveSize(BuildContext context) {
       orientation: Orientation.portrait);
 }
 
-Image handleNetworkImage(
+Image handleIfNetworkImage(
     {required String? url,
     double? height,
     double? width,
@@ -86,12 +86,21 @@ Image handleNetworkImage(
   if (url == null ||
       url.toLowerCase().contains('.svg') ||
       !url.startsWith('http')) {
-    _img = Image.asset(
-      assetInCaseFailed,
-      height: height,
-      width: width,
-      fit: BoxFit.contain,
-    );
+    try {
+      _img = Image.asset(
+        url!,
+        height: height,
+        width: width,
+        fit: BoxFit.contain,
+      );
+    } catch (e) {
+      _img = Image.asset(
+        assetInCaseFailed,
+        height: height,
+        width: width,
+        fit: BoxFit.contain,
+      );
+    }
   } else {
     _img = Image.network(
       url,

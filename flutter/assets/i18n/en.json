@@ -311,6 +311,10 @@
             "displayName": "Enter Display Name",
             "phone": "Enter Phone Number",
             "phoneNumber": "+52123456.."
+        },
+        "popUps": {
+            "yes" : "Yes",
+            "no" : "No"
         }
     },
     "admin": {
