@@ -112,7 +112,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                                     borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(25),
                                         topRight: Radius.circular(25)),
-                                    child: handleNetworkImage(
+                                    child: handleIfNetworkImage(
                                         url: cartItem.value!.item.image!,
                                         fit: BoxFit.cover)
                                     // Image.network(
@@ -398,7 +398,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
 
   Widget image(String? imageLink) {
     if (imageLink != null)
-      return handleNetworkImage(
+      return handleIfNetworkImage(
         url: cartItem.value!.item.image!,
         height: 40,
       );

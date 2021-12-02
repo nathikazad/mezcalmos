@@ -44,7 +44,7 @@ class DriverPage extends GetView<DriverStatsController> {
                     color: Colors.white,
                     child: ClipOval(
                       child: (data[0]["photo"] != "")
-                          ? handleNetworkImage(url: data[0]["photo"])
+                          ? handleIfNetworkImage(url: data[0]["photo"])
                           //  Image.network(
                           //     "${data[0]["photo"]}",
                           //     fit: BoxFit.cover,

@@ -85,7 +85,7 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
                                     borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(25),
                                         topRight: Radius.circular(25)),
-                                    child: handleNetworkImage(
+                                    child: handleIfNetworkImage(
                                         url: restaurant!.photo,
                                         fit: BoxFit.cover),
                                   ),

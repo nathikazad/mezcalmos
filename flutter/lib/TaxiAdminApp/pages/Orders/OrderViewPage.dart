@@ -43,7 +43,7 @@ class OrderViewPage extends GetView<OrderStatsController> {
                               // alignment: Alignment.center,
                               height: Get.width * 0.3,
                               width: Get.width * 0.3,
-                              child: handleNetworkImage(
+                              child: handleIfNetworkImage(
                                   url: data["orders"][0]["customer"]["photo"])
                               // Image.network(
                               //   "${data["orders"][0]["customer"]["photo"]}",
@@ -75,7 +75,7 @@ class OrderViewPage extends GetView<OrderStatsController> {
                             width: Get.width * 0.3,
                             child: (data["orders"][0]["driver"] != null)
                                 ? InkWell(
-                                    child: handleNetworkImage(
+                                    child: handleIfNetworkImage(
                                         url: data["orders"][0]["driver"]
                                             ["photo"]),
                                     // Image.network(

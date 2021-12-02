@@ -59,7 +59,7 @@ class ViewRestaurantScreen extends GetView<RestaurantsInfoController> {
                                   borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(25),
                                       topRight: Radius.circular(25)),
-                                  child: handleNetworkImage(
+                                  child: handleIfNetworkImage(
                                       url: restaurant.value?.photo),
                                   // Image.network(
                                   //   "${restaurant.value!.photo}",

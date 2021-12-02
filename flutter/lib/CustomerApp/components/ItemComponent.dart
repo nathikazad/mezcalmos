@@ -44,7 +44,7 @@ class ItemComponent extends StatelessWidget {
               height: 43,
               child: ClipRRect(
                   borderRadius: BorderRadius.all(Radius.circular(8)),
-                  child: handleNetworkImage(url: imgUrl, fit: BoxFit.cover)
+                  child: handleIfNetworkImage(url: imgUrl, fit: BoxFit.cover)
                   //  Image.network(
                   //   "$imgUrl",
                   //   fit: BoxFit.cover,

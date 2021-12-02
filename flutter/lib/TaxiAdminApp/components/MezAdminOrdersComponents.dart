@@ -180,12 +180,13 @@ class MezAdminOrdersComponents {
                     child: Container(
                       height: 30,
                       width: 30,
-                      child: ClipOval(child: handleNetworkImage(url: driverImg)
-                          //  Image.network(
-                          //   "${driverImg}",
-                          //   fit: BoxFit.cover,
-                          // ),
-                          ),
+                      child:
+                          ClipOval(child: handleIfNetworkImage(url: driverImg)
+                              //  Image.network(
+                              //   "${driverImg}",
+                              //   fit: BoxFit.cover,
+                              // ),
+                              ),
                     ),
                   )
                 : Center(
@@ -214,7 +215,7 @@ class MezAdminOrdersComponents {
               child: Container(
                   height: 30,
                   width: 30,
-                  child: ClipOval(child: handleNetworkImage(url: custImg)
+                  child: ClipOval(child: handleIfNetworkImage(url: custImg)
                       // Image.network(
                       //   "${custImg}",
                       //   fit: BoxFit.cover,
@@ -303,7 +304,7 @@ class MezAdminOrdersComponents {
                       width: 35,
                       child: ClipOval(
                           child: (img != "null")
-                              ? handleNetworkImage(url: img)
+                              ? handleIfNetworkImage(url: img)
                               // Image.network(
                               //     "${img}",
                               //     fit: BoxFit.cover,
