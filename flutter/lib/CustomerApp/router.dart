@@ -1,8 +1,10 @@
 import 'package:get/get.dart'; // getX
+import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/MapViews/PickLocationView/PickLocationView.dart';
 import 'package:mezcalmos/CustomerApp/pages/ListOrdersScreen/ListOrdersScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/ViewRestaurantOrderScreen.dart';
+import 'package:mezcalmos/CustomerApp/pages/SavedLocations/savedLocationView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/RequestTaxiScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrderScreen.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
@@ -25,6 +27,7 @@ const String kCartRoute = '/cart';
 const String kCartItemRoute = '/cart/:cartItemId';
 const String kPickLocationRoute = '/pickLocationFromMap/addLocation';
 const String kPickLocationEditRoute = '/pickLocationFromMap/editLocation';
+const String kSavedLocations = '/savedLocations';
 
 String getRestaurantRoute(String restaurantId) {
   return kRestaurantRoute.replaceFirst(":restaurantId", restaurantId);
@@ -102,6 +105,7 @@ class XRouter {
             page: () => ViewTaxiOrderScreen(),
             transitionDuration: Duration(milliseconds: 500),
             transition: Transition.rightToLeft),
+        GetPage(name: kSavedLocations, page: () => SavedLocationView())
       ] +
       SharedRouter.sharedRoutes;
 }

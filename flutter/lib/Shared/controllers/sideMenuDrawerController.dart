@@ -2,10 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 
 class SideMenuDrawerController extends GetxController {
   GlobalKey<ScaffoldState>? _scaffoldKey;
-
+  List<SideMenuItem>? sideMenuItems;
   GlobalKey<ScaffoldState>? getNewKey() {
     _scaffoldKey =
         new GlobalKey<ScaffoldState>(debugLabel: '___ScaffoldStateKey___');

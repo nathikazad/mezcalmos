@@ -20,6 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
+import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:package_info/package_info.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -31,8 +32,11 @@ class StartingPoint extends StatefulWidget {
   final Function signInCallback;
   final Function signOutCallback;
   final List<GetPage<dynamic>> routes;
+  final List<SideMenuItem>? sideMenuItems;
+  //  Sideminu
   StartingPoint(
-      this.appType, this.signInCallback, this.signOutCallback, this.routes);
+      this.appType, this.signInCallback, this.signOutCallback, this.routes,
+      [this.sideMenuItems]);
 
   @override
   _StartingPointState createState() => _StartingPointState();
@@ -107,7 +111,8 @@ class _StartingPointState extends State<StartingPoint> {
     // and then to the sideMenuController
     //this datastructure, should basically just have a name and a link
     //the side menu controller will populate the middle of its tiles using this list
-    Get.put<SettingsController>(SettingsController(widget.appType),
+    Get.put<SettingsController>(
+        SettingsController(widget.appType, widget.sideMenuItems),
         permanent: true);
   }
 

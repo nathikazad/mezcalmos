@@ -13,12 +13,10 @@ import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
 
 import 'components/SavedLocationComponent.dart';
 
-enum SavedLocationViewMode { GetSavedLocation, SeeSaveLocation }
-
 class SavedLocationView extends StatefulWidget {
-  final SavedLocationViewMode? savedLocationViewMode;
-  SavedLocationView({Key? key, required this.savedLocationViewMode})
-      : super(key: key);
+  SavedLocationView({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _SavedLocationViewState createState() => _SavedLocationViewState();
@@ -120,15 +118,7 @@ class _SavedLocationViewState extends State<SavedLocationView> {
             ),
             ...savedLocations.map((savedLocation) => SavedLocationComponent(
                   savelocation: savedLocation,
-                  onPress: () {
-                    // mezcalmosSnackBar(
-                    //     "_title", "Clicked on ${savedLocation.id!}");
-                    // Get.back();
-                    if (widget.savedLocationViewMode ==
-                        SavedLocationViewMode.GetSavedLocation) {
-                      Get.back(result: savedLocation);
-                    }
-                  },
+                  onPress: () {},
                 )),
             SizedBox(
               height: 25,

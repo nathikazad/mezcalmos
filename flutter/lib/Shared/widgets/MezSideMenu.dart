@@ -109,22 +109,8 @@ class MezSideMenu extends GetWidget<AuthController> {
 //@jamal TODO: pass in a list of listTiles that gets sent by the app at the time of initialization,
 //this datastructure, should basically just have a name and a link
 //and then populate the middle of these tiles using this list
-                // ListTile(
-                //   onTap: () {
-                //     _drawerController.closeMenu();
-                //     Get.to(() => SavedLocationView(
-                //             savedLocationViewMode: savedLocationViewMode)(
-                //         savedLocationViewMode:
-                //             SavedLocationViewMode.SeeSaveLocation));
-                //   },
-                //   leading: Icon(
-                //     Icons.near_me_outlined,
-                //     color: Color.fromARGB(255, 103, 121, 254),
-                //     size: 25.sp,
-                //   ),
-                //   title: Text("Saved Locations",
-                //       style: TextStyle(fontFamily: 'psb', fontSize: 16.sp)),
-                // ),
+
+                _buildSideMenuItem(),
                 Obx(() => controller.user != null
                     ? ListTile(
                         onTap: () async {
@@ -178,5 +164,42 @@ class MezSideMenu extends GetWidget<AuthController> {
         ),
       ),
     );
+  }
+
+  Widget _buildSideMenuItem() {
+    if (_drawerController.sideMenuItems!.length > 0) {
+      return Column(
+        children: _drawerController.sideMenuItems!,
+      );
+    } else
+      return Container();
+  }
+}
+
+class SideMenuItem extends StatefulWidget {
+  SideMenuItem({
+    Key? key,
+    required this.onPress,
+    required this.icon,
+    required this.title,
+  }) : super(key: key);
+  final GestureTapCallback onPress;
+  final Widget icon;
+  final String title;
+
+  @override
+  _SideMenuItemState createState() => _SideMenuItemState();
+}
+
+class _SideMenuItemState extends State<SideMenuItem> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        child: ListTile(
+      onTap: widget.onPress,
+      leading: widget.icon,
+      title: Text("${widget.title}",
+          style: TextStyle(fontFamily: 'psb', fontSize: 16.sp)),
+    ));
   }
 }

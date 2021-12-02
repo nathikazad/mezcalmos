@@ -7,10 +7,13 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/controllers/themeContoller.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 
 class SettingsController extends GetxController {
   late final ThemeController _appTheme;
   late final LanguageController _appLanguage;
+  final List<SideMenuItem>? sideMenuItems;
   AppType appType;
   ThemeController get appTheme => _appTheme;
   LanguageController get appLanguage => _appLanguage;
@@ -21,7 +24,7 @@ class SettingsController extends GetxController {
   Stream<bool> get locationPermissionStream =>
       _hasLocationPermissionStreamController.stream;
 
-  SettingsController(this.appType);
+  SettingsController(this.appType, this.sideMenuItems);
 
   @override
   void onInit() async {
@@ -31,7 +34,8 @@ class SettingsController extends GetxController {
     // FOR NOW WE SET IT TO EN (default  if not passed to LangController)
     _appTheme = Get.put(ThemeController(), permanent: true);
     _appLanguage = Get.put(LanguageController(), permanent: true);
-    Get.put(SideMenuDrawerController(), permanent: false);
+    Get.put(SideMenuDrawerController(), permanent: false).sideMenuItems =
+        this.sideMenuItems;
 
     bool locationPermission = await _getLocationPermission();
     _hasLocationPermissionStreamController.add(locationPermission);
