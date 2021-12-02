@@ -63,8 +63,8 @@ abstract class MGoogleMapController {
         isBytes: true);
     markerId = markerId;
 
-    this.addOrUpdateMarker(
-        Marker(markerId: MarkerId(markerId), icon: icon, position: latLng));
+    this.addOrUpdateMarker(Marker(
+        markerId: MarkerId("dest_$markerId"), icon: icon, position: latLng));
   }
 
   late void Function(Marker) addOrUpdateMarker;

@@ -311,12 +311,10 @@ Future<YesNoDialogButton> yesNoDialog(
 //   return Future.value(res);
 // }
 
-Future<YesNoDialogButton> cancelAlertDialog(
-    {required String title,
-    required String body,
-    Function? onConform,
-    Function? onCancel}) async {
-  //TODO: use twobutton dialog to implement this
+Future<YesNoDialogButton> cancelAlertDialog({
+  required String title,
+  required String body,
+}) async {
   return (await twoButtonDialog(
     title: title,
     body: body,

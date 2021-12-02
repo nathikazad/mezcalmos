@@ -60,6 +60,7 @@ const String aLocationPermissionAsset =
 
 const String aPurpleLocationCircle = "assets/images/PurpleLocationCircle.png";
 const String aLocationPicker = "assets/images/PurpleLocationPicker.png";
+const String aOrderUnavailable = "assets/images/circularCancel.png";
 
 enum AppType { CustomerApp, TaxiApp, TaxiAdminApp, DeliveryAdminApp }
 
