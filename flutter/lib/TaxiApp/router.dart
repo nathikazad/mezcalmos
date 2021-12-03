@@ -18,14 +18,13 @@ String getIncomingOrderRoute(String orderId) {
 // GetX based Router (For navigating)
 class XRouter {
   static dynamic mainRoutes = [
-        GetPage(
-            name: kCurrentOrderRoute,
-            page: () => CurrentOrderScreen()),
+        GetPage(name: kCurrentOrderRoute, page: () => CurrentOrderScreen()),
         GetPage(
             name: kIncomingOrdersListRoute, page: () => IncomingOrdersScreen()),
         GetPage(name: kHomeRoute, page: () => TaxiWrapper()),
         GetPage(
             name: kIncomingOrdersViewRoute,
             page: () => IncomingOrderViewScreen()),
-      ];
+      ] +
+      SharedRouter.sharedRoutes;
 }

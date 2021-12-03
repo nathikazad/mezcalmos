@@ -42,7 +42,8 @@ abstract class MGoogleMapController {
         Marker(markerId: MarkerId(markerId), icon: icon, position: latLng));
   }
 
-  Future<void> addTaxiDriverMarker(String markerId, LatLng latLng) async {
+  Future<void> addOrUpdateTaxiDriverMarker(
+      String markerId, LatLng latLng) async {
     this.addOrUpdateMarker(Marker(
         markerId: MarkerId(markerId),
         icon: await BitmapDescriptor.fromAssetImage(
@@ -52,7 +53,7 @@ abstract class MGoogleMapController {
   }
 
   Future<void> addOrUpdatePurpleDestinationMarker(
-      String markerId, LatLng latLng) async {
+      {String markerId = "dest", required LatLng latLng}) async {
     BitmapDescriptor icon = await BitmapDescriptorLoader(
         (await cropRonded(
             (await rootBundle.load(purple_destination_marker_asset))
@@ -63,8 +64,18 @@ abstract class MGoogleMapController {
         isBytes: true);
     markerId = markerId;
 
-    this.addOrUpdateMarker(Marker(
-        markerId: MarkerId("dest_$markerId"), icon: icon, position: latLng));
+    this.addOrUpdateMarker(
+        Marker(markerId: MarkerId(markerId), icon: icon, position: latLng));
+  }
+
+  void removeDestinationMarker({String id = "dest"}) {
+    this.removeMarker(id);
+  }
+
+  void decodeAndAddPolyline({required String encodedPolylineString}) {
+    this.addPolyline(MapHelper.loadUpPolyline(encodedPolylineString)
+        .map<PointLatLng>((e) => PointLatLng(e.latitude, e.longitude))
+        .toList());
   }
 
   late void Function(Marker) addOrUpdateMarker;

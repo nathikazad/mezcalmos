@@ -39,7 +39,6 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen>
 
   bool _clickedButton = false;
   TaxiAuthController taxiAuthController = Get.find<TaxiAuthController>();
-  List<PointLatLng> _latLngPoints = [];
 
   @override
   void initState() {
@@ -51,11 +50,11 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen>
     } else {
       if (order!.inProcess()) {
         // populate the LatLngPoints from the encoded PolyLine String + SetState!
-        generatePolyLineLatLngPoints();
+        decodeAndAddPolyline(
+            encodedPolylineString: order!.routeInformation.polyline);
         // add the corresponding markers
         addOrUpdateUserMarker(order!.customer.id, order!.from.toLatLng());
-        addOrUpdatePurpleDestinationMarker(
-            order!.customer.id, order!.from.toLatLng());
+        addOrUpdatePurpleDestinationMarker(latLng: order!.from.toLatLng());
         // start Listening for the vailability of the order
         _orderListener =
             controller.getIncomingOrderStream(orderId).listen((order) {
@@ -140,15 +139,6 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen>
   void cancelOrderSubscription() {
     _orderListener?.cancel();
     _orderListener = null;
-  }
-
-  void generatePolyLineLatLngPoints() {
-    setState(() {
-      _latLngPoints.assignAll(
-          MapHelper.loadUpPolyline(order!.routeInformation.polyline)
-              .map<PointLatLng>((e) => PointLatLng(e.latitude, e.longitude))
-              .toList());
-    });
   }
 
   Widget acceptOrderButton({required Widget child}) {

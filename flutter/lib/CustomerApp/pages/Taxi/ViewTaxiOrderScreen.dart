@@ -133,7 +133,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
         removeMarker(toMarkerId);
 
         // taxi driver marker
-        addTaxiDriverMarker(
+        addOrUpdateTaxiDriverMarker(
             // TODO : // this should have Driver actual location instreal of from!
             order.value!.driver!.id,
             order.value!.from.toLatLng());
