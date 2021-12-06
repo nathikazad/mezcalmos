@@ -15,8 +15,8 @@ class ViewTaxiOrderScreen extends StatefulWidget {
   _ViewTaxiOrderScreenState createState() => _ViewTaxiOrderScreenState();
 }
 
-class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
-    with MGoogleMapController {
+class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
+  MGoogleMapController mGoogleMapController = MGoogleMapController();
   OrderController controller = Get.find<OrderController>();
   Rxn<TaxiOrder> order = Rxn();
   StreamSubscription? _orderListener;
@@ -34,7 +34,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
       if (order.value!.inProcess()) {
         mezDbgPrint("order is in process!");
         inProcessOrderStatusHandler(order.value!.status);
-        setAnimateMarkersPolyLinesBounds?.call(true);
+        mGoogleMapController.setAnimateMarkersPolyLinesBounds(true);
 
         _orderListener =
             controller.getCurrentOrderStream(orderId).listen((currentOrder) {
@@ -52,7 +52,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
 
             order.value = controller.getOrder(orderId) as TaxiOrder?;
             // one time execution :
-            setAnimateMarkersPolyLinesBounds?.call(false);
+            mGoogleMapController.setAnimateMarkersPolyLinesBounds(false);
             pastOrderStatusHandler(order.value!.status);
           }
         });
@@ -96,7 +96,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
                   child: Obx(
                     () => order.value != null
                         ? MGoogleMap(
-                            mGoogleMapController: this,
+                            mGoogleMapController: this.mGoogleMapController,
                             periodicRedrendring: true,
 
                             // notifyParent: (_) {},
@@ -130,15 +130,13 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
     switch (status) {
       case TaxiOrdersStatus.OnTheWay:
         // remove the to dest marker
-        removeMarker(toMarkerId);
+        mGoogleMapController.removeMarker(toMarkerId);
 
         // taxi driver marker
-        addOrUpdateTaxiDriverMarker(
-            // TODO : // this should have Driver actual location instreal of from!
-            order.value!.driver!.id,
-            order.value!.from.toLatLng());
+        mGoogleMapController.addOrUpdateTaxiDriverMarker(
+            order.value!.driver!.id, order.value!.driver!.location!.toLatLng());
         // customer marker
-        addOrUpdateUserMarker(
+        mGoogleMapController.addOrUpdateUserMarker(
             order.value!.customer.id, order.value!.from.toLatLng());
         break;
 
@@ -152,23 +150,23 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
         //     order.value!.driver!.id, order.value!.from.toLatLng());
 
         // removing customer marker
-        removeMarker(order.value!.customer.id);
+        mGoogleMapController.removeMarker(order.value!.customer.id);
         // updating driver's marker
-        addOrUpdateUserMarker(
+        mGoogleMapController.addOrUpdateUserMarker(
             order.value!.driver!.id, order.value!.from.toLatLng());
         // updating destination marker.
-        addOrUpdatePurpleDestinationMarker(
-            toMarkerId, order.value!.to.toLatLng());
+        mGoogleMapController.addOrUpdatePurpleDestinationMarker(
+            latLng: order.value!.to.toLatLng());
         break;
 
       default:
         // this.addPolyline()
         // default is : isLoookingForTaxi
         // updating destination marker.
-        addOrUpdatePurpleDestinationMarker(
-            toMarkerId, order.value!.to.toLatLng());
+        mGoogleMapController.addOrUpdatePurpleDestinationMarker(
+            latLng: order.value!.to.toLatLng());
         // customer marker
-        addOrUpdateUserMarker(
+        mGoogleMapController.addOrUpdateUserMarker(
             order.value!.customer.id, order.value!.from.toLatLng());
         break;
     }
@@ -177,11 +175,12 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
   /// This gets invoked when the order is moved to /past db node
   void pastOrderStatusHandler(TaxiOrdersStatus status) {
     // @Saad, no need to navigate back, should just be enough to show status
-    removeMarker(order.value!.driver!.id);
+    mGoogleMapController.removeMarker(order.value!.driver!.id);
     // adding customer's marker
-    addOrUpdateUserMarker(
+    mGoogleMapController.addOrUpdateUserMarker(
         order.value!.customer.id, order.value!.from.toLatLng());
     // updating destination marker.
-    addOrUpdatePurpleDestinationMarker(toMarkerId, order.value!.to.toLatLng());
+    mGoogleMapController.addOrUpdatePurpleDestinationMarker(
+        latLng: order.value!.to.toLatLng());
   }
 }

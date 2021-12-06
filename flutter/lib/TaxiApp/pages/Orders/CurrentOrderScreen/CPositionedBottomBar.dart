@@ -240,7 +240,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                                           controller.cancelTaxi(null).then((_) {
                                             removeLoadingAnimation();
                                             Get.offNamedUntil(
-                                                kOrdersListPage,
+                                                kIncomingOrdersListRoute,
                                                 ModalRoute.withName(
                                                     kHomeRoute));
                                           });
@@ -329,7 +329,8 @@ class CurrentPositionedBottomBar extends StatelessWidget {
     ServerResponse serverResponse = await controller.finishRide();
     if (serverResponse.success) {
       mezDbgPrint("CurrentPositionedBottomBar finishRide success");
-      Get.offNamedUntil(kOrdersListPage, ModalRoute.withName(kHomeRoute));
+      Get.offNamedUntil(
+          kIncomingOrdersListRoute, ModalRoute.withName(kHomeRoute));
     } else {
       // todo: SHOW ERROR MESSAGE
     }

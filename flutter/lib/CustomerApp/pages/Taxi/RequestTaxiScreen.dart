@@ -166,7 +166,8 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
     } else {
       taxiRequest.value.setToLocation(newLocation);
       locationPickerController.addOrUpdatePurpleDestinationMarker(
-          textFieldType.toShortString(), newLocation.toLatLng());
+          markerId: textFieldType.toShortString(),
+          latLng: newLocation.toLatLng());
     }
     setState(() {});
   }

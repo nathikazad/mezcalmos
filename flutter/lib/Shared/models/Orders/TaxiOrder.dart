@@ -42,7 +42,7 @@ class TaxiOrder extends Order {
   String? rideStartTime;
   TaxiOrdersStatus status;
   double distanceToClient = 0;
-  UserInfo? get driver => this.serviceProvider;
+  TaxiUserInfo? get driver => this.serviceProvider as TaxiUserInfo;
   TaxiOrder(
       {required String orderId,
       required this.cost,
@@ -51,7 +51,7 @@ class TaxiOrder extends Order {
       required DateTime orderTime,
       required PaymentType paymentType,
       required this.routeInformation,
-      UserInfo? driver,
+      TaxiUserInfo? driver,
       required this.acceptRideTime,
       required this.rideFinishTime,
       required this.rideStartTime,

@@ -18,9 +18,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 
-abstract class MGoogleMapController {
+class MGoogleMapController {
+  RxSet<Polyline> polylines = <Polyline>{}.obs;
+  RxList<Marker> markers = <Marker>[].obs;
+  Location? location;
+  RxBool _animateMarkersPolyLinesBounds = false.obs;
+  GoogleMapController? controller;
+
   Future<void> addCircleMarker(String markerId, LatLng latLng) async {
-    this.addOrUpdateMarker(Marker(
+    markers.removeWhere((element) => element.markerId.value == markerId);
+    markers.add(Marker(
         markerId: MarkerId(markerId),
         icon: await BitmapDescriptor.fromAssetImage(
             ImageConfiguration(), aPurpleLocationCircle),
@@ -38,13 +45,13 @@ abstract class MGoogleMapController {
         isBytes: true);
     markerId = markerId;
 
-    this.addOrUpdateMarker(
+    this._addOrUpdateMarker(
         Marker(markerId: MarkerId(markerId), icon: icon, position: latLng));
   }
 
   Future<void> addOrUpdateTaxiDriverMarker(
       String markerId, LatLng latLng) async {
-    this.addOrUpdateMarker(Marker(
+    this._addOrUpdateMarker(Marker(
         markerId: MarkerId(markerId),
         icon: await BitmapDescriptor.fromAssetImage(
             ImageConfiguration(), taxi_driver_marker_asset),
@@ -64,7 +71,7 @@ abstract class MGoogleMapController {
         isBytes: true);
     markerId = markerId;
 
-    this.addOrUpdateMarker(
+    this._addOrUpdateMarker(
         Marker(markerId: MarkerId(markerId), icon: icon, position: latLng));
   }
 
@@ -78,13 +85,61 @@ abstract class MGoogleMapController {
         .toList());
   }
 
-  late void Function(Marker) addOrUpdateMarker;
-  late void Function(String) removeMarker;
-  late void Function(List<PointLatLng>) addPolyline;
-  late void Function() clearPolyline;
-  void Function(bool)? setAnimateMarkersPolyLinesBounds;
-  late void Function(double lat, double lng) moveToNewLatLng;
-  late Future<LatLng> Function() getMapCenter;
+  // base internal functions
+  void _addOrUpdateMarker(Marker marker) {
+    markers.removeWhere(
+        (element) => element.markerId.value == marker.markerId.value);
+    markers.add(marker);
+  }
+
+  void removeMarker(String markerId) {
+    markers.removeWhere((element) => element.markerId.value == markerId);
+  }
+
+  void addPolyline(List<PointLatLng> latLngPoints) {
+    polylines.add(Polyline(
+        color: Color.fromARGB(255, 172, 89, 252),
+        jointType: JointType.round,
+        width: 2,
+        startCap: Cap.buttCap,
+        endCap: Cap.roundCap,
+        polylineId: PolylineId('_poly_'),
+        visible: true,
+        points: latLngPoints
+            .map<LatLng>((e) => LatLng(e.latitude, e.longitude))
+            .toList()));
+
+    this._animateMarkersPolyLinesBounds.value = true;
+  }
+
+  void clearPolyline() {
+    polylines.clear();
+  }
+
+  void setAnimateMarkersPolyLinesBounds(bool value) {
+    this._animateMarkersPolyLinesBounds.value = value;
+  }
+
+  void moveToNewLatLng(double lat, double lng) async {
+    await controller?.animateCamera(CameraUpdate.newLatLng(LatLng(lat, lng)));
+  }
+
+  Future<LatLng> getMapCenter() async {
+    LatLngBounds? visibleRegion = await controller?.getVisibleRegion();
+
+    LatLng centerLatLng = visibleRegion == null
+        ? LatLng(0, 0)
+        : LatLng(
+            (visibleRegion.northeast.latitude +
+                    visibleRegion.southwest.latitude) /
+                2,
+            (visibleRegion.northeast.longitude +
+                    visibleRegion.southwest.longitude) /
+                2,
+          );
+
+    return centerLatLng;
+  }
 }
 
 class MGoogleMap extends StatefulWidget with MezDisposable {
@@ -110,12 +165,11 @@ class MGoogleMap extends StatefulWidget with MezDisposable {
       : super(key: key);
 
   @override
-  State<MGoogleMap> createState() => MGoogleMapState(mGoogleMapController);
+  State<MGoogleMap> createState() => MGoogleMapState();
 }
 
 class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
   Timer? _reRendringTimer;
-  GoogleMapController? _controller;
   Completer<GoogleMapController> _completer = Completer();
   List<LatLng> _polylinesLatLngBounds = [];
   // to make sure each marker gets fully handled when the new data comes on it's corresponding stream!
@@ -123,95 +177,27 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
   Set<Polyline> polylines = <Polyline>{};
   List<Marker> markers = <Marker>[];
   bool animateMarkersPolyLinesBounds = false;
-  MGoogleMapState(MGoogleMapController mGoogleMapController) {
-    mGoogleMapController.addOrUpdateMarker = addOrUpdateMarker;
-    mGoogleMapController.setAnimateMarkersPolyLinesBounds =
-        setAnimateMarkersPolyLinesBounds;
-    mGoogleMapController.removeMarker = removeMarker;
-    mGoogleMapController.moveToNewLatLng = moveToNewLatLng;
-    mGoogleMapController.addPolyline = addPolyline;
-    mGoogleMapController.clearPolyline = clearPolyline;
-    mGoogleMapController.getMapCenter = getMapCenter;
-  }
-
-  void setAnimateMarkersPolyLinesBounds(bool setter) {
-    setState(() {
-      animateMarkersPolyLinesBounds = setter;
-    });
-  }
-
-  void addOrUpdateMarker(Marker marker) {
-    setState(() {
-      markers
-          .removeWhere((element) => element.markerId.value == marker.markerId);
-      markers.add(marker);
-    });
-  }
-
-  void removeMarker(String markerId) {
-    setState(() {
-      markers.removeWhere((element) => element.markerId.value == markerId);
-    });
-  }
-
-  void addPolyline(List<PointLatLng> polylineList) {
-    setState(() {
-      polylines.add(Polyline(
-          color: Color.fromARGB(255, 172, 89, 252),
-          jointType: JointType.round,
-          width: 2,
-          startCap: Cap.buttCap,
-          endCap: Cap.roundCap,
-          polylineId: PolylineId('_poly_'),
-          visible: true,
-          points: polylineList
-              .map<LatLng>((e) => LatLng(e.latitude, e.longitude))
-              .toList()));
-      animateMarkersPolyLinesBounds = true;
-    });
-  }
-
-  void clearPolyline() {
-    setState(() {
-      polylines.clear();
-      animateMarkersPolyLinesBounds = false;
-    });
-  }
+  MGoogleMapState();
 
 // Cheker -> Animate first and Double check if the bounds fit well the MapScreen
   Future<void> _boundsReChecker(CameraUpdate u) async {
-    _controller?.animateCamera(u);
-    _controller?.animateCamera(u);
-    LatLngBounds? l1 = await _controller?.getVisibleRegion();
-    LatLngBounds? l2 = await _controller?.getVisibleRegion();
+    widget.mGoogleMapController.controller?.animateCamera(u);
+    widget.mGoogleMapController.controller?.animateCamera(u);
+    LatLngBounds? l1 =
+        await widget.mGoogleMapController.controller?.getVisibleRegion();
+    LatLngBounds? l2 =
+        await widget.mGoogleMapController.controller?.getVisibleRegion();
     if (l1 != null && l2 != null) {
       if (l1.southwest.latitude == -90 || l2.southwest.latitude == -90)
         await _boundsReChecker(u);
     }
   }
 
-  Future<LatLng> getMapCenter() async {
-    LatLngBounds? visibleRegion = await _controller?.getVisibleRegion();
-
-    LatLng centerLatLng = visibleRegion == null
-        ? LatLng(0, 0)
-        : LatLng(
-            (visibleRegion.northeast.latitude +
-                    visibleRegion.southwest.latitude) /
-                2,
-            (visibleRegion.northeast.longitude +
-                    visibleRegion.southwest.longitude) /
-                2,
-          );
-
-    return centerLatLng;
-  }
-
   // Animate the camera using widget.bounds
   Future<void> _animateCameraWithNewBounds(LatLngBounds? _bounds) async {
-    if (_controller != null && _bounds != null) {
+    if (widget.mGoogleMapController.controller != null && _bounds != null) {
       CameraUpdate _camUpdate = CameraUpdate.newLatLngBounds(_bounds, 100.sp);
-      await _controller!.animateCamera(_camUpdate);
+      await widget.mGoogleMapController.controller!.animateCamera(_camUpdate);
       await _boundsReChecker(_camUpdate);
     }
   }
@@ -258,7 +244,8 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
   }
 
   Future<void> moveToNewLatLng(double lat, double lng) async {
-    await _controller?.animateCamera(CameraUpdate.newLatLng(LatLng(lat, lng)));
+    await widget.mGoogleMapController.controller
+        ?.animateCamera(CameraUpdate.newLatLng(LatLng(lat, lng)));
   }
 
   @override
@@ -279,7 +266,7 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
     // attach Callback onResume to avoid Map going black in some devices after going back from background to foreGround.
     Get.find<AppLifeCycleController>().attachCallback(AppLifecycleState.resumed,
         () {
-      _controller?.setMapStyle(mezMapStyle);
+      widget.mGoogleMapController.controller?.setMapStyle(mezMapStyle);
     });
     // control our re-rendring Separately;
     _reRendringTimer = widget.periodicRedrendring
@@ -320,8 +307,8 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
     // favoid keeping listeners in memory.
     cancelSubscriptions();
     // gmapControlelr disposing.
-    _controller?.dispose();
-    _controller = null;
+    widget.mGoogleMapController.controller?.dispose();
+    widget.mGoogleMapController.controller = null;
     super.dispose();
   }
 
@@ -371,7 +358,7 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
               zoom: 5.151926040649414),
           onMapCreated: (GoogleMapController _gController) async {
             mezDbgPrint("\n\n\n\n\n o n   m a p   c r e a t e d !\n\n\n\n\n\n");
-            _controller = _gController;
+            widget.mGoogleMapController.controller = _gController;
             await _gController.setMapStyle(mezMapStyle);
             await animateAndUpdateBounds();
             _completer.complete(_gController);
@@ -386,7 +373,8 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
                   onTap: () async {
                     LocationData? _tmpCurrentLoc = await _currentLocation();
                     if (_tmpCurrentLoc != null) {
-                      _controller?.animateCamera(CameraUpdate.newCameraPosition(
+                      widget.mGoogleMapController.controller
+                          ?.animateCamera(CameraUpdate.newCameraPosition(
                         CameraPosition(
                           target: LatLng(_tmpCurrentLoc.latitude!,
                               _tmpCurrentLoc.longitude!),

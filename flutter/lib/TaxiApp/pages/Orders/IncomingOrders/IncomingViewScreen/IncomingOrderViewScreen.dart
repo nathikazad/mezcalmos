@@ -30,12 +30,12 @@ class IncomingOrderViewScreen extends StatefulWidget {
       _IncomingOrderViewScreenState();
 }
 
-class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen>
-    with MGoogleMapController {
+class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
   LanguageController lang = Get.find<LanguageController>();
   TaxiOrder? order;
   IncomingOrdersController controller = Get.find<IncomingOrdersController>();
   StreamSubscription? _orderListener;
+  MGoogleMapController mGoogleMapController = MGoogleMapController();
 
   bool _clickedButton = false;
   TaxiAuthController taxiAuthController = Get.find<TaxiAuthController>();
@@ -50,11 +50,13 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen>
     } else {
       if (order!.inProcess()) {
         // populate the LatLngPoints from the encoded PolyLine String + SetState!
-        decodeAndAddPolyline(
+        mGoogleMapController.decodeAndAddPolyline(
             encodedPolylineString: order!.routeInformation.polyline);
         // add the corresponding markers
-        addOrUpdateUserMarker(order!.customer.id, order!.from.toLatLng());
-        addOrUpdatePurpleDestinationMarker(latLng: order!.from.toLatLng());
+        mGoogleMapController.addOrUpdateUserMarker(
+            order!.customer.id, order!.from.toLatLng());
+        mGoogleMapController.addOrUpdatePurpleDestinationMarker(
+            latLng: order!.from.toLatLng());
         // start Listening for the vailability of the order
         _orderListener =
             controller.getIncomingOrderStream(orderId).listen((order) {
@@ -93,13 +95,15 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen>
             ? Stack(
                 alignment: Alignment.topCenter,
                 children: [
-                  MGoogleMap(
-                    mGoogleMapController: this,
-                    // markers: customMarkers,
-                    initialLocation: order!.from.toLatLng(),
-                    // polylines: polylines,
-                    debugString: "IncomingViewScreen",
-                    myLocationButtonEnabled: false,
+                  Obx(
+                    () => MGoogleMap(
+                      mGoogleMapController: mGoogleMapController,
+                      // markers: customMarkers,
+                      initialLocation: order!.from.toLatLng(),
+                      // polylines: polylines,
+                      debugString: "IncomingViewScreen",
+                      myLocationButtonEnabled: false,
+                    ),
                   ),
                   IncommingPositionedBottomBar(
                     order: this.order!,

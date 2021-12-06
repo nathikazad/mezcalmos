@@ -61,8 +61,36 @@ class UserInfo {
   String id;
   String name;
   String image;
-  UserInfo(this.id, this.name, this.image);
+  Location? location;
+
+  UserInfo(this.id, this.name, this.image, {this.location});
+
   factory UserInfo.fromData(dynamic data) {
     return UserInfo(data["id"], data["name"], data["image"]);
+  }
+}
+
+class TaxiUserInfo extends UserInfo {
+  String taxiNumber;
+  String sitio;
+  Location? location;
+
+  TaxiUserInfo(
+      {required String id,
+      required String name,
+      required String image,
+      required this.taxiNumber,
+      required this.sitio,
+      required this.location})
+      : super(id, name, image);
+
+  factory TaxiUserInfo.fromData(dynamic data) {
+    return TaxiUserInfo(
+        id: data["id"],
+        name: data["name"],
+        image: data["image"],
+        taxiNumber: data["taxiNumber"],
+        sitio: data["sitio"],
+        location: Location.fromFirebaseData(data["location"]));
   }
 }
