@@ -12,7 +12,7 @@ import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
 
 class ListRestaurantsScreen extends StatefulWidget {
   @override
-  _ListRestaurantsScreenState createState() => _ListRestaurantsScreenState();
+  _ListRestaurantsScreenState createState() => _ListRestaurantsScreenState();       
 }
 
 class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
