@@ -24,7 +24,7 @@
           ]
         },
         "info": {
-          "id":"6Hr3Hc2hkkZa7LX7slnFo3zOTdxx",
+          "id": "6Hr3Hc2hkkZa7LX7slnFo3zOTdxx",
           "name": "Basic Fodd",
           "image": "https://food.fnr.sndimg.com/content/dam/images/food/fullset/2018/10/4/1/FN_chain-restaurant-entrees_Applebees_Bourbon-Street-Chicken-Shrimp_s6x4.jpg.rend.hgtvcom.441.294.suffix/1538685780055.jpeg",
           "language": "es"
@@ -307,11 +307,30 @@
   },
   "taxis": {
     "info": {
-      "T8AByBxlwcS321zFp8um19fzPwns" : {
-        "details":{"taxiNumber":"1234"},"location":{"lastUpdateTime":"2021-11-25 07:28:01.393887Z","position":{"lat":37.33233141,"lng":-122.0312186}},"notificationInfo":{"deviceNotificationToken":"dlybbT8G40gWiiqy9EVOtJ:APA91bFdk0hg-QY_oOaSLSfePbCj_rOUrNcLhKGCE2hwjjSaaOPVDpsI8be2YYDFLc3nnMueMP5xmynJKziXSBvxP1JIUq8SOkYquGr1j8WZwXOHy_hVXGfDBAsUI1U-1QeSiRvFV9uw"},"state":{"authorizationStatus":"authorized","isLooking":true},"versionNumber":"1.0.0"
+      "T8AByBxlwcS321zFp8um19fzPwns": {
+        "details": {
+          "taxiNumber": "1234"
+        },
+        "location": {
+          "lastUpdateTime": "2021-11-25 07:28:01.393887Z",
+          "position": {
+            "lat": 37.33233141,
+            "lng": -122.0312186
+          }
+        },
+        "notificationInfo": {
+          "deviceNotificationToken": "dlybbT8G40gWiiqy9EVOtJ:APA91bFdk0hg-QY_oOaSLSfePbCj_rOUrNcLhKGCE2hwjjSaaOPVDpsI8be2YYDFLc3nnMueMP5xmynJKziXSBvxP1JIUq8SOkYquGr1j8WZwXOHy_hVXGfDBAsUI1U-1QeSiRvFV9uw"
+        },
+        "state": {
+          "authorizationStatus": "authorized",
+          "isLooking": true
+        },
+        "versionNumber": "1.0.0"
       },
       "CMuzfW4Jp1vpzUEYvz8al0mT0KbG": {
-        "details":{"taxiNumber":"5678"},
+        "details": {
+          "taxiNumber": "5678"
+        },
         "location": {
           "lastUpdateTime": "Tue, 06 Jul 2021 20:33:40 GMT",
           "position": {
@@ -319,10 +338,15 @@
             "lng": -97.04627909999999
           }
         },
-        "state":{"authorizationStatus":"authorized","isLooking":true}
+        "state": {
+          "authorizationStatus": "authorized",
+          "isLooking": true
+        }
       },
       "PBcTv6zSy1FUT7C3EOaFj1Rw8dct": {
-        "details":{"taxiNumber":"8888"},
+        "details": {
+          "taxiNumber": "8888"
+        },
         "location": {
           "lastUpdateTime": "2021-10-26 22:15:17.578554Z",
           "position": {
@@ -333,7 +357,10 @@
         "notificationInfo": {
           "deviceNotificationToken": "cGgugGITjk3FkrWMT-HzVH:APA91bFBmHXuodBMGJsyaQ_WmOTVvS86PIp86k9pxb9PcCx5rfo3MtVN8a9Xivwz75poHKDZJR5WkYIBl4SOhGDA0ymnx5QQF6Fs-ZP471zRRYCgCSWnSwaFryWokw877BL7H5Kj8npg"
         },
-        "state":{"authorizationStatus":"authorized","isLooking":true}
+        "state": {
+          "authorizationStatus": "authorized",
+          "isLooking": true
+        }
       }
     }
   },

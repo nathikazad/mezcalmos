@@ -20,6 +20,10 @@ export function currentOrderIdNode(taxiId: string) {
   return firebase.database().ref(`/taxis/info/${taxiId}/state/currentOrderId`)
 }
 
-export function info(taxiId: string) {
-  return firebase.database().ref(`/taxis/info/${taxiId}`)
+export function info(taxiId?: string) {
+  let dbNode: string = `/taxis/info/${taxiId}`
+  if (taxiId != undefined) {
+    dbNode += `/${taxiId}`
+  }
+  return firebase.database().ref(dbNode);
 }

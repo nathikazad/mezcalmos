@@ -1,14 +1,15 @@
-import { info } from "../../shared/databaseNodes/taxi";
-import { AuthorizationStatus } from "../../shared/models/Generic";
+import { info } from "../../databaseNodes/taxi"
+import { AuthorizationStatus, NotificationInfo } from "../Generic";
 
 export interface State {
   authorizationStatus: AuthorizationStatus;
-  open: boolean;
+  isLooking: boolean;
   currentOrderId?: string;
 }
 
 export interface Taxi {
   state: State;
+  notificationInfo: NotificationInfo;
   details: TaxiDetails
 }
 
