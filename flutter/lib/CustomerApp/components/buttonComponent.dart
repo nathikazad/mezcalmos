@@ -15,14 +15,13 @@ class ButtonComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
       child: InkWell(
         child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             width: Get.width,
-            height: 48,
+            height: 60,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(4)),
+              // borderRadius: BorderRadius.all(Radius.circular(4)),
               boxShadow: [
                 BoxShadow(
                     color: const Color(0x332362f1),

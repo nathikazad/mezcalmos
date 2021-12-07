@@ -38,7 +38,7 @@ class _IncrementalComponentState extends State<IncrementalComponent> {
 
     void _decrement() {
       print("the max value is ${widget.minVal}");
-      if (widget.value != 1) {
+      if (widget.value != widget.minVal) {
         mezDbgPrint("the component value ${widget.value}");
         setState(() {
           widget.value--;
@@ -55,17 +55,7 @@ class _IncrementalComponentState extends State<IncrementalComponent> {
 
     return Container(
       child: Container(
-        //padding: const EdgeInsets.all(5),
-        decoration: BoxDecoration(
-            // borderRadius: BorderRadius.all(Radius.circular(4)),
-            // border: Border.all(
-            //     color: const Color(0x4d5c7fff), width: 0.20000000298023224),
-            // color: Color.fromRGBO(239, 238, 253, 1)
-            // gradient: LinearGradient(
-            //     begin: Alignment(0.1689453125, 0),
-            //     end: Alignment(1, 1),
-            //     colors: [const Color(0x1a5582ff), const Color(0x1ac54efc)]),
-            ),
+        decoration: BoxDecoration(),
         child: Row(
           children: [
             InkWell(

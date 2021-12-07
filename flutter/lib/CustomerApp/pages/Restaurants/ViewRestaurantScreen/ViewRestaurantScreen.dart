@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
-import '../../../router.dart';
 import 'components/buildRestaurantsItems.dart';
 
 class ViewRestaurantScreen extends StatefulWidget {
@@ -81,21 +78,6 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
                             fontWeight: FontWeight.w600,
                           )),
                     ),
-
-                    // SizedBox(
-                    //   height: 18,
-                    // ),
-                    // Container(
-                    //   padding: const EdgeInsets.symmetric(horizontal: 15),
-                    //   child: Text(
-                    //     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet in vitae, suscipit tellus. Ut fringilla turpis neque mattis eu eu enim pellentesque. Lobortis diam mi risus at maecenas. Malesuada nibh et quis morbi varius. Sit ante enim tempor lacinia donec vulputate.",
-                    //     style: GoogleFonts.nunito(
-                    //         textStyle: TextStyle(
-                    //             fontStyle: FontStyle.normal,
-                    //             fontWeight: FontWeight.w600,
-                    //             fontSize: 14)),
-                    //   ),
-                    // ),
                     SizedBox(
                       height: 20,
                     ),

@@ -45,6 +45,7 @@ class _MyExpensionPanelComponentState extends State<MyExpensionPanelComponent>
     _iconTurns = _controller.drive(_halfTween.chain(_easeInTween));
     _isExpanded = PageStorage.of(context)?.readState(context) as bool? ??
         widget.initiallyExpanded;
+
     if (_isExpanded) _controller.value = 1.0;
     super.initState();
   }
@@ -82,7 +83,11 @@ class _MyExpensionPanelComponentState extends State<MyExpensionPanelComponent>
         children: [
           Container(
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: !_isExpanded
+                    ? BorderRadius.circular(8)
+                    : BorderRadius.only(
+                        topLeft: Radius.circular(8),
+                        topRight: Radius.circular(8)),
                 color: const Color(0xffffffff)),
             child: Column(
               children: [
@@ -95,23 +100,19 @@ class _MyExpensionPanelComponentState extends State<MyExpensionPanelComponent>
                         width: 28,
                         height: 28,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(64)),
-                          boxShadow: [
-                            BoxShadow(
-                                color: const Color(0x33c5c5c5),
-                                offset: Offset(0, 5),
-                                blurRadius: 10,
-                                spreadRadius: 0)
-                          ],
-                          color: const Color(0xffffffff),
+                          borderRadius: BorderRadius.all(Radius.circular(3)),
+                          color: const Color.fromRGBO(237, 237, 237, 1),
                         ),
                         child: const Icon(
                           Icons.edit_outlined,
                           size: 14,
-                          color: Color(0xff5c7fff),
+                          color: Color.fromRGBO(38, 50, 56, 1),
                         ),
                       ),
                       onTap: widget.onEdit,
+                    ),
+                    SizedBox(
+                      width: 3,
                     ),
                     InkWell(
                       child: Container(
@@ -119,20 +120,13 @@ class _MyExpensionPanelComponentState extends State<MyExpensionPanelComponent>
                         height: 28,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(64)),
-                          boxShadow: [
-                            BoxShadow(
-                                color: const Color(0x33c5c5c5),
-                                offset: Offset(0, 5),
-                                blurRadius: 10,
-                                spreadRadius: 0)
-                          ],
-                          color: const Color(0xffffffff),
+                          color: const Color.fromRGBO(172, 89, 252, 0.8),
                         ),
                         child: RotationTransition(
                           turns: _iconTurns,
                           child: const Icon(
                             Icons.expand_more,
-                            color: Color(0xff5c7fff),
+                            color: Color(0xffffffff),
                           ),
                         ),
                       ),
@@ -143,33 +137,13 @@ class _MyExpensionPanelComponentState extends State<MyExpensionPanelComponent>
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  width: Get.width,
-                  height: 0.5,
-                  decoration: BoxDecoration(
-                    color: const Color(0xffececec),
-                  ),
-                ),
               ],
             ),
           ),
-          // ListTileTheme.merge(
-          //   child: ListTile(
-          //     onTap: _handleTap,
-          //     contentPadding: const EdgeInsets.symmetric(horizontal: 15),
-          //     title: Text("hey"),
-          //     subtitle: Text("hey"),
-          // trailing: RotationTransition(
-          //   turns: _iconTurns,
-          //   child: const Icon(Icons.expand_more),
-          // ),
-          // ),
-          // ),
-
-          ClipRect(
+          ClipRRect(
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(8),
+                bottomRight: Radius.circular(8)),
             child: Align(
               alignment: Alignment.center,
               heightFactor: _heightFactor.value,

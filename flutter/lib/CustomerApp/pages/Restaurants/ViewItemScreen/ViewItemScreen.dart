@@ -10,7 +10,6 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:intl/intl.dart';
 
-import '../../../router.dart';
 import 'components/BottomBarItemViewScreen.dart';
 import 'components/NoteComponet.dart';
 import 'components/chooseOneCheckBox.dart';
@@ -137,7 +136,13 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                             chooseManyCheckBoxes(
                                 cartItem.value!.item.chooseManyOptions,
                                 cartItem),
-                            NoteComponent(),
+                            NoteComponent(
+                              onChangeCallback: (String value) {
+                                cartItem.value?.notes = value;
+                              },
+                              textController: TextEditingController(
+                                  text: cartItem.value?.notes),
+                            ),
                             SizedBox(
                               height: 15,
                             )

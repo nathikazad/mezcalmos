@@ -3,7 +3,11 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
 class NoteComponent extends StatefulWidget {
-  NoteComponent({Key? key}) : super(key: key);
+  final TextEditingController textController;
+  final Function? onChangeCallback;
+  NoteComponent(
+      {Key? key, required this.onChangeCallback, required this.textController})
+      : super(key: key);
 
   @override
   _NoteComponentState createState() => _NoteComponentState();
@@ -51,6 +55,10 @@ class _NoteComponentState extends State<NoteComponent> {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             height: 99,
             child: TextField(
+              onChanged: (val) {
+                if (widget.onChangeCallback != null)
+                  widget.onChangeCallback!(val);
+              },
               decoration: InputDecoration(
                 hintText: lang.strings['customer']['restaurant']['menu']
                     ['notes'],

@@ -48,15 +48,9 @@ class _DropDownListCartViewState extends State<DropDownListCartView> {
 
   @override
   Widget build(BuildContext context) {
+    final txt = Theme.of(context).textTheme;
     return Container(
-      margin: const EdgeInsets.symmetric(
-        horizontal: 15,
-      ),
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(4)),
-          border: Border.all(color: const Color(0xffececec), width: 0.5),
-          color: const Color(0x80ffffff)),
       child: DropdownButtonHideUnderline(
         child: Obx(() {
           return DropdownButton<SavedLocation>(
@@ -66,11 +60,15 @@ class _DropDownListCartViewState extends State<DropDownListCartView> {
                         alignment: Alignment.center,
                         child: Container(
                           alignment: Alignment.centerLeft,
-                          child: Text(item.name),
+                          child: Text(item.name,
+                              style: txt.headline2!.copyWith(
+                                  fontWeight: FontWeight.w400, fontSize: 12)),
                         ),
                       ))
                   .toList();
             },
+            iconDisabledColor: Color.fromRGBO(172, 89, 252, 1),
+            iconEnabledColor: Color.fromRGBO(172, 89, 252, 1),
             value: dropDownListValue,
             isDense: false,
             isExpanded: true,
@@ -92,14 +90,18 @@ class _DropDownListCartViewState extends State<DropDownListCartView> {
                               child: Row(
                             children: [
                               Icon(
-                                Icons.search,
+                                Icons.location_on_outlined,
                                 size: 18,
-                                color: Color(0xff2362f1),
+                                color: Color.fromRGBO(172, 89, 252, 1),
                               ),
                               SizedBox(
                                 width: 15,
                               ),
-                              Text(e.name),
+                              Text(
+                                e.name,
+                                style: txt.headline2!.copyWith(
+                                    fontWeight: FontWeight.w400, fontSize: 12),
+                              ),
                             ],
                           )),
                         ))

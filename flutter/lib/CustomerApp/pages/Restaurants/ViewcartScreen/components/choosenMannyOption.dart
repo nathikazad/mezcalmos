@@ -3,15 +3,20 @@ import 'package:mezcalmos/CustomerApp/components/titlesComponent.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:get/get.dart';
 
-List<Widget> choosenMannyOption(Map<dynamic, dynamic> data) {
+List<Widget> choosenMannyOption(
+    Map<dynamic, dynamic> data, BuildContext context) {
   LanguageController lang = Get.find<LanguageController>();
+  final txt = Theme.of(context).textTheme;
 
   List<Widget> myWidgets = [
     SizedBox(
       height: 5,
     ),
     MenuTitles(
-        title: lang.strings["customer"]["restaurant"]["cart"]["options"]),
+      title: lang.strings["customer"]["restaurant"]["cart"]["options"],
+      textTheme: txt.subtitle1!
+          .copyWith(fontSize: 13, color: Color.fromRGBO(33, 33, 33, 0.8)),
+    ),
   ];
 
   data.forEach((key, value) {
