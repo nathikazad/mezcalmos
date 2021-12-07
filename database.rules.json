@@ -50,7 +50,7 @@
       "inProcessOrders": {
         "$uid": {
           ".read": "$uid === auth.uid",
-          "$orderid": {
+          "$orderId": {
             "driver": {
               "location": {
                 ".write": "root.child('customers/inProcessOrders/' + $uid + '/' + $orderId + '/driver/id').val() === auth.uid"
@@ -110,7 +110,7 @@
       },
       "past": {},
       "open" : {
-        ".read": "only for drivers true",
+        ".read": "true",
         "taxi": {
           "$orderId": {
             "estimatedPrice": {
