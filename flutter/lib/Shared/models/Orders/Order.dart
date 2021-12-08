@@ -1,4 +1,5 @@
 import 'package:mezcalmos/Shared/models/Location.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 abstract class Order {
   String orderId;
@@ -85,12 +86,14 @@ class TaxiUserInfo extends UserInfo {
       : super(id, name, image);
 
   factory TaxiUserInfo.fromData(dynamic data) {
+    mezDbgPrint(" TaxiUserInfo.fromData ====> $data");
+    // TODO : Make Sure this is the structure in the database (staging - prod).
     return TaxiUserInfo(
         id: data["id"],
         name: data["name"],
         image: data["image"],
         taxiNumber: data["taxiNumber"],
         sitio: data["sitio"],
-        location: Location.fromFirebaseData(data["location"]));
+        location: Location.fromFirebaseData(data["location"]['position']));
   }
 }

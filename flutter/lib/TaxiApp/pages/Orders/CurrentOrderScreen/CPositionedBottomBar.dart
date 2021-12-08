@@ -294,6 +294,8 @@ class CurrentPositionedBottomBar extends StatelessWidget {
 
   Future<void> clickButton() async {
     if (order.status == TaxiOrdersStatus.InTransit) {
+      mezDbgPrint("CurrentPositionedBottomBar InTransit!");
+
       if ((MapHelper.calculateDistance(
               taxiAuthController.currentLocation, order.to.position) >
           0.5)) {

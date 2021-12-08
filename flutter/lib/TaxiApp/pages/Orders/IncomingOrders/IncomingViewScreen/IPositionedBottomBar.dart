@@ -187,15 +187,13 @@ class IncommingPositionedBottomBar extends StatelessWidget with MezDisposable {
                     maxLines: 1,
                   ),
                 ),
-                Obx(
-                  () => Text(
-                    "${order.distanceToClient.toStringAsFixed(1)} km ${lang.strings['taxi']['incoming']["far"]}",
-                    overflow: TextOverflow.ellipsis,
-                    softWrap: false,
-                    maxLines: 1,
-                    style: TextStyle(
-                        fontSize: 14.sp, fontFamily: 'psr', color: Colors.grey),
-                  ),
+                Text(
+                  "${order.distanceToClient.toStringAsFixed(1)} km ${lang.strings['taxi']['incoming']["far"]}",
+                  overflow: TextOverflow.ellipsis,
+                  softWrap: false,
+                  maxLines: 1,
+                  style: TextStyle(
+                      fontSize: 14.sp, fontFamily: 'psr', color: Colors.grey),
                 ),
               ]),
         )

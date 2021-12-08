@@ -52,18 +52,16 @@ class IncomingPositionedFromToTopBar extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                             )),
-                        Obx(
-                          () => GestureDetector(
-                            onTap: () => mezcalmosSnackBar(
-                                lang.strings['shared']['inputLocation']["from"],
-                                order.from.address),
-                            child: Text(
-                              order.from.address,
-                              style: TextStyle(fontSize: 15, fontFamily: 'psr'),
-                              maxLines: 1,
-                              softWrap: false,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                        GestureDetector(
+                          onTap: () => mezcalmosSnackBar(
+                              lang.strings['shared']['inputLocation']["from"],
+                              order.from.address),
+                          child: Text(
+                            order.from.address,
+                            style: TextStyle(fontSize: 15, fontFamily: 'psr'),
+                            maxLines: 1,
+                            softWrap: false,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ]),
@@ -129,18 +127,16 @@ class IncomingPositionedFromToTopBar extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Obx(
-                        () => GestureDetector(
-                          onTap: () => mezcalmosSnackBar(
-                              lang.strings['shared']['inputLocation']["to"],
-                              order.to.address),
-                          child: Text(
-                            order.to.address,
-                            style: TextStyle(fontSize: 16, fontFamily: 'psr'),
-                            maxLines: 1,
-                            softWrap: false,
-                            overflow: TextOverflow.ellipsis,
-                          ),
+                      GestureDetector(
+                        onTap: () => mezcalmosSnackBar(
+                            lang.strings['shared']['inputLocation']["to"],
+                            order.to.address),
+                        child: Text(
+                          order.to.address,
+                          style: TextStyle(fontSize: 16, fontFamily: 'psr'),
+                          maxLines: 1,
+                          softWrap: false,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ],

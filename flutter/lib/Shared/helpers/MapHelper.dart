@@ -28,7 +28,7 @@ class RideDistance {
     };
   }
 
-  RideDistance.fromJson(Map<String, dynamic> data)
+  RideDistance.fromJson(dynamic data)
       : this.distanceStringInKm = data['text'],
         this.distanceInMeters = data['value'];
 }
@@ -43,7 +43,7 @@ class RideDuration {
     };
   }
 
-  RideDuration.fromJson(Map<String, dynamic> data)
+  RideDuration.fromJson(dynamic data)
       : this.daysHoursString = data['text'],
         this.seconds = data['value'];
 }

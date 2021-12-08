@@ -24,12 +24,20 @@ class IncomingOrdersScreen extends StatefulWidget {
 }
 
 class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
-  IncomingOrdersController controller = Get.find<IncomingOrdersController>();
+  IncomingOrdersController controller =
+      Get.put<IncomingOrdersController>(IncomingOrdersController());
   LanguageController lang = Get.find<LanguageController>();
   TaxiAuthController _taxiAuthController = Get.find<TaxiAuthController>();
 
   @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    responsiveSize(context);
     return WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(

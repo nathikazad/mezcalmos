@@ -197,7 +197,7 @@ Widget mainApp(AppType appType, List<GetPage<dynamic>> routes) {
           visualDensity: VisualDensity.adaptivePlatformDensity),
       color: Colors.white,
       enableLog: true,
-      // logWriterCallback: ,
+      logWriterCallback: (String _, {bool? isError}) => mezDbgPrint(_),
       getPages: routes,
       initialRoute: kWrapperRoute);
 }

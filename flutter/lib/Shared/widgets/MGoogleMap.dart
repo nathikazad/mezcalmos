@@ -53,8 +53,13 @@ class MGoogleMapController {
       String markerId, LatLng latLng) async {
     this._addOrUpdateMarker(Marker(
         markerId: MarkerId(markerId),
-        icon: await BitmapDescriptor.fromAssetImage(
-            ImageConfiguration(), taxi_driver_marker_asset),
+        icon: await BitmapDescriptorLoader(
+            (await cropRonded((await rootBundle.load(taxi_driver_marker_asset))
+                .buffer
+                .asUint8List())),
+            60,
+            60,
+            isBytes: true),
         flat: true,
         position: latLng));
   }
@@ -174,9 +179,9 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
   List<LatLng> _polylinesLatLngBounds = [];
   // to make sure each marker gets fully handled when the new data comes on it's corresponding stream!
   List<String> _markersCurrentlyBeingUpdated = <String>[];
-  Set<Polyline> polylines = <Polyline>{};
-  List<Marker> markers = <Marker>[];
-  bool animateMarkersPolyLinesBounds = false;
+  // Set<Polyline> polylines = <Polyline>{};
+  // List<Marker> markers = <Marker>[];
+  // bool animateMarkersPolyLinesBounds = false;
   MGoogleMapState();
 
 // Cheker -> Animate first and Double check if the bounds fit well the MapScreen
@@ -228,7 +233,7 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
   // adds up the markers the new markers latLn ot polyline's and calculate out of them all the latLngbounds
   LatLngBounds? _getMarkersAndPolylinesBounds() {
     List<LatLng> _bnds = [..._polylinesLatLngBounds];
-    markers.forEach((cmarker) {
+    widget.mGoogleMapController.markers.forEach((cmarker) {
       _bnds.add(cmarker.position);
     });
     return _bnds.isEmpty ? null : MapHelper.createMapBounds(_bnds);
@@ -237,7 +242,9 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
   // main function for updating the bounds and start the animation
   Future<void> animateAndUpdateBounds() async {
     LatLngBounds? _polyMarkersBounds =
-        animateMarkersPolyLinesBounds ? _getMarkersAndPolylinesBounds() : null;
+        widget.mGoogleMapController._animateMarkersPolyLinesBounds.value
+            ? _getMarkersAndPolylinesBounds()
+            : null;
     if (_polyMarkersBounds != null) {
       await _animateCameraWithNewBounds(_polyMarkersBounds);
     }
@@ -261,7 +268,8 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
     super.initState();
     mezDbgPrint("MGoogleMap initstate ${this.hashCode} ${widget.debugString}");
     // one time polylines LatLng points extraction.
-    _polylinesLatLngBounds = _getLatLngBoundsFromPolyline(polylines);
+    _polylinesLatLngBounds =
+        _getLatLngBoundsFromPolyline(widget.mGoogleMapController.polylines);
     animateAndUpdateBounds();
     // attach Callback onResume to avoid Map going black in some devices after going back from background to foreGround.
     Get.find<AppLifeCycleController>().attachCallback(AppLifecycleState.resumed,
@@ -281,14 +289,14 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
         if (!_markersCurrentlyBeingUpdated.contains(markerId)) {
           mezDbgPrint("N E W    L O C A T I O N");
           _markersCurrentlyBeingUpdated.add(markerId);
-          int i = markers
+          int i = widget.mGoogleMapController.markers
               .indexWhere((element) => element.markerId.value == markerId);
           mezDbgPrint(
-              "Inside MgoogleMap::widget.idWithSubscription::listener :: marker id -> ${markers[i].markerId.value}");
+              "Inside MgoogleMap::widget.idWithSubscription::listener :: marker id -> ${widget.mGoogleMapController.markers[i].markerId.value}");
           this.setState(() {
-            markers[i] = Marker(
+            widget.mGoogleMapController.markers[i] = Marker(
                 markerId: MarkerId(markerId),
-                icon: markers[i].icon,
+                icon: widget.mGoogleMapController.markers[i].icon,
                 position: LatLng(newLoc.latitude!, newLoc.longitude!));
           });
           _markersCurrentlyBeingUpdated.remove(markerId);
@@ -338,31 +346,35 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
     responsiveSize(context);
     return Stack(
       children: [
-        GoogleMap(
-          padding: EdgeInsets.all(20),
-          mapToolbarEnabled: false,
-          minMaxZoomPreference: polylines.isNotEmpty
-              ? MinMaxZoomPreference.unbounded
-              : MinMaxZoomPreference(16, 17),
-          myLocationButtonEnabled: false,
-          buildingsEnabled: false,
-          markers: markers.toSet(),
-          polylines: polylines,
-          zoomControlsEnabled: false,
-          compassEnabled: false,
-          mapType: MapType.normal,
-          tiltGesturesEnabled: true,
-          initialCameraPosition: CameraPosition(
-              target: widget.initialLocation,
-              tilt: 9.440717697143555,
-              zoom: 5.151926040649414),
-          onMapCreated: (GoogleMapController _gController) async {
-            mezDbgPrint("\n\n\n\n\n o n   m a p   c r e a t e d !\n\n\n\n\n\n");
-            widget.mGoogleMapController.controller = _gController;
-            await _gController.setMapStyle(mezMapStyle);
-            await animateAndUpdateBounds();
-            _completer.complete(_gController);
-          },
+        Obx(
+          () => GoogleMap(
+            padding: EdgeInsets.all(20),
+            mapToolbarEnabled: false,
+            minMaxZoomPreference:
+                widget.mGoogleMapController.polylines.isNotEmpty
+                    ? MinMaxZoomPreference.unbounded
+                    : MinMaxZoomPreference(16, 17),
+            myLocationButtonEnabled: false,
+            buildingsEnabled: false,
+            markers: widget.mGoogleMapController.markers.toSet(),
+            polylines: widget.mGoogleMapController.polylines,
+            zoomControlsEnabled: false,
+            compassEnabled: false,
+            mapType: MapType.normal,
+            tiltGesturesEnabled: true,
+            initialCameraPosition: CameraPosition(
+                target: widget.initialLocation,
+                tilt: 9.440717697143555,
+                zoom: 5.151926040649414),
+            onMapCreated: (GoogleMapController _gController) async {
+              mezDbgPrint(
+                  "\n\n\n\n\n o n   m a p   c r e a t e d !\n\n\n\n\n\n");
+              widget.mGoogleMapController.controller = _gController;
+              await _gController.setMapStyle(mezMapStyle);
+              await animateAndUpdateBounds();
+              _completer.complete(_gController);
+            },
+          ),
         ),
         // ),
         widget.myLocationButtonEnabled

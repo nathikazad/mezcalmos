@@ -223,7 +223,7 @@ Future<YesNoDialogButton> yesNoDialog(
     leftButtonText: Get.find<LanguageController>().strings['shared']['popUps']
         ['no'],
   ))
-      .toYesNo(right: YesNoDialogButton.Yes, left: YesNoDialogButton.No);
+      .toYesNo(right: YesNoDialogButton.No, left: YesNoDialogButton.Yes);
 }
 
 // Future<bool> yesNoDefaultConfirmationDialog(String text) async {

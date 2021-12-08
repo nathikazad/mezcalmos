@@ -95,15 +95,13 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
             ? Stack(
                 alignment: Alignment.topCenter,
                 children: [
-                  Obx(
-                    () => MGoogleMap(
-                      mGoogleMapController: mGoogleMapController,
-                      // markers: customMarkers,
-                      initialLocation: order!.from.toLatLng(),
-                      // polylines: polylines,
-                      debugString: "IncomingViewScreen",
-                      myLocationButtonEnabled: false,
-                    ),
+                  MGoogleMap(
+                    mGoogleMapController: mGoogleMapController,
+                    // markers: customMarkers,
+                    initialLocation: order!.from.toLatLng(),
+                    // polylines: polylines,
+                    debugString: "IncomingViewScreen",
+                    myLocationButtonEnabled: false,
                   ),
                   IncommingPositionedBottomBar(
                     order: this.order!,

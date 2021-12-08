@@ -1,21 +1,17 @@
 import 'dart:async';
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
-import 'package:mezcalmos/TaxiApp/notificationHandler.dart';
 
 class OrderController extends GetxController {
-  TaxiAuthController _taxiAuthController = Get.find<TaxiAuthController>();
   DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
   AuthController _authController = Get.find<AuthController>();
   ForegroundNotificationsController _foregroundNotificationsController =
@@ -27,55 +23,68 @@ class OrderController extends GetxController {
   StreamSubscription? _pastOrdersListener;
 
   @override
-  OrderController() {
+  void onInit() {
     print("--------------------> RestaurantsOrderController Initialized !");
     _pastOrdersListener?.cancel();
     _pastOrdersListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(taxiPastOrdersNode(_authController.fireAuthUser!.uid))
         .onValue
-        .listen((event) async {
+        .listen((event) {
+      mezDbgPrint("[][][][][ got new past Order ]]");
       List<TaxiOrder> orders = [];
       if (event.snapshot.value != null) {
-        for (var orderId in event.snapshot.value.keys) {
+        event.snapshot.value.keys.forEach((orderId) {
+          // for (var orderId in event.snapshot.value.keys) {
           dynamic orderData = event.snapshot.value[orderId];
           orders.add(TaxiOrder.fromData(orderId, orderData));
-        }
+        });
       }
-      currentOrders.value = orders;
+      pastOrders.value = orders;
     });
 
+    mezDbgPrint(
+        "Starting listening on inProcess : ${taxiInProcessOrderNode(_authController.fireAuthUser!.uid)}");
     _currentOrdersListener?.cancel();
     _currentOrdersListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(taxiInProcessOrderNode(_authController.fireAuthUser!.uid))
         .onValue
-        .listen((event) async {
+        .listen((event) {
+      mezDbgPrint("[][][][][ got new inProcess Order ]]");
+
       List<TaxiOrder> orders = [];
       if (event.snapshot.value != null) {
         mezDbgPrint("orderController: new incoming order data");
-        for (var orderId in event.snapshot.value.keys) {
+        event.snapshot.value.keys.forEach((orderId) {
+          mezDbgPrint("Hndling Order : $orderId");
           dynamic orderData = event.snapshot.value[orderId];
-          try {
-            orders.add(TaxiOrder.fromData(orderId, orderData));
-          } catch (e) {
-            mezDbgPrint("orderController: adding order error " + orderId);
-            mezDbgPrint(e);
-          }
-        }
+          mezDbgPrint("Order Data => $orderData");
+          orders.add(TaxiOrder.fromData(orderId, orderData));
+          // try {
+          // } catch (e) {
+          //   mezDbgPrint(e);
+          // }
+        });
       }
       currentOrders.value = orders;
     });
+    super.onInit();
   }
 
   TaxiOrder? getOrder(String orderId) {
     try {
       return currentOrders.firstWhere((order) {
+        mezDbgPrint(
+            "Checking CurrentOrders::${order.orderId} ==> ${order.toString()}");
         return order.orderId == orderId;
       });
     } on StateError {
       try {
         return pastOrders.firstWhere((order) {
+          mezDbgPrint(
+              "Checking PastOrders::${order.orderId} ==> ${order.toString()}");
+
           return order.orderId == orderId;
         });
       } on StateError {
@@ -116,7 +125,7 @@ class OrderController extends GetxController {
         .where((notification) =>
             notification.notificationType == NotificationType.NewMessage &&
             notification.orderId! ==
-                _taxiAuthController.taxiState!.currentOrder!)
+                Get.find<TaxiAuthController>().taxiState!.currentOrder!)
         .isNotEmpty;
   }
 
@@ -127,7 +136,7 @@ class OrderController extends GetxController {
             notification.notificationType ==
                 NotificationType.OrderStatusChange &&
             notification.orderId! ==
-                _taxiAuthController.taxiState!.currentOrder!)
+                Get.find<TaxiAuthController>().taxiState!.currentOrder!)
         .forEach((notification) {
       _foregroundNotificationsController.removeNotification(notification.id);
     });

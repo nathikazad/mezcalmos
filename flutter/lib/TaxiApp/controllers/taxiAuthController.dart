@@ -147,15 +147,17 @@ class TaxiAuthController extends GetxController {
               .child(rootInProcessOrderDriverLocationNode(
                   _state.value!.currentOrder!))
               .set(positionUpdate);
-          String currentOrderCustomerId = Get.find<OrderController>()
-              .getOrder(_state.value!.currentOrder!)!
-              .customer
-              .id;
-          _databaseHelper.firebaseDatabase
-              .reference()
-              .child(customerInProcessOrderDriverLocationNode(
-                  _state.value!.currentOrder!, currentOrderCustomerId))
-              .set(positionUpdate);
+          // TODO : Fix this down bellow !
+
+          // String currentOrderCustomerId = Get.find<OrderController>()
+          //     .getOrder(_state.value!.currentOrder!)!
+          //     .customer
+          //     .id;
+          // _databaseHelper.firebaseDatabase
+          //     .reference()
+          //     .child(customerInProcessOrderDriverLocationNode(
+          //         _state.value!.currentOrder!, currentOrderCustomerId))
+          //     .set(positionUpdate);
         }
       }
     });

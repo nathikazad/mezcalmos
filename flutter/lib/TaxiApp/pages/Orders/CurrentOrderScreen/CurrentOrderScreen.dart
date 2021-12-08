@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
@@ -27,7 +28,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
   MGoogleMapController mGoogleMapController = MGoogleMapController();
   LanguageController lang = Get.find<LanguageController>();
   TaxiOrder? order;
-  OrderController controller = Get.find<OrderController>();
+  OrderController controller = Get.put<OrderController>(OrderController());
   StreamSubscription? _orderListener;
   bool _clickedButton = false;
   TaxiAuthController taxiAuthController = Get.find<TaxiAuthController>();
@@ -35,10 +36,15 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
 
   @override
   void initState() {
+    mezDbgPrint("Inside _ViewCurrentOrderScreenState::InitState");
     String orderId = taxiAuthController.taxiState!.currentOrder!;
+    mezDbgPrint("orderId :: $orderId");
+
     controller.clearOrderNotifications();
     // we need the first snapshot seprated !
     TaxiOrder? _orderSnapshot = controller.getOrder(orderId);
+    mezDbgPrint("_orderSnapshot :: $_orderSnapshot");
+
     if (_orderSnapshot == null) {
       // TODO ORDERNOTAVAILABLEANYMORE DIALOGUE
       Get.back();
@@ -83,11 +89,6 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
 
   Widget build(BuildContext context) {
     // make sure can't be poped, unless we do.
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-      // TODO : add post
-      // First time Init, MGoogleMapController late fucntions won't get executed because thery're not implemented yet!
-      // with this we 're sure they got implemented!
-    });
 
     return WillPopScope(
         onWillPop: () async => false,
@@ -99,13 +100,11 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
           body: SafeArea(
               child: order != null
                   ? Stack(alignment: Alignment.topCenter, children: [
-                      Obx(
-                        () => MGoogleMap(
-                          mGoogleMapController: this.mGoogleMapController,
-                          initialLocation: initialPosition,
-                          myLocationButtonEnabled: false,
-                          debugString: "CurrentOrderScreen",
-                        ),
+                      MGoogleMap(
+                        mGoogleMapController: this.mGoogleMapController,
+                        initialLocation: initialPosition,
+                        myLocationButtonEnabled: false,
+                        debugString: "CurrentOrderScreen",
                       ),
                       CurrentPositionedBottomBar(order!),
                       CurrentPositionedFromToTopBar(order!)

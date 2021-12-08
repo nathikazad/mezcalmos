@@ -31,9 +31,9 @@ String customerInProcessOrderDriverLocationNode(
 }
 
 String taxiPastOrdersNode(String uid) {
-  return '/taxi/pastOrders/$uid';
+  return 'taxis/pastOrders/$uid';
 }
 
 String taxiInProcessOrderNode(String uid) {
-  return 'taxi/inProcessOrders/$uid';
+  return 'taxis/inProcessOrders/$uid';
 }

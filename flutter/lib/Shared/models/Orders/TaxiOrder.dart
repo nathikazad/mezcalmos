@@ -1,7 +1,9 @@
+// import 'package:location/location.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 enum TaxiOrdersStatus {
   DroppedOff,
@@ -94,18 +96,26 @@ class TaxiOrder extends Order {
   }
 
   factory TaxiOrder.fromData(dynamic id, dynamic data) {
+    var _from = data['from'];
+    var _to = data['to'];
+
+    mezDbgPrint("FROOOOOOM => $_from");
+    mezDbgPrint("TOOOOOO => $_to");
+
     TaxiOrder taxiOrder = TaxiOrder(
         orderId: id,
-        driver:
-            (data["driver"] != null) ? UserInfo.fromData(data["driver"]) : null,
+        driver: (data["driver"] != null)
+            ? TaxiUserInfo.fromData(data["driver"])
+            : null,
         customer: UserInfo.fromData(data["customer"]),
         rideFinishTime: data['rideFinishTime'],
         rideStartTime: data['rideStartTime'],
         status: data['status'].toString().toTaxiOrderStatus(),
         acceptRideTime: data['acceptRideTime'],
         cost: data['cost'],
-        from: Location.fromFirebaseData(data['from']),
-        to: Location.fromFirebaseData(data['to']),
+        // from: Location("", LocationData.fromMap({"lat":})),
+        from: Location.fromFirebaseData(_from),
+        to: Location.fromFirebaseData(_to),
         orderTime: DateTime.parse(data["orderTime"]),
         paymentType: data["paymentType"].toString().toPaymentType(),
         routeInformation: RouteInformation(
@@ -116,7 +126,7 @@ class TaxiOrder extends Order {
   }
 
   // Added for Debugging Perposes - Don't delete for now
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJsSon() => {
         "customer": customer,
         "estimatedPrice": cost,
         "from": from,
