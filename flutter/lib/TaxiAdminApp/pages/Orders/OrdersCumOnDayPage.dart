@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/TaxiAdminApp/Models/NbOrders.dart';
 import 'package:mezcalmos/TaxiAdminApp/components/MezAdminOrdersComponents.dart';
-import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
+import 'package:mezcalmos/TaxiAdminApp/components/appBar.dart';
 
 import 'OrdersOnDayPage.dart';
 
@@ -291,7 +291,7 @@ class OrdersCumOnDayPage extends GetView<OrderStatsController> {
   Widget build(BuildContext context) {
     Get.put<OrderStatsController>(OrderStatsController());
     return Scaffold(
-        appBar: MezcalmosSharedWidgets.mezCalmosAdminAppBar(context),
+        appBar: mezCalmosAdminAppBar(context),
         body: GetX<OrderStatsController>(
           init: OrderStatsController(),
           builder: (controller) {

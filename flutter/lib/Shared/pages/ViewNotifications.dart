@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:mezcalmos/Shared/widgets/CancelAlertDailog.dart';
 import 'package:mezcalmos/Shared/widgets/DateTitleComponent.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as notifs;
 import 'package:intl/intl.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 
 import '../widgets/MezClearButton.dart';
 
@@ -27,7 +26,8 @@ class ViewNotifications extends StatefulWidget {
 
 class _ViewNotificationsState extends State<ViewNotifications> {
   // RxList<notifs.Notification> currentNotifs = RxList.empty();
-  FBNotificationsController controller = Get.find<FBNotificationsController>();
+  ForegroundNotificationsController controller =
+      Get.find<ForegroundNotificationsController>();
   LanguageController lang = Get.find<LanguageController>();
   AuthController authController = Get.find<AuthController>();
 
@@ -69,16 +69,13 @@ class _ViewNotificationsState extends State<ViewNotifications> {
                     ? Container()
                     : MezClearButton(
                         onTapFunction: () async {
-                          bool yesNoRes = await cancelAlertDailog(
-                              "${lang.strings["shared"]["notification"]["alertClearNotification"]["title"]}",
-                              "${lang.strings["shared"]["notification"]["alertClearNotification"]["title"]}",
-                              () {
-                            Get.back(result: true);
-                          }, () {
-                            Get.back(result: false);
-                          });
+                          YesNoDialogButton yesNoRes = await cancelAlertDialog(
+                              title:
+                                  "${lang.strings["shared"]["notification"]["alertClearNotification"]["title"]}",
+                              body:
+                                  "${lang.strings["shared"]["notification"]["alertClearNotification"]["title"]}");
 
-                          if (yesNoRes) {
+                          if (yesNoRes == YesNoDialogButton.Yes) {
                             controller.clearAllNotification();
                             Get.back();
                           }

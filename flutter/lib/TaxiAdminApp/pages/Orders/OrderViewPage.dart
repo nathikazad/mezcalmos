@@ -3,7 +3,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
-import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
+import 'package:mezcalmos/TaxiAdminApp/components/appBar.dart';
 import 'package:mezcalmos/TaxiAdminApp/components/infoCardComponent.dart';
 import 'package:mezcalmos/TaxiAdminApp/components/staticMap.dart';
 import 'package:mezcalmos/TaxiAdminApp/controller/OrdersController.dart';
@@ -43,7 +43,7 @@ class OrderViewPage extends GetView<OrderStatsController> {
                               // alignment: Alignment.center,
                               height: Get.width * 0.3,
                               width: Get.width * 0.3,
-                              child: handleNetworkImage(
+                              child: handleIfNetworkImage(
                                   url: data["orders"][0]["customer"]["photo"])
                               // Image.network(
                               //   "${data["orders"][0]["customer"]["photo"]}",
@@ -75,7 +75,7 @@ class OrderViewPage extends GetView<OrderStatsController> {
                             width: Get.width * 0.3,
                             child: (data["orders"][0]["driver"] != null)
                                 ? InkWell(
-                                    child: handleNetworkImage(
+                                    child: handleIfNetworkImage(
                                         url: data["orders"][0]["driver"]
                                             ["photo"]),
                                     // Image.network(
@@ -164,7 +164,7 @@ class OrderViewPage extends GetView<OrderStatsController> {
   Widget build(BuildContext context) {
     Get.put<OrderStatsController>(OrderStatsController());
     return Scaffold(
-      appBar: MezcalmosSharedWidgets.mezCalmosAdminAppBar(context),
+      appBar: mezCalmosAdminAppBar(context),
       body: Container(child: getOrder(orderId)),
     );
   }

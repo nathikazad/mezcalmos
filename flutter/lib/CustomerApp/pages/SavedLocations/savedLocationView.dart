@@ -14,12 +14,10 @@ import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
 
 import 'components/SavedLocationComponent.dart';
 
-enum SavedLocationViewMode { GetSavedLocation, SeeSaveLocation }
-
 class SavedLocationView extends StatefulWidget {
-  final SavedLocationViewMode? savedLocationViewMode;
-  SavedLocationView({Key? key, required this.savedLocationViewMode})
-      : super(key: key);
+  SavedLocationView({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _SavedLocationViewState createState() => _SavedLocationViewState();
@@ -40,13 +38,13 @@ class _SavedLocationViewState extends State<SavedLocationView> {
     mezDbgPrint("==============");
     setState(() {
       savedLocations.assignAll(
-          _customerAuthController.customerStream.value?.savedLocations ?? []);
+          _customerAuthController.customerRxn.value?.savedLocations ?? []);
     });
     mezDbgPrint("==============");
     mezDbgPrint(savedLocations);
     mezDbgPrint("==============");
     // then start a listener in case there are changes in /savedLocations db node!
-    savedLocationsStreamSub = _customerAuthController.customerStream
+    savedLocationsStreamSub = _customerAuthController.customerRxn
         .map<List<SavedLocation>>((customerInstance) {
       return customerInstance?.savedLocations ?? [];
     }).listen((_savedLocations) {
@@ -129,10 +127,7 @@ class _SavedLocationViewState extends State<SavedLocationView> {
                         .map((savedLocation) => SavedLocationComponent(
                               savelocation: savedLocation,
                               onPress: () {
-                                if (widget.savedLocationViewMode ==
-                                    SavedLocationViewMode.GetSavedLocation) {
-                                  Get.back(result: savedLocation);
-                                }
+                                Get.back(result: savedLocation);
                               },
                             )),
                     SizedBox(

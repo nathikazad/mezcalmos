@@ -6,11 +6,10 @@ import 'package:mezcalmos/CustomerApp/components/customerAppBar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
+import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
-import 'package:mezcalmos/Shared/widgets/MezPickGoogleMap.dart';
 import 'package:location/location.dart' as GeoLoc;
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -92,7 +91,7 @@ class _PickLocationViewState extends State<PickLocationView> {
       GeoLoc.Location().getLocation().then((locData) {
         mezDbgPrint("Sat to current Location $locData!");
         setState(() {
-          _selectedLocation = Location.fromData({
+          _selectedLocation = Location.fromFirebaseData({
             "address": "",
             "lat": locData.latitude,
             "lng": locData.longitude,
@@ -103,7 +102,7 @@ class _PickLocationViewState extends State<PickLocationView> {
       var x = Get.parameters["id"];
 
       savedLocation = customerAuthController
-          .customerStream()!
+          .customerRxn()!
           .savedLocations
           .firstWhere((saved) => saved.id == x);
 
@@ -112,7 +111,7 @@ class _PickLocationViewState extends State<PickLocationView> {
       GeoLoc.Location().getLocation().then((locData) {
         mezDbgPrint("Sat to current Location $locData!");
         setState(() {
-          _selectedLocation = Location.fromData({
+          _selectedLocation = Location.fromFirebaseData({
             "address": "${savedLocation!.location.address}",
             "lat": savedLocation!.location.latitude,
             "lng": savedLocation!.location.longitude,
@@ -160,9 +159,9 @@ class _PickLocationViewState extends State<PickLocationView> {
                   label: "",
                   text: _selectedLocation?.address,
                   onClear: () {},
-                  notifyParent: (Location location, bool showBlackScreen) {
+                  notifyParent: (Location? location) {
                     mezDbgPrint(
-                        "Ontap on suggestion  => ${location.toJson()} ");
+                        "Ontap on suggestion  => ${location?.toJson()} ");
                     setState(() {
                       this.showBlackScreen = showBlackScreen;
                       _selectedLocation = location;
@@ -178,24 +177,25 @@ class _PickLocationViewState extends State<PickLocationView> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
                           color: Colors.grey.shade200),
-                      child: _selectedLocation != null
-                          ? MezPickGoogleMap(
-                              showBlackScreen: showBlackScreen,
-                              notifyParent:
-                                  (Location location, bool showBlackScreen) {
-                                setState(() {
-                                  this.showBlackScreen = showBlackScreen;
-                                  _selectedLocation = location;
-                                });
-                              },
-                              location: LatLng(_selectedLocation!.latitude,
-                                  _selectedLocation!.longitude))
-                          : Center(
-                              child: CircularProgressIndicator(
-                                color: Colors.black,
-                                strokeWidth: 1,
-                              ),
-                            ),
+                      child:
+                          // _selectedLocation != null
+                          //     ? MezPickGoogleMap(
+                          //         showBlackScreen: showBlackScreen,
+                          //         notifyParent: (Location location) {
+                          //           setState(() {
+                          //             this.showBlackScreen = showBlackScreen;
+                          //             _selectedLocation = location;
+                          //           });
+                          //         },
+                          //         location: LatLng(_selectedLocation!.latitude,
+                          //             _selectedLocation!.longitude))
+                          //     :
+                          Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.black,
+                          strokeWidth: 1,
+                        ),
+                      ),
                     ))),
             Container(
               margin: EdgeInsets.only(bottom: 30),

@@ -10,7 +10,7 @@ import { OrderType } from "../shared/models/Order";
 import { UserInfo } from "../shared/models/User";
 import { getTaxi, Taxi } from "./models/Taxi";
 import { TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "./models/TaxiOrder";
-import { buildChat } from "../shared/helper/chat";
+import { buildChatForOrder } from "../shared/helper/chat";
 import { ParticipantType } from "../shared/models/Chat";
 import { push } from "../shared/notification/notifyUser";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
@@ -110,7 +110,7 @@ export = functions.https.onCall(async (data, context) => {
     taxiNodes.currentOrderIdNode(taxiId).set(orderId);
 
 
-    await buildChat(
+    await buildChatForOrder(
       order.customer.id,
       {
         ...order.customer,
@@ -121,6 +121,7 @@ export = functions.https.onCall(async (data, context) => {
         ...driverInfo,
         particpantType: ParticipantType.Taxi
       },
+      OrderType.Taxi,
       orderId);
 
 

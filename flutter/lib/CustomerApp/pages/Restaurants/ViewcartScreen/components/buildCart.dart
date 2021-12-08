@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/widgets/CancelAlertDailog.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/widgets/MezClearButton.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 
 Widget buildCart(Cart cart, BuildContext context) {
   final txt = Theme.of(context).textTheme;
@@ -65,17 +67,13 @@ Widget buildCart(Cart cart, BuildContext context) {
                     width: 28,
                     child: InkWell(
                       onTap: () async {
-                        bool yesNoRes = await cancelAlertDailog(
-                            lang.strings["customer"]["restaurant"]["cart"]
-                                ["clearCart"],
-                            lang.strings["customer"]["restaurant"]["cart"]
-                                ["clearCartConfirm"], () {
-                          Get.back(result: true);
-                        }, () {
-                          Get.back(result: false);
-                        });
+                        YesNoDialogButton yesNoRes = await cancelAlertDialog(
+                            title: lang.strings["customer"]["restaurant"]
+                                ["cart"]["clearCart"],
+                            body: lang.strings["customer"]["restaurant"]["cart"]
+                                ["clearCartConfirm"]);
 
-                        if (yesNoRes) {
+                        if (yesNoRes == YesNoDialogButton.Yes) {
                           controller.clearCart();
                           Get.back();
                         }

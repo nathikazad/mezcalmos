@@ -11,7 +11,7 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/Shared/widgets/CancelAlertDailog.dart';
+import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 
 import 'choosenOneOption.dart';
 import 'package:intl/intl.dart';
@@ -77,21 +77,17 @@ Widget buildItems(List<CartItem> cartItems, BuildContext context) {
                             onChangedToZero: (isZero) async {
                               if (isZero) {
                                 controller.refresh();
-                                bool yesNoResult = await cancelAlertDailog(
-                                  lang.strings["customer"]["restaurant"]["cart"]
-                                      ["deleteItem"],
-                                  lang.strings["customer"]["restaurant"]["cart"]
-                                      ["deleteItemConfirm"],
-                                  () {
-                                    Get.back(result: true);
-                                  },
-                                  () {
-                                    Get.back(result: false);
-                                  },
-                                );
+                                YesNoDialogButton yesNoResult =
+                                    await cancelAlertDialog(
+                                        title: lang.strings["customer"]
+                                                ["restaurant"]["cart"]
+                                            ["deleteItem"],
+                                        body: lang.strings["customer"]
+                                                ["restaurant"]["cart"]
+                                            ["deleteItemConfirm"]);
                                 mezDbgPrint(
                                     " the returend value from the dailog $yesNoResult");
-                                if (yesNoResult == true) {
+                                if (yesNoResult == YesNoDialogButton.Yes) {
                                   controller.deleteItem("${element.id}");
 
                                   if (controller.cart.value.quantity() == 0) {

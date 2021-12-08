@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 
 class IncomingPositionedFromToTopBar extends StatelessWidget {
-  IncomingOrdersController controller = Get.find<IncomingOrdersController>();
   LanguageController lang = Get.find<LanguageController>();
+  TaxiOrder order;
+  IncomingPositionedFromToTopBar({required this.order});
 
   @override
   Widget build(BuildContext context) {
@@ -51,21 +52,16 @@ class IncomingPositionedFromToTopBar extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                             )),
-                        Obx(
-                          () => GestureDetector(
-                            onTap: () => mezcalmosSnackBar(
-                                lang.strings['shared']['inputLocation']["from"],
-                                controller
-                                        .selectedIncommingOrder?.from.address ??
-                                    ""),
-                            child: Text(
-                              controller.selectedIncommingOrder?.from.address ??
-                                  ".........",
-                              style: TextStyle(fontSize: 15, fontFamily: 'psr'),
-                              maxLines: 1,
-                              softWrap: false,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                        GestureDetector(
+                          onTap: () => mezcalmosSnackBar(
+                              lang.strings['shared']['inputLocation']["from"],
+                              order.from.address),
+                          child: Text(
+                            order.from.address,
+                            style: TextStyle(fontSize: 15, fontFamily: 'psr'),
+                            maxLines: 1,
+                            softWrap: false,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ]),
@@ -131,20 +127,16 @@ class IncomingPositionedFromToTopBar extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Obx(
-                        () => GestureDetector(
-                          onTap: () => mezcalmosSnackBar(
-                              lang.strings['shared']['inputLocation']["to"],
-                              controller.selectedIncommingOrder?.to.address ??
-                                  ""),
-                          child: Text(
-                            controller.selectedIncommingOrder?.to.address ??
-                                ".........",
-                            style: TextStyle(fontSize: 16, fontFamily: 'psr'),
-                            maxLines: 1,
-                            softWrap: false,
-                            overflow: TextOverflow.ellipsis,
-                          ),
+                      GestureDetector(
+                        onTap: () => mezcalmosSnackBar(
+                            lang.strings['shared']['inputLocation']["to"],
+                            order.to.address),
+                        child: Text(
+                          order.to.address,
+                          style: TextStyle(fontSize: 16, fontFamily: 'psr'),
+                          maxLines: 1,
+                          softWrap: false,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ],

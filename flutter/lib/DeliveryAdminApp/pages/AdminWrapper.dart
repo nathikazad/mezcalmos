@@ -5,14 +5,14 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/notificationHandler.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/utilities/NotificationsDisplayer.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/adminAuthController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/models/Admin.dart';
@@ -46,7 +46,7 @@ class _AdminWrapperState extends State<AdminWrapper> {
     });
     String userId = Get.find<AuthController>().fireAuthUser!.uid;
     _notificationsStreamListener = initializeShowNotificationsListener();
-    Get.find<FBNotificationsController>()
+    Get.find<ForegroundNotificationsController>()
         .startListeningForNotificationsFromFirebase(
             notificationsNode(userId), deliveryAdminNotificationHandler);
     super.initState();
@@ -66,7 +66,7 @@ class _AdminWrapperState extends State<AdminWrapper> {
   Widget build(BuildContext context) {
     mezDbgPrint("AdminWrapper:: build");
     return Scaffold(
-        key: Get.find<SideMenuDraweController>().getNewKey(),
+        key: Get.find<SideMenuDrawerController>().getNewKey(),
         drawer: MezSideMenu(),
         backgroundColor: Colors.white,
         // appBar: mezcalmosAppBar(

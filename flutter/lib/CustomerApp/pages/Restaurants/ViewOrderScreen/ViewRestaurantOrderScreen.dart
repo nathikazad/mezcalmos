@@ -14,10 +14,10 @@ import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
-import 'package:mezcalmos/Shared/widgets/CancelAlertDailog.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
 
 import 'components/buildOrdersItem.dart';
@@ -39,8 +39,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
   Rxn<RestaurantOrder> order = Rxn();
   OrderController controller = Get.find<OrderController>();
   RestaurantController restaurantController = Get.find<RestaurantController>();
-  StreamSubscription? _currentOrderListener;
-  StreamSubscription? _pastShownOrder;
+  StreamSubscription? _orderListener;
 
   bool _clickedButton = false;
 
@@ -84,24 +83,19 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
       Get.back();
     } else {
       if (order.value!.inProcess()) {
-        _pastShownOrder =
-            controller.getPastOrderStream(orderId).listen((event) {
-          if (event != null) {
-            mezDbgPrint("===================" +
-                (event as RestaurantOrder).restaurantOrderStatus.toString());
-            order.value = event;
-          }
-        });
-        _currentOrderListener =
+        _orderListener =
             controller.getCurrentOrderStream(orderId).listen((event) {
           if (event != null) {
             mezDbgPrint("===================" +
                 (event as RestaurantOrder).restaurantOrderStatus.toString());
             order.value = event;
+          } else {
+            _orderListener?.cancel();
+            _orderListener = null;
+            order.value = controller.getOrder(orderId) as RestaurantOrder?;
           }
         });
-      } else {}
-
+      }
       //mezDbgPrint("=========> ${order.value}");
     }
     super.initState();
@@ -109,10 +103,8 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
 
   @override
   void dispose() {
-    _currentOrderListener?.cancel();
-    _pastShownOrder?.cancel();
-    _currentOrderListener = null;
-    _pastShownOrder = null;
+    _orderListener?.cancel();
+    _orderListener = null;
     _popUpController.hideMenu();
     _popUpController.dispose();
     super.dispose();
@@ -437,17 +429,13 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                       ),
                       onTap: () async =>
                           await onTapButtonsShowLoading(() async {
-                        bool yesNoRes = await cancelAlertDailog(
-                            lang.strings['customer']['restaurant']['checkout']
-                                ['cancelOrder'],
-                            lang.strings['customer']['restaurant']['checkout']
-                                ['cancelOrderConfirm'], () {
-                          Get.back(result: true);
-                        }, () {
-                          Get.back(result: false);
-                        });
+                        YesNoDialogButton yesNoRes = await cancelAlertDialog(
+                            title: lang.strings['customer']['restaurant']
+                                ['checkout']['cancelOrder'],
+                            body: lang.strings['customer']['restaurant']
+                                ['checkout']['cancelOrderConfirm']);
 
-                        if (yesNoRes) {
+                        if (yesNoRes == YesNoDialogButton.Yes) {
                           mezDbgPrint(Get.parameters.toString());
                           ServerResponse resp = await restaurantController
                               .cancelOrder(Get.parameters['orderId']!);

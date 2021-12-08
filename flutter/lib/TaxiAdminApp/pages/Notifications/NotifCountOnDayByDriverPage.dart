@@ -4,7 +4,7 @@ import 'package:mezcalmos/TaxiAdminApp/controller/NotificationsController.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/TaxiAdminApp/constants/styles.dart';
 import 'package:mezcalmos/TaxiAdminApp/components/MezAdminOrdersComponents.dart';
-import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
+import 'package:mezcalmos/TaxiAdminApp/components/appBar.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/TaxiAdminApp/pages/Orders/OrdersCumOnDayPage.dart';
 
@@ -312,7 +312,7 @@ class NotifCountOnDayPage extends GetView<NotificationsController> {
   Widget build(BuildContext context) {
     Get.put<NotificationsController>(NotificationsController());
     return Scaffold(
-        appBar: MezcalmosSharedWidgets.mezCalmosAdminAppBar(context),
+        appBar: mezCalmosAdminAppBar(context),
         body: GetX<NotificationsController>(
             init: NotificationsController(),
             builder: (controller) {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
+import 'package:mezcalmos/TaxiAdminApp/components/appBar.dart';
 import 'package:mezcalmos/TaxiAdminApp/Models/NbNotifs.dart';
 import 'package:mezcalmos/TaxiAdminApp/controller/NotificationsController.dart';
 import 'package:get/get.dart';
@@ -345,7 +345,7 @@ class UniqueNotificationsOnMonthPage extends GetView<NotificationsController> {
   Widget build(BuildContext context) {
     Get.put<NotificationsController>(NotificationsController());
     return Scaffold(
-        appBar: MezcalmosSharedWidgets.mezCalmosAdminAppBar(context),
+        appBar: mezCalmosAdminAppBar(context),
         body: GetX<NotificationsController>(
             init: NotificationsController(),
             builder: (controller) {

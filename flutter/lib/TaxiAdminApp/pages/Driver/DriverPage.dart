@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
+import 'package:mezcalmos/TaxiAdminApp/components/appBar.dart';
 import 'package:mezcalmos/TaxiAdminApp/Models/NbNotifs.dart';
 import 'package:mezcalmos/TaxiAdminApp/Models/NbOrders.dart';
 import 'package:mezcalmos/TaxiAdminApp/components/infoCardComponent.dart';
@@ -44,7 +44,7 @@ class DriverPage extends GetView<DriverStatsController> {
                     color: Colors.white,
                     child: ClipOval(
                       child: (data[0]["photo"] != "")
-                          ? handleNetworkImage(url: data[0]["photo"])
+                          ? handleIfNetworkImage(url: data[0]["photo"])
                           //  Image.network(
                           //     "${data[0]["photo"]}",
                           //     fit: BoxFit.cover,
@@ -406,7 +406,7 @@ class DriverPage extends GetView<DriverStatsController> {
   Widget build(BuildContext context) {
     Get.put<DriverStatsController>(DriverStatsController());
     return Scaffold(
-      appBar: MezcalmosSharedWidgets.mezCalmosAdminAppBar(context),
+      appBar: mezCalmosAdminAppBar(context),
       body: GetX<DriverStatsController>(
           init: DriverStatsController(),
           builder: (controller) {

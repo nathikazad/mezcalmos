@@ -3,16 +3,19 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
-import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class IncommingPositionedBottomBar extends StatelessWidget with MezDisposable {
-  IncomingOrdersController controller = Get.find<IncomingOrdersController>();
+  // IncomingOrdersController controller = Get.find<IncomingOrdersController>();
   LanguageController lang = Get.find<LanguageController>();
+  TaxiOrder order;
+
+  IncommingPositionedBottomBar({required this.order});
 
   @override
   Widget build(BuildContext context) {
@@ -41,90 +44,9 @@ class IncommingPositionedBottomBar extends StatelessWidget with MezDisposable {
               children: [
                 Expanded(
                     flex: 7, //Get.width > 320 ? 7 : 0,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        CircleAvatar(
-                          // radius: 30.0,
-                          child: ClipOval(
-                            clipBehavior: Clip.antiAlias,
-                            child: controller.selectedIncommingOrder?.customer
-                                        .image ==
-                                    null
-                                ? Image.asset(
-                                    aDefaultAvatar,
-                                    width: getSizeRelativeToScreen(
-                                        100, context.height, context.width),
-                                    height: getSizeRelativeToScreen(
-                                        100, context.height, context.width),
-                                    fit: BoxFit.cover,
-                                  )
-                                : handleNetworkImage(
-                                    url: controller.selectedIncommingOrder!
-                                            .customer.image +
-                                        "?type=large",
-                                    height: getSizeRelativeToScreen(
-                                        100, context.height, context.width),
-                                    width: getSizeRelativeToScreen(
-                                        100, context.height, context.width),
-                                    //  Image.network(
-                                    //     controller.selectedIncommingOrder!.customer
-                                    //             .image +
-                                    //         "?type=large",
-                                    //     fit: BoxFit.cover,
-                                    // height: getSizeRelativeToScreen(
-                                    //     100, context.height, context.width),
-                                    // width: getSizeRelativeToScreen(
-                                    //     100, context.height, context.width),
-                                  ),
-                          ),
-                          backgroundColor: Colors.grey
-                              .shade100, //Color.fromARGB(255, 222, 222, 222),
-                          // radius: 1,
-                        ),
-                        SizedBox(
-                          width: 5.sp,
-                        ),
-                        Expanded(
-                          child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: 100.sp,
-                                  child: Text(
-                                    controller.selectedIncommingOrder?.customer
-                                            .name ??
-                                        "Customer",
-                                    style: TextStyle(
-                                      fontSize: 16.sp,
-                                      fontFamily: 'psb',
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                    softWrap: false,
-                                    maxLines: 1,
-                                  ),
-                                ),
-                                Obx(
-                                  () => Text(
-                                    "${controller.selectedIncommingOrder?.distanceToClient.toStringAsFixed(1) ?? '? '} km ${lang.strings['taxi']['incoming']["far"]}",
-                                    overflow: TextOverflow.ellipsis,
-                                    softWrap: false,
-                                    maxLines: 1,
-                                    style: TextStyle(
-                                        fontSize: 14.sp,
-                                        fontFamily: 'psr',
-                                        color: Colors.grey),
-                                  ),
-                                ),
-                              ]),
-                        )
-                      ],
-                    )),
+                    child: avatarAndDistanceToClient(context)),
                 Container(
                   color: Color.fromARGB(255, 236, 236, 236),
-                  // color: Colors.red,
                   width: 1.1.sp,
                   height: 35.sp,
                 ),
@@ -148,21 +70,18 @@ class IncommingPositionedBottomBar extends StatelessWidget with MezDisposable {
                               )),
                             )),
                       ),
-                      Obx(
-                        () => Text(
-                          "${controller.selectedIncommingOrder?.estimatedPrice?.toString() ?? '? \$'}",
-                          style: TextStyle(
-                              fontSize: 16.sp,
-                              fontFamily: 'psb',
-                              color: Colors.black),
-                        ),
-                      )
+                      Text(
+                        order.cost.toString(),
+                        style: TextStyle(
+                            fontSize: 16.sp,
+                            fontFamily: 'psb',
+                            color: Colors.black),
+                      ),
                     ],
                   ),
                 ),
                 Container(
                   color: Color.fromARGB(255, 236, 236, 236),
-                  // color: Colors.red,
                   width: 1.1.sp,
                   height: 35.sp,
                 ),
@@ -170,7 +89,7 @@ class IncommingPositionedBottomBar extends StatelessWidget with MezDisposable {
                   width: 5.sp,
                 ),
                 Expanded(
-                  flex: 4, //Get.width > 320 ? 4 : 0,
+                  flex: 4,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -186,7 +105,7 @@ class IncommingPositionedBottomBar extends StatelessWidget with MezDisposable {
                             width: 10.sp,
                           ),
                           Text(
-                            "${hoursMinsShortner(controller.selectedIncommingOrder?.routeInformation.duration ?? '? mins')}",
+                            "${hoursMinsShortner(order.routeInformation.duration.daysHoursString)}",
                             overflow: TextOverflow.ellipsis,
                             softWrap: false,
                             maxLines: 1,
@@ -208,7 +127,7 @@ class IncommingPositionedBottomBar extends StatelessWidget with MezDisposable {
                             width: 10.sp,
                           ),
                           Text(
-                            "${controller.selectedIncommingOrder?.routeInformation.distance ?? '? km'}",
+                            order.routeInformation.distance.distanceStringInKm,
                             overflow: TextOverflow.ellipsis,
                             softWrap: false,
                             maxLines: 1,
@@ -224,5 +143,61 @@ class IncommingPositionedBottomBar extends StatelessWidget with MezDisposable {
                 )
               ],
             )));
+  }
+
+  Widget avatarAndDistanceToClient(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        CircleAvatar(
+          // radius: 30.0,
+          child: ClipOval(
+              clipBehavior: Clip.antiAlias,
+              child: handleIfNetworkImage(
+                  url: order.customer.image,
+                  assetInCaseFailed: aDefaultAvatar,
+                  fit: BoxFit.cover,
+                  height: getSizeRelativeToScreen(
+                      100, context.height, context.width),
+                  width: getSizeRelativeToScreen(
+                      100, context.height, context.width))),
+          backgroundColor:
+              Colors.grey.shade100, //Color.fromARGB(255, 222, 222, 222),
+          // radius: 1,
+        ),
+        SizedBox(
+          width: 5.sp,
+        ),
+        Expanded(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: 100.sp,
+                  child: Text(
+                    order.customer.name,
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      fontFamily: 'psb',
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: false,
+                    maxLines: 1,
+                  ),
+                ),
+                Text(
+                  "${order.distanceToClient.toStringAsFixed(1)} km ${lang.strings['taxi']['incoming']["far"]}",
+                  overflow: TextOverflow.ellipsis,
+                  softWrap: false,
+                  maxLines: 1,
+                  style: TextStyle(
+                      fontSize: 14.sp, fontFamily: 'psr', color: Colors.grey),
+                ),
+              ]),
+        )
+      ],
+    );
   }
 }

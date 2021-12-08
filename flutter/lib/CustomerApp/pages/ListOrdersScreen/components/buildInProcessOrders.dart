@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/DateTitleComponent.dart';
 import 'package:get/get.dart';
 
@@ -10,7 +11,22 @@ import 'package:intl/intl.dart';
 final f = new DateFormat('MM.dd.yyyy');
 final currency = new NumberFormat("#,##0.00", "en_US");
 
+VoidCallback getOrderRouteByOrderType(OrderType type, String orderId) {
+  switch (type) {
+    case OrderType.Restaurant:
+      return () => Get.toNamed(getRestaurantOrderRoute(orderId));
+
+    case OrderType.Taxi:
+      return () => Get.toNamed(getTaxiOrderRoute(orderId));
+    default:
+      return () {
+        mezcalmosSnackBar("Info", "Comming soon !");
+      };
+  }
+}
+
 Widget buildInProcessOrders(List<Order> currentOrders) {
+  mezDbgPrint(currentOrders);
   List<Widget> inProcessOrdersWidget = [
     DateTitleComponent(
       date: "In Process",
@@ -30,17 +46,17 @@ Widget buildInProcessOrders(List<Order> currentOrders) {
         children: currentOrders.fold<List<Widget>>(
       <Widget>[],
       (children, order) {
+        mezDbgPrint(
+            "--------------[ ${order.serviceProvider.toString()} ]-------------");
         inProcessOrdersWidget.add(OrderCardComponenet(
-          title: order.serviceProvider!.name,
+          title: order.serviceProvider?.name ?? "-",
           subTitle: order.to.address,
           date:
               "${DateFormat.jm().format(DateFormat("hh:mm").parse("${order.orderTime.toLocal().hour}:${order.orderTime.toLocal().minute}"))}",
           price: "${currency.format(order.cost)}",
           type: order.orderType,
-          url: order.serviceProvider!.image,
-          onPress: () {
-            Get.toNamed(getRestaurantOrderRoute(order.orderId));
-          },
+          url: order.serviceProvider?.image,
+          onPress: getOrderRouteByOrderType(order.orderType, order.orderId),
         ));
         children = inProcessOrdersWidget;
         return children;

@@ -7,11 +7,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
-import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 
 enum AccountState {
   free,
@@ -39,8 +38,7 @@ class _UserProfileState extends State<UserProfile> {
   void initState() {
     // should only executes once because when state rebuilds upon any focus (This gets re-executes making it impossible to apply userName changes)
     super.initState();
-    textController.text =
-        !auth.isDisplayNameSet() ? "" : auth.user!.name!;
+    textController.text = !auth.isDisplayNameSet() ? "" : auth.user!.name!;
   }
 
   Widget _buildButtonIcon() {
@@ -128,8 +126,8 @@ class _UserProfileState extends State<UserProfile> {
     super.dispose();
   }
 
-  SideMenuDraweController _sideMenuDraweController =
-      Get.find<SideMenuDraweController>();
+  SideMenuDrawerController _sideMenuDraweController =
+      Get.find<SideMenuDrawerController>();
   @override
   Widget build(BuildContext context) {
     responsiveSize(context);
@@ -200,7 +198,7 @@ class _UserProfileState extends State<UserProfile> {
                                                         ),
                                                       )
                                                     : Obx(() =>
-                                                        handleNetworkImage(
+                                                        handleIfNetworkImage(
                                                             url: auth
                                                                 .user?.image))
                                                 // Image.network(
@@ -256,8 +254,7 @@ class _UserProfileState extends State<UserProfile> {
                                             Container(
                                               child: Center(
                                                 child: Text(
-                                                  (auth.user!.name ==
-                                                          null)
+                                                  (auth.user!.name == null)
                                                       ? "User"
                                                       : "${auth.user!.name}",
                                                   textAlign: TextAlign.center,
@@ -326,8 +323,7 @@ class _UserProfileState extends State<UserProfile> {
                                           "editing" + textController.text);
                                     } else {
                                       mezDbgPrint("saved");
-                                      auth.user!.name =
-                                          textController.text;
+                                      auth.user!.name = textController.text;
                                       if (imageFile.path != "test") {
                                         var xUrl = await auth.getImageUrl(
                                             imageFile, auth.user!.uid);

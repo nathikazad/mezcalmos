@@ -9,12 +9,12 @@ import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
-import 'package:mezcalmos/Shared/controllers/sideMenuDraweController.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as MezNotification;
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/NotificationsDisplayer.dart';
@@ -37,8 +37,8 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   // MyPopupMenuController _popUpController = MyPopupMenuController();
 
   LanguageController lang = Get.find<LanguageController>();
-  SideMenuDraweController _sideMenuDrawerController =
-      Get.find<SideMenuDraweController>();
+  SideMenuDrawerController _sideMenuDrawerController =
+      Get.find<SideMenuDrawerController>();
   OrderController _orderController = Get.find<OrderController>();
   RxInt numberOfCurrentOrders = RxInt(0);
   DateTime? appClosedTime;
@@ -50,10 +50,10 @@ class _CustomerWrapperState extends State<CustomerWrapper>
       numberOfCurrentOrders.value = _orderController.currentOrders.length;
     });
     String userId = Get.find<AuthController>().fireAuthUser!.uid;
-    _notificationsStreamListener = initializeShowNotificationsListener();
     // listening for notification Permissions!
+    _notificationsStreamListener = initializeShowNotificationsListener();
     listenForLocationPermissions();
-    Get.find<FBNotificationsController>()
+    Get.find<ForegroundNotificationsController>()
         .startListeningForNotificationsFromFirebase(
             notificationsNode(userId), customerNotificationHandler);
     Future.microtask(() {
@@ -182,7 +182,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
                   url: "assets/images/taxiService.png",
                   subtitle:
                       "Get the nearest taxi arrount and get your destinatiion asap .",
-                  ontap: () => Get.toNamed(kTaxisRoute),
+                  ontap: () => Get.toNamed(kTaxiRequestRoute),
                 ),
                 SizedBox(
                   height: Get.height * 0.05,

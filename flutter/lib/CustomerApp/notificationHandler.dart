@@ -42,8 +42,9 @@ Notification restaurantOrderStatusChangeNotificationHandler(
       title: dynamicFields["title"],
       timestamp: DateTime.parse(value['time']),
       notificationType: NotificationType.OrderStatusChange,
-      variableParams: value,
-      showIfOnLinkPage: true);
+      notificationAction:
+          dynamicFields["notificationAction"].toString().toNotificationAction(),
+      variableParams: value);
 }
 
 Map<String, dynamic>? getRestaurantOrderStatusFields(
@@ -105,5 +106,7 @@ Notification newMessageNotification(String key, dynamic value) {
       title: value['sender']['name'],
       timestamp: DateTime.parse(value['time']),
       notificationType: NotificationType.NewMessage,
+      notificationAction:
+          value["notificationAction"].toString().toNotificationAction(),
       variableParams: value);
 }

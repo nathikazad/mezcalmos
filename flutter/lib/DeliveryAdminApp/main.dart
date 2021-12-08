@@ -15,7 +15,7 @@ List<GetPage<dynamic>> routes = XRouter.mainRoutes;
 
 void main() {
   runMainGuarded(() => runApp(
-        SPoint(
+        StartingPoint(
             AppType.DeliveryAdminApp, signInCallback, signOutCallback, routes),
       ));
 }

@@ -30,13 +30,13 @@ class _DropDownListCartViewState extends State<DropDownListCartView> {
       listOfSavedLoacations = [
         SavedLocation(
             name: "Pick From map",
-            location: Location.fromData(<String, dynamic>{
+            location: Location.fromFirebaseData(<String, dynamic>{
               "lat": 37.33233141,
               "lng": -122.0312186,
               "address": "Unnamed Road, Cupertino, CA 95014, USA"
             }))
       ];
-      customerAuthController.customerStream.value?.savedLocations
+      customerAuthController.customerRxn.value?.savedLocations
           .forEach((element) {
         listOfSavedLoacations.add(element);
       });

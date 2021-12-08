@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
-import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/utilities/Extensions.dart';
@@ -12,7 +10,7 @@ import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
-import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
+import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 
 class IncomingOrdersController extends GetxController with MezDisposable {
   RxList<TaxiOrder> orders = <TaxiOrder>[]
@@ -24,25 +22,13 @@ class IncomingOrdersController extends GetxController with MezDisposable {
   DatabaseHelper _databaseHelper =
       Get.find<DatabaseHelper>(); // Already Injected in main function
 
-  AppLifeCycleController _appLifeCycleController =
-      Get.find<AppLifeCycleController>();
+  // AppLifeCycleController _appLifeCycleController =
+  //     Get.find<AppLifeCycleController>();
 
-  // RxBool _waitingResponse = RxBool(false);
-  RxString _selectedIncommingOrderKey = "".obs;
 
   // Storing all the needed Listeners here
   Worker? _updateOrderDistanceToClient;
 
-  TaxiOrder? get selectedIncommingOrder =>
-      (_selectedIncommingOrderKey.value != "")
-          ? orders.firstWhere(
-              (element) => element.orderId == _selectedIncommingOrderKey.value,
-              orElse: null)
-          : null;
-
-  set selectedIncommingOrderKey(String selectedOrderKey) {
-    _selectedIncommingOrderKey.value = selectedOrderKey;
-  }
 
   @override
   void onInit() async {
@@ -67,12 +53,12 @@ class IncomingOrdersController extends GetxController with MezDisposable {
             order.distanceToClient = MapHelper.calculateDistance(
                 order.from.position, _taxiAuthController.currentLocation);
             ordersFromSnapshot.add(order);
-            if (_appLifeCycleController.appState == AppLifecycleState.resumed)
-              _databaseHelper.firebaseDatabase
-                  .reference()
-                  .child(notificationStatusReadNode(
-                      key, _authController.user!.uid))
-                  .set(true);
+            // if (_appLifeCycleController.appState == AppLifecycleState.resumed)
+            //   _databaseHelper.firebaseDatabase
+            //       .reference()
+            //       .child(notificationStatusReadNode(
+            //           key, _authController.user!.uid))
+            //       .set(true);
           });
 
           ordersFromSnapshot
@@ -82,17 +68,6 @@ class IncomingOrdersController extends GetxController with MezDisposable {
         } else {
           orders.value = [];
         }
-        // if (orders
-        //         .where(
-        //             (element) => element.id == _selectedIncommingOrderKey.value)
-        //         .length ==
-        //     0) {
-        //   if (Get.currentRoute == kSelectedIcommingOrder) {
-        //     await MezcalmosSharedWidgets.mezcalmosDialogOrderNoMoreAvailable(
-        //         55, Get.height, Get.width);
-        //     Get.back(closeOverlays: true);
-        //   }
-        // }
       }).canceledBy(this);
       _updateOrderDistanceToClient?.dispose();
       _updateOrderDistanceToClient =
@@ -106,15 +81,38 @@ class IncomingOrdersController extends GetxController with MezDisposable {
       });
     }
 
-    _appLifeCycleController.attachCallback(AppLifecycleState.resumed, () {
-      mezDbgPrint("[+] Callback executed :: app resumed !");
-      orders.forEach((element) {
-        _databaseHelper.firebaseDatabase
-            .reference()
-            .child(notificationStatusReadNode(
-                element.orderId, _authController.user!.uid))
-            .set(true);
+    // _appLifeCycleController.attachCallback(AppLifecycleState.resumed, () {
+    //   mezDbgPrint("[+] Callback executed :: app resumed !");
+    //   orders.forEach((element) {
+    //     _databaseHelper.firebaseDatabase
+    //         .reference()
+    //         .child(notificationStatusReadNode(
+    //             element.orderId, _authController.user!.uid))
+    //         .set(true);
+    //   });
+    // });
+  }
+
+  TaxiOrder? getOrder(String orderId) {
+    try {
+      return orders.firstWhere((order) {
+        return order.orderId == orderId;
       });
+    } on StateError {
+      return null;
+    }
+  }
+
+  Stream<TaxiOrder?> getIncomingOrderStream(String orderId) {
+    return orders.stream.map<TaxiOrder?>((_) {
+      try {
+        return orders.firstWhere(
+          (incomingOrder) => incomingOrder.orderId == orderId,
+        );
+      } on StateError catch (_) {
+        // do nothing
+        return null;
+      }
     });
   }
 
@@ -122,7 +120,7 @@ class IncomingOrdersController extends GetxController with MezDisposable {
   void detachListeners() {
     cancelSubscriptions();
     _updateOrderDistanceToClient?.dispose();
-    _appLifeCycleController.cleanAllCallbacks();
+    // _appLifeCycleController.cleanAllCallbacks();
   }
 
   Future<ServerResponse> acceptTaxi(String orderId) async {

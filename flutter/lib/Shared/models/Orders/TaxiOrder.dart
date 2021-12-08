@@ -1,5 +1,9 @@
+// import 'package:location/location.dart';
+import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
+import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 enum TaxiOrdersStatus {
   DroppedOff,
@@ -26,31 +30,30 @@ extension ParseStringToOrderStatus on String {
 
 class RouteInformation {
   String polyline;
-  String distance;
-  String duration;
+  RideDistance distance;
+  RideDuration duration;
   RouteInformation(this.polyline, this.distance, this.duration);
 }
 
 class TaxiOrder extends Order {
-  dynamic estimatedPrice;
+  num cost;
   Location from;
   RouteInformation routeInformation;
-  dynamic acceptRideTime;
-  dynamic rideFinishTime;
-  dynamic rideStartTime;
+  String? acceptRideTime;
+  String? rideFinishTime;
+  String? rideStartTime;
   TaxiOrdersStatus status;
   double distanceToClient = 0;
-  dynamic cancelledBy;
-  UserInfo? get driver => this.serviceProvider;
+  TaxiUserInfo? get driver => this.serviceProvider as TaxiUserInfo;
   TaxiOrder(
       {required String orderId,
-      required this.estimatedPrice,
+      required this.cost,
       required this.from,
       required Location to,
       required DateTime orderTime,
       required PaymentType paymentType,
       required this.routeInformation,
-      UserInfo? driver,
+      TaxiUserInfo? driver,
       required this.acceptRideTime,
       required this.rideFinishTime,
       required this.rideStartTime,
@@ -70,32 +73,62 @@ class TaxiOrder extends Order {
   List<Object> get props =>
       [orderId, from, to, orderTime, paymentType, routeInformation];
 
+  /// Convert [TaxiOrder] object to [TaxiRequest] object.
+  TaxiRequest toTaxiRequest() {
+    return TaxiRequest(
+        from: from,
+        to: to,
+        routeInformation: this.routeInformation,
+        estimatedPrice: cost as int,
+        paymentType: paymentType);
+  }
+
+  /// Update this model from [TaxiRequest] object
+  void updateFromTaxiRequest(TaxiRequest taxiRequest) {
+    this.from = taxiRequest.from!;
+    this.to = taxiRequest.to!;
+    this.routeInformation = RouteInformation(
+        taxiRequest.routeInformation!.polyline,
+        taxiRequest.routeInformation!.distance,
+        taxiRequest.routeInformation!.duration);
+    this.cost = taxiRequest.estimatedPrice;
+    this.paymentType = taxiRequest.paymentType;
+  }
+
   factory TaxiOrder.fromData(dynamic id, dynamic data) {
+    var _from = data['from'];
+    var _to = data['to'];
+
+    mezDbgPrint("FROOOOOOM => $_from");
+    mezDbgPrint("TOOOOOO => $_to");
+
     TaxiOrder taxiOrder = TaxiOrder(
         orderId: id,
-        driver:
-            (data["driver"] != null) ? UserInfo.fromData(data["driver"]) : null,
+        driver: (data["driver"] != null)
+            ? TaxiUserInfo.fromData(data["driver"])
+            : null,
         customer: UserInfo.fromData(data["customer"]),
         rideFinishTime: data['rideFinishTime'],
         rideStartTime: data['rideStartTime'],
         status: data['status'].toString().toTaxiOrderStatus(),
         acceptRideTime: data['acceptRideTime'],
-        estimatedPrice: data['estimatedPrice'],
-        from: Location.fromData(data['from']),
-        to: Location.fromData(data['to']),
+        cost: data['cost'],
+        // from: Location("", LocationData.fromMap({"lat":})),
+        from: Location.fromFirebaseData(_from),
+        to: Location.fromFirebaseData(_to),
         orderTime: DateTime.parse(data["orderTime"]),
         paymentType: data["paymentType"].toString().toPaymentType(),
         routeInformation: RouteInformation(
             data['routeInformation']['polyline'],
-            data['routeInformation']['distance']['text'],
-            data['routeInformation']['duration']['text']));
+            RideDistance.fromJson(data['routeInformation']['distance']),
+            RideDuration.fromJson(data['routeInformation']['duration'])));
     return taxiOrder;
   }
 
   // Added for Debugging Perposes - Don't delete for now
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJsSon() => {
         "customer": customer,
-        "estimatedPrice": estimatedPrice,
+        "estimatedPrice": cost,
         "from": from,
         "status": status,
         "to": to,

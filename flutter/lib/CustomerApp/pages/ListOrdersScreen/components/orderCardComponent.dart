@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mezcalmos/CustomerApp/pages/Orders/ListOrdersScreen/components/twoAvatars.dart';
+import 'package:mezcalmos/CustomerApp/pages/ListOrdersScreen/components/twoAvatars.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
 
@@ -11,7 +11,7 @@ class OrderCardComponenet extends StatelessWidget {
   final String date;
   final String price;
   final OrderType type;
-  final String url;
+  final String? url;
   GestureTapCallback? onPress;
   OrderCardComponenet(
       {required this.title,
@@ -19,7 +19,7 @@ class OrderCardComponenet extends StatelessWidget {
       required this.date,
       required this.price,
       required this.type,
-      required this.url,
+      this.url,
       this.onPress,
       Key? key})
       : super(key: key);
@@ -47,7 +47,7 @@ class OrderCardComponenet extends StatelessWidget {
                 children: [
                   TowAvatars(
                     type: type,
-                    url: "$url",
+                    url: url,
                   ),
                   Expanded(
                       child: Column(

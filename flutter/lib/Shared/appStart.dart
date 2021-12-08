@@ -25,26 +25,31 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
+import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+import 'package:package_info/package_info.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:package_info/package_info.dart';
 
-class SPoint extends StatefulWidget {
-  AppType appType;
-  Function signInCallback;
-  Function signOutCallback;
-  List<GetPage<dynamic>> routes;
-  SPoint(this.appType, this.signInCallback, this.signOutCallback, this.routes);
+class StartingPoint extends StatefulWidget {
+  final AppType appType;
+  final Function signInCallback;
+  final Function signOutCallback;
+  final List<GetPage<dynamic>> routes;
+  final List<SideMenuItem>? sideMenuItems;
+  //  Sideminu
+  StartingPoint(
+      this.appType, this.signInCallback, this.signOutCallback, this.routes,
+      [this.sideMenuItems]);
 
   @override
-  _SPointState createState() => _SPointState();
+  _StartingPointState createState() => _StartingPointState();
 }
 
-class _SPointState extends State<SPoint> {
+class _StartingPointState extends State<StartingPoint> {
   bool _initialized = false;
   bool _error = false;
 
-  _SPointState();
+  _StartingPointState();
 
   Future<void> setupFirebase() async {
     const String _host =
@@ -99,13 +104,18 @@ class _SPointState extends State<SPoint> {
   }
 
   void putControllers() {
-    AuthController authController = Get.put<AuthController>(
+    Get.put<AuthController>(
         AuthController(widget.signInCallback, widget.signOutCallback),
         permanent: true);
     mezDbgPrint("Putting Auth Controller");
     Get.put<AppLifeCycleController>(AppLifeCycleController(logs: true),
         permanent: true);
-    Get.put<SettingsController>(SettingsController(widget.appType),
+    //@jamal TODO: pass in a list of listTiles from here to the settings controller
+    // and then to the sideMenuController
+    //this datastructure, should basically just have a name and a link
+    //the side menu controller will populate the middle of its tiles using this list
+    Get.put<SettingsController>(
+        SettingsController(widget.appType, widget.sideMenuItems),
         permanent: true);
   }
 

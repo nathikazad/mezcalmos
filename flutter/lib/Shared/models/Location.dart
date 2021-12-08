@@ -1,15 +1,24 @@
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 class Location {
   String address;
   LocationData position;
   Location(this.address, this.position);
-  factory Location.fromData(dynamic location) {
-    LocationData position = LocationData.fromMap(<String, dynamic>{
-      "latitude": location["lat"],
-      "longitude": location["lng"]
-    });
-    return Location(location["address"], position);
+  factory Location.fromFirebaseData(dynamic location) {
+    mezDbgPrint("Building LocData => $location");
+    LocationData position = buildLocationData(location["lat"], location["lng"]);
+    return Location(location["address"] ?? "", position);
+  }
+
+  static LocationData buildLocationData(double lat, double lng) {
+    return LocationData.fromMap(
+        <String, dynamic>{"latitude": lat, "longitude": lng});
+  }
+
+  LatLng toLatLng() {
+    return LatLng(position.latitude!, position.longitude!);
   }
 
   Map<String, String> toJson() =>
@@ -24,5 +33,10 @@ class Location {
       "lat": position.latitude,
       "lng": position.longitude
     };
+  }
+
+  @override
+  String toString() {
+    return "{address : $address , position : ${toLatLng()}}";
   }
 }

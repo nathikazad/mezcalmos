@@ -1,9 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
+import 'package:mezcalmos/TaxiAdminApp/components/appBar.dart';
 import 'package:mezcalmos/TaxiAdminApp/Models/NbCustomers.dart';
-import 'package:mezcalmos/TaxiAdminApp/Models/NbOrders.dart';
 import 'package:mezcalmos/TaxiAdminApp/controller/CustomersController.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -258,7 +257,7 @@ class NewCustomersOnMonthPage extends GetView<CustomersController> {
   Widget build(BuildContext context) {
     Get.put<CustomersController>(CustomersController());
     return Scaffold(
-        appBar: MezcalmosSharedWidgets.mezCalmosAdminAppBar(context),
+        appBar: mezCalmosAdminAppBar(context),
         body: GetX<CustomersController>(
             init: CustomersController(),
             builder: (controller) {

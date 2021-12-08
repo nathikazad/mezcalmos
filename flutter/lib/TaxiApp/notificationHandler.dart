@@ -23,12 +23,13 @@ Notification orderStatusChangeNotificationHandler(String key, dynamic value) {
       getTaxiOrderStatusFields(newOrdersStatus)!;
   return Notification(
       id: key,
-      linkUrl: kCurrentOrderPage,
+      linkUrl: kCurrentOrderRoute,
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],
       timestamp: DateTime.parse(value['time']),
       notificationType: NotificationType.OrderStatusChange,
+      notificationAction: value["notificationAction"],
       variableParams: value);
 }
 
@@ -55,5 +56,6 @@ Notification newMessageNotification(String key, dynamic value) {
       title: value['sender']['name'],
       timestamp: DateTime.parse(value['time']),
       notificationType: NotificationType.NewMessage,
+      notificationAction: value["notificationAction"],
       variableParams: value);
 }

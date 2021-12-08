@@ -16,8 +16,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void mezDbgPrint(dynamic log) {
   String d = DateFormat('HH:mm:ss').format(DateTime.now());
+  String caller = StackTrace.current.toString().split('\n').lastWhere(
+      (element) => element.contains(':mezcalmos/'),
+      orElse: () => '');
+
+  if (caller != '') caller = caller.split('/').last.replaceAll(')', '');
+
   log.toString().split('\n').forEach((str) {
-    print("[MZL][$d] $str\n");
+    print("[MZL][$caller][$d] $str\n");
   });
 }
 
@@ -69,7 +75,7 @@ void responsiveSize(BuildContext context) {
       orientation: Orientation.portrait);
 }
 
-Image handleNetworkImage(
+Image handleIfNetworkImage(
     {required String? url,
     double? height,
     double? width,
@@ -80,12 +86,21 @@ Image handleNetworkImage(
   if (url == null ||
       url.toLowerCase().contains('.svg') ||
       !url.startsWith('http')) {
-    _img = Image.asset(
-      assetInCaseFailed,
-      height: height,
-      width: width,
-      fit: BoxFit.contain,
-    );
+    try {
+      _img = Image.asset(
+        url!,
+        height: height,
+        width: width,
+        fit: BoxFit.contain,
+      );
+    } catch (e) {
+      _img = Image.asset(
+        assetInCaseFailed,
+        height: height,
+        width: width,
+        fit: BoxFit.contain,
+      );
+    }
   } else {
     _img = Image.network(
       url,

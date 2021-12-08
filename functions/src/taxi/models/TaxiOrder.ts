@@ -21,7 +21,8 @@ export interface TaxiOrder extends Order {
 }
 
 export interface TaxiInfo extends UserInfo {
-  taxiNumber?: string
+  taxiNumber?: string,
+  sitio?: string
 }
 
 export enum TaxiOrderStatus {

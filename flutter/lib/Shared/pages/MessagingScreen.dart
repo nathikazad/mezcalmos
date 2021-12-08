@@ -15,6 +15,7 @@ class MessagingScreen extends StatefulWidget {
   _MessagingScreenState createState() => _MessagingScreenState();
 }
 
+// TODO : REFACTORING !
 class _MessagingScreenState extends State<MessagingScreen> {
   String? orderId;
   ParticipantType? recipientType;
@@ -54,14 +55,9 @@ class _MessagingScreenState extends State<MessagingScreen> {
   }) =>
       Container(
         alignment: !isMe ? Alignment.centerLeft : Alignment.centerRight,
-        // width: double.infinity,
-        // color: Colors.black,
-        // margin: const EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 30),
         padding:
             const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
-        // const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
         child: Wrap(
-            // alignment: !isMe ? Alignment.topLeft : Alignment.topRight,
             alignment: !isMe ? WrapAlignment.start : WrapAlignment.end,
             runAlignment: !isMe ? WrapAlignment.start : WrapAlignment.end,
             crossAxisAlignment: WrapCrossAlignment.start,
@@ -77,7 +73,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
                 child: CircleAvatar(
                   radius: 23,
                   backgroundColor: Colors.grey.shade200,
-                  backgroundImage: handleNetworkImage(
+                  backgroundImage: handleIfNetworkImage(
                           url: userImage, assetInCaseFailed: aDefaultAvatar)
                       .image,
                 ),
@@ -127,13 +123,11 @@ class _MessagingScreenState extends State<MessagingScreen> {
                                 ? Color.fromARGB(255, 0, 15, 28)
                                 : Colors.white),
                       )),
-                  // SizedBox(
-                  //   height: 10,
-                  // ),
                   time != null
                       ? Padding(
                           padding: const EdgeInsets.only(left: 5.0),
                           child: Text(
+                            // TODO : make it functional @SeenIn
                             (!isMe ? 'Seen In' : 'Sent In') + '    $time',
                             style: TextStyle(
                                 fontFamily: 'psr',
@@ -165,7 +159,6 @@ class _MessagingScreenState extends State<MessagingScreen> {
     });
 
     // controller.loadChat(_authController.user!.uid, orderId);
-
     void _fillCallBack() {
       mezDbgPrint(
           "--------------------- >>>>> FillCallback Executed  >> Messages Count >> ${controller.value?.messages.length}!");
@@ -258,8 +251,6 @@ class _MessagingScreenState extends State<MessagingScreen> {
               Expanded(
                 child: Obx(
                   () => ListView(
-                    // reverse: true,
-
                     shrinkWrap: true,
                     padding: EdgeInsets.only(top: 20, bottom: 0),
                     controller: _listViewScrollController,

@@ -1,14 +1,16 @@
 import 'dart:async';
 import 'package:flutter/services.dart';
-import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
+import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 import 'package:soundpool/soundpool.dart';
 import 'package:get/get.dart';
 
 StreamSubscription<Notification> initializeShowNotificationsListener() {
-  return Get.find<FBNotificationsController>()
-      .notificationsStream
+  return Get.find<ForegroundNotificationsController>()
+      .displayNotificationsStream
       .listen((notification) {
     mezDbgPrint("Notification Displayer: ${notification.toJson()}");
     if (DateTime.now().difference(notification.timestamp) <
@@ -29,9 +31,16 @@ void _displayNotification(Notification notification) async {
   });
   await pool.play(soundId);
   mezDbgPrint(notification.imgUrl);
-  notificationSnackBar(notification.imgUrl, notification.title,
-      notification.body, notification.formattedTime, () async {
-    mezDbgPrint("Notification route ===> ${notification.linkUrl} !");
-    Get.toNamed(notification.linkUrl);
-  });
+  if (notification.notificationAction == NotificationAction.ShowPopUp) {
+    oneButtonDialog(
+        title: notification.title,
+        message: notification.body,
+        imagUrl: notification.imgUrl);
+  } else {
+    notificationSnackBar(notification.imgUrl, notification.title,
+        notification.body, notification.formattedTime, () async {
+      mezDbgPrint("Notification route ===> ${notification.linkUrl} !");
+      Get.toNamed(notification.linkUrl);
+    });
+  }
 }

@@ -41,7 +41,7 @@ class RestaurantOrder extends Order {
         orderTime: DateTime.parse(data["orderTime"]),
         cost: data["cost"],
         notes: data["notes"],
-        to: Location.fromData(data['to']),
+        to: Location.fromFirebaseData(data['to']),
         restaurant: UserInfo.fromData(data["restaurant"]),
         customer: UserInfo.fromData(data["customer"]));
 

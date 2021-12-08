@@ -32,7 +32,7 @@ Notification orderStatusChangeNotification(String key, dynamic value) {
       timestamp: DateTime.parse(value['time']),
       notificationType: NotificationType.OrderStatusChange,
       variableParams: value,
-      showIfOnLinkPage: true);
+      notificationAction: value["notificationAction"]);
 }
 
 Notification newOrderNotification(String key, dynamic value) {
@@ -45,7 +45,7 @@ Notification newOrderNotification(String key, dynamic value) {
       timestamp: DateTime.parse(value['time']),
       notificationType: NotificationType.NewOrder,
       variableParams: value,
-      showIfOnLinkPage: true);
+      notificationAction: value["notificationAction"]);
 }
 
 Notification newMessageNotification(String key, dynamic value) {
@@ -57,5 +57,6 @@ Notification newMessageNotification(String key, dynamic value) {
       title: value['sender']['name'],
       timestamp: DateTime.parse(value['time']),
       notificationType: NotificationType.NewMessage,
-      variableParams: value);
+      variableParams: value,
+      notificationAction: value["notificationAction"]);
 }

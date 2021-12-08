@@ -2,11 +2,12 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/deviceNotificationsController.dart';
+import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
+import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 import 'package:mezcalmos/TaxiApp/models/TaxiDriver.dart';
 import 'package:location/location.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,8 +16,8 @@ class TaxiAuthController extends GetxController {
   Rxn<TaxiState> _state = Rxn();
   DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
   AuthController _authController = Get.find<AuthController>();
-  DeviceNotificationsController _notificationsController =
-      Get.find<DeviceNotificationsController>();
+  BackgroundNotificationsController _notificationsController =
+      Get.find<BackgroundNotificationsController>();
 
   TaxiState? get taxiState => _state.value;
   Stream<TaxiState?> get stateStream => _state.stream;
@@ -143,9 +144,20 @@ class TaxiAuthController extends GetxController {
         if (_state.value?.currentOrder != null) {
           _databaseHelper.firebaseDatabase
               .reference()
-              .child(inProcessOrder(_state.value!.currentOrder!))
-              .child('driver/location')
+              .child(rootInProcessOrderDriverLocationNode(
+                  _state.value!.currentOrder!))
               .set(positionUpdate);
+          // TODO : Fix this down bellow !
+
+          // String currentOrderCustomerId = Get.find<OrderController>()
+          //     .getOrder(_state.value!.currentOrder!)!
+          //     .customer
+          //     .id;
+          // _databaseHelper.firebaseDatabase
+          //     .reference()
+          //     .child(customerInProcessOrderDriverLocationNode(
+          //         _state.value!.currentOrder!, currentOrderCustomerId))
+          //     .set(positionUpdate);
         }
       }
     });

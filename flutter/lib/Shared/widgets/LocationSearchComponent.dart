@@ -1,22 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
+import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/models/Location.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/AutoCompleteTextField.dart';
 
-typedef LocationChangesNotifier = void Function(
-  Location location,
-  bool showBlackScreen,
-);
-
 typedef TextFieldGotUpdated = void Function(String updatedText);
-
-//  useBorders: false,
-//                         borderRaduis : 0,
-//                         bgColor: Colors.white,
-//                         labelStyle : TextStyle(),
 
 // Location Search component
 class LocationSearchComponent extends StatefulWidget {
@@ -38,7 +27,7 @@ class LocationSearchComponent extends StatefulWidget {
 
   final String label;
   final String hint;
-  final LocationChangesNotifier notifyParent;
+  final MapHelper.LocationChangesNotifier notifyParent;
   final Function onClear;
   String? text;
   final FocusNode? focusNode;
@@ -165,7 +154,7 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
                   Location? _loc =
                       await MapHelper.getLocationFromPlaceId(placeId);
                   if (_loc != null) {
-                    widget.notifyParent(_loc, true);
+                    widget.notifyParent(_loc);
                     setState(() {
                       _showClearBtn = false;
                     });

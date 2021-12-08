@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/constants/databaseNodes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/controllers/fbNotificationsController.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
@@ -86,8 +86,8 @@ class MessageController extends GetxController {
 
   void clearMessageNotifications(String orderId) {
     mezDbgPrint("Clearing message notifications");
-    FBNotificationsController fbNotificationsController =
-        Get.find<FBNotificationsController>();
+    ForegroundNotificationsController fbNotificationsController =
+        Get.find<ForegroundNotificationsController>();
     fbNotificationsController
         .notifications()
         .where((notification) =>

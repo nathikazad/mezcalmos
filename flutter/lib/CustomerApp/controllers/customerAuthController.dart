@@ -4,19 +4,21 @@ import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/CustomerApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/controllers/deviceNotificationsController.dart';
+import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
+import 'package:mezcalmos/Shared/models/Location.dart';
 
 class CustomerAuthController extends GetxController {
   Rxn<Customer> _customer = Rxn();
   DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
   AuthController _authController = Get.find<AuthController>();
 
-  DeviceNotificationsController _notificationsController =
-      Get.find<DeviceNotificationsController>();
+  BackgroundNotificationsController _notificationsController =
+      Get.find<BackgroundNotificationsController>();
 
-  Rxn<Customer> get customerStream => _customer;
+  Rxn<Customer> get customerRxn => _customer;
+
   bool _checkedAppVersion = false;
 
   StreamSubscription? _customerNodeListener;
@@ -86,6 +88,14 @@ class CustomerAuthController extends GetxController {
         .child(savedLocationNode(
             _authController.fireAuthUser!.uid, savedLocation.id!))
         .remove();
+  }
+
+  Location? getLocationById(String locationId) {
+    // we get the user Location by it's id!
+    return _customer.value?.savedLocations
+        .firstWhere((savedLocation) => savedLocation.id == locationId,
+            orElse: null)
+        .location;
   }
 
   @override

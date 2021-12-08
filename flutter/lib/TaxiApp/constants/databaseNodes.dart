@@ -21,14 +21,19 @@ String notificationsNode(String uid) {
 
 String taxiIsLookingField(String uid) => "${taxiAuthNode(uid)}/state/isLooking";
 
-String inProcessOrder(String orderId) {
-  return 'orders/inProcess/taxi/$orderId';
+String rootInProcessOrderDriverLocationNode(String orderId) {
+  return 'orders/inProcess/taxi/$orderId/driver/location';
 }
 
-String pastOrder(String orderId) {
-  return 'orders/past/taxi/$orderId';
+String customerInProcessOrderDriverLocationNode(
+    String orderId, String customerId) {
+  return 'customers/inProcessOrders/$customerId/$orderId/driver/location';
 }
 
-String inProcessOrderStatus(String orderId) {
-  return 'orders/inProcess/taxi/$orderId/status';
+String taxiPastOrdersNode(String uid) {
+  return 'taxis/pastOrders/$uid';
+}
+
+String taxiInProcessOrderNode(String uid) {
+  return 'taxis/inProcessOrders/$uid';
 }
