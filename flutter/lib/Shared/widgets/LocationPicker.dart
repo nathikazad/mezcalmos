@@ -11,6 +11,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:location/location.dart' as GeoLoc;
 
 class LocationPickerController extends MGoogleMapController {
+  RxBool _showLoading = false.obs;
+  RxBool _showFakeMarker = true.obs;
+  RxBool _showBlackScreen = true.obs;
+  Rx<BottomButtomToShow> _bottomButtomToShow = BottomButtomToShow.Pick.obs;
+  RxDouble blackScreenBottomTextMargin = 0.0.obs;
+  RxBool myLocationButtonEnabled = true.obs;
+
   late void Function() showBlackScreen;
   late void Function() hideBlackScreen;
   late void Function() showFakeMarkerAndPickButton;
@@ -18,22 +25,19 @@ class LocationPickerController extends MGoogleMapController {
   late void Function() showPickButton;
   late void Function() showGrayedOutButton;
   late void Function(Location newLocation) setLocation;
-  late void Function(Set<Polyline> polylines) setPolylines;
+  // late void Function(Set<Polyline> polylines) setPolylines;
 }
 
 class LocationPicker extends StatefulWidget {
   final MapHelper.LocationChangesNotifier notifyParentOfLocationFinalized;
   final Function notifyParentOfConfirm;
-  final double blackScreenBottomTextMargin;
-  final bool myLocationButtonEnabled;
+
   // Location location;
   final LocationPickerController locationPickerMapController;
 
   LocationPicker(
       {required this.notifyParentOfLocationFinalized,
       required this.notifyParentOfConfirm,
-      this.blackScreenBottomTextMargin = 0,
-      this.myLocationButtonEnabled = true,
       required this.locationPickerMapController});
   @override
   LocationPickerState createState() =>
@@ -45,11 +49,6 @@ enum BottomButtomToShow { Pick, Confirm, GrayedOut }
 class LocationPickerState extends State<LocationPicker> {
   final LanguageController _lang = Get.find<LanguageController>();
   Location? location;
-
-  bool _showLoading = false;
-  bool _showFakeMarker = true;
-  bool _showBlackScreen = true;
-  BottomButtomToShow _bottomButtomToShow = BottomButtomToShow.Pick;
 
   LocationPickerController _mezPickGoogleMapController;
 
@@ -67,46 +66,32 @@ class LocationPickerState extends State<LocationPicker> {
 /******************************  Controller functions ************************************/
 
   void showBlackScreen() {
-    setState(() {
-      _showBlackScreen = true;
-    });
+    _mezPickGoogleMapController._showBlackScreen.value = true;
   }
 
   void hideBlackScreen() {
-    setState(() {
-      _showBlackScreen = false;
-    });
+    _mezPickGoogleMapController._showBlackScreen.value = false;
   }
 
   void showFakeMarkerAndPickButton() {
-    setState(() {
-      _showFakeMarker = true;
-      _bottomButtomToShow = BottomButtomToShow.Pick;
-    });
+    _mezPickGoogleMapController._showFakeMarker.value = true;
+    _mezPickGoogleMapController._bottomButtomToShow.value =
+        BottomButtomToShow.Pick;
   }
 
   void showPickButton() {
-    setState(() {
-      _bottomButtomToShow = BottomButtomToShow.Pick;
-    });
+    _mezPickGoogleMapController._bottomButtomToShow.value =
+        BottomButtomToShow.Pick;
   }
 
   void showConfirmButton() {
-    setState(() {
-      _bottomButtomToShow = BottomButtomToShow.Confirm;
-    });
-
-    mezDbgPrint("=========>>> showing $_bottomButtomToShow");
-    // setState(() {});
+    _mezPickGoogleMapController._bottomButtomToShow.value =
+        BottomButtomToShow.Confirm;
   }
 
   void showGrayedOutButton() {
-    setState(() {
-      mezDbgPrint(
-          "=========>>> Called :: showGrayedOutButton $_bottomButtomToShow");
-
-      _bottomButtomToShow = BottomButtomToShow.GrayedOut;
-    });
+    _mezPickGoogleMapController._bottomButtomToShow.value =
+        BottomButtomToShow.GrayedOut;
   }
 
   void setLocation(Location newLocation) {
@@ -115,11 +100,9 @@ class LocationPickerState extends State<LocationPicker> {
     this
         ._mezPickGoogleMapController
         .moveToNewLatLng(newLocation.latitude, newLocation.longitude);
-    setState(() {
-      _showLoading = true;
-      _showLoading = false;
-      _showBlackScreen = true;
-    });
+    _mezPickGoogleMapController._showLoading.value = true;
+    _mezPickGoogleMapController._showLoading.value = false;
+    _mezPickGoogleMapController._showBlackScreen.value = true;
   }
 
 /******************************  Init and build function ************************************/
@@ -131,7 +114,8 @@ class LocationPickerState extends State<LocationPicker> {
   @override
   Widget build(BuildContext context) {
     responsiveSize(context);
-    return _showLoading == false || location != null
+    return Obx(() => _mezPickGoogleMapController._showLoading.value == false ||
+            location != null
         ? Stack(
             alignment: Alignment.center,
             children: [
@@ -142,14 +126,19 @@ class LocationPickerState extends State<LocationPicker> {
                 initialLocation:
                     LatLng(location!.latitude, location!.longitude),
                 periodicRedrendring: false,
-                myLocationButtonEnabled: widget.myLocationButtonEnabled,
+                myLocationButtonEnabled:
+                    _mezPickGoogleMapController.myLocationButtonEnabled.value,
               ),
-              _showFakeMarker ? pickerMarker() : SizedBox(),
-              _showBlackScreen ? gestureDetector() : SizedBox(),
+              _mezPickGoogleMapController._showFakeMarker.value
+                  ? pickerMarker()
+                  : SizedBox(),
+              _mezPickGoogleMapController._showBlackScreen.value
+                  ? gestureDetector()
+                  : SizedBox(),
               bottomButton()
             ],
           )
-        : Center(child: CircularProgressIndicator());
+        : Center(child: CircularProgressIndicator()));
   }
 
 /******************************  Widgets ************************************/
@@ -171,8 +160,7 @@ class LocationPickerState extends State<LocationPicker> {
   }
 
   Widget bottomButton() {
-    mezDbgPrint("11111111  ===> Currently Switching on $_bottomButtomToShow");
-    switch (_bottomButtomToShow) {
+    switch (_mezPickGoogleMapController._bottomButtomToShow.value) {
       case BottomButtomToShow.Pick:
         mezDbgPrint("0000000000  ===> returning Pick");
         return buildBottomButton(
@@ -222,9 +210,7 @@ class LocationPickerState extends State<LocationPicker> {
                   ? () async {
                       var _loc = await getCenterAndGeoCode();
                       notifier.call(_loc);
-                      setState(() {
-                        _showFakeMarker = false;
-                      });
+                      _mezPickGoogleMapController._showFakeMarker.value = false;
                     }
                   : () {},
               child: Text(buttonText,
@@ -239,16 +225,17 @@ class LocationPickerState extends State<LocationPicker> {
   Widget gestureDetector() {
     return GestureDetector(
       onTap: () {
-        setState(() {
-          _showBlackScreen = false;
-        });
+        _mezPickGoogleMapController._showBlackScreen.value = false;
       },
       child: Container(
         width: Get.width,
         color: Colors.black45,
         alignment: Alignment.bottomCenter,
         padding: EdgeInsets.only(
-            bottom: widget.blackScreenBottomTextMargin, left: 10, right: 10),
+            bottom:
+                _mezPickGoogleMapController.blackScreenBottomTextMargin.value,
+            left: 10,
+            right: 10),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

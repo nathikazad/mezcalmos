@@ -34,6 +34,11 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
 
   @override
   void initState() {
+    // set the location Enabled Button to be false
+    locationPickerController.myLocationButtonEnabled.value = false;
+    // set blackScreenBottom 110
+    locationPickerController.blackScreenBottomTextMargin.value = 110;
+
     _currentFocusedTextField = SearchComponentType.From;
     GeoLoc.Location().getLocation().then((GeoLoc.LocationData locData) {
       MapHelper.getAdressFromLatLng(
@@ -72,8 +77,6 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                       borderRadius: BorderRadius.circular(5),
                       color: Colors.white),
                   child: LocationPicker(
-                      myLocationButtonEnabled: false,
-                      blackScreenBottomTextMargin: 110,
                       locationPickerMapController:
                           this.locationPickerController,
                       notifyParentOfLocationFinalized:
@@ -182,6 +185,8 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
       taxiRequest.value.routeInformation?.duration = route.duration;
       taxiRequest.value.estimatedPrice = estimatedPrice;
       taxiRequest.value.routeInformation?.polyline = route.encodedPolyLine;
+      mezDbgPrint("Polyliiines ====> ${route.polylineList}");
+      mezDbgPrint("Polyliiines ====> ${taxiRequest.value.toString()}");
       locationPickerController.addPolyline(route.polylineList);
       setState(() {});
     } else {
