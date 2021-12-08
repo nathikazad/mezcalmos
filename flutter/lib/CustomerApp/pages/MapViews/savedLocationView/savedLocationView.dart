@@ -1,7 +1,8 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/components/CustomerApp_appbar.dart';
+import 'package:mezcalmos/CustomerApp/components/buttonComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/customerAppBar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
@@ -77,113 +78,108 @@ class _SavedLocationViewState extends State<SavedLocationView> {
 
   @override
   Widget build(BuildContext context) {
+    final txt = Theme.of(context).textTheme;
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: customerAppBar(
-        AppBarLeftButtonType.Back,
-        _popUpController,
-      ),
-      body: Container(
-        child: SingleChildScrollView(
-            child: Column(
-          children: [
-            SizedBox(
-              height: 20,
+        appBar: CustomerAppBar(
+          title: "Saved Locations",
+          autoBack: true,
+        ),
+        bottomNavigationBar: ButtonComponent(
+          widget: Center(
+            child: Text(
+              "${lang.strings["customer"]["savedLocations"]["addNewLoc"]}",
+              style: txt.headline1!.copyWith(color: Colors.white),
             ),
-            Container(
-              margin: const EdgeInsets.only(right: 16, bottom: 10, left: 16),
-              child: Row(
-                children: [
-                  Container(
-                    child: Text(
-                        lang.strings["customer"]["savedLocations"]["title"],
-                        style: const TextStyle(
-                            color: const Color(0xff000f1c),
-                            fontFamily: "psr",
-                            fontStyle: FontStyle.normal,
-                            fontSize: 12.0),
-                        textAlign: TextAlign.left),
-                  ),
-                  Spacer(),
-                  Container(
-                    child: Text(
-                        "${getLocationNumbers()} ${lang.strings["customer"]["savedLocations"]["location"]}${getLocationNumbers() > 1 ? 's' : ''}",
-                        style: const TextStyle(
-                            color: const Color(0xff000f1c),
-                            fontFamily: "psr",
-                            fontStyle: FontStyle.normal,
-                            fontSize: 12.0),
-                        textAlign: TextAlign.right),
-                  )
-                ],
-              ),
-            ),
-            ...savedLocations.map((savedLocation) => SavedLocationComponent(
-                  savelocation: savedLocation,
-                  onPress: () {
-                    // mezcalmosSnackBar(
-                    //     "_title", "Clicked on ${savedLocation.id!}");
-                    // Get.back();
-                    if (widget.savedLocationViewMode ==
-                        SavedLocationViewMode.GetSavedLocation) {
-                      Get.back(result: savedLocation);
-                    }
-                  },
-                )),
-            SizedBox(
-              height: 25,
-            ),
-            InkWell(
-              child: Container(
-                margin: const EdgeInsets.only(left: 16, right: 16),
-                width: double.infinity,
-                height: 48,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(4)),
-                  boxShadow: [
-                    BoxShadow(
-                        color: const Color(0x332362f1),
-                        offset: Offset(0, 6),
-                        blurRadius: 10,
-                        spreadRadius: 0)
+          ),
+          function: () {
+            Get.toNamed(kPickLocationRoute);
+          },
+        ),
+        body: savedLocations.length > 0
+            ? Container(
+                child: SingleChildScrollView(
+                    child: Column(
+                  children: [
+                    SizedBox(height: Get.height * 0.07),
+                    Container(
+                      margin: const EdgeInsets.only(
+                          right: 16, bottom: 10, left: 16),
+                      child: Row(
+                        children: [
+                          Container(
+                            child: Text(
+                                lang.strings["customer"]["savedLocations"]
+                                    ["title"],
+                                style: txt.headline1!.copyWith(
+                                    fontWeight: FontWeight.w700, fontSize: 12),
+                                textAlign: TextAlign.left),
+                          ),
+                          Spacer(),
+                          Container(
+                            child: Text(
+                                "${getLocationNumbers()} ${lang.strings["customer"]["savedLocations"]["location"]}${getLocationNumbers() > 1 ? 's' : ''}",
+                                style: txt.headline4!.copyWith(
+                                    fontWeight: FontWeight.w700, fontSize: 12),
+                                textAlign: TextAlign.right),
+                          )
+                        ],
+                      ),
+                    ),
+                    ...savedLocations
+                        .map((savedLocation) => SavedLocationComponent(
+                              savelocation: savedLocation,
+                              onPress: () {
+                                if (widget.savedLocationViewMode ==
+                                    SavedLocationViewMode.GetSavedLocation) {
+                                  Get.back(result: savedLocation);
+                                }
+                              },
+                            )),
+                    SizedBox(
+                      height: 25,
+                    ),
                   ],
-                  gradient: LinearGradient(
-                      begin: Alignment(0.1689453125, 0),
-                      end: Alignment(1, 1),
-                      colors: [
-                        const Color(0xff5582ff),
-                        const Color(0xffc54efc)
-                      ]),
-                ),
-                child: Center(
-                  child: RichText(
-                      text: TextSpan(children: [
-                    TextSpan(
-                        style: const TextStyle(
-                            color: const Color(0xffffffff),
-                            fontWeight: FontWeight.w300,
-                            fontFamily: "FontAwesome5Pro",
-                            fontStyle: FontStyle.normal,
-                            fontSize: 16.0),
-                        text: "+ "),
-                    TextSpan(
-                        style: const TextStyle(
-                            color: const Color(0xffffffff),
-                            fontWeight: FontWeight.w700,
-                            fontFamily: "ProductSans",
-                            fontStyle: FontStyle.normal,
-                            fontSize: 16.0),
-                        text:
-                            "    ${lang.strings["customer"]["savedLocations"]["addNewLoc"]}")
-                  ])),
-                ),
-              ),
-              onTap: () {
-                Get.toNamed(kPickLocationRoute);
-              },
-            )
-          ],
-        )),
+                )),
+              )
+            : SavedlocationISEmpty());
+  }
+}
+
+class SavedlocationISEmpty extends StatelessWidget {
+  const SavedlocationISEmpty({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final txt = Theme.of(context).textTheme;
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            child: Image.asset("assets/images/noSavedLoc.png"),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Container(
+            child: Text(
+              "Your Saved locations list is empty",
+              style: txt.headline2!
+                  .copyWith(fontWeight: FontWeight.w700, fontSize: 19),
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            child: Text(
+              "Add new location by clicking the button below",
+              style: txt.subtitle1!
+                  .copyWith(fontWeight: FontWeight.w500, fontSize: 13),
+            ),
+          )
+        ],
       ),
     );
   }
