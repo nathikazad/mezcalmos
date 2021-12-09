@@ -20,7 +20,6 @@ class _NoteComponentState extends State<NoteComponent> {
 
     final txt = Theme.of(context).textTheme;
     return Container(
-      height: 160,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12), color: Colors.white),
       padding: const EdgeInsets.only(top: 10, left: 15, right: 15, bottom: 10),
@@ -53,12 +52,13 @@ class _NoteComponentState extends State<NoteComponent> {
                 borderRadius: BorderRadius.circular(10),
                 color: Color.fromRGBO(237, 237, 237, 1)),
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            height: 99,
             child: TextField(
               onChanged: (val) {
                 if (widget.onChangeCallback != null)
                   widget.onChangeCallback!(val);
               },
+              maxLines: 5,
+              minLines: 5,
               decoration: InputDecoration(
                 hintText: lang.strings['customer']['restaurant']['menu']
                     ['notes'],

@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/components/CustomerApp_appbar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
+import 'package:mezcalmos/CustomerApp/pages/ListOrdersScreen/components/OngoingOrderCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/ListOrdersScreen/ordersListScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Orders/ListOrdersScreen/components/OldOrderCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Orders/ListOrdersScreen/components/OngoingOrderCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Orders/ListOrdersScreen/ordersListScreen.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -24,12 +24,34 @@ class ListOrdersScreen extends StatefulWidget {
 class _ListOrdersScreen extends State<ListOrdersScreen> {
   MyPopupMenuController _popUpController = MyPopupMenuController();
   LanguageController _lang = Get.find<LanguageController>();
+  // RxList<Order> currentOrders = RxList.empty();
+  // RxList<Order> pastOrders = RxList.empty();
   OrderController controller = Get.find<OrderController>();
   AuthController auth = Get.find<AuthController>();
+  // StreamSubscription? currentOrdersListener;
+  // StreamSubscription? pastOrdersListener;
 
+  @override
+  initState() {
+    mezDbgPrint("ListOrdersScreen: onInit");
+    // currentOrders.value = controller.currentOrders;
+    // currentOrdersListener = controller.currentOrders.stream.listen((_) {
+    //   currentOrders.value = controller.currentOrders;
+    // });
+    // pastOrders.value = controller.pastOrders;
+    // pastOrdersListener = controller.pastOrders.stream.listen((_) {
+    //   pastOrders.value = controller.pastOrders;
+    // });
+
+    super.initState();
+  }
 
   @override
   void dispose() {
+    // currentOrdersListener?.cancel();
+    // currentOrdersListener = null;
+    // pastOrdersListener?.cancel();
+    // pastOrdersListener = null;
     _popUpController.hideMenu();
     _popUpController.dispose();
     super.dispose();
@@ -82,7 +104,8 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                       children: List.generate(
                           controller.pastOrders().length,
                           (index) => OldOrderCard(
-                              order: controller.pastOrders()[index] as RestaurantOrder)),
+                              order: controller.pastOrders()[index]
+                                  as RestaurantOrder)),
                     ),
                   ),
                 ),

@@ -4,7 +4,7 @@ import 'package:mezcalmos/CustomerApp/components/CustomerApp_appbar.dart';
 import 'package:mezcalmos/CustomerApp/components/RestaurandCard.dart';
 import 'package:mezcalmos/CustomerApp/components/searchField.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/NewViewRestaurant.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
@@ -12,7 +12,7 @@ import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
 
 class ListRestaurantsScreen extends StatefulWidget {
   @override
-  _ListRestaurantsScreenState createState() => _ListRestaurantsScreenState();       
+  _ListRestaurantsScreenState createState() => _ListRestaurantsScreenState();
 }
 
 class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
@@ -56,8 +56,14 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
                     (index) => RestaurantCard(
                           restaurant: restaurants[index],
                           onClick: () {
-                            Get.toNamed(
-                                getRestaurantRoute(restaurants[index].id));
+                            // Get.toNamed(
+                            //     getRestaurantRoute(restaurants[index].id));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        NewRestaurantViewScreen(
+                                            restaurant: restaurants[index])));
                           },
                         )),
               ),

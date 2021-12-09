@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/components/CustomerApp_appbar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
@@ -8,7 +9,6 @@ import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:intl/intl.dart';
 
 import 'components/BottomBarItemViewScreen.dart';
 import 'components/NoteComponet.dart';
@@ -75,18 +75,17 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => (cartItem.value?.item == null)
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : Scaffold(
-              appBar: CustomerAppBar(
-                title: currentRestaurant != null
-                    ? "${currentRestaurant!.name}"
-                    : "",
-                autoBack: true,
-              ),
-              body: Container(
+      () => Scaffold(
+        appBar: CustomerAppBar(
+          title: currentRestaurant != null ? "${currentRestaurant!.name}" : "",
+          autoBack: true,
+        ),
+        body: (cartItem.value?.item == null)
+            ? Container(
+                alignment: Alignment.center,
+                child: CircularProgressIndicator(),
+              )
+            : Container(
                 child: Column(
                   children: [
                     Expanded(
@@ -156,7 +155,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                   ],
                 ),
               ),
-            ),
+      ),
     );
   }
 }

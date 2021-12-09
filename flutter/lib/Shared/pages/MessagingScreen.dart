@@ -1,12 +1,13 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/components/CustomerApp_appbar.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
-import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 // Extends GetView<MessagingController> after Nathik implements the controller
@@ -65,43 +66,34 @@ class _MessagingScreenState extends State<MessagingScreen> {
             spacing: 10,
             clipBehavior: Clip.none,
             children: [
-              Container(
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border:
-                        Border.all(color: Colors.grey.shade200, width: 0.5)),
-                child: CircleAvatar(
-                  radius: 23,
-                  backgroundColor: Colors.grey.shade200,
-                  backgroundImage: handleIfNetworkImage(
-                          url: userImage, assetInCaseFailed: aDefaultAvatar)
-                      .image,
+              if (!isMe)
+                Container(
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border:
+                          Border.all(color: Colors.grey.shade200, width: 0.5)),
+                  child: CircleAvatar(
+                    radius: 23,
+                    backgroundColor: Colors.grey.shade200,
+                    backgroundImage: handleIfNetworkImage(
+                            url: userImage, assetInCaseFailed: aDefaultAvatar)
+                        .image,
+                  ),
                 ),
-              ),
               Wrap(
                 spacing: 5,
                 direction: Axis.vertical,
-                // alignment: WrapAlignment.spaceEvenly,
                 runAlignment: !isMe ? WrapAlignment.start : WrapAlignment.end,
-                // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-
                 children: [
                   Container(
                       margin: EdgeInsets.only(top: 10),
                       constraints: BoxConstraints(maxWidth: 170, minWidth: 80),
                       padding: EdgeInsets.only(
-                          left: 25, top: 10, bottom: 10, right: 10),
-                      // width: Get.width / 2,
+                          left: 25, top: 10, bottom: 10, right: 25),
                       decoration: BoxDecoration(
-                          gradient: !isMe
-                              ? LinearGradient(colors: [
-                                  Color.fromARGB(255, 248, 248, 248),
-                                  Color.fromARGB(255, 248, 248, 248)
-                                ])
-                              : LinearGradient(colors: [
-                                  Color.fromARGB(255, 92, 127, 255),
-                                  Color.fromARGB(255, 172, 89, 252)
-                                ]),
+                          color: !isMe
+                              ? Theme.of(context).primaryColorLight
+                              : Colors.white,
                           borderRadius: !isMe
                               ? BorderRadius.only(
                                   topLeft: Radius.zero,
@@ -113,27 +105,20 @@ class _MessagingScreenState extends State<MessagingScreen> {
                                   topRight: Radius.zero,
                                   bottomRight: Radius.circular(20),
                                   bottomLeft: Radius.circular(30))),
-                      child: Text(
-                        message,
-                        softWrap: true,
-                        style: TextStyle(
-                            fontFamily: 'psr',
-                            fontSize: 15,
-                            color: !isMe
-                                ? Color.fromARGB(255, 0, 15, 28)
-                                : Colors.white),
-                      )),
+                      child: Text(message,
+                          softWrap: true,
+                          style: (!isMe)
+                              ? Theme.of(context)
+                                  .textTheme
+                                  .bodyText2!
+                                  .copyWith(color: Colors.white)
+                              : Theme.of(context).textTheme.bodyText2)),
                   time != null
                       ? Padding(
                           padding: const EdgeInsets.only(left: 5.0),
                           child: Text(
-                            // TODO : make it functional @SeenIn
-                            (!isMe ? 'Seen In' : 'Sent In') + '    $time',
-                            style: TextStyle(
-                                fontFamily: 'psr',
-                                fontSize: 10,
-                                color: Color.fromARGB(255, 0, 15, 28)),
-                          ),
+                              (!isMe ? 'Seen In' : 'Sent In') + '    $time',
+                              style: Theme.of(context).textTheme.subtitle1),
                         )
                       : SizedBox(),
                 ],
@@ -182,72 +167,15 @@ class _MessagingScreenState extends State<MessagingScreen> {
         onValueCallBack: _fillCallBack);
 
     return Scaffold(
-        // resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.white,
-        appBar: mezcalmosAppBar(AppBarLeftButtonType.Back),
+        appBar: CustomerAppBar(
+            title: controller.recipient(participantType: recipientType)?.name ??
+                "Customer",
+            autoBack: true),
         body: Container(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                  width: Get.width,
-                  padding: EdgeInsets.only(top: 15, bottom: 15),
-                  decoration:
-                      BoxDecoration(color: Color.fromARGB(255, 248, 248, 248)),
-                  child: Wrap(
-                    spacing: 20,
-                    direction: Axis.horizontal,
-                    alignment: WrapAlignment.start,
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15),
-                        child: Obx(
-                          () => CircleAvatar(
-                            radius: 23,
-                            backgroundColor: Colors.grey.shade200,
-                            backgroundImage: controller
-                                        .recipient(
-                                            participantType: recipientType)
-                                        ?.image !=
-                                    null
-                                ? NetworkImage(controller
-                                    .recipient(participantType: recipientType)!
-                                    .image)
-                                : AssetImage(aDefaultAvatar) as ImageProvider,
-                          ),
-                        ),
-                      ),
-                      Obx(
-                        () => Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              controller
-                                      .recipient(participantType: recipientType)
-                                      ?.name ??
-                                  "Customer",
-                              style:
-                                  TextStyle(fontFamily: 'psb', fontSize: 16.5),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              _languageController.strings['shared']['messages']
-                                  ['available'],
-                              style: TextStyle(
-                                  fontFamily: 'psr',
-                                  fontSize: 13,
-                                  color: Color.fromARGB(255, 79, 168, 35)),
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  )),
               Expanded(
                 child: Obx(
                   () => ListView(
@@ -258,83 +186,88 @@ class _MessagingScreenState extends State<MessagingScreen> {
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.all(20),
-                child: TextField(
-                    onChanged: (value) => _typedMsg.value = value,
-                    controller: _textEditingController,
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontFamily: 'psr',
-                        color: Color.fromARGB(255, 0, 15, 28)),
-                    cursorColor: Colors.purple,
-                    scrollPadding: EdgeInsets.all(10),
-                    decoration: InputDecoration(
-                        isDense: true,
-                        contentPadding: EdgeInsets.only(
-                            left: 20, right: 10, top: 30, bottom: 30),
-                        filled: true,
-                        fillColor: Color.fromARGB(255, 248, 248, 248),
-                        border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(140)),
-                            borderSide: BorderSide.none),
-                        hintText: _languageController.strings['shared']
-                            ['messages']['writeMsgPlaceholder'],
-                        hintStyle: TextStyle(
-                            fontSize: 12,
-                            fontFamily: 'psr',
-                            color: Color.fromARGB(255, 0, 15, 28)),
-                        suffixIcon: Padding(
-                          padding: const EdgeInsets.only(right: 10),
-                          child: GestureDetector(
-                            onTap: () {
-                              bool msgReady2Send = _textEditingController.text
-                                      .replaceAll(' ', '')
-                                      .length >
-                                  0;
-                              if (msgReady2Send) {
-                                controller.sendMessage(
-                                    _typedMsg.value, this.orderId!);
-                                _textEditingController.clear();
-                                _typedMsg.value = "";
-                              } else {
-                                _textEditingController.clear();
-                                _typedMsg.value = "";
-                              }
-                            },
-                            child: Obx(
-                              () => Container(
-                                child: Icon(
-                                  Icons.send,
-                                  size: 18,
-                                  color: Colors.white,
-                                ),
-                                width: 45,
-                                height: 45,
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    gradient: _typedMsg.value.length > 0
-                                        ? LinearGradient(
-                                            colors: [
-                                                Color.fromARGB(
-                                                    255, 92, 127, 255),
-                                                Color.fromARGB(
-                                                    255, 172, 89, 252)
-                                              ],
-                                            begin: Alignment.topCenter,
-                                            end: Alignment.bottomCenter)
-                                        : LinearGradient(colors: [
-                                            Colors.grey.shade200,
-                                            Colors.grey.shade200
-                                          ])),
-                              ),
-                            ),
-                          ),
-                        ))),
-              )
+              SendMessageBox(
+                  typedMsg: _typedMsg,
+                  textEditingController: _textEditingController,
+                  languageController: _languageController,
+                  controller: controller,
+                  orderId: orderId)
             ],
           ),
         ));
+  }
+}
+
+class SendMessageBox extends StatelessWidget {
+  const SendMessageBox({
+    Key? key,
+    required RxString typedMsg,
+    required TextEditingController textEditingController,
+    required LanguageController languageController,
+    required this.controller,
+    required this.orderId,
+  })  : _typedMsg = typedMsg,
+        _textEditingController = textEditingController,
+        _languageController = languageController,
+        super(key: key);
+
+  final RxString _typedMsg;
+  final TextEditingController _textEditingController;
+  final LanguageController _languageController;
+  final MessageController controller;
+  final String? orderId;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+        onChanged: (value) => _typedMsg.value = value,
+        controller: _textEditingController,
+        style: Theme.of(context).textTheme.bodyText2,
+        cursorColor: Colors.purple,
+        scrollPadding: EdgeInsets.all(10),
+        decoration: InputDecoration(
+            isDense: true,
+            contentPadding: EdgeInsets.all(30),
+            filled: true,
+            fillColor: Colors.white,
+            border: OutlineInputBorder(borderSide: BorderSide.none),
+            hintText: _languageController.strings['shared']['messages']
+                ['writeMsgPlaceholder'],
+            hintStyle: Theme.of(context).textTheme.subtitle1,
+            suffixIcon: Padding(
+              padding: const EdgeInsets.all(16),
+              child: GestureDetector(
+                onTap: () {
+                  bool msgReady2Send =
+                      _textEditingController.text.replaceAll(' ', '').length >
+                          0;
+                  if (msgReady2Send) {
+                    controller.sendMessage(_typedMsg.value, this.orderId!);
+                    _textEditingController.clear();
+                    _typedMsg.value = "";
+                  } else {
+                    _textEditingController.clear();
+                    _typedMsg.value = "";
+                  }
+                },
+                child: Obx(
+                  () => Container(
+                    child: Icon(
+                      Icons.send,
+                      size: 18,
+                      color: Colors.white,
+                    ),
+                    width: 45,
+                    height: 45,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: _typedMsg.value.length > 0
+                          ? Theme.of(context).primaryColorLight
+                          : Colors.grey.shade200,
+                    ),
+                  ),
+                ),
+              ),
+            )));
   }
 }

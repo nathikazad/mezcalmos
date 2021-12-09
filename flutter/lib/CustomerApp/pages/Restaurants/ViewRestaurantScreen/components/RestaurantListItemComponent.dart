@@ -25,7 +25,6 @@ class _RestaurantsListItemsOfComponentState
         margin: const EdgeInsets.symmetric(
           horizontal: 15,
         ),
-        height: 79,
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(8)),
         child: Row(
@@ -54,28 +53,16 @@ class _RestaurantsListItemsOfComponentState
                   Container(
                     alignment: Alignment.centerLeft,
                     child: Text("${widget.item.name!.capitalizeFirstofEach}",
-                        style: txt.headline2),
+                        style: txt.headline3),
                   ),
                   SizedBox(
                     height: 7,
                   ),
                   Container(
                     alignment: Alignment.centerLeft,
-                    child: RichText(
-                      text: TextSpan(
-                        children: <TextSpan>[
-                          TextSpan(
-                              text: "${widget.item.cost} \$",
-                              style: txt.headline2!.copyWith(
-                                  color: Color.fromRGBO(172, 89, 252, 1))),
-                          TextSpan(
-                            text: '/ person',
-                            style: txt.headline3!.copyWith(
-                                fontSize: 13, fontWeight: FontWeight.w300),
-                          )
-                        ],
-                      ),
-                    ),
+                    child: Text("${widget.item.cost} \$",
+                        style: txt.headline2!
+                            .copyWith(color: Color.fromRGBO(172, 89, 252, 1))),
                   )
                 ],
               ),
