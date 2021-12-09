@@ -42,8 +42,6 @@ export = functions.https.onCall(async (data, context) => {
     //   }
     // }
 
-    // notification.notifyDriversNewRequest(firebase);
-
     let userInfo = await getUserInfo(customerId);
     let order = constructTaxiOrder(orderRequest, userInfo);
     let orderRef = await customerNodes.inProcessOrders(customerId).push(order);

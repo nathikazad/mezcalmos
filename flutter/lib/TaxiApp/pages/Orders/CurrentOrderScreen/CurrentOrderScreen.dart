@@ -57,7 +57,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
         updateOrder(orderStreamEvent: _orderSnapshot);
         // set InitialPosition
         setState(() {
-          initialPosition = order!.driver!.location!.toLatLng();
+          initialPosition = order!.driver!.location!;
         });
         // Listener
         _orderListener =
@@ -138,7 +138,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
           // add the Taxi's
           mGoogleMapController.addOrUpdateTaxiDriverMarker(
               orderStreamEvent.driver!.id,
-              orderStreamEvent.driver!.location!.toLatLng());
+              orderStreamEvent.driver!.location!);
           break;
         case TaxiOrdersStatus.InTransit:
           // no more showing the customer's marker
@@ -162,13 +162,13 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
       if (orderStreamEvent.inProcess()) {
         mGoogleMapController.addOrUpdateTaxiDriverMarker(
             orderStreamEvent.driver!.id,
-            orderStreamEvent.driver!.location!.toLatLng());
+            orderStreamEvent.driver!.location!);
       }
     }
 
     setState(() {
       order = orderStreamEvent;
-      initialPosition = order!.driver!.location!.toLatLng();
+      initialPosition = order!.driver!.location!;
     });
   }
 

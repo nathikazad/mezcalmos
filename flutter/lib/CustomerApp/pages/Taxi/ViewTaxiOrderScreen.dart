@@ -134,7 +134,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
 
         // taxi driver marker
         mGoogleMapController.addOrUpdateTaxiDriverMarker(
-            order.value!.driver!.id, order.value!.driver!.location!.toLatLng());
+            order.value!.driver!.id, order.value!.driver!.location!);
         // customer marker
         mGoogleMapController.addOrUpdateUserMarker(
             order.value!.customer.id, order.value!.from.toLatLng());

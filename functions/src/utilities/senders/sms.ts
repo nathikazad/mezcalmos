@@ -9,7 +9,8 @@ export interface Payload {
   phoneNumber: string
 }
 export async function send(payload: Payload): Promise<void> {
-  await twilio(keys.twilio.accountid, keys.twilio.authtoken)
-    .messages
-    .create({ body: payload.message, from: '+16304488781', to: payload.phoneNumber })
+  if (keys.twilio)
+    await twilio(keys.twilio.accountid, keys.twilio.authtoken)
+      .messages
+      .create({ body: payload.message, from: '+16304488781', to: payload.phoneNumber })
 }

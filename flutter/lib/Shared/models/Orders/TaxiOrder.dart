@@ -1,4 +1,5 @@
-// import 'package:location/location.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart' as locationLibrary;
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
@@ -143,5 +144,36 @@ class TaxiOrder extends Order {
     return status == TaxiOrdersStatus.InTransit ||
         status == TaxiOrdersStatus.LookingForTaxi ||
         status == TaxiOrdersStatus.OnTheWay;
+  }
+}
+
+
+class TaxiUserInfo extends UserInfo {
+  String taxiNumber;
+  String? sitio;
+  LatLng? location;
+
+  TaxiUserInfo(
+      {required String id,
+      required String name,
+      required String image,
+      required this.taxiNumber,
+      this.sitio,
+      required this.location})
+      : super(id, name, image);
+
+  factory TaxiUserInfo.fromData(dynamic data) {
+    mezDbgPrint(" TaxiUserInfo.fromData ====> $data");
+    LatLng? location = data["location"] != null
+        ? LatLng(data["location"]["position"]["lat"],
+            data["location"]["position"]["lng"])
+        : null;
+    return TaxiUserInfo(
+        id: data["id"],
+        name: data["name"],
+        image: data["image"],
+        taxiNumber: data["taxiNumber"],
+        sitio: data["sitio"],
+        location: location);
   }
 }

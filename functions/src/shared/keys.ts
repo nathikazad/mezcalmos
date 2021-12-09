@@ -13,9 +13,6 @@ if (!process.env.MEZC_API_KEYS) {
     hasura: {
       key: "rOTavdgkE13VvHckk2AsK5FEMvkCLx5EriEBQF2GJaRLrCw55gv44uATzneQiEMN",
       url: "https://testing-mezc.hasura.app/v1/graphql"
-    },
-    fcm: {
-      key: "smkey"
     }
   }
 } else {

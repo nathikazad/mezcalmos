@@ -9,7 +9,7 @@ class Location {
   factory Location.fromFirebaseData(dynamic location) {
     mezDbgPrint("Building LocData => $location");
     LocationData position = buildLocationData(location["lat"], location["lng"]);
-    return Location(location["address"] ?? "", position);
+    return Location(location["address"], position);
   }
 
   static LocationData buildLocationData(double lat, double lng) {
