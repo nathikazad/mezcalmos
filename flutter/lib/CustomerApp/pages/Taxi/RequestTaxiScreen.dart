@@ -127,7 +127,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
 
 // after pick button is clicked after user verifies gps locaiton
   void updateModelAndMaybeCalculateRoute(Location newLocation) {
-    locationPickerController.hideBlackScreen();
+    locationPickerController.showOrHideBlackScreen(true);
     updateModelAndMarker(_currentFocusedTextField, newLocation);
     if (taxiRequest.value.isFromToSet()) {
       updateRouteInformation();

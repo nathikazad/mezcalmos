@@ -5,14 +5,14 @@ import 'package:mezcalmos/CustomerApp/components/userMenuComponent.dart';
 class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
   final GestureTapCallback? onLeadingTaped;
 
-  final String title;
+  final String? title;
   final Widget? myLeading;
   final bool? center;
   final Color? color;
   final bool autoBack;
   CustomerAppBar(
       {Key? key,
-      required this.title,
+      this.title,
       this.color,
       required this.autoBack,
       this.myLeading,
@@ -37,7 +37,7 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
               onTap: onLeadingTaped != null ? onLeadingTaped : null)
           : null,
       title: Text(
-        title,
+        title ?? "",
         style: Theme.of(context).textTheme.headline2,
       ),
       actions: [

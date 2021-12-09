@@ -21,7 +21,7 @@ import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 class MGoogleMapController {
   RxSet<Polyline> polylines = <Polyline>{}.obs;
   RxList<Marker> markers = <Marker>[].obs;
-  Location? location;
+  Rxn<LocationModel.Location> location = Rxn();
   RxBool _animateMarkersPolyLinesBounds = false.obs;
   GoogleMapController? controller;
 

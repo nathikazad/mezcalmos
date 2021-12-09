@@ -18,30 +18,46 @@ class LocationPickerController extends MGoogleMapController {
   RxDouble blackScreenBottomTextMargin = 0.0.obs;
   RxBool myLocationButtonEnabled = true.obs;
 
-  late void Function() showBlackScreen;
-  late void Function() hideBlackScreen;
-  late void Function() showFakeMarkerAndPickButton;
-  late void Function() showConfirmButton;
-  late void Function() showPickButton;
-  late void Function() showGrayedOutButton;
-  late void Function(Location newLocation) setLocation;
+  void showOrHideBlackScreen(bool value) {
+    _showBlackScreen.value = value;
+  }
+
+  void showFakeMarkerAndPickButton() {
+    _showFakeMarker.value = true;
+    _bottomButtomToShow.value = BottomButtomToShow.Pick;
+  }
+
+  void showConfirmButton() {
+    _bottomButtomToShow.value = BottomButtomToShow.Confirm;
+  }
+
+  void showPickButton() {
+    _bottomButtomToShow.value = BottomButtomToShow.Pick;
+  }
+
+  void showGrayedOutButton() {
+    _bottomButtomToShow.value = BottomButtomToShow.GrayedOut;
+  }
+
+  void setLocation(Location newLocation) {
+    super.location.value = newLocation;
+  }
   // late void Function(Set<Polyline> polylines) setPolylines;
 }
 
 class LocationPicker extends StatefulWidget {
   final MapHelper.LocationChangesNotifier notifyParentOfLocationFinalized;
   final Function notifyParentOfConfirm;
-
   // Location location;
   final LocationPickerController locationPickerMapController;
-
+  final bool showBottomButton;
   LocationPicker(
-      {required this.notifyParentOfLocationFinalized,
+      {this.showBottomButton = true,
+      required this.notifyParentOfLocationFinalized,
       required this.notifyParentOfConfirm,
       required this.locationPickerMapController});
   @override
-  LocationPickerState createState() =>
-      LocationPickerState(this.locationPickerMapController);
+  LocationPickerState createState() => LocationPickerState();
 }
 
 enum BottomButtomToShow { Pick, Confirm, GrayedOut }
@@ -50,62 +66,8 @@ class LocationPickerState extends State<LocationPicker> {
   final LanguageController _lang = Get.find<LanguageController>();
   Location? location;
 
-  LocationPickerController _mezPickGoogleMapController;
+  LocationPickerState();
 
-  LocationPickerState(this._mezPickGoogleMapController) {
-    _mezPickGoogleMapController.showBlackScreen = showBlackScreen;
-    _mezPickGoogleMapController.hideBlackScreen = hideBlackScreen;
-    _mezPickGoogleMapController.showFakeMarkerAndPickButton =
-        showFakeMarkerAndPickButton;
-    _mezPickGoogleMapController.setLocation = setLocation;
-    _mezPickGoogleMapController.showConfirmButton = showConfirmButton;
-    _mezPickGoogleMapController.showPickButton = showPickButton;
-    _mezPickGoogleMapController.showGrayedOutButton = showGrayedOutButton;
-  }
-
-/******************************  Controller functions ************************************/
-
-  void showBlackScreen() {
-    _mezPickGoogleMapController._showBlackScreen.value = true;
-  }
-
-  void hideBlackScreen() {
-    _mezPickGoogleMapController._showBlackScreen.value = false;
-  }
-
-  void showFakeMarkerAndPickButton() {
-    _mezPickGoogleMapController._showFakeMarker.value = true;
-    _mezPickGoogleMapController._bottomButtomToShow.value =
-        BottomButtomToShow.Pick;
-  }
-
-  void showPickButton() {
-    _mezPickGoogleMapController._bottomButtomToShow.value =
-        BottomButtomToShow.Pick;
-  }
-
-  void showConfirmButton() {
-    _mezPickGoogleMapController._bottomButtomToShow.value =
-        BottomButtomToShow.Confirm;
-  }
-
-  void showGrayedOutButton() {
-    _mezPickGoogleMapController._bottomButtomToShow.value =
-        BottomButtomToShow.GrayedOut;
-  }
-
-  void setLocation(Location newLocation) {
-    location = newLocation;
-    mezDbgPrint("MezPickedGMap did updated => Location changed !!!");
-    this
-        ._mezPickGoogleMapController
-        .moveToNewLatLng(newLocation.latitude, newLocation.longitude);
-    _mezPickGoogleMapController._showLoading.value = true;
-    _mezPickGoogleMapController._showLoading.value = false;
-    _mezPickGoogleMapController._showBlackScreen.value = true;
-  }
-
-/******************************  Init and build function ************************************/
   @override
   void initState() {
     super.initState();
@@ -114,28 +76,31 @@ class LocationPickerState extends State<LocationPicker> {
   @override
   Widget build(BuildContext context) {
     responsiveSize(context);
-    return Obx(() => _mezPickGoogleMapController._showLoading.value == false ||
-            location != null
+    return Obx(() => widget.locationPickerMapController._showLoading.value ==
+                false ||
+            widget.locationPickerMapController.location != null
         ? Stack(
             alignment: Alignment.center,
             children: [
               MGoogleMap(
-                mGoogleMapController: _mezPickGoogleMapController,
+                mGoogleMapController: widget.locationPickerMapController,
                 notifyParentOfNewLocation:
                     widget.notifyParentOfLocationFinalized,
-                initialLocation:
-                    LatLng(location!.latitude, location!.longitude),
+                initialLocation: LatLng(
+                    widget.locationPickerMapController.location.value!.latitude,
+                    widget
+                        .locationPickerMapController.location.value!.longitude),
                 periodicRedrendring: false,
-                myLocationButtonEnabled:
-                    _mezPickGoogleMapController.myLocationButtonEnabled.value,
+                myLocationButtonEnabled: widget
+                    .locationPickerMapController.myLocationButtonEnabled.value,
               ),
-              _mezPickGoogleMapController._showFakeMarker.value
+              widget.locationPickerMapController._showFakeMarker.value
                   ? pickerMarker()
                   : SizedBox(),
-              _mezPickGoogleMapController._showBlackScreen.value
+              widget.locationPickerMapController._showBlackScreen.value
                   ? gestureDetector()
                   : SizedBox(),
-              bottomButton()
+              this.widget.showBottomButton ? bottomButton() : SizedBox()
             ],
           )
         : Center(child: CircularProgressIndicator()));
@@ -160,7 +125,7 @@ class LocationPickerState extends State<LocationPicker> {
   }
 
   Widget bottomButton() {
-    switch (_mezPickGoogleMapController._bottomButtomToShow.value) {
+    switch (widget.locationPickerMapController._bottomButtomToShow.value) {
       case BottomButtomToShow.Pick:
         mezDbgPrint("0000000000  ===> returning Pick");
         return buildBottomButton(
@@ -185,9 +150,16 @@ class LocationPickerState extends State<LocationPicker> {
     return Positioned(
         bottom: 10,
         left: 15,
-        right: 15,
+        right: widget.locationPickerMapController.myLocationButtonEnabled.value
+            ? 80
+            : 15,
         child: Container(
-          margin: EdgeInsets.only(bottom: 30),
+          height: 50,
+          margin: EdgeInsets.only(
+              bottom: widget
+                      .locationPickerMapController.myLocationButtonEnabled.value
+                  ? 2
+                  : 30),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
             gradient: LinearGradient(
@@ -202,38 +174,41 @@ class LocationPickerState extends State<LocationPicker> {
           ),
           child: TextButton(
               style: ButtonStyle(
-                  fixedSize: MaterialStateProperty.all(Size(Get.width,
-                      getSizeRelativeToScreen(20, Get.height, Get.width))),
                   backgroundColor:
                       MaterialStateProperty.all(Colors.transparent)),
               onPressed: notifier != null
                   ? () async {
                       var _loc = await getCenterAndGeoCode();
                       notifier.call(_loc);
-                      _mezPickGoogleMapController._showFakeMarker.value = false;
+                      widget.locationPickerMapController._showFakeMarker.value =
+                          false;
                     }
                   : () {},
-              child: Text(buttonText,
-                  style: TextStyle(
-                    fontFamily: 'psr',
-                    color: Colors.white,
-                    fontSize: 18.sp,
-                  ))),
+              child: Center(
+                child: Text(buttonText,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.visible,
+                    style: TextStyle(
+                      fontFamily: 'psr',
+                      color: Colors.white,
+                      fontSize: 18.sp,
+                    )),
+              )),
         ));
   }
 
   Widget gestureDetector() {
     return GestureDetector(
       onTap: () {
-        _mezPickGoogleMapController._showBlackScreen.value = false;
+        widget.locationPickerMapController._showBlackScreen.value = false;
       },
       child: Container(
         width: Get.width,
         color: Colors.black45,
         alignment: Alignment.bottomCenter,
         padding: EdgeInsets.only(
-            bottom:
-                _mezPickGoogleMapController.blackScreenBottomTextMargin.value,
+            bottom: widget
+                .locationPickerMapController.blackScreenBottomTextMargin.value,
             left: 10,
             right: 10),
         child: Row(
@@ -269,23 +244,28 @@ class LocationPickerState extends State<LocationPicker> {
 
 /******************************  helper functions ************************************/
   Future<Location> getCenterAndGeoCode() async {
-    LatLng _mapCenter = await this._mezPickGoogleMapController.getMapCenter();
+    LatLng _mapCenter =
+        await this.widget.locationPickerMapController.getMapCenter();
 
     GeoLoc.LocationData _newLocationData =
         Location.buildLocationData(_mapCenter.latitude, _mapCenter.longitude);
 
-    double kmDistance = MapHelper.calculateDistance(_newLocationData,
-        Location.buildLocationData(location!.latitude, location!.longitude));
+    double kmDistance = MapHelper.calculateDistance(
+        _newLocationData,
+        Location.buildLocationData(
+            widget.locationPickerMapController.location.value!.latitude,
+            widget.locationPickerMapController.location.value!.longitude));
 
     mezDbgPrint("@===> old location : ${location.toString()}");
 
-    String formattedAddress = location!.address;
+    String formattedAddress =
+        widget.locationPickerMapController.location.value!.address;
     if (kmDistance > 0.5 || formattedAddress == "") {
       // ADDED : || formattedAddress == ""  CUZ on clear we set address == "".
       // and that's what 's leavign the textfields empty when re-picking but  distance is less than 0.5 km
       formattedAddress = await MapHelper.getAdressFromLatLng(LatLng(
               _newLocationData.latitude!, _newLocationData.longitude!)) ??
-          location!.address;
+          widget.locationPickerMapController.location.value!.address;
     } else {
       mezDbgPrint(
           "%&****************************  DISTANCE LESS THAN 0.5 %%%%%%%%%%%%%%");

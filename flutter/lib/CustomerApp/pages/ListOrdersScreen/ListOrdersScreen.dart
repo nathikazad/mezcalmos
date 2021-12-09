@@ -4,13 +4,12 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/components/CustomerApp_appbar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
-import 'package:mezcalmos/CustomerApp/pages/Orders/ListOrdersScreen/components/OldOrderCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Orders/ListOrdersScreen/components/OngoingOrderCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Orders/ListOrdersScreen/ordersListScreen.dart';
+import 'package:mezcalmos/CustomerApp/pages/ListOrdersScreen/components/OldOrderCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/ListOrdersScreen/components/OngoingOrderCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/ListOrdersScreen/ordersListScreen.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
 
 final f = new DateFormat('MM.dd.yyyy');
@@ -26,7 +25,6 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
   LanguageController _lang = Get.find<LanguageController>();
   OrderController controller = Get.find<OrderController>();
   AuthController auth = Get.find<AuthController>();
-
 
   @override
   void dispose() {
@@ -82,7 +80,8 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                       children: List.generate(
                           controller.pastOrders().length,
                           (index) => OldOrderCard(
-                              order: controller.pastOrders()[index] as RestaurantOrder)),
+                              order: controller.pastOrders()[index]
+                                  as RestaurantOrder)),
                     ),
                   ),
                 ),

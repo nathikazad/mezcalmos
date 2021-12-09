@@ -9,10 +9,12 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/widgets/LocationPicker.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
 import 'package:location/location.dart' as GeoLoc;
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
 
 import 'components/saveLocationDailog.dart';
@@ -28,8 +30,9 @@ class PickLocationView extends StatefulWidget {
 
 class _PickLocationViewState extends State<PickLocationView> {
   MyPopupMenuController _popUpController = MyPopupMenuController();
-
-  Location? _selectedLocation;
+  final LocationPickerController locationPickerController =
+      LocationPickerController();
+  // Location? locationPickerController.location;
   SavedLocation? savedLocation;
   bool showBlackScreen = true;
 
@@ -44,12 +47,13 @@ class _PickLocationViewState extends State<PickLocationView> {
       if (resault != null && resault != "") {
         mezDbgPrint("the choosen name is $resault");
         String? address = await MapHelper.getAdressFromLatLng(LatLng(
-            _selectedLocation!.latitude!, _selectedLocation!.longitude!));
-        _selectedLocation!.address = address ??
-            "${_lang.strings['shared']['pickLocation']['address']} : ${_selectedLocation!.latitude}, ${_selectedLocation!.longitude}";
+            locationPickerController.location.value!.latitude!,
+            locationPickerController.location.value!.longitude!));
+        locationPickerController.location.value!.address = address ??
+            "${_lang.strings['shared']['pickLocation']['address']} : ${locationPickerController.location.value!.latitude}, ${locationPickerController.location.value!.longitude}";
 
-        savedLocation =
-            SavedLocation(name: resault, location: _selectedLocation!);
+        savedLocation = SavedLocation(
+            name: resault, location: locationPickerController.location.value!);
 
         customerAuthController.saveNewLocation(savedLocation!);
 
@@ -61,12 +65,15 @@ class _PickLocationViewState extends State<PickLocationView> {
       if (resault != null && resault != "") {
         mezDbgPrint("the choosen name is $resault");
         String? address = await MapHelper.getAdressFromLatLng(LatLng(
-            _selectedLocation!.latitude!, _selectedLocation!.longitude!));
-        _selectedLocation!.address = address ??
-            "${_lang.strings['shared']['pickLocation']['address']} : ${_selectedLocation!.latitude}, ${_selectedLocation!.longitude}";
+            locationPickerController.location.value!.latitude!,
+            locationPickerController.location.value!.longitude!));
+        locationPickerController.location.value!.address = address ??
+            "${_lang.strings['shared']['pickLocation']['address']} : ${locationPickerController.location.value!.latitude}, ${locationPickerController.location.value!.longitude}";
 
         savedLocation = SavedLocation(
-            id: savedLocation!.id, name: resault, location: _selectedLocation!);
+            id: savedLocation!.id,
+            name: resault,
+            location: locationPickerController.location.value!);
 
         customerAuthController.editLocation(savedLocation!);
 
@@ -75,14 +82,14 @@ class _PickLocationViewState extends State<PickLocationView> {
     }
     // Get.back();
     // mezDbgPrint(
-    //     "Last Location Stored Address ==> ${_selectedLocation!.address}");
-    // mezDbgPrint("Last Location Stored Lat ==> ${_selectedLocation!.latitude}");
-    // mezDbgPrint("Last Location Stored Lng ==> ${_selectedLocation!.longitude}");
-    // if (_selectedLocation!.address == "") {
+    //     "Last Location Stored Address ==> ${locationPickerController.location!.address}");
+    // mezDbgPrint("Last Location Stored Lat ==> ${locationPickerController.location!.latitude}");
+    // mezDbgPrint("Last Location Stored Lng ==> ${locationPickerController.location!.longitude}");
+    // if (locationPickerController.location!.address == "") {
 
     // }
 
-    // Get.back<Location>(result: _selectedLocation, closeOverlays: true);
+    // Get.back<Location>(result: locationPickerController.location, closeOverlays: true);
   }
 
   @override
@@ -91,11 +98,11 @@ class _PickLocationViewState extends State<PickLocationView> {
       GeoLoc.Location().getLocation().then((locData) {
         mezDbgPrint("Sat to current Location $locData!");
         setState(() {
-          _selectedLocation = Location.fromFirebaseData({
+          locationPickerController.setLocation(Location.fromFirebaseData({
             "address": "",
             "lat": locData.latitude,
             "lng": locData.longitude,
-          });
+          }));
         });
       });
     } else {
@@ -111,7 +118,7 @@ class _PickLocationViewState extends State<PickLocationView> {
       GeoLoc.Location().getLocation().then((locData) {
         mezDbgPrint("Sat to current Location $locData!");
         setState(() {
-          _selectedLocation = Location.fromFirebaseData({
+          locationPickerController.location.value = Location.fromFirebaseData({
             "address": "${savedLocation!.location.address}",
             "lat": savedLocation!.location.latitude,
             "lng": savedLocation!.location.longitude,
@@ -135,6 +142,31 @@ class _PickLocationViewState extends State<PickLocationView> {
   Widget build(BuildContext context) {
     responsiveSize(context);
     return Scaffold(
+      bottomNavigationBar: Container(
+        margin: EdgeInsets.only(bottom: 30),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          gradient: LinearGradient(colors: [
+            Color.fromRGBO(81, 132, 255, 1),
+            Color.fromRGBO(206, 73, 252, 1)
+          ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+        ),
+        child: TextButton(
+            style: ButtonStyle(
+                fixedSize: MaterialStateProperty.all(Size(Get.width,
+                    getSizeRelativeToScreen(20, Get.height, Get.width))),
+                backgroundColor: MaterialStateProperty.all(Colors.transparent)
+
+                // MaterialStateProperty.all(Color(0xffa8a8a8)),
+                ),
+            onPressed: onPickButtonClick,
+            child: Text(_lang.strings["shared"]["pickLocation"]["pick"],
+                style: TextStyle(
+                  fontFamily: 'psr',
+                  color: Colors.white,
+                  fontSize: 18.sp,
+                ))),
+      ),
       resizeToAvoidBottomInset: false,
       appBar: customerAppBar(AppBarLeftButtonType.Back, _popUpController),
       backgroundColor: Colors.white,
@@ -157,14 +189,14 @@ class _PickLocationViewState extends State<PickLocationView> {
               padding: EdgeInsets.only(top: 10),
               child: LocationSearchComponent(
                   label: "",
-                  text: _selectedLocation?.address,
+                  text: locationPickerController.location.value?.address,
                   onClear: () {},
                   notifyParent: (Location? location) {
                     mezDbgPrint(
                         "Ontap on suggestion  => ${location?.toJson()} ");
                     setState(() {
                       this.showBlackScreen = showBlackScreen;
-                      _selectedLocation = location;
+                      locationPickerController.setLocation(location!);
                     });
                   }),
             ),
@@ -177,52 +209,28 @@ class _PickLocationViewState extends State<PickLocationView> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
                           color: Colors.grey.shade200),
-                      child:
-                          // _selectedLocation != null
-                          //     ? MezPickGoogleMap(
-                          //         showBlackScreen: showBlackScreen,
-                          //         notifyParent: (Location location) {
-                          //           setState(() {
-                          //             this.showBlackScreen = showBlackScreen;
-                          //             _selectedLocation = location;
-                          //           });
-                          //         },
-                          //         location: LatLng(_selectedLocation!.latitude,
-                          //             _selectedLocation!.longitude))
-                          //     :
-                          Center(
-                        child: CircularProgressIndicator(
-                          color: Colors.black,
-                          strokeWidth: 1,
-                        ),
-                      ),
+                      child: locationPickerController.location != null
+                          ? LocationPicker(
+                              showBottomButton: false,
+                              locationPickerMapController:
+                                  this.locationPickerController,
+                              notifyParentOfConfirm: (_) {},
+                              notifyParentOfLocationFinalized:
+                                  (Location location) {
+                                setState(() {
+                                  this.showBlackScreen = showBlackScreen;
+                                  locationPickerController
+                                      .setLocation(location);
+                                });
+                              },
+                            )
+                          : Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.black,
+                                strokeWidth: 1,
+                              ),
+                            ),
                     ))),
-            Container(
-              margin: EdgeInsets.only(bottom: 30),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                gradient: LinearGradient(colors: [
-                  Color.fromRGBO(81, 132, 255, 1),
-                  Color.fromRGBO(206, 73, 252, 1)
-                ], begin: Alignment.topLeft, end: Alignment.bottomRight),
-              ),
-              child: TextButton(
-                  style: ButtonStyle(
-                      fixedSize: MaterialStateProperty.all(Size(Get.width,
-                          getSizeRelativeToScreen(20, Get.height, Get.width))),
-                      backgroundColor:
-                          MaterialStateProperty.all(Colors.transparent)
-
-                      // MaterialStateProperty.all(Color(0xffa8a8a8)),
-                      ),
-                  onPressed: onPickButtonClick,
-                  child: Text(_lang.strings["shared"]["pickLocation"]["pick"],
-                      style: TextStyle(
-                        fontFamily: 'psr',
-                        color: Colors.white,
-                        fontSize: 18.sp,
-                      ))),
-            ),
           ],
         ),
       ),
