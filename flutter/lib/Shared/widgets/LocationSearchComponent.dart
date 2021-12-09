@@ -36,10 +36,10 @@ class LocationSearchComponent extends StatefulWidget {
       {required this.label,
       this.readOnly = false,
       this.useBorders = true,
-      this.leftTopRadius = 0,
-      this.leftBotRaduis = 0,
-      this.rightTopRaduis = 0,
-      this.rightBotRaduis = 0,
+      this.leftTopRadius = 6,
+      this.leftBotRaduis = 6,
+      this.rightTopRaduis = 6,
+      this.rightBotRaduis = 6,
       this.bgColor = const Color(0xfff8f8f8),
       this.labelStyle = const TextStyle(fontFamily: "psr", fontSize: 14),
       this.hint = "Enter Address",
@@ -100,7 +100,7 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
     return Column(
       children: <Widget>[
         Container(
-          padding: EdgeInsets.only(left: 10, top: 10),
+          padding: EdgeInsets.only(left: 10, right: 10),
           alignment: Alignment.center,
           decoration: BoxDecoration(
               border: widget.useBorders
@@ -162,6 +162,11 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
                 },
                 tfTextDecoration: InputDecoration(
                   hintText: widget.hint,
+                  hintStyle: TextStyle(
+                    color: Color.fromRGBO(141, 141, 141, 1),
+                    fontSize: 13.33,
+                    fontWeight: FontWeight.w400,
+                  ),
                   border: InputBorder.none,
                   suffixIconConstraints: BoxConstraints(
                     maxWidth: 20,
@@ -182,7 +187,8 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
                               child: Icon(Icons.clear_rounded,
                                   size: 22, color: Colors.black)),
                         )
-                      : SizedBox(height: 0, width: 0),
+                      : Icon(Icons.search,
+                          size: 22, color: Color.fromRGBO(141, 141, 141, 1)),
                 ),
               ),
             ],

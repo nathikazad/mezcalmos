@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/userMenuComponent.dart';
+import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 
 // ignore: must_be_immutable
 class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -36,10 +38,19 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
               child: myLeading,
               onTap: onLeadingTaped != null ? onLeadingTaped : null)
           : null,
-      title: Text(
-        title ?? "",
-        style: Theme.of(context).textTheme.headline2,
-      ),
+      title: (title != null)
+          ? Text(
+              title!,
+              style: Theme.of(context).textTheme.headline2,
+            )
+          : Container(
+              width: Get.width * 0.5,
+              child: FittedBox(
+                child: Row(
+                  children: [MezcalmosSharedWidgets.fillTitle(1)],
+                ),
+              ),
+            ),
       actions: [
         UserMenu(),
       ],

@@ -60,6 +60,7 @@ class SavedLocationComponent extends StatelessWidget {
                 //===============address================
                 Container(
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Icon(
                         Icons.location_on_outlined,
@@ -69,12 +70,18 @@ class SavedLocationComponent extends StatelessWidget {
                       SizedBox(
                         width: 5,
                       ),
-                      Text(
-                        "${savelocation.location.address}",
-                        style: txt.subtitle2!.copyWith(
-                            color: Color.fromRGBO(33, 33, 33, 1),
-                            fontSize: 13.44,
-                            fontWeight: FontWeight.w400),
+                      Container(
+                        width: Get.width * 0.60,
+                        child: Text(
+                          "${savelocation.location.address}",
+                          maxLines: 2,
+                          softWrap: true,
+                          overflow: TextOverflow.ellipsis,
+                          style: txt.subtitle2!.copyWith(
+                              color: Color.fromRGBO(33, 33, 33, 1),
+                              fontSize: 13.44,
+                              fontWeight: FontWeight.w400),
+                        ),
                       ),
                     ],
                   ),
