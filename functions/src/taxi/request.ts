@@ -5,8 +5,8 @@ import { isSignedIn } from "../shared/helper/authorizer";
 import { ServerResponseStatus } from "../shared/models/Generic";
 import { OrderType } from "../shared/models/Order";
 import { getUserInfo } from "../shared/rootController";
-import { OrderRequest } from "./models/OrderRequest";
-import { constructTaxiOrder } from "./models/TaxiOrder";
+import { OrderRequest } from "../shared/models/taxi/OrderRequest";
+import { constructTaxiOrder } from "../shared/models/taxi/TaxiOrder";
 
 export = functions.https.onCall(async (data, context) => {
   let response = isSignedIn(context.auth)

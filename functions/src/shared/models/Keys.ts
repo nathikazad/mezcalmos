@@ -16,4 +16,6 @@ export interface Keys {
   twilio: Twilio;
   hasura: Hasura;
   fcm: Fcm;
+  serviceAccount?: string | undefined;
+  databaseURL?: string | undefined;
 }

@@ -3,8 +3,9 @@ import { UserInfo } from "./User";
 
 
 export interface Chat {
-  chatType: "order",
-  orderType?: OrderType
+  chatType: ChatType;
+  orderType?: OrderType;
+  messages: Record<string, Message>;
   participants: Record<string, Participant>;
 }
 
@@ -22,4 +23,12 @@ export enum ParticipantType {
 
 export interface Participant extends UserInfo {
   particpantType: ParticipantType
+}
+
+export interface Message {
+  orderId: string;
+  userId: string;
+  alreadyNotified: boolean;
+  message: string,
+  timestamp: string
 }

@@ -1,0 +1,17 @@
+{
+  "name": "supervisor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "emulateSupervisor": "cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 supervisor -x node --  index.js emulate"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cross-env": "^7.0.3",
+    "firebase-admin": "^9.9.0",
+    "graphql-request": "^3.5.0",
+    "web-push": "^3.4.4"
+  }
+}

@@ -5,7 +5,7 @@ import { ServerResponseStatus } from "../shared/models/Generic";
 import { OrderType } from "../shared/models/Order";
 import { push } from "../shared/notification/notifyUser";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
-import { TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "./models/TaxiOrder";
+import { TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "../shared/models/taxi/TaxiOrder";
 import { taxiOrderStatusChangeMessages } from "./bgNotificationMessages";
 
 export async function expireOrder(orderId: string) {
@@ -66,7 +66,6 @@ export async function expireOrder(orderId: string) {
     }
 
     push(order.customer.id!, notification);
-
 
     return {
       status: ServerResponseStatus.Success,
