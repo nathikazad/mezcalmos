@@ -47,7 +47,7 @@ class ItemMenuComponents extends StatelessWidget {
                 borderRadius: BorderRadius.all(
                   Radius.circular(3),
                 ),
-                child: handleIfNetworkImage(url: photo, fit: BoxFit.cover),
+                child: mLoadImage(url: photo, fit: BoxFit.cover),
                 // Image.network(
                 //   "$photo",
                 //   fit: BoxFit.cover,

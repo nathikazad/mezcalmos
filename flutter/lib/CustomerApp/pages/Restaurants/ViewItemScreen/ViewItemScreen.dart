@@ -101,7 +101,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                                 height: Get.width - 120,
                                 width: Get.width - 120,
                                 child: ClipOval(
-                                  child: handleIfNetworkImage(
+                                  child: mLoadImage(
                                       url: cartItem.value!.item.image!,
                                       fit: BoxFit.cover),
                                 ),

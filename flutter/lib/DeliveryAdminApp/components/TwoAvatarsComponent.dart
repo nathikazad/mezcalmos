@@ -34,7 +34,7 @@ class TowAvatarsComponent extends StatelessWidget {
                         child: Container(
                             width: 30,
                             height: 30,
-                            child: handleIfNetworkImage(
+                            child: mLoadImage(
                                 url: customerImage,
                                 assetInCaseFailed: aDefaultAvatar)
                             // Image.network(
@@ -52,7 +52,7 @@ class TowAvatarsComponent extends StatelessWidget {
             child: Container(
               height: 40,
               width: 40,
-              child: ClipOval(child: handleIfNetworkImage(url: url)
+              child: ClipOval(child: mLoadImage(url: url)
                   //      Image.network(
                   //   "$url",
                   //   fit: BoxFit.cover,

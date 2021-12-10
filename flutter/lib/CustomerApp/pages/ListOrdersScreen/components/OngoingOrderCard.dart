@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 
 class OngoingOrderCard extends StatelessWidget {
   const OngoingOrderCard({
@@ -27,7 +28,12 @@ class OngoingOrderCard extends StatelessWidget {
                 CircleAvatar(
                     radius: 35,
                     backgroundImage:
-                        NetworkImage(order.serviceProvider!.image)),
+                        // #question @jam what is the point of null check if you are going to override it like this
+                        // taxi orders dont have service provider image when they are looking for orders
+                        // in that case show the logo, it will not work as NetworkImage, so please change to load asset image
+                        NetworkImage(order.serviceProvider != null
+                            ? order.serviceProvider!.image
+                            : "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d")),
                 SizedBox(width: 5.w),
                 Flexible(
                   flex: 3,
@@ -35,7 +41,7 @@ class OngoingOrderCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        order.serviceProvider!.name,
+                        order.serviceProvider?.name ?? "Unavailable",
                         style: txt.headline3,
                       ),
                       Text(
@@ -51,7 +57,15 @@ class OngoingOrderCard extends StatelessWidget {
                   shape: CircleBorder(),
                   child: InkWell(
                     onTap: () {
-                      Get.toNamed(getRestaurantOrderRoute(order.orderId));
+                      switch (order.orderType) {
+                        case OrderType.Restaurant:
+                          Get.toNamed(getRestaurantOrderRoute(order.orderId));
+                          break;
+                        case OrderType.Taxi:
+                          Get.toNamed(getTaxiOrderRoute(order.orderId));
+                          break;
+                        default:
+                      }
                     },
                     customBorder: CircleBorder(),
                     child: Container(

@@ -122,6 +122,8 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     // mezDbgPrint("CustomWrapper Build callabck");
     // Navigate to current orders if any after build
 
+// @mont #comment
+// needs more organization, each component should be one line
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(

@@ -186,7 +186,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
           // maxRadius: getSizeRelativeToScreen(56, sw, sh),
           // minRadius: getSizeRelativeToScreen(55, sw, sh),
           backgroundColor: Colors.grey,
-          backgroundImage: handleIfNetworkImage(
+          backgroundImage: mLoadImage(
                   url: order.customer.image, assetInCaseFailed: aDefaultAvatar)
               .image,
           onBackgroundImageError: (e, s) => mezDbgPrint(

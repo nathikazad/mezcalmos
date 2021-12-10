@@ -27,23 +27,6 @@ class TaxiRequest {
     // this.polyline
   });
 
-  // User to Get the order from db
-  factory TaxiRequest.fromSnapShotData(String orderId, dynamic data) {
-    return TaxiRequest(
-      // orderId: orderId,
-      from: data['from'],
-      to: data['to'],
-      // distance: RideDistance.fromJson(data['distance']),
-      // duration: RideDuration.fromJson(data['duration']),
-      routeInformation: RouteInformation(
-          data['polyline'],
-          RideDistance.fromJson(data['distance']),
-          RideDuration.fromJson(data['duration'])),
-      estimatedPrice: data['estimatedPrice'],
-      paymentType: data['paymentType'],
-      // polyline: data['polyline']
-    );
-  }
 
   void incrementPrice() {
     estimatedPrice += 5;
@@ -63,6 +46,10 @@ class TaxiRequest {
     this.to = loc;
   }
 
+  void setRouteInformation(RouteInformation routeInformation) {
+    this.routeInformation = routeInformation;
+  }
+
   bool isFromToSet() {
     return this.from != null && this.to != null;
   }
@@ -73,11 +60,7 @@ class TaxiRequest {
       "to": to?.toFirebaseFormattedJson(),
       "estimatedPrice": estimatedPrice,
       "paymentType": paymentType.toFirebaseFormatString(),
-      "routeInformation": {
-        "duration": routeInformation?.duration.daysHoursString,
-        "distance": routeInformation?.distance.distanceStringInKm,
-        "polyline": routeInformation?.polyline
-      }
+      "routeInformation": routeInformation?.toJson()
     };
   }
 }

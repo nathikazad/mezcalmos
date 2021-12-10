@@ -7,6 +7,7 @@ import 'package:mezcalmos/CustomerApp/pages/Taxi/components/MapBottomBar.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/models/Location.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart' as TaxiOrder;
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
@@ -145,11 +146,11 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
     // build order and call controller function
     ServerResponse response = await controller.requestTaxi(taxiRequest.value);
     if (response.success) {
-      String oid = response.data["orderId"];
+      String orderId = response.data["orderId"];
       // in case the widget is still mounted , then make dart scheduale this delayed call as soon as possible ,
       // so we don't fall into assertion error ('!_debugLocked': is not true.)
       Future.delayed(Duration.zero,
-          () => popEverythingAndNavigateTo(getTaxiOrderRoute(oid))
+          () => popEverythingAndNavigateTo(getTaxiOrderRoute(orderId))
           // popUntilAndNavigateTo(kHomeRoute, getTaxiOrderRoute(oid))
           );
     } else {
@@ -181,6 +182,10 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
     if (route != null) {
       int estimatedPrice =
           getEstimatedRidePriceInPesos(route.distance.distanceInMeters);
+      taxiRequest.value.setRouteInformation(TaxiOrder.RouteInformation(
+          polyline: route.encodedPolyLine,
+          distance: route.distance,
+          duration: route.duration));
       taxiRequest.value.routeInformation?.distance = route.distance;
       taxiRequest.value.routeInformation?.duration = route.duration;
       taxiRequest.value.estimatedPrice = estimatedPrice;
@@ -188,6 +193,8 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
       mezDbgPrint("Polyliiines ====> ${route.polylineList}");
       mezDbgPrint("Polyliiines ====> ${taxiRequest.value.toString()}");
       locationPickerController.addPolyline(route.polylineList);
+      // #question @saad why is there a set state here?
+      // taxiRequest is obx and locationPickcontroller will calls
       setState(() {});
     } else {
       // TODO:handle route error

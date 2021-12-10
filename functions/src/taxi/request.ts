@@ -15,6 +15,7 @@ export = functions.https.onCall(async (data, context) => {
 
   let customerId: string = context.auth!.uid;
   let orderRequest: OrderRequest = <OrderRequest>data;
+  console.log(orderRequest);
 
   let transactionResponse = await customerNodes.lock(customerId).transaction(function (lock) {
     if (lock == true) {

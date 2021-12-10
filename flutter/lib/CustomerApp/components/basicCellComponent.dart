@@ -29,7 +29,7 @@ class BasicCellComponent extends StatelessWidget {
                 borderRadius: BorderRadius.all(
                   Radius.circular(3),
                 ),
-                child: handleIfNetworkImage(url: url, fit: BoxFit.cover)
+                child: mLoadImage(url: url, fit: BoxFit.cover)
                 // Image.network(
                 //   "$url",
                 //   fit: BoxFit.cover,

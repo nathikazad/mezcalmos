@@ -43,7 +43,7 @@ Future<void> oneButtonDialog(
               width: Get.width / 2,
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: handleIfNetworkImage(url: imagUrl).image,
+                      image: mLoadImage(url: imagUrl).image,
                       // image: AssetImage(imagUrl),
                       fit: BoxFit.contain)),
             )),

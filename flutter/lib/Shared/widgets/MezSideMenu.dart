@@ -63,7 +63,7 @@ class MezSideMenu extends GetWidget<AuthController> {
                               height: getSizeRelativeToScreen(300, sw, sh).sp,
                               fit: BoxFit.contain,
                             )
-                          : handleIfNetworkImage(
+                          : mLoadImage(
                               url: controller.user!.image! + "?type=large",
                               width: getSizeRelativeToScreen(300, sw, sh).sp,
                               height: getSizeRelativeToScreen(300, sw, sh).sp,

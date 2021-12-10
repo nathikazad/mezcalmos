@@ -74,7 +74,8 @@ class RestaurantCard extends StatelessWidget {
                       topRight: Radius.circular(15),
                       bottomRight: Radius.circular(15),
                     ),
-                    child: handleIfNetworkImage(
+                    child:
+                        mLoadImage(
                         url: restaurant.photo, fit: BoxFit.cover)),
               )
             ],

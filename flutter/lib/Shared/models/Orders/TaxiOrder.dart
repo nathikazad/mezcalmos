@@ -33,7 +33,12 @@ class RouteInformation {
   String polyline;
   RideDistance distance;
   RideDuration duration;
-  RouteInformation(this.polyline, this.distance, this.duration);
+  RouteInformation(
+      {required this.polyline, required this.distance, required this.duration});
+
+  Map<String, dynamic> toJson() {
+    return {...distance.toJson(), ...duration.toJson(), "polyline": polyline};
+  }
 }
 
 class TaxiOrder extends Order {
@@ -84,18 +89,6 @@ class TaxiOrder extends Order {
         paymentType: paymentType);
   }
 
-  /// Update this model from [TaxiRequest] object
-  void updateFromTaxiRequest(TaxiRequest taxiRequest) {
-    this.from = taxiRequest.from!;
-    this.to = taxiRequest.to!;
-    this.routeInformation = RouteInformation(
-        taxiRequest.routeInformation!.polyline,
-        taxiRequest.routeInformation!.distance,
-        taxiRequest.routeInformation!.duration);
-    this.cost = taxiRequest.estimatedPrice;
-    this.paymentType = taxiRequest.paymentType;
-  }
-
   factory TaxiOrder.fromData(dynamic id, dynamic data) {
     mezDbgPrint("FROOOOOOM => ${data['from']}");
     mezDbgPrint("TOOOOOO => ${data['to']}");
@@ -118,14 +111,16 @@ class TaxiOrder extends Order {
         orderTime: DateTime.parse(data["orderTime"]),
         paymentType: data["paymentType"].toString().toPaymentType(),
         routeInformation: RouteInformation(
-            data['routeInformation']['polyline'],
-            RideDistance.fromJson(data['routeInformation']['distance']),
-            RideDuration.fromJson(data['routeInformation']['duration'])));
+            polyline: data['routeInformation']['polyline'],
+            distance:
+                RideDistance.fromJson(data['routeInformation']['distance']),
+            duration:
+                RideDuration.fromJson(data['routeInformation']['duration'])));
     return taxiOrder;
   }
 
   // Added for Debugging Perposes - Don't delete for now
-  Map<String, dynamic> toJsSon() => {
+  Map<String, dynamic> toJson() => {
         "customer": customer,
         "estimatedPrice": cost,
         "from": from,

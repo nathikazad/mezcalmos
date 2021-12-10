@@ -75,7 +75,7 @@ void responsiveSize(BuildContext context) {
       orientation: Orientation.portrait);
 }
 
-Image handleIfNetworkImage(
+Image mLoadImage(
     {required String? url,
     double? height,
     double? width,

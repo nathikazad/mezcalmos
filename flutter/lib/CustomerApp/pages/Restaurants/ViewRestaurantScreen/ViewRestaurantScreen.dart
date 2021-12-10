@@ -58,7 +58,7 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: Container(
-                          child: handleIfNetworkImage(
+                          child: mLoadImage(
                               url: restaurant!.photo, fit: BoxFit.cover),
                         ),
                       ),

@@ -48,7 +48,7 @@ class ImageComponent extends StatelessWidget {
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(25),
                           topRight: Radius.circular(25)),
-                      child: handleIfNetworkImage(url: image)
+                      child: mLoadImage(url: image)
                       //  Image.network(
                       //   "$image",
                       //   fit: BoxFit.cover,

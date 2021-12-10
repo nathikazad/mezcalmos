@@ -154,7 +154,7 @@ class IncommingPositionedBottomBar extends StatelessWidget with MezDisposable {
           // radius: 30.0,
           child: ClipOval(
               clipBehavior: Clip.antiAlias,
-              child: handleIfNetworkImage(
+              child: mLoadImage(
                   url: order.customer.image,
                   assetInCaseFailed: aDefaultAvatar,
                   fit: BoxFit.cover,

@@ -181,7 +181,7 @@ class MezAdminOrdersComponents {
                       height: 30,
                       width: 30,
                       child:
-                          ClipOval(child: handleIfNetworkImage(url: driverImg)
+                          ClipOval(child: mLoadImage(url: driverImg)
                               //  Image.network(
                               //   "${driverImg}",
                               //   fit: BoxFit.cover,
@@ -215,7 +215,7 @@ class MezAdminOrdersComponents {
               child: Container(
                   height: 30,
                   width: 30,
-                  child: ClipOval(child: handleIfNetworkImage(url: custImg)
+                  child: ClipOval(child: mLoadImage(url: custImg)
                       // Image.network(
                       //   "${custImg}",
                       //   fit: BoxFit.cover,
@@ -304,7 +304,7 @@ class MezAdminOrdersComponents {
                       width: 35,
                       child: ClipOval(
                           child: (img != "null")
-                              ? handleIfNetworkImage(url: img)
+                              ? mLoadImage(url: img)
                               // Image.network(
                               //     "${img}",
                               //     fit: BoxFit.cover,

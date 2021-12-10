@@ -198,7 +198,7 @@ class _UserProfileState extends State<UserProfile> {
                                                         ),
                                                       )
                                                     : Obx(() =>
-                                                        handleIfNetworkImage(
+                                                        mLoadImage(
                                                             url: auth
                                                                 .user?.image))
                                                 // Image.network(
