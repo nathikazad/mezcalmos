@@ -59,10 +59,11 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
 
   @override
   Widget build(BuildContext context) {
+    LanguageController lang = Get.find<LanguageController>();
     final txt = Theme.of(context).textTheme;
     return Scaffold(
         appBar: CustomerAppBar(
-          title: 'Orders',
+          title: '${lang.strings["customer"]["orders"]["title"]}',
           autoBack: true,
         ),
         body: SingleChildScrollView(
@@ -77,7 +78,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                     children: [
                       Container(
                         child: Text(
-                          'Ongoing orders',
+                          '${lang.strings["customer"]["orders"]["onGoingOrders"]}',
                           style: txt.headline3,
                         ),
                       ),

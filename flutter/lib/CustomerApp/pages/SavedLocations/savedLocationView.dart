@@ -79,7 +79,7 @@ class _SavedLocationViewState extends State<SavedLocationView> {
     final txt = Theme.of(context).textTheme;
     return Scaffold(
         appBar: CustomerAppBar(
-          title: "Saved Locations",
+          title: "${lang.strings["customer"]["savedLocations"]["title"]}",
           autoBack: true,
         ),
         bottomNavigationBar: ButtonComponent(

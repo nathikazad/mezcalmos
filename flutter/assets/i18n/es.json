@@ -1,15 +1,31 @@
 {
     "customer": {
         "home": {
-            "taxi": "Taxi",
+            "supportText":"necesitas ayuda ? Contacta con nuestro equipo de soporte",
+            "welcomeText":"Bienvenido a MEZCALMOS 👋",
+            "appDescription":"Su lugar único para encontrar todos sus servicios locales que necesita y donde puede disfrutar de servicios rápidos y de alta calidad .",
+            "taxi": {
+                "title":"Taxi",
+                "subtitle":"Consiga el taxi más cercano y obtenga su destino lo antes posible."
+            },
             "groceries": "Comestibles",
             "services": "Servicios",
-            "food": "Comida"
+            "food": {
+                "title":"Comida",
+                "subtitle":"Descubre los platos más deliciosos de los restaurantes más cercanos."
+            },
+            "laundry":{
+                "title":"Lavandería",
+                "subtitle":"Comming soon ..."
+            }
+           
         },
         "restaurant": {
             "restaurants": "Restaurantes",
             "menu": {
                 "menu": "Menú",
+                "items":"elementos",
+                "info":"Informacións",
                 "description": "Descripción",
                 "notes": "Notas",
                 "quantity": "Cantidad",
@@ -17,8 +33,11 @@
                 "modifyItem": "Modificar artículo"
             },
             "cart": {
+                "myCart":"Mi Carrito",
                 "cart": "Carro",
                 "inCart": "En El Carrito",
+                "orderSummary":"Resumen de la orden",
+                "orderCost":"Costo de la orden",
                 "clear": "Vaciar",
                 "clearCart": "Vaciar carrito",
                 "clearCartConfirm": "¿Está seguro de que desea vaciar el carrito?",
@@ -28,7 +47,7 @@
                 "deliveryCost": "Costo de envío",
                 "total": "Total",
                 "deliveryLocation": "Lugar De Entrega",
-                "pickLocation": "Elegir Ubicación",
+                "pickLocation": "Elegir del mapa",
                 "orderNow": "ORDENAR AHORA",
                 "options": "Opciones"
             },
@@ -85,6 +104,7 @@
             "location": "Ubicacion",
             "addNewLoc": "Añadir Nueva Ubicación",
             "editLocation": "Editar ubicación",
+            "deleteLocation":"Eliminar ubicación",
             "locations": "Ubicaciones",
             "addLocationDialog": {
                 "title": "Si da un nombre, puede guardar la ubicación para uso futuro.",
@@ -99,6 +119,7 @@
         },
         "orders": {
             "title": "Pedidos",
+            "onGoingOrders":"Pedidos en curso",
             "item": "Artículo|Artículos",
             "onTheWay": "En camino",
             "inTransit": "En tránsito",

@@ -1,5 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
@@ -16,6 +19,7 @@ class RestaurantCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LanguageController lang = Get.find<LanguageController>();
     final txt = Theme.of(context).textTheme;
     return Card(
       margin: EdgeInsets.all(8),
@@ -57,7 +61,7 @@ class RestaurantCard extends StatelessWidget {
                           ),
                           Text(
                             restaurant.items.length.toStringAsFixed(0) +
-                                ' items',
+                                ' ${lang.strings["customer"]["restaurant"]["menu"]["items"]}',
                             style: txt.bodyText2,
                           )
                         ],
@@ -70,13 +74,22 @@ class RestaurantCard extends StatelessWidget {
                 width: 150.w,
                 height: double.infinity,
                 child: ClipRRect(
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(15),
-                      bottomRight: Radius.circular(15),
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(15),
+                    bottomRight: Radius.circular(15),
+                  ),
+                  child: CachedNetworkImage(
+                    imageUrl: restaurant.photo,
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) => Container(
+                      width: 15,
+                      height: 15,
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
                     ),
-                    child:
-                        mLoadImage(
-                        url: restaurant.photo, fit: BoxFit.cover)),
+                  ),
+                ),
               )
             ],
           ),

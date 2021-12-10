@@ -35,7 +35,7 @@ Widget buildCart(Cart cart, BuildContext context) {
                   ),
                   Container(
                     child: Text(
-                      "In cart",
+                      "${lang.strings["customer"]["restaurant"]["cart"]["inCart"]}",
                       style: txt.headline2,
                     ),
                   )
@@ -51,7 +51,7 @@ Widget buildCart(Cart cart, BuildContext context) {
                   Container(
                     child: Text(
                       (cart.quantity() != null)
-                          ? "${cart.quantity()} items"
+                          ? "${cart.quantity()} ${lang.strings["customer"]["restaurant"]["menu"]["items"]}"
                           : "0",
                       style: txt.headline2,
                     ),

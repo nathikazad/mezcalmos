@@ -1,15 +1,32 @@
 {
     "customer": {
+        
         "home": {
-            "taxi": "Taxi",
+            "supportText":"need help ? Contact our support team",
+            "welcomeText":"Welcome to MEZCALMOS 👋",
+            "appDescription":"Your one stop palce to find all your needed local services and where you can enjoy fast and hight quality services.",
+            "taxi": {
+                "title":"Taxi",
+                "subtitle":"Get the nearest taxi arrount and get your destinatiion asap ."
+            },
             "groceries": "Groceries",
             "services": "Services",
-            "food": "Food"
+            "food": {
+                "title":"Food",
+                "subtitle":"Descover most delicious dishes from the nearest restaurants ."
+            },
+            "laundry":{
+                "title":"Laundry",
+                "subtitle":"Comming soon ..."
+            }
         },
         "restaurant": {
             "restaurants": "Restaurants",
             "menu": {
+                "myCart":"My Cart",
+                "items":"Items",
                 "menu": "Menu",
+                "info":"Informations",
                 "description": "Description",
                 "notes": "Notes",
                 "quantity": "Quantity",
@@ -19,6 +36,8 @@
             "cart": {
                 "cart": "Cart",
                 "inCart": "In Cart",
+                "orderSummary":"Order Summary",
+                "orderCost":"Order Cost",
                 "clear": "Clear",
                 "clearCart": "Clear Cart",
                 "clearCartConfirm": "Are you sure you want to clear the cart ?",
@@ -28,7 +47,7 @@
                 "deliveryCost": "Delivery Cost",
                 "total": "Total",
                 "deliveryLocation": "Delivery Location",
-                "pickLocation": "Pick Location",
+                "pickLocation": "Pick from map",
                 "orderNow": "ORDER NOW",
                 "options": "Options"
             },
@@ -85,6 +104,7 @@
             "location": "Location",
             "addNewLoc": "Add New Location",
             "editLocation": "Edit Location",
+            "deleteLocation":"Delete Location",
             "locations":"Locations",
             "addLocationDialog":{
                 "title":"If you give a name, you can save the location for future use.",
@@ -99,6 +119,7 @@
         },
         "orders": {
             "title": "Orders",
+            "onGoingOrders":"Ongoing Orders",
             "item": "Item|Items",
             "onTheWay": "On the way",
             "inTransit": "In Transit",

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/CustomerApp/components/userMenuComponent.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
@@ -30,31 +31,44 @@ class RestaurantSliverAppBar extends StatelessWidget {
       pinned: true,
       floating: false,
       flexibleSpace: FlexibleSpaceBar(
-        titlePadding: EdgeInsets.all(12),
-        collapseMode: CollapseMode.parallax,
-        centerTitle: true,
-        title: Text(
-          restaurant.name,
-          style: Theme.of(context)
-              .textTheme
-              .headline2!
-              .copyWith(color: Colors.white),
-        ),
-        background: Container(
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: NetworkImage(restaurant.photo), fit: BoxFit.cover)),
-          foregroundDecoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                Colors.black.withOpacity(0.7),
-                const Color(0x00000000).withOpacity(0.1),
-                Colors.black.withOpacity(0.7),
-              ])),
-        ),
-      ),
+          titlePadding: EdgeInsets.all(12),
+          collapseMode: CollapseMode.parallax,
+          centerTitle: true,
+          title: Text(
+            restaurant.name,
+            style: Theme.of(context)
+                .textTheme
+                .headline2!
+                .copyWith(color: Colors.white),
+          ),
+          background: CachedNetworkImage(
+            imageUrl: restaurant.photo,
+            fit: BoxFit.cover,
+            imageBuilder: (context, imageProvider) => Container(
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: NetworkImage(restaurant.photo),
+                      fit: BoxFit.cover)),
+              foregroundDecoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                    Colors.black.withOpacity(0.7),
+                    const Color(0x00000000).withOpacity(0.1),
+                    Colors.black.withOpacity(0.7),
+                  ])),
+            ),
+            placeholder: (context, url) => Container(
+              width: 15,
+              height: 15,
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+            errorWidget: (context, url, error) => Container(
+                width: 15, height: 15, child: Center(child: Icon(Icons.error))),
+          )),
     );
   }
 }

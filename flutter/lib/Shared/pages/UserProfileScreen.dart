@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -198,13 +199,21 @@ class _UserProfileState extends State<UserProfile> {
                                                         ),
                                                       )
                                                     : Obx(() =>
-                                                        mLoadImage(
-                                                            url: auth
-                                                                .user?.image))
-                                                // Image.network(
-                                                //     "${auth.user!.image}",
-                                                //     fit: BoxFit.cover,
-                                                //   )
+                                                        CachedNetworkImage(
+                                                          imageUrl:
+                                                              auth.user!.image!,
+                                                          fit: BoxFit.cover,
+                                                          placeholder:
+                                                              (context, url) =>
+                                                                  Container(
+                                                            width: 15.w,
+                                                            height: 15.w,
+                                                            child: Center(
+                                                              child:
+                                                                  CircularProgressIndicator(),
+                                                            ),
+                                                          ),
+                                                        ))
                                                 : Image.file(
                                                     imageFile,
                                                     fit: BoxFit.cover,
