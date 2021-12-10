@@ -18,5 +18,6 @@ export interface TaxiDetails {
 }
 
 export async function getTaxi(taxiId: string): Promise<Taxi> {
+  console.log(`checking taxi node at @ ${info(taxiId)}`);
   return (await info(taxiId).once('value')).val();
 }

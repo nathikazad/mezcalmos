@@ -31,6 +31,7 @@ export = functions.https.onCall(async (data, context) => {
   let taxiId: string = context.auth!.uid;
   let orderId: string = data.orderId;
   let taxi: Taxi = (await getTaxi(taxiId));
+  console.log(`Got taxi ${taxi}`);
   if (!taxi || !taxi.state ||
     taxi.state.authorizationStatus != AuthorizationStatus.Authorized) {
     return {

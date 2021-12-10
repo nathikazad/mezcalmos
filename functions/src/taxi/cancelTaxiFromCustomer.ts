@@ -39,6 +39,21 @@ export = functions.https.onCall(async (data, context) => {
     }
     return order
   })
+  //  if there is no order in /inProcess then we  check /open
+  if (transactionResponse.snapshot.val() == null) {
+    transactionResponse =   await rootNodes.openOrders(OrderType.Taxi, orderId).transaction(function (order) {
+      if (order != null) {
+        if (order.lock == true) {
+          return
+        } else {
+          order.lock = true
+          return order
+        }
+      }
+      return order
+    })
+  }
+
 
 
   if (!transactionResponse.committed) {
@@ -79,32 +94,40 @@ export = functions.https.onCall(async (data, context) => {
 
 
     rootNodes.inProcessOrders(OrderType.Taxi, orderId).remove();
+    // @Nathik i added this because TaxiApp is listening on /orders/open ,
+    // and when Customer cancels ride it stays in /orders/open/taxi
+    rootNodes.openOrders(OrderType.Taxi ,orderId);
+    rootNodes.inProcessOrders(OrderType.Taxi, orderId).remove();
     rootNodes.pastOrders(OrderType.Taxi, orderId).set(order);
     customerNodes.inProcessOrders(order.customer.id!, orderId).remove();
     customerNodes.pastOrders(order.customer.id!, orderId).set(order);
-    taxiNodes.inProcessOrders(order.driver.id, orderId).remove();
-    taxiNodes.pastOrders(order.driver.id, orderId).set(order);
-
-
-    let notification: Notification = {
-      foreground: <TaxiOrderStatusChangeNotification>{
-        status: TaxiOrderStatus.CancelledByCustomer,
-        time: (new Date()).toISOString(),
-        notificationType: NotificationType.OrderStatusChange,
-        orderType: OrderType.Taxi,
-        orderId: orderId,
-        notificationAction: NotificationAction.ShowPopUp
-      },
-      background: taxiOrderStatusChangeMessages[TaxiOrderStatus.CancelledByCustomer]
+    if (order.driver !=  null)
+    {
+      taxiNodes.inProcessOrders(order.driver.id, orderId).remove();
+      taxiNodes.pastOrders(order.driver.id, orderId).set(order);
+      let notification: Notification = {
+        foreground: <TaxiOrderStatusChangeNotification>{
+          status: TaxiOrderStatus.CancelledByCustomer,
+          time: (new Date()).toISOString(),
+          notificationType: NotificationType.OrderStatusChange,
+          orderType: OrderType.Taxi,
+          orderId: orderId,
+          notificationAction: NotificationAction.ShowPopUp
+        },
+        background: taxiOrderStatusChangeMessages[TaxiOrderStatus.CancelledByCustomer]
+      }
+      
+      push(order.driver.id, notification, ParticipantType.Taxi);
+  
     }
 
-    push(order.driver.id, notification, ParticipantType.Taxi);
-
+   
     return {
       status: ServerResponseStatus.Success,
       message: "started"
     };
   } catch (e) {
+    console.log(e);
     functions.logger.error(`Order start error ${orderId}`);
     return {
       status: ServerResponseStatus.Error,
@@ -112,5 +135,6 @@ export = functions.https.onCall(async (data, context) => {
     }
   } finally {
     rootNodes.inProcessOrders(OrderType.Taxi, orderId).child("lock").remove();
+    rootNodes.openOrders(OrderType.Taxi, orderId).child("lock").remove();
   }
 });

@@ -21,7 +21,7 @@ export function currentOrderIdNode(taxiId: string) {
 }
 
 export function info(taxiId?: string) {
-  let dbNode: string = `/taxis/info/${taxiId}`
+  let dbNode: string = "/taxis/info/"
   if (taxiId != undefined) {
     dbNode += `/${taxiId}`
   }

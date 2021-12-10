@@ -102,8 +102,8 @@ async function changeStatus(data: any, newStatus: TaxiOrderStatus, auth?: AuthDa
     } else {
       rootNodes.inProcessOrders(OrderType.Taxi, orderId).remove();
       rootNodes.pastOrders(OrderType.Taxi, orderId).set(order);
+      await customerNodes.pastOrders(order.customer.id!, orderId).set(order);
       customerNodes.inProcessOrders(order.customer.id!, orderId).remove();
-      customerNodes.pastOrders(order.customer.id!, orderId).set(order);
       taxiNodes.inProcessOrders(taxiId, orderId).remove();
       taxiNodes.pastOrders(taxiId, orderId).set(order);
       currentOrderIdNode(taxiId).remove()
