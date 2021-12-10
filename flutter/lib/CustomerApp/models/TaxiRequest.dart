@@ -27,6 +27,9 @@ class TaxiRequest {
     // this.polyline
   });
 
+  void setEstimatedPrice(int price) {
+    estimatedPrice = price;
+  }
 
   void incrementPrice() {
     estimatedPrice += 5;

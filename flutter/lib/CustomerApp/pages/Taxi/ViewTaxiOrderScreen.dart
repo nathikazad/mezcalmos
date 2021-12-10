@@ -3,56 +3,89 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
+import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/MapBottomBar.dart';
+import 'package:mezcalmos/CustomerApp/pages/Taxi/components/TaxiOrderTopBar.dart';
+import 'package:mezcalmos/Shared/Themes/styles/textStyleTheme.dart';
+import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
+import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 class ViewTaxiOrderScreen extends StatefulWidget {
+  final MGoogleMapController mGoogleMapController = MGoogleMapController();
+
   @override
   _ViewTaxiOrderScreenState createState() => _ViewTaxiOrderScreenState();
 }
 
 class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
-  MGoogleMapController mGoogleMapController = MGoogleMapController();
   OrderController controller = Get.find<OrderController>();
   Rxn<TaxiOrder> order = Rxn();
   StreamSubscription? _orderListener;
   final String toMarkerId = "to";
+  LanguageController lang = Get.find<LanguageController>();
 
-  // TODO: overriding functions in MGoogleMapController!
+  // TODO: overriding functions in widget.mGoogleMapController!
 /******************************  Init and build function ************************************/
   @override
   void initState() {
     String orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
+
     order.value = controller.getOrder(orderId) as TaxiOrder?;
     if (order.value != null) {
+      // set initial location
+      widget.mGoogleMapController.setLocation(order.value!.from);
+      // add the polylines!
+      widget.mGoogleMapController.decodeAndAddPolyline(
+          encodedPolylineString: order.value!.routeInformation.polyline);
+      widget.mGoogleMapController.setAnimateMarkersPolyLinesBounds(true);
+
       mezDbgPrint("order not null !");
       if (order.value!.inProcess()) {
         mezDbgPrint("order is in process!");
         inProcessOrderStatusHandler(order.value!.status);
-        mGoogleMapController.setAnimateMarkersPolyLinesBounds(true);
+        // widget.mGoogleMapController.setAnimateMarkersPolyLinesBounds(false);
 
-        _orderListener =
-            controller.getCurrentOrderStream(orderId).listen((currentOrder) {
+        _orderListener = controller
+            .getCurrentOrderStream(orderId)
+            .listen((currentOrder) async {
           if (currentOrder != null) {
-            mezDbgPrint("currentOrder is not null!");
+            // setState(() {
+            //   mezDbgPrint("SetState First time !");
+            // });
+            mezDbgPrint(
+                "currentOrder is not null! ======= == = = == =>>> $currentOrder.");
 
             order.value = currentOrder as TaxiOrder;
             inProcessOrderStatusHandler(order.value!.status);
           } else {
             mezDbgPrint("currentOrder is null!");
-
-            // this else clause gets executed when the order becomes /pastOrders.
             _orderListener?.cancel();
             _orderListener = null;
+            TaxiOrder? _order = controller.getOrder(orderId) as TaxiOrder?;
+            // this else clause gets executed when the order becomes /pastOrders.
 
-            order.value = controller.getOrder(orderId) as TaxiOrder?;
+            mezDbgPrint("+++ GOT PAST OORDER ----- >>> ${order.value}");
+            if (_order == null) {
+              if (order.value!.status == TaxiOrdersStatus.CancelledByCustomer) {
+                Get.back();
+                oneButtonDialog(
+                    message: "Order Canceled Successfully !",
+                    imagUrl: _order!.customer.image);
+              }
+              _order = (await controller.getPastOrderStream(orderId).first)
+                  as TaxiOrder?;
+            }
+            order.value = _order;
+
             // one time execution :
-            mGoogleMapController.setAnimateMarkersPolyLinesBounds(false);
+            widget.mGoogleMapController.setAnimateMarkersPolyLinesBounds(true);
             pastOrderStatusHandler(order.value!.status);
           }
         });
@@ -62,7 +95,6 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
       }
     } else {
       mezcalmosSnackBar("Error", "Unfound Order !");
-      // Get.back();
     }
     super.initState();
   }
@@ -77,66 +109,62 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back),
-      // appBar: AppBar(),
-      backgroundColor: Colors.white,
-      body: Container(
-        color: Colors.white,
-        padding: EdgeInsets.only(left: 1, right: 1),
-        child: Stack(
-            clipBehavior: Clip.none,
-            alignment: Alignment.topCenter,
-            children: [
-              Container(
-                  width: Get.width,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: Colors.white),
-                  child: Obx(
-                    () => order.value != null
-                        ? MGoogleMap(
-                            mGoogleMapController: this.mGoogleMapController,
-                            periodicRedrendring: true,
-
-                            // notifyParent: (_) {},
-                            // we will have to handle init location depending on taxi state
-                            initialLocation: LatLng(
-                                order.value!.from.position.latitude!,
-                                order.value!.from.position.longitude!))
-                        : MezLogoAnimation(
-                            centered: true,
-                          ),
-                  )),
-              Container(
-                height: 40,
-                width: Get.width,
-                color: Colors.white,
-              ),
-              MapBottomBar(taxiRequest: (order.value!.toTaxiRequest()).obs)
-              // FromToLocationBar(
-              //   taxiRequest,
-              //   newLocationFromSearchBar,
-              //   key: _fromToGlobalStateKey,
-              // ),
-            ]),
-      ),
-    );
+        resizeToAvoidBottomInset: false,
+        appBar: mezcalmosAppBar(AppBarLeftButtonType.Back),
+        // appBar: AppBar(),
+        backgroundColor: Colors.white,
+        body: Container(
+          color: Colors.white,
+          padding: EdgeInsets.only(left: 1, right: 1),
+          child: Obx(
+            () => order.value != null
+                ? Stack(
+                    clipBehavior: Clip.none,
+                    alignment: Alignment.topCenter,
+                    children: [
+                        Container(
+                            width: Get.width,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: Colors.white),
+                            child: MGoogleMap(
+                              mGoogleMapController:
+                                  this.widget.mGoogleMapController,
+                              periodicRedrendring: true,
+                            )),
+                        Container(
+                          height: 40,
+                          width: Get.width,
+                          color: Colors.white,
+                        ),
+                        MapBottomBar(
+                            taxiRequest: order.value!.toTaxiRequest(),
+                            isOrderCanceled: order.value!.isCanceled()),
+                        cancelButton(order.value!.isCanceled()),
+                        TaxiOrderTopBar(order: order.value!)
+                      ])
+                : MezLogoAnimation(
+                    centered: true,
+                  ),
+          ),
+        ));
   }
 
   /******************************  helper functions ************************************/
   /// This gets invoked when the order is moved to [inProcess] db node
   void inProcessOrderStatusHandler(TaxiOrdersStatus status) {
+    mezDbgPrint(
+        "[[[[[[[[[[[[[[[[[[[[[[[[[[[[[ $status ]]]]]]]]]]]]]]]]]]]]]]]]]]]]]");
     switch (status) {
       case TaxiOrdersStatus.OnTheWay:
         // remove the to dest marker
-        mGoogleMapController.removeMarker(toMarkerId);
+        widget.mGoogleMapController.removeDestinationMarker();
 
         // taxi driver marker
-        mGoogleMapController.addOrUpdateTaxiDriverMarker(
+        widget.mGoogleMapController.addOrUpdateTaxiDriverMarker(
             order.value!.driver!.id, order.value!.driver!.location!);
         // customer marker
-        mGoogleMapController.addOrUpdateUserMarker(
+        widget.mGoogleMapController.addOrUpdateUserMarker(
             order.value!.customer.id, order.value!.from.toLatLng());
         break;
 
@@ -150,23 +178,24 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
         //     order.value!.driver!.id, order.value!.from.toLatLng());
 
         // removing customer marker
-        mGoogleMapController.removeMarker(order.value!.customer.id);
+        widget.mGoogleMapController.removeMarker(order.value!.customer.id);
         // updating driver's marker
-        mGoogleMapController.addOrUpdateUserMarker(
-            order.value!.driver!.id, order.value!.from.toLatLng());
+        widget.mGoogleMapController.addOrUpdateTaxiDriverMarker(
+            order.value!.driver!.id,
+            LatLng(order.value!.driver!.location!.latitude,
+                order.value!.driver!.location!.longitude));
         // updating destination marker.
-        mGoogleMapController.addOrUpdatePurpleDestinationMarker(
+        widget.mGoogleMapController.addOrUpdatePurpleDestinationMarker(
             latLng: order.value!.to.toLatLng());
         break;
 
       default:
-        // this.addPolyline()
         // default is : isLoookingForTaxi
         // updating destination marker.
-        mGoogleMapController.addOrUpdatePurpleDestinationMarker(
+        widget.mGoogleMapController.addOrUpdatePurpleDestinationMarker(
             latLng: order.value!.to.toLatLng());
         // customer marker
-        mGoogleMapController.addOrUpdateUserMarker(
+        widget.mGoogleMapController.addOrUpdateUserMarker(
             order.value!.customer.id, order.value!.from.toLatLng());
         break;
     }
@@ -175,12 +204,46 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
   /// This gets invoked when the order is moved to /past db node
   void pastOrderStatusHandler(TaxiOrdersStatus status) {
     // @Saad, no need to navigate back, should just be enough to show status
-    mGoogleMapController.removeMarker(order.value!.driver!.id);
+    if (order.value!.driver != null)
+      widget.mGoogleMapController.removeMarker(order.value!.driver!.id);
     // adding customer's marker
-    mGoogleMapController.addOrUpdateUserMarker(
+    widget.mGoogleMapController.addOrUpdateUserMarker(
         order.value!.customer.id, order.value!.from.toLatLng());
     // updating destination marker.
-    mGoogleMapController.addOrUpdatePurpleDestinationMarker(
-        latLng: order.value!.to.toLatLng());
+    widget.mGoogleMapController
+        .addOrUpdatePurpleDestinationMarker(latLng: order.value!.to.toLatLng());
+  }
+
+  Widget cancelButton(bool isCanceled) {
+    if (isCanceled) {
+      return SizedBox();
+    } else {
+      return Positioned(
+        bottom: 20,
+        left: 15,
+        right: 15,
+        child: InkWell(
+          onTap: () async {
+            mezDbgPrint("Canceling order ===> ${order.value!.orderId}");
+            await Get.find<TaxiController>().cancelTaxi(order.value!.orderId);
+          },
+          child: Container(
+              height: 50,
+              decoration: BoxDecoration(
+                  color: Colors.red.shade400,
+                  borderRadius: BorderRadius.circular(10)),
+              child: Center(
+                child: Text(
+                  "CANCEL",
+                  style: textStyleTheme.bodyText1!.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w300,
+                      fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
+              )),
+        ),
+      );
+    }
   }
 }

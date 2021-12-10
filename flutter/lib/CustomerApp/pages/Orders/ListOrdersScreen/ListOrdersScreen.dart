@@ -104,8 +104,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                       children: List.generate(
                           controller.pastOrders().length,
                           (index) => OldOrderCard(
-                              order: controller.pastOrders()[index]
-                                  as RestaurantOrder)),
+                              order: controller.pastOrders()[index])),
                     ),
                   ),
                 ),

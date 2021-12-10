@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 class OldOrderCard extends StatelessWidget {
   const OldOrderCard({
@@ -9,7 +10,7 @@ class OldOrderCard extends StatelessWidget {
     required this.order,
   }) : super(key: key);
 
-  final RestaurantOrder order;
+  final Order order;
 
   @override
   Widget build(BuildContext context) {
@@ -25,23 +26,25 @@ class OldOrderCard extends StatelessWidget {
                 CircleAvatar(
                     radius: 35,
                     backgroundImage:
-                        NetworkImage(order.serviceProvider!.image)),
+                        mLoadImage(url: order.serviceProvider?.image).image),
                 SizedBox(width: 10.w),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      order.serviceProvider!.name,
+                      order.serviceProvider?.name ?? "Taxi Order",
                       style: txt.headline3,
                     ),
-                    Text(
-                      order.to.address,
-                      style: txt.subtitle1,
-                    ),
+                    Text(order.to.address,
+                        style: txt.subtitle1,
+                        maxLines: 2,
+                        softWrap: true,
+                        overflow: TextOverflow.ellipsis),
                   ],
                 ),
                 Spacer(),
-                (order.restaurantOrderStatus == RestaurantOrderStatus.Delivered)
+                // if not canceled , it means it was delivered!
+                !order.isCanceled()
                     ? Icon(
                         Icons.check_circle,
                         color: Colors.green,

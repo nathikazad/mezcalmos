@@ -23,7 +23,8 @@ class RequestTaxiScreen extends StatefulWidget {
 
 class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
   // MyPopupMenuController _popUpController = MyPopupMenuController();
-  SearchComponentType _currentFocusedTextField = SearchComponentType.From;
+  Rx<SearchComponentType> _currentFocusedTextField =
+      SearchComponentType.From.obs;
   Rx<TaxiRequest> taxiRequest = TaxiRequest().obs;
   TaxiController controller = Get.find<TaxiController>();
   final LocationPickerController locationPickerController =
@@ -40,7 +41,6 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
     // set blackScreenBottom 110
     locationPickerController.blackScreenBottomTextMargin.value = 110;
 
-    _currentFocusedTextField = SearchComponentType.From;
     GeoLoc.Location().getLocation().then((GeoLoc.LocationData locData) {
       MapHelper.getAdressFromLatLng(
               LatLng(locData.latitude!, locData.longitude!))
@@ -50,7 +50,6 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                 "${locData.latitude.toString()}, ${locData.longitude.toString()}",
             locData);
         updateModelAndMarker(SearchComponentType.From, taxiRequest.value.from!);
-        setState(() {});
         locationPickerController.setLocation(taxiRequest.value.from!);
       });
     });
@@ -66,39 +65,43 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
       //  AppBar(),
       backgroundColor: Colors.white,
       body: Container(
-        color: Colors.white,
-        padding: EdgeInsets.only(left: 1, right: 1),
-        child: Stack(
-            clipBehavior: Clip.none,
-            alignment: Alignment.topCenter,
-            children: [
-              Container(
-                  width: Get.width,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: Colors.white),
-                  child: LocationPicker(
-                      locationPickerMapController:
-                          this.locationPickerController,
-                      notifyParentOfLocationFinalized:
-                          updateModelAndMaybeCalculateRoute,
-                      notifyParentOfConfirm: (Location? _) async =>
-                          await requestTaxi(_))),
-              Container(
-                height: 40,
-                width: Get.width,
-                color: Colors.white,
-              ),
-              LocationSearchBar(
-                  request: taxiRequest,
-                  locationSearchBarController: locationSearchBarController,
-                  newLocationChosenEvent:
-                      updateModelAndHandoffToLocationPicker),
-              taxiRequest.value.isFromToSet()
-                  ? MapBottomBar(taxiRequest: taxiRequest)
-                  : SizedBox()
-            ]),
-      ),
+          color: Colors.white,
+          padding: EdgeInsets.only(left: 1, right: 1),
+          child: Obx(
+            () => Stack(
+                clipBehavior: Clip.none,
+                alignment: Alignment.topCenter,
+                children: [
+                  Container(
+                      width: Get.width,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: Colors.white),
+                      child: LocationPicker(
+                          locationPickerMapController:
+                              this.locationPickerController,
+                          notifyParentOfLocationFinalized:
+                              updateModelAndMaybeCalculateRoute,
+                          notifyParentOfConfirm: (Location? _) async =>
+                              await requestTaxi(_))),
+                  Container(
+                    height: 40,
+                    width: Get.width,
+                    color: Colors.white,
+                  ),
+                  LocationSearchBar(
+                      request: taxiRequest,
+                      locationSearchBarController: locationSearchBarController,
+                      newLocationChosenEvent:
+                          updateModelAndHandoffToLocationPicker),
+                  taxiRequest.value.isFromToSet()
+                      ? MapBottomBar(
+                          taxiRequest: taxiRequest.value,
+                          isOrderCanceled: false,
+                        )
+                      : SizedBox()
+                ]),
+          )),
     );
   }
 
@@ -111,7 +114,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
     mezDbgPrint(
         "updateModelAndHandoffToLocationPicker Address ===> ${newLocation?.address}");
     if (newLocation != null) {
-      _currentFocusedTextField = textFieldType;
+      _currentFocusedTextField.value = textFieldType;
       updateModelAndMarker(textFieldType, newLocation);
       locationPickerController.setLocation(newLocation);
       locationPickerController.showFakeMarkerAndPickButton();
@@ -123,13 +126,12 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
     }
     locationSearchBarController.collapseDropdown();
     locationPickerController.clearPolyline();
-    setState(() {});
   }
 
 // after pick button is clicked after user verifies gps locaiton
   void updateModelAndMaybeCalculateRoute(Location newLocation) {
     locationPickerController.showOrHideBlackScreen(true);
-    updateModelAndMarker(_currentFocusedTextField, newLocation);
+    updateModelAndMarker(_currentFocusedTextField.value, newLocation);
     if (taxiRequest.value.isFromToSet()) {
       updateRouteInformation();
       locationPickerController.showConfirmButton();
@@ -149,10 +151,10 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
       String orderId = response.data["orderId"];
       // in case the widget is still mounted , then make dart scheduale this delayed call as soon as possible ,
       // so we don't fall into assertion error ('!_debugLocked': is not true.)
-      Future.delayed(Duration.zero,
-          () => popEverythingAndNavigateTo(getTaxiOrderRoute(orderId))
-          // popUntilAndNavigateTo(kHomeRoute, getTaxiOrderRoute(oid))
-          );
+      await Future.microtask(() {
+        mezDbgPrint("Goung tooooo route >>>>  ${getTaxiOrderRoute(orderId)}");
+        popEverythingAndNavigateTo(getTaxiOrderRoute(orderId));
+      });
     } else {
       mezcalmosSnackBar("Error :(", "Failed to request a taxi !",
           position: SnackPosition.TOP);
@@ -182,6 +184,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
     if (route != null) {
       int estimatedPrice =
           getEstimatedRidePriceInPesos(route.distance.distanceInMeters);
+      taxiRequest.value.setEstimatedPrice(estimatedPrice);
       taxiRequest.value.setRouteInformation(TaxiOrder.RouteInformation(
           polyline: route.encodedPolyLine,
           distance: route.distance,
@@ -189,8 +192,6 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
       mezDbgPrint("Polyliiines ====> ${route.polylineList}");
       mezDbgPrint("Polyliiines ====> ${taxiRequest.value.toString()}");
       locationPickerController.addPolyline(route.polylineList);
-      // #question @saad why is there a set state here?
-      // taxiRequest is obx and locationPickcontroller will calls
     } else {
       // TODO:handle route error
     }
@@ -198,6 +199,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
 
   int getEstimatedRidePriceInPesos(int distanceInMeteres) {
     // 35 is always the minimum possible price !
+    // TODO : Calculate depending on distance
     return 35;
   }
 }

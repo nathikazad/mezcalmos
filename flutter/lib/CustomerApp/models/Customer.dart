@@ -12,6 +12,7 @@ class Customer {
     this.notificationInfo = data?["notificationInfo"];
     List<SavedLocation> newSavedLocations = [];
 
+    mezDbgPrint("SavedLocations ===> ${data?["savedLocations"]}");
     if (data["savedLocations"] != null) {
       Map<String, dynamic>.from(data?["savedLocations"])
           .entries

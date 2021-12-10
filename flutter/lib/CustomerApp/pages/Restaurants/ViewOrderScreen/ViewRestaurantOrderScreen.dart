@@ -10,13 +10,7 @@ import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantControlle
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
-import 'package:intl/intl.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
-
 import 'components/DriverOrderCard.dart';
 import 'components/OrderDetailsCard.dart';
 import 'components/OrderFooterCard.dart';
@@ -89,7 +83,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
             controller.getCurrentOrderStream(orderId).listen((event) {
           if (event != null) {
             mezDbgPrint("===================" +
-                (event as RestaurantOrder).restaurantOrderStatus.toString());
+                (event as RestaurantOrder).status.toString());
             order.value = event;
           } else {
             _orderListener?.cancel();
@@ -116,7 +110,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
   Widget build(BuildContext context) {
     final txt = Theme.of(context).textTheme;
     responsiveSize(context);
-    mezDbgPrint(order.value?.restaurantOrderStatus);
+    mezDbgPrint(order.value?.status);
     mezDbgPrint(order.value?.serviceProviderId);
     return Scaffold(
         appBar: CustomerAppBar(
@@ -142,7 +136,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                         ),
                         OrderStatusCard(
                           order: order.value!,
-                          ordersStates: order.value!.restaurantOrderStatus,
+                          ordersStates: order.value!.status,
                           helperText: '',
                         ),
                         SizedBox(
@@ -150,7 +144,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                         ),
                         DriverOrderCard(
                             helperText: '',
-                            ordersStates: order.value!.restaurantOrderStatus,
+                            ordersStates: order.value!.status,
                             order: order.value!),
                         SizedBox(
                           height: 30.h,

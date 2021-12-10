@@ -27,8 +27,7 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
     final txt = Theme.of(context).textTheme;
     return Container(
         child: (widget.order.inProcess() &&
-                widget.order.restaurantOrderStatus ==
-                    RestaurantOrderStatus.OrderReceieved)
+                widget.order.status == RestaurantOrderStatus.OrderReceieved)
             ? Container(
                 margin: EdgeInsets.all(8),
                 child: TextButton(
@@ -161,10 +160,8 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                       child: Text('Cancel order'),
                     )),
               )
-            : (widget.order.restaurantOrderStatus ==
-                        RestaurantOrderStatus.Delivered ||
-                    widget.order.restaurantOrderStatus ==
-                        RestaurantOrderStatus.ReadyForPickup)
+            : (widget.order.status == RestaurantOrderStatus.Delivered ||
+                    widget.order.status == RestaurantOrderStatus.ReadyForPickup)
                 ? Card(
                     child: Container(
                       alignment: Alignment.center,
@@ -187,9 +184,9 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                       ),
                     ),
                   )
-                : (widget.order.restaurantOrderStatus ==
+                : (widget.order.status ==
                             RestaurantOrderStatus.CancelledByCustomer ||
-                        widget.order.restaurantOrderStatus ==
+                        widget.order.status ==
                             RestaurantOrderStatus.CancelledByAdmin)
                     ? Card(
                         color: Colors.black,

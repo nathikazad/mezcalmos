@@ -32,6 +32,12 @@ class OrderController extends GetxController {
         .child(customerPastOrders(_authController.fireAuthUser!.uid))
         .onValue
         .listen((event) async {
+      mezDbgPrint("----------------- O R D E R CONTROLLER ----------------");
+      mezDbgPrint("----------------- O R D E R CONTROLLER ----------------");
+      mezDbgPrint("PAST ORDERS ==> ${event.snapshot.value}");
+      mezDbgPrint("----------------- O R D E R CONTROLLER ----------------");
+      mezDbgPrint("----------------- O R D E R CONTROLLER ----------------");
+
       List<Order> orders = [];
       if (event.snapshot.value != null) {
         for (var orderId in event.snapshot.value.keys) {
@@ -39,6 +45,11 @@ class OrderController extends GetxController {
           if (orderData["orderType"] ==
               OrderType.Restaurant.toFirebaseFormatString()) {
             orders.add(RestaurantOrder.fromData(orderId, orderData));
+          }
+
+          if (orderData["orderType"] ==
+              OrderType.Taxi.toFirebaseFormatString()) {
+            orders.add(TaxiOrder.fromData(orderId, orderData));
           }
         }
       }
@@ -57,16 +68,16 @@ class OrderController extends GetxController {
         for (var orderId in event.snapshot.value.keys) {
           dynamic orderData = event.snapshot.value[orderId];
           // try {
-            // if restaurant order
-            if (orderData["orderType"] ==
-                OrderType.Restaurant.toFirebaseFormatString()) {
-              orders.add(RestaurantOrder.fromData(orderId, orderData));
-            }
-            // if Taxi order
-            if (orderData["orderType"] ==
-                OrderType.Taxi.toFirebaseFormatString()) {
-              orders.add(TaxiOrder.fromData(orderId, orderData));
-            }
+          // if restaurant order
+          if (orderData["orderType"] ==
+              OrderType.Restaurant.toFirebaseFormatString()) {
+            orders.add(RestaurantOrder.fromData(orderId, orderData));
+          }
+          // if Taxi order
+          if (orderData["orderType"] ==
+              OrderType.Taxi.toFirebaseFormatString()) {
+            orders.add(TaxiOrder.fromData(orderId, orderData));
+          }
           // } catch (e) {
           //   mezDbgPrint("orderController: adding order error " + orderId);
           //   mezDbgPrint(e);
