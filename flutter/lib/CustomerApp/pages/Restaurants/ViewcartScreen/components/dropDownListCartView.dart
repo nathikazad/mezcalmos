@@ -29,7 +29,8 @@ class _DropDownListCartViewState extends State<DropDownListCartView> {
     setState(() {
       listOfSavedLoacations = [
         SavedLocation(
-            name: "Pick From map",
+            name:
+                "${lang.strings["customer"]["restaurant"]["cart"]["pickLocation"]}",
             location: Location.fromFirebaseData(<String, dynamic>{
               "lat": 37.33233141,
               "lng": -122.0312186,

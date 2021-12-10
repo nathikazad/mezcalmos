@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/route_manager.dart';
 import 'package:intl/intl.dart';
+import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 
 class OldOrderCard extends StatelessWidget {
@@ -13,11 +16,12 @@ class OldOrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LanguageController lang = Get.find<LanguageController>();
     final txt = Theme.of(context).textTheme;
     return Card(
       child: Container(
         padding: EdgeInsets.all(8),
-        width: double.infinity,
+        width: Get.width,
         child: Column(
           children: [
             Row(
@@ -26,35 +30,54 @@ class OldOrderCard extends StatelessWidget {
                     radius: 35,
                     backgroundImage:
                         NetworkImage(order.serviceProvider!.image)),
-                SizedBox(width: 10.w),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      order.serviceProvider!.name,
-                      style: txt.headline3,
+                Expanded(
+                  child: Container(
+                    child: Row(
+                      children: [
+                        SizedBox(width: 10.w),
+                        Container(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                width: Get.width * 0.37,
+                                child: Text(
+                                  order.serviceProvider!.name,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: txt.headline3,
+                                ),
+                              ),
+                              Container(
+                                width: Get.width * 0.37,
+                                child: Text(
+                                  order.to.address,
+                                  softWrap: true,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: txt.subtitle1,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Spacer(),
+                        (order.restaurantOrderStatus ==
+                                RestaurantOrderStatus.Delivered)
+                            ? Icon(
+                                Icons.check_circle,
+                                color: Colors.green,
+                                size: 50,
+                              )
+                            : Icon(
+                                Icons.cancel,
+                                color: Colors.red,
+                                size: 50,
+                              ),
+                        Spacer()
+                      ],
                     ),
-                    Text(
-                      order.to.address,
-                      style: txt.subtitle1,
-                    ),
-                  ],
+                  ),
                 ),
-                Spacer(),
-                (order.restaurantOrderStatus == RestaurantOrderStatus.Delivered)
-                    ? Icon(
-                        Icons.check_circle,
-                        color: Colors.green,
-                        size: 50,
-                      )
-                    : Icon(
-                        Icons.cancel,
-                        color: Colors.red,
-                        size: 50,
-                      ),
-                SizedBox(
-                  width: 10.w,
-                )
               ],
             ),
             Divider(),
@@ -64,7 +87,7 @@ class OldOrderCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Total cost : ${order.cost} \$",
+                    "${lang.strings["customer"]["restaurant"]["cart"]["totalCost"]} : ${order.cost} \$",
                   ),
                   Text(
                     "${DateFormat.jm().format(DateFormat("hh:mm").parse("${order.orderTime.toLocal().hour}:${order.orderTime.toLocal().minute}"))}",

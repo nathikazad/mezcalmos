@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 
@@ -15,6 +16,7 @@ class SavedLocationComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LanguageController lang = Get.find<LanguageController>();
     final txt = Theme.of(context).textTheme;
     CustomerAuthController _customerAuthController =
         Get.find<CustomerAuthController>();
@@ -106,7 +108,8 @@ class SavedLocationComponent extends StatelessWidget {
                           color: Colors.white,
                         ),
                         iconColor: Colors.black,
-                        title: "Edit Location",
+                        title:
+                            "${lang.strings["customer"]["savedLocations"]["editLocation"]}",
                         ontap: () {
                           mezDbgPrint("edit saved lovation item");
                           Get.toNamed(kPickLocationEditRoute,
@@ -122,7 +125,8 @@ class SavedLocationComponent extends StatelessWidget {
                           color: Colors.white,
                         ),
                         iconColor: Colors.red,
-                        title: "Delete Location",
+                        title:
+                            "${lang.strings["customer"]["savedLocations"]["deleteLocation"]}",
                         ontap: () {
                           mezDbgPrint("delete saved location item");
                           _customerAuthController.deleteLocation(savelocation);
@@ -176,7 +180,13 @@ class IconSavedLocationButton extends StatelessWidget {
             SizedBox(
               width: 5,
             ),
-            Text("$title")
+            Container(
+              width: Get.width * 0.25,
+              child: Text(
+                "$title",
+                overflow: TextOverflow.ellipsis,
+              ),
+            )
           ],
         ),
       ),

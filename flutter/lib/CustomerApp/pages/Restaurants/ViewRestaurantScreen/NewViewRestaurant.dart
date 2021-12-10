@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-
+import 'package:get/get.dart';
 import 'components/RestaurantSliverAppbar.dart';
 import 'components/buildRestaurantsItems.dart';
 
@@ -14,6 +15,7 @@ class NewRestaurantViewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LanguageController lang = Get.find<LanguageController>();
     return Scaffold(
       body: DefaultTabController(
         length: 2,
@@ -27,10 +29,12 @@ class NewRestaurantViewScreen extends StatelessWidget {
                     labelStyle: Theme.of(context).textTheme.bodyText1,
                     tabs: [
                       Tab(
-                        text: 'Menu',
+                        text:
+                            '${lang.strings["customer"]["restaurant"]["menu"]["menu"]}',
                       ),
                       Tab(
-                        text: 'Informations',
+                        text:
+                            '${lang.strings["customer"]["restaurant"]["menu"]["info"]}',
                       ),
                     ],
                   ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
 import 'dropDownListCartView.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,6 +18,7 @@ class OrderSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LanguageController lang = Get.find<LanguageController>();
     final txt = Theme.of(context).textTheme;
 
     return Container(
@@ -37,7 +39,7 @@ class OrderSummaryCard extends StatelessWidget {
               alignment: Alignment.center,
               width: Get.width,
               child: Text(
-                "Order summary",
+                "${lang.strings["customer"]["restaurant"]["cart"]["orderSummary"]}",
                 style: txt.headline2!.copyWith(
                   fontWeight: FontWeight.w700,
                   fontSize: 16.sp,
@@ -66,7 +68,7 @@ class OrderSummaryCard extends StatelessWidget {
                   Expanded(
                     child: Container(
                       child: Text(
-                        "Order cost :",
+                        "${lang.strings["customer"]["restaurant"]["cart"]["orderCost"]} :",
                         style: txt.headline3!.copyWith(
                           fontWeight: FontWeight.w500,
                           fontSize: 14.75.sp,
@@ -97,7 +99,7 @@ class OrderSummaryCard extends StatelessWidget {
                   Expanded(
                     child: Container(
                       child: Text(
-                        "Delivery cost :",
+                        "${lang.strings["customer"]["restaurant"]["cart"]["deliveryCost"]} :",
                         style: txt.headline3!.copyWith(
                           fontWeight: FontWeight.w500,
                           fontSize: 14.75.sp,
@@ -128,7 +130,7 @@ class OrderSummaryCard extends StatelessWidget {
                   Expanded(
                     child: Container(
                       child: Text(
-                        "Total cost :",
+                        "${lang.strings["customer"]["restaurant"]["cart"]["totalCost"]} :",
                         style: txt.headline3!.copyWith(
                           fontWeight: FontWeight.w600,
                           fontSize: 14.75.sp,
@@ -157,7 +159,7 @@ class OrderSummaryCard extends StatelessWidget {
             Container(
               alignment: Alignment.centerLeft,
               child: Text(
-                "Delivery location :",
+                "${lang.strings["customer"]["restaurant"]["cart"]["deliveryLocation"]} :",
                 style: txt.headline3!.copyWith(
                   fontWeight: FontWeight.w600,
                   fontSize: 14.75.sp,

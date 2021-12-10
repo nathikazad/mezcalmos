@@ -50,7 +50,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
     return Scaffold(
       appBar: CustomerAppBar(
         autoBack: true,
-        title: "My Cart",
+        title: "${lang.strings["customer"]["restaurant"]["cart"]["myCart"]}",
       ),
       body: Obx(() => controller.cart.value.items.length > 0
           ? GetBuilder<RestaurantController>(

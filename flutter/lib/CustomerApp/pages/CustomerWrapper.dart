@@ -147,19 +147,23 @@ class _CustomerWrapperState extends State<CustomerWrapper>
                 Container(
                   alignment: Alignment.centerLeft,
                   padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Text(
-                    "Welcome to MEZCALMOS 👋",
-                    style: txt.headline1,
-                    textAlign: TextAlign.left,
+                  child: Obx(
+                    () => Text(
+                      "${lang.strings['customer']['home']['welcomeText']}",
+                      style: txt.headline1,
+                      textAlign: TextAlign.left,
+                    ),
                   ),
                 ),
                 //============================== description=============================
                 Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                  child: Text(
-                    "Your one stop palce to find all your needed local services and where you can enjoy fast and hight quality services.",
-                    style: txt.subtitle1!.copyWith(fontSize: 14),
+                  child: Obx(
+                    () => Text(
+                      "${lang.strings['customer']['home']['appDescription']}",
+                      style: txt.subtitle1!.copyWith(fontSize: 14),
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -169,43 +173,54 @@ class _CustomerWrapperState extends State<CustomerWrapper>
                 Container(
                   padding: const EdgeInsets.only(top: 10, left: 15),
                   alignment: Alignment.centerLeft,
-                  child: Text(
-                    "${lang.strings['customer']['home']['services']}",
-                    style: txt.headline1,
-                    textAlign: TextAlign.left,
+                  child: Obx(
+                    () => Text(
+                      "${lang.strings['customer']['home']['services']}",
+                      style: txt.headline1,
+                      textAlign: TextAlign.left,
+                    ),
                   ),
                 ),
                 SizedBox(
                   height: Get.height * 0.05,
                 ),
                 //====================Taxi===================
-                ServicesCard(
-                  title: "${lang.strings['customer']['home']['taxi']}",
-                  url: "assets/images/taxiService.png",
-                  subtitle:
-                      "Get the nearest taxi arrount and get your destinatiion asap .",
-                  ontap: () => Get.toNamed(kTaxiRequestRoute),
+                Obx(
+                  () => ServicesCard(
+                    title:
+                        "${lang.strings['customer']['home']['taxi']["title"]}",
+                    url: "assets/images/taxiService.png",
+                    subtitle:
+                        "${lang.strings['customer']['home']['taxi']["subtitle"]}",
+                    ontap: () => Get.toNamed(kTaxiRequestRoute),
+                  ),
                 ),
                 SizedBox(
                   height: Get.height * 0.05,
                 ),
                 //==================Food====================
-                ServicesCard(
-                  title: "${lang.strings['customer']['home']['food']}",
-                  url: "assets/images/restaurantService.png",
-                  subtitle:
-                      "Get the nearest taxi arrount and get your destinatiion asap .",
-                  ontap: () {
-                    Get.toNamed(kRestaurantsRoute);
-                  },
+                Obx(
+                  () => ServicesCard(
+                    title:
+                        "${lang.strings['customer']['home']['food']["title"]}",
+                    url: "assets/images/restaurantService.png",
+                    subtitle:
+                        "${lang.strings['customer']['home']['food']["subtitle"]}",
+                    ontap: () {
+                      Get.toNamed(kRestaurantsRoute);
+                    },
+                  ),
                 ),
                 SizedBox(
                   height: Get.height * 0.05,
                 ),
                 //==================Laundry=================
-                ServicesCard(
-                  title: "Laundry",
-                  url: "assets/images/laundryService.png",
+                Obx(
+                  () => ServicesCard(
+                    title:
+                        "${lang.strings['customer']['home']['laundry']["title"]}",
+                    url: "assets/images/laundryService.png",
+                  ),
                 ),
                 SizedBox(
                   height: Get.height * 0.15,
@@ -215,7 +230,8 @@ class _CustomerWrapperState extends State<CustomerWrapper>
                   height: 50,
                   child: Center(
                     child: InkWell(
-                      child: Text("need help ? Conatct our support team"),
+                      child: Obx(() => Text(
+                          "${lang.strings["customer"]["home"]["supportText"]}")),
                       onTap: () {
                         mezDbgPrint("conatct our support team");
                       },
@@ -254,7 +270,6 @@ class ServicesCard extends StatelessWidget {
             subtitle != null ? Colors.white : Color.fromRGBO(82, 82, 82, 0.03),
         borderRadius: BorderRadius.circular(10),
       ),
-      height: 100.h,
       child: InkWell(
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
@@ -272,8 +287,9 @@ class ServicesCard extends StatelessWidget {
                       child: Text(
                         "${title}",
                         textAlign: TextAlign.left,
+                        overflow: TextOverflow.ellipsis,
                         style: txt.headline1!.copyWith(
-                            fontWeight: FontWeight.w600, fontSize: 37.sp),
+                            fontWeight: FontWeight.w600, fontSize: 35.sp),
                       ),
                     ),
                     //================ subtitle============
