@@ -6,7 +6,7 @@ import * as customerNodes from "../shared/databaseNodes/customer";
 import { push } from "../shared/notification/notifyUser";
 import { OrderType } from "../shared/models/Order";
 import { ServerResponseStatus } from "../shared/models/Generic";
-import { orderInProcess, TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "./models/TaxiOrder";
+import { orderInProcess, TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "../shared/models/taxi/TaxiOrder";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { taxiOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { ParticipantType } from "../shared/models/Chat";

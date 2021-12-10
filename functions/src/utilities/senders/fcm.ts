@@ -45,6 +45,11 @@ export async function push(notification: fcmPayload, throughApi: boolean = false
 }
 
 function pushThroughApi(notification: fcmPayload) {
+  if (keys.fcm == undefined) {
+    logger.error("FCM key is undefined");
+    return
+  }
+
   let message: any = {
     ...notification.payload,
     ...notification.options

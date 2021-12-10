@@ -5,7 +5,7 @@ import { UserInfo } from "./User";
 export interface Chat {
   chatType: ChatType;
   orderType?: OrderType;
-  messages: Record<string, Message>;
+  messages?: Record<string, Message>;
   participants: Record<string, Participant>;
 }
 

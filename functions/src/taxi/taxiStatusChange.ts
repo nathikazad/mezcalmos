@@ -8,7 +8,7 @@ import { ServerResponse, ServerResponseStatus } from "../shared/models/Generic";
 import { OrderType } from "../shared/models/Order";
 import { push } from "../shared/notification/notifyUser";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
-import { orderInProcess, TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "./models/TaxiOrder";
+import { orderInProcess, TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "../shared/models/taxi/TaxiOrder";
 import { taxiOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { AuthData } from "firebase-functions/lib/common/providers/https";
 
