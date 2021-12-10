@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/models/Location.dart';
@@ -38,7 +39,6 @@ class LocationPickerController extends MGoogleMapController {
   void showGrayedOutButton() {
     _bottomButtomToShow.value = BottomButtomToShow.GrayedOut;
   }
-  // late void Function(Set<Polyline> polylines) setPolylines;
 }
 
 class LocationPicker extends StatefulWidget {
@@ -60,6 +60,7 @@ enum BottomButtomToShow { Pick, Confirm, GrayedOut }
 
 class LocationPickerState extends State<LocationPicker> {
   final LanguageController _lang = Get.find<LanguageController>();
+  Location? location;
 
   LocationPickerState();
 
@@ -71,34 +72,30 @@ class LocationPickerState extends State<LocationPicker> {
   @override
   Widget build(BuildContext context) {
     responsiveSize(context);
-    return Obx(() => widget.locationPickerMapController._showLoading.value ==
-                false ||
-            widget.locationPickerMapController.location.value != null
-        ? Stack(
-            alignment: Alignment.center,
-            children: [
-              MGoogleMap(
-                mGoogleMapController: widget.locationPickerMapController,
-                notifyParentOfNewLocation:
-                    widget.notifyParentOfLocationFinalized,
-                initialLocation: LatLng(
-                    widget.locationPickerMapController.location.value!.latitude,
-                    widget
-                        .locationPickerMapController.location.value!.longitude),
-                periodicRedrendring: false,
-                myLocationButtonEnabled: widget
-                    .locationPickerMapController.myLocationButtonEnabled.value,
-              ),
-              widget.locationPickerMapController._showFakeMarker.value
-                  ? pickerMarker()
-                  : SizedBox(),
-              widget.locationPickerMapController._showBlackScreen.value
-                  ? gestureDetector()
-                  : SizedBox(),
-              this.widget.showBottomButton ? bottomButton() : SizedBox()
-            ],
-          )
-        : Center(child: CircularProgressIndicator()));
+    return Obx(() =>
+        widget.locationPickerMapController._showLoading.value == false ||
+                widget.locationPickerMapController.location.value != null
+            ? Stack(
+                alignment: Alignment.center,
+                children: [
+                  MGoogleMap(
+                    mGoogleMapController: widget.locationPickerMapController,
+                    notifyParentOfNewLocation:
+                        widget.notifyParentOfLocationFinalized,
+                    periodicRedrendring: false,
+                    myLocationButtonEnabled: widget.locationPickerMapController
+                        .myLocationButtonEnabled.value,
+                  ),
+                  widget.locationPickerMapController._showFakeMarker.value
+                      ? pickerMarker()
+                      : SizedBox(),
+                  widget.locationPickerMapController._showBlackScreen.value
+                      ? gestureDetector()
+                      : SizedBox(),
+                  this.widget.showBottomButton ? bottomButton() : SizedBox()
+                ],
+              )
+            : Center(child: CircularProgressIndicator()));
   }
 
 /******************************  Widgets ************************************/
@@ -143,7 +140,7 @@ class LocationPickerState extends State<LocationPicker> {
   Widget buildBottomButton(String buttonText,
       {Function? notifier, Function? onPress}) {
     return Positioned(
-        bottom: 10,
+        bottom: 0,
         left: 15,
         right: widget.locationPickerMapController.myLocationButtonEnabled.value
             ? 80
@@ -202,8 +199,9 @@ class LocationPickerState extends State<LocationPicker> {
         color: Colors.black45,
         alignment: Alignment.bottomCenter,
         padding: EdgeInsets.only(
-            bottom: widget
-                .locationPickerMapController.blackScreenBottomTextMargin.value,
+            bottom: widget.locationPickerMapController
+                    .blackScreenBottomTextMargin.value +
+                35,
             left: 10,
             right: 10),
         child: Row(
@@ -251,7 +249,7 @@ class LocationPickerState extends State<LocationPicker> {
             widget.locationPickerMapController.location.value!.latitude,
             widget.locationPickerMapController.location.value!.longitude));
 
-    // mezDbgPrint("@===> old location : ${location.toString()}");
+    mezDbgPrint("@===> old location : ${location.toString()}");
 
     String formattedAddress =
         widget.locationPickerMapController.location.value!.address;

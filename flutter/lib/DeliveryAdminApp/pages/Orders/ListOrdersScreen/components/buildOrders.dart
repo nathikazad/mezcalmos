@@ -21,7 +21,7 @@ Widget buildOrders(RxList<Order> inProcessOrders) {
         // mezDbgPrint("${s.restaurantOrderStatus}");
         children.add(DeliveryAdminOrderComponent(
           type: OrderType.Restaurant,
-          status: s.restaurantOrderStatus,
+          status: s.status,
           url: s.restaurant.image,
           image: "${s.customer.image}",
           userName: "${s.customer.name}",

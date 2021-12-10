@@ -110,8 +110,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                           child: Container(
                             padding: const EdgeInsets.symmetric(vertical: 10),
                             child: Obx(() => buildWigetOnOrderStatus(
-                                order.value!.restaurantOrderStatus,
-                                order.value!.orderTime)),
+                                order.value!.status, order.value!.orderTime)),
                           ),
                         )
                       ],
@@ -519,7 +518,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
 
   Widget? changeStatusButton() {
     mezDbgPrint(order.value);
-    switch (order.value!.restaurantOrderStatus) {
+    switch (order.value!.status) {
       case RestaurantOrderStatus.OrderReceieved:
         return ButtonComponent(
           widget: getWidgetOrShowLoading(Text(

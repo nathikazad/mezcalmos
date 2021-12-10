@@ -22,6 +22,7 @@ abstract class Order {
       this.serviceProvider,
       required this.to});
   bool inProcess();
+  bool isCanceled();
   // Order.orderFromData(dynamic orderId, dynamic orderData){
 
 }

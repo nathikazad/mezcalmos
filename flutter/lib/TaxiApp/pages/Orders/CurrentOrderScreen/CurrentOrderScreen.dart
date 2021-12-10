@@ -3,9 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart' as LocationLibrary;
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
@@ -32,7 +35,6 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
   StreamSubscription? _orderListener;
   bool _clickedButton = false;
   TaxiAuthController taxiAuthController = Get.find<TaxiAuthController>();
-  LatLng? initialPosition;
 
   @override
   void initState() {
@@ -53,13 +55,21 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
         // populate the LatLngPoints from the encoded PolyLine String + SetState!
         mGoogleMapController.decodeAndAddPolyline(
             encodedPolylineString: _orderSnapshot.routeInformation.polyline);
+        mGoogleMapController.setLocation(_orderSnapshot.from);
+        // mGoogleMapController.setLocation(Location(
+        //     "CurrentLocation",
+        //     LocationLibrary.LocationData.fromMap({
+        //       "latitude": _orderSnapshot.driver!.location!.latitude,
+        //       "longitude": _orderSnapshot.driver!.location!.longitude
+        //     })));
         // handle OrderStatus first time (since this.order will be null)!
         updateOrder(orderStreamEvent: _orderSnapshot);
         // set InitialPosition
         if (order?.driver?.location != null)
-          setState(() {
-            initialPosition = order!.driver!.location!;
-          });
+          mGoogleMapController.moveToNewLatLng(
+              order!.driver!.location!.latitude,
+              order!.driver!.location!.longitude);
+
         // Listener
         _orderListener =
             controller.getCurrentOrderStream(orderId).listen((event) {
@@ -99,11 +109,11 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
           backgroundColor: Colors.white,
           appBar: taxiAppBar(AppBarLeftButtonType.Menu),
           body: SafeArea(
-              child: order != null && initialPosition != null
+              child: order != null &&
+                      this.mGoogleMapController.location.value != null
                   ? Stack(alignment: Alignment.topCenter, children: [
                       MGoogleMap(
                         mGoogleMapController: this.mGoogleMapController,
-                        initialLocation: initialPosition!,
                         myLocationButtonEnabled: false,
                         debugString: "CurrentOrderScreen",
                       ),
@@ -158,6 +168,16 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
           break;
         default:
       }
+      setState(() {
+        order = orderStreamEvent;
+        if (order?.driver?.location != null)
+          mGoogleMapController.setLocation(Location(
+              "CurrentLocation",
+              LocationLibrary.LocationData.fromMap({
+                "latitude": order!.driver!.location!.latitude,
+                "longitude": order!.driver!.location!.longitude
+              })));
+      });
     } else {
       // in case there is no status Changes
       // we simply keep updating the taxi's Marker's location , only if inProcess!
@@ -167,12 +187,6 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
             orderStreamEvent.driver!.id, orderStreamEvent.driver!.location!);
       }
     }
-
-    setState(() {
-      order = orderStreamEvent;
-      if (order?.driver?.location != null)
-        initialPosition = order!.driver!.location!;
-    });
   }
 
   void cancelOrderSubscription() {

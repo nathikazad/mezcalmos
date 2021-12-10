@@ -41,10 +41,8 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
         handleState(taxiState);
       } else {
         mezDbgPrint("inside else  = $taxiState");
-
         Get.find<TaxiAuthController>().stateStream.first.then((_taxiState) {
           mezDbgPrint("inside else -> then  = $_taxiState");
-
           handleState(_taxiState);
         });
       }

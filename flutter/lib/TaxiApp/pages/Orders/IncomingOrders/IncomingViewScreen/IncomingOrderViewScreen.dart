@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -56,7 +57,9 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
         mGoogleMapController.addOrUpdateUserMarker(
             order!.customer.id, order!.from.toLatLng());
         mGoogleMapController.addOrUpdatePurpleDestinationMarker(
-            latLng: order!.from.toLatLng());
+            latLng: order!.to.toLatLng());
+        // set initial position
+        mGoogleMapController.setLocation(order!.from);
         // start Listening for the vailability of the order
         _orderListener =
             controller.getIncomingOrderStream(orderId).listen((order) {
@@ -88,7 +91,7 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: taxiAppBar(AppBarLeftButtonType.Menu,
+      appBar: taxiAppBar(AppBarLeftButtonType.Back,
           function: cancelOrderSubscription),
       body: SafeArea(
         child: order != null
@@ -97,9 +100,6 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
                 children: [
                   MGoogleMap(
                     mGoogleMapController: mGoogleMapController,
-                    // markers: customMarkers,
-                    initialLocation: order!.from.toLatLng(),
-                    // polylines: polylines,
                     debugString: "IncomingViewScreen",
                     myLocationButtonEnabled: false,
                   ),

@@ -167,7 +167,7 @@ class MezSideMenu extends GetWidget<AuthController> {
   }
 
   Widget _buildSideMenuItem() {
-    if (_drawerController.sideMenuItems!.length > 0) {
+    if (_drawerController.sideMenuItems != null) {
       return Column(
         children: _drawerController.sideMenuItems!,
       );

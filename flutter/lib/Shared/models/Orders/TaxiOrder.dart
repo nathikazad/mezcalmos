@@ -50,7 +50,7 @@ class TaxiOrder extends Order {
   String? rideStartTime;
   TaxiOrdersStatus status;
   double distanceToClient = 0;
-  TaxiUserInfo? get driver => this.serviceProvider as TaxiUserInfo;
+  TaxiUserInfo? get driver => this.serviceProvider as TaxiUserInfo?;
   TaxiOrder(
       {required String orderId,
       required this.cost,
@@ -131,6 +131,14 @@ class TaxiOrder extends Order {
         "routeInformation": routeInformation,
         "distanceToClient": distanceToClient
       };
+
+  @override
+  bool isCanceled() {
+    return status == TaxiOrdersStatus.CancelledByCustomer ||
+        status == TaxiOrdersStatus.CancelledByTaxi ||
+        status == TaxiOrdersStatus.Expired ||
+        status == TaxiOrdersStatus.DroppedOff;
+  }
 
   @override
   bool inProcess() {

@@ -3,14 +3,14 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 class RestaurantOrder extends Order {
-  RestaurantOrderStatus restaurantOrderStatus;
+  RestaurantOrderStatus status;
   int quantity;
   List<RestaurantOrderItem> items = [];
   String? notes;
   UserInfo get restaurant => this.serviceProvider!;
   RestaurantOrder(
       {required String orderId,
-      required this.restaurantOrderStatus,
+      required this.status,
       required this.quantity,
       required String serviceProviderId,
       required PaymentType paymentType,
@@ -33,8 +33,7 @@ class RestaurantOrder extends Order {
   factory RestaurantOrder.fromData(dynamic id, dynamic data) {
     RestaurantOrder restaurantOrder = RestaurantOrder(
         orderId: id,
-        restaurantOrderStatus:
-            data["status"].toString().toRestaurantOrderStatus(),
+        status: data["status"].toString().toRestaurantOrderStatus(),
         quantity: data["quantity"],
         serviceProviderId: data["serviceProviderId"],
         paymentType: data["paymentType"].toString().toPaymentType(),
@@ -80,12 +79,19 @@ class RestaurantOrder extends Order {
   }
 
   String get restaurantId => this.serviceProviderId!;
+
+  @override
+  bool isCanceled() {
+    return status == RestaurantOrderStatus.CancelledByCustomer ||
+        status == RestaurantOrderStatus.CancelledByAdmin;
+  }
+
   @override
   bool inProcess() {
-    return restaurantOrderStatus == RestaurantOrderStatus.OrderReceieved ||
-        restaurantOrderStatus == RestaurantOrderStatus.PreparingOrder ||
-        restaurantOrderStatus == RestaurantOrderStatus.ReadyForPickup ||
-        restaurantOrderStatus == RestaurantOrderStatus.OnTheWay;
+    return status == RestaurantOrderStatus.OrderReceieved ||
+        status == RestaurantOrderStatus.PreparingOrder ||
+        status == RestaurantOrderStatus.ReadyForPickup ||
+        status == RestaurantOrderStatus.OnTheWay;
   }
 
   String get clipBoardText {
