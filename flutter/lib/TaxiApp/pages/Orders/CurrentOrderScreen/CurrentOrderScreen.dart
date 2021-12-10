@@ -32,7 +32,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
   StreamSubscription? _orderListener;
   bool _clickedButton = false;
   TaxiAuthController taxiAuthController = Get.find<TaxiAuthController>();
-  late LatLng initialPosition;
+  LatLng? initialPosition;
 
   @override
   void initState() {
@@ -56,9 +56,10 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
         // handle OrderStatus first time (since this.order will be null)!
         updateOrder(orderStreamEvent: _orderSnapshot);
         // set InitialPosition
-        setState(() {
-          initialPosition = order!.driver!.location!;
-        });
+        if (order?.driver?.location != null)
+          setState(() {
+            initialPosition = order!.driver!.location!;
+          });
         // Listener
         _orderListener =
             controller.getCurrentOrderStream(orderId).listen((event) {
@@ -98,11 +99,11 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
           backgroundColor: Colors.white,
           appBar: taxiAppBar(AppBarLeftButtonType.Menu),
           body: SafeArea(
-              child: order != null
+              child: order != null && initialPosition != null
                   ? Stack(alignment: Alignment.topCenter, children: [
                       MGoogleMap(
                         mGoogleMapController: this.mGoogleMapController,
-                        initialLocation: initialPosition,
+                        initialLocation: initialPosition!,
                         myLocationButtonEnabled: false,
                         debugString: "CurrentOrderScreen",
                       ),
@@ -136,9 +137,10 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
           mGoogleMapController.addOrUpdateUserMarker(
               orderStreamEvent.customer.id, orderStreamEvent.from.toLatLng());
           // add the Taxi's
-          mGoogleMapController.addOrUpdateTaxiDriverMarker(
-              orderStreamEvent.driver!.id,
-              orderStreamEvent.driver!.location!);
+          if (orderStreamEvent.driver?.location != null)
+            mGoogleMapController.addOrUpdateTaxiDriverMarker(
+                orderStreamEvent.driver!.id,
+                orderStreamEvent.driver!.location!);
           break;
         case TaxiOrdersStatus.InTransit:
           // no more showing the customer's marker
@@ -159,16 +161,17 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
     } else {
       // in case there is no status Changes
       // we simply keep updating the taxi's Marker's location , only if inProcess!
-      if (orderStreamEvent.inProcess()) {
+      if (orderStreamEvent.inProcess() &&
+          orderStreamEvent.driver?.location != null) {
         mGoogleMapController.addOrUpdateTaxiDriverMarker(
-            orderStreamEvent.driver!.id,
-            orderStreamEvent.driver!.location!);
+            orderStreamEvent.driver!.id, orderStreamEvent.driver!.location!);
       }
     }
 
     setState(() {
       order = orderStreamEvent;
-      initialPosition = order!.driver!.location!;
+      if (order?.driver?.location != null)
+        initialPosition = order!.driver!.location!;
     });
   }
 

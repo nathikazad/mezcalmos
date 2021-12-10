@@ -97,11 +97,9 @@ class TaxiOrder extends Order {
   }
 
   factory TaxiOrder.fromData(dynamic id, dynamic data) {
-    var _from = data['from'];
-    var _to = data['to'];
-
-    mezDbgPrint("FROOOOOOM => $_from");
-    mezDbgPrint("TOOOOOO => $_to");
+    mezDbgPrint("FROOOOOOM => ${data['from']}");
+    mezDbgPrint("TOOOOOO => ${data['to']}");
+    mezDbgPrint("DRIVER => ${data["driver"]}");
 
     TaxiOrder taxiOrder = TaxiOrder(
         orderId: id,
@@ -115,8 +113,8 @@ class TaxiOrder extends Order {
         acceptRideTime: data['acceptRideTime'],
         cost: data['cost'],
         // from: Location("", LocationData.fromMap({"lat":})),
-        from: Location.fromFirebaseData(_from),
-        to: Location.fromFirebaseData(_to),
+        from: Location.fromFirebaseData(data['from']),
+        to: Location.fromFirebaseData(data['to']),
         orderTime: DateTime.parse(data["orderTime"]),
         paymentType: data["paymentType"].toString().toPaymentType(),
         routeInformation: RouteInformation(
@@ -146,7 +144,6 @@ class TaxiOrder extends Order {
         status == TaxiOrdersStatus.OnTheWay;
   }
 }
-
 
 class TaxiUserInfo extends UserInfo {
   String taxiNumber;

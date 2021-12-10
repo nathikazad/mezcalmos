@@ -1,4 +1,5 @@
 import 'package:mezcalmos/Shared/models/Location.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 abstract class Order {
   String orderId;
@@ -68,5 +69,3 @@ class UserInfo {
     return UserInfo(data["id"], data["name"], data["image"]);
   }
 }
-
-

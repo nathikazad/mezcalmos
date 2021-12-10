@@ -271,7 +271,7 @@
             "text": "1 min",
             "value": 66
           },
-          "estimatedPrice": 30,
+          "cost": 30,
           "from": {
             "address": "Virgilio Uribe Santos 1259, Lazaro Cardenas, 70934 Brisas de Zicatela, Oax., Mexico",
             "by": "search",

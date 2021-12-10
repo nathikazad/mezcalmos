@@ -29,20 +29,27 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
   StreamSubscription<MezNotification.Notification>?
       _notificationsStreamListener;
   StreamSubscription<bool>? _locationStreamSub;
-
   @override
   void initState() {
     Future.microtask(() {
       mezDbgPrint("TaxiWrapper::microtask handleState first time");
       TaxiState? taxiState = Get.find<TaxiAuthController>().taxiState;
-      if (taxiState != null)
+      mezDbgPrint("taxiState = $taxiState");
+      if (taxiState != null) {
+        mezDbgPrint("inside if  = $taxiState");
+
         handleState(taxiState);
-      else
-        Get.find<TaxiAuthController>()
-            .stateStream
-            .first
-            .then((taxiState) => handleState(taxiState));
+      } else {
+        mezDbgPrint("inside else  = $taxiState");
+
+        Get.find<TaxiAuthController>().stateStream.first.then((_taxiState) {
+          mezDbgPrint("inside else -> then  = $_taxiState");
+
+          handleState(_taxiState);
+        });
+      }
     });
+
     String userId = Get.find<AuthController>().fireAuthUser!.uid;
     _notificationsStreamListener = initializeShowNotificationsListener();
     listenForLocationPermissions();

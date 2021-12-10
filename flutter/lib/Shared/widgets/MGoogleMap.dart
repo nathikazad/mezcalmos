@@ -74,7 +74,7 @@ class MGoogleMapController {
         60,
         60,
         isBytes: true);
-    markerId = markerId;
+    // markerId = markerId;
 
     this._addOrUpdateMarker(
         Marker(markerId: MarkerId(markerId), icon: icon, position: latLng));
@@ -90,7 +90,7 @@ class MGoogleMapController {
         .toList());
   }
 
-  // base internal functions
+  // base internal function
   void _addOrUpdateMarker(Marker marker) {
     markers.removeWhere(
         (element) => element.markerId.value == marker.markerId.value);

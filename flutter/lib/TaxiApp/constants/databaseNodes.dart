@@ -37,3 +37,8 @@ String taxiPastOrdersNode(String uid) {
 String taxiInProcessOrderNode(String uid) {
   return 'taxis/inProcessOrders/$uid';
 }
+
+String taxiInProcessOrderDriverLocationNode(
+    {required String orderId, required String taxiId}) {
+  return taxiInProcessOrderNode(taxiId) + '/$orderId/driver/location';
+}

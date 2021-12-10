@@ -76,7 +76,7 @@ class OrderController extends GetxController {
     try {
       return currentOrders.firstWhere((order) {
         mezDbgPrint(
-            "Checking CurrentOrders::${order.orderId} ==> ${order.toString()}");
+            "Checking CurrentOrders::${order.orderId} ==> Driver Loc : ${order.driver?.location?.toJson()}");
         return order.orderId == orderId;
       });
     } on StateError {

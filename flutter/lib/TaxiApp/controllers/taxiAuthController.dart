@@ -35,13 +35,12 @@ class TaxiAuthController extends GetxController {
   String? _previousStateValue = "init";
 
   @override
-  void onInit() async {
-    super.onInit();
+  void onInit() {
     // ------------------------------------------------------------------------
-
     mezDbgPrint("TaxiAuthController: init ${this.hashCode}");
     mezDbgPrint("TaxiAuthController: calling handle state change first time");
     setupTaxi(Get.find<AuthController>().fireAuthUser!);
+    super.onInit();
   }
 
   void setupTaxi(User user) async {
@@ -51,14 +50,15 @@ class TaxiAuthController extends GetxController {
 
     mezDbgPrint(
         "TaxiAuthController: _taxiStateNodeListener init ${taxiStateNode(user.uid)}");
-    await _taxiStateNodeListener?.cancel();
+    _taxiStateNodeListener?.cancel();
+    _taxiStateNodeListener = null;
     _taxiStateNodeListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(taxiStateNode(user.uid))
         .onValue
         .listen((event) async {
       mezDbgPrint(
-          "TaxiAuthController${this.hashCode}: _taxiStateNodeListener event");
+          "[++++++ = === ==] TaxiAuthController${this.hashCode}: _taxiStateNodeListener event => ${event.snapshot.value}");
       if (event.snapshot.value.toString() == _previousStateValue) {
         mezDbgPrint(
             'TaxiAuthController:: same state event fired again, skipping it');
@@ -142,12 +142,22 @@ class TaxiAuthController extends GetxController {
             .child('location')
             .set(positionUpdate);
         if (_state.value?.currentOrder != null) {
+          // updating driver location in taxis/inProcessOrders
+          _databaseHelper.firebaseDatabase
+              .reference()
+              .child(taxiInProcessOrderDriverLocationNode(
+                  orderId: _state.value!.currentOrder!,
+                  taxiId: _authController.fireAuthUser!.uid))
+              .set(positionUpdate);
+
+          // updating driver location in root orders/inProcess/taxi
           _databaseHelper.firebaseDatabase
               .reference()
               .child(rootInProcessOrderDriverLocationNode(
                   _state.value!.currentOrder!))
               .set(positionUpdate);
 
+          // updating driver location in customers/inProcessOrders
           String? currentOrderCustomerId = Get.find<OrderController>()
               .getOrder(_state.value!.currentOrder!)
               ?.customer
