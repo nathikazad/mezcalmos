@@ -186,16 +186,11 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
           polyline: route.encodedPolyLine,
           distance: route.distance,
           duration: route.duration));
-      taxiRequest.value.routeInformation?.distance = route.distance;
-      taxiRequest.value.routeInformation?.duration = route.duration;
-      taxiRequest.value.estimatedPrice = estimatedPrice;
-      taxiRequest.value.routeInformation?.polyline = route.encodedPolyLine;
       mezDbgPrint("Polyliiines ====> ${route.polylineList}");
       mezDbgPrint("Polyliiines ====> ${taxiRequest.value.toString()}");
       locationPickerController.addPolyline(route.polylineList);
       // #question @saad why is there a set state here?
       // taxiRequest is obx and locationPickcontroller will calls
-      setState(() {});
     } else {
       // TODO:handle route error
     }

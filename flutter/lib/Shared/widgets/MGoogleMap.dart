@@ -145,14 +145,17 @@ class MGoogleMapController {
 
     return centerLatLng;
   }
+
+  void setLocation(LocationModel.Location newLocation) {
+    this.location.value = newLocation;
+  }
 }
 
 class MGoogleMap extends StatefulWidget with MezDisposable {
   final MapHelper.LocationChangesNotifier? notifyParentOfNewLocation;
   LatLng initialLocation;
-  Map<String, Stream<LocationData>> idWithSubscription;
   Duration rerenderDuration;
-  String debugString;
+  String? debugString;
   final MGoogleMapController mGoogleMapController;
   // this is used when we don't want to re-render the map periodically.
   bool periodicRedrendring;
@@ -163,9 +166,8 @@ class MGoogleMap extends StatefulWidget with MezDisposable {
       this.periodicRedrendring = true,
       this.myLocationButtonEnabled = false,
       required this.initialLocation,
+      this.debugString,
       this.rerenderDuration = const Duration(seconds: 2),
-      this.debugString = "",
-      this.idWithSubscription = const {},
       required this.mGoogleMapController})
       : super(key: key);
 
@@ -284,28 +286,28 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
           })
         : null;
 
-    widget.idWithSubscription.forEach((markerId, stream) {
-      stream.listen((newLoc) {
-        if (!_markersCurrentlyBeingUpdated.contains(markerId)) {
-          mezDbgPrint("N E W    L O C A T I O N");
-          _markersCurrentlyBeingUpdated.add(markerId);
-          int i = widget.mGoogleMapController.markers
-              .indexWhere((element) => element.markerId.value == markerId);
-          mezDbgPrint(
-              "Inside MgoogleMap::widget.idWithSubscription::listener :: marker id -> ${widget.mGoogleMapController.markers[i].markerId.value}");
-          this.setState(() {
-            widget.mGoogleMapController.markers[i] = Marker(
-                markerId: MarkerId(markerId),
-                icon: widget.mGoogleMapController.markers[i].icon,
-                position: LatLng(newLoc.latitude!, newLoc.longitude!));
-          });
-          _markersCurrentlyBeingUpdated.remove(markerId);
-          // animateAndUpdateBounds();
-          mezDbgPrint(" E N D  -  L O C A T I O N");
-        }
-        // we skip if that markerId is already being handled .
-      }).canceledBy(this);
-    });
+    // widget.idWithSubscription.forEach((markerId, stream) {
+    //   stream.listen((newLoc) {
+    //     if (!_markersCurrentlyBeingUpdated.contains(markerId)) {
+    //       mezDbgPrint("N E W    L O C A T I O N");
+    //       _markersCurrentlyBeingUpdated.add(markerId);
+    //       int i = widget.mGoogleMapController.markers
+    //           .indexWhere((element) => element.markerId.value == markerId);
+    //       mezDbgPrint(
+    //           "Inside MgoogleMap::widget.idWithSubscription::listener :: marker id -> ${widget.mGoogleMapController.markers[i].markerId.value}");
+    //       this.setState(() {
+    //         widget.mGoogleMapController.markers[i] = Marker(
+    //             markerId: MarkerId(markerId),
+    //             icon: widget.mGoogleMapController.markers[i].icon,
+    //             position: LatLng(newLoc.latitude!, newLoc.longitude!));
+    //       });
+    //       _markersCurrentlyBeingUpdated.remove(markerId);
+    //       // animateAndUpdateBounds();
+    //       mezDbgPrint(" E N D  -  L O C A T I O N");
+    //     }
+    //     // we skip if that markerId is already being handled .
+    //   }).canceledBy(this);
+    // });
   }
 
   @override

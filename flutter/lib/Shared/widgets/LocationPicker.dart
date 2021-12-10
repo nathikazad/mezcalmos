@@ -38,10 +38,6 @@ class LocationPickerController extends MGoogleMapController {
   void showGrayedOutButton() {
     _bottomButtomToShow.value = BottomButtomToShow.GrayedOut;
   }
-
-  void setLocation(Location newLocation) {
-    super.location.value = newLocation;
-  }
   // late void Function(Set<Polyline> polylines) setPolylines;
 }
 
@@ -64,7 +60,6 @@ enum BottomButtomToShow { Pick, Confirm, GrayedOut }
 
 class LocationPickerState extends State<LocationPicker> {
   final LanguageController _lang = Get.find<LanguageController>();
-  Location? location;
 
   LocationPickerState();
 
@@ -78,7 +73,7 @@ class LocationPickerState extends State<LocationPicker> {
     responsiveSize(context);
     return Obx(() => widget.locationPickerMapController._showLoading.value ==
                 false ||
-            widget.locationPickerMapController.location != null
+            widget.locationPickerMapController.location.value != null
         ? Stack(
             alignment: Alignment.center,
             children: [
@@ -256,7 +251,7 @@ class LocationPickerState extends State<LocationPicker> {
             widget.locationPickerMapController.location.value!.latitude,
             widget.locationPickerMapController.location.value!.longitude));
 
-    mezDbgPrint("@===> old location : ${location.toString()}");
+    // mezDbgPrint("@===> old location : ${location.toString()}");
 
     String formattedAddress =
         widget.locationPickerMapController.location.value!.address;
