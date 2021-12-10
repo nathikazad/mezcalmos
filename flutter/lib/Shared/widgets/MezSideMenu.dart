@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -54,20 +55,40 @@ class MezSideMenu extends GetWidget<AuthController> {
                   height: 120.sp,
                   width: 120.sp,
                   child: ClipOval(
-                      clipBehavior: Clip.antiAlias,
-                      child: controller.user?.image == null ||
-                              controller.user?.image == ""
-                          ? Image.asset(
-                              aDefaultAvatar,
+                    clipBehavior: Clip.antiAlias,
+                    child: controller.user?.image == null ||
+                            controller.user?.image == ""
+                        ? Image.asset(
+                            aDefaultAvatar,
+                            width: getSizeRelativeToScreen(300, sw, sh).sp,
+                            height: getSizeRelativeToScreen(300, sw, sh).sp,
+                            fit: BoxFit.contain,
+                          )
+                        : CachedNetworkImage(
+                            imageUrl: controller.user!.image!,
+                            fit: BoxFit.cover,
+                            imageBuilder: (context, imageProvider) => Container(
                               width: getSizeRelativeToScreen(300, sw, sh).sp,
                               height: getSizeRelativeToScreen(300, sw, sh).sp,
-                              fit: BoxFit.contain,
-                            )
-                          : mLoadImage(
-                              url: controller.user!.image! + "?type=large",
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                    image: imageProvider, fit: BoxFit.cover),
+                              ),
+                            ),
+                            placeholder: (context, url) => Container(
                               width: getSizeRelativeToScreen(300, sw, sh).sp,
                               height: getSizeRelativeToScreen(300, sw, sh).sp,
-                              assetInCaseFailed: aDefaultAvatar)),
+                              child: Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                            ),
+                            errorWidget: (context, url, error) => Container(
+                                width: getSizeRelativeToScreen(300, sw, sh).sp,
+                                height: getSizeRelativeToScreen(300, sw, sh).sp,
+                                child: Center(child: Icon(Icons.error))),
+                          ),
+                  ),
                 ),
                 SizedBox(
                   height: 30.sp,

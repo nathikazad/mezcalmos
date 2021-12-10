@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -101,9 +102,17 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                                 height: Get.width - 120,
                                 width: Get.width - 120,
                                 child: ClipOval(
-                                  child: mLoadImage(
-                                      url: cartItem.value!.item.image!,
-                                      fit: BoxFit.cover),
+                                  child: CachedNetworkImage(
+                                    imageUrl: cartItem.value!.item.image!,
+                                    fit: BoxFit.cover,
+                                    placeholder: (context, url) => Container(
+                                      width: 15,
+                                      height: 15,
+                                      child: Center(
+                                        child: CircularProgressIndicator(),
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
