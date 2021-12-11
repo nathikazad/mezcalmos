@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 class OldOrderCard extends StatelessWidget {
   OldOrderCard({
@@ -29,7 +30,7 @@ class OldOrderCard extends StatelessWidget {
                 CircleAvatar(
                     radius: 35,
                     backgroundImage:
-                        NetworkImage(order.serviceProvider!.image)),
+                        mLoadImage(url: order.serviceProvider?.image).image),
                 Expanded(
                   child: Container(
                     child: Row(
@@ -42,7 +43,7 @@ class OldOrderCard extends StatelessWidget {
                               Container(
                                 width: Get.width * 0.37,
                                 child: Text(
-                                  order.serviceProvider!.name,
+                                  order.serviceProvider?.name ?? "Taxi Order",
                                   overflow: TextOverflow.ellipsis,
                                   style: txt.headline3,
                                 ),
@@ -61,7 +62,8 @@ class OldOrderCard extends StatelessWidget {
                           ),
                         ),
                         Spacer(),
-                        order.isCanceled()
+                        // TODO : Handle taxi order ... dropedOff
+                        !order.isCanceled()
                             ? Icon(
                                 Icons.check_circle,
                                 color: Colors.green,

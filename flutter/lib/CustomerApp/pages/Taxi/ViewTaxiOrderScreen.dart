@@ -158,7 +158,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
     switch (status) {
       case TaxiOrdersStatus.OnTheWay:
         // remove the to dest marker
-        widget.mGoogleMapController.removeDestinationMarker();
+        // widget.mGoogleMapController.removeDestinationMarker();
 
         // taxi driver marker
         widget.mGoogleMapController.addOrUpdateTaxiDriverMarker(
