@@ -1,15 +1,14 @@
-import 'package:mezcalmos/CustomerApp/constants/databaseNodes.dart';
-import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
-import 'package:mezcalmos/Shared/models/Notification.dart';
-import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
-import 'package:cloud_functions/cloud_functions.dart';
-import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
-import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'dart:async';
+
+import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/constants/databaseNodes.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
+import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
+import 'package:mezcalmos/Shared/models/Notification.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 class OrderController extends GetxController {
@@ -22,6 +21,7 @@ class OrderController extends GetxController {
 
   StreamSubscription? _currentOrdersListener;
   StreamSubscription? _pastOrdersListener;
+  Rx<FilterStatus> filterStatus = FilterStatus.All.obs;
 
   @override
   OrderController() {
@@ -130,6 +130,7 @@ class OrderController extends GetxController {
     });
   }
 
+
   bool orderHaveNewMessageNotifications(String orderId) {
     return _fbNotificationsController
         .notifications()
@@ -161,3 +162,5 @@ class OrderController extends GetxController {
     super.onClose();
   }
 }
+
+enum FilterStatus { All, Done, Canceled }

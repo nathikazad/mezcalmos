@@ -13,49 +13,57 @@ class OrderItemsItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final txt = Theme.of(context).textTheme;
-    return Row(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-              color: Theme.of(context).primaryColorLight.withOpacity(0.2),
-              shape: BoxShape.circle),
-          padding: EdgeInsets.all(12),
-          child: Text(
-            item.quantity.toStringAsFixed(0),
-            style: txt.headline2!
-                .copyWith(color: Theme.of(context).primaryColorLight),
-          ),
-        ),
-        SizedBox(
-          width: 10,
-        ),
-        CircleAvatar(
-          radius: 30,
-          backgroundImage: CachedNetworkImageProvider(item.image),
-        ),
-        SizedBox(
-          width: 10,
-        ),
-        Flexible(
-            flex: 2,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+    return Card(
+      child: Container(
+        padding: EdgeInsets.all(8),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Text(
-                  item.name,
-                  style: txt.headline3,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+                CircleAvatar(
+                  radius: 25,
+                  backgroundImage: CachedNetworkImageProvider(item.image),
+                ),
+                // SizedBox(
+                //   width: 10,
+                // ),
+                Flexible(
+                  flex: 1,
+                  child: Text(
+                    item.name,
+                    style: txt.bodyText1,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                Spacer(),
+                Container(
+                  alignment: Alignment.centerRight,
+                  decoration: BoxDecoration(
+                      color:
+                          Theme.of(context).primaryColorLight.withOpacity(0.2),
+                      shape: BoxShape.circle),
+                  padding: EdgeInsets.all(12),
+                  child: Text(
+                    item.quantity.toStringAsFixed(0),
+                    style: txt.headline2!
+                        .copyWith(color: Theme.of(context).primaryColorLight),
+                  ),
                 ),
               ],
-            )),
-        Spacer(),
-        Text(
-          item.totalCost.toStringAsFixed(2) + "\$",
-          style: txt.headline2!
-              .copyWith(color: Theme.of(context).primaryColorLight),
+            ),
+            Divider(
+              thickness: 0.3,
+            ),
+            Container(
+              alignment: Alignment.bottomRight,
+              child: Text(item.totalCost.toStringAsFixed(2) + " \$",
+                  style: txt.headline2!),
+            )
+          ],
         ),
-      ],
+      ),
     );
   }
 }

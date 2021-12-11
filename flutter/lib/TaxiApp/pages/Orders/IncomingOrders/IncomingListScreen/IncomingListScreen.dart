@@ -9,14 +9,15 @@ import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
-import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingListScreen/components/MezSwitch.dart';
 import 'package:mezcalmos/TaxiApp/components/taxiAppBar.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
-import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingListScreen/components/NoScrollGlowBehaviour.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'Components/MezSwitch.dart';
+import 'Components/NoScrollGlowBehaviour.dart';
 
 class IncomingOrdersScreen extends StatefulWidget {
   @override

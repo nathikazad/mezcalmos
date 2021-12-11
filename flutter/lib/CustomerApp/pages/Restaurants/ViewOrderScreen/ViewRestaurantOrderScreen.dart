@@ -11,8 +11,6 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
-import 'components/DriverOrderCard.dart';
-import 'components/OrderDetailsCard.dart';
 import 'components/OrderFooterCard.dart';
 import 'components/OrderStatusCard.dart';
 import 'components/OrderSummaryCard.dart';
@@ -109,55 +107,36 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
   @override
   Widget build(BuildContext context) {
     final txt = Theme.of(context).textTheme;
-    responsiveSize(context);
-    mezDbgPrint(order.value?.status);
-    mezDbgPrint(order.value?.serviceProviderId);
     return Scaffold(
         appBar: CustomerAppBar(
           autoBack: true,
-          title: 'Order',
+          title: 'Order status',
         ),
         body: Obx(
           () => (order.value != null)
               ? SingleChildScrollView(
-                  physics: ClampingScrollPhysics(),
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Container(
-                          child: Text(
-                            'Order Satus',
-                            style: txt.headline3,
-                          ),
-                        ),
                         SizedBox(
-                          height: 10.h,
+                          height: 20.h,
                         ),
                         OrderStatusCard(
                           order: order.value!,
                           ordersStates: order.value!.status,
-                          helperText: '',
                         ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        DriverOrderCard(
-                            helperText: '',
-                            ordersStates: order.value!.status,
-                            order: order.value!),
+
                         SizedBox(
                           height: 30.h,
                         ),
                         OrderItemsCard(
                           items: order.value!.items,
                         ),
+
                         SizedBox(
-                          height: 10.h,
-                        ),
-                        OrderDetailsCard(order: order.value!),
-                        SizedBox(
-                          height: 10.h,
+                          height: 20.h,
                         ),
                         OrderSummaryCard(order: order.value!),
 
@@ -167,139 +146,13 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                             ? SizedBox()
                             : notesWidget(order),
                         //===============================>button cancel===========================
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        OrderFooterCard(order: order.value!),
-                        // Container(
-                        //   child: Obx(() => order.value!.inProcess() &&
-                        //           order.value!.restaurantOrderStatus ==
-                        //               RestaurantOrderStatus.OrderReceieved
-                        //       ? Container(
-                        //           margin: EdgeInsets.all(8),
-                        //           child: TextButton(
-                        //               onPressed: () async {
-                        //                 await onTapButtonsShowLoading(() async {
-                        //                   bool yesNoRes =
-                        //                       await cancelAlertDailog(
-                        //                           lang.strings['customer']
-                        //                                       ['restaurant']
-                        //                                   ['checkout']
-                        //                               ['cancelOrder'],
-                        //                           lang.strings['customer']
-                        //                                       ['restaurant']
-                        //                                   ['checkout']
-                        //                               ['cancelOrderConfirm'],
-                        //                           () {
-                        //                     Get.back(result: true);
-                        //                   }, () {
-                        //                     Get.back(result: false);
-                        //                   });
 
-                        //                   if (yesNoRes) {
-                        //                     mezDbgPrint(
-                        //                         Get.parameters.toString());
-                        //                     ServerResponse resp =
-                        //                         await restaurantController
-                        //                             .cancelOrder(Get.parameters[
-                        //                                 'orderId']!);
-                        //                     mezDbgPrint(resp.data.toString());
-                        //                     if (resp.success) {
-                        //                       Get.until((route) =>
-                        //                           route.settings.name ==
-                        //                           kHomeRoute);
-                        //                       mezcalmosSnackBar(
-                        //                           lang.strings["shared"]
-                        //                                   ["snackbars"]
-                        //                               ["titleSuccess"],
-                        //                           lang.strings["shared"]
-                        //                                   ["snackbars"]
-                        //                               ["orderCancelSuccess"],
-                        //                           position: SnackPosition.TOP);
-                        //                     } else {
-                        //                       mezcalmosSnackBar(
-                        //                           lang.strings["shared"]
-                        //                                   ["snackbars"]
-                        //                               ["titleFailed"],
-                        //                           lang.strings["shared"]
-                        //                                   ["snackbars"]
-                        //                               ["orderCancelFailed"],
-                        //                           position: SnackPosition.TOP);
-                        //                     }
-                        //                   }
-                        //                 });
-                        //               },
-                        //               style: TextButton.styleFrom(
-                        //                   backgroundColor: Colors.black),
-                        //               child: Container(
-                        //                 alignment: Alignment.center,
-                        //                 child: Text('Cancel order'),
-                        //               )),
-                        //         )
-                        //       : (order.value!.restaurantOrderStatus ==
-                        //                   RestaurantOrderStatus.Delivered ||
-                        //               order.value!.restaurantOrderStatus ==
-                        //                   RestaurantOrderStatus.ReadyForPickup)
-                        //           ? Card(
-                        //               child: Container(
-                        //                 alignment: Alignment.center,
-                        //                 margin: EdgeInsets.all(16),
-                        //                 child: Row(
-                        //                   mainAxisAlignment:
-                        //                       MainAxisAlignment.center,
-                        //                   children: [
-                        //                     Icon(
-                        //                       Icons.check_circle,
-                        //                       color: Colors.green,
-                        //                     ),
-                        //                     SizedBox(
-                        //                       width: 10,
-                        //                     ),
-                        //                     Text(
-                        //                       'Order Delivered',
-                        //                       style: txt.headline3,
-                        //                     )
-                        //                   ],
-                        //                 ),
-                        //               ),
-                        //             )
-                        //           : (order.value!.restaurantOrderStatus ==
-                        //                       RestaurantOrderStatus
-                        //                           .CancelledByCustomer ||
-                        //                   order.value!.restaurantOrderStatus ==
-                        //                       RestaurantOrderStatus
-                        //                           .CancelledByAdmin)
-                        //               ? Card(
-                        //                   color: Colors.black,
-                        //                   child: Container(
-                        //                     alignment: Alignment.center,
-                        //                     margin: EdgeInsets.all(16),
-                        //                     child: Row(
-                        //                       mainAxisAlignment:
-                        //                           MainAxisAlignment.center,
-                        //                       children: [
-                        //                         Icon(
-                        //                           Icons.cancel,
-                        //                           color: Colors.red,
-                        //                         ),
-                        //                         SizedBox(
-                        //                           width: 10,
-                        //                         ),
-                        //                         Text(
-                        //                           'Order Canceled',
-                        //                           style: txt.headline3!
-                        //                               .copyWith(
-                        //                                   color: Colors.white),
-                        //                         )
-                        //                       ],
-                        //                     ),
-                        //                   ),
-                        //                 )
-                        //               : Container()),
-                        // ),
                         SizedBox(
-                          height: 10,
+                          height: 20.h,
                         ),
+                        Container(
+                            alignment: Alignment.center,
+                            child: OrderFooterCard(order: order.value!)),
                       ],
                     ),
                   ),

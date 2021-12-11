@@ -72,7 +72,6 @@ class OldOrderCard extends StatelessWidget {
                                 color: Colors.red,
                                 size: 50,
                               ),
-                        Spacer()
                       ],
                     ),
                   ),
