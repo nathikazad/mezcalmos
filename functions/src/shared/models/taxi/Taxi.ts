@@ -1,4 +1,3 @@
-import { info } from "../../databaseNodes/taxi"
 import { AuthorizationStatus, NotificationInfo } from "../Generic";
 
 export interface State {
@@ -15,9 +14,4 @@ export interface Taxi {
 
 export interface TaxiDetails {
   taxiNumber: string
-}
-
-export async function getTaxi(taxiId: string): Promise<Taxi> {
-  console.log(`checking taxi node at @ ${info(taxiId)}`);
-  return (await info(taxiId).once('value')).val();
 }

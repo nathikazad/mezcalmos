@@ -1,13 +1,12 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 class Location {
   String address;
   LocationData position;
   Location(this.address, this.position);
   factory Location.fromFirebaseData(dynamic location) {
-    mezDbgPrint("Building LocData => $location");
+    // mezDbgPrint("Building LocData => $location");
     LocationData position = buildLocationData(location["lat"], location["lng"]);
     return Location(location["address"], position);
   }

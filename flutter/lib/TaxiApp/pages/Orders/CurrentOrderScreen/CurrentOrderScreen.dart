@@ -72,13 +72,12 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
 
         // Listener
         _orderListener =
-            controller.getCurrentOrderStream(orderId).listen((event) {
-          if (event != null) {
-            updateOrder(orderStreamEvent: event);
+            controller.getCurrentOrderStream(orderId).listen((order) {
+          if (order != null) {
+            updateOrder(orderStreamEvent: order);
           } else {
             cancelOrderSubscription();
             // this will get the order inCase it moved to /past
-            order = controller.getOrder(orderId);
             //TODO: status change check if status is cancelledByCustomer
             if (order?.status == TaxiOrdersStatus.CancelledByCustomer) {
               oneButtonDialog(

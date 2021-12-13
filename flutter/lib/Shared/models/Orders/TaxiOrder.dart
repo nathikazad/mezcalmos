@@ -90,9 +90,9 @@ class TaxiOrder extends Order {
   }
 
   factory TaxiOrder.fromData(dynamic id, dynamic data) {
-    mezDbgPrint("FROOOOOOM => ${data['from']}");
-    mezDbgPrint("TOOOOOO => ${data['to']}");
-    mezDbgPrint("DRIVER => ${data["driver"]}");
+    // mezDbgPrint("FROOOOOOM => ${data['from']}");
+    // mezDbgPrint("TOOOOOO => ${data['to']}");
+    // mezDbgPrint("DRIVER => ${data["driver"]}");
 
     TaxiOrder taxiOrder = TaxiOrder(
         orderId: id,
@@ -164,7 +164,7 @@ class TaxiUserInfo extends UserInfo {
       : super(id, name, image);
 
   factory TaxiUserInfo.fromData(dynamic data) {
-    mezDbgPrint(" TaxiUserInfo.fromData ====> $data");
+    // mezDbgPrint(" TaxiUserInfo.fromData ====> $data");
     LatLng? location = data["location"] != null
         ? LatLng(data["location"]["position"]["lat"],
             data["location"]["position"]["lng"])

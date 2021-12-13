@@ -130,7 +130,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
                             child: MGoogleMap(
                               mGoogleMapController:
                                   this.widget.mGoogleMapController,
-                              periodicRedrendring: true,
+                              periodicRerendering: true,
                             )),
                         Container(
                           height: 40,

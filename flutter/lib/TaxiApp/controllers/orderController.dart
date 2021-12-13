@@ -51,15 +51,15 @@ class OrderController extends GetxController {
         .child(taxiInProcessOrderNode(_authController.fireAuthUser!.uid))
         .onValue
         .listen((event) {
-      mezDbgPrint("[][][][][ got new inProcess Order ]]");
+      // mezDbgPrint("[][][][][ got new inProcess Order ]]");
 
       List<TaxiOrder> orders = [];
       if (event.snapshot.value != null) {
-        mezDbgPrint("orderController: new incoming order data");
+        // mezDbgPrint("orderController: new incoming order data");
         event.snapshot.value.keys.forEach((orderId) {
-          mezDbgPrint("Hndling Order : $orderId");
+          // mezDbgPrint("Hndling Order : $orderId");
           dynamic orderData = event.snapshot.value[orderId];
-          mezDbgPrint("Order Data => $orderData");
+          // mezDbgPrint("Order Data => $orderData");
           orders.add(TaxiOrder.fromData(orderId, orderData));
           // try {
           // } catch (e) {
@@ -75,8 +75,8 @@ class OrderController extends GetxController {
   TaxiOrder? getOrder(String orderId) {
     try {
       return currentOrders.firstWhere((order) {
-        mezDbgPrint(
-            "Checking CurrentOrders::${order.orderId} ==> Driver Loc : ${order.driver?.location?.toJson()}");
+        // mezDbgPrint(
+        //     "Checking CurrentOrders::${order.orderId} ==> Driver Loc : ${order.driver?.location?.toJson()}");
         return order.orderId == orderId;
       });
     } on StateError {
