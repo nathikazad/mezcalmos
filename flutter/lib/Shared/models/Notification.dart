@@ -38,8 +38,10 @@ extension ParseNotificationActionToString on NotificationAction {
 
 extension ParseStringNotificationAction on String {
   NotificationAction toNotificationAction() {
-    return NotificationAction.values
-        .firstWhere((e) => e.toFirebaseFormatString() == this);
+    return NotificationAction.values.firstWhere(
+      (e) => e.toFirebaseFormatString() == this,
+      orElse: () => NotificationAction.ShowSnackBarAlways,
+    );
   }
 }
 
