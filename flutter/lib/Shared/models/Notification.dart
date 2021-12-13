@@ -1,5 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 enum NotificationType {
   NewMessage,

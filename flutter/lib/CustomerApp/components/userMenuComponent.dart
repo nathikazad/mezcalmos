@@ -4,6 +4,7 @@ import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 class UserMenu extends StatelessWidget {
   UserMenu({
@@ -51,6 +52,9 @@ class UserMenu extends StatelessWidget {
         switch (item) {
           case "Orders":
             Get.toNamed(kOrdersRoute);
+            break;
+          case "Notifications":
+            Get.toNamed(kNotificationsRoute);
             break;
           default:
         }

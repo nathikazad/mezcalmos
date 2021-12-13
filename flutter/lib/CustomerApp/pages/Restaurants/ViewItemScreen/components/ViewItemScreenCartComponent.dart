@@ -37,7 +37,7 @@ class _ViewItemScreenCartComponentState
       margin: const EdgeInsets.only(
         bottom: 10,
       ),
-      height: 70,
+      height: (widget.price == null) ? 70 : null,
       child: InkWell(
         child: Container(
           decoration: BoxDecoration(

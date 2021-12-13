@@ -43,7 +43,7 @@ Notification restaurantOrderStatusChangeNotificationHandler(
       timestamp: DateTime.parse(value['time']),
       notificationType: NotificationType.OrderStatusChange,
       notificationAction:
-          dynamicFields["notificationAction"].toString().toNotificationAction(),
+          value["notificationAction"].toString().toNotificationAction(),
       variableParams: value);
 }
 
