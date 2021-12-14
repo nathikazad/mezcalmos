@@ -13,4 +13,6 @@ export async function send(payload: Payload): Promise<void> {
     await twilio(keys.twilio.accountid, keys.twilio.authtoken)
       .messages
       .create({ body: payload.message, from: '+16304488781', to: payload.phoneNumber })
+  else
+    console.log("twilio keys not defined, cannot send")
 }

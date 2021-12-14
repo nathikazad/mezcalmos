@@ -96,7 +96,7 @@ export = functions.https.onCall(async (data, context) => {
     rootNodes.inProcessOrders(OrderType.Taxi, orderId).remove();
     // @Nathik i added this because TaxiApp is listening on /orders/open ,
     // and when Customer cancels ride it stays in /orders/open/taxi
-    rootNodes.openOrders(OrderType.Taxi ,orderId);
+    rootNodes.openOrders(OrderType.Taxi, orderId).remove();
     rootNodes.inProcessOrders(OrderType.Taxi, orderId).remove();
     rootNodes.pastOrders(OrderType.Taxi, orderId).set(order);
     customerNodes.inProcessOrders(order.customer.id!, orderId).remove();

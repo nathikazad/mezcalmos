@@ -7,7 +7,11 @@ import * as foreground from "../../utilities/senders/foreground";
 import { getUserInfo } from "../rootController";
 
 
-export async function push(userId: string, notification: Notification, particpantType: ParticipantType = ParticipantType.Customer) {
+export async function push(
+  userId: string,
+  notification: Notification,
+  particpantType: ParticipantType = ParticipantType.Customer,
+  fcmThroughApi: boolean = false) {
   foreground.push({
     particpantType: particpantType,
     userId: userId,
@@ -26,6 +30,6 @@ export async function push(userId: string, notification: Notification, particpan
         priority: fcm.NotificationPriority.High
       }
     };
-    fcm.push(fcmMessage);
+    fcm.push(fcmMessage, fcmThroughApi);
   }
 }

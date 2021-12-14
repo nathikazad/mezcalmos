@@ -7,9 +7,10 @@ import { push } from "../shared/notification/notifyUser";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "../shared/models/taxi/TaxiOrder";
 import { taxiOrderStatusChangeMessages } from "./bgNotificationMessages";
+import { ParticipantType } from "../shared/models/Chat";
 
 export async function expireOrder(orderId: string) {
-  let order = (await rootNodes.inProcessOrders(OrderType.Taxi, orderId).once('value')).val()
+  let order = (await rootNodes.openOrders(OrderType.Taxi, orderId).once('value')).val()
   if (order == null) {
     return {
       status: ServerResponseStatus.Error,
@@ -50,7 +51,10 @@ export async function expireOrder(orderId: string) {
     order.finishRideTime = (new Date()).toISOString();
 
     rootNodes.openOrders(OrderType.Taxi, orderId).remove();
-    customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
+    rootNodes.pastOrders(OrderType.Taxi, orderId).set(order);
+    customerNodes.inProcessOrders(order.customer.id!, orderId).remove();
+    customerNodes.pastOrders(order.customer.id!, orderId).set(order);
+
 
 
     let notification: Notification = {
@@ -65,7 +69,7 @@ export async function expireOrder(orderId: string) {
       background: taxiOrderStatusChangeMessages[TaxiOrderStatus.Expired]
     }
 
-    push(order.customer.id!, notification);
+    push(order.customer.id!, notification, ParticipantType.Customer, true);
 
     return {
       status: ServerResponseStatus.Success,

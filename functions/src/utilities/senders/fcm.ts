@@ -46,7 +46,7 @@ export async function push(notification: fcmPayload, throughApi: boolean = false
 
 function pushThroughApi(notification: fcmPayload) {
   if (keys.fcm == undefined) {
-    logger.error("FCM key is undefined");
+    logger.error("FCM key is undefined, cannot send");
     return
   }
 

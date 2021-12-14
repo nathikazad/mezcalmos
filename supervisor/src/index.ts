@@ -1,22 +1,36 @@
 import * as firebaseAdmin from "firebase-admin";
-import { getKeys } from "../../functions/src/shared/keys";
 import * as taxiNodes from "../../functions/src/shared/databaseNodes/taxi";
 import * as customerNodes from "../../functions/src/shared/databaseNodes/customer";
-import * as rootNodes from "../../functions/src/shared/databaseNodes/root";
-import { OrderType } from "../../functions/src/shared/models/Order";
 import { Chat, Message } from "../../functions/src/shared/models/Chat";
+import { Keys } from "../../functions/src/shared/models/Keys";
+import { setKeys } from "../../functions/src/shared/keys";
 import { Taxi } from "../../functions/src/shared/models/taxi/Taxi";
 import { TaxiOrder } from "../../functions/src/shared/models/taxi/TaxiOrder";
 import { expireOrder } from "../../functions/src/taxi/expire";
 import { NotificationPriority, push } from "../../functions/src/utilities/senders/fcm";
 import * as notifyUser from "../../functions/src/shared/notification/notifyUser";
 import { NewMessageNotification, Notification, NotificationAction, NotificationType } from "../../functions/src/shared/models/Notification";
+import * as functions from "firebase-functions";
+import * as fs from 'fs';
+import * as rootNodes from "../../functions/src/shared/databaseNodes/root";
+import { OrderType } from "../../functions/src/shared/models/Order";
 
-let keys = getKeys();
-// const keys = requireHelper("keys").keys()
-// const hasuraClass = requireHelper("hasura")
-// const expireOrder = requireHelper("taxi/expire");
-// const sender = requireHelper("sender")
+
+enum Environment {
+  Emulate = "emulate",
+  Staging = "staging",
+  Production = "production"
+}
+
+let keys: Record<Environment, Keys> = <Record<Environment, Keys>>functions.config()
+if (Object.keys(keys).length == 0) {
+  if (process.env.MEZC_API_KEYS) {
+    keys = <Record<Environment, Keys>>JSON.parse(fs.readFileSync(process.env.MEZC_API_KEYS, 'utf8'));
+  } else {
+    console.log("No environment keys or MEZC_API_KEYS file defined")
+  }
+}
+
 
 const checkOpenOrdersInterval: number = 10 //seconds
 let orderExpirationLimit: number = 300 // seconds
@@ -26,24 +40,38 @@ if (process.argv.length != 3) {
   process.exit()
 }
 
-const env = process.argv[2]
+const env: Environment = <Environment>process.argv[2]
 
-if (env != "emulate" && env != "staging" && env != "production") {
+if (env != Environment.Emulate && env != Environment.Staging && env != Environment.Production) {
   console.log("Invalid environment has to be emulate, staging or production")
   process.exit()
 }
-let firebaseParams: any = { databaseURL: keys.databaseURL };
-if (keys.serviceAccount)
-  firebaseParams.credential = firebaseAdmin.credential.cert(require(keys.serviceAccount))
+
+if (!keys[env].databaseURL) {
+  console.log("db url not defined")
+  process.exit()
+}
+
+if (!keys[env].serviceAccount && (env == Environment.Staging || env == Environment.Production)) {
+  console.log("Service account key not defined")
+  process.exit()
+}
+
+let firebaseParams: any = { databaseURL: keys[env].databaseURL };
+if (keys[env].serviceAccount)
+  firebaseParams.credential = firebaseAdmin.credential.cert(require(keys[env].serviceAccount!))
+
 const firebase = firebaseAdmin.initializeApp(firebaseParams)
 // const hasura = new hasuraClass.Hasura(keys[env].hasura)
-// const fcm = new sender.FCM(keys[env].fcm)
 
+setKeys(keys[env]);
 
 let openOrders: Record<string, TaxiOrder> = {}
-rootNodes.openOrders(OrderType.Taxi).on('value', function (snap) {
+rootNodes.openOrders(OrderType.Taxi).on('value', function (snap: any) {
   openOrders = snap.val()
+  console.log(snap.val())
 });
+
 
 // let notificationStatus = {}
 // firebase.database().ref(`/notificationStatus/taxi`).on('value', function (snap) {
@@ -52,13 +80,14 @@ rootNodes.openOrders(OrderType.Taxi).on('value', function (snap) {
 //     notificationStatus = snap.val()
 // });
 
-firebase.database().ref(`/metadata/orderExpirationTime`).on('value', function (snap) {
-  if (snap.val()) {
-    orderExpirationLimit = parseInt(snap.val())
-  }
-});
+// firebase.database().ref(`/metadata/orderExpirationTime`).on('value', function (snap) {
+//   if (snap.val()) {
+//     orderExpirationLimit = parseInt(snap.val())
+//   }
+// });
 
 async function checkOpenOrders() {
+  console.log("checking open orders")
   if (openOrders == null)
     return
 
@@ -70,22 +99,21 @@ async function checkOpenOrders() {
       let orderTime = new Date(openOrders[orderId].orderTime)
       let orderExpirationTime = new Date(orderTime.getTime() + orderExpirationLimit * 1000);
       if (new Date() > orderExpirationTime) {
+        console.log(`expiring order ${orderId}`)
         expireOrder(orderId);
         delete openOrders[orderId]
       } else {
         // for drivers not already notified, add them to order notifications list
         driversToNotify = updateOrderNotificationsList(orderId, drivers, driversToNotify)
-        // for drivers who just got marked read or received, save the respective times
+        // for drivers who just got marked read or received from device, save the respective times
         checkForStatusChange(orderId)
       }
     } else {
       expireOrder(orderId)
     }
   }
-  if (Object.keys(driversToNotify).length > 0) {
-    // for drivers who just got marked sent, mark them to be written in hasura
-    notifyDrivers(driversToNotify)
-  }
+
+  notifyDrivers(driversToNotify)
 
   // let hasuraUpdateList = []
   // for (let orderId in openOrders) {
@@ -103,23 +131,9 @@ async function checkOpenOrders() {
   // if (hasuraUpdateList.length > 0) {
   //   hasura.updateNotifications(hasuraUpdateList);
   // }
-  for (let orderId in openOrders) {
-    let openOrder = openOrders[orderId];
-    rootNodes.openOrders(OrderType.Taxi, orderId).transaction(function (order) {
-      if (order != null) {
-        order.notificationStatus = openOrder.notificationStatus!
-        return order;
-      }
-      return order
-    });
-    customerNodes.inProcessOrders(OrderType.Taxi, orderId).transaction(function (order) {
-      if (order != null) {
-        order.notificationStatus = openOrder.notificationStatus!
-        return order;
-      }
-      return order
-    })
-  }
+
+  // update notification status as an atomic operatiom, so that cannot be removed just before notification status write.
+  updateNotificationStatusesInDb();
 }
 
 setInterval(checkOpenOrders, checkOpenOrdersInterval * 1000);
@@ -136,19 +150,23 @@ function filterDrivers(drivers: Record<string, Taxi>): Record<string, Taxi> {
   return newDrivers
 }
 
-function updateOrderNotificationsList(orderId: string,
+function updateOrderNotificationsList(
+  orderId: string,
   drivers: Record<string, Taxi>,
-  driversToNotify: Record<string, NotifyDriver>):
+  driversToNotify: Record<string, NotifyDriver> = {}):
   Record<string, NotifyDriver> {
   for (let driverId in drivers) {
     if (driversToNotify[driverId])
       continue
     let driver = drivers[driverId]
+    if (!driver.notificationInfo)
+      continue
     let notificationStatus = openOrders[orderId].notificationStatus;
     if (!notificationStatus || !notificationStatus[driverId]
       || (!notificationStatus[driverId].read
         && (!notificationStatus[driverId].sentCount
           || notificationStatus[driverId].sentCount < 6))) {
+      driversToNotify[driverId] = driversToNotify[driverId] || {}
       driversToNotify[driverId].info = driver
       driversToNotify[driverId].orderId = orderId
     }
@@ -182,6 +200,8 @@ interface NotifyDriver {
 }
 
 function notifyDrivers(driversToNotify: Record<string, NotifyDriver>) {
+  console.log("inside notify drivers")
+  console.log(Object.keys(driversToNotify))
   for (let driverId in driversToNotify) {
     let driverToNotify = driversToNotify[driverId];
 
@@ -223,6 +243,26 @@ function notifyDrivers(driversToNotify: Record<string, NotifyDriver>) {
   }
 }
 
+function updateNotificationStatusesInDb() {
+  for (let orderId in openOrders) {
+    let openOrder = openOrders[orderId];
+    rootNodes.openOrders(OrderType.Taxi, orderId).transaction(function (order) {
+      if (order != null) {
+        order.notificationStatus = openOrder.notificationStatus!
+        return order;
+      }
+      return order
+    });
+    customerNodes.inProcessOrders(openOrder.customer.id, orderId).transaction(function (order) {
+      if (order != null) {
+        order.notificationStatus = openOrder.notificationStatus!
+        return order;
+      }
+      return order
+    })
+  }
+}
+
 function getIPAddress() {
   var interfaces = require('os').networkInterfaces();
   for (var devName in interfaces) {
@@ -244,8 +284,8 @@ function constructReturnUrl(orderId: string) {
     url = "http://" + getIPAddress() + ":9000"
     dbName = "mezcalmos-31f1c-default-rtdb"
   } else {
-    url = keys.databaseURL
-    dbName = keys.databaseURL!.split('.')[0].split('/')[2]
+    url = keys[env].databaseURL
+    dbName = keys[env].databaseURL!.split('.')[0].split('/')[2]
   }
   return `${url}/notificationStatus/taxi/${orderId}/<driverId>/received.json?ns=${dbName}`
 }
@@ -257,33 +297,31 @@ firebase.database().ref(`/notificationQueue`).on('child_added', function (snap) 
 
 async function notifyOtherParticipants(messageId: string, message: Message) {
   let chat: Chat = (await firebase.database().ref(`chat/${message.orderId}`).once("value")).val();
-  if (chat.messages[messageId].alreadyNotified != true) {
-    let senderInfo = chat.participants[message.userId]
-    senderInfo.id = message.userId
-    delete chat.participants[message.userId]
-    for (let participantId in chat.participants) {
-      let participant = chat.participants[participantId]
-      let notification: Notification = {
-        foreground: <NewMessageNotification>{
-          sender: participant,
-          message: message.message,
-          time: message.timestamp,
-          notificationType: NotificationType.NewMessage,
-          notificationAction: NotificationAction.ShowSnackbarOnlyIfNotOnPage,
+  let senderInfo = chat.participants[message.userId]
+  senderInfo.id = message.userId
+  delete chat.participants[message.userId]
+  for (let participantId in chat.participants) {
+    let participant = chat.participants[participantId]
+    let notification: Notification = {
+      foreground: <NewMessageNotification>{
+        sender: participant,
+        message: message.message,
+        time: message.timestamp,
+        notificationType: NotificationType.NewMessage,
+        notificationAction: NotificationAction.ShowSnackbarOnlyIfNotOnPage,
+      },
+      background: {
+        en: {
+          title: `New message from ${senderInfo.name}`,
+          body: message.message
         },
-        background: {
-          en: {
-            title: `New message from ${senderInfo.name}`,
-            body: message.message
-          },
-          es: {
-            title: `Nueva mensaje de ${senderInfo.name}`,
-            body: message.message
-          }
+        es: {
+          title: `Nueva mensaje de ${senderInfo.name}`,
+          body: message.message
         }
       }
-      notifyUser.push(participantId, notification, participant.particpantType);
-      firebase.database().ref(`chat/${message.orderId}/messages/${messageId}/alreadyNotified`).set(true)
     }
+    notifyUser.push(participantId, notification, participant.particpantType);
+    firebase.database().ref(`chat/${message.orderId}/messages/${messageId}/alreadyNotified`).set(true)
   }
 }
