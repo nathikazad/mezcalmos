@@ -1,6 +1,6 @@
 import * as functions from "firebase-functions";
 import * as firebase from "firebase-admin";
-import { setUserInfo } from "../shared/rootController";
+import { setUserInfo } from "../shared/controllers/rootController";
 
 
 // Customer Canceling

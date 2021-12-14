@@ -4,7 +4,7 @@ import * as rootNodes from "../shared/databaseNodes/root";
 import { isSignedIn } from "../shared/helper/authorizer";
 import { ServerResponseStatus } from "../shared/models/Generic";
 import { OrderType } from "../shared/models/Order";
-import { getUserInfo } from "../shared/rootController";
+import { getUserInfo } from "../shared/controllers/rootController";
 import { OrderRequest } from "../shared/models/taxi/OrderRequest";
 import { constructTaxiOrder } from "../shared/models/taxi/TaxiOrder";
 

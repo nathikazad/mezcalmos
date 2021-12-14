@@ -2,6 +2,7 @@
 
 import 'dart:async';
 
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/constants/databaseNodes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -50,10 +51,21 @@ class MessageController extends GetxController {
   }
 
   void sendMessage(String message, String orderId) async {
-    _databaseHelper.firebaseDatabase
+    DatabaseReference messageNode = _databaseHelper.firebaseDatabase
         .reference()
         .child('${orderChatNode(orderId)}/messages')
-        .push()
+        .push();
+
+    messageNode.set(<String, dynamic>{
+      "message": message,
+      "userId": _authController.user!.uid,
+      "timestamp": DateTime.now().toUtc().toString(),
+      "orderId": _model.value.orderId
+    });
+
+    _databaseHelper.firebaseDatabase
+        .reference()
+        .child('notificationQueue/${messageNode.key}')
         .set(<String, dynamic>{
       "message": message,
       "userId": _authController.user!.uid,

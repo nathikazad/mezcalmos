@@ -132,7 +132,10 @@
         ".read": "root.child('chat/' + $orderId + '/participants/' + auth.uid).exists() || root.child('taxiAdmins/' + auth.uid + '/authorized').val() === true || root.child('deliveryAdmins/' + auth.uid + '/authorized').val() === true",
         "messages": {
           "$messageId": {
-            ".write": "root.child('chat/' + $orderId + '/participants/' + auth.uid).exists()"
+            ".write": "root.child('chat/' + $orderId + '/participants/' + auth.uid).exists()",
+            "notified": {
+              ".write": "false"
+            }
           }
         }
       }
@@ -256,6 +259,9 @@
           ".read": "$uid === auth.uid"
         }
       }
+    },
+    "notificationQueue": {
+      ".write": "true"
     }
   }
 }

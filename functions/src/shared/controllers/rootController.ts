@@ -1,5 +1,6 @@
-import { userInfoNode } from "./databaseNodes/root";
-import { UserInfo } from "./models/User";
+import { userInfoNode } from "../databaseNodes/root";
+import { UserInfo } from "../models/User";
+
 
 
 export async function getUserInfo(userId: string): Promise<UserInfo> {

@@ -4,7 +4,7 @@ import { Language, NotificationInfo } from "../models/Generic";
 import * as fcm from "../../utilities/senders/fcm";
 import { Notification } from "../models/Notification";
 import * as foreground from "../../utilities/senders/foreground";
-import { getUserInfo } from "../rootController";
+import { getUserInfo } from "../controllers/rootController";
 
 
 export async function push(

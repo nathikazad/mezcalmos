@@ -1,6 +1,6 @@
 import { Chat, ChatType, Participant } from "../models/Chat";
 import { OrderType } from "../models/Order";
-import *  as rootNodes from "../databaseNodes/root";
+import { setChat } from "../controllers/chatController";
 
 
 export async function buildChatForOrder(
@@ -18,6 +18,6 @@ export async function buildChatForOrder(
       [serviceProviderId]: serviceProviderInfo,
     }
   }
-  await rootNodes.chat(orderId).set(chat);
+  await setChat(orderId, chat);
   return chat;
 }

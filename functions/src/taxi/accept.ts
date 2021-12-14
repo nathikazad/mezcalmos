@@ -15,7 +15,7 @@ import { ParticipantType } from "../shared/models/Chat";
 import { push } from "../shared/notification/notifyUser";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { taxiOrderStatusChangeMessages } from "./bgNotificationMessages";
-import { getUserInfo } from "../shared/rootController";
+import { getUserInfo } from "../shared/controllers/rootController";
 import { getTaxi } from "../shared/controllers/taxiController";
 
 export = functions.https.onCall(async (data, context) => {

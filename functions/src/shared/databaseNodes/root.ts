@@ -38,6 +38,14 @@ export function pastOrders(orderType: OrderType, orderId?: string) {
   return orders(OrderStatus.PastOrders, orderType, orderId);
 }
 
+export function notificationsQueueNode(notificationId?: string) {
+  let dbNode: string = `notificationQueue`
+  if (notificationId != undefined) {
+    dbNode += `/${notificationId}`
+  }
+  return firebase.database().ref(dbNode);
+}
+
 enum OrderStatus {
   InProcess = "inProcess",
   Open = "open",
@@ -46,14 +54,6 @@ enum OrderStatus {
 
 function orders(orderStatus: OrderStatus, orderType: OrderType, orderId?: string) {
   let dbNode: string = `orders/${orderStatus}/${orderType}`
-  if (orderId != undefined) {
-    dbNode += `/${orderId}`
-  }
-  return firebase.database().ref(dbNode);
-}
-
-export function chat(orderId?: string) {
-  let dbNode: string = `/chat`
   if (orderId != undefined) {
     dbNode += `/${orderId}`
   }

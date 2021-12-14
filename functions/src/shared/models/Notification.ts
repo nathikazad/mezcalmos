@@ -31,6 +31,7 @@ export type BackgroundNotification = Record<Language, fcmNotification>
 export interface NewMessageNotification extends ForegroundNotification {
   sender: UserInfo,
   message: string,
+  orderId: string
 }
 
 export interface OrderNotification extends ForegroundNotification {

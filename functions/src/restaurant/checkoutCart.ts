@@ -20,7 +20,8 @@ import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
 import { buildChatForOrder } from "../shared/helper/chat";
 import { isSignedIn } from "../shared/helper/authorizer";
 import { getRestaurant } from "./restaurantController";
-import { getUserInfo } from "../shared/rootController";
+import { getUserInfo } from "../shared/controllers/rootController";
+import { setChat } from "../shared/controllers/chatController";
 
 export = functions.https.onCall(async (data, context) => {
 
@@ -100,5 +101,6 @@ async function addDeliveryAdminsToChat(
       particpantType: ParticipantType.DeliveryAdmin
     }
   }
-  rootNodes.chat(orderId).set(chat);
+
+  setChat(orderId, chat);
 }

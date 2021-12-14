@@ -28,7 +28,7 @@ export interface Participant extends UserInfo {
 export interface Message {
   orderId: string;
   userId: string;
-  alreadyNotified: boolean;
+  notified?: boolean;
   message: string,
   timestamp: string
 }

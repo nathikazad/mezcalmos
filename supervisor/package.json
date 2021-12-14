@@ -4,7 +4,7 @@
     "build": "tsc",
     "watch": "tsc -w",
     "emulateSupervisor": "npm run build && cross-env FIREBASE_DATABASE_EMULATOR_HOST=localhost:9000 node lib/supervisor/src/index.js emulate",
-    "start": "npm run shell",
+    "stagingSupervisor": "npm run build && node lib/supervisor/src/index.js staging",
     "logs": "firebase functions:log"
   },
   "engines": {
