@@ -30,8 +30,7 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
 
     return Container(
         child: Container(
-      padding: const EdgeInsets.symmetric(horizontal: 9),
-      height: 60,
+      padding: const EdgeInsets.all(16),
       color: Colors.white,
       child: Row(
         children: [
@@ -66,39 +65,23 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
               )),
             ),
           ),
-          Expanded(
-            flex: 3,
-            child: Container(
-              child: InkWell(
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Color.fromRGBO(172, 89, 252, 1),
-                      borderRadius: BorderRadius.circular(10)),
-                  height: 50,
-                  child: Center(
-                    child: Text(
-                      widget.mode == ViewItemScreenMode.AddItemMode
-                          ? lang.strings['customer']['restaurant']['menu']
-                              ['addToCart']
-                          : lang.strings['customer']['restaurant']['menu']
-                              ['modifyItem'],
-                      style: txt.headline2!
-                          .copyWith(color: Colors.white, fontSize: 14),
-                    ),
-                  ),
-                ),
-                onTap: () {
-                  if (ViewItemScreenMode.AddItemMode == widget.mode) {
-                    restaurantCartController.addItem(widget.cartItem.value!);
-                    Get.offNamed(kCartRoute);
-                  } else {
-                    restaurantCartController.addItem(widget.cartItem.value!);
-                    Get.back();
-                  }
-                },
-              ),
+          TextButton(
+            onPressed: () {
+              if (ViewItemScreenMode.AddItemMode == widget.mode) {
+                restaurantCartController.addItem(widget.cartItem.value!);
+                Get.offNamed(kCartRoute);
+              } else {
+                restaurantCartController.addItem(widget.cartItem.value!);
+                Get.back();
+              }
+            },
+            child: Text(
+              widget.mode == ViewItemScreenMode.AddItemMode
+                  ? lang.strings['customer']['restaurant']['menu']['addToCart']
+                  : lang.strings['customer']['restaurant']['menu']
+                      ['modifyItem'],
             ),
-          )
+          ),
         ],
       ),
     ));

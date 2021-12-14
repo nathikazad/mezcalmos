@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/components/CustomerApp_appbar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
-import 'package:mezcalmos/CustomerApp/pages/ListOrdersScreen/components/FilterOrderComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/ListOrdersScreen/components/OldOrderCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/ListOrdersScreen/components/OngoingOrderCard.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -82,7 +80,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                         ),
                       ),
                       SizedBox(
-                        height: 10.h,
+                        height: 15,
                       ),
                       Obx(
                         () => Column(
@@ -96,15 +94,28 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                   ),
                 ),
 
-                FilterOrders(),
                 Obx(
                   () => Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
-                      children: List.generate(
-                          controller.pastOrders().length,
-                          (index) => OldOrderCard(
-                              order: controller.pastOrders()[index])),
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          child: Text(
+                            'All orders',
+                            style: txt.headline3,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Column(
+                          children: List.generate(
+                              controller.pastOrders().length,
+                              (index) => OldOrderCard(
+                                  order: controller.pastOrders()[index])),
+                        ),
+                      ],
                     ),
                   ),
                 ),

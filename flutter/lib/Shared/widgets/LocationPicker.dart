@@ -83,6 +83,7 @@ class LocationPickerState extends State<LocationPicker> {
                     notifyParentOfNewLocation:
                         widget.notifyParentOfLocationFinalized,
                     periodicRerendering: false,
+                 //   periodicRedrendring: false,
                     myLocationButtonEnabled: widget.locationPickerMapController
                         .myLocationButtonEnabled.value,
                   ),

@@ -1,15 +1,21 @@
+import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/CustomerApp/components/userMenuComponent.dart';
+import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
+import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 
 class RestaurantSliverAppBar extends StatelessWidget {
-  const RestaurantSliverAppBar({
+  RestaurantSliverAppBar({
     Key? key,
     required this.restaurant,
   }) : super(key: key);
 
   final Restaurant restaurant;
+  RestaurantController controller = Get.find<RestaurantController>();
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +33,26 @@ class RestaurantSliverAppBar extends StatelessWidget {
             Icons.arrow_back,
             color: Colors.white,
           )),
-      actions: [UserMenu()],
+      actions: [
+        Obx(
+          () => controller.cart.value.items.length > 0
+              ? IconButton(
+                  onPressed: () {
+                    Get.toNamed(kCartRoute);
+                  },
+                  padding: EdgeInsets.only(right: 8),
+                  icon: Badge(
+                      badgeContent: Text(controller.cart.value.items.length
+                          .toStringAsFixed(0)),
+                      badgeColor: Theme.of(context).primaryColorLight,
+                      child: Icon(
+                        Ionicons.cart,
+                        color: Colors.white,
+                      )))
+              : Container(),
+        ),
+        UserMenu()
+      ],
       pinned: true,
       floating: false,
       flexibleSpace: FlexibleSpaceBar(

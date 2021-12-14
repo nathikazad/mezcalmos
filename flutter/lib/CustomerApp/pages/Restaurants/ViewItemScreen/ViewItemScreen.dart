@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/components/CustomerApp_appbar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
@@ -98,20 +97,25 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                                 top: 10,
                               ),
                               alignment: Alignment.center,
-                              child: Container(
-                                height: Get.width - 120,
-                                width: Get.width - 120,
-                                child: ClipOval(
-                                  child: CachedNetworkImage(
-                                    imageUrl: cartItem.value!.item.image!,
-                                    fit: BoxFit.cover,
-                                    placeholder: (context, url) => Container(
-                                      width: 15,
-                                      height: 15,
-                                      child: Center(
-                                        child: CircularProgressIndicator(),
-                                      ),
-                                    ),
+                              child: CachedNetworkImage(
+                                imageUrl: cartItem.value!.item.image!,
+                                imageBuilder: (context, imageProvider) {
+                                  return Container(
+                                    width: 150,
+                                    height: 150,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image: imageProvider)),
+                                  );
+                                },
+                                fit: BoxFit.cover,
+                                placeholder: (context, url) => Container(
+                                  width: 15,
+                                  height: 15,
+                                  child: Center(
+                                    child: CircularProgressIndicator(),
                                   ),
                                 ),
                               ),
@@ -125,11 +129,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                               child: Text(
                                   "${cartItem.value!.item.description!.inCaps}",
                                   textAlign: TextAlign.center,
-                                  style: GoogleFonts.nunito(
-                                      textStyle: TextStyle(
-                                          fontStyle: FontStyle.normal,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 14))),
+                                  style: Theme.of(context).textTheme.bodyText2),
                             ),
                             SizedBox(
                               height: 20,

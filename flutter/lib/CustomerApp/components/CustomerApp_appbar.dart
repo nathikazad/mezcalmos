@@ -1,6 +1,10 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/CustomerApp/components/userMenuComponent.dart';
+import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
+import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 
 // ignore: must_be_immutable
@@ -12,10 +16,12 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool? center;
   final Color? color;
   final bool autoBack;
+  bool? userMenu = true;
   CustomerAppBar(
       {Key? key,
       this.title,
       this.color,
+      this.userMenu = true,
       required this.autoBack,
       this.myLeading,
       this.onLeadingTaped,
@@ -24,7 +30,7 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
         super(key: key);
 
   // getting user image;
-
+  RestaurantController controller = Get.find<RestaurantController>();
   @override
   final Size preferredSize;
   @override
@@ -52,6 +58,18 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
       actions: [
+        Obx(() => controller.cart.value.items.length > 0
+            ? IconButton(
+                onPressed: () {
+                  Get.toNamed(kCartRoute);
+                },
+                padding: EdgeInsets.only(right: 8),
+                icon: Badge(
+                    badgeContent: Text(
+                        controller.cart.value.items.length.toStringAsFixed(0)),
+                    badgeColor: Theme.of(context).primaryColorLight,
+                    child: Icon(Ionicons.cart)))
+            : Container()),
         UserMenu(),
       ],
       elevation: 0.1,

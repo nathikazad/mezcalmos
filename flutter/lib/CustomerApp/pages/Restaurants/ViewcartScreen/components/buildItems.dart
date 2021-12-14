@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:mezcalmos/CustomerApp/components/ItemComponent.dart';
+import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/components/incrementalComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/myExpensionPanelComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
@@ -14,8 +13,6 @@ import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 
 import 'choosenOneOption.dart';
-import 'package:intl/intl.dart';
-
 import 'itemInformationCart.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
@@ -35,7 +32,7 @@ Widget buildItems(List<CartItem> cartItems, BuildContext context) {
         padding: const EdgeInsets.only(bottom: 15),
         margin: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
         child: MyExpensionPanelComponent(
-          child: Container(
+          child: Flexible(
               // width: 200,
               child: Obx(
             () => ItemInformationCart(

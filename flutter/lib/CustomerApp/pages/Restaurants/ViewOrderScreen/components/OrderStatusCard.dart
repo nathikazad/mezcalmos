@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
@@ -84,21 +85,24 @@ Widget getOrderWidget(RestaurantOrderStatus status) {
   switch (status) {
     case RestaurantOrderStatus.CancelledByAdmin:
       return Icon(
-        Icons.cancel,
+        Ionicons.bag_remove,
         size: 40.w,
         color: Colors.red,
       );
 
     case RestaurantOrderStatus.CancelledByCustomer:
       return Icon(
-        Icons.cancel,
+        Ionicons.bag_remove,
         size: 40.w,
         color: Colors.red,
       );
 
     case RestaurantOrderStatus.OrderReceieved:
-      return Container(
-          height: 40.w, width: 40.w, child: CircularProgressIndicator());
+      return Icon(
+        Icons.hourglass_bottom_rounded,
+        size: 40.w,
+        color: Colors.grey,
+      );
     case RestaurantOrderStatus.PreparingOrder:
       return Container(
         height: 40.h,
@@ -119,14 +123,14 @@ Widget getOrderWidget(RestaurantOrderStatus status) {
       );
     case RestaurantOrderStatus.ReadyForPickup:
       return Icon(
-        Icons.check_circle,
+        Ionicons.bag,
         size: 40.w,
         color: Colors.grey,
       );
 
     case RestaurantOrderStatus.Delivered:
       return Icon(
-        Icons.check_circle,
+        Ionicons.bag_check,
         size: 40.w,
         color: Colors.green,
       );

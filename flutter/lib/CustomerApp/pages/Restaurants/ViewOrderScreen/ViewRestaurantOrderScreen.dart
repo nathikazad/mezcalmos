@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/components/CustomerApp_appbar.dart';
@@ -11,6 +10,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
+
 import 'components/OrderFooterCard.dart';
 import 'components/OrderStatusCard.dart';
 import 'components/OrderSummaryCard.dart';
@@ -121,7 +121,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         SizedBox(
-                          height: 20.h,
+                          height: 20,
                         ),
                         OrderStatusCard(
                           order: order.value!,
@@ -129,14 +129,14 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                         ),
 
                         SizedBox(
-                          height: 30.h,
+                          height: 30,
                         ),
                         OrderItemsCard(
                           items: order.value!.items,
                         ),
 
                         SizedBox(
-                          height: 20.h,
+                          height: 2,
                         ),
                         OrderSummaryCard(order: order.value!),
 
@@ -147,9 +147,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                             : notesWidget(order),
                         //===============================>button cancel===========================
 
-                        SizedBox(
-                          height: 20.h,
-                        ),
+                        SizedBox(height: 20),
                         Container(
                             alignment: Alignment.center,
                             child: OrderFooterCard(order: order.value!)),

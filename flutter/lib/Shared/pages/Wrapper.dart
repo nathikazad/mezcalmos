@@ -37,7 +37,7 @@ class _WrapperState extends State<Wrapper> {
 
   void handleAuthStateChange(fireAuth.User? user) async {
     mezDbgPrint("Wrapper: handleAuthStateChange $user");
-    if (user == null) {
+    if (user == null ) {
       mezDbgPrint("Wrapper::handleAuthStateChange:: going to sign in route");
       Get.offNamedUntil(kSignInRoute, ModalRoute.withName(kWrapperRoute));
     } else {

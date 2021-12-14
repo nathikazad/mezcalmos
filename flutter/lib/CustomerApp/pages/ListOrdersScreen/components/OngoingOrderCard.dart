@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:ionicons/ionicons.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/OrderStatusCard.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/TaxiApp/constants/assets.dart';
+import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 
 class OngoingOrderCard extends StatelessWidget {
   const OngoingOrderCard({
@@ -20,86 +22,100 @@ class OngoingOrderCard extends StatelessWidget {
     LanguageController lang = Get.find<LanguageController>();
     final txt = Theme.of(context).textTheme;
     return Card(
-      child: Container(
-        padding: EdgeInsets.all(8),
-        width: double.infinity,
-        child: Column(
-          children: [
-            Row(
-              children: [
-                CircleAvatar(
-                    radius: 35,
-                    backgroundImage:
-                        // #question @jam what is the point of null check if you are going to override it like this
-                        // taxi orders dont have service provider image when they are looking for orders
-                        // in that case show the logo, it will not work as NetworkImage, so please change to load asset image
-                        NetworkImage(order.serviceProvider != null
-                            ? order.serviceProvider!.image
-                            : "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d")),
-                SizedBox(width: 5.w),
-                Flexible(
-                  flex: 3,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        order.serviceProvider?.name ?? "Unavailable",
-                        style: txt.headline3,
-                      ),
-                      Text(
-                        order.to.address,
-                        style: txt.subtitle1,
-                      ),
-                    ],
-                  ),
-                ),
-                Spacer(),
-                Material(
-                  color: Theme.of(context).primaryColorLight,
-                  shape: CircleBorder(),
-                  child: InkWell(
-                    onTap: () {
-                      switch (order.orderType) {
-                        case OrderType.Restaurant:
-                          Get.toNamed(getRestaurantOrderRoute(order.orderId));
-                          break;
-                        case OrderType.Taxi:
-                          Get.toNamed(getTaxiOrderRoute(order.orderId));
-                          break;
-                        default:
-                      }
-                    },
-                    customBorder: CircleBorder(),
-                    child: Container(
-                      margin: EdgeInsets.all(16),
-                      child: Icon(
-                        Icons.launch,
-                        color: Colors.white,
-                      ),
+      child: InkWell(
+        onTap: () {
+          switch (order.orderType) {
+            case OrderType.Restaurant:
+              Get.toNamed(getRestaurantOrderRoute(order.orderId));
+              break;
+            case OrderType.Taxi:
+              Get.toNamed(getTaxiOrderRoute(order.orderId));
+              break;
+            default:
+          }
+        },
+        borderRadius: BorderRadius.circular(10),
+        child: Ink(
+          padding: EdgeInsets.all(8),
+          width: double.infinity,
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  CircleAvatar(
+                      radius: 35,
+                      backgroundImage:
+                          // #question @jam what is the point of null check if you are going to override it like this
+                          // taxi orders dont have service provider image when they are looking for orders
+                          // in that case show the logo, it will not work as NetworkImage, so please change to load asset image
+                          NetworkImage(order.serviceProvider != null
+                              ? order.serviceProvider!.image
+                              : "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d")),
+                  SizedBox(width: 5.w),
+                  Flexible(
+                    flex: 3,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          order.serviceProvider?.name ?? "Unavailable",
+                          style: txt.headline3,
+                        ),
+                        Text(
+                          order.to.address,
+                          style: txt.subtitle1,
+                        ),
+                      ],
                     ),
                   ),
-                ),
-                SizedBox(
-                  width: 10.w,
-                )
-              ],
-            ),
-            Divider(),
-            Container(
-              padding: EdgeInsets.all(3),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "${lang.strings["customer"]["restaurant"]["cart"]["totalCost"]} : ${order.cost} \$",
-                  ),
-                  Text(
-                    "${DateFormat.jm().format(DateFormat("hh:mm").parse("${order.orderTime.toLocal().hour}:${order.orderTime.toLocal().minute}"))}",
-                  ),
+                  Spacer(),
+                  if (order.orderType == OrderType.Restaurant)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        getOrderWidget((order as RestaurantOrder).status),
+                        Text(
+                          getOrderStatus((order as RestaurantOrder).status),
+                          style: txt.subtitle1,
+                        )
+                      ],
+                    ),
+                  SizedBox(
+                    width: 10,
+                  )
                 ],
               ),
-            )
-          ],
+              Divider(),
+              Container(
+                padding: EdgeInsets.all(3),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      "${lang.strings["customer"]["restaurant"]["cart"]["totalCost"]} : ${order.cost} \$",
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Icon(
+                      Ionicons.time_outline,
+                      size: 16.sp,
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      "${DateFormat.jm().format(DateFormat("hh:mm").parse("${order.orderTime.toLocal().hour}:${order.orderTime.toLocal().minute}"))}",
+                    ),
+                    Spacer(),
+                    Icon(
+                      Icons.arrow_forward_ios_rounded,
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

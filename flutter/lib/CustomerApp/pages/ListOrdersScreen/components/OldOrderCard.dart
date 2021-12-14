@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:get/get.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 class OldOrderCard extends StatelessWidget {
@@ -65,12 +66,12 @@ class OldOrderCard extends StatelessWidget {
                         // TODO : Handle taxi order ... dropedOff
                         !order.isCanceled()
                             ? Icon(
-                                Icons.check_circle,
+                                Ionicons.bag_check,
                                 color: Colors.green,
                                 size: 50,
                               )
                             : Icon(
-                                Icons.cancel,
+                                Ionicons.bag_remove,
                                 color: Colors.red,
                                 size: 50,
                               ),

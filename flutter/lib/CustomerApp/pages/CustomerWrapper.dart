@@ -3,11 +3,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/CustomerApp/components/CustomerApp_appbar.dart';
 import 'package:mezcalmos/CustomerApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -20,6 +22,7 @@ import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/NotificationsDisplayer.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
+import 'package:url_launcher/url_launcher.dart';
 //import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
 
 class CustomerWrapper extends StatefulWidget {
@@ -129,133 +132,182 @@ class _CustomerWrapperState extends State<CustomerWrapper>
 // @mont #comment
 // needs more organization, each component should be one line
     return WillPopScope(
-      onWillPop: () async => false,
-      child: Scaffold(
-        key: _sideMenuDrawerController.getNewKey(),
-        drawer: MezSideMenu(),
-        appBar: CustomerAppBar(
-          autoBack: false,
-          myLeading: Icon(Icons.apps),
-          onLeadingTaped: () {
-            _sideMenuDrawerController.openMenu();
-          },
-          title: '',
-        ),
-        body: Container(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(
-                  height: Get.height * 0.07,
-                ),
-                //================================Welcome to MEZCALMOS 👋===================
-                Container(
-                  alignment: Alignment.centerLeft,
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Obx(
-                    () => Text(
-                      "${lang.strings['customer']['home']['welcomeText']}",
-                      style: txt.headline1,
-                      textAlign: TextAlign.left,
+        onWillPop: () async => false,
+        child: Scaffold(
+          key: _sideMenuDrawerController.getNewKey(),
+          drawer: MezSideMenu(),
+          appBar: CustomerAppBar(
+            autoBack: false,
+            userMenu: false,
+            myLeading: Icon(Icons.apps),
+            onLeadingTaped: () {
+              _sideMenuDrawerController.openMenu();
+            },
+            title: null,
+          ),
+          body: Container(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(children: [
+                  //================================Welcome to MEZCALMOS 👋===================
+
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    margin: EdgeInsets.all(8),
+                    child: Obx(
+                      () => Text(
+                        "${lang.strings['customer']['home']['welcomeText']}",
+                        style: txt.headline1,
+                        textAlign: TextAlign.left,
+                      ),
                     ),
                   ),
-                ),
-                //============================== description=============================
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                  child: Obx(
-                    () => Text(
-                      "${lang.strings['customer']['home']['appDescription']}",
-                      style: txt.subtitle1!.copyWith(fontSize: 14),
+                  //============================== description=============================
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 15),
+                    child: Obx(
+                      () => Text(
+                        "${lang.strings['customer']['home']['appDescription']}",
+                        style: txt.bodyText2,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                //============================Services===================================
-                Container(
-                  padding: const EdgeInsets.only(top: 10, left: 15),
-                  alignment: Alignment.centerLeft,
-                  child: Obx(
-                    () => Text(
-                      "${lang.strings['customer']['home']['services']}",
-                      style: txt.headline1,
-                      textAlign: TextAlign.left,
+
+                  //============================Services===================================
+                  Container(
+                    margin: EdgeInsets.all(8),
+                    alignment: Alignment.centerLeft,
+                    child: Obx(
+                      () => Text(
+                        "${lang.strings['customer']['home']['services']}",
+                        style: txt.headline1,
+                        textAlign: TextAlign.left,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: Get.height * 0.05,
-                ),
-                //====================Taxi===================
-                Obx(
-                  () => ServicesCard(
-                    title:
-                        "${lang.strings['customer']['home']['taxi']["title"]}",
-                    url: "assets/images/taxiService.png",
-                    subtitle:
-                        "${lang.strings['customer']['home']['taxi']["subtitle"]}",
-                    ontap: () {
-                      Order? _temp = _orderController.hasOrderOfType(
-                          typeToCheck: OrderType.Taxi);
-                      if (_temp != null) {
-                        popEverythingAndNavigateTo(
-                            getTaxiOrderRoute(_temp.orderId));
-                      } else {
-                        Get.toNamed(kTaxiRequestRoute);
-                      }
-                    },
+
+                  SizedBox(
+                    height: Get.height * 0.05,
                   ),
-                ),
-                SizedBox(
-                  height: Get.height * 0.05,
-                ),
-                //==================Food====================
-                Obx(
-                  () => ServicesCard(
-                    title:
-                        "${lang.strings['customer']['home']['food']["title"]}",
-                    url: "assets/images/restaurantService.png",
-                    subtitle:
-                        "${lang.strings['customer']['home']['food']["subtitle"]}",
-                    ontap: () {
-                      Get.toNamed(kRestaurantsRoute);
-                    },
-                  ),
-                ),
-                SizedBox(
-                  height: Get.height * 0.05,
-                ),
-                //==================Laundry=================
-                Obx(
-                  () => ServicesCard(
-                    title:
-                        "${lang.strings['customer']['home']['laundry']["title"]}",
-                    url: "assets/images/laundryService.png",
-                  ),
-                ),
-                SizedBox(
-                  height: Get.height * 0.15,
-                ),
-                Container(
-                  width: Get.width,
-                  height: 50,
-                  child: Center(
-                    child: InkWell(
-                      child: Obx(() => Text(
-                          "${lang.strings["customer"]["home"]["supportText"]}")),
-                      onTap: () {
-                        mezDbgPrint("conatct our support team");
+                  //====================Taxi===================
+                  Obx(
+                    () => ServicesCard(
+                      title:
+                          "${lang.strings['customer']['home']['taxi']["title"]}",
+                      url: "assets/images/taxiService.png",
+                      subtitle:
+                          "${lang.strings['customer']['home']['taxi']["subtitle"]}",
+                      ontap: () {
+                        Order? _temp = _orderController.hasOrderOfType(
+                            typeToCheck: OrderType.Taxi);
+                        if (_temp != null) {
+                          popEverythingAndNavigateTo(
+                              getTaxiOrderRoute(_temp.orderId));
+                        } else {
+                          Get.toNamed(kTaxiRequestRoute);
+                        }
                       },
                     ),
                   ),
-                )
-              ],
+                  //==================Food====================
+                  Obx(
+                    () => ServicesCard(
+                      title:
+                          "${lang.strings['customer']['home']['food']["title"]}",
+                      url: "assets/images/restaurantService.png",
+                      subtitle:
+                          "${lang.strings['customer']['home']['food']["subtitle"]}",
+                      ontap: () {
+                        Get.toNamed(kRestaurantsRoute);
+                      },
+                    ),
+                  ),
+
+                  //==================Laundry=================
+                  Obx(
+                    () => ServicesCard(
+                      title:
+                          "${lang.strings['customer']['home']['laundry']["title"]}",
+                      url: "assets/images/laundryService.png",
+                    ),
+                  ),
+                  SizedBox(
+                    height: 35,
+                  ),
+                  HomeFooterButtons(),
+                ]),
+              ),
             ),
           ),
-        ),
+        ));
+  }
+}
+
+class HomeFooterButtons extends StatelessWidget {
+  HomeFooterButtons({
+    Key? key,
+  }) : super(key: key);
+  LanguageController lang = Get.find<LanguageController>();
+
+  @override
+  Widget build(BuildContext context) {
+    final txt = Theme.of(context).textTheme;
+    return Obx(
+      () => Column(
+        children: [
+          InkWell(
+            onTap: () {
+              lang.changeUserLanguage();
+            },
+            child: Ink(
+              width: double.infinity,
+              padding: EdgeInsets.all(12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    height: 31.sp,
+                    width: 31.sp,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            image: AssetImage(lang.oppositFlag))),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(lang.oppositToLang, style: txt.bodyText1),
+                ],
+              ),
+            ),
+          ),
+          InkWell(
+            onTap: () async => await launch(tPrivacyPolicy),
+            child: Ink(
+              width: double.infinity,
+              padding: EdgeInsets.all(12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Ionicons.lock_closed,
+                    // color: Theme.of(context).primaryColorLight,
+                    size: 25.sp,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    lang.strings['shared']['navDrawer']["legal"],
+                    style: txt.bodyText1,
+                  )
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -277,67 +329,69 @@ class ServicesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final txt = Theme.of(context).textTheme;
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 15),
-      decoration: BoxDecoration(
-        color:
-            subtitle != null ? Colors.white : Color.fromRGBO(82, 82, 82, 0.03),
-        borderRadius: BorderRadius.circular(10),
-      ),
+    return Card(
+      margin: EdgeInsets.all(8),
+      color: subtitle != null ? Colors.white : Colors.grey.shade300,
       child: InkWell(
+        borderRadius: BorderRadius.circular(10),
+        onTap: ontap,
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
-          child: Row(
-            children: [
-              Container(
-                width: Get.width * 0.7 - 50,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    //================= title=============
-                    Container(
-                      padding: const EdgeInsets.only(left: 10),
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "${title}",
-                        textAlign: TextAlign.left,
-                        overflow: TextOverflow.ellipsis,
-                        style: txt.headline1!.copyWith(
-                            fontWeight: FontWeight.w600, fontSize: 35.sp),
+          padding: const EdgeInsets.all(8),
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: Get.width * 0.7 - 50,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      //================= title=============
+                      Container(
+                        padding: const EdgeInsets.only(left: 10),
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "${title}",
+                          textAlign: TextAlign.left,
+                          overflow: TextOverflow.ellipsis,
+                          style: txt.headline1!.copyWith(
+                              fontWeight: FontWeight.w600, fontSize: 35.sp),
+                        ),
                       ),
-                    ),
-                    //================ subtitle============
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      padding:
-                          subtitle == null ? EdgeInsets.only(left: 10) : null,
-                      child: subtitle != null
-                          ? Text(
-                              "${subtitle}",
-                              style: txt.subtitle1!.copyWith(fontSize: 13.7.sp),
-                            )
-                          : Text(
-                              "Comming soon ...",
-                              style: txt.subtitle1!.copyWith(
-                                  fontSize: 13.7.sp,
-                                  fontWeight: FontWeight.w700),
-                            ),
-                    )
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  child: Image.asset(
-                    url,
-                    fit: BoxFit.fitHeight,
+                      //================ subtitle============
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        padding:
+                            subtitle == null ? EdgeInsets.only(left: 10) : null,
+                        child: subtitle != null
+                            ? Text(
+                                "${subtitle}",
+                                style:
+                                    txt.subtitle1!.copyWith(fontSize: 13.7.sp),
+                              )
+                            : Text(
+                                "Comming soon ...",
+                                style: txt.subtitle1!.copyWith(
+                                    fontSize: 13.7.sp,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                      )
+                    ],
                   ),
                 ),
-              )
-            ],
+                Expanded(
+                  child: Container(
+                    child: Image.asset(
+                      url,
+                      fit: BoxFit.fitHeight,
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
-        onTap: ontap,
       ),
     );
   }

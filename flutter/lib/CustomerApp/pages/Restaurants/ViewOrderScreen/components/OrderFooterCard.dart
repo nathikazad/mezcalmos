@@ -108,53 +108,9 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                               // ],
                             );
                           });
-                      // await onTapButtonsShowLoading(() async {
-                      //   bool yesNoRes = await cancelAlertDailog(
-                      //       lang.strings['customer']
-                      //               ['restaurant']['checkout']
-                      //           ['cancelOrder'],
-                      //       lang.strings['customer']
-                      //               ['restaurant']['checkout']
-                      //           ['cancelOrderConfirm'], () {
-                      //     Get.back(result: true);
-                      //   }, () {
-                      //     Get.back(result: false);
-                      //   });
-
-                      //   if (yesNoRes) {
-                      //     mezDbgPrint(
-                      //         Get.parameters.toString());
-                      //     ServerResponse resp =
-                      //         await restaurantController
-                      //             .cancelOrder(Get
-                      //                 .parameters['orderId']!);
-                      //     mezDbgPrint(resp.data.toString());
-                      //     if (resp.success) {
-                      //       Get.until((route) =>
-                      //           route.settings.name ==
-                      //           kHomeRoute);
-                      //       mezcalmosSnackBar(
-                      //           lang.strings["shared"]
-                      //                   ["snackbars"]
-                      //               ["titleSuccess"],
-                      //           lang.strings["shared"]
-                      //                   ["snackbars"]
-                      //               ["orderCancelSuccess"],
-                      //           position: SnackPosition.TOP);
-                      //     } else {
-                      //       mezcalmosSnackBar(
-                      //           lang.strings["shared"]
-                      //                   ["snackbars"]
-                      //               ["titleFailed"],
-                      //           lang.strings["shared"]
-                      //                   ["snackbars"]
-                      //               ["orderCancelFailed"],
-                      //           position: SnackPosition.TOP);
-                      //     }
-                      //   }
-                      //  });
                     },
-                    style: TextButton.styleFrom(backgroundColor: Colors.black),
+                    style: TextButton.styleFrom(
+                        backgroundColor: Colors.red.shade600),
                     child: Container(
                       alignment: Alignment.center,
                       child: Text('Cancel order'),
@@ -214,6 +170,8 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                       )
                     : TextButton(
                         onPressed: null,
+                        style:
+                            TextButton.styleFrom(backgroundColor: Colors.grey),
                         child: Container(
                           alignment: Alignment.center,
                           child: Text('Cancel order'),

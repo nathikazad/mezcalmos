@@ -70,16 +70,15 @@ class _RestaurantsListItemsOfComponentState
                   Container(
                     alignment: Alignment.centerLeft,
                     child: Text("${widget.item.name!.capitalizeFirstofEach}",
-                        style: txt.headline3),
+                        style: txt.headline3!
+                            .copyWith(color: Colors.grey.shade800)),
                   ),
                   SizedBox(
                     height: 7,
                   ),
                   Container(
                     alignment: Alignment.centerLeft,
-                    child: Text("${widget.item.cost} \$",
-                        style: txt.headline2!
-                            .copyWith(color: Color.fromRGBO(172, 89, 252, 1))),
+                    child: Text("${widget.item.cost} \$", style: txt.headline1),
                   )
                 ],
               ),

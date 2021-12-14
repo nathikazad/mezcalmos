@@ -69,12 +69,10 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
               child: !_clickedOrderNow
                   ? Text(
                       "${lang.strings['customer']['restaurant']['cart']['orderNow']}",
-                      style: TextStyle(
-                          color: const Color(0xffffffff),
-                          fontFamily: "psb",
-                          fontStyle: FontStyle.normal,
-                          fontSize: 16.0),
-                      textAlign: TextAlign.center)
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline2!
+                          .copyWith(color: Colors.white))
                   : Container(
                       height: 20,
                       width: 20,

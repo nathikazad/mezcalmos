@@ -25,10 +25,10 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
-import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
-import 'package:package_info/package_info.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+import 'package:package_info/package_info.dart';
 
 class StartingPoint extends StatefulWidget {
   final AppType appType;

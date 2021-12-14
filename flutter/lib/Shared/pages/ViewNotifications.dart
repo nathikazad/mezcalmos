@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/widgets/DateTitleComponent.dart';
+import 'package:intl/intl.dart';
+import 'package:ionicons/ionicons.dart';
+import 'package:mezcalmos/CustomerApp/components/CustomerApp_appbar.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as notifs;
-import 'package:intl/intl.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/widgets/DateTitleComponent.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 
 import '../widgets/MezClearButton.dart';
 
-final f = new DateFormat('hh:mm a');
-final ff = new DateFormat('MM.dd.yyyy');
 
 class ViewNotifications extends StatefulWidget {
   ViewNotifications({Key? key}) : super(key: key);
@@ -37,67 +36,64 @@ class _ViewNotificationsState extends State<ViewNotifications> {
     super.initState();
   }
 
+// TODO remove static list and use the one comming from thee controller
+// TODO add obx
+  List<notifs.Notification> myNotifs = [
+    notifs.Notification(
+        id: '55',
+        timestamp: DateTime.now(),
+        title: 'The restaurant is preparing the order',
+        body: 'Restaurant name start preparing your order',
+        imgUrl: 'assets/images/OnTheWayOrderNotificationIcon.png',
+        linkUrl: 'linkUrl',
+        notificationType: notifs.NotificationType.OrderStatusChange,
+        notificationAction: notifs.NotificationAction.ShowPopUp),
+    notifs.Notification(
+        id: '55',
+        timestamp: DateTime.now(),
+        title: 'Your order is ready for pickup',
+        body: 'Restaurant name start preparing your order',
+        imgUrl: 'assets/images/DroppedOrderNotificationIcon.png',
+        linkUrl: 'linkUrl',
+        notificationType: notifs.NotificationType.OrderStatusChange,
+        notificationAction: notifs.NotificationAction.ShowPopUp),
+    notifs.Notification(
+        id: '55',
+        timestamp: DateTime(2021, 12, 13),
+        title: 'Your order is ready for pickup',
+        body: 'Restaurant name start preparing your order',
+        imgUrl: 'assets/images/PrepareOrderNotificationIcon.png',
+        linkUrl: 'linkUrl',
+        notificationType: notifs.NotificationType.OrderStatusChange,
+        notificationAction: notifs.NotificationAction.ShowPopUp),
+  ];
+
   @override
   Widget build(BuildContext context) {
-    responsiveSize(context);
-    mezDbgPrint(
-        "build function building the list ${controller.notifications.value.length}");
-
+    final txt = Theme.of(context).textTheme;
     return Scaffold(
-      backgroundColor: const Color(0xffffffff),
-      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back),
-      body: Column(
-        children: [
-          Row(
+      appBar: CustomerAppBar(
+        title: lang.strings['shared']['notification']['title'],
+        autoBack: true,
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
             children: [
-              Container(
-                padding: const EdgeInsets.only(
-                    top: 8, bottom: 8, right: 10, left: 10),
-                //width: Get.width,
-                child: Text(lang.strings['shared']['notification']['title'],
-                    style: TextStyle(
-                        color: const Color(0xfd1d1d1d),
-                        // fontWeight: FontWeight.w500,
-                        fontFamily: "psr",
-                        fontStyle: FontStyle.normal,
-                        fontSize: 40.0.sp),
-                    textAlign: TextAlign.left),
-              ),
-              Spacer(),
-              Obx(
-                () => (controller.notifications.value.length <= 0)
-                    ? Container()
-                    : MezClearButton(
-                        onTapFunction: () async {
-                          YesNoDialogButton yesNoRes = await cancelAlertDialog(
-                              title:
-                                  "${lang.strings["shared"]["notification"]["alertClearNotification"]["title"]}",
-                              body:
-                                  "${lang.strings["shared"]["notification"]["alertClearNotification"]["title"]}");
-
-                          if (yesNoRes == YesNoDialogButton.Yes) {
-                            controller.clearAllNotification();
-                            Get.back();
-                          }
-                        },
-                      ),
-              ),
               SizedBox(
-                width: 10,
+                height: 10,
               ),
+              // TODO is the clear button needed ??
+              ClearNotifButton(),
+              SizedBox(
+                height: 5,
+              ),
+              // TODO change the notif list to obx
+              _buildNotification(myNotifs)
             ],
           ),
-          SizedBox(
-            height: Get.height * 0.015,
-          ),
-          Expanded(
-              child: Container(
-            child: SingleChildScrollView(
-                child: Obx(
-              () => _buildNotification(controller.notifications()),
-            )),
-          ))
-        ],
+        ),
       ),
     );
   }
@@ -108,13 +104,13 @@ class _ViewNotificationsState extends State<ViewNotifications> {
     return Column(
       children: notifications.fold<List<Widget>>(<Widget>[],
           (children, notification) {
-        mezDbgPrint(
-            "this is from the the list of notifications ${notification.notificationType}");
         if (dd.isSameDate(notification.timestamp)) {
           myWidgets.addAll([
-            _checkTheNotifsTypeAndReturnWidget(notification),
+            NotifCard(
+              notification: notification,
+            ),
             SizedBox(
-              height: 10,
+              height: 5,
             )
           ]);
         } else {
@@ -123,14 +119,16 @@ class _ViewNotificationsState extends State<ViewNotifications> {
             date: "${ff.format(dd.toLocal())}",
             dateIcon: FaIcon(
               FontAwesomeIcons.calendarAlt,
-              size: 12,
+              size: 13.sp,
             ),
           ));
           if (dd.isSameDate(notification.timestamp)) {
             myWidgets.addAll([
-              _checkTheNotifsTypeAndReturnWidget(notification),
+              NotifCard(
+                notification: notification,
+              ),
               SizedBox(
-                height: 10,
+                height: 5,
               )
             ]);
           }
@@ -143,123 +141,121 @@ class _ViewNotificationsState extends State<ViewNotifications> {
   }
 }
 
-Widget _checkTheNotifsTypeAndReturnWidget(notifs.Notification notification) {
-  return NotificationComponent(
-    notification: notification,
-  );
+class ClearNotifButton extends StatelessWidget {
+  ClearNotifButton({
+    Key? key,
+  }) : super(key: key);
+
+  ForegroundNotificationsController controller =
+      Get.find<ForegroundNotificationsController>();
+  LanguageController lang = Get.find<LanguageController>();
+  @override
+  Widget build(BuildContext context) {
+    return Obx(
+      () => (controller.notifications.value.length <= 0)
+          ? Container()
+          : Container(
+              alignment: Alignment.centerRight,
+              child: MezClearButton(
+                onTapFunction: () async {
+                  YesNoDialogButton yesNoRes = await cancelAlertDialog(
+                      title:
+                          "${lang.strings["shared"]["notification"]["alertClearNotification"]["title"]}",
+                      body:
+                          "${lang.strings["shared"]["notification"]["alertClearNotification"]["title"]}");
+
+                  if (yesNoRes == YesNoDialogButton.Yes) {
+                    controller.clearAllNotification();
+                    Get.back();
+                  }
+                },
+              ),
+            ),
+    );
+  }
 }
 
-class NotificationComponent extends StatelessWidget {
+class NotifCard extends StatelessWidget {
+  const NotifCard({
+    Key? key,
+    required this.notification,
+  }) : super(key: key);
+
   final notifs.Notification notification;
-  NotificationComponent({required this.notification, Key? key})
-      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => Get.toNamed(notification.linkUrl),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        margin: const EdgeInsets.symmetric(horizontal: 10),
-        width: Get.width,
-        height: 63,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(4)),
-          border: Border.all(color: const Color(0xffececec), width: 0.5),
-          color: const Color(0xffffffff),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              height: 31,
-              width: 31,
-              child: ClipOval(
-                child: Container(
-                  width: 31,
-                  height: 31,
-                  // child: Center(
-                  child: notification.imgUrl.startsWith("http")
-                      ? Image.network(
-                          notification.imgUrl,
-                          fit: BoxFit.cover,
-                        )
-                      : Image.asset(
-                          notification.imgUrl,
-                          fit: BoxFit.cover,
-                        ),
-                ),
-              ),
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
+    final txt = Theme.of(context).textTheme;
+    return Card(
+      child: InkWell(
+        borderRadius: BorderRadius.circular(10),
+        onTap: () {
+          Get.toNamed(notification.linkUrl);
+        },
+        child: Ink(
+          padding: const EdgeInsets.all(8),
+          width: double.infinity,
+          child: Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                  CircleAvatar(
+                    radius: 25,
+
+                    backgroundColor: Colors.transparent,
+                    // TODO implement the real image
+                    backgroundImage: AssetImage(notification.imgUrl),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Expanded(
-                            child: Container(
-                          child: Text("${notification.title}",
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                  color: const Color(0xff000f1c),
-                                  fontWeight: FontWeight.w700,
-                                  fontFamily: "ProductSans",
-                                  fontStyle: FontStyle.normal,
-                                  fontSize: 13.0),
-                              textAlign: TextAlign.left),
-                        )),
-                        Container(
-                          child: Container(
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.query_builder,
-                                  size: 12,
-                                  color: Color(0xff000f1c),
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  "${f.format(notification.timestamp.toLocal())}",
-                                  style: TextStyle(
-                                      color: const Color(0xff000f1c),
-                                      fontWeight: FontWeight.w400,
-                                      fontFamily: "ProductSans",
-                                      fontStyle: FontStyle.normal,
-                                      fontSize: 10.0),
-                                )
-                              ],
-                            ),
-                          ),
-                        )
+                        Text(
+                          notification.title,
+                          style: txt.bodyText1,
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          notification.body,
+                          style: txt.bodyText2,
+                        ),
                       ],
                     ),
                   ),
-                  SizedBox(
-                    height: 3,
-                  ),
-                  Text("${notification.body}",
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                          color: const Color(0xff000f1c),
-                          fontWeight: FontWeight.w400,
-                          fontFamily: "ProductSans",
-                          fontStyle: FontStyle.normal,
-                          fontSize: 12.0),
-                      textAlign: TextAlign.left)
                 ],
               ),
-            ),
-          ],
+              Divider(
+                thickness: 0.2,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Icon(
+                    Ionicons.time_outline,
+                    size: 14.sp,
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text(
+                    "${f.format(notification.timestamp.toLocal())}",
+                    style: txt.subtitle1,
+                  ),
+                  Spacer(),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    size: 14.sp,
+                  )
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -271,3 +267,6 @@ extension DateOnlyCompare on DateTime {
     return year == other.year && month == other.month && day == other.day;
   }
 }
+
+final f = new DateFormat('hh:mm a');
+final ff = new DateFormat('MM.dd.yyyy');

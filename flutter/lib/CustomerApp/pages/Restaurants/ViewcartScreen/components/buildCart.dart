@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/widgets/MezClearButton.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 
 Widget buildCart(Cart cart, BuildContext context) {
@@ -63,8 +61,8 @@ Widget buildCart(Cart cart, BuildContext context) {
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(28)),
-                    height: 28,
-                    width: 28,
+                    height: 30,
+                    width: 30,
                     child: InkWell(
                       onTap: () async {
                         YesNoDialogButton yesNoRes = await cancelAlertDialog(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class ViewItemScreenCartComponent extends StatefulWidget {
   final String? title;
@@ -34,49 +33,26 @@ class _ViewItemScreenCartComponentState
 
     isTure = widget.intailVal != null ? widget.intailVal : false;
     return Container(
-      margin: const EdgeInsets.only(
-        bottom: 10,
-      ),
-      height: (widget.price == null) ? 70 : null,
+      margin: const EdgeInsets.only(bottom: 5, left: 10, right: 10),
       child: InkWell(
-        child: Container(
+        child: Ink(
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(8),
             border: Border.all(
                 color: isTure! ? Color.fromRGBO(172, 89, 252, 1) : Colors.white,
-                width: 1.5),
+                width: 2),
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-          margin: const EdgeInsets.symmetric(
-            horizontal: 15,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 16),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      child: Text(
-                        "${widget.title}",
-                        style: txt.headline3,
-                      ),
-                    ),
-                    (widget.price == null)
-                        ? Container()
-                        : Container(
-                            padding: const EdgeInsets.only(top: 5),
-                            child: Text(
-                              "${widget.price}",
-                              style: txt.headline2!.copyWith(
-                                  color: Color.fromRGBO(172, 89, 252, 1)),
-                            ),
-                          )
-                  ],
+              Flexible(
+                child: Text(
+                  "${widget.title}" +
+                      "${(widget.price == null) ? " " : "  ${widget.price}"}",
+                  style: txt.headline3,
                 ),
               ),
               Theme(

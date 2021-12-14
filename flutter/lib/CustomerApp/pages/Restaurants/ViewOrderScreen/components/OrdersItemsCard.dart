@@ -25,17 +25,12 @@ class OrderItemsCard extends StatelessWidget {
               style: txt.headline3,
             ),
           ),
-          ListView.separated(
+          ListView.builder(
             physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: items.length,
             itemBuilder: (context, index) {
               return OrderItemsItemCard(item: items[index]);
-            },
-            separatorBuilder: (context, index) {
-              return Divider(
-                thickness: 0.2,
-              );
             },
           )
         ],

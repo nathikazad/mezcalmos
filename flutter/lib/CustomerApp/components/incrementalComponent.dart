@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 class IncrementalComponent extends StatefulWidget {
@@ -66,7 +65,7 @@ class _IncrementalComponentState extends State<IncrementalComponent> {
                     borderRadius: BorderRadius.all(Radius.circular(32)),
                     color: (widget.value > widget.minVal!)
                         ? const Color(0xffac59fc)
-                        : Colors.black,
+                        : Colors.grey.shade400,
                   ),
                   child: Icon(
                     Icons.remove,
@@ -83,21 +82,14 @@ class _IncrementalComponentState extends State<IncrementalComponent> {
               width: 7,
             ),
             Container(
-              height: 32,
-              width: 32,
+              height: 45,
+              width: 45,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(32)),
-                color: const Color.fromRGBO(237, 237, 237, 1),
-              ),
+                  shape: BoxShape.circle,
+                  color: Theme.of(context).primaryColorLight.withOpacity(0.2)),
               child: Center(
                 child: Text("${widget.value}",
-                    style: const TextStyle(
-                        color: const Color(0xff000f1c),
-                        fontWeight: FontWeight.w400,
-                        fontFamily: "ProductSans",
-                        fontStyle: FontStyle.normal,
-                        fontSize: 20.0),
-                    textAlign: TextAlign.left),
+                    style: Theme.of(context).textTheme.headline2),
               ),
             ),
             SizedBox(

@@ -92,48 +92,55 @@ class _MyExpensionPanelComponentState extends State<MyExpensionPanelComponent>
             child: Column(
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     widget.child,
-                    Spacer(),
-                    InkWell(
-                      child: Container(
-                        width: 28,
-                        height: 28,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(3)),
-                          color: const Color.fromRGBO(237, 237, 237, 1),
-                        ),
-                        child: const Icon(
-                          Icons.edit_outlined,
-                          size: 14,
-                          color: Color.fromRGBO(38, 50, 56, 1),
-                        ),
-                      ),
-                      onTap: widget.onEdit,
-                    ),
-                    SizedBox(
-                      width: 3,
-                    ),
-                    InkWell(
-                      child: Container(
-                        width: 28,
-                        height: 28,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(64)),
-                          color: const Color.fromRGBO(172, 89, 252, 0.8),
-                        ),
-                        child: RotationTransition(
-                          turns: _iconTurns,
-                          child: const Icon(
-                            Icons.expand_more,
-                            color: Color(0xffffffff),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        InkWell(
+                          child: Container(
+                            width: 30,
+                            height: 30,
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(3)),
+                              color: const Color.fromRGBO(237, 237, 237, 1),
+                            ),
+                            child: const Icon(
+                              Icons.edit_outlined,
+                              size: 14,
+                              color: Color.fromRGBO(38, 50, 56, 1),
+                            ),
                           ),
+                          onTap: widget.onEdit,
                         ),
-                      ),
-                      onTap: _handleTap,
-                    ),
-                    SizedBox(
-                      width: 10,
+                        SizedBox(
+                          width: 10,
+                        ),
+                        InkWell(
+                          child: Container(
+                            width: 30,
+                            height: 30,
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(64)),
+                              color: const Color.fromRGBO(172, 89, 252, 0.8),
+                            ),
+                            child: RotationTransition(
+                              turns: _iconTurns,
+                              child: const Icon(
+                                Icons.expand_more,
+                                color: Color(0xffffffff),
+                              ),
+                            ),
+                          ),
+                          onTap: _handleTap,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                      ],
                     ),
                   ],
                 ),

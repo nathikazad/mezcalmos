@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class DateTitleComponent extends StatelessWidget {
   final String date;
@@ -10,26 +9,19 @@ class DateTitleComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10),
+      margin: const EdgeInsets.all(8),
       child: Column(
         children: [
           Row(
             children: [
               (dateIcon == null) ? Container() : dateIcon!,
               Container(
-                alignment: Alignment.centerLeft,
-                padding: (dateIcon != null)
-                    ? const EdgeInsets.symmetric(horizontal: 5)
-                    : const EdgeInsets.all(0),
-                child: Text("$date",
-                    style: const TextStyle(
-                        color: const Color(0xff000f1c),
-                        fontWeight: FontWeight.w700,
-                        fontFamily: "ProductSans",
-                        fontStyle: FontStyle.normal,
-                        fontSize: 12.0),
-                    textAlign: TextAlign.left),
-              )
+                  alignment: Alignment.centerLeft,
+                  padding: (dateIcon != null)
+                      ? const EdgeInsets.symmetric(horizontal: 5)
+                      : const EdgeInsets.all(0),
+                  child: Text("$date",
+                      style: Theme.of(context).textTheme.bodyText2))
             ],
           ),
           SizedBox(
