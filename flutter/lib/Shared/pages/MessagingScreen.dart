@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/userMenuComponent.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -170,7 +169,6 @@ class _MessagingScreenState extends State<MessagingScreen> {
             controller.recipient(participantType: recipientType)?.name ??
                 "Customer",
           ),
-          actions: [UserMenu()],
         ),
         body: Container(
           child: Column(
