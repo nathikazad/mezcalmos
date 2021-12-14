@@ -20,7 +20,14 @@ class MGoogleMapController {
   RxBool animateMarkersPolyLinesBounds = false.obs;
   GoogleMapController? controller;
 
-  Future<void> addCircleMarker(String markerId, LatLng latLng) async {
+  void _addOrUpdateMarker(Marker marker) {
+    markers.removeWhere(
+        (element) => element.markerId.value == marker.markerId.value);
+    markers.add(marker);
+  }
+
+  Future<void> addOrUpdateCircleMarker(LatLng latLng,
+      {String markerId = "default"}) async {
     markers.removeWhere((element) => element.markerId.value == markerId);
     markers.add(Marker(
         markerId: MarkerId(markerId),
@@ -30,18 +37,25 @@ class MGoogleMapController {
         position: latLng));
   }
 
-  Future<void> addOrUpdateUserMarker(String markerId, LatLng latLng) async {
+  void removeCircleMarker({String markerId = "default"}) {
+    markers.removeWhere((element) => element.markerId.value == markerId);
+  }
+
+  Future<void> addOrUpdateUserMarker(
+      {String? markerId, required LatLng latLng, String? imgUrl}) async {
     BitmapDescriptor icon = await BitmapDescriptorLoader(
-        (await cropRonded((await http.get(Uri.parse(
-                Get.find<AuthController>().user!.image ?? aDefaultAvatar)))
+        (await cropRonded((await http.get(Uri.parse(imgUrl ??
+                Get.find<AuthController>().user!.image ??
+                aDefaultAvatar)))
             .bodyBytes) as Uint8List),
         60,
         60,
         isBytes: true);
-    markerId = markerId;
-
-    this._addOrUpdateMarker(
-        Marker(markerId: MarkerId(markerId), icon: icon, position: latLng));
+    // default userId is authenticated's
+    this._addOrUpdateMarker(Marker(
+        markerId: MarkerId(markerId ?? Get.find<AuthController>().user!.uid),
+        icon: icon,
+        position: latLng));
   }
 
   Future<void> addOrUpdateTaxiDriverMarker(
@@ -76,7 +90,7 @@ class MGoogleMapController {
   }
 
   void removeDestinationMarker({String id = "dest"}) {
-    this.removeMarker(id);
+    this.removeMarkerById(id);
   }
 
   void decodeAndAddPolyline({required String encodedPolylineString}) {
@@ -85,14 +99,7 @@ class MGoogleMapController {
         .toList());
   }
 
-  // base internal function
-  void _addOrUpdateMarker(Marker marker) {
-    markers.removeWhere(
-        (element) => element.markerId.value == marker.markerId.value);
-    markers.add(marker);
-  }
-
-  void removeMarker(String markerId) {
+  void removeMarkerById(String markerId) {
     markers.removeWhere((element) => element.markerId.value == markerId);
   }
 

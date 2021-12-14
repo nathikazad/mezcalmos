@@ -4,19 +4,22 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 
 class TaxiRequest {
-  // String? orderId;
+  String? orderId;
   Location? from;
   Location? to;
   RouteInformation? routeInformation;
+  TaxiUserInfo? driverInfo;
   // RideDistance? distance;
   // RideDuration? duration;
   int estimatedPrice;
   PaymentType paymentType;
   // String? polyline;
-
+  TaxiOrdersStatus? status;
   // No orderId needed in this case, when the user creates
   TaxiRequest({
-    // this.orderId,
+    this.orderId,
+    this.driverInfo,
+    this.status,
     this.from,
     this.to,
     this.routeInformation,

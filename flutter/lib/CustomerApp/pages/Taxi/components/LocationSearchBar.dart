@@ -111,9 +111,9 @@ class LocationSearchBarState extends State<LocationSearchBar> {
               boxShadow: <BoxShadow>[
                 BoxShadow(
                     color: Color.fromARGB(60, 0, 0, 0),
-                    spreadRadius: 1,
+                    spreadRadius: .5,
                     blurRadius: 4,
-                    offset: Offset(0, 10)),
+                    offset: Offset(0, 5)),
               ],
             ),
             child: Column(

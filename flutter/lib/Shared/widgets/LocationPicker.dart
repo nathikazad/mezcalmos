@@ -14,7 +14,7 @@ import 'package:location/location.dart' as GeoLoc;
 class LocationPickerController extends MGoogleMapController {
   RxBool _showLoading = false.obs;
   RxBool _showFakeMarker = true.obs;
-  RxBool _showBlackScreen = true.obs;
+  RxBool _showBlackScreen = false.obs;
   Rx<BottomButtomToShow> _bottomButtomToShow = BottomButtomToShow.Pick.obs;
   RxDouble blackScreenBottomTextMargin = 0.0.obs;
   RxBool myLocationButtonEnabled = true.obs;
@@ -221,12 +221,13 @@ class LocationPickerState extends State<LocationPicker> {
               child: Text(
                 _lang.strings["shared"]["inputLocation"]["moveMapIfNotPrecise"],
                 // "You can move the map if position is not precise.",
-                overflow: TextOverflow.visible,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 softWrap: true,
                 textAlign: TextAlign.center,
                 // maxLines: ,
                 style: TextStyle(
-                    color: Colors.white, fontFamily: 'psb', fontSize: 20.sp),
+                    color: Colors.white, fontFamily: 'psb', fontSize: 15.sp),
               ),
             )
           ],

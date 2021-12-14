@@ -104,12 +104,16 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   // when app resumes check if there are current orders and if yes navigate to orders page
   void navigateToOrdersIfNecessary(List<Order> currentOrders) {
     mezDbgPrint("navigateToOrdersIfNecessary");
+
     if (currentOrders.length == 1) {
+      // Restaurant
       if (currentOrders[0].orderType == OrderType.Restaurant)
         popEverythingAndNavigateTo(
             getRestaurantOrderRoute(currentOrders[0].orderId));
-      else
-        mezDbgPrint("Navigate to other order type");
+      // Taxi
+      else if (currentOrders[0].orderType == OrderType.Taxi) {
+        popEverythingAndNavigateTo(getTaxiOrderRoute(currentOrders[0].orderId));
+      }
     } else if (currentOrders.length > 1) {
       popEverythingAndNavigateTo(kOrdersRoute);
     }
@@ -193,7 +197,16 @@ class _CustomerWrapperState extends State<CustomerWrapper>
                     url: "assets/images/taxiService.png",
                     subtitle:
                         "${lang.strings['customer']['home']['taxi']["subtitle"]}",
-                    ontap: () => Get.toNamed(kTaxiRequestRoute),
+                    ontap: () {
+                      Order? _temp = _orderController.hasOrderOfType(
+                          typeToCheck: OrderType.Taxi);
+                      if (_temp != null) {
+                        popEverythingAndNavigateTo(
+                            getTaxiOrderRoute(_temp.orderId));
+                      } else {
+                        Get.toNamed(kTaxiRequestRoute);
+                      }
+                    },
                   ),
                 ),
                 SizedBox(

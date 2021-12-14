@@ -11,7 +11,6 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
-import 'package:mezcalmos/TaxiApp/components/taxiDialogs.dart';
 import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
@@ -33,7 +32,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     responsiveSize(context);
     return Positioned(
-        bottom: GetStorage().read(getxGmapBottomPaddingKey) + 20,
+        bottom: GetStorage().read(getxGmapBottomPaddingKey),
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 5),
           height: getSizeRelativeToScreen(25, Get.height, Get.width),

@@ -1,8 +1,4 @@
 import 'dart:async';
-import 'dart:typed_data';
-import 'package:flutter/services.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -12,7 +8,6 @@ import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
@@ -55,7 +50,10 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
             encodedPolylineString: order!.routeInformation.polyline);
         // add the corresponding markers
         mGoogleMapController.addOrUpdateUserMarker(
-            order!.customer.id, order!.from.toLatLng());
+            markerId: order!.customer.id,
+            latLng: order!.from.toLatLng(),
+            imgUrl: order!.customer.image);
+
         mGoogleMapController.addOrUpdatePurpleDestinationMarker(
             latLng: order!.to.toLatLng());
         // set initial position
@@ -93,48 +91,45 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
     return Scaffold(
       appBar: taxiAppBar(AppBarLeftButtonType.Back,
           function: cancelOrderSubscription),
-      body: SafeArea(
-        child: order != null
-            ? Stack(
-                alignment: Alignment.topCenter,
-                children: [
-                  MGoogleMap(
-                    mGoogleMapController: mGoogleMapController,
-                    debugString: "IncomingViewScreen",
-                    myLocationButtonEnabled: false,
-                  ),
-                  IncommingPositionedBottomBar(
-                    order: this.order!,
-                  ),
-                  Positioned(
-                      bottom: GetStorage().read(getxGmapBottomPaddingKey),
-                      child: acceptOrderButton(
-                        child: !_clickedButton
-                            ? Text(
-                                lang.strings['taxi']['taxiView']
-                                    ["acceptOrders"],
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              )
-                            : const SizedBox(
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                ),
-                                height: 20,
-                                width: 20,
+      body: order != null
+          ? Stack(
+              alignment: Alignment.topCenter,
+              children: [
+                MGoogleMap(
+                  mGoogleMapController: mGoogleMapController,
+                  debugString: "IncomingViewScreen",
+                  myLocationButtonEnabled: false,
+                ),
+                IncommingPositionedBottomBar(
+                  order: this.order!,
+                ),
+                Positioned(
+                    bottom: GetStorage().read(getxGmapBottomPaddingKey),
+                    child: acceptOrderButton(
+                      child: !_clickedButton
+                          ? Text(
+                              lang.strings['taxi']['taxiView']["acceptOrders"],
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
                               ),
-                      )),
-                  IncomingPositionedFromToTopBar(
-                    order: this.order!,
-                  )
-                ],
-              )
-            : MezLogoAnimation(
-                centered: true,
-              ),
-      ),
+                            )
+                          : const SizedBox(
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                              ),
+                              height: 20,
+                              width: 20,
+                            ),
+                    )),
+                IncomingPositionedFromToTopBar(
+                  order: this.order!,
+                )
+              ],
+            )
+          : MezLogoAnimation(
+              centered: true,
+            ),
     );
   }
 

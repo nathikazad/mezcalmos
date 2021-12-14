@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/models/Location.dart';
+import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
 import 'package:mezcalmos/Shared/widgets/AutoCompleteTextField.dart';
 
 typedef TextFieldGotUpdated = void Function(String updatedText);
@@ -41,7 +42,7 @@ class LocationSearchComponent extends StatefulWidget {
       this.rightTopRaduis = 6,
       this.rightBotRaduis = 6,
       this.bgColor = const Color(0xfff8f8f8),
-      this.labelStyle = const TextStyle(fontFamily: "psr", fontSize: 14),
+      this.labelStyle = const TextStyle(fontFamily: "psr", fontSize: 20),
       this.hint = "Enter Address",
       this.text,
       required this.notifyParent,
@@ -100,7 +101,7 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
     return Column(
       children: <Widget>[
         Container(
-          padding: EdgeInsets.only(left: 10, right: 10),
+          padding: EdgeInsets.only(left: 10, top: 10),
           alignment: Alignment.center,
           decoration: BoxDecoration(
               border: widget.useBorders
@@ -118,9 +119,6 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
               Text(
                 widget.label,
                 style: widget.labelStyle,
-              ),
-              SizedBox(
-                height: 20,
               ),
               AutoCompleteTextView(
                 readOnly: widget.readOnly,
@@ -173,8 +171,8 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
                   ),
                   suffixIcon: _showClearBtn
                       ? Container(
-                          margin: EdgeInsets.only(right: 5),
-                          padding: EdgeInsets.only(bottom: 1),
+                          // margin: EdgeInsets.only(right: 5),
+                          // padding: EdgeInsets.only(bottom: 1),
                           alignment: Alignment.centerRight,
                           child: GestureDetector(
                               onTap: () async {
@@ -184,11 +182,10 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
                                   _controller.clear();
                                 });
                               },
-                              child: Icon(Icons.clear_rounded,
-                                  size: 22, color: Colors.black)),
+                              child: Icon(MezcalmosIcons.times_circle,
+                                  size: 16, color: Colors.black)),
                         )
-                      : Icon(Icons.search,
-                          size: 22, color: Color.fromRGBO(141, 141, 141, 1)),
+                      : SizedBox(),
                 ),
               ),
             ],

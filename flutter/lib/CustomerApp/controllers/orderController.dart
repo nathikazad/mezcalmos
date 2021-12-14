@@ -88,6 +88,23 @@ class OrderController extends GetxController {
     });
   }
 
+  Order? hasOrderOfType({required OrderType typeToCheck}) {
+    try {
+      return currentOrders().firstWhere((o) => o.orderType == typeToCheck);
+    } on StateError catch (_) {
+      return null;
+    }
+  }
+
+  bool hasNewMessageNotification(String orderId) {
+    return _fbNotificationsController
+        .notifications()
+        .where((notification) =>
+            notification.notificationType == NotificationType.NewMessage &&
+            notification.orderId! == orderId)
+        .isNotEmpty;
+  }
+
   Order? getOrder(String orderId) {
     try {
       return currentOrders.firstWhere((order) {
@@ -129,7 +146,6 @@ class OrderController extends GetxController {
       }
     });
   }
-
 
   bool orderHaveNewMessageNotifications(String orderId) {
     return _fbNotificationsController

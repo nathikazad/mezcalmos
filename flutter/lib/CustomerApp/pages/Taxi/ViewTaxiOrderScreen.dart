@@ -82,8 +82,8 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
               _order = (await controller.getPastOrderStream(orderId).first)
                   as TaxiOrder?;
             }
-            order.value = _order;
 
+            order.value = _order;
             // one time execution :
             widget.mGoogleMapController.setAnimateMarkersPolyLinesBounds(true);
             pastOrderStatusHandler(order.value!.status);
@@ -115,7 +115,6 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
         backgroundColor: Colors.white,
         body: Container(
           color: Colors.white,
-          padding: EdgeInsets.only(left: 1, right: 1),
           child: Obx(
             () => order.value != null
                 ? Stack(
@@ -132,15 +131,10 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
                                   this.widget.mGoogleMapController,
                               periodicRerendering: true,
                             )),
-                        Container(
-                          height: 40,
-                          width: Get.width,
-                          color: Colors.white,
-                        ),
                         MapBottomBar(
-                            taxiRequest: order.value!.toTaxiRequest(),
-                            isOrderCanceled: order.value!.isCanceled()),
-                        cancelButton(order.value!.isCanceled()),
+                          taxiRequest: order.value!.toTaxiRequest().obs,
+                        ),
+                        cancelButton(order.value!.status),
                         TaxiOrderTopBar(order: order.value!)
                       ])
                 : MezLogoAnimation(
@@ -157,18 +151,25 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
         "[[[[[[[[[[[[[[[[[[[[[[[[[[[[[ $status ]]]]]]]]]]]]]]]]]]]]]]]]]]]]]");
     switch (status) {
       case TaxiOrdersStatus.OnTheWay:
-        // remove the to dest marker
-        // widget.mGoogleMapController.removeDestinationMarker();
+        widget.mGoogleMapController.setAnimateMarkersPolyLinesBounds(true);
 
+        // update the to dest marker
+        // widget.mGoogleMapController.removeDestinationMarker();
+        widget.mGoogleMapController.addOrUpdatePurpleDestinationMarker(
+            latLng: order.value!.to.toLatLng());
         // taxi driver marker
-        widget.mGoogleMapController.addOrUpdateTaxiDriverMarker(
-            order.value!.driver!.id, order.value!.driver!.location!);
+        if (order.value!.driver?.location != null)
+          widget.mGoogleMapController.addOrUpdateTaxiDriverMarker(
+              order.value!.driver!.id, order.value!.driver!.location!);
         // customer marker
         widget.mGoogleMapController.addOrUpdateUserMarker(
-            order.value!.customer.id, order.value!.from.toLatLng());
+            markerId: order.value!.customer.id,
+            latLng: order.value!.from.toLatLng());
         break;
 
       case TaxiOrdersStatus.InTransit:
+        widget.mGoogleMapController.setAnimateMarkersPolyLinesBounds(true);
+
         // from [driver] to [destination]
         // thus we keep updating the driver marker only.
         // + Remove customer Marker
@@ -178,7 +179,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
         //     order.value!.driver!.id, order.value!.from.toLatLng());
 
         // removing customer marker
-        widget.mGoogleMapController.removeMarker(order.value!.customer.id);
+        widget.mGoogleMapController.removeMarkerById(order.value!.customer.id);
         // updating driver's marker
         widget.mGoogleMapController.addOrUpdateTaxiDriverMarker(
             order.value!.driver!.id,
@@ -191,12 +192,16 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
 
       default:
         // default is : isLoookingForTaxi
+        // so user can move freely
+        widget.mGoogleMapController.setAnimateMarkersPolyLinesBounds(false);
+
         // updating destination marker.
         widget.mGoogleMapController.addOrUpdatePurpleDestinationMarker(
             latLng: order.value!.to.toLatLng());
         // customer marker
         widget.mGoogleMapController.addOrUpdateUserMarker(
-            order.value!.customer.id, order.value!.from.toLatLng());
+            markerId: order.value!.customer.id,
+            latLng: order.value!.from.toLatLng());
         break;
     }
   }
@@ -205,17 +210,18 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
   void pastOrderStatusHandler(TaxiOrdersStatus status) {
     // @Saad, no need to navigate back, should just be enough to show status
     if (order.value!.driver != null)
-      widget.mGoogleMapController.removeMarker(order.value!.driver!.id);
+      widget.mGoogleMapController.removeMarkerById(order.value!.driver!.id);
     // adding customer's marker
     widget.mGoogleMapController.addOrUpdateUserMarker(
-        order.value!.customer.id, order.value!.from.toLatLng());
+        markerId: order.value!.customer.id,
+        latLng: order.value!.from.toLatLng());
     // updating destination marker.
     widget.mGoogleMapController
         .addOrUpdatePurpleDestinationMarker(latLng: order.value!.to.toLatLng());
   }
 
-  Widget cancelButton(bool isCanceled) {
-    if (isCanceled) {
+  Widget cancelButton(TaxiOrdersStatus status) {
+    if (status != TaxiOrdersStatus.LookingForTaxi) {
       return SizedBox();
     } else {
       return Positioned(

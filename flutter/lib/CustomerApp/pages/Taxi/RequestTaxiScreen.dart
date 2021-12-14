@@ -31,7 +31,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
       LocationPickerController();
   final LocationSearchBarController locationSearchBarController =
       LocationSearchBarController();
-
+  bool _pickedFromTo = false;
   /******************************  Init and build function ************************************/
 
   @override
@@ -39,19 +39,14 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
     // set the location Enabled Button to be false
     locationPickerController.myLocationButtonEnabled.value = false;
     // set blackScreenBottom 110
-    locationPickerController.blackScreenBottomTextMargin.value = 110;
+    locationPickerController.blackScreenBottomTextMargin.value = 10;
 
     GeoLoc.Location().getLocation().then((GeoLoc.LocationData locData) {
-      MapHelper.getAdressFromLatLng(
-              LatLng(locData.latitude!, locData.longitude!))
-          .then((address) {
-        taxiRequest.value.from = Location(
-            address ??
-                "${locData.latitude.toString()}, ${locData.longitude.toString()}",
-            locData);
-        updateModelAndMarker(SearchComponentType.From, taxiRequest.value.from!);
-        locationPickerController.setLocation(taxiRequest.value.from!);
-      });
+      taxiRequest.value.from = Location("", locData);
+      updateModelAndMarker(SearchComponentType.From, taxiRequest.value.from!);
+      locationPickerController.setLocation(taxiRequest.value.from!);
+      locationPickerController.addOrUpdateCircleMarker(LatLng(
+          taxiRequest.value.from!.latitude, taxiRequest.value.from!.longitude));
     });
 
     super.initState();
@@ -65,43 +60,35 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
       //  AppBar(),
       backgroundColor: Colors.white,
       body: Container(
-          color: Colors.white,
-          padding: EdgeInsets.only(left: 1, right: 1),
-          child: Obx(
-            () => Stack(
-                clipBehavior: Clip.none,
-                alignment: Alignment.topCenter,
-                children: [
-                  Container(
-                      width: Get.width,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Colors.white),
-                      child: LocationPicker(
-                          locationPickerMapController:
-                              this.locationPickerController,
-                          notifyParentOfLocationFinalized:
-                              updateModelAndMaybeCalculateRoute,
-                          notifyParentOfConfirm: (Location? _) async =>
-                              await requestTaxi(_))),
-                  Container(
-                    height: 40,
-                    width: Get.width,
-                    color: Colors.white,
-                  ),
-                  LocationSearchBar(
-                      request: taxiRequest,
-                      locationSearchBarController: locationSearchBarController,
-                      newLocationChosenEvent:
-                          updateModelAndHandoffToLocationPicker),
-                  taxiRequest.value.isFromToSet()
-                      ? MapBottomBar(
-                          taxiRequest: taxiRequest.value,
-                          isOrderCanceled: false,
-                        )
-                      : SizedBox()
-                ]),
-          )),
+        color: Colors.white,
+        child: Stack(
+            clipBehavior: Clip.none,
+            alignment: Alignment.topCenter,
+            children: [
+              Container(
+                  width: Get.width,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.white),
+                  child: LocationPicker(
+                      locationPickerMapController:
+                          this.locationPickerController,
+                      notifyParentOfLocationFinalized:
+                          updateModelAndMaybeCalculateRoute,
+                      notifyParentOfConfirm: (Location? _) async =>
+                          await requestTaxi(_))),
+              LocationSearchBar(
+                  request: taxiRequest,
+                  locationSearchBarController: locationSearchBarController,
+                  newLocationChosenEvent:
+                      updateModelAndHandoffToLocationPicker),
+              _pickedFromTo
+                  ? MapBottomBar(
+                      taxiRequest: taxiRequest,
+                    )
+                  : SizedBox()
+            ]),
+      ),
     );
   }
 
@@ -117,11 +104,17 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
       _currentFocusedTextField.value = textFieldType;
       updateModelAndMarker(textFieldType, newLocation);
       locationPickerController.setLocation(newLocation);
+      locationPickerController.moveToNewLatLng(
+          newLocation.latitude, newLocation.longitude);
       locationPickerController.showFakeMarkerAndPickButton();
+      locationPickerController.showOrHideBlackScreen(true);
     } else {
       // Location cleared
-      locationPickerController.removeMarker(textFieldType.toShortString());
+      locationPickerController.removeMarkerById(textFieldType.toShortString());
       locationPickerController.showGrayedOutButton();
+      setState(() {
+        _pickedFromTo = false;
+      });
       mezDbgPrint("showGrayedOutButton");
     }
     locationSearchBarController.collapseDropdown();
@@ -130,17 +123,29 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
 
 // after pick button is clicked after user verifies gps locaiton
   void updateModelAndMaybeCalculateRoute(Location newLocation) {
-    locationPickerController.showOrHideBlackScreen(true);
+    locationPickerController.showOrHideBlackScreen(false);
+
     updateModelAndMarker(_currentFocusedTextField.value, newLocation);
     if (taxiRequest.value.isFromToSet()) {
+      locationPickerController.setAnimateMarkersPolyLinesBounds(true);
       updateRouteInformation();
       locationPickerController.showConfirmButton();
+      setState(() {
+        _pickedFromTo = true;
+      });
+
       mezDbgPrint("++showConfirmButton");
     } else {
+      locationPickerController.setAnimateMarkersPolyLinesBounds(false);
+
       mezDbgPrint("showGrayedOutButton");
       locationPickerController.showGrayedOutButton();
+      locationPickerController.removeCircleMarker();
+
+      setState(() {
+        _pickedFromTo = false;
+      });
     }
-    setState(() {});
   }
 
 // after confirm button is clicked on mez pick google map
@@ -168,14 +173,14 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
     if (textFieldType == SearchComponentType.From) {
       taxiRequest.value.setFromLocation(newLocation);
       locationPickerController.addOrUpdateUserMarker(
-          textFieldType.toShortString(), newLocation.toLatLng());
+          markerId: textFieldType.toShortString(),
+          latLng: newLocation.toLatLng());
     } else {
       taxiRequest.value.setToLocation(newLocation);
       locationPickerController.addOrUpdatePurpleDestinationMarker(
           markerId: textFieldType.toShortString(),
           latLng: newLocation.toLatLng());
     }
-    setState(() {});
   }
 
   void updateRouteInformation() async {

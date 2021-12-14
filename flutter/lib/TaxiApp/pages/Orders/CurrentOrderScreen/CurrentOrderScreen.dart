@@ -107,9 +107,8 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
           drawer: MezSideMenu(),
           backgroundColor: Colors.white,
           appBar: taxiAppBar(AppBarLeftButtonType.Menu),
-          body: SafeArea(
-              child: order != null &&
-                      this.mGoogleMapController.location.value != null
+          body:
+              order != null && this.mGoogleMapController.location.value != null
                   ? Stack(alignment: Alignment.topCenter, children: [
                       MGoogleMap(
                         mGoogleMapController: this.mGoogleMapController,
@@ -121,7 +120,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
                     ])
                   : MezLogoAnimation(
                       centered: true,
-                    )),
+                    ),
         )); // no need for obx here.
   }
 
@@ -144,26 +143,37 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
         case TaxiOrdersStatus.OnTheWay:
           // Add the customer's Marker
           mGoogleMapController.addOrUpdateUserMarker(
-              orderStreamEvent.customer.id, orderStreamEvent.from.toLatLng());
+              markerId: orderStreamEvent.customer.id,
+              latLng: orderStreamEvent.from.toLatLng(),
+              imgUrl: orderStreamEvent.customer.image);
           // add the Taxi's
           if (orderStreamEvent.driver?.location != null)
             mGoogleMapController.addOrUpdateTaxiDriverMarker(
                 orderStreamEvent.driver!.id,
                 orderStreamEvent.driver!.location!);
+
+          mGoogleMapController.addOrUpdatePurpleDestinationMarker(
+              latLng: orderStreamEvent.to.toLatLng());
           break;
         case TaxiOrdersStatus.InTransit:
           // no more showing the customer's marker
-          mGoogleMapController.removeMarker(orderStreamEvent.customer.id);
+          mGoogleMapController.removeMarkerById(orderStreamEvent.customer.id);
           // add the destination marker
           mGoogleMapController.addOrUpdatePurpleDestinationMarker(
               latLng: orderStreamEvent.to.toLatLng());
           break;
         case TaxiOrdersStatus.DroppedOff:
           // no more showing the taxi's Marker:
-          mGoogleMapController.removeMarker(orderStreamEvent.driver!.id);
+          mGoogleMapController.removeMarkerById(orderStreamEvent.driver!.id);
           // Add the customer's from Marker
           mGoogleMapController.addOrUpdateUserMarker(
-              orderStreamEvent.customer.id, orderStreamEvent.from.toLatLng());
+              markerId: orderStreamEvent.customer.id,
+              latLng: orderStreamEvent.from.toLatLng(),
+              imgUrl: orderStreamEvent.customer.image);
+
+          mGoogleMapController.addOrUpdatePurpleDestinationMarker(
+              latLng: orderStreamEvent.to.toLatLng());
+
           break;
         default:
       }

@@ -82,11 +82,13 @@ class TaxiOrder extends Order {
   /// Convert [TaxiOrder] object to [TaxiRequest] object.
   TaxiRequest toTaxiRequest() {
     return TaxiRequest(
-        from: from,
-        to: to,
+        driverInfo: this.driver,
+        status: this.status,
+        from: this.from,
+        to: this.to,
         routeInformation: this.routeInformation,
-        estimatedPrice: cost as int,
-        paymentType: paymentType);
+        estimatedPrice: this.cost as int,
+        paymentType: this.paymentType);
   }
 
   factory TaxiOrder.fromData(dynamic id, dynamic data) {

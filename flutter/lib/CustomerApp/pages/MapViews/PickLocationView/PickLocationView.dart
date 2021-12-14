@@ -107,7 +107,6 @@ class _PickLocationViewState extends State<PickLocationView> {
       });
     } else {
       var x = Get.parameters["id"];
-
       savedLocation = customerAuthController
           .customerRxn()!
           .savedLocations
@@ -134,7 +133,6 @@ class _PickLocationViewState extends State<PickLocationView> {
   void dispose() {
     _popUpController.hideMenu();
     _popUpController.dispose();
-    // TODO: implement dispose
     super.dispose();
   }
 
@@ -209,7 +207,7 @@ class _PickLocationViewState extends State<PickLocationView> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
                           color: Colors.grey.shade200),
-                      child: locationPickerController.location != null
+                      child: locationPickerController.location.value != null
                           ? LocationPicker(
                               showBottomButton: false,
                               locationPickerMapController:
