@@ -32,7 +32,8 @@ Notification orderStatusChangeNotification(String key, dynamic value) {
       timestamp: DateTime.parse(value['time']),
       notificationType: NotificationType.OrderStatusChange,
       variableParams: value,
-      notificationAction: value["notificationAction"]);
+      notificationAction:
+          value["notificationAction"].toString().toNotificationAction());
 }
 
 Notification newOrderNotification(String key, dynamic value) {
@@ -45,7 +46,8 @@ Notification newOrderNotification(String key, dynamic value) {
       timestamp: DateTime.parse(value['time']),
       notificationType: NotificationType.NewOrder,
       variableParams: value,
-      notificationAction: value["notificationAction"]);
+      notificationAction:
+          value["notificationAction"].toString().toNotificationAction());
 }
 
 Notification newMessageNotification(String key, dynamic value) {
@@ -58,5 +60,6 @@ Notification newMessageNotification(String key, dynamic value) {
       timestamp: DateTime.parse(value['time']),
       notificationType: NotificationType.NewMessage,
       variableParams: value,
-      notificationAction: value["notificationAction"]);
+      notificationAction:
+          value["notificationAction"].toString().toNotificationAction());
 }
