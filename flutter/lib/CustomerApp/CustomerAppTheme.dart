@@ -20,6 +20,11 @@ class CustomerAppTheme {
     scaffoldBackgroundColor: Color(0XFFEDEDED),
     appBarTheme: AppBarTheme(
         backgroundColor: Colors.white,
+        titleTextStyle: TextStyle(
+            fontFamily: "Poppins",
+            fontWeight: FontWeight.w600,
+            fontSize: 18.sp,
+            color: Colors.black),
         elevation: 0.2,
         centerTitle: true,
         titleSpacing: 16,

@@ -66,7 +66,12 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
                 padding: EdgeInsets.only(right: 8),
                 icon: Badge(
                     badgeContent: Text(
-                        controller.cart.value.items.length.toStringAsFixed(0)),
+                      controller.cart.value.items.length.toStringAsFixed(0),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText2!
+                          .copyWith(color: Colors.white),
+                    ),
                     badgeColor: Theme.of(context).primaryColorLight,
                     child: Icon(Ionicons.cart)))
             : Container()),

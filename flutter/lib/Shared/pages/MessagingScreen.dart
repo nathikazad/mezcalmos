@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/CustomerApp_appbar.dart';
+import 'package:mezcalmos/CustomerApp/components/userMenuComponent.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -56,8 +56,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
   }) =>
       Container(
         alignment: !isMe ? Alignment.centerLeft : Alignment.centerRight,
-        padding:
-            const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+        padding: const EdgeInsets.all(5.0),
         child: Wrap(
             alignment: !isMe ? WrapAlignment.start : WrapAlignment.end,
             runAlignment: !isMe ? WrapAlignment.start : WrapAlignment.end,
@@ -86,10 +85,9 @@ class _MessagingScreenState extends State<MessagingScreen> {
                 runAlignment: !isMe ? WrapAlignment.start : WrapAlignment.end,
                 children: [
                   Container(
-                      margin: EdgeInsets.only(top: 10),
                       constraints: BoxConstraints(maxWidth: 170, minWidth: 80),
                       padding: EdgeInsets.only(
-                          left: 25, top: 10, bottom: 10, right: 25),
+                          left: 16, top: 8, bottom: 8, right: 16),
                       decoration: BoxDecoration(
                           color: !isMe
                               ? Theme.of(context).primaryColorLight
@@ -167,20 +165,25 @@ class _MessagingScreenState extends State<MessagingScreen> {
         onValueCallBack: _fillCallBack);
 
     return Scaffold(
-        appBar: CustomerAppBar(
-            title: controller.recipient(participantType: recipientType)?.name ??
+        appBar: AppBar(
+          title: Text(
+            controller.recipient(participantType: recipientType)?.name ??
                 "Customer",
-            autoBack: true),
+          ),
+          actions: [UserMenu()],
+        ),
         body: Container(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(
+                height: 10,
+              ),
               Expanded(
                 child: Obx(
                   () => ListView(
                     shrinkWrap: true,
-                    padding: EdgeInsets.only(top: 20, bottom: 0),
                     controller: _listViewScrollController,
                     children: List.from(chatLines.reversed),
                   ),

@@ -188,9 +188,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
                     ),
                   ),
 
-                  SizedBox(
-                    height: Get.height * 0.05,
-                  ),
                   //====================Taxi===================
                   Obx(
                     () => ServicesCard(
