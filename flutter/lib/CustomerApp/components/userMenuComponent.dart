@@ -6,24 +6,30 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:get/get.dart';
 
 class UserMenu extends StatelessWidget {
   UserMenu({
     Key? key,
   }) : super(key: key);
+  // AuthController authController = Get.find<AuthController>();
 
-  String? userImage = Get.find<AuthController>().fireAuthUser!.photoURL;
+  String? userImage = Get.find<AuthController>().fireAuthUser?.photoURL;
   LanguageController lang = Get.find<LanguageController>();
   AuthController auth = Get.find<AuthController>();
-  OrderController controller = Get.find<OrderController>();
-  ForegroundNotificationsController notifController =
-      Get.find<ForegroundNotificationsController>();
+  OrderController? controller;
+  ForegroundNotificationsController? notifController;
   @override
   Widget build(BuildContext context) {
+    if (auth.fireAuthUser != null) {
+      controller = Get.find<OrderController>();
+      notifController = Get.find<ForegroundNotificationsController>();
+    }
     final txt = Theme.of(context).textTheme;
     return PopupMenuButton(
       padding: EdgeInsets.all(5),
@@ -34,9 +40,29 @@ class UserMenu extends StatelessWidget {
         backgroundColor: Colors.white,
         child: Padding(
           padding: const EdgeInsets.all(2.0),
-          child: CircleAvatar(
-            backgroundImage: NetworkImage(userImage!),
-          ),
+          child: auth.fireAuthUser != null
+              ? CircleAvatar(
+                  backgroundImage: userImage != null
+                      ? NetworkImage(
+                          userImage!,
+                        )
+                      : Image.asset(
+                          aDefaultAvatar,
+                          fit: BoxFit.cover,
+                        ).image,
+                )
+              : Container(
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.account_circle_outlined,
+                      color: Colors.black,
+                    ),
+                    onPressed: () {
+                      Get.offNamedUntil(
+                          kSignInRoute, ModalRoute.withName("/wrapper"));
+                    },
+                  ),
+                ),
         ),
       ),
       itemBuilder: (context) {
@@ -44,12 +70,12 @@ class UserMenu extends StatelessWidget {
           PopupMenuItem(
             child: Row(
               children: [
-                (notifController.notifications.isEmpty)
+                (notifController!.notifications.isEmpty)
                     ? Icon(Ionicons.notifications_outline)
                     : Badge(
                         badgeColor: Theme.of(context).primaryColorLight,
                         badgeContent: Text(
-                          notifController.notifications.length
+                          notifController!.notifications.length
                               .toStringAsFixed(0),
                           style: txt.subtitle1!.copyWith(color: Colors.white),
                         ),
@@ -65,12 +91,12 @@ class UserMenu extends StatelessWidget {
           PopupMenuItem(
             child: Row(
               children: [
-                (controller.currentOrders.isEmpty)
+                (controller!.currentOrders.isEmpty)
                     ? Icon(Ionicons.time_outline)
                     : Badge(
                         badgeColor: Theme.of(context).primaryColorLight,
                         badgeContent: Text(
-                          controller.currentOrders.length.toStringAsFixed(0),
+                          controller!.currentOrders.length.toStringAsFixed(0),
                           style: txt.subtitle1!.copyWith(color: Colors.white),
                         ),
                         child: Icon(Ionicons.time_outline)),

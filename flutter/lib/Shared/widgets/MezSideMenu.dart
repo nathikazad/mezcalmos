@@ -58,12 +58,16 @@ class MezSideMenu extends GetWidget<AuthController> {
                     clipBehavior: Clip.antiAlias,
                     child: controller.user?.image == null ||
                             controller.user?.image == ""
-                        ? Image.asset(
-                            aDefaultAvatar,
-                            width: getSizeRelativeToScreen(300, sw, sh).sp,
-                            height: getSizeRelativeToScreen(300, sw, sh).sp,
-                            fit: BoxFit.contain,
+                        ? Icon(
+                            Icons.account_circle_outlined,
+                            size: getSizeRelativeToScreen(285, sw, sh).sp,
                           )
+                        // Image.asset(
+                        //     aDefaultAvatar,
+                        //     width: getSizeRelativeToScreen(300, sw, sh).sp,
+                        //     height: getSizeRelativeToScreen(300, sw, sh).sp,
+                        //     fit: BoxFit.contain,
+                        //   )
                         : CachedNetworkImage(
                             imageUrl: controller.user!.image!,
                             fit: BoxFit.cover,
@@ -131,7 +135,9 @@ class MezSideMenu extends GetWidget<AuthController> {
 //this datastructure, should basically just have a name and a link
 //and then populate the middle of these tiles using this list
 
-                _buildSideMenuItem(),
+                controller.fireAuthUser != null
+                    ? _buildSideMenuItem()
+                    : Container(),
                 Obx(() => controller.user != null
                     ? ListTile(
                         onTap: () async {

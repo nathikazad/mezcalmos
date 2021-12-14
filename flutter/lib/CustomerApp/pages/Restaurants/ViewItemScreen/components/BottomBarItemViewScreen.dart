@@ -3,10 +3,12 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/incrementalComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
 import '../../../../router.dart';
 import '../ViewItemScreen.dart';
+import 'dialogRequiredSignIn.dart';
 
 class BottomBarItemViewScreen extends StatefulWidget {
   BottomBarItemViewScreen(
@@ -27,6 +29,7 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
     LanguageController lang = Get.find<LanguageController>();
     RestaurantController restaurantCartController =
         Get.find<RestaurantController>();
+    AuthController auth = Get.find<AuthController>();
 
     return Container(
         child: Container(
@@ -67,12 +70,16 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
           ),
           TextButton(
             onPressed: () {
-              if (ViewItemScreenMode.AddItemMode == widget.mode) {
-                restaurantCartController.addItem(widget.cartItem.value!);
-                Get.offNamed(kCartRoute);
+              if (auth.fireAuthUser != null) {
+                if (ViewItemScreenMode.AddItemMode == widget.mode) {
+                  restaurantCartController.addItem(widget.cartItem.value!);
+                  Get.offNamed(kCartRoute);
+                } else {
+                  restaurantCartController.addItem(widget.cartItem.value!);
+                  Get.back();
+                }
               } else {
-                restaurantCartController.addItem(widget.cartItem.value!);
-                Get.back();
+                dialogRequiredSignIn();
               }
             },
             child: Text(

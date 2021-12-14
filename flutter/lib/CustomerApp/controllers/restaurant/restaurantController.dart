@@ -23,43 +23,44 @@ class RestaurantController extends GetxController {
   void onInit() {
     super.onInit();
     print("--------------------> RestaurantsCartController Initialized !");
-
-    _cartListener?.cancel();
-    _cartListener = _databaseHelper.firebaseDatabase
-        .reference()
-        .child(customerCart(_authController.fireAuthUser!.uid))
-        .onValue
-        .listen((event) async {
-      dynamic cartData = event.snapshot.value;
-      // check if cart has data
-      if (cartData != null) {
-        // check if cart data is for restaurant
-        if (cartData["orderType"] ==
-            OrderType.Restaurant.toFirebaseFormatString()) {
-          // check if already associated restaurant with cart is the same as current restaurant,
-          // if not clear the old associated restaurant
-          if (associatedRestaurant != null) {
-            if (cartData["serviceProviderId"] != associatedRestaurant!.id) {
-              associatedRestaurant = null;
+    if (_authController.fireAuthUser != null) {
+      _cartListener?.cancel();
+      _cartListener = _databaseHelper.firebaseDatabase
+          .reference()
+          .child(customerCart(_authController.fireAuthUser!.uid))
+          .onValue
+          .listen((event) async {
+        dynamic cartData = event.snapshot.value;
+        // check if cart has data
+        if (cartData != null) {
+          // check if cart data is for restaurant
+          if (cartData["orderType"] ==
+              OrderType.Restaurant.toFirebaseFormatString()) {
+            // check if already associated restaurant with cart is the same as current restaurant,
+            // if not clear the old associated restaurant
+            if (associatedRestaurant != null) {
+              if (cartData["serviceProviderId"] != associatedRestaurant!.id) {
+                associatedRestaurant = null;
+              }
             }
-          }
-          mezDbgPrint(" =====> $cartData \n");
+            mezDbgPrint(" =====> $cartData \n");
 
-          // if no associated restaurant data is saved, then fetch it from database
-          if (associatedRestaurant == null) {
-            associatedRestaurant =
-                await getAssociatedRestaurant(cartData["serviceProviderId"]);
+            // if no associated restaurant data is saved, then fetch it from database
+            if (associatedRestaurant == null) {
+              associatedRestaurant =
+                  await getAssociatedRestaurant(cartData["serviceProviderId"]);
+            }
+            if (cartData == null) {
+              cart.value = Cart();
+            }
+            cart.value = Cart.fromCartData(cartData, associatedRestaurant!);
           }
-          if (cartData == null) {
-            cart.value = Cart();
-          }
-          cart.value = Cart.fromCartData(cartData, associatedRestaurant!);
+        } else {
+          cart.value = Cart();
+          associatedRestaurant = null;
         }
-      } else {
-        cart.value = Cart();
-        associatedRestaurant = null;
-      }
-    });
+      });
+    }
   }
 
   Future<Restaurant> getAssociatedRestaurant(String restaurantId) async {

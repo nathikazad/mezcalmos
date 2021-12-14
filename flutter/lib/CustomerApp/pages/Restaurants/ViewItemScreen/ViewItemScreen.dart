@@ -6,6 +6,7 @@ import 'package:mezcalmos/CustomerApp/components/CustomerApp_appbar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
@@ -14,6 +15,7 @@ import 'components/BottomBarItemViewScreen.dart';
 import 'components/NoteComponet.dart';
 import 'components/chooseOneCheckBox.dart';
 import 'components/choosenManyCheckBox.dart';
+import 'components/dialogRequiredSignIn.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
 enum ViewItemScreenMode { AddItemMode, EditItemMode }
@@ -29,6 +31,7 @@ class ViewItemScreen extends StatefulWidget {
 
 class _ViewItemScreenState extends State<ViewItemScreen> {
   LanguageController lang = Get.find<LanguageController>();
+  AuthController auth = Get.find<AuthController>();
   Rxn<CartItem> cartItem = Rxn();
   late RestaurantController restaurantCartController;
   RestaurantsInfoController controller = Get.find<RestaurantsInfoController>();
@@ -67,6 +70,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
         });
       });
     }
+
     // scroll controller stuff !
 
     super.initState();

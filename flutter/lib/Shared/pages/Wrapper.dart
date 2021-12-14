@@ -2,7 +2,9 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
@@ -15,6 +17,7 @@ class Wrapper extends StatefulWidget {
 
 class _WrapperState extends State<Wrapper> {
   AuthController _authController = Get.find<AuthController>();
+  SettingsController settingsController = Get.find<SettingsController>();
 
   @override
   void dispose() {
@@ -36,10 +39,15 @@ class _WrapperState extends State<Wrapper> {
   }
 
   void handleAuthStateChange(fireAuth.User? user) async {
-    mezDbgPrint("Wrapper: handleAuthStateChange $user");
-    if (user == null ) {
-      mezDbgPrint("Wrapper::handleAuthStateChange:: going to sign in route");
-      Get.offNamedUntil(kSignInRoute, ModalRoute.withName(kWrapperRoute));
+    mezDbgPrint(
+        "Wrapper: handleAuthStateChange $user and the app type is ${settingsController.appType}");
+    if (user == null) {
+      if (AppType.CustomerApp == settingsController.appType) {
+        Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
+      } else {
+        mezDbgPrint("Wrapper::handleAuthStateChange:: going to sign in route");
+        Get.offNamedUntil(kSignInRoute, ModalRoute.withName(kWrapperRoute));
+      }
     } else {
       mezDbgPrint(
           "Wrapper::handleAuthStateChange:: signed in, Checking if User name are Set !");

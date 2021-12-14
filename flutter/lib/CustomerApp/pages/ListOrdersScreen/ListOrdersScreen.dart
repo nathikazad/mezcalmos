@@ -10,6 +10,8 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
 
+import 'components/FilterOrderComponent.dart';
+
 final f = new DateFormat('MM.dd.yyyy');
 final currency = new NumberFormat("#,##0.00", "en_US");
 
@@ -23,7 +25,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
   LanguageController _lang = Get.find<LanguageController>();
   // RxList<Order> currentOrders = RxList.empty();
   // RxList<Order> pastOrders = RxList.empty();
-  OrderController controller = Get.find<OrderController>();
+  OrderController controller = Get.put(OrderController());
   AuthController auth = Get.find<AuthController>();
   // StreamSubscription? currentOrdersListener;
   // StreamSubscription? pastOrdersListener;
@@ -59,70 +61,65 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
     LanguageController lang = Get.find<LanguageController>();
     final txt = Theme.of(context).textTheme;
     return Scaffold(
-        appBar: CustomerAppBar(
-          title: '${lang.strings["customer"]["orders"]["title"]}',
-          autoBack: true,
-        ),
-        body: SingleChildScrollView(
-            physics: ClampingScrollPhysics(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin: EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        child: Text(
-                          '${lang.strings["customer"]["orders"]["onGoingOrders"]}',
-                          style: txt.headline3,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Obx(
-                        () => Column(
-                          children: List.generate(
-                              controller.currentOrders().length,
-                              (index) => OngoingOrderCard(
-                                  order: controller.currentOrders()[index])),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                Obx(
-                  () => Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          child: Text(
-                            'All orders',
-                            style: txt.headline3,
+      appBar: CustomerAppBar(
+        title: '${lang.strings["customer"]["orders"]["title"]}',
+        autoBack: true,
+      ),
+      body: Obx(
+        () => Get.find<AuthController>().user != null
+            ? SingleChildScrollView(
+                physics: ClampingScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            child: Text(
+                              '${lang.strings["customer"]["orders"]["onGoingOrders"]}',
+                              style: txt.headline3,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Column(
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Obx(
+                            () => Column(
+                              children: List.generate(
+                                  controller.currentOrders().length,
+                                  (index) => OngoingOrderCard(
+                                      order:
+                                          controller.currentOrders()[index])),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    FilterOrders(),
+                    Obx(
+                      () => Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
                           children: List.generate(
                               controller.pastOrders().length,
                               (index) => OldOrderCard(
                                   order: controller.pastOrders()[index])),
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-                // Obx(() => buildInProcessOrders(controller.currentOrders())),
-                // SizedBox(height: 20),
-                // Obx(() => buildPastOrders(controller.pastOrders()))
-              ],
-            )));
+                    // Obx(() => buildInProcessOrders(controller.currentOrders())),
+                    // SizedBox(height: 20),
+                    // Obx(() => buildPastOrders(controller.pastOrders()))
+                  ],
+                ))
+            : Container(
+                child: Text("nothing"),
+              ),
+      ),
+    );
   }
 }

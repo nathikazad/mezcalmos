@@ -34,6 +34,7 @@
                 "modifyItem": "Modify item"
             },
             "cart": {
+                "myCart":"My Cart",
                 "cart": "Cart",
                 "inCart": "In Cart",
                 "orderSummary":"Order Summary",

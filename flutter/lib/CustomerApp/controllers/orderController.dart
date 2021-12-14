@@ -26,66 +26,68 @@ class OrderController extends GetxController {
   @override
   OrderController() {
     print("--------------------> RestaurantsOrderController Initialized !");
-    _pastOrdersListener?.cancel();
-    _pastOrdersListener = _databaseHelper.firebaseDatabase
-        .reference()
-        .child(customerPastOrders(_authController.fireAuthUser!.uid))
-        .onValue
-        .listen((event) async {
-      mezDbgPrint("----------------- O R D E R CONTROLLER ----------------");
-      mezDbgPrint("----------------- O R D E R CONTROLLER ----------------");
-      mezDbgPrint("PAST ORDERS ==> ${event.snapshot.value}");
-      mezDbgPrint("----------------- O R D E R CONTROLLER ----------------");
-      mezDbgPrint("----------------- O R D E R CONTROLLER ----------------");
+    if (_authController.user != null) {
+      _pastOrdersListener?.cancel();
+      _pastOrdersListener = _databaseHelper.firebaseDatabase
+          .reference()
+          .child(customerPastOrders(_authController.fireAuthUser!.uid))
+          .onValue
+          .listen((event) async {
+        mezDbgPrint("----------------- O R D E R CONTROLLER ----------------");
+        mezDbgPrint("----------------- O R D E R CONTROLLER ----------------");
+        mezDbgPrint("PAST ORDERS ==> ${event.snapshot.value}");
+        mezDbgPrint("----------------- O R D E R CONTROLLER ----------------");
+        mezDbgPrint("----------------- O R D E R CONTROLLER ----------------");
 
-      List<Order> orders = [];
-      if (event.snapshot.value != null) {
-        for (var orderId in event.snapshot.value.keys) {
-          dynamic orderData = event.snapshot.value[orderId];
-          if (orderData["orderType"] ==
-              OrderType.Restaurant.toFirebaseFormatString()) {
-            orders.add(RestaurantOrder.fromData(orderId, orderData));
-          }
+        List<Order> orders = [];
+        if (event.snapshot.value != null) {
+          for (var orderId in event.snapshot.value.keys) {
+            dynamic orderData = event.snapshot.value[orderId];
+            if (orderData["orderType"] ==
+                OrderType.Restaurant.toFirebaseFormatString()) {
+              orders.add(RestaurantOrder.fromData(orderId, orderData));
+            }
 
-          if (orderData["orderType"] ==
-              OrderType.Taxi.toFirebaseFormatString()) {
-            orders.add(TaxiOrder.fromData(orderId, orderData));
+            if (orderData["orderType"] ==
+                OrderType.Taxi.toFirebaseFormatString()) {
+              orders.add(TaxiOrder.fromData(orderId, orderData));
+            }
           }
         }
-      }
-      pastOrders.value = orders;
-    });
+        pastOrders.value = orders;
+      });
 
-    _currentOrdersListener?.cancel();
-    _currentOrdersListener = _databaseHelper.firebaseDatabase
-        .reference()
-        .child(customerInProcessOrders(_authController.fireAuthUser!.uid))
-        .onValue
-        .listen((event) async {
-      List<Order> orders = [];
-      if (event.snapshot.value != null) {
-        mezDbgPrint("orderController: new incoming order data");
-        for (var orderId in event.snapshot.value.keys) {
-          dynamic orderData = event.snapshot.value[orderId];
-          // try {
-          // if restaurant order
-          if (orderData["orderType"] ==
-              OrderType.Restaurant.toFirebaseFormatString()) {
-            orders.add(RestaurantOrder.fromData(orderId, orderData));
+      _currentOrdersListener?.cancel();
+      _currentOrdersListener = _databaseHelper.firebaseDatabase
+          .reference()
+          .child(customerInProcessOrders(_authController.fireAuthUser!.uid))
+          .onValue
+          .listen((event) async {
+        List<Order> orders = [];
+        if (event.snapshot.value != null) {
+          mezDbgPrint("orderController: new incoming order data");
+          for (var orderId in event.snapshot.value.keys) {
+            dynamic orderData = event.snapshot.value[orderId];
+            // try {
+            // if restaurant order
+            if (orderData["orderType"] ==
+                OrderType.Restaurant.toFirebaseFormatString()) {
+              orders.add(RestaurantOrder.fromData(orderId, orderData));
+            }
+            // if Taxi order
+            if (orderData["orderType"] ==
+                OrderType.Taxi.toFirebaseFormatString()) {
+              orders.add(TaxiOrder.fromData(orderId, orderData));
+            }
+            // } catch (e) {
+            //   mezDbgPrint("orderController: adding order error " + orderId);
+            //   mezDbgPrint(e);
+            // }
           }
-          // if Taxi order
-          if (orderData["orderType"] ==
-              OrderType.Taxi.toFirebaseFormatString()) {
-            orders.add(TaxiOrder.fromData(orderId, orderData));
-          }
-          // } catch (e) {
-          //   mezDbgPrint("orderController: adding order error " + orderId);
-          //   mezDbgPrint(e);
-          // }
         }
-      }
-      currentOrders.value = orders;
-    });
+        currentOrders.value = orders;
+      });
+    } else {}
   }
 
   Order? hasOrderOfType({required OrderType typeToCheck}) {
