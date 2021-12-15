@@ -37,12 +37,11 @@ class CustomerWrapper extends StatefulWidget {
 class _CustomerWrapperState extends State<CustomerWrapper>
     with WidgetsBindingObserver {
   MyPopupMenuController _popUpController = MyPopupMenuController();
-  OrderController _orderController = Get.find<OrderController>();
   LanguageController lang = Get.find<LanguageController>();
   SideMenuDrawerController _sideMenuDrawerController =
       Get.find<SideMenuDrawerController>();
   AuthController auth = Get.find<AuthController>();
-
+  // OrderController? _orderController;
   DateTime? appClosedTime;
 
   StreamSubscription<MezNotification.Notification>?
@@ -54,9 +53,10 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   void initState() {
     if (auth.fireAuthUser != null) {
       WidgetsBinding.instance!.addObserver(this);
-      _orderCountListener = _orderController.currentOrders.stream.listen((_) {
-        numberOfCurrentOrders.value = _orderController.currentOrders.length;
-      });
+      // _orderController = Get.find<OrderController>();
+      // _orderCountListener = _orderController.currentOrders.stream.listen((_) {
+      //   numberOfCurrentOrders.value = _orderController.currentOrders.length;
+      // });
       String? userId = Get.find<AuthController>().fireAuthUser!.uid;
       // listening for notification Permissions!
       _notificationsStreamListener = initializeShowNotificationsListener();
@@ -64,10 +64,10 @@ class _CustomerWrapperState extends State<CustomerWrapper>
       Get.find<ForegroundNotificationsController>()
           .startListeningForNotificationsFromFirebase(
               notificationsNode(userId), customerNotificationHandler);
-      Future.microtask(() {
-        // Fix to Input Focus problems ( we had it in build which gets re-executed after any input focus) !
-        navigateToOrdersIfNecessary(_orderController.currentOrders);
-      });
+      // Future.microtask(() {
+      //   // Fix to Input Focus problems ( we had it in build which gets re-executed after any input focus) !
+      //   navigateToOrdersIfNecessary(_orderController.currentOrders);
+      // });
     } else {
       Get.put(RestaurantController());
     }
@@ -105,9 +105,9 @@ class _CustomerWrapperState extends State<CustomerWrapper>
       if (appClosedTime != null &&
           DateTime.now().difference(appClosedTime!) > Duration(seconds: 10) &&
           Get.currentRoute != kLocationPermissionPage) {
-        if (_orderController != null) {
-          navigateToOrdersIfNecessary(_orderController.currentOrders);
-        }
+        // if (_orderController != null) {
+        //   navigateToOrdersIfNecessary(_orderController!.currentOrders);
+        // }
       }
     } else if (state == AppLifecycleState.paused) {
       appClosedTime = DateTime.now();
@@ -227,19 +227,19 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             url: "assets/images/taxiService.png",
             subtitle: "${lang.strings['customer']['home']['taxi']["subtitle"]}",
             ontap: () {
-              num noOfCurrentTaxiOrders = _orderController.currentOrders
-                  .where((currentOrder) =>
-                      currentOrder.orderType == OrderType.Taxi)
-                  .length;
-              if (noOfCurrentTaxiOrders == 0) {
+              // num noOfCurrentTaxiOrders = _orderController.currentOrders
+              //     .where((currentOrder) =>
+              //         currentOrder.orderType == OrderType.Taxi)
+              //     .length;
+              // if (noOfCurrentTaxiOrders == 0) {
                 Get.toNamed(kTaxiRequestRoute);
-              } else {
-                String orderId = _orderController.currentOrders
-                    .firstWhere((currentOrder) =>
-                        currentOrder.orderType == OrderType.Taxi)
-                    .orderId;
-                Get.toNamed(getTaxiOrderRoute(orderId));
-              }
+              // } else {
+              //   String orderId = _orderController.currentOrders
+              //       .firstWhere((currentOrder) =>
+              //           currentOrder.orderType == OrderType.Taxi)
+              //       .orderId;
+              //   Get.toNamed(getTaxiOrderRoute(orderId));
+              // }
             },
           ),
         ),

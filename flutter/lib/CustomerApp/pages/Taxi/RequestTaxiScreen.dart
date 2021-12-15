@@ -26,7 +26,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
   Rx<SearchComponentType> _currentFocusedTextField =
       SearchComponentType.From.obs;
   Rx<TaxiRequest> taxiRequest = TaxiRequest().obs;
-  TaxiController controller = Get.find<TaxiController>();
+  TaxiController controller = Get.put<TaxiController>(TaxiController());
   final LocationPickerController locationPickerController =
       LocationPickerController();
   final LocationSearchBarController locationSearchBarController =

@@ -14,7 +14,6 @@ class AuthHooks {
         "[+] CustomerApp::AuthHooks::onSignOutHook -> Callback Executed.");
     await Get.delete<CustomerAuthController>(force: true);
     await Get.delete<OrderController>(force: true);
-    await Get.delete<TaxiController>(force: true);
     await Get.delete<RestaurantController>(force: true);
     await Get.delete<BackgroundNotificationsController>(force: true);
     await Get.delete<MessageController>(force: true);
@@ -34,7 +33,6 @@ class AuthHooks {
         ForegroundNotificationsController(),
         permanent: true);
     Get.put<OrderController>(OrderController(), permanent: true);
-    Get.put<TaxiController>(TaxiController(), permanent: true);
     Get.put<RestaurantController>(RestaurantController(), permanent: true);
     Get.put<MessageController>(MessageController(), permanent: true);
   }
