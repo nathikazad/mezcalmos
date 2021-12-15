@@ -36,7 +36,7 @@ class BackgroundNotificationsController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    mezDbgPrint("DeviceNotificationsController onInit");
+    mezDbgPrint("BackgroundNotificationsController onInit");
     NotificationSettings settings = await requestPermission();
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);

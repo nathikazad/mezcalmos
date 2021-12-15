@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.d
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 class CustomerAuthController extends GetxController {
   Rxn<Customer> _customer = Rxn();
@@ -27,43 +28,46 @@ class CustomerAuthController extends GetxController {
   void onInit() async {
     super.onInit();
 
-    // ------------------------------------------------------------------------
+    if (_authController.fireAuthUser != null) {
+      mezDbgPrint(
+          "User from CustomerAuthController >> ${_authController.fireAuthUser!.uid}");
+      mezDbgPrint(
+          "CustomerAuthController  Messaging Token>> ${await _notificationsController.getToken()}");
+      _customerNodeListener?.cancel();
+      _customerNodeListener = _databaseHelper.firebaseDatabase
+          .reference()
+          .child(customerNode(_authController.fireAuthUser!.uid))
+          .onValue
+          .listen((event) async {
+        _customer.value = Customer.fromSnapshotData(event.snapshot.value);
 
-    print(
-        "User from CustomerAuthController >> ${_authController.fireAuthUser!.uid}");
-    print(
-        "CustomerAuthController  Messaging Token>> ${await _notificationsController.getToken()}");
-    _customerNodeListener?.cancel();
-    _customerNodeListener = _databaseHelper.firebaseDatabase
-        .reference()
-        .child(customerNode(_authController.fireAuthUser!.uid))
-        .onValue
-        .listen((event) async {
-      _customer.value = Customer.fromSnapshotData(event.snapshot.value);
+        if (_checkedAppVersion == false) {
+          String VERSION = GetStorage().read(getxVersion);
+          print("[+] Customer currently using App v$VERSION");
+          _databaseHelper.firebaseDatabase
+              .reference()
+              .child(customerAppVersionNode(_authController.fireAuthUser!.uid))
+              .set(VERSION);
 
-      if (_checkedAppVersion == false) {
-        String VERSION = GetStorage().read(getxVersion);
-        print("[+] Customer currently using App v$VERSION");
+          _checkedAppVersion = true;
+        }
+      });
+
+      String? deviceNotificationToken =
+          await _notificationsController.getToken();
+      if (deviceNotificationToken != null)
         _databaseHelper.firebaseDatabase
             .reference()
-            .child(customerAppVersionNode(_authController.fireAuthUser!.uid))
-            .set(VERSION);
-
-        _checkedAppVersion = true;
-      }
-    });
-
-    String? deviceNotificationToken = await _notificationsController.getToken();
-    if (deviceNotificationToken != null)
-      _databaseHelper.firebaseDatabase
-          .reference()
-          .child(
-              customerNotificationInfoNode(_authController.fireAuthUser!.uid))
-          .set(<String, String>{
-        'deviceNotificationToken': deviceNotificationToken
-      });
-    print(
-        "/////////////////////////////////////////////${_customer.value?.toJson()}////////////////////////////////////////////////////");
+            .child(
+                customerNotificationInfoNode(_authController.fireAuthUser!.uid))
+            .set(<String, String>{
+          'deviceNotificationToken': deviceNotificationToken
+        });
+      print(
+          "/////////////////////////////////////////////${_customer.value?.toJson()}////////////////////////////////////////////////////");
+    } else {
+      throw Exception("User is not signed it to init customer auth controller");
+    }
   }
 
   void saveNewLocation(SavedLocation savedLocation) {

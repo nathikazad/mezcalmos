@@ -260,7 +260,7 @@
                     "title": "Ready For Pickup",
                     "body": "Your order is ready for pickup"
                 },
-                "onTheWay": {
+                "onTheWayRestaurant": {
                     "title": "On the Way",
                     "body": "Your order is on the way"
                 },
@@ -271,6 +271,22 @@
                 "cancelled": {
                     "title": "Order Cancelled",
                     "body": "Your order has been cancelled"
+                },
+                "onTheWayTaxi": {
+                    "title": "On the Way",
+                    "body": "Your taxi is on the way"
+                },
+                "inTransit": {
+                    "title": "In Transit",
+                    "body": "You are on the way to your destination"
+                },
+                "droppedOff": {
+                    "title": "Reached",
+                    "body": "Ha llegado a su destino"
+                },
+                "expired": {
+                    "title": "No taxis available",
+                    "body": "Lamentablemente, no pudimos encontrar un taxi para usted. Vuelva a intentarlo más tarde"
                 }
             }
         },

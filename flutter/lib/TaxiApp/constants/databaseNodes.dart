@@ -1,4 +1,3 @@
-const String taxiOpenOrdersNode = "orders/open/taxi";
 String taxiAuthNode(String uid) {
   return 'taxis/info/$uid';
 }

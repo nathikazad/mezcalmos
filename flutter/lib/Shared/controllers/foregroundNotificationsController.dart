@@ -27,12 +27,13 @@ class ForegroundNotificationsController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    mezDbgPrint("fbNotificationsController: Init");
+    mezDbgPrint("ForegroundNotificationsController: Init");
   }
 
   void startListeningForNotificationsFromFirebase(String notificationNode,
       Notification Function(String key, dynamic value) notificationHandler) {
-    mezDbgPrint("FBNotificationsController:startListeningForNotifications");
+    mezDbgPrint(
+        "ForegroundNotificationsController:startListeningForNotifications");
     mezDbgPrint(notificationNode);
     this._notificationNode = notificationNode;
     _notificationNodeAddListener?.cancel();
@@ -41,7 +42,7 @@ class ForegroundNotificationsController extends GetxController {
         .child(notificationNode)
         .onChildAdded
         .listen((event) {
-      mezDbgPrint("fbNotificationsController:: NEW NOTIFICATION");
+      mezDbgPrint("ForegroundNotificationsController:: NEW NOTIFICATION");
       mezDbgPrint(event.snapshot.value);
       try {
         Notification _notification =

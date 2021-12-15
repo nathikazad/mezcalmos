@@ -23,34 +23,17 @@ class ListOrdersScreen extends StatefulWidget {
 class _ListOrdersScreen extends State<ListOrdersScreen> {
   MyPopupMenuController _popUpController = MyPopupMenuController();
   LanguageController _lang = Get.find<LanguageController>();
-  // RxList<Order> currentOrders = RxList.empty();
-  // RxList<Order> pastOrders = RxList.empty();
   OrderController controller = Get.put(OrderController());
   AuthController auth = Get.find<AuthController>();
-  // StreamSubscription? currentOrdersListener;
-  // StreamSubscription? pastOrdersListener;
 
   @override
   initState() {
     mezDbgPrint("ListOrdersScreen: onInit");
-    // currentOrders.value = controller.currentOrders;
-    // currentOrdersListener = controller.currentOrders.stream.listen((_) {
-    //   currentOrders.value = controller.currentOrders;
-    // });
-    // pastOrders.value = controller.pastOrders;
-    // pastOrdersListener = controller.pastOrders.stream.listen((_) {
-    //   pastOrders.value = controller.pastOrders;
-    // });
-
     super.initState();
   }
 
   @override
   void dispose() {
-    // currentOrdersListener?.cancel();
-    // currentOrdersListener = null;
-    // pastOrdersListener?.cancel();
-    // pastOrdersListener = null;
     _popUpController.hideMenu();
     _popUpController.dispose();
     super.dispose();

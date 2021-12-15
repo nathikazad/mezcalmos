@@ -3,14 +3,13 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
-import 'package:mezcalmos/Shared/models/Notification.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
+import 'package:mezcalmos/Shared/models/Notification.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
 class OrderController extends GetxController {
   DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
@@ -25,9 +24,10 @@ class OrderController extends GetxController {
   Rx<FilterStatus> filterStatus = FilterStatus.All.obs;
 
   @override
-  OrderController() {
-    print("--------------------> RestaurantsOrderController Initialized !");
-    if (_authController.user != null) {
+  void onInit() {
+    super.onInit();
+    mezDbgPrint("--------------------> OrderController Initialized !");
+    if (_authController.fireAuthUser != null) {
       _pastOrdersListener?.cancel();
       _pastOrdersListener = _databaseHelper.firebaseDatabase
           .reference()
@@ -69,7 +69,6 @@ class OrderController extends GetxController {
           mezDbgPrint("orderController: new incoming order data");
           for (var orderId in event.snapshot.value.keys) {
             dynamic orderData = event.snapshot.value[orderId];
-            // try {
             // if restaurant order
             if (orderData["orderType"] ==
                 OrderType.Restaurant.toFirebaseFormatString()) {
@@ -80,32 +79,12 @@ class OrderController extends GetxController {
                 OrderType.Taxi.toFirebaseFormatString()) {
               orders.add(TaxiOrder.fromData(orderId, orderData));
             }
-            // } catch (e) {
-            //   mezDbgPrint("orderController: adding order error " + orderId);
-            //   mezDbgPrint(e);
-            // }
           }
         }
         currentOrders.value = orders;
       });
-    } else {}
-  }
-
-  void updateRideCost({required String orderId, required double cost}) {
-    if (cost >= 35) {
-      // update order in Customers node
-      _databaseHelper.firebaseDatabase
-          .reference()
-          .child(customerInProcessOrders(_authController.fireAuthUser!.uid))
-          .child("/$orderId/cost")
-          .set(cost);
-
-      // update order in orders node
-      _databaseHelper.firebaseDatabase
-          .reference()
-          .child("$taxiOpenOrdersNode/")
-          .child("$orderId/cost")
-          .set(cost);
+    } else {
+      throw Exception("User is not signed it to init order controller");
     }
   }
 

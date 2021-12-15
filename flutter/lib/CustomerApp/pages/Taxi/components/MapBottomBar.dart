@@ -307,7 +307,7 @@ class _MapBottomBarState extends State<MapBottomBar> {
                   Order? order = Get.find<OrderController>()
                       .hasOrderOfType(typeToCheck: OrderType.Taxi);
                   if (order != null) {
-                    Get.find<OrderController>().updateRideCost(
+                    Get.find<TaxiController>().updateRideCost(
                         orderId: order.orderId,
                         cost: widget.taxiRequest.estimatedPrice - 5);
                   }
@@ -341,7 +341,7 @@ class _MapBottomBarState extends State<MapBottomBar> {
                   Order? order = Get.find<OrderController>()
                       .hasOrderOfType(typeToCheck: OrderType.Taxi);
                   if (order != null) {
-                    Get.find<OrderController>().updateRideCost(
+                    Get.find<TaxiController>().updateRideCost(
                         orderId: order.orderId,
                         cost: widget.taxiRequest.estimatedPrice + 5);
                   }

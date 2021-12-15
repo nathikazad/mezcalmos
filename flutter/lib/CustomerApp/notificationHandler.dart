@@ -4,6 +4,7 @@ import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 Notification customerNotificationHandler(String key, dynamic value) {
@@ -18,14 +19,33 @@ Notification customerNotificationHandler(String key, dynamic value) {
       switch (orderType) {
         case OrderType.Restaurant:
           return restaurantOrderStatusChangeNotificationHandler(key, value);
-        // case OrderType.Taxi:
-        //   mezDbgPrint("Taxi Notifications");
+        case OrderType.Taxi:
+          return taxiOrderStatusChangeNotificationHandler(key, value);
         default:
           throw StateError("Invalid Notification Type");
       }
     default:
       throw StateError("Invalid Notification Type");
   }
+}
+
+Notification taxiOrderStatusChangeNotificationHandler(
+    String key, dynamic value) {
+  TaxiOrdersStatus newOrdersStatus =
+      value['status'].toString().toTaxiOrderStatus();
+  Map<String, dynamic> dynamicFields =
+      getTaxiOrderStatusFields(newOrdersStatus)!;
+  return Notification(
+      id: key,
+      linkUrl: getTaxiOrderRoute(value['orderId']),
+      body: dynamicFields["body"],
+      imgUrl: dynamicFields["imgUrl"],
+      title: dynamicFields["title"],
+      timestamp: DateTime.parse(value['time']),
+      notificationType: NotificationType.OrderStatusChange,
+      notificationAction:
+          value["notificationAction"].toString().toNotificationAction(),
+      variableParams: value);
 }
 
 Notification restaurantOrderStatusChangeNotificationHandler(
@@ -70,9 +90,9 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
     case RestaurantOrderStatus.OnTheWay:
       return <String, dynamic>{
         "title":
-            "${lang.strings["shared"]["notification"]["notificationType"]["onTheWay"]["title"]}",
+            "${lang.strings["shared"]["notification"]["notificationType"]["onTheWayRestaurant"]["title"]}",
         "body":
-            "${lang.strings["shared"]["notification"]["notificationType"]["onTheWay"]["body"]}",
+            "${lang.strings["shared"]["notification"]["notificationType"]["onTheWayRestaurant"]["body"]}",
         "imgUrl": "assets/images/OnTheWayOrderNotificationIcon.png",
       };
     case RestaurantOrderStatus.Delivered:
@@ -88,7 +108,56 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
         "title":
             "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["title"]}",
         "body":
+            "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["body"]}",
+        "imgUrl": "assets/images/CancelledOrderNotificationIcon.png",
+      };
+    default:
+    // do nothing
+  }
+}
+
+Map<String, dynamic>? getTaxiOrderStatusFields(
+    TaxiOrdersStatus taxiOrdersStatus) {
+  LanguageController lang = Get.find<LanguageController>();
+  switch (taxiOrdersStatus) {
+    case TaxiOrdersStatus.OnTheWay:
+      return <String, dynamic>{
+        "title":
+            "${lang.strings["shared"]["notification"]["notificationType"]["onTheWayTaxi"]["title"]}",
+        "body":
+            "${lang.strings["shared"]["notification"]["notificationType"]["onTheWayTaxi"]["body"]}",
+        "imgUrl": "assets/images/OnTheWayOrderNotificationIcon.png",
+      };
+    case TaxiOrdersStatus.InTransit:
+      return <String, dynamic>{
+        "title":
+            "${lang.strings["shared"]["notification"]["notificationType"]["inTransit"]["title"]}",
+        "body":
+            "${lang.strings["shared"]["notification"]["notificationType"]["inTransit"]["body"]}",
+        "imgUrl": "assets/images/OnTheWayOrderNotificationIcon.png",
+      };
+    case TaxiOrdersStatus.DroppedOff:
+      return <String, dynamic>{
+        "title":
+            "${lang.strings["shared"]["notification"]["notificationType"]["droppedOff"]["title"]}",
+        "body":
+            "${lang.strings["shared"]["notification"]["notificationType"]["droppedOff"]["body"]}",
+        "imgUrl": "assets/images/DroppedOrderNotificationIcon.png",
+      };
+    case TaxiOrdersStatus.CancelledByTaxi:
+      return <String, dynamic>{
+        "title":
             "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["title"]}",
+        "body":
+            "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["body"]}",
+        "imgUrl": "assets/images/CancelledOrderNotificationIcon.png",
+      };
+    case TaxiOrdersStatus.Expired:
+      return <String, dynamic>{
+        "title":
+            "${lang.strings["shared"]["notification"]["notificationType"]["expired"]["title"]}",
+        "body":
+            "${lang.strings["shared"]["notification"]["notificationType"]["expired"]["titbodyle"]}",
         "imgUrl": "assets/images/CancelledOrderNotificationIcon.png",
       };
     default:

@@ -3,12 +3,18 @@ import 'dart:async';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/CustomerApp/constants/databaseNodes.dart';
+import 'package:mezcalmos/Shared/constants/databaseNodes.dart';
 
 enum OrdersStates { Null, Finished, Cancelled, Expired, InProccess, IsLooking }
 
 class TaxiController extends GetxController {
+  DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
+  AuthController _authController = Get.find<AuthController>();
   Future<ServerResponse> cancelTaxi(String orderId) async {
     HttpsCallable cancelTaxiFunction =
         FirebaseFunctions.instance.httpsCallable('taxi-cancelFromCustomer');
@@ -37,6 +43,24 @@ class TaxiController extends GetxController {
       mezDbgPrint("+ EROROROROR HAPPPPEND ==> $e");
       return ServerResponse(ResponseStatus.Error,
           errorMessage: "Server Error", errorCode: "serverError");
+    }
+  }
+
+   void updateRideCost({required String orderId, required double cost}) {
+    if (cost >= 35) {
+      // update order in Customers node
+      _databaseHelper.firebaseDatabase
+          .reference()
+          .child(customerInProcessOrders(_authController.fireAuthUser!.uid))
+          .child("/$orderId/cost")
+          .set(cost);
+
+      // update order in orders node
+      _databaseHelper.firebaseDatabase
+          .reference()
+          .child(taxiOpenOrdersNode())
+          .child("$orderId/cost")
+          .set(cost);
     }
   }
 

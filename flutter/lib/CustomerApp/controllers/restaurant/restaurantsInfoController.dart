@@ -11,7 +11,8 @@ class RestaurantsInfoController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    print("--------------------> RestaurantsInfoController Initialized !");
+    mezDbgPrint(
+        "--------------------> RestaurantsInfoController Initialized !");
   }
 
   Future<List<Restaurant>> getRestaurants() async {

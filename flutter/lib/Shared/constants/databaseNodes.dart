@@ -9,3 +9,5 @@ String userInfo(String? userId) {
 String orderChatNode(String orderId) {
   return 'chat/$orderId';
 }
+
+String taxiOpenOrdersNode() => "orders/open/taxi";

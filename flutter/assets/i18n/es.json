@@ -259,7 +259,7 @@
                     "title": "Listo Para Recoger",
                     "body": "Tu pedido está listo para ser recogido"
                 },
-                "onTheWay": {
+                "onTheWayRestaurant": {
                     "title": "En Camino",
                     "body": "Tu pedido está en camino"
                 },
@@ -270,6 +270,22 @@
                 "cancelled": {
                     "title": "Orden Cancelada",
                     "body": "Tu pedido ha sido cancelado"
+                },
+                "onTheWayTaxi": {
+                    "title": "En Camino",
+                    "body": "Tu taxi está en camino"
+                },
+                "inTransit": {
+                    "title": "En Transito",
+                    "body": "Estás de camino a tu destino"
+                },
+                "droppedOff": {
+                    "title": "Llegado",
+                    "body": "Your have reached your "
+                },
+                "expired": {
+                    "title": "No hay taxis disponibles",
+                    "body": "Unfortunately, we could not find a taxi for you. Please try again later"
                 }
             }
         },
