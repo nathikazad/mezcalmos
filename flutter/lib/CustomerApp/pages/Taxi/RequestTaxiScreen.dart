@@ -39,7 +39,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
     // set the location Enabled Button to be false
     locationPickerController.myLocationButtonEnabled.value = false;
     // set blackScreenBottom 110
-    locationPickerController.blackScreenBottomTextMargin.value = 10;
+    locationPickerController.blackScreenBottomTextMargin.value = 80;
 
     GeoLoc.Location().getLocation().then((GeoLoc.LocationData locData) {
       taxiRequest.value.from = Location("", locData);
@@ -83,8 +83,10 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                   newLocationChosenEvent:
                       updateModelAndHandoffToLocationPicker),
               _pickedFromTo
-                  ? MapBottomBar(
-                      taxiRequest: taxiRequest,
+                  ? Obx(
+                      () => MapBottomBar(
+                        taxiRequest: taxiRequest.value,
+                      ),
                     )
                   : SizedBox()
             ]),
@@ -96,10 +98,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
 // when one of the dropdowns (pick current location, a saved location or a places suggestion clicked)
   void updateModelAndHandoffToLocationPicker(
       Location? newLocation, SearchComponentType textFieldType) {
-    mezDbgPrint(
-        "updateModelAndHandoffToLocationPicker textFieldType ===> $textFieldType");
-    mezDbgPrint(
-        "updateModelAndHandoffToLocationPicker Address ===> ${newLocation?.address}");
+    locationPickerController.removeCircleMarker();
     if (newLocation != null) {
       _currentFocusedTextField.value = textFieldType;
       updateModelAndMarker(textFieldType, newLocation);
@@ -115,7 +114,6 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
       setState(() {
         _pickedFromTo = false;
       });
-      mezDbgPrint("showGrayedOutButton");
     }
     locationSearchBarController.collapseDropdown();
     locationPickerController.clearPolyline();
@@ -128,20 +126,16 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
     updateModelAndMarker(_currentFocusedTextField.value, newLocation);
     if (taxiRequest.value.isFromToSet()) {
       locationPickerController.setAnimateMarkersPolyLinesBounds(true);
+      locationPickerController.animateAndUpdateBounds();
       updateRouteInformation();
       locationPickerController.showConfirmButton();
       setState(() {
         _pickedFromTo = true;
       });
-
-      mezDbgPrint("++showConfirmButton");
     } else {
       locationPickerController.setAnimateMarkersPolyLinesBounds(false);
-
-      mezDbgPrint("showGrayedOutButton");
       locationPickerController.showGrayedOutButton();
       locationPickerController.removeCircleMarker();
-
       setState(() {
         _pickedFromTo = false;
       });
@@ -186,25 +180,28 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
   void updateRouteInformation() async {
     MapHelper.Route? route = await MapHelper.getDurationAndDistance(
         taxiRequest.value.from!, taxiRequest.value.to!);
+
+    mezDbgPrint("updateRouteInformation::Route => ${route?.polylineList}");
     if (route != null) {
-      int estimatedPrice =
-          getEstimatedRidePriceInPesos(route.distance.distanceInMeters);
-      taxiRequest.value.setEstimatedPrice(estimatedPrice);
-      taxiRequest.value.setRouteInformation(TaxiOrder.RouteInformation(
-          polyline: route.encodedPolyLine,
-          distance: route.distance,
-          duration: route.duration));
+      setState(() {
+        int estimatedPrice =
+            getEstimatedRidePriceInPesos(route.distance.distanceInMeters);
+        taxiRequest.value.setEstimatedPrice(estimatedPrice);
+        locationPickerController.addPolyline(route.polylineList);
+        taxiRequest.value.setRouteInformation(TaxiOrder.RouteInformation(
+            polyline: route.encodedPolyLine,
+            distance: route.distance,
+            duration: route.duration));
+      });
       mezDbgPrint("Polyliiines ====> ${route.polylineList}");
       mezDbgPrint("Polyliiines ====> ${taxiRequest.value.toString()}");
-      locationPickerController.addPolyline(route.polylineList);
     } else {
       // TODO:handle route error
     }
   }
 
   int getEstimatedRidePriceInPesos(int distanceInMeteres) {
-    // 35 is always the minimum possible price !
-    // TODO : Calculate depending on distance
-    return 35;
+    int roundedKm = (distanceInMeteres / 1000).round();
+    return roundedKm <= 1 ? 35 : roundedKm * 15;
   }
 }

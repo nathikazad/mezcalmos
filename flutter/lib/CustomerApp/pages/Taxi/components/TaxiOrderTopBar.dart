@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TaxiOrderTopBar extends StatelessWidget {
   final LanguageController lang = Get.find<LanguageController>();
@@ -12,6 +13,7 @@ class TaxiOrderTopBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    responsiveSize(context);
     return Positioned(
       top: 10,
       child: Container(
@@ -50,21 +52,23 @@ class TaxiOrderTopBar extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.normal,
                               ),
                             )),
                         GestureDetector(
-                          onTap: () => mezcalmosSnackBar(
-                              lang.strings['shared']['inputLocation']["from"],
-                              order.from.address),
-                          child: Text(
-                            order.from.address,
-                            style: TextStyle(fontSize: 15, fontFamily: 'psr'),
-                            maxLines: 1,
-                            softWrap: false,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
+                            onTap: () => mezcalmosSnackBar(
+                                lang.strings['shared']['inputLocation']["from"],
+                                order.from.address),
+                            child: Text(
+                              order.from.address,
+                              overflow: TextOverflow.ellipsis,
+                              softWrap: false,
+                              maxLines: 1,
+                              style: TextStyle(
+                                  fontSize: 14.sp,
+                                  fontFamily: 'psr',
+                                  color: Colors.black87),
+                            )),
                       ]),
                 ),
               ),
@@ -125,22 +129,24 @@ class TaxiOrderTopBar extends StatelessWidget {
                             lang.strings['shared']['inputLocation']["to"],
                             style: TextStyle(
                               fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.normal,
                             ),
                           ),
                         ),
                         GestureDetector(
-                          onTap: () => mezcalmosSnackBar(
-                              lang.strings['shared']['inputLocation']["to"],
-                              order.to.address),
-                          child: Text(
-                            order.to.address, //13+..
-                            style: TextStyle(fontSize: 15, fontFamily: 'psr'),
-                            maxLines: 1,
-                            softWrap: false,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
+                            onTap: () => mezcalmosSnackBar(
+                                lang.strings['shared']['inputLocation']["to"],
+                                order.to.address),
+                            child: Text(
+                              order.to.address,
+                              overflow: TextOverflow.ellipsis,
+                              softWrap: false,
+                              maxLines: 1,
+                              style: TextStyle(
+                                  fontSize: 14.sp,
+                                  fontFamily: 'psr',
+                                  color: Colors.black87),
+                            )),
                       ],
                     )),
               ),

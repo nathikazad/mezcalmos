@@ -313,7 +313,7 @@
             "searching": "Buscando",
             "pick": "ELIGE",
             "pickFromMap": "Elige del mapa",
-            "moveMapIfNotPrecise": "Puede mover el mapa si la posición no es precisa.",
+            "moveMapIfNotPrecise": "Puede mover el mapa.",
             "moveMapToPick": "Mueva el mapa para elegir la ubicación."
         },
         "pickLocation": {

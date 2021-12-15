@@ -39,7 +39,8 @@ class AutoCompleteTextView extends StatefulWidget {
       this.maxHeight = 200,
       this.tfCursorColor = Colors.white,
       this.tfCursorWidth = 2.0,
-      this.tfStyle = const TextStyle(color: Colors.black),
+      this.tfStyle = const TextStyle(
+          color: Colors.black87, fontFamily: 'psr', fontSize: 13.5),
       this.tfTextDecoration = const InputDecoration(),
       this.tfTextAlign = TextAlign.left,
       this.suggestionStyle = const TextStyle(color: Colors.black),

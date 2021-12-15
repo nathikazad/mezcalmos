@@ -45,6 +45,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
       widget.mGoogleMapController.decodeAndAddPolyline(
           encodedPolylineString: order.value!.routeInformation.polyline);
       widget.mGoogleMapController.setAnimateMarkersPolyLinesBounds(true);
+      widget.mGoogleMapController.animateAndUpdateBounds();
 
       mezDbgPrint("order not null !");
       if (order.value!.inProcess()) {
@@ -131,8 +132,10 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
                                   this.widget.mGoogleMapController,
                               periodicRerendering: true,
                             )),
-                        MapBottomBar(
-                          taxiRequest: order.value!.toTaxiRequest().obs,
+                        Obx(
+                          () => MapBottomBar(
+                            taxiRequest: order.value!.toTaxiRequest(),
+                          ),
                         ),
                         cancelButton(order.value!.status),
                         TaxiOrderTopBar(order: order.value!)
@@ -152,6 +155,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
     switch (status) {
       case TaxiOrdersStatus.OnTheWay:
         widget.mGoogleMapController.setAnimateMarkersPolyLinesBounds(true);
+        widget.mGoogleMapController.animateAndUpdateBounds();
 
         // update the to dest marker
         // widget.mGoogleMapController.removeDestinationMarker();
@@ -193,7 +197,8 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
       default:
         // default is : isLoookingForTaxi
         // so user can move freely
-        widget.mGoogleMapController.setAnimateMarkersPolyLinesBounds(false);
+        widget.mGoogleMapController.setAnimateMarkersPolyLinesBounds(true);
+        widget.mGoogleMapController.animateAndUpdateBounds();
 
         // updating destination marker.
         widget.mGoogleMapController.addOrUpdatePurpleDestinationMarker(

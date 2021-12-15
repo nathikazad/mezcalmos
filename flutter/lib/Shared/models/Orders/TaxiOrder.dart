@@ -87,15 +87,11 @@ class TaxiOrder extends Order {
         from: this.from,
         to: this.to,
         routeInformation: this.routeInformation,
-        estimatedPrice: this.cost as int,
+        estimatedPrice: this.cost.round(),
         paymentType: this.paymentType);
   }
 
   factory TaxiOrder.fromData(dynamic id, dynamic data) {
-    // mezDbgPrint("FROOOOOOM => ${data['from']}");
-    // mezDbgPrint("TOOOOOO => ${data['to']}");
-    // mezDbgPrint("DRIVER => ${data["driver"]}");
-
     TaxiOrder taxiOrder = TaxiOrder(
         orderId: id,
         driver: (data["driver"] != null)

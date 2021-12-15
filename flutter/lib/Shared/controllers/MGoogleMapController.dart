@@ -19,6 +19,7 @@ class MGoogleMapController {
   Rxn<Location> location = Rxn();
   RxBool animateMarkersPolyLinesBounds = false.obs;
   GoogleMapController? controller;
+  LatLngBounds? bounds;
 
   void _addOrUpdateMarker(Marker marker) {
     markers.removeWhere(
@@ -157,5 +158,73 @@ class MGoogleMapController {
 
   void setLocation(Location newLocation) {
     this.location.value = newLocation;
+  }
+
+  void setBounds(LatLngBounds? bounds) {
+    this.bounds = bounds;
+  }
+
+  // Animate the camera using widget.bounds
+  Future<void> animateCameraWithNewBounds() async {
+    if (controller != null && this.bounds != null) {
+      CameraUpdate _camUpdate = CameraUpdate.newLatLngBounds(this.bounds!, 100);
+      await controller!.animateCamera(_camUpdate);
+      await _boundsReChecker(_camUpdate);
+    }
+  }
+
+  // Cheker -> Animate first and Double check if the bounds fit well the MapScreen
+  Future<void> _boundsReChecker(CameraUpdate u) async {
+    controller?.animateCamera(u);
+    controller?.animateCamera(u);
+    LatLngBounds? l1 = await controller?.getVisibleRegion();
+    LatLngBounds? l2 = await controller?.getVisibleRegion();
+    if (l1 != null && l2 != null) {
+      if (l1.southwest.latitude == -90 || l2.southwest.latitude == -90)
+        await _boundsReChecker(u);
+    }
+  }
+
+  // adds up the markers the new markers latLn ot polyline's and calculate out of them all the latLngbounds
+  LatLngBounds? _getMarkersAndPolylinesBounds() {
+    List<LatLng> _bnds = [..._getLatLngBoundsFromPolyline(polylines)];
+    mezDbgPrint("+ Added Polyline ${_bnds} TO BOUNDS!");
+
+    markers.forEach((cmarker) {
+      mezDbgPrint("+ ADDING MARKER ${cmarker.markerId.value} TO BOUNDS!");
+      _bnds.add(cmarker.position);
+    });
+    return _bnds.isEmpty ? null : MapHelper.createMapBounds(_bnds);
+  }
+
+  // Calculate bounds from the polyline's List of LatLng
+  // we're using this onInit (one time calculation since we have the polyline always the same)
+  List<LatLng> _getLatLngBoundsFromPolyline(Set<Polyline> p) {
+    if (p.isNotEmpty) {
+      double minLat = p.first.points.first.latitude;
+      double minLong = p.first.points.first.longitude;
+      double maxLat = p.first.points.first.latitude;
+      double maxLong = p.first.points.first.longitude;
+      p.forEach((poly) {
+        poly.points.forEach((point) {
+          if (point.latitude < minLat) minLat = point.latitude;
+          if (point.latitude > maxLat) maxLat = point.latitude;
+          if (point.longitude < minLong) minLong = point.longitude;
+          if (point.longitude > maxLong) maxLong = point.longitude;
+        });
+      });
+
+      return [LatLng(minLat, minLong), LatLng(maxLat, maxLong)];
+    } else {
+      return [];
+    }
+  }
+
+  // main function for updating the bounds and start the animation
+  Future<void> animateAndUpdateBounds() async {
+    setBounds(animateMarkersPolyLinesBounds.value
+        ? _getMarkersAndPolylinesBounds()
+        : null);
+    await animateCameraWithNewBounds();
   }
 }

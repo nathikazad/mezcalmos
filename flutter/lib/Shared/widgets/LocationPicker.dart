@@ -203,15 +203,15 @@ class LocationPickerState extends State<LocationPicker> {
             bottom: widget.locationPickerMapController
                     .blackScreenBottomTextMargin.value +
                 35,
-            left: 10,
+            left: (Get.width / 5.5).sp,
             right: 10),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          // mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 2.0),
+              padding: const EdgeInsets.only(top: 2.0, right: 5),
               child: Icon(
                 Icons.open_with,
                 color: Colors.white,
@@ -222,13 +222,12 @@ class LocationPickerState extends State<LocationPicker> {
               child: Text(
                 _lang.strings["shared"]["inputLocation"]["moveMapIfNotPrecise"],
                 // "You can move the map if position is not precise.",
-                maxLines: 1,
+                maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 softWrap: true,
-                textAlign: TextAlign.center,
-                // maxLines: ,
+                textAlign: TextAlign.start,
                 style: TextStyle(
-                    color: Colors.white, fontFamily: 'psb', fontSize: 15.sp),
+                    color: Colors.white, fontFamily: 'psb', fontSize: 20.sp),
               ),
             )
           ],

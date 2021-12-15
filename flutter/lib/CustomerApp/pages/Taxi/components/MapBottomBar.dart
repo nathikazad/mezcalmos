@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/Shared/Themes/styles/textStyleTheme.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
@@ -14,7 +16,7 @@ import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 
 // @SAAD - TODO : REFACTORE THIS.
 class MapBottomBar extends StatefulWidget {
-  Rx<TaxiRequest> taxiRequest;
+  TaxiRequest taxiRequest;
   MapBottomBar({required this.taxiRequest});
 
   @override
@@ -26,7 +28,7 @@ class MapBottomBar extends StatefulWidget {
 class _MapBottomBarState extends State<MapBottomBar> {
   LanguageController lang = Get.find<LanguageController>();
   OrderController controller = Get.find<OrderController>();
-  double _bottomPadding = GetStorage().read(getxGmapBottomPaddingKey) + 10;
+  double _bottomPadding = GetStorage().read(getxGmapBottomPaddingKey) + 15;
 
   @override
   Widget build(BuildContext context) {
@@ -50,19 +52,18 @@ class _MapBottomBarState extends State<MapBottomBar> {
                   borderRadius: BorderRadius.circular(5),
                   color: Colors.white,
                 ),
-                child: Obx(() => Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: buildBottomBatByStatus(
-                          widget.taxiRequest.value.status),
-                    )))));
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: buildBottomBatByStatus(widget.taxiRequest.status),
+                ))));
   }
 
   Widget messageBtn() {
     return GestureDetector(
       onTap: () async {
-        Get.toNamed(
-            getCustomerMessagesRoute(widget.taxiRequest.value.orderId!));
+        Get.toNamed(getCustomerMessagesRoute(
+            controller.hasOrderOfType(typeToCheck: OrderType.Taxi)!.orderId));
       },
       child: Container(
         margin: EdgeInsets.only(left: 6),
@@ -82,21 +83,19 @@ class _MapBottomBarState extends State<MapBottomBar> {
         child: Center(
           child: Stack(
             children: [
-              Obx(
-                () => widget.taxiRequest.value.orderId != null &&
-                        controller.hasNewMessageNotification(
-                            widget.taxiRequest.value.orderId!)
-                    ? Positioned(
-                        top: 5,
-                        right: 5,
-                        child: Container(
-                          height: 6,
-                          width: 6,
-                          decoration: BoxDecoration(
-                              color: Colors.red, shape: BoxShape.circle),
-                        ))
-                    : SizedBox(),
-              ),
+              widget.taxiRequest.orderId != null &&
+                      controller.hasNewMessageNotification(
+                          widget.taxiRequest.orderId!)
+                  ? Positioned(
+                      top: 5,
+                      right: 5,
+                      child: Container(
+                        height: 6,
+                        width: 6,
+                        decoration: BoxDecoration(
+                            color: Colors.red, shape: BoxShape.circle),
+                      ))
+                  : SizedBox(),
               Center(
                 child: Icon(
                   Icons.mail,
@@ -127,7 +126,11 @@ class _MapBottomBarState extends State<MapBottomBar> {
                     "¿Cancelar el viaje actual?"),
                 actions: [
                   TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.find<TaxiController>().cancelTaxi(controller
+                            .hasOrderOfType(typeToCheck: OrderType.Taxi)!
+                            .orderId);
+                      },
                       child: Text(
                           lang.strings?['taxi']?['taxiView']?['yes'] ?? 'Si')),
                   TextButton(
@@ -180,7 +183,7 @@ class _MapBottomBarState extends State<MapBottomBar> {
               child: ClipOval(
                   clipBehavior: Clip.antiAlias,
                   child: mLoadImage(
-                      url: widget.taxiRequest.value.driverInfo!.image,
+                      url: widget.taxiRequest.driverInfo!.image,
                       assetInCaseFailed: aDefaultAvatar,
                       fit: BoxFit.cover,
                       height: getSizeRelativeToScreen(
@@ -189,7 +192,6 @@ class _MapBottomBarState extends State<MapBottomBar> {
                           100, context.height, context.width))),
               backgroundColor:
                   Colors.grey.shade100, //Color.fromARGB(255, 222, 222, 222),
-              // radius: 1,
             ),
             SizedBox(
               width: 5.sp,
@@ -203,7 +205,7 @@ class _MapBottomBarState extends State<MapBottomBar> {
                   Container(
                     width: 100.sp,
                     child: Text(
-                      widget.taxiRequest.value.driverInfo!.name,
+                      widget.taxiRequest.driverInfo!.name,
                       style: TextStyle(
                         fontSize: 16.sp,
                         fontFamily: 'psb',
@@ -236,8 +238,7 @@ class _MapBottomBarState extends State<MapBottomBar> {
     return Expanded(
         flex: 1,
         child: Center(
-            child: Text(
-                widget.taxiRequest.value.estimatedPrice.toString() + "\$",
+            child: Text(widget.taxiRequest.estimatedPrice.toString() + "\$",
                 softWrap: false,
                 style: textStyleTheme.headline2?.copyWith(
                     color: Colors.black,
@@ -250,44 +251,42 @@ class _MapBottomBarState extends State<MapBottomBar> {
   }
 
   Widget rightRouteInfos() {
+    setState(() {});
     return Expanded(
-        flex: 1,
-        child: Obx(
-          () => Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.end,
+      flex: 1,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Row(
             children: [
-              Row(
-                children: [
-                  Icon(MezcalmosIcons.route,
-                      size:
-                          getSizeRelativeToScreen(32, Get.width.w, Get.height.h)
-                              .w),
-                  SizedBox(
-                    width: 2.w,
-                  ),
-                  Text(widget.taxiRequest.value.routeInformation?.distance
-                          .distanceStringInKm ??
-                      "-"),
-                ],
+              Icon(MezcalmosIcons.route,
+                  size:
+                      getSizeRelativeToScreen(32, Get.width.w, Get.height.h).w),
+              SizedBox(
+                width: 2.w,
               ),
-              Row(
-                children: [
-                  Icon(MezcalmosIcons.stopwatch,
-                      size:
-                          getSizeRelativeToScreen(32, Get.width.w, Get.height.h)
-                              .w),
-                  SizedBox(
-                    width: 2.w,
-                  ),
-                  Text(widget.taxiRequest.value.routeInformation?.duration
-                          .daysHoursString ??
-                      "-"),
-                ],
-              ),
+              Text(widget.taxiRequest.routeInformation?.distance
+                      .distanceStringInKm ??
+                  "-"),
             ],
           ),
-        ));
+          Row(
+            children: [
+              Icon(MezcalmosIcons.stopwatch,
+                  size:
+                      getSizeRelativeToScreen(32, Get.width.w, Get.height.h).w),
+              SizedBox(
+                width: 2.w,
+              ),
+              Text(widget
+                      .taxiRequest.routeInformation?.duration.daysHoursString ??
+                  "-"),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 
   Widget incrementDecrementPrice() {
@@ -301,8 +300,18 @@ class _MapBottomBarState extends State<MapBottomBar> {
           children: [
             InkWell(
               onTap: () {
-                widget.taxiRequest.value.decrementPrice();
-                setState(() {});
+                if (widget.taxiRequest.status == null) {
+                  widget.taxiRequest.decrementPrice();
+                  setState(() {});
+                } else {
+                  Order? order = Get.find<OrderController>()
+                      .hasOrderOfType(typeToCheck: OrderType.Taxi);
+                  if (order != null) {
+                    Get.find<OrderController>().updateRideCost(
+                        orderId: order.orderId,
+                        cost: widget.taxiRequest.estimatedPrice - 5);
+                  }
+                }
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -319,14 +328,24 @@ class _MapBottomBarState extends State<MapBottomBar> {
               ),
             ),
             Text(
-              widget.taxiRequest.value.estimatedPrice.toString(),
+              widget.taxiRequest.estimatedPrice.toString(),
               style: TextStyle(
                   color: Colors.black, fontFamily: 'psb', fontSize: 20),
             ),
             InkWell(
               onTap: () {
-                widget.taxiRequest.value.incrementPrice();
-                setState(() {});
+                if (widget.taxiRequest.status == null) {
+                  widget.taxiRequest.incrementPrice();
+                  setState(() {});
+                } else {
+                  Order? order = Get.find<OrderController>()
+                      .hasOrderOfType(typeToCheck: OrderType.Taxi);
+                  if (order != null) {
+                    Get.find<OrderController>().updateRideCost(
+                        orderId: order.orderId,
+                        cost: widget.taxiRequest.estimatedPrice + 5);
+                  }
+                }
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -354,18 +373,18 @@ class _MapBottomBarState extends State<MapBottomBar> {
       case null:
         _widgies.assignAll([
           incrementDecrementPrice(),
-          verticalSeparator(),
+          Expanded(flex: 1, child: verticalSeparator()),
           rightRouteInfos()
         ]);
-        _bottomPadding = GetStorage().read(getxGmapBottomPaddingKey) + 10;
+        _bottomPadding = GetStorage().read(getxGmapBottomPaddingKey) + 15;
         break;
       case TaxiOrdersStatus.LookingForTaxi:
         _widgies.assignAll([
           incrementDecrementPrice(),
-          verticalSeparator(),
+          Expanded(flex: 1, child: verticalSeparator()),
           rightRouteInfos()
         ]);
-        _bottomPadding = GetStorage().read(getxGmapBottomPaddingKey) + 10;
+        _bottomPadding = GetStorage().read(getxGmapBottomPaddingKey) + 15;
         break;
 
       case TaxiOrdersStatus.DroppedOff:
@@ -381,7 +400,18 @@ class _MapBottomBarState extends State<MapBottomBar> {
         break;
 
       case TaxiOrdersStatus.Expired:
-        _widgies.assignAll([Text("Ride Expired :(")]);
+        _widgies.assignAll([
+          Center(
+            child: Text(
+              "Ride Expired :(",
+              overflow: TextOverflow.ellipsis,
+              softWrap: false,
+              maxLines: 1,
+              style: TextStyle(
+                  fontSize: 14.sp, fontFamily: 'psr', color: Colors.grey),
+            ),
+          )
+        ]);
         _bottomPadding = 10;
         break;
 
@@ -397,7 +427,18 @@ class _MapBottomBarState extends State<MapBottomBar> {
         break;
 
       case TaxiOrdersStatus.CancelledByCustomer:
-        _widgies.assignAll([Text("Ride Canceled :(")]);
+        _widgies.assignAll([
+          Center(
+            child: Text(
+              "Ride Canceled :(",
+              overflow: TextOverflow.ellipsis,
+              softWrap: false,
+              maxLines: 1,
+              style: TextStyle(
+                  fontSize: 14.sp, fontFamily: 'psr', color: Colors.grey),
+            ),
+          )
+        ]);
         _bottomPadding = 10;
         break;
 

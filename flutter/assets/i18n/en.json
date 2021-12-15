@@ -314,7 +314,7 @@
             "searching": "Searching",
             "pick": "PICK",
             "pickFromMap": "Pick from map",
-            "moveMapIfNotPrecise" : "You can move the map if position is not precise",
+            "moveMapIfNotPrecise" : "You can move the map.",
             "moveMapToPick": "Move the map to pick location"
         },
         "pickLocation": {

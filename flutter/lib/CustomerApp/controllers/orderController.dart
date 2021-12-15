@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 
 class OrderController extends GetxController {
   DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
@@ -88,6 +89,24 @@ class OrderController extends GetxController {
         currentOrders.value = orders;
       });
     } else {}
+  }
+
+  void updateRideCost({required String orderId, required double cost}) {
+    if (cost >= 35) {
+      // update order in Customers node
+      _databaseHelper.firebaseDatabase
+          .reference()
+          .child(customerInProcessOrders(_authController.fireAuthUser!.uid))
+          .child("/$orderId/cost")
+          .set(cost);
+
+      // update order in orders node
+      _databaseHelper.firebaseDatabase
+          .reference()
+          .child("$taxiOpenOrdersNode/")
+          .child("$orderId/cost")
+          .set(cost);
+    }
   }
 
   Order? hasOrderOfType({required OrderType typeToCheck}) {
