@@ -285,7 +285,7 @@
                 },
                 "expired": {
                     "title": "No hay taxis disponibles",
-                    "body": "Unfortunately, we could not find a taxi for you. Please try again later"
+                    "body": "Lamentablemente, no pudimos encontrar un taxi para usted. Vuelva a intentarlo más tarde"
                 }
             }
         },

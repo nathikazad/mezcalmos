@@ -33,8 +33,10 @@ Notification taxiOrderStatusChangeNotificationHandler(
     String key, dynamic value) {
   TaxiOrdersStatus newOrdersStatus =
       value['status'].toString().toTaxiOrderStatus();
+  mezDbgPrint(newOrdersStatus);
   Map<String, dynamic> dynamicFields =
       getTaxiOrderStatusFields(newOrdersStatus)!;
+  mezDbgPrint(dynamicFields);
   return Notification(
       id: key,
       linkUrl: getTaxiOrderRoute(value['orderId']),
@@ -157,7 +159,7 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
         "title":
             "${lang.strings["shared"]["notification"]["notificationType"]["expired"]["title"]}",
         "body":
-            "${lang.strings["shared"]["notification"]["notificationType"]["expired"]["titbodyle"]}",
+            "${lang.strings["shared"]["notification"]["notificationType"]["expired"]["body"]}",
         "imgUrl": "assets/images/CancelledOrderNotificationIcon.png",
       };
     default:

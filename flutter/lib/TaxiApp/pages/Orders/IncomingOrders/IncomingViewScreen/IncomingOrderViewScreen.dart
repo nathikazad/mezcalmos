@@ -71,7 +71,7 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
             cancelOrderSubscription();
             Get.back();
             oneButtonDialog(
-                message: lang.strings['taxi']['cancelOrder']['rideUnavailble'],
+                body: lang.strings['taxi']['cancelOrder']['rideUnavailble'],
                 imagUrl: aOrderUnavailable);
           }
         });

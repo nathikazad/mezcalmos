@@ -22,9 +22,10 @@ extension TwoButtonExtension on TwoButtonDialogButton {
 }
 
 // TODO: @Saad make sure network images work
+// ok button is not showing
 Future<void> oneButtonDialog(
     {String? title,
-    required String message,
+    required String body,
     required String imagUrl,
     String buttonText = "Ok"}) async {
   await Get.defaultDialog(
@@ -56,7 +57,7 @@ Future<void> oneButtonDialog(
             fit: FlexFit.loose,
             child: Center(
               child: Text(
-                message,
+                body,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontFamily: 'psr',
@@ -142,7 +143,7 @@ Future<TwoButtonDialogButton> twoButtonDialog(
                       color: const Color(0xffdb2846),
                     ),
                     child: Center(
-                      child: Text("${lang.strings["taxi"]["taxiView"]["yes"]}",
+                      child: Text(leftButtonText,
                           style: const TextStyle(
                               color: const Color(0xffffffff),
                               fontWeight: FontWeight.w700,
@@ -153,9 +154,9 @@ Future<TwoButtonDialogButton> twoButtonDialog(
                     ),
                   ),
                   onTap: () {
+                    Get.back();
                     twoButtonDialogButton = TwoButtonDialogButton.Left;
                     leftButtonCallback?.call();
-                    Get.back();
                     // onConform();
                   },
                 ),
@@ -178,7 +179,7 @@ Future<TwoButtonDialogButton> twoButtonDialog(
                       color: const Color(0xfffdfdfd),
                     ),
                     child: Center(
-                      child: Text("${lang.strings["taxi"]["taxiView"]["no"]}",
+                      child: Text(rightButtonText,
                           style: const TextStyle(
                               color: const Color(0xff000000),
                               fontWeight: FontWeight.w700,
@@ -189,10 +190,8 @@ Future<TwoButtonDialogButton> twoButtonDialog(
                     ),
                   ),
                   onTap: () {
-                    // onCancel();
-                    twoButtonDialogButton = TwoButtonDialogButton.Right;
-                    rightButtonCallback?.call();
                     Get.back();
+                    rightButtonCallback?.call();
                   },
                 )
               ],

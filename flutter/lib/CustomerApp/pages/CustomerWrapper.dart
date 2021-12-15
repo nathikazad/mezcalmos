@@ -37,9 +37,7 @@ class CustomerWrapper extends StatefulWidget {
 class _CustomerWrapperState extends State<CustomerWrapper>
     with WidgetsBindingObserver {
   MyPopupMenuController _popUpController = MyPopupMenuController();
-
-  // MyPopupMenuController _popUpController = MyPopupMenuController();
-
+  OrderController _orderController = Get.find<OrderController>();
   LanguageController lang = Get.find<LanguageController>();
   SideMenuDrawerController _sideMenuDrawerController =
       Get.find<SideMenuDrawerController>();
@@ -50,16 +48,14 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   StreamSubscription<MezNotification.Notification>?
       _notificationsStreamListener;
   StreamSubscription<bool>? _locationStreamSub;
-  OrderController? _orderController;
   RxInt numberOfCurrentOrders = RxInt(0);
   StreamSubscription? _orderCountListener;
   @override
   void initState() {
     if (auth.fireAuthUser != null) {
-      _orderController = Get.find<OrderController>();
       WidgetsBinding.instance!.addObserver(this);
-      _orderCountListener = _orderController!.currentOrders.stream.listen((_) {
-        numberOfCurrentOrders.value = _orderController!.currentOrders.length;
+      _orderCountListener = _orderController.currentOrders.stream.listen((_) {
+        numberOfCurrentOrders.value = _orderController.currentOrders.length;
       });
       String? userId = Get.find<AuthController>().fireAuthUser!.uid;
       // listening for notification Permissions!
@@ -70,7 +66,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
               notificationsNode(userId), customerNotificationHandler);
       Future.microtask(() {
         // Fix to Input Focus problems ( we had it in build which gets re-executed after any input focus) !
-        navigateToOrdersIfNecessary(_orderController!.currentOrders);
+        navigateToOrdersIfNecessary(_orderController.currentOrders);
       });
     } else {
       Get.put(RestaurantController());
@@ -110,7 +106,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
           DateTime.now().difference(appClosedTime!) > Duration(seconds: 10) &&
           Get.currentRoute != kLocationPermissionPage) {
         if (_orderController != null) {
-          navigateToOrdersIfNecessary(_orderController!.currentOrders);
+          navigateToOrdersIfNecessary(_orderController.currentOrders);
         }
       }
     } else if (state == AppLifecycleState.paused) {
@@ -230,7 +226,21 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             title: "${lang.strings['customer']['home']['taxi']["title"]}",
             url: "assets/images/taxiService.png",
             subtitle: "${lang.strings['customer']['home']['taxi']["subtitle"]}",
-            ontap: () => Get.toNamed(kTaxiRequestRoute),
+            ontap: () {
+              num noOfCurrentTaxiOrders = _orderController.currentOrders
+                  .where((currentOrder) =>
+                      currentOrder.orderType == OrderType.Taxi)
+                  .length;
+              if (noOfCurrentTaxiOrders == 0) {
+                Get.toNamed(kTaxiRequestRoute);
+              } else {
+                String orderId = _orderController.currentOrders
+                    .firstWhere((currentOrder) =>
+                        currentOrder.orderType == OrderType.Taxi)
+                    .orderId;
+                Get.toNamed(getTaxiOrderRoute(orderId));
+              }
+            },
           ),
         ),
         SizedBox(

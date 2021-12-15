@@ -77,7 +77,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
               if (order.value!.status == TaxiOrdersStatus.CancelledByCustomer) {
                 Get.back();
                 oneButtonDialog(
-                    message: "Order Canceled Successfully !",
+                    body: "Order Canceled Successfully !",
                     imagUrl: _order!.customer.image);
               }
               _order = (await controller.getPastOrderStream(orderId).first)

@@ -81,7 +81,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
             //TODO: status change check if status is cancelledByCustomer
             if (order?.status == TaxiOrdersStatus.CancelledByCustomer) {
               oneButtonDialog(
-                  message: lang.strings['taxi']['orders']['cancelledMessage'],
+                  body: lang.strings['taxi']['orders']['cancelledMessage'],
                   imagUrl: aOrderUnavailable);
             }
           }

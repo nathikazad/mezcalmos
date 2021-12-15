@@ -5,7 +5,7 @@ import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 
 Future<void> mezcalmosDialogWithTaxi({required String message}) =>
-    oneButtonDialog(message: message, imagUrl: taxiImageAsset);
+    oneButtonDialog(body: message, imagUrl: taxiImageAsset);
 
 Future<void>
     mezcalmosDialogOrderNoMoreAvailable() async => mezcalmosDialogWithTaxi(

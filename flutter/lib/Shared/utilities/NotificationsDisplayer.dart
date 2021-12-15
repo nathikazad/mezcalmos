@@ -4,7 +4,6 @@ import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.d
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
-import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 import 'package:soundpool/soundpool.dart';
 import 'package:get/get.dart';
 
@@ -32,10 +31,12 @@ void _displayNotification(Notification notification) async {
   await pool.play(soundId);
   mezDbgPrint(notification.imgUrl);
   if (notification.notificationAction == NotificationAction.ShowPopUp) {
-    oneButtonDialog(
+    twoButtonDialog(
         title: notification.title,
-        message: notification.body,
-        imagUrl: notification.imgUrl);
+        body: notification.body,
+        leftButtonText: "Ok",
+        rightButtonText: "View Order",
+        rightButtonCallback: () => Get.toNamed(notification.linkUrl));
   } else {
     notificationSnackBar(notification.imgUrl, notification.title,
         notification.body, notification.formattedTime, () async {
