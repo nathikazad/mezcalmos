@@ -113,6 +113,13 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                                     children: [
                                       Expanded(
                                         child: TextFormField(
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline1!
+                                                .copyWith(
+                                                    fontSize: 14,
+                                                    fontWeight:
+                                                        FontWeight.w500),
                                             onChanged: (s) {
                                               if (_prefixTextFieldController
                                                           .value.text.length >
@@ -155,6 +162,12 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                                         .scaffoldBackgroundColor,
                                   ),
                                   child: TextFormField(
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline1!
+                                        .copyWith(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
                                     autofocus: true,
                                     onChanged: (s) {
                                       if (_prefixTextFieldController

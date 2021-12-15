@@ -55,7 +55,7 @@ class SignIn extends GetWidget<AuthController> {
                   MezcalmosSharedWidgets.mezcalmosTitle(
                       // textSize: getSizeRelativeToScreen(25, sh, sw).sp,
                       textSize: Get.width > 320
-                          ? getSizeRelativeToScreen(25, sh, sw).sp
+                          ? getSizeRelativeToScreen(23, sh, sw).sp
                           : 45.sp,
                       isBold: true),
                   SizedBox(
@@ -113,7 +113,7 @@ class SignIn extends GetWidget<AuthController> {
                                                   child: Text(tTestAdminValue))
                                             ],
                                           ));
-                                  
+
                                   clickedLogin.value = false;
                                 },
                           child: clickedLogin.value
