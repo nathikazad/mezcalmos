@@ -109,6 +109,11 @@ class MGoogleMapController {
     markers.removeWhere((element) => element.markerId.value == markerId);
   }
 
+  void removerAuthenticatedUserMarker() {
+    markers.removeWhere((element) =>
+        element.markerId.value == Get.find<AuthController>().user!.uid);
+  }
+
   void addPolyline(List<PointLatLng> latLngPoints) {
     mezDbgPrint("---< $latLngPoints");
     mezDbgPrint(

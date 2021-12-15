@@ -8,9 +8,6 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 
-const String defaultDb = "test";
-const String defaultLaunchMode = "stage";
-
 Function signInCallback = AuthHooks.onSignInHook;
 Function signOutCallback = AuthHooks.onSignOutHook;
 List<GetPage<dynamic>> routes = XRouter.mainRoutes;

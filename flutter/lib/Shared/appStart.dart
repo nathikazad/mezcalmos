@@ -206,18 +206,13 @@ Widget mainApp(AppType appType, List<GetPage<dynamic>> routes) {
   }
 
   return ScreenUtilInit(
-      // designSize: Size(360, 690),
       builder: () => GetMaterialApp(
           debugShowCheckedModeBanner: false,
           onInit: () async => await _initializeConfig(),
           title: appType.toShortString(),
           theme: getTheme(appType),
-          // theme: ThemeData(
-          //     primaryColor: Colors.white,
-          //     visualDensity: VisualDensity.adaptivePlatformDensity),
           color: Colors.white,
           enableLog: true,
-          // logWriterCallback: ,
           getPages: routes,
           initialRoute: kWrapperRoute));
 }

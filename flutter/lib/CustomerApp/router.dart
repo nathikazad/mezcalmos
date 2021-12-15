@@ -83,11 +83,10 @@ class XRouter {
             transitionDuration: Duration(milliseconds: 500),
             transition: Transition.rightToLeft),
         GetPage(
-          name: kCartRoute,
-          page: () => ViewCartScreen(),
-          // transitionDuration: Duration(milliseconds: 500),
-          // transition: Transition.rightToLeft
-        ),
+            name: kCartRoute,
+            page: () => ViewCartScreen(),
+            transitionDuration: Duration(milliseconds: 500),
+            transition: Transition.rightToLeft),
         GetPage(
             name: kRestaurantOrderRoute,
             page: () => ViewRestaurantOrderScreen()),

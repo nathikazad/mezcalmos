@@ -47,18 +47,16 @@ class LocationSearchBarController {
   /// if no type was specified it unfocus from and to
   void unfocusFieldByType({required SearchComponentType type}) {
     if (type == SearchComponentType.From) {
-      focusedTextField.value = SearchComponentType.None;
       fromTextFieldFocusNode.unfocus();
     } else if (type == SearchComponentType.To) {
-      focusedTextField.value = SearchComponentType.None;
       toTextFieldFocusNode.unfocus();
     }
   }
 
   void unfocusAllFocusNodes() {
-    focusedTextField.value = SearchComponentType.None;
     fromTextFieldFocusNode.unfocus();
     toTextFieldFocusNode.unfocus();
+    // focusedTextField.value = SearchComponentType.None;
   }
 }
 
@@ -151,7 +149,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
       locationSearchBarController.unfocusAllFocusNodes();
       locationSearchBarController.focusedTextField.value =
           SearchComponentType.None;
-      setState(() {});
+      // setState(() {});
     }
     super.didUpdateWidget(oldWidget);
   }
@@ -164,8 +162,8 @@ class LocationSearchBarState extends State<LocationSearchBar> {
       child: LocationSearchComponent(
         focusNode: locationSearchBarController.fromTextFieldFocusNode,
         readOnly: widget.request.value.from?.address != null,
-        dropDownDxOffset: -10,
-        dropDownWidth: Get.width - 30,
+        dropDownDxOffset: 0,
+        dropDownWidth: Get.width - 20,
         useBorders: false,
         leftTopRadius: 5,
         leftBotRaduis: 5,
@@ -232,8 +230,8 @@ class LocationSearchBarState extends State<LocationSearchBar> {
         rightBotRaduis: 5,
         bgColor: Colors.white,
         // to Controll where to start our dropDown DX (Distance on X axis)
-        dropDownDxOffset: -(Get.width / 2.5),
-        dropDownWidth: Get.width - 30,
+        dropDownDxOffset: -(Get.width / 2.1),
+        dropDownWidth: Get.width - 20,
         label: "To",
         text: widget.request.value.to?.address ?? "",
         onClear: () => textFieldOnClear(SearchComponentType.To),

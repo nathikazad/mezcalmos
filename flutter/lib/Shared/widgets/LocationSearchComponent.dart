@@ -173,23 +173,30 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
                         fontFamily: 'psr'),
                     border: InputBorder.none,
                     suffixIconConstraints: BoxConstraints(
-                      maxWidth: 26,
+                      maxWidth: 30,
                     ),
                     suffixIcon: _showClearBtn
-                        ? Container(
-                            // margin: EdgeInsets.only(right: 5),
-                            padding: EdgeInsets.only(top: 20, right: 10),
-                            alignment: Alignment.bottomRight,
-                            child: GestureDetector(
-                                onTap: () async {
-                                  setState(() {
-                                    widget.onClear();
-                                    _showClearBtn = false;
-                                    _controller.clear();
-                                  });
-                                },
-                                child: Icon(MezcalmosIcons.times_circle,
-                                    size: 16, color: Colors.black)),
+                        ? GestureDetector(
+                            onTap: () async {
+                              setState(() {
+                                widget.onClear();
+                                _showClearBtn = false;
+                                _controller.clear();
+                              });
+                            },
+                            child: Container(
+                                decoration: BoxDecoration(),
+                                margin: EdgeInsets.only(right: 5),
+                                padding: EdgeInsets.only(top: 20, right: 10),
+                                alignment: Alignment.bottomRight,
+                                child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 5.0),
+                                    child: Icon(MezcalmosIcons.times_circle,
+                                        size: 16, color: Colors.black),
+                                  ),
+                                )),
                           )
                         : SizedBox(),
                   ),

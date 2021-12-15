@@ -46,7 +46,12 @@ class AutoCompleteTextView extends StatefulWidget {
       ),
       this.tfTextDecoration = const InputDecoration(),
       this.tfTextAlign = TextAlign.left,
-      this.suggestionStyle = const TextStyle(color: Colors.black),
+      this.suggestionStyle = const TextStyle(
+        color: Colors.black87,
+        fontSize: 15,
+        fontFamily: 'psb',
+        fontWeight: FontWeight.w500,
+      ),
       this.suggestionTextAlign = TextAlign.left,
       required this.getSuggestionsMethod,
       required this.focusGained,
@@ -148,6 +153,8 @@ class _AutoCompleteTextViewState extends State<AutoCompleteTextView> {
                                 itemCount: suggestionShowList.length,
                                 itemBuilder: (context, index) {
                                   return ListTile(
+                                    minLeadingWidth: 10,
+                                    leading: Icon(Icons.search_rounded),
                                     title: Text(
                                       suggestionShowList[index],
                                       style: widget.suggestionStyle,
