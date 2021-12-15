@@ -111,6 +111,9 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
         Obx(
           () => widget.mGoogleMapController.location.value != null
               ? GoogleMap(
+                  onTap: (_) {
+                    widget.mGoogleMapController.onMapTap?.call();
+                  },
                   padding: EdgeInsets.all(20),
                   mapToolbarEnabled: false,
                   minMaxZoomPreference:

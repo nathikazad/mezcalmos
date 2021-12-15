@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 enum SearchComponentType { From, To, None }
 
@@ -31,8 +32,8 @@ class LocationDropDownItem {
 
 class LocationSearchBarController {
   RxDouble pickChoicesDropDownHeight = 0.0.obs;
-  final FocusNode fromTextFieldFocusNode = FocusNode();
-  final FocusNode toTextFieldFocusNode = FocusNode();
+  FocusNode fromTextFieldFocusNode = FocusNode();
+  FocusNode toTextFieldFocusNode = FocusNode();
   Rx<SearchComponentType> focusedTextField = SearchComponentType.None.obs;
 
   void collapseDropdown() {
@@ -44,15 +45,20 @@ class LocationSearchBarController {
   }
 
   /// if no type was specified it unfocus from and to
-  void unfocusFieldByType({SearchComponentType? type}) {
+  void unfocusFieldByType({required SearchComponentType type}) {
     if (type == SearchComponentType.From) {
+      focusedTextField.value = SearchComponentType.None;
       fromTextFieldFocusNode.unfocus();
     } else if (type == SearchComponentType.To) {
-      toTextFieldFocusNode.unfocus();
-    } else {
-      fromTextFieldFocusNode.unfocus();
+      focusedTextField.value = SearchComponentType.None;
       toTextFieldFocusNode.unfocus();
     }
+  }
+
+  void unfocusAllFocusNodes() {
+    focusedTextField.value = SearchComponentType.None;
+    fromTextFieldFocusNode.unfocus();
+    toTextFieldFocusNode.unfocus();
   }
 }
 
@@ -102,10 +108,11 @@ class LocationSearchBarState extends State<LocationSearchBar> {
 
   @override
   Widget build(BuildContext context) {
+    responsiveSize(context);
     return Positioned(
-        top: 5,
+        top: 10,
         left: 10,
-        right: 5,
+        right: 10,
         child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
@@ -118,20 +125,22 @@ class LocationSearchBarState extends State<LocationSearchBar> {
                     offset: Offset(0, 5)),
               ],
             ),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    fromTextField(),
-                    middleLogo(),
-                    toTextField(),
-                  ],
-                ),
-                SizedBox(
-                  height: 2,
-                ),
-                pickChoicesDropDown()
-              ],
+            child: Center(
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      fromTextField(),
+                      middleLogo(),
+                      toTextField(),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 2,
+                  ),
+                  pickChoicesDropDown()
+                ],
+              ),
             )));
   }
 
@@ -139,7 +148,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
   void didUpdateWidget(LocationSearchBar oldWidget) {
     if (widget.request.value.to?.address != null &&
         widget.request.value.from?.address != null) {
-      locationSearchBarController.unfocusFieldByType();
+      locationSearchBarController.unfocusAllFocusNodes();
       locationSearchBarController.focusedTextField.value =
           SearchComponentType.None;
       setState(() {});
@@ -151,7 +160,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
 
   Widget fromTextField() {
     return Expanded(
-      flex: locationSearchBarController.fromTextFieldFocusNode.hasFocus ? 3 : 2,
+      flex: locationSearchBarController.fromTextFieldFocusNode.hasFocus ? 6 : 5,
       child: LocationSearchComponent(
         focusNode: locationSearchBarController.fromTextFieldFocusNode,
         readOnly: widget.request.value.from?.address != null,
@@ -161,7 +170,6 @@ class LocationSearchBarState extends State<LocationSearchBar> {
         leftTopRadius: 5,
         leftBotRaduis: 5,
         bgColor: Colors.white,
-        labelStyle: TextStyle(fontFamily: 'psb', fontSize: 14),
         label: "From",
         text: widget.request.value.from?.address ?? "",
         onClear: () => textFieldOnClear(SearchComponentType.From),
@@ -215,7 +223,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
 
   Widget toTextField() {
     return Expanded(
-      flex: locationSearchBarController.toTextFieldFocusNode.hasFocus ? 3 : 2,
+      flex: locationSearchBarController.toTextFieldFocusNode.hasFocus ? 6 : 5,
       child: LocationSearchComponent(
         focusNode: locationSearchBarController.toTextFieldFocusNode,
         readOnly: widget.request.value.to?.address != null,
@@ -226,7 +234,6 @@ class LocationSearchBarState extends State<LocationSearchBar> {
         // to Controll where to start our dropDown DX (Distance on X axis)
         dropDownDxOffset: -(Get.width / 2.5),
         dropDownWidth: Get.width - 30,
-        labelStyle: TextStyle(fontFamily: 'psb', fontSize: 14),
         label: "To",
         text: widget.request.value.to?.address ?? "",
         onClear: () => textFieldOnClear(SearchComponentType.To),
@@ -271,7 +278,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
                     child: InkWell(
                       onTap: () {
                         e.function();
-                        locationSearchBarController.unfocusFieldByType();
+                        locationSearchBarController.unfocusAllFocusNodes();
 
                         setState(() {});
                       },

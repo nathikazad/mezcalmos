@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -40,7 +39,11 @@ class AutoCompleteTextView extends StatefulWidget {
       this.tfCursorColor = Colors.white,
       this.tfCursorWidth = 2.0,
       this.tfStyle = const TextStyle(
-          color: Colors.black87, fontFamily: 'psr', fontSize: 13.5),
+        color: Colors.black87,
+        fontSize: 15,
+        fontFamily: 'psb',
+        fontWeight: FontWeight.w500,
+      ),
       this.tfTextDecoration = const InputDecoration(),
       this.tfTextAlign = TextAlign.left,
       this.suggestionStyle = const TextStyle(color: Colors.black),

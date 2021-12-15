@@ -20,6 +20,11 @@ class MGoogleMapController {
   RxBool animateMarkersPolyLinesBounds = false.obs;
   GoogleMapController? controller;
   LatLngBounds? bounds;
+  Function? onMapTap;
+
+  void setOnMapTap({required Function onTap}) {
+    this.onMapTap = onTap;
+  }
 
   void _addOrUpdateMarker(Marker marker) {
     markers.removeWhere(

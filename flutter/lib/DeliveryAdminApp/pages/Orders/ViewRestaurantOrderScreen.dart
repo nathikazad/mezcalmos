@@ -44,13 +44,13 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
     mezDbgPrint("ViewOrderScreen");
     orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
-    order.value = controller.getOrder(orderId) as RestaurantOrder;
+    order.value = controller.getOrder(orderId) as RestaurantOrder?;
     if (order.value == null) {
       Get.back();
     } else {
       _orderListener =
           controller.getCurrentOrderStream(orderId).listen((newOrder) {
-        order.value = controller.getOrder(orderId) as RestaurantOrder;
+        order.value = controller.getOrder(orderId) as RestaurantOrder?;
       });
     }
   }

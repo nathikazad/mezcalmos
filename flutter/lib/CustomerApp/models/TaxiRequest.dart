@@ -57,7 +57,10 @@ class TaxiRequest {
   }
 
   bool isFromToSet() {
-    return this.from != null && this.to != null;
+    return this.from?.address != null &&
+        this.from?.address != "" &&
+        this.to?.address != null &&
+        this.to?.address != "";
   }
 
   Map<String, dynamic> asCloudFunctionParam() {

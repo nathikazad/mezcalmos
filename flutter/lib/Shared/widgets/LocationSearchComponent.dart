@@ -42,7 +42,8 @@ class LocationSearchComponent extends StatefulWidget {
       this.rightTopRaduis = 6,
       this.rightBotRaduis = 6,
       this.bgColor = const Color(0xfff8f8f8),
-      this.labelStyle = const TextStyle(fontFamily: "psr", fontSize: 20),
+      this.labelStyle = const TextStyle(
+          fontWeight: FontWeight.w700, fontSize: 14, color: Colors.black87),
       this.hint = "Enter Address",
       this.text,
       required this.notifyParent,
@@ -100,95 +101,101 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
 
     return Column(
       children: <Widget>[
-        Container(
-          padding: EdgeInsets.only(left: 10, top: 10),
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-              border: widget.useBorders
-                  ? Border.all(color: const Color(0xffececec), width: 0.5)
-                  : null,
-              color: widget.bgColor,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(widget.leftTopRadius),
-                  topRight: Radius.circular(widget.rightTopRaduis),
-                  bottomLeft: Radius.circular(widget.leftBotRaduis),
-                  bottomRight: Radius.circular(widget.rightBotRaduis))),
-          child: Stack(
-            alignment: Alignment.topLeft,
-            children: [
-              Text(
-                widget.label,
-                style: widget.labelStyle,
-              ),
-              AutoCompleteTextView(
-                readOnly: widget.readOnly,
-                focusNode: widget.focusNode,
-                dropDownDxOffset: widget.dropDownDxOffset,
-                dropDownWidth: widget.dropDownWidth,
-                tfInitialText: widget.text,
-                tfCursorColor: Colors.black,
-                controller: _controller,
-                suggestionsApiFetchDelay: 1,
-                getSuggestionsMethod: MapHelper.getLocationsSuggestions,
-                focusGained: widget.onFocus ?? () {},
-                focusLost: widget.onFocusLost ?? () {},
-                onValueChanged: (String value) {
-                  if (widget.onTextChange != null) {
-                    widget.onTextChange!(value);
-                  }
-                  if (!_showClearBtn && value.length >= 3) {
-                    setState(() {
-                      _showClearBtn = true;
-                    });
-                  }
-
-                  if (_showClearBtn && value.length < 3) {
-                    setState(() {
-                      _showClearBtn = false;
-                    });
-                  }
-                },
-                onTapCallback: (String placeId, String name) async {
-                  Location? _loc =
-                      await MapHelper.getLocationFromPlaceId(placeId);
-                  if (_loc != null) {
-                    widget.notifyParent(_loc);
-                    setState(() {
-                      _showClearBtn = false;
-                    });
-                  }
-                },
-                tfTextDecoration: InputDecoration(
-                  hintText: widget.hint,
-                  hintStyle: TextStyle(
-                    color: Color.fromRGBO(141, 141, 141, 1),
-                    fontSize: 13.33,
-                    fontWeight: FontWeight.w400,
+        Center(
+          child: Container(
+            // padding: EdgeInsets.only(left: 0, top: 10),
+            alignment: Alignment.centerLeft,
+            decoration: BoxDecoration(
+                border: widget.useBorders
+                    ? Border.all(color: const Color(0xffececec), width: 0.5)
+                    : null,
+                color: widget.bgColor,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(widget.leftTopRadius),
+                    topRight: Radius.circular(widget.rightTopRaduis),
+                    bottomLeft: Radius.circular(widget.leftBotRaduis),
+                    bottomRight: Radius.circular(widget.rightBotRaduis))),
+            child: Stack(
+              alignment: Alignment.topLeft,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 10.0, top: 5),
+                  child: Text(
+                    widget.label,
+                    style: widget.labelStyle,
                   ),
-                  border: InputBorder.none,
-                  suffixIconConstraints: BoxConstraints(
-                    maxWidth: 20,
-                  ),
-                  suffixIcon: _showClearBtn
-                      ? Container(
-                          // margin: EdgeInsets.only(right: 5),
-                          // padding: EdgeInsets.only(bottom: 1),
-                          alignment: Alignment.centerRight,
-                          child: GestureDetector(
-                              onTap: () async {
-                                setState(() {
-                                  widget.onClear();
-                                  _showClearBtn = false;
-                                  _controller.clear();
-                                });
-                              },
-                              child: Icon(MezcalmosIcons.times_circle,
-                                  size: 16, color: Colors.black)),
-                        )
-                      : SizedBox(),
                 ),
-              ),
-            ],
+                AutoCompleteTextView(
+                  readOnly: widget.readOnly,
+                  focusNode: widget.focusNode,
+                  dropDownDxOffset: widget.dropDownDxOffset,
+                  dropDownWidth: widget.dropDownWidth,
+                  tfInitialText: widget.text,
+                  tfCursorColor: Colors.black,
+                  controller: _controller,
+                  suggestionsApiFetchDelay: 1,
+                  getSuggestionsMethod: MapHelper.getLocationsSuggestions,
+                  focusGained: widget.onFocus ?? () {},
+                  focusLost: widget.onFocusLost ?? () {},
+                  onValueChanged: (String value) {
+                    if (widget.onTextChange != null) {
+                      widget.onTextChange!(value);
+                    }
+                    if (!_showClearBtn && value.length >= 3) {
+                      setState(() {
+                        _showClearBtn = true;
+                      });
+                    }
+
+                    if (_showClearBtn && value.length < 3) {
+                      setState(() {
+                        _showClearBtn = false;
+                      });
+                    }
+                  },
+                  onTapCallback: (String placeId, String name) async {
+                    Location? _loc =
+                        await MapHelper.getLocationFromPlaceId(placeId);
+                    if (_loc != null) {
+                      widget.notifyParent(_loc);
+                      setState(() {
+                        _showClearBtn = false;
+                      });
+                    }
+                  },
+                  tfTextDecoration: InputDecoration(
+                    contentPadding: EdgeInsets.only(left: 10, top: 20),
+                    hintText: widget.hint,
+                    hintStyle: TextStyle(
+                        color: Color.fromRGBO(141, 141, 141, 1),
+                        fontSize: 16.33,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: 'psr'),
+                    border: InputBorder.none,
+                    suffixIconConstraints: BoxConstraints(
+                      maxWidth: 26,
+                    ),
+                    suffixIcon: _showClearBtn
+                        ? Container(
+                            // margin: EdgeInsets.only(right: 5),
+                            padding: EdgeInsets.only(top: 20, right: 10),
+                            alignment: Alignment.bottomRight,
+                            child: GestureDetector(
+                                onTap: () async {
+                                  setState(() {
+                                    widget.onClear();
+                                    _showClearBtn = false;
+                                    _controller.clear();
+                                  });
+                                },
+                                child: Icon(MezcalmosIcons.times_circle,
+                                    size: 16, color: Colors.black)),
+                          )
+                        : SizedBox(),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ],

@@ -36,8 +36,8 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
   void initState() {
     String orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
-
     order.value = controller.getOrder(orderId) as TaxiOrder?;
+    mezDbgPrint("ViewTaxiscreen :: Order :: ${order.value}");
     if (order.value != null) {
       // set initial location
       widget.mGoogleMapController.setLocation(order.value!.from);

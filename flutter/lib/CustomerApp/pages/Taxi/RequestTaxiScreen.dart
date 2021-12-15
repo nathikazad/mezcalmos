@@ -36,6 +36,10 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
 
   @override
   void initState() {
+    locationPickerController.setOnMapTap(onTap: () {
+      locationSearchBarController.unfocusAllFocusNodes.call();
+      setState(() {});
+    });
     // set the location Enabled Button to be false
     locationPickerController.myLocationButtonEnabled.value = false;
     // set blackScreenBottom 110

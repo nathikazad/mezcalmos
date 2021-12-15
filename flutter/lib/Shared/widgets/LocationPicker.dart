@@ -62,8 +62,6 @@ class LocationPickerState extends State<LocationPicker> {
   final LanguageController _lang = Get.find<LanguageController>();
   Location? location;
 
-  LocationPickerState();
-
   @override
   void initState() {
     super.initState();
@@ -83,7 +81,7 @@ class LocationPickerState extends State<LocationPicker> {
                     notifyParentOfNewLocation:
                         widget.notifyParentOfLocationFinalized,
                     periodicRerendering: false,
-                 //   periodicRedrendring: false,
+                    //   periodicRedrendring: false,
                     myLocationButtonEnabled: widget.locationPickerMapController
                         .myLocationButtonEnabled.value,
                   ),
