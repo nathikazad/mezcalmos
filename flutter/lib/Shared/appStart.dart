@@ -8,6 +8,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:device_preview/device_preview.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -56,9 +57,8 @@ class _StartingPointState extends State<StartingPoint> {
         String.fromEnvironment('HOST', defaultValue: "http://127.0.0.1");
     const String _launchMode =
         String.fromEnvironment('LMODE', defaultValue: "prod");
-
-    print('mode  -> $_launchMode');
-    print('host  -> $_host');
+    mezDbgPrint('mode  -> $_launchMode');
+    mezDbgPrint('host  -> $_host');
 
     FirebaseApp _app = await Firebase.initializeApp();
     mezDbgPrint("[+] App Initialized under Name ${_app.name} .");
@@ -93,6 +93,13 @@ class _StartingPointState extends State<StartingPoint> {
     if (await GetStorage.init()) {
       mezDbgPrint("[ GET STORAGE ] INITIALIZED !");
       await GetStorage().write(getxLmodeKey, _launchMode);
+      // previewMode
+      const bool _isPreviewMode = bool.hasEnvironment('PREVIEW');
+      await GetStorage().write('previewMode', _isPreviewMode);
+      mezDbgPrint('previewMode  -> $_isPreviewMode');
+      mezDbgPrint(
+          "previewModeString  -> ${String.fromEnvironment('PREVIEW', defaultValue: 'NONE')}");
+
       // Get the VersionNumber
       PackageInfo pInfos = await PackageInfo.fromPlatform();
       mezDbgPrint("[ GET STORAGE ] version number ${pInfos.version}");
@@ -178,6 +185,7 @@ class _StartingPointState extends State<StartingPoint> {
     if (!_initialized) {
       return SplashScreen();
     } else {
+      mezDbgPrint("====> PreviewMode ===> ${GetStorage().read('previewMode')}");
       return mainApp(widget.appType, widget.routes);
     }
   }
@@ -206,13 +214,23 @@ Widget mainApp(AppType appType, List<GetPage<dynamic>> routes) {
   }
 
   return ScreenUtilInit(
-      builder: () => GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          onInit: () async => await _initializeConfig(),
-          title: appType.toShortString(),
-          theme: getTheme(appType),
-          color: Colors.white,
-          enableLog: true,
-          getPages: routes,
-          initialRoute: kWrapperRoute));
+    builder: () => GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      onInit: () async => await _initializeConfig(),
+      title: appType.toShortString(),
+      theme: getTheme(appType),
+      color: Colors.white,
+      enableLog: true,
+      getPages: routes,
+      initialRoute: kWrapperRoute,
+      builder: (ctx, widget) {
+        return DevicePreview(
+            devices: [
+              ...DevicePreview.defaultDevices,
+            ],
+            enabled: GetStorage().read('previewMode') as bool,
+            builder: (context) => widget!);
+      },
+    ),
+  );
 }

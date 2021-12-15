@@ -249,7 +249,15 @@ class Launcher:
 
 
     def __set_flutter_args__(self):
-        self.flutter_setup = f"--dart-define=APP_SP={self.user_args['app']} --dart-define=HOST={self.user_args['host']} --dart-define=LMODE={self.user_args['lmode']}"
+        global _previewDartDefine
+        if self.user_args['preview'] == True:
+            _previewDartDefine = " --dart-define=PREVIEW=True"
+        else:
+            _previewDartDefine = ""
+
+
+
+        self.flutter_setup = f"--dart-define=APP_SP={self.user_args['app']} --dart-define=HOST={self.user_args['host']} --dart-define=LMODE={self.user_args['lmode']}{_previewDartDefine}"
     
     def __build_temp(self):
         # TODO : Auto versioning checks.
