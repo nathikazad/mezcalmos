@@ -51,6 +51,9 @@
         "$uid": {
           ".read": "$uid === auth.uid",
           "$orderId": {
+            "cost": {
+              ".write": "root.child('orders/open/taxi/' + $orderId + '/customer/id').val() === auth.uid"
+            },
             "driver": {
               "location": {
                 ".write": "root.child('customers/inProcessOrders/' + $uid + '/' + $orderId + '/driver/id').val() === auth.uid"
@@ -120,7 +123,7 @@
         ".read": "true",
         "taxi": {
           "$orderId": {
-            "estimatedPrice": {
+            "cost": {
               ".write": "root.child('orders/open/taxi/' + $orderId + '/customer/id').val() === auth.uid"
             }
           }
