@@ -58,8 +58,8 @@ class UserMenu extends StatelessWidget {
                       color: Colors.black,
                     ),
                     onPressed: () {
-                      Get.offNamedUntil(
-                          kSignInRoute, ModalRoute.withName("/wrapper"));
+                      Get.offNamedUntil(kSignInRouteOptional,
+                          ModalRoute.withName("/wrapper"));
                     },
                   ),
                 ),

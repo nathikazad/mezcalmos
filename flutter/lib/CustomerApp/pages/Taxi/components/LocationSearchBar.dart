@@ -368,7 +368,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
                 color: Colors.yellow,
               ),
               function: () {
-                mezcalmosSnackBar(e.name, e.location.address);
+                mezcalmosSnackBar(e.name, "${e.location?.address}");
                 Location? _savedLoc = _authController.getLocationById(e.id!);
                 widget.newLocationChosenEvent(_savedLoc,
                     locationSearchBarController.focusedTextField.value);

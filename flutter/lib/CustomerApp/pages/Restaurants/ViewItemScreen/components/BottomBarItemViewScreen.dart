@@ -1,21 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart';
 import 'package:mezcalmos/CustomerApp/components/incrementalComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 import '../../../../router.dart';
 import '../ViewItemScreen.dart';
+import 'dailogCheckCartIfEmpty.dart';
 import 'dialogRequiredSignIn.dart';
 
 class BottomBarItemViewScreen extends StatefulWidget {
   BottomBarItemViewScreen(
-      {Key? key, required this.cartItem, required this.mode})
+      {Key? key,
+      required this.cartItem,
+      required this.mode,
+      this.currentRestaurantId})
       : super(key: key);
   final Rxn<CartItem> cartItem;
   final ViewItemScreenMode mode;
+  final String? currentRestaurantId;
 
   @override
   _BottomBarItemViewScreenState createState() =>
@@ -72,8 +79,20 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
             onPressed: () {
               if (auth.fireAuthUser != null) {
                 if (ViewItemScreenMode.AddItemMode == widget.mode) {
-                  restaurantCartController.addItem(widget.cartItem.value!);
-                  Get.offNamed(kCartRoute);
+                  if (restaurantCartController.associatedRestaurant?.id ==
+                      widget.currentRestaurantId) {
+                    restaurantCartController.addItem(widget.cartItem.value!);
+                    Get.offNamed(kCartRoute);
+                  } else {
+                    mezDbgPrint(
+                        "not true ${restaurantCartController.associatedRestaurant?.id} and the other is ${widget.currentRestaurantId}");
+                    dailogcheckCartIfempty(checkoutFunc: () {
+                      Get.back();
+                    }, overwriteFunc: () {
+                      restaurantCartController.addItem(widget.cartItem.value!);
+                      Get.offNamed(kCartRoute);
+                    });
+                  }
                 } else {
                   restaurantCartController.addItem(widget.cartItem.value!);
                   Get.back();

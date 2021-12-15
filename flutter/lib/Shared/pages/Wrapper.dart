@@ -46,7 +46,8 @@ class _WrapperState extends State<Wrapper> {
         Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
       } else {
         mezDbgPrint("Wrapper::handleAuthStateChange:: going to sign in route");
-        Get.offNamedUntil(kSignInRoute, ModalRoute.withName(kWrapperRoute));
+        Get.offNamedUntil(
+            kSignInRouteRequired, ModalRoute.withName(kWrapperRoute));
       }
     } else {
       mezDbgPrint(

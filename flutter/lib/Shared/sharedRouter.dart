@@ -17,7 +17,8 @@ import 'package:mezcalmos/Shared/pages/Wrapper.dart';
 const String kWrapperRoute = '/wrapper';
 const String kHomeRoute = '/';
 const String kSplashRoute = '/splash';
-const String kSignInRoute = '/sign_in';
+const String kSignInRouteRequired = '/sign_in/required';
+const String kSignInRouteOptional = '/sign_in/optional';
 const String kLocationPermissionPage = '/location_permission';
 const String kOtpRoute = '/sign_in_otp';
 const String kOtpConfirmRoute = '/sign_in_otp_confirm';
@@ -50,7 +51,14 @@ class SharedRouter {
     GetPage(name: kUserProfile, page: () => UserProfile()),
     GetPage(name: kWrapperRoute, page: () => Wrapper()),
     GetPage(name: kSplashRoute, page: () => SplashScreen()),
-    GetPage(name: kSignInRoute, page: () => SignIn()),
+    GetPage(
+        name: kSignInRouteRequired,
+        page: () => SignIn(mode: SignInMode.RequiredSignIn)),
+    GetPage(
+        name: kSignInRouteOptional,
+        page: () => SignIn(
+              mode: SignInMode.OptionalSignIn,
+            )),
     GetPage(name: kOtpRoute, page: () => PhoneNumberScreen()),
     GetPage(name: kOtpConfirmRoute, page: () => OtpConfirmationScreen()),
     GetPage(

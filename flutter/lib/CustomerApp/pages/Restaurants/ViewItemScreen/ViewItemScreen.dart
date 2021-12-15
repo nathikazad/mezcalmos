@@ -164,6 +164,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                     BottomBarItemViewScreen(
                       cartItem: cartItem,
                       mode: widget.viewItemScreenMode!,
+                      currentRestaurantId: currentRestaurant?.id,
                     )
                   ],
                 ),

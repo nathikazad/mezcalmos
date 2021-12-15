@@ -70,39 +70,49 @@ class NewRestaurantViewScreen extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.all(5),
+                      margin: EdgeInsets.only(
+                          left: 5, right: 5, top: 5, bottom: 15.h),
                       child: Text(restaurant.description),
                     ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    Container(
-                      child: Text(
-                        'Location :',
-                        style: Theme.of(context).textTheme.bodyText1,
-                      ),
-                    ),
-                    Card(
-                      child: Container(
-                        height: 250.h,
-                        width: double.infinity,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    Container(
-                      child: Text(
-                        'Working Hours :',
-                        style: Theme.of(context).textTheme.bodyText1,
-                      ),
-                    ),
-                    Card(
-                      child: Container(
-                        height: 250.h,
-                        width: double.infinity,
-                      ),
-                    ),
+                    (restaurant.location != null)
+                        ? Column(
+                            children: [
+                              Container(
+                                child: Text(
+                                  'Location :',
+                                  style: Theme.of(context).textTheme.bodyText1,
+                                ),
+                              ),
+                              Card(
+                                child: Container(
+                                  height: 250.h,
+                                  width: double.infinity,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                            ],
+                          )
+                        : Container(),
+                    (restaurant.openHour != null)
+                        ? Column(
+                            children: [
+                              Container(
+                                child: Text(
+                                  'Working Hours :',
+                                  style: Theme.of(context).textTheme.bodyText1,
+                                ),
+                              ),
+                              Card(
+                                child: Container(
+                                  height: 250.h,
+                                  width: double.infinity,
+                                ),
+                              ),
+                            ],
+                          )
+                        : Container()
                   ],
                 ),
               ),

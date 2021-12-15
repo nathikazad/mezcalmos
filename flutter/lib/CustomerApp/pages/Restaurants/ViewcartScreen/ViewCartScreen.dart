@@ -62,7 +62,9 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
             )),
       bottomNavigationBar: Obx(
         () => ButtonComponent(
-            bgColor: controller.cart.value.toLocation == null
+            bgColor: controller.cart.value.toLocation == null ||
+                    controller.cart.value.toLocation?.address ==
+                        "Unnamed Road, Cupertino, CA 95014, USA"
                 ? const Color(0xdddddddd)
                 : const Color(0xffac59fc),
             widget: Center(
@@ -82,9 +84,11 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                       ),
                     ),
             ),
-            function: controller.cart.value.toLocation != null &&
-                    !_clickedOrderNow
-                ? () async {
+            function: controller.cart.value.toLocation == null ||
+                    controller.cart.value.toLocation?.address ==
+                        "Unnamed Road, Cupertino, CA 95014, USA"
+                ? () {}
+                : () async {
                     if (controller.cart.value.toLocation != null) {
                       setState(() {
                         _clickedOrderNow = true;
@@ -118,9 +122,6 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                         _clickedOrderNow = false;
                       });
                     }
-                  }
-                : () {
-                    // TODO : maybe add a pop up notifying the user that he/she should pick lcoation !
                   }),
       ),
     );

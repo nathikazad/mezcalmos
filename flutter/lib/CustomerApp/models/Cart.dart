@@ -129,11 +129,7 @@ class Cart {
     });
     this.toLocation = cartData["to"] != null
         ? Location.fromFirebaseData(cartData["to"])
-        : Location.fromFirebaseData(<String, dynamic>{
-            "lat": 37.33233141,
-            "lng": -122.0312186,
-            "address": "Unnamed Road, Cupertino, CA 95014, USA"
-          });
+        : null;
     this.notes = cartData["notes"];
   }
   int quantity() {

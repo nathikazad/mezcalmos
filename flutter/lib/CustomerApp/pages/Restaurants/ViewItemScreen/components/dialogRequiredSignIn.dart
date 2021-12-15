@@ -41,7 +41,7 @@ void dialogRequiredSignIn() {
                 child: InkWell(
                   onTap: () {
                     Get.offNamedUntil(
-                        kSignInRoute, ModalRoute.withName("/wrapper"));
+                        kSignInRouteOptional, ModalRoute.withName("/wrapper"));
                   },
                   child: Container(
                     decoration: BoxDecoration(

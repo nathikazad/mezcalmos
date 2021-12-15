@@ -14,7 +14,9 @@ class Wrapper extends GetWidget<AuthController> {
         Get.put(HasuraHelper());
         return StatsIndexPage();
       } else
-        return SignIn();
+        return SignIn(
+          mode: SignInMode.RequiredSignIn,
+        );
     });
   }
 }

@@ -168,6 +168,8 @@ class Restaurant {
   String description;
   String name;
   String photo;
+  String? location;
+  String? openHour;
   RestaurantState restaurantState;
   List<Item> items = [];
 
@@ -176,6 +178,8 @@ class Restaurant {
       required this.description,
       required this.name,
       required this.photo,
+      this.location,
+      this.openHour,
       required this.restaurantState});
 
   factory Restaurant.fromRestaurantData(
@@ -196,11 +200,15 @@ class Restaurant {
     String name = restaurantData["info"]["name"];
     String photo = restaurantData["info"]["image"];
     String description = restaurantData["details"]["description"][language];
+    String? location = restaurantData["info"]["location"] ?? null;
+    String? openHour = restaurantData["info"]["openHour"] ?? null;
     Restaurant restaurant = Restaurant(
         id: restaurantId,
         description: description,
         name: name,
         photo: photo,
+        location: location,
+        openHour: openHour,
         restaurantState: restaurantState);
     restaurantData["menu"].forEach((dynamic itemId, dynamic itemData) {
       restaurant.items

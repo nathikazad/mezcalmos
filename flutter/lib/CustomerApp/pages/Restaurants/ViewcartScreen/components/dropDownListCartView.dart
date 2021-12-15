@@ -34,7 +34,7 @@ class _DropDownListCartViewState extends State<DropDownListCartView> {
             location: Location.fromFirebaseData(<String, dynamic>{
               "lat": 37.33233141,
               "lng": -122.0312186,
-              "address": "Unnamed Road, Cupertino, CA 95014, USA"
+              "address": "Unnamed jamal Road, Cupertino, CA 95014, USA"
             }))
       ];
       customerAuthController.customerRxn.value?.savedLocations
@@ -112,7 +112,9 @@ class _DropDownListCartViewState extends State<DropDownListCartView> {
                 dropDownListValue = newValue;
               });
               // we will route the user back to the Map
-              if (newValue!.name == "Pick From map") {
+              if (newValue!.name ==
+                  lang.strings["customer"]["restaurant"]["cart"]
+                      ["pickLocation"]) {
                 SavedLocation saveLocation =
                     await Get.toNamed(kPickLocationRoute);
                 setState(() {

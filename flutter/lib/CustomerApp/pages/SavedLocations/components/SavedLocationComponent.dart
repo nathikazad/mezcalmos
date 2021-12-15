@@ -75,7 +75,7 @@ class SavedLocationComponent extends StatelessWidget {
                       Container(
                         width: Get.width * 0.60,
                         child: Text(
-                          "${savelocation.location.address}",
+                          "${savelocation.location?.address}",
                           maxLines: 2,
                           softWrap: true,
                           overflow: TextOverflow.ellipsis,
