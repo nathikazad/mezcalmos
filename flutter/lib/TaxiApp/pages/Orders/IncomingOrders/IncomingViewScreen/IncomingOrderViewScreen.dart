@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -14,6 +16,7 @@ import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/TaxiApp/components/taxiAppBar.dart';
+import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/IPositionedBottomBar.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/IPositionedFromToBar.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
@@ -40,6 +43,12 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
   void initState() {
     String orderId = Get.parameters['orderId']!;
     order = controller.getOrder(orderId);
+    Get.find<DatabaseHelper>()
+        .firebaseDatabase
+        .reference()
+        .child(notificationStatusReadNode(
+            orderId, Get.find<AuthController>().user!.uid))
+        .set(true);
     // we do not setState here yet !
     if (order == null) {
       Get.back();

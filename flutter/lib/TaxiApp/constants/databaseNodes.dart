@@ -6,8 +6,12 @@ String taxiStateNode(String uid) {
   return 'taxis/info/$uid/state';
 }
 
+String notificationStatusReceivedNode(String orderId, String uid) {
+  return 'orders/open/taxi/$orderId/notificationStatus/$uid/received';
+}
+
 String notificationStatusReadNode(String orderId, String uid) {
-  return 'notificationStatus/taxi/$orderId/$uid/read';
+  return 'orders/open/taxi/$orderId/notificationStatus/$uid/read';
 }
 
 String taxiDriverAppVersionNode(String uid) {

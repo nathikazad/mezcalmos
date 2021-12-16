@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/constants/databaseNodes.dart';
 import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
+import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 
@@ -21,10 +22,6 @@ class IncomingOrdersController extends GetxController with MezDisposable {
 
   DatabaseHelper _databaseHelper =
       Get.find<DatabaseHelper>(); // Already Injected in main function
-
-  // AppLifeCycleController _appLifeCycleController =
-  //     Get.find<AppLifeCycleController>();
-
 
   // Storing all the needed Listeners here
   Worker? _updateOrderDistanceToClient;
@@ -53,12 +50,11 @@ class IncomingOrdersController extends GetxController with MezDisposable {
             order.distanceToClient = MapHelper.calculateDistance(
                 order.from.position, _taxiAuthController.currentLocation);
             ordersFromSnapshot.add(order);
-            // if (_appLifeCycleController.appState == AppLifecycleState.resumed)
-            //   _databaseHelper.firebaseDatabase
-            //       .reference()
-            //       .child(notificationStatusReadNode(
-            //           key, _authController.user!.uid))
-            //       .set(true);
+            _databaseHelper.firebaseDatabase
+                .reference()
+                .child(notificationStatusReceivedNode(
+                    key, _authController.user!.uid))
+                .set(true);
           });
 
           ordersFromSnapshot

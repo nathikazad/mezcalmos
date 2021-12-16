@@ -25,6 +25,7 @@ class ViewTaxiOrderScreen extends StatefulWidget {
 
 class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
   OrderController controller = Get.find<OrderController>();
+  TaxiController taxiController = Get.put<TaxiController>(TaxiController());
   Rxn<TaxiOrder> order = Rxn();
   StreamSubscription? _orderListener;
   final String toMarkerId = "to";

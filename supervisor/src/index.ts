@@ -66,7 +66,7 @@ function constructReturnUrl(orderId: string) {
     url = keys[env].databaseURL
     dbName = keys[env].databaseURL!.split('.')[0].split('/')[2]
   }
-  return `${url}/notificationStatus/taxi/${orderId}/<driverId>/received.json?ns=${dbName}`
+  return `${url}/orders/open/taxi/${orderId}/notificationStatus/<driverId>/received.json?ns=${dbName}`
 }
 
 function getIPAddress() {

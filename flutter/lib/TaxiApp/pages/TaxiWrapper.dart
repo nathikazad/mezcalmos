@@ -31,6 +31,7 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
   StreamSubscription<bool>? _locationStreamSub;
   @override
   void initState() {
+    mezDbgPrint("TaxiWrapper::init state");
     Future.microtask(() {
       mezDbgPrint("TaxiWrapper::microtask handleState first time");
       TaxiState? taxiState = Get.find<TaxiAuthController>().taxiState;
