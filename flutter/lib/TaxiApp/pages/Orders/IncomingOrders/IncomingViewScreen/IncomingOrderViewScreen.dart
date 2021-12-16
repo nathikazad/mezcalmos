@@ -43,16 +43,12 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
   void initState() {
     String orderId = Get.parameters['orderId']!;
     order = controller.getOrder(orderId);
-    Get.find<DatabaseHelper>()
-        .firebaseDatabase
-        .reference()
-        .child(notificationStatusReadNode(
-            orderId, Get.find<AuthController>().user!.uid))
-        .set(true);
+    
     // we do not setState here yet !
     if (order == null) {
       Get.back();
     } else {
+      controller.markOrderAsRead(orderId, order!.customer.id);
       if (order!.inProcess()) {
         // populate the LatLngPoints from the encoded PolyLine String + SetState!
         mGoogleMapController.decodeAndAddPolyline(

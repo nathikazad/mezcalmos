@@ -128,10 +128,10 @@ export = functions.https.onCall(async (data, context) => {
     };
   } catch (e) {
     console.log(e);
-    functions.logger.error(`Order start error ${orderId}`);
+    functions.logger.error(`Order cancel error ${orderId}`);
     return {
       status: ServerResponseStatus.Error,
-      orderId: "Order start error"
+      orderId: "Order cancel error"
     }
   } finally {
     rootNodes.inProcessOrders(OrderType.Taxi, orderId).child("lock").remove();

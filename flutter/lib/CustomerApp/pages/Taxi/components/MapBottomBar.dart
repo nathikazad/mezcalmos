@@ -18,7 +18,6 @@ import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 class MapBottomBar extends StatefulWidget {
   TaxiRequest taxiRequest;
   MapBottomBar({required this.taxiRequest});
-
   @override
   State<MapBottomBar> createState() {
     return _MapBottomBarState();
@@ -290,6 +289,7 @@ class _MapBottomBarState extends State<MapBottomBar> {
   }
 
   Widget incrementDecrementPrice() {
+    TaxiController taxiController = Get.put<TaxiController>(TaxiController());
     return Expanded(
       flex: 1,
       child: Container(
@@ -307,7 +307,7 @@ class _MapBottomBarState extends State<MapBottomBar> {
                   Order? order = Get.find<OrderController>()
                       .hasOrderOfType(typeToCheck: OrderType.Taxi);
                   if (order != null) {
-                    Get.find<TaxiController>().updateRideCost(
+                    taxiController.updateRideCost(
                         orderId: order.orderId,
                         cost: widget.taxiRequest.estimatedPrice - 5);
                   }
@@ -341,7 +341,7 @@ class _MapBottomBarState extends State<MapBottomBar> {
                   Order? order = Get.find<OrderController>()
                       .hasOrderOfType(typeToCheck: OrderType.Taxi);
                   if (order != null) {
-                    Get.find<TaxiController>().updateRideCost(
+                    taxiController.updateRideCost(
                         orderId: order.orderId,
                         cost: widget.taxiRequest.estimatedPrice + 5);
                   }

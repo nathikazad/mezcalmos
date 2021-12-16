@@ -1,3 +1,5 @@
+import 'package:mezcalmos/Shared/constants/databaseNodes.dart';
+
 String taxiAuthNode(String uid) {
   return 'taxis/info/$uid';
 }
@@ -6,16 +8,26 @@ String taxiStateNode(String uid) {
   return 'taxis/info/$uid/state';
 }
 
-String notificationStatusReceivedNode(String orderId, String uid) {
-  return 'orders/open/taxi/$orderId/notificationStatus/$uid/received';
-}
-
-String notificationStatusReadNode(String orderId, String uid) {
-  return 'orders/open/taxi/$orderId/notificationStatus/$uid/read';
-}
-
 String taxiDriverAppVersionNode(String uid) {
   return taxiAuthNode(uid) + '/versionNumber';
+}
+
+String rootOpenOrderReadNode(String orderId, String uid) {
+  return taxiOpenOrdersNode() + '/$orderId/notificationStatus/$uid/read';
+}
+
+String rootOpenOrderReceivedNode(String orderId, String uid) {
+  return taxiOpenOrdersNode() + '/$orderId/notificationStatus/$uid/received';
+}
+
+String customerInProcessOrderReadNode(
+    String orderId, String customerId, String driverId) {
+  return 'customers/inProcessOrders/$customerId/$orderId/notificationStatus/$driverId/read';
+}
+
+String customerInProcessOrderReceivedNode(
+    String orderId, String customerId, String driverId) {
+  return 'customers/inProcessOrders/$customerId/$orderId/notificationStatus/$driverId/received';
 }
 
 String notificationsNode(String uid) {

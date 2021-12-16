@@ -200,10 +200,10 @@ class MGoogleMapController {
   // adds up the markers the new markers latLn ot polyline's and calculate out of them all the latLngbounds
   LatLngBounds? _getMarkersAndPolylinesBounds() {
     List<LatLng> _bnds = [..._getLatLngBoundsFromPolyline(polylines)];
-    mezDbgPrint("+ Added Polyline ${_bnds} TO BOUNDS!");
+    // mezDbgPrint("+ Added Polyline ${_bnds} TO BOUNDS!");
 
     markers.forEach((cmarker) {
-      mezDbgPrint("+ ADDING MARKER ${cmarker.markerId.value} TO BOUNDS!");
+      // mezDbgPrint("+ ADDING MARKER ${cmarker.markerId.value} TO BOUNDS!");
       _bnds.add(cmarker.position);
     });
     return _bnds.isEmpty ? null : MapHelper.createMapBounds(_bnds);

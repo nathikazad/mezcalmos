@@ -52,11 +52,21 @@
           ".read": "$uid === auth.uid",
           "$orderId": {
             "cost": {
-              ".write": "root.child('orders/open/taxi/' + $orderId + '/customer/id').val() === auth.uid"
+              ".write": "data.parent().exists() && data.parent().child('/customer/id').val() === auth.uid"
+            },
+            "notificationStatus": {
+              "$driverId": {
+                "received": {
+                  ".write": "root.child('customers/inProcessOrders/' + $uid + '/' + $orderId).exists() && true"
+                },
+                "read": {
+                  ".write": "root.child('customers/inProcessOrders/' + $uid + '/' + $orderId).exists() && $driverId === auth.uid"
+                }
+              }
             },
             "driver": {
               "location": {
-                ".write": "root.child('customers/inProcessOrders/' + $uid + '/' + $orderId + '/driver/id').val() === auth.uid"
+                ".write": "data.parent().parent().exists() && data.parent().parent().child('/driver/id').val() === auth.uid"
               }
             }
           }
@@ -112,7 +122,7 @@
           "$orderId": {
             "driver": {
               "location": {
-                ".write": "root.child('orders/inProcess/taxi/' + $orderId + '/driver/id').val() === auth.uid"
+                ".write": "root.child('orders/inProcess/taxi/' + $orderId).exists() && root.child('orders/inProcess/taxi/' + $orderId + '/driver/id').val() === auth.uid"
               }
             }
           }
@@ -124,7 +134,17 @@
         "taxi": {
           "$orderId": {
             "cost": {
-              ".write": "root.child('orders/open/taxi/' + $orderId + '/customer/id').val() === auth.uid"
+              ".write": "data.parent().exists() && data.parent().child($orderId + '/customer/id').val() === auth.uid"
+            },
+            "notificationStatus": {
+              "$driverId": {
+                "received": {
+                  ".write": "root.child('orders/open/taxi/' + $orderId).exists() && true"
+                },
+                "read": {
+                  ".write": "root.child('orders/open/taxi/' + $orderId).exists() && $driverId === auth.uid"
+                }
+              }
             }
           }
         }
@@ -264,7 +284,8 @@
       }
     },
     "notificationQueue": {
-      ".write": "true"
+      ".write": "true",
+      ".read": "false"
     }
   }
 }

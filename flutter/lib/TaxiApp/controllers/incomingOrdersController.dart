@@ -26,7 +26,6 @@ class IncomingOrdersController extends GetxController with MezDisposable {
   // Storing all the needed Listeners here
   Worker? _updateOrderDistanceToClient;
 
-
   @override
   void onInit() async {
     // _selectedIncommingOrder.value = null;
@@ -50,11 +49,7 @@ class IncomingOrdersController extends GetxController with MezDisposable {
             order.distanceToClient = MapHelper.calculateDistance(
                 order.from.position, _taxiAuthController.currentLocation);
             ordersFromSnapshot.add(order);
-            _databaseHelper.firebaseDatabase
-                .reference()
-                .child(notificationStatusReceivedNode(
-                    key, _authController.user!.uid))
-                .set(true);
+            markOrderAsReceived(key, order.customer.id);
           });
 
           ordersFromSnapshot
@@ -97,6 +92,30 @@ class IncomingOrdersController extends GetxController with MezDisposable {
     } on StateError {
       return null;
     }
+  }
+
+  Future<void> markOrderAsRead(String orderId, String customerId) async {
+    _databaseHelper.firebaseDatabase
+        .reference()
+        .child(rootOpenOrderReadNode(orderId, _authController.user!.uid))
+        .set(true);
+    _databaseHelper.firebaseDatabase
+        .reference()
+        .child(customerInProcessOrderReadNode(
+            orderId, customerId, _authController.user!.uid))
+        .set(true);
+  }
+
+  Future<void> markOrderAsReceived(String orderId, String customerId) async {
+    _databaseHelper.firebaseDatabase
+        .reference()
+        .child(rootOpenOrderReceivedNode(orderId, _authController.user!.uid))
+        .set(true);
+    _databaseHelper.firebaseDatabase
+        .reference()
+        .child(customerInProcessOrderReceivedNode(
+            orderId, customerId, _authController.user!.uid))
+        .set(true);
   }
 
   Stream<TaxiOrder?> getIncomingOrderStream(String orderId) {
