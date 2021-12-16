@@ -63,8 +63,7 @@ class _WrapperState extends State<Wrapper> {
         await Get.toNamed(kUserProfile);
         // Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
       }
-      // Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
-      Get.back();
+      Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
     }
   }
 
