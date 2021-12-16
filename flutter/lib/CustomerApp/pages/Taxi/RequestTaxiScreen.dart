@@ -40,6 +40,10 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
       locationSearchBarController.unfocusAllFocusNodes.call();
       setState(() {});
     });
+
+    // set current SearchComponent:
+    locationSearchBarController
+        .focusedTextField(_currentFocusedTextField.value);
     // set the location Enabled Button to be false
     locationPickerController.myLocationButtonEnabled.value = false;
     // set blackScreenBottom 110
@@ -61,7 +65,6 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: mezcalmosAppBar(AppBarLeftButtonType.Back),
-      //  AppBar(),
       backgroundColor: Colors.white,
       body: Container(
         color: Colors.white,

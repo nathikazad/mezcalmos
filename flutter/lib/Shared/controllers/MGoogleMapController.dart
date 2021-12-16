@@ -51,7 +51,7 @@ class MGoogleMapController {
       {String? markerId, required LatLng latLng, String? imgUrl}) async {
     BitmapDescriptor icon = await BitmapDescriptorLoader(
         (await cropRonded((await http.get(Uri.parse(imgUrl ??
-                Get.find<AuthController>().user!.image ??
+                Get.find<AuthController>().fireAuthUser?.photoURL ??
                 aDefaultAvatar)))
             .bodyBytes) as Uint8List),
         60,
@@ -59,7 +59,8 @@ class MGoogleMapController {
         isBytes: true);
     // default userId is authenticated's
     this._addOrUpdateMarker(Marker(
-        markerId: MarkerId(markerId ?? Get.find<AuthController>().user!.uid),
+        markerId: MarkerId(
+            markerId ?? Get.find<AuthController>().user?.uid ?? 'ANONYMOUS'),
         icon: icon,
         position: latLng));
   }
@@ -111,7 +112,8 @@ class MGoogleMapController {
 
   void removerAuthenticatedUserMarker() {
     markers.removeWhere((element) =>
-        element.markerId.value == Get.find<AuthController>().user!.uid);
+        element.markerId.value ==
+        (Get.find<AuthController>().user?.uid ?? 'ANONYMOUS'));
   }
 
   void addPolyline(List<PointLatLng> latLngPoints) {

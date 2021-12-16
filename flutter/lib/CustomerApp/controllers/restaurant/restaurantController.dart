@@ -75,7 +75,7 @@ class RestaurantController extends GetxController {
   void saveCart() {
     _databaseHelper.firebaseDatabase
         .reference()
-        .child(customerCart(_authController.user!.uid))
+        .child(customerCart(_authController.fireAuthUser!.uid))
         .set(cart.value.toFirebaseFormattedJson());
   }
 

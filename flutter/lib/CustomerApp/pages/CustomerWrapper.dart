@@ -6,10 +6,14 @@ import 'package:mezcalmos/CustomerApp/components/CustomerApp_appbar.dart';
 import 'package:mezcalmos/CustomerApp/components/customerHomeFooterButtons.dart';
 import 'package:mezcalmos/CustomerApp/components/servicesCard.dart';
 import 'package:mezcalmos/CustomerApp/constants/databaseNodes.dart';
+import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
+import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
+import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
@@ -40,22 +44,30 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   StreamSubscription<bool>? _locationStreamSub;
   RxInt numberOfCurrentOrders = RxInt(0);
   StreamSubscription? _orderCountListener;
-
-
   @override
   void initState() {
-    WidgetsBinding.instance!.addObserver(this);
-    listenForLocationPermissions();
+    // TODO : We have to find some kind of solution to inject global stuff (All these controllers are used ..)
+    Get.put<ForegroundNotificationsController>(
+        ForegroundNotificationsController(),
+        permanent: true);
+    Get.put<BackgroundNotificationsController>(
+        BackgroundNotificationsController(),
+        permanent: true);
+    Get.put<TaxiController>(TaxiController(), permanent: true);
+    Get.put(RestaurantController());
+    Get.put<CustomerAuthController>(CustomerAuthController());
 
-    // Setup these things only if user is signed in
-    if (auth.isUserSignedIn) {
-      _orderController = Get.find<OrderController>();
+    _orderController =
+        Get.put<OrderController>(OrderController(), permanent: true);
+    if (auth.fireAuthUser != null) {
+      WidgetsBinding.instance!.addObserver(this);
       _orderCountListener = _orderController!.currentOrders.stream.listen((_) {
         numberOfCurrentOrders.value = _orderController!.currentOrders.length;
       });
       String? userId = Get.find<AuthController>().fireAuthUser!.uid;
       // listening for notification Permissions!
       _notificationsStreamListener = initializeShowNotificationsListener();
+      listenForLocationPermissions();
       Get.find<ForegroundNotificationsController>()
           .startListeningForNotificationsFromFirebase(
               notificationsNode(userId), customerNotificationHandler);
@@ -63,6 +75,8 @@ class _CustomerWrapperState extends State<CustomerWrapper>
         // Fix to Input Focus problems ( we had it in build which gets re-executed after any input focus) !
         navigateToOrdersIfNecessary(_orderController!.currentOrders);
       });
+    } else {
+      Get.put(RestaurantController());
     }
     super.initState();
   }
@@ -216,7 +230,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     );
   }
 
-    // when app resumes check if there are current orders and if yes navigate to orders page
+  // when app resumes check if there are current orders and if yes navigate to orders page
   void navigateToOrdersIfNecessary(List<Order> currentOrders) {
     mezDbgPrint("navigateToOrdersIfNecessary");
 
@@ -245,5 +259,4 @@ class _CustomerWrapperState extends State<CustomerWrapper>
       }
     });
   }
-
 }

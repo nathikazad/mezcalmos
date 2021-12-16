@@ -46,7 +46,7 @@ class TaxiController extends GetxController {
     }
   }
 
-   void updateRideCost({required String orderId, required double cost}) {
+  void updateRideCost({required String orderId, required double cost}) {
     if (cost >= 35) {
       // update order in Customers node
       _databaseHelper.firebaseDatabase

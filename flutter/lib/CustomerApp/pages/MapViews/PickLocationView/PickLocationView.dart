@@ -48,17 +48,18 @@ class _PickLocationViewState extends State<PickLocationView> {
           context: context, function: () => mezDbgPrint("hey bro"));
       if (resault != null && resault != "") {
         mezDbgPrint("the choosen name is $resault");
-        String? address = await MapHelper.getAdressFromLatLng(LatLng(
-            locationPickerController.location.value!.latitude!,
-            locationPickerController.location.value!.longitude!));
-        locationPickerController.location.value!.address = address ??
-            "${_lang.strings['shared']['pickLocation']['address']} : ${locationPickerController.location.value!.latitude}, ${locationPickerController.location.value!.longitude}";
+        // String? address = await MapHelper.getAdressFromLatLng(LatLng(
+        //     locationPickerController.location.value!.latitude!,
+        //     locationPickerController.location.value!.longitude!));
+        // locationPickerController.location.value!.address = address ??
+        //     "${_lang.strings['shared']['pickLocation']['address']} : ${locationPickerController.location.value!.latitude}, ${locationPickerController.location.value!.longitude}";
 
         savedLocation = SavedLocation(
             name: resault, location: locationPickerController.location.value!);
 
         customerAuthController.saveNewLocation(savedLocation!);
-
+        mezDbgPrint(
+            "AddNewLocation:: Sending Results of ${savedLocation?.toFirebaseFormattedJson()}");
         Get.back(result: savedLocation);
       }
     } else {
@@ -68,11 +69,11 @@ class _PickLocationViewState extends State<PickLocationView> {
           nameVal: savedLocation!.name);
       if (resault != null && resault != "") {
         mezDbgPrint("the choosen name is $resault");
-        String? address = await MapHelper.getAdressFromLatLng(LatLng(
-            locationPickerController.location.value!.latitude!,
-            locationPickerController.location.value!.longitude!));
-        locationPickerController.location.value!.address = address ??
-            "${_lang.strings['shared']['pickLocation']['address']} : ${locationPickerController.location.value!.latitude}, ${locationPickerController.location.value!.longitude}";
+        // String? address = await MapHelper.getAdressFromLatLng(LatLng(
+        //     locationPickerController.location.value!.latitude!,
+        //     locationPickerController.location.value!.longitude!));
+        // locationPickerController.location.value!.address = address ??
+        //     "${_lang.strings['shared']['pickLocation']['address']} : ${locationPickerController.location.value!.latitude}, ${locationPickerController.location.value!.longitude}";
 
         savedLocation = SavedLocation(
             id: savedLocation!.id,
@@ -156,7 +157,10 @@ class _PickLocationViewState extends State<PickLocationView> {
             Container(
               padding: EdgeInsets.only(top: 10, left: 10, right: 10),
               child: LocationSearchComponent(
-                  label: "",
+                  hintPadding: EdgeInsets.only(left: 10),
+                  suffixPadding: EdgeInsets.only(right: 10),
+                  useBorders: false,
+                  showSearchIcon: true,
                   text: locationPickerController.location.value?.address,
                   onClear: () {},
                   notifyParent: (Location? location) {
@@ -165,6 +169,8 @@ class _PickLocationViewState extends State<PickLocationView> {
                     setState(() {
                       this.showBlackScreen = showBlackScreen;
                       locationPickerController.setLocation(location!);
+                      locationPickerController.moveToNewLatLng(
+                          location.latitude, location.longitude);
                     });
                   }),
             ),

@@ -5,6 +5,7 @@ import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantControlle
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
+import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
 import '../../../../router.dart';
 
@@ -117,14 +118,17 @@ class _DropDownListCartViewState extends State<DropDownListCartView> {
                       ["pickLocation"]) {
                 SavedLocation saveLocation =
                     await Get.toNamed(kPickLocationRoute);
-                setState(() {
-                  listOfSavedLoacations.add(saveLocation);
-                  dropDownListValue =
-                      listOfSavedLoacations[listOfSavedLoacations.length - 1];
-                  controller.cart.value.toLocation = saveLocation.location;
-                  controller.saveCart();
-                  controller.refresh();
-                });
+                mezDbgPrint("View Got result : $saveLocation");
+                if (saveLocation != null) {
+                  setState(() {
+                    listOfSavedLoacations.add(saveLocation);
+                    dropDownListValue =
+                        listOfSavedLoacations[listOfSavedLoacations.length - 1];
+                    controller.cart.value.toLocation = saveLocation.location;
+                    controller.saveCart();
+                    controller.refresh();
+                  });
+                }
               } else {
                 controller.cart.value.toLocation = newValue.location;
                 controller.saveCart();

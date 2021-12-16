@@ -84,7 +84,7 @@ class OrderController extends GetxController {
         currentOrders.value = orders;
       });
     } else {
-      throw Exception("User is not signed it to init order controller");
+      mezDbgPrint("User is not signed it to init order controller");
     }
   }
 

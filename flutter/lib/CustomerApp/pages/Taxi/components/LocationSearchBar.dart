@@ -160,6 +160,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
     return Expanded(
       flex: locationSearchBarController.fromTextFieldFocusNode.hasFocus ? 6 : 5,
       child: LocationSearchComponent(
+        suffixPadding: EdgeInsets.only(top: 20, right: 10),
         focusNode: locationSearchBarController.fromTextFieldFocusNode,
         readOnly: widget.request.value.from?.address != null,
         dropDownDxOffset: 0,
@@ -223,6 +224,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
     return Expanded(
       flex: locationSearchBarController.toTextFieldFocusNode.hasFocus ? 6 : 5,
       child: LocationSearchComponent(
+        suffixPadding: EdgeInsets.only(top: 20, right: 10),
         focusNode: locationSearchBarController.toTextFieldFocusNode,
         readOnly: widget.request.value.to?.address != null,
         useBorders: false,

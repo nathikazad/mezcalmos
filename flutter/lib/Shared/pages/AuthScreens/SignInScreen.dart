@@ -28,7 +28,6 @@ class SignIn extends GetWidget<AuthController> {
 
   @override
   Widget build(BuildContext context) {
-    mezDbgPrint("hhhhhhhhhh ========= the mode is ${mode.toString()}");
     responsiveSize(context);
 
     final sw = MediaQuery.of(context).size.width.w;
@@ -51,8 +50,9 @@ class SignIn extends GetWidget<AuthController> {
                         color: Colors.black,
                       ),
                       onPressed: () {
-                        Get.offNamedUntil(
-                            kHomeRoute, ModalRoute.withName(kWrapperRoute));
+                        Get.back();
+                        // Get.offNamedUntil(
+                        //     kHomeRoute, ModalRoute.withName(kWrapperRoute));
                       },
                     ),
                   )
@@ -122,24 +122,30 @@ class SignIn extends GetWidget<AuthController> {
                                                 content: Column(
                                                   children: [
                                                     TextButton(
-                                                        onPressed: () =>
-                                                            controller.signIn(
-                                                                tTestCustomerValue,
-                                                                tEmailTestPassword),
+                                                        onPressed: () {
+                                                          Get.back();
+                                                          controller.signIn(
+                                                              tTestCustomerValue,
+                                                              tEmailTestPassword);
+                                                        },
                                                         child: Text(
                                                             tTestCustomerValue)),
                                                     TextButton(
-                                                        onPressed: () =>
-                                                            controller.signIn(
-                                                                tTestTaxiValue,
-                                                                tEmailTestPassword),
+                                                        onPressed: () {
+                                                          Get.back();
+                                                          controller.signIn(
+                                                              tTestTaxiValue,
+                                                              tEmailTestPassword);
+                                                        },
                                                         child: Text(
                                                             tTestTaxiValue)),
                                                     TextButton(
-                                                        onPressed: () =>
-                                                            controller.signIn(
-                                                                tTestAdminValue,
-                                                                tEmailTestPassword),
+                                                        onPressed: () {
+                                                          Get.back();
+                                                          controller.signIn(
+                                                              tTestAdminValue,
+                                                              tEmailTestPassword);
+                                                        },
                                                         child: Text(
                                                             tTestAdminValue))
                                                   ],

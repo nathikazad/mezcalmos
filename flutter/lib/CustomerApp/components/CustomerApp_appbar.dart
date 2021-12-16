@@ -31,7 +31,7 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
         super(key: key);
 
   AuthController _authController = Get.find<AuthController>();
-  // getting user image;
+
   @override
   final Size preferredSize;
   @override

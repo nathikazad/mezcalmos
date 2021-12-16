@@ -12,12 +12,14 @@ class AuthHooks {
   static Future<void> onSignOutHook() async {
     mezDbgPrint(
         "[+] CustomerApp::AuthHooks::onSignOutHook -> Callback Executed.");
+// TODO : these deletes should not delete stuff that should be Globaly injected (on Signin And SiGnout)
     await Get.delete<CustomerAuthController>(force: true);
-    await Get.delete<OrderController>(force: true);
-    await Get.delete<RestaurantController>(force: true);
+    // await Get.delete<OrderController>(force: true);
+    // await Get.delete<TaxiController>(force: true);
+    // await Get.delete<RestaurantController>(force: true);
     await Get.delete<BackgroundNotificationsController>(force: true);
     await Get.delete<MessageController>(force: true);
-    await Get.delete<ForegroundNotificationsController>(force: true);
+    // await Get.delete<ForegroundNotificationsController>(force: true);
     mezDbgPrint(
         "[+] CustomerApp::AuthHooks::onSignOutHook -> Callback Finished.");
   }
@@ -33,6 +35,7 @@ class AuthHooks {
         ForegroundNotificationsController(),
         permanent: true);
     Get.put<OrderController>(OrderController(), permanent: true);
+    Get.put<TaxiController>(TaxiController(), permanent: true);
     Get.put<RestaurantController>(RestaurantController(), permanent: true);
     Get.put<MessageController>(MessageController(), permanent: true);
   }
