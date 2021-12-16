@@ -52,6 +52,57 @@ class _StartingPointState extends State<StartingPoint> {
 
   _StartingPointState();
 
+  @override
+  void initState() {
+    super.initState();
+    WidgetsFlutterBinding.ensureInitialized();
+    initializeSetup();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+    SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+    if (_error) {
+      mezcalmosSnackBar("Error", "Server connection failed !");
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          body: Center(
+            child: Icon(Icons.signal_wifi_bad,
+                color: Colors.red.shade200,
+                size: getSizeRelativeToScreen(50, Get.height, Get.width)),
+          ),
+        ),
+      );
+    }
+    if (!_initialized) {
+      return SplashScreen();
+    } else {
+      mezDbgPrint("====> PreviewMode ===> ${GetStorage().read('previewMode')}");
+      return mainApp(widget.appType, widget.routes);
+    }
+  }
+
+  void initializeSetup() async {
+    try {
+      await setupFirebase();
+      await setGlobalVariables();
+      putControllers();
+      await waitForInitialization();
+      hookOnFlutterErrorsStdout();
+      setState(() => _initialized = true);
+    } catch (e) {
+      mezDbgPrint("[+] Error Happend =======> $e");
+      setState(() {
+        _error = true;
+      });
+      rethrow;
+    }
+  }
+
   Future<void> setupFirebase() async {
     const String _host =
         String.fromEnvironment('HOST', defaultValue: "http://127.0.0.1");
@@ -117,10 +168,6 @@ class _StartingPointState extends State<StartingPoint> {
     mezDbgPrint("Putting Auth Controller");
     Get.put<AppLifeCycleController>(AppLifeCycleController(logs: true),
         permanent: true);
-    //@jamal TODO: pass in a list of listTiles from here to the settings controller
-    // and then to the sideMenuController
-    //this datastructure, should basically just have a name and a link
-    //the side menu controller will populate the middle of its tiles using this list
     Get.put<SettingsController>(
         SettingsController(widget.appType, widget.sideMenuItems),
         permanent: true);
@@ -137,57 +184,6 @@ class _StartingPointState extends State<StartingPoint> {
         mezDbgPrint(item);
       }
     };
-  }
-
-  void initializeSetup() async {
-    try {
-      await setupFirebase();
-      await setGlobalVariables();
-      putControllers();
-      await waitForInitialization();
-      hookOnFlutterErrorsStdout();
-      setState(() => _initialized = true);
-    } catch (e) {
-      mezDbgPrint("[+] Error Happend =======> $e");
-      setState(() {
-        _error = true;
-      });
-      rethrow;
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsFlutterBinding.ensureInitialized();
-    initializeSetup();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations(
-        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-    SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(statusBarColor: Colors.transparent));
-    if (_error) {
-      mezcalmosSnackBar("Error", "Server connection failed !");
-      return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          body: Center(
-            child: Icon(Icons.signal_wifi_bad,
-                color: Colors.red.shade200,
-                size: getSizeRelativeToScreen(50, Get.height, Get.width)),
-          ),
-        ),
-      );
-    }
-    if (!_initialized) {
-      return SplashScreen();
-    } else {
-      mezDbgPrint("====> PreviewMode ===> ${GetStorage().read('previewMode')}");
-      return mainApp(widget.appType, widget.routes);
-    }
   }
 }
 

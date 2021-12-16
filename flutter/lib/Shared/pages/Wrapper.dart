@@ -24,6 +24,7 @@ class _WrapperState extends State<Wrapper> {
     super.dispose();
   }
 
+  @override
   void initState() {
     Get.put(MyPopupMenuController());
     mezDbgPrint("Wrapper: (::initState::)");
@@ -62,7 +63,8 @@ class _WrapperState extends State<Wrapper> {
         await Get.toNamed(kUserProfile);
         // Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
       }
-      Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
+      // Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
+      Get.back();
     }
   }
 

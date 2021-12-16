@@ -5,6 +5,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/CustomerApp/components/userMenuComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 
 // ignore: must_be_immutable
@@ -29,8 +30,8 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
       : preferredSize = Size.fromHeight(kToolbarHeight),
         super(key: key);
 
+  AuthController _authController = Get.find<AuthController>();
   // getting user image;
-  RestaurantController controller = Get.find<RestaurantController>();
   @override
   final Size preferredSize;
   @override
@@ -58,7 +59,8 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
       actions: [
-        Obx(() => controller.cart.value.items.length > 0
+        Obx(() => _authController.isUserSignedIn &&
+                Get.find<RestaurantController>().cart.value.items.length > 0
             ? IconButton(
                 onPressed: () {
                   Get.toNamed(kCartRoute);
@@ -66,7 +68,12 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
                 padding: EdgeInsets.only(right: 8),
                 icon: Badge(
                     badgeContent: Text(
-                      controller.cart.value.items.length.toStringAsFixed(0),
+                      Get.find<RestaurantController>()
+                          .cart
+                          .value
+                          .items
+                          .length
+                          .toStringAsFixed(0),
                       style: Theme.of(context)
                           .textTheme
                           .bodyText2!

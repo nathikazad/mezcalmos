@@ -34,13 +34,11 @@ class AuthController extends GetxController {
   StreamSubscription? _userNodeListener;
 
   // Rxn<fireAuth.User> _userRx = Rxn();
-  StreamController<fireAuth.User?> _authStateStream =
+  StreamController<fireAuth.User?> authStateChangeStream =
       StreamController.broadcast();
-  Stream<fireAuth.User?> get authStateChange => _authStateStream.stream;
+  Stream<fireAuth.User?> get authStateChange => authStateChangeStream.stream;
 
-  // StreamController<User> _databaseUserController = StreamController.broadcast();
-  // Stream<User?> get dbUserStream => _databaseUserController.stream;
-
+  bool get isUserSignedIn => _fireAuthUser.value != null;
   DatabaseHelper _databaseHelper =
       Get.find<DatabaseHelper>(); // Already Injected in main function
 
@@ -60,7 +58,7 @@ class AuthController extends GetxController {
         return;
       }
       _previousUserValue = user?.toString();
-      _authStateStream.add(user);
+      authStateChangeStream.add(user);
 
       mezDbgPrint('Authcontroller:: Auth state change!');
       mezDbgPrint(user?.hashCode);
