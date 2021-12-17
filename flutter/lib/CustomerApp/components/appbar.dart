@@ -51,11 +51,10 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
               style: Theme.of(context).textTheme.headline2,
             )
           : Container(
-              width: Get.width * 0.5,
+              alignment: Alignment.center,
+              width: 150,
               child: FittedBox(
-                child: Row(
-                  children: [MezcalmosSharedWidgets.fillTitle(1)],
-                ),
+                child: MezcalmosSharedWidgets.fillTitle(1),
               ),
             ),
       actions: [

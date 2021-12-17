@@ -42,7 +42,7 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Column(children: [
+            child: Column(mainAxisSize: MainAxisSize.max, children: [
               SearchField(),
               Column(
                 children: List.generate(

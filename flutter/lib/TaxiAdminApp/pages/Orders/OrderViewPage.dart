@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
-
 import 'package:mezcalmos/TaxiAdminApp/components/appBar.dart';
+import 'package:mezcalmos/TaxiAdminApp/components/getFutureData.dart';
 import 'package:mezcalmos/TaxiAdminApp/components/infoCardComponent.dart';
 import 'package:mezcalmos/TaxiAdminApp/components/staticMap.dart';
-import 'package:mezcalmos/TaxiAdminApp/controller/OrdersController.dart';
-import 'package:get/get.dart';
-import 'package:intl/intl.dart';
-import 'package:mezcalmos/TaxiAdminApp/components/getFutureData.dart';
+import 'package:mezcalmos/TaxiAdminApp/controller/ordersController.dart';
 import 'package:mezcalmos/TaxiAdminApp/pages/Driver/DriverPage.dart';
 
 class OrderViewPage extends GetView<OrderStatsController> {

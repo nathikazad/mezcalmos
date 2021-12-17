@@ -8,8 +8,10 @@ import 'package:mezcalmos/CustomerApp/pages/ListOrdersScreen/components/OngoingO
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
-import 'components/FilterOrderComponent.dart';
+import 'components/OngoingOrderCard.dart';
+import 'components/TaxiOrderOngoingCard.dart';
 
 final f = new DateFormat('MM.dd.yyyy');
 final currency = new NumberFormat("#,##0.00", "en_US");
@@ -22,11 +24,15 @@ class ListOrdersScreen extends StatefulWidget {
 class _ListOrdersScreen extends State<ListOrdersScreen> {
   LanguageController _lang = Get.find<LanguageController>();
   OrderController controller = Get.put(OrderController());
+
+  LanguageController lang = Get.find<LanguageController>();
+
   AuthController auth = Get.find<AuthController>();
 
   @override
   initState() {
     mezDbgPrint("ListOrdersScreen: onInit");
+
     super.initState();
   }
 
@@ -69,15 +75,21 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                             () => Column(
                               children: List.generate(
                                   controller.currentOrders().length,
-                                  (index) => OngoingOrderCard(
-                                      order:
-                                          controller.currentOrders()[index])),
+                                  (index) => (controller
+                                              .currentOrders()[index]
+                                              .orderType ==
+                                          OrderType.Restaurant)
+                                      ? OngoingOrderCard(
+                                          order:
+                                              controller.currentOrders()[index])
+                                      : TaxiOngoingOrderCard(
+                                          order: controller
+                                              .currentOrders()[index])),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    FilterOrders(),
                     Obx(
                       () => Padding(
                         padding: const EdgeInsets.all(16.0),

@@ -22,7 +22,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
     return SliverAppBar(
       backgroundColor: Theme.of(context).primaryColorLight,
       elevation: 0.4,
-      expandedHeight: 300,
+      expandedHeight: 220,
       automaticallyImplyLeading: false,
       titleSpacing: 16,
       leading: IconButton(

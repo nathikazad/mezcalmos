@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/TaxiAdminApp/controller/DriverController.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/TaxiAdminApp/components/getFutureData.dart';
+import 'package:mezcalmos/TaxiAdminApp/controller/driverController.dart';
 
 class RankingsPage extends GetView<DriverStatsController> {
   Widget getRanks() {

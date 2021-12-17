@@ -18,13 +18,14 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
+import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as MezNotification;
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
-import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+//import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
 
 class CustomerWrapper extends StatefulWidget {
   @override
@@ -103,43 +104,43 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     return WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
-          key: _sideMenuDrawerController.getNewKey(),
-          drawer: MezSideMenu(),
-          appBar: CustomerAppBar(
-            autoBack: false,
-            myLeading: Icon(Icons.apps),
-            onLeadingTaped: () {
-              _sideMenuDrawerController.openMenu();
-            },
-          ),
-          body: Container(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(children: [
-                  //================================Welcome to MEZCALMOS 👋===================
-                  mezWelcomeContainer(txt.headline1!),
-                  //============================== description=============================
-                  mezDescription(txt.subtitle1!.copyWith(fontSize: 14)),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  //============================Service title===================================
-                  mezServiceTitle(txt.headline1!),
-
-                  //========================= list of services ===========================
-                  mezListOfServices(),
-
-                  HomeFooterButtons(),
-                ]),
-              ),
+            key: _sideMenuDrawerController.getNewKey(),
+            drawer: MezSideMenu(),
+            appBar: CustomerAppBar(
+              autoBack: false,
             ),
-          ),
-        ));
+            body: LayoutBuilder(builder: (context, constraints) {
+              return SingleChildScrollView(
+                  child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                          minWidth: constraints.maxWidth,
+                          minHeight: constraints.maxHeight),
+                      child: IntrinsicHeight(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child:
+                              Column(mainAxisSize: MainAxisSize.max, children: [
+                            mezWelcomeContainer(txt.headline1!),
+                            //============================== description=============================
+                            mezDescription(
+                                txt.subtitle1!.copyWith(fontSize: 14)),
+
+                            //============================Service title===================================
+                            mezServiceTitle(txt.headline1!),
+
+                            //========================= list of services ===========================
+                            Expanded(child: mezListOfServices()),
+                            // Spacer(),
+                            HomeFooterButtons(),
+                          ]),
+                        ),
+                      )));
+            })));
   }
 
   Widget mezWelcomeContainer(TextStyle textStyle) {
     return Container(
+      margin: const EdgeInsets.all(5),
       alignment: Alignment.centerLeft,
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Obx(
@@ -154,7 +155,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
 
   Widget mezDescription(TextStyle textStyle) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+      margin: const EdgeInsets.all(5),
       child: Obx(
         () => Text("${lang.strings['customer']['home']['appDescription']}",
             style: textStyle),
@@ -166,6 +167,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     return Container(
       padding: const EdgeInsets.only(top: 10, left: 15),
       alignment: Alignment.centerLeft,
+      margin: const EdgeInsets.all(5),
       child: Obx(
         () => Text(
           "${lang.strings['customer']['home']['services']}",
@@ -203,9 +205,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             },
           ),
         ),
-        SizedBox(
-          height: Get.height * 0.05,
-        ),
+
         //==================Food====================
         Obx(
           () => ServicesCard(
@@ -217,9 +217,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             },
           ),
         ),
-        SizedBox(
-          height: Get.height * 0.05,
-        ),
+
         //==================Laundry=================
         Obx(
           () => ServicesCard(

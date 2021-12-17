@@ -67,6 +67,8 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
 
   @override
   void initState() {
+    super.initState();
+
     String orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId) as RestaurantOrder?;
@@ -117,16 +119,13 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         SizedBox(
-                          height: 20,
+                          height: 10,
                         ),
                         OrderStatusCard(
                           order: order.value!,
                           ordersStates: order.value!.status,
                         ),
 
-                        SizedBox(
-                          height: 30,
-                        ),
                         OrderItemsCard(
                           items: order.value!.items,
                         ),

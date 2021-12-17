@@ -29,60 +29,51 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           //===================== item image avatar=============
-          Container(
-            child: CachedNetworkImage(
-              imageUrl: widget.imageUrl,
-              imageBuilder: (context, imageProvider) {
-                return Container(
-                  width: 60,
-                  height: 60,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                          fit: BoxFit.cover, image: imageProvider)),
-                );
-              },
-              fit: BoxFit.cover,
-              placeholder: (context, url) => Container(
-                width: 15,
-                height: 15,
-                child: Center(
-                  child: CircularProgressIndicator(),
+          Flexible(
+            child: Container(
+              child: CachedNetworkImage(
+                imageUrl: widget.imageUrl,
+                imageBuilder: (context, imageProvider) {
+                  return Container(
+                    width: 60,
+                    height: 60,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            fit: BoxFit.cover, image: imageProvider)),
+                  );
+                },
+                fit: BoxFit.cover,
+                placeholder: (context, url) => Container(
+                  width: 15,
+                  height: 15,
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
                 ),
               ),
             ),
           ),
           SizedBox(
-            width: 5,
+            width: 10,
           ),
           Flexible(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                //===================== restaurant name=================
-                // Container(
-                //   child: Text("${widget.restaurantName}", style: txt.subtitle1),
-                // ),
-
-                Text(
-                  "${widget.itemName}",
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: txt.headline2,
-                ),
-              ],
+            flex: 4,
+            fit: FlexFit.loose,
+            child: Text(
+              "${widget.itemName} hhhh hhhh hhhhhhh",
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: txt.headline3,
             ),
           ),
           SizedBox(
-            width: 15,
+            width: 10,
           ),
-          Container(
-            //===================== items price========================
-            child: Text(
-              "${widget.itemsPrice} \$",
-              style: txt.headline2!
-                  .copyWith(color: Color.fromRGBO(172, 89, 252, 1)),
-            ),
+          Text(
+            "\$${widget.itemsPrice} ",
+            style:
+                txt.headline3!.copyWith(color: Color.fromRGBO(172, 89, 252, 1)),
           ),
         ],
       ),

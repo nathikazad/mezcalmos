@@ -55,7 +55,7 @@ class CustomerAppTheme {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       primary: Colors.white,
       backgroundColor: Color(0xFFAC59FC),
-      padding: EdgeInsets.all(16),
+      padding: EdgeInsets.all(12),
       textStyle: TextStyle(
         fontFamily: "Montserrat",
         fontWeight: FontWeight.w700,

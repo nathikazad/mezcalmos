@@ -43,7 +43,7 @@ class OngoingOrderCard extends StatelessWidget {
               Row(
                 children: [
                   CircleAvatar(
-                      radius: 35,
+                      radius: 30,
                       backgroundImage:
                           // #question @jam what is the point of null check if you are going to override it like this
                           // taxi orders dont have service provider image when they are looking for orders
@@ -51,9 +51,10 @@ class OngoingOrderCard extends StatelessWidget {
                           NetworkImage(order.serviceProvider != null
                               ? order.serviceProvider!.image
                               : "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d")),
-                  SizedBox(width: 5.w),
+                  SizedBox(width: 10),
                   Flexible(
-                    flex: 3,
+                    flex: 5,
+                    fit: FlexFit.tight,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -69,17 +70,16 @@ class OngoingOrderCard extends StatelessWidget {
                     ),
                   ),
                   Spacer(),
-                  if (order.orderType == OrderType.Restaurant)
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        getOrderWidget((order as RestaurantOrder).status),
-                        Text(
-                          getOrderStatus((order as RestaurantOrder).status),
-                          style: txt.subtitle1,
-                        )
-                      ],
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      getOrderWidget((order as RestaurantOrder).status),
+                      Text(
+                        getOrderStatus((order as RestaurantOrder).status),
+                        style: txt.subtitle1,
+                      )
+                    ],
+                  ),
                   SizedBox(
                     width: 10,
                   )
@@ -92,7 +92,7 @@ class OngoingOrderCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      "${lang.strings["customer"]["restaurant"]["cart"]["totalCost"]} : ${order.cost} \$",
+                      "${lang.strings["customer"]["restaurant"]["cart"]["totalCost"]} : \$${order.cost.toStringAsFixed(0)} ",
                     ),
                     SizedBox(
                       width: 10,

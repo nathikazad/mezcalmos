@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart';
 import 'package:mezcalmos/CustomerApp/components/incrementalComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
@@ -11,7 +10,6 @@ import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 
 import '../../../../router.dart';
 import '../ViewItemScreen.dart';
-import 'dailogCheckCartIfEmpty.dart';
 import 'dialogRequiredSignIn.dart';
 
 class BottomBarItemViewScreen extends StatefulWidget {
@@ -44,37 +42,36 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
       padding: const EdgeInsets.all(16),
       color: Colors.white,
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Expanded(
-            flex: 3,
-            child: Container(
-              child: IncrementalComponent(
-                increment: () {
-                  widget.cartItem.value!.quantity++;
-                  widget.cartItem.refresh();
-                },
-                decrement: () {
-                  // if(widget.cartItem.value!.quantity<=1){
+          IncrementalComponent(
+            increment: () {
+              widget.cartItem.value!.quantity++;
+              widget.cartItem.refresh();
+            },
+            decrement: () {
+              // if(widget.cartItem.value!.quantity<=1){
 
-                  // }
-                  widget.cartItem.value!.quantity--;
-                  widget.cartItem.refresh();
-                },
-                minVal: 1,
-                value: widget.cartItem.value!.quantity,
-              ),
-            ),
+              // }
+              widget.cartItem.value!.quantity--;
+              widget.cartItem.refresh();
+            },
+            minVal: 1,
+            value: widget.cartItem.value!.quantity,
           ),
-          Expanded(
-            flex: 2,
-            child: Container(
-              //price thing
-              child: Center(
-                  child: Text(
-                "${currency.format(widget.cartItem.value!.totalCost())} \$",
-                style: txt.headline2,
-              )),
-            ),
+          Container(
+            child: Center(
+                child: Text(
+              "\$${widget.cartItem.value!.totalCost().toStringAsFixed(0)} ",
+              style: txt.headline3,
+            )),
+          ),
+          Container(
+            child: Center(
+                child: Text(
+              "\$${widget.cartItem.value!.totalCost().toStringAsFixed(0)} ",
+              style: txt.headline3,
+            )),
           ),
           TextButton(
             onPressed: () async {
@@ -150,6 +147,7 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                   ? lang.strings['customer']['restaurant']['menu']['addToCart']
                   : lang.strings['customer']['restaurant']['menu']
                       ['modifyItem'],
+              textAlign: TextAlign.center,
             ),
           ),
         ],

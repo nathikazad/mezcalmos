@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 const Duration _kExpand = Duration(milliseconds: 200);
 
@@ -155,7 +154,6 @@ class _MyExpensionPanelComponentState extends State<MyExpensionPanelComponent>
               alignment: Alignment.center,
               heightFactor: _heightFactor.value,
               child: Container(
-                width: Get.width,
                 color: Colors.white,
                 child: Column(
                   children: widget.children,

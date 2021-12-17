@@ -8,12 +8,12 @@ import 'package:mezcalmos/TaxiAdminApp/components/appBar.dart';
 import 'package:mezcalmos/TaxiAdminApp/Models/NbNotifs.dart';
 import 'package:mezcalmos/TaxiAdminApp/Models/NbOrders.dart';
 import 'package:mezcalmos/TaxiAdminApp/components/infoCardComponent.dart';
-import 'package:mezcalmos/TaxiAdminApp/controller/DriverController.dart';
 import 'package:mezcalmos/TaxiAdminApp/components/getFutureData.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:mezcalmos/TaxiAdminApp/controller/driverController.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 class DriverPage extends GetView<DriverStatsController> {

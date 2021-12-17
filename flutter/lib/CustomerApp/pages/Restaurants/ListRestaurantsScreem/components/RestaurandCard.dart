@@ -28,13 +28,14 @@ class RestaurantCard extends StatelessWidget {
         onTap: onClick,
         child: Container(
           width: double.infinity,
-          height: 120.h,
+          height: 125,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Flexible(
                 child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(12.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -43,28 +44,34 @@ class RestaurantCard extends StatelessWidget {
                         style: txt.headline3,
                       ),
                       SizedBox(
-                        height: 10.h,
+                        height: 10,
                       ),
                       Text(
                         restaurant.description,
                         style: txt.subtitle1,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
                       Spacer(),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.restaurant_menu,
-                            color: Colors.deepPurple,
-                          ),
-                          SizedBox(
-                            width: 5.w,
-                          ),
-                          Text(
-                            restaurant.items.length.toStringAsFixed(0) +
-                                ' ${lang.strings["customer"]["restaurant"]["menu"]["items"]}',
-                            style: txt.bodyText2,
-                          )
-                        ],
+                      Container(
+                        alignment: Alignment.bottomLeft,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Icon(
+                              Icons.restaurant_menu,
+                              color: Colors.deepPurple,
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              restaurant.items.length.toStringAsFixed(0) +
+                                  ' ${lang.strings["customer"]["restaurant"]["menu"]["items"]}',
+                              style: txt.bodyText2,
+                            )
+                          ],
+                        ),
                       )
                     ],
                   ),

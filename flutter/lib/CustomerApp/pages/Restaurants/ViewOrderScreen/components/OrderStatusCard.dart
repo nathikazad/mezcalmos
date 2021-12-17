@@ -29,43 +29,37 @@ class OrderStatusCard extends StatelessWidget {
         Card(
           child: Container(
             width: double.infinity,
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  getOrderWidget(ordersStates),
-                  Flexible(
-                      child: Text(
-                    getOrderStatus(ordersStates),
-                    style: txt.headline3,
-                    textAlign: TextAlign.center,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  )),
-                  SizedBox(
-                    width: 10.w,
-                  ),
-                  Material(
-                    color: Theme.of(context).primaryColorLight,
-                    shape: CircleBorder(),
-                    child: InkWell(
-                      onTap: () {
-                        Get.toNamed(getRestaurantMessagesRoute(order.orderId));
-                      },
-                      customBorder: CircleBorder(),
-                      child: Container(
-                        margin: EdgeInsets.all(16),
-                        child: Icon(
-                          Icons.textsms,
-                          color: Colors.white,
-                        ),
+            padding: const EdgeInsets.all(12),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                getOrderWidget(ordersStates),
+                Flexible(
+                    child: Text(
+                  getOrderStatus(ordersStates),
+                  style: txt.headline3,
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                )),
+                Material(
+                  color: Theme.of(context).primaryColorLight,
+                  shape: CircleBorder(),
+                  child: InkWell(
+                    onTap: () {
+                      Get.toNamed(getRestaurantMessagesRoute(order.orderId));
+                    },
+                    customBorder: CircleBorder(),
+                    child: Container(
+                      margin: EdgeInsets.all(12),
+                      child: Icon(
+                        Icons.textsms,
+                        color: Colors.white,
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

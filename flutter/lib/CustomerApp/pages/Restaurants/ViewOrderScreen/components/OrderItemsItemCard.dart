@@ -19,17 +19,18 @@ class OrderItemsItemCard extends StatelessWidget {
         child: Column(
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 CircleAvatar(
                   radius: 25,
                   backgroundImage: CachedNetworkImageProvider(item.image),
                 ),
-                // SizedBox(
-                //   width: 10,
-                // ),
+                SizedBox(
+                  width: 10,
+                ),
                 Flexible(
-                  flex: 1,
+                  flex: 2,
+                  fit: FlexFit.tight,
                   child: Text(
                     item.name,
                     style: txt.bodyText1,

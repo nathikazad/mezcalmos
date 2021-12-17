@@ -32,13 +32,12 @@ Widget buildItems(List<CartItem> cartItems, BuildContext context) {
         margin: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
         child: MyExpensionPanelComponent(
           child: Flexible(
-              // width: 200,
               child: Obx(
             () => ItemInformationCart(
               imageUrl: element.item.image!,
               itemName: element.item.name!,
               restaurantName: "Basic food",
-              itemsPrice: "${currency.format(counter.value)}",
+              itemsPrice: counter.value.toStringAsFixed(0),
             ),
           )),
           children: choosenOneOption(element.chosenOneOptions, context) +
