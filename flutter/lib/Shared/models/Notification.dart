@@ -54,6 +54,7 @@ class Notification {
   String body;
   String imgUrl;
   String linkUrl;
+  String? linkText;
   NotificationType notificationType;
   NotificationAction notificationAction;
   String? get orderId => variableParams['orderId'];
@@ -67,7 +68,8 @@ class Notification {
       required this.imgUrl,
       required this.linkUrl,
       required this.notificationType,
-      required this.notificationAction});
+      required this.notificationAction,
+      this.linkText});
 
   String get formattedTime =>
       DateFormat('HH:mm').format(this.timestamp.toLocal()).toString();

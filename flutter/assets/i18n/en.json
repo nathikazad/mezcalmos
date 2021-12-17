@@ -288,7 +288,9 @@
                     "title": "No taxis available",
                     "body": "Unfortunately, we could not find a taxi for you. Please try again later"
                 }
-            }
+            },
+            "view": "View",
+            "viewOrder": "View Order"
         },
         "userInfo": {
             "title": " User Information",

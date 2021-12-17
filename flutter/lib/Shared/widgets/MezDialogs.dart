@@ -206,9 +206,14 @@ Future<YesNoDialogButton> cancelAlertDialog(
       .toYesNo(right: YesNoDialogButton.Yes, left: YesNoDialogButton.No);
 }
 
-class YesButtonComponetStyle extends StatelessWidget {
-  const YesButtonComponetStyle({Key? key}) : super(key: key);
-
+class MezDialogButtonStyle extends StatelessWidget {
+  MezDialogButtonStyle(
+      {required this.buttonText,
+      required this.buttonColor,
+      required this.buttonShadowColor});
+  final String buttonText;
+  final Color buttonColor;
+  final Color buttonShadowColor;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -218,18 +223,17 @@ class YesButtonComponetStyle extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(4)),
         boxShadow: [
           BoxShadow(
-              color: const Color(0x2eff0000),
+              color: buttonShadowColor,
               offset: Offset(0, 6),
               blurRadius: 10,
               spreadRadius: 0)
         ],
-        color: const Color(0xffdb2846),
+        color: buttonColor,
       ),
       child: Center(
-        child: Text(
-            "${Get.find<LanguageController>().strings["taxi"]["taxiView"]["yes"]}",
+        child: Text(buttonText,
             style: const TextStyle(
-                color: const Color(0xffffffff),
+                color: const Color(0xff000000),
                 fontWeight: FontWeight.w700,
                 fontFamily: "ProductSans",
                 fontStyle: FontStyle.normal,
@@ -240,36 +244,28 @@ class YesButtonComponetStyle extends StatelessWidget {
   }
 }
 
+class YesButtonComponetStyle extends StatelessWidget {
+  const YesButtonComponetStyle({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MezDialogButtonStyle(
+        buttonText:
+            "${Get.find<LanguageController>().strings["taxi"]["taxiView"]["yes"]}",
+        buttonColor: Color(0xffdb2846),
+        buttonShadowColor: Color(0x2eff0000));
+  }
+}        
+
 class NoButtonComponetStyle extends StatelessWidget {
   const NoButtonComponetStyle({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 88,
-      height: 35,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(4)),
-        boxShadow: [
-          BoxShadow(
-              color: const Color(0x334c504a),
-              offset: Offset(0, 6),
-              blurRadius: 10,
-              spreadRadius: 0)
-        ],
-        color: const Color(0xfffdfdfd),
-      ),
-      child: Center(
-        child: Text(
+    return MezDialogButtonStyle(
+        buttonText:
             "${Get.find<LanguageController>().strings["taxi"]["taxiView"]["no"]}",
-            style: const TextStyle(
-                color: const Color(0xff000000),
-                fontWeight: FontWeight.w700,
-                fontFamily: "ProductSans",
-                fontStyle: FontStyle.normal,
-                fontSize: 14.0),
-            textAlign: TextAlign.center),
-      ),
-    );
+        buttonColor: Color(0xfffdfdfd),
+        buttonShadowColor: Color(0x334c504a));
   }
 }

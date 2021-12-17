@@ -48,9 +48,7 @@ Widget buildCart(Cart cart, BuildContext context) {
                   Spacer(),
                   Container(
                     child: Text(
-                      (cart.quantity() != null)
-                          ? "${cart.quantity()} ${lang.strings["customer"]["restaurant"]["menu"]["items"]}"
-                          : "0",
+                      "${cart.quantity()} ${lang.strings["customer"]["restaurant"]["menu"]["items"]}",
                       style: txt.headline2,
                     ),
                   ),

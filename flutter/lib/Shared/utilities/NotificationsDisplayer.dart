@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as notifs;
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
@@ -35,58 +36,16 @@ void _displayNotification(notifs.Notification notification) async {
     twoButtonDialog(
         title: notification.title,
         body: notification.body,
-        buttonRightStyle: Container(
-          width: 88,
-          height: 35,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            boxShadow: [
-              BoxShadow(
-                  color: const Color(0x334c504a),
-                  offset: Offset(0, 6),
-                  blurRadius: 10,
-                  spreadRadius: 0)
-            ],
-            color: const Color(0xfffdfdfd),
-          ),
-          child: Center(
-            child: Text("View Order",
-                style: const TextStyle(
-                    color: const Color(0xff000000),
-                    fontWeight: FontWeight.w700,
-                    fontFamily: "ProductSans",
-                    fontStyle: FontStyle.normal,
-                    fontSize: 14.0),
-                textAlign: TextAlign.center),
-          ),
-        ),
-        buttonLeftStyle: Container(
-          width: 88,
-          height: 35,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-            boxShadow: [
-              BoxShadow(
-                  color: const Color(0x2eff0000),
-                  offset: Offset(0, 6),
-                  blurRadius: 10,
-                  spreadRadius: 0)
-            ],
-            color: const Color(0xffdb2846),
-          ),
-          child: Center(
-            child: Text("Ok",
-                style: const TextStyle(
-                    color: const Color(0xffffffff),
-                    fontWeight: FontWeight.w700,
-                    fontFamily: "ProductSans",
-                    fontStyle: FontStyle.normal,
-                    fontSize: 14.0),
-                textAlign: TextAlign.center),
-          ),
-        ),
-        // leftButtonText: "Ok",
-        // rightButtonText: "View Order",
+        buttonRightStyle: MezDialogButtonStyle(
+            buttonText: "Ok",
+            buttonColor: Color(0xffffffff),
+            buttonShadowColor: Color(0xfffdfdfd)),
+        buttonLeftStyle: MezDialogButtonStyle(
+            buttonText: notification.linkText ??
+                Get.find<LanguageController>().strings['shared']['notification']
+                    ['view'],
+            buttonColor: Color(0xffffffff),
+            buttonShadowColor: Color(0xfffdfdfd)),
         rightButtonCallback: () => Get.toNamed(notification.linkUrl));
   } else {
     notificationSnackBar(notification.imgUrl, notification.title,

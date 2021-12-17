@@ -40,6 +40,8 @@ Notification taxiOrderStatusChangeNotificationHandler(
   return Notification(
       id: key,
       linkUrl: getTaxiOrderRoute(value['orderId']),
+      linkText: Get.find<LanguageController>().strings['shared']['notification']
+          ['viewOrder'],
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],
@@ -59,6 +61,8 @@ Notification restaurantOrderStatusChangeNotificationHandler(
   return Notification(
       id: key,
       linkUrl: getRestaurantOrderRoute(value['orderId']),
+      linkText: Get.find<LanguageController>().strings['shared']['notification']
+          ['viewOrder'],
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],

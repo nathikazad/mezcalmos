@@ -18,7 +18,6 @@ import 'itemInformationCart.dart';
 final currency = new NumberFormat("#,##0.00", "en_US");
 
 Widget buildItems(List<CartItem> cartItems, BuildContext context) {
-  final txt = Theme.of(context).textTheme;
   RestaurantController controller = Get.find<RestaurantController>();
   LanguageController lang = Get.find<LanguageController>();
 

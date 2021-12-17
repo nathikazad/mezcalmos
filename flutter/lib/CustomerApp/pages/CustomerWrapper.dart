@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/CustomerApp_appbar.dart';
+import 'package:mezcalmos/CustomerApp/components/appbar.dart';
 import 'package:mezcalmos/CustomerApp/components/customerHomeFooterButtons.dart';
 import 'package:mezcalmos/CustomerApp/components/servicesCard.dart';
 import 'package:mezcalmos/CustomerApp/constants/databaseNodes.dart';
