@@ -15,7 +15,11 @@ List<GetPage<dynamic>> routes = XRouter.mainRoutes;
 void main() {
   loadBitmaps();
   runMainGuarded(() => runApp(
-        StartingPoint(AppType.TaxiApp, signInCallback, signOutCallback, routes),
+        StartingPoint(
+            appType: AppType.TaxiApp,
+            signInCallback: signInCallback,
+            signOutCallback: signOutCallback,
+            routes: routes),
       ));
 }
 

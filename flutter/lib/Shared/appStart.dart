@@ -19,7 +19,6 @@ import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:mezcalmos/CustomerApp/CustomerAppTheme.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -32,16 +31,29 @@ import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:package_info/package_info.dart';
 import 'package:mezcalmos/Shared/utilities/ResponsiveUtilities.dart';
 
+final ThemeData _defaultAppTheme = ThemeData(
+    primaryColor: Colors.white,
+    visualDensity: VisualDensity.adaptivePlatformDensity);
+
 class StartingPoint extends StatefulWidget {
   final AppType appType;
+  final ThemeData? _appTheme;
   final Function signInCallback;
   final Function signOutCallback;
   final List<GetPage<dynamic>> routes;
   final List<SideMenuItem>? sideMenuItems;
+
+  ThemeData get appTheme => _appTheme ?? _defaultAppTheme;
+
   //  Sideminu
   StartingPoint(
-      this.appType, this.signInCallback, this.signOutCallback, this.routes,
-      [this.sideMenuItems]);
+      {required this.appType,
+      ThemeData? appTheme,
+      required this.signInCallback,
+      required this.signOutCallback,
+      required this.routes,
+      this.sideMenuItems})
+      : _appTheme = appTheme;
 
   @override
   _StartingPointState createState() => _StartingPointState();
@@ -83,7 +95,10 @@ class _StartingPointState extends State<StartingPoint> {
       return SplashScreen();
     } else {
       mezDbgPrint("====> PreviewMode ===> ${GetStorage().read('previewMode')}");
-      return mainApp(widget.appType, widget.routes);
+      return mainApp(
+          appType: widget.appType,
+          appTheme: widget.appTheme,
+          routes: widget.routes);
     }
   }
 
@@ -188,7 +203,10 @@ class _StartingPointState extends State<StartingPoint> {
   }
 }
 
-Widget mainApp(AppType appType, List<GetPage<dynamic>> routes) {
+Widget mainApp(
+    {required AppType appType,
+    required ThemeData appTheme,
+    required List<GetPage<dynamic>> routes}) {
   Future<void> _initializeConfig() async {
     // We will use this to Initialize anything at MaterialApp root init of app
     BitmapDescriptor desc = await BitmapDescriptor.fromAssetImage(
@@ -198,24 +216,12 @@ Widget mainApp(AppType appType, List<GetPage<dynamic>> routes) {
     print("[+] InitializedConfig -- the ${appType.toShortString()} !");
   }
 
-  getTheme(AppType appType) {
-    switch (appType) {
-      case AppType.CustomerApp:
-        return CustomerAppTheme.lightTheme;
-
-      default:
-        return ThemeData(
-            primaryColor: Colors.white,
-            visualDensity: VisualDensity.adaptivePlatformDensity);
-    }
-  }
-
   return ScreenUtilInit(
     builder: () => GetMaterialApp(
       debugShowCheckedModeBanner: false,
       onInit: () async => await _initializeConfig(),
       title: appType.toShortString(),
-      theme: getTheme(appType),
+      theme: appTheme,
       color: Colors.white,
       enableLog: true,
       getPages: routes,
