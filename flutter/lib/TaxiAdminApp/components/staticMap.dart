@@ -8,8 +8,8 @@ import 'package:get/get.dart';
 import 'dart:ui' as ui;
 import 'package:http/http.dart' as http;
 // import 'package:mezcalmos/Shared/controllers/mapController.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/TaxiAdminApp/pages/Orders/OrdersCumOnMonthPage.dart';
+import 'package:mezcalmos/Shared/utilities/ResponsiveUtilities.dart';
+import 'package:mezcalmos/Shared/utilities/ImageUtilities.dart';
 
 class StaticMap extends StatefulWidget {
   final LatLng pickUpLocation;

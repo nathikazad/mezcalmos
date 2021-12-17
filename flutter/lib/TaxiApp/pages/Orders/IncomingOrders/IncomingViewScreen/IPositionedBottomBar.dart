@@ -5,17 +5,18 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/utilities/Extensions.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/utilities/ResponsiveUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mezcalmos/Shared/utilities/ImageUtilities.dart';
 
-class IncommingPositionedBottomBar extends StatelessWidget with MezDisposable {
+class IncomingPositionedBottomBar extends StatelessWidget with MezDisposable {
   // IncomingOrdersController controller = Get.find<IncomingOrdersController>();
   LanguageController lang = Get.find<LanguageController>();
   TaxiOrder order;
 
-  IncommingPositionedBottomBar({required this.order});
+  IncomingPositionedBottomBar({required this.order});
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +106,7 @@ class IncommingPositionedBottomBar extends StatelessWidget with MezDisposable {
                             width: 10.sp,
                           ),
                           Text(
-                            "${hoursMinsShortner(order.routeInformation.duration.daysHoursString)}",
+                            "${order.routeInformation.duration.shortTextVersion}",
                             overflow: TextOverflow.ellipsis,
                             softWrap: false,
                             maxLines: 1,

@@ -30,6 +30,7 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:package_info/package_info.dart';
+import 'package:mezcalmos/Shared/utilities/ResponsiveUtilities.dart';
 
 class StartingPoint extends StatefulWidget {
   final AppType appType;

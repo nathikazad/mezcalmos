@@ -8,7 +8,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
+import 'package:mezcalmos/Shared/utilities/ResponsiveUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 

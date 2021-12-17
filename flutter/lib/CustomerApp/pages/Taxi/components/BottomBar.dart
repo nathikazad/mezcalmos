@@ -9,7 +9,8 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/utilities/ResponsiveUtilities.dart';
+import 'package:mezcalmos/Shared/utilities/ImageUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
@@ -279,7 +280,7 @@ class _BottomBarState extends State<BottomBar> {
                 width: 2.w,
               ),
               Text(widget
-                      .taxiRequest.routeInformation?.duration.daysHoursString ??
+                      .taxiRequest.routeInformation?.duration.longTextVersion ??
                   "-"),
             ],
           ),

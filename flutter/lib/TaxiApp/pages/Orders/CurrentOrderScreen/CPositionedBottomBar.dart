@@ -16,6 +16,8 @@ import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.d
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:mezcalmos/Shared/utilities/ResponsiveUtilities.dart';
 
 class CurrentPositionedBottomBar extends StatelessWidget {
   RxBool showLoadingCircleInButton = false.obs;
@@ -351,6 +353,15 @@ class CurrentPositionedBottomBar extends StatelessWidget {
       mezDbgPrint("CurrentPositionedBottomBar startRide success");
     } else {
       // todo: SHOW ERROR MESSAGE
+    }
+  }
+
+  Future<void> mapLauncher(lat, lng) async {
+    String url = "https://www.google.com/maps/dir/?api=1&destination=$lat,$lng";
+    if (await canLaunch(url))
+      await launch(url);
+    else {
+      mezcalmosSnackBar("Error", "Failed to launch that on Map!");
     }
   }
 }

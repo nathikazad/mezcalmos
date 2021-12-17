@@ -4,6 +4,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mezcalmos/Shared/utilities/ResponsiveUtilities.dart';
 
 class TopBar extends StatelessWidget {
   final LanguageController lang = Get.find<LanguageController>();

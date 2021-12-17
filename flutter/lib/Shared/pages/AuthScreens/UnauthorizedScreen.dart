@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:mezcalmos/Shared/utilities/ResponsiveUtilities.dart';
 
 class UnauthorizedScreen extends StatefulWidget {
   UnauthorizedScreen({Key? key}) : super(key: key);

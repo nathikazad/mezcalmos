@@ -33,18 +33,28 @@ class RideDistance {
         this.distanceInMeters = data['value'];
 }
 
+String hoursMinsShortner(String original) {
+  return original
+      .replaceFirst('hours', 'hr')
+      .replaceFirst('hour', 'hr')
+      .replaceFirst('mins', 'min')
+      .replaceFirst('min', 'min');
+}
+
 class RideDuration {
-  String daysHoursString;
+  String _asText;
+  String get longTextVersion => this._asText;
+  String get shortTextVersion => hoursMinsShortner(this._asText);
   int seconds;
-  RideDuration(this.daysHoursString, this.seconds);
+  RideDuration(this._asText, this.seconds);
   Map<String, dynamic> toJson() {
     return {
-      "duration": {"text": this.daysHoursString, "value": this.seconds}
+      "duration": {"text": this.longTextVersion, "value": this.seconds}
     };
   }
 
   RideDuration.fromJson(dynamic data)
-      : this.daysHoursString = data['text'],
+      : this._asText = data['text'],
         this.seconds = data['value'];
 }
 

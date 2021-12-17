@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/models/Location.dart' as LocationModel;
 import 'package:mezcalmos/Shared/utilities/Extensions.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mezcalmos/Shared/utilities/ResponsiveUtilities.dart';
 
 class MGoogleMap extends StatefulWidget with MezDisposable {
   final MapHelper.LocationChangesNotifier? notifyParentOfNewLocation;

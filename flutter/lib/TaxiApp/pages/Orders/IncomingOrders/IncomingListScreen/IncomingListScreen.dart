@@ -15,9 +15,10 @@ import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:mezcalmos/Shared/utilities/ImageUtilities.dart';
 import 'Components/MezSwitch.dart';
 import 'Components/NoScrollGlowBehaviour.dart';
+import 'package:mezcalmos/Shared/utilities/ResponsiveUtilities.dart';
 
 class IncomingOrdersScreen extends StatefulWidget {
   @override
@@ -259,7 +260,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
               size: getSizeRelativeToScreen(32, Get.width.w, Get.height.h).w),
           SizedBox(width: 2.w),
           Text(
-            hoursMinsShortner(order.routeInformation.duration.daysHoursString),
+            order.routeInformation.duration.shortTextVersion,
             overflow: TextOverflow.ellipsis,
             maxLines: 1,
             softWrap: false,

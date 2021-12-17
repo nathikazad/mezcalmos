@@ -10,7 +10,7 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-
+import 'package:mezcalmos/Shared/utilities/ResponsiveUtilities.dart';
 import 'components/cartIsEmptyScreen.dart';
 
 class ViewCartScreen extends StatefulWidget {

@@ -55,3 +55,54 @@ void _displayNotification(notifs.Notification notification) async {
     });
   }
 }
+
+
+void notificationSnackBar(
+    String imgUrl, String title, String msg, String time, Function onClick) {
+  Get.rawSnackbar(
+      onTap: (_) async {
+        mezDbgPrint("ONTAP ====> $_");
+        await onClick();
+      },
+      maxWidth: Get.width,
+      margin: EdgeInsets.all(0),
+      duration: Duration(milliseconds: 5000),
+      icon: Container(
+        height: 50,
+        width: 10,
+        clipBehavior: Clip.antiAlias,
+        decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(
+                color: Colors.grey.shade100,
+                width: 1,
+                style: BorderStyle.solid)),
+        child: imgUrl.startsWith("http")
+            ? Image.network(
+                imgUrl,
+                fit: BoxFit.cover,
+                height: 50,
+                width: 10,
+              )
+            : Image.asset(imgUrl),
+      ),
+      backgroundColor: Colors.white,
+      borderWidth: 1,
+      borderColor: const Color(0xECECEC),
+      borderRadius: 0,
+      messageText: Text(msg),
+      titleText: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            title,
+            style: TextStyle(fontFamily: 'psb'),
+          ),
+          Text(time)
+        ],
+      ),
+      padding: EdgeInsets.all(25),
+      snackPosition: SnackPosition.TOP,
+      snackStyle: SnackStyle.GROUNDED);
+}
