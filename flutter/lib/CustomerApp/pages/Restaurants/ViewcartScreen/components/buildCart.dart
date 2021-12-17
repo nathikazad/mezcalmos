@@ -66,10 +66,18 @@ Widget buildCart(Cart cart, BuildContext context) {
                     child: InkWell(
                       onTap: () async {
                         YesNoDialogButton yesNoRes = await cancelAlertDialog(
-                            title: lang.strings["customer"]["restaurant"]
-                                ["cart"]["clearCart"],
-                            body: lang.strings["customer"]["restaurant"]["cart"]
-                                ["clearCartConfirm"]);
+                          title: lang.strings["customer"]["restaurant"]["cart"]
+                              ["clearCart"],
+                          body: lang.strings["customer"]["restaurant"]["cart"]
+                              ["clearCartConfirm"],
+                          icon: Container(
+                            child: Icon(
+                              Icons.highlight_off,
+                              size: 65,
+                              color: Color(0xffdb2846),
+                            ),
+                          ),
+                        );
 
                         if (yesNoRes == YesNoDialogButton.Yes) {
                           controller.clearCart();

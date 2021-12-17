@@ -13,6 +13,8 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
 
 import 'components/SavedLocationComponent.dart';
+import 'components/savedLocationBody.dart';
+import 'components/savedLocationISEmpty.dart';
 
 class SavedLocationView extends StatefulWidget {
   SavedLocationView({
@@ -94,88 +96,9 @@ class _SavedLocationViewState extends State<SavedLocationView> {
           },
         ),
         body: savedLocations.length > 0
-            ? Container(
-                child: SingleChildScrollView(
-                    child: Column(
-                  children: [
-                    SizedBox(height: Get.height * 0.07),
-                    Container(
-                      margin: const EdgeInsets.only(
-                          right: 16, bottom: 10, left: 16),
-                      child: Row(
-                        children: [
-                          Container(
-                            child: Text(
-                                lang.strings["customer"]["savedLocations"]
-                                    ["title"],
-                                style: txt.headline1!.copyWith(
-                                    fontWeight: FontWeight.w700, fontSize: 12),
-                                textAlign: TextAlign.left),
-                          ),
-                          Spacer(),
-                          Container(
-                            child: Text(
-                                "${getLocationNumbers()} ${lang.strings["customer"]["savedLocations"]["location"]}${getLocationNumbers() > 1 ? 's' : ''}",
-                                style: txt.headline4!.copyWith(
-                                    fontWeight: FontWeight.w700, fontSize: 12),
-                                textAlign: TextAlign.right),
-                          )
-                        ],
-                      ),
-                    ),
-                    ...savedLocations
-                        .map((savedLocation) => SavedLocationComponent(
-                              savelocation: savedLocation,
-                              onPress: () {
-                                Get.back(result: savedLocation);
-                              },
-                            )),
-                    SizedBox(
-                      height: 25,
-                    ),
-                  ],
-                )),
+            ? SavedLocationBody(
+                savedLocations: savedLocations,
               )
             : SavedlocationISEmpty());
-  }
-}
-
-class SavedlocationISEmpty extends StatelessWidget {
-  const SavedlocationISEmpty({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            child: Image.asset("assets/images/noSavedLoc.png"),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Container(
-            child: Text(
-              "Your Saved locations list is empty",
-              style: txt.headline2!
-                  .copyWith(fontWeight: FontWeight.w700, fontSize: 19),
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-            child: Text(
-              "Add new location by clicking the button below",
-              style: txt.subtitle1!
-                  .copyWith(fontWeight: FontWeight.w500, fontSize: 13),
-            ),
-          )
-        ],
-      ),
-    );
   }
 }

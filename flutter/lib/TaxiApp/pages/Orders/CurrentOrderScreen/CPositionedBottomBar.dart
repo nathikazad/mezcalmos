@@ -300,6 +300,13 @@ class CurrentPositionedBottomBar extends StatelessWidget {
           0.5)) {
         YesNoDialogButton clickedYes = await yesNoDialog(
             text: 'Oops!',
+            icon: Container(
+              child: Icon(
+                Icons.highlight_off,
+                size: 65,
+                color: Color(0xffdb2846),
+              ),
+            ),
             body: lang.strings['taxi']['taxiView']["tooFarFromfinishRide"]);
 
         mezDbgPrint("CurrentPositionedBottomBar clickedYes: $clickedYes");

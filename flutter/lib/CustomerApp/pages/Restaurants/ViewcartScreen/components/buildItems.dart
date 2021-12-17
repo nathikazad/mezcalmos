@@ -81,7 +81,14 @@ Widget buildItems(List<CartItem> cartItems, BuildContext context) {
                                             ["deleteItem"],
                                         body: lang.strings["customer"]
                                                 ["restaurant"]["cart"]
-                                            ["deleteItemConfirm"]);
+                                            ["deleteItemConfirm"],
+                                        icon: Container(
+                                          child: Icon(
+                                            Icons.highlight_off,
+                                            size: 65,
+                                            color: Color(0xffdb2846),
+                                          ),
+                                        ));
                                 mezDbgPrint(
                                     " the returend value from the dailog $yesNoResult");
                                 if (yesNoResult == YesNoDialogButton.Yes) {

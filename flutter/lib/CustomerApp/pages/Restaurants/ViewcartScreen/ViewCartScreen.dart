@@ -12,6 +12,8 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
+import 'components/cartIsEmptyScreen.dart';
+
 class ViewCartScreen extends StatefulWidget {
   @override
   _ViewCartScreenState createState() => _ViewCartScreenState();
@@ -52,79 +54,94 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         autoBack: true,
         title: "${lang.strings["customer"]["restaurant"]["cart"]["myCart"]}",
       ),
-      body: Obx(() => controller.cart.value.items.length > 0
-          ? GetBuilder<RestaurantController>(
+      body: Obx(() {
+        if (controller.cart.value.items.length > 0) {
+          return GetBuilder<RestaurantController>(
               // specify type as Controller
               init: RestaurantController(), // intialize with the Controller
-              builder: (_) => SingleChildScrollView(child: ViewCartBody()))
-          : MezLogoAnimation(
-              centered: true,
-            )),
+              builder: (_) => SingleChildScrollView(child: ViewCartBody()));
+        } else {
+          return CartIsEmptyScreen();
+        }
+      }),
       bottomNavigationBar: Obx(
         () => ButtonComponent(
-            bgColor: controller.cart.value.toLocation == null ||
-                    controller.cart.value.toLocation?.address ==
-                        "Unnamed Road, Cupertino, CA 95014, USA"
-                ? const Color(0xdddddddd)
-                : const Color(0xffac59fc),
+            bgColor: getTheRightButtonColor(),
             widget: Center(
-              child: !_clickedOrderNow
-                  ? Text(
-                      "${lang.strings['customer']['restaurant']['cart']['orderNow']}",
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline2!
-                          .copyWith(color: Colors.white))
-                  : Container(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(
-                        color: Colors.white,
-                        strokeWidth: 1,
-                      ),
-                    ),
-            ),
-            function: controller.cart.value.toLocation == null ||
-                    controller.cart.value.toLocation?.address ==
-                        "Unnamed Road, Cupertino, CA 95014, USA"
-                ? () {}
-                : () async {
-                    if (controller.cart.value.toLocation != null) {
-                      setState(() {
-                        _clickedOrderNow = true;
-                      });
-                      controller.cart.value.notes = textcontoller.text;
-                      mezDbgPrint(controller.cart.value
-                          .toFirebaseFormattedJson()
-                          .toString());
-
-                      var response = await controller.checkout();
-                      print(response.errorCode.toString());
-                      if (response.success) {
-                        controller.clearCart();
-                        popEverythingAndNavigateTo(
-                            getRestaurantOrderRoute(response.data["orderId"]));
-                      } else {
-                        print(response);
-                        if (response.errorCode == "serverError") {
-                          // do something
-                        } else if (response.errorCode ==
-                            "inMoreThanThreeOrders") {
-                          // do something
-                        } else if (response.errorCode == "restaurantClosed") {
-                          // do something
-                        } else {
-                          // do something
-                        }
-                      }
-
-                      setState(() {
-                        _clickedOrderNow = false;
-                      });
-                    }
-                  }),
+                child: getTheRightWidgetForOrderNowButton(!_clickedOrderNow)),
+            function: checkoutActionButton),
       ),
     );
+  }
+
+  Color getTheRightButtonColor() {
+    // it returns the pruple or the grey color for the order now button
+    if (controller.cart.value.toLocation == null ||
+        controller.cart.value.toLocation?.address ==
+            "Unnamed Road, Cupertino, CA 95014, USA") {
+      return Color(0xdddddddd);
+    } else {
+      return Color(0xffac59fc);
+    }
+  }
+
+  Widget getTheRightWidgetForOrderNowButton(bool clicked) {
+    if (!clicked) {
+      return Container(
+        height: 20,
+        width: 20,
+        child: CircularProgressIndicator(
+          color: Colors.white,
+          strokeWidth: 1,
+        ),
+      );
+    } else {
+      return Text(
+          "${lang.strings['customer']['restaurant']['cart']['orderNow']}",
+          style: Theme.of(context)
+              .textTheme
+              .headline2!
+              .copyWith(color: Colors.white));
+    }
+  }
+
+  void checkoutActionButton() async {
+    if (controller.cart.value.toLocation == null ||
+        controller.cart.value.toLocation?.address ==
+            "Unnamed Road, Cupertino, CA 95014, USA") {
+//do nothing ...
+    } else {
+      if (controller.cart.value.toLocation != null) {
+        setState(() {
+          _clickedOrderNow = true;
+        });
+        controller.cart.value.notes = textcontoller.text;
+        mezDbgPrint(controller.cart.value.toFirebaseFormattedJson().toString());
+
+        var response = await controller.checkout();
+        print(response.errorCode.toString());
+        if (response.success) {
+          controller.clearCart();
+          popEverythingAndNavigateTo(
+              getRestaurantOrderRoute(response.data["orderId"]));
+        } else {
+          print(response);
+          if (response.errorCode == "serverError") {
+            // do something
+          } else if (response.errorCode == "inMoreThanThreeOrders") {
+            // do something
+          } else if (response.errorCode == "restaurantClosed") {
+            // do something
+          } else {
+            // do something
+          }
+        }
+
+        setState(() {
+          _clickedOrderNow = false;
+        });
+      }
+    }
   }
 }
 

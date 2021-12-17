@@ -177,8 +177,7 @@ class _PickLocationViewState extends State<PickLocationView> {
 
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-              child: Text(
-                  "Search for specefic location or you can just mark your location and click pick location"),
+              child: Text("Search for location or move map and pick location"),
             ),
             // stack
             Expanded(

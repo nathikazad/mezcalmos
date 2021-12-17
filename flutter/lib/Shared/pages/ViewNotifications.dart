@@ -15,7 +15,6 @@ import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 
 import '../widgets/MezClearButton.dart';
 
-
 class ViewNotifications extends StatefulWidget {
   ViewNotifications({Key? key}) : super(key: key);
 
@@ -162,7 +161,14 @@ class ClearNotifButton extends StatelessWidget {
                       title:
                           "${lang.strings["shared"]["notification"]["alertClearNotification"]["title"]}",
                       body:
-                          "${lang.strings["shared"]["notification"]["alertClearNotification"]["title"]}");
+                          "${lang.strings["shared"]["notification"]["alertClearNotification"]["title"]}",
+                      icon: Container(
+                        child: Icon(
+                          Icons.highlight_off,
+                          size: 65,
+                          color: Color(0xffdb2846),
+                        ),
+                      ));
 
                   if (yesNoRes == YesNoDialogButton.Yes) {
                     controller.clearAllNotification();

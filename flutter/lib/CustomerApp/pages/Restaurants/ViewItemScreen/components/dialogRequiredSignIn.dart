@@ -29,7 +29,7 @@ void dialogRequiredSignIn() {
               Container(
                 width: Get.width,
                 child: Text(
-                  "Please before you go any further try to sign in and save this item in your cart.",
+                  "You need to be signed in to add items to your cart",
                   textAlign: TextAlign.center,
                 ),
               ),

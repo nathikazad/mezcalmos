@@ -7,6 +7,7 @@ import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 
 import '../../../../router.dart';
 import '../ViewItemScreen.dart';
@@ -76,22 +77,65 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
             ),
           ),
           TextButton(
-            onPressed: () {
+            onPressed: () async {
               if (auth.fireAuthUser != null) {
                 if (ViewItemScreenMode.AddItemMode == widget.mode) {
-                  if (restaurantCartController.associatedRestaurant?.id ==
-                      widget.currentRestaurantId) {
-                    restaurantCartController.addItem(widget.cartItem.value!);
-                    Get.offNamed(kCartRoute);
-                  } else {
-                    mezDbgPrint(
-                        "not true ${restaurantCartController.associatedRestaurant?.id} and the other is ${widget.currentRestaurantId}");
-                    dailogcheckCartIfempty(checkoutFunc: () {
-                      Get.back();
-                    }, overwriteFunc: () {
+                  if (restaurantCartController.associatedRestaurant?.id !=
+                      null) {
+                    if (restaurantCartController.associatedRestaurant?.id ==
+                        widget.currentRestaurantId) {
+                      mezDbgPrint(
+                          "the first id is ${restaurantCartController.associatedRestaurant?.id} and the scond is ${widget.currentRestaurantId}");
                       restaurantCartController.addItem(widget.cartItem.value!);
                       Get.offNamed(kCartRoute);
-                    });
+                    } else {
+                      mezDbgPrint(
+                          "not true ${restaurantCartController.associatedRestaurant?.id} and the other is ${widget.currentRestaurantId}");
+
+                      YesNoDialogButton clickedYes = await yesNoDialog(
+                          text: 'Warrning !!',
+                          titleUp: true,
+                          icon: Container(
+                            child: Icon(
+                              Icons.warning_amber,
+                              color: Colors.yellow,
+                              size: 70,
+                            ),
+                          ),
+                          buttonLeftStyle: Container(
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: Colors.grey[300]),
+                            height: 30,
+                            child: Text("Checkout"),
+                          ),
+                          buttonRightStyle: Container(
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: Colors.blue[800]),
+                            height: 30,
+                            child: Text(
+                              "Overwrite",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                          body:
+                              "You already have some items in your cart, Would you like to discard to them ?");
+                      if (clickedYes == YesNoDialogButton.Yes) {
+                        Get.back();
+                        Get.toNamed(kCartRoute);
+                      } else {
+                        Get.back();
+                        restaurantCartController
+                            .addItem(widget.cartItem.value!);
+                        Get.offNamed(kCartRoute);
+                      }
+                    }
+                  } else {
+                    restaurantCartController.addItem(widget.cartItem.value!);
+                    Get.offNamed(kCartRoute);
                   }
                 } else {
                   restaurantCartController.addItem(widget.cartItem.value!);
