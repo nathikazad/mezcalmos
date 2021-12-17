@@ -1,105 +1,162 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-
+import 'package:get/get.dart';
+import 'components/RestaurantSliverAppbar.dart';
 import 'components/buildRestaurantsItems.dart';
 
 class ViewRestaurantScreen extends StatefulWidget {
-  ViewRestaurantScreen({Key? key}) : super(key: key);
-//ViewRestaurantScreen
+  // final Restaurant restaurant;
+  const ViewRestaurantScreen({
+    Key? key,
+    // required this.restaurant,
+  }) : super(key: key);
+
   @override
   _ViewRestaurantScreenState createState() => _ViewRestaurantScreenState();
 }
 
 class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
-  late String restaurantId;
   Restaurant? restaurant;
-  LanguageController lang = Get.find<LanguageController>();
-  RestaurantsInfoController controller =
-      Get.put<RestaurantsInfoController>(RestaurantsInfoController());
-
   @override
   void initState() {
-    this.restaurantId = Get.parameters['restaurantId']!;
-    mezDbgPrint("param rest_id ===> $restaurantId");
-    controller.getRestaurant(restaurantId).then((value) {
-      mezDbgPrint("Fetched ===> $value");
-      setState(() {
-        restaurant = value;
-      });
-    });
+    restaurant = Get.arguments as Restaurant;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
-
-    return (restaurant?.items == null)
-        ? Container(
-            child: Center(
-              child: CircularProgressIndicator(),
+    LanguageController lang = Get.find<LanguageController>();
+    return Scaffold(
+      body: DefaultTabController(
+        length: 2,
+        child: NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              RestaurantSliverAppBar(restaurant: restaurant!),
+              SliverPersistentHeader(
+                delegate: _SliverAppBarDelegate(
+                  TabBar(
+                    labelStyle: Theme.of(context).textTheme.bodyText1,
+                    tabs: [
+                      Tab(
+                        text:
+                            '${lang.strings["customer"]["restaurant"]["menu"]["menu"]}',
+                      ),
+                      Tab(
+                        text:
+                            '${lang.strings["customer"]["restaurant"]["menu"]["info"]}',
+                      ),
+                    ],
+                  ),
+                ),
+                pinned: true,
+              ),
+            ];
+          },
+          body: TabBarView(children: [
+            // -----------------------------FIRST TAB (MENU) --------------------------------------------//
+            SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  buildResturantItems(restaurant!.items, restaurant!.id),
+                ],
+              ),
             ),
-          )
-        : SafeArea(
-            child: Scaffold(
-              backgroundColor: Color.fromRGBO(237, 237, 237, 1),
-              body: SingleChildScrollView(
+            // -----------------------------SECOND TAB (INFOS) --------------------------------------------//
+            SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
-                      width: Get.width,
-                      height: 270,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Container(
-                          child: mLoadImage(
-                              url: restaurant!.photo, fit: BoxFit.cover),
-                        ),
+                      child: Text(
+                        'Description :',
+                        style: Theme.of(context).textTheme.bodyText1,
                       ),
                     ),
-                    SizedBox(
-                      height: 18,
-                    ),
                     Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 15,
-                      ),
-                      child: Text(restaurant!.name.capitalizeFirstofEach,
-                          style: txt.headline1!.copyWith(
-                            fontSize: 21,
-                            fontWeight: FontWeight.w600,
-                          )),
+                      margin: EdgeInsets.only(
+                          left: 5, right: 5, top: 5, bottom: 15.h),
+                      child: Text(restaurant!.description),
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 30),
-                      alignment: Alignment.centerLeft,
-                      child: Text("Menu",
-                          textAlign: TextAlign.left, style: txt.headline2),
-                    ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    buildResturantItems(restaurant!.items, restaurantId),
+                    (restaurant!.location != null)
+                        ? Column(
+                            children: [
+                              Container(
+                                child: Text(
+                                  'Location :',
+                                  style: Theme.of(context).textTheme.bodyText1,
+                                ),
+                              ),
+                              Card(
+                                child: Container(
+                                  height: 250.h,
+                                  width: double.infinity,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                            ],
+                          )
+                        : Container(),
+                    (restaurant!.openHour != null)
+                        ? Column(
+                            children: [
+                              Container(
+                                child: Text(
+                                  'Working Hours :',
+                                  style: Theme.of(context).textTheme.bodyText1,
+                                ),
+                              ),
+                              Card(
+                                child: Container(
+                                  height: 250.h,
+                                  width: double.infinity,
+                                ),
+                              ),
+                            ],
+                          )
+                        : Container()
                   ],
                 ),
               ),
             ),
-          );
+          ]),
+        ),
+      ),
+    );
   }
 }
 
-extension CapExtension on String {
-  String get inCaps => '${this[0].toUpperCase()}${this.substring(1)}';
-  String get allInCaps => this.toUpperCase();
-  String get capitalizeFirstofEach =>
-      this.split(" ").map((str) => str.capitalize).join(" ");
+class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
+  _SliverAppBarDelegate(this._tabBar);
+
+  final TabBar _tabBar;
+
+  @override
+  double get minExtent => _tabBar.preferredSize.height;
+  @override
+  double get maxExtent => _tabBar.preferredSize.height;
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return new Container(
+      color: Colors.white,
+      child: _tabBar,
+    );
+  }
+
+  @override
+  bool shouldRebuild(_SliverAppBarDelegate oldDelegate) {
+    return false;
+  }
 }

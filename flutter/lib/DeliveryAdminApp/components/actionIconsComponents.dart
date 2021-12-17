@@ -5,7 +5,7 @@ import 'package:mezcalmos/Shared/pages/ViewNotifications.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 
-import '../router.dart';
+import '../../CustomerApp/router.dart';
 
 enum ButtonColorType { ButtonLightColor, ButtonDarkColor }
 LinearGradient gradientLightColor = LinearGradient(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
+import 'package:mezcalmos/DeliveryAdminApp/components/actionIconsComponents.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:get/get.dart';

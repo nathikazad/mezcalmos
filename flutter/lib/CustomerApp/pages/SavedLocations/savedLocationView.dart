@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/CustomerApp_appbar.dart';
 import 'package:mezcalmos/CustomerApp/components/buttonComponent.dart';
-import 'package:mezcalmos/CustomerApp/components/customerAppBar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
 
 import 'components/SavedLocationComponent.dart';
 import 'components/savedLocationBody.dart';
@@ -26,7 +24,6 @@ class SavedLocationView extends StatefulWidget {
 }
 
 class _SavedLocationViewState extends State<SavedLocationView> {
-  MyPopupMenuController _popUpController = MyPopupMenuController();
   LanguageController lang = Get.find<LanguageController>();
   CustomerAuthController _customerAuthController =
       Get.find<CustomerAuthController>();
@@ -65,8 +62,6 @@ class _SavedLocationViewState extends State<SavedLocationView> {
 
   @override
   void dispose() {
-    _popUpController.hideMenu();
-    _popUpController.dispose();
     savedLocationsStreamSub?.cancel();
     savedLocationsStreamSub = null;
     super.dispose();

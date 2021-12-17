@@ -8,7 +8,6 @@ import 'package:mezcalmos/CustomerApp/pages/ListOrdersScreen/components/OngoingO
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
 
 import 'components/FilterOrderComponent.dart';
 
@@ -21,7 +20,6 @@ class ListOrdersScreen extends StatefulWidget {
 }
 
 class _ListOrdersScreen extends State<ListOrdersScreen> {
-  MyPopupMenuController _popUpController = MyPopupMenuController();
   LanguageController _lang = Get.find<LanguageController>();
   OrderController controller = Get.put(OrderController());
   AuthController auth = Get.find<AuthController>();
@@ -34,8 +32,6 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
 
   @override
   void dispose() {
-    _popUpController.hideMenu();
-    _popUpController.dispose();
     super.dispose();
   }
 
@@ -81,7 +77,6 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                         ],
                       ),
                     ),
-
                     FilterOrders(),
                     Obx(
                       () => Padding(
@@ -94,9 +89,6 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                         ),
                       ),
                     ),
-                    // Obx(() => buildInProcessOrders(controller.currentOrders())),
-                    // SizedBox(height: 20),
-                    // Obx(() => buildPastOrders(controller.pastOrders()))
                   ],
                 ))
             : Container(

@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/components/CustomerApp_appbar.dart';
 import 'package:mezcalmos/CustomerApp/components/buttonComponent.dart';
-import 'package:mezcalmos/CustomerApp/components/customerAppBar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -17,7 +16,6 @@ import 'package:location/location.dart' as GeoLoc;
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
-import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
 
 import 'components/saveLocationDailog.dart';
 
@@ -31,7 +29,6 @@ class PickLocationView extends StatefulWidget {
 }
 
 class _PickLocationViewState extends State<PickLocationView> {
-  MyPopupMenuController _popUpController = MyPopupMenuController();
   final LocationPickerController locationPickerController =
       LocationPickerController();
   // Location? locationPickerController.location;
@@ -126,8 +123,6 @@ class _PickLocationViewState extends State<PickLocationView> {
 
   @override
   void dispose() {
-    _popUpController.hideMenu();
-    _popUpController.dispose();
     super.dispose();
   }
 

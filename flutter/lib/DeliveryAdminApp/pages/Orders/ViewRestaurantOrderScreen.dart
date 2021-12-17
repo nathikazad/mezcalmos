@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/actionIconsComponents.dart';
+import 'package:mezcalmos/DeliveryAdminApp/components/actionIconsComponents.dart';
 import 'package:mezcalmos/CustomerApp/components/basicCellComponent.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/DeliveryAdminAppbar.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/buildWidgetOnOrderStatus.dart';

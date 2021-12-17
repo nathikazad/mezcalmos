@@ -9,7 +9,6 @@ import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantControlle
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
 
 import 'components/OrderFooterCard.dart';
 import 'components/OrderStatusCard.dart';
@@ -27,8 +26,6 @@ class ViewRestaurantOrderScreen extends StatefulWidget {
 }
 
 class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
-  MyPopupMenuController _popUpController = MyPopupMenuController();
-
   LanguageController lang = Get.find<LanguageController>();
   Rxn<RestaurantOrder> order = Rxn();
   OrderController controller = Get.find<OrderController>();
@@ -99,8 +96,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
   void dispose() {
     _orderListener?.cancel();
     _orderListener = null;
-    _popUpController.hideMenu();
-    _popUpController.dispose();
+
     super.dispose();
   }
 

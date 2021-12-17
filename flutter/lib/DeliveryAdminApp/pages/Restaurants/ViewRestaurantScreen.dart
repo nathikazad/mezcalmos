@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/itemMenuComponent.dart';
+import 'package:mezcalmos/DeliveryAdminApp/components/itemMenuComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
@@ -60,8 +60,7 @@ class ViewRestaurantScreen extends GetView<RestaurantsInfoController> {
                                       topLeft: Radius.circular(25),
                                       topRight: Radius.circular(25)),
                                   child:
-                                      mLoadImage(
-                                      url: restaurant.value?.photo),
+                                      mLoadImage(url: restaurant.value?.photo),
                                   // Image.network(
                                   //   "${restaurant.value!.photo}",
                                   //   fit: BoxFit.cover,
