@@ -30,11 +30,21 @@ String savedLocationNode(String uid, String locationId) {
   return 'customers/info/$uid/savedLocations/${locationId}';
 }
 
-String notificationsNode(String uid) {
+String customerNotificationsNode(String uid) {
   return 'notifications/customer/$uid';
 }
 
-//TODO: Apply the correct Node!
-String customerTaxiOrderNode(String id) {
-  return 'orders/taxi/$id';
+String customerInProcessOrderReadNode(
+    String orderId, String customerId, String driverId) {
+  return 'customers/inProcessOrders/$customerId/$orderId/notificationStatus/$driverId/read';
+}
+
+String customerInProcessOrderReceivedNode(
+    String orderId, String customerId, String driverId) {
+  return 'customers/inProcessOrders/$customerId/$orderId/notificationStatus/$driverId/received';
+}
+
+String customerInProcessOrderDriverLocationNode(
+    String orderId, String customerId) {
+  return 'customers/inProcessOrders/$customerId/$orderId/driver/location';
 }

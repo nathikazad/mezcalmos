@@ -3,12 +3,12 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/constants/databaseNodes.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/ordersNode.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
-import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 
@@ -34,10 +34,10 @@ class IncomingOrdersController extends GetxController {
 
     if (_authController.user != null) {
       // Added TaxiOrder!
-      mezDbgPrint("Gonna start listen on : $taxiOpenOrdersNode !!");
+      mezDbgPrint("Gonna start listen on : ${rootTaxiOpenOrdersNode()} !!");
       _incomingOrdersListener = _databaseHelper.firebaseDatabase
           .reference()
-          .child(taxiOpenOrdersNode())
+          .child(rootTaxiOpenOrdersNode())
           .onValue
           .listen((event) async {
         mezDbgPrint("Open Orders Node");

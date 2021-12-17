@@ -1,3 +1,7 @@
+String orderChatNode(String orderId) {
+  return 'chat/$orderId';
+}
+
 String userLanguage(String? userId) {
   return 'users/$userId/info/language';
 }
@@ -5,9 +9,3 @@ String userLanguage(String? userId) {
 String userInfo(String? userId) {
   return 'users/$userId/info';
 }
-
-String orderChatNode(String orderId) {
-  return 'chat/$orderId';
-}
-
-String taxiOpenOrdersNode() => "orders/open/taxi";

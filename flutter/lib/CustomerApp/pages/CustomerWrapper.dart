@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/appbar.dart';
 import 'package:mezcalmos/CustomerApp/components/customerHomeFooterButtons.dart';
 import 'package:mezcalmos/CustomerApp/components/servicesCard.dart';
-import 'package:mezcalmos/CustomerApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
@@ -18,6 +17,7 @@ import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.d
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as MezNotification;
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -71,7 +71,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
       listenForLocationPermissions();
       Get.find<ForegroundNotificationsController>()
           .startListeningForNotificationsFromFirebase(
-              notificationsNode(userId), customerNotificationHandler);
+              customerNotificationsNode(userId), customerNotificationHandler);
       Future.microtask(() {
         // Fix to Input Focus problems ( we had it in build which gets re-executed after any input focus) !
         navigateToOrdersIfNecessary(_orderController!.currentOrders);

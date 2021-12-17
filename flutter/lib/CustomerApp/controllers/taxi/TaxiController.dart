@@ -5,10 +5,12 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/ordersNode.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/CustomerApp/constants/databaseNodes.dart';
-import 'package:mezcalmos/Shared/constants/databaseNodes.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
+
 
 enum OrdersStates { Null, Finished, Cancelled, Expired, InProccess, IsLooking }
 
@@ -58,7 +60,7 @@ class TaxiController extends GetxController {
       // update order in orders node
       _databaseHelper.firebaseDatabase
           .reference()
-          .child(taxiOpenOrdersNode())
+          .child(rootTaxiOpenOrdersNode())
           .child("$orderId/cost")
           .set(cost);
     }
