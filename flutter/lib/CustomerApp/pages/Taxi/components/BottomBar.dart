@@ -15,16 +15,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 
 // @SAAD - TODO : REFACTORE THIS.
-class MapBottomBar extends StatefulWidget {
+class BottomBar extends StatefulWidget {
   TaxiRequest taxiRequest;
-  MapBottomBar({required this.taxiRequest});
+  BottomBar({required this.taxiRequest});
   @override
-  State<MapBottomBar> createState() {
-    return _MapBottomBarState();
+  State<BottomBar> createState() {
+    return _BottomBarState();
   }
 }
 
-class _MapBottomBarState extends State<MapBottomBar> {
+class _BottomBarState extends State<BottomBar> {
   LanguageController lang = Get.find<LanguageController>();
   OrderController controller = Get.find<OrderController>();
   double _bottomPadding = GetStorage().read(getxGmapBottomPaddingKey) + 15;

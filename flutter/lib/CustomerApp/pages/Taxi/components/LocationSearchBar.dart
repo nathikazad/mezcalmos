@@ -7,7 +7,6 @@ import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 enum SearchComponentType { From, To, None }
 
@@ -82,25 +81,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
   /************  Init, build and other overrided function *********************************/
   @override
   void initState() {
-    // locationSearchBarController = LocationSearchBarController();
-    dropDownItems.addAll([
-      LocationDropDownItem(
-          function: () async {
-            widget.newLocationChosenEvent(await MapHelper.getCurrentLocation(),
-                locationSearchBarController.focusedTextField.value);
-          },
-          title: "Current location",
-          icon:
-              Icon(MezcalmosIcons.crosshairs, size: 20, color: Colors.purple)),
-      LocationDropDownItem(
-          function: () async {
-            widget.newLocationChosenEvent(await MapHelper.getCurrentLocation(),
-                locationSearchBarController.focusedTextField.value);
-          },
-          title: "Pick From Map",
-          icon: Icon(MezcalmosIcons.crosshairs, size: 20, color: Colors.purple))
-    ]);
-    dropDownItems.addAll(getSavedLocationsWithCallbacks());
+    loadDropdownItems();
     super.initState();
   }
 
@@ -112,17 +93,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
         left: 10,
         right: 10,
         child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.white,
-              boxShadow: <BoxShadow>[
-                BoxShadow(
-                    color: Color.fromARGB(60, 0, 0, 0),
-                    spreadRadius: .5,
-                    blurRadius: 4,
-                    offset: Offset(0, 5)),
-              ],
-            ),
+            decoration: getDecoration(),
             child: Center(
               child: Column(
                 children: [
@@ -133,9 +104,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
                       toTextField(),
                     ],
                   ),
-                  SizedBox(
-                    height: 2,
-                  ),
+                  SizedBox(height: 2),
                   pickChoicesDropDown()
                 ],
               ),
@@ -154,6 +123,19 @@ class LocationSearchBarState extends State<LocationSearchBar> {
     super.didUpdateWidget(oldWidget);
   }
 
+  BoxDecoration getDecoration() {
+    return BoxDecoration(
+      borderRadius: BorderRadius.circular(10),
+      color: Colors.white,
+      boxShadow: <BoxShadow>[
+        BoxShadow(
+            color: Color.fromARGB(60, 0, 0, 0),
+            spreadRadius: .5,
+            blurRadius: 4,
+            offset: Offset(0, 5)),
+      ],
+    );
+  }
   /******************************  Widgets ************************************/
 
   Widget fromTextField() {
@@ -361,6 +343,28 @@ class LocationSearchBarState extends State<LocationSearchBar> {
   }
 
   /******************************  helper functions ************************************/
+
+  void loadDropdownItems() {
+    dropDownItems.addAll([
+      LocationDropDownItem(
+          function: () async {
+            widget.newLocationChosenEvent(await MapHelper.getCurrentLocation(),
+                locationSearchBarController.focusedTextField.value);
+          },
+          title: "Current location",
+          icon:
+              Icon(MezcalmosIcons.crosshairs, size: 20, color: Colors.purple)),
+      LocationDropDownItem(
+          function: () async {
+            widget.newLocationChosenEvent(await MapHelper.getCurrentLocation(),
+                locationSearchBarController.focusedTextField.value);
+          },
+          title: "Pick From Map",
+          icon: Icon(MezcalmosIcons.crosshairs, size: 20, color: Colors.purple))
+    ]);
+    dropDownItems.addAll(getSavedLocationsWithCallbacks());
+  }
+
   List<LocationDropDownItem> getSavedLocationsWithCallbacks() {
     return _authController.customerRxn.value?.savedLocations
             .map<LocationDropDownItem>((e) {

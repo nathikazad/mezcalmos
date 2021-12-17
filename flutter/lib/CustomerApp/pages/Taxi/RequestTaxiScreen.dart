@@ -3,7 +3,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/LocationSearchBar.dart';
-import 'package:mezcalmos/CustomerApp/pages/Taxi/components/MapBottomBar.dart';
+import 'package:mezcalmos/CustomerApp/pages/Taxi/components/BottomBar.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/models/Location.dart';
@@ -12,7 +12,7 @@ import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:mezcalmos/Shared/widgets/LocationPicker.dart';
+import 'package:mezcalmos/CustomerApp/components/LocationPicker.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart' as GeoLoc;
 
@@ -91,7 +91,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                       updateModelAndHandoffToLocationPicker),
               _pickedFromTo
                   ? Obx(
-                      () => MapBottomBar(
+                      () => BottomBar(
                         taxiRequest: taxiRequest.value,
                       ),
                     )

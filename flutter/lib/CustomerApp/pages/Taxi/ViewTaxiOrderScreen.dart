@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
-import 'package:mezcalmos/CustomerApp/pages/Taxi/components/MapBottomBar.dart';
-import 'package:mezcalmos/CustomerApp/pages/Taxi/components/TaxiOrderTopBar.dart';
+import 'package:mezcalmos/CustomerApp/pages/Taxi/components/BottomBar.dart';
+import 'package:mezcalmos/CustomerApp/pages/Taxi/components/TopBar.dart';
 import 'package:mezcalmos/Shared/Themes/styles/textStyleTheme.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -134,12 +134,12 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
                               periodicRerendering: true,
                             )),
                         Obx(
-                          () => MapBottomBar(
+                          () => BottomBar(
                             taxiRequest: order.value!.toTaxiRequest(),
                           ),
                         ),
                         cancelButton(order.value!.status),
-                        TaxiOrderTopBar(order: order.value!)
+                        TopBar(order: order.value!)
                       ])
                 : MezLogoAnimation(
                     centered: true,

@@ -32,7 +32,8 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   @override
   void initState() {
     super.initState();
-
+    // check if cart empty
+    // if yes redirect to home page
     controller.cart.value.items.map((item) {
       mezDbgPrint(
           "+++ From ViewCartScreen ==> ${item.id} <= notes => ${item.notes}");

@@ -5,11 +5,11 @@ import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class TaxiOrderTopBar extends StatelessWidget {
+class TopBar extends StatelessWidget {
   final LanguageController lang = Get.find<LanguageController>();
 
   TaxiOrder order;
-  TaxiOrderTopBar({required this.order});
+  TopBar({required this.order});
 
   @override
   Widget build(BuildContext context) {
