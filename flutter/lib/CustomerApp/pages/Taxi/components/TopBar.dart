@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mezcalmos/Shared/utilities/ResponsiveUtilities.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 
 class TopBar extends StatelessWidget {
   final LanguageController lang = Get.find<LanguageController>();
@@ -57,7 +57,7 @@ class TopBar extends StatelessWidget {
                               ),
                             )),
                         GestureDetector(
-                            onTap: () => mezcalmosSnackBar(
+                            onTap: () => MezSnackbar(
                                 lang.strings['shared']['inputLocation']["from"],
                                 order.from.address),
                             child: Text(
@@ -135,7 +135,7 @@ class TopBar extends StatelessWidget {
                           ),
                         ),
                         GestureDetector(
-                            onTap: () => mezcalmosSnackBar(
+                            onTap: () => MezSnackbar(
                                 lang.strings['shared']['inputLocation']["to"],
                                 order.to.address),
                             child: Text(

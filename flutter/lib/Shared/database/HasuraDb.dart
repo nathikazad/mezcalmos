@@ -5,15 +5,14 @@ import 'package:graphql/client.dart';
 import 'package:gql/ast.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart'
-    show mezDbgPrint;
+import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart' show mezDbgPrint;
 
-class HasuraHelper {
+class HasuraDb {
   late final GraphQLClient graphQLClient;
   AuthController _authController = Get.find<AuthController>();
-  DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
-  HasuraHelper() {
+  FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
+  HasuraDb() {
     initializeHasura();
   }
 

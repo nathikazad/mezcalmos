@@ -7,7 +7,7 @@ import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoCont
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-import 'package:mezcalmos/Shared/utilities/ResponsiveUtilities.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 
 class ListRestaurantsScreen extends StatefulWidget {
   @override

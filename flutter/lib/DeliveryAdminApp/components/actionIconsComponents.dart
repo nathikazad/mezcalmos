@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mezcalmos/Shared/pages/ViewNotifications.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 import '../../CustomerApp/router.dart';
 

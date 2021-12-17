@@ -9,8 +9,8 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/component
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/Shared/utilities/ResponsiveUtilities.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'components/cartIsEmptyScreen.dart';
 
 class ViewCartScreen extends StatefulWidget {

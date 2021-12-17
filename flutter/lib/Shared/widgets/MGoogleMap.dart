@@ -8,20 +8,19 @@ import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/models/Location.dart' as LocationModel;
-import 'package:mezcalmos/Shared/utilities/Extensions.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mezcalmos/Shared/utilities/ResponsiveUtilities.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 
-class MGoogleMap extends StatefulWidget with MezDisposable {
+class MGoogleMap extends StatefulWidget {
   final MapHelper.LocationChangesNotifier? notifyParentOfNewLocation;
   // LatLng initialLocation;
-  Duration rerenderDuration;
-  String? debugString;
+  final Duration rerenderDuration;
+  final String? debugString;
   final MGoogleMapController mGoogleMapController;
   // this is used when we don't want to re-render the map periodically.
-  bool periodicRerendering;
-  bool myLocationButtonEnabled;
+  final bool periodicRerendering;
+  final bool myLocationButtonEnabled;
   MGoogleMap(
       {Key? key,
       this.notifyParentOfNewLocation,
@@ -37,7 +36,7 @@ class MGoogleMap extends StatefulWidget with MezDisposable {
   State<MGoogleMap> createState() => MGoogleMapState();
 }
 
-class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
+class MGoogleMapState extends State<MGoogleMap> {
   Timer? _reRenderingTimer;
   Completer<GoogleMapController> _completer = Completer();
   // to make sure each marker gets fully handled when the new data comes on it's corresponding stream!
@@ -75,8 +74,6 @@ class MGoogleMapState extends State<MGoogleMap> with MezDisposable {
   void dispose() {
     mezDbgPrint("MGoogleMap disposed ${this.hashCode} ${widget.debugString}");
     _reRenderingTimer?.cancel();
-    // favoid keeping listeners in memory.
-    cancelSubscriptions();
     // gmapControlelr disposing.
     widget.mGoogleMapController.controller?.dispose();
     widget.mGoogleMapController.controller = null;

@@ -4,17 +4,18 @@ import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
-import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
+import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 import 'package:mezcalmos/TaxiApp/models/TaxiDriver.dart';
 import 'package:location/location.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class TaxiAuthController extends GetxController {
   Rxn<TaxiState> _state = Rxn();
-  DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
+  FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   AuthController _authController = Get.find<AuthController>();
   BackgroundNotificationsController _notificationsController =
       Get.find<BackgroundNotificationsController>();
@@ -193,7 +194,7 @@ class TaxiAuthController extends GetxController {
         .set(false)
         .catchError((err) {
       mezDbgPrint("Error turning [ isLooking = false ] -> $err");
-      mezcalmosSnackBar("Error ~", "Failed turning it off!");
+      MezSnackbar("Error ~", "Failed turning it off!");
     });
   }
 
@@ -204,7 +205,7 @@ class TaxiAuthController extends GetxController {
         .set(true)
         .catchError((err) {
       mezDbgPrint("Error turning [ isLooking = true ] -> $err");
-      mezcalmosSnackBar("Error ~", "Failed turning_listenForLocation it on!");
+      MezSnackbar("Error ~", "Failed turning_listenForLocation it on!");
     });
   }
 }

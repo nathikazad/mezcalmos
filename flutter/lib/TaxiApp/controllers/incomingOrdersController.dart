@@ -4,27 +4,27 @@ import 'package:get/get.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
-import 'package:mezcalmos/Shared/utilities/Extensions.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/constants/databaseNodes.dart';
-import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
+import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 
-class IncomingOrdersController extends GetxController with MezDisposable {
+class IncomingOrdersController extends GetxController {
   RxList<TaxiOrder> orders = <TaxiOrder>[]
       .obs; // this is observable which will be constaintly changing in realtime .
   AuthController _authController =
       Get.find<AuthController>(); // since it's already injected .
   TaxiAuthController _taxiAuthController = Get.find<TaxiAuthController>();
 
-  DatabaseHelper _databaseHelper =
-      Get.find<DatabaseHelper>(); // Already Injected in main function
+  FirebaseDb _databaseHelper =
+      Get.find<FirebaseDb>(); // Already Injected in main function
 
   // Storing all the needed Listeners here
   Worker? _updateOrderDistanceToClient;
+  StreamSubscription? _incomingOrdersListener;
 
   @override
   void onInit() async {
@@ -35,7 +35,7 @@ class IncomingOrdersController extends GetxController with MezDisposable {
     if (_authController.user != null) {
       // Added TaxiOrder!
       mezDbgPrint("Gonna start listen on : $taxiOpenOrdersNode !!");
-      _databaseHelper.firebaseDatabase
+      _incomingOrdersListener = _databaseHelper.firebaseDatabase
           .reference()
           .child(taxiOpenOrdersNode())
           .onValue
@@ -59,7 +59,7 @@ class IncomingOrdersController extends GetxController with MezDisposable {
         } else {
           orders.value = [];
         }
-      }).canceledBy(this);
+      });
       _updateOrderDistanceToClient?.dispose();
       _updateOrderDistanceToClient =
           ever(_taxiAuthController.currentLocationRx, (userLocation) {
@@ -133,7 +133,7 @@ class IncomingOrdersController extends GetxController with MezDisposable {
 
   // I added this to avoid possible dangling pointers ...
   void detachListeners() {
-    cancelSubscriptions();
+    _incomingOrdersListener?.cancel();
     _updateOrderDistanceToClient?.dispose();
     // _appLifeCycleController.cleanAllCallbacks();
   }

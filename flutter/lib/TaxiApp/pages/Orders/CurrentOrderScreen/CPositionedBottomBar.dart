@@ -8,8 +8,8 @@ import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
@@ -17,7 +17,8 @@ import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:mezcalmos/Shared/utilities/ResponsiveUtilities.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class CurrentPositionedBottomBar extends StatelessWidget {
   RxBool showLoadingCircleInButton = false.obs;
@@ -361,7 +362,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
     if (await canLaunch(url))
       await launch(url);
     else {
-      mezcalmosSnackBar("Error", "Failed to launch that on Map!");
+      MezSnackbar("Error", "Failed to launch that on Map!");
     }
   }
 }

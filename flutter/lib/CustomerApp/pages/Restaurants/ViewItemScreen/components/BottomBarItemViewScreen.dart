@@ -6,7 +6,7 @@ import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantControlle
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 
 import '../../../../router.dart';

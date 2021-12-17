@@ -3,16 +3,16 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
+import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
 class OrderController extends GetxController {
-  DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
+  FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   AuthController _authController = Get.find<AuthController>();
   ForegroundNotificationsController _fbNotificationsController =
       Get.find<ForegroundNotificationsController>();

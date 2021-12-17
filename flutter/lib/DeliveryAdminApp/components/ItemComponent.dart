@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mezcalmos/Shared/utilities/ImageUtilities.dart';
+import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 
 class ItemComponent extends StatelessWidget {
   final String? imgUrl;

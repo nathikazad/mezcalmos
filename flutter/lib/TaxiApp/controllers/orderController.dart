@@ -5,14 +5,15 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/TaxiApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
-import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
+import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class OrderController extends GetxController {
-  DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
+  FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   AuthController _authController = Get.find<AuthController>();
   ForegroundNotificationsController _foregroundNotificationsController =
       Get.find<ForegroundNotificationsController>();
@@ -155,7 +156,7 @@ class OrderController extends GetxController {
       mezDbgPrint(res.errorCode);
       return res;
     } catch (e) {
-      mezcalmosSnackBar("Notice ~", "Failed to Cancel the Taxi Request :( ");
+      MezSnackbar("Notice ~", "Failed to Cancel the Taxi Request :( ");
       mezDbgPrint("Exception happend in cancelTaxi : $e");
       return ServerResponse(ResponseStatus.Error,
           errorMessage: "Server Error", errorCode: "serverError");

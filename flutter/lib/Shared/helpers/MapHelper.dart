@@ -10,7 +10,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'dart:math' show cos, sqrt, sin, pi, atan2, pow;
 import 'package:http/http.dart' as http;
 import 'package:mezcalmos/Shared/models/Location.dart' as LocModel;
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 typedef LocationChangesNotifier = void Function(LocModel.Location location);
 
@@ -42,11 +42,11 @@ String hoursMinsShortner(String original) {
 }
 
 class RideDuration {
-  String _asText;
-  String get longTextVersion => this._asText;
-  String get shortTextVersion => hoursMinsShortner(this._asText);
+  String _text;
+  String get longTextVersion => this._text;
+  String get shortTextVersion => hoursMinsShortner(this._text);
   int seconds;
-  RideDuration(this._asText, this.seconds);
+  RideDuration(this._text, this.seconds);
   Map<String, dynamic> toJson() {
     return {
       "duration": {"text": this.longTextVersion, "value": this.seconds}
@@ -54,7 +54,7 @@ class RideDuration {
   }
 
   RideDuration.fromJson(dynamic data)
-      : this._asText = data['text'],
+      : this._text = data['text'],
         this.seconds = data['value'];
 }
 

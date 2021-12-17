@@ -6,7 +6,7 @@ import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.d
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class AuthHooks {
   static Future<void> onSignOutHook() async {

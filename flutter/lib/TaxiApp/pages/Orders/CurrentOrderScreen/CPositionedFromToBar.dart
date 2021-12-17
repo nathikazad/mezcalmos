@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
-import 'package:mezcalmos/Shared/utilities/ResponsiveUtilities.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 
 class CurrentPositionedFromToTopBar extends StatelessWidget {
   OrderController controller = Get.find<OrderController>();
@@ -55,7 +55,7 @@ class CurrentPositionedFromToTopBar extends StatelessWidget {
                               ),
                             )),
                         GestureDetector(
-                          onTap: () => mezcalmosSnackBar(
+                          onTap: () => MezSnackbar(
                               lang.strings['shared']['inputLocation']["from"],
                               order.from.address),
                           child: Text(
@@ -131,7 +131,7 @@ class CurrentPositionedFromToTopBar extends StatelessWidget {
                           ),
                         ),
                         GestureDetector(
-                          onTap: () => mezcalmosSnackBar(
+                          onTap: () => MezSnackbar(
                               lang.strings['shared']['inputLocation']["to"],
                               order.to.address),
                           child: Text(

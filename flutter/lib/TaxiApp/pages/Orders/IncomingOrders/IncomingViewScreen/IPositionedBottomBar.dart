@@ -4,17 +4,16 @@ import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
-import 'package:mezcalmos/Shared/utilities/Extensions.dart';
-import 'package:mezcalmos/Shared/utilities/ResponsiveUtilities.dart';
-import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mezcalmos/Shared/utilities/ImageUtilities.dart';
+import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 
-class IncomingPositionedBottomBar extends StatelessWidget with MezDisposable {
+class IncomingPositionedBottomBar extends StatelessWidget {
   // IncomingOrdersController controller = Get.find<IncomingOrdersController>();
-  LanguageController lang = Get.find<LanguageController>();
-  TaxiOrder order;
+  final LanguageController lang = Get.find<LanguageController>();
+  final TaxiOrder order;
 
   IncomingPositionedBottomBar({required this.order});
 

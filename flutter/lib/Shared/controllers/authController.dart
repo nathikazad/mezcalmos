@@ -9,12 +9,13 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
+import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'dart:convert';
 import 'dart:math';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
@@ -39,8 +40,8 @@ class AuthController extends GetxController {
   Stream<fireAuth.User?> get authStateChange => authStateChangeStream.stream;
 
   bool get isUserSignedIn => _fireAuthUser.value != null;
-  DatabaseHelper _databaseHelper =
-      Get.find<DatabaseHelper>(); // Already Injected in main function
+  FirebaseDb _databaseHelper =
+      Get.find<FirebaseDb>(); // Already Injected in main function
 
   AuthController(this._onSignInCallback, this._onSignOutCallback);
   String? _previousUserValue = "init";
@@ -248,7 +249,7 @@ class AuthController extends GetxController {
             .signInWithCustomToken(response.data["token"]);
       }
     } catch (e) {
-      mezcalmosSnackBar("Error", "OTP Code confirmation failed :(");
+      MezSnackbar("Error", "OTP Code confirmation failed :(");
       print("Exception happend in GetAuthUsingOTP : $e");
     }
 
@@ -270,7 +271,7 @@ class AuthController extends GetxController {
       fireAuth.FirebaseAuth.instance
           .signInWithCredential(facebookAuthCredential);
     } else {
-      mezcalmosSnackBar("Notice ~", "Failed SignIn with Facebook !");
+      MezSnackbar("Notice ~", "Failed SignIn with Facebook !");
     }
   }
 
@@ -305,7 +306,7 @@ class AuthController extends GetxController {
       fireAuth.FirebaseAuth.instance.signInWithCredential(oauthCredential);
     } catch (exception) {
       print(exception);
-      mezcalmosSnackBar("Notice ~", "Failed SignIn with Apple !");
+      MezSnackbar("Notice ~", "Failed SignIn with Apple !");
     }
   }
 

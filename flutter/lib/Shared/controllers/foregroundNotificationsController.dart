@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart' as material;
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
+import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'dart:async';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 typedef shouldSaveNotification = bool Function(Notification notification);
 
 class ForegroundNotificationsController extends GetxController {
-  DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
+  FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
 
   RxList<Notification> notifications = RxList();
   LanguageController _lang = Get.find<LanguageController>();

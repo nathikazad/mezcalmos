@@ -4,10 +4,11 @@ import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:mezcalmos/Shared/utilities/ResponsiveUtilities.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class LocationPermissionScreen extends StatelessWidget {
   final SettingsController _settingsController = Get.find<SettingsController>();
@@ -85,7 +86,7 @@ class LocationPermissionScreen extends StatelessWidget {
                         switch (_permissionStatus) {
                           // on denied forever User must know cuz it needs manual change in IOS!!
                           case PermissionStatus.deniedForever:
-                            mezcalmosSnackBar(
+                            MezSnackbar(
                                 'Error :(',
                                 _settingsController.appLanguage
                                         .strings['shared']['permissions']
@@ -100,7 +101,7 @@ class LocationPermissionScreen extends StatelessWidget {
 
                           // Default
                           default:
-                            mezcalmosSnackBar(
+                            MezSnackbar(
                                 'Error :(',
                                 _settingsController
                                         .appLanguage.strings['shared']
@@ -108,7 +109,7 @@ class LocationPermissionScreen extends StatelessWidget {
                                 position: SnackPosition.TOP);
                         }
                       } else {
-                        mezcalmosSnackBar(
+                        MezSnackbar(
                             'Error :(',
                             _settingsController.appLanguage.strings['shared']
                                 ['permissions']['locationIsOff'],

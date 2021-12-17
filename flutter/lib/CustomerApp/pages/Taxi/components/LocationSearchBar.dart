@@ -4,10 +4,11 @@ import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/models/Location.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/Shared/utilities/ResponsiveUtilities.dart';
-import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 enum SearchComponentType { From, To, None }
 
@@ -375,7 +376,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
                 color: Colors.yellow,
               ),
               function: () {
-                mezcalmosSnackBar(e.name, "${e.location?.address}");
+                MezSnackbar(e.name, "${e.location?.address}");
                 Location? _savedLoc = _authController.getLocationById(e.id!);
                 widget.newLocationChosenEvent(_savedLoc,
                     locationSearchBarController.focusedTextField.value);

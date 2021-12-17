@@ -7,7 +7,7 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/CustomerApp/authHooks.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 
 const String defaultDb = "test";

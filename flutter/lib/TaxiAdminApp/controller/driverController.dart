@@ -1,12 +1,12 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:mezcalmos/Shared/helpers/HasuraHelper.dart';
-import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
+import 'package:mezcalmos/Shared/database/HasuraDb.dart';
+import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:graphql/client.dart';
 import 'package:get/get.dart';
 
 class DriverStatsController extends GetxController {
-  HasuraHelper _hasuraHelper = Get.find<HasuraHelper>();
-  DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
+  HasuraDb _hasuraHelper = Get.find<HasuraDb>();
+  FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
 
   @override
   void onInit() {

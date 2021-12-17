@@ -4,13 +4,13 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
-import 'package:mezcalmos/Shared/utilities/ResponsiveUtilities.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
@@ -165,12 +165,12 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
                 Get.offNamedUntil(
                     kCurrentOrderRoute, ModalRoute.withName(kHomeRoute));
                 // Notice the User !
-                mezcalmosSnackBar(
+                MezSnackbar(
                     serverResponse.status.toShortString(), serverResponse.data);
               } else {
                 // in case Taxi User failed accepting the order.
                 Get.back();
-                mezcalmosSnackBar("Failed", serverResponse.errorMessage!);
+                MezSnackbar("Failed", serverResponse.errorMessage!);
               }
             }
           : () => null,

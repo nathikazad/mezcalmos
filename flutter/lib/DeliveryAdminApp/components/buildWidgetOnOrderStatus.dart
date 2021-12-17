@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:rive/rive.dart' as rive;
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';

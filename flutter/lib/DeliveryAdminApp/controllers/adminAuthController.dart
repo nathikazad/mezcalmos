@@ -5,14 +5,14 @@ import 'package:mezcalmos/DeliveryAdminApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/Shared/constants/databaseNodes.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
-import 'package:mezcalmos/Shared/helpers/DatabaseHelper.dart';
+import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/DeliveryAdminApp/models/Admin.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 
 class AdminAuthController extends GetxController {
   Rxn<Admin> _admin = Rxn();
-  DatabaseHelper _databaseHelper = Get.find<DatabaseHelper>();
+  FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   AuthController _authController = Get.find<AuthController>();
 
   BackgroundNotificationsController _notificationsController =

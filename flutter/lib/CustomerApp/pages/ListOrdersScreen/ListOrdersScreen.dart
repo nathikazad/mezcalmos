@@ -7,7 +7,7 @@ import 'package:mezcalmos/CustomerApp/pages/ListOrdersScreen/components/OldOrder
 import 'package:mezcalmos/CustomerApp/pages/ListOrdersScreen/components/OngoingOrderCard.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 import 'components/FilterOrderComponent.dart';
 

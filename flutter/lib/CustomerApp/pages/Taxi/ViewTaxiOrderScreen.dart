@@ -6,11 +6,11 @@ import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/BottomBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/TopBar.dart';
-import 'package:mezcalmos/Shared/Themes/styles/textStyleTheme.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
@@ -96,7 +96,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
         pastOrderStatusHandler(order.value!.status);
       }
     } else {
-      mezcalmosSnackBar("Error", "Unfound Order !");
+      MezSnackbar("Error", "Unfound Order !");
     }
     super.initState();
   }
@@ -247,7 +247,8 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
               child: Center(
                 child: Text(
                   "CANCEL",
-                  style: textStyleTheme.bodyText1!.copyWith(
+                  style: TextStyle(
+                      fontFamily: "psr",
                       color: Colors.white,
                       fontWeight: FontWeight.w300,
                       fontSize: 18),

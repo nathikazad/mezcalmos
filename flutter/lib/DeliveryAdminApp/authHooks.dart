@@ -5,7 +5,7 @@ import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/adminAuthController.dart';
 
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 class AuthHooks {
   static Future<void> onSignOutHook() async {
     mezDbgPrint(

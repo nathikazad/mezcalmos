@@ -1,10 +1,10 @@
-import 'package:mezcalmos/Shared/helpers/HasuraHelper.dart';
+import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/TaxiAdminApp/helpers/formatter.dart';
 import 'package:graphql/client.dart';
 import 'package:get/get.dart';
 
 class NotificationsController extends GetxController {
-  HasuraHelper _hasuraHelper = Get.find<HasuraHelper>();
+  HasuraDb _hasuraHelper = Get.find<HasuraDb>();
 
   @override
   void onInit() {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/utilities/ImageUtilities.dart';
+import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 
 class BasicCellComponent extends StatelessWidget {
   final String url;

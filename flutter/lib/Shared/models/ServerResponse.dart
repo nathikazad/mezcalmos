@@ -1,4 +1,4 @@
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 enum ResponseStatus { Success, Error }
 

@@ -3,15 +3,14 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
-import 'package:mezcalmos/Shared/Themes/styles/textStyleTheme.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:mezcalmos/Shared/utilities/ResponsiveUtilities.dart';
-import 'package:mezcalmos/Shared/utilities/ImageUtilities.dart';
-import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
+import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 
@@ -240,7 +239,8 @@ class _BottomBarState extends State<BottomBar> {
         child: Center(
             child: Text(widget.taxiRequest.estimatedPrice.toString() + "\$",
                 softWrap: false,
-                style: textStyleTheme.headline2?.copyWith(
+                style: TextStyle(
+                    fontFamily: "psr",
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                     fontSize: 15))));

@@ -4,7 +4,7 @@ import 'package:mezcalmos/Shared/appStart.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/DeliveryAdminApp/authHooks.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 const String defaultDb = "test";
 const String defaultLaunchMode = "stage";

@@ -3,13 +3,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/Shared/utilities/MezIcons.dart';
+import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:mezcalmos/Shared/utilities/ResponsiveUtilities.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 
 class UnauthorizedScreen extends StatefulWidget {
   UnauthorizedScreen({Key? key}) : super(key: key);
@@ -79,7 +79,7 @@ class _UnauthorizedScreenState extends State<UnauthorizedScreen> {
                 InkWell(
                   onTap: () async {
                     if (!(await launch('https://meztaxi.com')))
-                      mezcalmosSnackBar('Error',
+                      MezSnackbar('Error',
                           "Failed launching https://meztaxi.com on browser , maybe try to browse to it manually ? ");
                   },
                   child: Text(

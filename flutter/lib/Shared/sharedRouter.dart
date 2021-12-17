@@ -7,7 +7,6 @@ import 'package:mezcalmos/Shared/pages/MessagingScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/OtpConfirmationScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/PhoneNumberScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
-import 'package:mezcalmos/Shared/pages/PickToLocation.dart';
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen.dart';
 import 'package:mezcalmos/Shared/pages/ViewNotifications.dart';
@@ -71,7 +70,6 @@ class SharedRouter {
     GetPage(name: kUnauthorizedRoute, page: () => UnauthorizedScreen()),
     GetPage(
         name: kLocationPermissionPage, page: () => LocationPermissionScreen()),
-    GetPage(name: kPickToLocation, page: () => PickToLocation()),
     GetPage(name: kNotificationsRoute, page: () => ViewNotifications())
   ];
 }

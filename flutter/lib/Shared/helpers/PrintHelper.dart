@@ -1,8 +1,6 @@
 // Usefull when trying to make Sizes adptable!
 import 'dart:async';
 import 'package:intl/intl.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 void mezDbgPrint(dynamic log) {
   String d = DateFormat('HH:mm:ss').format(DateTime.now());
@@ -37,12 +35,3 @@ runMainGuarded(Function runMain) {
     mezDbgPrint("========== [ END MEZ EXCEPTION ] ==========");
   });
 }
-
-//Our default snackBar
-void mezcalmosSnackBar(String _title, String _msg,
-        {SnackPosition position = SnackPosition.BOTTOM}) =>
-    Get.snackbar(_title, _msg,
-        colorText: Colors.white,
-        backgroundColor: Colors.black87,
-        snackPosition: position,
-        snackStyle: SnackStyle.FLOATING);

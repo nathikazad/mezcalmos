@@ -1,5 +1,5 @@
 import 'package:mezcalmos/Shared/models/Location.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class Customer {
   // List<Order> currentOrders = [];

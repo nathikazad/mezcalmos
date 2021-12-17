@@ -7,7 +7,8 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class OrderFooterCard extends StatefulWidget {
   const OrderFooterCard({Key? key, required this.order}) : super(key: key);
@@ -63,7 +64,7 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                                           Get.until((route) =>
                                               route.settings.name ==
                                               kHomeRoute);
-                                          mezcalmosSnackBar(
+                                          MezSnackbar(
                                               lang.strings["shared"]
                                                   ["snackbars"]["titleSuccess"],
                                               lang.strings["shared"]
@@ -71,7 +72,7 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                                                   ["orderCancelSuccess"],
                                               position: SnackPosition.TOP);
                                         } else {
-                                          mezcalmosSnackBar(
+                                          MezSnackbar(
                                               lang.strings["shared"]
                                                   ["snackbars"]["titleFailed"],
                                               lang.strings["shared"]

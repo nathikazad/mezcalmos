@@ -5,7 +5,8 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 const mypadding = EdgeInsets.only(left: 15, right: 15);
 
@@ -340,15 +341,15 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                             mezDbgPrint("++++++++++++ response >>> $response");
 
                             if (response.success) {
-                              mezcalmosSnackBar(
+                              MezSnackbar(
                                   "Notice ~", "OTP Sent code to : $phone");
                               Get.toNamed(kOtpConfirmRoute, arguments: phone);
                             } else {
-                              mezcalmosSnackBar(response.errorCode.toString(),
+                              MezSnackbar(response.errorCode.toString(),
                                   response.errorMessage.toString());
                             }
                           } else
-                            mezcalmosSnackBar(
+                            MezSnackbar(
                                 "Error", "Invalid phone Number !");
                           clickedSendOtp.value = false;
                         }

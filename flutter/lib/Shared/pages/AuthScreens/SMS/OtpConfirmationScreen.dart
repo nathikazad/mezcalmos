@@ -1,14 +1,14 @@
 import 'dart:async';
 import 'dart:ui';
-
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
-import 'package:mezcalmos/Shared/utilities/GlobalUtilities.dart';
-import 'package:mezcalmos/Shared/utilities/ResponsiveUtilities.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
@@ -171,7 +171,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                                         if (!response.success) {
                                           resendOtpTimerActivate(response
                                               .data['secondsLeft'] as double);
-                                          mezcalmosSnackBar(
+                                          MezSnackbar(
                                               response.status.toShortString(),
                                               response.errorMessage.toString(),
                                               position: SnackPosition.TOP);
