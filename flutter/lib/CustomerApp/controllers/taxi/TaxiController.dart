@@ -11,12 +11,12 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 
-
 enum OrdersStates { Null, Finished, Cancelled, Expired, InProccess, IsLooking }
 
 class TaxiController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   AuthController _authController = Get.find<AuthController>();
+
   Future<ServerResponse> cancelTaxi(String orderId) async {
     HttpsCallable cancelTaxiFunction =
         FirebaseFunctions.instance.httpsCallable('taxi-cancelFromCustomer');

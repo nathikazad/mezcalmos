@@ -49,15 +49,29 @@ class MGoogleMapController {
   }
 
   Future<void> addOrUpdateUserMarker(
-      {String? markerId, required LatLng latLng, String? imgUrl}) async {
-    BitmapDescriptor icon = await BitmapDescriptorLoader(
-        (await cropRonded((await http.get(Uri.parse(imgUrl ??
-                Get.find<AuthController>().fireAuthUser?.photoURL ??
-                aDefaultAvatar)))
-            .bodyBytes) as Uint8List),
-        60,
-        60,
-        isBytes: true);
+      {String? markerId,
+      required LatLng latLng,
+      String? customImgHttpUrl}) async {
+    BitmapDescriptor icon;
+
+    if (Get.find<AuthController>().fireAuthUser?.photoURL == null) {
+      icon = await BitmapDescriptorLoader(
+          (await cropRonded((await rootBundle.load(aMapUserImgNotSignedIn))
+              .buffer
+              .asUint8List())),
+          60,
+          60,
+          isBytes: true);
+    } else {
+      icon = await BitmapDescriptorLoader(
+          (await cropRonded((await http.get(Uri.parse(customImgHttpUrl ??
+                  Get.find<AuthController>().fireAuthUser!.photoURL!)))
+              .bodyBytes) as Uint8List),
+          60,
+          60,
+          isBytes: true);
+    }
+
     // default userId is authenticated's
     this._addOrUpdateMarker(Marker(
         markerId: MarkerId(

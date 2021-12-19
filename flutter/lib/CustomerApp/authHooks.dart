@@ -14,12 +14,12 @@ class AuthHooks {
         "[+] CustomerApp::AuthHooks::onSignOutHook -> Callback Executed.");
 // TODO : these deletes should not delete stuff that should be Globaly injected (on Signin And SiGnout)
     await Get.delete<CustomerAuthController>(force: true);
-    // await Get.delete<OrderController>(force: true);
-    // await Get.delete<TaxiController>(force: true);
-    // await Get.delete<RestaurantController>(force: true);
+    await Get.delete<OrderController>(force: true);
+    await Get.delete<TaxiController>(force: true);
+    await Get.delete<RestaurantController>(force: true);
     await Get.delete<BackgroundNotificationsController>(force: true);
     await Get.delete<MessageController>(force: true);
-    // await Get.delete<ForegroundNotificationsController>(force: true);
+    await Get.delete<ForegroundNotificationsController>(force: true);
     mezDbgPrint(
         "[+] CustomerApp::AuthHooks::onSignOutHook -> Callback Finished.");
   }

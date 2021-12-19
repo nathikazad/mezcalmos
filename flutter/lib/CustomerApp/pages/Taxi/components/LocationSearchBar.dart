@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -9,6 +10,7 @@ import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 enum SearchComponentType { From, To, None }
 
@@ -42,7 +44,7 @@ class LocationSearchBarController {
   }
 
   void expandDropdown() {
-    pickChoicesDropDownHeight.value = 100;
+    pickChoicesDropDownHeight.value = 100.sp;
   }
 
   /// if no type was specified it unfocus from and to
@@ -76,7 +78,7 @@ class LocationSearchBar extends StatefulWidget {
 }
 
 class LocationSearchBarState extends State<LocationSearchBar> {
-  CustomerAuthController _authController = Get.find<CustomerAuthController>();
+  CustomerAuthController? _authController;
   LocationSearchBarController locationSearchBarController;
   List<LocationDropDownItem> dropDownItems = [];
   LocationSearchBarState(this.locationSearchBarController);
@@ -250,40 +252,42 @@ class LocationSearchBarState extends State<LocationSearchBar> {
                 bottomRight: Radius.circular(10),
                 topRight: Radius.circular(0),
               )),
-          child: Wrap(
-            spacing: 20,
-            direction: Axis.vertical,
-            alignment: WrapAlignment.center,
-            crossAxisAlignment: WrapCrossAlignment.start,
-            children: [
-              ...dropDownItems.map<Widget>((e) => SizedBox(
-                    // width: 20,
-                    height: 20,
-                    child: InkWell(
-                      onTap: () {
-                        e.function();
-                        locationSearchBarController.unfocusAllFocusNodes();
+          child: SingleChildScrollView(
+            child: Column(
+              // spacing: 20,
+              // direction: Axis.vertical,
+              // alignment: WrapAlignment.center,
 
-                        setState(() {});
-                      },
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 20,
-                          ),
-                          e.icon,
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            e.title,
-                            style: TextStyle(fontFamily: 'psb'),
-                          )
-                        ],
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ...dropDownItems.map<Widget>((e) => SizedBox(
+                      height: 32.sp,
+                      child: InkWell(
+                        onTap: () {
+                          e.function();
+                          locationSearchBarController.unfocusAllFocusNodes();
+                          setState(() {});
+                        },
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 20,
+                            ),
+                            e.icon,
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              e.title,
+                              style: TextStyle(fontFamily: 'psb'),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                  )),
-            ],
+                    )),
+              ],
+            ),
           )),
     );
   }
@@ -364,11 +368,14 @@ class LocationSearchBarState extends State<LocationSearchBar> {
           title: "Pick From Map",
           icon: Icon(MezcalmosIcons.crosshairs, size: 20, color: Colors.purple))
     ]);
-    dropDownItems.addAll(getSavedLocationsWithCallbacks());
+    if (Get.find<AuthController>().fireAuthUser != null) {
+      _authController = Get.find<CustomerAuthController>();
+      dropDownItems.addAll(getSavedLocationsWithCallbacks());
+    }
   }
 
   List<LocationDropDownItem> getSavedLocationsWithCallbacks() {
-    return _authController.customerRxn.value?.savedLocations
+    return _authController!.customerRxn.value?.savedLocations
             .map<LocationDropDownItem>((e) {
           return LocationDropDownItem(
               icon: Icon(
@@ -377,7 +384,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
               ),
               function: () {
                 MezSnackbar(e.name, "${e.location?.address}");
-                Location? _savedLoc = _authController.getLocationById(e.id!);
+                Location? _savedLoc = _authController!.getLocationById(e.id!);
                 widget.newLocationChosenEvent(_savedLoc,
                     locationSearchBarController.focusedTextField.value);
                 // setState(() {

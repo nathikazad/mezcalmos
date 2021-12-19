@@ -7,16 +7,20 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
+import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 // @SAAD - TODO : REFACTORE THIS.
 class BottomBar extends StatefulWidget {
   TaxiRequest taxiRequest;
+
   BottomBar({required this.taxiRequest});
   @override
   State<BottomBar> createState() {
@@ -26,46 +30,49 @@ class BottomBar extends StatefulWidget {
 
 class _BottomBarState extends State<BottomBar> {
   LanguageController lang = Get.find<LanguageController>();
-  OrderController controller = Get.find<OrderController>();
-  double _bottomPadding = GetStorage().read(getxGmapBottomPaddingKey) + 15;
+  RxDouble _bottomPadding =
+      ((GetStorage().read(getxGmapBottomPaddingKey) as double) + 15.0).obs;
 
   @override
   Widget build(BuildContext context) {
     responsiveSize(context);
-    return Positioned(
-        bottom: _bottomPadding,
-        left: 15,
-        right: 15,
-        child: Container(
-            margin: EdgeInsets.only(bottom: _bottomPadding),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              gradient: LinearGradient(colors: [
-                Color.fromRGBO(81, 132, 255, 1),
-                Color.fromRGBO(206, 73, 252, 1)
-              ], begin: Alignment.topLeft, end: Alignment.bottomRight),
-            ),
-            child: Container(
-                height: getSizeRelativeToScreen(25, Get.height, Get.width),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: Colors.white,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: buildBottomBatByStatus(widget.taxiRequest.status),
-                ))));
+    return Obx(
+      () => Positioned(
+          bottom: _bottomPadding.value,
+          left: 15,
+          right: 15,
+          child: Container(
+              margin: EdgeInsets.only(bottom: _bottomPadding.value),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                gradient: LinearGradient(colors: [
+                  Color.fromRGBO(81, 132, 255, 1),
+                  Color.fromRGBO(206, 73, 252, 1)
+                ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+              ),
+              child: Container(
+                  height: getSizeRelativeToScreen(25, Get.height, Get.width),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: Colors.white,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: buildBottomBatByStatus(widget.taxiRequest.status),
+                  )))),
+    );
   }
 
-  Widget messageBtn() {
+  Widget messageBtn({EdgeInsets? margin}) {
     return GestureDetector(
       onTap: () async {
-        Get.toNamed(getCustomerMessagesRoute(
-            controller.hasOrderOfType(typeToCheck: OrderType.Taxi)!.orderId));
+        Get.toNamed(getCustomerMessagesRoute(Get.find<OrderController>()
+            .hasOrderOfType(typeToCheck: OrderType.Taxi)!
+            .orderId));
       },
       child: Container(
-        margin: EdgeInsets.only(left: 6),
+        margin: margin ?? EdgeInsets.only(left: 6),
         height: getSizeRelativeToScreen(16, Get.height, Get.width),
         width: getSizeRelativeToScreen(16, Get.height, Get.width),
         decoration: BoxDecoration(
@@ -83,7 +90,7 @@ class _BottomBarState extends State<BottomBar> {
           child: Stack(
             children: [
               widget.taxiRequest.orderId != null &&
-                      controller.hasNewMessageNotification(
+                      Get.find<OrderController>().hasNewMessageNotification(
                           widget.taxiRequest.orderId!)
                   ? Positioned(
                       top: 5,
@@ -113,34 +120,26 @@ class _BottomBarState extends State<BottomBar> {
     return Container(
       margin: EdgeInsets.only(right: 6),
       child: GestureDetector(
-        onTap: () async => await showDialog(
-            context: context,
-            builder: (BuildContext ctx) {
-              return AlertDialog(
-                title: Text(lang.strings?['taxi']?['cancelOrder']
-                        ?['confirmation_header'] ??
-                    "Por favor confirmar"),
-                content: Text(lang.strings?['taxi']?['cancelOrder']
-                        ?['confirmation_text'] ??
-                    "¿Cancelar el viaje actual?"),
-                actions: [
-                  TextButton(
-                      onPressed: () {
-                        Get.find<TaxiController>().cancelTaxi(controller
-                            .hasOrderOfType(typeToCheck: OrderType.Taxi)!
-                            .orderId);
-                      },
-                      child: Text(
-                          lang.strings?['taxi']?['taxiView']?['yes'] ?? 'Si')),
-                  TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Text(
-                          lang.strings?['taxi']?['taxiView']?['no'] ?? 'No'))
-                ],
-              );
-            }),
+        onTap: () async {
+          YesNoDialogButton res = await yesNoDialog(
+              text: lang.strings?['taxi']?['cancelOrder']
+                      ?['confirmation_header'] ??
+                  "Por favor confirmar",
+              body: lang.strings?['taxi']?['cancelOrder']
+                      ?['confirmation_text'] ??
+                  "¿Cancelar el viaje actual?");
+
+          if (res == YesNoDialogButton.Yes) {
+            ServerResponse resp = await Get.find<TaxiController>()
+                .cancelTaxi(widget.taxiRequest.orderId!);
+
+            if (!resp.success) {
+              MezSnackbar("Oops", "Failed to communicate with the server :(.",
+                  position: SnackPosition.TOP);
+            }
+            // no need for else here , because we are handling UI changes already upon CanceledbyCustomer.
+          }
+        },
         child: Container(
           height: getSizeRelativeToScreen(16, Get.height, Get.width),
           width: getSizeRelativeToScreen(16, Get.height, Get.width),
@@ -237,7 +236,7 @@ class _BottomBarState extends State<BottomBar> {
     return Expanded(
         flex: 1,
         child: Center(
-            child: Text(widget.taxiRequest.estimatedPrice.toString() + "\$",
+            child: Text("\$" + widget.taxiRequest.estimatedPrice.toString(),
                 softWrap: false,
                 style: TextStyle(
                     fontFamily: "psr",
@@ -251,7 +250,7 @@ class _BottomBarState extends State<BottomBar> {
   }
 
   Widget rightRouteInfos() {
-    setState(() {});
+    // setState(() {});
     return Expanded(
       flex: 1,
       child: Column(
@@ -377,7 +376,8 @@ class _BottomBarState extends State<BottomBar> {
           Expanded(flex: 1, child: verticalSeparator()),
           rightRouteInfos()
         ]);
-        _bottomPadding = GetStorage().read(getxGmapBottomPaddingKey) + 15;
+        _bottomPadding.value =
+            (GetStorage().read(getxGmapBottomPaddingKey) as double) + 15.0;
         break;
       case TaxiOrdersStatus.LookingForTaxi:
         _widgies.assignAll([
@@ -385,7 +385,8 @@ class _BottomBarState extends State<BottomBar> {
           Expanded(flex: 1, child: verticalSeparator()),
           rightRouteInfos()
         ]);
-        _bottomPadding = GetStorage().read(getxGmapBottomPaddingKey) + 15;
+        _bottomPadding.value =
+            (GetStorage().read(getxGmapBottomPaddingKey) as double) + 15.0;
         break;
 
       case TaxiOrdersStatus.DroppedOff:
@@ -396,7 +397,7 @@ class _BottomBarState extends State<BottomBar> {
           verticalSeparator(),
           messageBtn()
         ]);
-        _bottomPadding = 10;
+        _bottomPadding.value = 10.0;
 
         break;
 
@@ -413,18 +414,18 @@ class _BottomBarState extends State<BottomBar> {
             ),
           )
         ]);
-        _bottomPadding = 10;
+        _bottomPadding.value = 10.0;
         break;
 
       case TaxiOrdersStatus.CancelledByTaxi:
         _widgies.assignAll([
           taxiAvatarAndPrice(description: "Ride Canceled by Taxi :("),
-          verticalSeparator(),
-          rideCost(),
-          verticalSeparator(),
-          messageBtn()
+          // verticalSeparator(),
+          // rideCost(),
+          // verticalSeparator(),
+          messageBtn(margin: EdgeInsets.symmetric(horizontal: 6))
         ]);
-        _bottomPadding = 10;
+        _bottomPadding.value = 10.0;
         break;
 
       case TaxiOrdersStatus.CancelledByCustomer:
@@ -440,7 +441,7 @@ class _BottomBarState extends State<BottomBar> {
             ),
           )
         ]);
-        _bottomPadding = 10;
+        _bottomPadding.value = 10.0;
         break;
 
       default:
@@ -451,9 +452,8 @@ class _BottomBarState extends State<BottomBar> {
           verticalSeparator(),
           buildMsgAndCancelBtn()
         ]);
-        _bottomPadding = 10;
+        _bottomPadding.value = 10.0;
     }
-
     return _widgies;
   }
 }

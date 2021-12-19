@@ -66,7 +66,7 @@ class CustomerAuthController extends GetxController {
       print(
           "/////////////////////////////////////////////${_customer.value?.toJson()}////////////////////////////////////////////////////");
     } else {
-      throw Exception("User is not signed it to init customer auth controller");
+      mezDbgPrint("User is not signed it to init customer auth controller");
     }
   }
 

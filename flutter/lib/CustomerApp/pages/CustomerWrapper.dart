@@ -25,6 +25,7 @@ import 'package:mezcalmos/Shared/models/Notification.dart' as MezNotification;
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 //import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
 
 class CustomerWrapper extends StatefulWidget {
@@ -49,20 +50,27 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   @override
   void initState() {
     // TODO : We have to find some kind of solution to inject global stuff (All these controllers are used ..)
-    Get.put<ForegroundNotificationsController>(
-        ForegroundNotificationsController(),
-        permanent: true);
-    Get.put<BackgroundNotificationsController>(
-        BackgroundNotificationsController(),
-        permanent: true);
-    Get.put<TaxiController>(TaxiController(), permanent: true);
-    Get.put(RestaurantController());
-    Get.put<CustomerAuthController>(CustomerAuthController());
+    // Get.put<ForegroundNotificationsController>(
+    //     ForegroundNotificationsController(),
+    //     permanent: true);
+    // Get.put<BackgroundNotificationsController>(
+    //     BackgroundNotificationsController(),
+    //     permanent: true);
+    // Get.put<TaxiController>(TaxiController(), permanent: true);
+    // Get.put(RestaurantController());
+    // Get.put<CustomerAuthController>(CustomerAuthController());
 
-    _orderController =
-        Get.put<OrderController>(OrderController(), permanent: true);
+    // _orderController =
+    //     Get.put<OrderController>(OrderController(), permanent: true);
+
     if (auth.fireAuthUser != null) {
       WidgetsBinding.instance!.addObserver(this);
+      _orderController = Get.find<OrderController>();
+      // if (!Get.isRegistered<OrderController>()) {
+      //   _orderController =
+      //       Get.put<OrderController>(OrderController(), permanent: true);
+      // }
+
       _orderCountListener = _orderController!.currentOrders.stream.listen((_) {
         numberOfCurrentOrders.value = _orderController!.currentOrders.length;
       });
@@ -79,6 +87,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
       });
     } else {
       Get.put(RestaurantController());
+      Get.put(TaxiController());
     }
     super.initState();
   }
@@ -138,6 +147,33 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             })));
   }
 
+  void checkTaxiCurrentOrdersAndNavigate() {
+    _orderController = Get.find<OrderController>();
+
+    mezDbgPrint(
+        "\nsaad [OrderController is registred] -- ${_orderController!.currentOrders.toJson()}");
+
+    // return;
+    num noOfCurrentTaxiOrders = _orderController
+            ?.currentOrders()
+            .where((currentOrder) => currentOrder.orderType == OrderType.Taxi)
+            .length ??
+        0;
+    if (noOfCurrentTaxiOrders == 0) {
+      MezSnackbar("Uder  has no orders", "Uder  has no orders");
+
+      Get.toNamed(kTaxiRequestRoute);
+    } else {
+      MezSnackbar("Uder  has  orders", "Uder  has  orders");
+
+      String orderId = _orderController!.currentOrders
+          .firstWhere(
+              (currentOrder) => currentOrder.orderType == OrderType.Taxi)
+          .orderId;
+      Get.toNamed(getTaxiOrderRoute(orderId));
+    }
+  }
+
   Widget mezWelcomeContainer(TextStyle textStyle) {
     return Container(
       margin: const EdgeInsets.all(5),
@@ -188,19 +224,11 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             url: "assets/images/taxiService.png",
             subtitle: "${lang.strings['customer']['home']['taxi']["subtitle"]}",
             ontap: () {
-              num noOfCurrentTaxiOrders = _orderController?.currentOrders
-                      .where((currentOrder) =>
-                          currentOrder.orderType == OrderType.Taxi)
-                      .length ??
-                  0;
-              if (noOfCurrentTaxiOrders == 0) {
+              if (Get.find<AuthController>().fireAuthUser == null) {
+                MezSnackbar("Uder is null", "Uder is null");
                 Get.toNamed(kTaxiRequestRoute);
               } else {
-                String orderId = _orderController!.currentOrders
-                    .firstWhere((currentOrder) =>
-                        currentOrder.orderType == OrderType.Taxi)
-                    .orderId;
-                Get.toNamed(getTaxiOrderRoute(orderId));
+                checkTaxiCurrentOrdersAndNavigate();
               }
             },
           ),

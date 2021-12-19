@@ -133,11 +133,11 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
                                   this.widget.mGoogleMapController,
                               periodicRerendering: true,
                             )),
-                        Obx(
-                          () => BottomBar(
+                        Obx(() {
+                          return BottomBar(
                             taxiRequest: order.value!.toTaxiRequest(),
-                          ),
-                        ),
+                          );
+                        }),
                         cancelButton(order.value!.status),
                         TopBar(order: order.value!)
                       ])
@@ -210,6 +210,8 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
             latLng: order.value!.from.toLatLng());
         break;
     }
+
+    setState(() {});
   }
 
   /// This gets invoked when the order is moved to /past db node
@@ -237,7 +239,12 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
         child: InkWell(
           onTap: () async {
             mezDbgPrint("Canceling order ===> ${order.value!.orderId}");
-            await Get.find<TaxiController>().cancelTaxi(order.value!.orderId);
+            YesNoDialogButton res = await yesNoDialog(
+                text: "Confirm Cancelation.",
+                body: "Are you sure you want to cancel your Order ?");
+            if (res == YesNoDialogButton.Yes) {
+              await Get.find<TaxiController>().cancelTaxi(order.value!.orderId);
+            }
           },
           child: Container(
               height: 50,

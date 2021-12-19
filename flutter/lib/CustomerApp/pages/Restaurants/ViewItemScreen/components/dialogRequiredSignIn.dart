@@ -40,8 +40,7 @@ void dialogRequiredSignIn() {
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: InkWell(
                   onTap: () {
-                    Get.offNamedUntil(
-                        kSignInRouteOptional, ModalRoute.withName("/wrapper"));
+                    Get.toNamed(kSignInRouteOptional);
                   },
                   child: Container(
                     decoration: BoxDecoration(

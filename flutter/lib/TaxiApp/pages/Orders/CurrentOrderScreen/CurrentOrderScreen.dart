@@ -145,7 +145,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
           mGoogleMapController.addOrUpdateUserMarker(
               markerId: orderStreamEvent.customer.id,
               latLng: orderStreamEvent.from.toLatLng(),
-              imgUrl: orderStreamEvent.customer.image);
+              customImgHttpUrl: orderStreamEvent.customer.image);
           // add the Taxi's
           if (orderStreamEvent.driver?.location != null)
             mGoogleMapController.addOrUpdateTaxiDriverMarker(
@@ -169,7 +169,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
           mGoogleMapController.addOrUpdateUserMarker(
               markerId: orderStreamEvent.customer.id,
               latLng: orderStreamEvent.from.toLatLng(),
-              imgUrl: orderStreamEvent.customer.image);
+              customImgHttpUrl: orderStreamEvent.customer.image);
 
           mGoogleMapController.addOrUpdatePurpleDestinationMarker(
               latLng: orderStreamEvent.to.toLatLng());

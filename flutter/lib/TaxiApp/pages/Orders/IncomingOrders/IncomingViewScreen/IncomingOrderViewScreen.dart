@@ -41,7 +41,7 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
   void initState() {
     String orderId = Get.parameters['orderId']!;
     order = controller.getOrder(orderId);
-    
+
     // we do not setState here yet !
     if (order == null) {
       Get.back();
@@ -55,7 +55,7 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
         mGoogleMapController.addOrUpdateUserMarker(
             markerId: order!.customer.id,
             latLng: order!.from.toLatLng(),
-            imgUrl: order!.customer.image);
+            customImgHttpUrl: order!.customer.image);
 
         mGoogleMapController.addOrUpdatePurpleDestinationMarker(
             latLng: order!.to.toLatLng());

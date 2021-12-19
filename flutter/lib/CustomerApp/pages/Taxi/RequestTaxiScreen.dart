@@ -74,17 +74,22 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
             alignment: Alignment.topCenter,
             children: [
               Container(
-                  width: Get.width,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: Colors.white),
-                  child: LocationPicker(
-                      locationPickerMapController:
-                          this.locationPickerController,
-                      notifyParentOfLocationFinalized:
-                          updateModelAndMaybeCalculateRoute,
-                      notifyParentOfConfirm: (Location? _) async =>
-                          await requestTaxi(_))),
+                width: Get.width,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: Colors.white),
+                child: LocationPicker(
+
+                    /// [onSuccessSignIn] THIS WILL GETS EXECUTED IF USER GOT SIGNED IN SUCCESSFULY
+                    // AFTER HE CREATED HIS TAXI REQUESTED WHILE HE WAS SIGNEDOUT
+                    onSuccessSignIn: onSuccessSignInUpdateUserMarker,
+                    locationPickerMapController: this.locationPickerController,
+                    notifyParentOfLocationFinalized:
+                        updateModelAndMaybeCalculateRoute,
+                    notifyParentOfConfirm: (Location? _) async {
+                      await requestTaxi(_);
+                    }),
+              ),
               LocationSearchBar(
                   request: taxiRequest,
                   locationSearchBarController: locationSearchBarController,
@@ -150,8 +155,11 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
     }
   }
 
-// after confirm button is clicked on mez pick google map
+  // after confirm button is clicked on mez pick google map
   Future<void> requestTaxi(Location? loc) async {
+    // we show grayed Confirm button so the user won't press it twice.
+    this.locationPickerController.showLoadingIconOnConfirm();
+
     // build order and call controller function
     ServerResponse response = await controller.requestTaxi(taxiRequest.value);
     if (response.success) {
@@ -166,6 +174,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
       MezSnackbar("Error :(", "Failed to request a taxi !",
           position: SnackPosition.TOP);
       mezDbgPrint("Error requesting the taxi : ${response.toString()}");
+      this.locationPickerController.showConfirmButton();
     }
   }
 
@@ -183,6 +192,12 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
           markerId: textFieldType.toShortString(),
           latLng: newLocation.toLatLng());
     }
+  }
+
+  void onSuccessSignInUpdateUserMarker() {
+    locationPickerController.addOrUpdateUserMarker(
+        markerId: SearchComponentType.From.toShortString(),
+        latLng: taxiRequest.value.from!.toLatLng());
   }
 
   void updateRouteInformation() async {

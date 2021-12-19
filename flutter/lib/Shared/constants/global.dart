@@ -52,6 +52,7 @@ const String getxVersion = "version";
 
 const String aLogoPath = "assets/images/logo.png";
 const String aDefaultAvatar = "assets/images/defaultAvatar.png";
+const String aMapUserImgNotSignedIn = "assets/images/map_user.png";
 const String aNoImgAsset = "assets/images/no-img.png";
 const String enLang = "assets/i18n/en.json";
 const String esLang = "assets/i18n/es.json";

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/route_manager.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/theme.dart';
@@ -32,6 +33,7 @@ List<SideMenuItem> sideMenuItems = <SideMenuItem>[
 ];
 
 void main() {
+  ScreenUtil.init(BoxConstraints(maxHeight: Get.height, maxWidth: Get.width));
   runMainGuarded(() => runApp(
         StartingPoint(
           appType: AppType.CustomerApp,

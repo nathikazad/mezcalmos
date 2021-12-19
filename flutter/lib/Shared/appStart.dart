@@ -31,6 +31,7 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:package_info/package_info.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 final ThemeData _defaultAppTheme = ThemeData(
     primaryColor: Colors.white,
@@ -75,14 +76,13 @@ class _StartingPointState extends State<StartingPoint> {
 
   @override
   Widget build(BuildContext context) {
-    responsiveSize(context);
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     if (_error) {
       MezSnackbar("Error", "Server connection failed !");
-      return MaterialApp(
+      return GetMaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
           body: Center(
@@ -107,11 +107,21 @@ class _StartingPointState extends State<StartingPoint> {
   void initializeSetup() async {
     try {
       await setupFirebase();
+      mezDbgPrint("Done : setupFirebase");
       await setGlobalVariables();
+      mezDbgPrint("Done : setGlobalVariables");
+
       putControllers();
+      mezDbgPrint("Done : putControllers");
+
       await waitForInitialization();
+      mezDbgPrint("Done : waitForInitialization");
+
       hookOnFlutterErrorsStdout();
+      mezDbgPrint("Done : hookOnFlutterErrorsStdout");
+
       setState(() => _initialized = true);
+      mezDbgPrint("_initialized Set to : $_initialized");
     } catch (e) {
       mezDbgPrint("[+] Error Happend =======> $e");
       setState(() {
@@ -203,23 +213,21 @@ class _StartingPointState extends State<StartingPoint> {
       }
     };
   }
-}
 
-Widget mainApp(
-    {required AppType appType,
-    required ThemeData appTheme,
-    required List<GetPage<dynamic>> routes}) {
-  Future<void> _initializeConfig() async {
-    // We will use this to Initialize anything at MaterialApp root init of app
-    BitmapDescriptor desc = await BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(), 'assets/images/purple_circle.png');
+  Widget mainApp(
+      {required AppType appType,
+      required ThemeData appTheme,
+      required List<GetPage<dynamic>> routes}) {
+    Future<void> _initializeConfig() async {
+      // We will use this to Initialize anything at MaterialApp root init of app
+      BitmapDescriptor desc = await BitmapDescriptor.fromAssetImage(
+          ImageConfiguration(), 'assets/images/purple_circle.png');
 
-    await GetStorage().write('markerCircle', desc);
-    print("[+] InitializedConfig -- the ${appType.toShortString()} !");
-  }
+      await GetStorage().write('markerCircle', desc);
+      print("[+] InitializedConfig -- the ${appType.toShortString()} !");
+    }
 
-  return ScreenUtilInit(
-    builder: () => GetMaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       onInit: () async => await _initializeConfig(),
       title: appType.toShortString(),
@@ -229,13 +237,19 @@ Widget mainApp(
       getPages: routes,
       initialRoute: kWrapperRoute,
       builder: (ctx, widget) {
+        mezDbgPrint("INSIDE GetMaterialApp::builder -> $ctx - $widget ");
         return DevicePreview(
             devices: [
               ...DevicePreview.defaultDevices,
             ],
             enabled: GetStorage().read('previewMode') as bool,
-            builder: (context) => widget!);
+            builder: (context) {
+              responsiveSize(context);
+              mezDbgPrint(
+                  "INSIDE GetMaterialApp::builder::DevicePreview::BUILDER -> $context ");
+              return widget!;
+            });
       },
-    ),
-  );
+    );
+  }
 }

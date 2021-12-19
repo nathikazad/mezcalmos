@@ -26,6 +26,10 @@ class LocationPickerController extends MGoogleMapController {
     _showBlackScreen.value = value;
   }
 
+  void showLoadingIconOnConfirm() {
+    _bottomButtomToShow.value = BottomButtomToShow.Loading;
+  }
+
   void showFakeMarkerAndPickButton() {
     _showFakeMarker.value = true;
     _bottomButtomToShow.value = BottomButtomToShow.Pick;
@@ -47,11 +51,14 @@ class LocationPickerController extends MGoogleMapController {
 class LocationPicker extends StatefulWidget {
   final MapHelper.LocationChangesNotifier notifyParentOfLocationFinalized;
   final Function notifyParentOfConfirm;
+  final Function? onSuccessSignIn;
+
   // Location location;
   final LocationPickerController locationPickerMapController;
   final bool showBottomButton;
   LocationPicker(
       {this.showBottomButton = true,
+      this.onSuccessSignIn,
       required this.notifyParentOfLocationFinalized,
       required this.notifyParentOfConfirm,
       required this.locationPickerMapController});
@@ -59,7 +66,7 @@ class LocationPicker extends StatefulWidget {
   LocationPickerState createState() => LocationPickerState();
 }
 
-enum BottomButtomToShow { Pick, Confirm, GrayedOut }
+enum BottomButtomToShow { Pick, Confirm, GrayedOut, Loading }
 
 class LocationPickerState extends State<LocationPicker> {
   final LanguageController _lang = Get.find<LanguageController>();
@@ -73,31 +80,29 @@ class LocationPickerState extends State<LocationPicker> {
   @override
   Widget build(BuildContext context) {
     responsiveSize(context);
-    return Obx(() =>
-        widget.locationPickerMapController._showLoading.value == false ||
-                widget.locationPickerMapController.location.value != null
-            ? Stack(
-                alignment: Alignment.center,
-                children: [
-                  MGoogleMap(
-                    mGoogleMapController: widget.locationPickerMapController,
-                    notifyParentOfNewLocation:
-                        widget.notifyParentOfLocationFinalized,
-                    periodicRerendering: false,
-                    //   periodicRedrendring: false,
-                    myLocationButtonEnabled: widget.locationPickerMapController
-                        .myLocationButtonEnabled.value,
-                  ),
-                  widget.locationPickerMapController._showFakeMarker.value
-                      ? pickerMarker()
-                      : SizedBox(),
-                  widget.locationPickerMapController._showBlackScreen.value
-                      ? gestureDetector()
-                      : SizedBox(),
-                  this.widget.showBottomButton ? bottomButton() : SizedBox()
-                ],
-              )
-            : Center(child: CircularProgressIndicator()));
+    return Obx(() => widget.locationPickerMapController.location.value != null
+        ? Stack(
+            alignment: Alignment.center,
+            children: [
+              MGoogleMap(
+                mGoogleMapController: widget.locationPickerMapController,
+                notifyParentOfNewLocation:
+                    widget.notifyParentOfLocationFinalized,
+                periodicRerendering: false,
+                //   periodicRedrendring: false,
+                myLocationButtonEnabled: widget
+                    .locationPickerMapController.myLocationButtonEnabled.value,
+              ),
+              widget.locationPickerMapController._showFakeMarker.value
+                  ? pickerMarker()
+                  : SizedBox(),
+              widget.locationPickerMapController._showBlackScreen.value
+                  ? gestureDetector()
+                  : SizedBox(),
+              this.widget.showBottomButton ? bottomButton() : SizedBox()
+            ],
+          )
+        : Center(child: CircularProgressIndicator()));
   }
 
 /******************************  Widgets ************************************/
@@ -135,10 +140,15 @@ class LocationPickerState extends State<LocationPicker> {
           return buildBottomButton("Sign in to make order",
               notifier: (_) async {
             await Get.toNamed(kSignInRouteOptional);
+            // call back in case User was signedOut and he signedIn before confirming his Order Successfully!
+            widget.onSuccessSignIn?.call();
             setState(() {});
           });
         }
-
+      case BottomButtomToShow.Loading:
+        return buildBottomButton(
+          null,
+        );
       case BottomButtomToShow.GrayedOut:
         mezDbgPrint("0000000000  ===> returning GrayedOut");
         return buildBottomButton(
@@ -147,7 +157,7 @@ class LocationPickerState extends State<LocationPicker> {
     }
   }
 
-  Widget buildBottomButton(String buttonText,
+  Widget buildBottomButton(String? buttonText,
       {Function? notifier, Function? onPress}) {
     return Positioned(
         bottom: 0,
@@ -187,14 +197,20 @@ class LocationPickerState extends State<LocationPicker> {
                     }
                   : () {},
               child: Center(
-                child: Text(buttonText,
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.visible,
-                    style: TextStyle(
-                      fontFamily: 'psr',
-                      color: Colors.white,
-                      fontSize: 18.sp,
-                    )),
+                child: buttonText != null
+                    ? Text(buttonText,
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.visible,
+                        style: TextStyle(
+                          fontFamily: 'psr',
+                          color: Colors.white,
+                          fontSize: 18.sp,
+                        ))
+                    : Container(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(
+                            strokeWidth: 1, color: Colors.black)),
               )),
         ));
   }

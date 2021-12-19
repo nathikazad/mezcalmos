@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -60,11 +59,11 @@ class _WrapperState extends State<Wrapper> {
         mezDbgPrint(
             "User Signed in but Name or image are null , so  heading to UserInfo Page !");
         await Get.toNamed(kUserProfile);
-        // Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
       }
       if (Get.currentRoute == kSignInRouteOptional) {
         mezDbgPrint("Current Routee ======= = == = => ${Get.currentRoute}");
         Get.back();
+        setState(() {});
       } else
         Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
     }
