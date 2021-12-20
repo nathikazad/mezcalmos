@@ -50,18 +50,19 @@ const String getxUserId = "userid";
 const String getxVersion = "version";
 // ----------------- Assets Strings ----------------- //
 
-const String aLogoPath = "assets/images/logo.png";
-const String aDefaultAvatar = "assets/images/defaultAvatar.png";
-const String aMapUserImgNotSignedIn = "assets/images/map_user.png";
-const String aNoImgAsset = "assets/images/no-img.png";
+const String aLogoPath = "assets/images/shared/logo.png";
+const String aDefaultAvatar = "assets/images/shared/defaultAvatar.png";
+const String aMapUserImgNotSignedIn = "assets/images/shared/map_user.png";
+const String aNoImgAsset = "assets/images/shared/no-img.png";
 const String enLang = "assets/i18n/en.json";
 const String esLang = "assets/i18n/es.json";
 const String aLocationPermissionAsset =
-    "assets/images/Enable Map_Illustration.png";
+    "assets/images/shared/Enable Map_Illustration.png";
 
-const String aPurpleLocationCircle = "assets/images/PurpleLocationCircle.png";
-const String aLocationPicker = "assets/images/PurpleLocationPicker.png";
-const String aOrderUnavailable = "assets/images/circularCancel.png";
+const String aPurpleLocationCircle =
+    "assets/images/shared/PurpleLocationCircle.png";
+const String aLocationPicker = "assets/images/shared/PurpleLocationPicker.png";
+const String aOrderUnavailable = "assets/images/shared/circularCancel.png";
 
 enum AppType { CustomerApp, TaxiApp, TaxiAdminApp, DeliveryAdminApp }
 

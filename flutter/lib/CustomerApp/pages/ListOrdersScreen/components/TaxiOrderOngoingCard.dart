@@ -55,8 +55,8 @@ class TaxiOngoingOrderCard extends StatelessWidget {
                             CircleAvatar(
                               radius: 20,
                               backgroundColor: Colors.white,
-                              backgroundImage:
-                                  AssetImage('assets/images/taxiDriverImg.png'),
+                              backgroundImage: AssetImage(
+                                  'assets/images/customer/taxi/taxiDriverImg.png'),
                             ),
                             Text(
                               'Driver name',
@@ -179,7 +179,7 @@ Widget getTaxiOrderWidget(TaxiOrdersStatus status) {
           height: 50,
           width: 50,
           child: Image.asset(
-            'assets/images/search.png',
+            'assets/images/customer/taxi/search.png',
             fit: BoxFit.contain,
           ));
     case TaxiOrdersStatus.OnTheWay:
@@ -187,7 +187,7 @@ Widget getTaxiOrderWidget(TaxiOrdersStatus status) {
           height: 50,
           width: 50,
           child: Image.asset(
-            'assets/images/taxiOnTheWay.png',
+            'flutter/assets/images/customer/taxi/taxiOnTheWay.png',
             fit: BoxFit.contain,
           ));
     case TaxiOrdersStatus.InTransit:
@@ -195,7 +195,7 @@ Widget getTaxiOrderWidget(TaxiOrdersStatus status) {
           height: 50,
           width: 50,
           child: Image.asset(
-            'assets/images/taxiOnTheWay.png',
+            'flutter/assets/images/customer/taxi/taxiOnTheWay.png',
             fit: BoxFit.contain,
           ));
     case TaxiOrdersStatus.DroppedOff:
@@ -203,7 +203,7 @@ Widget getTaxiOrderWidget(TaxiOrdersStatus status) {
           height: 50,
           width: 50,
           child: Image.asset(
-            'assets/images/taxi.png',
+            'assets/images/customer/taxi/taxi.png',
             fit: BoxFit.contain,
           ));
     case TaxiOrdersStatus.Expired:

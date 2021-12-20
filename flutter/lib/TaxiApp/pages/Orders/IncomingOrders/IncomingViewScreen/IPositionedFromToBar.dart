@@ -105,7 +105,8 @@ class IncomingPositionedFromToTopBar extends StatelessWidget {
                               end: Alignment.bottomRight),
                         ),
                         child: Center(
-                          child: Image.asset('assets/images/logoWhite.png'),
+                          child:
+                              Image.asset('assets/images/shared/logoWhite.png'),
                         ),
                       ),
                     ])),

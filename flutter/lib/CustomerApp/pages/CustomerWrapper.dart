@@ -221,7 +221,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
         Obx(
           () => ServicesCard(
             title: "${lang.strings['customer']['home']['taxi']["title"]}",
-            url: "assets/images/taxiService.png",
+            url: "assets/images/customer/taxi/taxiService.png",
             subtitle: "${lang.strings['customer']['home']['taxi']["subtitle"]}",
             ontap: () {
               if (Get.find<AuthController>().fireAuthUser == null) {
@@ -238,7 +238,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
         Obx(
           () => ServicesCard(
             title: "${lang.strings['customer']['home']['food']["title"]}",
-            url: "assets/images/restaurantService.png",
+            url: "assets/images/customer/restaurants/restaurantService.png",
             subtitle: "${lang.strings['customer']['home']['food']["subtitle"]}",
             ontap: () {
               Get.toNamed(kRestaurantsRoute);
@@ -250,7 +250,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
         Obx(
           () => ServicesCard(
             title: "${lang.strings['customer']['home']['laundry']["title"]}",
-            url: "assets/images/laundryService.png",
+            url: "assets/images/customer/laundryService.png",
           ),
         ),
       ],

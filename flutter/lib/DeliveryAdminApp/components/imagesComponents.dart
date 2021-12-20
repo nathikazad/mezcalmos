@@ -10,7 +10,7 @@ class TaxiImage extends StatelessWidget {
     return Container(
       width: sw,
       height: sh,
-      child: Image.asset("assets/images/Taxi.png"),
+      child: Image.asset("assets/images/customer/taxi/taxi.png"),
     );
   }
 }
@@ -26,7 +26,7 @@ class FoodImage extends StatelessWidget {
     return Container(
       width: sw,
       height: sh,
-      child: Image.asset("assets/images/Restaurant.png"),
+      child: Image.asset("assets/images/customer/restaurants/Restaurant.png"),
     );
   }
 }

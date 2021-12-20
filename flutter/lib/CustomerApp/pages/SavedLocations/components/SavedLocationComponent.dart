@@ -38,7 +38,7 @@ class SavedLocationComponent extends StatelessWidget {
                       topLeft: Radius.circular(8),
                       bottomLeft: Radius.circular(8)),
                   child: Image.asset(
-                    "assets/images/adressImage.jpg",
+                    "assets/images/customer/adressImage.jpg",
                     fit: BoxFit.cover,
                   ),
                 )),

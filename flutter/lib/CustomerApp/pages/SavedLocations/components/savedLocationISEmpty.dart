@@ -14,7 +14,7 @@ class SavedlocationISEmpty extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            child: Image.asset("assets/images/noSavedLoc.png"),
+            child: Image.asset("assets/images/customer/noSavedLoc.png"),
           ),
           SizedBox(
             height: 15,

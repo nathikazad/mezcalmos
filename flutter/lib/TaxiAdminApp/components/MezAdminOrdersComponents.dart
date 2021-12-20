@@ -180,13 +180,12 @@ class MezAdminOrdersComponents {
                     child: Container(
                       height: 30,
                       width: 30,
-                      child:
-                          ClipOval(child: mLoadImage(url: driverImg)
-                              //  Image.network(
-                              //   "${driverImg}",
-                              //   fit: BoxFit.cover,
-                              // ),
-                              ),
+                      child: ClipOval(child: mLoadImage(url: driverImg)
+                          //  Image.network(
+                          //   "${driverImg}",
+                          //   fit: BoxFit.cover,
+                          // ),
+                          ),
                     ),
                   )
                 : Center(
@@ -199,7 +198,7 @@ class MezAdminOrdersComponents {
                           padding: const EdgeInsets.all(5),
                           color: Colors.white,
                           child: Image.asset(
-                            "assets/images/logo.png",
+                            "assets/images/shared/logo.png",
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -499,7 +498,7 @@ class MezAdminOrdersComponents {
 
   static Widget noDataImage() {
     return Container(
-      child: Image.asset("assets/images/nodata.jpg"),
+      child: Image.asset("assets/images/customer/taxi/nodata.jpg"),
     );
   }
 }

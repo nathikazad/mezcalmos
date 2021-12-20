@@ -24,7 +24,7 @@ void dialogRequiredSignIn() {
               ),
               Expanded(
                   child: Container(
-                child: Image.asset("assets/images/loginImg.jpg"),
+                child: Image.asset("assets/images/customer/loginImg.jpg"),
               )),
               Container(
                 width: Get.width,

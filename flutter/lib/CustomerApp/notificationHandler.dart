@@ -83,7 +83,7 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
             "${lang.strings["shared"]["notification"]["notificationType"]["preparingOrder"]["title"]}",
         "body":
             "${lang.strings["shared"]["notification"]["notificationType"]["preparingOrder"]["body"]}",
-        "imgUrl": "assets/images/PrepareOrderNotificationIcon.png",
+        "imgUrl": "assets/images/customer/PrepareOrderNotificationIcon.png",
       };
     case RestaurantOrderStatus.ReadyForPickup:
       return <String, dynamic>{
@@ -91,7 +91,7 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
             "${lang.strings["shared"]["notification"]["notificationType"]["readyForPickup"]["title"]}",
         "body":
             "${lang.strings["shared"]["notification"]["notificationType"]["readyForPickup"]["body"]}",
-        "imgUrl": "assets/images/ReadyOrderNotificationIcon.png",
+        "imgUrl": "assets/images/customer/ReadyOrderNotificationIcon.png",
       };
     case RestaurantOrderStatus.OnTheWay:
       return <String, dynamic>{
@@ -99,7 +99,7 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
             "${lang.strings["shared"]["notification"]["notificationType"]["onTheWayRestaurant"]["title"]}",
         "body":
             "${lang.strings["shared"]["notification"]["notificationType"]["onTheWayRestaurant"]["body"]}",
-        "imgUrl": "assets/images/OnTheWayOrderNotificationIcon.png",
+        "imgUrl": "assets/images/customer/OnTheWayOrderNotificationIcon.png",
       };
     case RestaurantOrderStatus.Delivered:
       return <String, dynamic>{
@@ -107,7 +107,7 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
             "${lang.strings["shared"]["notification"]["notificationType"]["delivered"]["title"]}",
         "body":
             "${lang.strings["shared"]["notification"]["notificationType"]["delivered"]["body"]}",
-        "imgUrl": "assets/images/DroppedOrderNotificationIcon.png",
+        "imgUrl": "assets/images/customer/DroppedOrderNotificationIcon.png",
       };
     case RestaurantOrderStatus.CancelledByAdmin:
       return <String, dynamic>{
@@ -115,7 +115,7 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
             "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["title"]}",
         "body":
             "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["body"]}",
-        "imgUrl": "assets/images/CancelledOrderNotificationIcon.png",
+        "imgUrl": "assets/images/customer/CancelledOrderNotificationIcon.png",
       };
     default:
     // do nothing
@@ -132,7 +132,7 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
             "${lang.strings["shared"]["notification"]["notificationType"]["onTheWayTaxi"]["title"]}",
         "body":
             "${lang.strings["shared"]["notification"]["notificationType"]["onTheWayTaxi"]["body"]}",
-        "imgUrl": "assets/images/OnTheWayOrderNotificationIcon.png",
+        "imgUrl": "assets/images/customer/OnTheWayOrderNotificationIcon.png",
       };
     case TaxiOrdersStatus.InTransit:
       return <String, dynamic>{
@@ -140,7 +140,7 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
             "${lang.strings["shared"]["notification"]["notificationType"]["inTransit"]["title"]}",
         "body":
             "${lang.strings["shared"]["notification"]["notificationType"]["inTransit"]["body"]}",
-        "imgUrl": "assets/images/OnTheWayOrderNotificationIcon.png",
+        "imgUrl": "assets/images/customer/OnTheWayOrderNotificationIcon.png",
       };
     case TaxiOrdersStatus.DroppedOff:
       return <String, dynamic>{
@@ -148,7 +148,7 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
             "${lang.strings["shared"]["notification"]["notificationType"]["droppedOff"]["title"]}",
         "body":
             "${lang.strings["shared"]["notification"]["notificationType"]["droppedOff"]["body"]}",
-        "imgUrl": "assets/images/DroppedOrderNotificationIcon.png",
+        "imgUrl": "assets/images/customer/DroppedOrderNotificationIcon.png",
       };
     case TaxiOrdersStatus.CancelledByTaxi:
       return <String, dynamic>{

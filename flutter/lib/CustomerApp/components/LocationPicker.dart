@@ -119,7 +119,7 @@ class LocationPickerState extends State<LocationPicker> {
         width: 20,
         child: ClipRect(
           child: Image.asset(
-            "assets/images/PurpleLocationPicker.png",
+            "assets/images/shared/PurpleLocationPicker.png",
             fit: BoxFit.cover,
           ),
         ),

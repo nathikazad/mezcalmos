@@ -1,8 +1,8 @@
 ///========================== Icon Images=====================================
-const String circularCancel = "assets/images/CancelOrder.png";
-const String stoveIcon = "assets/images/stoveIcon.png";
-const String cancelIcon = "assets/images/CancelOrder.png";
-const String tick = "assets/images/tick.png";
-const String truck = "assets/images/truck.png";
-const String waiting = "assets/images/waiting.png";
-const String box = "assets/images/Box.png";
+const String circularCancel = "assets/images/customer/CancelOrder.png";
+const String stoveIcon = "assets/images/customer/restaurants/stoveIcon.png";
+const String cancelIcon = "assets/images/customer/CancelOrder.png";
+const String tick = "assets/images/customer/restaurants/tick.png";
+const String truck = "assets/images/customer/restaurants/truck.png";
+const String waiting = "assets/images/customer/restaurants/waiting.png";
+const String box = "assets/images/customer/Box.png";
