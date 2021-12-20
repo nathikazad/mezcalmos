@@ -19,32 +19,36 @@ class HomeFooterButtons extends StatelessWidget {
       () => Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          InkWell(
-            onTap: () {
-              lang.changeUserLanguage();
-            },
-            child: Ink(
-              padding: EdgeInsets.all(12),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 20.sp,
-                    width: 20.sp,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                            image: AssetImage(lang.oppositFlag))),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(lang.oppositToLang, style: txt.bodyText2),
-                ],
+          Flexible(
+            child: InkWell(
+              onTap: () {
+                lang.changeUserLanguage();
+              },
+              child: Ink(
+                padding: EdgeInsets.all(12),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 20.sp,
+                      width: 20.sp,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                              image: AssetImage(lang.oppositFlag))),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(lang.oppositToLang, style: txt.bodyText2),
+                  ],
+                ),
               ),
             ),
           ),
           Flexible(
+            flex: 1,
+            fit: FlexFit.loose,
             child: InkWell(
               onTap: () async => await launch(tPrivacyPolicy),
               child: Ink(
@@ -61,6 +65,8 @@ class HomeFooterButtons extends StatelessWidget {
                       width: 10,
                     ),
                     Flexible(
+                      flex: 1,
+                      fit: FlexFit.loose,
                       child: Text(
                         lang.strings['shared']['navDrawer']["legal"],
                         style: txt.bodyText2,

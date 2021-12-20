@@ -44,7 +44,7 @@ class TaxiOngoingOrderCard extends StatelessWidget {
                                   NetworkImage(order.serviceProvider!.image),
                             ),
                             Text(
-                              'Driver name',
+                              order.serviceProvider!.name,
                               style: txt.bodyText2,
                             ),
                           ],
@@ -53,14 +53,10 @@ class TaxiOngoingOrderCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             CircleAvatar(
-                              radius: 20,
+                              radius: 25,
                               backgroundColor: Colors.white,
                               backgroundImage: AssetImage(
                                   'assets/images/customer/taxi/taxiDriverImg.png'),
-                            ),
-                            Text(
-                              'Driver name',
-                              style: txt.bodyText2,
                             ),
                           ],
                         ),
@@ -72,7 +68,7 @@ class TaxiOngoingOrderCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          getTaxiOrderStatus(TaxiOrdersStatus.OnTheWay),
+                          getTaxiOrderStatus((order as TaxiOrder).status),
                           style: txt.headline3,
                         ),
                         if (MediaQuery.of(context).size.width > 320)
@@ -95,7 +91,7 @@ class TaxiOngoingOrderCard extends StatelessWidget {
                   ),
 
                   // getTaxiOrderWidget((order as TaxiOrder).status),
-                  getTaxiOrderWidget(TaxiOrdersStatus.OnTheWay),
+                  getTaxiOrderWidget((order as TaxiOrder).status),
                   SizedBox(
                     width: 10,
                   )

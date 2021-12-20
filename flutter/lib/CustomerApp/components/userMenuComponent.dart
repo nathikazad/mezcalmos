@@ -1,5 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
@@ -10,16 +11,23 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 
-class UserMenu extends StatelessWidget {
+class UserMenu extends StatefulWidget {
   // AuthController authController = Get.find<AuthController>();
 
+  @override
+  State<UserMenu> createState() => _UserMenuState();
+}
+
+class _UserMenuState extends State<UserMenu> {
   LanguageController lang = Get.find<LanguageController>();
+
   AuthController auth = Get.find<AuthController>();
+
   OrderController? controller;
+
   ForegroundNotificationsController? notifController;
 
   RxList<PopupMenuEntry<int>> getItems(BuildContext context) {
@@ -50,6 +58,7 @@ class UserMenu extends StatelessWidget {
           ),
           value: 2,
         ),
+      
         PopupMenuItem(
           child: Row(
             children: [
@@ -89,6 +98,13 @@ class UserMenu extends StatelessWidget {
     }
 
     return _tmpPopUpItems.obs;
+  }
+
+  @override
+  void initState() {
+    controller = Get.find<OrderController>();
+    notifController = Get.find<ForegroundNotificationsController>();
+    super.initState();
   }
 
   @override
