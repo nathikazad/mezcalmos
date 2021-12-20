@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
+import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -59,7 +60,7 @@ class _BottomBarState extends State<BottomBar> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: buildBottomBatByStatus(widget.taxiRequest.status),
+                    children: buildBottomBatByStatus(widget.taxiRequest),
                   )))),
     );
   }
@@ -367,9 +368,9 @@ class _BottomBarState extends State<BottomBar> {
     );
   }
 
-  List<Widget> buildBottomBatByStatus(TaxiOrdersStatus? status) {
+  List<Widget> buildBottomBatByStatus(TaxiRequest? taxiRequest) {
     List<Widget> _widgies = [];
-    switch (status) {
+    switch (taxiRequest?.status) {
       case null:
         _widgies.assignAll([
           incrementDecrementPrice(),
@@ -402,15 +403,32 @@ class _BottomBarState extends State<BottomBar> {
         break;
 
       case TaxiOrdersStatus.Expired:
+        TaxiController controller = Get.find<TaxiController>();
         _widgies.assignAll([
-          Center(
-            child: Text(
-              "Ride Expired :(",
-              overflow: TextOverflow.ellipsis,
-              softWrap: false,
-              maxLines: 1,
-              style: TextStyle(
-                  fontSize: 14.sp, fontFamily: 'psr', color: Colors.grey),
+          Container(
+            width: Get.width - 40,
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 5,
+                  child: Text(
+                    "Ride Expired :(",
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: false,
+                    maxLines: 1,
+                    style: TextStyle(
+                        fontSize: 14.sp, fontFamily: 'psr', color: Colors.grey),
+                  ),
+                ),
+                Expanded(
+                    flex: 3,
+                    child: ResendButton(
+                      function: () {
+                        popEverythingAndNavigateTo(kTaxiRequestRoute,
+                            args: taxiRequest!.reCreate());
+                      },
+                    ))
+              ],
             ),
           )
         ]);
@@ -429,15 +447,32 @@ class _BottomBarState extends State<BottomBar> {
         break;
 
       case TaxiOrdersStatus.CancelledByCustomer:
+        TaxiController controller = Get.find<TaxiController>();
         _widgies.assignAll([
-          Center(
-            child: Text(
-              "Ride Canceled :(",
-              overflow: TextOverflow.ellipsis,
-              softWrap: false,
-              maxLines: 1,
-              style: TextStyle(
-                  fontSize: 14.sp, fontFamily: 'psr', color: Colors.grey),
+          Container(
+            width: Get.width - 40,
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 5,
+                  child: Text(
+                    "Ride Canceled :(",
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: false,
+                    maxLines: 1,
+                    style: TextStyle(
+                        fontSize: 14.sp, fontFamily: 'psr', color: Colors.grey),
+                  ),
+                ),
+                Expanded(
+                    flex: 3,
+                    child: ResendButton(
+                      function: () {
+                        popEverythingAndNavigateTo(kTaxiRequestRoute,
+                            args: taxiRequest!.reCreate());
+                      },
+                    ))
+              ],
             ),
           )
         ]);
@@ -455,5 +490,26 @@ class _BottomBarState extends State<BottomBar> {
         _bottomPadding.value = 10.0;
     }
     return _widgies;
+  }
+}
+
+class ResendButton extends StatelessWidget {
+  ResendButton({Key? key, required this.function}) : super(key: key);
+  final GestureTapCallback function;
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      child: Container(
+        decoration: BoxDecoration(
+            color: Colors.black, borderRadius: BorderRadius.circular(12)),
+        height: 40,
+        child: Center(
+            child: Text(
+          "Resend",
+          style: TextStyle(color: Colors.white),
+        )),
+      ),
+      onTap: function,
+    );
   }
 }

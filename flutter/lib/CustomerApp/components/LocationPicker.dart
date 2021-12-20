@@ -35,6 +35,10 @@ class LocationPickerController extends MGoogleMapController {
     _bottomButtomToShow.value = BottomButtomToShow.Pick;
   }
 
+  void hideFakeMarker() {
+    _showFakeMarker.value = false;
+  }
+
   void showConfirmButton() {
     _bottomButtomToShow.value = BottomButtomToShow.Confirm;
   }

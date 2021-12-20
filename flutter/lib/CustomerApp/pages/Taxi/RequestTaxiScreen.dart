@@ -32,32 +32,70 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
       LocationPickerController();
   final LocationSearchBarController locationSearchBarController =
       LocationSearchBarController();
+  TaxiRequest? orderRequest;
   bool _pickedFromTo = false;
   /******************************  Init and build function ************************************/
 
   @override
   void initState() {
-    locationPickerController.setOnMapTap(onTap: () {
-      locationSearchBarController.unfocusAllFocusNodes.call();
-      setState(() {});
-    });
+    if (Get.arguments != null) {
+      orderRequest = Get.arguments as TaxiRequest;
+      this.taxiRequest.value = orderRequest!;
 
-    // set current SearchComponent:
-    locationSearchBarController
-        .focusedTextField(_currentFocusedTextField.value);
-    // set the location Enabled Button to be false
-    locationPickerController.myLocationButtonEnabled.value = false;
-    // set blackScreenBottom 110
-    locationPickerController.blackScreenBottomTextMargin.value = 80;
+      mezDbgPrint(
+          "============ the older requist is ${Get.arguments} ===========");
+      locationPickerController.setOnMapTap(onTap: () {
+        locationSearchBarController.unfocusAllFocusNodes.call();
+        setState(() {});
+      });
 
-    GeoLoc.Location().getLocation().then((GeoLoc.LocationData locData) {
-      taxiRequest.value.from = Location("", locData);
-      updateModelAndMarker(SearchComponentType.From, taxiRequest.value.from!);
-      locationPickerController.setLocation(taxiRequest.value.from!);
-      locationPickerController.addOrUpdateCircleMarker(LatLng(
-          taxiRequest.value.from!.latitude, taxiRequest.value.from!.longitude));
-    });
+      // set current SearchComponent:
+      locationSearchBarController
+          .focusedTextField(_currentFocusedTextField.value);
+      // set the location Enabled Button to be false
+      locationPickerController.myLocationButtonEnabled.value = false;
+      // set blackScreenBottom 110
+      locationPickerController.blackScreenBottomTextMargin.value = 80;
 
+      GeoLoc.Location().getLocation().then((GeoLoc.LocationData locData) {
+        //taxiRequest.value.from = Location("", locData);
+        updateModelAndMarker(SearchComponentType.From, taxiRequest.value.from!);
+        locationPickerController.setLocation(taxiRequest.value.from!);
+        locationPickerController.addOrUpdateUserMarker(
+            latLng: LatLng(taxiRequest.value.from!.latitude,
+                taxiRequest.value.from!.longitude));
+
+        updateModelAndMarker(SearchComponentType.To, taxiRequest.value.to!);
+        locationPickerController.addOrUpdatePurpleDestinationMarker(
+            latLng: LatLng(taxiRequest.value.to!.position.latitude!,
+                taxiRequest.value.to!.position.longitude!));
+        updateRouteInformation();
+        locationPickerController.hideFakeMarker();
+        locationPickerController.showConfirmButton();
+      });
+    } else {
+      locationPickerController.setOnMapTap(onTap: () {
+        locationSearchBarController.unfocusAllFocusNodes.call();
+        setState(() {});
+      });
+
+      // set current SearchComponent:
+      locationSearchBarController
+          .focusedTextField(_currentFocusedTextField.value);
+      // set the location Enabled Button to be false
+      locationPickerController.myLocationButtonEnabled.value = false;
+      // set blackScreenBottom 110
+      locationPickerController.blackScreenBottomTextMargin.value = 80;
+
+      GeoLoc.Location().getLocation().then((GeoLoc.LocationData locData) {
+        taxiRequest.value.from = Location("", locData);
+        updateModelAndMarker(SearchComponentType.From, taxiRequest.value.from!);
+        locationPickerController.setLocation(taxiRequest.value.from!);
+        locationPickerController.addOrUpdateCircleMarker(LatLng(
+            taxiRequest.value.from!.latitude,
+            taxiRequest.value.from!.longitude));
+      });
+    }
     super.initState();
   }
 

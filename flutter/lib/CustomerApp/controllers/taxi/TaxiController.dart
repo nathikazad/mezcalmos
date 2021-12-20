@@ -36,6 +36,7 @@ class TaxiController extends GetxController {
 
     try {
       mezDbgPrint("=============== http Func calling with ================");
+      mezDbgPrint("=============== jamal test================");
       mezDbgPrint(taxiRequest.asCloudFunctionParam());
       HttpsCallableResult response =
           await requestTaxiFunction.call(taxiRequest.asCloudFunctionParam());

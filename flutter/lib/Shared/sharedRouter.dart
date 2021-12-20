@@ -34,14 +34,15 @@ String getCustomerMessagesRoute(
       "?recipientType=${ParticipantType.Customer.toFirebaseFormattedString()}";
 }
 
-void popEverythingAndNavigateTo(dynamic route) {
-  popUntilAndNavigateTo(kHomeRoute, route);
+void popEverythingAndNavigateTo(dynamic route, {dynamic args}) {
+  popUntilAndNavigateTo(kHomeRoute, route, args: args);
 }
 
-void popUntilAndNavigateTo(dynamic untilRoute, dynamic toRoute) {
+void popUntilAndNavigateTo(dynamic untilRoute, dynamic toRoute,
+    {dynamic args}) {
   Get.offNamedUntil(toRoute, (Route<dynamic> route) {
     return (route.settings.name == untilRoute);
-  });
+  }, arguments: args);
 }
 
 // GetX based Router (For navigating)

@@ -29,6 +29,14 @@ class TaxiRequest {
     this.paymentType = PaymentType.Cash,
     // this.polyline
   });
+  TaxiRequest reCreate() {
+    return TaxiRequest(
+        from: this.from,
+        to: this.to,
+        routeInformation: this.routeInformation,
+        estimatedPrice: this.estimatedPrice,
+        paymentType: this.paymentType);
+  }
 
   void setEstimatedPrice(int price) {
     estimatedPrice = price;
