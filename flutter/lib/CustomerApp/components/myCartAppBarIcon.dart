@@ -21,7 +21,7 @@ class MyCartAppBarIcon extends StatelessWidget {
             onPressed: () {
               Get.toNamed(kCartRoute);
             },
-            padding: EdgeInsets.only(right: 8),
+            splashRadius: 20,
             icon: Badge(
                 badgeContent: Text(
                   Get.find<RestaurantController>()

@@ -38,10 +38,13 @@ class _UserMenuState extends State<UserMenu> {
   Widget build(BuildContext context) {
     final txt = Theme.of(context).textTheme;
     return PopupMenuButton(
-      iconSize: 50,
+      iconSize: 40,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(15.0))),
-      icon: UserMenuIcon(),
+      icon: Padding(
+        padding: const EdgeInsets.all(3.0),
+        child: UserMenuIcon(),
+      ),
       itemBuilder: (context) {
         return [
           if (orderController.currentOrders.isNotEmpty)
