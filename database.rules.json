@@ -103,7 +103,7 @@
           "$orderId": {
             "driver": {
               "location": {
-                ".write": "$uid === auth.uid"
+                ".write": "data.parent().parent().exists() && $uid === auth.uid"
               }
             }
           }
@@ -122,7 +122,7 @@
           "$orderId": {
             "driver": {
               "location": {
-                ".write": "root.child('orders/inProcess/taxi/' + $orderId).exists() && root.child('orders/inProcess/taxi/' + $orderId + '/driver/id').val() === auth.uid"
+                ".write": "data.parent().parent().exists() && root.child('orders/inProcess/taxi/' + $orderId + '/driver/id').val() === auth.uid"
               }
             }
           }

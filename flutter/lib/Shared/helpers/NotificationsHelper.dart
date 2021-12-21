@@ -39,11 +39,11 @@ void _displayNotification(notifs.Notification notification) async {
     twoButtonDialog(
         title: notification.title,
         body: notification.body,
-        buttonRightStyle: MezDialogButtonStyle(
+        buttonLeftStyle: MezDialogButtonStyle(
             buttonText: "Ok",
             buttonColor: Color(0xffffffff),
             buttonShadowColor: Color(0xfffdfdfd)),
-        buttonLeftStyle: MezDialogButtonStyle(
+        buttonRightStyle: MezDialogButtonStyle(
             buttonText: notification.linkText ??
                 Get.find<LanguageController>().strings['shared']['notification']
                     ['view'],

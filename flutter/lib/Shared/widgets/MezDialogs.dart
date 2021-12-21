@@ -133,9 +133,10 @@ Future<TwoButtonDialogButton> twoButtonDialog(
                     child: InkWell(
                       child: buttonLeftStyle,
                       onTap: () {
+                        Get.back();
                         twoButtonDialogButton = TwoButtonDialogButton.Left;
                         leftButtonCallback?.call();
-                        Get.back();
+                        
                         // onConform();
                       },
                     ),
@@ -151,9 +152,10 @@ Future<TwoButtonDialogButton> twoButtonDialog(
                       child: buttonRightStyle,
                       onTap: () {
                         // onCancel();
+                        Get.back();
                         twoButtonDialogButton = TwoButtonDialogButton.Right;
                         rightButtonCallback?.call();
-                        Get.back();
+                        
                       },
                     ),
                   ),
