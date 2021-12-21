@@ -2,6 +2,75 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
+import 'package:mezcalmos/Shared/models/Schedule.dart';
+
+class Restaurant {
+  String id;
+  String description;
+  String name;
+  String photo;
+  String? location;
+  Schedule? schedule;
+  RestaurantState restaurantState;
+  List<Item> items = [];
+
+  Restaurant(
+      {required this.id,
+      required this.description,
+      required this.name,
+      required this.photo,
+      this.location,
+      this.schedule,
+      required this.restaurantState});
+
+  factory Restaurant.fromRestaurantData(
+      {required String restaurantId, required dynamic restaurantData}) {
+    String language = Get.find<LanguageController>().userLanguageKey;
+    List<Object?> availableLanguages =
+        restaurantData["details"]["languages"] as List<Object?>;
+    if (!availableLanguages.contains(language)) {
+      language = availableLanguages[0] as String;
+    }
+
+    RestaurantState restaurantState = RestaurantState(
+        restaurantData["state"]?["authorizationStatus"]
+                ?.toString()
+                .toAuthorizationStatus() ??
+            AuthorizationStatus.Unauthorized,
+        restaurantData["state"]?["open"] ?? false);
+    String name = restaurantData["info"]["name"];
+    String photo = restaurantData["info"]["image"];
+    String description = restaurantData["details"]["description"][language];
+    Schedule? schedule = Schedule.fromData(restaurantData["info"]["openHours"]);
+    Restaurant restaurant = Restaurant(
+        id: restaurantId,
+        description: description,
+        name: name,
+        photo: photo,
+        schedule: schedule,
+        restaurantState: restaurantState);
+    restaurantData["menu"].forEach((dynamic itemId, dynamic itemData) {
+      restaurant.items
+          .add(Item.itemFromData(itemId, itemData, language: language));
+    });
+    return restaurant;
+  }
+
+  Item findItemById(String id) {
+    return this.items.firstWhere((item) => item.id == id);
+  }
+
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      "id": id,
+      "description": description,
+      "name": name,
+      "items": jsonEncode(items),
+      "restaurantState": restaurantState.toJson()
+    };
+  }
+}
+
 
 class RestaurantState {
   AuthorizationStatus authorizationStatus = AuthorizationStatus.Unauthorized;
@@ -160,75 +229,5 @@ class Item {
   ChooseManyOption? findChooseManyOption(String id) {
     if (this.chooseOneOptions.length == 0) return null;
     return this.chooseManyOptions.firstWhere((element) => element.id == id);
-  }
-}
-
-class Restaurant {
-  String id;
-  String description;
-  String name;
-  String photo;
-  String? location;
-  String? openHour;
-  RestaurantState restaurantState;
-  List<Item> items = [];
-
-  Restaurant(
-      {required this.id,
-      required this.description,
-      required this.name,
-      required this.photo,
-      this.location,
-      this.openHour,
-      required this.restaurantState});
-
-  factory Restaurant.fromRestaurantData(
-      {required String restaurantId, required dynamic restaurantData}) {
-    String language = Get.find<LanguageController>().userLanguageKey;
-    List<Object?> availableLanguages =
-        restaurantData["details"]["languages"] as List<Object?>;
-    if (!availableLanguages.contains(language)) {
-      language = availableLanguages[0] as String;
-    }
-
-    RestaurantState restaurantState = RestaurantState(
-        restaurantData["state"]?["authorizationStatus"]
-                ?.toString()
-                .toAuthorizationStatus() ??
-            AuthorizationStatus.Unauthorized,
-        restaurantData["state"]?["open"] ?? false);
-    String name = restaurantData["info"]["name"];
-    String photo = restaurantData["info"]["image"];
-    String description = restaurantData["details"]["description"][language];
-    String? location = restaurantData["info"]["location"] ?? null;
-    String? openHour = restaurantData["info"]["openHour"] ?? null;
-    Restaurant restaurant = Restaurant(
-        id: restaurantId,
-        description: description,
-        name: name,
-        photo: photo,
-        location: location,
-        openHour: openHour,
-        restaurantState: restaurantState);
-    restaurantData["menu"].forEach((dynamic itemId, dynamic itemData) {
-      restaurant.items
-          .add(Item.itemFromData(itemId, itemData, language: language));
-      // print(Item.itemFromData(itemId, itemData, language).toJson());
-    });
-    return restaurant;
-  }
-
-  Item findItemById(String id) {
-    return this.items.firstWhere((item) => item.id == id);
-  }
-
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
-      "id": id,
-      "description": description,
-      "name": name,
-      "items": jsonEncode(items),
-      "restaurantState": restaurantState.toJson()
-    };
   }
 }

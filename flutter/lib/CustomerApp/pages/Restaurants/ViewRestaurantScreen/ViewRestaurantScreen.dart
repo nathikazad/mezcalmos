@@ -107,7 +107,7 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
                             ],
                           )
                         : Container(),
-                    (restaurant!.openHour != null)
+                    (restaurant!.schedule != null)
                         ? Column(
                             children: [
                               Container(
