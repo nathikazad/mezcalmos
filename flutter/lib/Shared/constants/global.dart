@@ -57,11 +57,11 @@ const String aNoImgAsset = "assets/images/shared/no-img.png";
 const String enLang = "assets/i18n/en.json";
 const String esLang = "assets/i18n/es.json";
 const String aLocationPermissionAsset =
-    "assets/images/shared/Enable Map_Illustration.png";
+    "assets/images/shared/enableMapIllustration.png";
 
 const String aPurpleLocationCircle =
-    "assets/images/shared/PurpleLocationCircle.png";
-const String aLocationPicker = "assets/images/shared/PurpleLocationPicker.png";
+    "assets/images/shared/purpleLocationCircle.png";
+const String aLocationPicker = "assets/images/shared/purpleLocationPicker.png";
 const String aOrderUnavailable = "assets/images/shared/circularCancel.png";
 
 enum AppType { CustomerApp, TaxiApp, TaxiAdminApp, DeliveryAdminApp }

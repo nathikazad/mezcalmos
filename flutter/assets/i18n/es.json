@@ -30,7 +30,13 @@
                 "notes": "Notas",
                 "quantity": "Cantidad",
                 "addToCart": "AÑADIR AL CARRITO",
-                "modifyItem": "Modificar artículo"
+                "modifyItem": "Modificar artículo",
+                "dailog":{
+                    "title":"Advertencia",
+                    "subtitle":"Ya tienes algunos artículos en tu carrito, te gustaría descartarlos?",
+                    "leftBtn":"Verificar",
+                    "rightBtn":"Sobrescribir"
+                }
             },
             "cart": {
                 "myCart":"Mi Carrito",
@@ -109,7 +115,8 @@
             "addLocationDialog": {
                 "title": "Si da un nombre, puede guardar la ubicación para uso futuro.",
                 "button": "OK",
-                "textHint": "Nombre del lugar"
+                "textHint": "Nombre del lugar",
+                "skip":"Saltar"
             },
             "editLocationDialog": {
                 "title": "puede editar el nombre y guardar esta ubicación para usos futuros",
@@ -117,6 +124,10 @@
                 "textHint": "Nombre del lugar"
             }
         },
+        "pickLocation":{
+            "pickLocation":"Elegir ubicación",
+            "pickLabele":"Busque la ubicación o mueva el mapa y elija la ubicación"
+            },
         "orders": {
             "title": "Pedidos",
             "onGoingOrders":"Pedidos en curso",

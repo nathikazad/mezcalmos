@@ -26,7 +26,7 @@ class FoodImage extends StatelessWidget {
     return Container(
       width: sw,
       height: sh,
-      child: Image.asset("assets/images/customer/restaurants/Restaurant.png"),
+      child: Image.asset("assets/images/customer/deliveryAdmin/restaurant.png"),
     );
   }
 }

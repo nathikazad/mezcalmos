@@ -16,12 +16,11 @@ const String user_icon_marker_asset = "${_imgs_path}defaultAvatar.png";
 
 // --------------------------------------------------------------------------------------------------------------
 
-const String turnOn_asset = "${_imgs_path}Turn On_Illustration.png";
-const String noOrdersFound_asset = "${_imgs_path}No Order_Illustration.png";
-const String usaFlagAsset = "${_imgs_path}usa.png";
-const String mexicoFlagAsset = "${_imgs_path}mexico.png";
-const String money_asset = "${_imgs_path}money.png";
+const String turnOn_asset = "${_imgs_path}turnOnIllustration.png";
+const String noOrdersFound_asset = "${_imgs_path}noOrderIllustration.png";
+const String usaFlagAsset = "assets/images/shared/usa.png";
+const String mexicoFlagAsset = "assets/images/shared/mexico.png";
+const String money_asset = "assets/images/shared/money.png";
 
-const String taxiImageAsset = "${_imgs_path}How to taxi_Illustration2.png";
-const String taxiAnauthorizedAsset =
-    "${_imgs_path}Driver_Illustration_Check.png";
+const String taxiImageAsset = "${_imgs_path}howToTaxiIllustration2.png";
+const String taxiAnauthorizedAsset = "${_imgs_path}driverIllustrationCheck.png";

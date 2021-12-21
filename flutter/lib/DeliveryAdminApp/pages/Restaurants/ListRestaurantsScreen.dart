@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/ItemComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -19,6 +20,7 @@ class ListRestaurantsScreen extends GetView<RestaurantsInfoController> {
   }
 
   Widget build(BuildContext context) {
+    mezDbgPrint(restaurants.value.length.toString() + "=================");
     return Scaffold(
         //appBar: mezcalmosAppBar("back", () => Get.back(), actionIcons: []),
         body: Column(

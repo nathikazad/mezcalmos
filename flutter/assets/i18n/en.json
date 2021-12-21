@@ -22,6 +22,7 @@
         },
         "restaurant": {
             "restaurants": "Restaurants",
+            
             "menu": {
                 "myCart":"My Cart",
                 "items":"Items",
@@ -31,7 +32,13 @@
                 "notes": "Notes",
                 "quantity": "Quantity",
                 "addToCart": "ADD TO CART",
-                "modifyItem": "Modify item"
+                "modifyItem": "Modify item",
+                "dailog":{
+                    "title":"Warning",
+                    "subtitle":"You already have some items in your cart, Would you like to discard to them ?",
+                    "leftBtn":"Checkout",
+                    "rightBtn":"Overwrite"
+                }
             },
             "cart": {
                 "myCart":"My Cart",
@@ -110,13 +117,18 @@
             "addLocationDialog":{
                 "title":"If you give a name, you can save the location for future use.",
                 "button":"OK",
-                "textHint":"Location Name"
+                "textHint":"Location Name",
+                "skip":"Skip"
             },
             "editLocationDialog":{
                 "title":"you can edit the name and save this location for furure uses",
                 "button":"EDIT",
                 "textHint":"Location Name"
             }
+        },
+        "pickLocation":{
+        "pickLocation":"Pick Location",
+        "pickLabele":"Search for location or move map and pick location"
         },
         "orders": {
             "title": "Orders",

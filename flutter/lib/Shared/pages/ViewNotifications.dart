@@ -43,7 +43,8 @@ class _ViewNotificationsState extends State<ViewNotifications> {
         timestamp: DateTime.now(),
         title: 'The restaurant is preparing the order',
         body: 'Restaurant name start preparing your order',
-        imgUrl: 'assets/images/customer/OnTheWayOrderNotificationIcon.png',
+        imgUrl:
+            'assets/images/customer/assets/images/shared/notifications/onTheWayOrderNotificationIcon.png',
         linkUrl: 'linkUrl',
         notificationType: notifs.NotificationType.OrderStatusChange,
         notificationAction: notifs.NotificationAction.ShowPopUp),
@@ -52,7 +53,8 @@ class _ViewNotificationsState extends State<ViewNotifications> {
         timestamp: DateTime.now(),
         title: 'Your order is ready for pickup',
         body: 'Restaurant name start preparing your order',
-        imgUrl: 'assets/images/customer/DroppedOrderNotificationIcon.png',
+        imgUrl:
+            'assets/images/customer/assets/images/shared/notifications/droppedOrderNotificationIcon.png',
         linkUrl: 'linkUrl',
         notificationType: notifs.NotificationType.OrderStatusChange,
         notificationAction: notifs.NotificationAction.ShowPopUp),
@@ -61,7 +63,8 @@ class _ViewNotificationsState extends State<ViewNotifications> {
         timestamp: DateTime(2021, 12, 13),
         title: 'Your order is ready for pickup',
         body: 'Restaurant name start preparing your order',
-        imgUrl: 'assets/images/customer/PrepareOrderNotificationIcon.png',
+        imgUrl:
+            'assets/images/customer/assets/images/shared/notifications/prepareOrderNotificationIcon.png',
         linkUrl: 'linkUrl',
         notificationType: notifs.NotificationType.OrderStatusChange,
         notificationAction: notifs.NotificationAction.ShowPopUp),

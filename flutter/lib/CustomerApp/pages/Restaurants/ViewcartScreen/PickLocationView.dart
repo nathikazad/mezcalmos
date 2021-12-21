@@ -129,7 +129,9 @@ class _PickLocationViewState extends State<PickLocationView> {
             ? ButtonComponent(
                 function: () => onPickButtonClick(context),
                 widget: Center(
-                    child: Text("Pick Location",
+                    child: Text(
+                        _lang.strings["customer"]["pickLocation"]
+                            ["pickLocation"],
                         style: Theme.of(context)
                             .textTheme
                             .headline2!
@@ -146,7 +148,7 @@ class _PickLocationViewState extends State<PickLocationView> {
         resizeToAvoidBottomInset: false,
         appBar: CustomerAppBar(
           autoBack: true,
-          title: "Pick location",
+          title: _lang.strings["customer"]["pickLocation"]["pickLocation"],
         ),
         body: Container(
           child: Column(
@@ -176,8 +178,8 @@ class _PickLocationViewState extends State<PickLocationView> {
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                child:
-                    Text("Search for location or move map and pick location"),
+                child: Text(
+                    _lang.strings["customer"]["pickLocation"]["pickLabele"]),
               ),
               // stack
               Expanded(

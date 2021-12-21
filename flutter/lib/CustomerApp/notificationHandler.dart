@@ -83,7 +83,8 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
             "${lang.strings["shared"]["notification"]["notificationType"]["preparingOrder"]["title"]}",
         "body":
             "${lang.strings["shared"]["notification"]["notificationType"]["preparingOrder"]["body"]}",
-        "imgUrl": "assets/images/customer/PrepareOrderNotificationIcon.png",
+        "imgUrl":
+            "assets/images/customer/assets/images/shared/notifications/prepareOrderNotificationIcon.png",
       };
     case RestaurantOrderStatus.ReadyForPickup:
       return <String, dynamic>{
@@ -91,7 +92,8 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
             "${lang.strings["shared"]["notification"]["notificationType"]["readyForPickup"]["title"]}",
         "body":
             "${lang.strings["shared"]["notification"]["notificationType"]["readyForPickup"]["body"]}",
-        "imgUrl": "assets/images/customer/ReadyOrderNotificationIcon.png",
+        "imgUrl":
+            "assets/images/customer/assets/images/shared/notifications/readyOrderNotificationIcon.png",
       };
     case RestaurantOrderStatus.OnTheWay:
       return <String, dynamic>{
@@ -99,7 +101,8 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
             "${lang.strings["shared"]["notification"]["notificationType"]["onTheWayRestaurant"]["title"]}",
         "body":
             "${lang.strings["shared"]["notification"]["notificationType"]["onTheWayRestaurant"]["body"]}",
-        "imgUrl": "assets/images/customer/OnTheWayOrderNotificationIcon.png",
+        "imgUrl":
+            "assets/images/customer/assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
       };
     case RestaurantOrderStatus.Delivered:
       return <String, dynamic>{
@@ -107,7 +110,8 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
             "${lang.strings["shared"]["notification"]["notificationType"]["delivered"]["title"]}",
         "body":
             "${lang.strings["shared"]["notification"]["notificationType"]["delivered"]["body"]}",
-        "imgUrl": "assets/images/customer/DroppedOrderNotificationIcon.png",
+        "imgUrl":
+            "assets/images/customer/assets/images/shared/notifications/droppedOrderNotificationIcon.png",
       };
     case RestaurantOrderStatus.CancelledByAdmin:
       return <String, dynamic>{
@@ -115,7 +119,8 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
             "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["title"]}",
         "body":
             "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["body"]}",
-        "imgUrl": "assets/images/customer/CancelledOrderNotificationIcon.png",
+        "imgUrl":
+            "assets/images/customer/assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
       };
     default:
     // do nothing
@@ -132,7 +137,8 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
             "${lang.strings["shared"]["notification"]["notificationType"]["onTheWayTaxi"]["title"]}",
         "body":
             "${lang.strings["shared"]["notification"]["notificationType"]["onTheWayTaxi"]["body"]}",
-        "imgUrl": "assets/images/customer/OnTheWayOrderNotificationIcon.png",
+        "imgUrl":
+            "assets/images/customer/assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
       };
     case TaxiOrdersStatus.InTransit:
       return <String, dynamic>{
@@ -140,7 +146,8 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
             "${lang.strings["shared"]["notification"]["notificationType"]["inTransit"]["title"]}",
         "body":
             "${lang.strings["shared"]["notification"]["notificationType"]["inTransit"]["body"]}",
-        "imgUrl": "assets/images/customer/OnTheWayOrderNotificationIcon.png",
+        "imgUrl":
+            "assets/images/customer/assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
       };
     case TaxiOrdersStatus.DroppedOff:
       return <String, dynamic>{
@@ -148,7 +155,8 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
             "${lang.strings["shared"]["notification"]["notificationType"]["droppedOff"]["title"]}",
         "body":
             "${lang.strings["shared"]["notification"]["notificationType"]["droppedOff"]["body"]}",
-        "imgUrl": "assets/images/customer/DroppedOrderNotificationIcon.png",
+        "imgUrl":
+            "assets/images/customer/assets/images/shared/notifications/droppedOrderNotificationIcon.png",
       };
     case TaxiOrdersStatus.CancelledByTaxi:
       return <String, dynamic>{
@@ -156,7 +164,8 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
             "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["title"]}",
         "body":
             "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["body"]}",
-        "imgUrl": "assets/images/CancelledOrderNotificationIcon.png",
+        "imgUrl":
+            "assets/images/assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
       };
     case TaxiOrdersStatus.Expired:
       return <String, dynamic>{
@@ -164,7 +173,8 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
             "${lang.strings["shared"]["notification"]["notificationType"]["expired"]["title"]}",
         "body":
             "${lang.strings["shared"]["notification"]["notificationType"]["expired"]["body"]}",
-        "imgUrl": "assets/images/CancelledOrderNotificationIcon.png",
+        "imgUrl":
+            "assets/images/assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
       };
     default:
     // do nothing

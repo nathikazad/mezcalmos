@@ -41,13 +41,13 @@ class Restaurant {
     String name = restaurantData["info"]["name"];
     String photo = restaurantData["info"]["image"];
     String description = restaurantData["details"]["description"][language];
-    Schedule? schedule = Schedule.fromData(restaurantData["info"]["openHours"]);
+    // Schedule? schedule = Schedule.fromData(restaurantData["info"]["openHours"]);
     Restaurant restaurant = Restaurant(
         id: restaurantId,
         description: description,
         name: name,
         photo: photo,
-        schedule: schedule,
+        // schedule: schedule,
         restaurantState: restaurantState);
     restaurantData["menu"].forEach((dynamic itemId, dynamic itemData) {
       restaurant.items
@@ -70,7 +70,6 @@ class Restaurant {
     };
   }
 }
-
 
 class RestaurantState {
   AuthorizationStatus authorizationStatus = AuthorizationStatus.Unauthorized;

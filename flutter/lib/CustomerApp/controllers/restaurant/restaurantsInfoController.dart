@@ -18,7 +18,7 @@ class RestaurantsInfoController extends GetxController {
   Future<List<Restaurant>> getRestaurants() async {
     DataSnapshot snapshot = await _databaseHelper.firebaseDatabase
         .reference()
-        .child('restaurants/info')
+        .child('restaurants/info/')
         .once();
 
     mezDbgPrint("Got restorantes ===> ${snapshot.value}");
@@ -26,7 +26,7 @@ class RestaurantsInfoController extends GetxController {
     snapshot.value.forEach((dynamic key, dynamic value) {
       try {
         restaurants.add(Restaurant.fromRestaurantData(
-          restaurantId: key, restaurantData: value));
+            restaurantId: key, restaurantData: value));
       } catch (e) {
         mezDbgPrint("FREAKING EXCEPTION ===> $e");
       }

@@ -90,7 +90,8 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                           "not true ${restaurantCartController.associatedRestaurant?.id} and the other is ${widget.currentRestaurantId}");
 
                       YesNoDialogButton clickedYes = await yesNoDialog(
-                          text: 'Warrning !!',
+                          text: lang.strings['customer']['restaurant']['menu']
+                              ["dailog"]["title"],
                           titleUp: true,
                           icon: Container(
                             child: Icon(
@@ -105,7 +106,8 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                                 borderRadius: BorderRadius.circular(8),
                                 color: Colors.grey[300]),
                             height: 30,
-                            child: Text("Checkout"),
+                            child: Text(lang.strings['customer']['restaurant']
+                                ['menu']["dailog"]["leftBtn"]),
                           ),
                           buttonRightStyle: Container(
                             alignment: Alignment.center,
@@ -114,12 +116,13 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                                 color: Colors.blue[800]),
                             height: 30,
                             child: Text(
-                              "Overwrite",
+                              lang.strings['customer']['restaurant']['menu']
+                                  ["dailog"]["rightBtn"],
                               style: TextStyle(color: Colors.white),
                             ),
                           ),
-                          body:
-                              "You already have some items in your cart, Would you like to discard to them ?");
+                          body: lang.strings['customer']['restaurant']['menu']
+                              ["dailog"]["subtitle"]);
                       if (clickedYes == YesNoDialogButton.Yes) {
                         Get.back();
                         Get.toNamed(kCartRoute);

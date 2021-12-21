@@ -27,7 +27,7 @@ Notification orderStatusChangeNotification(String key, dynamic value) {
       id: key,
       linkUrl: getRestaurantOrderRoute(value['orderId']),
       body: 'Order is now ${newOrdersStatus.toFirebaseFormatString()}',
-      imgUrl: "assets/images/customer/cancel.png",
+      imgUrl: "assets/images/shared/notifications/cancel.png",
       title: newOrdersStatus.toFirebaseFormatString(),
       timestamp: DateTime.parse(value['time']),
       notificationType: NotificationType.OrderStatusChange,

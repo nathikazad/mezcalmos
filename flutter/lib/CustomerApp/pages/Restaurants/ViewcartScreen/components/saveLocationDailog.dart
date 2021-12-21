@@ -86,7 +86,9 @@ Future<String?> savedLocationDailog(
                   color: Colors.grey[300],
                 ),
                 child: Center(
-                  child: Text("Skip",
+                  child: Text(
+                      lang.strings["customer"]["savedLocations"]
+                          ["addLocationDialog"]["skip"],
                       style: const TextStyle(
                           color: const Color(0xfffff4f4),
                           fontWeight: FontWeight.w700,
