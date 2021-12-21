@@ -94,10 +94,24 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                       () => Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Column(
-                          children: List.generate(
-                              controller.pastOrders().length,
-                              (index) => OldOrderCard(
-                                  order: controller.pastOrders()[index])),
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              child: Text(
+                                'Past orders',
+                                style: txt.headline3,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Column(
+                              children: List.generate(
+                                  controller.pastOrders().length,
+                                  (index) => OldOrderCard(
+                                      order: controller.pastOrders()[index])),
+                            ),
+                          ],
                         ),
                       ),
                     ),

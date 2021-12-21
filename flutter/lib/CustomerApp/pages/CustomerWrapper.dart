@@ -5,14 +5,12 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/appbar.dart';
 import 'package:mezcalmos/CustomerApp/components/customerHomeFooterButtons.dart';
 import 'package:mezcalmos/CustomerApp/components/servicesCard.dart';
-import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
@@ -107,16 +105,16 @@ class _CustomerWrapperState extends State<CustomerWrapper>
                           minHeight: constraints.maxHeight),
                       child: IntrinsicHeight(
                         child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(10.0),
                           child:
                               Column(mainAxisSize: MainAxisSize.max, children: [
-                            mezWelcomeContainer(txt.headline1!),
+                            mezWelcomeContainer(txt.headline2!),
                             //============================== description=============================
                             mezDescription(
                                 txt.subtitle1!.copyWith(fontSize: 14)),
 
                             //============================Service title===================================
-                            mezServiceTitle(txt.headline1!),
+                            mezServiceTitle(txt.headline2!),
 
                             //========================= list of services ===========================
                             Expanded(child: mezListOfServices()),
@@ -151,7 +149,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     return Container(
       margin: const EdgeInsets.all(5),
       alignment: Alignment.centerLeft,
-      padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Obx(
         () => Text(
           "${lang.strings['customer']['home']['welcomeText']}",
@@ -164,7 +161,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
 
   Widget mezDescription(TextStyle textStyle) {
     return Container(
-      margin: const EdgeInsets.all(5),
+      margin: EdgeInsets.all(5),
       child: Obx(
         () => Text("${lang.strings['customer']['home']['appDescription']}",
             style: textStyle),
@@ -174,7 +171,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
 
   Widget mezServiceTitle(TextStyle textStyle) {
     return Container(
-      padding: const EdgeInsets.only(top: 10, left: 15),
       alignment: Alignment.centerLeft,
       margin: const EdgeInsets.all(5),
       child: Obx(

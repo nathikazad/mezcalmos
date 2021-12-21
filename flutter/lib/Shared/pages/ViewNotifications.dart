@@ -13,8 +13,6 @@ import 'package:mezcalmos/Shared/models/Notification.dart' as notifs;
 import 'package:mezcalmos/Shared/widgets/DateTitleComponent.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 
-import '../widgets/MezClearButton.dart';
-
 class ViewNotifications extends StatefulWidget {
   ViewNotifications({Key? key}) : super(key: key);
 
@@ -80,19 +78,14 @@ class _ViewNotificationsState extends State<ViewNotifications> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Column(
             children: [
-              SizedBox(
-                height: 10,
-              ),
               // TODO is the clear button needed ??
               ClearNotifButton(),
-              SizedBox(
-                height: 5,
-              ),
+
               // TODO change the notif list to obx
-              _buildNotification(myNotifs)
+              _buildNotification(controller.notifications)
             ],
           ),
         ),
@@ -153,34 +146,39 @@ class ClearNotifButton extends StatelessWidget {
   LanguageController lang = Get.find<LanguageController>();
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => (controller.notifications.value.length <= 0)
-          ? Container()
-          : Container(
-              alignment: Alignment.centerRight,
-              child: MezClearButton(
-                onTapFunction: () async {
-                  YesNoDialogButton yesNoRes = await cancelAlertDialog(
-                      title:
-                          "${lang.strings["shared"]["notification"]["alertClearNotification"]["title"]}",
-                      body:
-                          "${lang.strings["shared"]["notification"]["alertClearNotification"]["title"]}",
-                      icon: Container(
-                        child: Icon(
-                          Icons.highlight_off,
-                          size: 65,
-                          color: Color(0xffdb2846),
-                        ),
-                      ));
-
-                  if (yesNoRes == YesNoDialogButton.Yes) {
-                    controller.clearAllNotification();
-                    Get.back();
-                  }
-                },
+    return Obx(() => (controller.notifications.value.length <= 0)
+        ? Container()
+        : Container(
+            child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Latest',
+                style: Theme.of(context).textTheme.bodyText1,
               ),
-            ),
-    );
+              IconButton(
+                  onPressed: () async {
+                    YesNoDialogButton yesNoRes = await cancelAlertDialog(
+                        title:
+                            "${lang.strings["shared"]["notification"]["alertClearNotification"]["title"]}",
+                        body:
+                            "${lang.strings["shared"]["notification"]["alertClearNotification"]["title"]}",
+                        icon: Container(
+                          child: Icon(
+                            Icons.highlight_off,
+                            size: 65,
+                            color: Color(0xffdb2846),
+                          ),
+                        ));
+
+                    if (yesNoRes != YesNoDialogButton.Yes) {
+                      controller.clearAllNotification();
+                      Get.back();
+                    }
+                  },
+                  icon: Icon(Ionicons.trash_outline)),
+            ],
+          )));
   }
 }
 

@@ -5,8 +5,8 @@ import 'package:get/route_manager.dart';
 import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
 class OldOrderCard extends StatelessWidget {
   OldOrderCard({

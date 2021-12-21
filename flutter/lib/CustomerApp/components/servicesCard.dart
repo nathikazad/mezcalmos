@@ -24,27 +24,28 @@ class ServicesCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         onTap: ontap,
         child: Container(
-          margin: EdgeInsets.all(8),
+          padding: EdgeInsets.all(8),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Flexible(
-                // width: Get.width * 0.7 - 50,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     //================= title=============
                     Container(
-                      padding: const EdgeInsets.all(7),
+                      padding: const EdgeInsets.all(3),
                       alignment: Alignment.centerLeft,
                       child: Text("${title}",
                           style: txt.headline1!.copyWith(fontSize: 20.sp)),
                     ),
                     //================ subtitle============
                     Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 7, vertical: 3),
                       alignment: Alignment.centerLeft,
-                      padding:
-                          subtitle == null ? EdgeInsets.only(left: 10) : null,
+                      // padding:
+                      //     subtitle == null ? EdgeInsets.only(left: 10) : null,
                       child: subtitle != null
                           ? Text(
                               "${subtitle}",
