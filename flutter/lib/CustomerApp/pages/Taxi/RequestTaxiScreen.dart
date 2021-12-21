@@ -91,9 +91,9 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
         taxiRequest.value.from = Location("", locData);
         updateModelAndMarker(SearchComponentType.From, taxiRequest.value.from!);
         locationPickerController.setLocation(taxiRequest.value.from!);
-        locationPickerController.addOrUpdateCircleMarker(LatLng(
-            taxiRequest.value.from!.latitude,
-            taxiRequest.value.from!.longitude));
+        // locationPickerController.addOrUpdateCircleMarker(LatLng(
+        //     taxiRequest.value.from!.latitude,
+        //     taxiRequest.value.from!.longitude));
       });
     }
     super.initState();

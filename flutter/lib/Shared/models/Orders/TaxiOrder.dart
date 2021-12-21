@@ -172,7 +172,7 @@ class TaxiUserInfo extends UserInfo {
         id: data["id"],
         name: data["name"],
         image: data["image"],
-        taxiNumber: data["taxiNumber"],
+        taxiNumber: data["taxiNumber"].toString(),
         sitio: data["sitio"],
         location: location);
   }

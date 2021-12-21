@@ -56,6 +56,7 @@ Notification newMessageNotification(String key, dynamic value) {
       title: value['sender']['name'],
       timestamp: DateTime.parse(value['time']),
       notificationType: NotificationType.NewMessage,
-      notificationAction: value["notificationAction"],
+      notificationAction:
+          (value["notificationAction"] as String).toNotificationAction(),
       variableParams: value);
 }

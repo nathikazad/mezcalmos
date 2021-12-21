@@ -9,8 +9,14 @@ import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // Extends GetView<MessagingController> after Nathik implements the controller
+import 'package:intl/intl.dart' as intl;
+
+DateTime now = DateTime.now();
+String formattedDate = intl.DateFormat('dd-MM-yyyy').format(now);
+
 class MessagingScreen extends StatefulWidget {
   @override
   _MessagingScreenState createState() => _MessagingScreenState();
@@ -65,27 +71,30 @@ class _MessagingScreenState extends State<MessagingScreen> {
             spacing: 10,
             clipBehavior: Clip.none,
             children: [
-              if (!isMe)
-                Container(
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border:
-                          Border.all(color: Colors.grey.shade200, width: 0.5)),
-                  child: CircleAvatar(
-                    radius: 23,
-                    backgroundColor: Colors.grey.shade200,
-                    backgroundImage: mLoadImage(
-                            url: userImage, assetInCaseFailed: aDefaultAvatar)
-                        .image,
-                  ),
+              Container(
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border:
+                        Border.all(color: Colors.grey.shade200, width: 0.5)),
+                child: CircleAvatar(
+                  radius: 23,
+                  backgroundColor: Colors.grey.shade200,
+                  backgroundImage: mLoadImage(
+                          url: !isMe
+                              ? userImage
+                              : _authController.fireAuthUser?.photoURL,
+                          assetInCaseFailed: aDefaultAvatar)
+                      .image,
                 ),
+              ),
               Wrap(
                 spacing: 5,
                 direction: Axis.vertical,
                 runAlignment: !isMe ? WrapAlignment.start : WrapAlignment.end,
                 children: [
                   Container(
-                      constraints: BoxConstraints(maxWidth: 170, minWidth: 80),
+                      constraints: BoxConstraints(
+                          maxWidth: Get.width - 100, minWidth: 50),
                       padding: EdgeInsets.only(
                           left: 16, top: 8, bottom: 8, right: 16),
                       decoration: BoxDecoration(
@@ -114,8 +123,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
                   time != null
                       ? Padding(
                           padding: const EdgeInsets.only(left: 5.0),
-                          child: Text(
-                              (!isMe ? 'Seen In' : 'Sent In') + '    $time',
+                          child: Text(time,
                               style: Theme.of(context).textTheme.subtitle1),
                         )
                       : SizedBox(),
@@ -166,9 +174,11 @@ class _MessagingScreenState extends State<MessagingScreen> {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text(
-            controller.recipient(participantType: recipientType)?.name ??
-                "Customer",
+          title: Obx(
+            () => Text(
+              controller.recipient(participantType: recipientType)?.name ??
+                  "User",
+            ),
           ),
         ),
         body: Container(
@@ -176,9 +186,11 @@ class _MessagingScreenState extends State<MessagingScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 10,
-              ),
+              Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10.1),
+                  child: Center(
+                    child: Text(formattedDate),
+                  )),
               Expanded(
                 child: Obx(
                   () => ListView(
@@ -224,7 +236,8 @@ class SendMessageBox extends StatelessWidget {
     return TextField(
         onChanged: (value) => _typedMsg.value = value,
         controller: _textEditingController,
-        style: Theme.of(context).textTheme.bodyText2,
+        style:
+            Theme.of(context).textTheme.subtitle1?.copyWith(fontSize: 14.5.sp),
         cursorColor: Colors.purple,
         scrollPadding: EdgeInsets.all(10),
         decoration: InputDecoration(
@@ -235,7 +248,10 @@ class SendMessageBox extends StatelessWidget {
             border: OutlineInputBorder(borderSide: BorderSide.none),
             hintText: _languageController.strings['shared']['messages']
                 ['writeMsgPlaceholder'],
-            hintStyle: Theme.of(context).textTheme.subtitle1,
+            hintStyle: Theme.of(context)
+                .textTheme
+                .subtitle1
+                ?.copyWith(fontSize: 14.5.sp),
             suffixIcon: Padding(
               padding: const EdgeInsets.all(16),
               child: GestureDetector(

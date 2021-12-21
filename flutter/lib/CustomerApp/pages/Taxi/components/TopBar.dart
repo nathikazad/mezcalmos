@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 
 class TopBar extends StatelessWidget {
@@ -53,23 +52,24 @@ class TopBar extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 fontSize: 16,
-                                fontWeight: FontWeight.normal,
+                                fontWeight: FontWeight.bold,
                               ),
                             )),
                         GestureDetector(
-                            onTap: () => MezSnackbar(
-                                lang.strings['shared']['inputLocation']["from"],
-                                order.from.address),
-                            child: Text(
-                              order.from.address,
-                              overflow: TextOverflow.ellipsis,
-                              softWrap: false,
-                              maxLines: 1,
-                              style: TextStyle(
-                                  fontSize: 14.sp,
-                                  fontFamily: 'psr',
-                                  color: Colors.black87),
-                            )),
+                          onTap: () => MezSnackbar(
+                              lang.strings['shared']['inputLocation']["from"],
+                              order.from.address),
+                          child: Text(
+                            order.from.address,
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontFamily: 'psr',
+                                fontWeight: FontWeight.w400),
+                            maxLines: 1,
+                            softWrap: false,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
                       ]),
                 ),
               ),
@@ -131,24 +131,25 @@ class TopBar extends StatelessWidget {
                             lang.strings['shared']['inputLocation']["to"],
                             style: TextStyle(
                               fontSize: 16,
-                              fontWeight: FontWeight.normal,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
                         GestureDetector(
-                            onTap: () => MezSnackbar(
-                                lang.strings['shared']['inputLocation']["to"],
-                                order.to.address),
-                            child: Text(
-                              order.to.address,
-                              overflow: TextOverflow.ellipsis,
-                              softWrap: false,
-                              maxLines: 1,
-                              style: TextStyle(
-                                  fontSize: 14.sp,
-                                  fontFamily: 'psr',
-                                  color: Colors.black87),
-                            )),
+                          onTap: () => MezSnackbar(
+                              lang.strings['shared']['inputLocation']["to"],
+                              order.to.address),
+                          child: Text(
+                            order.to.address, //13+..
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontFamily: 'psr',
+                                fontWeight: FontWeight.w400),
+                            maxLines: 1,
+                            softWrap: false,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
                       ],
                     )),
               ),

@@ -49,28 +49,9 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   StreamSubscription? _orderCountListener;
   @override
   void initState() {
-    // TODO : We have to find some kind of solution to inject global stuff (All these controllers are used ..)
-    // Get.put<ForegroundNotificationsController>(
-    //     ForegroundNotificationsController(),
-    //     permanent: true);
-    // Get.put<BackgroundNotificationsController>(
-    //     BackgroundNotificationsController(),
-    //     permanent: true);
-    // Get.put<TaxiController>(TaxiController(), permanent: true);
-    // Get.put(RestaurantController());
-    // Get.put<CustomerAuthController>(CustomerAuthController());
-
-    // _orderController =
-    //     Get.put<OrderController>(OrderController(), permanent: true);
-
     if (auth.fireAuthUser != null) {
       WidgetsBinding.instance!.addObserver(this);
       _orderController = Get.find<OrderController>();
-      // if (!Get.isRegistered<OrderController>()) {
-      //   _orderController =
-      //       Get.put<OrderController>(OrderController(), permanent: true);
-      // }
-
       _orderCountListener = _orderController!.currentOrders.stream.listen((_) {
         numberOfCurrentOrders.value = _orderController!.currentOrders.length;
       });

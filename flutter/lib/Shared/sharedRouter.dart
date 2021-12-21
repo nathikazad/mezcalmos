@@ -34,6 +34,13 @@ String getCustomerMessagesRoute(
       "?recipientType=${ParticipantType.Customer.toFirebaseFormattedString()}";
 }
 
+String getTaxiMessagesRoute(
+  String orderId,
+) {
+  return kMessagesRoute.replaceFirst(":orderId", orderId) +
+      "?recipientType=${ParticipantType.Taxi.toFirebaseFormattedString()}";
+}
+
 void popEverythingAndNavigateTo(dynamic route, {dynamic args}) {
   popUntilAndNavigateTo(kHomeRoute, route, args: args);
 }
