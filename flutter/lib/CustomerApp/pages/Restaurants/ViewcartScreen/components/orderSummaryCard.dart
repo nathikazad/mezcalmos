@@ -9,8 +9,11 @@ class OrderSummaryCard extends StatelessWidget {
   final String? orderCost;
   final String? deliveryCost;
   final String? totalCost;
+  final OnDropDownNewValue? onValueChangeCallback;
+
   const OrderSummaryCard({
     Key? key,
+    this.onValueChangeCallback,
     this.orderCost,
     this.deliveryCost,
     this.totalCost,
@@ -170,7 +173,9 @@ class OrderSummaryCard extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            DropDownListCartView(),
+            DropDownListCartView(
+              onValueChangeCallback: this.onValueChangeCallback,
+            ),
           ],
         ),
       ),

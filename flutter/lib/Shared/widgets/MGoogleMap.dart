@@ -98,7 +98,6 @@ class MGoogleMapState extends State<MGoogleMap> {
     return currentLocation;
   }
 
-  bool userTaped = false;
   @override
   Widget build(BuildContext context) {
     mezDbgPrint(
@@ -142,6 +141,7 @@ class MGoogleMapState extends State<MGoogleMap> {
                 )
               : SizedBox(),
         ),
+
         // ),
         widget.myLocationButtonEnabled
             ? Positioned(
@@ -185,10 +185,5 @@ class MGoogleMapState extends State<MGoogleMap> {
             : SizedBox(),
       ],
     );
-  }
-
-  Future<void> moveToNewLatLng(double lat, double lng) async {
-    await widget.mGoogleMapController.controller
-        ?.animateCamera(CameraUpdate.newLatLng(LatLng(lat, lng)));
   }
 }

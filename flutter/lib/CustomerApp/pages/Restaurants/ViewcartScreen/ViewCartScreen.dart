@@ -13,6 +13,8 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'components/cartIsEmptyScreen.dart';
 
+enum DropDownResult { Null, String }
+
 class ViewCartScreen extends StatefulWidget {
   @override
   _ViewCartScreenState createState() => _ViewCartScreenState();
@@ -22,6 +24,8 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   LanguageController lang = Get.find<LanguageController>();
   RestaurantController controller = Get.find<RestaurantController>();
   bool _clickedOrderNow = false;
+  DropDownResult ddResult = DropDownResult.Null;
+
   TextEditingController textcontoller = new TextEditingController();
   CustomerAuthController customerAuthController =
       Get.find<CustomerAuthController>();
@@ -59,26 +63,36 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
           return GetBuilder<RestaurantController>(
               // specify type as Controller
               init: RestaurantController(), // intialize with the Controller
-              builder: (_) => SingleChildScrollView(child: ViewCartBody()));
+              builder: (_) => SingleChildScrollView(child: ViewCartBody(
+                    onValueChangeCallback: ({String? newValue}) {
+                      mezDbgPrint("onValueChangeCallback :: $newValue");
+                      if (newValue == null) {
+                        setState(() {
+                          ddResult = DropDownResult.Null;
+                        });
+                      } else {
+                        setState(() {
+                          ddResult = DropDownResult.String;
+                        });
+                      }
+                    },
+                  )));
         } else {
           return CartIsEmptyScreen();
         }
       }),
-      bottomNavigationBar: Obx(
-        () => ButtonComponent(
-            bgColor: getTheRightButtonColor(),
-            widget: Center(
-                child: getTheRightWidgetForOrderNowButton(!_clickedOrderNow)),
-            function: checkoutActionButton),
-      ),
+      bottomNavigationBar: ButtonComponent(
+          bgColor: getTheRightButtonColor(),
+          widget: Center(
+              child: getTheRightWidgetForOrderNowButton(!_clickedOrderNow)),
+          function: checkoutActionButton),
     );
   }
 
   Color getTheRightButtonColor() {
     // it returns the pruple or the grey color for the order now button
-    if (controller.cart.value.toLocation == null ||
-        controller.cart.value.toLocation?.address ==
-            "Unnamed Road, Cupertino, CA 95014, USA") {
+    // if (controller.cart.value.toLocation == null) {
+    if (ddResult == DropDownResult.Null) {
       return Color(0xdddddddd);
     } else {
       return Color(0xffac59fc);
@@ -105,42 +119,39 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
     }
   }
 
+//itemviewscreen
   void checkoutActionButton() async {
-    if (controller.cart.value.toLocation == null ||
-        controller.cart.value.toLocation?.address ==
-            "Unnamed Road, Cupertino, CA 95014, USA") {
-//do nothing ...
-    } else {
-      if (controller.cart.value.toLocation != null) {
-        setState(() {
-          _clickedOrderNow = true;
-        });
-        controller.cart.value.notes = textcontoller.text;
-        mezDbgPrint(controller.cart.value.toFirebaseFormattedJson().toString());
+    // if (controller.cart.value.toLocation != null) {
+    mezDbgPrint("Called : checkoutActionButton : DdResult ($ddResult}");
+    if (ddResult != DropDownResult.Null) {
+      setState(() {
+        _clickedOrderNow = true;
+      });
+      controller.cart.value.notes = textcontoller.text;
+      mezDbgPrint(controller.cart.value.toFirebaseFormattedJson().toString());
 
-        var response = await controller.checkout();
-        print(response.errorCode.toString());
-        if (response.success) {
-          controller.clearCart();
-          popEverythingAndNavigateTo(
-              getRestaurantOrderRoute(response.data["orderId"]));
+      var response = await controller.checkout();
+      print(response.errorCode.toString());
+      if (response.success) {
+        controller.clearCart();
+        popEverythingAndNavigateTo(
+            getRestaurantOrderRoute(response.data["orderId"]));
+      } else {
+        print(response);
+        if (response.errorCode == "serverError") {
+          // do something
+        } else if (response.errorCode == "inMoreThanThreeOrders") {
+          // do something
+        } else if (response.errorCode == "restaurantClosed") {
+          // do something
         } else {
-          print(response);
-          if (response.errorCode == "serverError") {
-            // do something
-          } else if (response.errorCode == "inMoreThanThreeOrders") {
-            // do something
-          } else if (response.errorCode == "restaurantClosed") {
-            // do something
-          } else {
-            // do something
-          }
+          // do something
         }
-
-        setState(() {
-          _clickedOrderNow = false;
-        });
       }
+
+      setState(() {
+        _clickedOrderNow = false;
+      });
     }
   }
 }

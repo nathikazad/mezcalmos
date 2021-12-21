@@ -43,8 +43,17 @@ class LocationSearchBarController {
     pickChoicesDropDownHeight.value = 0;
   }
 
-  void expandDropdown() {
-    pickChoicesDropDownHeight.value = 100.sp;
+  void expandDropdown({int itemsCount = 2}) {
+    // eachItems = 32 OF HEIGHT
+    double height = 2 * 32;
+
+    if (itemsCount >= 2 && itemsCount <= 4) {
+      height = itemsCount * 32;
+    } else if (itemsCount > 4) {
+      height = 4 * 32;
+    }
+
+    pickChoicesDropDownHeight.value = height.sp;
   }
 
   /// if no type was specified it unfocus from and to
@@ -320,7 +329,8 @@ class LocationSearchBarState extends State<LocationSearchBar> {
     if (value.length >= 1) {
       locationSearchBarController.collapseDropdown();
     } else {
-      locationSearchBarController.expandDropdown();
+      locationSearchBarController.expandDropdown(
+          itemsCount: dropDownItems.length);
     }
   }
 
@@ -328,7 +338,8 @@ class LocationSearchBarState extends State<LocationSearchBar> {
     if (type == SearchComponentType.From &&
             widget.request.value.from?.address == null ||
         widget.request.value.from?.address == "") {
-      locationSearchBarController.expandDropdown();
+      locationSearchBarController.expandDropdown(
+          itemsCount: dropDownItems.length);
       setState(() {
         locationSearchBarController.focusedTextField.value = type;
       });
@@ -337,7 +348,8 @@ class LocationSearchBarState extends State<LocationSearchBar> {
     if (type == SearchComponentType.To &&
             widget.request.value.to?.address == null ||
         widget.request.value.from?.address == "") {
-      locationSearchBarController.expandDropdown();
+      locationSearchBarController.expandDropdown(
+          itemsCount: dropDownItems.length);
       setState(() {
         locationSearchBarController.focusedTextField.value = type;
       });

@@ -71,11 +71,13 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
             });
           } else {
             // if the Order is no more available , Show a pop up while poping back back !
-            cancelOrderSubscription();
-            Get.back();
-            oneButtonDialog(
-                body: lang.strings['taxi']['cancelOrder']['rideUnavailble'],
-                imagUrl: aOrderUnavailable);
+            if (_clickedButton == false) {
+              cancelOrderSubscription();
+              Get.back();
+              oneButtonDialog(
+                  body: lang.strings['taxi']['cancelOrder']['rideUnavailble'],
+                  imagUrl: aOrderUnavailable);
+            }
           }
         });
       }
@@ -154,7 +156,6 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
               setState(() {
                 _clickedButton = true;
               });
-
               ServerResponse serverResponse =
                   await controller.acceptTaxi(order!.orderId);
 
@@ -169,6 +170,9 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
                     serverResponse.status.toShortString(), serverResponse.data);
               } else {
                 // in case Taxi User failed accepting the order.
+                setState(() {
+                  _clickedButton = false;
+                });
                 Get.back();
                 MezSnackbar("Failed", serverResponse.errorMessage!);
               }

@@ -31,7 +31,6 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
   final String toMarkerId = "to";
   LanguageController lang = Get.find<LanguageController>();
 
-  // TODO: overriding functions in widget.mGoogleMapController!
 /******************************  Init and build function ************************************/
   @override
   void initState() {
@@ -94,6 +93,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
       } else {
         // it's in past orders!
         pastOrderStatusHandler(order.value!.status);
+        setState(() {});
       }
     } else {
       MezSnackbar("Error", "Unfound Order !");
@@ -216,7 +216,6 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
 
   /// This gets invoked when the order is moved to /past db node
   void pastOrderStatusHandler(TaxiOrdersStatus status) {
-    // @Saad, no need to navigate back, should just be enough to show status
     if (order.value!.driver != null)
       widget.mGoogleMapController.removeMarkerById(order.value!.driver!.id);
     // adding customer's marker

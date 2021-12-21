@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/buttonComponent.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/components/chooseOneCheckBox.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
-Future<String> savedLocationDailog(
-    {required BuildContext context,
-    required Function function,
-    String? nameVal}) async {
+Future<String?> savedLocationDailog(
+    {required BuildContext context, String? nameVal}) async {
   LanguageController lang = Get.find<LanguageController>();
   TextEditingController txtController = TextEditingController();
   if (nameVal != null && nameVal != "") {

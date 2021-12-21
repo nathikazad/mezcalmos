@@ -84,10 +84,8 @@ class _IncrementalComponentState extends State<IncrementalComponent> {
           decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: Theme.of(context).primaryColorLight.withOpacity(0.2)),
-          child: Flexible(
-            child: Text("${widget.value}",
-                style: Theme.of(context).textTheme.headline3),
-          ),
+          child: Text("${widget.value}",
+              style: Theme.of(context).textTheme.headline3),
         ),
         SizedBox(
           width: 5,

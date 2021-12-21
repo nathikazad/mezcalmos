@@ -3,14 +3,17 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
+import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
-import '../../../../router.dart';
+typedef OnDropDownNewValue = void Function({String? newValue});
 
 class DropDownListCartView extends StatefulWidget {
-  DropDownListCartView({Key? key}) : super(key: key);
+  final OnDropDownNewValue? onValueChangeCallback;
+
+  DropDownListCartView({this.onValueChangeCallback, Key? key})
+      : super(key: key);
 
   @override
   _DropDownListCartViewState createState() => _DropDownListCartViewState();
@@ -22,28 +25,29 @@ class _DropDownListCartViewState extends State<DropDownListCartView> {
 
   CustomerAuthController customerAuthController =
       Get.find<CustomerAuthController>();
-  var listOfSavedLoacations = <SavedLocation>[];
+  List<SavedLocation> listOfSavedLoacations = <SavedLocation>[];
   SavedLocation? dropDownListValue;
 
   @override
   void initState() {
     setState(() {
-      listOfSavedLoacations = [
-        SavedLocation(
-            name:
-                "${lang.strings["customer"]["restaurant"]["cart"]["pickLocation"]}",
-            location: Location.fromFirebaseData(<String, dynamic>{
-              "lat": 37.33233141,
-              "lng": -122.0312186,
-              "address": "Unnamed jamal Road, Cupertino, CA 95014, USA"
-            }))
-      ];
+      // default ID: _pick_ , stands for our  Pick From Map
+      SavedLocation loc = SavedLocation(
+          name: lang.strings["customer"]["restaurant"]["cart"]["pickLocation"],
+          id: "_pick_");
+
+      listOfSavedLoacations.add(loc);
+
+      setState(() {
+        dropDownListValue = loc;
+      });
+
       customerAuthController.customerRxn.value?.savedLocations
           .forEach((element) {
         listOfSavedLoacations.add(element);
       });
 
-      dropDownListValue = listOfSavedLoacations[0];
+      // dropDownListValue = listOfSavedLoacations[0];
     });
     super.initState();
   }
@@ -74,15 +78,18 @@ class _DropDownListCartViewState extends State<DropDownListCartView> {
             value: dropDownListValue,
             isDense: false,
             isExpanded: true,
-            hint: Text(
-                lang.strings["customer"]["restaurant"]["cart"]["pickLocation"],
-                style: const TextStyle(
-                    color: const Color(0xff000f1c),
-                    fontWeight: FontWeight.w500,
-                    fontFamily: "FontAwesome5Pro",
-                    fontStyle: FontStyle.normal,
-                    fontSize: 12.0),
-                textAlign: TextAlign.left),
+            hint: Center(
+              child: Text(
+                  lang.strings["customer"]["restaurant"]["cart"]
+                      ["pickLocation"],
+                  style: const TextStyle(
+                      color: const Color(0xff000f1c),
+                      fontWeight: FontWeight.w500,
+                      fontFamily: "FontAwesome5Pro",
+                      fontStyle: FontStyle.normal,
+                      fontSize: 12.0),
+                  textAlign: TextAlign.left),
+            ),
             icon: Icon(Icons.expand_more),
             items: listOfSavedLoacations
                 .map<DropdownMenuItem<SavedLocation>>(
@@ -109,15 +116,16 @@ class _DropDownListCartViewState extends State<DropDownListCartView> {
                         ))
                 .toList(),
             onChanged: (newValue) async {
+              mezDbgPrint(
+                  "Changed value over to ====> ${newValue?.name} | Old one was : ${dropDownListValue?.name}");
+
               setState(() {
                 dropDownListValue = newValue;
               });
               // we will route the user back to the Map
-              if (newValue!.name ==
-                  lang.strings["customer"]["restaurant"]["cart"]
-                      ["pickLocation"]) {
-                SavedLocation saveLocation =
-                    await Get.toNamed(kPickLocationRoute);
+              if (newValue?.id == "_pick_") {
+                SavedLocation? saveLocation =
+                    await Get.toNamed(kPickLocationRoute) as SavedLocation?;
                 mezDbgPrint("View Got result : $saveLocation");
                 if (saveLocation != null) {
                   setState(() {
@@ -129,8 +137,12 @@ class _DropDownListCartViewState extends State<DropDownListCartView> {
                     controller.refresh();
                   });
                 }
+                widget.onValueChangeCallback
+                    ?.call(newValue: saveLocation?.name);
               } else {
-                controller.cart.value.toLocation = newValue.location;
+                widget.onValueChangeCallback?.call(newValue: newValue?.name);
+
+                controller.cart.value.toLocation = newValue!.location!;
                 controller.saveCart();
                 controller.refresh();
               }

@@ -40,7 +40,6 @@ class MezcalmosSharedWidgets {
         ],
       ));
 
-
   static Widget fillTitle(int actionLength) {
     return Container(
       width: Get.width * (actionLength >= 3 && Get.width <= 320 ? 0.45 : 0.55),

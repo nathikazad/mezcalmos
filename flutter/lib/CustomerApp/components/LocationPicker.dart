@@ -75,6 +75,7 @@ enum BottomButtomToShow { Pick, Confirm, GrayedOut, Loading }
 class LocationPickerState extends State<LocationPicker> {
   final LanguageController _lang = Get.find<LanguageController>();
   Location? location;
+  bool userTaped = false;
 
   @override
   void initState() {
@@ -221,12 +222,15 @@ class LocationPickerState extends State<LocationPicker> {
 
   Widget gestureDetector() {
     return GestureDetector(
-      onTap: () {
-        widget.locationPickerMapController._showBlackScreen.value = false;
+      behavior: HitTestBehavior.deferToChild,
+      onPanStart: (_) {
+        widget.locationPickerMapController.showOrHideBlackScreen(false);
       },
       child: Container(
         width: Get.width,
-        color: Colors.black45,
+        color: widget.locationPickerMapController._showBlackScreen.value
+            ? Colors.black45
+            : Colors.transparent,
         alignment: Alignment.bottomCenter,
         padding: EdgeInsets.only(
             bottom: widget.locationPickerMapController
@@ -237,7 +241,6 @@ class LocationPickerState extends State<LocationPicker> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
-          // mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 2.0, right: 5),

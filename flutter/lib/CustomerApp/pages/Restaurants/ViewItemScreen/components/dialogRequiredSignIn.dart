@@ -40,6 +40,9 @@ void dialogRequiredSignIn() {
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: InkWell(
                   onTap: () {
+                    // to remove the SignIn popUp first!
+                    Get.back();
+                    // then head to kSignInRoute.
                     Get.toNamed(kSignInRouteOptional);
                   },
                   child: Container(
@@ -50,7 +53,7 @@ void dialogRequiredSignIn() {
                     width: Get.width,
                     alignment: Alignment.center,
                     child: Text(
-                      "Sign me in ",
+                      "Sign me in",
                       style: TextStyle(color: Colors.white),
                     ),
                   ),

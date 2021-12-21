@@ -149,10 +149,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
 
   void checkTaxiCurrentOrdersAndNavigate() {
     _orderController = Get.find<OrderController>();
-
-    mezDbgPrint(
-        "\nsaad [OrderController is registred] -- ${_orderController!.currentOrders.toJson()}");
-
     // return;
     num noOfCurrentTaxiOrders = _orderController
             ?.currentOrders()
@@ -160,12 +156,8 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             .length ??
         0;
     if (noOfCurrentTaxiOrders == 0) {
-      MezSnackbar("Uder  has no orders", "Uder  has no orders");
-
       Get.toNamed(kTaxiRequestRoute);
     } else {
-      MezSnackbar("Uder  has  orders", "Uder  has  orders");
-
       String orderId = _orderController!.currentOrders
           .firstWhere(
               (currentOrder) => currentOrder.orderType == OrderType.Taxi)

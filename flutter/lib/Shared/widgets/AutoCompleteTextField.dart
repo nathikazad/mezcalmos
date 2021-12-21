@@ -114,10 +114,9 @@ class _AutoCompleteTextViewState extends State<AutoCompleteTextView> {
   }
 
   _getSuggestions(String data) async {
-    if (data.length >= 3) {
+    if (data.length >= 3 && !suggestionsStreamController.isClosed) {
       idWithDescription.clear();
       idWithDescription = await widget.getSuggestionsMethod(data);
-
       suggestionsStreamController.sink.add(idWithDescription.values.toList());
     }
   }

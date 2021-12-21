@@ -33,7 +33,7 @@ class ButtonComponent extends StatelessWidget {
             ),
             child: widget),
         onTap: () {
-          function!();
+          function?.call();
         },
       ),
     );

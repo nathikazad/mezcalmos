@@ -149,7 +149,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
 // when one of the dropdowns (pick current location, a saved location or a places suggestion clicked)
   void updateModelAndHandoffToLocationPicker(
       Location? newLocation, SearchComponentType textFieldType) {
-    locationPickerController.removeCircleMarker();
+    // locationPickerController.removeCircleMarker();
     if (newLocation != null) {
       _currentFocusedTextField.value = textFieldType;
       updateModelAndMarker(textFieldType, newLocation);
@@ -186,7 +186,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
     } else {
       locationPickerController.setAnimateMarkersPolyLinesBounds(false);
       locationPickerController.showGrayedOutButton();
-      locationPickerController.removeCircleMarker();
+      // locationPickerController.removeCircleMarker();
       setState(() {
         _pickedFromTo = false;
       });

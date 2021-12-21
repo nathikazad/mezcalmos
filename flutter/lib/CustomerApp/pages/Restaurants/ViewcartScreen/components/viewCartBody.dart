@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/dropDownListCartView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/textFieldComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:get/get.dart';
@@ -12,7 +13,9 @@ import 'orderSummaryCard.dart';
 final currency = new NumberFormat("#,##0.00", "en_US");
 
 class ViewCartBody extends StatefulWidget {
-  ViewCartBody({Key? key}) : super(key: key);
+  final OnDropDownNewValue? onValueChangeCallback;
+
+  ViewCartBody({Key? key, this.onValueChangeCallback}) : super(key: key);
 
   @override
   _ViewCartBodyState createState() => _ViewCartBodyState();
@@ -21,7 +24,6 @@ class ViewCartBody extends StatefulWidget {
 class _ViewCartBodyState extends State<ViewCartBody> {
   LanguageController lang = Get.find<LanguageController>();
   RestaurantController controller = Get.find<RestaurantController>();
-  bool _clickedOrderNow = false;
   TextEditingController textcontoller = new TextEditingController();
 
   @override
@@ -48,6 +50,7 @@ class _ViewCartBodyState extends State<ViewCartBody> {
             height: 21.h,
           ),
           Obx(() => OrderSummaryCard(
+                onValueChangeCallback: widget.onValueChangeCallback,
                 deliveryCost: "${currency.format(40.00)}",
                 orderCost:
                     "${currency.format(controller.cart.value.toFirebaseFormattedJson()["cost"] as dynamic)}",
