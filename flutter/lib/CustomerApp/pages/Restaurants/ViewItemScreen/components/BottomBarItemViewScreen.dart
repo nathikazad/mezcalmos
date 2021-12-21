@@ -40,8 +40,7 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
     AuthController auth = Get.find<AuthController>();
 
     return Container(
-        child: Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(5),
       color: Colors.white,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -61,12 +60,8 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
             minVal: 1,
             value: widget.cartItem.value!.quantity,
           ),
-          Container(
-            child: Center(
-                child: Text(
-              "\$${widget.cartItem.value!.totalCost().toStringAsFixed(0)} ",
-              style: txt.headline3,
-            )),
+          SizedBox(
+            width: 5,
           ),
           Container(
             child: Center(
@@ -75,100 +70,102 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
               style: txt.headline3,
             )),
           ),
-          TextButton(
-            style: ButtonStyle(
-                backgroundColor: !widget.isAvailable
-                    ? MaterialStateProperty.all(Colors.grey[300])
-                    : MaterialStateProperty.all(
-                        Color.fromRGBO(172, 89, 252, 1))),
-            onPressed: widget.isAvailable
-                ? () async {
-                    if (auth.fireAuthUser != null) {
-                      if (ViewItemScreenMode.AddItemMode == widget.mode) {
-                        if (restaurantCartController.associatedRestaurant?.id !=
-                            null) {
-                          if (restaurantCartController
-                                  .associatedRestaurant?.id ==
-                              widget.currentRestaurantId) {
-                            mezDbgPrint(
-                                "the first id is ${restaurantCartController.associatedRestaurant?.id} and the scond is ${widget.currentRestaurantId}");
-                            restaurantCartController
-                                .addItem(widget.cartItem.value!);
-                            Get.offNamed(kCartRoute);
-                          } else {
-                            mezDbgPrint(
-                                "not true ${restaurantCartController.associatedRestaurant?.id} and the other is ${widget.currentRestaurantId}");
-
-                            YesNoDialogButton clickedYes = await yesNoDialog(
-                                text: lang.strings['customer']['restaurant']
-                                    ['menu']["dailog"]["title"],
-                                titleUp: true,
-                                icon: Container(
-                                  child: Icon(
-                                    Icons.warning_amber,
-                                    color: Colors.yellow,
-                                    size: 70,
-                                  ),
-                                ),
-                                buttonLeftStyle: Container(
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8),
-                                      color: Colors.grey[300]),
-                                  height: 30,
-                                  child: Text(lang.strings['customer']
-                                          ['restaurant']['menu']["dailog"]
-                                      ["leftBtn"]),
-                                ),
-                                buttonRightStyle: Container(
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8),
-                                      color: Colors.blue[800]),
-                                  height: 30,
-                                  child: Text(
-                                    lang.strings['customer']['restaurant']
-                                        ['menu']["dailog"]["rightBtn"],
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                                body: lang.strings['customer']['restaurant']
-                                    ['menu']["dailog"]["subtitle"]);
-                            if (clickedYes == YesNoDialogButton.Yes) {
-                              Get.back();
-                              Get.toNamed(kCartRoute);
-                            } else {
-                              Get.back();
+          Flexible(
+            child: TextButton(
+              style: ButtonStyle(
+                  backgroundColor: !widget.isAvailable
+                      ? MaterialStateProperty.all(Colors.grey[300])
+                      : MaterialStateProperty.all(
+                          Color.fromRGBO(172, 89, 252, 1))),
+              onPressed: widget.isAvailable
+                  ? () async {
+                      if (auth.fireAuthUser != null) {
+                        if (ViewItemScreenMode.AddItemMode == widget.mode) {
+                          if (restaurantCartController.associatedRestaurant?.id !=
+                              null) {
+                            if (restaurantCartController
+                                    .associatedRestaurant?.id ==
+                                widget.currentRestaurantId) {
+                              mezDbgPrint(
+                                  "the first id is ${restaurantCartController.associatedRestaurant?.id} and the scond is ${widget.currentRestaurantId}");
                               restaurantCartController
                                   .addItem(widget.cartItem.value!);
                               Get.offNamed(kCartRoute);
+                            } else {
+                              mezDbgPrint(
+                                  "not true ${restaurantCartController.associatedRestaurant?.id} and the other is ${widget.currentRestaurantId}");
+
+                              YesNoDialogButton clickedYes = await yesNoDialog(
+                                  text: lang.strings['customer']['restaurant']
+                                      ['menu']["dailog"]["title"],
+                                  titleUp: true,
+                                  icon: Container(
+                                    child: Icon(
+                                      Icons.warning_amber,
+                                      color: Colors.yellow,
+                                      size: 70,
+                                    ),
+                                  ),
+                                  buttonLeftStyle: Container(
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                        color: Colors.grey[300]),
+                                    height: 30,
+                                    child: Text(lang.strings['customer']
+                                            ['restaurant']['menu']["dailog"]
+                                        ["leftBtn"]),
+                                  ),
+                                  buttonRightStyle: Container(
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                        color: Colors.blue[800]),
+                                    height: 30,
+                                    child: Text(
+                                      lang.strings['customer']['restaurant']
+                                          ['menu']["dailog"]["rightBtn"],
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                  body: lang.strings['customer']['restaurant']
+                                      ['menu']["dailog"]["subtitle"]);
+                              if (clickedYes == YesNoDialogButton.Yes) {
+                                Get.back();
+                                Get.toNamed(kCartRoute);
+                              } else {
+                                Get.back();
+                                restaurantCartController
+                                    .addItem(widget.cartItem.value!);
+                                Get.offNamed(kCartRoute);
+                              }
                             }
+                          } else {
+                            restaurantCartController
+                                .addItem(widget.cartItem.value!);
+                            Get.offNamed(kCartRoute);
                           }
                         } else {
                           restaurantCartController
                               .addItem(widget.cartItem.value!);
-                          Get.offNamed(kCartRoute);
+                          Get.back();
                         }
                       } else {
-                        restaurantCartController
-                            .addItem(widget.cartItem.value!);
-                        Get.back();
+                        dialogRequiredSignIn();
                       }
-                    } else {
-                      dialogRequiredSignIn();
                     }
-                  }
-                : null,
-            child: Text(
-              widget.mode == ViewItemScreenMode.AddItemMode
-                  ? lang.strings['customer']['restaurant']['menu']['addToCart']
-                  : lang.strings['customer']['restaurant']['menu']
-                      ['modifyItem'],
-              textAlign: TextAlign.center,
+                  : null,
+              child: Text(
+                widget.mode == ViewItemScreenMode.AddItemMode
+                    ? lang.strings['customer']['restaurant']['menu']['addToCart']
+                    : lang.strings['customer']['restaurant']['menu']
+                        ['modifyItem'],
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         ],
       ),
-    ));
+    );
   }
 }
