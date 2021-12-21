@@ -135,6 +135,7 @@ class UserMenu extends StatelessWidget {
             case 2:
               Get.toNamed(kOrdersRoute);
               break;
+
             case 0:
               auth.signOut();
               break;

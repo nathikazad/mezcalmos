@@ -1,3 +1,5 @@
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+
 enum Weekday { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }
 
 extension AddDayOfWeekToDateTime on DateTime {
@@ -37,19 +39,27 @@ class Schedule {
   factory Schedule.fromData(dynamic data) {
     Map<Weekday, OpenHours> openHours = {};
     data.forEach((dynamic day, dynamic openHour) {
-      List<int> from = data["from"]
-          .toString()
-          .split(':')
-          .map((val) => int.parse(val))
-          .toList();
-      List<int> to = data["to"]
-          .toString()
-          .split(':')
-          .map((val) => int.parse(val))
-          .toList();
-      openHours[day.toString().toWeekDay()] =
-          OpenHours(openHour["isOpen"], from, to);
+      mezDbgPrint(
+          "============ Inside the foreach this is the values  $openHour ===========");
+      try {
+        List<int> from = openHour["from"]
+            .toString()
+            .split(':')
+            .map((val) => int.parse(val))
+            .toList();
+        List<int> to = openHour["to"]
+            .toString()
+            .split(':')
+            .map((val) => int.parse(val))
+            .toList();
+
+        openHours[day.toString().toWeekDay()] =
+            OpenHours(openHour["isOpen"], from, to);
+      } catch (e) {
+        mezDbgPrint("something went wrong $e");
+      }
     });
+
     return Schedule(openHours);
   }
 

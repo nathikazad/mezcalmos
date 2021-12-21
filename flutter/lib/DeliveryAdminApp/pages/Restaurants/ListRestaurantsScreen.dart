@@ -21,6 +21,15 @@ class ListRestaurantsScreen extends GetView<RestaurantsInfoController> {
 
   Widget build(BuildContext context) {
     mezDbgPrint(restaurants.value.length.toString() + "=================");
+    restaurants.sort(
+      (a, b) {
+        if (b.schedule!.isOpen()) {
+          return 1;
+        } else {
+          return -1;
+        }
+      },
+    );
     return Scaffold(
         //appBar: mezcalmosAppBar("back", () => Get.back(), actionIcons: []),
         body: Column(

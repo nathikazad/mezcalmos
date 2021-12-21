@@ -17,11 +17,13 @@ class BottomBarItemViewScreen extends StatefulWidget {
       {Key? key,
       required this.cartItem,
       required this.mode,
+      required this.isAvailable,
       this.currentRestaurantId})
       : super(key: key);
   final Rxn<CartItem> cartItem;
   final ViewItemScreenMode mode;
   final String? currentRestaurantId;
+  final bool isAvailable;
 
   @override
   _BottomBarItemViewScreenState createState() =>
@@ -74,77 +76,89 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
             )),
           ),
           TextButton(
-            onPressed: () async {
-              if (auth.fireAuthUser != null) {
-                if (ViewItemScreenMode.AddItemMode == widget.mode) {
-                  if (restaurantCartController.associatedRestaurant?.id !=
-                      null) {
-                    if (restaurantCartController.associatedRestaurant?.id ==
-                        widget.currentRestaurantId) {
-                      mezDbgPrint(
-                          "the first id is ${restaurantCartController.associatedRestaurant?.id} and the scond is ${widget.currentRestaurantId}");
-                      restaurantCartController.addItem(widget.cartItem.value!);
-                      Get.offNamed(kCartRoute);
-                    } else {
-                      mezDbgPrint(
-                          "not true ${restaurantCartController.associatedRestaurant?.id} and the other is ${widget.currentRestaurantId}");
+            style: ButtonStyle(
+                backgroundColor: !widget.isAvailable
+                    ? MaterialStateProperty.all(Colors.grey[300])
+                    : MaterialStateProperty.all(
+                        Color.fromRGBO(172, 89, 252, 1))),
+            onPressed: widget.isAvailable
+                ? () async {
+                    if (auth.fireAuthUser != null) {
+                      if (ViewItemScreenMode.AddItemMode == widget.mode) {
+                        if (restaurantCartController.associatedRestaurant?.id !=
+                            null) {
+                          if (restaurantCartController
+                                  .associatedRestaurant?.id ==
+                              widget.currentRestaurantId) {
+                            mezDbgPrint(
+                                "the first id is ${restaurantCartController.associatedRestaurant?.id} and the scond is ${widget.currentRestaurantId}");
+                            restaurantCartController
+                                .addItem(widget.cartItem.value!);
+                            Get.offNamed(kCartRoute);
+                          } else {
+                            mezDbgPrint(
+                                "not true ${restaurantCartController.associatedRestaurant?.id} and the other is ${widget.currentRestaurantId}");
 
-                      YesNoDialogButton clickedYes = await yesNoDialog(
-                          text: lang.strings['customer']['restaurant']['menu']
-                              ["dailog"]["title"],
-                          titleUp: true,
-                          icon: Container(
-                            child: Icon(
-                              Icons.warning_amber,
-                              color: Colors.yellow,
-                              size: 70,
-                            ),
-                          ),
-                          buttonLeftStyle: Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: Colors.grey[300]),
-                            height: 30,
-                            child: Text(lang.strings['customer']['restaurant']
-                                ['menu']["dailog"]["leftBtn"]),
-                          ),
-                          buttonRightStyle: Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: Colors.blue[800]),
-                            height: 30,
-                            child: Text(
-                              lang.strings['customer']['restaurant']['menu']
-                                  ["dailog"]["rightBtn"],
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                          body: lang.strings['customer']['restaurant']['menu']
-                              ["dailog"]["subtitle"]);
-                      if (clickedYes == YesNoDialogButton.Yes) {
-                        Get.back();
-                        Get.toNamed(kCartRoute);
+                            YesNoDialogButton clickedYes = await yesNoDialog(
+                                text: lang.strings['customer']['restaurant']
+                                    ['menu']["dailog"]["title"],
+                                titleUp: true,
+                                icon: Container(
+                                  child: Icon(
+                                    Icons.warning_amber,
+                                    color: Colors.yellow,
+                                    size: 70,
+                                  ),
+                                ),
+                                buttonLeftStyle: Container(
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      color: Colors.grey[300]),
+                                  height: 30,
+                                  child: Text(lang.strings['customer']
+                                          ['restaurant']['menu']["dailog"]
+                                      ["leftBtn"]),
+                                ),
+                                buttonRightStyle: Container(
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      color: Colors.blue[800]),
+                                  height: 30,
+                                  child: Text(
+                                    lang.strings['customer']['restaurant']
+                                        ['menu']["dailog"]["rightBtn"],
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                                body: lang.strings['customer']['restaurant']
+                                    ['menu']["dailog"]["subtitle"]);
+                            if (clickedYes == YesNoDialogButton.Yes) {
+                              Get.back();
+                              Get.toNamed(kCartRoute);
+                            } else {
+                              Get.back();
+                              restaurantCartController
+                                  .addItem(widget.cartItem.value!);
+                              Get.offNamed(kCartRoute);
+                            }
+                          }
+                        } else {
+                          restaurantCartController
+                              .addItem(widget.cartItem.value!);
+                          Get.offNamed(kCartRoute);
+                        }
                       } else {
-                        Get.back();
                         restaurantCartController
                             .addItem(widget.cartItem.value!);
-                        Get.offNamed(kCartRoute);
+                        Get.back();
                       }
+                    } else {
+                      dialogRequiredSignIn();
                     }
-                  } else {
-                    restaurantCartController.addItem(widget.cartItem.value!);
-                    Get.offNamed(kCartRoute);
                   }
-                } else {
-                  restaurantCartController.addItem(widget.cartItem.value!);
-                  Get.back();
-                }
-              } else {
-                dialogRequiredSignIn();
-              }
-            },
+                : null,
             child: Text(
               widget.mode == ViewItemScreenMode.AddItemMode
                   ? lang.strings['customer']['restaurant']['menu']['addToCart']

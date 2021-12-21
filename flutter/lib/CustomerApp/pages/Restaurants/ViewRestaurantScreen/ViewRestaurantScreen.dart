@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:get/get.dart';
 import 'components/RestaurantSliverAppbar.dart';
 import 'components/buildRestaurantsItems.dart';
+import 'package:intl/intl.dart';
+
+import 'components/restaurantInfoTab.dart';
+
+final f = new DateFormat('hh:mm a');
 
 class ViewRestaurantScreen extends StatefulWidget {
   // final Restaurant restaurant;
@@ -22,6 +29,8 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
   @override
   void initState() {
     restaurant = Get.arguments as Restaurant;
+    mezDbgPrint(
+        "the length of opening hours is ${restaurant?.schedule?.openHours.length}");
     super.initState();
   }
 
@@ -69,66 +78,9 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
               ),
             ),
             // -----------------------------SECOND TAB (INFOS) --------------------------------------------//
-            SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      child: Text(
-                        'Description :',
-                        style: Theme.of(context).textTheme.bodyText1,
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(
-                          left: 5, right: 5, top: 5, bottom: 15.h),
-                      child: Text(restaurant!.description),
-                    ),
-                    (restaurant!.location != null)
-                        ? Column(
-                            children: [
-                              Container(
-                                child: Text(
-                                  'Location :',
-                                  style: Theme.of(context).textTheme.bodyText1,
-                                ),
-                              ),
-                              Card(
-                                child: Container(
-                                  height: 250.h,
-                                  width: double.infinity,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10.h,
-                              ),
-                            ],
-                          )
-                        : Container(),
-                    (restaurant!.schedule != null)
-                        ? Column(
-                            children: [
-                              Container(
-                                child: Text(
-                                  'Working Hours :',
-                                  style: Theme.of(context).textTheme.bodyText1,
-                                ),
-                              ),
-                              Card(
-                                child: Container(
-                                  height: 250.h,
-                                  width: double.infinity,
-                                ),
-                              ),
-                            ],
-                          )
-                        : Container()
-                  ],
-                ),
-              ),
-            ),
+            RestaurantInfoTab(
+              restaurant: restaurant!,
+            )
           ]),
         ),
       ),

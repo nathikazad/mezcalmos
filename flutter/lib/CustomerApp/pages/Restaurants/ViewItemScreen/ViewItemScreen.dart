@@ -8,6 +8,7 @@ import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoCont
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
@@ -127,6 +128,28 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                             SizedBox(
                               height: 20,
                             ),
+                            !checkRestaurantAvailability(
+                                    schedule: currentRestaurant!.schedule)
+                                ? Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15, vertical: 15),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.warning,
+                                          color: Colors.red,
+                                        ),
+                                        SizedBox(
+                                          width: 15,
+                                        ),
+                                        Text(
+                                            "This restaurant its not available now .")
+                                      ],
+                                    ),
+                                  )
+                                : Container(),
                             Container(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 15),
@@ -162,6 +185,8 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                       ),
                     ),
                     BottomBarItemViewScreen(
+                      isAvailable: checkRestaurantAvailability(
+                          schedule: currentRestaurant!.schedule),
                       cartItem: cartItem,
                       mode: widget.viewItemScreenMode!,
                       currentRestaurantId: currentRestaurant?.id,
@@ -171,6 +196,34 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
               ),
       ),
     );
+  }
+
+  bool checkRestaurantAvailability({Schedule? schedule}) {
+    var dayNane = DateFormat('EEEE').format(DateTime.now());
+
+    //var xx = DateFormat.jm().format(DateFormat("hh:mm a").parse("9:00 AM"));
+    var x = DateTime.now();
+
+    if (schedule != null) {
+      bool isOpen = false;
+      schedule.openHours.forEach((key, value) {
+        if (key.toFirebaseFormatString() == dayNane.toLowerCase()) {
+          var dateOfStart =
+              DateTime(x.year, x.month, x.day, value.from[0], value.from[1]);
+          var dateOfClose =
+              DateTime(x.year, x.month, x.day, value.to[0], value.to[1]);
+          mezDbgPrint(dateOfStart.toString());
+          mezDbgPrint(dateOfClose.toString());
+          if (dateOfStart.isBefore(x) && dateOfClose.isAfter(x)) {
+            mezDbgPrint("Today is $dayNane");
+            isOpen = true;
+          }
+        }
+      });
+      return isOpen;
+    } else {
+      return true;
+    }
   }
 }
 

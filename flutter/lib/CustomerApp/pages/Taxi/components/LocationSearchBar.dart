@@ -390,10 +390,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
     return _authController!.customerRxn.value?.savedLocations
             .map<LocationDropDownItem>((e) {
           return LocationDropDownItem(
-              icon: Icon(
-                Icons.star,
-                color: Colors.yellow,
-              ),
+              icon: Icon(Icons.location_on_outlined, color: Colors.purple),
               function: () {
                 MezSnackbar(e.name, "${e.location?.address}");
                 Location? _savedLoc = _authController!.getLocationById(e.id!);

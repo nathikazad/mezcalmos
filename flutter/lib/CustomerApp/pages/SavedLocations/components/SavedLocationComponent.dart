@@ -22,7 +22,7 @@ class SavedLocationComponent extends StatelessWidget {
         Get.find<CustomerAuthController>();
     return InkWell(
       child: Container(
-        //padding: const EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
         height: Get.width * 0.3,
         width: Get.width,
@@ -30,21 +30,6 @@ class SavedLocationComponent extends StatelessWidget {
             borderRadius: BorderRadius.circular(8), color: Colors.white),
         child: Row(
           children: [
-            Container(
-                height: Get.width * 0.3,
-                width: Get.width * 0.22,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(8),
-                      bottomLeft: Radius.circular(8)),
-                  child: Image.asset(
-                    "assets/images/shared/adressImage.jpg",
-                    fit: BoxFit.cover,
-                  ),
-                )),
-            SizedBox(
-              width: 10,
-            ),
             Expanded(
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,7 +58,7 @@ class SavedLocationComponent extends StatelessWidget {
                         width: 5,
                       ),
                       Container(
-                        width: Get.width * 0.60,
+                        width: Get.width * 0.83,
                         child: Text(
                           "${savelocation.location?.address}",
                           maxLines: 2,
@@ -181,7 +166,7 @@ class IconSavedLocationButton extends StatelessWidget {
               width: 5,
             ),
             Container(
-              width: Get.width * 0.25,
+              //width: Get.width * 0.25,
               child: Text(
                 "$title",
                 overflow: TextOverflow.ellipsis,

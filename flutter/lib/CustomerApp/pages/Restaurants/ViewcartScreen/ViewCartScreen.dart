@@ -8,10 +8,12 @@ import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/viewCartBody.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'components/cartIsEmptyScreen.dart';
+import 'package:intl/intl.dart';
 
 enum DropDownResult { Null, String }
 
@@ -91,8 +93,10 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
 
   Color getTheRightButtonColor() {
     // it returns the pruple or the grey color for the order now button
-    // if (controller.cart.value.toLocation == null) {
-    if (ddResult == DropDownResult.Null) {
+
+    if (ddResult == DropDownResult.Null ||
+        !checkRestaurantAvailability(
+            schedule: controller.associatedRestaurant!.schedule)) {
       return Color(0xdddddddd);
     } else {
       return Color(0xffac59fc);
@@ -100,6 +104,14 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   }
 
   Widget getTheRightWidgetForOrderNowButton(bool clicked) {
+    if (!checkRestaurantAvailability(
+        schedule: controller.associatedRestaurant!.schedule)) {
+      return Text("This restaurant is closed",
+          style: Theme.of(context)
+              .textTheme
+              .headline2!
+              .copyWith(color: Colors.white));
+    }
     if (!clicked) {
       return Container(
         height: 20,
@@ -152,6 +164,34 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
       setState(() {
         _clickedOrderNow = false;
       });
+    }
+  }
+
+  bool checkRestaurantAvailability({Schedule? schedule}) {
+    var dayNane = DateFormat('EEEE').format(DateTime.now());
+
+    //var xx = DateFormat.jm().format(DateFormat("hh:mm a").parse("9:00 AM"));
+    var x = DateTime.now();
+
+    if (schedule != null) {
+      bool isOpen = false;
+      schedule.openHours.forEach((key, value) {
+        if (key.toFirebaseFormatString() == dayNane.toLowerCase()) {
+          var dateOfStart =
+              DateTime(x.year, x.month, x.day, value.from[0], value.from[1]);
+          var dateOfClose =
+              DateTime(x.year, x.month, x.day, value.to[0], value.to[1]);
+          mezDbgPrint(dateOfStart.toString());
+          mezDbgPrint(dateOfClose.toString());
+          if (dateOfStart.isBefore(x) && dateOfClose.isAfter(x)) {
+            mezDbgPrint("Today is $dayNane");
+            isOpen = true;
+          }
+        }
+      });
+      return isOpen;
+    } else {
+      return true;
     }
   }
 }

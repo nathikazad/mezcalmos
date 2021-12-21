@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 
@@ -41,13 +42,16 @@ class Restaurant {
     String name = restaurantData["info"]["name"];
     String photo = restaurantData["info"]["image"];
     String description = restaurantData["details"]["description"][language];
-    // Schedule? schedule = Schedule.fromData(restaurantData["info"]["openHours"]);
+    Schedule? schedule = restaurantData["details"]["openHours"] != null
+        ? Schedule.fromData(restaurantData["details"]["openHours"])
+        : null;
+
     Restaurant restaurant = Restaurant(
         id: restaurantId,
         description: description,
         name: name,
         photo: photo,
-        // schedule: schedule,
+        schedule: schedule,
         restaurantState: restaurantState);
     restaurantData["menu"].forEach((dynamic itemId, dynamic itemData) {
       restaurant.items
