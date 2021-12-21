@@ -108,12 +108,19 @@ class _CustomerWrapperState extends State<CustomerWrapper>
                           padding: const EdgeInsets.all(10.0),
                           child:
                               Column(mainAxisSize: MainAxisSize.max, children: [
+                            SizedBox(
+                              height: 10,
+                            ),
+
                             mezWelcomeContainer(txt.headline2!),
                             //============================== description=============================
                             mezDescription(
                                 txt.subtitle1!.copyWith(fontSize: 14)),
 
                             //============================Service title===================================
+                            SizedBox(
+                              height: 10,
+                            ),
                             mezServiceTitle(txt.headline2!),
 
                             //========================= list of services ===========================

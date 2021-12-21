@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/OrderStatusCard.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
@@ -70,16 +69,7 @@ class OngoingOrderCard extends StatelessWidget {
                     ),
                   ),
                   Spacer(),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      getOrderWidget((order as RestaurantOrder).status),
-                      Text(
-                        getOrderStatus((order as RestaurantOrder).status),
-                        style: txt.subtitle1,
-                      )
-                    ],
-                  ),
+                  getOrderWidget((order as RestaurantOrder).status),
                   SizedBox(
                     width: 10,
                   )
@@ -94,9 +84,7 @@ class OngoingOrderCard extends StatelessWidget {
                     Text(
                       "${lang.strings["customer"]["restaurant"]["cart"]["totalCost"]} : \$${order.cost.toStringAsFixed(0)} ",
                     ),
-                    SizedBox(
-                      width: 10,
-                    ),
+                    Spacer(),
                     Icon(
                       Ionicons.time_outline,
                       size: 16.sp,
@@ -105,9 +93,12 @@ class OngoingOrderCard extends StatelessWidget {
                       width: 5,
                     ),
                     Text(
-                      "${DateFormat.jm().format(DateFormat("hh:mm").parse("${order.orderTime.toLocal().hour}:${order.orderTime.toLocal().minute}"))}",
+                      getOrderStatus((order as RestaurantOrder).status),
+                      style: txt.bodyText2,
                     ),
-                    Spacer(),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Icon(
                       Icons.arrow_forward_ios_rounded,
                     )

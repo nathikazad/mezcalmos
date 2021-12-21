@@ -81,10 +81,7 @@ class _ViewNotificationsState extends State<ViewNotifications> {
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Column(
             children: [
-              // TODO is the clear button needed ??
               ClearNotifButton(),
-
-              // TODO change the notif list to obx
               _buildNotification(controller.notifications)
             ],
           ),

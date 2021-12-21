@@ -2,14 +2,14 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
-import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 
 class OrderController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
@@ -44,14 +44,18 @@ class OrderController extends GetxController {
         if (event.snapshot.value != null) {
           for (var orderId in event.snapshot.value.keys) {
             dynamic orderData = event.snapshot.value[orderId];
-            if (orderData["orderType"] ==
-                OrderType.Restaurant.toFirebaseFormatString()) {
-              orders.add(RestaurantOrder.fromData(orderId, orderData));
-            }
+            try {
+              if (orderData["orderType"] ==
+                  OrderType.Restaurant.toFirebaseFormatString()) {
+                orders.add(RestaurantOrder.fromData(orderId, orderData));
+              }
 
-            if (orderData["orderType"] ==
-                OrderType.Taxi.toFirebaseFormatString()) {
-              orders.add(TaxiOrder.fromData(orderId, orderData));
+              if (orderData["orderType"] ==
+                  OrderType.Taxi.toFirebaseFormatString()) {
+                orders.add(TaxiOrder.fromData(orderId, orderData));
+              }
+            } catch (e) {
+              mezDbgPrint("past order error $orderId" + e.toString());
             }
           }
         }

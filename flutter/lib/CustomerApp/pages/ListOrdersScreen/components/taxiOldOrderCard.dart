@@ -3,19 +3,18 @@ import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/OrderStatusCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/ListOrdersScreen/components/TaxiOrderOngoingCard.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 
-class OldOrderCard extends StatelessWidget {
-  OldOrderCard({
+class TaxiOldOrderCard extends StatelessWidget {
+  TaxiOldOrderCard({
     Key? key,
     required this.order,
   }) : super(key: key);
 
-  Order order;
+  TaxiOrder order;
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +30,11 @@ class OldOrderCard extends StatelessWidget {
               children: [
                 CircleAvatar(
                     radius: 30,
-                    backgroundImage:
-                        mLoadImage(url: order.serviceProvider?.image).image),
+                    backgroundImage: mLoadImage(
+                            assetInCaseFailed:
+                                'assets/images/taxiDriverImg.png',
+                            url: order.serviceProvider?.image)
+                        .image),
                 SizedBox(
                   width: 10,
                 ),
@@ -43,7 +45,7 @@ class OldOrderCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        order.serviceProvider!.name,
+                        order.serviceProvider?.name ?? "Taxi order",
                         overflow: TextOverflow.ellipsis,
                         style: txt.headline3,
                         maxLines: 2,
@@ -61,12 +63,12 @@ class OldOrderCard extends StatelessWidget {
                 Spacer(),
                 !order.isCanceled()
                     ? Icon(
-                        Ionicons.bag_check,
+                        Ionicons.checkmark_circle,
                         color: Colors.green,
                         size: 50,
                       )
                     : Icon(
-                        Ionicons.bag_remove,
+                        Ionicons.close_circle,
                         color: Colors.red,
                         size: 50,
                       ),
@@ -79,12 +81,12 @@ class OldOrderCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    " ${lang.strings["customer"]["restaurant"]["cart"]["totalCost"]} : \$${order.cost.toStringAsFixed(0)}  ",
+                    " ${lang.strings["customer"]["restaurant"]["cart"]["totalCost"]} : \$${order.cost.toStringAsFixed(0)}",
                   ),
                   (MediaQuery.of(context).size.width > 320)
                       ? Flexible(
                           child: Text(
-                            getOrderStatus((order as RestaurantOrder).status) +
+                            getTaxiOrderStatus(order.status) +
                                 ' at :' +
                                 DateFormat(' dd MMM yyyy')
                                     .format(order.orderTime),
@@ -94,7 +96,7 @@ class OldOrderCard extends StatelessWidget {
                           ),
                         )
                       : Text(
-                          getOrderStatus((order as RestaurantOrder).status),
+                          getTaxiOrderStatus(order.status),
                           style: txt.bodyText2,
                         ),
                 ],

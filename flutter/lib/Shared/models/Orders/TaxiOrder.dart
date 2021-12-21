@@ -1,10 +1,8 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart' as locationLibrary;
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 enum TaxiOrdersStatus {
   DroppedOff,
@@ -136,14 +134,14 @@ class TaxiOrder extends Order {
     // all of them are in /past node
     return status == TaxiOrdersStatus.CancelledByCustomer ||
         status == TaxiOrdersStatus.CancelledByTaxi ||
-        status == TaxiOrdersStatus.Expired ||
-        status == TaxiOrdersStatus.DroppedOff;
+        status == TaxiOrdersStatus.Expired;
   }
 
   @override
   bool inProcess() {
     return status == TaxiOrdersStatus.InTransit ||
         status == TaxiOrdersStatus.LookingForTaxi ||
+        status == TaxiOrdersStatus.DroppedOff ||
         status == TaxiOrdersStatus.OnTheWay;
   }
 }

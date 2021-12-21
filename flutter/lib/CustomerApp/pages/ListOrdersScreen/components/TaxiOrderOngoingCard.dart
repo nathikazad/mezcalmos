@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -35,30 +34,16 @@ class TaxiOngoingOrderCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   (order.serviceProvider != null)
-                      ? Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            CircleAvatar(
-                              radius: 20,
-                              backgroundImage:
-                                  NetworkImage(order.serviceProvider!.image),
-                            ),
-                            Text(
-                              order.serviceProvider!.name,
-                              style: txt.bodyText2,
-                            ),
-                          ],
+                      ? CircleAvatar(
+                          radius: 30,
+                          backgroundImage:
+                              NetworkImage(order.serviceProvider!.image),
                         )
-                      : Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            CircleAvatar(
-                              radius: 25,
-                              backgroundColor: Colors.white,
-                              backgroundImage: AssetImage(
-                                  'assets/images/customer/taxi/taxiDriverImg.png'),
-                            ),
-                          ],
+                      : CircleAvatar(
+                          radius: 30,
+                          backgroundColor: Colors.white,
+                          backgroundImage:
+                              AssetImage('assets/images/taxiDriverImg.png'),
                         ),
                   SizedBox(width: 10),
                   Flexible(
@@ -68,7 +53,7 @@ class TaxiOngoingOrderCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          getTaxiOrderStatus((order as TaxiOrder).status),
+                          order.serviceProvider?.name ?? "Taxi order",
                           style: txt.headline3,
                         ),
                         if (MediaQuery.of(context).size.width > 320)
@@ -89,8 +74,6 @@ class TaxiOngoingOrderCard extends StatelessWidget {
                   SizedBox(
                     width: 10,
                   ),
-
-                  // getTaxiOrderWidget((order as TaxiOrder).status),
                   getTaxiOrderWidget((order as TaxiOrder).status),
                   SizedBox(
                     width: 10,
@@ -104,11 +87,9 @@ class TaxiOngoingOrderCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      "${lang.strings["customer"]["restaurant"]["cart"]["totalCost"]} : ${order.cost} \$",
+                      "${lang.strings["customer"]["restaurant"]["cart"]["totalCost"]} : \$${order.cost}",
                     ),
-                    SizedBox(
-                      width: 10,
-                    ),
+                    Spacer(),
                     Icon(
                       Ionicons.time_outline,
                       size: 16.sp,
@@ -117,9 +98,12 @@ class TaxiOngoingOrderCard extends StatelessWidget {
                       width: 5,
                     ),
                     Text(
-                      "${DateFormat.jm().format(DateFormat("hh:mm").parse("${order.orderTime.toLocal().hour}:${order.orderTime.toLocal().minute}"))}",
+                      getTaxiOrderStatus((order as TaxiOrder).status),
+                      style: txt.bodyText2,
                     ),
-                    Spacer(),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Icon(
                       Icons.arrow_forward_ios_rounded,
                     )

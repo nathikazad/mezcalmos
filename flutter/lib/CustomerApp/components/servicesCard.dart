@@ -28,6 +28,9 @@ class ServicesCard extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(
+                width: 5,
+              ),
               Flexible(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
