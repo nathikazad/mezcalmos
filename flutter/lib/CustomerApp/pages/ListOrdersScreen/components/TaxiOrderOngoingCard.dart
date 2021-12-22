@@ -119,21 +119,22 @@ class TaxiOngoingOrderCard extends StatelessWidget {
 }
 
 String getTaxiOrderStatus(TaxiOrdersStatus status) {
+  LanguageController lang = Get.find<LanguageController>();
   switch (status) {
     case TaxiOrdersStatus.CancelledByCustomer:
-      return 'Order Canceled';
+      return '${lang.strings["customer"]["taxi"]["orders"]["orderStatus"]["canceledByAdmin"]}';
     case TaxiOrdersStatus.CancelledByCustomer:
-      return 'Order Canceled';
+      return '${lang.strings["customer"]["taxi"]["orders"]["orderStatus"]["canceledByCustomer"]}';
     case TaxiOrdersStatus.LookingForTaxi:
-      return 'Looking for Taxi';
+      return '${lang.strings["customer"]["taxi"]["orders"]["orderStatus"]["lookingForTaxi"]}';
     case TaxiOrdersStatus.OnTheWay:
-      return 'Taxi on the way';
+      return '${lang.strings["customer"]["taxi"]["orders"]["orderStatus"]["onTheWay"]}';
     case TaxiOrdersStatus.InTransit:
-      return 'Taxi in transit';
+      return '${lang.strings["customer"]["taxi"]["orders"]["orderStatus"]["inTransit"]}';
     case TaxiOrdersStatus.DroppedOff:
-      return 'Dropped off';
+      return '${lang.strings["customer"]["taxi"]["orders"]["orderStatus"]["droppedOff"]}';
     case TaxiOrdersStatus.Expired:
-      return 'Order expired';
+      return '${lang.strings["customer"]["taxi"]["orders"]["orderStatus"]["expired"]}';
 
     default:
       return 'Unknown status';

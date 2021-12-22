@@ -102,54 +102,40 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                                 top: 10,
                               ),
                               alignment: Alignment.center,
-                              child: CachedNetworkImage(
-                                imageUrl: cartItem.value!.item.image!,
-                                imageBuilder: (context, imageProvider) {
-                                  return Container(
-                                    width: 150,
-                                    height: 150,
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        image: DecorationImage(
-                                            fit: BoxFit.cover,
-                                            image: imageProvider)),
-                                  );
-                                },
-                                fit: BoxFit.cover,
-                                placeholder: (context, url) => Container(
-                                  width: 15,
-                                  height: 15,
-                                  child: Center(
-                                    child: CircularProgressIndicator(),
-                                  ),
-                                ),
-                              ),
+                              child: cartItem.value?.item.image != null &&
+                                      cartItem.value?.item.image != ""
+                                  ? CachedNetworkImage(
+                                      imageUrl: cartItem.value!.item.image!,
+                                      imageBuilder: (context, imageProvider) {
+                                        return Container(
+                                          width: 150,
+                                          height: 150,
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              image: DecorationImage(
+                                                  fit: BoxFit.cover,
+                                                  image: imageProvider)),
+                                        );
+                                      },
+                                      fit: BoxFit.cover,
+                                      errorWidget: (context, url, error) {
+                                        return Container();
+                                      },
+                                      placeholder: (context, url) {
+                                        return Container(
+                                          width: 15,
+                                          height: 15,
+                                          child: Center(
+                                            child: CircularProgressIndicator(),
+                                          ),
+                                        );
+                                      },
+                                    )
+                                  : Container(),
                             ),
                             SizedBox(
                               height: 20,
                             ),
-                            !checkRestaurantAvailability(
-                                    schedule: currentRestaurant!.schedule)
-                                ? Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 15, vertical: 15),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.warning,
-                                          color: Colors.red,
-                                        ),
-                                        SizedBox(
-                                          width: 15,
-                                        ),
-                                        Text(
-                                            "This restaurant its not available now .")
-                                      ],
-                                    ),
-                                  )
-                                : Container(),
                             Container(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 15),
@@ -186,7 +172,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                     ),
                     BottomBarItemViewScreen(
                       isAvailable: checkRestaurantAvailability(
-                          schedule: currentRestaurant!.schedule),
+                          schedule: currentRestaurant?.schedule),
                       cartItem: cartItem,
                       mode: widget.viewItemScreenMode!,
                       currentRestaurantId: currentRestaurant?.id,

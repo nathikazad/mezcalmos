@@ -27,10 +27,25 @@
                 "items":"elementos",
                 "info":"Informacións",
                 "description": "Descripción",
+                "location":"localización",
                 "notes": "Notas",
                 "quantity": "Cantidad",
                 "addToCart": "AÑADIR AL CARRITO",
                 "modifyItem": "Modificar artículo",
+                "workingHours":{
+                    "workingHours":"Horas Laborales",
+                    "open":"Abierto",
+                    "closed":"Cerrado",
+                    "weekDays":{
+                        "monday":"Lunes",
+                        "tuesday":"Martes",
+                        "wednesday":"Miércoles",
+                        "thursday":"Jueves",
+                        "friday":"Viernes",
+                        "saturday":"Sábado",
+                        "sunday":"Domingo"
+                    }
+                },
                 "dailog":{
                     "title":"Advertencia",
                     "subtitle":"Ya tienes algunos artículos en tu carrito, te gustaría descartarlos?",
@@ -183,6 +198,15 @@
             "rideUnavailble": "Lamento informarle que el viaje ya no está disponible."
         },
         "orders": {
+            "orderStatus":{
+                "canceledByAdmin":"Cancelado",
+                "canceledByCustomer":"Cancelado",
+                "onTheWay":"Taxi en el camino",
+                "lookingForTaxi":"Buscando Taxi",
+                "inTransit":"Taxi en tránsito",
+                "droppedOff":"Dejado",
+                "expired":"Orden caducada"
+            },
             "title": "Pedidos",
             "item": "Artículo|Artículos",
             "onTheWay": "En camino",

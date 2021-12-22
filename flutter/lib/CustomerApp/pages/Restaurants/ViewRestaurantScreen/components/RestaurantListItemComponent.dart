@@ -30,34 +30,36 @@ class _RestaurantsListItemsOfComponentState
             color: Colors.white, borderRadius: BorderRadius.circular(8)),
         child: Row(
           children: [
-            CachedNetworkImage(
-              imageUrl: widget.item.image!,
-              fit: BoxFit.cover,
-              imageBuilder: (context, imageProvider) => Container(
-                height: 63,
-                width: 63,
-                child: ClipOval(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                          image: imageProvider, fit: BoxFit.cover),
+            widget.item.image != null && widget.item.image != ""
+                ? CachedNetworkImage(
+                    imageUrl: widget.item.image!,
+                    fit: BoxFit.cover,
+                    imageBuilder: (context, imageProvider) => Container(
+                      height: 63,
+                      width: 63,
+                      child: ClipOval(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                                image: imageProvider, fit: BoxFit.cover),
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ),
-              placeholder: (context, url) => Container(
-                width: 15,
-                height: 15,
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              ),
-              errorWidget: (context, url, error) => Container(
-                  width: 15,
-                  height: 15,
-                  child: Center(child: Icon(Icons.error))),
-            ),
+                    placeholder: (context, url) => Container(
+                      width: 15,
+                      height: 15,
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
+                    errorWidget: (context, url, error) => Container(
+                        width: 15,
+                        height: 15,
+                        child: Center(child: Icon(Icons.error))),
+                  )
+                : Container(),
             SizedBox(
               width: 15,
             ),

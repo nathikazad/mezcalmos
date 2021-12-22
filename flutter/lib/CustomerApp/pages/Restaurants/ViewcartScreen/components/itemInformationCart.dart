@@ -61,7 +61,7 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
             flex: 4,
             fit: FlexFit.loose,
             child: Text(
-              "${widget.itemName} hhhh hhhh hhhhhhh",
+              "${widget.itemName}",
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: txt.headline3,

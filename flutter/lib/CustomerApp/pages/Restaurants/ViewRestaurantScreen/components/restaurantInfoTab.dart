@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/components/workinHoursCart.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:get/get.dart';
 
-final f = new DateFormat('hh:mm a');
+final f = new DateFormat('hh:mma');
 
 class RestaurantInfoTab extends StatelessWidget {
   final Restaurant restaurant;
@@ -14,6 +16,7 @@ class RestaurantInfoTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LanguageController lang = Get.find<LanguageController>();
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -22,7 +25,7 @@ class RestaurantInfoTab extends StatelessWidget {
           children: [
             Container(
               child: Text(
-                'Description :',
+                '${lang.strings["customer"]["restaurant"]["menu"]["description"]} :',
                 style: Theme.of(context).textTheme.bodyText1,
               ),
             ),
@@ -35,7 +38,7 @@ class RestaurantInfoTab extends StatelessWidget {
                     children: [
                       Container(
                         child: Text(
-                          'Location :',
+                          '${lang.strings["customer"]["restaurant"]["menu"]["location"]} :',
                           style: Theme.of(context).textTheme.bodyText1,
                         ),
                       ),
@@ -61,12 +64,13 @@ class RestaurantInfoTab extends StatelessWidget {
   }
 
   Widget getWorkingHoursWidget(Schedule? schedule, BuildContext context) {
+    LanguageController lang = Get.find<LanguageController>();
     var xDate = DateTime.now();
     List<Widget> widgets = [
       Container(
         alignment: Alignment.centerLeft,
         child: Text(
-          "Working Hours :",
+          "${lang.strings["customer"]["restaurant"]["menu"]["workingHours"]["workingHours"]}",
           style: Theme.of(context).textTheme.bodyText1,
         ),
       ),
@@ -79,7 +83,8 @@ class RestaurantInfoTab extends StatelessWidget {
       schedule.openHours.forEach((key, value) {
         if (key.index == i) {
           widgets.add(WorkingHoursCart(
-            day: key.toFirebaseFormatString().inCaps,
+            day:
+                "${lang.strings["customer"]["restaurant"]["menu"]["workingHours"]["weekDays"]["${key.toFirebaseFormatString()}"]}",
             isOpen: value.isOpen,
             openHour:
                 "${f.format(DateTime(xDate.year, xDate.month, xDate.day, value.from[0], value.from[1]))}",

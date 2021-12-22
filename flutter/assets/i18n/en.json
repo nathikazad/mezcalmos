@@ -29,10 +29,25 @@
                 "menu": "Menu",
                 "info":"Informations",
                 "description": "Description",
+                "location":"Location",
                 "notes": "Notes",
                 "quantity": "Quantity",
                 "addToCart": "ADD TO CART",
                 "modifyItem": "Modify item",
+                "workingHours":{
+                    "workingHours":"Working Hours",
+                    "open":"Open",
+                    "closed":"Closed",
+                    "weekDays":{
+                        "monday":"Monday",
+                        "tuesday":"Tuesday",
+                        "wednesday":"Wednesday",
+                        "thursday":"Thursday",
+                        "friday":"Friday",
+                        "saturday":"Saturday",
+                        "sunday":"Sanday"
+                    }
+                },
                 "dailog":{
                     "title":"Warning",
                     "subtitle":"You already have some items in your cart, Would you like to discard to them ?",
@@ -185,6 +200,15 @@
             "rideUnavailble": "Sorry to inform you the the ride is not available any more."
         },
         "orders": {
+            "orderStatus":{
+                "canceledByAdmin":"Canceled By Admin",
+                "canceledByCustomer":"Canceled By Customer",
+                "onTheWay":"Taxi on the way",
+                "lookingForTaxi":"Looking for Taxi",
+                "inTransit":"Taxi in transit",
+                "droppedOff":"Dropped off",
+                "expired":"Order expired"
+            },
             "title": "Orders",
             "item": "Item|Items",
             "onTheWay": "On the way",

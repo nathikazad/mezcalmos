@@ -47,20 +47,11 @@ Widget buildCart(Cart cart, BuildContext context) {
                 children: [
                   Spacer(),
                   Container(
-                    child: Text(
-                      "${cart.quantity()} ${lang.strings["customer"]["restaurant"]["menu"]["items"]}",
-                      style: txt.headline2,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(28)),
-                    height: 30,
-                    width: 30,
                     child: InkWell(
                       onTap: () async {
                         YesNoDialogButton yesNoRes = await cancelAlertDialog(
@@ -83,11 +74,17 @@ Widget buildCart(Cart cart, BuildContext context) {
                         }
                       },
                       child: Container(
-                        child: Center(
-                          child: Icon(
-                            Icons.delete_outline,
-                            size: 15,
-                          ),
+                        child: Row(
+                          children: [
+                            Container(
+                              //Todo:translate
+                              child: Text("Clear"),
+                            ),
+                            Icon(
+                              Icons.delete_outline,
+                              size: 15,
+                            ),
+                          ],
                         ),
                       ),
                     ),
