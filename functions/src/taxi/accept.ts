@@ -71,7 +71,7 @@ export = functions.https.onCall(async (data, context) => {
 
   try {
     let order: TaxiOrder = transactionResponse.snapshot.val();
-
+    delete order.lock;
     if (!order) {
       return {
         status: ServerResponseStatus.Error,
@@ -154,15 +154,7 @@ export = functions.https.onCall(async (data, context) => {
       orderId: "Order accept error"
     }
   } finally {
-    // @Nathik i think this is what was causing the bug ?
-    // u're removing the lock from an already removed node.
-
-    // this is the original : rootNodes.openOrders(OrderType.Taxi, orderId).child("lock").remove();
-
-    // instead I replaced it with : 
-    rootNodes.inProcessOrders(OrderType.Taxi, orderId).child('lock').remove();
-    taxiNodes.inProcessOrders(taxiId, orderId).child('lock').remove();
-
+    rootNodes.openOrders(OrderType.Taxi, orderId).child("lock").remove();
   }
 
 });

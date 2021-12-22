@@ -19,6 +19,7 @@ export interface TaxiOrder extends Order {
   finishRideTime?: string,
   driver: TaxiInfo;
   notificationStatus?: Record<string, NotificationStatus>;
+  lock?: boolean;
 }
 
 export interface TaxiInfo extends UserInfo {
