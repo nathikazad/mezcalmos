@@ -49,7 +49,9 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
       height: 60,
       width: Get.width,
       color: Colors.red,
-      child: Center(child: Text("This restaurant is closed right now")),
+      child: Center(
+          child: Text(
+              "${lang.strings["customer"]["restaurant"]["notAvailable"]}")),
     );
   }
 

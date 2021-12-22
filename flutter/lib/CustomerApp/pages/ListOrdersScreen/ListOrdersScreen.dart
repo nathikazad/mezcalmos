@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 
 import 'components/OngoingOrderCard.dart';
@@ -122,7 +123,9 @@ class PastOrderList extends StatelessWidget {
                         order: controller.pastOrders()[index] as TaxiOrder);
 
                   case OrderType.Restaurant:
-                    return OldOrderCard(order: controller.pastOrders()[index]);
+                    return OldOrderCard(
+                        order:
+                            controller.pastOrders()[index] as RestaurantOrder);
 
                   default:
                     return SizedBox(

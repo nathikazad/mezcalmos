@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:rive/rive.dart';
@@ -132,21 +133,22 @@ Widget getOrderWidget(RestaurantOrderStatus status) {
 }
 
 String getOrderStatus(RestaurantOrderStatus status) {
+  LanguageController lang = Get.find<LanguageController>();
   switch (status) {
     case RestaurantOrderStatus.CancelledByAdmin:
-      return 'Order Canceled';
+      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["canceledByAdmin"]}';
     case RestaurantOrderStatus.CancelledByCustomer:
-      return 'Order Canceled';
+      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["canceledByCustomer"]}';
     case RestaurantOrderStatus.OrderReceieved:
-      return 'Order Recieved';
+      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["recievied"]}';
     case RestaurantOrderStatus.PreparingOrder:
-      return 'Preparing Order';
+      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["preparing"]}';
     case RestaurantOrderStatus.OnTheWay:
-      return 'Order on the way';
+      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["onTheWay"]}';
     case RestaurantOrderStatus.ReadyForPickup:
-      return 'Order ready for pickup';
+      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["readyForPickUp"]}';
     case RestaurantOrderStatus.Delivered:
-      return 'Order Delivered';
+      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["delivered"]}';
 
     default:
       return 'Unknown status';

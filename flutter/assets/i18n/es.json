@@ -22,6 +22,7 @@
         },
         "restaurant": {
             "restaurants": "Restaurantes",
+            "notAvailable":"su restaurante está cerrado",
             "menu": {
                 "menu": "Menú",
                 "items":"elementos",

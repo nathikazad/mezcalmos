@@ -22,6 +22,8 @@
         },
         "restaurant": {
             "restaurants": "Restaurants",
+            "notAvailable":"This restaurant is closed",
+            
             
             "menu": {
                 "myCart":"My Cart",

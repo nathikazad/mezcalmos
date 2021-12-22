@@ -20,7 +20,7 @@ class SavedLocationBody extends StatelessWidget {
       child: SingleChildScrollView(
           child: Column(
         children: [
-          SizedBox(height: Get.height * 0.07),
+          SizedBox(height: 20),
           Container(
             margin: const EdgeInsets.only(right: 16, bottom: 10, left: 16),
             child: Row(

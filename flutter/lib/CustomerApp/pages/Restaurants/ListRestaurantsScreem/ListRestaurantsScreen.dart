@@ -33,6 +33,17 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
   }
 
   Widget build(BuildContext context) {
+    restaurants.sort((a, b) {
+      if (b.schedule != null) {
+        if (b.schedule!.isOpen() == true) {
+          return 0;
+        } else
+          return -1;
+      } else {
+        return 1;
+      }
+    });
+
     responsiveSize(context);
     return Scaffold(
         appBar: CustomerAppBar(

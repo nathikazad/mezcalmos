@@ -106,11 +106,11 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   Widget getTheRightWidgetForOrderNowButton(bool clicked) {
     if (!checkRestaurantAvailability(
         schedule: controller.associatedRestaurant!.schedule)) {
-      return Text("This restaurant is closed",
+      return Text("${lang.strings["customer"]["restaurant"]["notAvailable"]}",
           style: Theme.of(context)
               .textTheme
               .headline2!
-              .copyWith(color: Colors.white));
+              .copyWith(color: Colors.black));
     }
     if (!clicked) {
       return Container(

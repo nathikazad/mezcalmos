@@ -39,8 +39,6 @@ class Schedule {
   factory Schedule.fromData(dynamic data) {
     Map<Weekday, OpenHours> openHours = {};
     data.forEach((dynamic day, dynamic openHour) {
-      mezDbgPrint(
-          "============ Inside the foreach this is the values  $openHour ===========");
       try {
         List<int> from = openHour["from"]
             .toString()

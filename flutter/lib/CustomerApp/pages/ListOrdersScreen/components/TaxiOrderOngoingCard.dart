@@ -42,8 +42,8 @@ class TaxiOngoingOrderCard extends StatelessWidget {
                       : CircleAvatar(
                           radius: 30,
                           backgroundColor: Colors.white,
-                          backgroundImage:
-                              AssetImage('assets/images/taxiDriverImg.png'),
+                          backgroundImage: AssetImage(
+                              'assets/images/customer/taxi/taxiDriverImg.png'),
                         ),
                   SizedBox(width: 10),
                   Flexible(
@@ -122,19 +122,19 @@ String getTaxiOrderStatus(TaxiOrdersStatus status) {
   LanguageController lang = Get.find<LanguageController>();
   switch (status) {
     case TaxiOrdersStatus.CancelledByCustomer:
-      return '${lang.strings["customer"]["taxi"]["orders"]["orderStatus"]["canceledByAdmin"]}';
+      return '${lang.strings["taxi"]["orders"]["orderStatus"]["canceledByAdmin"]}';
     case TaxiOrdersStatus.CancelledByCustomer:
-      return '${lang.strings["customer"]["taxi"]["orders"]["orderStatus"]["canceledByCustomer"]}';
+      return '${lang.strings["taxi"]["orders"]["orderStatus"]["canceledByCustomer"]}';
     case TaxiOrdersStatus.LookingForTaxi:
-      return '${lang.strings["customer"]["taxi"]["orders"]["orderStatus"]["lookingForTaxi"]}';
+      return '${lang.strings["taxi"]["orders"]["orderStatus"]["lookingForTaxi"]}';
     case TaxiOrdersStatus.OnTheWay:
-      return '${lang.strings["customer"]["taxi"]["orders"]["orderStatus"]["onTheWay"]}';
+      return '${lang.strings["taxi"]["orders"]["orderStatus"]["onTheWay"]}';
     case TaxiOrdersStatus.InTransit:
-      return '${lang.strings["customer"]["taxi"]["orders"]["orderStatus"]["inTransit"]}';
+      return '${lang.strings["taxi"]["orders"]["orderStatus"]["inTransit"]}';
     case TaxiOrdersStatus.DroppedOff:
-      return '${lang.strings["customer"]["taxi"]["orders"]["orderStatus"]["droppedOff"]}';
+      return '${lang.strings["taxi"]["orders"]["orderStatus"]["droppedOff"]}';
     case TaxiOrdersStatus.Expired:
-      return '${lang.strings["customer"]["taxi"]["orders"]["orderStatus"]["expired"]}';
+      return '${lang.strings["taxi"]["orders"]["orderStatus"]["expired"]}';
 
     default:
       return 'Unknown status';
@@ -168,7 +168,7 @@ Widget getTaxiOrderWidget(TaxiOrdersStatus status) {
           height: 50,
           width: 50,
           child: Image.asset(
-            'flutter/assets/images/customer/taxi/taxiOnTheWay.png',
+            'assets/images/customer/taxi/taxiOnTheWay.png',
             fit: BoxFit.contain,
           ));
     case TaxiOrdersStatus.InTransit:
@@ -176,7 +176,7 @@ Widget getTaxiOrderWidget(TaxiOrdersStatus status) {
           height: 50,
           width: 50,
           child: Image.asset(
-            'flutter/assets/images/customer/taxi/taxiOnTheWay.png',
+            'assets/images/customer/taxi/taxiOnTheWay.png',
             fit: BoxFit.contain,
           ));
     case TaxiOrdersStatus.DroppedOff:

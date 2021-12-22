@@ -32,7 +32,7 @@ class TaxiOldOrderCard extends StatelessWidget {
                     radius: 30,
                     backgroundImage: mLoadImage(
                             assetInCaseFailed:
-                                'assets/images/taxiDriverImg.png',
+                                'assets/images/customer/taxi/taxiDriverImg.png',
                             url: order.serviceProvider?.image)
                         .image),
                 SizedBox(

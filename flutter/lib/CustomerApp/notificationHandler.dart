@@ -84,7 +84,7 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
         "body":
             "${lang.strings["shared"]["notification"]["notificationType"]["preparingOrder"]["body"]}",
         "imgUrl":
-            "assets/images/customer/assets/images/shared/notifications/prepareOrderNotificationIcon.png",
+            "assets/images/shared/notifications/prepareOrderNotificationIcon.png",
       };
     case RestaurantOrderStatus.ReadyForPickup:
       return <String, dynamic>{
@@ -93,7 +93,7 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
         "body":
             "${lang.strings["shared"]["notification"]["notificationType"]["readyForPickup"]["body"]}",
         "imgUrl":
-            "assets/images/customer/assets/images/shared/notifications/readyOrderNotificationIcon.png",
+            "assets/images/shared/notifications/readyOrderNotificationIcon.png",
       };
     case RestaurantOrderStatus.OnTheWay:
       return <String, dynamic>{
@@ -102,7 +102,7 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
         "body":
             "${lang.strings["shared"]["notification"]["notificationType"]["onTheWayRestaurant"]["body"]}",
         "imgUrl":
-            "assets/images/customer/assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
+            "assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
       };
     case RestaurantOrderStatus.Delivered:
       return <String, dynamic>{
@@ -111,7 +111,7 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
         "body":
             "${lang.strings["shared"]["notification"]["notificationType"]["delivered"]["body"]}",
         "imgUrl":
-            "assets/images/customer/assets/images/shared/notifications/droppedOrderNotificationIcon.png",
+            "assets/images/shared/notifications/droppedOrderNotificationIcon.png",
       };
     case RestaurantOrderStatus.CancelledByAdmin:
       return <String, dynamic>{
@@ -120,7 +120,7 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
         "body":
             "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["body"]}",
         "imgUrl":
-            "assets/images/customer/assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
+            "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
       };
     default:
     // do nothing
@@ -138,7 +138,7 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
         "body":
             "${lang.strings["shared"]["notification"]["notificationType"]["onTheWayTaxi"]["body"]}",
         "imgUrl":
-            "assets/images/customer/assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
+            "assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
       };
     case TaxiOrdersStatus.InTransit:
       return <String, dynamic>{
@@ -147,7 +147,7 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
         "body":
             "${lang.strings["shared"]["notification"]["notificationType"]["inTransit"]["body"]}",
         "imgUrl":
-            "assets/images/customer/assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
+            "assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
       };
     case TaxiOrdersStatus.DroppedOff:
       return <String, dynamic>{
@@ -156,7 +156,7 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
         "body":
             "${lang.strings["shared"]["notification"]["notificationType"]["droppedOff"]["body"]}",
         "imgUrl":
-            "assets/images/customer/assets/images/shared/notifications/droppedOrderNotificationIcon.png",
+            "assets/images/shared/notifications/droppedOrderNotificationIcon.png",
       };
     case TaxiOrdersStatus.CancelledByTaxi:
       return <String, dynamic>{
@@ -165,7 +165,7 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
         "body":
             "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["body"]}",
         "imgUrl":
-            "assets/images/assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
+            "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
       };
     case TaxiOrdersStatus.Expired:
       return <String, dynamic>{
@@ -174,7 +174,7 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
         "body":
             "${lang.strings["shared"]["notification"]["notificationType"]["expired"]["body"]}",
         "imgUrl":
-            "assets/images/assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
+            "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
       };
     default:
     // do nothing
