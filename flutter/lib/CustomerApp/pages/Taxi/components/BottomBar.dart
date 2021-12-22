@@ -62,7 +62,8 @@ class _BottomBarState extends State<BottomBar> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: buildBottomBatByStatus(widget.taxiRequest),
+                    children:
+                        buildBottomBatByStatus(widget.taxiRequest, context),
                   )))),
     );
   }
@@ -174,7 +175,7 @@ class _BottomBarState extends State<BottomBar> {
           height: getSizeRelativeToScreen(16, Get.height, Get.width),
           width: getSizeRelativeToScreen(16, Get.height, Get.width),
           decoration: BoxDecoration(
-            color: Colors.purpleAccent,
+            color: Colors.deepPurple.shade400,
             borderRadius: BorderRadius.circular(4),
           ),
           child: Center(
@@ -197,7 +198,11 @@ class _BottomBarState extends State<BottomBar> {
         ));
   }
 
-  Widget taxiAvatarAndName({String? description, String? name, String? asset}) {
+  Widget taxiAvatarAndName(
+      {required BuildContext pContext,
+      String? description,
+      String? name,
+      String? asset}) {
     return Expanded(
       flex: 2,
       child: Container(
@@ -207,7 +212,7 @@ class _BottomBarState extends State<BottomBar> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             CircleAvatar(
-              // radius: 30.0,
+              radius: 18.0.sp,
               child: ClipOval(
                   clipBehavior: Clip.antiAlias,
                   child: mLoadImage(
@@ -216,9 +221,9 @@ class _BottomBarState extends State<BottomBar> {
                       assetInCaseFailed: asset ?? aDefaultAvatar,
                       fit: BoxFit.cover,
                       height: getSizeRelativeToScreen(
-                          100, context.height, context.width),
+                          100, pContext.height, pContext.width),
                       width: getSizeRelativeToScreen(
-                          100, context.height, context.width))),
+                          100, pContext.height, pContext.width))),
               backgroundColor:
                   Colors.grey.shade100, //Color.fromARGB(255, 222, 222, 222),
             ),
@@ -398,7 +403,8 @@ class _BottomBarState extends State<BottomBar> {
     );
   }
 
-  List<Widget> buildBottomBatByStatus(TaxiRequest? taxiRequest) {
+  List<Widget> buildBottomBatByStatus(
+      TaxiRequest? taxiRequest, BuildContext pContext) {
     List<Widget> _widgies = [];
     switch (taxiRequest?.status) {
       case null:
@@ -422,7 +428,8 @@ class _BottomBarState extends State<BottomBar> {
 
       case TaxiOrdersStatus.DroppedOff:
         _widgies.assignAll([
-          taxiAvatarAndName(description: "Ride finished :)"),
+          taxiAvatarAndName(
+              description: "Ride finished :)", pContext: pContext),
           verticalSeparator(),
           rideCost(),
           verticalSeparator(),
@@ -435,6 +442,7 @@ class _BottomBarState extends State<BottomBar> {
       case TaxiOrdersStatus.Expired:
         _widgies.assignAll([
           taxiAvatarAndName(
+              pContext: pContext,
               asset: taxi_driver_marker_asset,
               name:
                   "${Get.find<AuthController>().fireAuthUser!.displayName}'s Ride.",
@@ -446,7 +454,8 @@ class _BottomBarState extends State<BottomBar> {
 
       case TaxiOrdersStatus.CancelledByTaxi:
         _widgies.assignAll([
-          taxiAvatarAndName(description: "Ride Canceled by Taxi :("),
+          taxiAvatarAndName(
+              pContext: pContext, description: "Ride Canceled by Taxi :("),
           messageBtn(margin: EdgeInsets.symmetric(horizontal: 6))
         ]);
         _bottomPadding.value = 10.0;
@@ -455,6 +464,7 @@ class _BottomBarState extends State<BottomBar> {
       case TaxiOrdersStatus.CancelledByCustomer:
         _widgies.assignAll([
           taxiAvatarAndName(
+              pContext: pContext,
               asset: taxi_driver_marker_asset,
               name:
                   "${Get.find<AuthController>().fireAuthUser!.displayName}'s Ride.",
@@ -466,7 +476,9 @@ class _BottomBarState extends State<BottomBar> {
 
       default:
         _widgies.assignAll([
-          taxiAvatarAndName(),
+          taxiAvatarAndName(
+            pContext: pContext,
+          ),
           verticalSeparator(),
           rideCost(),
           verticalSeparator(),

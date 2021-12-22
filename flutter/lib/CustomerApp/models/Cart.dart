@@ -1,3 +1,4 @@
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
@@ -113,7 +114,7 @@ class Cart {
       });
       Map<String, bool> chosenManyOptions = {};
       itemData["options"]?["chosenManyOptions"]
-          .forEach((dynamic id, dynamic data) {
+          ?.forEach((dynamic id, dynamic data) {
         chosenManyOptions[id] = data["chosenValue"];
       });
       Item item = this.restaurant!.findItemById(itemData["id"]);

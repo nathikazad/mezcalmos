@@ -80,7 +80,7 @@ class _RestaurantsListItemsOfComponentState
                   ),
                   Container(
                     alignment: Alignment.centerLeft,
-                    child: Text("${widget.item.cost} \$", style: txt.headline1),
+                    child: Text("\$${widget.item.cost}", style: txt.headline1),
                   )
                 ],
               ),

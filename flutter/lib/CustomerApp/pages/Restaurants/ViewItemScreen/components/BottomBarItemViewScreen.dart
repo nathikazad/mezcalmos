@@ -3,14 +3,13 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/incrementalComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemScreen.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/components/dialogRequiredSignIn.dart';
+import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
-
-import '../../../../router.dart';
-import '../ViewItemScreen.dart';
-import 'dialogRequiredSignIn.dart';
 
 class BottomBarItemViewScreen extends StatefulWidget {
   BottomBarItemViewScreen(

@@ -35,7 +35,7 @@ class OrderSummaryCard extends StatelessWidget {
                       style: txt.headline3,
                     ),
                     Text(
-                      order.cost.toStringAsFixed(2) + " \$",
+                      '\$' + order.cost.toStringAsFixed(2),
                       style: txt.headline2,
                     ),
                   ],
@@ -51,7 +51,7 @@ class OrderSummaryCard extends StatelessWidget {
                       style: txt.headline3,
                     ),
                     Text(
-                      (4 + order.cost).toStringAsFixed(2) + " \$",
+                      '\$' + (4 + order.cost).toStringAsFixed(2),
                       style: txt.headline2,
                     ),
                   ],

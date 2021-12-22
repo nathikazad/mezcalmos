@@ -23,6 +23,8 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
   OrderController controller = Get.find<OrderController>();
   RestaurantController restaurantController = Get.find<RestaurantController>();
   LanguageController lang = Get.find<LanguageController>();
+  RxBool _clickedCancel = false.obs;
+
   @override
   Widget build(BuildContext context) {
     final txt = Theme.of(context).textTheme;
@@ -36,77 +38,109 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                       showDialog(
                           context: context,
                           builder: (context) {
-                            return AlertDialog(
-                              contentPadding: EdgeInsets.all(20),
+                            return Obx(
+                              () => AlertDialog(
+                                contentPadding: EdgeInsets.all(20),
 
-                              title: Text(
-                                'Cancel order',
-                                textAlign: TextAlign.center,
-                              ),
+                                title: Text(
+                                  !_clickedCancel.value
+                                      ? 'Cancel order'
+                                      : 'Order is being canceled ...',
+                                  textAlign: TextAlign.center,
+                                ),
 
-                              content: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                      'Are you sure you want to cancel the order ?'),
-                                  SizedBox(
-                                    height: 10.h,
-                                  ),
-                                  TextButton(
-                                      onPressed: () async {
-                                        ServerResponse resp =
-                                            await restaurantController
-                                                .cancelOrder(
-                                                    Get.parameters['orderId']!);
-                                        mezDbgPrint(resp.data.toString());
-                                        if (resp.success) {
-                                          Get.until((route) =>
-                                              route.settings.name ==
-                                              kHomeRoute);
-                                          MezSnackbar(
-                                              lang.strings["shared"]
-                                                  ["snackbars"]["titleSuccess"],
-                                              lang.strings["shared"]
-                                                      ["snackbars"]
-                                                  ["orderCancelSuccess"],
-                                              position: SnackPosition.TOP);
-                                        } else {
-                                          MezSnackbar(
-                                              lang.strings["shared"]
-                                                  ["snackbars"]["titleFailed"],
-                                              lang.strings["shared"]
-                                                      ["snackbars"]
-                                                  ["orderCancelFailed"],
-                                              position: SnackPosition.TOP);
-                                        }
-                                      },
-                                      style: TextButton.styleFrom(
-                                          backgroundColor: Colors.redAccent,
-                                          padding: EdgeInsets.all(12)),
-                                      child: Container(
-                                          alignment: Alignment.center,
-                                          child: Text('Cancel my order'))),
-                                  SizedBox(
-                                    height: 5.h,
-                                  ),
-                                  TextButton(
-                                      onPressed: () {},
-                                      style: TextButton.styleFrom(
-                                          backgroundColor: Colors.black,
-                                          padding: EdgeInsets.all(12)),
-                                      child: Container(
-                                          alignment: Alignment.center,
-                                          child: Text('Cancel'))),
-                                ],
+                                content: !_clickedCancel.value
+                                    ? Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                              'Are you sure you want to cancel the order ?'),
+                                          SizedBox(
+                                            height: 10.h,
+                                          ),
+                                          TextButton(
+                                              onPressed: () async {
+                                                _clickedCancel.value = true;
+                                                // to get back to the main view.
+                                                ServerResponse resp =
+                                                    await restaurantController
+                                                        .cancelOrder(
+                                                            Get.parameters[
+                                                                'orderId']!);
+                                                mezDbgPrint(
+                                                    resp.data.toString());
+                                                if (resp.success) {
+                                                  Get.until((route) =>
+                                                      route.settings.name ==
+                                                      kHomeRoute);
+                                                  MezSnackbar(
+                                                      lang.strings["shared"]
+                                                              ["snackbars"]
+                                                          ["titleSuccess"],
+                                                      lang.strings["shared"]
+                                                              ["snackbars"][
+                                                          "orderCancelSuccess"],
+                                                      position:
+                                                          SnackPosition.TOP);
+                                                } else {
+                                                  _clickedCancel.value = false;
+                                                  MezSnackbar(
+                                                      lang.strings["shared"]
+                                                              ["snackbars"]
+                                                          ["titleFailed"],
+                                                      lang.strings["shared"]
+                                                              ["snackbars"]
+                                                          ["orderCancelFailed"],
+                                                      position:
+                                                          SnackPosition.TOP);
+                                                }
+                                              },
+                                              style: TextButton.styleFrom(
+                                                  backgroundColor:
+                                                      Colors.redAccent,
+                                                  padding: EdgeInsets.all(12)),
+                                              child: Container(
+                                                  alignment: Alignment.center,
+                                                  child:
+                                                      Text("Yes, i'm sure!"))),
+                                          SizedBox(
+                                            height: 5.h,
+                                          ),
+                                          TextButton(
+                                              onPressed: () {
+                                                Get.back();
+                                              },
+                                              style: TextButton.styleFrom(
+                                                  backgroundColor: Colors.black,
+                                                  padding: EdgeInsets.all(12)),
+                                              child: Container(
+                                                  alignment: Alignment.center,
+                                                  child: Text('No'))),
+                                        ],
+                                      )
+                                    : Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Center(
+                                              child: CircularProgressIndicator(
+                                            strokeWidth: 1.2,
+                                            color: Colors.purpleAccent.shade700,
+                                          ))
+                                        ],
+                                      ),
+
+                                // actions: [
+                                //   TextButton(
+                                //       onPressed: () {},
+                                //       child: Text('Cancel order')),
+                                //   TextButton(
+                                //       onPressed: () {}, child: Text('Cancel')),
+                                // ],
                               ),
-                              // actions: [
-                              //   TextButton(
-                              //       onPressed: () {},
-                              //       child: Text('Cancel order')),
-                              //   TextButton(
-                              //       onPressed: () {}, child: Text('Cancel')),
-                              // ],
                             );
                           });
                     },

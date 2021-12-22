@@ -39,7 +39,7 @@ class RestaurantController extends GetxController {
             // check if already associated restaurant with cart is the same as current restaurant,
             // if not clear the old associated restaurant
             if (associatedRestaurant != null) {
-              if (cartData["serviceProviderId"] != associatedRestaurant!.id) {
+              if (cartData["serviceProviderId"] != associatedRestaurant?.id) {
                 associatedRestaurant = null;
               }
             }

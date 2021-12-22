@@ -61,6 +61,11 @@ class _PickLocationViewState extends State<PickLocationView> {
         savedLocation = SavedLocation(
             name: _result, location: locationPickerController.location.value!);
         customerAuthController.saveNewLocation(savedLocation!);
+      } else {
+        await geoCode();
+        savedLocation = SavedLocation(
+            name: locationPickerController.location.value!.address,
+            location: locationPickerController.location.value!);
       }
     } else {
       _result = await savedLocationDailog(

@@ -61,7 +61,7 @@ class ListRestaurantsScreen extends GetView<RestaurantsInfoController> {
             child: Obx(() => ListView(
                 padding: const EdgeInsets.only(top: 10),
                 children: restaurants
-                    .map((restaurant) => ItemComponent(
+                    .map((restaurant) => ListRestaurantsItem(
                           imgUrl: restaurant.photo,
                           title: restaurant.name,
                           restaurantId: restaurant.id,

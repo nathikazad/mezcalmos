@@ -6,6 +6,7 @@ import 'package:mezcalmos/CustomerApp/components/appbar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/textFieldComponent.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
@@ -13,10 +14,8 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 import 'components/BottomBarItemViewScreen.dart';
-import 'components/NoteComponet.dart';
 import 'components/chooseOneCheckBox.dart';
 import 'components/choosenManyCheckBox.dart';
-import 'components/dialogRequiredSignIn.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
 enum ViewItemScreenMode { AddItemMode, EditItemMode }
@@ -24,7 +23,7 @@ enum ViewItemScreenMode { AddItemMode, EditItemMode }
 class ViewItemScreen extends StatefulWidget {
   ViewItemScreen({Key? key, required this.viewItemScreenMode})
       : super(key: key);
-  final ViewItemScreenMode? viewItemScreenMode;
+  final ViewItemScreenMode viewItemScreenMode;
 
   @override
   _ViewItemScreenState createState() => _ViewItemScreenState();
@@ -37,14 +36,19 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
   late RestaurantController restaurantCartController;
   RestaurantsInfoController controller = Get.find<RestaurantsInfoController>();
   Restaurant? currentRestaurant;
+  TextEditingController _noteTextEdittingController = TextEditingController();
+
+  @override
+  void dispose() {
+    _noteTextEdittingController.dispose();
+    super.dispose();
+  }
+
   @override
   void initState() {
     mezDbgPrint("Args : ${Get.arguments.toString()}");
     mezDbgPrint("params : ${Get.parameters.toString()}");
-
-    Get.put<RestaurantsInfoController>(RestaurantsInfoController());
-    restaurantCartController =
-        Get.put<RestaurantController>(RestaurantController());
+    restaurantCartController = Get.find<RestaurantController>();
     mezDbgPrint("widget.viewItemScreenMode => ${widget.viewItemScreenMode}");
     if (widget.viewItemScreenMode == ViewItemScreenMode.AddItemMode) {
       String? restaurantId = Get.parameters['restaurantId'];
@@ -71,9 +75,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
         });
       });
     }
-
-    // scroll controller stuff !
-
+    controller.refresh();
     super.initState();
   }
 
@@ -156,12 +158,13 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                             chooseManyCheckBoxes(
                                 cartItem.value!.item.chooseManyOptions,
                                 cartItem),
-                            NoteComponent(
+                            TextFieldComponent(
+                              textController: _noteTextEdittingController,
+                              hint: lang.strings["customer"]["restaurant"]
+                                  ["menu"]["notes"],
                               onChangeCallback: (String value) {
                                 cartItem.value?.notes = value;
                               },
-                              textController: TextEditingController(
-                                  text: cartItem.value?.notes),
                             ),
                             SizedBox(
                               height: 15,
@@ -174,7 +177,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                       isAvailable: checkRestaurantAvailability(
                           schedule: currentRestaurant?.schedule),
                       cartItem: cartItem,
-                      mode: widget.viewItemScreenMode!,
+                      mode: widget.viewItemScreenMode,
                       currentRestaurantId: currentRestaurant?.id,
                     )
                   ],
@@ -187,7 +190,6 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
   bool checkRestaurantAvailability({Schedule? schedule}) {
     var dayNane = DateFormat('EEEE').format(DateTime.now());
 
-    //var xx = DateFormat.jm().format(DateFormat("hh:mm a").parse("9:00 AM"));
     var x = DateTime.now();
 
     if (schedule != null) {

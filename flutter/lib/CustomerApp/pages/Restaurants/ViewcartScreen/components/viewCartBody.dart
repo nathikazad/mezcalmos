@@ -27,6 +27,12 @@ class _ViewCartBodyState extends State<ViewCartBody> {
   TextEditingController textcontoller = new TextEditingController();
 
   @override
+  void dispose() {
+    textcontoller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       child: Column(
@@ -51,11 +57,9 @@ class _ViewCartBodyState extends State<ViewCartBody> {
           ),
           Obx(() => OrderSummaryCard(
                 onValueChangeCallback: widget.onValueChangeCallback,
-                deliveryCost: "${currency.format(40.00)}",
-                orderCost:
-                    "${currency.format(controller.cart.value.toFirebaseFormattedJson()["cost"] as dynamic)}",
-                totalCost:
-                    "${currency.format(controller.cart.value.toFirebaseFormattedJson()["cost"] as dynamic)}",
+                deliveryCost: currency.format(40.00),
+                orderCost: currency.format(controller.cart.value.totalCost()),
+                totalCost: currency.format(controller.cart.value.totalCost()),
               )),
           SizedBox(
             height: 20,

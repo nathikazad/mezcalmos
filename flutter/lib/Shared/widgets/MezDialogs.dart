@@ -136,7 +136,7 @@ Future<TwoButtonDialogButton> twoButtonDialog(
                         Get.back();
                         twoButtonDialogButton = TwoButtonDialogButton.Left;
                         leftButtonCallback?.call();
-                        
+
                         // onConform();
                       },
                     ),
@@ -155,7 +155,6 @@ Future<TwoButtonDialogButton> twoButtonDialog(
                         Get.back();
                         twoButtonDialogButton = TwoButtonDialogButton.Right;
                         rightButtonCallback?.call();
-                        
                       },
                     ),
                   ),
@@ -205,7 +204,7 @@ Future<YesNoDialogButton> cancelAlertDialog(
     buttonRightStyle: NoButtonComponetStyle(),
     buttonLeftStyle: YesButtonComponetStyle(),
   ))
-      .toYesNo(right: YesNoDialogButton.Yes, left: YesNoDialogButton.No);
+      .toYesNo(right: YesNoDialogButton.No, left: YesNoDialogButton.Yes);
 }
 
 class MezDialogButtonStyle extends StatelessWidget {
@@ -257,7 +256,7 @@ class YesButtonComponetStyle extends StatelessWidget {
         buttonColor: Color(0xffdb2846),
         buttonShadowColor: Color(0x2eff0000));
   }
-}        
+}
 
 class NoButtonComponetStyle extends StatelessWidget {
   const NoButtonComponetStyle({Key? key}) : super(key: key);

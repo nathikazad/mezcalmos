@@ -90,9 +90,9 @@ Widget buildItems(List<CartItem> cartItems, BuildContext context) {
                                 mezDbgPrint(
                                     " the returend value from the dailog $yesNoResult");
                                 if (yesNoResult == YesNoDialogButton.Yes) {
-                                  controller.deleteItem("${element.id}");
-
+                                  controller.deleteItem(element.id!);
                                   if (controller.cart.value.quantity() == 0) {
+                                    controller.clearCart();
                                     Get.until((route) =>
                                         route.settings.name == kHomeRoute);
                                   }

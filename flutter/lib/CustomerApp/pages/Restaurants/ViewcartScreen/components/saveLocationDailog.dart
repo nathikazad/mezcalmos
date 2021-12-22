@@ -99,7 +99,7 @@ Future<String?> savedLocationDailog(
                 ),
               ),
               onTap: () {
-                Get.back();
+                Get.back(result: txtController.text);
               },
             ),
             SizedBox(

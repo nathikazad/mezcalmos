@@ -65,6 +65,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
 
             order.value = currentOrder as TaxiOrder;
             inProcessOrderStatusHandler(order.value!.status);
+            setState(() {});
           } else {
             mezDbgPrint("currentOrder is null!");
             _orderListener?.cancel();
@@ -88,6 +89,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
             // one time execution :
             widget.mGoogleMapController.setAnimateMarkersPolyLinesBounds(true);
             pastOrderStatusHandler(order.value!.status);
+            setState(() {});
           }
         });
       } else {
@@ -135,7 +137,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
                             )),
                         Obx(() {
                           return BottomBar(
-                            taxiRequest: order.value!.toTaxiRequest(),
+                            taxiRequest: order.value!.toTaxiRequest().obs.value,
                           );
                         }),
                         cancelButton(order.value!.status),
@@ -210,8 +212,6 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
             latLng: order.value!.from.toLatLng());
         break;
     }
-
-    setState(() {});
   }
 
   /// This gets invoked when the order is moved to /past db node

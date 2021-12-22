@@ -28,7 +28,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   bool _clickedOrderNow = false;
   DropDownResult ddResult = DropDownResult.Null;
 
-  TextEditingController textcontoller = new TextEditingController();
+  TextEditingController textcontoller = TextEditingController();
   CustomerAuthController customerAuthController =
       Get.find<CustomerAuthController>();
   var listOfSavedLoacations = <SavedLocation>[];
@@ -47,6 +47,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
 
   @override
   void dispose() {
+    textcontoller.dispose();
     super.dispose();
   }
 
@@ -96,7 +97,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
 
     if (ddResult == DropDownResult.Null ||
         !checkRestaurantAvailability(
-            schedule: controller.associatedRestaurant!.schedule)) {
+            schedule: controller.associatedRestaurant?.schedule)) {
       return Color(0xdddddddd);
     } else {
       return Color(0xffac59fc);

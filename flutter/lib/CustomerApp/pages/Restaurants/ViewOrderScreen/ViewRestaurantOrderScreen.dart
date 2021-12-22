@@ -134,7 +134,6 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                           height: 2,
                         ),
                         OrderSummaryCard(order: order.value!),
-
                         //===============================>notes========================>
                         order.value?.notes == null ||
                                 order.value!.notes!.length <= 0
@@ -150,7 +149,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                     ),
                   ),
                 )
-              : CircularProgressIndicator(),
+              : Center(child: CircularProgressIndicator()),
         ));
   }
 }

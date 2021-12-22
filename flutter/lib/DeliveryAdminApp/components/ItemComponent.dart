@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 
-class ItemComponent extends StatelessWidget {
+class ListRestaurantsItem extends StatelessWidget {
   final String? imgUrl;
   final String? title;
   final String? subtitle;
@@ -12,7 +12,7 @@ class ItemComponent extends StatelessWidget {
   final GestureTapCallback? onClick;
   final EdgeInsetsGeometry? margin;
   // final int? index;
-  ItemComponent(
+  ListRestaurantsItem(
       {this.imgUrl,
       this.title,
       this.subtitle,
@@ -92,7 +92,7 @@ class ItemComponent extends StatelessWidget {
       ),
       onTap: () {
         print("nothing");
-        onClick!();
+        onClick?.call();
         // Get.to(() => ViewRestaurantScreen(restaurantId!),
         //     transition: Transition.rightToLeft,
         //     duration: Duration(milliseconds: 350));

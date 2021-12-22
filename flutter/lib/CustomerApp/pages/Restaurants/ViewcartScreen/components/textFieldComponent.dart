@@ -20,12 +20,13 @@ class TextFieldComponent extends StatelessWidget {
         color: const Color(0xd0ffffff),
       ),
       child: TextField(
+        style: TextStyle(fontStyle: FontStyle.normal, fontSize: 16.0),
         controller: textController,
         onChanged: (String value) {
-          if (onChangeCallback != null) onChangeCallback!(value);
+          if (onChangeCallback != null) onChangeCallback?.call(value);
         },
         decoration: InputDecoration(
-          hintText: "$hint",
+          hintText: hint,
           hintStyle: TextStyle(
               color: const Color(0xffb4b4b4),
               fontWeight: FontWeight.w400,

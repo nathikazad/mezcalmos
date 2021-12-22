@@ -83,7 +83,7 @@ class OrderSummaryCard extends StatelessWidget {
                       child: Container(
                     alignment: Alignment.centerRight,
                     child: Text(
-                      "$orderCost \$",
+                      "\$$orderCost",
                       style: txt.headline3!.copyWith(
                         fontWeight: FontWeight.w500,
                         fontSize: 14.75.sp,
@@ -114,7 +114,7 @@ class OrderSummaryCard extends StatelessWidget {
                       child: Container(
                     alignment: Alignment.centerRight,
                     child: Text(
-                      "$deliveryCost \$",
+                      "\$$deliveryCost",
                       style: txt.headline3!.copyWith(
                         fontWeight: FontWeight.w500,
                         fontSize: 14.75.sp,
@@ -145,7 +145,7 @@ class OrderSummaryCard extends StatelessWidget {
                       child: Container(
                     alignment: Alignment.centerRight,
                     child: Text(
-                      "$totalCost \$",
+                      "\$$totalCost",
                       style: txt.headline3!.copyWith(
                         fontWeight: FontWeight.w600,
                         fontSize: 14.75.sp,

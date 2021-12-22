@@ -66,7 +66,6 @@ void dialogRequiredSignIn() {
                 child: InkWell(
                   onTap: () {
                     Get.back();
-                    Get.back();
                   },
                   child: Container(
                     alignment: Alignment.center,

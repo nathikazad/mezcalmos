@@ -54,10 +54,11 @@ class _MessagingScreenState extends State<MessagingScreen> {
 
   RxString _typedMsg = "".obs;
 
-  Widget singleChatComponent(
-    String message,
+  Widget singleChatComponent({
+    required String message,
     String? time,
-    bool isMe, {
+    required bool isMe,
+    required BuildContext parentContext,
     String? userImage,
   }) =>
       Container(
@@ -99,7 +100,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
                           left: 16, top: 8, bottom: 8, right: 16),
                       decoration: BoxDecoration(
                           color: !isMe
-                              ? Theme.of(context).primaryColorLight
+                              ? Theme.of(parentContext).primaryColorLight
                               : Colors.white,
                           borderRadius: !isMe
                               ? BorderRadius.only(
@@ -115,16 +116,17 @@ class _MessagingScreenState extends State<MessagingScreen> {
                       child: Text(message,
                           softWrap: true,
                           style: (!isMe)
-                              ? Theme.of(context)
+                              ? Theme.of(parentContext)
                                   .textTheme
                                   .bodyText2!
                                   .copyWith(color: Colors.white)
-                              : Theme.of(context).textTheme.bodyText2)),
+                              : Theme.of(parentContext).textTheme.bodyText2)),
                   time != null
                       ? Padding(
                           padding: const EdgeInsets.only(left: 5.0),
                           child: Text(time,
-                              style: Theme.of(context).textTheme.subtitle1),
+                              style:
+                                  Theme.of(parentContext).textTheme.subtitle1),
                         )
                       : SizedBox(),
                 ],
@@ -158,9 +160,10 @@ class _MessagingScreenState extends State<MessagingScreen> {
           // mezDbgPrint(
           //     " \t\t ${controller.value!.participants[e.userId]?.image}");
           return singleChatComponent(
-            e.message,
-            e.formatedTime,
-            e.userId == _authController.user!.uid,
+            parentContext: context,
+            message: e.message,
+            time: e.formatedTime,
+            isMe: e.userId == _authController.user!.uid,
             userImage: controller.value!.participants[e.userId]?.image,
           );
         },
