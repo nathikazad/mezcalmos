@@ -34,8 +34,8 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
 /******************************  Init and build function ************************************/
   @override
   void initState() {
-    String orderId = "-MrNxR182MKEBRqgdgXZ";
-    //Get.parameters['orderId']!;
+    String orderId = Get.parameters['orderId']!;
+
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId) as TaxiOrder?;
     mezDbgPrint("ViewTaxiscreen :: Order :: ${order.value}");

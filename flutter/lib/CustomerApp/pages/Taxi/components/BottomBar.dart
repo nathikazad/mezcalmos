@@ -5,6 +5,7 @@ import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
@@ -17,6 +18,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 
 // @SAAD - TODO : REFACTORE THIS.
 class BottomBar extends StatefulWidget {
@@ -160,6 +162,33 @@ class _BottomBarState extends State<BottomBar> {
     );
   }
 
+  Widget reCreateOrderBtn() {
+    return Container(
+      margin: EdgeInsets.only(right: 10),
+      child: GestureDetector(
+        onTap: () {
+          popEverythingAndNavigateTo(kTaxiRequestRoute,
+              args: widget.taxiRequest.reCreate());
+        },
+        child: Container(
+          height: getSizeRelativeToScreen(16, Get.height, Get.width),
+          width: getSizeRelativeToScreen(16, Get.height, Get.width),
+          decoration: BoxDecoration(
+            color: Colors.purpleAccent,
+            borderRadius: BorderRadius.circular(4),
+          ),
+          child: Center(
+            child: Icon(
+              Icons.replay_circle_filled_sharp,
+              color: Colors.white,
+              size: 20,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget buildMsgAndCancelBtn() {
     return Expanded(
         flex: 1,
@@ -168,7 +197,7 @@ class _BottomBarState extends State<BottomBar> {
         ));
   }
 
-  Widget taxiAvatarAndPrice({String? description}) {
+  Widget taxiAvatarAndName({String? description, String? name, String? asset}) {
     return Expanded(
       flex: 2,
       child: Container(
@@ -182,8 +211,9 @@ class _BottomBarState extends State<BottomBar> {
               child: ClipOval(
                   clipBehavior: Clip.antiAlias,
                   child: mLoadImage(
-                      url: widget.taxiRequest.driverInfo!.image,
-                      assetInCaseFailed: aDefaultAvatar,
+                      // url: widget.taxiRequest.driverInfo?.image,
+                      url: null,
+                      assetInCaseFailed: asset ?? aDefaultAvatar,
                       fit: BoxFit.cover,
                       height: getSizeRelativeToScreen(
                           100, context.height, context.width),
@@ -202,9 +232,9 @@ class _BottomBarState extends State<BottomBar> {
                     : CrossAxisAlignment.center,
                 children: [
                   Container(
-                    width: 100.sp,
+                    width: name == null ? 100.sp : null,
                     child: Text(
-                      widget.taxiRequest.driverInfo!.name,
+                      name ?? widget.taxiRequest.driverInfo?.name ?? "Taxi",
                       style: TextStyle(
                         fontSize: 16.sp,
                         fontFamily: 'psb',
@@ -392,7 +422,7 @@ class _BottomBarState extends State<BottomBar> {
 
       case TaxiOrdersStatus.DroppedOff:
         _widgies.assignAll([
-          taxiAvatarAndPrice(description: "Ride finished :)"),
+          taxiAvatarAndName(description: "Ride finished :)"),
           verticalSeparator(),
           rideCost(),
           verticalSeparator(),
@@ -403,85 +433,40 @@ class _BottomBarState extends State<BottomBar> {
         break;
 
       case TaxiOrdersStatus.Expired:
-        TaxiController controller = Get.find<TaxiController>();
         _widgies.assignAll([
-          Container(
-            width: Get.width - 40,
-            child: Row(
-              children: [
-                Expanded(
-                  flex: 5,
-                  child: Text(
-                    "Ride Expired :(",
-                    overflow: TextOverflow.ellipsis,
-                    softWrap: false,
-                    maxLines: 1,
-                    style: TextStyle(
-                        fontSize: 14.sp, fontFamily: 'psr', color: Colors.grey),
-                  ),
-                ),
-                Expanded(
-                    flex: 3,
-                    child: ResendButton(
-                      function: () {
-                        popEverythingAndNavigateTo(kTaxiRequestRoute,
-                            args: taxiRequest!.reCreate());
-                      },
-                    ))
-              ],
-            ),
-          )
+          taxiAvatarAndName(
+              asset: taxi_driver_marker_asset,
+              name:
+                  "${Get.find<AuthController>().fireAuthUser!.displayName}'s Ride.",
+              description: "Your ride has been expired :("),
+          reCreateOrderBtn()
         ]);
         _bottomPadding.value = 10.0;
         break;
 
       case TaxiOrdersStatus.CancelledByTaxi:
         _widgies.assignAll([
-          taxiAvatarAndPrice(description: "Ride Canceled by Taxi :("),
-          // verticalSeparator(),
-          // rideCost(),
-          // verticalSeparator(),
+          taxiAvatarAndName(description: "Ride Canceled by Taxi :("),
           messageBtn(margin: EdgeInsets.symmetric(horizontal: 6))
         ]);
         _bottomPadding.value = 10.0;
         break;
 
       case TaxiOrdersStatus.CancelledByCustomer:
-        TaxiController controller = Get.find<TaxiController>();
         _widgies.assignAll([
-          Container(
-            width: Get.width - 40,
-            child: Row(
-              children: [
-                Expanded(
-                  flex: 5,
-                  child: Text(
-                    "Ride Canceled :(",
-                    overflow: TextOverflow.ellipsis,
-                    softWrap: false,
-                    maxLines: 1,
-                    style: TextStyle(
-                        fontSize: 14.sp, fontFamily: 'psr', color: Colors.grey),
-                  ),
-                ),
-                Expanded(
-                    flex: 3,
-                    child: ResendButton(
-                      function: () {
-                        popEverythingAndNavigateTo(kTaxiRequestRoute,
-                            args: taxiRequest!.reCreate());
-                      },
-                    ))
-              ],
-            ),
-          )
+          taxiAvatarAndName(
+              asset: taxi_driver_marker_asset,
+              name:
+                  "${Get.find<AuthController>().fireAuthUser!.displayName}'s Ride.",
+              description: "You have canceled your ride :("),
+          reCreateOrderBtn()
         ]);
         _bottomPadding.value = 10.0;
         break;
 
       default:
         _widgies.assignAll([
-          taxiAvatarAndPrice(),
+          taxiAvatarAndName(),
           verticalSeparator(),
           rideCost(),
           verticalSeparator(),
