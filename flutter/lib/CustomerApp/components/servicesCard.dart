@@ -68,7 +68,7 @@ class ServicesCard extends StatelessWidget {
                 width: 15,
               ),
               Container(
-                width: 80.w,
+                width: 80.h,
                 height: 80.h,
                 child: Image.asset(
                   url,

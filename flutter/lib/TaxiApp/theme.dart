@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TaxiAppTheme {
-  static final lightTheme = ThemeData(
+   final lightTheme = ThemeData(
     //---------------------------------------------------- COLORS ------------------------------------------------------------------------//
     //---------------------------------------------------- COLORS ------------------------------------------------------------------------//
     primaryColor: Colors.white,

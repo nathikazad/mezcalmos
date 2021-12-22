@@ -29,7 +29,7 @@ class TaxiOldOrderCard extends StatelessWidget {
             Row(
               children: [
                 CircleAvatar(
-                    radius: 30,
+                    radius: (Get.width * 0.09),
                     backgroundImage: mLoadImage(
                             assetInCaseFailed:
                                 'assets/images/customer/taxi/taxiDriverImg.png',
@@ -88,8 +88,7 @@ class TaxiOldOrderCard extends StatelessWidget {
                           child: Text(
                             getTaxiOrderStatus(order.status) +
                                 ' at :' +
-                                DateFormat(' dd MMM yyyy')
-                                    .format(order.orderTime),
+                                DateFormat(' hh:mm a').format(order.orderTime),
                             style: txt.bodyText2,
                             overflow: TextOverflow.ellipsis,
                             softWrap: true,

@@ -1,6 +1,5 @@
-
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
@@ -14,9 +13,8 @@ class NoUserIcon extends StatelessWidget {
     return Container(
         padding: const EdgeInsets.all(8),
         child: CircleAvatar(
-            radius: 20,
-            backgroundImage: CachedNetworkImageProvider(
-                'https://www.dovercourt.org/wp-content/uploads/2019/11/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.jpg'),
+            radius: 15.h,
+            backgroundImage: AssetImage('assets/images/shared/noUserImage.jpg'),
             child: Material(
               shape: CircleBorder(),
               clipBehavior: Clip.hardEdge,

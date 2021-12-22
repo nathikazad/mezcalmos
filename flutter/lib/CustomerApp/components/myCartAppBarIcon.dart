@@ -7,8 +7,10 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 
 class MyCartAppBarIcon extends StatelessWidget {
+  Color iconColor;
   MyCartAppBarIcon({
     Key? key,
+    required this.iconColor,
   }) : super(key: key);
 
   AuthController _authController = Get.find<AuthController>();
@@ -36,7 +38,7 @@ class MyCartAppBarIcon extends StatelessWidget {
                       .copyWith(color: Colors.white),
                 ),
                 badgeColor: Theme.of(context).primaryColorLight,
-                child: Icon(Ionicons.cart)))
+                child: Icon(Ionicons.cart,color: iconColor,)))
         : Container());
   }
 }

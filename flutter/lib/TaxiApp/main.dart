@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/route_manager.dart';
-import 'package:mezcalmos/TaxiApp/theme.dart';
-import 'package:mezcalmos/Shared/appStart.dart';
-import 'package:mezcalmos/TaxiApp/router.dart';
-import 'package:mezcalmos/TaxiApp/authHooks.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:mezcalmos/Shared/appStart.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/TaxiApp/authHooks.dart';
+import 'package:mezcalmos/TaxiApp/constants/assets.dart';
+import 'package:mezcalmos/TaxiApp/router.dart';
+import 'package:mezcalmos/TaxiApp/theme.dart';
 
 Function signInCallback = AuthHooks.onSignInHook;
 Function signOutCallback = AuthHooks.onSignOutHook;
@@ -22,7 +22,7 @@ void main() {
         StartingPoint(
             appType: AppType.TaxiApp,
             signInCallback: signInCallback,
-            appTheme: TaxiAppTheme.lightTheme,
+            appTheme: TaxiAppTheme().lightTheme,
             signOutCallback: signOutCallback,
             routes: routes),
       ));

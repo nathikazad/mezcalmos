@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/userMenuComponent.dart';
+import 'package:mezcalmos/CustomerApp/components/Menu/MenuComponent.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 
 import 'myCartAppBarIcon.dart';
-import 'noUserIcon.dart';
 
 // ignore: must_be_immutable
 class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -51,14 +50,18 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
             )
           : Container(
               alignment: Alignment.center,
-              width: 145,
+              width: 150,
               child: FittedBox(
                 child: MezcalmosSharedWidgets.fillTitle(1),
               ),
             ),
       actions: [
-        MyCartAppBarIcon(),
-        Obx(() => (_authController.isUserSignedIn) ? UserMenu() : NoUserIcon())
+        MyCartAppBarIcon(
+          iconColor: Colors.black,
+        ),
+        MenuComponent(
+          padding: 0,
+        )
       ],
       elevation: 0.1,
     );

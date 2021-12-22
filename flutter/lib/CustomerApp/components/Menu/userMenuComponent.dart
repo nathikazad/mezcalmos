@@ -5,7 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:mezcalmos/CustomerApp/components/userMenuIcon.dart';
+import 'package:mezcalmos/CustomerApp/components/Menu/userMenuIcon.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -14,7 +14,9 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 class UserMenu extends StatefulWidget {
-  // AuthController authController = Get.find<AuthController>();
+  final double padding;
+
+  const UserMenu({Key? key, required this.padding}) : super(key: key);
 
   @override
   State<UserMenu> createState() => _UserMenuState();
@@ -38,23 +40,23 @@ class _UserMenuState extends State<UserMenu> {
   Widget build(BuildContext context) {
     final txt = Theme.of(context).textTheme;
     return PopupMenuButton(
-      iconSize: 40,
+      padding: EdgeInsets.only(right: 12),
+      iconSize: 35,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(15.0))),
-      icon: Padding(
-        padding: const EdgeInsets.all(3.0),
-        child: UserMenuIcon(),
+      icon: UserMenuIcon(
+        padding: widget.padding,
       ),
       itemBuilder: (context) {
         return [
           if (orderController.currentOrders.isNotEmpty)
             PopupMenuItem(
-              child: OrdersMenuItem(orderController: orderController),
+              child: orderMenuItem(context),
               value: 2,
             ),
           if (notifController.notifications.isNotEmpty)
             PopupMenuItem(
-              child: NotifMenuItem(notifController: notifController),
+              child: notificationMenuItem(context),
               value: 1,
             ),
           PopupMenuItem(
@@ -65,7 +67,7 @@ class _UserMenuState extends State<UserMenu> {
                   width: 10,
                 ),
                 Text(
-                  'Saved locations',
+                  lang.strings['customer']['savedLocations']['title'],
                 ),
               ],
             ),
@@ -106,49 +108,8 @@ class _UserMenuState extends State<UserMenu> {
       },
     );
   }
-}
 
-class OrdersMenuItem extends StatelessWidget {
-  const OrdersMenuItem({
-    Key? key,
-    required this.orderController,
-  }) : super(key: key);
-
-  final OrderController orderController;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Badge(
-            badgeColor: Theme.of(context).primaryColorLight,
-            badgeContent: Text(
-              orderController.currentOrders.length.toStringAsFixed(0),
-              style: Theme.of(context)
-                  .textTheme
-                  .subtitle1!
-                  .copyWith(color: Colors.white),
-            ),
-            child: Icon(Ionicons.time_outline)),
-        SizedBox(
-          width: 10,
-        ),
-        Text(" Orders"),
-      ],
-    );
-  }
-}
-
-class NotifMenuItem extends StatelessWidget {
-  const NotifMenuItem({
-    Key? key,
-    required this.notifController,
-  }) : super(key: key);
-
-  final ForegroundNotificationsController notifController;
-
-  @override
-  Widget build(BuildContext context) {
+  Row notificationMenuItem(BuildContext context) {
     return Row(
       children: [
         Badge(
@@ -165,6 +126,27 @@ class NotifMenuItem extends StatelessWidget {
           width: 10,
         ),
         Text(" Notification"),
+      ],
+    );
+  }
+
+  Row orderMenuItem(BuildContext context) {
+    return Row(
+      children: [
+        Badge(
+            badgeColor: Theme.of(context).primaryColorLight,
+            badgeContent: Text(
+              orderController.currentOrders.length.toStringAsFixed(0),
+              style: Theme.of(context)
+                  .textTheme
+                  .subtitle1!
+                  .copyWith(color: Colors.white),
+            ),
+            child: Icon(Ionicons.time_outline)),
+        SizedBox(
+          width: 10,
+        ),
+        Text(" Orders"),
       ],
     );
   }

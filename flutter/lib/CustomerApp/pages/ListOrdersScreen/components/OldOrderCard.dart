@@ -86,8 +86,7 @@ class OldOrderCard extends StatelessWidget {
                           child: Text(
                             getOrderStatus((order as RestaurantOrder).status) +
                                 ' at :' +
-                                DateFormat(' dd MMM yyyy')
-                                    .format(order.orderTime),
+                                DateFormat(' hh:m a').format(order.orderTime),
                             style: txt.bodyText2,
                             overflow: TextOverflow.ellipsis,
                             softWrap: true,
