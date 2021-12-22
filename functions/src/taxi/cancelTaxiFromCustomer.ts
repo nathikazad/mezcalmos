@@ -105,6 +105,7 @@ export = functions.https.onCall(async (data, context) => {
     {
       taxiNodes.inProcessOrders(order.driver.id, orderId).remove();
       taxiNodes.pastOrders(order.driver.id, orderId).set(order);
+      taxiNodes.currentOrderIdNode(order.driver.id).remove()
       let notification: Notification = {
         foreground: <TaxiOrderStatusChangeNotification>{
           status: TaxiOrderStatus.CancelledByCustomer,
