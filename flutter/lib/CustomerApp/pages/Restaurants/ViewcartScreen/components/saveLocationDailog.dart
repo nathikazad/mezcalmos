@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/buttonComponent.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/PickLocationView.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
 Future<String?> savedLocationDailog(
-    {required BuildContext context, String? nameVal}) async {
+    {required BuildContext context,
+    String? nameVal,
+    PickLocationMode mode = PickLocationMode.AddNewLocation}) async {
   LanguageController lang = Get.find<LanguageController>();
   TextEditingController txtController = TextEditingController();
   if (nameVal != null && nameVal != "") {
@@ -77,35 +80,41 @@ Future<String?> savedLocationDailog(
             SizedBox(
               height: 10,
             ),
-            InkWell(
-              child: Container(
-                width: 100,
-                height: 35,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(4)),
-                  color: Colors.grey[300],
-                ),
-                child: Center(
-                  child: Text(
-                      lang.strings["customer"]["savedLocations"]
-                          ["addLocationDialog"]["skip"],
-                      style: const TextStyle(
-                          color: const Color(0xfffff4f4),
-                          fontWeight: FontWeight.w700,
-                          fontFamily: "ProductSans",
-                          fontStyle: FontStyle.normal,
-                          fontSize: 14.0),
-                      textAlign: TextAlign.center),
-                ),
-              ),
-              onTap: () {
-                Get.back(result: txtController.text);
-              },
-            ),
+            if (mode == PickLocationMode.AddNewLocation)
+              skipButton(lang, txtController),
             SizedBox(
               height: 30,
             )
           ],
         )),
       ));
+}
+
+InkWell skipButton(
+    LanguageController lang, TextEditingController txtController) {
+  return InkWell(
+    child: Container(
+      width: 100,
+      height: 35,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(4)),
+        color: Colors.grey[300],
+      ),
+      child: Center(
+        child: Text(
+            lang.strings["customer"]["savedLocations"]["addLocationDialog"]
+                ["skip"],
+            style: const TextStyle(
+                color: const Color(0xfffff4f4),
+                fontWeight: FontWeight.w700,
+                fontFamily: "ProductSans",
+                fontStyle: FontStyle.normal,
+                fontSize: 14.0),
+            textAlign: TextAlign.center),
+      ),
+    ),
+    onTap: () {
+      Get.back(result: txtController.text);
+    },
+  );
 }

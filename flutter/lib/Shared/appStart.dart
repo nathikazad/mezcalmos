@@ -8,13 +8,11 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:device_preview/device_preview.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:get_storage/get_storage.dart';
@@ -31,7 +29,6 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:package_info/package_info.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 final ThemeData _defaultAppTheme = ThemeData(
     primaryColor: Colors.white,
@@ -236,20 +233,10 @@ class _StartingPointState extends State<StartingPoint> {
       enableLog: true,
       getPages: routes,
       initialRoute: kWrapperRoute,
-      builder: (ctx, widget) {
-        mezDbgPrint("INSIDE GetMaterialApp::builder -> $ctx - $widget ");
-        return DevicePreview(
-            devices: [
-              ...DevicePreview.defaultDevices,
-            ],
-            enabled: GetStorage().read('previewMode') as bool,
-            builder: (context) {
-              responsiveSize(context);
-              mezDbgPrint(
-                  "INSIDE GetMaterialApp::builder::DevicePreview::BUILDER -> $context ");
-              return widget!;
-            });
-      },
+      // builder: (ctx, widget) {
+      //   responsiveSize(context);
+      //   return widget!;
+      // },
     );
   }
 }

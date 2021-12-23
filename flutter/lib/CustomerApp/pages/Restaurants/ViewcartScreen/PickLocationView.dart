@@ -2,18 +2,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart' as GeoLoc;
+import 'package:mezcalmos/CustomerApp/components/LocationPicker.dart';
 import 'package:mezcalmos/CustomerApp/components/appbar.dart';
 import 'package:mezcalmos/CustomerApp/components/buttonComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
-import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/CustomerApp/components/LocationPicker.dart';
-import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
-import 'package:location/location.dart' as GeoLoc;
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/models/Location.dart';
+import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
 
 import 'components/saveLocationDailog.dart';
 
@@ -54,7 +54,9 @@ class _PickLocationViewState extends State<PickLocationView> {
       showScreenLoading = true;
     });
     if (widget.pickLocationMode == PickLocationMode.AddNewLocation) {
-      _result = await savedLocationDailog(context: context);
+      _result = await savedLocationDailog(
+        context: context,
+      );
       if (_result != null && _result != "") {
         mezDbgPrint("the choosen name is $_result");
         await geoCode();
@@ -69,7 +71,9 @@ class _PickLocationViewState extends State<PickLocationView> {
       }
     } else {
       _result = await savedLocationDailog(
-          context: context, nameVal: savedLocation!.name);
+          context: context,
+          nameVal: savedLocation!.name,
+          mode: PickLocationMode.EditLocation);
       if (_result != null && _result != "") {
         mezDbgPrint("the choosen name is $_result");
         await geoCode();
