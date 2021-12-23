@@ -93,132 +93,159 @@ class SignIn extends GetWidget<AuthController> {
 
   Widget appleLoginBtn() {
     return Obx(
-      () => TextButton.icon(
-          onPressed: clickedLogin.value
-              ? null
-              : () async {
-                  clickedLogin.value = true;
-                  await controller.signInWithApple();
-                  clickedLogin.value = false;
-                },
-          style: TextButton.styleFrom(
-              backgroundColor: Colors.black,
-              fixedSize: Size(double.infinity, 50)),
-          icon: (!clickedLogin.value)
-              ? Container(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Icon(Ionicons.logo_apple))
-              : Container(),
-          label: Container(
-            alignment: Alignment.center,
-            child: (clickedLogin.value)
-                ? SizedBox(
-                    height: 25,
-                    width: 25,
-                    child: CircularProgressIndicator(
-                      color: Colors.white,
+      () => Container(
+        width: double.infinity,
+        child: TextButton(
+            onPressed: clickedLogin.value
+                ? null
+                : () async {
+                    clickedLogin.value = true;
+                    await controller.signInWithApple();
+                    clickedLogin.value = false;
+                  },
+            style: TextButton.styleFrom(
+                backgroundColor: Colors.black,
+                fixedSize: Size(double.infinity, 50)),
+            child: Container(
+              alignment: Alignment.center,
+              child: (clickedLogin.value)
+                  ? SizedBox(
+                      height: 25,
+                      width: 25,
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
+                    )
+                  : Row(
+                      children: [
+                        Container(
+                            padding: EdgeInsets.only(
+                                left: Get.width * 0.05,
+                                right: Get.width * 0.05),
+                            child: Icon(Ionicons.logo_apple)),
+                        Spacer(),
+                        Text(
+                          lang.strings['shared']['login']["loginWithApple"],
+                        ),
+                        Spacer()
+                      ],
                     ),
-                  )
-                : Text(
-                    lang.strings['shared']['login']["loginWithApple"],
-                  ),
-          )),
+            )),
+      ),
     );
   }
 
   Obx smsLoginBtn() {
     return Obx(
-      () => TextButton.icon(
-          onPressed: clickedLogin.value ? null : () => Get.toNamed(kOtpRoute),
-          style: TextButton.styleFrom(
-              backgroundColor: Colors.blue,
-              fixedSize: Size(double.infinity, 50)),
-          icon: (!clickedLogin.value)
-              ? Container(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Icon(Ionicons.chatbox))
-              : Container(),
-          label: Container(
-            alignment: Alignment.center,
-            child: (clickedLogin.value)
-                ? SizedBox(
-                    height: 25,
-                    width: 25,
-                    child: CircularProgressIndicator(
-                      color: Colors.white,
+      () => Container(
+        width: double.infinity,
+        child: TextButton(
+            onPressed: clickedLogin.value ? null : () => Get.toNamed(kOtpRoute),
+            style: TextButton.styleFrom(
+                backgroundColor: Colors.blue,
+                fixedSize: Size(double.infinity, 50)),
+            child: Container(
+              alignment: Alignment.center,
+              child: (clickedLogin.value)
+                  ? SizedBox(
+                      height: 25,
+                      width: 25,
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
+                    )
+                  : Row(
+                      children: [
+                        Container(
+                            padding: EdgeInsets.only(
+                                left: Get.width * 0.05,
+                                right: Get.width * 0.05),
+                            child: Icon(Ionicons.chatbox)),
+                        Spacer(),
+                        Text(
+                          lang.strings['shared']['login']["loginWithSms"],
+                        ),
+                        Spacer(),
+                      ],
                     ),
-                  )
-                : Text(
-                    lang.strings['shared']['login']["loginWithSms"],
-                  ),
-          )),
+            )),
+      ),
     );
   }
 
   Widget facebookLoginBtn(lmode) {
     return Obx(
-      () => TextButton.icon(
-          onPressed: clickedLogin.value
-              ? null
-              : () async {
-                  clickedLogin.value = true;
-                  lmode != "dev"
-                      ? await controller.signInWithFacebook()
-                      : await Get.defaultDialog(
-                          title: "Choose Test User",
-                          content: Column(
-                            children: [
-                              TextButton(
-                                  onPressed: () {
-                                    Get.back();
-                                    controller.signIn(
-                                        tTestCustomerValue, tEmailTestPassword);
-                                  },
-                                  child: Text(tTestCustomerValue)),
-                              TextButton(
-                                  onPressed: () {
-                                    Get.back();
-                                    controller.signIn(
-                                        tTestTaxiValue, tEmailTestPassword);
-                                  },
-                                  child: Text(tTestTaxiValue)),
-                              TextButton(
-                                  onPressed: () {
-                                    Get.back();
-                                    controller.signIn(
-                                        tTestAdminValue, tEmailTestPassword);
-                                  },
-                                  child: Text(tTestAdminValue))
-                            ],
-                          ));
-
-                  clickedLogin.value = false;
-                },
-          style: TextButton.styleFrom(
-              backgroundColor: Color.fromARGB(255, 58, 85, 159),
-              fixedSize: Size(double.infinity, 50)),
-          icon: (!clickedLogin.value)
-              ? Container(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Icon(Ionicons.logo_facebook),
-                )
-              : Container(),
-          label: Container(
-            alignment: Alignment.center,
-            child: (clickedLogin.value)
-                ? SizedBox(
-                    height: 25,
-                    width: 25,
-                    child: CircularProgressIndicator(
-                      color: Colors.white,
-                    ),
-                  )
-                : Text(
+      () => Container(
+        width: double.infinity,
+        child: TextButton(
+            onPressed: clickedLogin.value
+                ? null
+                : () async {
+                    clickedLogin.value = true;
                     lmode != "dev"
-                        ? lang.strings['shared']['login']["fbBtn"]
-                        : "test mode login",
-                  ),
-          )),
+                        ? await controller.signInWithFacebook()
+                        : await Get.defaultDialog(
+                            title: "Choose Test User",
+                            content: Column(
+                              children: [
+                                TextButton(
+                                    onPressed: () {
+                                      Get.back();
+                                      controller.signIn(tTestCustomerValue,
+                                          tEmailTestPassword);
+                                    },
+                                    child: Text(tTestCustomerValue)),
+                                TextButton(
+                                    onPressed: () {
+                                      Get.back();
+                                      controller.signIn(
+                                          tTestTaxiValue, tEmailTestPassword);
+                                    },
+                                    child: Text(tTestTaxiValue)),
+                                TextButton(
+                                    onPressed: () {
+                                      Get.back();
+                                      controller.signIn(
+                                          tTestAdminValue, tEmailTestPassword);
+                                    },
+                                    child: Text(tTestAdminValue))
+                              ],
+                            ));
+
+                    clickedLogin.value = false;
+                  },
+            style: TextButton.styleFrom(
+                backgroundColor: Color.fromARGB(255, 58, 85, 159),
+                fixedSize: Size(double.infinity, 50)),
+            child: Container(
+              alignment: Alignment.center,
+              child: (clickedLogin.value)
+                  ? SizedBox(
+                      height: 25,
+                      width: 25,
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
+                    )
+                  : Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.only(
+                              left: Get.width * 0.05, right: Get.width * 0.05),
+                          child: Icon(Ionicons.logo_facebook),
+                        ),
+                        Spacer(),
+                        Text(
+                          lmode != "dev"
+                              ? lang.strings['shared']['login']["fbBtn"]
+                              : "test mode login",
+                        ),
+                        Spacer(),
+                      ],
+                    ),
+            )),
+      ),
     );
   }
 }
