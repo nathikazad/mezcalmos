@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:get/get.dart';
 
 class OrderSummaryCard extends StatelessWidget {
   const OrderSummaryCard({
@@ -10,6 +12,7 @@ class OrderSummaryCard extends StatelessWidget {
   final Order order;
   @override
   Widget build(BuildContext context) {
+    LanguageController lang = Get.find<LanguageController>();
     final txt = Theme.of(context).textTheme;
     return Column(
       children: [
@@ -17,7 +20,7 @@ class OrderSummaryCard extends StatelessWidget {
           margin: EdgeInsets.all(8),
           alignment: Alignment.centerLeft,
           child: Text(
-            'Total Cost',
+            '${lang.strings["customer"]["restaurant"]["cart"]["totalCost"]}',
             style: txt.headline3,
           ),
         ),
@@ -31,7 +34,7 @@ class OrderSummaryCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Delivery Cost',
+                      '${lang.strings["customer"]["restaurant"]["cart"]["deliveryCost"]}',
                       style: txt.headline3,
                     ),
                     Text(
@@ -47,7 +50,7 @@ class OrderSummaryCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Total',
+                      '${lang.strings["customer"]["restaurant"]["cart"]["total"]}',
                       style: txt.headline3,
                     ),
                     Text(
@@ -67,7 +70,7 @@ class OrderSummaryCard extends StatelessWidget {
           margin: EdgeInsets.all(8),
           alignment: Alignment.centerLeft,
           child: Text(
-            'Delivery location',
+            '${lang.strings["customer"]["restaurant"]["cart"]["deliveryLocation"]}',
             style: txt.headline3,
           ),
         ),

@@ -34,7 +34,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
       Get.find<CustomerAuthController>();
   var listOfSavedLoacations = <SavedLocation>[];
   SavedLocation? dropDownListValue;
-
+  int nbClicks = 0;
   @override
   void initState() {
     super.initState();
@@ -89,7 +89,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
           bgColor: getTheRightButtonColor(),
           widget: Center(
               child: getTheRightWidgetForOrderNowButton(_clickedOrderNow)),
-          function: checkoutActionButton),
+          function: !_clickedOrderNow ? checkoutActionButton : () {}),
     );
   }
 
@@ -135,38 +135,40 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
 
 //itemviewscreen
   void checkoutActionButton() async {
-    // if (controller.cart.value.toLocation != null) {
-    mezDbgPrint("Called : checkoutActionButton : DdResult ($ddResult}");
-    if (ddResult != DropDownResult.Null) {
-      setState(() {
-        _clickedOrderNow = true;
-      });
-      controller.cart.value.notes = textcontoller.text;
-      mezDbgPrint(controller.cart.value.toFirebaseFormattedJson().toString());
+    if (nbClicks == 0) {
+      mezDbgPrint("Called : checkoutActionButton : DdResult ($ddResult}");
+      if (ddResult != DropDownResult.Null) {
+        setState(() {
+          _clickedOrderNow = true;
+        });
+        controller.cart.value.notes = textcontoller.text;
+        mezDbgPrint(controller.cart.value.toFirebaseFormattedJson().toString());
 
-      var response = await controller.checkout();
-      print(response.errorCode.toString());
-      if (response.success) {
-        controller.clearCart();
-        popEverythingAndNavigateTo(
-            getRestaurantOrderRoute(response.data["orderId"]));
-      } else {
-        print(response);
-        if (response.errorCode == "serverError") {
-          // do something
-        } else if (response.errorCode == "inMoreThanThreeOrders") {
-          // do something
-        } else if (response.errorCode == "restaurantClosed") {
-          // do something
+        var response = await controller.checkout();
+        print(response.errorCode.toString());
+        if (response.success) {
+          controller.clearCart();
+          popEverythingAndNavigateTo(
+              getRestaurantOrderRoute(response.data["orderId"]));
         } else {
-          // do something
+          print(response);
+          if (response.errorCode == "serverError") {
+            // do something
+          } else if (response.errorCode == "inMoreThanThreeOrders") {
+            // do something
+          } else if (response.errorCode == "restaurantClosed") {
+            // do something
+          } else {
+            // do something
+          }
         }
-      }
 
-      setState(() {
-        _clickedOrderNow = false;
-      });
+        setState(() {
+          _clickedOrderNow = false;
+        });
+      }
     }
+    nbClicks++;
   }
 
   bool checkRestaurantAvailability({Schedule? schedule}) {

@@ -127,8 +127,8 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
     return Scaffold(
         appBar: CustomerAppBar(
           autoBack: true,
-          //Todo:translate
-          title: 'Order status',
+          title:
+              '${lang.strings["customer"]["restaurant"]["orderStatus"]["orderStatus"]}',
         ),
         body: Obx(
           () {

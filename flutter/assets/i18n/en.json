@@ -23,7 +23,7 @@
         "restaurant": {
             "restaurants": "Restaurants",
             "notAvailable":"This restaurant is closed",
-            
+
             
             "menu": {
                 "myCart":"My Cart",
@@ -80,9 +80,22 @@
                 "orderItems": "Order Items",
                 "cancel": "Cancel",
                 "cancelOrder": "Cancel Order",
+                "orderCanceled":"Order is being canceled ...",
                 "cancelOrderConfirm": "Are you sure you want to\ncancel this order?"
             },
             "orderStatus": {
+                "orderCanceled":"Order Canceled",
+                "orderDeliverd":"Order Delivered",
+                "helperText":{
+                "preparing": "Your order is being prepared by the restaurant",
+                "readyForPickUp": "Your order is prepared and ready for pickup by the delivery driver'",
+                "onTheWay": "Your order is on the way",
+                "delivered": "Your order has been successfully delivered",
+                "canceledByAdmin": "Your order has been canceled by the restaurant",
+                "canceledByCustomer": "Your order has been canceled",
+                "recievied": "Your order is recieved by the restaurant"
+                },
+                "orderStatus":"Order Status",
                 "preparing": "Preparing the order",
                 "readyForPickUp": "Ready For Pickup",
                 "onTheWay": "On The Way",

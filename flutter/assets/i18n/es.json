@@ -77,9 +77,22 @@
                 "orderItems": "Encargar Artículos",
                 "cancel": "Cancelar",
                 "cancelOrder": "Cancelar el pedido",
+                "orderCanceled":"Se cancela el pedido ...",
                 "cancelOrderConfirm": "¿Estás segura de que deseas cancelar este pedido?"
             },
             "orderStatus": {
+                "orderCanceled":"Orden cancelada",
+                "orderDeliverd":"Pedido entregado",
+                "helperText":{
+                    "preparing": "Tu pedido está siendo preparado por el restaurante.",
+                    "readyForPickUp": "Su pedido está preparado y listo para ser recogido por el conductor de la entrega.",
+                    "onTheWay": "Tu pedido está en camino",
+                    "delivered": "Su pedido ha sido entregado con éxito.",
+                    "canceledByAdmin": "Tu pedido es cancelado por el Restaurante.",
+                    "canceledByCustomer": "Su pedido es cancelado por el cliente.",
+                    "recievied": "Su pedido es recibido por el restaurante."
+                    },
+                "orderStatus":"Estado de la orden",
                 "preparing": "Preparando el pedido",
                 "readyForPickUp": "Lista para recoger",
                 "onTheWay": "En camino",

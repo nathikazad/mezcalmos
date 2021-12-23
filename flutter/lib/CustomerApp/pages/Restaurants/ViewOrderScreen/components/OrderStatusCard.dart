@@ -196,21 +196,22 @@ String getOrderStatus(RestaurantOrderStatus status) {
 }
 
 String getOrderHelperText(RestaurantOrderStatus status) {
+  LanguageController lang = Get.find<LanguageController>();
   switch (status) {
     case RestaurantOrderStatus.CancelledByAdmin:
-      return 'Your order has been canceled by the restaurant';
+      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["helperText"]["canceledByAdmin"]}';
     case RestaurantOrderStatus.CancelledByCustomer:
-      return 'Your order has been canceled';
+      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["helperText"]["canceledByCustomer"]}';
     case RestaurantOrderStatus.OrderReceieved:
-      return 'Your order is recieved by the restaurant';
+      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["helperText"]["recievied"]}';
     case RestaurantOrderStatus.PreparingOrder:
-      return 'Your order is being prepared by the restaurant';
+      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["helperText"]["preparing"]}';
     case RestaurantOrderStatus.OnTheWay:
-      return 'Your order is on the way';
+      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["helperText"]["onTheWay"]}';
     case RestaurantOrderStatus.ReadyForPickup:
-      return 'Your order is prepared and ready for pickup by the delivery driver';
+      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["helperText"]["readyForPickUp"]}';
     case RestaurantOrderStatus.Delivered:
-      return 'Your order has been successfully delivered';
+      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["helperText"]["delivered"]}';
 
     default:
       return 'Unknown status';

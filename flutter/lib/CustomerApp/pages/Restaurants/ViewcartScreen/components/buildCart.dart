@@ -77,8 +77,8 @@ Widget buildCart(Cart cart, BuildContext context) {
                         child: Row(
                           children: [
                             Container(
-                              //Todo:translate
-                              child: Text("Clear"),
+                              child: Text(
+                                  "${lang.strings["customer"]["restaurant"]["cart"]["clear"]}"),
                             ),
                             Icon(
                               Icons.delete_outline,

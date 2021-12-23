@@ -43,9 +43,8 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
 
                                 title: Text(
                                   !_clickedCancel.value
-                                      //Todo:translate
-                                      ? 'Cancel order'
-                                      : 'Order is being canceled ...',
+                                      ? '${lang.strings["customer"]["restaurant"]["checkout"]["cancelOrder"]}'
+                                      : '${lang.strings["customer"]["restaurant"]["checkout"]["orderCanceled"]}',
                                   textAlign: TextAlign.center,
                                 ),
 
@@ -56,7 +55,7 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                                             CrossAxisAlignment.center,
                                         children: [
                                           Text(
-                                              'Are you sure you want to cancel the order ?'),
+                                              '${lang.strings["customer"]["restaurant"]["checkout"]["cancelOrderConfirm"]}'),
                                           SizedBox(
                                             height: 10.h,
                                           ),
@@ -148,7 +147,8 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                         backgroundColor: Colors.red.shade600),
                     child: Container(
                       alignment: Alignment.center,
-                      child: Text('Cancel order'),
+                      child: Text(
+                          '${lang.strings["customer"]["restaurant"]["checkout"]["cancelOrder"]}'),
                     )),
               )
             : (widget.order.status == RestaurantOrderStatus.Delivered)
@@ -167,7 +167,7 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                             width: 10,
                           ),
                           Text(
-                            'Order Delivered',
+                            '${lang.strings["customer"]["restaurant"]["orderStatus"]["orderDeliverd"]}',
                             style: txt.headline3,
                           )
                         ],
@@ -193,7 +193,7 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                                 width: 10,
                               ),
                               Text(
-                                'Order Canceled',
+                                '${lang.strings["customer"]["restaurant"]["orderStatus"]["orderCanceled"]}',
                                 style: txt.headline3,
                               )
                             ],
@@ -206,7 +206,8 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                             TextButton.styleFrom(backgroundColor: Colors.grey),
                         child: Container(
                           alignment: Alignment.center,
-                          child: Text('Cancel order'),
+                          child: Text(
+                              '${lang.strings["customer"]["restaurant"]["checkout"]["cancelOrder"]}'),
                         )));
   }
 }

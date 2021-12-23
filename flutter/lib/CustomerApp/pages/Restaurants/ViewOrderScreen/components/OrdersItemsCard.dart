@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:get/get.dart';
 
 import 'OrderItemsItemCard.dart';
 
 class OrderItemsCard extends StatelessWidget {
-  const OrderItemsCard({
+  OrderItemsCard({
     Key? key,
     required this.items,
   }) : super(key: key);
@@ -13,6 +15,7 @@ class OrderItemsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LanguageController lang = Get.find<LanguageController>();
     final txt = Theme.of(context).textTheme;
     return Container(
       child: Column(
@@ -21,7 +24,7 @@ class OrderItemsCard extends StatelessWidget {
             alignment: Alignment.centerLeft,
             margin: EdgeInsets.all(8),
             child: Text(
-              'Order items',
+              '${lang.strings["customer"]["restaurant"]["checkout"]["orderItems"]}',
               style: txt.headline3,
             ),
           ),
