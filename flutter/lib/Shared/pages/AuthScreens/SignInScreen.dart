@@ -40,54 +40,51 @@ class SignIn extends GetWidget<AuthController> {
           body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Obx(
-            () => (clickedLogin.value)
-                ? Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : Column(
-                    children: [
-                      (mode == SignInMode.OptionalSignIn)
-                          ? Container(
-                              padding: const EdgeInsets.all(15),
-                              alignment: Alignment.centerRight,
-                              child: IconButton(
-                                icon: Icon(
-                                  Icons.close,
-                                  color: Colors.black,
-                                ),
-                                onPressed: () {
-                                  Get.back();
-                                },
-                              ),
-                            )
-                          : Container(),
-                      MezcalmosSharedWidgets.logo(
-                          size: getSizeRelativeToScreen(60.w, sh, sw)),
-                      SizedBox(height: 10),
-                      MezcalmosSharedWidgets.mezcalmosTitle(
-                          textSize: 40.sp, isBold: true),
-                      SizedBox(
-                        height: 25,
+          child: Column(
+            children: [
+              (mode == SignInMode.OptionalSignIn)
+                  ? Container(
+                      padding: const EdgeInsets.all(15),
+                      alignment: Alignment.centerRight,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.close,
+                          color: Colors.black,
+                        ),
+                        onPressed: () {
+                          Get.back();
+                        },
                       ),
-                      Obx(
-                        () => Text(lang.strings['shared']['login']["title"],
-                            overflow: TextOverflow.visible,
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.headline1),
-                      ),
-                      Spacer(),
-                      facebookLoginBtn(lmode),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      smsLoginBtn(),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      if (lmode != "dev" && Platform.isIOS) appleLoginBtn(),
-                    ],
-                  ),
+                    )
+                  : Container(),
+              MezcalmosSharedWidgets.logo(
+                  size: getSizeRelativeToScreen(60.w, sh, sw)),
+              SizedBox(height: 10),
+              MezcalmosSharedWidgets.mezcalmosTitle(
+                  textSize: 40.sp, isBold: true),
+              SizedBox(
+                height: 25,
+              ),
+              Flexible(
+                flex: 2,
+                child: Obx(
+                  () => Text(lang.strings['shared']['login']["title"],
+                      overflow: TextOverflow.visible,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.headline1),
+                ),
+              ),
+              Spacer(),
+              facebookLoginBtn(lmode),
+              SizedBox(
+                height: 10,
+              ),
+              smsLoginBtn(),
+              SizedBox(
+                height: 10,
+              ),
+              if (lmode != "dev" && Platform.isIOS) appleLoginBtn(),
+            ],
           ),
         ),
       )),
@@ -140,83 +137,115 @@ class SignIn extends GetWidget<AuthController> {
 
   Obx smsLoginBtn() {
     return Obx(
-      () => TextButton.icon(
-          onPressed: clickedLogin.value ? null : () => Get.toNamed(kOtpRoute),
-          style: TextButton.styleFrom(
-            backgroundColor: Colors.blue,
-          ),
-          icon: (!clickedLogin.value)
-              ? Container(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Icon(Ionicons.chatbox))
-              : Container(),
-          label: Container(
-            alignment: Alignment.center,
-            width: double.infinity,
-            child: Text(
-              lang.strings['shared']['login']["loginWithSms"],
-            ),
-          )),
+      () => Container(
+        width: double.infinity,
+        child: TextButton(
+            onPressed: clickedLogin.value ? null : () => Get.toNamed(kOtpRoute),
+            style: TextButton.styleFrom(
+                backgroundColor: Colors.blue,
+                fixedSize: Size(double.infinity, 50)),
+            child: Container(
+              alignment: Alignment.center,
+              child: (clickedLogin.value)
+                  ? SizedBox(
+                      height: 25,
+                      width: 25,
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
+                    )
+                  : Row(
+                      children: [
+                        Container(
+                            padding: EdgeInsets.only(
+                                left: Get.width * 0.05,
+                                right: Get.width * 0.05),
+                            child: Icon(Ionicons.chatbox)),
+                        Spacer(),
+                        Text(
+                          lang.strings['shared']['login']["loginWithSms"],
+                        ),
+                        Spacer(),
+                      ],
+                    ),
+            )),
+      ),
     );
   }
 
   Widget facebookLoginBtn(lmode) {
     return Obx(
-      () => TextButton.icon(
-          onPressed: clickedLogin.value
-              ? null
-              : () async {
-                  clickedLogin.value = true;
-                  lmode != "dev"
-                      ? await controller.signInWithFacebook()
-                      : await Get.defaultDialog(
-                          title: "Choose Test User",
-                          content: Column(
-                            children: [
-                              TextButton(
-                                  onPressed: () {
-                                    Get.back();
-                                    controller.signIn(
-                                        tTestCustomerValue, tEmailTestPassword);
-                                  },
-                                  child: Text(tTestCustomerValue)),
-                              TextButton(
-                                  onPressed: () {
-                                    Get.back();
-                                    controller.signIn(
-                                        tTestTaxiValue, tEmailTestPassword);
-                                  },
-                                  child: Text(tTestTaxiValue)),
-                              TextButton(
-                                  onPressed: () {
-                                    Get.back();
-                                    controller.signIn(
-                                        tTestAdminValue, tEmailTestPassword);
-                                  },
-                                  child: Text(tTestAdminValue))
-                            ],
-                          ));
+      () => Container(
+        width: double.infinity,
+        child: TextButton(
+            onPressed: clickedLogin.value
+                ? null
+                : () async {
+                    clickedLogin.value = true;
+                    lmode != "dev"
+                        ? await controller.signInWithFacebook()
+                        : await Get.defaultDialog(
+                            title: "Choose Test User",
+                            content: Column(
+                              children: [
+                                TextButton(
+                                    onPressed: () {
+                                      Get.back();
+                                      controller.signIn(tTestCustomerValue,
+                                          tEmailTestPassword);
+                                    },
+                                    child: Text(tTestCustomerValue)),
+                                TextButton(
+                                    onPressed: () {
+                                      Get.back();
+                                      controller.signIn(
+                                          tTestTaxiValue, tEmailTestPassword);
+                                    },
+                                    child: Text(tTestTaxiValue)),
+                                TextButton(
+                                    onPressed: () {
+                                      Get.back();
+                                      controller.signIn(
+                                          tTestAdminValue, tEmailTestPassword);
+                                    },
+                                    child: Text(tTestAdminValue))
+                              ],
+                            ));
 
-                  clickedLogin.value = false;
-                },
-          style: TextButton.styleFrom(
-            backgroundColor: Color.fromARGB(255, 58, 85, 159),
-          ),
-          icon: (!clickedLogin.value)
-              ? Container(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Icon(Ionicons.logo_facebook),
-                )
-              : Container(),
-          label: Container(
-            alignment: Alignment.center,
-            width: double.infinity,
-            child: Text(
-              lmode != "dev"
-                  ? lang.strings['shared']['login']["fbBtn"]
-                  : "test mode login",
-            ),
-          )),
+                    clickedLogin.value = false;
+                  },
+            style: TextButton.styleFrom(
+                backgroundColor: Color.fromARGB(255, 58, 85, 159),
+                fixedSize: Size(double.infinity, 50)),
+            child: Container(
+              alignment: Alignment.center,
+              child: (clickedLogin.value)
+                  ? SizedBox(
+                      height: 25,
+                      width: 25,
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
+                    )
+                  : Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.only(
+                              left: Get.width * 0.05, right: Get.width * 0.05),
+                          child: Icon(Ionicons.logo_facebook),
+                        ),
+                        Spacer(),
+                        Text(
+                          lmode != "dev"
+                              ? lang.strings['shared']['login']["fbBtn"]
+                              : "test mode login",
+                        ),
+                        Spacer(),
+                      ],
+                    ),
+            )),
+      ),
     );
   }
 }
