@@ -84,6 +84,8 @@ class MessageController extends GetxController {
         mezDbgPrint("Recipient ===>$key");
         Participant recipient = _model.value.participants[key]!;
         if (recipient.participantType != participantType) {
+          mezDbgPrint(
+              "the user name is ${recipient.name} and the type is ${recipient.participantType.toString()}");
           return recipient;
         }
       }

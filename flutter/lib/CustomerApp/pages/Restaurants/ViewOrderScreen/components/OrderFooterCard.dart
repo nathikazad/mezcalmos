@@ -29,8 +29,7 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
   Widget build(BuildContext context) {
     final txt = Theme.of(context).textTheme;
     return Container(
-        child: (widget.order.inProcess() &&
-                widget.order.status == RestaurantOrderStatus.OrderReceieved)
+        child: (widget.order.inProcess())
             ? Container(
                 margin: EdgeInsets.all(8),
                 child: TextButton(
@@ -44,6 +43,7 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
 
                                 title: Text(
                                   !_clickedCancel.value
+                                      //Todo:translate
                                       ? 'Cancel order'
                                       : 'Order is being canceled ...',
                                   textAlign: TextAlign.center,

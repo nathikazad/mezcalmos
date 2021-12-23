@@ -81,23 +81,36 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
           if (event != null) {
             mezDbgPrint("===================" +
                 (event as RestaurantOrder).status.toString());
+
             order.value = event;
           } else {
             _orderListener?.cancel();
             _orderListener = null;
             controller.getPastOrderStream(orderId).listen((event) {
               if (event != null) {
-                mezDbgPrint("===================" +
-                    (event as RestaurantOrder).status.toString());
-                order.value = event;
+                mezDbgPrint("the past order is ========== $event ==========");
+                order.value = event as RestaurantOrder;
+              } else {
+                mezDbgPrint("the past order is ========== 'empty' ==========");
               }
             });
+            order.value = controller.getOrder(orderId) as RestaurantOrder?;
           }
         });
       }
       //mezDbgPrint("=========> ${order.value}");
     }
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(ViewRestaurantOrderScreen oldWidget) {
+    String orderId = Get.parameters['orderId']!;
+    super.didUpdateWidget(oldWidget);
+    mezDbgPrint("this widget is updated");
+    if (order.value == null) {
+      order.value = controller.getOrder(orderId) as RestaurantOrder?;
+    }
   }
 
   @override
@@ -114,48 +127,53 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
     return Scaffold(
         appBar: CustomerAppBar(
           autoBack: true,
+          //Todo:translate
           title: 'Order status',
         ),
         body: Obx(
-          () => (order.value != null)
-              ? SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        OrderStatusCard(
-                          order: order.value!,
-                          ordersStates: order.value!.status,
-                        ),
+          () {
+            if (order.value != null) {
+              return SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      SizedBox(
+                        height: 10,
+                      ),
+                      OrderStatusCard(
+                        order: order.value!,
+                        ordersStates: order.value!.status,
+                      ),
 
-                        OrderItemsCard(
-                          items: order.value!.items,
-                        ),
+                      OrderItemsCard(
+                        items: order.value!.items,
+                      ),
 
-                        SizedBox(
-                          height: 2,
-                        ),
-                        OrderSummaryCard(order: order.value!),
-                        //===============================>notes========================>
-                        order.value?.notes == null ||
-                                order.value!.notes!.length <= 0
-                            ? SizedBox()
-                            : notesWidget(order),
-                        //===============================>button cancel===========================
+                      SizedBox(
+                        height: 2,
+                      ),
+                      OrderSummaryCard(order: order.value!),
+                      //===============================>notes========================>
+                      order.value?.notes == null ||
+                              order.value!.notes!.length <= 0
+                          ? SizedBox()
+                          : notesWidget(order),
+                      //===============================>button cancel===========================
 
-                        SizedBox(height: 20),
-                        Container(
-                            alignment: Alignment.center,
-                            child: OrderFooterCard(order: order.value!)),
-                      ],
-                    ),
+                      SizedBox(height: 20),
+                      Container(
+                          alignment: Alignment.center,
+                          child: OrderFooterCard(order: order.value!)),
+                    ],
                   ),
-                )
-              : Center(child: CircularProgressIndicator()),
+                ),
+              );
+            } else {
+              return Center(child: CircularProgressIndicator());
+            }
+          },
         ));
   }
 }

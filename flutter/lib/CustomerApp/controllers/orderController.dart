@@ -18,6 +18,7 @@ class OrderController extends GetxController {
       Get.find<ForegroundNotificationsController>();
   RxList<Order> currentOrders = <Order>[].obs;
   RxList<Order> pastOrders = <Order>[].obs;
+  String lastPastOrderId = "";
 
   StreamSubscription? _currentOrdersListener;
   StreamSubscription? _pastOrdersListener;
@@ -36,7 +37,8 @@ class OrderController extends GetxController {
           .listen((event) async {
         mezDbgPrint("----------------- O R D E R CONTROLLER ----------------");
         mezDbgPrint("----------------- O R D E R CONTROLLER ----------------");
-        mezDbgPrint("PAST ORDERS ==> ${event.snapshot.value}");
+        mezDbgPrint("PAST ORDERS ==> ${event.snapshot.value} ");
+
         mezDbgPrint("----------------- O R D E R CONTROLLER ----------------");
         mezDbgPrint("----------------- O R D E R CONTROLLER ----------------");
 
@@ -55,7 +57,8 @@ class OrderController extends GetxController {
                 orders.add(TaxiOrder.fromData(orderId, orderData));
               }
             } catch (e) {
-              mezDbgPrint("past order error $orderId" + e.toString());
+              mezDbgPrint(
+                  "past order error $orderId ==============" + e.toString());
             }
           }
         }

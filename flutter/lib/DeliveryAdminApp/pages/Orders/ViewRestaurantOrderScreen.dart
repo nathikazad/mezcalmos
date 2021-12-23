@@ -9,8 +9,12 @@ import 'package:mezcalmos/DeliveryAdminApp/components/buttonComponent.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/dailogComponent.dart';
 import 'package:mezcalmos/DeliveryAdminApp/constants/global.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/orderController.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -30,16 +34,19 @@ class ViewRestaurantOrderScreen extends StatefulWidget {
 
 class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
   LanguageController lang = Get.find<LanguageController>();
+  AuthController auth = Get.find<AuthController>();
   // Since we have alot of buttons we check loading by name
   bool _clickedButton = false;
 
   Rxn<RestaurantOrder> order = Rxn();
   OrderController controller = Get.find<OrderController>();
   late String orderId;
+  Rx<bool> hasNewMessage = false.obs;
   StreamSubscription? _orderListener;
   @override
   void initState() {
     super.initState();
+
     mezDbgPrint("ViewOrderScreen");
     orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
@@ -72,6 +79,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
           mezDbgPrint(order.value.toString());
           if (order.value == null) {
             // Order Loading ..
+            Get.back();
             return MezLogoAnimation(
               centered: true,
             );
@@ -493,6 +501,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                       ]));
               if (res) {
                 controller.cancelOrder(orderId);
+                Get.back();
               }
             }),
             widget: getWidgetOrShowLoading(Text(
