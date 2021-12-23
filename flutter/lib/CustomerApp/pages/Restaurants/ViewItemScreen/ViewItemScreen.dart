@@ -196,15 +196,19 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
       bool isOpen = false;
       schedule.openHours.forEach((key, value) {
         if (key.toFirebaseFormatString() == dayNane.toLowerCase()) {
-          var dateOfStart =
-              DateTime(x.year, x.month, x.day, value.from[0], value.from[1]);
-          var dateOfClose =
-              DateTime(x.year, x.month, x.day, value.to[0], value.to[1]);
-          mezDbgPrint(dateOfStart.toString());
-          mezDbgPrint(dateOfClose.toString());
-          if (dateOfStart.isBefore(x) && dateOfClose.isAfter(x)) {
-            mezDbgPrint("Today is $dayNane");
-            isOpen = true;
+          if (value.isOpen == true) {
+            var dateOfStart =
+                DateTime(x.year, x.month, x.day, value.from[0], value.from[1]);
+            var dateOfClose =
+                DateTime(x.year, x.month, x.day, value.to[0], value.to[1]);
+            mezDbgPrint(dateOfStart.toString());
+            mezDbgPrint(dateOfClose.toString());
+            if (dateOfStart.isBefore(x) && dateOfClose.isAfter(x)) {
+              mezDbgPrint("Today is $dayNane");
+              isOpen = true;
+            }
+          } else {
+            isOpen = false;
           }
         }
       });
