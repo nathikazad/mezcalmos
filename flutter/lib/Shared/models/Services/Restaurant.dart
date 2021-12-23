@@ -42,7 +42,7 @@ class Restaurant {
     String name = restaurantData["info"]["name"];
     String photo = restaurantData["info"]["image"];
     String description = restaurantData["details"]["description"][language];
-    Schedule? schedule = restaurantData["details"]["openHours"] != null
+    Schedule? schedule = restaurantData["details"]["schedule"] != null
         ? Schedule.fromData(restaurantData["details"]["openHours"])
         : null;
 
