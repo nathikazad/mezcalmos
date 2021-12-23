@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -72,7 +74,6 @@ class SignIn extends GetWidget<AuthController> {
                       style: Theme.of(context).textTheme.headline1),
                 ),
               ),
-
               Spacer(),
               facebookLoginBtn(lmode),
               SizedBox(
@@ -82,8 +83,7 @@ class SignIn extends GetWidget<AuthController> {
               SizedBox(
                 height: 10,
               ),
-              // if (lmode != "dev" && Platform.isIOS)
-              appleLoginBtn(),
+              if (lmode != "dev" && Platform.isIOS) appleLoginBtn(),
             ],
           ),
         ),
@@ -113,8 +113,8 @@ class SignIn extends GetWidget<AuthController> {
             alignment: Alignment.center,
             child: (clickedLogin.value)
                 ? SizedBox(
-                    height: 30,
-                    width: 30,
+                    height: 25,
+                    width: 25,
                     child: CircularProgressIndicator(
                       color: Colors.white,
                     ),
@@ -142,8 +142,8 @@ class SignIn extends GetWidget<AuthController> {
             alignment: Alignment.center,
             child: (clickedLogin.value)
                 ? SizedBox(
-                    height: 30,
-                    width: 30,
+                    height: 25,
+                    width: 25,
                     child: CircularProgressIndicator(
                       color: Colors.white,
                     ),
@@ -207,8 +207,8 @@ class SignIn extends GetWidget<AuthController> {
             alignment: Alignment.center,
             child: (clickedLogin.value)
                 ? SizedBox(
-                    height: 30,
-                    width: 30,
+                    height: 25,
+                    width: 25,
                     child: CircularProgressIndicator(
                       color: Colors.white,
                     ),

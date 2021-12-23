@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 class NoUserIcon extends StatelessWidget {
@@ -14,7 +15,7 @@ class NoUserIcon extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         child: CircleAvatar(
             radius: 15.h,
-            backgroundImage: AssetImage('assets/images/shared/noUserImage.jpg'),
+            backgroundImage: AssetImage(aDefaultAvatar),
             child: Material(
               shape: CircleBorder(),
               clipBehavior: Clip.hardEdge,

@@ -168,38 +168,43 @@ class OtpConfirmationScreen extends GetView<AuthController> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "You have'nt recieve the text ?",
+                  "You have'nt recieve the text ?  ",
                   style: txt.bodyText2,
                 ),
                 Obx(
-                  () => TextButton(
-                      onPressed: _timeBetweenResending.value == 0
-                          ? () async {
-                              // resend code !
-                              canConfirmOtp.value = false;
-                              _otpCodeTextController.clear();
-                              ServerResponse response =
-                                  await controller.sendOTPForLogin(
-                                      Get.arguments ?? _phonePassed);
-                              mezDbgPrint(response.data);
-                              if (!response.success) {
-                                resendOtpTimerActivate(
-                                    response.data['secondsLeft']);
-                                MezSnackbar(response.status.toShortString(),
-                                    response.errorMessage.toString(),
-                                    position: SnackPosition.TOP);
+                  () => Flexible(
+                    child: TextButton(
+                        onPressed: _timeBetweenResending.value == 0
+                            ? () async {
+                                // resend code !
+                                canConfirmOtp.value = false;
+                                _otpCodeTextController.clear();
+                                ServerResponse response =
+                                    await controller.sendOTPForLogin(
+                                        Get.arguments ?? _phonePassed);
+                                mezDbgPrint(response.data);
+                                if (!response.success) {
+                                  resendOtpTimerActivate(
+                                      response.data['secondsLeft']);
+                                  MezSnackbar(response.status.toShortString(),
+                                      response.errorMessage.toString(),
+                                      position: SnackPosition.TOP);
+                                }
                               }
-                            }
-                          : null,
-                      style: TextButton.styleFrom(
-                          backgroundColor: Colors.transparent),
-                      child: Text(
-                        _timeBetweenResending.value == 0
-                            ? lang.strings['shared']['login']["resend"]
-                            : "${lang.strings['shared']['login']["resendAfter"]} ${_timeBetweenResending.value} ${lang.strings['shared']['login']["seconds"]}",
-                        textAlign: TextAlign.left,
-                        style: txt.bodyText1,
-                      )),
+                            : null,
+                        style: TextButton.styleFrom(
+                            textStyle: Theme.of(context).textTheme.bodyText2,
+                            backgroundColor: _timeBetweenResending.value == 0
+                                ? Theme.of(context)
+                                    .primaryColorLight
+                                    .withOpacity(0.8)
+                                : Colors.grey),
+                        child: Text(
+                          _timeBetweenResending.value == 0
+                              ? lang.strings['shared']['login']["resend"]
+                              : "${lang.strings['shared']['login']["resendAfter"]} ${_timeBetweenResending.value} ${lang.strings['shared']['login']["seconds"]}",
+                        )),
+                  ),
                 ),
               ],
             )

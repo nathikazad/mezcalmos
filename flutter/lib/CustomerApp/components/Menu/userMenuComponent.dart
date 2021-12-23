@@ -49,11 +49,10 @@ class _UserMenuState extends State<UserMenu> {
       ),
       itemBuilder: (context) {
         return [
-          if (orderController.currentOrders.isNotEmpty)
-            PopupMenuItem(
-              child: orderMenuItem(context),
-              value: 2,
-            ),
+          PopupMenuItem(
+            child: orderMenuItem(context),
+            value: 2,
+          ),
           if (notifController.notifications.isNotEmpty)
             PopupMenuItem(
               child: notificationMenuItem(context),
@@ -133,16 +132,18 @@ class _UserMenuState extends State<UserMenu> {
   Row orderMenuItem(BuildContext context) {
     return Row(
       children: [
-        Badge(
-            badgeColor: Theme.of(context).primaryColorLight,
-            badgeContent: Text(
-              orderController.currentOrders.length.toStringAsFixed(0),
-              style: Theme.of(context)
-                  .textTheme
-                  .subtitle1!
-                  .copyWith(color: Colors.white),
-            ),
-            child: Icon(Ionicons.time_outline)),
+        (orderController.currentOrders.isNotEmpty)
+            ? Badge(
+                badgeColor: Theme.of(context).primaryColorLight,
+                badgeContent: Text(
+                  orderController.currentOrders.length.toStringAsFixed(0),
+                  style: Theme.of(context)
+                      .textTheme
+                      .subtitle1!
+                      .copyWith(color: Colors.white),
+                ),
+                child: Icon(Ionicons.time_outline))
+            : Icon(Ionicons.time_outline),
         SizedBox(
           width: 10,
         ),

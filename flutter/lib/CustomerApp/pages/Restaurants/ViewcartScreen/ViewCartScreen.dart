@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/components/appbar.dart';
 import 'package:mezcalmos/CustomerApp/components/buttonComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
@@ -8,12 +9,12 @@ import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/viewCartBody.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Schedule.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/models/Schedule.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
+
 import 'components/cartIsEmptyScreen.dart';
-import 'package:intl/intl.dart';
 
 enum DropDownResult { Null, String }
 
@@ -87,7 +88,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
       bottomNavigationBar: ButtonComponent(
           bgColor: getTheRightButtonColor(),
           widget: Center(
-              child: getTheRightWidgetForOrderNowButton(!_clickedOrderNow)),
+              child: getTheRightWidgetForOrderNowButton(_clickedOrderNow)),
           function: checkoutActionButton),
     );
   }

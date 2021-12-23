@@ -60,9 +60,10 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                 child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  OngoingOrderList(txt: txt, controller: controller),
-                  Divider(),
-                  PastOrderList(txt: txt, controller: controller),
+                  if (controller.currentOrders.isNotEmpty)
+                    OngoingOrderList(txt: txt, controller: controller),
+                  if (controller.pastOrders.isNotEmpty)
+                    PastOrderList(txt: txt, controller: controller),
                 ],
               ))
             : Container(
@@ -183,7 +184,8 @@ class OngoingOrderList extends StatelessWidget {
                       height: 0,
                     );
                 }
-              })
+              }),
+          Divider(),
         ]),
       ),
     );

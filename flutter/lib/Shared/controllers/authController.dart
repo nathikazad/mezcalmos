@@ -1,24 +1,25 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
+
+import 'package:cloud_functions/cloud_functions.dart';
+import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
+import 'package:firebase_core/firebase_core.dart' as firebase_core;
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:mezcalmos/Shared/models/ServerResponse.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
-import 'package:mezcalmos/Shared/models/User.dart';
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
-import 'dart:convert';
-import 'dart:math';
+import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/ServerResponse.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
-import 'package:crypto/crypto.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'package:firebase_core/firebase_core.dart' as firebase_core;
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class AuthController extends GetxController {
   fireAuth.FirebaseAuth _auth = fireAuth.FirebaseAuth.instance;
@@ -220,7 +221,7 @@ class AuthController extends GetxController {
 
   Future<ServerResponse?> signInUsingOTP(
       String phoneNumber, String otpCode) async {
-    print("$phoneNumber  < phone ------ otp > $otpCode");
+    mezDbgPrint("$phoneNumber  < phone ------ otp > $otpCode");
     HttpsCallable getAuthUsingOTPFunction =
         FirebaseFunctions.instance.httpsCallable('otp-getAuthUsingOTP');
     HttpsCallableResult? response;

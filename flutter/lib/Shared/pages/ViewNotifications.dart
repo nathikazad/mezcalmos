@@ -168,7 +168,7 @@ class ClearNotifButton extends StatelessWidget {
                           ),
                         ));
 
-                    if (yesNoRes != YesNoDialogButton.Yes) {
+                    if (yesNoRes == YesNoDialogButton.Yes) {
                       controller.clearAllNotification();
                       Get.back();
                     }

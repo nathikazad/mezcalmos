@@ -19,26 +19,32 @@ class MyCartAppBarIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() => _authController.isUserSignedIn &&
             Get.find<RestaurantController>().cart.value.items.length > 0
-        ? IconButton(
-            onPressed: () {
-              Get.toNamed(kCartRoute);
-            },
-            splashRadius: 20,
-            icon: Badge(
-                badgeContent: Text(
-                  Get.find<RestaurantController>()
-                      .cart
-                      .value
-                      .items
-                      .length
-                      .toStringAsFixed(0),
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText2!
-                      .copyWith(color: Colors.white),
-                ),
-                badgeColor: Theme.of(context).primaryColorLight,
-                child: Icon(Ionicons.cart,color: iconColor,)))
+        ? Padding(
+            padding: const EdgeInsets.only(right: 5.0),
+            child: IconButton(
+                onPressed: () {
+                  Get.toNamed(kCartRoute);
+                },
+                splashRadius: 20,
+                icon: Badge(
+                    badgeContent: Text(
+                      Get.find<RestaurantController>()
+                          .cart
+                          .value
+                          .items
+                          .length
+                          .toStringAsFixed(0),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText2!
+                          .copyWith(color: Colors.white),
+                    ),
+                    badgeColor: Theme.of(context).primaryColorLight,
+                    child: Icon(
+                      Ionicons.cart,
+                      color: iconColor,
+                    ))),
+          )
         : Container());
   }
 }

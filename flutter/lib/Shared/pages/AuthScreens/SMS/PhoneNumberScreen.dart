@@ -50,25 +50,20 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 10,
+                  height: 5,
                 ),
-                TextButton(
-                    onPressed: () {
-                      Get.toNamed(kOtpConfirmRoute,
-                          arguments:
-                              "${_prefixTextFieldController.text}${_numberTextFieldController.text}");
-                    },
-                    child: Text('Second PAge')),
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  child: Text(
+                Obx(
+                  () => Container(
+                    padding: const EdgeInsets.all(16),
+                    child: Text(
 
-                      ///****add ths to lan file */
-                      lang.strings['shared']['login']["otpCode"],
-                      style: Theme.of(context).textTheme.headline1),
+                        ///****add ths to lan file */
+                        lang.strings['shared']['login']["otpCode"],
+                        style: Theme.of(context).textTheme.headline1),
+                  ),
                 ),
                 SizedBox(
-                  height: 15,
+                  height: 10,
                 ),
                 NumberInputCard(context),
                 Obx(
@@ -87,9 +82,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
             bottom: MediaQuery.of(context).viewInsets.bottom,
             left: 0,
             right: 0,
-            child: Obx(
-              () => SubmitButton(context),
-            ),
+            child: SubmitButton(context),
           ),
         ],
       ),
@@ -132,6 +125,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                       children: [
                         Expanded(
                           child: TextFormField(
+                              autofocus: false,
                               style: Theme.of(context)
                                   .textTheme
                                   .headline1!
