@@ -29,7 +29,8 @@ Notification orderStatusChangeNotificationHandler(String key, dynamic value) {
       title: dynamicFields["title"],
       timestamp: DateTime.parse(value['time']),
       notificationType: NotificationType.OrderStatusChange,
-      notificationAction: value["notificationAction"],
+      notificationAction:
+          (value["notificationAction"] as String).toNotificationAction(),
       variableParams: value);
 }
 

@@ -44,13 +44,14 @@ class LocationSearchBarController {
   }
 
   void expandDropdown({int itemsCount = 2}) {
-    // eachItems = 32 OF HEIGHT
-    double height = 2 * 32;
+    /// eachItems = [itemMaxHeight] OF HEIGHT
+    const double itemMaxHeight = 35;
+    double height = 2 * itemMaxHeight;
 
     if (itemsCount >= 2 && itemsCount <= 4) {
-      height = itemsCount * 32;
+      height = itemsCount * itemMaxHeight;
     } else if (itemsCount > 4) {
-      height = 4 * 32;
+      height = 4 * itemMaxHeight;
     }
 
     pickChoicesDropDownHeight.value = height.sp;
@@ -153,7 +154,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
 
   Widget fromTextField() {
     return Expanded(
-      flex: locationSearchBarController.fromTextFieldFocusNode.hasFocus ? 6 : 5,
+      flex: locationSearchBarController.fromTextFieldFocusNode.hasFocus ? 7 : 5,
       child: LocationSearchComponent(
         suffixPadding: EdgeInsets.only(top: 20, right: 10),
         focusNode: locationSearchBarController.fromTextFieldFocusNode,
@@ -217,7 +218,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
 
   Widget toTextField() {
     return Expanded(
-      flex: locationSearchBarController.toTextFieldFocusNode.hasFocus ? 6 : 5,
+      flex: locationSearchBarController.toTextFieldFocusNode.hasFocus ? 7 : 5,
       child: LocationSearchComponent(
         suffixPadding: EdgeInsets.only(top: 20, right: 10),
         focusNode: locationSearchBarController.toTextFieldFocusNode,

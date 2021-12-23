@@ -96,32 +96,32 @@ class TaxiAppTheme {
     textTheme: TextTheme(
       headline1: TextStyle(
           fontFamily: "Poppins",
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.w400,
           fontSize: 20.sp,
           color: Colors.black),
       headline2: TextStyle(
           fontFamily: "Poppins",
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.w400,
           fontSize: 18.sp,
           color: Colors.black),
       headline3: TextStyle(
         fontFamily: "Montserrat",
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w400,
         fontSize: 16.sp,
         color: Colors.black,
       ),
       bodyText1: TextStyle(
           fontFamily: "Montserrat",
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.w400,
           fontSize: 14.sp,
           color: Colors.black),
       bodyText2: TextStyle(
           fontFamily: "Nunito",
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.w400,
           fontSize: 13.sp,
           color: Colors.black),
       subtitle1: TextStyle(
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.w400,
           fontFamily: "Nunito",
           fontSize: 10.sp,
           color: Colors.black.withOpacity(0.8)),
