@@ -179,7 +179,6 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                         widget.order.status ==
                             RestaurantOrderStatus.CancelledByAdmin)
                     ? Card(
-                        color: Colors.black,
                         child: Container(
                           alignment: Alignment.center,
                           margin: EdgeInsets.all(16),
@@ -195,8 +194,7 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                               ),
                               Text(
                                 'Order Canceled',
-                                style: txt.headline3!
-                                    .copyWith(color: Colors.white),
+                                style: txt.headline3,
                               )
                             ],
                           ),

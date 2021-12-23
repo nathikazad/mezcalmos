@@ -41,7 +41,7 @@ class _UserMenuState extends State<UserMenu> {
     final txt = Theme.of(context).textTheme;
     return PopupMenuButton(
       padding: EdgeInsets.only(right: 12),
-      iconSize: 35,
+   
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(15.0))),
       icon: UserMenuIcon(

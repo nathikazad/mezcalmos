@@ -15,7 +15,7 @@ Future<String?> savedLocationDailog(
   }
   return await Get.defaultDialog(
       radius: 4,
-      title: lang.strings["customer"]["savedLocations"]["title"],
+      title: ' ',
       content: Container(
         child: SingleChildScrollView(
             child: Column(
@@ -49,8 +49,8 @@ Future<String?> savedLocationDailog(
                     .copyWith(fontSize: 13),
                 controller: txtController,
                 decoration: InputDecoration(
-                    hintText: lang.strings["customer"]["savedLocations"]
-                        ["addLocationDialog"]["textHint"],
+                    // hintText: lang.strings["customer"]["savedLocations"]
+                    //     ["addLocationDialog"]["textHint"],
                     border: InputBorder.none,
                     focusedBorder: InputBorder.none),
               ),
@@ -97,9 +97,8 @@ InkWell skipButton(
       width: 100,
       height: 35,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(4)),
-        color: Colors.grey[300],
-      ),
+          borderRadius: BorderRadius.all(Radius.circular(4)),
+          color: Colors.grey.shade700),
       child: Center(
         child: Text(
             lang.strings["customer"]["savedLocations"]["addLocationDialog"]

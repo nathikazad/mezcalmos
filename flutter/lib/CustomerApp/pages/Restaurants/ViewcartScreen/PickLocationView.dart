@@ -164,8 +164,17 @@ class _PickLocationViewState extends State<PickLocationView> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(
+                height: 10,
+              ),
               Container(
-                padding: EdgeInsets.only(top: 10, left: 10, right: 10),
+                margin: const EdgeInsets.all(8),
+                child: Text(
+                    _lang.strings["customer"]["pickLocation"]["pickLabele"]),
+              ),
+
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 8),
                 child: LocationSearchComponent(
                     hintPadding: EdgeInsets.only(left: 10),
                     suffixPadding: EdgeInsets.only(right: 10),
@@ -183,12 +192,8 @@ class _PickLocationViewState extends State<PickLocationView> {
                       });
                     }),
               ),
-
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                child: Text(
-                    _lang.strings["customer"]["pickLocation"]["pickLabele"]),
+              SizedBox(
+                height: 10,
               ),
               // stack
               Expanded(

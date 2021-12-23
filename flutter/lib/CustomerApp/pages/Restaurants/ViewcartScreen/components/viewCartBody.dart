@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/dropDownListCartView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/textFieldComponent.dart';
-import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/dropDownListCartView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/textFieldComponent.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'buildCart.dart';
 import 'buildItems.dart';
 import 'orderSummaryCard.dart';
@@ -43,17 +43,14 @@ class _ViewCartBodyState extends State<ViewCartBody> {
                   children: [
                     buildCart(controller.cart.value, context),
                     SizedBox(
-                      height: 15,
+                      height: 10,
                     ),
                     buildItems(controller.cart.value.items, context),
-                    SizedBox(
-                      height: 20,
-                    ),
                   ],
                 )
               : Container(),
           SizedBox(
-            height: 21.h,
+            height: 10,
           ),
           Obx(() => OrderSummaryCard(
                 onValueChangeCallback: widget.onValueChangeCallback,

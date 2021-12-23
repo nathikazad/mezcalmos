@@ -86,10 +86,10 @@
                 "preparing": "Preparing the order",
                 "readyForPickUp": "Ready For Pickup",
                 "onTheWay": "On The Way",
-                "delivered": "Delivered",
-                "canceledByAdmin": "Canceled By Admin",
-                "canceledByCustomer": "Canceled By Customer",
-                "recievied": "Receieved"
+                "delivered": "Order Delivered",
+                "canceledByAdmin": "Order Canceled",
+                "canceledByCustomer": "Order Canceled",
+                "recievied": "Order Recieved"
             }
         },
         "inviteCode": {
@@ -132,9 +132,9 @@
             "deleteLocation":"Delete Location",
             "locations":"Locations",
             "addLocationDialog":{
-                "title":"If you give a name, you can save the location for future use.",
+                "title":"Enter the location name.",
                 "button":"OK",
-                "textHint":"Location Name",
+                "textHint":"location name",
                 "skip":"Skip"
             },
             "editLocationDialog":{

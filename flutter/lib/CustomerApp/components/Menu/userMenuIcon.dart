@@ -6,7 +6,6 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class UserMenuIcon extends StatelessWidget {
   UserMenuIcon({
@@ -44,8 +43,7 @@ class UserMenuIcon extends StatelessWidget {
       padding: EdgeInsets.all(6),
       badgeContent: Text(
         (notifController.notifications.length +
-                orderController.currentOrders.length 
-                )
+                orderController.currentOrders.length)
             .toString(),
         style: Theme.of(context)
             .textTheme

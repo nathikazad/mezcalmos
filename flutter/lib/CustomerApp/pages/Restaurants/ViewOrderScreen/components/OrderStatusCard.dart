@@ -1,13 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:rive/rive.dart';
 
 class OrderStatusCard extends StatelessWidget {
@@ -31,19 +30,23 @@ class OrderStatusCard extends StatelessWidget {
         Card(
           child: Container(
             width: double.infinity,
-            padding: const EdgeInsets.all(12),
+            margin: const EdgeInsets.all(12),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                getOrderWidget(ordersStates),
+                getOrderWidget(RestaurantOrderStatus.CancelledByAdmin),
                 Flexible(
-                    child: Text(
-                  getOrderStatus(ordersStates),
-                  style: txt.headline3,
-                  textAlign: TextAlign.center,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                )),
+                  flex: 8,
+                  fit: FlexFit.tight,
+                  child: Text(
+                    getOrderStatus(RestaurantOrderStatus.CancelledByAdmin),
+                    style: txt.headline3,
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                Spacer(),
                 Material(
                   color: Theme.of(context).primaryColorLight,
                   shape: CircleBorder(),
@@ -101,29 +104,38 @@ class OrderStatusCard extends StatelessWidget {
 Widget getOrderWidget(RestaurantOrderStatus status) {
   switch (status) {
     case RestaurantOrderStatus.CancelledByAdmin:
-      return Icon(
-        Ionicons.bag_remove,
-        size: 40.w,
-        color: Colors.red,
+      return Padding(
+        padding: const EdgeInsets.only(right: 5.0),
+        child: Icon(
+          Ionicons.bag_remove,
+          size: 50,
+          color: Colors.red,
+        ),
       );
 
     case RestaurantOrderStatus.CancelledByCustomer:
-      return Icon(
-        Ionicons.bag_remove,
-        size: 40.w,
-        color: Colors.red,
+      return Padding(
+        padding: const EdgeInsets.only(right: 5.0),
+        child: Icon(
+          Ionicons.bag_remove,
+          size: 50,
+          color: Colors.red,
+        ),
       );
 
     case RestaurantOrderStatus.OrderReceieved:
-      return Icon(
-        Icons.hourglass_bottom_rounded,
-        size: 40.w,
-        color: Colors.grey,
+      return Padding(
+        padding: const EdgeInsets.only(right: 5.0),
+        child: Icon(
+          Icons.hourglass_bottom_rounded,
+          size: 50,
+          color: Colors.grey,
+        ),
       );
     case RestaurantOrderStatus.PreparingOrder:
       return Container(
-        height: 40.h,
-        width: 80.w,
+        height: 50,
+        width: 60,
         child: RiveAnimation.asset(
           "assets/animation/cooking.riv",
           fit: BoxFit.cover,
@@ -131,25 +143,31 @@ Widget getOrderWidget(RestaurantOrderStatus status) {
       );
     case RestaurantOrderStatus.OnTheWay:
       return Container(
-        height: 40.h,
-        width: 80.w,
+        height: 50,
+        width: 60,
         child: RiveAnimation.asset(
           "assets/animation/motorbikeWithSmokeAnimation.riv",
           fit: BoxFit.cover,
         ),
       );
     case RestaurantOrderStatus.ReadyForPickup:
-      return Icon(
-        Ionicons.bag,
-        size: 40.w,
-        color: Colors.grey,
+      return Padding(
+        padding: const EdgeInsets.only(right: 5.0),
+        child: Icon(
+          Ionicons.bag,
+          size: 50,
+          color: Colors.grey,
+        ),
       );
 
     case RestaurantOrderStatus.Delivered:
-      return Icon(
-        Ionicons.bag_check,
-        size: 40.w,
-        color: Colors.green,
+      return Padding(
+        padding: const EdgeInsets.only(right: 5.0),
+        child: Icon(
+          Ionicons.bag_check,
+          size: 50,
+          color: Colors.green,
+        ),
       );
   }
 }
@@ -180,9 +198,9 @@ String getOrderStatus(RestaurantOrderStatus status) {
 String getOrderHelperText(RestaurantOrderStatus status) {
   switch (status) {
     case RestaurantOrderStatus.CancelledByAdmin:
-      return 'Your order is canceled by the Restaurant';
+      return 'Your order has been canceled by the restaurant';
     case RestaurantOrderStatus.CancelledByCustomer:
-      return 'Your order is canceled by the customer';
+      return 'Your order has been canceled';
     case RestaurantOrderStatus.OrderReceieved:
       return 'Your order is recieved by the restaurant';
     case RestaurantOrderStatus.PreparingOrder:

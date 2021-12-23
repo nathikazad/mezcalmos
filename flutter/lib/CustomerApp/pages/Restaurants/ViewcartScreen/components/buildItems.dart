@@ -8,8 +8,8 @@ import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/choosenMannyOption.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 
 import 'choosenOneOption.dart';
@@ -28,8 +28,7 @@ Widget buildItems(List<CartItem> cartItems, BuildContext context) {
       print("${element.toFirebaseFunctionFormattedJson()}");
       mezDbgPrint("${element.id}");
       children.add(Container(
-        padding: const EdgeInsets.only(bottom: 15),
-        margin: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
+        margin: const EdgeInsets.all(5),
         child: MyExpensionPanelComponent(
           child: Flexible(
               child: Obx(

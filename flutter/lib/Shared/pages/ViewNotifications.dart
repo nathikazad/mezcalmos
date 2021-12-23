@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -33,41 +34,6 @@ class _ViewNotificationsState extends State<ViewNotifications> {
     super.initState();
   }
 
-// TODO remove static list and use the one comming from thee controller
-// TODO add obx
-  List<notifs.Notification> myNotifs = [
-    notifs.Notification(
-        id: '55',
-        timestamp: DateTime.now(),
-        title: 'The restaurant is preparing the order',
-        body: 'Restaurant name start preparing your order',
-        imgUrl:
-            'assets/images/shared/notifications/onTheWayOrderNotificationIcon.png',
-        linkUrl: 'linkUrl',
-        notificationType: notifs.NotificationType.OrderStatusChange,
-        notificationAction: notifs.NotificationAction.ShowPopUp),
-    notifs.Notification(
-        id: '55',
-        timestamp: DateTime.now(),
-        title: 'Your order is ready for pickup',
-        body: 'Restaurant name start preparing your order',
-        imgUrl:
-            'assets/images/shared/notifications/droppedOrderNotificationIcon.png',
-        linkUrl: 'linkUrl',
-        notificationType: notifs.NotificationType.OrderStatusChange,
-        notificationAction: notifs.NotificationAction.ShowPopUp),
-    notifs.Notification(
-        id: '55',
-        timestamp: DateTime(2021, 12, 13),
-        title: 'Your order is ready for pickup',
-        body: 'Restaurant name start preparing your order',
-        imgUrl:
-            'assets/images/shared/notifications/prepareOrderNotificationIcon.png',
-        linkUrl: 'linkUrl',
-        notificationType: notifs.NotificationType.OrderStatusChange,
-        notificationAction: notifs.NotificationAction.ShowPopUp),
-  ];
-
   @override
   Widget build(BuildContext context) {
     final txt = Theme.of(context).textTheme;
@@ -82,7 +48,7 @@ class _ViewNotificationsState extends State<ViewNotifications> {
           child: Column(
             children: [
               ClearNotifButton(),
-              _buildNotification(controller.notifications)
+              Obx(() => _buildNotification(controller.notifications))
             ],
           ),
         ),
@@ -146,14 +112,20 @@ class ClearNotifButton extends StatelessWidget {
     return Obx(() => (controller.notifications.value.length <= 0)
         ? Container()
         : Container(
+            // padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                'Latest',
-                style: Theme.of(context).textTheme.bodyText1,
+              Container(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Text(
+                  'Latest',
+                  style: Theme.of(context).textTheme.headline3,
+                ),
               ),
               IconButton(
+                  iconSize: 20,
                   onPressed: () async {
                     YesNoDialogButton yesNoRes = await cancelAlertDialog(
                         title:
@@ -173,7 +145,9 @@ class ClearNotifButton extends StatelessWidget {
                       Get.back();
                     }
                   },
-                  icon: Icon(Ionicons.trash_outline)),
+                  icon: Icon(
+                    Ionicons.trash_outline,
+                  )),
             ],
           )));
   }
@@ -204,13 +178,18 @@ class NotifCard extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  CircleAvatar(
-                    radius: 25,
-
-                    backgroundColor: Colors.transparent,
-                    // TODO implement the real image
-                    backgroundImage: AssetImage(notification.imgUrl),
-                  ),
+                  (notification.imgUrl.isURL)
+                      ? CircleAvatar(
+                          radius: 25,
+                          backgroundColor: Colors.transparent,
+                          backgroundImage:
+                              CachedNetworkImageProvider(notification.imgUrl),
+                        )
+                      : CircleAvatar(
+                          radius: 25,
+                          backgroundColor: Colors.transparent,
+                          backgroundImage: AssetImage(notification.imgUrl),
+                        ),
                   SizedBox(
                     width: 10,
                   ),

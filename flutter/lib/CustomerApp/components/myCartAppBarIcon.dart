@@ -20,13 +20,13 @@ class MyCartAppBarIcon extends StatelessWidget {
     return Obx(() => _authController.isUserSignedIn &&
             Get.find<RestaurantController>().cart.value.items.length > 0
         ? Padding(
-            padding: const EdgeInsets.only(right: 5.0),
+            padding: const EdgeInsets.only(right: 5.0, bottom: 0.0),
             child: IconButton(
                 onPressed: () {
                   Get.toNamed(kCartRoute);
                 },
-                splashRadius: 20,
                 icon: Badge(
+                    padding: EdgeInsets.all(6),
                     badgeContent: Text(
                       Get.find<RestaurantController>()
                           .cart
@@ -34,10 +34,8 @@ class MyCartAppBarIcon extends StatelessWidget {
                           .items
                           .length
                           .toStringAsFixed(0),
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText2!
-                          .copyWith(color: Colors.white),
+                      style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                          color: Colors.white, fontWeight: FontWeight.w700),
                     ),
                     badgeColor: Theme.of(context).primaryColorLight,
                     child: Icon(

@@ -14,7 +14,7 @@ Widget buildCart(Cart cart, BuildContext context) {
   return Column(
     children: [
       SizedBox(
-        height: Get.height * 0.07,
+        height: 15,
       ),
       Container(
         padding: const EdgeInsets.symmetric(horizontal: 15),
