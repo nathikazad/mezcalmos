@@ -35,13 +35,13 @@ class OtpConfirmationScreen extends GetView<AuthController> {
     );
   }
 
+  TextEditingController _otpCodeTextController = TextEditingController();
+
+  String _phonePassed = Get.arguments;
+  String otpCode = '';
+
   @override
   Widget build(BuildContext context) {
-    TextEditingController _otpCodeTextController = TextEditingController();
-
-    String otpCode = "";
-    String _phonePassed = Get.arguments;
-
     final txt = Theme.of(context).textTheme;
 
     return Scaffold(
@@ -143,8 +143,12 @@ class OtpConfirmationScreen extends GetView<AuthController> {
               // backgroundColor: Colors.grey.shade200,
               onCompleted: (value) {
                 canConfirmOtp.value = true;
+                otpCode = value;
+                mezDbgPrint(value);
               },
-              onChanged: (s) {},
+              onChanged: (s) {
+                otpCode = s;
+              },
 
               cursorColor: Colors.purpleAccent,
               keyboardType: TextInputType.number,

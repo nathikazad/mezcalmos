@@ -61,6 +61,9 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          SizedBox(
+            width: 5,
+          ),
           IncrementalComponent(
             increment: () {
               widget.cartItem.value!.quantity++;
@@ -87,6 +90,7 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
           Spacer(),
           Flexible(
             flex: 6,
+            fit: FlexFit.tight,
             child: TextButton(
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(

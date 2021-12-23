@@ -1,16 +1,17 @@
 import 'dart:io';
-import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 enum AccountState {
@@ -263,7 +264,7 @@ class _UserProfileState extends State<UserProfile> {
                                             Container(
                                               child: Center(
                                                 child: Text(
-                                                  (auth.user!.name == null)
+                                                  (!auth.isDisplayNameSet())
                                                       ? "User"
                                                       : "${auth.user!.name}",
                                                   textAlign: TextAlign.center,

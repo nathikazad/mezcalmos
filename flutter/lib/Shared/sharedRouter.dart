@@ -41,6 +41,7 @@ String getTaxiMessagesRoute(
       "?recipientType=${ParticipantType.Taxi.toFirebaseFormattedString()}";
 }
 
+
 void popEverythingAndNavigateTo(dynamic route, {dynamic args}) {
   popUntilAndNavigateTo(kHomeRoute, route, args: args);
 }

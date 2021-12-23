@@ -114,7 +114,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
               .headline2!
               .copyWith(color: Colors.black));
     }
-    if (!clicked) {
+    if (clicked) {
       return Container(
         height: 20,
         width: 20,
