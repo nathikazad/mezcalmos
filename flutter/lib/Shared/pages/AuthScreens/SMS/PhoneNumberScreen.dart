@@ -35,56 +35,62 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(
           'Sign in',
           style: Theme.of(context).textTheme.headline2,
         ),
       ),
-      body: Column(
+      body: Stack(
         children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 10,
-                  ),
-                  TextButton(
-                      onPressed: () {
-                        Get.toNamed(kOtpConfirmRoute,
-                            arguments:
-                                "${_prefixTextFieldController.text}${_numberTextFieldController.text}");
-                      },
-                      child: Text('Second PAge')),
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    child: Text(
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 10,
+                ),
+                TextButton(
+                    onPressed: () {
+                      Get.toNamed(kOtpConfirmRoute,
+                          arguments:
+                              "${_prefixTextFieldController.text}${_numberTextFieldController.text}");
+                    },
+                    child: Text('Second PAge')),
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  child: Text(
 
-                        ///****add ths to lan file */
-                        lang.strings['shared']['login']["otpCode"],
-                        style: Theme.of(context).textTheme.headline1),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  NumberInputCard(context),
-                  Obx(
-                    () => Container(
-                      padding: EdgeInsets.only(left: 15, right: 15, top: 15),
-                      child: Text(
-                        lang.strings['shared']['login']["twilioNote"],
-                        style: Theme.of(context).textTheme.bodyText2,
-                      ),
+                      ///****add ths to lan file */
+                      lang.strings['shared']['login']["otpCode"],
+                      style: Theme.of(context).textTheme.headline1),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                NumberInputCard(context),
+                Obx(
+                  () => Container(
+                    padding: EdgeInsets.only(left: 15, right: 15, top: 15),
+                    child: Text(
+                      lang.strings['shared']['login']["twilioNote"],
+                      style: Theme.of(context).textTheme.bodyText2,
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-          SubmitButton(context),
+          Positioned(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+            left: 0,
+            right: 0,
+            child: Obx(
+              () => SubmitButton(context),
+            ),
+          ),
         ],
       ),
     );
@@ -176,7 +182,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                       autofocus: true,
                       onChanged: (s) {
                         if (_prefixTextFieldController.text.length > 0 &&
-                            _numberTextFieldController.text.length == 8) {
+                            _numberTextFieldController.text.length >= 8) {
                           canSendOtp.value = true;
                         } else {
                           canSendOtp.value = false;

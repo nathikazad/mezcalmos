@@ -44,8 +44,8 @@ class UserMenuIcon extends StatelessWidget {
       padding: EdgeInsets.all(6),
       badgeContent: Text(
         (notifController.notifications.length +
-                orderController.currentOrders.length +
-                10)
+                orderController.currentOrders.length 
+                )
             .toString(),
         style: Theme.of(context)
             .textTheme

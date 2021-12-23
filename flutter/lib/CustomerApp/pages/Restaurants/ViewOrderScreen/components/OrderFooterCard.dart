@@ -4,10 +4,10 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class OrderFooterCard extends StatefulWidget {
@@ -151,8 +151,7 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                       child: Text('Cancel order'),
                     )),
               )
-            : (widget.order.status == RestaurantOrderStatus.Delivered ||
-                    widget.order.status == RestaurantOrderStatus.ReadyForPickup)
+            : (widget.order.status == RestaurantOrderStatus.Delivered)
                 ? Card(
                     child: Container(
                       alignment: Alignment.center,

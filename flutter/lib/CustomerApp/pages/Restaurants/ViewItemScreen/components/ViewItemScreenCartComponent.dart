@@ -51,7 +51,7 @@ class _ViewItemScreenCartComponentState
               Flexible(
                 child: Text(
                   "${widget.title}" +
-                      "${(widget.price == null) ? " " : "  ${widget.price}"}",
+                      "${(widget.price == null) ? " " : " +${widget.price}"}",
                   style: txt.headline3,
                 ),
               ),
