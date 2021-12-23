@@ -85,7 +85,13 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
           } else {
             _orderListener?.cancel();
             _orderListener = null;
-            order.value = controller.getOrder(orderId) as RestaurantOrder?;
+            controller.getPastOrderStream(orderId).listen((event) {
+              if (event != null) {
+                mezDbgPrint("===================" +
+                    (event as RestaurantOrder).status.toString());
+                order.value = event;
+              }
+            });
           }
         });
       }

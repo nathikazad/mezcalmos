@@ -218,7 +218,7 @@ class _StartingPointState extends State<StartingPoint> {
     Future<void> _initializeConfig() async {
       // We will use this to Initialize anything at MaterialApp root init of app
       BitmapDescriptor desc = await BitmapDescriptor.fromAssetImage(
-          ImageConfiguration(), 'assets/images/shared/purple_circle.png');
+          ImageConfiguration(), 'assets/images/shared/purpleCircle.png');
 
       await GetStorage().write('markerCircle', desc);
       print("[+] InitializedConfig -- the ${appType.toShortString()} !");

@@ -52,8 +52,8 @@ const String getxVersion = "version";
 
 const String aLogoPath = "assets/images/shared/logo.png";
 const String aDefaultAvatar = "assets/images/shared/noUserImage.jpg";
-const String aMapUserImgNotSignedIn = "assets/images/shared/map_user.png";
-const String aNoImgAsset = "assets/images/shared/no-img.png";
+const String aMapUserImgNotSignedIn = "assets/images/shared/mapUser.png";
+const String aNoImgAsset = "assets/images/shared/noImg.png";
 const String enLang = "assets/i18n/en.json";
 const String esLang = "assets/i18n/es.json";
 const String aLocationPermissionAsset =
