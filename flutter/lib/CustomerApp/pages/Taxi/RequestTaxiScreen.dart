@@ -62,6 +62,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
         updateModelAndMarker(SearchComponentType.From, taxiRequest.value.from!);
         locationPickerController.setLocation(taxiRequest.value.from!);
         locationPickerController.addOrUpdateUserMarker(
+            markerId: SearchComponentType.From.toShortString(),
             latLng: LatLng(taxiRequest.value.from!.latitude,
                 taxiRequest.value.from!.longitude));
 

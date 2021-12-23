@@ -45,7 +45,7 @@ class LocationSearchBarController {
 
   void expandDropdown({int itemsCount = 2}) {
     /// eachItems = [itemMaxHeight] OF HEIGHT
-    const double itemMaxHeight = 35;
+    double itemMaxHeight = 32.sp;
     double height = 2 * itemMaxHeight;
 
     if (itemsCount >= 2 && itemsCount <= 4) {
@@ -246,6 +246,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
   Widget pickChoicesDropDown() {
     return Obx(
       () => AnimatedContainer(
+          padding: EdgeInsets.symmetric(vertical: 10.sp),
           clipBehavior: Clip.hardEdge,
           duration: Duration(milliseconds: 500),
           curve: Curves.fastOutSlowIn,
@@ -264,21 +265,17 @@ class LocationSearchBarState extends State<LocationSearchBar> {
               )),
           child: SingleChildScrollView(
             child: Column(
-              // spacing: 20,
-              // direction: Axis.vertical,
-              // alignment: WrapAlignment.center,
-
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ...dropDownItems.map<Widget>((e) => SizedBox(
-                      height: 32.sp,
-                      child: InkWell(
-                        onTap: () {
-                          e.function();
-                          locationSearchBarController.unfocusAllFocusNodes();
-                          setState(() {});
-                        },
+                ...dropDownItems.map<Widget>((e) => InkWell(
+                      onTap: () {
+                        e.function();
+                        locationSearchBarController.unfocusAllFocusNodes();
+                        setState(() {});
+                      },
+                      child: SizedBox(
+                        height: 25.sp,
                         child: Row(
                           children: [
                             SizedBox(

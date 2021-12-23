@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -120,7 +121,7 @@ class LocationPickerState extends State<LocationPicker> {
         width: 20,
         child: ClipRect(
           child: Image.asset(
-            "assets/images/shared/purpleLocationPicker.png",
+            aLocationPicker,
             fit: BoxFit.cover,
           ),
         ),

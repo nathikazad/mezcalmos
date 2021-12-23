@@ -106,7 +106,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
 
   Widget getTheRightWidgetForOrderNowButton(bool clicked) {
     if (!checkRestaurantAvailability(
-        schedule: controller.associatedRestaurant!.schedule)) {
+        schedule: controller.associatedRestaurant?.schedule)) {
       return Text("${lang.strings["customer"]["restaurant"]["notAvailable"]}",
           style: Theme.of(context)
               .textTheme

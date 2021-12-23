@@ -78,7 +78,6 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
           } else {
             cancelOrderSubscription();
             // this will get the order inCase it moved to /past
-            //TODO: status change check if status is cancelledByCustomer
             if (order?.status == TaxiOrdersStatus.CancelledByCustomer) {
               oneButtonDialog(
                   body: lang.strings['taxi']['orders']['cancelledMessage'],

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TaxiAppTheme {
-   final lightTheme = ThemeData(
+  final lightTheme = ThemeData(
     //---------------------------------------------------- COLORS ------------------------------------------------------------------------//
     //---------------------------------------------------- COLORS ------------------------------------------------------------------------//
     primaryColor: Colors.white,
@@ -55,11 +55,11 @@ class TaxiAppTheme {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       primary: Colors.white,
       backgroundColor: Color(0xFFAC59FC),
-      padding: EdgeInsets.all(12),
+      padding: EdgeInsets.all(2),
       textStyle: TextStyle(
         fontFamily: "Montserrat",
-        fontWeight: FontWeight.w700,
-        fontSize: 15.sp,
+        fontWeight: FontWeight.w500,
+        fontSize: 14.sp,
         color: Colors.white,
       ),
     )),

@@ -216,8 +216,7 @@ class _BottomBarState extends State<BottomBar> {
               child: ClipOval(
                   clipBehavior: Clip.antiAlias,
                   child: mLoadImage(
-                      // url: widget.taxiRequest.driverInfo?.image,
-                      url: null,
+                      url: widget.taxiRequest.driverInfo?.image,
                       assetInCaseFailed: asset ?? aDefaultAvatar,
                       fit: BoxFit.cover,
                       height: getSizeRelativeToScreen(
