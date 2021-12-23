@@ -1,7 +1,9 @@
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
+import 'package:get/get.dart';
 
 Notification taxiNotificationHandler(String key, dynamic value) {
   NotificationType notificationType =
@@ -34,18 +36,17 @@ Notification orderStatusChangeNotificationHandler(String key, dynamic value) {
       variableParams: value);
 }
 
-Map<String, dynamic>? getTaxiOrderStatusFields(TaxiOrdersStatus taxiOrderStatus,
-    {String? customerName}) {
-  switch (taxiOrderStatus) {
-    case TaxiOrdersStatus.CancelledByCustomer:
-      return <String, dynamic>{
-        "title": "Ride Canceled.",
-        "body": "Ride has been canceled by ${customerName ?? 'customer'}",
-        "imgUrl": "assets/images/cancel.png"
+Map<String, dynamic>? getTaxiOrderStatusFields(
+    TaxiOrdersStatus taxiOrderStatus) {
+  LanguageController lang = Get.find<LanguageController>();
+  return <String, dynamic>{
+        "title":
+        "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["title"]}",
+    "body":
+        "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["body"]}",
+    "imgUrl":
+         "assets/images/cancel.png",
       };
-    default:
-    // do nothing
-  }
 }
 
 Notification newMessageNotification(String key, dynamic value) {

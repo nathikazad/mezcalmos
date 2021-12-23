@@ -138,39 +138,43 @@ class TaxiAuthController extends GetxController {
             "lng": currentLocation.longitude
           }
         };
-        // mezDbgPrint(positionUpdate);
-        _databaseHelper.firebaseDatabase
-            .reference()
-            .child(taxiAuthNode(_authController.fireAuthUser!.uid))
-            .child('location')
-            .set(positionUpdate);
-        if (_state.value?.currentOrder != null) {
-          // updating driver location in taxis/inProcessOrders
+        try {
+          // mezDbgPrint(positionUpdate);
           _databaseHelper.firebaseDatabase
               .reference()
-              .child(taxiInProcessOrderDriverLocationNode(
-                  orderId: _state.value!.currentOrder!,
-                  taxiId: _authController.fireAuthUser!.uid))
+              .child(taxiAuthNode(_authController.fireAuthUser!.uid))
+              .child('location')
               .set(positionUpdate);
-
-          // updating driver location in root orders/inProcess/taxi
-          _databaseHelper.firebaseDatabase
-              .reference()
-              .child(rootInProcessOrderDriverLocationNode(
-                  _state.value!.currentOrder!))
-              .set(positionUpdate);
-
-          // updating driver location in customers/inProcessOrders
-          String? currentOrderCustomerId = Get.find<OrderController>()
-              .getOrder(_state.value!.currentOrder!)
-              ?.customer
-              .id;
-          if (currentOrderCustomerId != null)
+          if (_state.value?.currentOrder != null) {
+            // updating driver location in taxis/inProcessOrders
             _databaseHelper.firebaseDatabase
                 .reference()
-                .child(customerInProcessOrderDriverLocationNode(
-                    _state.value!.currentOrder!, currentOrderCustomerId))
+                .child(taxiInProcessOrderDriverLocationNode(
+                    orderId: _state.value!.currentOrder!,
+                    taxiId: _authController.fireAuthUser!.uid))
                 .set(positionUpdate);
+
+            // updating driver location in root orders/inProcess/taxi
+            _databaseHelper.firebaseDatabase
+                .reference()
+                .child(rootInProcessOrderDriverLocationNode(
+                    _state.value!.currentOrder!))
+                .set(positionUpdate);
+
+            // updating driver location in customers/inProcessOrders
+            String? currentOrderCustomerId = Get.find<OrderController>()
+                .getOrder(_state.value!.currentOrder!)
+                ?.customer
+                .id;
+            if (currentOrderCustomerId != null)
+              _databaseHelper.firebaseDatabase
+                  .reference()
+                  .child(customerInProcessOrderDriverLocationNode(
+                      _state.value!.currentOrder!, currentOrderCustomerId))
+                  .set(positionUpdate);
+          }
+        } catch (e) {
+          mezDbgPrint("Write driver position to db error");
         }
       }
     });
