@@ -103,13 +103,13 @@ export = functions.https.onCall(async (data, context) => {
       taxiNumber: taxi.details.taxiNumber,
     }
 
+    await taxiNodes.inProcessOrders(taxiId, orderId).set(order);
+    taxiNodes.currentOrderIdNode(taxiId).set(orderId);
+
     rootNodes.inProcessOrders(OrderType.Taxi, orderId).set(order);
     rootNodes.openOrders(OrderType.Taxi, orderId).remove();
 
     customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
-
-    taxiNodes.inProcessOrders(taxiId, orderId).set(order);
-    taxiNodes.currentOrderIdNode(taxiId).set(orderId);
 
 
     await buildChatForOrder(
