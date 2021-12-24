@@ -46,7 +46,7 @@ class LocationSearchComponent extends StatefulWidget {
       this.rightBotRaduis = 6,
       this.bgColor = const Color(0xfff8f8f8),
       this.labelStyle = const TextStyle(
-          fontWeight: FontWeight.w700, fontSize: 14, color: Colors.black87),
+          fontWeight: FontWeight.w800, fontSize: 14, color: Colors.black87),
       this.text,
       required this.notifyParent,
       required this.onClear,
@@ -134,6 +134,11 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
                   dropDownWidth: widget.dropDownWidth,
                   tfInitialText: widget.text,
                   tfCursorColor: Colors.black,
+                  tfStyle: widget.labelStyle.copyWith(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black87,
+                  ),
                   controller: _controller,
                   suggestionsApiFetchDelay: 1,
                   getSuggestionsMethod: MapHelper.getLocationsSuggestions,

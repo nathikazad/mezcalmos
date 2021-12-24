@@ -34,7 +34,8 @@ Widget buildItems(List<CartItem> cartItems, BuildContext context) {
               child: Obx(
             () => ItemInformationCart(
               imageUrl: element.item.image!,
-              itemName: element.item.name!,
+              itemName: element.item.name![0].toUpperCase() +
+                  element.item.name!.substring(1),
               restaurantName: "Basic food",
               itemsPrice: counter.value.toStringAsFixed(0),
             ),
@@ -123,3 +124,10 @@ Widget buildItems(List<CartItem> cartItems, BuildContext context) {
     }),
   );
 }
+// extension CapExtension on String {
+//   String get inCaps => '${this[0].toUpperCase()}${this.substring(1)}';
+//   String get allInCaps => this.toUpperCase();
+//   String get capitalizeFirstofEach =>
+//       this.split(" ").map((str) => str.capitalize).join(" ");
+// }
+

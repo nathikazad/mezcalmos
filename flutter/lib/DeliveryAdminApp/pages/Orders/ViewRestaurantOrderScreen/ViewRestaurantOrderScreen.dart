@@ -24,6 +24,8 @@ import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'components/restaurntsInfoComponent.dart';
+
 final currency = new NumberFormat("#,##0.00", "en_US");
 LinearGradient? buttonGraientColor;
 
@@ -91,359 +93,19 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
             return SingleChildScrollView(
               child: Column(
                 children: [
-                  SizedBox(
-                    height: 15,
-                  ),
                   //====================Restaurant Info=======================
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    width: Get.width,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                      border: Border.all(
-                          color: const Color(0xffececec), width: 0.5),
-                      color: const Color(0x9affffff),
-                    ),
-                    child: Column(
-                      children: [
-                        BasicCellComponent(
-                          url: "${order.value!.restaurant.image}",
-                          title: "${order.value!.restaurant.name}",
-                        ),
-                        Container(
-                          width: Get.width,
-                          height: 1,
-                          decoration: BoxDecoration(
-                            color: const Color(0xffececec),
-                          ),
-                        ),
-                        Container(
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Obx(() {
-                              return (order.value!.status !=
-                                      RestaurantOrderStatus.Delivered)
-                                  ? buildWigetOnOrderStatus(order.value!.status,
-                                      order.value!.orderTime)
-                                  : Container();
-                            }),
-                          ),
-                        )
-                      ],
-                    ),
+                  RestaurantsInfoComponet(
+                    order: order.value!,
                   ),
-                  SizedBox(
-                    height: 15,
-                  ),
+
                   //============================= Customer info====================
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    alignment: Alignment.centerLeft,
-                    child: Text("Customer",
-                        style: const TextStyle(
-                            color: const Color(0xff000f1c),
-                            fontWeight: FontWeight.w700,
-                            fontFamily: "psb",
-                            fontStyle: FontStyle.normal,
-                            fontSize: 14.0),
-                        textAlign: TextAlign.left),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    width: Get.width,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                      border: Border.all(
-                          color: const Color(0xffececec), width: 0.5),
-                      color: const Color(0x9affffff),
-                    ),
-                    child: Column(
-                      children: [
-                        BasicCellComponent(
-                          url: (order.value as RestaurantOrder).customer.image,
-                          title: (order.value as RestaurantOrder).customer.name,
-                          traillingIcon: Container(
-                            child: Stack(children: [
-                              IconButton(
-                                icon: Icon(
-                                  Icons.chat_bubble_outline,
-                                  color: Color(0xff5c7fff),
-                                ),
-                                onPressed: () {
-                                  Get.toNamed(getCustomerMessagesRoute(
-                                      order.value!.orderId));
-                                },
-                              ),
-                              Positioned(
-                                  left: 28,
-                                  top: 10,
-                                  child: (controller
-                                          .orderHaveNewMessageNotifications(
-                                              order.value!.orderId))
-                                      ? Container(
-                                          width: 10,
-                                          height: 10,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              border: Border.all(
-                                                  color:
-                                                      const Color(0xfff6efff),
-                                                  width: 2),
-                                              color: const Color(0xffff0000)))
-                                      : Container())
-                            ]),
-                          ),
-                        ),
-                        Container(
-                          width: Get.width,
-                          height: 1,
-                          decoration: BoxDecoration(
-                            color: const Color(0xffececec),
-                          ),
-                        ),
-                        Container(
-                          child: Container(
-                              padding: const EdgeInsets.symmetric(vertical: 10),
-                              child: Row(
-                                children: changeStatusbuttons,
-                              )),
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                        "${lang.strings["customer"]["restaurant"]["checkout"]["orderItems"]}",
-                        style: const TextStyle(
-                            color: const Color(0xff000f1c),
-                            fontWeight: FontWeight.w700,
-                            fontFamily: "psb",
-                            fontStyle: FontStyle.normal,
-                            fontSize: 14.0),
-                        textAlign: TextAlign.left),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  buildOrdersItems(order.value!.items),
-                  SizedBox(
-                    height: 15,
-                  ),
+                  getCustomerInfoCart(),
                   //==========================>total cost=====================================
 
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                        "${lang.strings['customer']['restaurant']['cart']['totalCost']}",
-                        style: TextStyle(
-                            color: const Color(0xff000f1c),
-                            fontFamily: "psb",
-                            fontStyle: FontStyle.normal,
-                            fontSize: 14.0),
-                        textAlign: TextAlign.left),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    width: Get.width,
-                    height: 113,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                      border: Border.all(
-                          color: const Color(0xffececec), width: 0.5),
-                      color: const Color(0x80ffffff),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 15),
-                            child: Row(
-                              children: [
-                                Text(
-                                    "${lang.strings['customer']['restaurant']['cart']['deliveryCost']}",
-                                    style: const TextStyle(
-                                        color: const Color(0xff000f1c),
-                                        fontFamily: "psr",
-                                        fontStyle: FontStyle.normal,
-                                        fontSize: 20.0),
-                                    textAlign: TextAlign.left),
-                                Spacer(),
-                                Text(" \$40.00",
-                                    style: TextStyle(
-                                        color: const Color(0xff000f1c),
-                                        fontFamily: "psb",
-                                        fontStyle: FontStyle.normal,
-                                        fontSize: 20.0.sp),
-                                    textAlign: TextAlign.right)
-                              ],
-                            ),
-                          ),
-                        ),
-                        Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 15),
-                            width: Get.width,
-                            height: 0.5,
-                            decoration:
-                                BoxDecoration(color: const Color(0xffececec))),
-                        Expanded(
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 15),
-                            child: Row(
-                              children: [
-                                // Total
-                                Text(
-                                    "${lang.strings['customer']['restaurant']['cart']['total']}",
-                                    style: const TextStyle(
-                                        color: const Color(0xff000f1c),
-                                        fontFamily: "psr",
-                                        fontStyle: FontStyle.normal,
-                                        fontSize: 20.0),
-                                    textAlign: TextAlign.left),
-                                Spacer(),
-                                Text(
-                                    "  \$${currency.format(order.value!.cost)}",
-                                    style: TextStyle(
-                                        color: const Color(0xff000f1c),
-                                        fontFamily: "psb",
-                                        fontStyle: FontStyle.normal,
-                                        fontSize: 20.0.sp),
-                                    textAlign: TextAlign.right)
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
                   //=========== location========================
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                        "${lang.strings['customer']['restaurant']['cart']['deliveryLocation']}",
-                        style: const TextStyle(
-                            color: const Color(0xff000f1c),
-                            fontFamily: "psb",
-                            fontStyle: FontStyle.normal,
-                            fontSize: 14.0),
-                        textAlign: TextAlign.left),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 15),
-                    width: Get.width,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                      border: Border.all(
-                          color: const Color(0xffececec), width: 0.5),
-                      color: const Color(0x80ffffff),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Icon(
-                          MezcalmosIcons.map_marker,
-                          size: 16,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Container(
-                          width: Get.width * 0.70,
-                          child: Text(
-                            order.value!.to.address,
-                            style: const TextStyle(
-                                color: const Color(0xff000f1c),
-                                fontFamily: "psr",
-                                fontStyle: FontStyle.normal,
-                                fontSize: 16.0),
-                          ),
-                        ),
-                        Spacer(),
-                        InkWell(
-                            onTap: () {
-                              Clipboard.setData(ClipboardData(
-                                  text: order.value!.clipBoardText));
-                            },
-                            child: Icon(
-                              Icons.copy,
-                              size: 16,
-                            )),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
+                  getTotalCostCart(),
                   //===============================>notes========================>
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                        "${lang.strings['customer']['restaurant']['menu']['notes']}",
-                        style: const TextStyle(
-                            color: const Color(0xff000f1c),
-                            fontFamily: "psb",
-                            fontStyle: FontStyle.normal,
-                            fontSize: 14.0),
-                        textAlign: TextAlign.left),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    width: Get.width,
-                    height: 51,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                      border: Border.all(
-                          color: const Color(0xffececec), width: 0.5),
-                      color: const Color(0x80ffffff),
-                    ),
-                    child: Container(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                          order.value!.notes == null
-                              ? "Nothing"
-                              : "${order.value!.notes} ",
-                          style: const TextStyle(
-                              color: const Color(0xff000f1c),
-                              fontFamily: "psr",
-                              fontStyle: FontStyle.normal,
-                              fontSize: 16.0),
-                          textAlign: TextAlign.left),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
+                  getNoteCart()
                 ],
               ),
             );
@@ -480,6 +142,259 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
         ),
       );
     }
+  }
+
+  Widget getNoteCart() {
+    return Column(
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          alignment: Alignment.centerLeft,
+          child: Text(
+              "${lang.strings['customer']['restaurant']['menu']['notes']}",
+              style: const TextStyle(
+                  color: const Color(0xff000f1c),
+                  fontFamily: "psb",
+                  fontStyle: FontStyle.normal,
+                  fontSize: 14.0),
+              textAlign: TextAlign.left),
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        Container(
+          alignment: Alignment.center,
+          margin: const EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          width: Get.width,
+          height: 51,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(4)),
+            border: Border.all(color: const Color(0xffececec), width: 0.5),
+            color: const Color(0x80ffffff),
+          ),
+          child: Container(
+            alignment: Alignment.centerLeft,
+            child: Text(
+                order.value!.notes == null
+                    ? "Nothing"
+                    : "${order.value!.notes} ",
+                style: const TextStyle(
+                    color: const Color(0xff000f1c),
+                    fontFamily: "psr",
+                    fontStyle: FontStyle.normal,
+                    fontSize: 16.0),
+                textAlign: TextAlign.left),
+          ),
+        ),
+        SizedBox(
+          height: 30,
+        ),
+      ],
+    );
+  }
+
+  Widget getTotalCostCart() {
+    return Column(
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          alignment: Alignment.centerLeft,
+          child: Text(
+              "${lang.strings['customer']['restaurant']['cart']['totalCost']}",
+              style: TextStyle(
+                  color: const Color(0xff000f1c),
+                  fontFamily: "psb",
+                  fontStyle: FontStyle.normal,
+                  fontSize: 14.0),
+              textAlign: TextAlign.left),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 10),
+          width: Get.width,
+          height: 113,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(4)),
+            border: Border.all(color: const Color(0xffececec), width: 0.5),
+            color: const Color(0x80ffffff),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Row(
+                    children: [
+                      Text(
+                          "${lang.strings['customer']['restaurant']['cart']['deliveryCost']}",
+                          style: const TextStyle(
+                              color: const Color(0xff000f1c),
+                              fontFamily: "psr",
+                              fontStyle: FontStyle.normal,
+                              fontSize: 20.0),
+                          textAlign: TextAlign.left),
+                      Spacer(),
+                      Text(" \$40.00",
+                          style: TextStyle(
+                              color: const Color(0xff000f1c),
+                              fontFamily: "psb",
+                              fontStyle: FontStyle.normal,
+                              fontSize: 20.0.sp),
+                          textAlign: TextAlign.right)
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 15),
+                  width: Get.width,
+                  height: 0.5,
+                  decoration: BoxDecoration(color: const Color(0xffececec))),
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Row(
+                    children: [
+                      // Total
+                      Text(
+                          "${lang.strings['customer']['restaurant']['cart']['total']}",
+                          style: const TextStyle(
+                              color: const Color(0xff000f1c),
+                              fontFamily: "psr",
+                              fontStyle: FontStyle.normal,
+                              fontSize: 20.0),
+                          textAlign: TextAlign.left),
+                      Spacer(),
+                      Text("  \$${currency.format(order.value!.cost)}",
+                          style: TextStyle(
+                              color: const Color(0xff000f1c),
+                              fontFamily: "psb",
+                              fontStyle: FontStyle.normal,
+                              fontSize: 20.0.sp),
+                          textAlign: TextAlign.right)
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 20,
+        ),
+      ],
+    );
+  }
+
+  Widget getCustomerInfoCart() {
+    return Column(
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          alignment: Alignment.centerLeft,
+          child: Text("Customer",
+              style: const TextStyle(
+                  color: const Color(0xff000f1c),
+                  fontWeight: FontWeight.w700,
+                  fontFamily: "psb",
+                  fontStyle: FontStyle.normal,
+                  fontSize: 14.0),
+              textAlign: TextAlign.left),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 10),
+          width: Get.width,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(4)),
+            border: Border.all(color: const Color(0xffececec), width: 0.5),
+            color: const Color(0x9affffff),
+          ),
+          child: Column(
+            children: [
+              BasicCellComponent(
+                url: (order.value as RestaurantOrder).customer.image,
+                title: (order.value as RestaurantOrder).customer.name,
+                traillingIcon: Container(
+                  child: Stack(children: [
+                    IconButton(
+                      icon: Icon(
+                        Icons.chat_bubble_outline,
+                        color: Color(0xff5c7fff),
+                      ),
+                      onPressed: () {
+                        Get.toNamed(
+                            getCustomerMessagesRoute(order.value!.orderId));
+                      },
+                    ),
+                    Positioned(
+                        left: 28,
+                        top: 10,
+                        child: (controller.orderHaveNewMessageNotifications(
+                                order.value!.orderId))
+                            ? Container(
+                                width: 10,
+                                height: 10,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(
+                                        color: const Color(0xfff6efff),
+                                        width: 2),
+                                    color: const Color(0xffff0000)))
+                            : Container())
+                  ]),
+                ),
+              ),
+              Container(
+                width: Get.width,
+                height: 1,
+                decoration: BoxDecoration(
+                  color: const Color(0xffececec),
+                ),
+              ),
+              Container(
+                child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Row(
+                      children: changeStatusbuttons,
+                    )),
+              )
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          alignment: Alignment.centerLeft,
+          child: Text(
+              "${lang.strings["customer"]["restaurant"]["checkout"]["orderItems"]}",
+              style: const TextStyle(
+                  color: const Color(0xff000f1c),
+                  fontWeight: FontWeight.w700,
+                  fontFamily: "psb",
+                  fontStyle: FontStyle.normal,
+                  fontSize: 14.0),
+              textAlign: TextAlign.left),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        buildOrdersItems(order.value!.items),
+        SizedBox(
+          height: 15,
+        ),
+      ],
+    );
   }
 
   List<Widget> get changeStatusbuttons {

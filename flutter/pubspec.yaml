@@ -95,7 +95,7 @@ flutter:
     - assets/images/customer/
     - assets/images/shared/
     - assets/images/shared/notifications/
-    - assets/images/customer/deliveryAdmin/
+    - assets/images/deliveryAdmin/
     - assets/images/customer/restaurants/
     - assets/images/customer/taxi/
     - assets/fonts/

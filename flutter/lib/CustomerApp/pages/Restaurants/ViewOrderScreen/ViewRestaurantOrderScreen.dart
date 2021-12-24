@@ -16,7 +16,7 @@ import 'components/OrderSummaryCard.dart';
 import 'components/OrdersItemsCard.dart';
 import 'components/notesWidget.dart';
 
-final currency = new NumberFormat("#,##0.00", "en_US");
+final currency = new NumberFormat("#0", "en_US");
 ////////////===========
 
 class ViewRestaurantOrderScreen extends StatefulWidget {

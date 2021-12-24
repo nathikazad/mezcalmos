@@ -100,7 +100,8 @@ class _MessagingScreenState extends State<MessagingScreen> {
                           left: 16, top: 8, bottom: 8, right: 16),
                       decoration: BoxDecoration(
                           color: !isMe
-                              ? Theme.of(parentContext).primaryColorLight
+                              ? Color.fromRGBO(172, 89, 252, 1)
+                              //? Theme.of(parentContext).primaryColorLight
                               : Colors.white,
                           borderRadius: !isMe
                               ? BorderRadius.only(
@@ -125,8 +126,10 @@ class _MessagingScreenState extends State<MessagingScreen> {
                       ? Padding(
                           padding: const EdgeInsets.only(left: 5.0),
                           child: Text(time,
-                              style:
-                                  Theme.of(parentContext).textTheme.subtitle1),
+                              style: Theme.of(parentContext)
+                                  .textTheme
+                                  .subtitle1!
+                                  .copyWith(fontSize: 13)),
                         )
                       : SizedBox(),
                 ],
@@ -283,8 +286,8 @@ class SendMessageBox extends StatelessWidget {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: _typedMsg.value.length > 0
-                          ? Theme.of(context).primaryColorLight
-                          : Colors.grey.shade200,
+                          ? Color.fromRGBO(172, 89, 252, 1)
+                          : Theme.of(context).primaryColorLight,
                     ),
                   ),
                 ),
