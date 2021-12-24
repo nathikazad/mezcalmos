@@ -2,8 +2,6 @@ import 'package:get/get.dart'; // getX
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/AdminWrapper.dart';
-import 'package:mezcalmos/DeliveryAdminApp/pages/Restaurants/ListRestaurantsScreen.dart';
-import 'package:mezcalmos/DeliveryAdminApp/pages/Restaurants/ViewRestaurantScreen.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ListOrdersScreen/ListOrdersScreen.dart';
 
 // Routes Keys.
@@ -27,9 +25,7 @@ class XRouter {
         GetPage(name: kOrdersRoute, page: () => ListOrdersScreen()),
         GetPage(
             name: kRestaurantOrderRoute,
-            page: () => ViewRestaurantOrderScreen()),
-        GetPage(name: kRestaurantsRoute, page: () => ListRestaurantsScreen()),
-        GetPage(name: kRestaurantRoute, page: () => ViewRestaurantScreen()),
+            page: () => ViewRestaurantOrderScreen())
       ] +
       SharedRouter.sharedRoutes;
 }

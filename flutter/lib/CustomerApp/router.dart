@@ -58,6 +58,13 @@ String getRestaurantMessagesRoute(
       "?recipientType=${ParticipantType.Restaurant.toFirebaseFormattedString()}";
 }
 
+String getTaxiMessagesRoute(
+  String orderId,
+) {
+  return kMessagesRoute.replaceFirst(":orderId", orderId) +
+      "?recipientType=${ParticipantType.Taxi.toFirebaseFormattedString()}";
+}
+
 // GetX based Router (For navigating)
 class XRouter {
   static dynamic mainRoutes = [

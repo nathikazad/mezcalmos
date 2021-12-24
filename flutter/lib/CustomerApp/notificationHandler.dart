@@ -184,8 +184,8 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
 Notification newMessageNotification(String key, dynamic value) {
   return Notification(
       id: key,
-      linkUrl: getRestaurantMessagesRoute(
-          value['orderId']), // in future make dependent on order type
+      linkUrl: getMessageUrl(value['orderType'].toString().toOrderType(),
+          value['orderId'])!, // in future make dependent on order type
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],
@@ -194,4 +194,14 @@ Notification newMessageNotification(String key, dynamic value) {
       notificationAction:
           value["notificationAction"].toString().toNotificationAction(),
       variableParams: value);
+}
+
+String? getMessageUrl(OrderType orderType, String orderId) {
+  switch (orderType) {
+    case OrderType.Restaurant:
+      return getRestaurantMessagesRoute(orderId);
+    case OrderType.Taxi:
+      return getTaxiMessagesRoute(orderId);
+    default:
+  }
 }

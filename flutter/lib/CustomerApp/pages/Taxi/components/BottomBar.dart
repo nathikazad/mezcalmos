@@ -71,10 +71,7 @@ class _BottomBarState extends State<BottomBar> {
   Widget messageBtn({EdgeInsets? margin}) {
     return GestureDetector(
       onTap: () {
-        Get.toNamed(getCustomerMessagesRoute(widget.taxiRequest.orderId!));
-        // Get.find<OrderController>()
-        //     .hasOrderOfType(typeToCheck: OrderType.Taxi)!
-        //     .orderId)
+        Get.toNamed(getTaxiMessagesRoute(widget.taxiRequest.orderId!));
       },
       child: Container(
         margin: margin ?? EdgeInsets.only(left: 6),
