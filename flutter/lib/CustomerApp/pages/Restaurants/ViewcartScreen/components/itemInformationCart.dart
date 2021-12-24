@@ -24,7 +24,7 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
     final txt = Theme.of(context).textTheme;
     return Container(
       // width: Get.width * 0.7,
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
