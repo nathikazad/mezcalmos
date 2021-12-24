@@ -106,10 +106,15 @@ class _DropDownListCartViewState extends State<DropDownListCartView> {
                               SizedBox(
                                 width: 15,
                               ),
-                              Text(
-                                e.name,
-                                style: txt.headline2!.copyWith(
-                                    fontWeight: FontWeight.w400, fontSize: 12),
+                              Container(
+                                width: Get.width * 0.72,
+                                child: Text(
+                                  e.name,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: txt.headline2!.copyWith(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 12),
+                                ),
                               ),
                             ],
                           )),
