@@ -171,53 +171,51 @@ class LocationPickerState extends State<LocationPicker> {
         right: widget.locationPickerMapController.myLocationButtonEnabled.value
             ? 80
             : 15,
-        child: Container(
-          height: 50,
-          margin: EdgeInsets.only(
-              bottom: widget
-                      .locationPickerMapController.myLocationButtonEnabled.value
-                  ? 2
-                  : 30),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
-            gradient: LinearGradient(
-                colors: notifier != null
-                    ? [
-                        Color.fromRGBO(81, 132, 255, 1),
-                        Color.fromRGBO(206, 73, 252, 1)
-                      ]
-                    : [Colors.grey.shade400, Colors.grey.shade400],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight),
+        child: InkWell(
+          onTap: notifier != null
+              ? () async {
+                  var _loc = await getCenterAndGeoCode();
+                  notifier.call(_loc);
+                  widget.locationPickerMapController._showFakeMarker.value =
+                      false;
+                }
+              : () {},
+          child: Container(
+            height: 45,
+            margin: EdgeInsets.only(
+                bottom: widget.locationPickerMapController
+                        .myLocationButtonEnabled.value
+                    ? 2
+                    : 30),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              gradient: LinearGradient(
+                  colors: notifier != null
+                      ? [
+                          Color.fromRGBO(81, 132, 255, 1),
+                          Color.fromRGBO(206, 73, 252, 1)
+                        ]
+                      : [Colors.grey.shade400, Colors.grey.shade400],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight),
+            ),
+            child: Center(
+              child: buttonText != null
+                  ? Text(buttonText,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.visible,
+                      style: TextStyle(
+                        fontFamily: 'psr',
+                        color: Colors.white,
+                        fontSize: 18.sp,
+                      ))
+                  : Container(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(
+                          strokeWidth: 1, color: Colors.black)),
+            ),
           ),
-          child: TextButton(
-              style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all(Colors.transparent)),
-              onPressed: notifier != null
-                  ? () async {
-                      var _loc = await getCenterAndGeoCode();
-                      notifier.call(_loc);
-                      widget.locationPickerMapController._showFakeMarker.value =
-                          false;
-                    }
-                  : () {},
-              child: Center(
-                child: buttonText != null
-                    ? Text(buttonText,
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.visible,
-                        style: TextStyle(
-                          fontFamily: 'psr',
-                          color: Colors.white,
-                          fontSize: 18.sp,
-                        ))
-                    : Container(
-                        height: 20,
-                        width: 20,
-                        child: CircularProgressIndicator(
-                            strokeWidth: 1, color: Colors.black)),
-              )),
         ));
   }
 

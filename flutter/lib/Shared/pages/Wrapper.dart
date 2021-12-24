@@ -44,10 +44,6 @@ class _WrapperState extends State<Wrapper> {
       if (AppType.CustomerApp == settingsController.appType) {
         // if (Get.currentRoute != kSignInRouteOptional) {
         Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
-        // } else {
-        //   Get.back();
-        //   setState(() {});
-        // }
       } else {
         mezDbgPrint("Wrapper::handleAuthStateChange:: going to sign in route");
         Get.offNamedUntil(
@@ -60,10 +56,8 @@ class _WrapperState extends State<Wrapper> {
         await Get.toNamed(kUserProfile);
       }
       if (Get.currentRoute == kSignInRouteOptional) {
-        await GetStorage().write(kSignInRouteOptional, true);
         Get.back();
       } else {
-        await GetStorage().write(kSignInRouteOptional, false);
         Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
       }
     }

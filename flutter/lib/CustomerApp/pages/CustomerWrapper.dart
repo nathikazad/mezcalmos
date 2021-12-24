@@ -8,6 +8,7 @@ import 'package:mezcalmos/CustomerApp/components/customerHomeFooterButtons.dart'
 import 'package:mezcalmos/CustomerApp/components/servicesCard.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
+import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
@@ -49,6 +50,9 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   StreamSubscription? _authStateChnagesListener;
   @override
   void initState() {
+    Get.put(TaxiController(), permanent: true);
+    Get.put(RestaurantController(), permanent: true);
+    Get.put(RestaurantsInfoController(), permanent: true);
     WidgetsBinding.instance!.addObserver(this);
     if (Get.find<AuthController>().fireAuthUser != null) {
       _doIfFireAuthUserIsNotNull();
@@ -135,7 +139,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   }
 
   void _doIfFireAuthUserIsNotNull() {
-    injectIfNotInjected();
     _orderController = Get.find<OrderController>();
     _orderCountListener = _orderController!.currentOrders.stream.listen((_) {
       numberOfCurrentOrders.value = _orderController!.currentOrders.length;
@@ -151,20 +154,11 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     // kSignInRouteOptional being written in /wrapper , basically it is equal to true when the user
     // was already SignedOut and was on a page , which we want him to go back to it once he signed in.
     // check more in wrapper.
-    if (GetStorage().read<bool>(kSignInRouteOptional) != true) {
+    if (Get.currentRoute == kHomeRoute) {
       Future.microtask(() {
         // Fix to Input Focus problems ( we had it in build which gets re-executed after any input focus) !
         navigateToOrdersIfNecessary(_orderController!.currentOrders);
       });
-    }
-  }
-
-  void injectIfNotInjected() {
-    if (!Get.isRegistered<TaxiController>()) {
-      Get.put(TaxiController(), permanent: true);
-    }
-    if (!Get.isRegistered<RestaurantController>()) {
-      Get.put(RestaurantController());
     }
   }
 

@@ -182,7 +182,7 @@ class _StartingPointState extends State<StartingPoint> {
       mezDbgPrint("[ GET STORAGE ] version number ${pInfos.version}");
       await GetStorage().write(getxVersion, pInfos.version);
       await GetStorage().write(getxGmapBottomPaddingKey,
-          Platform.isAndroid ? 38.0.sp : (Get.height / 30).sp);
+          Platform.isAndroid ? 38.0.sp : Get.height / 35);
     } else
       mezDbgPrint("[ GET STORAGE ] FAILED TO INITIALIZE !");
   }

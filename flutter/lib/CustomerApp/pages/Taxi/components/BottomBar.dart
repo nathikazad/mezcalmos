@@ -45,7 +45,7 @@ class _BottomBarState extends State<BottomBar> {
           left: 15,
           right: 15,
           child: Container(
-              margin: EdgeInsets.only(bottom: _bottomPadding.value),
+              margin: EdgeInsets.only(bottom: 45),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
                 gradient: LinearGradient(colors: [
@@ -297,7 +297,7 @@ class _BottomBarState extends State<BottomBar> {
             children: [
               Icon(
                 MezcalmosIcons.route,
-                size: (Get.height * 0.020).w,
+                size: (Get.height * 0.015).sp,
               ),
               SizedBox(
                 width: 2.w,
@@ -311,7 +311,7 @@ class _BottomBarState extends State<BottomBar> {
             children: [
               Icon(
                 MezcalmosIcons.stopwatch,
-                size: (Get.height * 0.020).w,
+                size: (Get.height * 0.015).sp,
               ),
               SizedBox(
                 width: 2.w,
@@ -458,7 +458,8 @@ class _BottomBarState extends State<BottomBar> {
         _widgies.assignAll([
           taxiAvatarAndName(
               pContext: pContext, description: "Ride Canceled by Taxi :("),
-          messageBtn(margin: EdgeInsets.symmetric(horizontal: 6))
+          messageBtn(margin: EdgeInsets.symmetric(horizontal: 6)),
+          reCreateOrderBtn(),
         ]);
         _bottomPadding.value = 10.0;
         break;
