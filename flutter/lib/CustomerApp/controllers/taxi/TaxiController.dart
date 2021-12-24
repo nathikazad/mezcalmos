@@ -9,7 +9,6 @@ import 'package:mezcalmos/Shared/firebaseNodes/ordersNode.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
-import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 
 enum OrdersStates { Null, Finished, Cancelled, Expired, InProccess, IsLooking }
 

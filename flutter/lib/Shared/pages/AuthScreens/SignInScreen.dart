@@ -1,9 +1,7 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -45,7 +43,7 @@ class SignIn extends GetWidget<AuthController> {
                 children: [
                   (mode == SignInMode.OptionalSignIn)
                       ? Container(
-                          padding: const EdgeInsets.all(15),
+                          padding: EdgeInsets.all((Get.height * 0.025).h),
                           alignment: Alignment.centerRight,
                           child: IconButton(
                             icon: Icon(
@@ -57,7 +55,9 @@ class SignIn extends GetWidget<AuthController> {
                             },
                           ),
                         )
-                      : Container(),
+                      : Container(
+                          padding: EdgeInsets.all((Get.height * 0.025).h),
+                        ),
                   MezcalmosSharedWidgets.logo(
                       size: getSizeRelativeToScreen(60.w, sh, sw)),
                   SizedBox(height: 10),
@@ -71,7 +71,10 @@ class SignIn extends GetWidget<AuthController> {
                     child: Text(lang.strings['shared']['login']["title"],
                         overflow: TextOverflow.visible,
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headline1),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline1
+                            ?.copyWith(fontWeight: FontWeight.w600)),
                   ),
                   ...buildSignInButtons(lmode)
                 ],
@@ -136,6 +139,7 @@ class SignIn extends GetWidget<AuthController> {
                 Spacer(),
                 Text(
                   lang.strings['shared']['login']["loginWithApple"],
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Spacer()
               ],
@@ -163,6 +167,7 @@ class SignIn extends GetWidget<AuthController> {
                 Spacer(),
                 Text(
                   lang.strings['shared']['login']["loginWithSms"],
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Spacer(),
               ],
@@ -227,6 +232,7 @@ class SignIn extends GetWidget<AuthController> {
                   lmode != "dev"
                       ? lang.strings['shared']['login']["fbBtn"]
                       : "test mode login",
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Spacer(),
               ],
