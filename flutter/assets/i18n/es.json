@@ -22,7 +22,7 @@
         },
         "restaurant": {
             "restaurants": "Restaurantes",
-            "notAvailable":"su restaurante está cerrado",
+            "notAvailable": "Su restaurante está cerrado",
             "menu": {
                 "menu": "Menú",
                 "items":"elementos",
@@ -330,7 +330,7 @@
                 },
                 "droppedOff": {
                     "title": "Llegado",
-                    "body": "Your have reached your "
+                    "body": "Ha llegado a su destino"
                 },
                 "expired": {
                     "title": "No hay taxis disponibles",

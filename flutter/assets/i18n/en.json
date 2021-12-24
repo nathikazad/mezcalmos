@@ -333,7 +333,7 @@
                 },
                 "droppedOff": {
                     "title": "Reached",
-                    "body": "Ha llegado a su destino"
+                    "body": "Your have reached your destination"
                 },
                 "expired": {
                     "title": "No taxis available",

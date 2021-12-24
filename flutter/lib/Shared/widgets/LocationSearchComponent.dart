@@ -27,7 +27,6 @@ class LocationSearchComponent extends StatefulWidget {
   final double? dropDownDxOffset;
   final EdgeInsets hintPadding;
   final String label;
-  final String hint;
   final MapHelper.LocationChangesNotifier notifyParent;
   final Function onClear;
   final bool showSearchIcon;
@@ -48,7 +47,6 @@ class LocationSearchComponent extends StatefulWidget {
       this.bgColor = const Color(0xfff8f8f8),
       this.labelStyle = const TextStyle(
           fontWeight: FontWeight.w700, fontSize: 14, color: Colors.black87),
-      this.hint = "Enter Address",
       this.text,
       required this.notifyParent,
       required this.onClear,
@@ -169,7 +167,8 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
                   },
                   tfTextDecoration: InputDecoration(
                       contentPadding: widget.hintPadding,
-                      hintText: widget.hint,
+                      hintText: Get.find<LanguageController>().strings["shared"]
+                          ["placeHolders"]["address"],
                       hintStyle: TextStyle(
                           color: Color.fromRGBO(141, 141, 141, 1),
                           fontSize: 16.33,
