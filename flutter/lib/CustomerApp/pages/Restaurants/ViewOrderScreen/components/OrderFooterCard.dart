@@ -105,7 +105,7 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                                                   child:
                                                       Text("Yes, i'm sure!"))),
                                           SizedBox(
-                                            height: 5.h,
+                                            height: 10,
                                           ),
                                           TextButton(
                                               onPressed: () {

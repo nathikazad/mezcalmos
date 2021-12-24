@@ -7,8 +7,8 @@ import 'package:mezcalmos/CustomerApp/components/appbar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 
 import 'components/OrderFooterCard.dart';
 import 'components/OrderStatusCard.dart';
@@ -146,11 +146,15 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                         order: order.value!,
                         ordersStates: order.value!.status,
                       ),
-
+                      SizedBox(
+                        height: 10,
+                      ),
                       OrderItemsCard(
                         items: order.value!.items,
                       ),
-
+                      SizedBox(
+                        height: 10,
+                      ),
                       OrderSummaryCard(order: order.value!),
                       //===============================>notes========================>
                       order.value?.notes == null ||

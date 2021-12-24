@@ -56,8 +56,8 @@ class SignIn extends GetWidget<AuthController> {
                               },
                             ),
                           )
-                        : Container(
-                            padding: EdgeInsets.all((Get.height * 0.025).h),
+                        : SizedBox(
+                            height: 30,
                           ),
                     MezcalmosSharedWidgets.logo(
                         size: getSizeRelativeToScreen(60.w, sh, sw)),

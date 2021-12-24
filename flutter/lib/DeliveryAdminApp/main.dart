@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/route_manager.dart';
-import 'package:mezcalmos/Shared/appStart.dart';
-import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/DeliveryAdminApp/authHooks.dart';
+import 'package:mezcalmos/DeliveryAdminApp/router.dart';
+import 'package:mezcalmos/DeliveryAdminApp/theme.dart';
+import 'package:mezcalmos/Shared/appStart.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
@@ -19,6 +20,7 @@ void main() {
   runMainGuarded(() => runApp(
         StartingPoint(
             appType: AppType.DeliveryAdminApp,
+            appTheme: DeliveryAdminTheme.lightTheme,
             signInCallback: signInCallback,
             signOutCallback: signOutCallback,
             routes: routes),
