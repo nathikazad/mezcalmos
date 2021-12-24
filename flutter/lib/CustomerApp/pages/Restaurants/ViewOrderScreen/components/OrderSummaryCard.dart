@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:get/get.dart';
 
 class OrderSummaryCard extends StatelessWidget {
   const OrderSummaryCard({
@@ -38,7 +38,7 @@ class OrderSummaryCard extends StatelessWidget {
                       style: txt.headline3,
                     ),
                     Text(
-                      '\$' + order.cost.toStringAsFixed(2),
+                      '\$' + order.cost.toStringAsFixed(0),
                       style: txt.headline2,
                     ),
                   ],
@@ -54,7 +54,7 @@ class OrderSummaryCard extends StatelessWidget {
                       style: txt.headline3,
                     ),
                     Text(
-                      '\$' + (4 + order.cost).toStringAsFixed(2),
+                      '\$' + (4 + order.cost).toStringAsFixed(0),
                       style: txt.headline2,
                     ),
                   ],

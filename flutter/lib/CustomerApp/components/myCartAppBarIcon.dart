@@ -20,7 +20,7 @@ class MyCartAppBarIcon extends StatelessWidget {
     return Obx(() => _authController.isUserSignedIn &&
             Get.find<RestaurantController>().cart.value.items.length > 0
         ? Padding(
-            padding: const EdgeInsets.only(right: 5.0, bottom: 0.0),
+            padding: const EdgeInsets.only(right: 5.0, bottom: 8.0),
             child: IconButton(
                 onPressed: () {
                   Get.toNamed(kCartRoute);

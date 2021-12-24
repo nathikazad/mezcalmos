@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -33,76 +34,69 @@ class SignIn extends GetWidget<AuthController> {
     final lmode = GetStorage().read(getxLmodeKey);
 
     return WillPopScope(
-      onWillPop: () async => false,
-      child: Scaffold(
-          body: SafeArea(
-        child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Obx(
-              () => Column(
-                children: [
-                  (mode == SignInMode.OptionalSignIn)
-                      ? Container(
-                          padding: EdgeInsets.all((Get.height * 0.025).h),
-                          alignment: Alignment.centerRight,
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.close,
-                              color: Colors.black,
+        onWillPop: () async => false,
+        child: Scaffold(
+            body: SingleChildScrollView(
+          child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Obx(
+                () => Column(
+                  children: [
+                    (mode == SignInMode.OptionalSignIn)
+                        ? Container(
+                            padding: const EdgeInsets.only(top: 20),
+                            alignment: Alignment.centerRight,
+                            child: IconButton(
+                              icon: Icon(
+                                Icons.close,
+                                color: Colors.black,
+                              ),
+                              onPressed: () {
+                                Get.back();
+                              },
                             ),
-                            onPressed: () {
-                              Get.back();
-                            },
+                          )
+                        : Container(
+                            padding: EdgeInsets.all((Get.height * 0.025).h),
                           ),
-                        )
-                      : Container(
-                          padding: EdgeInsets.all((Get.height * 0.025).h),
-                        ),
-                  MezcalmosSharedWidgets.logo(
-                      size: getSizeRelativeToScreen(60.w, sh, sw)),
-                  SizedBox(height: 10),
-                  MezcalmosSharedWidgets.mezcalmosTitle(
-                      textSize: 40.sp, isBold: true),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  Flexible(
-                    flex: 2,
-                    child: Text(lang.strings['shared']['login']["title"],
+                    MezcalmosSharedWidgets.logo(
+                        size: getSizeRelativeToScreen(60.w, sh, sw)),
+                    SizedBox(height: 10),
+                    MezcalmosSharedWidgets.mezcalmosTitle(
+                        textSize: 40.sp, isBold: true),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    Text(lang.strings['shared']['login']["title"],
                         overflow: TextOverflow.visible,
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
                             .textTheme
                             .headline1
                             ?.copyWith(fontWeight: FontWeight.w600)),
-                  ),
-                  ...buildSignInButtons(lmode)
-                ],
-              ),
-            )),
-      )),
-    );
+                    ...buildSignInButtons(lmode)
+                  ],
+                ),
+              )),
+        )));
   }
 
   List<Widget> buildSignInButtons(String? lmode) {
     if (clickedLogin.value) {
       return <Widget>[
-        SizedBox(
-          height: 50,
-        ),
-        Spacer(),
-        Center(
-            child: Container(
-                padding: EdgeInsets.all(20),
-                child: CircularProgressIndicator(
-                  color: Colors.black,
-                  strokeWidth: 2.5,
-                ))),
-        Spacer()
+        Container(
+            alignment: Alignment.center,
+            padding: EdgeInsets.all(20),
+            child: CircularProgressIndicator(
+              color: Colors.black,
+              strokeWidth: 2.5,
+            )),
       ];
     } else {
       return <Widget>[
-        Spacer(),
+        SizedBox(
+          height: 20,
+        ),
         facebookLoginBtn(lmode),
         SizedBox(
           height: 10,

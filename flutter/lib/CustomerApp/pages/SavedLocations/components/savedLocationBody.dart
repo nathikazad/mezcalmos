@@ -45,9 +45,6 @@ class SavedLocationBody extends StatelessWidget {
           ),
           ...savedLocations.map((savedLocation) => SavedLocationComponent(
                 savelocation: savedLocation,
-                onPress: () {
-                  Get.back(result: savedLocation);
-                },
               )),
           SizedBox(
             height: 25,

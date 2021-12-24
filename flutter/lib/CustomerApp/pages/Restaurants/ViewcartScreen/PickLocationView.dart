@@ -56,6 +56,7 @@ class _PickLocationViewState extends State<PickLocationView> {
     if (widget.pickLocationMode == PickLocationMode.AddNewLocation) {
       _result = await savedLocationDailog(
         context: context,
+        comingFromCart: Get.arguments,
       );
       if (_result != null && _result != "") {
         mezDbgPrint("the choosen name is $_result");
@@ -71,6 +72,7 @@ class _PickLocationViewState extends State<PickLocationView> {
       }
     } else {
       _result = await savedLocationDailog(
+          comingFromCart: Get.arguments,
           context: context,
           nameVal: savedLocation!.name,
           mode: PickLocationMode.EditLocation);

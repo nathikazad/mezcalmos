@@ -130,7 +130,8 @@ class _DropDownListCartViewState extends State<DropDownListCartView> {
               // we will route the user back to the Map
               if (newValue?.id == "_pick_") {
                 SavedLocation? saveLocation =
-                    await Get.toNamed(kPickLocationRoute) as SavedLocation?;
+                    await Get.toNamed(kPickLocationRoute, arguments: true)
+                        as SavedLocation?;
                 mezDbgPrint("View Got result : $saveLocation");
                 if (saveLocation != null) {
                   setState(() {

@@ -59,7 +59,7 @@ class OrderItemsItemCard extends StatelessWidget {
             ),
             Container(
               alignment: Alignment.bottomRight,
-              child: Text('\$' + item.totalCost.toStringAsFixed(2),
+              child: Text('\$' + item.totalCost.toStringAsFixed(0),
                   style: txt.headline2!),
             )
           ],

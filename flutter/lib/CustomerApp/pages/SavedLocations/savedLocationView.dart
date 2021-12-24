@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/appbar.dart';
@@ -8,9 +9,7 @@ import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 
-import 'components/SavedLocationComponent.dart';
 import 'components/savedLocationBody.dart';
 import 'components/savedLocationISEmpty.dart';
 
@@ -87,7 +86,7 @@ class _SavedLocationViewState extends State<SavedLocationView> {
             ),
           ),
           function: () {
-            Get.toNamed(kPickLocationRoute);
+            Get.toNamed(kPickLocationRoute, arguments: false);
           },
         ),
         body: savedLocations.length > 0

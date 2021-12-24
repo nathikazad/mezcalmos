@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
 Future<String?> savedLocationDailog(
     {required BuildContext context,
+    bool? comingFromCart = false,
     String? nameVal,
     PickLocationMode mode = PickLocationMode.AddNewLocation}) async {
   LanguageController lang = Get.find<LanguageController>();
@@ -13,34 +14,30 @@ Future<String?> savedLocationDailog(
   if (nameVal != null && nameVal != "") {
     txtController.text = nameVal;
   }
+
   return await Get.defaultDialog(
-      radius: 4,
+      radius: 12,
       title: ' ',
+      titlePadding: EdgeInsets.zero,
       content: Container(
         child: SingleChildScrollView(
             child: Column(
           children: [
             Container(
+              // padding: const EdgeInsets.all(5),
+              alignment: Alignment.center,
               child: Text(
-                  nameVal != null
-                      ? lang.strings["customer"]["savedLocations"]
-                          ["editLocationDialog"]["title"]
-                      : lang.strings["customer"]["savedLocations"]
-                          ["addLocationDialog"]["title"],
-                  textAlign: TextAlign.center),
+                (comingFromCart != null && comingFromCart)
+                    ? 'enter location name, if you want to save for future use, else you may skip'
+                    : 'Enter location name',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
             ),
             SizedBox(
               height: 15,
             ),
             Container(
-              height: 48,
-              padding: const EdgeInsets.only(left: 10, right: 10),
-              margin: const EdgeInsets.only(left: 10, right: 10),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(4)),
-                  border:
-                      Border.all(color: const Color(0xffececec), width: 0.5),
-                  color: const Color(0xfff8f8f8)),
               alignment: Alignment.center,
               child: TextField(
                 style: Theme.of(context)
@@ -49,14 +46,21 @@ Future<String?> savedLocationDailog(
                     .copyWith(fontSize: 13),
                 controller: txtController,
                 decoration: InputDecoration(
-                    // hintText: lang.strings["customer"]["savedLocations"]
-                    //     ["addLocationDialog"]["textHint"],
-                    border: InputBorder.none,
-                    focusedBorder: InputBorder.none),
+                  // hintText: lang.strings["customer"]["savedLocations"]
+                  //     ["addLocationDialog"]["textHint"],
+                  filled: true,
+                  fillColor: Colors.grey.shade200,
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.transparent),
+                      borderRadius: BorderRadius.circular(5)),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.transparent),
+                      borderRadius: BorderRadius.circular(5)),
+                ),
               ),
             ),
             SizedBox(
-              height: 17,
+              height: 15,
             ),
             Container(
                 height: 42,
@@ -80,11 +84,10 @@ Future<String?> savedLocationDailog(
             SizedBox(
               height: 10,
             ),
-            if (mode == PickLocationMode.AddNewLocation)
+            if (mode == PickLocationMode.AddNewLocation &&
+                comingFromCart != null &&
+                comingFromCart)
               skipButton(lang, txtController),
-            SizedBox(
-              height: 30,
-            )
           ],
         )),
       ));

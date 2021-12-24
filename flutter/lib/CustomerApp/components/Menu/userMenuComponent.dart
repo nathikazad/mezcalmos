@@ -65,7 +65,7 @@ class _UserMenuState extends State<UserMenu> {
           PopupMenuItem(
             child: Row(
               children: [
-                Icon(Ionicons.person),
+                Icon(Ionicons.person_outline),
                 SizedBox(
                   width: 10,
                 ),
