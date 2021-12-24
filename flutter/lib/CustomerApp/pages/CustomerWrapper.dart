@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/CustomerApp/components/appbar.dart';
 import 'package:mezcalmos/CustomerApp/components/customerHomeFooterButtons.dart';
 import 'package:mezcalmos/CustomerApp/components/servicesCard.dart';
@@ -47,31 +48,41 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   StreamSubscription? _orderCountListener;
   @override
   void initState() {
-    if (auth.fireAuthUser != null) {
-      WidgetsBinding.instance!.addObserver(this);
-      _orderController = Get.find<OrderController>();
-      _orderCountListener = _orderController!.currentOrders.stream.listen((_) {
-        numberOfCurrentOrders.value = _orderController!.currentOrders.length;
-      });
-      String? userId = Get.find<AuthController>().fireAuthUser!.uid;
-      // listening for notification Permissions!
-      // @Nathik , initializeShowNotificationsListener() + startListeningForNotificationsFromFirebase() only happens once
-      // in every 1 app's runtime , means if user signOut and re-signedIn , notifications list will be Empty,
-      // because we don't re-execute them , on each AuthStateChnage , please check  the comment i left at :
-      // flutter/lib/CustomerApp/components/Menu/userMenuComponent.dart :: initState
-      _notificationsStreamListener = initializeShowNotificationsListener();
-      listenForLocationPermissions();
-      Get.find<ForegroundNotificationsController>()
-          .startListeningForNotificationsFromFirebase(
-              customerNotificationsNode(userId), customerNotificationHandler);
-      Future.microtask(() {
-        // Fix to Input Focus problems ( we had it in build which gets re-executed after any input focus) !
-        navigateToOrdersIfNecessary(_orderController!.currentOrders);
-      });
-    } else {
-      Get.put(RestaurantController());
-      Get.put(TaxiController());
-    }
+    WidgetsBinding.instance!.addObserver(this);
+
+    auth.authStateChange.listen((fireUser) {
+      if (fireUser != null) {
+        injectIfNotInjected();
+        _orderController = Get.find<OrderController>();
+        _orderCountListener =
+            _orderController!.currentOrders.stream.listen((_) {
+          numberOfCurrentOrders.value = _orderController!.currentOrders.length;
+        });
+        String? userId = Get.find<AuthController>().fireAuthUser!.uid;
+        // listening for notification Permissions!
+
+        _notificationsStreamListener = initializeShowNotificationsListener();
+        listenForLocationPermissions();
+        Get.find<ForegroundNotificationsController>()
+            .startListeningForNotificationsFromFirebase(
+                customerNotificationsNode(userId), customerNotificationHandler);
+        // kSignInRouteOptional being written in /wrapper , basically it is equal to true when the user
+        // was already SignedOut and was on a page , which we want him to go back to it once he signed in.
+        // check more in wrapper.
+        if (GetStorage().read<bool>(kSignInRouteOptional) != true) {
+          Future.microtask(() {
+            // Fix to Input Focus problems ( we had it in build which gets re-executed after any input focus) !
+            navigateToOrdersIfNecessary(_orderController!.currentOrders);
+          });
+        }
+      } else {
+        _orderCountListener?.cancel();
+        _orderCountListener = null;
+        _notificationsStreamListener?.cancel();
+        _notificationsStreamListener = null;
+      }
+    });
+
     super.initState();
   }
 
@@ -135,6 +146,15 @@ class _CustomerWrapperState extends State<CustomerWrapper>
                         ),
                       )));
             })));
+  }
+
+  void injectIfNotInjected() {
+    if (!Get.isRegistered<TaxiController>()) {
+      Get.put(TaxiController(), permanent: true);
+    }
+    if (!Get.isRegistered<RestaurantController>()) {
+      Get.put(RestaurantController());
+    }
   }
 
   void checkTaxiCurrentOrdersAndNavigate() {

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
@@ -15,7 +16,6 @@ class Wrapper extends StatefulWidget {
 }
 
 class _WrapperState extends State<Wrapper> {
-  AuthController _authController = Get.find<AuthController>();
   SettingsController settingsController = Get.find<SettingsController>();
 
   @override
@@ -42,7 +42,12 @@ class _WrapperState extends State<Wrapper> {
         "Wrapper: handleAuthStateChange $user and the app type is ${settingsController.appType}");
     if (user == null) {
       if (AppType.CustomerApp == settingsController.appType) {
+        // if (Get.currentRoute != kSignInRouteOptional) {
         Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
+        // } else {
+        //   Get.back();
+        //   setState(() {});
+        // }
       } else {
         mezDbgPrint("Wrapper::handleAuthStateChange:: going to sign in route");
         Get.offNamedUntil(
@@ -55,10 +60,12 @@ class _WrapperState extends State<Wrapper> {
         await Get.toNamed(kUserProfile);
       }
       if (Get.currentRoute == kSignInRouteOptional) {
+        await GetStorage().write(kSignInRouteOptional, true);
         Get.back();
-        setState(() {});
-      } else
+      } else {
+        await GetStorage().write(kSignInRouteOptional, false);
         Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
+      }
     }
   }
 

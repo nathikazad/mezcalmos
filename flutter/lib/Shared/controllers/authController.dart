@@ -53,21 +53,21 @@ class AuthController extends GetxController {
 
     mezDbgPrint('Auth controller init!');
     Get.lazyPut(() => LanguageController());
-    _auth.authStateChanges().listen((fireAuth.User? user) {
+    _auth.authStateChanges().listen((fireAuth.User? user) async {
       if (user?.toString() == _previousUserValue) {
         mezDbgPrint(
             'Authcontroller:: same sign in event fired again, skipping it');
         return;
       }
       _previousUserValue = user?.toString();
-      authStateChangeStream.add(user);
-
       mezDbgPrint('Authcontroller:: Auth state change!');
       mezDbgPrint(user?.hashCode);
       mezDbgPrint(user ?? "empty");
       _fireAuthUser.value = user;
 
       if (user == null) {
+        await _onSignOutCallback();
+        authStateChangeStream.add(null);
         mezDbgPrint('AuthController: User is currently signed out!');
         _userNodeListener?.cancel();
         _userNodeListener = null;
@@ -75,7 +75,7 @@ class AuthController extends GetxController {
       } else {
         mezDbgPrint('AuthController: User is currently signed in!');
         _onSignInCallback();
-
+        authStateChangeStream.add(user);
         GetStorage().write(getxUserId, user.uid);
         _userNodeListener?.cancel();
         _userNodeListener = _databaseHelper.firebaseDatabase
@@ -143,7 +143,7 @@ class AuthController extends GetxController {
   Future<void> signOut() async {
     try {
       mezDbgPrint("AuthController: Sign out function");
-      await _onSignOutCallback();
+
       mezDbgPrint("AuthController: Sign out callbacks finished");
       _userNodeListener?.cancel();
       _userNodeListener = null;

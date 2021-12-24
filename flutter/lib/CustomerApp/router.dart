@@ -15,7 +15,7 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 // import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/ViewRestaurantScreen.dart';
 
 // Routes Keys.
-const String kWrapperRoute = '/wrapper';
+// const String kWrapperRoute = '/wrapper';
 const String kTaxiRequestRoute = '/taxiRequest';
 const String kOrdersRoute = '/orders';
 const String kRestaurantsRoute = '/restaurants';
