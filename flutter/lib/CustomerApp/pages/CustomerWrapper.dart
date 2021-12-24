@@ -46,43 +46,14 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   StreamSubscription<bool>? _locationStreamSub;
   RxInt numberOfCurrentOrders = RxInt(0);
   StreamSubscription? _orderCountListener;
+  StreamSubscription? _authStateChnagesListener;
   @override
   void initState() {
     WidgetsBinding.instance!.addObserver(this);
-
-    auth.authStateChange.listen((fireUser) {
-      if (fireUser != null) {
-        injectIfNotInjected();
-        _orderController = Get.find<OrderController>();
-        _orderCountListener =
-            _orderController!.currentOrders.stream.listen((_) {
-          numberOfCurrentOrders.value = _orderController!.currentOrders.length;
-        });
-        String? userId = Get.find<AuthController>().fireAuthUser!.uid;
-        // listening for notification Permissions!
-
-        _notificationsStreamListener = initializeShowNotificationsListener();
-        listenForLocationPermissions();
-        Get.find<ForegroundNotificationsController>()
-            .startListeningForNotificationsFromFirebase(
-                customerNotificationsNode(userId), customerNotificationHandler);
-        // kSignInRouteOptional being written in /wrapper , basically it is equal to true when the user
-        // was already SignedOut and was on a page , which we want him to go back to it once he signed in.
-        // check more in wrapper.
-        if (GetStorage().read<bool>(kSignInRouteOptional) != true) {
-          Future.microtask(() {
-            // Fix to Input Focus problems ( we had it in build which gets re-executed after any input focus) !
-            navigateToOrdersIfNecessary(_orderController!.currentOrders);
-          });
-        }
-      } else {
-        _orderCountListener?.cancel();
-        _orderCountListener = null;
-        _notificationsStreamListener?.cancel();
-        _notificationsStreamListener = null;
-      }
-    });
-
+    if (Get.find<AuthController>().fireAuthUser != null) {
+      _doIfFireAuthUserIsNotNull();
+    }
+    startAuthListener();
     super.initState();
   }
 
@@ -146,6 +117,46 @@ class _CustomerWrapperState extends State<CustomerWrapper>
                         ),
                       )));
             })));
+  }
+
+  void startAuthListener() {
+    _authStateChnagesListener?.cancel();
+    _authStateChnagesListener = null;
+    _authStateChnagesListener = auth.authStateChange.listen((fireUser) {
+      if (fireUser != null) {
+        _doIfFireAuthUserIsNotNull();
+      } else {
+        _orderCountListener?.cancel();
+        _orderCountListener = null;
+        _notificationsStreamListener?.cancel();
+        _notificationsStreamListener = null;
+      }
+    });
+  }
+
+  void _doIfFireAuthUserIsNotNull() {
+    injectIfNotInjected();
+    _orderController = Get.find<OrderController>();
+    _orderCountListener = _orderController!.currentOrders.stream.listen((_) {
+      numberOfCurrentOrders.value = _orderController!.currentOrders.length;
+    });
+    String? userId = Get.find<AuthController>().fireAuthUser!.uid;
+    // listening for notification Permissions!
+
+    _notificationsStreamListener = initializeShowNotificationsListener();
+    listenForLocationPermissions();
+    Get.find<ForegroundNotificationsController>()
+        .startListeningForNotificationsFromFirebase(
+            customerNotificationsNode(userId), customerNotificationHandler);
+    // kSignInRouteOptional being written in /wrapper , basically it is equal to true when the user
+    // was already SignedOut and was on a page , which we want him to go back to it once he signed in.
+    // check more in wrapper.
+    if (GetStorage().read<bool>(kSignInRouteOptional) != true) {
+      Future.microtask(() {
+        // Fix to Input Focus problems ( we had it in build which gets re-executed after any input focus) !
+        navigateToOrdersIfNecessary(_orderController!.currentOrders);
+      });
+    }
   }
 
   void injectIfNotInjected() {
