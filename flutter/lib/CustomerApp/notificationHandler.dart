@@ -1,3 +1,4 @@
+import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
@@ -184,7 +185,7 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
 Notification newMessageNotification(String key, dynamic value) {
   return Notification(
       id: key,
-      linkUrl: getMessageUrl(value['orderType'].toString().toOrderType(),
+      linkUrl: getMessageUrl(
           value['orderId'])!, // in future make dependent on order type
       body: value['message'],
       imgUrl: value['sender']['image'],
@@ -196,8 +197,8 @@ Notification newMessageNotification(String key, dynamic value) {
       variableParams: value);
 }
 
-String? getMessageUrl(OrderType orderType, String orderId) {
-  switch (orderType) {
+String? getMessageUrl(String orderId) {
+  switch (Get.find<OrderController>().getOrder(orderId)!.orderType) {
     case OrderType.Restaurant:
       return getRestaurantMessagesRoute(orderId);
     case OrderType.Taxi:

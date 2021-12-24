@@ -19,7 +19,7 @@ class SettingsController extends GetxController {
   // this will be customized by the user in future.
   Soundpool _userNotificationsSoundPool = Soundpool.fromOptions(
       options: SoundpoolOptions(streamType: StreamType.notification));
-  int _selectedNotificationsSoundId = -1;
+  int? _selectedNotificationsSoundId;
 
   final List<SideMenuItem>? sideMenuItems;
 
@@ -69,8 +69,8 @@ class SettingsController extends GetxController {
   }
 
   Future playNotificationSound({int? soundId}) async {
-    await _userNotificationsSoundPool
-        .play(soundId ?? _selectedNotificationsSoundId);
+    if (_selectedNotificationsSoundId != null)
+      await _userNotificationsSoundPool.play(_selectedNotificationsSoundId!);
   }
 
   Future<bool> _getLocationPermission() async {
