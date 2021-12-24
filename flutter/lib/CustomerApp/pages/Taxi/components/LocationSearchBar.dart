@@ -45,7 +45,7 @@ class LocationSearchBarController {
 
   void expandDropdown({int itemsCount = 2}) {
     /// eachItems = [itemMaxHeight] OF HEIGHT
-    double itemMaxHeight = 32.sp;
+    double itemMaxHeight = 40.0 - (itemsCount == 2 ? 0 : itemsCount);
     double height = 2 * itemMaxHeight;
 
     if (itemsCount >= 2 && itemsCount <= 4) {
@@ -54,7 +54,7 @@ class LocationSearchBarController {
       height = 4 * itemMaxHeight;
     }
 
-    pickChoicesDropDownHeight.value = height.sp;
+    pickChoicesDropDownHeight.value = height;
   }
 
   /// if no type was specified it unfocus from and to
@@ -103,7 +103,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
   Widget build(BuildContext context) {
     responsiveSize(context);
     return Positioned(
-        top: 10,
+        top: 5,
         left: 10,
         right: 10,
         child: Container(
@@ -118,7 +118,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
                       toTextField(),
                     ],
                   ),
-                  SizedBox(height: 2),
+                  // SizedBox(height: 5),
                   pickChoicesDropDown()
                 ],
               ),
@@ -246,7 +246,11 @@ class LocationSearchBarState extends State<LocationSearchBar> {
   Widget pickChoicesDropDown() {
     return Obx(
       () => AnimatedContainer(
-          padding: EdgeInsets.symmetric(vertical: 10.sp),
+          // constraints: BoxConstraints(
+          //   maxHeight:
+          //       locationSearchBarController.pickChoicesDropDownHeight.value,
+          // ),
+          // padding: EdgeInsets.symmetric(vertical: 10.sp),
           clipBehavior: Clip.hardEdge,
           duration: Duration(milliseconds: 500),
           curve: Curves.fastOutSlowIn,
@@ -264,36 +268,67 @@ class LocationSearchBarState extends State<LocationSearchBar> {
                 topRight: Radius.circular(0),
               )),
           child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ...dropDownItems.map<Widget>((e) => InkWell(
-                      onTap: () {
-                        e.function();
-                        locationSearchBarController.unfocusAllFocusNodes();
-                        setState(() {});
-                      },
-                      child: SizedBox(
-                        height: 25.sp,
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              width: 20,
-                            ),
-                            e.icon,
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              e.title,
-                              style: TextStyle(fontFamily: 'psb'),
-                            )
-                          ],
+            child: Center(
+              child: ListView.separated(
+                padding: EdgeInsets.symmetric(vertical: 15),
+
+                shrinkWrap: true,
+                separatorBuilder: (sContext, i) {
+                  return SizedBox(height: 10);
+                },
+                itemCount: dropDownItems.length,
+                itemBuilder: (bContext, i) {
+                  return InkWell(
+                    onTap: () {
+                      dropDownItems[i].function();
+                      locationSearchBarController.unfocusAllFocusNodes();
+                      setState(() {});
+                    },
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 20,
                         ),
-                      ),
-                    )),
-              ],
+                        dropDownItems[i].icon,
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          dropDownItems[i].title,
+                          style: TextStyle(fontFamily: 'psb'),
+                        )
+                      ],
+                    ),
+                  );
+                },
+
+                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                // crossAxisAlignment: CrossAxisAlignment.start,
+                // children: [
+                //   ...dropDownItems.map<Widget>((e) => InkWell(
+                //         onTap: () {
+                //           e.function();
+                //           locationSearchBarController.unfocusAllFocusNodes();
+                //           setState(() {});
+                //         },
+                //         child: Row(
+                //           children: [
+                //             SizedBox(
+                //               width: 20,
+                //             ),
+                //             e.icon,
+                //             SizedBox(
+                //               width: 10,
+                //             ),
+                //             Text(
+                //               e.title,
+                //               style: TextStyle(fontFamily: 'psb'),
+                //             )
+                //           ],
+                //         ),
+                //       )),
+                // ],
+              ),
             ),
           )),
     );
@@ -388,10 +423,8 @@ class LocationSearchBarState extends State<LocationSearchBar> {
     return _authController!.customerRxn.value?.savedLocations
             .map<LocationDropDownItem>((e) {
           return LocationDropDownItem(
-              icon: Icon(MezcalmosIcons.crosshairs,
-                  size: 20, color: Colors.purple),
+              icon: Icon(MezcalmosIcons.search, size: 20, color: Colors.purple),
               function: () {
-                MezSnackbar(e.name, "${e.location?.address}");
                 Location? _savedLoc = _authController!.getLocationById(e.id!);
                 widget.newLocationChosenEvent(_savedLoc,
                     locationSearchBarController.focusedTextField.value);

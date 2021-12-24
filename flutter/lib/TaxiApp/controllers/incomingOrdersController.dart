@@ -44,7 +44,7 @@ class IncomingOrdersController extends GetxController {
         mezDbgPrint(event.snapshot.value);
         List<TaxiOrder> ordersFromSnapshot = <TaxiOrder>[];
         if (event.snapshot.value != null) {
-          event.snapshot.value.forEach((dynamic key, dynamic value) async {
+          event.snapshot.value?.forEach((dynamic key, dynamic value) async {
             TaxiOrder order = TaxiOrder.fromData(key, value);
             order.distanceToClient = MapHelper.calculateDistance(
                 order.from.position, _taxiAuthController.currentLocation);
