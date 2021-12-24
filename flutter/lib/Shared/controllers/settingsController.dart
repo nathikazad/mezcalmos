@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -9,11 +11,18 @@ import 'package:mezcalmos/Shared/controllers/themeContoller.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+import 'package:soundpool/soundpool.dart';
 
 class SettingsController extends GetxController {
   late final ThemeController _appTheme;
   late final LanguageController _appLanguage;
+  // this will be customized by the user in future.
+  Soundpool _userNotificationsSoundPool = Soundpool.fromOptions(
+      options: SoundpoolOptions(streamType: StreamType.notification));
+  int _selectedNotificationsSoundId = -1;
+
   final List<SideMenuItem>? sideMenuItems;
+
   AppType appType;
   ThemeController get appTheme => _appTheme;
   LanguageController get appLanguage => _appLanguage;
@@ -29,7 +38,6 @@ class SettingsController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-
     // here --------
     // FOR NOW WE SET IT TO EN (default  if not passed to LangController)
     _appTheme = Get.put(ThemeController(), permanent: true);
@@ -50,7 +58,19 @@ class SettingsController extends GetxController {
       //     "SettingsController::Checking LocationPermissions .. ${locationPermission}!");
     });
 
-    // this is to make sure that the use already Granted the App the permission to use the location !
+    if (GetStorage().read('notifSound') != null) {
+      // if it's not null then the user already specified a path to the Notification SOund (cached),
+      // which we will use it here.
+    } else {
+      ByteData _soundData = await rootBundle.load(aDefaultNotificationsSound);
+      _selectedNotificationsSoundId =
+          await _userNotificationsSoundPool.load(_soundData);
+    }
+  }
+
+  Future playNotificationSound({int? soundId}) async {
+    await _userNotificationsSoundPool
+        .play(soundId ?? _selectedNotificationsSoundId);
   }
 
   Future<bool> _getLocationPermission() async {

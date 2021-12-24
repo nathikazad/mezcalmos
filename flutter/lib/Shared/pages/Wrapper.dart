@@ -51,17 +51,10 @@ class _WrapperState extends State<Wrapper> {
     } else {
       mezDbgPrint(
           "Wrapper::handleAuthStateChange:: signed in, Checking if User name are Set !");
-      mezDbgPrint(Get.find<AuthController>().user?.name);
-      mezDbgPrint("--------------------------------");
-      mezDbgPrint(Get.find<AuthController>().fireAuthUser?.displayName);
-
       if (!Get.find<AuthController>().isDisplayNameSet()) {
-        mezDbgPrint(
-            "User Signed in but Name or image are null , so  heading to UserInfo Page !");
         await Get.toNamed(kUserProfile);
       }
       if (Get.currentRoute == kSignInRouteOptional) {
-        mezDbgPrint("Current Routee ======= = == = => ${Get.currentRoute}");
         Get.back();
         setState(() {});
       } else

@@ -13,6 +13,7 @@ import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:http/http.dart' as http;
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MGoogleMapController {
   RxSet<Polyline> polylines = <Polyline>{}.obs;
@@ -22,7 +23,9 @@ class MGoogleMapController {
   GoogleMapController? controller;
   LatLngBounds? bounds;
   Function? onMapTap;
-
+  // leaving this here , so later on on Future i will be more calculating the markers Size depending
+  // on zoom lvl.
+  RxDouble markersDefaultSize = (Get.height * 0.08).w.obs;
   void setOnMapTap({required Function onTap}) {
     this.onMapTap = onTap;
   }
@@ -56,19 +59,18 @@ class MGoogleMapController {
 
     if (Get.find<AuthController>().fireAuthUser?.photoURL == null) {
       icon = await BitmapDescriptorLoader(
-          (await cropRonded((await rootBundle.load(aMapUserImgNotSignedIn))
-              .buffer
-              .asUint8List())),
-          60,
-          60,
+          (await cropRonded(
+              (await rootBundle.load(aDefaultAvatar)).buffer.asUint8List())),
+          markersDefaultSize.value,
+          markersDefaultSize.value,
           isBytes: true);
     } else {
       icon = await BitmapDescriptorLoader(
           (await cropRonded((await http.get(Uri.parse(customImgHttpUrl ??
                   Get.find<AuthController>().fireAuthUser!.photoURL!)))
               .bodyBytes) as Uint8List),
-          60,
-          60,
+          markersDefaultSize.value,
+          markersDefaultSize.value,
           isBytes: true);
     }
 
@@ -88,8 +90,8 @@ class MGoogleMapController {
             (await cropRonded((await rootBundle.load(taxi_driver_marker_asset))
                 .buffer
                 .asUint8List())),
-            60,
-            60,
+            markersDefaultSize.value,
+            markersDefaultSize.value,
             isBytes: true),
         flat: true,
         position: latLng));
@@ -102,8 +104,8 @@ class MGoogleMapController {
             (await rootBundle.load(purple_destination_marker_asset))
                 .buffer
                 .asUint8List())),
-        60,
-        60,
+        markersDefaultSize.value,
+        markersDefaultSize.value,
         isBytes: true);
     // markerId = markerId;
 

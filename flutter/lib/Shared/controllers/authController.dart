@@ -124,17 +124,20 @@ class AuthController extends GetxController {
   // Future<ServerResponse> changeUserName(String? name) {}
 
   Future<void> editUserProfile(String? name, String? image) async {
-    Map<String, String> newProfileInfo = <String, String>{};
     if (name != null) {
-      newProfileInfo["name"] = name;
+      await _databaseHelper.firebaseDatabase
+          .reference()
+          .child(userInfo(fireAuthUser!.uid))
+          .child('name')
+          .set(name);
     }
-    if (image != null) {
-      newProfileInfo["image"] = image;
+    if (image != null && image.isURL) {
+      await _databaseHelper.firebaseDatabase
+          .reference()
+          .child(userInfo(fireAuthUser!.uid))
+          .child('image')
+          .set(image);
     }
-    await _databaseHelper.firebaseDatabase
-        .reference()
-        .child(userInfo(_user.value!.uid))
-        .update(newProfileInfo);
   }
 
   Future<void> signOut() async {

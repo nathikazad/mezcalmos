@@ -48,14 +48,14 @@ Image mLoadImage(
 // BitmapLoading stuff -------------------
 
 Future<BitmapDescriptor> BitmapDescriptorLoader(
-    dynamic asset, int width, int height,
+    dynamic asset, num width, num height,
     {bool isBytes = false}) async {
   return BitmapDescriptor.fromBytes(
       await getBytesFromCanvas(width, height, asset, isBytes: isBytes));
   // return await getBytesFromCanvas(width, height, asset, isBytes: isBytes);
 }
 
-Future<Uint8List> getBytesFromCanvas(int width, int height, urlAsset,
+Future<Uint8List> getBytesFromCanvas(num width, num height, urlAsset,
     {bool isBytes = false}) async {
   final ui.PictureRecorder pictureRecorder = ui.PictureRecorder();
   final ui.Canvas canvas = ui.Canvas(pictureRecorder);
@@ -72,7 +72,9 @@ Future<Uint8List> getBytesFromCanvas(int width, int height, urlAsset,
     new ui.Paint(),
   );
 
-  final img = await pictureRecorder.endRecording().toImage(width, height);
+  final img = await pictureRecorder
+      .endRecording()
+      .toImage(width.toInt(), height.toInt());
   final data = await img.toByteData(format: ui.ImageByteFormat.png);
   return data!.buffer.asUint8List();
 }

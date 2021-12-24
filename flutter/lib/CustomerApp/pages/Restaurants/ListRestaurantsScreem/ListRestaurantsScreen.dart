@@ -54,7 +54,7 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(mainAxisSize: MainAxisSize.max, children: [
-              SearchField(),
+              // SearchField(),
               Column(
                 children: List.generate(
                     restaurants.length,

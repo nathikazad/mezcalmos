@@ -49,10 +49,9 @@ const String getxDestinationDescriptor = "destination_descriptor";
 const String getxUserId = "userid";
 const String getxVersion = "version";
 // ----------------- Assets Strings ----------------- //
-
+const String aDefaultNotificationsSound = 'assets/sounds/notif-alert.mp3';
 const String aLogoPath = "assets/images/shared/logo.png";
 const String aDefaultAvatar = "assets/images/shared/noUserImage.jpg";
-const String aMapUserImgNotSignedIn = "assets/images/shared/mapUser.png";
 const String aNoImgAsset = "assets/images/shared/noImg.png";
 const String enLang = "assets/i18n/en.json";
 const String esLang = "assets/i18n/es.json";

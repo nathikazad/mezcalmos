@@ -70,10 +70,11 @@ class _BottomBarState extends State<BottomBar> {
 
   Widget messageBtn({EdgeInsets? margin}) {
     return GestureDetector(
-      onTap: () async {
-        Get.toNamed(getCustomerMessagesRoute(Get.find<OrderController>()
-            .hasOrderOfType(typeToCheck: OrderType.Taxi)!
-            .orderId));
+      onTap: () {
+        Get.toNamed(getCustomerMessagesRoute(widget.taxiRequest.orderId!));
+        // Get.find<OrderController>()
+        //     .hasOrderOfType(typeToCheck: OrderType.Taxi)!
+        //     .orderId)
       },
       child: Container(
         margin: margin ?? EdgeInsets.only(left: 6),
@@ -294,9 +295,10 @@ class _BottomBarState extends State<BottomBar> {
         children: [
           Row(
             children: [
-              Icon(MezcalmosIcons.route,
-                  size:
-                      getSizeRelativeToScreen(32, Get.width.w, Get.height.h).w),
+              Icon(
+                MezcalmosIcons.route,
+                size: (Get.height * 0.020).w,
+              ),
               SizedBox(
                 width: 2.w,
               ),
@@ -307,9 +309,10 @@ class _BottomBarState extends State<BottomBar> {
           ),
           Row(
             children: [
-              Icon(MezcalmosIcons.stopwatch,
-                  size:
-                      getSizeRelativeToScreen(32, Get.width.w, Get.height.h).w),
+              Icon(
+                MezcalmosIcons.stopwatch,
+                size: (Get.height * 0.020).w,
+              ),
               SizedBox(
                 width: 2.w,
               ),
@@ -432,7 +435,7 @@ class _BottomBarState extends State<BottomBar> {
           verticalSeparator(),
           rideCost(),
           verticalSeparator(),
-          messageBtn()
+          messageBtn(margin: EdgeInsets.symmetric(horizontal: 6))
         ]);
         _bottomPadding.value = 10.0;
 

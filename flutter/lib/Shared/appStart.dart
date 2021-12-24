@@ -29,6 +29,7 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:package_info/package_info.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 final ThemeData _defaultAppTheme = ThemeData(
     primaryColor: Colors.white,
@@ -181,7 +182,7 @@ class _StartingPointState extends State<StartingPoint> {
       mezDbgPrint("[ GET STORAGE ] version number ${pInfos.version}");
       await GetStorage().write(getxVersion, pInfos.version);
       await GetStorage().write(getxGmapBottomPaddingKey,
-          Platform.isAndroid ? 38.0 : Get.height / 30);
+          Platform.isAndroid ? 38.0.sp : (Get.height / 30).sp);
     } else
       mezDbgPrint("[ GET STORAGE ] FAILED TO INITIALIZE !");
   }

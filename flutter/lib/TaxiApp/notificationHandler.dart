@@ -34,13 +34,13 @@ Notification orderStatusChangeNotificationHandler(String key, dynamic value) {
       variableParams: value);
 }
 
-Map<String, dynamic>? getTaxiOrderStatusFields(
-    TaxiOrdersStatus taxiOrderStatus) {
+Map<String, dynamic>? getTaxiOrderStatusFields(TaxiOrdersStatus taxiOrderStatus,
+    {String? customerName}) {
   switch (taxiOrderStatus) {
     case TaxiOrdersStatus.CancelledByCustomer:
       return <String, dynamic>{
-        "title": "Preparing Order",
-        "body": "Order is being prepared",
+        "title": "Ride Canceled.",
+        "body": "Ride has been canceled by ${customerName ?? 'customer'}",
         "imgUrl": "assets/images/cancel.png"
       };
     default:

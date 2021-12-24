@@ -25,9 +25,12 @@ class ForegroundNotificationsController extends GetxController {
       _displayNotificationsStreamController.stream;
 
   @override
-  void onInit() async {
+  void onInit() {
+    mezDbgPrint(
+        "sd@s:ForegroundNotificationsController::Notifications =====> ${notifications.length}");
+
+    mezDbgPrint("sd@s:ForegroundNotificationsController: Init");
     super.onInit();
-    mezDbgPrint("ForegroundNotificationsController: Init");
   }
 
   void startListeningForNotificationsFromFirebase(String notificationNode,
@@ -42,7 +45,7 @@ class ForegroundNotificationsController extends GetxController {
         .child(notificationNode)
         .onChildAdded
         .listen((event) {
-      mezDbgPrint("ForegroundNotificationsController:: NEW NOTIFICATION");
+      mezDbgPrint("sd@s:ForegroundNotificationsController:: NEW NOTIFICATION");
       mezDbgPrint(event.snapshot.value);
       try {
         Notification _notification =

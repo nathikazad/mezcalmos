@@ -55,6 +55,10 @@ class _CustomerWrapperState extends State<CustomerWrapper>
       });
       String? userId = Get.find<AuthController>().fireAuthUser!.uid;
       // listening for notification Permissions!
+      // @Nathik , initializeShowNotificationsListener() + startListeningForNotificationsFromFirebase() only happens once
+      // in every 1 app's runtime , means if user signOut and re-signedIn , notifications list will be Empty,
+      // because we don't re-execute them , on each AuthStateChnage , please check  the comment i left at :
+      // flutter/lib/CustomerApp/components/Menu/userMenuComponent.dart :: initState
       _notificationsStreamListener = initializeShowNotificationsListener();
       listenForLocationPermissions();
       Get.find<ForegroundNotificationsController>()

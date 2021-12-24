@@ -1,13 +1,10 @@
 import 'dart:async';
-import 'package:flutter/services.dart';
-import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrderScreen.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as notifs;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
-import 'package:soundpool/soundpool.dart';
 import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +14,8 @@ StreamSubscription<notifs.Notification> initializeShowNotificationsListener() {
       .displayNotificationsStream
       .listen((notification) {
     mezDbgPrint("Notification Displayer: ${notification.toJson()}");
+    mezDbgPrint("Notif::title ====> ${notification.title}");
+    mezDbgPrint("Notif::body ====> ${notification.body}");
     if (DateTime.now().difference(notification.timestamp) <
         Duration(minutes: 10)) {
       _displayNotification(notification);
@@ -25,15 +24,7 @@ StreamSubscription<notifs.Notification> initializeShowNotificationsListener() {
 }
 
 void _displayNotification(notifs.Notification notification) async {
-  Soundpool pool = Soundpool.fromOptions(
-      options: SoundpoolOptions(streamType: StreamType.notification));
-
-  int soundId = await rootBundle
-      .load("assets/sounds/notif-alert.mp3")
-      .then((ByteData soundData) {
-    return pool.load(soundData);
-  });
-  await pool.play(soundId);
+  await Get.find<SettingsController>().playNotificationSound();
   mezDbgPrint(notification.imgUrl);
   if (notification.notificationAction == notifs.NotificationAction.ShowPopUp) {
     twoButtonDialog(

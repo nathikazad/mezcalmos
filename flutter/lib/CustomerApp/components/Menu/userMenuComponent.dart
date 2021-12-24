@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,10 +9,14 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/CustomerApp/components/Menu/userMenuIcon.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
+import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
+import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 class UserMenu extends StatefulWidget {
@@ -24,16 +30,35 @@ class UserMenu extends StatefulWidget {
 
 class _UserMenuState extends State<UserMenu> {
   LanguageController lang = Get.find<LanguageController>();
-
   AuthController auth = Get.find<AuthController>();
-
   OrderController orderController = Get.find<OrderController>();
-  ForegroundNotificationsController notifController =
-      Get.find<ForegroundNotificationsController>();
+  StreamSubscription? notificationsStreamListener;
 
   @override
   void initState() {
+    // @Nathik ,  Not really happy with .
+    // I think a more better way to do this is to revert back to listenening on fireAuthStateChange at the CustomerWraper ViewLayer,
+    // That way we can re-invoke startListeningForNotificationsFromFirebase() and initializeShowNotificationsListener() from there.
+
+    if (Get.isRegistered<ForegroundNotificationsController>()) {
+      notificationsStreamListener?.cancel();
+      notificationsStreamListener = null;
+      notificationsStreamListener = initializeShowNotificationsListener();
+      Get.find<ForegroundNotificationsController>()
+          .startListeningForNotificationsFromFirebase(
+              customerNotificationsNode(auth.fireAuthUser!.uid),
+              customerNotificationHandler);
+    }
+    mezDbgPrint(
+        "sd@s:UserMenu::Notifications =====> ${Get.find<ForegroundNotificationsController>().notifications.length}");
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    notificationsStreamListener?.cancel();
+    notificationsStreamListener = null;
+    super.dispose();
   }
 
   @override
@@ -41,7 +66,6 @@ class _UserMenuState extends State<UserMenu> {
     final txt = Theme.of(context).textTheme;
     return PopupMenuButton(
       padding: EdgeInsets.only(right: 12),
-   
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(15.0))),
       icon: UserMenuIcon(
@@ -53,7 +77,9 @@ class _UserMenuState extends State<UserMenu> {
             child: orderMenuItem(context),
             value: 2,
           ),
-          if (notifController.notifications.isNotEmpty)
+          if (Get.find<ForegroundNotificationsController>()
+              .notifications
+              .isNotEmpty)
             PopupMenuItem(
               child: notificationMenuItem(context),
               value: 1,
@@ -114,7 +140,10 @@ class _UserMenuState extends State<UserMenu> {
         Badge(
             badgeColor: Theme.of(context).primaryColorLight,
             badgeContent: Text(
-              notifController.notifications.length.toStringAsFixed(0),
+              Get.find<ForegroundNotificationsController>()
+                  .notifications
+                  .length
+                  .toStringAsFixed(0),
               style: Theme.of(context)
                   .textTheme
                   .subtitle1!
