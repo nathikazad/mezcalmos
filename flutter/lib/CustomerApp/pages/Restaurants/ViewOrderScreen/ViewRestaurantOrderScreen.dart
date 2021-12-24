@@ -135,7 +135,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
             if (order.value != null) {
               return SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -151,9 +151,6 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                         items: order.value!.items,
                       ),
 
-                      SizedBox(
-                        height: 2,
-                      ),
                       OrderSummaryCard(order: order.value!),
                       //===============================>notes========================>
                       order.value?.notes == null ||
@@ -162,7 +159,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                           : notesWidget(order),
                       //===============================>button cancel===========================
 
-                      SizedBox(height: 20),
+                      SizedBox(height: 10),
                       Container(
                           alignment: Alignment.center,
                           child: OrderFooterCard(order: order.value!)),

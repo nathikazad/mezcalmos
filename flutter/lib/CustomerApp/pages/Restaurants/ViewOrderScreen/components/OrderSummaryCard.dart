@@ -17,7 +17,7 @@ class OrderSummaryCard extends StatelessWidget {
     return Column(
       children: [
         Container(
-          margin: EdgeInsets.all(8),
+          margin: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
           alignment: Alignment.centerLeft,
           child: Text(
             '${lang.strings["customer"]["restaurant"]["cart"]["totalCost"]}',

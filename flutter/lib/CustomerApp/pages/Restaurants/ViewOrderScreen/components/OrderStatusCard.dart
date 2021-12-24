@@ -34,12 +34,12 @@ class OrderStatusCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                getOrderWidget(RestaurantOrderStatus.CancelledByAdmin),
+                getOrderWidget(ordersStates),
                 Flexible(
                   flex: 8,
                   fit: FlexFit.tight,
                   child: Text(
-                    getOrderStatus(RestaurantOrderStatus.CancelledByAdmin),
+                    getOrderStatus(ordersStates),
                     style: txt.headline3,
                     textAlign: TextAlign.center,
                     maxLines: 2,

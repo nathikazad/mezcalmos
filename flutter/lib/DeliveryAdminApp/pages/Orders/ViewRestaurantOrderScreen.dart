@@ -56,7 +56,11 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
     } else {
       _orderListener =
           controller.getCurrentOrderStream(orderId).listen((newOrder) {
-        order.value = controller.getOrder(orderId) as RestaurantOrder?;
+        if (newOrder != null) {
+          order.value = controller.getOrder(orderId) as RestaurantOrder?;
+        } else {
+          Get.back();
+        }
       });
     }
   }
@@ -116,8 +120,13 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                         Container(
                           child: Container(
                             padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Obx(() => buildWigetOnOrderStatus(
-                                order.value!.status, order.value!.orderTime)),
+                            child: Obx(() {
+                              return (order.value!.status !=
+                                      RestaurantOrderStatus.Delivered)
+                                  ? buildWigetOnOrderStatus(order.value!.status,
+                                      order.value!.orderTime)
+                                  : Container();
+                            }),
                           ),
                         )
                       ],
@@ -680,6 +689,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                   if (res) {
                     Get.snackbar("Loading", "");
                     controller.dropOrder(orderId);
+                    Get.back();
                   }
                 }));
 
