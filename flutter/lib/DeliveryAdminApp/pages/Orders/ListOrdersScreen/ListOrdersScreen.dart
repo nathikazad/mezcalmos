@@ -1,14 +1,15 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/DeliveryAdminAppbar.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:intl/intl.dart';
+import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 
 import 'components/buildOrders.dart';
 
@@ -83,18 +84,14 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
               return Column(
                 children: [
                   Container(
-                    padding: const EdgeInsets.only(left: 10),
+                    margin: const EdgeInsets.all(8),
                     alignment: Alignment.centerLeft,
                     child: Text(lang.strings["customer"]["orders"]["title"],
-                        style: const TextStyle(
-                            color: const Color(0xff1d1d1d),
-                            fontFamily: "psr",
-                            fontStyle: FontStyle.normal,
-                            fontSize: 45.0),
+                        style: Theme.of(context).textTheme.headline1,
                         textAlign: TextAlign.left),
                   ),
                   SizedBox(
-                    height: 15,
+                    height: 8,
                   ),
                   Expanded(
                     child: inProcessOrders.value.length > 0
