@@ -36,10 +36,27 @@ class OldOrderCard extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  CircleAvatar(
-                      radius: 30,
-                      backgroundImage:
-                          mLoadImage(url: order.serviceProvider?.image).image),
+                  Stack(
+                    children: [
+                      CircleAvatar(
+                          radius: 30,
+                          backgroundImage:
+                              mLoadImage(url: order.serviceProvider?.image)
+                                  .image),
+                      Positioned(
+                          top: 0,
+                          right: 0,
+                          child: CircleAvatar(
+                              radius: 14,
+                              backgroundColor: Colors.green.shade400,
+                              child: Icon(
+                                Icons.food_bank,
+                                size: 20,
+                                // size: 18.sp,
+                                color: Colors.white,
+                              )))
+                    ],
+                  ),
                   SizedBox(
                     width: 10,
                   ),

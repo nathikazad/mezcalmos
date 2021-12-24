@@ -153,11 +153,12 @@ class OngoingOrderList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Colors.green.withOpacity(0.3),
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Obx(
         () => Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Container(
-            margin: const EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
             child: Text(
               'Ongoing Orders',
               style: txt.headline3,
@@ -185,7 +186,9 @@ class OngoingOrderList extends StatelessWidget {
                     );
                 }
               }),
-          Divider(),
+          SizedBox(
+            height: 10,
+          )
         ]),
       ),
     );

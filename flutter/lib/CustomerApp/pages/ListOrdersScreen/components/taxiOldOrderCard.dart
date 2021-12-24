@@ -35,13 +35,30 @@ class TaxiOldOrderCard extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  CircleAvatar(
-                      radius: (Get.width * 0.09),
-                      backgroundImage: mLoadImage(
-                              assetInCaseFailed:
-                                  'assets/images/customer/taxi/taxiDriverImg.png',
-                              url: order.serviceProvider?.image)
-                          .image),
+                  Stack(
+                    children: [
+                      CircleAvatar(
+                          radius: 30,
+                          backgroundImage: mLoadImage(
+                                  assetInCaseFailed:
+                                      'assets/images/customer/taxi/taxiDriverImg.png',
+                                  url: order.serviceProvider?.image)
+                              .image),
+                      //  if (order.serviceProvider != null)
+                      Positioned(
+                          top: 0,
+                          right: 0,
+                          child: CircleAvatar(
+                              radius: 14,
+                              backgroundColor: Colors.amber.shade500,
+                              child: Icon(
+                                Icons.local_taxi_rounded,
+                                size: 20,
+                                // size: 18.sp,
+                                color: Colors.white,
+                              )))
+                    ],
+                  ),
                   SizedBox(
                     width: 10,
                   ),

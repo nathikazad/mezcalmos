@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 
@@ -33,18 +34,30 @@ class TaxiOngoingOrderCard extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  (order.serviceProvider != null)
-                      ? CircleAvatar(
+                  Stack(
+                    children: [
+                      CircleAvatar(
                           radius: 30,
-                          backgroundImage:
-                              NetworkImage(order.serviceProvider!.image),
-                        )
-                      : CircleAvatar(
-                          radius: 30,
-                          backgroundColor: Colors.white,
-                          backgroundImage: AssetImage(
-                              'assets/images/customer/taxi/taxiDriverImg.png'),
-                        ),
+                          backgroundImage: mLoadImage(
+                                  assetInCaseFailed:
+                                      'assets/images/customer/taxi/taxiDriverImg.png',
+                                  url: order.serviceProvider?.image)
+                              .image),
+                      //  if (order.serviceProvider != null)
+                      Positioned(
+                          top: 0,
+                          right: 0,
+                          child: CircleAvatar(
+                              radius: 14,
+                              backgroundColor: Colors.amber.shade500,
+                              child: Icon(
+                                Icons.local_taxi_rounded,
+                                size: 20,
+                                // size: 18.sp,
+                                color: Colors.white,
+                              )))
+                    ],
+                  ),
                   SizedBox(width: 10),
                   Flexible(
                     flex: 4,

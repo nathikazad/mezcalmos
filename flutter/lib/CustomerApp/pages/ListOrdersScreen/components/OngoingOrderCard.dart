@@ -5,6 +5,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/OrderStatusCard.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 
@@ -41,15 +42,29 @@ class OngoingOrderCard extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  CircleAvatar(
-                      radius: 30,
-                      backgroundImage:
-                          // #question @jam what is the point of null check if you are going to override it like this
-                          // taxi orders dont have service provider image when they are looking for orders
-                          // in that case show the logo, it will not work as NetworkImage, so please change to load asset image
-                          NetworkImage(order.serviceProvider != null
-                              ? order.serviceProvider!.image
-                              : "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d")),
+                  Stack(
+                    children: [
+                      CircleAvatar(
+                          radius: 30,
+                          backgroundImage: mLoadImage(
+                                  assetInCaseFailed:
+                                      'assets/images/customer/DeliveryAdmin/restaurant.png',
+                                  url: order.serviceProvider?.image)
+                              .image),
+                      Positioned(
+                          top: 0,
+                          right: 0,
+                          child: CircleAvatar(
+                              radius: 14,
+                              backgroundColor: Colors.green.shade400,
+                              child: Icon(
+                                Icons.food_bank,
+                                size: 20,
+                                // size: 18.sp,
+                                color: Colors.white,
+                              )))
+                    ],
+                  ),
                   SizedBox(width: 10),
                   Flexible(
                     flex: 5,
