@@ -23,15 +23,15 @@ class WorkingHoursCart extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Expanded(
-            flex: 3,
+          Flexible(
+            flex: 4,
             child: Container(
               width: 80,
               child: Text(day!),
             ),
           ),
-          Expanded(
-            flex: 2,
+          Flexible(
+            flex: 3,
             child: Row(
               children: [
                 Spacer(),
@@ -49,8 +49,8 @@ class WorkingHoursCart extends StatelessWidget {
               ],
             ),
           ),
-          Expanded(
-              flex: 5,
+          Flexible(
+              flex: 6,
               child: Row(children: [
                 Spacer(),
                 isOpen!

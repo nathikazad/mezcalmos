@@ -7,12 +7,11 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class SavedLocationComponent extends StatelessWidget {
-  SavedLocationComponent(
-      {required this.savelocation, Key? key})
+  SavedLocationComponent({required this.savelocation, Key? key})
       : super(key: key);
   final SavedLocation savelocation;
 
- // final GestureTapCallback onPress;
+  // final GestureTapCallback onPress;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +56,7 @@ class SavedLocationComponent extends StatelessWidget {
                       width: 5,
                     ),
                     Container(
-                      width: Get.width * 0.83,
+                      width: Get.width * 0.8,
                       child: Text(
                         "${savelocation.location?.address}",
                         maxLines: 2,

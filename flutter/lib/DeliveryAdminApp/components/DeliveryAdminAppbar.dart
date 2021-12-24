@@ -11,6 +11,5 @@ AppBar deliveryAdminAppBar(AppBarLeftButtonType leftBtnType,
         ? ActionIconsComponents.notificationIcon(
             hasNewNotif: true, margin: EdgeInsets.all(0))
         : SizedBox(),
-    withOrder ? ActionIconsComponents.cartIcon() : Container()
   ]);
 }

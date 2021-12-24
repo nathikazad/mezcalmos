@@ -107,7 +107,7 @@ class _DropDownListCartViewState extends State<DropDownListCartView> {
                                 width: 15,
                               ),
                               Container(
-                                width: Get.width * 0.72,
+                                width: Get.width * 0.65,
                                 child: Text(
                                   e.name,
                                   overflow: TextOverflow.ellipsis,

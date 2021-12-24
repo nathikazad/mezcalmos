@@ -178,42 +178,4 @@ class ActionIconsComponents {
       ),
     );
   }
-
-  /// cart icon
-  static Widget cartIcon(
-      {EdgeInsetsGeometry margin = const EdgeInsets.symmetric(horizontal: 5),
-      Function? function,
-      ButtonColorType btnTypeColor = ButtonColorType.ButtonLightColor}) {
-    return Container(
-      margin: margin,
-      child: GestureDetector(
-        child: Container(
-          height: 30,
-          width: 30,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-            gradient: (btnTypeColor == ButtonColorType.ButtonLightColor)
-                ? gradientLightColor
-                : gradientDarkColor,
-          ),
-          child: Icon(
-            Icons.shopping_cart_outlined,
-            size: 18,
-            color: Color(0xff5582ff),
-          ),
-        ),
-        onTap: () {
-          print("cart");
-          if (function != null) {
-            function();
-            Get.toNamed(kCartRoute);
-          }
-          Get.toNamed(kCartRoute);
-
-          // Get.to(ViewCartScreen(),
-          //);
-        },
-      ),
-    );
-  }
 }
