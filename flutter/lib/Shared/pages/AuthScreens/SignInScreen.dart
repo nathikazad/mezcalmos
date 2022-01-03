@@ -59,13 +59,16 @@ class SignIn extends GetWidget<AuthController> {
                         : SizedBox(
                             height: 30,
                           ),
-                    MezcalmosSharedWidgets.logo(
-                        size: getSizeRelativeToScreen(60.w, sh, sw)),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 50),
+                      child: MezcalmosSharedWidgets.logo(
+                          size: getSizeRelativeToScreen(60.w, sh, sw)),
+                    ),
                     SizedBox(height: 10),
                     MezcalmosSharedWidgets.mezcalmosTitle(
                         textSize: 40.sp, isBold: true),
                     SizedBox(
-                      height: 20.h,
+                      height: 20,
                     ),
                     Text(lang.strings['shared']['login']["title"],
                         overflow: TextOverflow.visible,
@@ -74,9 +77,6 @@ class SignIn extends GetWidget<AuthController> {
                             .textTheme
                             .headline1
                             ?.copyWith(fontWeight: FontWeight.w600)),
-                    SizedBox(
-                      height: 30.h,
-                    ),
                     ...buildSignInButtons(lmode)
                   ],
                 ),
