@@ -45,7 +45,9 @@ class _BottomBarState extends State<BottomBar> {
           left: 15,
           right: 15,
           child: Container(
-              margin: EdgeInsets.only(bottom: 45),
+              margin: EdgeInsets.only(
+                  bottom:
+                      getTheRightMargin(widget.taxiRequest.status) ? 45 : 13),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
                 gradient: LinearGradient(colors: [
@@ -66,6 +68,17 @@ class _BottomBarState extends State<BottomBar> {
                         buildBottomBatByStatus(widget.taxiRequest, context),
                   )))),
     );
+  }
+
+  bool getTheRightMargin(TaxiOrdersStatus? taxiOrdersStatus) {
+    switch (taxiOrdersStatus) {
+      case TaxiOrdersStatus.CancelledByTaxi:
+      case TaxiOrdersStatus.Expired:
+      case TaxiOrdersStatus.CancelledByCustomer:
+        return false;
+      default:
+        return true;
+    }
   }
 
   Widget messageBtn({EdgeInsets? margin}) {

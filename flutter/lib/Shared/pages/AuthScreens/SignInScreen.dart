@@ -37,11 +37,15 @@ class SignIn extends GetWidget<AuthController> {
         onWillPop: () async => false,
         child: Scaffold(
             body: SingleChildScrollView(
-          child: Padding(
+          child: Container(
               padding: const EdgeInsets.all(8.0),
+              width: Get.width,
+              height: Get.height,
+              alignment: Alignment.center,
               child: Obx(
                 () => Column(
                   children: [
+                    Spacer(),
                     (mode == SignInMode.OptionalSignIn)
                         ? Container(
                             padding: const EdgeInsets.only(top: 20),
@@ -67,9 +71,7 @@ class SignIn extends GetWidget<AuthController> {
                     SizedBox(height: 10),
                     MezcalmosSharedWidgets.mezcalmosTitle(
                         textSize: 40.sp, isBold: true),
-                    SizedBox(
-                      height: 20,
-                    ),
+                    Spacer(),
                     Text(lang.strings['shared']['login']["title"],
                         overflow: TextOverflow.visible,
                         textAlign: TextAlign.center,
@@ -77,7 +79,9 @@ class SignIn extends GetWidget<AuthController> {
                             .textTheme
                             .headline1
                             ?.copyWith(fontWeight: FontWeight.w600)),
-                    ...buildSignInButtons(lmode)
+                    Spacer(),
+                    ...buildSignInButtons(lmode),
+                    Spacer(),
                   ],
                 ),
               )),
