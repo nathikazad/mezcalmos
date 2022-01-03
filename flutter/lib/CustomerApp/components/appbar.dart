@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/Menu/MenuComponent.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -50,7 +51,7 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
             )
           : Container(
               alignment: Alignment.center,
-              width: 150,
+              width: 170.w,
               child: FittedBox(
                 child: MezcalmosSharedWidgets.fillTitle(1),
               ),
