@@ -5,7 +5,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:mezcalmos/CustomerApp/components/appbar.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -38,9 +37,9 @@ class _ViewNotificationsState extends State<ViewNotifications> {
   Widget build(BuildContext context) {
     final txt = Theme.of(context).textTheme;
     return Scaffold(
-      appBar: CustomerAppBar(
-        title: lang.strings['shared']['notification']['title'],
-        autoBack: true,
+      appBar: AppBar(
+        title: Text(lang.strings['shared']['notification']['title']),
+        automaticallyImplyLeading: true,
       ),
       body: SingleChildScrollView(
         child: Padding(

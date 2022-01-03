@@ -97,7 +97,7 @@ class PastOrderList extends StatelessWidget {
               groupComparator: (DateTime value1, DateTime value2) =>
                   value2.compareTo(value1),
               itemComparator: (element1, element2) =>
-                  element1.orderTime.compareTo(element2.orderTime),
+                  element2.orderTime.compareTo(element1.orderTime),
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               groupHeaderBuilder: (element) {
@@ -117,22 +117,35 @@ class PastOrderList extends StatelessWidget {
               separator: SizedBox(
                 height: 5,
               ),
-              indexedItemBuilder: (context, order, index) {
-                switch (controller.pastOrders()[index].orderType) {
+              itemBuilder: (context, element) {
+                switch (element.orderType) {
                   case OrderType.Taxi:
-                    return TaxiOldOrderCard(
-                        order: controller.pastOrders()[index] as TaxiOrder);
+                    return TaxiOldOrderCard(order: element as TaxiOrder);
 
                   case OrderType.Restaurant:
-                    return OldOrderCard(
-                        order:
-                            controller.pastOrders()[index] as RestaurantOrder);
+                    return OldOrderCard(order: element as RestaurantOrder);
 
                   default:
                     return SizedBox(
                       height: 0,
                     );
                 }
+                // indexedItemBuilder: (context, order, index) {
+                //   switch (controller.pastOrders()[index].orderType) {
+                //     case OrderType.Taxi:
+                //       return TaxiOldOrderCard(
+                //           order: controller.pastOrders()[index] as TaxiOrder);
+
+                //     case OrderType.Restaurant:
+                //       return OldOrderCard(
+                //           order:
+                //               controller.pastOrders()[index] as RestaurantOrder);
+
+                //     default:
+                //       return SizedBox(
+                //         height: 0,
+                //       );
+                //   }
               }),
         ]),
       ),
