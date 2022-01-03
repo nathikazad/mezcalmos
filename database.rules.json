@@ -93,7 +93,7 @@
             ".write": "$uid === auth.uid"
           },
           "location": {
-            ".write": "$uid === auth.uid"
+            ".write": "data.parent().exists() && $uid === auth.uid"
           }
         }
       },

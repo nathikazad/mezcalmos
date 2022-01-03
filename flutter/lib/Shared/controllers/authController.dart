@@ -86,6 +86,10 @@ class AuthController extends GetxController {
           if (event.snapshot.value['language'] == null) {
             event.snapshot.value['language'] =
                 Get.find<LanguageController>().userLanguageKey;
+            _databaseHelper.firebaseDatabase
+                .reference()
+                .child(userLanguage(user.uid))
+                .set(Get.find<LanguageController>().userLanguageKey);
           }
           _user.value = User.fromSnapshot(user, event.snapshot);
 

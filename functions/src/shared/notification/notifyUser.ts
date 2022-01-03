@@ -20,7 +20,7 @@ export async function push(
   let subscription: NotificationInfo;
   subscription = await rootDbNodes.getNotificationInfo(particpantType, userId);
   if (subscription != null && subscription.deviceNotificationToken) {
-    let language: Language = (await getUserInfo(userId)).language!;
+    let language: Language = (await getUserInfo(userId)).language ?? Language.ES;
     let fcmMessage: fcm.fcmPayload = {
       token: subscription.deviceNotificationToken,
       payload: {
