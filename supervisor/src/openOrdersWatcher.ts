@@ -151,7 +151,7 @@ function notifyDrivers(driversToNotify: Record<string, NotifyDriver>) {
       }
     else {
       openOrders[driverToNotify.orderId].notificationStatus![driverId].sentCount =
-        openOrders[driverToNotify.orderId].notificationStatus![driverId].sentCount + 1;
+        openOrders[driverToNotify.orderId].notificationStatus![driverId].sentCount ?? 0 + 1;
     }
 
     push({
@@ -181,14 +181,18 @@ function updateNotificationStatusesInDb() {
     let openOrder = openOrders[orderId];
     rootNodes.openOrders(OrderType.Taxi, orderId).transaction(function (order) {
       if (order != null) {
+        console.log("root")
         order.notificationStatus = openOrder.notificationStatus!
+        console.log(order)
         return order;
       }
       return order
     });
     customerNodes.inProcessOrders(openOrder.customer.id, orderId).transaction(function (order) {
       if (order != null) {
+        console.log("customer")
         order.notificationStatus = openOrder.notificationStatus!
+        console.log(order)
         return order;
       }
       return order
