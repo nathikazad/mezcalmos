@@ -31,7 +31,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
   MGoogleMapController mGoogleMapController = MGoogleMapController();
   LanguageController lang = Get.find<LanguageController>();
   TaxiOrder? order;
-  OrderController controller = Get.put<OrderController>(OrderController());
+  OrderController controller = Get.find<OrderController>();
   StreamSubscription? _orderListener;
   bool _clickedButton = false;
   TaxiAuthController taxiAuthController = Get.find<TaxiAuthController>();

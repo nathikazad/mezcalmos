@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/BottomBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/TopBar.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -30,7 +32,8 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
   StreamSubscription? _orderListener;
   final String toMarkerId = "to";
   LanguageController lang = Get.find<LanguageController>();
-
+  RxDouble bottomPadding =
+      ((GetStorage().read(getxGmapBottomPaddingKey) as double) + 15.0).obs;
 /******************************  Init and build function ************************************/
   @override
   void initState() {
@@ -98,7 +101,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
         setState(() {});
       }
     } else {
-      MezSnackbar("Error", "Unfound Order !");
+      mezDbgPrint("Error :Unfound Order !");
     }
     super.initState();
   }
@@ -137,8 +140,9 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
                             )),
                         Obx(() {
                           return BottomBar(
-                            taxiRequest: order.value!.toTaxiRequest().obs.value,
-                          );
+                              taxiRequest:
+                                  order.value!.toTaxiRequest().obs.value,
+                              bottomPadding: bottomPadding.value);
                         }),
                         cancelButton(order.value!.status),
                         TopBar(order: order.value!)
@@ -157,6 +161,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
         "[[[[[[[[[[[[[[[[[[[[[[[[[[[[[ $status ]]]]]]]]]]]]]]]]]]]]]]]]]]]]]");
     switch (status) {
       case TaxiOrdersStatus.OnTheWay:
+        bottomPadding.value = 10.0;
         widget.mGoogleMapController.setAnimateMarkersPolyLinesBounds(true);
         widget.mGoogleMapController.animateAndUpdateBounds();
 
@@ -175,6 +180,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
         break;
 
       case TaxiOrdersStatus.InTransit:
+        bottomPadding.value = 10.0;
         widget.mGoogleMapController.setAnimateMarkersPolyLinesBounds(true);
 
         // from [driver] to [destination]
@@ -198,6 +204,8 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
         break;
 
       default:
+        // bottomPadding.value = 10.0;
+
         // default is : isLoookingForTaxi
         // so user can move freely
         widget.mGoogleMapController.setAnimateMarkersPolyLinesBounds(true);
@@ -216,6 +224,8 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
 
   /// This gets invoked when the order is moved to /past db node
   void pastOrderStatusHandler(TaxiOrdersStatus status) {
+    bottomPadding.value = 10.0;
+
     if (order.value!.driver != null)
       widget.mGoogleMapController.removeMarkerById(order.value!.driver!.id);
     // adding customer's marker

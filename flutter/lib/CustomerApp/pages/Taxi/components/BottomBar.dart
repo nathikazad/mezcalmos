@@ -23,8 +23,8 @@ import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 // @SAAD - TODO : REFACTORE THIS.
 class BottomBar extends StatefulWidget {
   TaxiRequest taxiRequest;
-
-  BottomBar({required this.taxiRequest});
+  double? bottomPadding = 45;
+  BottomBar({required this.taxiRequest, this.bottomPadding});
   @override
   State<BottomBar> createState() {
     return _BottomBarState();
@@ -33,40 +33,44 @@ class BottomBar extends StatefulWidget {
 
 class _BottomBarState extends State<BottomBar> {
   LanguageController lang = Get.find<LanguageController>();
-  RxDouble _bottomPadding =
-      ((GetStorage().read(getxGmapBottomPaddingKey) as double) + 15.0).obs;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.bottomPadding == null) {
+      widget.bottomPadding =
+          ((GetStorage().read(getxGmapBottomPaddingKey) as double) + 15.0);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     responsiveSize(context);
-    return Obx(
-      () => Positioned(
-          bottom: _bottomPadding.value,
-          left: 15,
-          right: 15,
+    return Positioned(
+      bottom: widget.bottomPadding,
+      left: 15,
+      right: 15,
+      child: Container(
+          margin: EdgeInsets.only(
+              bottom: getTheRightMargin(widget.taxiRequest.status) ? 45 : 13),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            gradient: LinearGradient(colors: [
+              Color.fromRGBO(81, 132, 255, 1),
+              Color.fromRGBO(206, 73, 252, 1)
+            ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+          ),
           child: Container(
-              margin: EdgeInsets.only(
-                  bottom:
-                      getTheRightMargin(widget.taxiRequest.status) ? 45 : 13),
+              height: getSizeRelativeToScreen(25, Get.height, Get.width),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
-                gradient: LinearGradient(colors: [
-                  Color.fromRGBO(81, 132, 255, 1),
-                  Color.fromRGBO(206, 73, 252, 1)
-                ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                color: Colors.white,
               ),
-              child: Container(
-                  height: getSizeRelativeToScreen(25, Get.height, Get.width),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: Colors.white,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children:
-                        buildBottomBatByStatus(widget.taxiRequest, context),
-                  )))),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: buildBottomBatByStatus(widget.taxiRequest, context),
+              ))),
     );
   }
 
@@ -425,8 +429,8 @@ class _BottomBarState extends State<BottomBar> {
           Expanded(flex: 1, child: verticalSeparator()),
           rightRouteInfos()
         ]);
-        _bottomPadding.value =
-            (GetStorage().read(getxGmapBottomPaddingKey) as double) + 15.0;
+        // widget.bottomPadding =
+        //     (GetStorage().read(getxGmapBottomPaddingKey) as double) + 15.0;
         break;
       case TaxiOrdersStatus.LookingForTaxi:
         _widgies.assignAll([
@@ -434,8 +438,8 @@ class _BottomBarState extends State<BottomBar> {
           Expanded(flex: 1, child: verticalSeparator()),
           rightRouteInfos()
         ]);
-        _bottomPadding.value =
-            (GetStorage().read(getxGmapBottomPaddingKey) as double) + 15.0;
+        // widget.bottomPadding =
+        //     (GetStorage().read(getxGmapBottomPaddingKey) as double) + 15.0;
         break;
 
       case TaxiOrdersStatus.DroppedOff:
@@ -447,7 +451,7 @@ class _BottomBarState extends State<BottomBar> {
           verticalSeparator(),
           messageBtn(margin: EdgeInsets.symmetric(horizontal: 6))
         ]);
-        _bottomPadding.value = 10.0;
+        // widget.bottomPadding = 10.0;
 
         break;
 
@@ -461,7 +465,7 @@ class _BottomBarState extends State<BottomBar> {
               description: "Your ride has been expired :("),
           reCreateOrderBtn()
         ]);
-        _bottomPadding.value = 10.0;
+        // widget.bottomPadding = 10.0;
         break;
 
       case TaxiOrdersStatus.CancelledByTaxi:
@@ -471,7 +475,7 @@ class _BottomBarState extends State<BottomBar> {
           messageBtn(margin: EdgeInsets.symmetric(horizontal: 6)),
           reCreateOrderBtn(),
         ]);
-        _bottomPadding.value = 10.0;
+        // widget.bottomPadding = 10.0;
         break;
 
       case TaxiOrdersStatus.CancelledByCustomer:
@@ -484,7 +488,7 @@ class _BottomBarState extends State<BottomBar> {
               description: "You have canceled your ride :("),
           reCreateOrderBtn()
         ]);
-        _bottomPadding.value = 10.0;
+        // widget.bottomPadding = 10.0;
         break;
 
       default:
@@ -497,7 +501,7 @@ class _BottomBarState extends State<BottomBar> {
           verticalSeparator(),
           buildMsgAndCancelBtn()
         ]);
-        _bottomPadding.value = 10.0;
+      // widget.bottomPadding = 10.0;
     }
     return _widgies;
   }

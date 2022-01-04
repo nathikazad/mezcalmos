@@ -57,7 +57,7 @@ class OrderController extends GetxController {
       List<TaxiOrder> orders = [];
       if (event.snapshot.value != null) {
         // mezDbgPrint("orderController: new incoming order data");
-        event.snapshot.value.keys.forEach((orderId) {
+        event.snapshot.value.keys?.forEach((orderId) {
           // mezDbgPrint("Hndling Order : $orderId");
           dynamic orderData = event.snapshot.value[orderId];
           // mezDbgPrint("Order Data => $orderData");

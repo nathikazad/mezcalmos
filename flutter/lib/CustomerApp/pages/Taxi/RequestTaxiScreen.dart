@@ -205,7 +205,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
       String orderId = response.data["orderId"];
       // in case the widget is still mounted , then make dart scheduale this delayed call as soon as possible ,
       // so we don't fall into assertion error ('!_debugLocked': is not true.)
-      await Future.microtask(() {
+      await Future.delayed(Duration.zero, () {
         mezDbgPrint("Goung tooooo route >>>>  ${getTaxiOrderRoute(orderId)}");
         popEverythingAndNavigateTo(getTaxiOrderRoute(orderId));
       });

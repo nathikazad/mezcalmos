@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
@@ -167,8 +168,10 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
                 Get.offNamedUntil(
                     kCurrentOrderRoute, ModalRoute.withName(kHomeRoute));
                 // Notice the User !
-                MezSnackbar(
-                    serverResponse.status.toShortString(), serverResponse.data);
+                mezDbgPrint(
+                    "s@ad:IncommingOrderViewScreen::acceptOrderButton::response::data:: ${serverResponse.data}");
+                mezDbgPrint(
+                    "s@ad:IncommingOrderViewScreen::acceptOrderButton::response::status:: ${serverResponse.status.toShortString()}");
               } else {
                 // in case Taxi User failed accepting the order.
                 setState(() {

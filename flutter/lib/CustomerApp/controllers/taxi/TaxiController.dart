@@ -34,8 +34,6 @@ class TaxiController extends GetxController {
         FirebaseFunctions.instance.httpsCallable("taxi-requestRide");
 
     try {
-      mezDbgPrint("=============== http Func calling with ================");
-      mezDbgPrint("=============== jamal test================");
       mezDbgPrint(taxiRequest.asCloudFunctionParam());
       HttpsCallableResult response =
           await requestTaxiFunction.call(taxiRequest.asCloudFunctionParam());

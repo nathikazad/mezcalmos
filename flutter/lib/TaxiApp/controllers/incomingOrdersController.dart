@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:collection';
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -44,12 +46,21 @@ class IncomingOrdersController extends GetxController {
         mezDbgPrint(event.snapshot.value);
         List<TaxiOrder> ordersFromSnapshot = <TaxiOrder>[];
         if (event.snapshot.value != null) {
+          mezDbgPrint("s@s:Ordeeeeer ==> ${event.snapshot.value}");
           event.snapshot.value?.forEach((dynamic key, dynamic value) async {
-            TaxiOrder order = TaxiOrder.fromData(key, value);
-            order.distanceToClient = MapHelper.calculateDistance(
-                order.from.position, _taxiAuthController.currentLocation);
-            ordersFromSnapshot.add(order);
-            markOrderAsReceived(key, order.customer.id);
+            // this is made to avoid 1 key being in the event.snapshot
+            // happening becasause.
+            if (value.keys.length > 1) {
+              TaxiOrder order = TaxiOrder.fromData(key, value);
+              order.distanceToClient = MapHelper.calculateDistance(
+                  order.from.position, _taxiAuthController.currentLocation);
+              ordersFromSnapshot.add(order);
+              try {
+                await markOrderAsReceived(key, order.customer.id);
+              } on PlatformException catch (_) {
+                // do nothing
+              }
+            }
           });
 
           ordersFromSnapshot
@@ -95,27 +106,43 @@ class IncomingOrdersController extends GetxController {
   }
 
   Future<void> markOrderAsRead(String orderId, String customerId) async {
-    _databaseHelper.firebaseDatabase
-        .reference()
-        .child(rootOpenOrderReadNode(orderId, _authController.user!.uid))
-        .set(true);
-    _databaseHelper.firebaseDatabase
-        .reference()
-        .child(customerInProcessOrderReadNode(
-            orderId, customerId, _authController.user!.uid))
-        .set(true);
+    TaxiOrder? tmpOrderCheck;
+    try {
+      tmpOrderCheck = orders.firstWhere((order) => order.orderId == orderId);
+    } on StateError catch (_) {
+      tmpOrderCheck = null;
+    }
+    if (tmpOrderCheck != null) {
+      await _databaseHelper.firebaseDatabase
+          .reference()
+          .child(rootOpenOrderReadNode(orderId, _authController.user!.uid))
+          .set(true);
+      await _databaseHelper.firebaseDatabase
+          .reference()
+          .child(customerInProcessOrderReadNode(
+              orderId, customerId, _authController.user!.uid))
+          .set(true);
+    }
   }
 
   Future<void> markOrderAsReceived(String orderId, String customerId) async {
-    _databaseHelper.firebaseDatabase
-        .reference()
-        .child(rootOpenOrderReceivedNode(orderId, _authController.user!.uid))
-        .set(true);
-    _databaseHelper.firebaseDatabase
-        .reference()
-        .child(customerInProcessOrderReceivedNode(
-            orderId, customerId, _authController.user!.uid))
-        .set(true);
+    TaxiOrder? tmpOrderCheck;
+    try {
+      tmpOrderCheck = orders.firstWhere((order) => order.orderId == orderId);
+    } on StateError catch (_) {
+      tmpOrderCheck = null;
+    }
+    if (tmpOrderCheck != null) {
+      await _databaseHelper.firebaseDatabase
+          .reference()
+          .child(rootOpenOrderReceivedNode(orderId, _authController.user!.uid))
+          .set(true);
+      await _databaseHelper.firebaseDatabase
+          .reference()
+          .child(customerInProcessOrderReceivedNode(
+              orderId, customerId, _authController.user!.uid))
+          .set(true);
+    }
   }
 
   Stream<TaxiOrder?> getIncomingOrderStream(String orderId) {
