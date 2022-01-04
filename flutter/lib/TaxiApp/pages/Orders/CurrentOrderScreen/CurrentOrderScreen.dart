@@ -1,16 +1,17 @@
 import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as LocationLibrary;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
@@ -20,7 +21,6 @@ import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/CurrentOrderScreen/CPositionedBottomBar.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/CurrentOrderScreen/CPositionedFromToBar.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 
 class CurrentOrderScreen extends StatefulWidget {
   @override
@@ -77,6 +77,11 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
             updateOrder(orderStreamEvent: order);
           } else {
             cancelOrderSubscription();
+            controller.getPastOrderStream(orderId).listen((order) {
+              if (order != null) {
+                updateOrder(orderStreamEvent: order);
+              }
+            });
             // this will get the order inCase it moved to /past
             if (order?.status == TaxiOrdersStatus.CancelledByCustomer) {
               oneButtonDialog(
@@ -98,7 +103,9 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
 
   Widget build(BuildContext context) {
     // make sure can't be poped, unless we do.
+    mezDbgPrint("***************************************");
 
+    mezDbgPrint(order!.status);
     return WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
@@ -115,7 +122,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
                         debugString: "CurrentOrderScreen",
                       ),
                       CurrentPositionedBottomBar(order!),
-                      CurrentPositionedFromToTopBar(order!)
+                      CurrentPositionedFromToTopBar(order!),
                     ])
                   : MezLogoAnimation(
                       centered: true,
