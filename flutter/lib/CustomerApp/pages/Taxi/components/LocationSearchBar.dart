@@ -39,7 +39,7 @@ class LocationSearchBarController {
   FocusNode fromTextFieldFocusNode = FocusNode();
   FocusNode toTextFieldFocusNode = FocusNode();
   Rx<SearchComponentType> focusedTextField = SearchComponentType.None.obs;
-
+  
   void collapseDropdown() {
     pickChoicesDropDownHeight.value = 0;
   }
@@ -93,6 +93,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
   LocationSearchBarController locationSearchBarController;
   List<LocationDropDownItem> dropDownItems = [];
   LocationSearchBarState(this.locationSearchBarController);
+  LanguageController lang = Get.find<LanguageController>();
   /************  Init, build and other overrided function *********************************/
   @override
   void initState() {
@@ -166,7 +167,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
         leftTopRadius: 5,
         leftBotRaduis: 5,
         bgColor: Colors.white,
-        label: "From",
+        label: lang.strings['shared']['inputLocation']['from'],
         text: widget.request.value.from?.address ?? "",
         onClear: () => textFieldOnClear(SearchComponentType.From),
         onTextChange: textFieldOnTextChanged,
@@ -231,7 +232,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
         // to Controll where to start our dropDown DX (Distance on X axis)
         dropDownDxOffset: -(Get.width / 2.1),
         dropDownWidth: Get.width - 20,
-        label: "To",
+        label: lang.strings['shared']['inputLocation']['to'],
         text: widget.request.value.to?.address ?? "",
         onClear: () => textFieldOnClear(SearchComponentType.To),
         onTextChange: textFieldOnTextChanged,
