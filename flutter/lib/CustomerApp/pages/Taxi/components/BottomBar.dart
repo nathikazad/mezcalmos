@@ -7,6 +7,7 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
@@ -23,7 +24,7 @@ import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 // @SAAD - TODO : REFACTORE THIS.
 class BottomBar extends StatefulWidget {
   TaxiRequest taxiRequest;
-  double? bottomPadding = 45;
+  double? bottomPadding;
   BottomBar({required this.taxiRequest, this.bottomPadding});
   @override
   State<BottomBar> createState() {
@@ -36,18 +37,18 @@ class _BottomBarState extends State<BottomBar> {
 
   @override
   void initState() {
-    super.initState();
     if (widget.bottomPadding == null) {
-      widget.bottomPadding =
-          ((GetStorage().read(getxGmapBottomPaddingKey) as double) + 15.0);
+      widget.bottomPadding = 45;
     }
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    mezDbgPrint("Paddding -======> ${widget.bottomPadding}");
     responsiveSize(context);
     return Positioned(
-      bottom: widget.bottomPadding,
+      bottom: 45,
       left: 15,
       right: 15,
       child: Container(

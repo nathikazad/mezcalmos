@@ -70,9 +70,15 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
         locationPickerController.addOrUpdatePurpleDestinationMarker(
             latLng: LatLng(taxiRequest.value.to!.position.latitude!,
                 taxiRequest.value.to!.position.longitude!));
-        updateRouteInformation();
         locationPickerController.hideFakeMarker();
+        locationPickerController.setAnimateMarkersPolyLinesBounds(true);
+        locationPickerController.animateAndUpdateBounds();
+        updateRouteInformation();
         locationPickerController.showConfirmButton();
+
+        setState(() {
+          _pickedFromTo = true;
+        });
       });
     } else {
       locationPickerController.setOnMapTap(onTap: () {
