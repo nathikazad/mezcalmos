@@ -32,18 +32,17 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
       LocationPickerController();
   final LocationSearchBarController locationSearchBarController =
       LocationSearchBarController();
-  TaxiRequest? orderRequest;
+  //TaxiRequest? orderRequest;
   bool _pickedFromTo = false;
   /******************************  Init and build function ************************************/
 
   @override
   void initState() {
     if (Get.arguments != null) {
-      orderRequest = Get.arguments as TaxiRequest;
-      this.taxiRequest.value = orderRequest!;
+      taxiRequest.value = Get.arguments as TaxiRequest;
 
       mezDbgPrint(
-          "============ the older requist is ${Get.arguments} ===========");
+          "============ the older requist is ${(Get.arguments as TaxiRequest).status} ===========");
       locationPickerController.setOnMapTap(onTap: () {
         locationSearchBarController.unfocusAllFocusNodes.call();
         setState(() {});
@@ -108,6 +107,9 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // if (Get.arguments != null) {
+    //   taxiRequest.value = Get.arguments as TaxiRequest;
+    // }
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: mezcalmosAppBar(AppBarLeftButtonType.Back),
@@ -141,10 +143,8 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                   newLocationChosenEvent:
                       updateModelAndHandoffToLocationPicker),
               _pickedFromTo
-                  ? Obx(
-                      () => BottomBar(
-                        taxiRequest: taxiRequest.value,
-                      ),
+                  ? BottomBar(
+                      taxiRequest: taxiRequest.value,
                     )
                   : SizedBox()
             ]),

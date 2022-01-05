@@ -48,7 +48,7 @@ class _BottomBarState extends State<BottomBar> {
     mezDbgPrint("Paddding -======> ${widget.bottomPadding}");
     responsiveSize(context);
     return Positioned(
-      bottom: 45,
+      bottom: 25,
       left: 15,
       right: 15,
       child: Container(

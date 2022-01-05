@@ -242,7 +242,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
       return SizedBox();
     } else {
       return Positioned(
-        bottom: 20,
+        bottom: 15,
         left: 15,
         right: 15,
         child: InkWell(
