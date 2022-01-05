@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
@@ -42,8 +41,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
     return Positioned(
       bottom: GetStorage().read(getxGmapBottomPaddingKey),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 5),
-        height: getSizeRelativeToScreen(25, Get.height, Get.width),
+        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
         width: Get.width / 1.05,
         decoration: BoxDecoration(
             color: Colors.white,
@@ -67,13 +65,14 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                         CachedNetworkImageProvider(order.customer.image),
                   )),
                   SizedBox(
-                    width: 5,
+                    width: 10,
                   ),
                   Flexible(
                       fit: FlexFit.tight,
                       flex: 8,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text('${order.customer.name} Ride ',
                               style: Theme.of(context)
@@ -86,22 +85,6 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                           ),
                         ],
                       )),
-                  Spacer(),
-                  IconButton(
-                      onPressed: () {
-                        if (!clickedYesCancelPopUp) {
-                          showLoadingAnimation();
-                          controller.cancelTaxi(null).then((_) {
-                            removeLoadingAnimation();
-                            Get.offNamedUntil(kIncomingOrdersListRoute,
-                                ModalRoute.withName(kHomeRoute));
-                          });
-                        }
-                      },
-                      icon: Icon(
-                        Ionicons.close_circle,
-                        color: Colors.red,
-                      ))
                 ],
               )
             : Flex(

@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
@@ -21,6 +22,8 @@ import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/CurrentOrderScreen/CPositionedBottomBar.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/CurrentOrderScreen/CPositionedFromToBar.dart';
+
+import '../../../router.dart';
 
 class CurrentOrderScreen extends StatefulWidget {
   @override
@@ -112,7 +115,17 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
           key: Get.find<SideMenuDrawerController>().getNewKey(),
           drawer: MezSideMenu(),
           backgroundColor: Colors.white,
-          appBar: taxiAppBar(AppBarLeftButtonType.Menu),
+          appBar: taxiAppBar(
+              (order!.status == TaxiOrdersStatus.CancelledByCustomer)
+                  ? AppBarLeftButtonType.Back
+                  : AppBarLeftButtonType.Menu, function: () async {
+            mezDbgPrint('take me back');
+
+            controller.cancelTaxi(null).then((_) {
+              Get.offNamedUntil(
+                  kIncomingOrdersListRoute, ModalRoute.withName(kHomeRoute));
+            });
+          }),
           body:
               order != null && this.mGoogleMapController.location.value != null
                   ? Stack(alignment: Alignment.topCenter, children: [
