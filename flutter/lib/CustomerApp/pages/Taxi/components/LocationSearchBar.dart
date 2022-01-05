@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -396,13 +397,14 @@ class LocationSearchBarState extends State<LocationSearchBar> {
   /******************************  helper functions ************************************/
 
   void loadDropdownItems() {
+    LanguageController lang = Get.find<LanguageController>();
     dropDownItems.addAll([
       LocationDropDownItem(
           function: () async {
             widget.newLocationChosenEvent(await MapHelper.getCurrentLocation(),
                 locationSearchBarController.focusedTextField.value);
           },
-          title: "Current location",
+          title: "${lang.strings["customer"]["taxiView"]["currentLocation"]}",
           icon:
               Icon(MezcalmosIcons.crosshairs, size: 20, color: Colors.purple)),
       LocationDropDownItem(
@@ -410,7 +412,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
             widget.newLocationChosenEvent(await MapHelper.getCurrentLocation(),
                 locationSearchBarController.focusedTextField.value);
           },
-          title: "Pick From Map",
+          title: "${lang.strings["customer"]["taxiView"]["pickFromMap"]}",
           icon: Icon(MezcalmosIcons.crosshairs, size: 20, color: Colors.purple))
     ]);
     if (Get.find<AuthController>().fireAuthUser != null) {

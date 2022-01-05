@@ -62,7 +62,7 @@
                 "orderCost":"Costo de la orden",
                 "clear": "Vaciar",
                 "clearCart": "Vaciar carrito",
-                "clearCartConfirm": "¿Está seguro de que desea vaciar el carrito?",
+                "clearCartConfirm": "Está seguro de que desea vaciar el carrito?",
                 "deleteItem": "Eliminar este artículo.",
                 "deleteItemConfirm": "¿Quieres eliminar este artículo?",
                 "totalCost": "Costo Total",
@@ -107,8 +107,15 @@
             "no": "No",
             "confirm": "Confirmar"
         },
+        "signInAlert":{
+            "title":"Debe iniciar sesión para agregar artículos a su carrito",
+            "signBtn":"Apuntame dentro",
+            "notNowBtn":"Ahora no ?"
+        },
         "taxiView": {
             "taxi": "Taxi",
+            "currentLocation":"Ubicación actual",
+            "pickFromMap":"Elegir del mapa",
             "searching": "Buscando taxi",
             "cancel": "Cancelar",
             "arrival": "Llegara",
@@ -125,7 +132,8 @@
             "noRide": "Lamento informarle que este viaje ya no existe."
         },
         "cancelOrder": {
-            "question": "Por qué quieres cancelar el viaje?",
+            "title":"Confirmar cancelación.",
+            "question": "Estás seguro de que deseas cancelar tu pedido?",
             "cancelRide": "Cancelar viaje",
             "postAgain": "Publica de nuevo",
             "noShow": "No vino",
@@ -142,13 +150,13 @@
             "deleteLocation":"Eliminar ubicación",
             "locations": "Ubicaciones",
             "addLocationDialog": {
-                "title": "Si da un nombre, puede guardar la ubicación para uso futuro.",
+                "title": "ingrese el nombre de la ubicación, si desea guardar para uso futuro, de lo contrario, puede omitir",
                 "button": "OK",
                 "textHint": "Nombre del lugar",
                 "skip":"Saltar"
             },
             "editLocationDialog": {
-                "title": "puede editar el nombre y guardar esta ubicación para usos futuros",
+                "title": "Ingrese el nombre de la ubicación",
                 "button": "EDITAR",
                 "textHint": "Nombre del lugar"
             }

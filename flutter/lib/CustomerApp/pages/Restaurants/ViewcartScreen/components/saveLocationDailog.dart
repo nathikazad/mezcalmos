@@ -26,8 +26,8 @@ Future<String?> savedLocationDailog(
                   alignment: Alignment.center,
                   child: Text(
                     (comingFromCart != null && comingFromCart)
-                        ? 'enter location name, if you want to save for future use, else you may skip'
-                        : 'Enter location name',
+                        ? '${lang.strings["customer"]["savedLocations"]["addLocationDialog"]["title"]}'
+                        : '${lang.strings["customer"]["savedLocations"]["editLocationDialog"]["title"]}',
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodyText1,
                   ),

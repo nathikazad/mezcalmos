@@ -82,8 +82,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     return WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
-            key: _sideMenuDrawerController.getNewKey(),
-            drawer: MezSideMenu(),
             appBar: CustomerAppBar(
               autoBack: false,
             ),

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 void dialogRequiredSignIn() {
+  LanguageController lang = Get.find<LanguageController>();
   Get.dialog(
     Container(
       padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
@@ -29,7 +31,7 @@ void dialogRequiredSignIn() {
               Container(
                 width: Get.width,
                 child: Text(
-                  "You need to be signed in to add items to your cart",
+                  "${lang.strings["customer"]["signInAlert"]["title"]}",
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -53,7 +55,7 @@ void dialogRequiredSignIn() {
                     width: Get.width,
                     alignment: Alignment.center,
                     child: Text(
-                      "Sign me in",
+                      "${lang.strings["customer"]["signInAlert"]["signBtn"]}",
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
@@ -70,8 +72,9 @@ void dialogRequiredSignIn() {
                   child: Container(
                     alignment: Alignment.center,
                     height: 15,
-                    child:
-                        Text("Not now ?", style: TextStyle(color: Colors.grey)),
+                    child: Text(
+                        "${lang.strings["customer"]["signInAlert"]["notNowBtn"]}",
+                        style: TextStyle(color: Colors.grey)),
                   ),
                 ),
               ),

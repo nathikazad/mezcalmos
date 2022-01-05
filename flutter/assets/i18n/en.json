@@ -110,8 +110,15 @@
             "no": "No",
             "confirm": "Confirm"
         },
+        "signInAlert":{
+            "title":"You need to be signed in to add items to your cart",
+            "signBtn":"Sign me in",
+            "notNowBtn":"Not now ?"
+        },
         "taxiView": {
             "taxi": "Taxi",
+            "currentLocation":"Current location",
+            "pickFromMap":"Pick from map",
             "searching": "Searching for Taxi",
             "cancel": "Cancel",
             "arrival": "Arrival",
@@ -128,7 +135,8 @@
             "noRide": "Sorry to inform you this ride does not exist anymore."
         },
         "cancelOrder": {
-            "question": "Why do you want to cancel the ride?",
+            "title":"Confirm Cancelation.",
+            "question": "Are you sure you want to cancel your Order ?",
             "cancelRide": "Cancel ride",
             "postAgain": "Post again",
             "noShow": "No show",
@@ -145,13 +153,13 @@
             "deleteLocation":"Delete Location",
             "locations":"Locations",
             "addLocationDialog":{
-                "title":"Enter the location name.",
+                "title":"enter location name, if you want to save for future use, else you may skip",
                 "button":"OK",
                 "textHint":"location name",
                 "skip":"Skip"
             },
             "editLocationDialog":{
-                "title":"you can edit the name and save this location for furure uses",
+                "title":"Enter location name",
                 "button":"EDIT",
                 "textHint":"Location Name"
             }

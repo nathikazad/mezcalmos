@@ -186,7 +186,7 @@ class LocationPickerState extends State<LocationPicker> {
                 bottom: widget.locationPickerMapController
                         .myLocationButtonEnabled.value
                     ? 2
-                    : 30),
+                    : 15),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
               gradient: LinearGradient(
