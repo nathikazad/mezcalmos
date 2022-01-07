@@ -31,7 +31,7 @@ class UserMenuIcon extends StatelessWidget {
               ? userWithBadge(context)
               : CircleAvatar(
                   backgroundImage: mLoadImage(
-                          url: auth.fireAuthUser!.photoURL,
+                          url: auth.user!.image,
                           assetInCaseFailed: aDefaultAvatar)
                       .image),
         )));
@@ -52,8 +52,7 @@ class UserMenuIcon extends StatelessWidget {
       ),
       child: CircleAvatar(
           backgroundImage: mLoadImage(
-                  url: auth.fireAuthUser!.photoURL,
-                  assetInCaseFailed: aDefaultAvatar)
+                  url: auth.user!.image, assetInCaseFailed: aDefaultAvatar)
               .image),
     );
   }
