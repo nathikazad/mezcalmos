@@ -119,7 +119,7 @@ class ClearNotifButton extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: Text(
-                  'Latest',
+                  '${lang.strings["shared"]["notification"]["latest"]}',
                   style: Theme.of(context).textTheme.headline3,
                 ),
               ),

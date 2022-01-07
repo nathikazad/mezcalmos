@@ -13,7 +13,7 @@
             "services": "Services",
             "food": {
                 "title":"Food",
-                "subtitle":"Descover most delicious dishes from the nearest restaurants ."
+                "subtitle":"Discover most delicious dishes from the nearest restaurants ."
             },
             "laundry":{
                 "title":"Laundry",
@@ -302,6 +302,7 @@
             "writeMsgPlaceholder": "Write your message here ..."
         },
         "notification": {
+            "latest":"Latest",
             "title": "Notifications",
             "today": "Today",
             "yesterday": "Yesterday",

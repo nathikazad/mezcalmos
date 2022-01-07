@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:get/get.dart';
 
 class ServicesCard extends StatelessWidget {
   ServicesCard(
@@ -17,6 +19,7 @@ class ServicesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final txt = Theme.of(context).textTheme;
+    LanguageController lang = Get.find<LanguageController>();
     return Card(
       margin: EdgeInsets.all(5),
       color: subtitle != null ? Colors.white : Colors.grey.shade300,
@@ -55,7 +58,7 @@ class ServicesCard extends StatelessWidget {
                               style: txt.subtitle1!.copyWith(fontSize: 13.7.sp),
                             )
                           : Text(
-                              "Comming soon ...",
+                              "${lang.strings['customer']['home']['laundry']["subtitle"]}",
                               style: txt.subtitle1!.copyWith(
                                   fontSize: 13.7.sp,
                                   fontWeight: FontWeight.w700),

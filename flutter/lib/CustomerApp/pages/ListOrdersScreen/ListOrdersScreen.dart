@@ -86,6 +86,7 @@ class PastOrderList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LanguageController lang = Get.find<LanguageController>();
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Obx(
@@ -105,9 +106,9 @@ class PastOrderList extends StatelessWidget {
                   margin: const EdgeInsets.all(8),
                   child: Text(
                     (calculateDifference(element.orderTime) == 0)
-                        ? ' Today '
+                        ? ' ${lang.strings["shared"]["notification"]["today"]} '
                         : (calculateDifference(element.orderTime) == -1)
-                            ? ' Yesterday '
+                            ? ' ${lang.strings["shared"]["notification"]["yesterday"]} '
                             : DateFormat('dd MMM yyyy')
                                 .format(element.orderTime),
                     style: txt.headline3,
@@ -149,6 +150,7 @@ class OngoingOrderList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LanguageController lang = Get.find<LanguageController>();
     return Container(
       color: Colors.green.withOpacity(0.3),
       padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -157,7 +159,7 @@ class OngoingOrderList extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(8),
             child: Text(
-              'Ongoing Orders',
+              '${lang.strings["customer"]["orders"]["onGoingOrders"]}',
               style: txt.headline3,
             ),
           ),

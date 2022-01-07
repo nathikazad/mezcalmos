@@ -16,7 +16,7 @@
             },
             "laundry":{
                 "title":"Lavandería",
-                "subtitle":"Comming soon ..."
+                "subtitle":"Próximamente ..."
             }
            
         },
@@ -64,7 +64,7 @@
                 "clearCart": "Vaciar carrito",
                 "clearCartConfirm": "Está seguro de que desea vaciar el carrito?",
                 "deleteItem": "Eliminar este artículo.",
-                "deleteItemConfirm": "¿Quieres eliminar este artículo?",
+                "deleteItemConfirm": "Quieres eliminar este artículo?",
                 "totalCost": "Costo Total",
                 "deliveryCost": "Costo de envío",
                 "total": "Total",
@@ -299,6 +299,7 @@
             "writeMsgPlaceholder": "Escribe tu mensaje aqui ..."
         },
         "notification": {
+            "latest":"Último",
             "title": "Notificaciones",
             "today": "Hoy",
             "yesterday": "Ayer",
