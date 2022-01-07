@@ -21,20 +21,24 @@ class UserMenuIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => CircleAvatar(
-        backgroundColor: Colors.white,
-        child: Padding(
-          padding: EdgeInsets.all(padding),
-          child: ((notifController.notifications.length +
-                      orderController.currentOrders.length) >
-                  0)
-              ? userWithBadge(context)
-              : CircleAvatar(
-                  backgroundImage: mLoadImage(
-                          url: auth.user!.image,
-                          assetInCaseFailed: aDefaultAvatar)
-                      .image),
-        )));
+    return Obx(() => (auth.user != null)
+        ? CircleAvatar(
+            backgroundColor: Colors.white,
+            child: Padding(
+              padding: EdgeInsets.all(padding),
+              child: ((notifController.notifications.length +
+                          orderController.currentOrders.length) >
+                      0)
+                  ? userWithBadge(context)
+                  : CircleAvatar(
+                      backgroundImage: mLoadImage(
+                              url: auth.user!.image != null
+                                  ? auth.user!.image
+                                  : auth.fireAuthUser!.photoURL,
+                              assetInCaseFailed: aDefaultAvatar)
+                          .image),
+            ))
+        : Container());
   }
 
   Badge userWithBadge(BuildContext context) {
@@ -52,7 +56,10 @@ class UserMenuIcon extends StatelessWidget {
       ),
       child: CircleAvatar(
           backgroundImage: mLoadImage(
-                  url: auth.user!.image, assetInCaseFailed: aDefaultAvatar)
+                  url: auth.user!.image != null
+                      ? auth.user!.image
+                      : auth.fireAuthUser!.photoURL,
+                  assetInCaseFailed: aDefaultAvatar)
               .image),
     );
   }
