@@ -45,10 +45,12 @@ class SignIn extends GetWidget<AuthController> {
               child: Obx(
                 () => Column(
                   children: [
-                    Spacer(),
+                    SizedBox(
+                      height: 35,
+                    ),
                     (mode == SignInMode.OptionalSignIn)
                         ? Container(
-                            padding: const EdgeInsets.only(top: 20),
+                            // padding: const EdgeInsets.only(top: 5),
                             alignment: Alignment.centerRight,
                             child: IconButton(
                               icon: Icon(
