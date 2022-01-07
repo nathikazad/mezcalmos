@@ -275,6 +275,8 @@
             "verifyCountryCode": "Verifique el código de su país",
             "verifyPhoneNumber": "Verifique su número de teléfono",
             "OtpConfirmation": "Confirmación del \ncódigo OTP",
+            "otpDidnReciveTxt":"No has recibido el mensaje de texto?",
+            "confirmation":"Confirmación",
             "enterOtpCode": "Ingrese el código OTP enviado a",
             "resend": "Reenviar",
             "resendAfter": "Reenviar después",

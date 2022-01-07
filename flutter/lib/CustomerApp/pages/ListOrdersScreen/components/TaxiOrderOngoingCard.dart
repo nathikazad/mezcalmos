@@ -94,38 +94,42 @@ class TaxiOngoingOrderCard extends StatelessWidget {
                 ],
               ),
               Divider(),
-              Container(
-                padding: EdgeInsets.all(3),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      "${lang.strings["customer"]["restaurant"]["cart"]["totalCost"]} : \$${order.cost}",
-                    ),
-                    Spacer(),
-                    Icon(
-                      Ionicons.time_outline,
-                      size: 16.sp,
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      getTaxiOrderStatus((order as TaxiOrder).status),
-                      style: txt.bodyText2,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Icon(
-                      Icons.arrow_forward_ios_rounded,
-                    )
-                  ],
-                ),
-              )
+              mezOrdercart(txt)
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Container mezOrdercart(TextTheme txt) {
+    return Container(
+      padding: EdgeInsets.all(3),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text(
+            "${lang.strings["customer"]["restaurant"]["cart"]["totalCost"]} : \$${order.cost}",
+          ),
+          Spacer(),
+          Icon(
+            Ionicons.time_outline,
+            size: 16.sp,
+          ),
+          SizedBox(
+            width: 5,
+          ),
+          Text(
+            getTaxiOrderStatus((order as TaxiOrder).status),
+            style: txt.bodyText2,
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Icon(
+            Icons.arrow_forward_ios_rounded,
+          )
+        ],
       ),
     );
   }

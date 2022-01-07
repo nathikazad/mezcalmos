@@ -5,7 +5,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ListRestaurantsScreem/Li
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/ViewRestaurantOrderScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/ViewRestaurantScreen.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/PickLocationView.dart';
+import 'package:mezcalmos/CustomerApp/pages/PickLocationScreen/PickLocationView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/ViewCartScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/SavedLocations/savedLocationView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/RequestTaxiScreen.dart';

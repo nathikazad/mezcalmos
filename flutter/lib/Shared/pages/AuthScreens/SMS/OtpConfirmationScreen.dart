@@ -47,7 +47,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          title: Text('Confirmation'),
+          title: Text('${lang.strings["shared"]["login"]["confirmation"]}'),
         ),
         body: Stack(
           children: [
@@ -172,7 +172,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "You have'nt recieve the text ?  ",
+                  "${lang.strings["shared"]["login"]["otpDidnReciveTxt"]}",
                   style: txt.bodyText2,
                 ),
                 Obx(

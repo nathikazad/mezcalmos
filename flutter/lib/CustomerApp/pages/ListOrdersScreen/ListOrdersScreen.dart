@@ -130,22 +130,6 @@ class PastOrderList extends StatelessWidget {
                       height: 0,
                     );
                 }
-                // indexedItemBuilder: (context, order, index) {
-                //   switch (controller.pastOrders()[index].orderType) {
-                //     case OrderType.Taxi:
-                //       return TaxiOldOrderCard(
-                //           order: controller.pastOrders()[index] as TaxiOrder);
-
-                //     case OrderType.Restaurant:
-                //       return OldOrderCard(
-                //           order:
-                //               controller.pastOrders()[index] as RestaurantOrder);
-
-                //     default:
-                //       return SizedBox(
-                //         height: 0,
-                //       );
-                //   }
               }),
         ]),
       ),

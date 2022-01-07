@@ -15,7 +15,7 @@ import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
 
-import 'components/saveLocationDailog.dart';
+import '../Restaurants/ViewcartScreen/components/saveLocationDailog.dart';
 
 enum PickLocationMode { AddNewLocation, EditLocation }
 
@@ -161,75 +161,72 @@ class _PickLocationViewState extends State<PickLocationView> {
           autoBack: true,
           title: _lang.strings["customer"]["pickLocation"]["pickLocation"],
         ),
-        body: Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                margin: const EdgeInsets.all(8),
-                child: Text(
-                    _lang.strings["customer"]["pickLocation"]["pickLabele"]),
-              ),
+        body: mezPickLocationViewBody());
+  }
 
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 8),
-                child: LocationSearchComponent(
-                    hintPadding: EdgeInsets.only(left: 10),
-                    suffixPadding: EdgeInsets.only(right: 10),
-                    useBorders: false,
-                    showSearchIcon: true,
-                    text: locationPickerController.location.value?.address,
-                    onClear: () {},
-                    notifyParent: (Location? location) {
-                      mezDbgPrint(
-                          "Ontap on suggestion  => ${location?.toJson()} ");
-                      setState(() {
-                        locationPickerController.setLocation(location!);
-                        locationPickerController.moveToNewLatLng(
-                            location.latitude, location.longitude);
-                      });
-                    }),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              // stack
-              Expanded(
-                  child: Container(
-                width: Get.width,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: Colors.grey.shade200),
-                child: locationPickerController.location.value != null
-                    ? LocationPicker(
-                        showBottomButton: false,
-                        locationPickerMapController:
-                            this.locationPickerController,
-                        notifyParentOfConfirm: (_) {},
-                        notifyParentOfLocationFinalized: (Location location) {
-                          setState(() {
-                            locationPickerController.setLocation(location);
-                          });
-                        },
-                      )
-                    : Center(
-                        child: CircularProgressIndicator(
-                          color: Colors.black,
-                          strokeWidth: 1,
-                        ),
-                      ),
-              )),
-            ],
+  Container mezPickLocationViewBody() {
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: 10,
           ),
-        )
-        // : Center(
-        //     child: CircularProgressIndicator(
-        //         strokeWidth: 1, color: Colors.black),
-        //   )
-        );
+          Container(
+            margin: const EdgeInsets.all(8),
+            child:
+                Text(_lang.strings["customer"]["pickLocation"]["pickLabele"]),
+          ),
+
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 8),
+            child: LocationSearchComponent(
+                hintPadding: EdgeInsets.only(left: 10),
+                suffixPadding: EdgeInsets.only(right: 10),
+                useBorders: false,
+                showSearchIcon: true,
+                text: locationPickerController.location.value?.address,
+                onClear: () {},
+                notifyParent: (Location? location) {
+                  mezDbgPrint("Ontap on suggestion  => ${location?.toJson()} ");
+                  setState(() {
+                    locationPickerController.setLocation(location!);
+                    locationPickerController.moveToNewLatLng(
+                        location.latitude, location.longitude);
+                  });
+                }),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          // stack
+          Expanded(
+              child: Container(
+            width: Get.width,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: Colors.grey.shade200),
+            child: locationPickerController.location.value != null
+                ? LocationPicker(
+                    showBottomButton: false,
+                    locationPickerMapController: this.locationPickerController,
+                    notifyParentOfConfirm: (_) {},
+                    notifyParentOfLocationFinalized: (Location location) {
+                      setState(() {
+                        locationPickerController.setLocation(location);
+                      });
+                    },
+                  )
+                : Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.black,
+                      strokeWidth: 1,
+                    ),
+                  ),
+          )),
+        ],
+      ),
+    );
   }
 }

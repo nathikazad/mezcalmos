@@ -112,7 +112,7 @@ class RestaurantController extends GetxController {
         .remove()
         .then((value) {
       mezDbgPrint("============= /// :your cart is deleted \\\ ============= ");
-      cart.value = Cart();
+      cart.value = Cart(restaurant: associatedRestaurant);
     });
     Get.appUpdate();
   }

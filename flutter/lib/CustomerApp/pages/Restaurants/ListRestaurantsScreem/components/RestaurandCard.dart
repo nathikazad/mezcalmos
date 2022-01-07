@@ -79,54 +79,57 @@ class RestaurantCard extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(
-                width: 150.w,
-                height: double.infinity,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(15),
-                    bottomRight: Radius.circular(15),
-                  ),
-                  child: Stack(
-                    children: [
-                      Container(
-                        height: 125,
-                        width: 150.w,
-                        child: CachedNetworkImage(
-                          imageUrl: restaurant.photo,
-                          fit: BoxFit.cover,
-                          placeholder: (context, url) => Container(
-                            width: 15,
-                            height: 15,
-                            child: Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        height: 125,
-                        width: 150.w,
-                        color: checkRestaurantAvailability(
-                                schedule: restaurant.schedule)
-                            ? null
-                            : Colors.black.withOpacity(0.5),
-                        child: checkRestaurantAvailability(
-                                schedule: restaurant.schedule)
-                            ? null
-                            : Center(
-                                child: Text(
-                                  "${lang.strings["customer"]["restaurant"]["menu"]["workingHours"]["closed"]}",
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ),
-                      )
-                    ],
-                  ),
-                ),
-              )
+              mezRestuarntCardImage(lang)
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Container mezRestuarntCardImage(LanguageController lang) {
+    ///responsible for the image of restaurant
+    return Container(
+      width: 150.w,
+      height: double.infinity,
+      child: ClipRRect(
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(15),
+          bottomRight: Radius.circular(15),
+        ),
+        child: Stack(
+          children: [
+            Container(
+              height: 125,
+              width: 150.w,
+              child: CachedNetworkImage(
+                imageUrl: restaurant.photo,
+                fit: BoxFit.cover,
+                placeholder: (context, url) => Container(
+                  width: 15,
+                  height: 15,
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              height: 125,
+              width: 150.w,
+              color: checkRestaurantAvailability(schedule: restaurant.schedule)
+                  ? null
+                  : Colors.black.withOpacity(0.5),
+              child: checkRestaurantAvailability(schedule: restaurant.schedule)
+                  ? null
+                  : Center(
+                      child: Text(
+                        "${lang.strings["customer"]["restaurant"]["menu"]["workingHours"]["closed"]}",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+            )
+          ],
         ),
       ),
     );

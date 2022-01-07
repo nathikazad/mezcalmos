@@ -143,8 +143,11 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         });
         controller.cart.value.notes = textcontoller.text;
         mezDbgPrint(controller.cart.value.toFirebaseFormattedJson().toString());
+        //     controller.cart.value.restaurant!.id = "6Hr3Hc2hkkZa7LX7slnFo3zOTdxx";
 
         var response = await controller.checkout();
+        mezDbgPrint(
+            "======== the response is ${response.errorCode} and the cart value ${controller.cart.value.toFirebaseFormattedJson().toString()}");
         print(response.errorCode.toString());
         if (response.success) {
           controller.clearCart();

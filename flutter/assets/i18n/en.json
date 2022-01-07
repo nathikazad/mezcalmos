@@ -278,6 +278,8 @@
             "verifyCountryCode": "Please verify your country code",
             "verifyPhoneNumber": "Please verify your phone number",
             "OtpConfirmation": "OTP Code Confirmation",
+            "otpDidnReciveTxt":"You have'nt recieve the text ?",
+            "confirmation":"Confirmation",
             "enterOtpCode": "Enter OTP code sent to",
             "resend": "Resend",
             "resendAfter": "Resend after",

@@ -92,97 +92,97 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                 alignment: Alignment.center,
                 child: CircularProgressIndicator(),
               )
-            : Container(
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.only(
-                                top: 10,
-                              ),
-                              alignment: Alignment.center,
-                              child: cartItem.value?.item.image != null &&
-                                      cartItem.value?.item.image != ""
-                                  ? CachedNetworkImage(
-                                      imageUrl: cartItem.value!.item.image!,
-                                      imageBuilder: (context, imageProvider) {
-                                        return Container(
-                                          width: 150,
-                                          height: 150,
-                                          decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              image: DecorationImage(
-                                                  fit: BoxFit.cover,
-                                                  image: imageProvider)),
-                                        );
-                                      },
-                                      fit: BoxFit.cover,
-                                      errorWidget: (context, url, error) {
-                                        return Container();
-                                      },
-                                      placeholder: (context, url) {
-                                        return Container(
-                                          width: 15,
-                                          height: 15,
-                                          child: Center(
-                                            child: CircularProgressIndicator(),
-                                          ),
-                                        );
-                                      },
-                                    )
-                                  : Container(),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Container(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 15),
-                              child: Text(
-                                  "${cartItem.value!.item.description!.inCaps}",
-                                  textAlign: TextAlign.center,
-                                  style: Theme.of(context).textTheme.bodyText2),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            chooseOneCheckBoxes(
-                                cartItem.value!.item.chooseOneOptions,
-                                cartItem),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            chooseManyCheckBoxes(
-                                cartItem.value!.item.chooseManyOptions,
-                                cartItem),
-                            TextFieldComponent(
-                              textController: _noteTextEdittingController,
-                              hint: lang.strings["customer"]["restaurant"]
-                                  ["menu"]["notes"],
-                              onChangeCallback: (String value) {
-                                cartItem.value?.notes = value;
-                              },
-                            ),
-                            SizedBox(
-                              height: 15,
-                            )
-                          ],
-                        ),
-                      ),
+            : itemViewScreenBody(context),
+      ),
+    );
+  }
+
+  Container itemViewScreenBody(BuildContext context) {
+    return Container(
+      child: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.only(
+                      top: 10,
                     ),
-                    BottomBarItemViewScreen(
-                      isAvailable: checkRestaurantAvailability(
-                          schedule: currentRestaurant?.schedule),
-                      cartItem: cartItem,
-                      mode: widget.viewItemScreenMode,
-                      currentRestaurantId: currentRestaurant?.id,
-                    )
-                  ],
-                ),
+                    alignment: Alignment.center,
+                    child: cartItem.value?.item.image != null &&
+                            cartItem.value?.item.image != ""
+                        ? CachedNetworkImage(
+                            imageUrl: cartItem.value!.item.image!,
+                            imageBuilder: (context, imageProvider) {
+                              return Container(
+                                width: 150,
+                                height: 150,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: imageProvider)),
+                              );
+                            },
+                            fit: BoxFit.cover,
+                            errorWidget: (context, url, error) {
+                              return Container();
+                            },
+                            placeholder: (context, url) {
+                              return Container(
+                                width: 15,
+                                height: 15,
+                                child: Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              );
+                            },
+                          )
+                        : Container(),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Text("${cartItem.value!.item.description!.inCaps}",
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.bodyText2),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  chooseOneCheckBoxes(
+                      cartItem.value!.item.chooseOneOptions, cartItem),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  chooseManyCheckBoxes(
+                      cartItem.value!.item.chooseManyOptions, cartItem),
+                  TextFieldComponent(
+                    textController: _noteTextEdittingController,
+                    hint: lang.strings["customer"]["restaurant"]["menu"]
+                        ["notes"],
+                    onChangeCallback: (String value) {
+                      cartItem.value?.notes = value;
+                    },
+                  ),
+                  SizedBox(
+                    height: 15,
+                  )
+                ],
               ),
+            ),
+          ),
+          BottomBarItemViewScreen(
+            isAvailable: checkRestaurantAvailability(
+                schedule: currentRestaurant?.schedule),
+            cartItem: cartItem,
+            mode: widget.viewItemScreenMode,
+            currentRestaurantId: currentRestaurant?.id,
+          )
+        ],
       ),
     );
   }
