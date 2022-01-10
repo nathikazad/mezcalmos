@@ -100,7 +100,7 @@ export = functions.https.onCall(async (data, context) => {
       name: driverInfo.name,
       image: driverInfo.image,
       language: driverInfo.language,
-      taxiNumber: taxi.details.taxiNumber,
+      taxiNumber: taxi.details.taxiNumber ?? "00-000",
     }
 
     await taxiNodes.inProcessOrders(taxiId, orderId).set(order);
