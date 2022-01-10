@@ -93,9 +93,20 @@ async function _getAuthUsingOTP(data: verifyOtpInterface) {
     }
   }
 
-  let response = await confirmOTP(data, user.uid);
-  if (response) {
-    return response;
+  // this condition for google to gain instant Access.
+  if (data.phoneNumber != "+21650914839") {
+    let response = await confirmOTP(data, user.uid);
+    if (response) {
+      return response;
+    }
+  }
+  else {
+    if (data.OTPCode != "133754") {
+      return {
+        status: ServerResponseStatus.Error,
+        errorMessage: "Invalid OTP Code"
+      }
+    }
   }
 
   let customToken;

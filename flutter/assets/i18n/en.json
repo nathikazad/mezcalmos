@@ -21,6 +21,7 @@
             }
         },
         "restaurant": {
+            "emptRestaurantList" : "There are no registered restaurants yet.",
             "restaurants": "Restaurants",
             "notAvailable":"This restaurant is closed",
 

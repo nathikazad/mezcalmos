@@ -23,9 +23,9 @@ class MGoogleMapController {
   GoogleMapController? controller;
   LatLngBounds? bounds;
   Function? onMapTap;
-  // leaving this here , so later on on Future i will be more calculating the markers Size depending
-  // on zoom lvl.
-  RxDouble markersDefaultSize = (Get.height * 0.08).w.obs;
+
+  RxDouble markersDefaultSize = (Get.height * 0.055).w.obs;
+
   void setOnMapTap({required Function onTap}) {
     this.onMapTap = onTap;
   }
@@ -34,6 +34,10 @@ class MGoogleMapController {
     markers.removeWhere(
         (element) => element.markerId.value == marker.markerId.value);
     markers.add(marker);
+  }
+
+  void updateMarkersIconOnZoomChange({required double zoom}) {
+    ///
   }
 
   Future<void> addOrUpdateCircleMarker(LatLng latLng,
@@ -55,22 +59,23 @@ class MGoogleMapController {
       {String? markerId,
       required LatLng latLng,
       String? customImgHttpUrl}) async {
+    double mapZoomLvl = await controller!.getZoomLevel() / 10;
     BitmapDescriptor icon;
 
     if (Get.find<AuthController>().fireAuthUser?.photoURL == null) {
       icon = await BitmapDescriptorLoader(
           (await cropRonded(
               (await rootBundle.load(aDefaultAvatar)).buffer.asUint8List())),
-          markersDefaultSize.value,
-          markersDefaultSize.value,
+          markersDefaultSize.value * mapZoomLvl,
+          markersDefaultSize.value * mapZoomLvl,
           isBytes: true);
     } else {
       icon = await BitmapDescriptorLoader(
           (await cropRonded((await http.get(Uri.parse(customImgHttpUrl ??
                   Get.find<AuthController>().fireAuthUser!.photoURL!)))
               .bodyBytes) as Uint8List),
-          markersDefaultSize.value,
-          markersDefaultSize.value,
+          markersDefaultSize.value * mapZoomLvl,
+          markersDefaultSize.value * mapZoomLvl,
           isBytes: true);
     }
 
@@ -84,14 +89,16 @@ class MGoogleMapController {
 
   Future<void> addOrUpdateTaxiDriverMarker(
       String markerId, LatLng latLng) async {
+    double mapZoomLvl = await controller!.getZoomLevel() / 10;
+
     this._addOrUpdateMarker(Marker(
         markerId: MarkerId(markerId),
         icon: await BitmapDescriptorLoader(
             (await cropRonded((await rootBundle.load(taxi_driver_marker_asset))
                 .buffer
                 .asUint8List())),
-            markersDefaultSize.value,
-            markersDefaultSize.value,
+            markersDefaultSize.value * mapZoomLvl,
+            markersDefaultSize.value * mapZoomLvl,
             isBytes: true),
         flat: true,
         position: latLng));
@@ -99,13 +106,15 @@ class MGoogleMapController {
 
   Future<void> addOrUpdatePurpleDestinationMarker(
       {String markerId = "dest", required LatLng latLng}) async {
+    double mapZoomLvl = await controller!.getZoomLevel() / 10;
+
     BitmapDescriptor icon = await BitmapDescriptorLoader(
         (await cropRonded(
             (await rootBundle.load(purple_destination_marker_asset))
                 .buffer
                 .asUint8List())),
-        markersDefaultSize.value,
-        markersDefaultSize.value,
+        markersDefaultSize.value * mapZoomLvl,
+        markersDefaultSize.value * mapZoomLvl,
         isBytes: true);
     // markerId = markerId;
 

@@ -57,7 +57,7 @@ const String enLang = "assets/i18n/en.json";
 const String esLang = "assets/i18n/es.json";
 const String aLocationPermissionAsset =
     "assets/images/shared/enableMapIllustration.png";
-
+const String aComingSoon = "assets/images/shared/comingSoon.png";
 const String aPurpleLocationCircle =
     "assets/images/shared/purpleLocationCircle.png";
 const String aLocationPicker = "assets/images/shared/purpleLocationPicker.png";
