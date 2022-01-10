@@ -24,7 +24,7 @@ async function notifyOtherParticipants(messageId: string, message: Message) {
     let participant = chat.participants[participantId]
     let notification: Notification = {
       foreground: <NewMessageNotification>{
-        sender: participant,
+        sender: senderInfo,
         message: message.message,
         orderId: message.orderId,
         time: message.timestamp,
