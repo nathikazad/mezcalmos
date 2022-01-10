@@ -1,18 +1,17 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+// Extends GetView<MessagingController> after Nathik implements the controller
+import 'package:intl/intl.dart' as intl;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
-import 'package:mezcalmos/Shared/models/Chat.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-// Extends GetView<MessagingController> after Nathik implements the controller
-import 'package:intl/intl.dart' as intl;
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Chat.dart';
 
 DateTime now = DateTime.now();
 String formattedDate = intl.DateFormat('dd-MM-yyyy').format(now);
@@ -58,7 +57,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
     required String message,
     String? time,
     required bool isMe,
-    required BuildContext parentContext,
+    // required BuildContext parentContext,
     String? userImage,
   }) =>
       Container(
@@ -114,22 +113,26 @@ class _MessagingScreenState extends State<MessagingScreen> {
                                   topRight: Radius.zero,
                                   bottomRight: Radius.circular(20),
                                   bottomLeft: Radius.circular(30))),
-                      child: Text(message,
-                          softWrap: true,
-                          style: (!isMe)
-                              ? Theme.of(parentContext)
-                                  .textTheme
-                                  .bodyText2!
-                                  .copyWith(color: Colors.white)
-                              : Theme.of(parentContext).textTheme.bodyText2)),
+                      child: Text(
+                        message,
+                        softWrap: true,
+                        style: TextStyle(
+                            fontFamily: "Nunito",
+                            fontWeight: FontWeight.w400,
+                            fontSize: 13.sp,
+                            color: (!isMe) ? Colors.black : Colors.white),
+                      )),
                   time != null
                       ? Padding(
                           padding: const EdgeInsets.only(left: 5.0),
-                          child: Text(time,
-                              style: Theme.of(parentContext)
-                                  .textTheme
-                                  .subtitle1!
-                                  .copyWith(fontSize: 13)),
+                          child: Text(
+                            time,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontFamily: "Nunito",
+                                fontSize: 10.sp,
+                                color: Colors.black.withOpacity(0.8)),
+                          ),
                         )
                       : SizedBox(),
                 ],
@@ -163,7 +166,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
           // mezDbgPrint(
           //     " \t\t ${controller.value!.participants[e.userId]?.image}");
           return singleChatComponent(
-            parentContext: context,
+            // parentContext: context,
             message: e.message,
             time: e.formatedTime,
             isMe: e.userId == _authController.user!.uid,
