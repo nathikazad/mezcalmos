@@ -79,7 +79,7 @@
                 "cancel": "Cancelar",
                 "cancelOrder": "Cancelar el pedido",
                 "orderCanceled":"Se cancela el pedido ...",
-                "cancelOrderConfirm": "¿Estás segura de que deseas cancelar este pedido?"
+                "cancelOrderConfirm": "Estás segura de que deseas cancelar este pedido?"
             },
             "orderStatus": {
                 "orderCanceled":"Orden cancelada",
@@ -211,7 +211,7 @@
             "question": "Por qué quieres cancelar el viaje?",
             "cancelRide": "Cancelar viaje",
             "confirmation_header": "Por favor confirmar",
-            "confirmation_text": "¿Estás seguro de que deseas cancelar el viaje actual?",
+            "confirmation_text": "Estás seguro de que deseas cancelar el viaje actual?",
             "backToIncoming": "Volver a entrante",
             "noShow": "No vino",
             "otherRide": "Otro viaje",
@@ -243,7 +243,7 @@
             "cancelledMessage": "Tu viaje ha sido cancelado"
         },
         "introduction": {
-            "howToTaxi": "¿Desea utilizar la aplicación  Mezcalmos para ofrecer  transporte a los clientes  en <span class = 'text_blue'> Puerto Escondido? </span> ",
+            "howToTaxi": "Desea utilizar la aplicación  Mezcalmos para ofrecer  transporte a los clientes  en <span class = 'text_blue'> Puerto Escondido? </span> ",
             "signUpTaxi": "Haga clic en Registrarse,  muéstrenos la prueba de su  autorización de taxi y comience  a ofrecer viajes de inmediato.",
             "confirmation": "Su solicitud está bajo revisión. Nos pondremos en contacto con usted en breve",
             "logIn": " Registrate|Iniciar sesión",

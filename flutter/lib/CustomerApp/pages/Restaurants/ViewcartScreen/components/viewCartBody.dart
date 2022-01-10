@@ -54,7 +54,7 @@ class _ViewCartBodyState extends State<ViewCartBody> {
           ),
           Obx(() => OrderSummaryCard(
                 onValueChangeCallback: widget.onValueChangeCallback,
-                deliveryCost: " --",
+                deliveryCost: " 40",
                 orderCost: controller.cart.value.totalCost().toStringAsFixed(0),
                 totalCost: controller.cart.value.totalCost().toStringAsFixed(0),
               )),

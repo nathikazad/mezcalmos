@@ -78,6 +78,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   @override
   Widget build(BuildContext context) {
     final txt = Theme.of(context).textTheme;
+
     responsiveSize(context);
     return WillPopScope(
         onWillPop: () async => false,
@@ -218,6 +219,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   }
 
   Widget mezListOfServices() {
+    OrderController orderController = Get.find<OrderController>();
     return Column(
       children: [
         //====================Taxi===================
@@ -244,7 +246,12 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             url: "assets/images/customer/restaurants/restaurantService.png",
             subtitle: "${lang.strings['customer']['home']['food']["subtitle"]}",
             ontap: () {
-              Get.toNamed(kRestaurantsRoute);
+              if (orderController.currentOrders.isEmpty) {
+                Get.toNamed(kRestaurantsRoute);
+              } else {
+                Get.toNamed(getRestaurantOrderRoute(
+                    orderController.currentOrders.value[0].orderId));
+              }
             },
           ),
         ),

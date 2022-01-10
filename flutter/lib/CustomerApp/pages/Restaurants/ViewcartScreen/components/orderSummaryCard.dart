@@ -114,9 +114,10 @@ class OrderSummaryCard extends StatelessWidget {
                       child: Container(
                     alignment: Alignment.centerRight,
                     child: Text(
-                      "-",
+                      "\$40",
                       style: txt.headline3!.copyWith(
                         fontWeight: FontWeight.w500,
+                        decoration: TextDecoration.lineThrough,
                         fontSize: 14.75.sp,
                       ),
                     ),
