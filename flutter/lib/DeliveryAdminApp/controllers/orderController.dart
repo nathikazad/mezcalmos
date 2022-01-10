@@ -68,9 +68,16 @@ class OrderController extends GetxController {
         return order.orderId == orderId;
       }) as RestaurantOrder;
     } on StateError {
-      return null;
+      try {
+        return pastOrders.firstWhere((order) {
+          return order.orderId == orderId;
+        });
+      } on StateError {
+        return null;
+      }
     }
   }
+
 
   Stream<Order?> getCurrentOrderStream(String orderId) {
     return inProcessOrders.stream.map<Order?>((_) {
