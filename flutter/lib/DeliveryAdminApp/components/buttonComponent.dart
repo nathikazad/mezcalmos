@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 
-class ButtonComponent extends StatelessWidget {
+class ButtonComponent extends StatefulWidget {
   final Widget? widget;
   final LinearGradient? gradient;
   final GestureTapCallback? function;
   ButtonComponent({this.widget, this.gradient, this.function});
 
+  @override
+  _ButtonComponentState createState() => _ButtonComponentState();
+}
+
+class _ButtonComponentState extends State<ButtonComponent> {
+  bool _clickedButton = false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,12 +30,46 @@ class ButtonComponent extends StatelessWidget {
                       blurRadius: 10,
                       spreadRadius: 0)
                 ],
-                gradient: gradient == null
+                gradient: widget.gradient == null
                     ? LinearGradient(colors: [Colors.white])
-                    : gradient!),
-            child: Center(child: widget)),
-        onTap: function == null ? () => null : function,
+                    : widget.gradient!),
+            child: Center(
+                child: widget.widget == null
+                    ? null
+                    : getWidgetOrShowLoading(widget.widget!))),
+        onTap: widget.function == null
+            ? () => null
+            : () {
+                if (!_clickedButton) {
+                  // set true to show loading button
+                  setState(() {
+                    _clickedButton = true;
+                  });
+
+                  widget.function!();
+
+                  // after function done set to back to false
+                  setState(() {
+                    _clickedButton = false;
+                  });
+                }
+              },
       ),
     );
+  }
+
+  Widget getWidgetOrShowLoading(Widget desiredWidget) {
+    if (!_clickedButton) {
+      return desiredWidget;
+    } else {
+      return Container(
+        width: 20,
+        height: 20,
+        child: CircularProgressIndicator(
+          color: Colors.white,
+          strokeWidth: 1.5,
+        ),
+      );
+    }
   }
 }
