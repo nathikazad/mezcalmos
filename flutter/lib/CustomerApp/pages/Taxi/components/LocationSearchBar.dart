@@ -39,7 +39,7 @@ class LocationSearchBarController {
   FocusNode fromTextFieldFocusNode = FocusNode();
   FocusNode toTextFieldFocusNode = FocusNode();
   Rx<SearchComponentType> focusedTextField = SearchComponentType.None.obs;
-  
+
   void collapseDropdown() {
     pickChoicesDropDownHeight.value = 0;
   }
@@ -111,20 +111,13 @@ class LocationSearchBarState extends State<LocationSearchBar> {
         child: Container(
             decoration: getDecoration(),
             child: Center(
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      fromTextField(),
-                      middleLogo(),
-                      toTextField(),
-                    ],
-                  ),
-                  // SizedBox(height: 5),
-                  pickChoicesDropDown()
-                ],
+                child: Column(children: [
+              Row(
+                children: [fromTextField(), middleLogo(), toTextField()],
               ),
-            )));
+              // SizedBox(height: 5),
+              pickChoicesDropDown()
+            ]))));
   }
 
   @override
@@ -248,11 +241,6 @@ class LocationSearchBarState extends State<LocationSearchBar> {
   Widget pickChoicesDropDown() {
     return Obx(
       () => AnimatedContainer(
-          // constraints: BoxConstraints(
-          //   maxHeight:
-          //       locationSearchBarController.pickChoicesDropDownHeight.value,
-          // ),
-          // padding: EdgeInsets.symmetric(vertical: 10.sp),
           clipBehavior: Clip.hardEdge,
           duration: Duration(milliseconds: 500),
           curve: Curves.fastOutSlowIn,
@@ -273,7 +261,6 @@ class LocationSearchBarState extends State<LocationSearchBar> {
             child: Center(
               child: ListView.separated(
                 padding: EdgeInsets.symmetric(vertical: 15),
-
                 shrinkWrap: true,
                 separatorBuilder: (sContext, i) {
                   return SizedBox(height: 10);
@@ -303,33 +290,6 @@ class LocationSearchBarState extends State<LocationSearchBar> {
                     ),
                   );
                 },
-
-                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                // crossAxisAlignment: CrossAxisAlignment.start,
-                // children: [
-                //   ...dropDownItems.map<Widget>((e) => InkWell(
-                //         onTap: () {
-                //           e.function();
-                //           locationSearchBarController.unfocusAllFocusNodes();
-                //           setState(() {});
-                //         },
-                //         child: Row(
-                //           children: [
-                //             SizedBox(
-                //               width: 20,
-                //             ),
-                //             e.icon,
-                //             SizedBox(
-                //               width: 10,
-                //             ),
-                //             Text(
-                //               e.title,
-                //               style: TextStyle(fontFamily: 'psb'),
-                //             )
-                //           ],
-                //         ),
-                //       )),
-                // ],
               ),
             ),
           )),

@@ -74,23 +74,6 @@ Future<String?> savedLocationDailog(
                                 ["addLocationDialog"]["button"],
                       ),
                     )),
-                // ButtonComponent(
-                //   function: () {
-                //     Get.back(result: txtController.text);
-                //   },
-                //   widget: Center(
-                //     child: Text(
-                //         nameVal != null
-                //             ? lang.strings["customer"]["savedLocations"]
-                //                 ["editLocationDialog"]["button"]
-                //             : lang.strings["customer"]["savedLocations"]
-                //                 ["addLocationDialog"]["button"],
-                //         style: Theme.of(context)
-                //             .textTheme
-                //             .headline2!
-                //             .copyWith(color: Colors.white)),
-                //   ),
-                // ),
                 SizedBox(
                   height: 5,
                 ),

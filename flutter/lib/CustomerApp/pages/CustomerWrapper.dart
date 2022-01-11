@@ -219,7 +219,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   }
 
   Widget mezListOfServices() {
-    OrderController orderController = Get.find<OrderController>();
     return Column(
       children: [
         //====================Taxi===================
@@ -246,11 +245,18 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             url: "assets/images/customer/restaurants/restaurantService.png",
             subtitle: "${lang.strings['customer']['home']['food']["subtitle"]}",
             ontap: () {
-              if (orderController.currentOrders.isEmpty) {
-                Get.toNamed(kRestaurantsRoute);
+              if (auth.fireAuthUser != null) {
+                if (Get.find<OrderController>().currentOrders.isEmpty) {
+                  Get.toNamed(kRestaurantsRoute);
+                } else {
+                  Get.toNamed(getRestaurantOrderRoute(
+                      Get.find<OrderController>()
+                          .currentOrders
+                          .value[0]
+                          .orderId));
+                }
               } else {
-                Get.toNamed(getRestaurantOrderRoute(
-                    orderController.currentOrders.value[0].orderId));
+                Get.toNamed(kRestaurantsRoute);
               }
             },
           ),

@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
+import 'package:mezcalmos/CustomerApp/pages/Taxi/components/reCreateOrderBtn.dart';
+import 'package:mezcalmos/CustomerApp/pages/Taxi/components/smallComponentForABottom.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -45,7 +47,6 @@ class _BottomBarState extends State<BottomBar> {
 
   @override
   Widget build(BuildContext context) {
-    mezDbgPrint("Paddding -======> ${widget.bottomPadding}");
     responsiveSize(context);
     return Positioned(
       bottom: 25,
@@ -84,261 +85,6 @@ class _BottomBarState extends State<BottomBar> {
       default:
         return true;
     }
-  }
-
-  Widget messageBtn({EdgeInsets? margin}) {
-    return GestureDetector(
-      onTap: () {
-        Get.toNamed(getTaxiMessagesRoute(widget.taxiRequest.orderId!));
-      },
-      child: Container(
-        margin: margin ?? EdgeInsets.only(left: 6),
-        height: getSizeRelativeToScreen(16, Get.height, Get.width),
-        width: getSizeRelativeToScreen(16, Get.height, Get.width),
-        decoration: BoxDecoration(
-          color: Color.fromARGB(255, 232, 239, 254),
-          borderRadius: BorderRadius.circular(4),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-                color: Color.fromARGB(255, 216, 225, 249),
-                spreadRadius: 0,
-                blurRadius: 4,
-                offset: Offset(0, 2))
-          ],
-        ),
-        child: Center(
-          child: Stack(
-            children: [
-              widget.taxiRequest.orderId != null &&
-                      Get.find<OrderController>().hasNewMessageNotification(
-                          widget.taxiRequest.orderId!)
-                  ? Positioned(
-                      top: 5,
-                      right: 5,
-                      child: Container(
-                        height: 6,
-                        width: 6,
-                        decoration: BoxDecoration(
-                            color: Colors.red, shape: BoxShape.circle),
-                      ))
-                  : SizedBox(),
-              Center(
-                child: Icon(
-                  Icons.mail,
-                  color: Color.fromARGB(255, 103, 121, 254),
-                  size: 16,
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget cancelBtn() {
-    return Container(
-      margin: EdgeInsets.only(right: 6),
-      child: GestureDetector(
-        onTap: () async {
-          YesNoDialogButton res = await yesNoDialog(
-              text: lang.strings?['taxi']?['cancelOrder']
-                      ?['confirmation_header'] ??
-                  "Por favor confirmar",
-              body: lang.strings?['taxi']?['cancelOrder']
-                      ?['confirmation_text'] ??
-                  "¿Cancelar el viaje actual?");
-
-          if (res == YesNoDialogButton.Yes) {
-            ServerResponse resp = await Get.find<TaxiController>()
-                .cancelTaxi(widget.taxiRequest.orderId!);
-
-            if (!resp.success) {
-              MezSnackbar("Oops", "Failed to communicate with the server :(.",
-                  position: SnackPosition.TOP);
-            }
-            // no need for else here , because we are handling UI changes already upon CanceledbyCustomer.
-          }
-        },
-        child: Container(
-          height: getSizeRelativeToScreen(16, Get.height, Get.width),
-          width: getSizeRelativeToScreen(16, Get.height, Get.width),
-          decoration: BoxDecoration(
-            color: Color.fromARGB(255, 247, 177, 179),
-            borderRadius: BorderRadius.circular(4),
-          ),
-          child: Center(
-            child: Icon(
-              MezcalmosIcons.times_circle,
-              color: Color.fromARGB(255, 255, 0, 8),
-              size: 16,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget reCreateOrderBtn() {
-    return Container(
-      margin: EdgeInsets.only(right: 10),
-      child: GestureDetector(
-        onTap: () {
-          popEverythingAndNavigateTo(kTaxiRequestRoute,
-              args: widget.taxiRequest.reCreate());
-        },
-        child: Container(
-          height: getSizeRelativeToScreen(16, Get.height, Get.width),
-          width: getSizeRelativeToScreen(16, Get.height, Get.width),
-          decoration: BoxDecoration(
-            color: Colors.deepPurple.shade400,
-            borderRadius: BorderRadius.circular(4),
-          ),
-          child: Center(
-            child: Icon(
-              Icons.replay_circle_filled_sharp,
-              color: Colors.white,
-              size: 20,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget buildMsgAndCancelBtn() {
-    return Expanded(
-        flex: 1,
-        child: Row(
-          children: [messageBtn(), Spacer(), cancelBtn()],
-        ));
-  }
-
-  Widget taxiAvatarAndName(
-      {required BuildContext pContext,
-      String? description,
-      String? name,
-      String? asset}) {
-    return Expanded(
-      flex: 2,
-      child: Container(
-        margin: EdgeInsets.only(left: 10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            CircleAvatar(
-              radius: 18.0.sp,
-              child: ClipOval(
-                  clipBehavior: Clip.antiAlias,
-                  child: mLoadImage(
-                      url: widget.taxiRequest.driverInfo?.image,
-                      assetInCaseFailed: asset ?? aDefaultAvatar,
-                      fit: BoxFit.cover,
-                      height: getSizeRelativeToScreen(
-                          100, pContext.height, pContext.width),
-                      width: getSizeRelativeToScreen(
-                          100, pContext.height, pContext.width))),
-              backgroundColor:
-                  Colors.grey.shade100, //Color.fromARGB(255, 222, 222, 222),
-            ),
-            SizedBox(
-              width: 5.sp,
-            ),
-            Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: description != null
-                    ? CrossAxisAlignment.start
-                    : CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    width: name == null ? 100.sp : null,
-                    child: Text(
-                      name ?? widget.taxiRequest.driverInfo?.name ?? "Taxi",
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontFamily: 'psb',
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                      softWrap: false,
-                      maxLines: 1,
-                    ),
-                  ),
-                  description != null
-                      ? Text(
-                          description,
-                          overflow: TextOverflow.ellipsis,
-                          softWrap: false,
-                          maxLines: 1,
-                          style: TextStyle(
-                              fontSize: 14.sp,
-                              fontFamily: 'psr',
-                              color: Colors.grey),
-                        )
-                      : SizedBox(),
-                ]),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget rideCost() {
-    return Expanded(
-        flex: 1,
-        child: Center(
-            child: Text("\$" + widget.taxiRequest.estimatedPrice.toString(),
-                softWrap: false,
-                style: TextStyle(
-                    fontFamily: "psr",
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15))));
-  }
-
-  Widget verticalSeparator() {
-    return VerticalDivider(width: 1, color: Colors.grey.shade300);
-  }
-
-  Widget rightRouteInfos() {
-    // setState(() {});
-    return Expanded(
-      flex: 1,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Row(
-            children: [
-              Icon(
-                MezcalmosIcons.route,
-                size: (Get.height * 0.015).sp,
-              ),
-              SizedBox(
-                width: 2.w,
-              ),
-              Text(widget.taxiRequest.routeInformation?.distance
-                      .distanceStringInKm ??
-                  "-"),
-            ],
-          ),
-          Row(
-            children: [
-              Icon(
-                MezcalmosIcons.stopwatch,
-                size: (Get.height * 0.015).sp,
-              ),
-              SizedBox(
-                width: 2.w,
-              ),
-              Text(widget
-                      .taxiRequest.routeInformation?.duration.longTextVersion ??
-                  "-"),
-            ],
-          ),
-        ],
-      ),
-    );
   }
 
   Widget incrementDecrementPrice() {
@@ -428,29 +174,31 @@ class _BottomBarState extends State<BottomBar> {
         _widgies.assignAll([
           incrementDecrementPrice(),
           Expanded(flex: 1, child: verticalSeparator()),
-          rightRouteInfos()
+          rightRouteInfos(taxiRequest!)
         ]);
-        // widget.bottomPadding =
-        //     (GetStorage().read(getxGmapBottomPaddingKey) as double) + 15.0;
+
         break;
       case TaxiOrdersStatus.LookingForTaxi:
         _widgies.assignAll([
           incrementDecrementPrice(),
           Expanded(flex: 1, child: verticalSeparator()),
-          rightRouteInfos()
+          rightRouteInfos(taxiRequest!)
         ]);
-        // widget.bottomPadding =
-        //     (GetStorage().read(getxGmapBottomPaddingKey) as double) + 15.0;
+
         break;
 
       case TaxiOrdersStatus.DroppedOff:
         _widgies.assignAll([
           taxiAvatarAndName(
-              description: "Ride finished :)", pContext: pContext),
+              description: "Ride finished :)",
+              pContext: pContext,
+              taxiRequest: taxiRequest!),
           verticalSeparator(),
-          rideCost(),
+          rideCost(widget.taxiRequest.estimatedPrice.toString()),
           verticalSeparator(),
-          messageBtn(margin: EdgeInsets.symmetric(horizontal: 6))
+          messageBtn(
+              taxiRequest: widget.taxiRequest,
+              margin: EdgeInsets.symmetric(horizontal: 6))
         ]);
         // widget.bottomPadding = 10.0;
 
@@ -460,11 +208,12 @@ class _BottomBarState extends State<BottomBar> {
         _widgies.assignAll([
           taxiAvatarAndName(
               pContext: pContext,
+              taxiRequest: taxiRequest!,
               asset: taxi_driver_marker_asset,
               name:
                   "${Get.find<AuthController>().fireAuthUser!.displayName}'s Ride.",
               description: "Your ride has been expired :("),
-          reCreateOrderBtn()
+          reCreateOrderBtn(widget.taxiRequest)
         ]);
         // widget.bottomPadding = 10.0;
         break;
@@ -472,9 +221,13 @@ class _BottomBarState extends State<BottomBar> {
       case TaxiOrdersStatus.CancelledByTaxi:
         _widgies.assignAll([
           taxiAvatarAndName(
-              pContext: pContext, description: "Ride Canceled by Taxi :("),
-          messageBtn(margin: EdgeInsets.symmetric(horizontal: 6)),
-          reCreateOrderBtn(),
+              taxiRequest: taxiRequest!,
+              pContext: pContext,
+              description: "Ride Canceled by Taxi :("),
+          messageBtn(
+              taxiRequest: widget.taxiRequest,
+              margin: EdgeInsets.symmetric(horizontal: 6)),
+          reCreateOrderBtn(widget.taxiRequest),
         ]);
         // widget.bottomPadding = 10.0;
         break;
@@ -482,12 +235,13 @@ class _BottomBarState extends State<BottomBar> {
       case TaxiOrdersStatus.CancelledByCustomer:
         _widgies.assignAll([
           taxiAvatarAndName(
+              taxiRequest: taxiRequest!,
               pContext: pContext,
               asset: taxi_driver_marker_asset,
               name:
                   "${Get.find<AuthController>().fireAuthUser!.displayName}'s Ride.",
               description: "You have canceled your ride :("),
-          reCreateOrderBtn()
+          reCreateOrderBtn(widget.taxiRequest)
         ]);
         // widget.bottomPadding = 10.0;
         break;
@@ -495,36 +249,16 @@ class _BottomBarState extends State<BottomBar> {
       default:
         _widgies.assignAll([
           taxiAvatarAndName(
+            taxiRequest: taxiRequest,
             pContext: pContext,
           ),
           verticalSeparator(),
-          rideCost(),
+          rideCost(widget.taxiRequest.estimatedPrice.toString()),
           verticalSeparator(),
-          buildMsgAndCancelBtn()
+          buildMsgAndCancelBtn(taxiRequest!)
         ]);
       // widget.bottomPadding = 10.0;
     }
     return _widgies;
-  }
-}
-
-class ResendButton extends StatelessWidget {
-  ResendButton({Key? key, required this.function}) : super(key: key);
-  final GestureTapCallback function;
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      child: Container(
-        decoration: BoxDecoration(
-            color: Colors.black, borderRadius: BorderRadius.circular(12)),
-        height: 40,
-        child: Center(
-            child: Text(
-          "Resend",
-          style: TextStyle(color: Colors.white),
-        )),
-      ),
-      onTap: function,
-    );
   }
 }
