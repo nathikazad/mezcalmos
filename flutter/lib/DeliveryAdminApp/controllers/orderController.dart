@@ -1,14 +1,15 @@
+import 'dart:async';
+
+import 'package:cloud_functions/cloud_functions.dart';
+import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
-import 'package:cloud_functions/cloud_functions.dart';
-import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
-import 'dart:async';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class OrderController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
@@ -78,6 +79,10 @@ class OrderController extends GetxController {
     }
   }
 
+  bool isPast(RestaurantOrder order) {
+    
+    return pastOrders.contains(order);
+  }
 
   Stream<Order?> getCurrentOrderStream(String orderId) {
     return inProcessOrders.stream.map<Order?>((_) {
