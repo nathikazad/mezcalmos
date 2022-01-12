@@ -24,6 +24,7 @@ class ListOrdersScreen extends StatefulWidget {
 
 class _ListOrdersScreen extends State<ListOrdersScreen> {
   RxList<Order> inProcessOrders = RxList.empty();
+  RxList<Order> pastOrders = RxList.empty();
   OrderController controller = Get.find<OrderController>();
   LanguageController lang = Get.find<LanguageController>();
   StreamSubscription? _ordersListener;
@@ -37,12 +38,20 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
     return controller.inProcessOrders().reversed.toList();
   }
 
+  List<Order> fetchPastByRange() {
+    return controller.pastOrders().reversed.toList();
+  }
+
   @override
   void initState() {
     controller.clearNewOrderNotifications();
     inProcessOrders.value = fetchByRange();
     controller.inProcessOrders.stream.listen((_) {
       inProcessOrders.value = fetchByRange();
+    });
+    pastOrders.value = fetchPastByRange();
+    controller.pastOrders.stream.listen((_) {
+      pastOrders.value = fetchPastByRange();
     });
 
     // _ordersListViewController.addListener(() {
@@ -81,26 +90,45 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
             //     "menu", Get.find<SideMenuDraweController>().openMenu),
             drawer: MezSideMenu(),
             body: Obx(() {
-              return Column(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.all(8),
-                    alignment: Alignment.centerLeft,
-                    child: Text(lang.strings["customer"]["orders"]["title"],
-                        style: Theme.of(context).textTheme.headline1,
-                        textAlign: TextAlign.left),
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  Expanded(
-                    child: inProcessOrders.value.length > 0
-                        ? buildOrders(inProcessOrders)
-                        : Center(
-                            child: Text("No orders"),
-                          ),
-                  ),
-                ],
+              return SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.all(8),
+                      alignment: Alignment.centerLeft,
+                      child: Text(lang.strings["customer"]["orders"]["title"],
+                          style: Theme.of(context).textTheme.headline1,
+                          textAlign: TextAlign.left),
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Container(
+                      child: inProcessOrders.value.length > 0
+                          ? buildOrders(inProcessOrders)
+                          : Center(
+                              child: Text("No orders"),
+                            ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.all(8),
+                      alignment: Alignment.centerLeft,
+                      child: Text('Past orders',
+                          style: Theme.of(context).textTheme.headline1,
+                          textAlign: TextAlign.left),
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Container(
+                      child: controller.pastOrders.value.length > 0
+                          ? buildOrders(controller.pastOrders)
+                          : Center(
+                              child: Text("No orders"),
+                            ),
+                    ),
+                  ],
+                ),
               );
             })));
   }

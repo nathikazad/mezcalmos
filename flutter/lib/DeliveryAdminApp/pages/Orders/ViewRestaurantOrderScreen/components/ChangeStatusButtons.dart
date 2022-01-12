@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/buttonStyles.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/ButtonStyles.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+
+// Change status of the order compnent inside the order view screen
 
 List<Widget> changebuttonsDepandesOnStatus(Rxn<RestaurantOrder> order) {
   if (order.value?.inProcess() ?? false)
@@ -16,7 +16,6 @@ List<Widget> changebuttonsDepandesOnStatus(Rxn<RestaurantOrder> order) {
   else
     return [];
 }
-
 
 Widget? changeStatusButton(Rxn<RestaurantOrder> order) {
   switch (order.value!.status) {

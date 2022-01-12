@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 
-Widget getNoteCart(Rxn<RestaurantOrder> order) {
+// Display the notte of the order inside the order view
+Widget orderNoteCard(Rxn<RestaurantOrder> order) {
   LanguageController lang = Get.find<LanguageController>();
   return Column(
     children: [

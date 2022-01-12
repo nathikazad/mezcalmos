@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/buttonComponent.dart';
+import 'package:mezcalmos/DeliveryAdminApp/components/dailogComponent.dart';
 import 'package:mezcalmos/DeliveryAdminApp/constants/global.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/orderController.dart';
-import 'package:mezcalmos/DeliveryAdminApp/components/dailogComponent.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+// the styles of status buttons inside the order screen
 class ButtonsStyle {
   // this button for cancel order
   static Widget cancelButtonWidget(String orderId) {

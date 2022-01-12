@@ -128,7 +128,13 @@
           }
         }
       },
-      "past": {},
+      "past": {
+        "$orderType": {
+          ".indexOn": [
+            "orderTime"
+          ]
+        }
+      },
       "open" : {
         ".read": "true",
         "taxi": {

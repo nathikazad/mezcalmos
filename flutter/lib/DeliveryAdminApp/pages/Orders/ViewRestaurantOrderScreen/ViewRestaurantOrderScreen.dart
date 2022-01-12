@@ -5,18 +5,18 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/DeliveryAdminAppbar.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/orderController.dart';
-import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/getTotalCostCart.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/OrderInfoCard.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/OrderNoteCard.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/OrderTotalCostCard.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
-import 'components/GetNoteCart.dart';
-import 'components/getCustomerInfoCart.dart';
-import 'components/restaurantsInfoComponent.dart';
+import 'components/PastOrderInfo.dart';
+import 'components/RestaurantsInfoComponent.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
 LinearGradient? buttonGraientColor;
@@ -29,6 +29,8 @@ class ViewRestaurantOrderScreen extends StatefulWidget {
 class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
   LanguageController lang = Get.find<LanguageController>();
   AuthController auth = Get.find<AuthController>();
+  // Since we have alot of buttons we check loading by name
+
   Rxn<RestaurantOrder> order = Rxn();
   OrderController controller = Get.find<OrderController>();
   late String orderId;
@@ -65,13 +67,10 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
 
   @override
   Widget build(BuildContext context) {
-    responsiveSize(context);
-    mezDbgPrint("ViewOrderScreen build");
     return Scaffold(
         appBar: deliveryAdminAppBar(AppBarLeftButtonType.Back, withOrder: true),
         backgroundColor: Colors.white,
         body: Obx(() {
-          mezDbgPrint(order.value.toString());
           if (order.value == null) {
             // Order Loading ..
             Get.back();
@@ -83,29 +82,25 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
               child: Column(
                 children: [
                   //====================Restaurant Info=======================
-                  RestaurantsInfoComponet(
-                    order: order.value!,
-                  ),
+                  (!controller.isPast(order.value!))
+                      ? RestaurantsInfoComponet(
+                          order: order.value!,
+                        )
+                      : PastOrderInfo(order: order.value!),
 
                   //============================= Customer info====================
-                  getCustomerInfoCart(order),
+                  //getCustomerInfoCart(),
+                  OrderInfoCard(order: order),
                   //==========================>total cost=====================================
 
                   //=========== location========================
-                  getTotalCostCart(order),
+                  orderTotalCostCard(order),
                   //===============================>notes========================>
-                  getNoteCart(order)
+                  orderNoteCard(order)
                 ],
               ),
             );
           }
         }));
   }
-}
-
-extension CapExtension on String {
-  String get inCaps => '${this[0].toUpperCase()}${this.substring(1)}';
-  String get allInCaps => this.toUpperCase();
-  String get capitalizeFirstofEach =>
-      this.split(" ").map((str) => str.capitalize).join(" ");
 }

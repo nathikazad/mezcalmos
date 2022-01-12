@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+
+// Displays the order costs [delivery + total]
 
 final currency = new NumberFormat("#,##0.00", "en_US");
 
-Widget getTotalCostCart(Rxn<RestaurantOrder> order) {
+Widget orderTotalCostCard(Rxn<RestaurantOrder> order) {
   LanguageController lang = Get.find<LanguageController>();
 
   return Column(

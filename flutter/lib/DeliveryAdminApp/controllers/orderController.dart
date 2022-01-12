@@ -1,28 +1,30 @@
-import 'package:mezcalmos/DeliveryAdminApp/constants/databaseNodes.dart';
-import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
-import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'dart:async';
+
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/DeliveryAdminApp/constants/databaseNodes.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
+import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
-import 'dart:async';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class OrderController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
-  AuthController _authController = Get.find<AuthController>();
   ForegroundNotificationsController _fbNotificationsController =
       Get.find<ForegroundNotificationsController>();
   RxList<Order> inProcessOrders = <Order>[].obs;
-  StreamSubscription? _ordersListener;
+  RxList<Order> pastOrders = <Order>[].obs;
+  StreamSubscription? _currentOrdersListener;
+  StreamSubscription? _pastOrdersListener;
+
   @override
   void onInit() {
     mezDbgPrint(
         "--------------------> RestaurantsOrderController Initialized !");
-    _ordersListener = _databaseHelper.firebaseDatabase
+    _currentOrdersListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(inProcessOrdersNode())
         .onValue
@@ -36,7 +38,29 @@ class OrderController extends GetxController {
       }
       inProcessOrders.value = orders;
     });
+
+    _pastOrdersListener = _databaseHelper.firebaseDatabase
+        .reference()
+        .child(pastOrdersNode())
+        .orderByChild('orderTime')
+        .limitToLast(15)
+        .onChildAdded
+        .listen((event) {
+      pastOrders.add(
+          RestaurantOrder.fromData(event.snapshot.key, event.snapshot.value));
+    });
+
     super.onInit();
+  }
+
+  @override
+  void onClose() async {
+    mezDbgPrint("[+] OrderController::dispose ---------> Was invoked !");
+    _currentOrdersListener?.cancel();
+    _pastOrdersListener?.cancel();
+    pastOrders.clear();
+    inProcessOrders.clear();
+    super.onClose();
   }
 
   Order? getOrder(String orderId) {
@@ -45,8 +69,19 @@ class OrderController extends GetxController {
         return order.orderId == orderId;
       }) as RestaurantOrder;
     } on StateError {
-      return null;
+      try {
+        return pastOrders.firstWhere((order) {
+          return order.orderId == orderId;
+        });
+      } on StateError {
+        return null;
+      }
     }
+  }
+
+  bool isPast(RestaurantOrder order) {
+    
+    return pastOrders.contains(order);
   }
 
   Stream<Order?> getCurrentOrderStream(String orderId) {
