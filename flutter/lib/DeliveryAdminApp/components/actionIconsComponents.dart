@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mezcalmos/Shared/pages/ViewNotifications.dart';
+import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
-import '../../CustomerApp/router.dart';
 
 enum ButtonColorType { ButtonLightColor, ButtonDarkColor }
 LinearGradient gradientLightColor = LinearGradient(

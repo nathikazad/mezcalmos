@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 
-import 'noUserIcon.dart';
-import 'userMenuComponent.dart';
+import 'NoUserIcon.dart';
+import 'UserMenuComponent.dart';
 
 class MenuComponent extends StatelessWidget {
   MenuComponent({

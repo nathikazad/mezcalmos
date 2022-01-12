@@ -5,7 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:mezcalmos/CustomerApp/components/Menu/userMenuIcon.dart';
+import 'package:mezcalmos/CustomerApp/components/Menu/UserMenuIcon.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';

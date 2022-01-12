@@ -2,16 +2,16 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/appbar.dart';
-import 'package:mezcalmos/CustomerApp/components/buttonComponent.dart';
+import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
+import 'package:mezcalmos/CustomerApp/components/ButtonComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
-import 'components/savedLocationBody.dart';
-import 'components/savedLocationISEmpty.dart';
+import 'components/SavedLocationBody.dart';
+import 'components/SavedLocationIsEmpty.dart';
 
 class SavedLocationView extends StatefulWidget {
   SavedLocationView({
