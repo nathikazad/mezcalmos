@@ -142,7 +142,7 @@ class _UserMenuState extends State<UserMenu> {
   Row orderMenuItem(BuildContext context) {
     return Row(
       children: [
-        (orderController.currentOrders.isNotEmpty)
+        (orderController.currentOrders.length > 0)
             ? Badge(
                 badgeColor: Theme.of(context).primaryColorLight,
                 badgeContent: Text(

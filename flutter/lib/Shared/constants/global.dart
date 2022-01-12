@@ -4,6 +4,8 @@
 
 import 'package:mezcalmos/Shared/models/Chat.dart';
 
+// this is my user that i create in prod for the prod deployement testing.
+const String testUserIdInProd = "BUhQ74BrbBNeYZz60fK4ocrgpqz1";
 const String db = "mezcalmos-31f1c-default-rtdb";
 const String stagingDb =
     "https://mezcalmos-staging-default-rtdb.firebaseio.com";

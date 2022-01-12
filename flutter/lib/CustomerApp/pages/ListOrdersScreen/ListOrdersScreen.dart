@@ -35,7 +35,8 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
 
   @override
   initState() {
-    mezDbgPrint("ListOrdersScreen: onInit");
+    mezDbgPrint(
+        "ListOrdersScreen: onInit current : ${controller.currentOrders.length} past : ${controller.pastOrders.length}");
 
     super.initState();
   }
@@ -55,7 +56,9 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
         autoBack: true,
       ),
       body: Obx(
-        () => Get.find<AuthController>().user != null
+        () => Get.find<AuthController>().user != null &&
+                controller.currentOrders.length + controller.pastOrders.length >
+                    1
             ? SingleChildScrollView(
                 child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,8 +69,21 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                     PastOrderList(txt: txt, controller: controller),
                 ],
               ))
-            : Container(
-                child: Text("nothing"),
+            : Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.error, color: Colors.black, size: 30),
+                    Text(
+                      lang.strings['customer']['orders']['noOrders'],
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w300,
+                          fontSize: 14),
+                    )
+                  ],
+                ),
               ),
       ),
     );
@@ -90,49 +106,68 @@ class PastOrderList extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Obx(
-        () => Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          GroupedListView<Order, DateTime>(
-              elements: controller.pastOrders(),
-              groupBy: (element) => DateTime(element.orderTime.year,
-                  element.orderTime.month, element.orderTime.day),
-              groupComparator: (DateTime value1, DateTime value2) =>
-                  value2.compareTo(value1),
-              itemComparator: (element1, element2) =>
-                  element2.orderTime.compareTo(element1.orderTime),
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              groupHeaderBuilder: (element) {
-                return Container(
-                  margin: const EdgeInsets.all(8),
-                  child: Text(
-                    (calculateDifference(element.orderTime) == 0)
-                        ? ' ${lang.strings["shared"]["notification"]["today"]} '
-                        : (calculateDifference(element.orderTime) == -1)
-                            ? ' ${lang.strings["shared"]["notification"]["yesterday"]} '
-                            : DateFormat('dd MMM yyyy')
-                                .format(element.orderTime),
-                    style: txt.headline3,
-                  ),
-                );
-              },
-              separator: SizedBox(
-                height: 5,
+        () => controller.pastOrders().length +
+                    controller.currentOrders().length >=
+                1
+            ? Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                GroupedListView<Order, DateTime>(
+                    elements: controller.pastOrders(),
+                    groupBy: (element) => DateTime(element.orderTime.year,
+                        element.orderTime.month, element.orderTime.day),
+                    groupComparator: (DateTime value1, DateTime value2) =>
+                        value2.compareTo(value1),
+                    itemComparator: (element1, element2) =>
+                        element2.orderTime.compareTo(element1.orderTime),
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    groupHeaderBuilder: (element) {
+                      return Container(
+                        margin: const EdgeInsets.all(8),
+                        child: Text(
+                          (calculateDifference(element.orderTime) == 0)
+                              ? ' ${lang.strings["shared"]["notification"]["today"]} '
+                              : (calculateDifference(element.orderTime) == -1)
+                                  ? ' ${lang.strings["shared"]["notification"]["yesterday"]} '
+                                  : DateFormat('dd MMM yyyy')
+                                      .format(element.orderTime),
+                          style: txt.headline3,
+                        ),
+                      );
+                    },
+                    separator: SizedBox(
+                      height: 5,
+                    ),
+                    itemBuilder: (context, element) {
+                      switch (element.orderType) {
+                        case OrderType.Taxi:
+                          return TaxiOldOrderCard(order: element as TaxiOrder);
+
+                        case OrderType.Restaurant:
+                          return OldOrderCard(
+                              order: element as RestaurantOrder);
+
+                        default:
+                          return SizedBox(
+                            height: 0,
+                          );
+                      }
+                    }),
+              ])
+            : Center(
+                child: Column(
+                  children: [
+                    Icon(Icons.error, color: Colors.white),
+                    Text(
+                      lang.strings['customer']['orders']['noOrders'],
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1!
+                          .copyWith(color: Colors.black),
+                    )
+                  ],
+                ),
               ),
-              itemBuilder: (context, element) {
-                switch (element.orderType) {
-                  case OrderType.Taxi:
-                    return TaxiOldOrderCard(order: element as TaxiOrder);
-
-                  case OrderType.Restaurant:
-                    return OldOrderCard(order: element as RestaurantOrder);
-
-                  default:
-                    return SizedBox(
-                      height: 0,
-                    );
-                }
-              }),
-        ]),
       ),
     );
   }

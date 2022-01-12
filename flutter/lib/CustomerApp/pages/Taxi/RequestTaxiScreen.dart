@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/LocationSearchBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/BottomBar.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart' as TaxiOrder;
@@ -86,8 +89,8 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
       });
 
       // set current SearchComponent:
-      locationSearchBarController
-          .focusedTextField(_currentFocusedTextField.value);
+      locationSearchBarController.focusedTextField.value =
+          _currentFocusedTextField.value;
       // set the location Enabled Button to be false
       locationPickerController.myLocationButtonEnabled.value = false;
       // set blackScreenBottom 110
@@ -134,7 +137,13 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                     notifyParentOfLocationFinalized:
                         updateModelAndMaybeCalculateRoute,
                     notifyParentOfConfirm: (Location? _) async {
-                      await requestTaxi(_);
+                      if (GetStorage().read(getxLmodeKey) == "prod" &&
+                          Get.find<AuthController>().fireAuthUser?.uid ==
+                              testUserIdInProd) {
+                        MezSnackbar("Oops",
+                            "This prod version is live and running , we can't let you do that :( !");
+                      } else
+                        await requestTaxi(_);
                     }),
               ),
               LocationSearchBar(

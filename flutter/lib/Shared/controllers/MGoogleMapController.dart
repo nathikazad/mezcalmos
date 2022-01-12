@@ -23,6 +23,7 @@ class MGoogleMapController {
   GoogleMapController? controller;
   LatLngBounds? bounds;
   Function? onMapTap;
+  final double mapZoomLvl = 12 / 10;
 
   RxDouble markersDefaultSize = (Get.height * 0.055).w.obs;
 
@@ -59,7 +60,6 @@ class MGoogleMapController {
       {String? markerId,
       required LatLng latLng,
       String? customImgHttpUrl}) async {
-    double mapZoomLvl = await controller!.getZoomLevel() / 10;
     BitmapDescriptor icon;
 
     if (Get.find<AuthController>().fireAuthUser?.photoURL == null) {
@@ -89,8 +89,6 @@ class MGoogleMapController {
 
   Future<void> addOrUpdateTaxiDriverMarker(
       String markerId, LatLng latLng) async {
-    double mapZoomLvl = await controller!.getZoomLevel() / 10;
-
     this._addOrUpdateMarker(Marker(
         markerId: MarkerId(markerId),
         icon: await BitmapDescriptorLoader(
@@ -106,8 +104,6 @@ class MGoogleMapController {
 
   Future<void> addOrUpdatePurpleDestinationMarker(
       {String markerId = "dest", required LatLng latLng}) async {
-    double mapZoomLvl = await controller!.getZoomLevel() / 10;
-
     BitmapDescriptor icon = await BitmapDescriptorLoader(
         (await cropRonded(
             (await rootBundle.load(purple_destination_marker_asset))

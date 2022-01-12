@@ -153,7 +153,8 @@ class LocationSearchBarState extends State<LocationSearchBar> {
       child: LocationSearchComponent(
         suffixPadding: EdgeInsets.only(top: 20, right: 10),
         focusNode: locationSearchBarController.fromTextFieldFocusNode,
-        readOnly: widget.request.value.from?.address != null,
+        readOnly: widget.request.value.from?.address != null &&
+            widget.request.value.from?.address != "",
         dropDownDxOffset: 0,
         dropDownWidth: Get.width - 20,
         useBorders: false,

@@ -8,7 +8,7 @@ from termcolor import colored
 
 
 # GLOBAL CONSTANTS !
-VERSION = "1.0.7"
+VERSION = "1.0.8"
 XOR_VALUE = 100
 CONFIG_FILE = "config.json"
 ACTIVE_DEBUG = True
@@ -287,7 +287,7 @@ class Launcher:
         self.__set_flutter_args__()
 class Config:
     
-    possible_args = ['--verbose' , 'help', 'app' , 'env' , 'version', 'filter', 'fmode', '--build', '--lan', '--preview' , '--set-version']
+    possible_args = ['--fix-pods', '--verbose' , 'help', 'app' , 'env' , 'version', 'filter', 'fmode', '--build', '--lan', '--preview' , '--set-version']
     def __help__(self):
         print(f""" 
         + app=<AppName>
@@ -298,8 +298,9 @@ class Config:
         + --lan : in case you want to launch to another device connected to the same network.
         + --preview : Passing this along , will result on launching the app in the device-preview for testing an try many resolutions.
         + --set-version=<version> : Used to set the project's version to a specific version , this will set the version and quit.
-        + help : show this help menu
-        
+       	+ --fix-pods : Special cmd for MAC M1 , meant for fixing pod problems on IOS.
+	+ help : show this help menu
+     
         === only in build ===
         + version=<version> : example : 1.0.15+11
 
@@ -542,8 +543,35 @@ class Config:
         if _:
             self.__patch_version__(_)
             exit(DW_EXIT_REASONS.NORMAL)
+                # Cmd to fix Pods Problems
+        _ = self.__get_arg_value__('--fix-pods')
+        if _:
+            if input('This is only for MAC M1 chips ! Continue : y/n ?') == 'y':
+                print("[+] Clearing cache and Removing lock files ..")
+                os.system('rm -rf ../ios/Pods & rm ../ios/Podfile.lock & rm -rf ../ios/.symlinks & rm ../ios/Flutter/Flutter.podspec & rm ../pubspec.lock')
+                if not os.path.exists('../ios/Podfile'):
+                    os.system('flutter pub get')
+                
+                pod_lines =  open('../ios/Podfile' , 'r').readlines()
+                patch_line_index = None
+                print("[+] Checking Podfile ..")
 
-        # Checking pymode
+                for index , line in enumerate(pod_lines):
+                    print(line)
+                    if 'platform :ios,' in line:
+                        patch_line_index = index
+                        exit()
+                # min required now is 10.0
+                if patch_line_index != None:
+                    print("[+] Fixing Podfile ..")
+                    pod_lines[patch_line_index] = "platform :ios, '10.0'"
+                open('../ios/Podfile' , 'w+').write('\n'.join(pod_lines))    
+                print("[+] Installing Pods ..")
+                os.system('cd .. && flutter pub get && cd ios && arch -x86_64 pod install && cd ../launcher')
+            print("\n+ Done !")
+            exit(DW_EXIT_REASONS.NORMAL)
+
+	# Checking pymode
         if '--build' in args:
             self.user_args['pymode'] = "build"
         else: self.user_args['pymode'] = "launch"
