@@ -7,7 +7,7 @@ import 'package:mezcalmos/DeliveryAdminApp/components/dailogComponent.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class BUttonsStyle {
+class ButtonsStyle {
   // this button for cancel order
   static Widget cancelButtonWidget(String orderId) {
     OrderController controller = Get.find<OrderController>();

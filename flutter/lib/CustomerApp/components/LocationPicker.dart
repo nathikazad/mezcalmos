@@ -143,7 +143,8 @@ class LocationPickerState extends State<LocationPicker> {
           return buildBottomButton("CONFIRM",
               notifier: widget.notifyParentOfConfirm);
         } else {
-          return buildBottomButton("Sign in to make order",
+          return buildBottomButton(
+              _lang.strings["shared"]["login"]["signInToMakeOrder"],
               notifier: (_) async {
             await Get.toNamed(kSignInRouteOptional);
             // call back in case User was signedOut and he signedIn before confirming his Order Successfully!

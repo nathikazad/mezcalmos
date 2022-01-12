@@ -1,6 +1,5 @@
 {
     "customer": {
-        
         "home": {
             "supportText":"need help ? Contact our support team",
             "welcomeText":"Welcome to MEZCALMOS 👋",
@@ -23,9 +22,7 @@
         "restaurant": {
             "emptRestaurantList" : "There are no registered restaurants yet.",
             "restaurants": "Restaurants",
-            "notAvailable":"This restaurant is closed",
-
-            
+            "notAvailable": "This restaurant is closed",
             "menu": {
                 "myCart":"My Cart",
                 "items":"Items",
@@ -81,19 +78,19 @@
                 "orderItems": "Order Items",
                 "cancel": "Cancel",
                 "cancelOrder": "Cancel Order",
-                "orderCanceled":"Order is being canceled ...",
+                "orderCanceled": "Order is being cancelled ...",
                 "cancelOrderConfirm": "Are you sure you want to\ncancel this order?"
             },
             "orderStatus": {
-                "orderCanceled":"Order Canceled",
+                "orderCanceled": "Order Cancelled",
                 "orderDeliverd":"Order Delivered",
                 "helperText":{
                 "preparing": "Your order is being prepared by the restaurant",
                 "readyForPickUp": "Your order is prepared and ready for pickup by the delivery driver'",
                 "onTheWay": "Your order is on the way",
                 "delivered": "Your order has been successfully delivered",
-                "canceledByAdmin": "Your order has been canceled by the restaurant",
-                "canceledByCustomer": "Your order has been canceled",
+                "canceledByAdmin": "Your order has been cancelled by the restaurant",
+                "canceledByCustomer": "Your order has been cancelled",
                 "recievied": "Your order is recieved by the restaurant"
                 },
                 "orderStatus":"Order Status",
@@ -101,9 +98,13 @@
                 "readyForPickUp": "Ready For Pickup",
                 "onTheWay": "On The Way",
                 "delivered": "Order Delivered",
-                "canceledByAdmin": "Order Canceled",
-                "canceledByCustomer": "Order Canceled",
+                "canceledByAdmin": "Order Cancelled",
+                "canceledByCustomer": "Order Cancelled",
                 "recievied": "Order Recieved"
+            },
+            "cancelOrderDialog": {
+                "yes": "Yes, I'm sure!",
+                "no": "No"
             }
         },
         "inviteCode": {
@@ -114,7 +115,7 @@
         "signInAlert":{
             "title":"You need to be signed in to add items to your cart",
             "signBtn":"Sign me in",
-            "notNowBtn":"Not now ?"
+            "notNowBtn": "Not now ?"
         },
         "taxiView": {
             "taxi": "Taxi",
@@ -133,7 +134,12 @@
             "logIn": "Login To Make This Order",
             "outOfPuerto": "You are too far out of puerto",
             "priceEstimate": "Estimated price for the ride is $",
-            "noRide": "Sorry to inform you this ride does not exist anymore."
+            "noRide": "Sorry to inform you this ride does not exist anymore.",
+            "rideFinished": "Ride finished",
+            "rideExpired": "Your ride has been expired",
+            "rideCancelledByTaxi": "Ride cancelled by taxi",
+            "rideCancelledByCustomer": "You have cancelled your ride",
+            "ride": "ride"
         },
         "cancelOrder": {
             "title":"Confirm Cancelation.",
@@ -225,8 +231,8 @@
         },
         "orders": {
             "orderStatus":{
-                "canceledByAdmin":"Canceled By Admin",
-                "canceledByCustomer":"Canceled By Customer",
+                "canceledByTaxi": "Cancelled",
+                "canceledByCustomer": "Cancelled",
                 "onTheWay":"Taxi on the way",
                 "lookingForTaxi":"Looking for Taxi",
                 "inTransit":"Taxi in transit",
@@ -258,7 +264,7 @@
         "snackbars" : {
             "titleSuccess" : "Success :)",
             "titleFailed" : "Oops :(",
-            "orderCancelSuccess" : "Order canceled successfully.",
+            "orderCancelSuccess": "Order cancelled successfully.",
             "orderCancelFailed": "Failed to cancel the order."
         },
         "permissions": {
@@ -293,7 +299,8 @@
             "enterPhoneNumber": "Enter phone number to recieve OTP code",
             "otpSubtitleNumber": "Enter Phone Number",
             "submit": "SUBMIT",
-            "twilioNote": "By continuing you will receive a verification code to your phone number by SMS. Message and data rates may apply."
+            "twilioNote": "By continuing you will receive a verification code to your phone number by SMS. Message and data rates may apply.",
+            "signInToMakeOrder": "Sign in to make order"
         },
         "messages": {
             "title": "Messages",
@@ -406,7 +413,6 @@
             "location": "Location"
         },
         "placeHolders": {
-            
             "home": "Home",
             "address": "Enter Address",
             "name": "Enter Name",

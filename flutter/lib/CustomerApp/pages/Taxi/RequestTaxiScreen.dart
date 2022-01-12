@@ -15,7 +15,7 @@ import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:mezcalmos/CustomerApp/components/LocationPicker.dart';
+import 'package:mezcalmos/CustomerApp/components/locationPicker.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:location/location.dart' as GeoLoc;

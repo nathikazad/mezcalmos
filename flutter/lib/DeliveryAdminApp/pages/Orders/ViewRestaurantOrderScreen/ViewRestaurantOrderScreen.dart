@@ -14,7 +14,7 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:intl/intl.dart';
 import 'components/getCustomerInfoCart.dart';
-import 'components/restaurntsInfoComponent.dart';
+import 'components/restaurantsInfoComponent.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
 LinearGradient? buttonGraientColor;

@@ -18,15 +18,15 @@
                 "title":"Lavandería",
                 "subtitle":"Próximamente ..."
             }
-           
         },
         "restaurant": {
             "emptRestaurantList" : "Aún no hay restaurantes registrados.",
             "restaurants": "Restaurantes",
             "notAvailable": "Su restaurante está cerrado",
             "menu": {
-                "menu": "Menú",
+                "myCart": "Mi Carrito",
                 "items":"elementos",
+                "menu": "Menú",
                 "info":"Informacións",
                 "description": "Descripción",
                 "location":"localización",
@@ -79,7 +79,7 @@
                 "cancel": "Cancelar",
                 "cancelOrder": "Cancelar el pedido",
                 "orderCanceled":"Se cancela el pedido ...",
-                "cancelOrderConfirm": "Estás segura de que deseas cancelar este pedido?"
+                "cancelOrderConfirm": "¿Estás segura de que deseas cancelar este pedido?"
             },
             "orderStatus": {
                 "orderCanceled":"Orden cancelada",
@@ -101,6 +101,10 @@
                 "canceledByAdmin": "Cancelada Por Admin",
                 "canceledByCustomer": "Cancelada Por Cliente",
                 "recievied": "Recibida"
+            },
+            "cancelOrderDialog": {
+                "yes": "Si, Estoy seguro!",
+                "no": "No"
             }
         },
         "inviteCode": {
@@ -111,7 +115,7 @@
         "signInAlert":{
             "title":"Debe iniciar sesión para agregar artículos a su carrito",
             "signBtn":"Apuntame dentro",
-            "notNowBtn":"Ahora no ?"
+            "notNowBtn": "Ahora no ?"
         },
         "taxiView": {
             "taxi": "Taxi",
@@ -130,7 +134,12 @@
             "logIn": "Inicie sesión para hacer este pedido",
             "outOfPuerto": "Estas demasiado lejos de puerto",
             "priceEstimate": "El precio estimado del viaje es de $",
-            "noRide": "Lamento informarle que este viaje ya no existe."
+            "noRide": "Lamento informarle que este viaje ya no existe.",
+            "rideFinished": "El viaje ha terminado",
+            "rideExpired": "Tu pedido ha expirado",
+            "rideCancelledByTaxi": "El viaje ha sido cancelado por taxi",
+            "rideCancelledByCustomer": "Has cancelado tu viaje",
+            "ride": "viaje"
         },
         "cancelOrder": {
             "title":"Confirmar cancelación.",
@@ -211,7 +220,7 @@
             "question": "Por qué quieres cancelar el viaje?",
             "cancelRide": "Cancelar viaje",
             "confirmation_header": "Por favor confirmar",
-            "confirmation_text": "Estás seguro de que deseas cancelar el viaje actual?",
+            "confirmation_text": "¿Estás seguro de que deseas cancelar el viaje actual?",
             "backToIncoming": "Volver a entrante",
             "noShow": "No vino",
             "otherRide": "Otro viaje",
@@ -222,7 +231,7 @@
         },
         "orders": {
             "orderStatus":{
-                "canceledByAdmin":"Cancelado",
+                "canceledByTaxi": "Cancelado",
                 "canceledByCustomer":"Cancelado",
                 "onTheWay":"Taxi en el camino",
                 "lookingForTaxi":"Buscando Taxi",
@@ -243,7 +252,7 @@
             "cancelledMessage": "Tu viaje ha sido cancelado"
         },
         "introduction": {
-            "howToTaxi": "Desea utilizar la aplicación  Mezcalmos para ofrecer  transporte a los clientes  en <span class = 'text_blue'> Puerto Escondido? </span> ",
+            "howToTaxi": "¿Desea utilizar la aplicación  Mezcalmos para ofrecer  transporte a los clientes  en <span class = 'text_blue'> Puerto Escondido? </span> ",
             "signUpTaxi": "Haga clic en Registrarse,  muéstrenos la prueba de su  autorización de taxi y comience  a ofrecer viajes de inmediato.",
             "confirmation": "Su solicitud está bajo revisión. Nos pondremos en contacto con usted en breve",
             "logIn": " Registrate|Iniciar sesión",
@@ -290,7 +299,8 @@
             "enterPhoneNumber": "Ingrese el número teléfono para recibir el código OTP",
             "otpSubtitleNumber": "Ingresa número telefónico",
             "submit": "ENVIAR",
-            "twilioNote": "Al continuar, recibirá un código de verificación a su número de teléfono por SMS. Se pueden aplicar tarifas por mensajes y datos."
+            "twilioNote": "Al continuar, recibirá un código de verificación a su número de teléfono por SMS. Se pueden aplicar tarifas por mensajes y datos.",
+            "signInToMakeOrder": "Iniciar sesión para hacer el pedido"
         },
         "messages": {
             "title": "Mensajes",

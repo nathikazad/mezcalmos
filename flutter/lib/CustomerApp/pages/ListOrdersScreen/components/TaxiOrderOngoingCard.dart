@@ -138,8 +138,8 @@ class TaxiOngoingOrderCard extends StatelessWidget {
 String getTaxiOrderStatus(TaxiOrdersStatus status) {
   LanguageController lang = Get.find<LanguageController>();
   switch (status) {
-    case TaxiOrdersStatus.CancelledByCustomer:
-      return '${lang.strings["taxi"]["orders"]["orderStatus"]["canceledByAdmin"]}';
+    case TaxiOrdersStatus.CancelledByTaxi:
+      return '${lang.strings["taxi"]["orders"]["orderStatus"]["CancelledByTaxi"]}';
     case TaxiOrdersStatus.CancelledByCustomer:
       return '${lang.strings["taxi"]["orders"]["orderStatus"]["canceledByCustomer"]}';
     case TaxiOrdersStatus.LookingForTaxi:

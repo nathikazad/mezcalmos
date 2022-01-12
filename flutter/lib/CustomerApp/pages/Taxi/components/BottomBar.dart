@@ -190,7 +190,8 @@ class _BottomBarState extends State<BottomBar> {
       case TaxiOrdersStatus.DroppedOff:
         _widgies.assignAll([
           taxiAvatarAndName(
-              description: "Ride finished :)",
+              description: lang.strings?['customer']?['taxiView']
+                  ?['rideFinished'],
               pContext: pContext,
               taxiRequest: taxiRequest!),
           verticalSeparator(),
@@ -211,8 +212,9 @@ class _BottomBarState extends State<BottomBar> {
               taxiRequest: taxiRequest!,
               asset: taxi_driver_marker_asset,
               name:
-                  "${Get.find<AuthController>().fireAuthUser!.displayName}'s Ride.",
-              description: "Your ride has been expired :("),
+                  "${Get.find<AuthController>().fireAuthUser!.displayName}'s ${lang.strings?['customer']?['taxiView']?['ride']}.",
+              description: lang.strings?['customer']?['taxiView']
+                  ?['rideExpired']),
           reCreateOrderBtn(widget.taxiRequest)
         ]);
         // widget.bottomPadding = 10.0;
@@ -223,7 +225,8 @@ class _BottomBarState extends State<BottomBar> {
           taxiAvatarAndName(
               taxiRequest: taxiRequest!,
               pContext: pContext,
-              description: "Ride Canceled by Taxi :("),
+              description: lang.strings?['customer']?['taxiView']
+                  ?['rideCancelledByTaxi']),
           messageBtn(
               taxiRequest: widget.taxiRequest,
               margin: EdgeInsets.symmetric(horizontal: 6)),
@@ -239,8 +242,9 @@ class _BottomBarState extends State<BottomBar> {
               pContext: pContext,
               asset: taxi_driver_marker_asset,
               name:
-                  "${Get.find<AuthController>().fireAuthUser!.displayName}'s Ride.",
-              description: "You have canceled your ride :("),
+                  "${Get.find<AuthController>().fireAuthUser!.displayName}'s ${lang.strings?['customer']?['taxiView']?['ride']}.",
+              description: lang.strings?['customer']?['taxiView']
+                  ?['rideCancelledByCustomer']),
           reCreateOrderBtn(widget.taxiRequest)
         ]);
         // widget.bottomPadding = 10.0;

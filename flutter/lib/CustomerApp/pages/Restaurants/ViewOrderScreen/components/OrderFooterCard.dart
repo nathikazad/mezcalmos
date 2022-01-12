@@ -103,7 +103,11 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                                               child: Container(
                                                   alignment: Alignment.center,
                                                   child:
-                                                      Text("Yes, i'm sure!"))),
+                                                      Text(lang.strings[
+                                                                  "customer"]
+                                                              ["restaurant"]
+                                                          ["cancelOrderDialog"]
+                                                      ["yes"]))),
                                           SizedBox(
                                             height: 10,
                                           ),
@@ -116,7 +120,11 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                                                   padding: EdgeInsets.all(12)),
                                               child: Container(
                                                   alignment: Alignment.center,
-                                                  child: Text('No'))),
+                                                  child: Text(lang.strings[
+                                                                  "customer"]
+                                                              ["restaurant"]
+                                                          ["cancelOrderDialog"]
+                                                      ["no"]))),
                                         ],
                                       )
                                     : Column(
