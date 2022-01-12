@@ -37,10 +37,9 @@ class OrderSummaryCard extends StatelessWidget {
                       '${lang.strings["customer"]["restaurant"]["cart"]["deliveryCost"]}',
                       style: txt.headline3,
                     ),
-                    Text(
-                      '\$' + order.cost.toStringAsFixed(0),
-                      style: txt.headline2,
-                    ),
+                    Text('\$' + 4.toString(),
+                        style: txt.headline2!
+                            .copyWith(decoration: TextDecoration.lineThrough)),
                   ],
                 ),
                 Divider(
@@ -54,7 +53,7 @@ class OrderSummaryCard extends StatelessWidget {
                       style: txt.headline3,
                     ),
                     Text(
-                      '\$' + (4 + order.cost).toStringAsFixed(0),
+                      '\$' + (order.cost).toStringAsFixed(0),
                       style: txt.headline2,
                     ),
                   ],

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/titlesComponent.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:get/get.dart';
 
 List<Widget> choosenMannyOption(
     Map<dynamic, dynamic> data, BuildContext context) {
@@ -38,7 +38,11 @@ List<Widget> choosenMannyOption(
       );
     }
   });
-  return myWidgets;
+    if (data.isEmpty) {
+    return [];
+  } else {
+    return myWidgets;
+  }
 }
 
 extension CapExtension on String {

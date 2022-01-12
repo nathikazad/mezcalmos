@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/titlesComponent.dart';
-import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/titlesComponent.dart';
 
 List<Widget> choosenOneOption(
     Map<dynamic, dynamic> data, BuildContext context) {
@@ -14,7 +14,7 @@ List<Widget> choosenOneOption(
 
   data.forEach((key, value) {
     myWidgets.add(MenuTitles(
-      title: key.toUpperCase(),
+      title: key.toString().capitalizeFirst,
       textTheme: txt.subtitle1!
           .copyWith(fontSize: 13, color: Color.fromRGBO(33, 33, 33, 0.8)),
     ));
@@ -38,7 +38,11 @@ List<Widget> choosenOneOption(
       )
     ]);
   });
-  return myWidgets;
+  if (data.isEmpty) {
+    return [];
+  } else {
+    return myWidgets;
+  }
 }
 
 extension CapExtension on String {

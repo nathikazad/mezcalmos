@@ -15,8 +15,8 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
+import 'components/CurrentOrderInfo.dart';
 import 'components/PastOrderInfo.dart';
-import 'components/RestaurantsInfoComponent.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
 LinearGradient? buttonGraientColor;
@@ -83,7 +83,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                 children: [
                   //====================Restaurant Info=======================
                   (!controller.isPast(order.value!))
-                      ? RestaurantsInfoComponet(
+                      ? CurrentOrderInfo(
                           order: order.value!,
                         )
                       : PastOrderInfo(order: order.value!),

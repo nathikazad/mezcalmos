@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
 import 'dropDownListCartView.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class OrderSummaryCard extends StatelessWidget {
   final String? orderCost;
@@ -114,7 +114,7 @@ class OrderSummaryCard extends StatelessWidget {
                       child: Container(
                     alignment: Alignment.centerRight,
                     child: Text(
-                      "\$40",
+                      "\$4",
                       style: txt.headline3!.copyWith(
                         fontWeight: FontWeight.w500,
                         decoration: TextDecoration.lineThrough,

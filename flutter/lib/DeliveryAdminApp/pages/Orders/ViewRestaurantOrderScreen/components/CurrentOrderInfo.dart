@@ -4,11 +4,10 @@ import 'package:mezcalmos/CustomerApp/components/BasicCellComponent.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/buildWidgetOnOrderStatus.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 
-
 //Displays the restaurant on charge with the order  and the order status with an animation
 
-class RestaurantsInfoComponet extends StatelessWidget {
-  RestaurantsInfoComponet({Key? key, required this.order}) : super(key: key);
+class CurrentOrderInfo extends StatelessWidget {
+  CurrentOrderInfo({Key? key, required this.order}) : super(key: key);
   final RestaurantOrder order;
 
   @override
