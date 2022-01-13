@@ -139,7 +139,7 @@ String getTaxiOrderStatus(TaxiOrdersStatus status) {
   LanguageController lang = Get.find<LanguageController>();
   switch (status) {
     case TaxiOrdersStatus.CancelledByTaxi:
-      return '${lang.strings["taxi"]["orders"]["orderStatus"]["CancelledByTaxi"]}';
+      return '${lang.strings["taxi"]["orders"]["orderStatus"]["canceledByTaxi"]}';
     case TaxiOrdersStatus.CancelledByCustomer:
       return '${lang.strings["taxi"]["orders"]["orderStatus"]["canceledByCustomer"]}';
     case TaxiOrdersStatus.LookingForTaxi:
