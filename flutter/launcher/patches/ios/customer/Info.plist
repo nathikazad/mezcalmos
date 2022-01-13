@@ -55,11 +55,10 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>App needs location when in use to update your Taxi Driver about your location</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This app require PhotoLibrary Access</string>
+	<string>App need access to PhotoLibrary in order to change User's profile pictures.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
-		<string>location</string>
 		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>

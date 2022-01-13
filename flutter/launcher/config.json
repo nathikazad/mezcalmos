@@ -81,7 +81,7 @@
                 },
 
                 "prod": {
-                    "appName" : "Mezcustomer",
+                    "appName" : "Mezcalmos",
                     "packageName": "com.mezcalmos.customer",
                     "googe-service-file": "services/prod/android/customer.json",
                     "apple-service-file": "services/prod/ios/customer.plist"
