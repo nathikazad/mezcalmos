@@ -1,27 +1,27 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/TaxiApp/components/taxiAppBar.dart';
-import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/IPositionedBottomBar.dart';
-import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/IPositionedFromToBar.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
+import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/IPositionedBottomBar.dart';
+import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/IPositionedFromToBar.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
-import 'package:mezcalmos/TaxiApp/theme.dart';
 
 class IncomingOrderViewScreen extends StatefulWidget {
   @override
@@ -46,6 +46,7 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
 
     // we do not setState here yet !
     if (order == null) {
+      mezDbgPrint('ORDER NULL NAVIGATE BACK');
       Get.back();
     } else {
       controller.markOrderAsRead(orderId, order!.customer.id);
@@ -158,6 +159,8 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
               setState(() {
                 _clickedButton = true;
               });
+              mezDbgPrint(
+                  '-----------------ORDER PRINT-------------' + order!.orderId);
               ServerResponse serverResponse =
                   await controller.acceptTaxi(order!.orderId);
 

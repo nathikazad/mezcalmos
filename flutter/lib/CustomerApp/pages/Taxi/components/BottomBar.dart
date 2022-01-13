@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
-import 'package:mezcalmos/CustomerApp/pages/Taxi/components/RecreateOrderBtn.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/BottomBarComponents.dart';
+import 'package:mezcalmos/CustomerApp/pages/Taxi/components/RecreateOrderBtn.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
-import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
-import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 
 // @SAAD - TODO : REFACTORE THIS.
@@ -43,7 +43,7 @@ class _BottomBarState extends State<BottomBar> {
       right: 15,
       child: Container(
           margin: EdgeInsets.only(
-              bottom: getTheRightMargin(widget.taxiRequest.status) ? 45 : 13),
+              bottom: getBottomMarging(widget.taxiRequest.status)),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
             gradient: LinearGradient(colors: [
@@ -76,75 +76,91 @@ class _BottomBarState extends State<BottomBar> {
     }
   }
 
+  double getBottomMarging(TaxiOrdersStatus? taxiOrdersStatus) {
+    switch (taxiOrdersStatus) {
+      case TaxiOrdersStatus.CancelledByTaxi:
+      case TaxiOrdersStatus.Expired:
+      case TaxiOrdersStatus.CancelledByCustomer:
+      case TaxiOrdersStatus.DroppedOff:
+      case TaxiOrdersStatus.OnTheWay:
+      case TaxiOrdersStatus.InTransit:
+        return 0;
+
+      case TaxiOrdersStatus.LookingForTaxi:
+        return 45;
+
+      default:
+        return 45;
+    }
+  }
+
   Widget incrementDecrementPrice() {
     TaxiController taxiController = Get.put<TaxiController>(TaxiController());
-    return Expanded(
-      flex: 1,
+    return Flexible(
+      flex: 2,
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10),
+        padding: EdgeInsets.symmetric(horizontal: 5),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            InkWell(
-              onTap: () {
-                if (widget.taxiRequest.status == null) {
-                  widget.taxiRequest.decrementPrice();
-                  setState(() {});
-                } else {
-                  Order? order = Get.find<OrderController>()
-                      .hasOrderOfType(typeToCheck: OrderType.Taxi);
-                  if (order != null) {
-                    taxiController.updateRideCost(
-                        orderId: order.orderId,
-                        cost: widget.taxiRequest.estimatedPrice - 5);
+            Material(
+              shape: CircleBorder(),
+              child: IconButton(
+                iconSize: 25,
+                splashRadius: 20,
+                tooltip: 'Decrease the price',
+                padding: EdgeInsets.zero,
+                onPressed: () {
+                  if (widget.taxiRequest.status == null) {
+                    widget.taxiRequest.decrementPrice();
+                    setState(() {});
+                  } else {
+                    Order? order = Get.find<OrderController>()
+                        .hasOrderOfType(typeToCheck: OrderType.Taxi);
+                    if (order != null) {
+                      taxiController.updateRideCost(
+                          orderId: order.orderId,
+                          cost: widget.taxiRequest.estimatedPrice - 5);
+                    }
                   }
-                }
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                        color: Colors.black,
-                        style: BorderStyle.solid,
-                        width: 1)),
-                child: Icon(
-                  Icons.remove,
-                  size: 18,
+                },
+                icon: Icon(
+                  Icons.remove_circle_outline,
+                  //size: 18,
                   color: Colors.black,
                 ),
               ),
             ),
             Text(
-              widget.taxiRequest.estimatedPrice.toString(),
+              '\$' + widget.taxiRequest.estimatedPrice.toString(),
               style: TextStyle(
                   color: Colors.black, fontFamily: 'psb', fontSize: 20),
             ),
-            InkWell(
-              onTap: () {
-                if (widget.taxiRequest.status == null) {
-                  widget.taxiRequest.incrementPrice();
-                  setState(() {});
-                } else {
-                  Order? order = Get.find<OrderController>()
-                      .hasOrderOfType(typeToCheck: OrderType.Taxi);
-                  if (order != null) {
-                    taxiController.updateRideCost(
-                        orderId: order.orderId,
-                        cost: widget.taxiRequest.estimatedPrice + 5);
+            Material(
+              shape: CircleBorder(),
+              child: IconButton(
+                iconSize: 25,
+                splashRadius: 20,
+                tooltip: 'Increase the price',
+                padding: EdgeInsets.zero,
+                onPressed: () {
+                  if (widget.taxiRequest.status == null) {
+                    widget.taxiRequest.incrementPrice();
+                    setState(() {});
+                  } else {
+                    Order? order = Get.find<OrderController>()
+                        .hasOrderOfType(typeToCheck: OrderType.Taxi);
+                    if (order != null) {
+                      taxiController.updateRideCost(
+                          orderId: order.orderId,
+                          cost: widget.taxiRequest.estimatedPrice + 5);
+                    }
                   }
-                }
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                        color: Colors.black,
-                        style: BorderStyle.solid,
-                        width: 1)),
-                child: Icon(
-                  Icons.add,
-                  size: 18,
+                },
+                icon: Icon(
+                  Icons.add_circle_outline,
+                  //size: 18,
                   color: Colors.black,
                 ),
               ),
@@ -170,7 +186,7 @@ class _BottomBarState extends State<BottomBar> {
       case TaxiOrdersStatus.LookingForTaxi:
         _widgies.assignAll([
           incrementDecrementPrice(),
-          Expanded(flex: 1, child: verticalSeparator()),
+          verticalSeparator(),
           rightRouteInfos(taxiRequest!)
         ]);
 

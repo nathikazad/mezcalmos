@@ -119,8 +119,8 @@ class _MessagingScreenState extends State<MessagingScreen> {
                         style: TextStyle(
                             fontFamily: "Nunito",
                             fontWeight: FontWeight.w400,
-                            fontSize: 13.sp,
-                            color: (!isMe) ? Colors.black : Colors.white),
+                            fontSize: 14.sp,
+                            color: (isMe) ? Colors.black : Colors.white),
                       )),
                   time != null
                       ? Padding(

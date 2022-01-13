@@ -1,11 +1,11 @@
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
@@ -75,8 +75,9 @@ Widget taxiAvatarAndName(
     String? description,
     String? name,
     String? asset}) {
-  return Expanded(
-    flex: 2,
+  return Flexible(
+    flex: 3,
+    fit: FlexFit.tight,
     child: Container(
       margin: EdgeInsets.only(left: 10),
       child: Row(
@@ -84,7 +85,7 @@ Widget taxiAvatarAndName(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           CircleAvatar(
-            radius: 18.0.sp,
+            radius: 18.sp,
             child: ClipOval(
                 clipBehavior: Clip.antiAlias,
                 child: mLoadImage(
@@ -108,7 +109,7 @@ Widget taxiAvatarAndName(
                   : CrossAxisAlignment.center,
               children: [
                 Container(
-                  width: name == null ? 100.sp : null,
+                  //  width: name == null ? 100.sp : null,
                   child: Text(
                     name ?? taxiRequest?.driverInfo?.name ?? "Taxi",
                     style: TextStyle(
@@ -238,7 +239,9 @@ Widget buildMsgAndCancelBtn(TaxiRequest taxiRequest) {
       child: Row(
         children: [
           messageBtn(taxiRequest: taxiRequest),
-          Spacer(),
+          SizedBox(
+            width: 5,
+          ),
           cancelBtn(taxiRequest)
         ],
       ));

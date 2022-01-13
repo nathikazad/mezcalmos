@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
-import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
-import 'package:mezcalmos/Shared/constants/MezIcons.dart';
-import 'package:mezcalmos/TaxiApp/constants/assets.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
+import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 
 class IncomingPositionedBottomBar extends StatelessWidget {
   // IncomingOrdersController controller = Get.find<IncomingOrdersController>();
@@ -53,9 +53,7 @@ class IncomingPositionedBottomBar extends StatelessWidget {
                 Expanded(
                   flex: 4, //Get.width > 320 ? 4 : 0,
                   child: Row(
-                    mainAxisAlignment: Get.width > 320
-                        ? MainAxisAlignment.spaceAround
-                        : MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       emptyOrWidgetSmallPhones(
@@ -69,6 +67,9 @@ class IncomingPositionedBottomBar extends StatelessWidget {
                                 image: AssetImage(money_asset),
                               )),
                             )),
+                      ),
+                      SizedBox(
+                        width: 10,
                       ),
                       Text(
                         order.cost.toString(),
