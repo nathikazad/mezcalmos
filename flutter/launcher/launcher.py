@@ -6,9 +6,12 @@ from enum import Enum
 import subprocess as proc
 from termcolor import colored
 
+# LAST UPDATE INFOS : 
+# ADDED A FIX FOR  warning: The iOS Simulator deployment target 'IPHONEOS_DEPLOYMENT_TARGET' is set to 8.0, but the range of supported deployment target versions is 9.0 to 14.5.99. (in target 'leveldb-library' from project 'Pods'
+
 
 # GLOBAL CONSTANTS !
-VERSION = "1.0.8"
+VERSION = "1.0.10"
 XOR_VALUE = 100
 CONFIG_FILE = "config.json"
 ACTIVE_DEBUG = True
@@ -201,8 +204,12 @@ class Launcher:
         _cloned = open(f'patches/ios/{self.user_args["app"].lower().replace("app" , "")}/Info.plist').read().replace('<mez-output-name>', _outputAppName)
         open(_info_plist_path , 'w+').write(_cloned)
         PRINTLN(f"[+] Patched ios/Runner/Info.plist => {_outputAppName}!")
-
-
+	    # Getting rid of 8.0
+        if os.path.exists('../ios/Pods/Pods.xcodeproj/project.pbxproj'):
+            _pods_xcodeproj_project_pbxproj = open('../ios/Pods/Pods.xcodeproj/project.pbxproj').read()
+            open('../ios/Pods/Pods.xcodeproj/project.pbxproj', 'w+').write(_pods_xcodeproj_project_pbxproj.replace('IPHONEOS_DEPLOYMENT_TARGET = 8.0', 'IPHONEOS_DEPLOYMENT_TARGET = 9.0'))
+            PRINTLN('[+] UPDATED IPHONEOS_DEPLOYMENT_TARGET => 9.0')
+            
     def __patch_gs__(self):
         '''If its staging mode Patch the Gpoogle-services.json'''
         # Project's Services files
