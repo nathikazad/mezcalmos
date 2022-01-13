@@ -28,12 +28,13 @@ dependencies:
   sign_in_with_apple: ^3.0.0
   crypto: ^3.0.0-nullsafety.0
   firebase_core: 
-  cloud_functions: ^1.0.7
+  # cloud_functions: ^1.0.7
+  cloud_functions: 3.0.3
   get_storage: 
   equatable: ^2.0.3
   flutter_polyline_points: ^1.0.0
   google_maps_flutter: ^2.0.9
-  image_downloader: ^0.30.0
+  image_downloader: 0.31.0
   flutter_facebook_auth: ^3.5.0
   pin_code_fields: ^7.2.0
   badges: ^2.0.2
