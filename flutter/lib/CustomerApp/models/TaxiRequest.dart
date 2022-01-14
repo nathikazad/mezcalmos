@@ -17,15 +17,6 @@ class TaxiRequest {
     this.paymentType = PaymentType.Cash,
   });
 
-  TaxiRequest reCreate() {
-    return TaxiRequest(
-        from: this.from,
-        to: this.to,
-        routeInformation: this.routeInformation,
-        estimatedPrice: this.estimatedPrice,
-        paymentType: this.paymentType);
-  }
-
   bool valid() {
     return (this.from != null &&
         this.to != null &&

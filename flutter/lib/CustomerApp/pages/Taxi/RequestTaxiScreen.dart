@@ -4,7 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/LocationSearchBar.dart';
-import 'package:mezcalmos/CustomerApp/pages/Taxi/components/BottomBar.dart';
+import 'package:mezcalmos/CustomerApp/pages/Taxi/components/TaxiBottomBars/TaxiRequestBottomBar.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -19,6 +19,13 @@ import 'package:mezcalmos/CustomerApp/components/LocationPicker.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:location/location.dart' as GeoLoc;
+
+/*
+  - TaxiReqScreen -
+    - From , to picked > Construct TaxiRequest Model.
+      - onConfirm  -> ViewTaxiRequest.
+
+*/
 
 class RequestTaxiScreen extends StatefulWidget {
   @override
@@ -110,9 +117,6 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // if (Get.arguments != null) {
-    //   taxiRequest.value = Get.arguments as TaxiRequest;
-    // }
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: mezcalmosAppBar(AppBarLeftButtonType.Back),
@@ -152,6 +156,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                   newLocationChosenEvent:
                       updateModelAndHandoffToLocationPicker),
               _pickedFromTo
+                  // from , to
                   ? BottomBar(
                       taxiRequest: taxiRequest.value,
                     )

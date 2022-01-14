@@ -5,7 +5,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
-import 'package:mezcalmos/CustomerApp/pages/Taxi/components/BottomBar.dart';
+import 'package:mezcalmos/CustomerApp/pages/Taxi/components/TaxiBottomBars/TaxiRequestBottomBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/TopBar.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
