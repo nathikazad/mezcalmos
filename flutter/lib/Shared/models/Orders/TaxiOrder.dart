@@ -39,6 +39,20 @@ class RouteInformation {
   }
 }
 
+class TaxiNotificationStatus {
+  bool sent = true;
+  num sentCount = 1;
+  bool read = false;
+  bool received = false;
+  String uid;
+  TaxiNotificationStatus(
+      {required this.sent,
+      required this.sentCount,
+      required this.read,
+      required this.received,
+      required this.uid});
+}
+
 class TaxiOrder extends Order {
   num cost;
   Location from;
@@ -49,6 +63,7 @@ class TaxiOrder extends Order {
   TaxiOrdersStatus status;
   double distanceToClient = 0;
   TaxiUserInfo? get driver => this.serviceProvider as TaxiUserInfo?;
+  List<TaxiNotificationStatus> notificationStatuses = [];
   TaxiOrder(
       {required String orderId,
       required this.cost,
@@ -113,6 +128,19 @@ class TaxiOrder extends Order {
                 RideDistance.fromJson(data['routeInformation']['distance']),
             duration:
                 RideDuration.fromJson(data['routeInformation']['duration'])));
+
+    // mezDbgPrint(itemData.toString());
+
+    data["notificationStatus"]
+        ?.forEach((dynamic uid, dynamic notificationStatus) {
+      taxiOrder.notificationStatuses.add(TaxiNotificationStatus(
+          sent: notificationStatus["sent"],
+          sentCount: notificationStatus["sentCount"],
+          read: notificationStatus["read"] ?? false,
+          received: notificationStatus["received"] ?? false,
+          uid: uid));
+    });
+
     return taxiOrder;
   }
 
@@ -143,6 +171,14 @@ class TaxiOrder extends Order {
         status == TaxiOrdersStatus.LookingForTaxi ||
         status == TaxiOrdersStatus.DroppedOff ||
         status == TaxiOrdersStatus.OnTheWay;
+  }
+
+  num numberOfTaxiSentNotificationTo() {
+    return this.notificationStatuses.length;
+  }
+
+  num numberOfTaxiReadNotification() {
+    return this.notificationStatuses.fold<num>(0, (previousValue, element) => element.read ? 1 : 0);
   }
 }
 

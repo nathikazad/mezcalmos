@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
@@ -11,7 +12,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 
 enum OrdersStates { Null, Finished, Cancelled, Expired, InProccess, IsLooking }
-
+const String numOfToolTipsShownStorageAddress = "numOfToolTipsShownStorage";
 class TaxiController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   AuthController _authController = Get.find<AuthController>();
@@ -63,6 +64,17 @@ class TaxiController extends GetxController {
           .set(cost);
     }
   }
+
+  
+  num numOfTimesToolTipShownToUser(){
+    return GetStorage().read<num>(numOfToolTipsShownStorageAddress) ?? 0;
+  }
+
+  void increaseNumOfTimesToolTipShownToUser(){
+    GetStorage().write(
+        numOfToolTipsShownStorageAddress, numOfTimesToolTipShownToUser() + 1);
+  }
+  
 
   @override
   void onClose() {
