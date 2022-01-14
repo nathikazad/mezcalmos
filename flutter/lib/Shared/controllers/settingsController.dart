@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/controllers/themeContoller.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:soundpool/soundpool.dart';
 
@@ -28,12 +29,13 @@ class SettingsController extends GetxController {
   LanguageController get appLanguage => _appLanguage;
 
   StreamController<bool> _hasLocationPermissionStreamController =
-      StreamController<bool>.broadcast();
+      StreamController<bool>.broadcast(sync: false);
 
   Stream<bool> get locationPermissionStream =>
       _hasLocationPermissionStreamController.stream;
 
   SettingsController(this.appType, this.sideMenuItems);
+  Timer? _locationListenerTimer;
 
   @override
   void onInit() async {
@@ -45,18 +47,7 @@ class SettingsController extends GetxController {
     Get.put(SideMenuDrawerController(), permanent: false).sideMenuItems =
         this.sideMenuItems;
 
-    bool locationPermission = await _getLocationPermission();
-    _hasLocationPermissionStreamController.add(locationPermission);
-    mezDbgPrint(
-        "SettingsController::Checking LocationPermissions .. $locationPermission!");
-
-    Timer.periodic(Duration(seconds: 5), (timer) async {
-      bool locationPermission = await _getLocationPermission();
-
-      _hasLocationPermissionStreamController.add(locationPermission);
-      // mezDbgPrint(
-      //     "SettingsController::Checking LocationPermissions .. ${locationPermission}!");
-    });
+    startPeriodicLocationPermissionsListener();
 
     if (GetStorage().read('notifSound') != null) {
       // if it's not null then the user already specified a path to the Notification SOund (cached),
@@ -73,11 +64,30 @@ class SettingsController extends GetxController {
       await _userNotificationsSoundPool.play(_selectedNotificationsSoundId!);
   }
 
+  void startPeriodicLocationPermissionsListener() {
+    _locationListenerTimer =
+        Timer.periodic(Duration(milliseconds: 500), (Timer t) async {
+      _locationListenerTimer?.cancel();
+      _locationListenerTimer = null;
+      bool locationPermission = await _getLocationPermission();
+      if (!locationPermission && Get.currentRoute != kLocationPermissionPage) {
+        PermissionStatus _status = await Location().requestPermission();
+        if (_status != PermissionStatus.granted) {
+          Future.delayed(Duration.zero, () {
+            Get.toNamed(kLocationPermissionPage);
+          });
+        }
+      }
+      _hasLocationPermissionStreamController.add(locationPermission);
+      startPeriodicLocationPermissionsListener();
+    });
+  }
+
   Future<bool> _getLocationPermission() async {
     bool serviceEnabled = await Location().serviceEnabled();
     if (!serviceEnabled) return false;
     PermissionStatus _tempLoca = await Location().hasPermission();
-    // mezDbgPrint(_tempLoca);
+
     return _tempLoca == PermissionStatus.granted;
   }
 

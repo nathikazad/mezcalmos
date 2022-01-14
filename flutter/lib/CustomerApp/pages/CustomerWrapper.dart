@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/components/CustomerHomeFooterButtons.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
@@ -24,8 +23,6 @@ import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as MezNotification;
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
-import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 //import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
 
 class CustomerWrapper extends StatefulWidget {
@@ -229,7 +226,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             subtitle: "${lang.strings['customer']['home']['taxi']["subtitle"]}",
             ontap: () {
               if (Get.find<AuthController>().fireAuthUser == null) {
-                MezSnackbar("Uder is null", "Uder is null");
                 Get.toNamed(kTaxiRequestRoute);
               } else {
                 checkTaxiCurrentOrdersAndNavigate();
