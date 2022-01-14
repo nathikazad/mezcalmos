@@ -95,9 +95,6 @@ class TaxiOrder extends Order {
   /// Convert [TaxiOrder] object to [TaxiRequest] object.
   TaxiRequest toTaxiRequest() {
     return TaxiRequest(
-        orderId: this.orderId,
-        driverInfo: this.driver,
-        status: this.status,
         from: this.from,
         to: this.to,
         routeInformation: this.routeInformation,

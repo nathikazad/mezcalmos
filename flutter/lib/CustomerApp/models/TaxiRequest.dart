@@ -4,31 +4,19 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 
 class TaxiRequest {
-  String? orderId;
   Location? from;
   Location? to;
   RouteInformation? routeInformation;
-  TaxiUserInfo? driverInfo;
-  // RideDistance? distance;
-  // RideDuration? duration;
   int estimatedPrice;
   PaymentType paymentType;
-  // String? polyline;
-  TaxiOrdersStatus? status;
-  // No orderId needed in this case, when the user creates
   TaxiRequest({
-    this.orderId,
-    this.driverInfo,
-    this.status,
     this.from,
     this.to,
     this.routeInformation,
-    // this.distance,
-    // this.duration,
     this.estimatedPrice = 35,
     this.paymentType = PaymentType.Cash,
-    // this.polyline
   });
+
   TaxiRequest reCreate() {
     return TaxiRequest(
         from: this.from,
@@ -36,6 +24,12 @@ class TaxiRequest {
         routeInformation: this.routeInformation,
         estimatedPrice: this.estimatedPrice,
         paymentType: this.paymentType);
+  }
+
+  bool valid() {
+    return (this.from != null &&
+        this.to != null &&
+        this.routeInformation != null);
   }
 
   void setEstimatedPrice(int price) {

@@ -75,8 +75,8 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
         locationPickerController.hideFakeMarker();
         locationPickerController.setAnimateMarkersPolyLinesBounds(true);
         locationPickerController.animateAndUpdateBounds();
-        updateRouteInformation();
-        locationPickerController.showConfirmButton();
+        updateRouteInformation()
+            .then((value) => locationPickerController.showConfirmButton());
 
         setState(() {
           _pickedFromTo = true;
@@ -194,8 +194,8 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
     if (taxiRequest.value.isFromToSet()) {
       locationPickerController.setAnimateMarkersPolyLinesBounds(true);
       locationPickerController.animateAndUpdateBounds();
-      updateRouteInformation();
-      locationPickerController.showConfirmButton();
+      updateRouteInformation()
+          .then((value) => locationPickerController.showConfirmButton());
       setState(() {
         _pickedFromTo = true;
       });
@@ -254,7 +254,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
         latLng: taxiRequest.value.from!.toLatLng());
   }
 
-  void updateRouteInformation() async {
+  Future<void> updateRouteInformation() async {
     MapHelper.Route? route = await MapHelper.getDurationAndDistance(
         taxiRequest.value.from!, taxiRequest.value.to!);
 
