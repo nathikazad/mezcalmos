@@ -34,54 +34,53 @@ class IncomingOrdersController extends GetxController {
     super.onInit();
     mezDbgPrint("IncomingOrdersController init");
 
-    if (_authController.user != null) {
       // Added TaxiOrder!
-      mezDbgPrint("Gonna start listen on : ${rootTaxiOpenOrdersNode()} !!");
-      _incomingOrdersListener = _databaseHelper.firebaseDatabase
-          .reference()
-          .child(rootTaxiOpenOrdersNode())
-          .onValue
-          .listen((event) async {
-        mezDbgPrint("Open Orders Node");
-        mezDbgPrint(event.snapshot.value);
-        List<TaxiOrder> ordersFromSnapshot = <TaxiOrder>[];
-        if (event.snapshot.value != null) {
-          mezDbgPrint("s@s:Ordeeeeer ==> ${event.snapshot.value}");
-          event.snapshot.value?.forEach((dynamic key, dynamic value) async {
-            // this is made to avoid 1 key being in the event.snapshot
-            // happening becasause.
-            if (value.keys.length > 1) {
-              TaxiOrder order = TaxiOrder.fromData(key, value);
-              order.distanceToClient = MapHelper.calculateDistance(
-                  order.from.position, _taxiAuthController.currentLocation);
-              ordersFromSnapshot.add(order);
-              try {
-                await markOrderAsReceived(key, order.customer.id);
-              } on PlatformException catch (_) {
-                // do nothing
-              }
+    mezDbgPrint("Gonna start listen on : ${rootTaxiOpenOrdersNode()} !!");
+    _incomingOrdersListener = _databaseHelper.firebaseDatabase
+        .reference()
+        .child(rootTaxiOpenOrdersNode())
+        .onValue
+        .listen((event) async {
+      mezDbgPrint("Open Orders Node");
+      mezDbgPrint(event.snapshot.value);
+      List<TaxiOrder> ordersFromSnapshot = <TaxiOrder>[];
+      if (event.snapshot.value != null) {
+        mezDbgPrint("s@s:Ordeeeeer ==> ${event.snapshot.value}");
+        event.snapshot.value?.forEach((dynamic key, dynamic value) async {
+          // this is made to avoid 1 key being in the event.snapshot
+          // happening becasause.
+          if (value.keys.length > 1) {
+            TaxiOrder order = TaxiOrder.fromData(key, value);
+            order.distanceToClient = MapHelper.calculateDistance(
+                order.from.position, _taxiAuthController.currentLocation);
+            ordersFromSnapshot.add(order);
+            try {
+              await markOrderAsReceived(key, order.customer.id);
+            } on PlatformException catch (_) {
+              // do nothing
             }
-          });
-
-          ordersFromSnapshot
-              .sort((a, b) => a.distanceToClient.compareTo(b.distanceToClient));
-          orders.value = ordersFromSnapshot;
-          mezDbgPrint(orders);
-        } else {
-          orders.value = [];
-        }
-      });
-      _updateOrderDistanceToClient?.dispose();
-      _updateOrderDistanceToClient =
-          ever(_taxiAuthController.currentLocationRx, (userLocation) {
-        // mezDbgPrint("Updating distances");
-        orders.forEach((order) {
-          order.distanceToClient = MapHelper.calculateDistance(
-              order.from.position, userLocation as LocationData);
+          }
         });
-        orders.sort((a, b) => a.distanceToClient.compareTo(b.distanceToClient));
+
+        ordersFromSnapshot
+            .sort((a, b) => a.distanceToClient.compareTo(b.distanceToClient));
+        orders.value = ordersFromSnapshot;
+        mezDbgPrint(orders);
+      } else {
+        orders.value = [];
+      }
+    });
+    _updateOrderDistanceToClient?.dispose();
+    _updateOrderDistanceToClient =
+        ever(_taxiAuthController.currentLocationRx, (userLocation) {
+      // mezDbgPrint("Updating distances");
+      orders.forEach((order) {
+        order.distanceToClient = MapHelper.calculateDistance(
+            order.from.position, userLocation as LocationData);
       });
-    }
+      orders.sort((a, b) => a.distanceToClient.compareTo(b.distanceToClient));
+    });
+    
 
     // _appLifeCycleController.attachCallback(AppLifecycleState.resumed, () {
     //   mezDbgPrint("[+] Callback executed :: app resumed !");
