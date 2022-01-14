@@ -43,10 +43,21 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
                             fit: BoxFit.cover, image: imageProvider)),
                   );
                 },
-                fit: BoxFit.cover,
+                errorWidget: (context, url, error) => Container(
+                    height: 60,
+                    width: 60,
+                    child: Container(
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.grey.shade300),
+                        child: Icon(
+                          Icons.image,
+                          color: Colors.grey,
+                          size: 18,
+                        ))),
                 placeholder: (context, url) => Container(
-                  width: 15,
-                  height: 15,
+                  width: 60,
+                  height: 60,
                   child: Center(
                     child: CircularProgressIndicator(),
                   ),

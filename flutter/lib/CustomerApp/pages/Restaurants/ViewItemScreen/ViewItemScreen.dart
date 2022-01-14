@@ -9,9 +9,9 @@ import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/textFieldComponent.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 import 'components/BottomBarItemViewScreen.dart';
 import 'components/chooseOneCheckBox.dart';
@@ -110,36 +110,41 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                       top: 10,
                     ),
                     alignment: Alignment.center,
-                    child: cartItem.value?.item.image != null &&
-                            cartItem.value?.item.image != ""
-                        ? CachedNetworkImage(
-                            imageUrl: cartItem.value!.item.image!,
-                            imageBuilder: (context, imageProvider) {
-                              return Container(
-                                width: 150,
-                                height: 150,
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image: imageProvider)),
-                              );
-                            },
-                            fit: BoxFit.cover,
-                            errorWidget: (context, url, error) {
-                              return Container();
-                            },
-                            placeholder: (context, url) {
-                              return Container(
-                                width: 15,
-                                height: 15,
-                                child: Center(
-                                  child: CircularProgressIndicator(),
-                                ),
-                              );
-                            },
-                          )
-                        : Container(),
+                    child: CachedNetworkImage(
+                      imageUrl: cartItem.value!.item.image!,
+                      imageBuilder: (context, imageProvider) {
+                        return Container(
+                          width: 150,
+                          height: 150,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                  fit: BoxFit.cover, image: imageProvider)),
+                        );
+                      },
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) {
+                        return Container(
+                          width: 150,
+                          height: 150,
+                          child: Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        );
+                      },
+                      errorWidget: (context, url, error) => Container(
+                          height: 150,
+                          width: 150,
+                          child: Container(
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.grey.shade300),
+                              child: Icon(
+                                Icons.image,
+                                color: Colors.grey,
+                                size: 30,
+                              ))),
+                    ),
                   ),
                   SizedBox(
                     height: 20,

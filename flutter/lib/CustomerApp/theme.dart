@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomerAppTheme {
-  static final lightTheme = ThemeData(
+ static ThemeData get lightTheme {
+    return ThemeData(
     //---------------------------------------------------- COLORS ------------------------------------------------------------------------//
     //---------------------------------------------------- COLORS ------------------------------------------------------------------------//
     primaryColor: Colors.white,
@@ -127,4 +128,5 @@ class CustomerAppTheme {
           color: Colors.black.withOpacity(0.8)),
     ),
   );
+}
 }

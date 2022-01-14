@@ -30,36 +30,41 @@ class _RestaurantsListItemsOfComponentState
             color: Colors.white, borderRadius: BorderRadius.circular(8)),
         child: Row(
           children: [
-            widget.item.image != null && widget.item.image != ""
-                ? CachedNetworkImage(
-                    imageUrl: widget.item.image!,
-                    fit: BoxFit.cover,
-                    imageBuilder: (context, imageProvider) => Container(
-                      height: 63,
-                      width: 63,
-                      child: ClipOval(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                                image: imageProvider, fit: BoxFit.cover),
-                          ),
-                        ),
-                      ),
+            CachedNetworkImage(
+              imageUrl: widget.item.image!,
+              fit: BoxFit.cover,
+              imageBuilder: (context, imageProvider) => Container(
+                height: 63,
+                width: 63,
+                child: ClipOval(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                          image: imageProvider, fit: BoxFit.cover),
                     ),
-                    placeholder: (context, url) => Container(
-                      width: 15,
-                      height: 15,
-                      child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    ),
-                    errorWidget: (context, url, error) => Container(
-                        width: 15,
-                        height: 15,
-                        child: Center(child: Icon(Icons.error))),
-                  )
-                : Container(),
+                  ),
+                ),
+              ),
+              placeholder: (context, url) => Container(
+                height: 63,
+                width: 63,
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
+              errorWidget: (context, url, error) => Container(
+                  height: 63,
+                  width: 63,
+                  child: Container(
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle, color: Colors.grey.shade300),
+                      child: Icon(
+                        Icons.image,
+                        color: Colors.grey,
+                        size: 20,
+                      ))),
+            ),
             SizedBox(
               width: 15,
             ),

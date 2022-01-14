@@ -102,38 +102,40 @@ Widget taxiAvatarAndName(
           SizedBox(
             width: 5.sp,
           ),
-          Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: description != null
-                  ? CrossAxisAlignment.start
-                  : CrossAxisAlignment.center,
-              children: [
-                Container(
-                  //  width: name == null ? 100.sp : null,
-                  child: Text(
-                    name ?? taxiRequest?.driverInfo?.name ?? "Taxi",
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      fontFamily: 'psb',
+          Flexible(
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: description != null
+                    ? CrossAxisAlignment.start
+                    : CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    //  width: name == null ? 100.sp : null,
+                    child: Text(
+                      name ?? taxiRequest?.driverInfo?.name ?? "Taxi",
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        fontFamily: 'psb',
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: false,
+                      maxLines: 1,
                     ),
-                    overflow: TextOverflow.ellipsis,
-                    softWrap: false,
-                    maxLines: 1,
                   ),
-                ),
-                description != null
-                    ? Text(
-                        description,
-                        overflow: TextOverflow.ellipsis,
-                        softWrap: false,
-                        maxLines: 1,
-                        style: TextStyle(
-                            fontSize: 14.sp,
-                            fontFamily: 'psr',
-                            color: Colors.grey),
-                      )
-                    : SizedBox(),
-              ]),
+                  description != null
+                      ? Text(
+                          description,
+                          overflow: TextOverflow.ellipsis,
+                          softWrap: false,
+                          maxLines: 1,
+                          style: TextStyle(
+                              fontSize: 14.sp,
+                              fontFamily: 'psr',
+                              color: Colors.grey),
+                        )
+                      : SizedBox(),
+                ]),
+          ),
         ],
       ),
     ),
@@ -234,15 +236,14 @@ Widget cancelBtn(TaxiRequest taxiRequest) {
 }
 
 Widget buildMsgAndCancelBtn(TaxiRequest taxiRequest) {
-  return Expanded(
-      flex: 1,
-      child: Row(
-        children: [
-          messageBtn(taxiRequest: taxiRequest),
-          SizedBox(
-            width: 5,
-          ),
-          cancelBtn(taxiRequest)
-        ],
-      ));
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceAround,
+    children: [
+      messageBtn(taxiRequest: taxiRequest),
+      SizedBox(
+        width: 5,
+      ),
+      cancelBtn(taxiRequest)
+    ],
+  );
 }

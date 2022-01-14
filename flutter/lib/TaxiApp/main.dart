@@ -22,7 +22,7 @@ void main() {
         StartingPoint(
             appType: AppType.TaxiApp,
             signInCallback: signInCallback,
-            appTheme: TaxiAppTheme().lightTheme,
+            appTheme: TaxiAppTheme.lightTheme,
             signOutCallback: signOutCallback,
             routes: routes),
       ));

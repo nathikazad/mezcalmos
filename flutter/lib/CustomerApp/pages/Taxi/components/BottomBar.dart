@@ -98,6 +98,7 @@ class _BottomBarState extends State<BottomBar> {
     TaxiController taxiController = Get.put<TaxiController>(TaxiController());
     return Flexible(
       flex: 2,
+      fit: FlexFit.tight,
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 5),
         child: Row(
@@ -107,8 +108,8 @@ class _BottomBarState extends State<BottomBar> {
             Material(
               shape: CircleBorder(),
               child: IconButton(
-                iconSize: 25,
-                splashRadius: 20,
+                iconSize: 18,
+                splashRadius: 18,
                 tooltip: 'Decrease the price',
                 padding: EdgeInsets.zero,
                 onPressed: () {
@@ -140,8 +141,8 @@ class _BottomBarState extends State<BottomBar> {
             Material(
               shape: CircleBorder(),
               child: IconButton(
-                iconSize: 25,
-                splashRadius: 20,
+                iconSize: 18,
+                splashRadius: 18,
                 tooltip: 'Increase the price',
                 padding: EdgeInsets.zero,
                 onPressed: () {
@@ -186,7 +187,7 @@ class _BottomBarState extends State<BottomBar> {
       case TaxiOrdersStatus.LookingForTaxi:
         _widgies.assignAll([
           incrementDecrementPrice(),
-          verticalSeparator(),
+          Expanded(flex: 1, child: verticalSeparator()),
           rightRouteInfos(taxiRequest!)
         ]);
 
