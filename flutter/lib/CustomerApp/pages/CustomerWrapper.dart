@@ -52,6 +52,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     Get.put(RestaurantsInfoController(), permanent: true);
     WidgetsBinding.instance!.addObserver(this);
     if (Get.find<AuthController>().fireAuthUser != null) {
+      mezDbgPrint("~~~~~~~~~ ${Get.find<AuthController>().isDisplayNameSet()}");
       _doIfFireAuthUserIsNotNull();
     }
     startAuthListener();
