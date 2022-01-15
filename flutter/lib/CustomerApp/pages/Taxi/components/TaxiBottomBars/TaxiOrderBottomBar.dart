@@ -35,8 +35,11 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
       left: 25,
       child: Container(
         padding: const EdgeInsets.all(8),
-        margin: const EdgeInsets.only(bottom: 45),
-        height: getSizeRelativeToScreen(25, Get.height, Get.width),
+        margin: EdgeInsets.only(
+            bottom: (widget.order.status == TaxiOrdersStatus.LookingForTaxi)
+                ? 45
+                : 0),
+        height: getSizeRelativeToScreen(30, Get.height, Get.width),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
             border: Border.all(
