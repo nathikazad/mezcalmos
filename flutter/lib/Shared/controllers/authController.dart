@@ -36,9 +36,14 @@ class AuthController extends GetxController {
   StreamSubscription? _userNodeListener;
 
   // Rxn<fireAuth.User> _userRx = Rxn();
-  StreamController<fireAuth.User?> authStateChangeStream =
+  StreamController<fireAuth.User?> _authStateStreamController =
       StreamController.broadcast();
-  Stream<fireAuth.User?> get authStateChange => authStateChangeStream.stream;
+
+  StreamController<User> _userInfoStreamController =
+      StreamController.broadcast();
+
+  Stream<fireAuth.User?> get authStateStream => _authStateStreamController.stream;
+  Stream<User> get userInfoStream => _userInfoStreamController.stream;
 
   bool get isUserSignedIn => _fireAuthUser.value != null;
   FirebaseDb _databaseHelper =
@@ -67,7 +72,7 @@ class AuthController extends GetxController {
 
       if (user == null) {
         await _onSignOutCallback();
-        authStateChangeStream.add(null);
+        _authStateStreamController.add(null);
         mezDbgPrint('AuthController: User is currently signed out!');
         _userNodeListener?.cancel();
         _userNodeListener = null;
@@ -75,7 +80,7 @@ class AuthController extends GetxController {
       } else {
         mezDbgPrint('AuthController: User is currently signed in!');
         _onSignInCallback();
-        authStateChangeStream.add(user);
+        _authStateStreamController.add(user);
         GetStorage().write(getxUserId, user.uid);
         _userNodeListener?.cancel();
         _userNodeListener = _databaseHelper.firebaseDatabase
@@ -92,7 +97,7 @@ class AuthController extends GetxController {
                 .set(Get.find<LanguageController>().userLanguageKey);
           }
           _user.value = User.fromSnapshot(user, event.snapshot);
-
+          _userInfoStreamController.add(_user.value!);
           Get.find<LanguageController>()
               .userLanguageChanged(_user.value!.language);
         });
@@ -102,7 +107,7 @@ class AuthController extends GetxController {
   }
 
   bool isDisplayNameSet() {
-    return _fireAuthUser.value?.displayName != null;
+    return _user.value?.name != null;
   }
 
   Future<String> getImageUrl(File imageFile, String uid) async {

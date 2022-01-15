@@ -17,9 +17,10 @@ class Wrapper extends StatefulWidget {
 
 class _WrapperState extends State<Wrapper> {
   SettingsController settingsController = Get.find<SettingsController>();
-
+  StreamSubscription? userInfoChangeListener;
   @override
   void dispose() {
+    userInfoChangeListener?.cancel();
     super.dispose();
   }
 
@@ -29,7 +30,7 @@ class _WrapperState extends State<Wrapper> {
     Future.delayed(Duration.zero, () {
       mezDbgPrint("Wrapper: calling handleAuthStateChange first time");
       handleAuthStateChange(Get.find<AuthController>().fireAuthUser);
-      Get.find<AuthController>().authStateChange.listen((user) {
+      Get.find<AuthController>().authStateStream.listen((user) {
         mezDbgPrint("Wrapper: calling handleAuthStateChange in listener");
         handleAuthStateChange(user);
       });
@@ -52,14 +53,25 @@ class _WrapperState extends State<Wrapper> {
     } else {
       mezDbgPrint(
           "Wrapper::handleAuthStateChange:: signed in, Checking if User name are Set !");
-      if (!Get.find<AuthController>().isDisplayNameSet()) {
-        await Get.toNamed(kUserProfile);
-      }
+
       if (Get.currentRoute == kSignInRouteOptional) {
         Get.back();
       } else {
         Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
       }
+
+      if (Get.find<AuthController>().user != null) {
+        if (!Get.find<AuthController>().isDisplayNameSet()) {
+          await Get.toNamed(kUserProfile);
+        }
+      }
+
+      userInfoChangeListener =
+          Get.find<AuthController>().userInfoStream.listen((event) {
+        if (!Get.find<AuthController>().isDisplayNameSet()) {
+          Get.toNamed(kUserProfile);
+        }
+      });
     }
   }
 

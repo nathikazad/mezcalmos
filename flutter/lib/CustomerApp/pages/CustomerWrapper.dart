@@ -125,7 +125,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   void startAuthListener() {
     _authStateChnagesListener?.cancel();
     _authStateChnagesListener = null;
-    _authStateChnagesListener = auth.authStateChange.listen((fireUser) {
+    _authStateChnagesListener = auth.authStateStream.listen((fireUser) {
       if (fireUser != null) {
         _doIfFireAuthUserIsNotNull();
       } else {
