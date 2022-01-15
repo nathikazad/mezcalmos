@@ -41,7 +41,7 @@ String customerInProcessOrderReadNode(
 
 String customerInProcessOrderReceivedNode(
     String orderId, String customerId, String driverId) {
-  return 'customers/inProcessOrders/$customerId/$orderId/notificationStatus/$driverId/received';
+  return 'customers/inProcessOrders/$customerId/$orderId/notificationStatus/$driverId/received/value';
 }
 
 String customerInProcessOrderDriverLocationNode(

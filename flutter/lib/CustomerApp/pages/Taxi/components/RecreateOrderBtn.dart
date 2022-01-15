@@ -10,8 +10,8 @@ Widget reCreateOrderBtn(TaxiRequest taxiRequest) {
     margin: EdgeInsets.only(right: 10),
     child: GestureDetector(
       onTap: () {
-        popEverythingAndNavigateTo(kTaxiRequestRoute,
-            args: taxiRequest.reCreate());
+        // popEverythingAndNavigateTo(kTaxiRequestRoute,
+        //     args: taxiRequest.reCreate());
       },
       child: Container(
         height: getSizeRelativeToScreen(16, Get.height, Get.width),

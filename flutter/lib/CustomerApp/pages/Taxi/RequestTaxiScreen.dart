@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart' as GeoLoc;
+import 'package:mezcalmos/CustomerApp/components/LocationPicker.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/LocationSearchBar.dart';
-import 'package:mezcalmos/CustomerApp/pages/Taxi/components/TaxiBottomBars/TaxiRequestBottomBar.dart';
+import 'package:mezcalmos/CustomerApp/pages/Taxi/components/TaxiBottomBars/TaxiReqBottomBar.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart' as TaxiOrder;
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:mezcalmos/CustomerApp/components/LocationPicker.dart';
-import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
-import 'package:location/location.dart' as GeoLoc;
 
 /*
   - TaxiReqScreen -
@@ -51,8 +51,8 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
     if (Get.arguments != null) {
       taxiRequest.value = Get.arguments as TaxiRequest;
 
-      mezDbgPrint(
-          "============ the older requist is ${(Get.arguments as TaxiRequest).status} ===========");
+      // mezDbgPrint(
+      //     "============ the older requist is ${(Get.arguments as TaxiRequest).status} ===========");
       locationPickerController.setOnMapTap(onTap: () {
         locationSearchBarController.unfocusAllFocusNodes.call();
         setState(() {});
@@ -157,7 +157,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                       updateModelAndHandoffToLocationPicker),
               _pickedFromTo
                   // from , to
-                  ? BottomBar(
+                  ? TaxiReqBottomBar(
                       taxiRequest: taxiRequest.value,
                     )
                   : SizedBox()

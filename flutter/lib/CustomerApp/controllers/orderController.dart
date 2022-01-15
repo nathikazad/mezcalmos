@@ -73,7 +73,6 @@ class OrderController extends GetxController {
           .listen((event) async {
         List<Order> orders = [];
         if (event.snapshot.value != null) {
-          // mezDbgPrint("orderController: new incoming order data");
           for (var orderId in event.snapshot.value.keys) {
             dynamic orderData = event.snapshot.value[orderId];
             // if restaurant order

@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
@@ -71,7 +72,7 @@ Widget rightRouteInfos(TaxiRequest taxiRequest) {
 
 Widget taxiAvatarAndName(
     {required BuildContext pContext,
-    required TaxiRequest? taxiRequest,
+    required TaxiOrder? order,
     String? description,
     String? name,
     String? asset}) {
@@ -89,7 +90,7 @@ Widget taxiAvatarAndName(
             child: ClipOval(
                 clipBehavior: Clip.antiAlias,
                 child: mLoadImage(
-                    url: taxiRequest?.driverInfo?.image,
+                    url: order?.serviceProvider?.image,
                     assetInCaseFailed: asset ?? aDefaultAvatar,
                     fit: BoxFit.cover,
                     height: getSizeRelativeToScreen(
@@ -112,7 +113,7 @@ Widget taxiAvatarAndName(
                   Container(
                     //  width: name == null ? 100.sp : null,
                     child: Text(
-                      name ?? taxiRequest?.driverInfo?.name ?? "Taxi",
+                      name ?? order?.serviceProvider?.name ?? "Taxi",
                       style: TextStyle(
                         fontSize: 16.sp,
                         fontFamily: 'psb',
@@ -142,10 +143,10 @@ Widget taxiAvatarAndName(
   );
 }
 
-Widget messageBtn({required TaxiRequest taxiRequest, EdgeInsets? margin}) {
+Widget messageBtn({required TaxiOrder order, EdgeInsets? margin}) {
   return GestureDetector(
     onTap: () {
-      Get.toNamed(getTaxiMessagesRoute(taxiRequest.orderId!));
+      Get.toNamed(getTaxiMessagesRoute(order.orderId));
     },
     child: Container(
       margin: margin ?? EdgeInsets.only(left: 6),
@@ -165,9 +166,8 @@ Widget messageBtn({required TaxiRequest taxiRequest, EdgeInsets? margin}) {
       child: Center(
         child: Stack(
           children: [
-            taxiRequest.orderId != null &&
-                    Get.find<OrderController>()
-                        .hasNewMessageNotification(taxiRequest.orderId!)
+            Get.find<OrderController>()
+                    .hasNewMessageNotification(order.orderId)
                 ? Positioned(
                     top: 5,
                     right: 5,
@@ -192,7 +192,7 @@ Widget messageBtn({required TaxiRequest taxiRequest, EdgeInsets? margin}) {
   );
 }
 
-Widget cancelBtn(TaxiRequest taxiRequest) {
+Widget cancelBtn(TaxiOrder order) {
   LanguageController lang = Get.find<LanguageController>();
   return Container(
     margin: EdgeInsets.only(right: 6),
@@ -207,7 +207,7 @@ Widget cancelBtn(TaxiRequest taxiRequest) {
 
         if (res == YesNoDialogButton.Yes) {
           ServerResponse resp =
-              await Get.find<TaxiController>().cancelTaxi(taxiRequest.orderId!);
+              await Get.find<TaxiController>().cancelTaxi(order.orderId);
 
           if (!resp.success) {
             MezSnackbar("Oops", "Failed to communicate with the server :(.",
@@ -235,15 +235,15 @@ Widget cancelBtn(TaxiRequest taxiRequest) {
   );
 }
 
-Widget buildMsgAndCancelBtn(TaxiRequest taxiRequest) {
+Widget buildMsgAndCancelBtn(TaxiOrder order) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceAround,
     children: [
-      messageBtn(taxiRequest: taxiRequest),
+      messageBtn(order: order),
       SizedBox(
         width: 5,
       ),
-      cancelBtn(taxiRequest)
+      cancelBtn(order)
     ],
   );
 }

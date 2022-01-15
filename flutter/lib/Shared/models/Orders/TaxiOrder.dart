@@ -1,6 +1,7 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
@@ -130,12 +131,16 @@ class TaxiOrder extends Order {
 
     data["notificationStatus"]
         ?.forEach((dynamic uid, dynamic notificationStatus) {
-      taxiOrder.notificationStatuses.add(TaxiNotificationStatus(
-          sent: notificationStatus["sent"],
-          sentCount: notificationStatus["sentCount"],
-          read: notificationStatus["read"] ?? false,
-          received: notificationStatus["received"] ?? false,
-          uid: uid));
+     try {
+        taxiOrder.notificationStatuses.add(TaxiNotificationStatus(
+            sent: notificationStatus["sent"] ?? false,
+            sentCount: notificationStatus["sentCount"] ?? 0,
+            read: notificationStatus["read"] ?? false,
+            received: notificationStatus["received"]?["value"] ?? false,
+            uid: uid));
+      } on NoSuchMethodError {
+        // TODO
+      }
     });
 
     return taxiOrder;
@@ -175,7 +180,9 @@ class TaxiOrder extends Order {
   }
 
   num numberOfTaxiReadNotification() {
-    return this.notificationStatuses.fold<num>(0, (previousValue, element) => element.read ? 1 : 0);
+    return this
+        .notificationStatuses
+        .fold<num>(0, (previousValue, element) => element.read ? 1 : 0);
   }
 }
 

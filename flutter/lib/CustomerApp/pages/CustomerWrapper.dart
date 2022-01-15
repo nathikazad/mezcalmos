@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/components/CustomerHomeFooterButtons.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
@@ -24,7 +23,6 @@ import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as MezNotification;
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 //import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
 
@@ -101,10 +99,12 @@ class _CustomerWrapperState extends State<CustomerWrapper>
                               height: 10,
                             ),
 
-                            mezWelcomeContainer(txt.headline2!),
+                            mezWelcomeContainer(Theme.of(context)
+                                .textTheme
+                                .headline2!
+                            ),
                             //============================== description=============================
-                            mezDescription(
-                                txt.subtitle1!.copyWith(fontSize: 14)),
+                            mezDescription(txt.subtitle1!),
 
                             //============================Service title===================================
                             SizedBox(
