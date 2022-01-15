@@ -26,15 +26,16 @@ class BasicCellComponent extends StatelessWidget {
               ),
             ),
             child: ClipRRect(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(3),
-                ),
-                child: mLoadImage(url: url, fit: BoxFit.cover)
-                // Image.network(
-                //   "$url",
-                //   fit: BoxFit.cover,
-                // ),
-                ),
+              borderRadius: BorderRadius.all(
+                Radius.circular(3),
+              ),
+              child:
+                  //mLoadImage(url: url, fit: BoxFit.cover)
+                  Image.network(
+                "$url",
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
           SizedBox(
             width: Get.width * 0.05,

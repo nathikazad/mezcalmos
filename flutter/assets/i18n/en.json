@@ -261,6 +261,11 @@
         }
     },
     "shared": {
+        "unauthorizedScreen":{
+            "unauthorized":"Unauthorized",
+            "subTitle1":"You are not authorized, please contact Alejandro ",
+            "subTitle2":" ,to get authorization."
+        },
         "snackbars" : {
             "titleSuccess" : "Success :)",
             "titleFailed" : "Oops :(",
@@ -363,6 +368,11 @@
             "viewOrder": "View Order"
         },
         "userInfo": {
+            "choosePic":"Choose a photo",
+            "saveTxt":"Please save the changes you made",
+            "hintTxt":"Enter your full name",
+            "validationTxtOne":"Please enter your full name",
+            "validationTxtTwo":"Please enter a valid name",
             "title": " User Information",
             "editInfo": "Edit Information",
             "editPhoneNumber": "Change Phone Number",

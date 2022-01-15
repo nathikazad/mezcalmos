@@ -92,11 +92,11 @@ class ChooseManyOption {
   String? id;
   bool selectedByDefault = false;
   num cost = 0;
-  String? name;
+  Map<String, String>? name;
 
   ChooseManyOption.fromData(String id, dynamic data, String language) {
     this.id = id;
-    this.name = data["name"][language];
+    this.name = {"en": data["name"]["en"], "es": data["name"]["es"]};
     this.cost = data["cost"];
     this.selectedByDefault = data["default"] ?? false;
   }
@@ -105,16 +105,19 @@ class ChooseManyOption {
 
 class ChooseOneOption {
   String? id;
-  String? name;
+  Map<String, String>? name;
   String? dialog;
   List<ChooseOneOptionListItem> chooseOneOptionListItems = [];
   ChooseOneOption.fromData(String id, dynamic data, String language) {
     this.id = id;
-    name = data["name"][language];
+    name = {"en": data["name"]["en"], "es": data["name"]["es"]};
     dialog = data["dialog"][language];
     data["options"].forEach((dynamic optionId, dynamic optionData) {
+      //mezDbgPrint(optionData["name"]);
       ChooseOneOptionListItem chooseOneOptionListItem = ChooseOneOptionListItem(
-          optionId, optionData["name"][language], optionData["cost"]);
+          optionId,
+          {"en": optionData["name"]["en"], "es": optionData["name"]["es"]},
+          optionData["cost"]);
       chooseOneOptionListItems.add(chooseOneOptionListItem);
     });
   }
@@ -137,7 +140,7 @@ class ChooseOneOption {
 class ChooseOneOptionListItem {
   String? id;
   num cost = 0;
-  String? name;
+  Map<String, String>? name;
   ChooseOneOptionListItem(this.id, this.name, this.cost);
   Map<String, dynamic> toJson() => {"id": id, "cost": cost, "name": name};
 }
@@ -171,7 +174,7 @@ class Item {
   bool? available;
   String? description;
   String? image;
-  String? name;
+  Map<String, String>? name;
   num cost = 0;
   List<ChooseOneOption> chooseOneOptions = [];
   List<ChooseManyOption> chooseManyOptions = [];
@@ -189,7 +192,7 @@ class Item {
         itemData["available"],
         itemData["description"][language],
         itemData["image"],
-        itemData["name"][language],
+        {"en": itemData["name"]["en"], "es": itemData["name"]["en"]},
         itemData["cost"]);
     if (itemData["options"]?["chooseOne"] != null) {
       itemData["options"]["chooseOne"]

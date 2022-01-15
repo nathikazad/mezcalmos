@@ -28,8 +28,9 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
       onTapFunction = () {
         if (function != null) {
           function();
+        } else {
+          Get.back();
         }
-        Get.back();
       };
       break;
     case AppBarLeftButtonType.Menu:

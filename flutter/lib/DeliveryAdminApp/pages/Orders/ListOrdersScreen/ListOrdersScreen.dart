@@ -85,7 +85,9 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
             backgroundColor: Colors.white,
             key: Get.find<SideMenuDrawerController>().getNewKey(),
             appBar: deliveryAdminAppBar(AppBarLeftButtonType.Menu,
-                withOrder: false),
+                withOrder: false,
+                function: () =>
+                    Get.find<SideMenuDrawerController>().openMenu()),
             // appBar: mezcalmosAppBar(
             //     "menu", Get.find<SideMenuDraweController>().openMenu),
             drawer: MezSideMenu(),

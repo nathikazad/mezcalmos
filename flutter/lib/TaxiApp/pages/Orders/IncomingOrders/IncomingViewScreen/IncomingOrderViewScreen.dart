@@ -161,6 +161,7 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
               });
               mezDbgPrint(
                   '-----------------ORDER PRINT-------------' + order!.orderId);
+
               ServerResponse serverResponse =
                   await controller.acceptTaxi(order!.orderId);
 

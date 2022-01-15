@@ -26,7 +26,7 @@ Widget chooseManyCheckBoxes(
   }
 
   chooseManyOptions.forEach((chooseManyOption) {
-    String name = chooseManyOption.name!;
+    String name = chooseManyOption.name!["${lang.userLanguageKey}"]!;
     String? price;
     if (chooseManyOption.cost > 0) {
       price = "\$${currency.format(chooseManyOption.cost)}";

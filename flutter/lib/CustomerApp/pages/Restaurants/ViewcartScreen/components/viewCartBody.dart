@@ -5,6 +5,7 @@ import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantControlle
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/dropDownListCartView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/textFieldComponent.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 import 'buildCart.dart';
 import 'buildItems.dart';
@@ -34,6 +35,7 @@ class _ViewCartBodyState extends State<ViewCartBody> {
 
   @override
   Widget build(BuildContext context) {
+    mezDbgPrint(controller.cart.value.items[0].chosenOneOptions);
     return Container(
       child: Column(
         children: [

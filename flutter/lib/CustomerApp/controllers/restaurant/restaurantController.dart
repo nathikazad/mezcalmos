@@ -53,6 +53,7 @@ class RestaurantController extends GetxController {
             if (cartData == null) {
               cart.value = Cart();
             }
+
             cart.value = Cart.fromCartData(cartData, associatedRestaurant!);
           }
         } else {

@@ -21,7 +21,6 @@ Widget buildItems(List<CartItem> cartItems, BuildContext context) {
   RestaurantController controller = Get.find<RestaurantController>();
   LanguageController lang = Get.find<LanguageController>();
 
-  print(cartItems.toString());
   return Column(
     children: cartItems.fold<List<Widget>>(<Widget>[], (children, element) {
       var counter = element.totalCost().obs;
@@ -34,14 +33,15 @@ Widget buildItems(List<CartItem> cartItems, BuildContext context) {
               child: Obx(
             () => ItemInformationCart(
               imageUrl: element.item.image!,
-              itemName: element.item.name![0].toUpperCase() +
-                  element.item.name!.substring(1),
+              itemName: element.item.name!['${lang.userLanguageKey}']![0]
+                      .toUpperCase() +
+                  element.item.name!['${lang.userLanguageKey}']!.substring(1),
               restaurantName: "Basic food",
               itemsPrice: counter.value.toStringAsFixed(0),
             ),
           )),
-          children: choosenOneOption(element.chosenOneOptions, context) +
-              choosenMannyOption(element.chosenManyOptions, context) +
+          children: choosenOneOption(element.item.chooseOneOptions, context) +
+              choosenMannyOption(element.item.chooseManyOptions, context) +
               [
                 SizedBox(
                   height: 10,

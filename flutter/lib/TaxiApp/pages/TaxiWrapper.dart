@@ -19,7 +19,6 @@ import 'package:mezcalmos/Shared/models/Notification.dart' as MezNotification;
 import 'package:mezcalmos/TaxiApp/notificationHandler.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
 
-
 class TaxiWrapper extends StatefulWidget {
   @override
   _TaxiWrapperState createState() => _TaxiWrapperState();
@@ -100,7 +99,8 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
         key: Get.find<SideMenuDrawerController>().getNewKey(),
         drawer: MezSideMenu(),
         backgroundColor: Colors.white,
-        appBar: taxiAppBar(AppBarLeftButtonType.Menu),
+        appBar: taxiAppBar(AppBarLeftButtonType.Menu,
+            function: () => Get.find<SideMenuDrawerController>().openMenu()),
         body: MezLogoAnimation(centered: true));
   }
 

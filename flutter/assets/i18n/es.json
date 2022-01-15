@@ -261,6 +261,11 @@
         }
     },
     "shared": {
+        "unauthorizedScreen":{
+            "unauthorized":"No autorizado",
+            "subTitle1":"No está autorizado, póngase en contacto con Alejandro.",
+            "subTitle2":" , para obtener la autorización."
+        },
         "snackbars": {
             "titleSuccess": "Éxito :)",
             "titleFailed": "Vaya :(",
@@ -363,6 +368,11 @@
             "viewOrder": "Ver Pedido"
         },
         "userInfo": {
+            "choosePic":"Elige una foto",
+            "saveTxt":"Guarda los cambios que hiciste",
+            "hintTxt":"Ingresa tu nombre completo",
+            "validationTxtOne":"Por favor ingresa tu nombre completo",
+            "validationTxtTwo":"Por favor ingrese un nombre valido",
             "title": " Información del usuario ",
             "editInfo": "Editar Información",
             "editPhoneNumber": "Cambiar número de teléfono",

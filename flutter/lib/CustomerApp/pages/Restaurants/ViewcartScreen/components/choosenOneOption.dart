@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/titlesComponent.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+// import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 
 List<Widget> choosenOneOption(
-    Map<dynamic, dynamic> data, BuildContext context) {
+    List<ChooseOneOption> data, BuildContext context) {
+  LanguageController lang = Get.find<LanguageController>();
   final txt = Theme.of(context).textTheme;
   List<Widget> myWidgets = [
     SizedBox(
@@ -12,9 +17,9 @@ List<Widget> choosenOneOption(
     )
   ];
 
-  data.forEach((key, value) {
+  data.forEach((value) {
     myWidgets.add(MenuTitles(
-      title: key.toString().capitalizeFirst,
+      title: value.name!["${lang.userLanguageKey}"].toString().capitalizeFirst,
       textTheme: txt.subtitle1!
           .copyWith(fontSize: 13, color: Color.fromRGBO(33, 33, 33, 0.8)),
     ));
@@ -24,7 +29,10 @@ List<Widget> choosenOneOption(
         width: Get.width,
         alignment: Alignment.centerLeft,
         padding: const EdgeInsets.only(left: 25, top: 5),
-        child: Text(data[key].toString().inCaps,
+        child: Text(
+            value.chooseOneOptionListItems[0].name!["${lang.userLanguageKey}"]
+                .toString()
+                .inCaps,
             style: TextStyle(
                 color: const Color(0xff000000),
                 fontWeight: FontWeight.w400,

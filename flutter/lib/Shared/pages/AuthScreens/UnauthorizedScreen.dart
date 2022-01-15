@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
@@ -34,14 +35,16 @@ class _UnauthorizedScreenState extends State<UnauthorizedScreen> {
   Widget build(BuildContext context) {
 // Color.fromARGB(255, 97, 127, 255),
 // Color.fromARGB(255, 198, 90, 252),
-
+    LanguageController lang = Get.find<LanguageController>();
     return WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
             key: Get.find<SideMenuDrawerController>().getNewKey(),
             drawer: MezSideMenu(),
             backgroundColor: Colors.white,
-            appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu),
+            appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu,
+                function: () =>
+                    Get.find<SideMenuDrawerController>().openMenu()),
             body: SafeArea(
                 child: Center(
                     child: Flex(
@@ -69,7 +72,7 @@ class _UnauthorizedScreenState extends State<UnauthorizedScreen> {
                   height: 20,
                 ),
                 Text(
-                  'Anauthorized',
+                  '${lang.strings['shared']['unauthorizedScreen']['unauthorized']}',
                   style: TextStyle(
                       color: Colors.black38, fontSize: 20, fontFamily: 'psr'),
                 ),
@@ -77,20 +80,48 @@ class _UnauthorizedScreenState extends State<UnauthorizedScreen> {
                   height: 5,
                 ),
                 InkWell(
-                  onTap: () async {
-                    if (!(await launch('https://meztaxi.com')))
-                      MezSnackbar('Error',
-                          "Failed launching https://meztaxi.com on browser , maybe try to browse to it manually ? ");
-                  },
-                  child: Text(
-                    'Request permission at : mextaxi.com ?',
-                    style: TextStyle(
-                        decoration: TextDecoration.underline,
-                        color: Colors.black26,
-                        fontSize: 14,
-                        fontFamily: 'psr'),
-                  ),
-                )
+                    onTap: () async {
+                      final Uri launchUri = Uri(
+                        scheme: 'tel',
+                        path: "+529541184711",
+                      );
+                      await launch(launchUri.toString());
+                      // if (!(await launch('tel:+529541184711')))
+                      //   MezSnackbar('Error',
+                      //       "Failed launching https://meztaxi.com on browser , maybe try to browse to it manually ? ");
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          children: <TextSpan>[
+                            TextSpan(
+                                text:
+                                    '${lang.strings['shared']['unauthorizedScreen']['subTitle1']} ',
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontFamily: 'psr',
+                                    color: Colors.black26)),
+                            TextSpan(
+                                text: '+52 954 118 4711',
+                                style: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    color: Colors.black26,
+                                    fontSize: 14,
+                                    fontFamily: 'psr',
+                                    fontWeight: FontWeight.bold)),
+                            TextSpan(
+                                text:
+                                    '${lang.strings['shared']['unauthorizedScreen']['subTitle2']}',
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontFamily: 'psr',
+                                    color: Colors.black26)),
+                          ],
+                        ),
+                      ),
+                    ))
               ],
             )))));
   }

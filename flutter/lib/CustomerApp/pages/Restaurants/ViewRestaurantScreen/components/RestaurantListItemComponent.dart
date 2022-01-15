@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 
 class RestaurantsListItemsOfComponent extends StatefulWidget {
@@ -19,7 +20,7 @@ class _RestaurantsListItemsOfComponentState
   @override
   Widget build(BuildContext context) {
     final txt = Theme.of(context).textTheme;
-
+    LanguageController lang = Get.find<LanguageController>();
     return InkWell(
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -76,7 +77,8 @@ class _RestaurantsListItemsOfComponentState
                   ),
                   Container(
                     alignment: Alignment.centerLeft,
-                    child: Text("${widget.item.name!.capitalizeFirstofEach}",
+                    child: Text(
+                        "${widget.item.name!['${lang.userLanguageKey}']!.capitalizeFirstofEach}",
                         style: txt.headline3!
                             .copyWith(color: Colors.grey.shade800)),
                   ),

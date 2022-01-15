@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -32,7 +33,7 @@ class _UserProfileState extends State<UserProfile> {
   AuthController auth = Get.find<AuthController>();
   LanguageController lang = Get.find<LanguageController>();
   AccountState state = AccountState.free;
-  bool isEditing = false;
+  Rx<bool> isEditing = false.obs;
   TextEditingController textController = new TextEditingController();
   File imageFile = File("test");
 
@@ -40,7 +41,12 @@ class _UserProfileState extends State<UserProfile> {
   void initState() {
     // should only executes once because when state rebuilds upon any focus (This gets re-executes making it impossible to apply userName changes)
     super.initState();
-    textController.text = !auth.isDisplayNameSet() ? "" : auth.user!.name!;
+    if (auth.user?.name != null) {
+    } else {
+      isEditing.value = true;
+    }
+
+    textController.text = auth.isDisplayNameSet() ? auth.user!.name! : "";
   }
 
   Widget _buildButtonIcon() {
@@ -130,8 +136,12 @@ class _UserProfileState extends State<UserProfile> {
 
   SideMenuDrawerController _sideMenuDraweController =
       Get.find<SideMenuDrawerController>();
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    String defaultPic =
+        "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d";
+    final RegExp nameExp = new RegExp(r"^[a-z ,.'-]+$", caseSensitive: false);
     responsiveSize(context);
     return WillPopScope(
         onWillPop: () async {
@@ -144,119 +154,233 @@ class _UserProfileState extends State<UserProfile> {
           }
         },
         child: Scaffold(
-          appBar: mezcalmosAppBar(AppBarLeftButtonType.Back),
-          backgroundColor: Colors.white,
-          body: Center(
-            child: SingleChildScrollView(
-              physics: ClampingScrollPhysics(),
-              child: Obx(
-                () => auth.user != null
-                    ? ConstrainedBox(
-                        constraints: BoxConstraints(maxHeight: Get.height),
-                        child: Container(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              SizedBox(
-                                height: 0.sp,
-                              ),
-                              Container(
-                                child: Text(
-                                  lang.strings['shared']['userInfo']["title"],
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 40.sp,
-                                      fontFamily: 'psr'),
-                                  textAlign: TextAlign.center,
+          appBar: mezcalmosAppBar(AppBarLeftButtonType.Back, function: () {
+            !checkNameValidation() && !auth.isDisplayNameSet()
+                ? showModalBottomSheet<void>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Container(
+                        height: 80,
+                        color: Colors.black,
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Text(
+                                  '${lang.strings['shared']['userInfo']['saveTxt']}',
+                                  style: TextStyle(color: Colors.white),
                                 ),
-                              ),
-                              SizedBox(
-                                height: 50.sp,
-                              ),
-                              // Spacer(),
+                                Spacer(),
+                                ElevatedButton(
+                                  child: Text(
+                                      "${lang.strings['shared']['userInfo']["saveBtn"]}"),
+                                  onPressed: () async {
+                                    if (imageFile.path != "test") {
+                                      var xUrl = await auth.getImageUrl(
+                                          imageFile, auth.user!.uid);
+                                      mezDbgPrint(xUrl);
+                                      auth.user!.image = xUrl;
+                                      auth.editUserProfile(
+                                          textController.text.trim(), xUrl);
+                                      isEditing.value = true;
+                                    } else {
+                                      mezDbgPrint("the path is empty");
 
-                              Container(
-                                height: 161.h,
-                                width: 161.w,
-                                child: Stack(
-                                  children: [
-                                    ClipOval(
-                                        child: Container(
-                                            height: 161.w,
-                                            width: 161.h,
-                                            color: Color.fromRGBO(
-                                                243, 243, 243, 1),
-                                            child: imageFile.path == "test"
-                                                ? (auth.user!.image == null ||
-                                                        auth.user!.image == "")
-                                                    ? Container(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        child: Text(
-                                                          "Choose A \n Photo",
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                        ),
-                                                      )
-                                                    : Obx(() =>
-                                                        CachedNetworkImage(
-                                                          imageUrl:
-                                                              auth.user!.image!,
-                                                          fit: BoxFit.cover,
-                                                          placeholder:
-                                                              (context, url) =>
-                                                                  Container(
-                                                            width: 15.w,
-                                                            height: 15.w,
-                                                            child: Center(
-                                                              child:
-                                                                  CircularProgressIndicator(),
-                                                            ),
-                                                          ),
-                                                        ))
-                                                : Image.file(
-                                                    imageFile,
-                                                    fit: BoxFit.cover,
-                                                  ))),
-                                    isEditing
-                                        ? Positioned(
-                                            left: 124.sp,
-                                            top: 124.sp,
-                                            child: InkWell(
-                                                child: Container(
-                                                  height: 35.sp,
-                                                  width: 35.sp,
-                                                  child: ClipOval(
-                                                    child: Container(
-                                                      child: _buildButtonIcon(),
-                                                      color: Colors.white,
-                                                    ),
-                                                  ),
-                                                ),
-                                                onTap: () {
-                                                  if (state ==
-                                                      AccountState.free)
-                                                    _pickImage();
-                                                  else if (state ==
-                                                      AccountState.picked)
-                                                    //   _cropImage();
-                                                    // else if (state.value == AccountState.cropped)
-                                                    _clearImage();
-                                                }
-                                                // _cropImage,
-                                                ),
-                                          )
-                                        : Container()
-                                  ],
+                                      auth.editUserProfile(
+                                          textController.text.trim(),
+                                          auth.user!.image);
+                                      isEditing.value = true;
+                                    }
+                                    Get.back();
+                                    Get.back();
+                                  },
                                 ),
-                              ),
-                              SizedBox(
-                                height: 50.sp,
-                              ),
-                              Container(
-                                  child: !isEditing
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  )
+                : Get.back();
+            // Get.back();
+          }),
+          backgroundColor: Colors.white,
+          body: Form(
+            key: _formKey,
+            child: Center(
+              child: SingleChildScrollView(
+                physics: ClampingScrollPhysics(),
+                child: Obx(
+                  () => auth.user != null
+                      ? ConstrainedBox(
+                          constraints: BoxConstraints(maxHeight: Get.height),
+                          child: Container(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SizedBox(
+                                  height: 0.sp,
+                                ),
+                                Container(
+                                  child: Text(
+                                    lang.strings['shared']['userInfo']["title"],
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 40.sp,
+                                        fontFamily: 'psr'),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 50.sp,
+                                ),
+                                // Spacer(),
+
+                                Obx(
+                                  () => Container(
+                                    height: 161.h,
+                                    width: 161.w,
+                                    child: Stack(
+                                      children: [
+                                        ClipOval(
+                                            child: Container(
+                                                height: 161.w,
+                                                width: 161.h,
+                                                color: Color.fromRGBO(
+                                                    243, 243, 243, 1),
+                                                child: imageFile.path == "test"
+                                                    ? (auth.user!.image ==
+                                                                null ||
+                                                            auth.user!.image ==
+                                                                "")
+                                                        ? Container(
+                                                            alignment: Alignment
+                                                                .center,
+                                                            child: Text(
+                                                              "Choose A \n Photo",
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                            ),
+                                                          )
+                                                        : Obx(() => Container(
+                                                              height: 161.h,
+                                                              width: 161.w,
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              child: Stack(
+                                                                children: [
+                                                                  CachedNetworkImage(
+                                                                    imageUrl: auth
+                                                                        .user!
+                                                                        .image!,
+                                                                    fit: BoxFit
+                                                                        .fill,
+                                                                    imageBuilder:
+                                                                        (context,
+                                                                                imageProvider) =>
+                                                                            Container(
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        image:
+                                                                            DecorationImage(
+                                                                          image:
+                                                                              imageProvider,
+                                                                          fit: BoxFit
+                                                                              .cover,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    placeholder:
+                                                                        (context,
+                                                                                url) =>
+                                                                            Container(
+                                                                      width:
+                                                                          15.w,
+                                                                      height:
+                                                                          15.w,
+                                                                      child:
+                                                                          Center(
+                                                                        child:
+                                                                            CircularProgressIndicator(),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  auth.user!.image ==
+                                                                          defaultPic
+                                                                      ? Container(
+                                                                          color: Colors
+                                                                              .black
+                                                                              .withOpacity(0.4),
+                                                                          child:
+                                                                              Center(
+                                                                            child:
+                                                                                Text(
+                                                                              "${lang.strings['shared']['userInfo']["choosePic"]}",
+                                                                              style: TextStyle(shadows: <Shadow>[
+                                                                                Shadow(
+                                                                                  offset: Offset(5.0, 5.0),
+                                                                                  blurRadius: 9.0,
+                                                                                  color: Colors.white.withOpacity(.5),
+                                                                                ),
+                                                                              ], color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                                                                            ),
+                                                                          ),
+                                                                        )
+                                                                      : Container()
+                                                                ],
+                                                              ),
+                                                            ))
+                                                    : Image.file(
+                                                        imageFile,
+                                                        fit: BoxFit.cover,
+                                                      ))),
+                                        isEditing.value
+                                            ? Positioned(
+                                                left: 124.sp,
+                                                top: 124.sp,
+                                                child: InkWell(
+                                                    child: Container(
+                                                      height: 35.sp,
+                                                      width: 35.sp,
+                                                      child: ClipOval(
+                                                        child: Container(
+                                                          child:
+                                                              _buildButtonIcon(),
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    onTap: () {
+                                                      if (state ==
+                                                          AccountState.free)
+                                                        _pickImage();
+                                                      else if (state ==
+                                                          AccountState.picked)
+                                                        //   _cropImage();
+                                                        // else if (state.value == AccountState.cropped)
+                                                        _clearImage();
+                                                    }
+                                                    // _cropImage,
+                                                    ),
+                                              )
+                                            : Container()
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 50.sp,
+                                ),
+                                Container(
+                                  child: Obx(() => !isEditing.value
                                       ? Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.start,
@@ -303,112 +427,159 @@ class _UserProfileState extends State<UserProfile> {
                                                   horizontal: 15),
                                               padding: EdgeInsets.symmetric(
                                                   horizontal: 15),
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  border: Border.all(
-                                                      color: Colors.blue)),
-                                              child: TextField(
+                                              child: TextFormField(
+                                                validator: (value) {
+                                                  if (value == null ||
+                                                      value.isEmpty) {
+                                                    return '${lang.strings['shared']['userInfo']['validationTxtOne']}';
+                                                  } else {
+                                                    if (!nameExp
+                                                        .hasMatch(value)) {
+                                                      return '${lang.strings['shared']['userInfo']['validationTxtTwo']}';
+                                                    }
+                                                    return null;
+                                                  }
+                                                },
                                                 controller: textController,
                                                 decoration: InputDecoration(
-                                                    border: InputBorder.none),
+                                                    border: OutlineInputBorder(
+                                                      gapPadding: 0,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                    labelStyle: TextStyle(
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                    hintText:
+                                                        "${lang.strings['shared']['userInfo']["hintTxt"]}",
+                                                    contentPadding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 10)),
                                                 style: TextStyle(
-                                                    color: Colors.blue),
+                                                    color: Colors.blue,
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.bold),
                                               ),
                                             )
                                           ],
                                         )),
+                                ),
 
-                              SizedBox(
-                                height: 50.sp,
-                              ),
-                              Container(
-                                padding: EdgeInsets.only(bottom: 20.sp),
-                                child: MaterialButton(
-                                  onPressed: () async {
-                                    setState(() {
-                                      isEditing = !isEditing;
-                                    });
-                                    if (isEditing) {
-                                      mezDbgPrint(
-                                          "editing" + textController.text);
-                                    } else {
-                                      mezDbgPrint("saved");
-                                      auth.user!.name = textController.text;
-                                      if (imageFile.path != "test") {
-                                        var xUrl = await auth.getImageUrl(
-                                            imageFile, auth.user!.uid);
-                                        mezDbgPrint(xUrl);
-                                        auth.user!.image = xUrl;
-                                        auth.editUserProfile(
-                                            textController.text.trim(), xUrl);
+                                SizedBox(
+                                  height: 50.sp,
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(bottom: 20.sp),
+                                  child: MaterialButton(
+                                    onPressed: () async {
+                                      if (checkNameValidation()) {
                                       } else {
-                                        mezDbgPrint("the path is empty");
+                                        if (!isEditing.value) {
+                                          mezDbgPrint(
+                                              "editing" + textController.text);
 
-                                        auth.editUserProfile(
-                                            textController.text.trim(),
-                                            auth.user!.image);
+                                          isEditing.value = !isEditing.value;
+                                        } else {
+                                          mezDbgPrint(
+                                              "Saved ${textController.text}");
+
+                                          auth.user!.name = textController.text;
+                                          if (imageFile.path != "test") {
+                                            var xUrl = await auth.getImageUrl(
+                                                imageFile, auth.user!.uid);
+                                            mezDbgPrint(xUrl);
+                                            auth.user!.image = xUrl;
+                                            auth.editUserProfile(
+                                                textController.text.trim(),
+                                                xUrl);
+                                            isEditing.value = !isEditing.value;
+                                          } else {
+                                            mezDbgPrint("the path is empty");
+
+                                            auth.editUserProfile(
+                                                textController.text.trim(),
+                                                auth.user!.image);
+                                            isEditing.value = !isEditing.value;
+                                          }
+                                        }
                                       }
-                                    }
-                                  },
-                                  padding: EdgeInsets.only(left: 0, right: 0),
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 15),
+                                    },
+                                    padding: EdgeInsets.only(left: 0, right: 0),
                                     child: Container(
-                                      height: 48.sp,
-                                      width: (Get.width - 20).sp,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5),
-                                        gradient: LinearGradient(
-                                            colors: [
-                                              Color.fromRGBO(81, 132, 255, 1),
-                                              Color.fromRGBO(206, 73, 252, 1)
-                                            ],
-                                            begin: Alignment.topLeft,
-                                            end: Alignment.bottomRight),
-                                      ),
-                                      child: Center(
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Icon(
-                                              (!isEditing)
-                                                  ? Icons.edit_outlined
-                                                  : Icons.save_outlined,
-                                              color: Colors.white,
-                                              size: 19,
-                                            ),
-                                            SizedBox(
-                                              width: 8,
-                                            ),
-                                            Text(
-                                              (!isEditing)
-                                                  ? lang.strings['shared']
-                                                      ['userInfo']["editBtn"]
-                                                  : lang.strings['shared']
-                                                      ['userInfo']["saveBtn"],
-                                              style: TextStyle(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 15),
+                                      child: Container(
+                                        height: 48.sp,
+                                        width: (Get.width - 20).sp,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          gradient: LinearGradient(
+                                              colors: [
+                                                Color.fromRGBO(81, 132, 255, 1),
+                                                Color.fromRGBO(206, 73, 252, 1)
+                                              ],
+                                              begin: Alignment.topLeft,
+                                              end: Alignment.bottomRight),
+                                        ),
+                                        child: Center(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Obx(
+                                                () => Icon(
+                                                  (!isEditing.value)
+                                                      ? Icons.edit_outlined
+                                                      : Icons.save_outlined,
                                                   color: Colors.white,
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w700),
-                                            ),
-                                          ],
+                                                  size: 19,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 8,
+                                              ),
+                                              Text(
+                                                (!isEditing.value)
+                                                    ? lang.strings['shared']
+                                                        ['userInfo']["editBtn"]
+                                                    : lang.strings['shared']
+                                                        ['userInfo']["saveBtn"],
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.w700),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      )
-                    : MezLogoAnimation(),
+                        )
+                      : MezLogoAnimation(),
+                ),
               ),
             ),
           ),
         ));
+  }
+
+  bool checkNameValidation() {
+    if (_formKey.currentState!.validate()) {
+      // If the form is valid, display a snackbar. In the real world,
+      // you'd often call a server or save the information in a database.
+      return false;
+    } else {
+      return true;
+    }
   }
 }

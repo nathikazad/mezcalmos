@@ -102,7 +102,7 @@ class AuthController extends GetxController {
   }
 
   bool isDisplayNameSet() {
-    return _fireAuthUser.value?.displayName != null;
+    return _user.value?.name != null;
   }
 
   Future<String> getImageUrl(File imageFile, String uid) async {
