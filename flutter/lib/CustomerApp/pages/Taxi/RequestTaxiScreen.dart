@@ -1,24 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart' as GeoLoc;
+import 'package:mezcalmos/CustomerApp/components/LocationPicker.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/LocationSearchBar.dart';
-import 'package:mezcalmos/CustomerApp/pages/Taxi/components/BottomBar.dart';
+import 'package:mezcalmos/CustomerApp/pages/Taxi/components/TaxiBottomBars/TaxiReqBottomBar.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart' as TaxiOrder;
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:mezcalmos/CustomerApp/components/LocationPicker.dart';
-import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
-import 'package:location/location.dart' as GeoLoc;
+
+/*
+  - TaxiReqScreen -
+    - From , to picked > Construct TaxiRequest Model.
+      - onConfirm  -> ViewTaxiRequest.
+
+*/
 
 class RequestTaxiScreen extends StatefulWidget {
   @override
@@ -44,8 +51,8 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
     if (Get.arguments != null) {
       taxiRequest.value = Get.arguments as TaxiRequest;
 
-      mezDbgPrint(
-          "============ the older requist is ${(Get.arguments as TaxiRequest).status} ===========");
+      // mezDbgPrint(
+      //     "============ the older requist is ${(Get.arguments as TaxiRequest).status} ===========");
       locationPickerController.setOnMapTap(onTap: () {
         locationSearchBarController.unfocusAllFocusNodes.call();
         setState(() {});
@@ -75,8 +82,8 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
         locationPickerController.hideFakeMarker();
         locationPickerController.setAnimateMarkersPolyLinesBounds(true);
         locationPickerController.animateAndUpdateBounds();
-        updateRouteInformation();
-        locationPickerController.showConfirmButton();
+        updateRouteInformation()
+            .then((value) => locationPickerController.showConfirmButton());
 
         setState(() {
           _pickedFromTo = true;
@@ -110,9 +117,6 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // if (Get.arguments != null) {
-    //   taxiRequest.value = Get.arguments as TaxiRequest;
-    // }
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: mezcalmosAppBar(AppBarLeftButtonType.Back),
@@ -152,7 +156,8 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                   newLocationChosenEvent:
                       updateModelAndHandoffToLocationPicker),
               _pickedFromTo
-                  ? BottomBar(
+                  // from , to
+                  ? TaxiReqBottomBar(
                       taxiRequest: taxiRequest.value,
                     )
                   : SizedBox()
@@ -194,8 +199,8 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
     if (taxiRequest.value.isFromToSet()) {
       locationPickerController.setAnimateMarkersPolyLinesBounds(true);
       locationPickerController.animateAndUpdateBounds();
-      updateRouteInformation();
-      locationPickerController.showConfirmButton();
+      updateRouteInformation()
+          .then((value) => locationPickerController.showConfirmButton());
       setState(() {
         _pickedFromTo = true;
       });
@@ -254,7 +259,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
         latLng: taxiRequest.value.from!.toLatLng());
   }
 
-  void updateRouteInformation() async {
+  Future<void> updateRouteInformation() async {
     MapHelper.Route? route = await MapHelper.getDurationAndDistance(
         taxiRequest.value.from!, taxiRequest.value.to!);
 

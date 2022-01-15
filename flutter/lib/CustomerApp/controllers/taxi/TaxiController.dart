@@ -31,19 +31,25 @@ class TaxiController extends GetxController {
   }
 
   Future<ServerResponse> requestTaxi(TaxiRequest taxiRequest) async {
-    HttpsCallable requestTaxiFunction =
-        FirebaseFunctions.instance.httpsCallable("taxi-requestRide");
+    if (taxiRequest.valid()) {
+      HttpsCallable requestTaxiFunction =
+          FirebaseFunctions.instance.httpsCallable("taxi-requestRide");
 
-    try {
-      mezDbgPrint(taxiRequest.asCloudFunctionParam());
-      HttpsCallableResult response =
-          await requestTaxiFunction.call(taxiRequest.asCloudFunctionParam());
+      try {
+        mezDbgPrint(taxiRequest.asCloudFunctionParam());
+        HttpsCallableResult response =
+            await requestTaxiFunction.call(taxiRequest.asCloudFunctionParam());
 
-      return ServerResponse.fromJson(response.data);
-    } catch (e) {
-      mezDbgPrint("+ EROROROROR HAPPPPEND ==> $e");
+        return ServerResponse.fromJson(response.data);
+      } catch (e) {
+        mezDbgPrint("+ EROROROROR HAPPPPEND ==> $e");
+        return ServerResponse(ResponseStatus.Error,
+            errorMessage: "Server Error", errorCode: "serverError");
+      }
+    } else {
       return ServerResponse(ResponseStatus.Error,
-          errorMessage: "Server Error", errorCode: "serverError");
+          errorMessage: "Invalid Request",
+          errorCode: "invalid taxi request or google map server down");
     }
   }
 

@@ -1,18 +1,18 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
-import 'package:mezcalmos/CustomerApp/pages/Taxi/components/BottomBar.dart';
+import 'package:mezcalmos/CustomerApp/pages/Taxi/components/TaxiBottomBars/TaxiOrderBottomBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/TopBar.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
@@ -139,10 +139,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
                               periodicRerendering: true,
                             )),
                         Obx(() {
-                          return BottomBar(
-                              taxiRequest:
-                                  order.value!.toTaxiRequest().obs.value,
-                              bottomPadding: bottomPadding.value);
+                          return TaxiOrderBottomBar(order: order.value!);
                         }),
                         cancelButton(order.value!.status),
                         TopBar(order: order.value!)
