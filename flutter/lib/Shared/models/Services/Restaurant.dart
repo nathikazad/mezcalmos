@@ -1,13 +1,23 @@
 import 'dart:convert';
-import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 
+extension ParseDynamicToLanugaugeMap on dynamic {
+  Map<LanguageType, String> toLanguageType() {
+    Map<LanguageType, String> map = {};
+    this.forEach((dynamic language, dynamic string) {
+      if (language == LanguageType.EN.toFirebaseFormatString() ||
+          language == LanguageType.ES.toFirebaseFormatString()) {
+        map[language.toLanguageType()] = string;
+      }
+    });
+    return map;
+  }
+}
+
 class Restaurant {
   String id;
-  String description;
+  Map<LanguageType, String> description;
   String name;
   String photo;
   String? location;
@@ -26,12 +36,8 @@ class Restaurant {
 
   factory Restaurant.fromRestaurantData(
       {required String restaurantId, required dynamic restaurantData}) {
-    String language = Get.find<LanguageController>().userLanguageKey;
-    List<Object?> availableLanguages =
-        restaurantData["details"]["languages"] as List<Object?>;
-    if (!availableLanguages.contains(language)) {
-      language = availableLanguages[0] as String;
-    }
+    // List<Object?> availableLanguages =
+    //     restaurantData["details"]["languages"] as List<Object?>;
 
     RestaurantState restaurantState = RestaurantState(
         restaurantData["state"]?["authorizationStatus"]
@@ -41,7 +47,8 @@ class Restaurant {
         restaurantData["state"]?["open"] ?? false);
     String name = restaurantData["info"]["name"];
     String photo = restaurantData["info"]["image"];
-    String description = restaurantData["details"]["description"][language];
+    Map<LanguageType, String> description =
+        restaurantData["details"]["description"].toLanguageMap();
     Schedule? schedule = restaurantData["details"]["schedule"] != null
         ? Schedule.fromData(restaurantData["details"]["schedule"])
         : null;
@@ -54,8 +61,7 @@ class Restaurant {
         schedule: schedule,
         restaurantState: restaurantState);
     restaurantData["menu"].forEach((dynamic itemId, dynamic itemData) {
-      restaurant.items
-          .add(Item.itemFromData(itemId, itemData, language: language));
+      restaurant.items.add(Item.itemFromData(itemId, itemData));
     });
     return restaurant;
   }
@@ -89,37 +95,49 @@ class RestaurantState {
 }
 
 class ChooseManyOption {
-  String? id;
-  bool selectedByDefault = false;
-  num cost = 0;
-  Map<String, String>? name;
+  String id;
+  bool selectedByDefault;
+  num cost;
+  Map<LanguageType, String> name;
 
-  ChooseManyOption.fromData(String id, dynamic data, String language) {
-    this.id = id;
-    this.name = {"en": data["name"]["en"], "es": data["name"]["es"]};
-    this.cost = data["cost"];
-    this.selectedByDefault = data["default"] ?? false;
+  ChooseManyOption(
+      {required this.id,
+      this.selectedByDefault = false,
+      this.cost = 0,
+      required this.name});
+
+  factory ChooseManyOption.fromData(String id, dynamic data) {
+    return ChooseManyOption(
+        id: id,
+        name: data["name"].toLanugageMap(),
+        cost: data["cost"],
+        selectedByDefault: data["default"] ?? false);
   }
   Map<String, dynamic> toJson() => {"id": id, "cost": cost, "name": name};
 }
 
 class ChooseOneOption {
-  String? id;
-  Map<String, String>? name;
+  String id;
+  Map<String, String> name;
   String? dialog;
   List<ChooseOneOptionListItem> chooseOneOptionListItems = [];
-  ChooseOneOption.fromData(String id, dynamic data, String language) {
-    this.id = id;
-    name = {"en": data["name"]["en"], "es": data["name"]["es"]};
-    dialog = data["dialog"][language];
+
+  ChooseOneOption({required this.id, required this.name, this.dialog});
+
+  factory ChooseOneOption.fromData(String id, dynamic data) {
+    ChooseOneOption chooseOneOption = ChooseOneOption(
+        id: id,
+        name: data["name"].toLanguageMap(),
+        dialog: data["dialog"].toLanguageMap());
     data["options"].forEach((dynamic optionId, dynamic optionData) {
       //mezDbgPrint(optionData["name"]);
       ChooseOneOptionListItem chooseOneOptionListItem = ChooseOneOptionListItem(
           optionId,
           {"en": optionData["name"]["en"], "es": optionData["name"]["es"]},
           optionData["cost"]);
-      chooseOneOptionListItems.add(chooseOneOptionListItem);
+      chooseOneOption.chooseOneOptionListItems.add(chooseOneOptionListItem);
     });
+    return chooseOneOption;
   }
 
   ChooseOneOptionListItem? findChooseOneOptionListItem(String id) {
@@ -138,74 +156,51 @@ class ChooseOneOption {
 }
 
 class ChooseOneOptionListItem {
-  String? id;
+  String id;
   num cost = 0;
-  Map<String, String>? name;
+  Map<String, String> name;
   ChooseOneOptionListItem(this.id, this.name, this.cost);
   Map<String, dynamic> toJson() => {"id": id, "cost": cost, "name": name};
 }
 
-// class Sides {
-//   List<ChooseOneOption> chooseOneOptions = [];
-//   List<ChooseManyOption> chooseManyOptions = [];
-//   Sides();
-//   Sides.fromData(dynamic sidesData, String language) {
-//     if (sidesData["chooseOne"] != null) {
-//       sidesData["chooseOne"].forEach((dynamic optionId, dynamic optionData) {
-//         chooseOneOptions
-//             .add(ChooseOneOption.fromData(optionId, optionData, language));
-//       });
-//     }
-//     if (sidesData["chooseMany"] != null) {
-//       sidesData["chooseMany"].forEach((dynamic optionId, dynamic optionData) {
-//         chooseManyOptions
-//             .add(ChooseManyOption.fromData(optionId, optionData, language));
-//       });
-//     }
-//   }
-//   Map<String, dynamic> toJson() => {
-//         "chooseOneOptions": jsonEncode(chooseOneOptions),
-//         "chooseManyOptions": jsonEncode(chooseManyOptions)
-//       };
-// }
-
 class Item {
-  String? id;
-  bool? available;
-  String? description;
+  String id;
+  bool available;
+  Map<LanguageType, String>? description;
   String? image;
-  Map<String, String>? name;
+  Map<LanguageType, String> name;
   num cost = 0;
   List<ChooseOneOption> chooseOneOptions = [];
   List<ChooseManyOption> chooseManyOptions = [];
   // Sides sides = new Sides();
-  Item(this.id, this.available, this.description, this.image, this.name,
-      this.cost);
+  Item(
+      {required this.id,
+      this.available = false,
+      this.description,
+      this.image,
+      required this.name,
+      required this.cost});
 
-  factory Item.itemFromData(String itemId, dynamic itemData,
-      {String? language}) {
-    if (language == null) {
-      language = Get.find<LanguageController>().userLanguageKey;
-    }
+  factory Item.itemFromData(String itemId, dynamic itemData) {
     Item item = Item(
-        itemId,
-        itemData["available"],
-        itemData["description"][language],
-        itemData["image"],
-        {"en": itemData["name"]["en"], "es": itemData["name"]["en"]},
-        itemData["cost"]);
+        id: itemId,
+        available: itemData["available"],
+        description: itemData["description"].toLanguageMap(),
+        image: itemData["image"],
+        name: itemData["name"].toLanguageMap(),
+        cost: itemData["cost"]);
     if (itemData["options"]?["chooseOne"] != null) {
       itemData["options"]["chooseOne"]
           .forEach((dynamic optionId, dynamic optionData) {
         item.chooseOneOptions
-            .add(ChooseOneOption.fromData(optionId, optionData, language!));
+            .add(ChooseOneOption.fromData(optionId, optionData));
       });
     }
     if (itemData["options"]?["chooseMany"] != null) {
       itemData["options"]["chooseMany"]
           .forEach((dynamic optionId, dynamic optionData) {
         item.chooseManyOptions
-            .add(ChooseManyOption.fromData(optionId, optionData, language!));
+            .add(ChooseManyOption.fromData(optionId, optionData));
       });
     }
     // if (itemData["options"]["sides"] != null) {

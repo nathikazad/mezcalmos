@@ -3,6 +3,7 @@
 // import 'package:flutter/material.dart';
 
 import 'package:mezcalmos/Shared/models/Chat.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
 
 // this is my user that i create in prod for the prod deployement testing.
 const String testUserIdInProd = "BUhQ74BrbBNeYZz60fK4ocrgpqz1";
@@ -32,7 +33,7 @@ const int nSplashScreenTimer = 1;
 
 const String tPrivacyPolicy = "https://meztaxi.com/privacy-policy.html";
 
-const String tDefaultLanguage = "es";
+const LanguageType tDefaultLanguage = LanguageType.ES;
 const String tDefaultTheme = "light";
 
 const String tMez = "MEZ";
