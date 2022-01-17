@@ -139,7 +139,9 @@
             "rideExpired": "Your ride has been expired",
             "rideCancelledByTaxi": "Ride cancelled by taxi",
             "rideCancelledByCustomer": "You have cancelled your ride",
-            "ride": "ride"
+            "ride": "ride",
+            "taxiRideCheckedTooltip" : "This shows how many Taxi drivers have seen your order but not accepted.\n\nMake use of that in order to controll your ride price.",
+            "taxiRidePriceTooltip" : " Click - to decrease your price by 5.\n Click + to increase your price by 5.\n\n If you see your order not being accepted try them out."
         },
         "cancelOrder": {
             "title":"Confirm Cancelation.",
