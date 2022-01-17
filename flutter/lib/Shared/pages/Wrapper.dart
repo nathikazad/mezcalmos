@@ -52,7 +52,7 @@ class _WrapperState extends State<Wrapper> {
     } else {
       mezDbgPrint(
           "Wrapper::handleAuthStateChange:: signed in, Checking if User name are Set !");
-      if (Get.find<AuthController>().fireAuthUser?.displayName == null) {
+      if (!Get.find<AuthController>().isDisplayNameSet()) {
         await Get.toNamed(kUserProfile);
       }
       if (Get.currentRoute == kSignInRouteOptional) {

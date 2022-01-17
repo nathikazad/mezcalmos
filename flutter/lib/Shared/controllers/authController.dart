@@ -103,7 +103,7 @@ class AuthController extends GetxController {
   }
 
   bool isDisplayNameSet() {
-    return _user.value?.name != null;
+    return fireAuthUser?.displayName != null;
   }
 
   Future<String> getImageUrl(File imageFile, String uid) async {
@@ -134,14 +134,32 @@ class AuthController extends GetxController {
           .reference()
           .child(userInfo(fireAuthUser!.uid))
           .child('name')
-          .set(name);
+          .set(name)
+          .then((value) {
+        _user.value = User(
+          uid: _user.value!.uid,
+          email: _user.value?.email,
+          image: _user.value?.image,
+          language: _user.value!.language,
+          name: name,
+        );
+      });
     }
     if (image != null && image.isURL) {
       await _databaseHelper.firebaseDatabase
           .reference()
           .child(userInfo(fireAuthUser!.uid))
           .child('image')
-          .set(image);
+          .set(image)
+          .then((value) {
+        _user.value = User(
+          uid: _user.value!.uid,
+          email: _user.value?.email,
+          image: image,
+          language: _user.value!.language,
+          name: _user.value?.name,
+        );
+      });
     }
   }
 

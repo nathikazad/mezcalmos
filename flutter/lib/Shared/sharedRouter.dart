@@ -8,7 +8,7 @@ import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/OtpConfirmationScreen.dar
 import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/PhoneNumberScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
-import 'package:mezcalmos/Shared/pages/UserProfileScreen.dart';
+import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileScreen.dart';
 import 'package:mezcalmos/Shared/pages/ViewNotifications.dart';
 import 'package:mezcalmos/Shared/pages/Wrapper.dart';
 
