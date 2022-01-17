@@ -106,31 +106,40 @@ class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Row(
-            children: [
-              Icon(
-                MezcalmosIcons.route,
-                size: (Get.height * 0.015).sp,
-              ),
-              SizedBox(
-                width: 2.w,
-              ),
-              Text(taxiRequest.routeInformation?.distance.distanceStringInKm ??
-                  "-"),
-            ],
+          Expanded(
+            child: Row(
+              children: [
+                Icon(
+                  MezcalmosIcons.route,
+                  size: (Get.height * 0.015).sp,
+                ),
+                SizedBox(
+                  width: 2.w,
+                ),
+                Text(
+                  taxiRequest.routeInformation?.distance.distanceStringInKm ??
+                      "-",
+                  overflow: TextOverflow.visible,
+                ),
+              ],
+            ),
           ),
-          Row(
-            children: [
-              Icon(
-                MezcalmosIcons.stopwatch,
-                size: (Get.height * 0.015).sp,
-              ),
-              SizedBox(
-                width: 2.w,
-              ),
-              Text(taxiRequest.routeInformation?.duration.longTextVersion ??
-                  "-"),
-            ],
+          Expanded(
+            child: Row(
+              children: [
+                Icon(
+                  MezcalmosIcons.stopwatch,
+                  size: (Get.height * 0.015).sp,
+                ),
+                SizedBox(
+                  width: 2.w,
+                ),
+                Text(
+                    taxiRequest.routeInformation?.duration.longTextVersion ??
+                        "-",
+                    overflow: TextOverflow.visible),
+              ],
+            ),
           ),
         ],
       ),
