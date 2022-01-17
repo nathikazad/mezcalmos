@@ -54,7 +54,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    mezDbgPrint(controller.cart.value.toLocation?.toFirebaseFormattedJson());
+    // mezDbgPrint(controller.cart.value.toLocation?.toFirebaseFormattedJson());
 
     responsiveSize(context);
     return Scaffold(

@@ -40,6 +40,7 @@ class OrderController extends GetxController {
         mezDbgPrint("PAST ORDERS ==> ${event.snapshot.value} ");
 
         mezDbgPrint("----------------- O R D E R CONTROLLER ----------------");
+
         mezDbgPrint("----------------- O R D E R CONTROLLER ----------------");
 
         List<Order> orders = [];
@@ -72,7 +73,10 @@ class OrderController extends GetxController {
           .onValue
           .listen((event) async {
         List<Order> orders = [];
+
+        mezDbgPrint("~~~~~~+++++++====== ${event.snapshot.value.toString()}");
         if (event.snapshot.value != null) {
+          mezDbgPrint("my data hhhh ${event.snapshot.value.toString()}");
           for (var orderId in event.snapshot.value.keys) {
             dynamic orderData = event.snapshot.value[orderId];
             // if restaurant order

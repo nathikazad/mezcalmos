@@ -31,7 +31,7 @@ Widget buildOrdersItems(List<RestaurantOrderItem> items) {
                       ),
                       //height: 43,
                       child: BasicCellComponent(
-                        title: "${element.name.inCaps}",
+                        title: "${element.name["es"]!.inCaps}",
                         url: "${element.image}",
                         traillingIcon: Container(
                           width: 25,
