@@ -139,7 +139,9 @@
             "rideExpired": "Tu pedido ha expirado",
             "rideCancelledByTaxi": "El viaje ha sido cancelado por taxi",
             "rideCancelledByCustomer": "Has cancelado tu viaje",
-            "ride": "viaje"
+            "ride": "viaje",
+            "taxiRideCheckedTooltip" : "Esto muestra cuántos taxistas vieron tu pedido pero no lo aceptaron.\n\nÚsalo para controlar el precio de tu viaje." ,
+            "taxiRidePriceTooltip" : " Haga clic en - para reducir el precio en 5.\n Haga clic en + para aumentar el precio en 5.\n\n Si ve que su pedido no se acepta, pruébelo."
         },
         "cancelOrder": {
             "title":"Confirmar cancelación.",

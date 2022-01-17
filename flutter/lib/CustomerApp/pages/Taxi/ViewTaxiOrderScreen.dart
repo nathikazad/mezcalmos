@@ -6,6 +6,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Taxi/components/MezToolTips.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/TaxiBottomBars/TaxiOrderBottomBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/TopBar.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -25,7 +26,8 @@ class ViewTaxiOrderScreen extends StatefulWidget {
   _ViewTaxiOrderScreenState createState() => _ViewTaxiOrderScreenState();
 }
 
-class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
+class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
+    with SingleTickerProviderStateMixin {
   OrderController controller = Get.find<OrderController>();
   TaxiController taxiController = Get.put<TaxiController>(TaxiController());
   Rxn<TaxiOrder> order = Rxn();
@@ -34,6 +36,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
   LanguageController lang = Get.find<LanguageController>();
   RxDouble bottomPadding =
       ((GetStorage().read(getxGmapBottomPaddingKey) as double) + 15.0).obs;
+
 /******************************  Init and build function ************************************/
   @override
   void initState() {
@@ -103,6 +106,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
     } else {
       mezDbgPrint("Error :Unfound Order !");
     }
+
     super.initState();
   }
 
@@ -138,11 +142,17 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
                                   this.widget.mGoogleMapController,
                               periodicRerendering: true,
                             )),
-                        Obx(() {
-                          return TaxiOrderBottomBar(order: order.value!);
-                        }),
+                        TaxiOrderBottomBar(order: order),
+
                         cancelButton(order.value!.status),
-                        TopBar(order: order.value!)
+                        TopBar(order: order.value!),
+                        // only if not marker as read more than 4 times or status isLookingForTaxi
+                        if (order.value!.status ==
+                                TaxiOrdersStatus.LookingForTaxi &&
+                            Get.find<TaxiController>()
+                                    .numOfTimesToolTipShownToUser() <=
+                                4)
+                          MezToolTips()
                       ])
                 : MezLogoAnimation(
                     centered: true,
@@ -151,7 +161,6 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
         ));
   }
 
-  /******************************  helper functions ************************************/
   /// This gets invoked when the order is moved to [inProcess] db node
   void inProcessOrderStatusHandler(TaxiOrdersStatus status) {
     mezDbgPrint(
