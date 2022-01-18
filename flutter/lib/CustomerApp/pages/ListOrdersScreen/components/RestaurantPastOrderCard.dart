@@ -11,8 +11,8 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 
 import '../../../router.dart';
 
-class OldOrderCard extends StatelessWidget {
-  OldOrderCard({
+class RestaurantPastOrderCard extends StatelessWidget {
+  RestaurantPastOrderCard({
     Key? key,
     required this.order,
   }) : super(key: key);

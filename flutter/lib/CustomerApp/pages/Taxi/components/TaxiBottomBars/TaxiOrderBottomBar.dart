@@ -188,7 +188,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
           ),
           Obx(
             () => Text(
-              widget.order.value!.numberOfTaxiSentNotificationTo().toString(),
+              widget.order.value!.numberOfTaxiReadNotification().toString(),
               style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
             ),
           )
