@@ -26,7 +26,7 @@ Widget chooseManyCheckBoxes(
   }
 
   chooseManyOptions.forEach((chooseManyOption) {
-    String name = chooseManyOption.name!["${lang.userLanguageKey}"]!;
+    String name = chooseManyOption.name[lang.userLanguageKey]!;
     String? price;
     if (chooseManyOption.cost > 0) {
       price = "\$${currency.format(chooseManyOption.cost)}";
@@ -34,9 +34,9 @@ Widget chooseManyCheckBoxes(
     chooseManyWidgetArray.add(ViewItemScreenCartComponent(
       title: name,
       price: price,
-      intailVal: cartItem.value!.chosenManyOptions[chooseManyOption.id!],
+      intailVal: cartItem.value!.chosenManyOptions[chooseManyOption.id],
       onValueChanged: (val) {
-        cartItem.value!.chosenManyOptions[chooseManyOption.id!] = val ?? false;
+        cartItem.value!.chosenManyOptions[chooseManyOption.id] = val ?? false;
         cartItem.refresh();
       },
     ));

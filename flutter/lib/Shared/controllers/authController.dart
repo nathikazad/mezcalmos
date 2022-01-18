@@ -163,7 +163,7 @@ class AuthController extends GetxController {
   }
 
   void changeLanguage(LanguageType newLanguage) {
-    if (_user.value != null) { 
+    if (_user.value != null) {
       _databaseHelper.firebaseDatabase
           .reference()
           .child(userLanguage(_user.value!.uid))

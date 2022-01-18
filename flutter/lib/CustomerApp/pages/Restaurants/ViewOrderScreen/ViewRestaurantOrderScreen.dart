@@ -73,7 +73,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId) as RestaurantOrder?;
     if (order.value == null) {
-      Get.back();
+      //Get.back();
     } else {
       if (order.value!.inProcess()) {
         _orderListener =

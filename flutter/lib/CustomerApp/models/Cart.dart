@@ -1,4 +1,5 @@
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
@@ -17,11 +18,11 @@ class CartItem {
 
   CartItem(this.item, this.restaurantId, {this.quantity = 1}) {
     this.item.chooseOneOptions.forEach((chooseOneOption) {
-      _chosenOneOptions[chooseOneOption.id!] =
-          chooseOneOption.chooseOneOptionListItems[0].id!;
+      _chosenOneOptions[chooseOneOption.id] =
+          chooseOneOption.chooseOneOptionListItems[0].id;
     });
     this.item.chooseManyOptions.forEach((chooseManyOption) {
-      _chosenManyOptions[chooseManyOption.id!] =
+      _chosenManyOptions[chooseManyOption.id] =
           chooseManyOption.selectedByDefault;
     });
   }
@@ -64,30 +65,44 @@ class CartItem {
       "quantity": this.quantity,
       "totalCost": this.totalCost(),
       "costPerOne": this.costPerOne(),
-      "name": this.item.name,
+      "name": {
+        "en": this.item.name[LanguageType.EN],
+        "es": this.item.name[LanguageType.ES],
+      },
       "image": this.item.image,
       "options": {"chosenOneOptions": {}, "chosenManyOptions": {}},
       "notes": notes
     };
     this.item.chooseOneOptions.forEach((e) {
-      ChooseOneOption? chooseOneOption = this.item.findChooseOneOption(e.id!);
+      ChooseOneOption? chooseOneOption = this.item.findChooseOneOption(e.id);
       ChooseOneOptionListItem? chooseOneOptionListItem = chooseOneOption
           ?.findChooseOneOptionListItem(this._chosenOneOptions[e.id]!);
       json["options"]["chosenOneOptions"][e.id] = {
         "chosenOptionId": this._chosenOneOptions[e.id],
-        "chosenOptionName": chooseOneOptionListItem?.name,
-        "name": chooseOneOption?.name,
+        "chosenOptionName": {
+          "en": chooseOneOptionListItem?.name[LanguageType.EN],
+          "es": chooseOneOptionListItem?.name[LanguageType.ES],
+        },
+        // chooseOneOptionListItem?.name,
+        "name": {
+          "en": chooseOneOption?.name[LanguageType.EN],
+          "es": chooseOneOption?.name[LanguageType.ES],
+        },
+        // chooseOneOption?.name,
         "chosenOptionCost": chooseOneOptionListItem?.cost ?? 0
       };
     });
 
     this.item.chooseManyOptions.forEach((e) {
-      ChooseManyOption? chooseManyOption =
-          this.item.findChooseManyOption(e.id!);
+      ChooseManyOption? chooseManyOption = this.item.findChooseManyOption(e.id);
       if (this.chosenManyOptions[e.id] ?? false) {
         json["options"]["chosenManyOptions"][e.id] = {
           "chosenValue": this.chosenManyOptions[e.id],
-          "name": chooseManyOption?.name,
+          "name": {
+            "en": chooseManyOption?.name[LanguageType.EN],
+            "es": chooseManyOption?.name[LanguageType.ES],
+          },
+          // chooseManyOption?.name,
           "chosenValueCost": chooseManyOption?.cost ?? 0
         };
       }

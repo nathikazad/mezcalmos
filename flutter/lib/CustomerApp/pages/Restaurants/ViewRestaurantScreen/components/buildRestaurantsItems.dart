@@ -13,7 +13,7 @@ Widget buildResturantItems(List<Item> items, String restaurantId) {
           item: item,
           function: () {
             Get.toNamed(
-              getItemRoute(restaurantId, item.id!),
+              getItemRoute(restaurantId, item.id),
               arguments: {"mode": ViewItemScreenMode.AddItemMode},
             );
           }));

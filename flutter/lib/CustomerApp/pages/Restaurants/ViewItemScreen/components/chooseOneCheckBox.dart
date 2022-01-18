@@ -19,7 +19,7 @@ Widget chooseOneCheckBoxes(
   chooseOneOptions.forEach((chooseOneOption) {
     List<Widget> chooseOneWidgetOptionsArray = [];
     chooseOneOption.chooseOneOptionListItems.forEach((chooseOneOptionListItem) {
-      String name = chooseOneOptionListItem.name!["${lang.userLanguageKey}"]!;
+      String? name = chooseOneOptionListItem.name[lang.userLanguageKey];
 
       String? price;
       if (chooseOneOptionListItem.cost > 0) {
@@ -27,12 +27,12 @@ Widget chooseOneCheckBoxes(
       }
       chooseOneWidgetOptionsArray.add(ViewItemScreenCartComponent(
         title: name,
-        intailVal: cartItem.value!.chosenOneOptions[chooseOneOption.id!] ==
+        intailVal: cartItem.value!.chosenOneOptions[chooseOneOption.id] ==
             chooseOneOptionListItem.id,
         price: price,
         onValueChanged: (val) {
-          cartItem.value!.chosenOneOptions[chooseOneOption.id!] =
-              chooseOneOptionListItem.id!;
+          cartItem.value!.chosenOneOptions[chooseOneOption.id] =
+              chooseOneOptionListItem.id;
           cartItem.refresh();
         },
       ));
@@ -41,7 +41,7 @@ Widget chooseOneCheckBoxes(
         children: <Widget>[
               MenuTitles(
                 title: chooseOneOption
-                    .name!["${lang.userLanguageKey}"]!.capitalizeFirstofEach,
+                    .name[lang.userLanguageKey]!.capitalizeFirstofEach,
               ),
               SizedBox(
                 height: 15,

@@ -25,8 +25,7 @@ class LanguageController extends GetxController {
 
     // mezDbgPrint("\n\n\n\n\nUSER LANGUAGE [[ $lang ]]\n\n\n\n\n");
     if (lang == LanguageType.EN)
-      _userLanguageKey.value =
-          LanguageType
+      _userLanguageKey.value = LanguageType
           .EN; // to avoid diffrent other languages diffrent than en and es
   }
 
@@ -37,15 +36,15 @@ class LanguageController extends GetxController {
   LanguageType get userLanguageKey => _userLanguageKey.value;
   String get langFullName => languageDetails[_userLanguageKey.value].fullName;
   String get langImage => languageDetails[_userLanguageKey.value].langImage;
-  dynamic get strings => _jsonStrings[_userLanguageKey.value];
+  dynamic get strings =>
+      _jsonStrings[_userLanguageKey.value.toFirebaseFormatString()];
 
   LanguageType get oppositLangKey => _userLanguageKey.value == LanguageType.EN
       ? LanguageType.ES
       : LanguageType.EN;
   String get oppositToLang =>
       _userLanguageKey.value == LanguageType.EN ? "A Español" : "To English";
-  String get oppositFlag =>
-      _userLanguageKey.value == LanguageType.EN
+  String get oppositFlag => _userLanguageKey.value == LanguageType.EN
       ? mexicoFlagAsset
       : usaFlagAsset;
 

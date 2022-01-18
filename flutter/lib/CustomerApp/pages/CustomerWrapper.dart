@@ -99,10 +99,8 @@ class _CustomerWrapperState extends State<CustomerWrapper>
                               height: 10,
                             ),
 
-                            mezWelcomeContainer(Theme.of(context)
-                                .textTheme
-                                .headline2!
-                            ),
+                            mezWelcomeContainer(
+                                Theme.of(context).textTheme.headline2!),
                             //============================== description=============================
                             mezDescription(txt.subtitle1!),
 

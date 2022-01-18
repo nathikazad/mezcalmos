@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/BasicCellComponent.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -8,6 +9,7 @@ import 'package:intl/intl.dart';
 final currency = new NumberFormat("#,##0.00", "en_US");
 
 Widget buildOrdersItems(List<RestaurantOrderItem> items) {
+  LanguageController lang = Get.find<LanguageController>();
   return Container(
       child: Column(
     children: items.fold<List<Widget>>(<Widget>[], (children, element) {
@@ -30,7 +32,8 @@ Widget buildOrdersItems(List<RestaurantOrderItem> items) {
                       ),
                       //height: 43,
                       child: BasicCellComponent(
-                        title: "${element.name.capitalizeFirstofEach}",
+                        title:
+                            "${element.name[lang.userLanguageKey]!.capitalizeFirstofEach}",
                         url: "${element.image}",
                         traillingIcon: Container(
                           width: 25,

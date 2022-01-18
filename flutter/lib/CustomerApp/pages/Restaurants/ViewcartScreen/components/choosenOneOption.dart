@@ -19,7 +19,7 @@ List<Widget> choosenOneOption(
 
   data.forEach((value) {
     myWidgets.add(MenuTitles(
-      title: value.name!["${lang.userLanguageKey}"].toString().capitalizeFirst,
+      title: value.name[lang.userLanguageKey].toString().capitalizeFirst,
       textTheme: txt.subtitle1!
           .copyWith(fontSize: 13, color: Color.fromRGBO(33, 33, 33, 0.8)),
     ));
@@ -30,7 +30,7 @@ List<Widget> choosenOneOption(
         alignment: Alignment.centerLeft,
         padding: const EdgeInsets.only(left: 25, top: 5),
         child: Text(
-            value.chooseOneOptionListItems[0].name!["${lang.userLanguageKey}"]
+            value.chooseOneOptionListItems[0].name[lang.userLanguageKey]
                 .toString()
                 .inCaps,
             style: TextStyle(

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 
@@ -47,8 +48,11 @@ class Restaurant {
         restaurantData["state"]?["open"] ?? false);
     String name = restaurantData["info"]["name"];
     String photo = restaurantData["info"]["image"];
-    Map<LanguageType, String> description =
-        restaurantData["details"]["description"].toLanguageMap();
+    Map<LanguageType, String> description = {
+      LanguageType.EN: restaurantData["details"]["description"]["en"],
+      LanguageType.ES: restaurantData["details"]["description"]["es"]
+    };
+    //restaurantData["details"]["description"].toLanguageMap();
     Schedule? schedule = restaurantData["details"]["schedule"] != null
         ? Schedule.fromData(restaurantData["details"]["schedule"])
         : null;
@@ -109,7 +113,10 @@ class ChooseManyOption {
   factory ChooseManyOption.fromData(String id, dynamic data) {
     return ChooseManyOption(
         id: id,
-        name: data["name"].toLanugageMap(),
+        name: {
+          LanguageType.EN: data["name"]["en"],
+          LanguageType.ES: data["name"]["es"]
+        },
         cost: data["cost"],
         selectedByDefault: data["default"] ?? false);
   }
@@ -118,7 +125,7 @@ class ChooseManyOption {
 
 class ChooseOneOption {
   String id;
-  Map<String, String> name;
+  Map<LanguageType, String> name;
   String? dialog;
   List<ChooseOneOptionListItem> chooseOneOptionListItems = [];
 
@@ -127,13 +134,21 @@ class ChooseOneOption {
   factory ChooseOneOption.fromData(String id, dynamic data) {
     ChooseOneOption chooseOneOption = ChooseOneOption(
         id: id,
-        name: data["name"].toLanguageMap(),
-        dialog: data["dialog"].toLanguageMap());
+        name: {
+          LanguageType.EN: data["name"]["en"],
+          LanguageType.ES: data["name"]["es"]
+        },
+        // data["name"].toLanguageMap(),
+        //TODO:change this
+        dialog: data["dialog"]["es"]);
     data["options"].forEach((dynamic optionId, dynamic optionData) {
       //mezDbgPrint(optionData["name"]);
       ChooseOneOptionListItem chooseOneOptionListItem = ChooseOneOptionListItem(
           optionId,
-          {"en": optionData["name"]["en"], "es": optionData["name"]["es"]},
+          {
+            LanguageType.EN: optionData["name"]["en"],
+            LanguageType.ES: optionData["name"]["es"]
+          },
           optionData["cost"]);
       chooseOneOption.chooseOneOptionListItems.add(chooseOneOptionListItem);
     });
@@ -158,9 +173,16 @@ class ChooseOneOption {
 class ChooseOneOptionListItem {
   String id;
   num cost = 0;
-  Map<String, String> name;
+  Map<LanguageType, String> name;
   ChooseOneOptionListItem(this.id, this.name, this.cost);
-  Map<String, dynamic> toJson() => {"id": id, "cost": cost, "name": name};
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "cost": cost,
+        "name": {
+          LanguageType.EN.toFirebaseFormatString(): name["en"],
+          LanguageType.ES.toFirebaseFormatString(): name["es"]
+        }
+      };
 }
 
 class Item {
@@ -185,9 +207,17 @@ class Item {
     Item item = Item(
         id: itemId,
         available: itemData["available"],
-        description: itemData["description"].toLanguageMap(),
+        description: {
+          LanguageType.EN: itemData["description"]["en"],
+          LanguageType.ES: itemData["description"]["es"]
+        },
+        //itemData["description"].toLanguageMap(),
         image: itemData["image"],
-        name: itemData["name"].toLanguageMap(),
+        name: {
+          LanguageType.EN: itemData["name"]["en"],
+          LanguageType.ES: itemData["name"]["es"]
+        },
+        //itemData["name"].toLanguageMap(),
         cost: itemData["cost"]);
     if (itemData["options"]?["chooseOne"] != null) {
       itemData["options"]["chooseOne"]
@@ -232,3 +262,13 @@ class Item {
     return this.chooseManyOptions.firstWhere((element) => element.id == id);
   }
 }
+
+// extension TurnDataToMapLangauge on dynamic {
+//   Map<LanguageType, String> get toLnaguageMap {
+//     mezDbgPrint("hhhhhh ====> ${{
+//       LanguageType.EN: this["en"],
+//       LanguageType.ES: this["es"]
+//     }}");
+//     return {LanguageType.EN: this["en"], LanguageType.ES: this["es"]};
+//   }
+// }

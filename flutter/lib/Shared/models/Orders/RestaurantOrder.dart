@@ -1,3 +1,4 @@
+import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -52,7 +53,12 @@ class RestaurantOrder extends Order {
           totalCost: itemData["totalCost"],
           idInCart: itemId,
           idInRestaurant: itemData["id"],
-          name: itemData["name"],
+          name: {
+            LanguageType.EN: itemData["name"]
+                ["${LanguageType.EN.toFirebaseFormatString()}"],
+            LanguageType.ES: itemData["name"]
+                ["${LanguageType.ES.toFirebaseFormatString()}"],
+          },
           image: itemData["image"],
           quantity: itemData["quantity"],
           notes: itemData["notes"]);
@@ -60,7 +66,12 @@ class RestaurantOrder extends Order {
           ?.forEach((dynamic id, dynamic data) {
         restaurantOrderItem.chooseManyOptions.add(ChooseManyOption(
             optionId: id,
-            optionName: data["name"],
+            optionName: {
+              LanguageType.EN: data["name"]
+                  ["${LanguageType.EN.toFirebaseFormatString()}"],
+              LanguageType.ES: data["name"]
+                  ["${LanguageType.ES.toFirebaseFormatString()}"]
+            },
             chosenValueCost: data["chosenValueCost"],
             chosenOptionValue: data["chosenValue"]));
       });
@@ -68,10 +79,22 @@ class RestaurantOrder extends Order {
           ?.forEach((dynamic id, dynamic data) {
         restaurantOrderItem.chooseOneOptions.add(ChooseOneOption(
             optionId: id,
-            optionName: data["name"],
+            optionName: {
+              LanguageType.EN: data["name"]
+                  ["${LanguageType.EN.toFirebaseFormatString()}"],
+              LanguageType.ES: data["name"]
+                  ["${LanguageType.ES.toFirebaseFormatString()}"]
+            },
             chosenOptionId: data["chosenOptionId"],
             chosenOptionCost: data["chosenOptionCost"],
-            chosenOptionName: data["chosenOptionName"]));
+            chosenOptionName: {
+              LanguageType.EN: data["chosenOptionName"]
+                  ["${LanguageType.EN.toFirebaseFormatString()}"],
+              LanguageType.ES: data["chosenOptionName"]
+                  ["${LanguageType.ES.toFirebaseFormatString()}"]
+            }
+            // data["chosenOptionName"]
+            ));
       });
       restaurantOrder.items.add(restaurantOrderItem);
     });
@@ -127,7 +150,7 @@ class RestaurantOrderItem {
   num totalCost;
   String idInCart;
   String idInRestaurant;
-  String name;
+  Map<LanguageType, String> name;
   String image;
   int quantity;
   String? notes;
@@ -146,9 +169,9 @@ class RestaurantOrderItem {
 
 class ChooseOneOption {
   String optionId;
-  String optionName;
+  Map<LanguageType, String> optionName;
   String chosenOptionId;
-  String chosenOptionName;
+  Map<LanguageType, String> chosenOptionName;
   num chosenOptionCost;
   ChooseOneOption(
       {required this.optionId,
@@ -160,7 +183,7 @@ class ChooseOneOption {
 
 class ChooseManyOption {
   String optionId;
-  String optionName;
+  Map<LanguageType, String> optionName;
   bool chosenOptionValue;
   num chosenValueCost;
   ChooseManyOption(

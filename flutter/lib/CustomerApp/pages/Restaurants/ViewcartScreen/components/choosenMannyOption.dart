@@ -27,7 +27,7 @@ List<Widget> choosenMannyOption(
           width: Get.width,
           alignment: Alignment.centerLeft,
           padding: const EdgeInsets.only(left: 25, top: 5),
-          child: Text("${value.name!["${lang.userLanguageKey}"]}".inCaps,
+          child: Text("${value.name[lang.userLanguageKey]}".inCaps,
               style: const TextStyle(
                   color: const Color(0xff000000),
                   fontWeight: FontWeight.w400,

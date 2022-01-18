@@ -151,7 +151,8 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Text("${cartItem.value!.item.description!.inCaps}",
+                    child: Text(
+                        "${cartItem.value!.item.description![lang.userLanguageKey]!.inCaps}",
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.bodyText2),
                   ),

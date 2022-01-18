@@ -19,7 +19,7 @@ enum LanguageType { EN, ES }
 extension ParseLanugaugeTypeToString on LanguageType {
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;
-    return str[0].toLowerCase() + str.substring(1);
+    return str[0].toLowerCase() + str.substring(1).toLowerCase();
   }
 }
 

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:firebase_database/firebase_database.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 
 class User {
@@ -38,7 +39,9 @@ class User {
         image = snapshot.value['image'],
         language = snapshot.value['language'] == null
             ? LanguageType.ES
-            : snapshot.value['language'].toLanguageType(),
+            : LanguageType.values.firstWhere((element) =>
+                element.toFirebaseFormatString().toLowerCase() ==
+                snapshot.value['language']),
         phone = snapshot.value['phone'],
         data = snapshot.value;
 
