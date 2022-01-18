@@ -28,7 +28,7 @@ class OrderController extends GetxController {
   void onInit() {
     super.onInit();
     mezDbgPrint("--------------------> OrderController Initialized !");
-    if (_authController.fireAuthUser != null) {
+    if (_authController.fireAuthUser?.uid != null) {
       _pastOrdersListener?.cancel();
       _pastOrdersListener = _databaseHelper.firebaseDatabase
           .reference()

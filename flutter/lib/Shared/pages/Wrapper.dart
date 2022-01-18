@@ -52,7 +52,9 @@ class _WrapperState extends State<Wrapper> {
     } else {
       mezDbgPrint(
           "Wrapper::handleAuthStateChange:: signed in, Checking if User name are Set !");
-      if (!Get.find<AuthController>().isDisplayNameSet()) {
+      if (!Get.find<AuthController>().isDisplayNameSet() ||
+          Get.find<AuthController>().fireAuthUser?.photoURL ==
+              "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d") {
         await Get.toNamed(kUserProfile);
       }
       if (Get.currentRoute == kSignInRouteOptional) {

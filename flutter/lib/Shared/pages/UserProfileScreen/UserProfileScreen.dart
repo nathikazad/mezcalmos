@@ -78,7 +78,7 @@ class _UserProfileState extends State<UserProfile> {
               if (textController.text == null || textController.text.isEmpty) {
                 checkNameValidation();
               } else {
-                if (!checkNameValidation()) {
+                if (!checkNameValidation() && auth.user?.image != defaultPic) {
                   showModalBottomSheet<void>(
                     context: context,
                     builder: (BuildContext context) {
@@ -148,7 +148,8 @@ class _UserProfileState extends State<UserProfile> {
                 child: Obx(
                   () => auth.user != null
                       ? ConstrainedBox(
-                          constraints: BoxConstraints(maxHeight: Get.height),
+                          constraints: BoxConstraints(
+                              maxHeight: Get.height, maxWidth: Get.width),
                           child: Container(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -178,6 +179,8 @@ class _UserProfileState extends State<UserProfile> {
                                     function: () async {
                                       if (checkNameValidation()) {
                                       } else {
+                                        mezDbgPrint(
+                                            " ~~~~ ||| ===>${imageFile.path}");
                                         if (!isEditing.value) {
                                           mezDbgPrint(
                                               "editing" + textController.text);
@@ -198,12 +201,17 @@ class _UserProfileState extends State<UserProfile> {
                                                 xUrl);
                                             isEditing.value = !isEditing.value;
                                           } else {
-                                            mezDbgPrint("the path is empty");
+                                            if (auth.user!.phone ==
+                                                defaultPic) {
+                                            } else {
+                                              mezDbgPrint("the path is empty");
 
-                                            auth.editUserProfile(
-                                                textController.text.trim(),
-                                                auth.user!.image);
-                                            isEditing.value = !isEditing.value;
+                                              auth.editUserProfile(
+                                                  textController.text.trim(),
+                                                  auth.user!.image);
+                                              isEditing.value =
+                                                  !isEditing.value;
+                                            }
                                           }
                                         }
                                       }

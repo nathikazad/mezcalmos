@@ -4,6 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
+String defaultPic =
+    "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d";
+
 Widget meddleWidgetUserProfile(
     {required bool isEditing,
     required TextEditingController controller,
@@ -70,6 +73,9 @@ Widget meddleWidgetUserProfile(
                               if (!nameExp.hasMatch(value)) {
                                 return '${lang.strings['shared']['userInfo']['validationTxtTwo']}';
                               }
+                              // if (auth.fireAuthUser?.photoURL == defaultPic) {
+                              //   return "select a user photo";
+                              // }
                               return null;
                             }
                           },

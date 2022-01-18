@@ -221,7 +221,7 @@ class AuthController extends GetxController {
       response = await sendOTPForLoginFunction.call(<String, dynamic>{
         'phoneNumber': phoneNumber,
         'messageType': 'SMS',
-        'language': tDefaultLanguage,
+        'language': tDefaultLanguage.toFirebaseFormatString(),
         // 'language': _settings.appLanguage.userLanguageKey,
       });
       // var c = json.decode(response.data);
@@ -256,7 +256,7 @@ class AuthController extends GetxController {
       response = await getAuthUsingOTPFunction.call(<String, dynamic>{
         'phoneNumber': phoneNumber,
         'OTPCode': otpCode,
-        'language': tDefaultLanguage,
+        'language': tDefaultLanguage.toFirebaseFormatString(),
         // 'language': _settings.appLanguage.userLanguageKey,
       });
 
