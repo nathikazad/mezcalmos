@@ -33,9 +33,9 @@ Widget buildItems(List<CartItem> cartItems, BuildContext context) {
               child: Obx(
             () => ItemInformationCart(
               imageUrl: element.item.image!,
-              itemName: element.item.name!['${lang.userLanguageKey}']![0]
-                      .toUpperCase() +
-                  element.item.name!['${lang.userLanguageKey}']!.substring(1),
+              itemName:
+                  element.item.name[lang.userLanguageKey]![0].toUpperCase() +
+                      element.item.name[lang.userLanguageKey]!.substring(1),
               restaurantName: "Basic food",
               itemsPrice: counter.value.toStringAsFixed(0),
             ),

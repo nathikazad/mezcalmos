@@ -78,7 +78,7 @@ class _RestaurantsListItemsOfComponentState
                   Container(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                        "${widget.item.name!['${lang.userLanguageKey}']!.capitalizeFirstofEach}",
+                        "${widget.item.name[lang.userLanguageKey]!.capitalizeFirstofEach}",
                         style: txt.headline3!
                             .copyWith(color: Colors.grey.shade800)),
                   ),

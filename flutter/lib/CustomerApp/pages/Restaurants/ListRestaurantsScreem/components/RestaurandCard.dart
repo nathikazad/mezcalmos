@@ -49,7 +49,7 @@ class RestaurantCard extends StatelessWidget {
                         height: 10,
                       ),
                       Text(
-                        restaurant.description,
+                        restaurant.description[lang.userLanguageKey]!,
                         style: txt.subtitle1,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,

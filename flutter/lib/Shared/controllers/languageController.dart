@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 
 class LanguageController extends GetxController {
@@ -11,7 +12,7 @@ class LanguageController extends GetxController {
 
   // default is english
   RxBool isAppInitialized = false.obs;
-  RxString _userLanguageKey = tDefaultLanguage.obs;
+  Rx<LanguageType> _userLanguageKey = tDefaultLanguage.obs;
 
   // jsonStrings will have:
   // {en : {}, es : {}}  <- so we avoid loading up each one onchanging lang
@@ -19,35 +20,40 @@ class LanguageController extends GetxController {
       .obs; // language Object by default  must be set to en if no lang given  in constructor.
 
   LanguageController() {
-    final lang = Platform.localeName.substring(0, 2);
+    final LanguageType lang =
+        Platform.localeName.substring(0, 2).toLanguageType();
 
     // mezDbgPrint("\n\n\n\n\nUSER LANGUAGE [[ $lang ]]\n\n\n\n\n");
-    if (lang == "en")
-      _userLanguageKey.value =
-          lang; // to avoid diffrent other languages diffrent than en and es
+    if (lang == LanguageType.EN)
+      _userLanguageKey.value = LanguageType
+          .EN; // to avoid diffrent other languages diffrent than en and es
   }
 
-  Map<String, dynamic> languageDetails = {
-    "en": {"fullName": "English", "langImage": usaFlagAsset},
-    "es": {"fullName": "Español", "langImage": mexicoFlagAsset}
+  Map<LanguageType, dynamic> languageDetails = {
+    LanguageType.EN: {"fullName": "English", "langImage": usaFlagAsset},
+    LanguageType.ES: {"fullName": "Español", "langImage": mexicoFlagAsset}
   };
-  String get userLanguageKey => _userLanguageKey.value;
+  LanguageType get userLanguageKey => _userLanguageKey.value;
   String get langFullName => languageDetails[_userLanguageKey.value].fullName;
   String get langImage => languageDetails[_userLanguageKey.value].langImage;
-  dynamic get strings => _jsonStrings[_userLanguageKey.value];
+  dynamic get strings =>
+      _jsonStrings[_userLanguageKey.value.toFirebaseFormatString()];
 
-  String get oppositLangKey => _userLanguageKey.value == "en" ? "es" : "en";
+  LanguageType get oppositLangKey => _userLanguageKey.value == LanguageType.EN
+      ? LanguageType.ES
+      : LanguageType.EN;
   String get oppositToLang =>
-      _userLanguageKey.value == "en" ? "A Español" : "To English";
-  String get oppositFlag =>
-      _userLanguageKey.value == "en" ? mexicoFlagAsset : usaFlagAsset;
+      _userLanguageKey.value == LanguageType.EN ? "A Español" : "To English";
+  String get oppositFlag => _userLanguageKey.value == LanguageType.EN
+      ? mexicoFlagAsset
+      : usaFlagAsset;
 
-  void changeUserLanguage([String? language]) {
+  void changeUserLanguage([LanguageType? language]) {
     if (language == null) {
-      if (_authController.user?.language == "es") {
-        language = "en";
+      if (_authController.user?.language == LanguageType.ES) {
+        language = LanguageType.EN;
       } else {
-        language = "es";
+        language = LanguageType.ES;
       }
       if (_authController.user != null) {
         // we need that because in case user clicked change lang from SideMenu , we really don't
@@ -63,7 +69,7 @@ class LanguageController extends GetxController {
     }
   }
 
-  void userLanguageChanged(String language) {
+  void userLanguageChanged(LanguageType language) {
     _userLanguageKey.value = language;
   }
 

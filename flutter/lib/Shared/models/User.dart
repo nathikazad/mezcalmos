@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:firebase_database/firebase_database.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
 
 class User {
   /** 
@@ -14,7 +16,7 @@ class User {
   String? email;
   String? name;
   String? image;
-  String language;
+  LanguageType language;
   String? phone;
   dynamic data;
 
@@ -36,8 +38,10 @@ class User {
         name = snapshot.value['name'],
         image = snapshot.value['image'],
         language = snapshot.value['language'] == null
-            ? "es"
-            : snapshot.value['language'],
+            ? LanguageType.ES
+            : LanguageType.values.firstWhere((element) =>
+                element.toFirebaseFormatString().toLowerCase() ==
+                snapshot.value['language']),
         phone = snapshot.value['phone'],
         data = snapshot.value;
 
@@ -47,6 +51,6 @@ class User {
         "email": email,
         "name": name,
         "image": image,
-        "language": language
+        "language": language.toString()
       };
 }

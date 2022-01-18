@@ -16,6 +16,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
@@ -161,14 +162,12 @@ class AuthController extends GetxController {
     }
   }
 
-  void changeLanguage(String newLanguage) {
+  void changeLanguage(LanguageType newLanguage) {
     if (_user.value != null) {
-      if (newLanguage == "en" || newLanguage == "es") {
-        _databaseHelper.firebaseDatabase
-            .reference()
-            .child(userLanguage(_user.value!.uid))
-            .set(newLanguage);
-      }
+      _databaseHelper.firebaseDatabase
+          .reference()
+          .child(userLanguage(_user.value!.uid))
+          .set(newLanguage.toFirebaseFormatString());
     }
   }
 

@@ -49,7 +49,6 @@ class RestaurantsInfoController extends GetxController {
         .reference()
         .child('restaurants/info/$restaurantId/menu/$itemId')
         .once()
-        .then<Item>((snapshot) => Item.itemFromData(itemId, snapshot.value,
-            language: lang.userLanguageKey));
+        .then<Item>((snapshot) => Item.itemFromData(itemId, snapshot.value));
   }
 }
