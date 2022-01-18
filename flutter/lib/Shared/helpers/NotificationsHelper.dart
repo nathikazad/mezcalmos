@@ -13,9 +13,9 @@ StreamSubscription<notifs.Notification> initializeShowNotificationsListener() {
   return Get.find<ForegroundNotificationsController>()
       .displayNotificationsStream
       .listen((notification) {
-    mezDbgPrint("Notification Displayer: ${notification.toJson()}");
-    mezDbgPrint("Notif::title ====> ${notification.title}");
-    mezDbgPrint("Notif::body ====> ${notification.body}");
+    // mezDbgPrint("Notification Displayer: ${notification.toJson()}");
+    // mezDbgPrint("Notif::title ====> ${notification.title}");
+    // mezDbgPrint("Notif::body ====> ${notification.body}");
     if (DateTime.now().difference(notification.timestamp) <
         Duration(minutes: 10)) {
       _displayNotification(notification);
@@ -25,7 +25,7 @@ StreamSubscription<notifs.Notification> initializeShowNotificationsListener() {
 
 void _displayNotification(notifs.Notification notification) async {
   await Get.find<SettingsController>().playNotificationSound();
-  mezDbgPrint(notification.imgUrl);
+  // mezDbgPrint(notification.imgUrl);
   if (notification.notificationAction == notifs.NotificationAction.ShowPopUp) {
     twoButtonDialog(
         title: notification.title,
@@ -47,7 +47,7 @@ void _displayNotification(notifs.Notification notification) async {
   } else {
     notificationSnackBar(notification.imgUrl, notification.title,
         notification.body, notification.formattedTime, () async {
-      mezDbgPrint("Notification route ===> ${notification.linkUrl} !");
+      // mezDbgPrint("Notification route ===> ${notification.linkUrl} !");
       Get.toNamed(notification.linkUrl);
     });
   }

@@ -35,9 +35,9 @@ class ForegroundNotificationsController extends GetxController {
 
   void startListeningForNotificationsFromFirebase(String notificationNode,
       Notification Function(String key, dynamic value) notificationHandler) {
-    mezDbgPrint(
-        "ForegroundNotificationsController:startListeningForNotifications");
-    mezDbgPrint(notificationNode);
+    // mezDbgPrint(
+    //     "ForegroundNotificationsController:startListeningForNotifications");
+    // mezDbgPrint(notificationNode);
     this._notificationNode = notificationNode;
     _notificationNodeAddListener?.cancel();
     _notificationNodeAddListener = _databaseHelper.firebaseDatabase
@@ -45,8 +45,8 @@ class ForegroundNotificationsController extends GetxController {
         .child(notificationNode)
         .onChildAdded
         .listen((event) {
-      mezDbgPrint("sd@s:ForegroundNotificationsController:: NEW NOTIFICATION");
-      mezDbgPrint(event.snapshot.value);
+      // mezDbgPrint("sd@s:ForegroundNotificationsController:: NEW NOTIFICATION");
+      // mezDbgPrint(event.snapshot.value);
       try {
         Notification _notification =
             notificationHandler(event.snapshot.key!, event.snapshot.value);

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/taxiNodes.dart';
@@ -59,7 +60,7 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
 
   void listenForLocationPermissions() {
     _locationStreamSub?.cancel();
-    _locationStreamSub = Get.find<SettingsController>().locationPermissionStream
+    _locationStreamSub = Get.find<LocationController>().locationPermissionStream
         // .distinct()
         .listen((locationPermission) {
       if (locationPermission == false &&

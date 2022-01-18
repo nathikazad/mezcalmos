@@ -46,19 +46,12 @@ class RestaurantOrder extends Order {
         customer: UserInfo.fromData(data["customer"]));
 
     data["items"].forEach((dynamic itemId, dynamic itemData) {
-      mezDbgPrint("hhhh~~~~++++" + itemData.toString());
-
       RestaurantOrderItem restaurantOrderItem = RestaurantOrderItem(
           costPerOne: itemData["costPerOne"],
           totalCost: itemData["totalCost"],
           idInCart: itemId,
           idInRestaurant: itemData["id"],
-          name: {
-            LanguageType.EN: itemData["name"]
-                ["${LanguageType.EN.toFirebaseFormatString()}"],
-            LanguageType.ES: itemData["name"]
-                ["${LanguageType.ES.toFirebaseFormatString()}"],
-          },
+          name: convertToLanguageMap(itemData["name"]),
           image: itemData["image"],
           quantity: itemData["quantity"],
           notes: itemData["notes"]);

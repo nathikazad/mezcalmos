@@ -1,3 +1,5 @@
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+
 enum AuthorizationStatus { InReview, Authorized, Unauthorized }
 
 extension ParseAuthorizationStatusToString on AuthorizationStatus {
@@ -28,4 +30,15 @@ extension ParseStringToLanugaugeType on String {
     return LanguageType.values
         .firstWhere((e) => e.toFirebaseFormatString().toLowerCase() == this);
   }
+}
+
+Map<LanguageType, String> convertToLanguageMap(dynamic data) {
+  Map<LanguageType, String> map = {};
+  data.forEach((dynamic language, dynamic string) {
+    if (language == LanguageType.EN.toFirebaseFormatString() ||
+        language == LanguageType.ES.toFirebaseFormatString()) {
+      map[language.toString().toLanguageType()] = string;
+    }
+  });
+  return map;
 }

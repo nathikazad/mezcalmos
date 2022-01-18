@@ -34,21 +34,22 @@ class OrderController extends GetxController {
         for (var orderId in event.snapshot.value.keys) {
           dynamic orderData = event.snapshot.value[orderId];
           orders.add(RestaurantOrder.fromData(orderId, orderData));
+          break;
         }
       }
       inProcessOrders.value = orders;
     });
 
-    _pastOrdersListener = _databaseHelper.firebaseDatabase
-        .reference()
-        .child(pastOrdersNode())
-        .orderByChild('orderTime')
-        .limitToLast(15)
-        .onChildAdded
-        .listen((event) {
-      pastOrders.add(
-          RestaurantOrder.fromData(event.snapshot.key, event.snapshot.value));
-    });
+    // _pastOrdersListener = _databaseHelper.firebaseDatabase
+    //     .reference()
+    //     .child(pastOrdersNode())
+    //     .orderByChild('orderTime')
+    //     .limitToLast(5)
+    //     .onChildAdded
+    //     .listen((event) {
+    //   pastOrders.add(
+    //       RestaurantOrder.fromData(event.snapshot.key, event.snapshot.value));
+    // });
 
     super.onInit();
   }
@@ -80,7 +81,6 @@ class OrderController extends GetxController {
   }
 
   bool isPast(RestaurantOrder order) {
-    
     return pastOrders.contains(order);
   }
 
@@ -108,13 +108,13 @@ class OrderController extends GetxController {
 
   void clearNewOrderNotifications() {
     _fbNotificationsController.notifications.value.forEach((element) {
-      mezDbgPrint(element.notificationType.toFirebaseFormatString());
+      // mezDbgPrint(element.notificationType.toFirebaseFormatString());
     });
     _fbNotificationsController.notifications.value
         .where((notification) =>
             notification.notificationType == NotificationType.NewOrder)
         .forEach((notification) {
-      mezDbgPrint(notification.id);
+      // mezDbgPrint(notification.id);
       _fbNotificationsController.removeNotification(notification.id);
     });
   }

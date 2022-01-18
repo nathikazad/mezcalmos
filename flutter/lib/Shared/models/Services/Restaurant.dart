@@ -3,19 +3,6 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 
-extension ParseDynamicToLanugaugeMap on dynamic {
-  Map<LanguageType, String> toLanguageType() {
-    Map<LanguageType, String> map = {};
-    this.forEach((dynamic language, dynamic string) {
-      if (language == LanguageType.EN.toFirebaseFormatString() ||
-          language == LanguageType.ES.toFirebaseFormatString()) {
-        map[language.toLanguageType()] = string;
-      }
-    });
-    return map;
-  }
-}
-
 class Restaurant {
   String id;
   Map<LanguageType, String> description;

@@ -42,7 +42,7 @@ class StartingPoint extends StatefulWidget {
   final Function signOutCallback;
   final List<GetPage<dynamic>> routes;
   final List<SideMenuItem>? sideMenuItems;
-
+  final bool locationOn;
   ThemeData get appTheme => _appTheme ?? _defaultAppTheme;
 
   //  Sideminu
@@ -52,7 +52,8 @@ class StartingPoint extends StatefulWidget {
       required this.signInCallback,
       required this.signOutCallback,
       required this.routes,
-      this.sideMenuItems})
+      this.sideMenuItems,
+      this.locationOn = true})
       : _appTheme = appTheme;
 
   @override
@@ -194,7 +195,8 @@ class _StartingPointState extends State<StartingPoint> {
     Get.put<AppLifeCycleController>(AppLifeCycleController(logs: true),
         permanent: true);
     Get.put<SettingsController>(
-        SettingsController(widget.appType, widget.sideMenuItems),
+        SettingsController(
+            widget.appType, widget.sideMenuItems, widget.locationOn),
         permanent: true);
   }
 

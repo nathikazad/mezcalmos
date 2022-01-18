@@ -23,6 +23,7 @@ void main() {
             appTheme: DeliveryAdminTheme.lightTheme,
             signInCallback: signInCallback,
             signOutCallback: signOutCallback,
-            routes: routes),
+            routes: routes,
+            locationOn: false),
       ));
 }

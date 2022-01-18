@@ -7,7 +7,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 Notification deliveryAdminNotificationHandler(String key, dynamic value) {
   NotificationType notificationType =
       value['notificationType'].toString().toNotificationType();
-  mezDbgPrint(notificationType.toFirebaseFormatString());
+  // mezDbgPrint(notificationType.toFirebaseFormatString());
   switch (notificationType) {
     case NotificationType.NewMessage:
       return newMessageNotification(key, value);

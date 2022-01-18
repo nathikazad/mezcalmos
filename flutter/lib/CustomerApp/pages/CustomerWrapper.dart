@@ -15,6 +15,7 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
@@ -297,7 +298,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
 
   void listenForLocationPermissions() {
     _locationStreamSub?.cancel();
-    _locationStreamSub = Get.find<SettingsController>().locationPermissionStream
+    _locationStreamSub = Get.find<LocationController>().locationPermissionStream
         // .distinct()
         .listen((locationPermission) {
       if (locationPermission == false &&
