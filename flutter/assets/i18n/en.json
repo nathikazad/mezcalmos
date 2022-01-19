@@ -438,6 +438,11 @@
         "popUps": {
             "yes" : "Yes",
             "no" : "No"
+        },
+        
+        "conenctionStatus" : {
+            "noInternetConnection" : "No internet connection",
+            "reconnecting" : "Reconnecting"
         }
     },
     "admin": {
