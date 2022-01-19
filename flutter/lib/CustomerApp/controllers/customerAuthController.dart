@@ -28,9 +28,9 @@ class CustomerAuthController extends GetxController {
   void onInit() async {
     super.onInit();
 
-    if (_authController.fireAuthUser != null) {
+    if (_authController.fireAuthUser?.uid != null) {
       mezDbgPrint(
-          "User from CustomerAuthController >> ${_authController.fireAuthUser!.uid}");
+          "User from CustomerAuthController >> ${_authController.fireAuthUser?.uid}");
       mezDbgPrint(
           "CustomerAuthController  Messaging Token>> ${await _notificationsController.getToken()}");
       _customerNodeListener?.cancel();

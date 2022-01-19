@@ -42,6 +42,7 @@ void main() {
           signOutCallback: signOutCallback,
           routes: routes,
           sideMenuItems: sideMenuItems,
+          locationOn: true,
         ),
       ));
 }

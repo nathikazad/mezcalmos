@@ -382,6 +382,7 @@
             "editBtn": "EDITAR INFORMACION",
             "deleteBtn": "Borrar cuenta",
             "saveBtn": "GUARDAR",
+            "cancel": "Cancelar",
             "editImgMsg": "Click on image to change it",
             "fullName": "Nombre completo",
             "phoneNumber": "Número de teléfono",

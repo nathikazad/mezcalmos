@@ -27,7 +27,8 @@ class OrderController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    mezDbgPrint("--------------------> OrderController Initialized !");
+    mezDbgPrint(
+        "--------------------> OrderController Initialized ! and the user uid is ${_authController.fireAuthUser?.uid} ");
     if (_authController.fireAuthUser?.uid != null) {
       _pastOrdersListener?.cancel();
       _pastOrdersListener = _databaseHelper.firebaseDatabase
@@ -37,7 +38,7 @@ class OrderController extends GetxController {
           .listen((event) async {
         mezDbgPrint("----------------- O R D E R CONTROLLER ----------------");
         mezDbgPrint("----------------- O R D E R CONTROLLER ----------------");
-        mezDbgPrint("PAST ORDERS ==> ${event.snapshot.value} ");
+        //  mezDbgPrint("PAST ORDERS ==> ${event.snapshot.value} ");
 
         mezDbgPrint("----------------- O R D E R CONTROLLER ----------------");
 
@@ -74,7 +75,7 @@ class OrderController extends GetxController {
           .listen((event) async {
         List<Order> orders = [];
 
-        mezDbgPrint("~~~~~~+++++++====== ${event.snapshot.value.toString()}");
+        // mezDbgPrint("~~~~~~+++++++====== ${event.snapshot.value.toString()}");
         if (event.snapshot.value != null) {
           mezDbgPrint("my data hhhh ${event.snapshot.value.toString()}");
           for (var orderId in event.snapshot.value.keys) {

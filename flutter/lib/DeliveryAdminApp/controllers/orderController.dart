@@ -34,22 +34,21 @@ class OrderController extends GetxController {
         for (var orderId in event.snapshot.value.keys) {
           dynamic orderData = event.snapshot.value[orderId];
           orders.add(RestaurantOrder.fromData(orderId, orderData));
-          break;
         }
       }
       inProcessOrders.value = orders;
     });
 
-    // _pastOrdersListener = _databaseHelper.firebaseDatabase
-    //     .reference()
-    //     .child(pastOrdersNode())
-    //     .orderByChild('orderTime')
-    //     .limitToLast(5)
-    //     .onChildAdded
-    //     .listen((event) {
-    //   pastOrders.add(
-    //       RestaurantOrder.fromData(event.snapshot.key, event.snapshot.value));
-    // });
+    _pastOrdersListener = _databaseHelper.firebaseDatabase
+        .reference()
+        .child(pastOrdersNode())
+        .orderByChild('orderTime')
+        .limitToLast(5)
+        .onChildAdded
+        .listen((event) {
+      pastOrders.add(
+          RestaurantOrder.fromData(event.snapshot.key, event.snapshot.value));
+    });
 
     super.onInit();
   }

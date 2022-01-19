@@ -90,7 +90,9 @@ class AuthController extends GetxController {
             _databaseHelper.firebaseDatabase
                 .reference()
                 .child(userLanguage(user.uid))
-                .set(Get.find<LanguageController>().userLanguageKey);
+                .set(Get.find<LanguageController>()
+                    .userLanguageKey
+                    .toFirebaseFormatString());
           }
           _user.value = User.fromSnapshot(user, event.snapshot);
 

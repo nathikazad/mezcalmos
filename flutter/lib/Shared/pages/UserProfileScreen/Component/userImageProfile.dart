@@ -8,6 +8,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/pages/UserProfileScreen/Component/compressImage.dart';
 
 enum AccountState {
   free,
@@ -110,7 +111,9 @@ class _UserImageProfileState extends State<UserImageProfile> {
     if (croppedFile != null) {
       setState(() {
         imageFile = croppedFile;
-        widget.onImageUserChanged!(imageFile);
+        compressImage(imageFile).then((value) {
+          widget.onImageUserChanged!(imageFile);
+        });
         state = AccountState.picked;
       });
     }
