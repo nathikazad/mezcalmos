@@ -30,6 +30,10 @@ class SettingsController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+
+    if (this.locationOn) {
+      Get.put(LocationController(), permanent: true);
+    }
     // here --------
     // FOR NOW WE SET IT TO EN (default  if not passed to LangController)
     _appTheme = Get.put(ThemeController(), permanent: true);
@@ -46,9 +50,7 @@ class SettingsController extends GetxController {
           await _userNotificationsSoundPool.load(_soundData);
     }
 
-    if (this.locationOn) {
-      Get.put(LocationController(), permanent: true);
-    }
+    
   }
 
   Future playNotificationSound({int? soundId}) async {
