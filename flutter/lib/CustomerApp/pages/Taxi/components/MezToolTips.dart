@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/widgets/ToolTipTrianglePainter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MezToolTips extends StatefulWidget {
   @override
@@ -22,61 +23,80 @@ class _MezToolTipsState extends State<MezToolTips> {
             color: Colors.black26,
             width: Get.width,
             height: Get.height,
-            child: InkWell(
-              onTap: () {
-                if (hintIndex == 2) {
-                  Get.find<TaxiController>()
-                      .increaseNumOfTimesToolTipShownToUser();
-                }
-                setState(() {
-                  hintIndex += 1;
-                  mezDbgPrint("Added one +> $hintIndex");
-                });
-              },
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 50),
-                      padding: EdgeInsets.only(
-                          top: 10, bottom: 10, left: 5, right: 5),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(
-                          color: Colors.grey,
-                          width: 1,
+            child: Stack(
+              alignment: Alignment.bottomLeft,
+              fit: StackFit.passthrough,
+              children: [
+                Positioned(
+                    bottom: 150,
+                    left: 25,
+                    right: 50,
+                    child: Stack(
+                      fit: StackFit.passthrough,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.only(
+                              top: 10, bottom: 10, left: 5, right: 5),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: Colors.grey,
+                              width: 1,
+                            ),
+                          ),
+                          child: Column(
+                            children:
+                                hintIndex == 1 ? firstHint() : secondHint(),
+                          ),
                         ),
-                      ),
-                      child: Column(
-                        children: hintIndex == 1 ? firstHint() : secondHint(),
-                      ),
-                    )
-                  ]),
+                        Positioned(
+                            top: 5,
+                            right: 5,
+                            child: InkWell(
+                              onTap: () {
+                                if (hintIndex == 2) {
+                                  Get.find<TaxiController>()
+                                      .increaseNumOfTimesToolTipShownToUser();
+                                }
+                                setState(() {
+                                  hintIndex += 1;
+                                  mezDbgPrint("Added one +> $hintIndex");
+                                });
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: Colors.grey.shade50,
+                                    shape: BoxShape.circle),
+                                height: 20,
+                                width: 20,
+                                child: Center(
+                                  child: Icon(
+                                    Icons.close,
+                                    size: 15,
+                                    color: Colors.purple.shade400,
+                                  ),
+                                ),
+                              ),
+                            )),
+                      ],
+                    )),
+                AnimatedPositioned(
+                    duration: Duration(milliseconds: 500),
+                    bottom: 150.5,
+                    left: hintIndex == 1 ? 80 : 210,
+                    child: CustomPaint(
+                        painter: ToolTipTrianglePainter(
+                            backGroundColor: Colors.white))),
+              ],
             ),
           );
   }
 
   List<Widget> secondHint() {
     return [
-      Container(
-          padding: EdgeInsets.only(top: 15),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Icon(Icons.mark_email_read, size: 30),
-              SizedBox(
-                width: 10,
-              ),
-              Text(
-                " 21",
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-              )
-            ],
-          )),
       SizedBox(
-        height: 20,
+        height: 10,
       ),
       Center(
         child: Text(
@@ -87,22 +107,22 @@ class _MezToolTipsState extends State<MezToolTips> {
         ),
       ),
       SizedBox(
-        height: 20,
+        height: 10,
       )
     ];
   }
 
   List<Widget> firstHint() {
     return [
-      Container(
-        child: Image.asset(
-          aTaxiRidePriceController,
-          height: 80,
-          width: 140,
-        ),
-      ),
+      // Container(
+      //   child: Image.asset(
+      //     aTaxiRidePriceController,
+      //     height: 80,
+      //     width: 140,
+      //   ),
+      // ),
       SizedBox(
-        height: 20,
+        height: 10,
       ),
       Center(
         child: Text(
@@ -113,7 +133,7 @@ class _MezToolTipsState extends State<MezToolTips> {
         ),
       ),
       SizedBox(
-        height: 20,
+        height: 10,
       )
     ];
   }

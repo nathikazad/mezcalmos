@@ -172,10 +172,6 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
                 Get.offNamedUntil(
                     kCurrentOrderRoute, ModalRoute.withName(kHomeRoute));
                 // Notice the User !
-                mezDbgPrint(
-                    "s@ad:IncommingOrderViewScreen::acceptOrderButton::response::data:: ${serverResponse.data}");
-                mezDbgPrint(
-                    "s@ad:IncommingOrderViewScreen::acceptOrderButton::response::status:: ${serverResponse.status.toShortString()}");
               } else {
                 // in case Taxi User failed accepting the order.
                 setState(() {

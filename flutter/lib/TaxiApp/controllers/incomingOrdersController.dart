@@ -34,7 +34,7 @@ class IncomingOrdersController extends GetxController {
     super.onInit();
     mezDbgPrint("IncomingOrdersController init");
 
-      // Added TaxiOrder!
+    // Added TaxiOrder!
     mezDbgPrint("Gonna start listen on : ${rootTaxiOpenOrdersNode()} !!");
     _incomingOrdersListener = _databaseHelper.firebaseDatabase
         .reference()
@@ -45,7 +45,6 @@ class IncomingOrdersController extends GetxController {
       mezDbgPrint(event.snapshot.value);
       List<TaxiOrder> ordersFromSnapshot = <TaxiOrder>[];
       if (event.snapshot.value != null) {
-        mezDbgPrint("s@s:Ordeeeeer ==> ${event.snapshot.value}");
         event.snapshot.value?.forEach((dynamic key, dynamic value) async {
           // this is made to avoid 1 key being in the event.snapshot
           // happening becasause.
@@ -80,7 +79,6 @@ class IncomingOrdersController extends GetxController {
       });
       orders.sort((a, b) => a.distanceToClient.compareTo(b.distanceToClient));
     });
-    
 
     // _appLifeCycleController.attachCallback(AppLifecycleState.resumed, () {
     //   mezDbgPrint("[+] Callback executed :: app resumed !");

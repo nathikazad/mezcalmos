@@ -21,7 +21,6 @@ extension TwoButtonExtension on TwoButtonDialogButton {
   }
 }
 
-// TODO: @Saad make sure network images work
 // ok button is not showing
 Future<void> oneButtonDialog(
     {String? title,

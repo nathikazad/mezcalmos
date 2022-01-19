@@ -117,7 +117,9 @@ class _AutoCompleteTextViewState extends State<AutoCompleteTextView> {
     if (data.length >= 3 && !suggestionsStreamController.isClosed) {
       idWithDescription.clear();
       idWithDescription = await widget.getSuggestionsMethod(data);
-      suggestionsStreamController.sink.add(idWithDescription.values.toList());
+      if (!suggestionsStreamController.isClosed) {
+        suggestionsStreamController.sink.add(idWithDescription.values.toList());
+      }
     }
   }
 
