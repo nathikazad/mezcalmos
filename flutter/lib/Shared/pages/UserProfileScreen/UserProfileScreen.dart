@@ -34,6 +34,7 @@ class _UserProfileState extends State<UserProfile> {
   LanguageController lang = Get.find<LanguageController>();
   AccountState state = AccountState.free;
   Rx<bool> isEditing = false.obs;
+  String? uploadedImageLink;
   TextEditingController textController = new TextEditingController();
   File? imageFile;
 
@@ -41,13 +42,13 @@ class _UserProfileState extends State<UserProfile> {
   void initState() {
     // should only executes once because when state rebuilds upon any focus (This gets re-executes making it impossible to apply userName changes)
     super.initState();
-    if (auth.user?.name != null || auth.user?.image != defaultPic) {
+    if (auth.user?.name != null && auth.user?.image != defaultPic) {
     } else {
       isEditing.value = true;
     }
 
     textController.text = auth.user?.name == null ? "" : auth.user!.name!;
-    imageFile = File("${auth.user?.image}");
+    imageFile = File(auth.user?.image != null ? auth.user!.image! : "test");
   }
 
   @override
@@ -74,70 +75,36 @@ class _UserProfileState extends State<UserProfile> {
           }
         },
         child: Scaffold(
-          appBar: mezcalmosAppBar(AppBarLeftButtonType.Back, function: () {
+          appBar:
+              mezcalmosAppBar(AppBarLeftButtonType.Back, function: () async {
             if (auth.user?.name == null || auth.user?.image == defaultPic) {
               if (textController.text == null || textController.text.isEmpty) {
                 checkNameValidation();
               } else {
                 if (!checkNameValidation()) {
-                  showModalBottomSheet<void>(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return Container(
-                        height: 80,
-                        color: Colors.black,
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                Text(
-                                  '${lang.strings['shared']['userInfo']['saveTxt']}',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                Spacer(),
-                                ElevatedButton(
-                                    child: Text(
-                                        "${lang.strings['shared']['userInfo']["saveBtn"]}"),
-                                    onPressed: () async {
-                                      if (imageFile?.path != defaultPic) {
-                                        var xUrl = await auth.getImageUrl(
-                                            imageFile!, auth.user!.uid);
-                                        mezDbgPrint(xUrl);
-                                        auth.user!.image = xUrl;
-                                        auth.editUserProfile(
-                                            textController.text.trim(), xUrl);
-                                        isEditing.value = true;
-                                      } else {
-                                        if (auth.user!.image == defaultPic) {
-                                          mezDbgPrint(
-                                              "please change the image");
+                  if (imageFile?.path != defaultPic &&
+                      imageFile?.path != "test") {
+                    var xUrl =
+                        await auth.getImageUrl(imageFile!, auth.user!.uid);
+                    mezDbgPrint(xUrl);
+                    auth.user!.image = xUrl;
+                    auth.editUserProfile(textController.text.trim(), xUrl);
+                    isEditing.value = true;
+                  } else {
+                    if (auth.user!.image == defaultPic) {
+                      mezDbgPrint("please change the image");
 
-                                          showAddImageDailog();
-                                        } else {
-                                          mezDbgPrint("the path is empty");
+                      // showAddImageDailog();
+                    } else {
+                      mezDbgPrint("the path is empty");
 
-                                          auth.editUserProfile(
-                                              textController.text.trim(),
-                                              auth.user!.image);
-                                          isEditing.value = !isEditing.value;
-                                          Get.back();
-                                          Get.back();
-                                        }
-                                      }
-                                    }),
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                  // showUserBottomSheet(
-                  //     context: context,
-                  //);
+                      auth.editUserProfile(
+                          textController.text.trim(), auth.user!.image);
+                      isEditing.value = !isEditing.value;
+                      Get.back();
+                      Get.back();
+                    }
+                  }
                 } else {
                   //do: somethig
                 }
@@ -171,7 +138,28 @@ class _UserProfileState extends State<UserProfile> {
                                     isEditing: isEditing.value,
                                     onImageUserChanged: (val) {
                                       setState(() {
-                                        imageFile = val;
+                                        if (val.path != defaultPic ||
+                                            val.path != null) {
+                                          Get.snackbar(
+                                              "${lang.strings["shared"]["userInfo"]["snackTxt"]}",
+                                              "${lang.strings["shared"]["userInfo"]["snackMsg"]}",
+                                              backgroundColor: Colors.black,
+                                              colorText: Colors.white,
+                                              showProgressIndicator: true);
+                                          setState(() {
+                                            imageFile = val;
+                                          });
+                                          auth
+                                              .getImageUrl(val, auth.user!.uid)
+                                              .then((value) {
+                                            setState(() {
+                                              uploadedImageLink = value;
+                                            });
+                                            auth
+                                                .editUserProfile(null, val.path)
+                                                .then((value) {});
+                                          });
+                                        }
                                       });
                                     },
                                   ),
@@ -199,21 +187,23 @@ class _UserProfileState extends State<UserProfile> {
                                               "Saved ${textController.text}");
 
                                           auth.user!.name = textController.text;
-                                          if (imageFile?.path != defaultPic) {
-                                            var xUrl = await auth.getImageUrl(
-                                                imageFile!, auth.user!.uid);
-                                            mezDbgPrint(xUrl);
-                                            auth.user!.image = xUrl;
+                                          if (imageFile?.path != defaultPic &&
+                                              imageFile?.path != "test") {
+                                            mezDbgPrint(
+                                                "the file path is ${imageFile?.path}");
+                                            // var xUrl = await auth.getImageUrl(
+                                            //     imageFile!, auth.user!.uid);
+                                            //
+                                            auth.user!.image =
+                                                uploadedImageLink ?? defaultPic;
                                             auth.editUserProfile(
                                                 textController.text.trim(),
-                                                xUrl);
+                                                uploadedImageLink ??
+                                                    defaultPic);
                                             isEditing.value = !isEditing.value;
                                           } else {
                                             if (auth.user!.image ==
                                                 defaultPic) {
-                                              mezDbgPrint(
-                                                  "please change the image");
-                                              showAddImageDailog();
                                             } else {
                                               mezDbgPrint("the path is empty");
 

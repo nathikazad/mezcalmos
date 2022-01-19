@@ -39,7 +39,7 @@ class _WrapperState extends State<Wrapper> {
 
   void handleAuthStateChange(fireAuth.User? user) async {
     mezDbgPrint(
-        "Wrapper: handleAuthStateChange $user and the app type is ${settingsController.appType}");
+        "Wrapper: handleAuthStateChange ${user?.displayName} and the app type is ${settingsController.appType}");
     if (user == null) {
       if (AppType.CustomerApp == settingsController.appType) {
         // if (Get.currentRoute != kSignInRouteOptional) {
@@ -52,8 +52,11 @@ class _WrapperState extends State<Wrapper> {
     } else {
       mezDbgPrint(
           "Wrapper::handleAuthStateChange:: signed in, Checking if User name are Set !");
+
+      mezDbgPrint(
+          "~~~~+++++===>>>> the first condition ${!Get.find<AuthController>().isDisplayNameSet()} and the second condition ${Get.find<AuthController>().user?.image == "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d"} ");
       if (!Get.find<AuthController>().isDisplayNameSet() ||
-          Get.find<AuthController>().fireAuthUser?.photoURL ==
+          Get.find<AuthController>().user?.image ==
               "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d") {
         await Get.toNamed(kUserProfile);
       }

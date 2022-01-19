@@ -32,6 +32,7 @@ class _UserImageProfileState extends State<UserImageProfile> {
   LanguageController lang = Get.find<LanguageController>();
   AccountState state = AccountState.free;
   File imageFile = File("test");
+  bool isUploading = false;
   String defaultPic =
       "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d";
 
@@ -57,7 +58,7 @@ class _UserImageProfileState extends State<UserImageProfile> {
 
   void _clearImage() {
     setState(() {
-      imageFile = File("test");
+      imageFile = File("${auth.user?.image}");
       widget.onImageUserChanged!(imageFile);
       state = AccountState.free;
     });
@@ -70,8 +71,8 @@ class _UserImageProfileState extends State<UserImageProfile> {
 
     setState(() {
       imageFile = File(pickedImage!.path);
-      if (imageFile.path != "test") {
-        widget.onImageUserChanged!(imageFile);
+      if (imageFile.path != defaultPic || imageFile.path != null) {
+        //   widget.onImageUserChanged!(imageFile);
         state = AccountState.picked;
         _cropImage();
       }
@@ -111,8 +112,13 @@ class _UserImageProfileState extends State<UserImageProfile> {
     if (croppedFile != null) {
       setState(() {
         imageFile = croppedFile;
+
         compressImage(imageFile).then((value) {
           widget.onImageUserChanged!(imageFile);
+          // auth.getImageUrl(value, auth.user!.uid).then((value) {
+          //   auth.editUserProfile(null, value).then((value) {
+          // });
+          // });
         });
         state = AccountState.picked;
       });

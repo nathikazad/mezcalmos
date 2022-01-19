@@ -370,6 +370,8 @@
             "viewOrder": "View Order"
         },
         "userInfo": {
+            "snackMsg":"Please be patient while your photo is uploaded",
+            "snackTxt":"Uploading Image",
             "choosePic":"Choose a photo",
             "saveTxt":"Please save the changes you made",
             "hintTxt":"Enter your full name",
