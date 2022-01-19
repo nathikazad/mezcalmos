@@ -32,3 +32,20 @@ export interface Message {
   message: string,
   timestamp: string
 }
+
+export async function buildChatForOrder(
+  customerId: string,
+  customerInfo: Participant,
+  serviceProviderId: string,
+  serviceProviderInfo: Participant,
+  orderType: OrderType): Promise<Chat> {
+  let chat: Chat = {
+    chatType: ChatType.Order,
+    orderType: orderType,
+    participants: {
+      [customerId]: customerInfo,
+      [serviceProviderId]: serviceProviderInfo,
+    }
+  }
+  return chat;
+}

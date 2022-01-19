@@ -1,15 +1,15 @@
 import * as functions from "firebase-functions";
 import { isSignedIn } from "../shared/helper/authorizer";
-import { orderInProcess, RestaurantOrder, RestaurantOrderStatus, RestaurantOrderStatusChangeNotification } from "./models/RestaurantOrder";
+import { orderInProcess, LaundryOrder, LaundryOrderStatus, LaundryOrderStatusChangeNotification } from "./models/LaundryOrder";
 import *  as rootDbNodes from "../shared/databaseNodes/root";
 import { OrderType } from "../shared/models/Order";
 import { ServerResponseStatus } from "../shared/models/Generic";
 import { finishOrder } from "./helper";
 import { notifyDeliveryAdmins } from "../shared/notification/notifyDeliveryAdmin";
 import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
-import { NotificationAction, NotificationType } from "../shared/models/Notification";
 import * as fcm from "../utilities/senders/fcm"
 import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
+import { NotificationAction, NotificationType } from "../shared/models/Notification";
 
 // Customer Canceling
 export = functions.https.onCall(async (data, context) => {
@@ -28,7 +28,7 @@ export = functions.https.onCall(async (data, context) => {
 
   let orderId: string = data.orderId;
 
-  let order: RestaurantOrder = (await rootDbNodes.inProcessOrders(OrderType.Restaurant, orderId).once('value')).val();
+  let order: LaundryOrder = (await rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).once('value')).val();
   if (order == null) {
     return {
       status: ServerResponseStatus.Error,
@@ -52,7 +52,7 @@ export = functions.https.onCall(async (data, context) => {
       errorCode: "orderNotInProcess"
     }
   }
-  order.status = RestaurantOrderStatus.CancelledByCustomer;
+  order.status = LaundryOrderStatus.CancelledByCustomer;
   await finishOrder(order, orderId);
 
   deliveryAdminNodes.deliveryAdmins().once('value', (snapshot) => {
@@ -65,11 +65,11 @@ export = functions.https.onCall(async (data, context) => {
 
 async function notifyDeliveryAdminsCancelledOrder(deliveryAdmins: Record<string, DeliveryAdmin>,
   orderId: string) {
-  let foregroundNotificaiton: RestaurantOrderStatusChangeNotification = {
-    status: RestaurantOrderStatus.CancelledByCustomer,
+  let foregroundNotificaiton: LaundryOrderStatusChangeNotification = {
+    status: LaundryOrderStatus.CancelledByCustomer,
     time: (new Date()).toISOString(),
     notificationType: NotificationType.OrderStatusChange,
-    orderType: OrderType.Restaurant,
+    orderType: OrderType.Laundry,
     notificationAction: NotificationAction.ShowPopUp,
     orderId: orderId,
   }

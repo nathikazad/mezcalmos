@@ -4,85 +4,63 @@
 // const hasura = new hasuraModule.Hasura(keys.hasura)
 
 import * as functions from "firebase-functions";
-import { Cart } from './models/Cart';
-import { constructRestaurantOrder, NewRestaurantOrderNotification, RestaurantOrder } from './models/RestaurantOrder';
-import { buildChatForOrder, Chat, ParticipantType } from "../shared/models/Chat";
+import { constructLaundryOrder, ConstructLaundryOrderParameters, LaundryOrder, NewLaundryOrderNotification } from './models/LaundryOrder';
+import { Chat, ChatType, ParticipantType } from "../shared/models/Chat";
 import { OrderType } from "../shared/models/Order";
-import { Restaurant } from "./models/Restaurant";
 import { UserInfo } from "../shared/models/User";
 import { ServerResponseStatus } from "../shared/models/Generic";
-import * as restaurantNodes from "../shared/databaseNodes/restaurant";
 import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
 import * as customerNodes from "../shared/databaseNodes/customer";
 import *  as rootNodes from "../shared/databaseNodes/root";
 import { notifyDeliveryAdmins } from "../shared/notification/notifyDeliveryAdmin";
 import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
 import { isSignedIn } from "../shared/helper/authorizer";
-import { getRestaurant } from "./restaurantController";
-import { getUserInfo } from "../shared/controllers/rootController";
 import * as chatController from "../shared/controllers/chatController";
+import { getUserInfo } from "../shared/controllers/rootController";
+import { setChat } from "../shared/controllers/chatController";
 import { NotificationAction, NotificationType } from "../shared/models/Notification";
-import * as fcm from "../utilities/senders/fcm"
+import * as fcm from "../utilities/senders/fcm";
 
 export = functions.https.onCall(async (data, context) => {
-
   let response = isSignedIn(context.auth)
   if (response != undefined)
     return response;
 
   let customerId: string = context.auth!.uid;
-  let cart: Cart = <Cart>data;
+  let orderParams: ConstructLaundryOrderParameters = <ConstructLaundryOrderParameters>data;
   // TODO limit number of active orders
-  // let customerCurrentOrder = (await firebase.database().ref(`/customers/${uid}/state/currentOrders`).once('value')).val();
-  // if (customerCurrentOrder && Object.keys(customerCurrentOrder).length >= 3) {
+  // let customerCurrentOrders = (await customerNodes.inProcessOrders(customerId).once('value')).val();
+  // if (customerCurrentOrders && customerCurrentOrders.length >= 3) {
   //   return {
   //     status: "Error",
-  //     errorMessage: "Customer is already in three orders",
-  //     errorCode: "inMoreThanThreeOrders"
+  //     errorMessage: "Customer is already in laundry orders",
+  //     errorCode: "alreadyInLaundryOrder"
   //   }
   // }
 
-  let restaurant: Restaurant = await getRestaurant(cart.serviceProviderId);
-
-  if (restaurant.state.open == false) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Restaurant is closed`,
-      errorCode: "restaurantClosed"
-    }
-  }
 
   let customerInfo: UserInfo = await getUserInfo(customerId);
-  const order: RestaurantOrder = constructRestaurantOrder({
-    cart: cart,
-    customer: customerInfo,
-    restaurant: restaurant.info,
-  })
+  const order: LaundryOrder = constructLaundryOrder(orderParams);
 
   let orderId: string = (await customerNodes.inProcessOrders(customerId).push(order)).key!;
-  restaurantNodes.inProcessOrders(cart.serviceProviderId, orderId).set(order);
-  rootNodes.inProcessOrders(OrderType.Restaurant, orderId).set(order);
-  await customerNodes.cart(customerId).remove();
+  rootNodes.inProcessOrders(OrderType.Laundry, orderId).set(order);
 
-
-  let chat: Chat = await buildChatForOrder(customerId,
-    {
-      ...customerInfo,
-      particpantType: ParticipantType.Customer
-    },
-    cart.serviceProviderId,
-    {
-      ...restaurant.info,
-      particpantType: ParticipantType.Restaurant
-    },
-    OrderType.Restaurant);
-
+  let chat: Chat = {
+    chatType: ChatType.Order,
+    orderType: OrderType.Laundry,
+    participants: {
+      [customerId]: {
+        ...customerInfo,
+        particpantType: ParticipantType.Customer
+      },
+    }
+  }
   await chatController.setChat(orderId, chat);
 
   deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
     let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
     addDeliveryAdminsToChat(deliveryAdmins, chat, orderId)
-    notifyDeliveryAdminsNewOrder(deliveryAdmins, orderId, restaurant.info)
+    notifyDeliveryAdminsNewOrder(deliveryAdmins, orderId)
   })
 
   return {
@@ -104,21 +82,18 @@ async function addDeliveryAdminsToChat(
     }
   }
 
-  chatController.setChat(orderId, chat);
+  setChat(orderId, chat);
 }
-
 
 async function notifyDeliveryAdminsNewOrder(
   deliveryAdmins: Record<string, DeliveryAdmin>,
-  orderId: string,
-  restaurant: UserInfo) {
-  let foregroundNotificaiton: NewRestaurantOrderNotification = {
+  orderId: string) {
+  let foregroundNotificaiton: NewLaundryOrderNotification = {
     time: (new Date()).toISOString(),
     notificationType: NotificationType.NewOrder,
-    orderType: OrderType.Restaurant,
+    orderType: OrderType.Laundry,
     orderId: orderId,
-    notificationAction: NotificationAction.ShowSnackBarAlways,
-    restaurant: restaurant
+    notificationAction: NotificationAction.ShowSnackBarAlways
   }
 
   let fcmNotification: fcm.fcmPayload = {
@@ -126,7 +101,7 @@ async function notifyDeliveryAdminsNewOrder(
     payload: {
       notification: {
         title: "Nueva Pedido",
-        body: `Hay una nueva orden de alimento`,
+        body: `Hay una nueva orden de lavaderia`,
         tag: NotificationType.NewOrder
       }
     },
