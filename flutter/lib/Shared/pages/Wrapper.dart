@@ -60,11 +60,11 @@ class _WrapperState extends State<Wrapper> {
         Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
       }
 
-      if (Get.find<AuthController>().user != null) {
-        if (!Get.find<AuthController>().isDisplayNameSet()) {
-          await Get.toNamed(kUserProfile);
-        }
-      }
+      // if (Get.find<AuthController>().user != null) {
+      //   if (!Get.find<AuthController>().isDisplayNameSet()) {
+      //     await Get.toNamed(kUserProfile);
+      //   }
+      // }
 
       userInfoChangeListener =
           Get.find<AuthController>().userInfoStream.listen((event) {
