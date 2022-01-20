@@ -5,11 +5,9 @@ import { OrderNotification } from '../../shared/models/Notification';
 import { Location } from "../../shared/models/Generic";
 
 export interface LaundryOrder extends Order {
-  quantity?: number;
   notes?: string;
   weight?: number;
   status: LaundryOrderStatus;
-  orderTime: string;
 }
 
 export enum LaundryOrderStatus {
@@ -25,15 +23,15 @@ export enum LaundryOrderStatus {
 }
 
 export interface ConstructLaundryOrderParameters {
-  customer: UserInfo,
   notes?: string,
   paymentType: PaymentType,
   to: Location
 }
+
 export function constructLaundryOrder(
-  params: ConstructLaundryOrderParameters): LaundryOrder {
+  params: ConstructLaundryOrderParameters, customer: UserInfo): LaundryOrder {
   return <LaundryOrder>{
-    customer: params.customer,
+    customer: customer,
     orderType: OrderType.Laundry,
     status: LaundryOrderStatus.OrderReceieved,
     orderTime: (new Date()).toISOString(),

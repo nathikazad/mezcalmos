@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryAdminApp/controllers/orderController.dart';
+import 'package:mezcalmos/DeliveryAdminApp/controllers/laundryOrderController.dart';
+import 'package:mezcalmos/DeliveryAdminApp/controllers/restaurantOrderController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
@@ -11,7 +12,8 @@ class AuthHooks {
     mezDbgPrint(
         "[+] DeliveryAdminApp::AuthHooks::onSignOutHook -> Callback Executed.");
     await Get.delete<AdminAuthController>(force: true);
-    await Get.delete<OrderController>(force: true);
+    await Get.delete<RestaurantOrderController>(force: true);
+    await Get.delete<LaundryOrderController>(force: true);
     await Get.delete<BackgroundNotificationsController>(force: true);
     await Get.delete<MessageController>(force: true);
     await Get.delete<ForegroundNotificationsController>(force: true);
@@ -29,7 +31,9 @@ class AuthHooks {
     Get.put<ForegroundNotificationsController>(
         ForegroundNotificationsController(),
         permanent: true);
-    Get.put<OrderController>(OrderController(), permanent: true);
+    Get.put<RestaurantOrderController>(RestaurantOrderController(),
+        permanent: true);
+    Get.put<LaundryOrderController>(LaundryOrderController(), permanent: true);
     Get.put<MessageController>(MessageController(), permanent: true);
 
   }

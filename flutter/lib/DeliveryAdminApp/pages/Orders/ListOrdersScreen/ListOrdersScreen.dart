@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/DeliveryAdminAppbar.dart';
-import 'package:mezcalmos/DeliveryAdminApp/controllers/orderController.dart';
+import 'package:mezcalmos/DeliveryAdminApp/controllers/restaurantOrderController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -25,7 +25,7 @@ class ListOrdersScreen extends StatefulWidget {
 class _ListOrdersScreen extends State<ListOrdersScreen> {
   RxList<Order> inProcessOrders = RxList.empty();
   RxList<Order> pastOrders = RxList.empty();
-  OrderController controller = Get.find<OrderController>();
+  RestaurantOrderController controller = Get.find<RestaurantOrderController>();
   LanguageController lang = Get.find<LanguageController>();
   StreamSubscription? _ordersListener;
 

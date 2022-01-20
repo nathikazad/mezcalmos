@@ -7,16 +7,15 @@ import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.d
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 
-class OrderController extends GetxController {
+class RestaurantOrderController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   ForegroundNotificationsController _fbNotificationsController =
       Get.find<ForegroundNotificationsController>();
-  RxList<Order> inProcessOrders = <Order>[].obs;
-  RxList<Order> pastOrders = <Order>[].obs;
+  RxList<RestaurantOrder> inProcessOrders = <RestaurantOrder>[].obs;
+  RxList<RestaurantOrder> pastOrders = <RestaurantOrder>[].obs;
   StreamSubscription? _currentOrdersListener;
   StreamSubscription? _pastOrdersListener;
 
@@ -26,10 +25,10 @@ class OrderController extends GetxController {
         "--------------------> RestaurantsOrderController Initialized !");
     _currentOrdersListener = _databaseHelper.firebaseDatabase
         .reference()
-        .child(inProcessOrdersNode())
+        .child(restaurantInProcessOrdersNode())
         .onValue
         .listen((event) {
-      List<Order> orders = [];
+      List<RestaurantOrder> orders = [];
       if (event.snapshot.value != null) {
         for (var orderId in event.snapshot.value.keys) {
           dynamic orderData = event.snapshot.value[orderId];
@@ -41,7 +40,7 @@ class OrderController extends GetxController {
 
     _pastOrdersListener = _databaseHelper.firebaseDatabase
         .reference()
-        .child(pastOrdersNode())
+        .child(restaurantPastOrdersNode())
         .orderByChild('orderTime')
         .limitToLast(5)
         .onChildAdded
@@ -63,11 +62,11 @@ class OrderController extends GetxController {
     super.onClose();
   }
 
-  Order? getOrder(String orderId) {
+  RestaurantOrder? getOrder(String orderId) {
     try {
       return inProcessOrders.firstWhere((order) {
         return order.orderId == orderId;
-      }) as RestaurantOrder;
+      });
     } on StateError {
       try {
         return pastOrders.firstWhere((order) {
@@ -83,8 +82,8 @@ class OrderController extends GetxController {
     return pastOrders.contains(order);
   }
 
-  Stream<Order?> getCurrentOrderStream(String orderId) {
-    return inProcessOrders.stream.map<Order?>((_) {
+  Stream<RestaurantOrder?> getCurrentOrderStream(String orderId) {
+    return inProcessOrders.stream.map<RestaurantOrder?>((_) {
       try {
         return inProcessOrders.firstWhere(
           (currentOrder) => currentOrder.orderId == orderId,
@@ -132,61 +131,29 @@ class OrderController extends GetxController {
   }
 
   Future<ServerResponse> cancelOrder(String orderId) async {
-    HttpsCallable cancelOrder = FirebaseFunctions.instance
-        .httpsCallable('restaurant-cancelOrderFromAdmin');
-    try {
-      HttpsCallableResult response =
-          await cancelOrder.call({"orderId": orderId});
-      return ServerResponse.fromJson(response.data);
-    } catch (e) {
-      return ServerResponse(ResponseStatus.Error,
-          errorMessage: "Server Error", errorCode: "serverError");
-    }
+    return _callRestaurantCloudFunction("cancelOrderFromAdmin", orderId);
   }
 
   Future<ServerResponse> prepareOrder(String orderId) async {
-    mezDbgPrint("prepare order");
-    HttpsCallable prepareOrderFunction =
-        FirebaseFunctions.instance.httpsCallable('restaurant-prepareOrder');
-    try {
-      HttpsCallableResult response =
-          await prepareOrderFunction.call({"orderId": orderId});
-      return ServerResponse.fromJson(response.data);
-    } catch (e) {
-      return ServerResponse(ResponseStatus.Error,
-          errorMessage: "Server Error", errorCode: "serverError");
-    }
+    return _callRestaurantCloudFunction("prepareOrder", orderId);
   }
 
   Future<ServerResponse> readyForPickupOrder(String orderId) async {
-    HttpsCallable readyForPickupOrderFunction = FirebaseFunctions.instance
-        .httpsCallable('restaurant-readyForOrderPickup');
-    try {
-      HttpsCallableResult response =
-          await readyForPickupOrderFunction.call({"orderId": orderId});
-      return ServerResponse.fromJson(response.data);
-    } catch (e) {
-      return ServerResponse(ResponseStatus.Error,
-          errorMessage: "Server Error", errorCode: "serverError");
-    }
+    return _callRestaurantCloudFunction("readyForOrderPickup", orderId);
   }
 
   Future<ServerResponse> deliverOrder(String orderId) async {
-    HttpsCallable deliverOrderFunction =
-        FirebaseFunctions.instance.httpsCallable('restaurant-deliverOrder');
-    try {
-      HttpsCallableResult response =
-          await deliverOrderFunction.call({"orderId": orderId});
-      return ServerResponse.fromJson(response.data);
-    } catch (e) {
-      return ServerResponse(ResponseStatus.Error,
-          errorMessage: "Server Error", errorCode: "serverError");
-    }
+    return _callRestaurantCloudFunction("deliverOrder", orderId);
   }
 
   Future<ServerResponse> dropOrder(String orderId) async {
+    return _callRestaurantCloudFunction("dropOrder", orderId);
+  }
+
+  Future<ServerResponse> _callRestaurantCloudFunction(
+      String functionName, String orderId) async {
     HttpsCallable dropOrderFunction =
-        FirebaseFunctions.instance.httpsCallable('restaurant-dropOrder');
+        FirebaseFunctions.instance.httpsCallable('restaurant-$functionName');
     mezDbgPrint("Drop order");
     try {
       HttpsCallableResult response =

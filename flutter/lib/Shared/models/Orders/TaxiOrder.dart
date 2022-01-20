@@ -1,7 +1,6 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
@@ -55,7 +54,6 @@ class TaxiNotificationStatus {
 }
 
 class TaxiOrder extends Order {
-  num cost;
   Location from;
   RouteInformation routeInformation;
   String? acceptRideTime;
@@ -67,7 +65,7 @@ class TaxiOrder extends Order {
   List<TaxiNotificationStatus> notificationStatuses = [];
   TaxiOrder(
       {required String orderId,
-      required this.cost,
+      required num cost,
       required this.from,
       required Location to,
       required DateTime orderTime,
@@ -78,14 +76,13 @@ class TaxiOrder extends Order {
       required this.rideFinishTime,
       required this.rideStartTime,
       required this.status,
-      required UserInfo customer,
-      dynamic cancelledBy})
+      required UserInfo customer})
       : super(
             orderTime: orderTime,
             orderId: orderId,
             paymentType: paymentType,
             orderType: OrderType.Taxi,
-            cost: 0,
+            cost: cost,
             customer: customer,
             serviceProvider: driver,
             to: to);

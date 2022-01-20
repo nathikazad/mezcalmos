@@ -7,7 +7,6 @@ import { OrderNotification } from "../Notification";
 export interface TaxiOrder extends Order {
   from: Location,
   cost: number,
-  orderTime: string,
   status: TaxiOrderStatus,
   routeInformation: {
     duration: string,

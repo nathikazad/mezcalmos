@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/DeliveryAdminAppbar.dart';
-import 'package:mezcalmos/DeliveryAdminApp/controllers/orderController.dart';
+import 'package:mezcalmos/DeliveryAdminApp/controllers/restaurantOrderController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/OrderInfoCard.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/OrderNoteCard.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/OrderTotalCostCard.dart';
@@ -32,7 +32,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
   // Since we have alot of buttons we check loading by name
 
   Rxn<RestaurantOrder> order = Rxn();
-  OrderController controller = Get.find<OrderController>();
+  RestaurantOrderController controller = Get.find<RestaurantOrderController>();
   late String orderId;
   Rx<bool> hasNewMessage = false.obs;
   StreamSubscription? _orderListener;
@@ -43,14 +43,14 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
     mezDbgPrint("ViewOrderScreen");
     orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
-    order.value = controller.getOrder(orderId) as RestaurantOrder?;
+    order.value = controller.getOrder(orderId);
     if (order.value == null) {
       Get.back();
     } else {
       _orderListener =
           controller.getCurrentOrderStream(orderId).listen((newOrder) {
         if (newOrder != null) {
-          order.value = controller.getOrder(orderId) as RestaurantOrder?;
+          order.value = controller.getOrder(orderId);
         } else {
           Get.back();
         }

@@ -7,7 +7,8 @@ export interface Order {
   cost: number;
   paymentType: PaymentType,
   to: Location,
-  customer: UserInfo
+  customer: UserInfo,
+  orderTime: string;
 }
 
 export enum OrderType {

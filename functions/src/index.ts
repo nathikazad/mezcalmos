@@ -46,6 +46,19 @@ export const taxi = {
   finishRide: require("./taxi/taxiStatusChange").finishRide,
 }
 
+import * as laundryStatusChange from './laundry/adminStatusChanges'
+export const laundry = {
+  requestLaundry: require("./laundry/laundryRequest"),
+  otwPickupOrder: laundryStatusChange.otwPickupOrder,
+  pickedUpOrder: laundryStatusChange.pickedUpOrder,
+  atLaundryOrder: laundryStatusChange.atLaundryOrder,
+  readyForDeliveryOrder: laundryStatusChange.readyForDeliveryOrder,
+  otwDeliveryOrder: laundryStatusChange.otwDeliveryOrder,
+  cancelFromCustomer: require("./laundry/cancelLaundryFromCustomer"),
+  cancelFromAdmin: laundryStatusChange.cancelOrder,
+  finishRide: laundryStatusChange.deliveredOrder,
+}
+
 // exports.submitAuthorizationRequest = functions.https.onCall(async (data, context) => {
 //   data.userId = context.auth.uid
 //   let response = await admin.submitAuthorizationRequest(firebase, data, hasura)

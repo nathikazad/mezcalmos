@@ -10,8 +10,8 @@ import { OrderType } from "../shared/models/Order";
 import { UserInfo } from "../shared/models/User";
 import { Taxi } from "../shared/models/taxi/Taxi";
 import { TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "../shared/models/taxi/TaxiOrder";
-import { buildChatForOrder } from "../shared/helper/chat";
-import { ParticipantType } from "../shared/models/Chat";
+import * as chatController from "../shared/controllers/chatController";
+import { buildChatForOrder, Chat, ParticipantType } from "../shared/models/Chat";
 import { push } from "../shared/notification/notifyUser";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { taxiOrderStatusChangeMessages } from "./bgNotificationMessages";
@@ -112,8 +112,8 @@ export = functions.https.onCall(async (data, context) => {
     customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
 
 
-    await buildChatForOrder(
-      order.customer.id,
+
+    let chat: Chat = await buildChatForOrder(order.customer.id,
       {
         ...order.customer,
         particpantType: ParticipantType.Customer
@@ -123,8 +123,9 @@ export = functions.https.onCall(async (data, context) => {
         ...driverInfo,
         particpantType: ParticipantType.Taxi
       },
-      OrderType.Taxi,
-      orderId);
+        OrderType.Restaurant);
+
+    await chatController.setChat(orderId, chat);
 
 
     let notification: Notification = {

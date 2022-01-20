@@ -11,7 +11,6 @@ import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 
-enum OrdersStates { Null, Finished, Cancelled, Expired, InProccess, IsLooking }
 const String numOfToolTipsShownStorageAddress = "numOfToolTipsShownStorage";
 class TaxiController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();

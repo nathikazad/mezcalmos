@@ -40,7 +40,7 @@ export = functions.https.onCall(async (data, context) => {
 
 
   let customerInfo: UserInfo = await getUserInfo(customerId);
-  const order: LaundryOrder = constructLaundryOrder(orderParams);
+  const order: LaundryOrder = constructLaundryOrder(orderParams, customerInfo);
 
   let orderId: string = (await customerNodes.inProcessOrders(customerId).push(order)).key!;
   rootNodes.inProcessOrders(OrderType.Laundry, orderId).set(order);
