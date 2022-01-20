@@ -97,12 +97,18 @@ class _PickLocationViewState extends State<PickLocationView> {
   void initState() {
     if (widget.pickLocationMode == PickLocationMode.AddNewLocation) {
       GeoLoc.Location().getLocation().then((locData) {
-        setState(() {
-          locationPickerController.setLocation(Location.fromFirebaseData({
-            "address": null,
-            "lat": locData.latitude,
-            "lng": locData.longitude,
-          }));
+        getAdressFromLatLng(LatLng(locData.latitude!, locData.latitude!))
+            .then((addrss) {
+          setState(() {
+            locationPickerController.setLocation(Location.fromFirebaseData({
+              "address": addrss ??
+                  locData.latitude.toString() +
+                      ', ' +
+                      locData.longitude.toString(),
+              "lat": locData.latitude,
+              "lng": locData.longitude,
+            }));
+          });
         });
       });
     } else {
