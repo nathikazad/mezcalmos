@@ -2,10 +2,10 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
@@ -17,10 +17,11 @@ class Wrapper extends StatefulWidget {
 
 class _WrapperState extends State<Wrapper> {
   SettingsController settingsController = Get.find<SettingsController>();
-  StreamSubscription? userInfoChangeListener;
+  StreamSubscription<User?>? userInfoChangeListener;
   @override
   void dispose() {
     userInfoChangeListener?.cancel();
+    userInfoChangeListener = null;
     super.dispose();
   }
 
@@ -51,6 +52,24 @@ class _WrapperState extends State<Wrapper> {
             kSignInRouteRequired, ModalRoute.withName(kWrapperRoute));
       }
     } else {
+      // this to  avoid no listener Events because User was already set, before even the listener got to start it's streamsub
+      if (Get.find<AuthController>().user != null) {
+        if (Get.currentRoute == kSignInRouteOptional) {
+          Get.back();
+        } else {
+          Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
+        }
+        redirectIfUserInfosNotSet();
+      }
+      startListeningForUserModelChanges();
+    }
+  }
+
+  void startListeningForUserModelChanges() {
+    userInfoChangeListener?.cancel();
+    userInfoChangeListener = null;
+    userInfoChangeListener =
+        Get.find<AuthController>().userInfoStream.listen((event) {
       mezDbgPrint(
           "Wrapper::handleAuthStateChange:: signed in, Checking if User name are Set !");
 
@@ -59,19 +78,17 @@ class _WrapperState extends State<Wrapper> {
       } else {
         Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
       }
+      redirectIfUserInfosNotSet();
+    });
+  }
 
-      // if (Get.find<AuthController>().user != null) {
-      //   if (!Get.find<AuthController>().isDisplayNameSet()) {
-      //     await Get.toNamed(kUserProfile);
-      //   }
-      // }
-
-      userInfoChangeListener =
-          Get.find<AuthController>().userInfoStream.listen((event) {
-        if (!Get.find<AuthController>().isDisplayNameSet()) {
-          Get.toNamed(kUserProfile);
-        }
-      });
+  void redirectIfUserInfosNotSet() {
+    mezDbgPrint(
+        "@s@s@ calleld ! ${Get.find<AuthController>().isDisplayNameSet()} ${Get.find<AuthController>().isUserImgSet()}");
+    if ((!Get.find<AuthController>().isDisplayNameSet() ||
+            !Get.find<AuthController>().isUserImgSet()) &&
+        Get.currentRoute != kUserProfile) {
+      Get.toNamed(kUserProfile);
     }
   }
 

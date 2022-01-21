@@ -39,11 +39,12 @@ class AuthController extends GetxController {
   StreamController<fireAuth.User?> _authStateStreamController =
       StreamController.broadcast();
 
-  StreamController<User> _userInfoStreamController =
+  StreamController<User?> _userInfoStreamController =
       StreamController.broadcast();
 
-  Stream<fireAuth.User?> get authStateStream => _authStateStreamController.stream;
-  Stream<User> get userInfoStream => _userInfoStreamController.stream;
+  Stream<fireAuth.User?> get authStateStream =>
+      _authStateStreamController.stream;
+  Stream<User?> get userInfoStream => _userInfoStreamController.stream;
 
   bool get isUserSignedIn => _fireAuthUser.value != null;
   FirebaseDb _databaseHelper =
@@ -73,6 +74,8 @@ class AuthController extends GetxController {
       if (user == null) {
         await _onSignOutCallback();
         _authStateStreamController.add(null);
+        _userInfoStreamController.add(null);
+
         mezDbgPrint('AuthController: User is currently signed out!');
         _userNodeListener?.cancel();
         _userNodeListener = null;
@@ -110,6 +113,11 @@ class AuthController extends GetxController {
     return _user.value?.name != null;
   }
 
+  bool isUserImgSet() {
+    return _user.value?.image != null &&
+        _user.value?.image != defaultUserImgUrl;
+  }
+
   Future<String> getImageUrl(File imageFile, String uid) async {
     String x;
 
@@ -130,9 +138,22 @@ class AuthController extends GetxController {
     return x;
   }
 
-  // Future<ServerResponse> changeUserName(String? name) {}
+  /// this is for setting the Original size of the image that was picked by the user,
+  ///
+  /// Made as a seprated function and not along with [editUserProfile]'s parameteres,
+  ///
+  /// because that was we won't need to wait for them both to get uploaded.
+  Future<void> setOriginalUserImage(String? originalImageUrl) async {
+    if (originalImageUrl != null) {
+      await _databaseHelper.firebaseDatabase
+          .reference()
+          .child(userInfo(fireAuthUser!.uid))
+          .child('origImaage')
+          .set(originalImageUrl);
+    }
+  }
 
-  Future<void> editUserProfile(String? name, String? image) async {
+  Future<void> editUserProfile(String? name, String? compressedImageUrl) async {
     if (name != null) {
       await _databaseHelper.firebaseDatabase
           .reference()
@@ -140,12 +161,12 @@ class AuthController extends GetxController {
           .child('name')
           .set(name);
     }
-    if (image != null && image.isURL) {
+    if (compressedImageUrl != null && compressedImageUrl.isURL) {
       await _databaseHelper.firebaseDatabase
           .reference()
           .child(userInfo(fireAuthUser!.uid))
           .child('image')
-          .set(image);
+          .set(compressedImageUrl);
     }
   }
 
