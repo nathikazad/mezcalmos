@@ -13,10 +13,10 @@
           "language": {
             ".write": "$uid === auth.uid"
           },
-          "photo": {
+          "image": {
             ".write": "$uid === auth.uid"
           },
-          "displayName": {
+          "name": {
             ".write": "$uid === auth.uid"
           },
           "phone": {
