@@ -53,14 +53,12 @@ class _WrapperState extends State<Wrapper> {
       }
     } else {
       // this to  avoid no listener Events because User was already set, before even the listener got to start it's streamsub
-      if (Get.find<AuthController>().user != null) {
-        if (Get.currentRoute == kSignInRouteOptional) {
-          Get.back();
-        } else {
-          Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
-        }
-        redirectIfUserInfosNotSet();
+      if (Get.currentRoute == kSignInRouteOptional) {
+        Get.back();
+      } else {
+        Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
       }
+      redirectIfUserInfosNotSet();
       startListeningForUserModelChanges();
     }
   }
