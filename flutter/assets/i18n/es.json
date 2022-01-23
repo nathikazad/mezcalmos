@@ -140,7 +140,8 @@
             "rideCancelledByTaxi": "El viaje ha sido cancelado por taxi",
             "rideCancelledByCustomer": "Has cancelado tu viaje",
             "ride": "viaje",
-            "taxiRideCheckedTooltip" : "Esto muestra cuántos taxistas vieron tu pedido pero no lo aceptaron.\n\nÚsalo para controlar el precio de tu viaje." ,
+            "taxiRideCheckedTooltip" : "Esto muestra cuántos conductores recibieron su oferta \npero no encontraron aceptable la oferta" ,
+            "taxiRequestPriceTooltip" : "¿Cuánto está dispuesto a ofrecer por este viaje?\n Transmitiremos su oferta a todos los taxistas cerca de usted,\n aceptarán su pedido solo si encuentran \nque el precio ofrecido es aceptable.",
             "taxiRidePriceTooltip" : " Haga clic en - para reducir el precio en 5.\n Haga clic en + para aumentar el precio en 5.\n\n Si ve que su pedido no se acepta, pruébelo."
         },
         "cancelOrder": {

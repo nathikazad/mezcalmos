@@ -6,11 +6,13 @@ import 'package:location/location.dart' as GeoLoc;
 import 'package:mezcalmos/CustomerApp/components/LocationPicker.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
+import 'package:mezcalmos/CustomerApp/pages/Taxi/components/Hints/RidePriceControllHint.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/LocationSearchBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/TaxiBottomBars/TaxiReqBottomBar.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
@@ -18,14 +20,8 @@ import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart' as TaxiOrder;
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezToolTip.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
-
-/*
-  - TaxiReqScreen -
-    - From , to picked > Construct TaxiRequest Model.
-      - onConfirm  -> ViewTaxiRequest.
-
-*/
 
 class RequestTaxiScreen extends StatefulWidget {
   @override
@@ -42,7 +38,6 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
       LocationPickerController();
   final LocationSearchBarController locationSearchBarController =
       LocationSearchBarController();
-  //TaxiRequest? orderRequest;
   bool _pickedFromTo = false;
   /******************************  Init and build function ************************************/
 
@@ -161,10 +156,20 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                   ? TaxiReqBottomBar(
                       taxiRequest: taxiRequest.value,
                     )
-                  : SizedBox()
+                  : SizedBox(),
+              if (_pickedFromTo) getToolTip(),
             ]),
       ),
     );
+  }
+
+  Widget getToolTip() {
+    if (Get.find<TaxiController>().numOfTimesToolTipShownToUser() >=
+        nMaxTimesToShowTTipsOnCustomerApp)
+      return MezToolTip(
+          hintWidgetsList: getHints(), applyCacheIncrementing: false);
+    else
+      return SizedBox();
   }
 
 /******************************  EVENT HANDLERS ************************************/
@@ -286,5 +291,19 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
   int getEstimatedRidePriceInPesos(int distanceInMeteres) {
     int roundedKm = (distanceInMeteres / 1000).round();
     return roundedKm <= 1 ? 35 : roundedKm * 15;
+  }
+
+  /// the hints  [MezToolTipHint] that are related to this view !
+  List<MezToolTipHint> getHints() {
+    return [
+      MezToolTipHint(
+        hintWidget: RidePriceControllHint(
+          hintText: Get.find<LanguageController>().strings['customer']
+              ['taxiView']['taxiRequestPriceTooltip'],
+        ),
+        left: 80.1,
+        bottom: 150.5,
+      ),
+    ];
   }
 }

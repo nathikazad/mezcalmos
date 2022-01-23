@@ -12,7 +12,10 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 
 enum OrdersStates { Null, Finished, Cancelled, Expired, InProccess, IsLooking }
-const String numOfToolTipsShownStorageAddress = "numOfToolTipsShownStorage";
+const String numOfToolTipsShownStorageAddress =
+    "numOfToolTipsShownStorageCustomerTaxi";
+const int nMaxTimesToShowTTipsOnCustomerApp = 4;
+
 class TaxiController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   AuthController _authController = Get.find<AuthController>();
@@ -71,16 +74,14 @@ class TaxiController extends GetxController {
     }
   }
 
-  
-  num numOfTimesToolTipShownToUser(){
+  num numOfTimesToolTipShownToUser() {
     return GetStorage().read<num>(numOfToolTipsShownStorageAddress) ?? 0;
   }
 
-  void increaseNumOfTimesToolTipShownToUser(){
+  void increaseNumOfTimesToolTipShownToUser() {
     GetStorage().write(
         numOfToolTipsShownStorageAddress, numOfTimesToolTipShownToUser() + 1);
   }
-  
 
   @override
   void onClose() {
