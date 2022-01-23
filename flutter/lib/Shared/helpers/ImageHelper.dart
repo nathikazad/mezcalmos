@@ -1,9 +1,11 @@
 // Usefull when trying to make Sizes adptable!
 import 'dart:async';
 import 'dart:io';
+import 'dart:math';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'dart:ui' as ui;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -13,8 +15,26 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
-Future<File> writeCompressedFileFromBytes(
-    {required String filePath, required Uint8List compressedImageBytes}) async {
+String generateRandomString(int len) {
+  var r = Random();
+  const _chars =
+      'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  return List.generate(len, (index) => _chars[r.nextInt(_chars.length)]).join();
+}
+
+/// this compresses the Original Image using jpeg format Since it's much ligher.
+///
+/// and reduce the quality down to [qualityCompressionOfUserImage = 25%].
+Future<Uint8List> compressImageBytes(Uint8List originalImg) async {
+  mezDbgPrint("s@s:beforeCompress => ${originalImg.lengthInBytes}");
+  final result = await FlutterImageCompress.compressWithList(originalImg,
+      quality: nQualityCompressionOfUserImage);
+  mezDbgPrint("s@s:after => ${result.lengthInBytes}");
+  return result;
+}
+
+Future<File> writeFileFromBytesAndReturnIt(
+    {required String filePath, required Uint8List imgBytes}) async {
   // compressed Image
   List<String> splittedPath = filePath.split('.');
   String pathWithoutExtension =
@@ -22,17 +42,20 @@ Future<File> writeCompressedFileFromBytes(
   mezDbgPrint("PATH WITHOUT EXTENSION $pathWithoutExtension");
   mezDbgPrint("PATH WITH EXTENSION ${filePath}");
 
-  return await File('${pathWithoutExtension}.compressed.${splittedPath.last}')
-      .writeAsBytes(compressedImageBytes);
+  return (await File(
+          '${pathWithoutExtension}.${DateTime.now().millisecondsSinceEpoch}.${splittedPath.last}')
+      .writeAsBytes(imgBytes));
 }
 
+/// this is only used for UserProfilePicture whereever we show bigImage [User.bigImage]
 Image showDefaultOrUserImg({Uint8List? memoryImg}) {
   if (memoryImg != null) {
     return mLoadImage(
         url: null, memoryImage: memoryImg, assetInCaseFailed: aLogoPath);
   }
   return mLoadImage(
-      url: Get.find<AuthController>().user!.image,
+      url: Get.find<AuthController>().user!.bigImage ??
+          Get.find<AuthController>().user!.image,
       assetInCaseFailed: aLogoPath);
 }
 
@@ -112,7 +135,8 @@ Future<imPicker.XFile?> imagePicker(
     return await picker.pickImage(
       source: source,
       preferredCameraDevice: imPicker.CameraDevice.front,
-      imageQuality: 10,
+      // maxWidth: 100,
+      imageQuality: nQualityCompressionOfUserImage,
     );
   } on PlatformException catch (_) {
     return null;

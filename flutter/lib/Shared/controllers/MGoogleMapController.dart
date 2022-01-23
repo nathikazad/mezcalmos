@@ -62,7 +62,10 @@ class MGoogleMapController {
       String? customImgHttpUrl}) async {
     BitmapDescriptor icon;
 
-    if (Get.find<AuthController>().fireAuthUser?.photoURL == null) {
+    String? uImg = Get.find<AuthController>().user?.image ??
+        Get.find<AuthController>().user?.bigImage;
+
+    if (uImg == null) {
       icon = await BitmapDescriptorLoader(
           (await cropRonded(
               (await rootBundle.load(aDefaultAvatar)).buffer.asUint8List())),
@@ -71,9 +74,9 @@ class MGoogleMapController {
           isBytes: true);
     } else {
       icon = await BitmapDescriptorLoader(
-          (await cropRonded((await http.get(Uri.parse(customImgHttpUrl ??
-                  Get.find<AuthController>().fireAuthUser!.photoURL!)))
-              .bodyBytes) as Uint8List),
+          (await cropRonded(
+              (await http.get(Uri.parse(customImgHttpUrl ?? uImg)))
+                  .bodyBytes) as Uint8List),
           markersDefaultSize.value * mapZoomLvl,
           markersDefaultSize.value * mapZoomLvl,
           isBytes: true);

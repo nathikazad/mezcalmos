@@ -6,80 +6,63 @@ import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileController.d
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
 
 class UserProfileWidgetsClass {
   // Singleton
   UserProfileController userProfileController;
   UserProfileWidgetsClass(this.userProfileController);
 
-  // All the widgets Used on UserProgileScreen is here
-
-  Widget topViewLayerWhenUploading() {
-    return Container(
-        height: Get.height,
-        width: Get.width,
-        color: Colors.black54,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              "Uploading ...",
-              style: TextStyle(color: Colors.white),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              height: 40,
-              width: 40,
-              child: CircularProgressIndicator(),
-            ),
-          ],
-        ));
-  }
-
   /// this holds the Main body parts.
   List<Widget> bodyContent(
       {required Function() onBrowsImageClick,
       required Function() onEditButtonClick,
       required Function() onSaveClick,
+      required bool isImageBeingUploaded,
       required bool clickedSave}) {
     return [
       userInfoTitle(),
       Flexible(
-        flex: 1,
+        flex: 2,
         // fit: FlexFit.tight,
         child: Stack(
           fit: StackFit.passthrough,
-          children:
-              pictureContainerWidget(onBrowsImageClick: onBrowsImageClick),
+          children: pictureContainerWidget(
+              onBrowsImageClick: onBrowsImageClick,
+              isImageBeingUploaded: isImageBeingUploaded),
         ),
       ),
-      Flexible(flex: 1, child: showUserNameOrTextField()),
       Flexible(
-        flex: 1,
+          flex: 1,
+          child: showUserNameOrTextField(
+              isImageBeingUploaded: isImageBeingUploaded)),
+      Flexible(
+        flex: 2,
         child: Container(
             margin: EdgeInsets.only(bottom: 50, left: 50, right: 50),
             child: showEditOrSaveAndCancelButton(
                 onSaveClick: onSaveClick,
                 onStartEdit: onEditButtonClick,
-                clickedSave: clickedSave)),
+                clickedSave: clickedSave,
+                isImageBeingUploaded: isImageBeingUploaded)),
       )
     ];
   }
 
   /// this Holds the Circled Container in the middle of the screen that has the user Image
-  List<Widget> pictureContainerWidget({required Function() onBrowsImageClick}) {
+  List<Widget> pictureContainerWidget(
+      {required Function() onBrowsImageClick,
+      required bool isImageBeingUploaded}) {
     return [
       Center(
         child: GestureDetector(
-          onTap: userProfileController.stateMode == UserProfileMode.Edit
-              ? onBrowsImageClick()
+          onTap: userProfileController.stateMode == UserProfileMode.Edit &&
+                  !isImageBeingUploaded
+              ? onBrowsImageClick
               : () {},
           child: Container(
-            height: 150.h,
-            width: 150.w,
+            height: 150,
+            width: 150,
             decoration: BoxDecoration(
                 color: Colors.white,
                 shape: BoxShape.circle,
@@ -89,7 +72,7 @@ class UserProfileWidgetsClass {
                             memoryImg: userProfileController.userImgBytes.value)
                         .image)),
             child: userProfileController.stateMode == UserProfileMode.Edit
-                ? browsImageButton()
+                ? browsImageButton(isImageBeingUploaded: isImageBeingUploaded)
                 : SizedBox(),
           ),
         ),
@@ -98,31 +81,42 @@ class UserProfileWidgetsClass {
   }
 
   /// this is the brows button inside  [pictureContainerWidget] When on [UserProfileMode.Edit] mode it shows up.
-  Center browsImageButton() {
+  Center browsImageButton({required bool isImageBeingUploaded}) {
     return Center(
       child: Container(
-        height: 150.h,
-        width: 150.w,
+        height: 150,
+        width: 150,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: Colors.black45,
         ),
         padding: EdgeInsets.all(5),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.photo_library_outlined,
-              color: Colors.white,
-            ),
-            SizedBox(height: 5),
-            Text(
-              ' select ',
-              style: TextStyle(color: Colors.white),
-            ),
-          ],
-        ),
+        child: !isImageBeingUploaded
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.photo_library_outlined,
+                    color: Colors.white,
+                  ),
+                  SizedBox(height: 5),
+                  Text(
+                    ' select ',
+                    style: TextStyle(color: Colors.white),
+                  )
+                ],
+              )
+            : Container(
+                height: 40,
+                width: 40,
+                child: Center(
+                  child: CircularProgressIndicator(
+                    strokeWidth: 1.0,
+                    color: Colors.purple,
+                  ),
+                ),
+              ),
       ),
     );
   }
@@ -144,9 +138,9 @@ class UserProfileWidgetsClass {
   /// In case the user hasn't his image and name set , the back arrow of the appbar won't work,
   ///
   /// and the user can't go out of the screen unless he sets up his infos.
-  AppBar getRightAppBar(bool isPictureBeingUploaded) {
+  AppBar getRightAppBar({required bool isImageBeingUploaded}) {
     if (userProfileController.checkIfUserHasAllInfosSet() &&
-        !isPictureBeingUploaded) {
+        !isImageBeingUploaded) {
       // return popable button
       return mezcalmosAppBar(AppBarLeftButtonType.Back,
           onClick: () => Get.back(closeOverlays: true));
@@ -157,8 +151,10 @@ class UserProfileWidgetsClass {
   }
 
   /// this return an onWillPopScope bool, defining if user can pop the scope or not depending on the [UserProfileMode]
-  bool onWillPopScopeFunction({Function? onDispose}) {
-    if (userProfileController.checkIfUserHasAllInfosSet()) {
+  bool onWillPopScopeFunction(
+      {required bool isImageBeingUploaded, Function? onDispose}) {
+    if (userProfileController.checkIfUserHasAllInfosSet() &&
+        !isImageBeingUploaded) {
       onDispose?.call();
       return true;
     } else
@@ -166,7 +162,7 @@ class UserProfileWidgetsClass {
   }
 
   /// this basically either shows the UserName or shows the textField depending on [UserProfileMode].
-  Widget showUserNameOrTextField() {
+  Widget showUserNameOrTextField({required bool isImageBeingUploaded}) {
     if (userProfileController.stateMode == UserProfileMode.Show) {
       return Text(
         Get.find<AuthController>().user!.name!,
@@ -178,6 +174,15 @@ class UserProfileWidgetsClass {
           Container(
             margin: EdgeInsets.symmetric(horizontal: 55),
             child: TextField(
+                decoration: InputDecoration(
+                    suffixIcon: Icon(
+                      Icons.perm_identity_rounded,
+                      color: Colors.purple.shade400,
+                    ),
+                    border: OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(),
+                    enabledBorder: OutlineInputBorder()),
+                enabled: !isImageBeingUploaded,
                 style: TextStyle(color: Colors.purple.shade400, fontSize: 15),
                 controller: userProfileController.textEditingController,
                 onChanged: (value) {
@@ -222,44 +227,52 @@ class UserProfileWidgetsClass {
   Widget showEditOrSaveAndCancelButton(
       {required Function() onStartEdit,
       required Function() onSaveClick,
-      required bool clickedSave}) {
-    if (userProfileController.stateMode == UserProfileMode.Show) {
-      return TextButton(onPressed: onStartEdit, child: Text("Edit User Info"));
-    } else {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          // save button---
-          saveButton(onSaveClick, clickedSave),
-          // cancel button
-          if (userProfileController.checkIfUserHasAllInfosSet() &&
-              userProfileController.stateMode == UserProfileMode.Edit &&
-              !clickedSave)
-            Expanded(
-                flex: 2,
-                child: InkWell(
-                  onTap: () {
-                    userProfileController.reset();
-                    userProfileController
-                        .setUserProfileMode(UserProfileMode.Show);
-                  },
-                  child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 10),
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.purple.shade400),
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(15)),
-                    height: 50,
-                    // width: Get.width - 100,
-                    child: Center(
-                        child: Text(
-                      "Cancel",
-                      style: TextStyle(color: Colors.purple.shade400),
-                    )),
-                  ),
-                )),
-        ],
+      required bool clickedSave,
+      required bool isImageBeingUploaded}) {
+    if (isImageBeingUploaded) {
+      return ThreeDotsLoading(
+        dotsColor: Colors.purple.shade400,
       );
+    } else {
+      if (userProfileController.stateMode == UserProfileMode.Show) {
+        return TextButton(
+            onPressed: onStartEdit, child: Text("Edit User Info"));
+      } else {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            // save button---
+            saveButton(onSaveClick, clickedSave),
+            // cancel button
+            if (userProfileController.checkIfUserHasAllInfosSet() &&
+                userProfileController.stateMode == UserProfileMode.Edit &&
+                !clickedSave)
+              Expanded(
+                  flex: 2,
+                  child: InkWell(
+                    onTap: () {
+                      userProfileController.reset();
+                      userProfileController
+                          .setUserProfileMode(UserProfileMode.Show);
+                    },
+                    child: Container(
+                      margin: EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.purple.shade400),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(15)),
+                      height: 50,
+                      // width: Get.width - 100,
+                      child: Center(
+                          child: Text(
+                        "Cancel",
+                        style: TextStyle(color: Colors.purple.shade400),
+                      )),
+                    ),
+                  )),
+          ],
+        );
+      }
     }
   }
 

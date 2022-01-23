@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/CustomerHomeFooterButtons.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:progress_indicators/progress_indicators.dart';
+import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
 
 class NoInternetConnectionScreen extends StatelessWidget {
   const NoInternetConnectionScreen({Key? key}) : super(key: key);
@@ -51,42 +51,9 @@ class NoInternetConnectionScreen extends StatelessWidget {
                 SizedBox(
                   height: 10,
                 ),
-                Container(
-                  height: 10,
-                  width: Get.width,
-                  alignment: Alignment.center,
-                  child: CollectionScaleTransition(
-                    children: <Widget>[
-                      Container(
-                        height: 5,
-                        width: 5,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: Colors.purple.shade400),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Container(
-                        height: 5,
-                        width: 5,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: Colors.purple.shade400),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Container(
-                        height: 5,
-                        width: 5,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: Colors.purple.shade400),
-                      ),
-                    ],
-                  ),
-                ),
+                ThreeDotsLoading(
+                  dotsColor: Colors.purple.shade400,
+                )
               ],
             ),
           ),

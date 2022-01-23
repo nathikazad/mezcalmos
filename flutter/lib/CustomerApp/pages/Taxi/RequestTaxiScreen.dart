@@ -164,7 +164,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
   }
 
   Widget getToolTip() {
-    if (Get.find<TaxiController>().numOfTimesToolTipShownToUser() >=
+    if (Get.find<TaxiController>().numOfTimesToolTipShownToUser() <=
         nMaxTimesToShowTTipsOnCustomerApp)
       return MezToolTip(
           hintWidgetsList: getHints(), applyCacheIncrementing: false);

@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
+import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
@@ -120,24 +121,28 @@ class AuthController extends GetxController {
         _user.value?.image != defaultUserImgUrl;
   }
 
-  Future<String> getImageUrl(File imageFile, String uid) async {
-    String x;
-
+  /// This Functions takes a File (Image) and an optional [isCompressed]
+  ///
+  /// And Upload it to firebaseStorage with at users/[uid]/avatar/[uid].[isCompressed ? 'cmpressed' : 'original'].[extension]
+  Future<String> uploadUserImgToFbStorage(
+      {required File imageFile, bool isCompressed = false}) async {
+    String _uploadedImgUrl;
+    var splitted = imageFile.path.split('.');
+    String imgPath =
+        "users/${this._fireAuthUser.value!.uid}/avatar/${this._fireAuthUser.value!.uid}.${isCompressed ? 'compressed' : 'original'}.${splitted[splitted.length - 1]}";
     try {
       await firebase_storage.FirebaseStorage.instance
-          .ref("users/$uid/avatar/${imageFile.path}")
+          .ref(imgPath)
           .putFile(imageFile);
     } on firebase_core.FirebaseException catch (e) {
-      print("{{{{{{{{{{{{{{{{{{{{" +
-          e.message.toString() +
-          "}}}}}}}}}}}}}}}}}}}}}}}}}}}}");
+      mezDbgPrint(e.message.toString());
     } finally {
-      x = await firebase_storage.FirebaseStorage.instance
-          .ref('users/$uid/avatar/${imageFile.path}')
+      _uploadedImgUrl = await firebase_storage.FirebaseStorage.instance
+          .ref(imgPath)
           .getDownloadURL();
     }
 
-    return x;
+    return _uploadedImgUrl;
   }
 
   /// this is for setting the Original size of the image that was picked by the user,
@@ -150,7 +155,7 @@ class AuthController extends GetxController {
       await _databaseHelper.firebaseDatabase
           .reference()
           .child(userInfo(fireAuthUser!.uid))
-          .child('origImaage')
+          .child('bigImaage')
           .set(originalImageUrl);
     }
   }
@@ -167,6 +172,7 @@ class AuthController extends GetxController {
           uid: _user.value!.uid,
           email: _user.value?.email,
           image: _user.value?.image,
+          bigImage: _user.value?.bigImage,
           language: _user.value!.language,
           name: name,
         );

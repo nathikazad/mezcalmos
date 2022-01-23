@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
-import 'package:mezcalmos/Shared/models/User.dart';
+// import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
@@ -17,11 +17,11 @@ class Wrapper extends StatefulWidget {
 
 class _WrapperState extends State<Wrapper> {
   SettingsController settingsController = Get.find<SettingsController>();
-  StreamSubscription<User?>? userInfoChangeListener;
+  // StreamSubscription<User?>? userInfoChangeListener;
   @override
   void dispose() {
-    userInfoChangeListener?.cancel();
-    userInfoChangeListener = null;
+    // userInfoChangeListener?.cancel();
+    // userInfoChangeListener = null;
     super.dispose();
   }
 
@@ -53,42 +53,46 @@ class _WrapperState extends State<Wrapper> {
       }
     } else {
       // this to  avoid no listener Events because User was already set, before even the listener got to start it's streamsub
-      if (Get.currentRoute == kSignInRouteOptional) {
-        Get.back();
-      } else {
-        Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
-      }
+      // if (Get.currentRoute == kSignInRouteOptional) {
+      //   Get.back();
+      // } else {
+      //   Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
+      // }
       if (Get.find<AuthController>().user != null) {
         redirectIfUserInfosNotSet();
-      }
-      startListeningForUserModelChanges();
+      } else
+        startListeningForUserModelChanges();
     }
   }
 
   void startListeningForUserModelChanges() {
-    userInfoChangeListener?.cancel();
-    userInfoChangeListener = null;
-    userInfoChangeListener =
-        Get.find<AuthController>().userInfoStream.listen((event) {
+    // userInfoChangeListener?.cancel();
+    // userInfoChangeListener = null;
+    // userInfoChangeListener =
+    Get.find<AuthController>().userInfoStream.first.then((event) {
       mezDbgPrint(
           "Wrapper::handleAuthStateChange:: signed in, Checking if User name are Set !");
-
-      if (Get.currentRoute == kSignInRouteOptional) {
-        Get.back();
-      } else {
-        Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
-      }
+      checkIfSignInRouteOrRedirectToHome();
       redirectIfUserInfosNotSet();
     });
   }
 
   void redirectIfUserInfosNotSet() {
     mezDbgPrint(
-        "@s@s@ calleld ! ${Get.find<AuthController>().isDisplayNameSet()} ${Get.find<AuthController>().isUserImgSet()}");
+        "@s@s@ calleld ! ${Get.currentRoute} | ${Get.find<AuthController>().isDisplayNameSet()} ${Get.find<AuthController>().isUserImgSet()}");
     if ((!Get.find<AuthController>().isDisplayNameSet() ||
             !Get.find<AuthController>().isUserImgSet()) &&
         Get.currentRoute != kUserProfile) {
       Get.toNamed(kUserProfile);
+    } else
+      checkIfSignInRouteOrRedirectToHome();
+  }
+
+  void checkIfSignInRouteOrRedirectToHome() {
+    if (Get.currentRoute == kSignInRouteOptional) {
+      Get.back();
+    } else {
+      Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
     }
   }
 
