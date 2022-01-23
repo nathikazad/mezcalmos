@@ -2,10 +2,10 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
@@ -17,9 +17,11 @@ class Wrapper extends StatefulWidget {
 
 class _WrapperState extends State<Wrapper> {
   SettingsController settingsController = Get.find<SettingsController>();
-
+  StreamSubscription<User?>? userInfoChangeListener;
   @override
   void dispose() {
+    userInfoChangeListener?.cancel();
+    userInfoChangeListener = null;
     super.dispose();
   }
 
@@ -29,7 +31,7 @@ class _WrapperState extends State<Wrapper> {
     Future.delayed(Duration.zero, () {
       mezDbgPrint("Wrapper: calling handleAuthStateChange first time");
       handleAuthStateChange(Get.find<AuthController>().fireAuthUser);
-      Get.find<AuthController>().authStateChange.listen((user) {
+      Get.find<AuthController>().authStateStream.listen((user) {
         mezDbgPrint("Wrapper: calling handleAuthStateChange in listener");
         handleAuthStateChange(user);
       });
@@ -50,21 +52,43 @@ class _WrapperState extends State<Wrapper> {
             kSignInRouteRequired, ModalRoute.withName(kWrapperRoute));
       }
     } else {
-      mezDbgPrint(
-          "Wrapper::handleAuthStateChange:: signed in, Checking if User name are Set !");
-
-      mezDbgPrint(
-          "~~~~+++++===>>>> the first condition ${!Get.find<AuthController>().isDisplayNameSet()} and the second condition ${Get.find<AuthController>().user?.image == "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d"} ");
-      if (!Get.find<AuthController>().isDisplayNameSet() ||
-          Get.find<AuthController>().user?.image ==
-              "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d") {
-        await Get.toNamed(kUserProfile);
-      }
+      // this to  avoid no listener Events because User was already set, before even the listener got to start it's streamsub
       if (Get.currentRoute == kSignInRouteOptional) {
         Get.back();
       } else {
         Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
       }
+      if (Get.find<AuthController>().user != null) {
+        redirectIfUserInfosNotSet();
+      }
+      startListeningForUserModelChanges();
+    }
+  }
+
+  void startListeningForUserModelChanges() {
+    userInfoChangeListener?.cancel();
+    userInfoChangeListener = null;
+    userInfoChangeListener =
+        Get.find<AuthController>().userInfoStream.listen((event) {
+      mezDbgPrint(
+          "Wrapper::handleAuthStateChange:: signed in, Checking if User name are Set !");
+
+      if (Get.currentRoute == kSignInRouteOptional) {
+        Get.back();
+      } else {
+        Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
+      }
+      redirectIfUserInfosNotSet();
+    });
+  }
+
+  void redirectIfUserInfosNotSet() {
+    mezDbgPrint(
+        "@s@s@ calleld ! ${Get.find<AuthController>().isDisplayNameSet()} ${Get.find<AuthController>().isUserImgSet()}");
+    if ((!Get.find<AuthController>().isDisplayNameSet() ||
+            !Get.find<AuthController>().isUserImgSet()) &&
+        Get.currentRoute != kUserProfile) {
+      Get.toNamed(kUserProfile);
     }
   }
 

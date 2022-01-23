@@ -56,6 +56,8 @@
 	<string>App needs location when in use to update your Taxi Driver about your location</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>App need access to PhotoLibrary in order to change User's profile pictures.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>App Needs camera access in case the user wanted to change his/her profile picture directly using his iPhone's camera.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>

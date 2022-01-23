@@ -18,5 +18,5 @@ AppBar deliveryAdminAppBar(AppBarLeftButtonType leftBtnType,
                 hasNewNotif: true, margin: EdgeInsets.all(0))
             : SizedBox(),
       ],
-      function: (function != null) ? function() : null);
+      onClick: () => function?.call());
 }

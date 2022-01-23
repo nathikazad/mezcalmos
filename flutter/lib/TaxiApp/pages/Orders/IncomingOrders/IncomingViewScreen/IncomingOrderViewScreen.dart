@@ -144,6 +144,7 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
   void cancelOrderSubscription() {
     _orderListener?.cancel();
     _orderListener = null;
+    Get.back(closeOverlays: true);
   }
 
   Widget acceptOrderButton({required Widget child}) {

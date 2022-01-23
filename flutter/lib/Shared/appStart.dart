@@ -201,7 +201,7 @@ class _StartingPointState extends State<StartingPoint> {
   }
 
   Future<void> waitForInitialization() async {
-    await Get.find<AuthController>().authStateChange.first;
+    await Get.find<AuthController>().authStateStream.first;
     return;
   }
 

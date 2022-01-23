@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
-
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
@@ -37,9 +36,15 @@ class AuthController extends GetxController {
   StreamSubscription? _userNodeListener;
 
   // Rxn<fireAuth.User> _userRx = Rxn();
-  StreamController<fireAuth.User?> authStateChangeStream =
+  StreamController<fireAuth.User?> _authStateStreamController =
       StreamController.broadcast();
-  Stream<fireAuth.User?> get authStateChange => authStateChangeStream.stream;
+
+  StreamController<User?> _userInfoStreamController =
+      StreamController.broadcast();
+
+  Stream<fireAuth.User?> get authStateStream =>
+      _authStateStreamController.stream;
+  Stream<User?> get userInfoStream => _userInfoStreamController.stream;
 
   bool get isUserSignedIn => _fireAuthUser.value != null;
   FirebaseDb _databaseHelper =
@@ -68,7 +73,9 @@ class AuthController extends GetxController {
 
       if (user == null) {
         await _onSignOutCallback();
-        authStateChangeStream.add(null);
+        _authStateStreamController.add(null);
+        _userInfoStreamController.add(null);
+
         mezDbgPrint('AuthController: User is currently signed out!');
         _userNodeListener?.cancel();
         _userNodeListener = null;
@@ -76,7 +83,7 @@ class AuthController extends GetxController {
       } else {
         mezDbgPrint('AuthController: User is currently signed in!');
         _onSignInCallback();
-        authStateChangeStream.add(user);
+        _authStateStreamController.add(user);
         GetStorage().write(getxUserId, user.uid);
         _userNodeListener?.cancel();
         _userNodeListener = _databaseHelper.firebaseDatabase
@@ -95,7 +102,7 @@ class AuthController extends GetxController {
                     .toFirebaseFormatString());
           }
           _user.value = User.fromSnapshot(user, event.snapshot);
-
+          _userInfoStreamController.add(_user.value!);
           Get.find<LanguageController>()
               .userLanguageChanged(_user.value!.language);
         });
@@ -105,7 +112,12 @@ class AuthController extends GetxController {
   }
 
   bool isDisplayNameSet() {
-    return _fireAuthUser.value?.displayName != null;
+    return _user.value?.name != null;
+  }
+
+  bool isUserImgSet() {
+    return _user.value?.image != null &&
+        _user.value?.image != defaultUserImgUrl;
   }
 
   Future<String> getImageUrl(File imageFile, String uid) async {
@@ -128,9 +140,22 @@ class AuthController extends GetxController {
     return x;
   }
 
-  // Future<ServerResponse> changeUserName(String? name) {}
+  /// this is for setting the Original size of the image that was picked by the user,
+  ///
+  /// Made as a seprated function and not along with [editUserProfile]'s parameteres,
+  ///
+  /// because that was we won't need to wait for them both to get uploaded.
+  Future<void> setOriginalUserImage(String? originalImageUrl) async {
+    if (originalImageUrl != null) {
+      await _databaseHelper.firebaseDatabase
+          .reference()
+          .child(userInfo(fireAuthUser!.uid))
+          .child('origImaage')
+          .set(originalImageUrl);
+    }
+  }
 
-  Future<void> editUserProfile(String? name, String? image) async {
+  Future<void> editUserProfile(String? name, String? compressedImageUrl) async {
     if (name != null) {
       await _databaseHelper.firebaseDatabase
           .reference()
@@ -147,21 +172,12 @@ class AuthController extends GetxController {
         );
       });
     }
-    if (image != null && image.isURL) {
+    if (compressedImageUrl != null && compressedImageUrl.isURL) {
       await _databaseHelper.firebaseDatabase
           .reference()
           .child(userInfo(fireAuthUser!.uid))
           .child('image')
-          .set(image)
-          .then((value) {
-        _user.value = User(
-          uid: _user.value!.uid,
-          email: _user.value?.email,
-          image: image,
-          language: _user.value!.language,
-          name: _user.value?.name,
-        );
-      });
+          .set(compressedImageUrl);
     }
   }
 

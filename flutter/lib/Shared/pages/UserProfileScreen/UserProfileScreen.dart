@@ -1,270 +1,463 @@
-import 'dart:io';
-
+import 'dart:async';
+import 'dart:io' as io;
+import 'dart:typed_data';
+import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
-import 'package:mezcalmos/Shared/pages/UserProfileScreen/Component/meddleWidgetUserProfile.dart';
-import 'package:mezcalmos/Shared/pages/UserProfileScreen/Component/userImageProfile.dart';
-import 'package:mezcalmos/Shared/pages/UserProfileScreen/Component/userProfileButton.dart';
-import 'package:mezcalmos/Shared/pages/UserProfileScreen/Component/userProfileScreenTitle.dart';
+import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
-
-enum AccountState {
-  free,
-  picked,
-  // cropped,
-}
-const mypadding = const EdgeInsets.symmetric(horizontal: 10);
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 
 class UserProfile extends StatefulWidget {
+  final AuthController authController = Get.find<AuthController>();
+  // this is just to controll incase we want to make a push to this route with a pre-defined mode.
+  final UserProfileMode pageInitMode;
+  // UserProfileController
+  final UserProfileController userProfileController = UserProfileController();
+  // Constructor!
+  UserProfile({Key? key, this.pageInitMode = UserProfileMode.Show})
+      : super(key: key) {
+    userProfileController.setUserProfileMode(this.pageInitMode);
+  }
+
   @override
-  State<UserProfile> createState() {
+  State<StatefulWidget> createState() {
     return _UserProfileState();
   }
 }
 
 class _UserProfileState extends State<UserProfile> {
-  AuthController auth = Get.find<AuthController>();
-  LanguageController lang = Get.find<LanguageController>();
-  AccountState state = AccountState.free;
-  Rx<bool> isEditing = false.obs;
-  String? uploadedImageLink;
-  TextEditingController textController = new TextEditingController();
-  File? imageFile;
+  AuthController _authController = Get.find<AuthController>();
+  RxBool isUploadingImg = false.obs;
+  RxBool clickedSave = false.obs;
 
   @override
   void initState() {
-    // should only executes once because when state rebuilds upon any focus (This gets re-executes making it impossible to apply userName changes)
+    widget.userProfileController.initSetup();
     super.initState();
-    if (auth.user?.name != null && auth.user?.image != defaultPic) {
-    } else {
-      isEditing.value = true;
-    }
-
-    textController.text = auth.user?.name == null ? "" : auth.user!.name!;
-    imageFile = File(auth.user?.image != null ? auth.user!.image! : "test");
   }
 
   @override
   void dispose() {
-    textController.dispose();
+    widget.userProfileController.disposeController();
     super.dispose();
   }
 
-  SideMenuDrawerController _sideMenuDraweController =
-      Get.find<SideMenuDrawerController>();
-  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    responsiveSize(context);
     return WillPopScope(
         onWillPop: () async {
-          if (!auth.isDisplayNameSet()) {
-            // Make it so the user can not go back unless
-            return false;
-          } else {
-            // user can go back !
-
-            return true;
-          }
+          return onWillPopScopeFunction();
         },
-        child: Scaffold(
-          appBar:
-              mezcalmosAppBar(AppBarLeftButtonType.Back, function: () async {
-            if (auth.user?.name == null || auth.user?.image == defaultPic) {
-              if (textController.text == null || textController.text.isEmpty) {
-                checkNameValidation();
-              } else {
-                if (!checkNameValidation()) {
-                  if (imageFile?.path != defaultPic &&
-                      imageFile?.path != "test") {
-                    var xUrl =
-                        await auth.getImageUrl(imageFile!, auth.user!.uid);
-                    mezDbgPrint(xUrl);
-                    auth.user!.image = xUrl;
-                    auth.editUserProfile(textController.text.trim(), xUrl);
-                    isEditing.value = true;
-                  } else {
-                    if (auth.user!.image == defaultPic) {
-                      mezDbgPrint("please change the image");
-
-                      // showAddImageDailog();
-                    } else {
-                      mezDbgPrint("the path is empty");
-
-                      auth.editUserProfile(
-                          textController.text.trim(), auth.user!.image);
-                      isEditing.value = !isEditing.value;
-                      Get.back();
-                      Get.back();
-                    }
-                  }
-                } else {
-                  //do: somethig
-                }
-              }
-              ;
-            } else {
-              Get.back();
-            }
-          }),
-          backgroundColor: Colors.white,
-          body: Form(
-            key: _formKey,
-            child: Center(
-              child: SingleChildScrollView(
-                physics: ClampingScrollPhysics(),
-                child: Obx(
-                  () => auth.user != null
-                      ? ConstrainedBox(
-                          constraints: BoxConstraints(
-                              maxHeight: Get.height, maxWidth: Get.width),
-                          child: Container(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                userProfileScreenTitle(),
-                                // Spacer(),
-                                Obx(
-                                  () => UserImageProfile(
-                                    isEditing: isEditing.value,
-                                    onImageUserChanged: (val) {
-                                      setState(() {
-                                        if (val.path != defaultPic ||
-                                            val.path != null) {
-                                          Get.snackbar(
-                                              "${lang.strings["shared"]["userInfo"]["snackTxt"]}",
-                                              "${lang.strings["shared"]["userInfo"]["snackMsg"]}",
-                                              backgroundColor: Colors.black,
-                                              colorText: Colors.white,
-                                              showProgressIndicator: true);
-                                          setState(() {
-                                            imageFile = val;
-                                          });
-                                          auth
-                                              .getImageUrl(val, auth.user!.uid)
-                                              .then((value) {
-                                            setState(() {
-                                              uploadedImageLink = value;
-                                            });
-                                            auth
-                                                .editUserProfile(null, val.path)
-                                                .then((value) {});
-                                          });
-                                        }
-                                      });
-                                    },
-                                  ),
-                                ),
-
-                                Obx(() => meddleWidgetUserProfile(
-                                    isEditing: isEditing.value,
-                                    controller: textController,
-                                    keyForm: _formKey)),
-
-                                Obx(
-                                  () => UserProfileButton(
-                                    function: () async {
-                                      if (checkNameValidation()) {
-                                      } else {
-                                        mezDbgPrint(
-                                            " ~~~~ ||| ===>${imageFile?.path}");
-                                        if (!isEditing.value) {
-                                          mezDbgPrint(
-                                              "editing" + textController.text);
-
-                                          isEditing.value = !isEditing.value;
-                                        } else {
-                                          mezDbgPrint(
-                                              "Saved ${textController.text}");
-
-                                          auth.user!.name = textController.text;
-                                          if (imageFile?.path != defaultPic &&
-                                              imageFile?.path != "test") {
-                                            mezDbgPrint(
-                                                "the file path is ${imageFile?.path}");
-                                            // var xUrl = await auth.getImageUrl(
-                                            //     imageFile!, auth.user!.uid);
-                                            //
-                                            auth.user!.image =
-                                                uploadedImageLink ?? defaultPic;
-                                            auth.editUserProfile(
-                                                textController.text.trim(),
-                                                uploadedImageLink ??
-                                                    defaultPic);
-                                            isEditing.value = !isEditing.value;
-                                          } else {
-                                            if (auth.user!.image ==
-                                                defaultPic) {
-                                            } else {
-                                              mezDbgPrint("the path is empty");
-
-                                              auth.editUserProfile(
-                                                  textController.text.trim(),
-                                                  auth.user!.image);
-                                              isEditing.value =
-                                                  !isEditing.value;
-                                            }
-                                          }
-                                        }
-                                      }
-                                    },
-                                    isEditing: isEditing.value,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
-                      : MezLogoAnimation(),
-                ),
-              ),
-            ),
+        child: Obx(
+          () => Scaffold(
+            appBar: getRightAppBar(),
+            body: isUploadingImg.value
+                ? topViewLayerWhenUploading()
+                : SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    physics: ClampingScrollPhysics(),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                          maxHeight: Get.height - 140, maxWidth: Get.width),
+                      child: Column(
+                        // direction: Axis.vertical,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: bodyContent(),
+                      ),
+                    ),
+                  ),
           ),
         ));
   }
 
-  void showAddImageDailog() {
-    Get.defaultDialog(
-        title: "${lang.strings["shared"]["userInfo"]["choosePic"]}",
-        middleText: "",
-        content: Column(
+  // -------------------------------------------------------- Helper functions ---------------------------------------------------------------
+
+  /// this is called when the user clicks Edit.
+  void onStartEdit() {
+    widget.userProfileController.userImg.value = null;
+    widget.userProfileController.setUserProfileMode(UserProfileMode.Edit);
+  }
+
+  /// this is called when the user clicks Save
+  Future<void> onSaveChangesClick() async {
+    if (widget.userProfileController.nameIsValidString()) {
+      mezDbgPrint("Started onSaveChangesClick");
+      clickedSave.value = true;
+      await _authController.editUserProfile(
+          widget.userProfileController.userName.value,
+          widget.userProfileController.compressedImgUrl);
+      mezDbgPrint("Set new compressed image and user name done!");
+
+      await _authController
+          .setOriginalUserImage(widget.userProfileController.originalImgUrl);
+
+      mezDbgPrint("Set Original image done!");
+
+      await Future.delayed(Duration(milliseconds: 500));
+      mezDbgPrint("Delay done!");
+      widget.userProfileController.reset();
+      widget.userProfileController.setUserProfileMode(UserProfileMode.Show);
+      clickedSave.value = false;
+    } else {
+      widget.userProfileController.setErrorTextForXDuration(
+          "Only Alphabet letters and spaces allowed.",
+          duration: Duration(seconds: 4));
+    }
+  }
+
+  /// this gets called when the user presses [browsImageButton()],
+  ///
+  /// It actually ask the user if he wants to take a picture or brows his gallery,
+  ///
+  /// And once the user actually selects something , it start uploading the compressed version first along with the original one.
+  void onBrowsImageClick() async {
+    imPicker.ImageSource? _from = await imagePickerChoiceDialog(context);
+    mezDbgPrint("rESULT ===> $_from");
+    if (_from != null) {
+      widget.userProfileController.reset();
+      var _res = await imagePicker(
+          picker: widget.userProfileController.picker, source: _from);
+
+      // this check is needed in case user presses back button without picking any image
+      if (_res != null) {
+        isUploadingImg.value = true;
+        // this holds XFile which holds the original image
+        widget.userProfileController.userImg.value = _res;
+        // this holds userImgBytes of the original
+        widget.userProfileController.userImgBytes.value =
+            await _res.readAsBytes();
+        // this is the bytes of our compressed image .
+        Uint8List _compressedVersion = await compressImageBytes(
+            widget.userProfileController.userImgBytes.value!);
+        // Get the actual File compressed
+        io.File compressedFile = await writeCompressedFileFromBytes(
+            filePath: widget.userProfileController.userImg.value!.path,
+            compressedImageBytes: _compressedVersion);
+        // generating a temp image from the Fiel , so we can resolve image provider.
+        Image img = Image.file(io.File(_res.path));
+        // resolving ImagePrivider (We will use this late to reduce the height and width of the image to the same percenteage )
+        img.image
+            .resolve(new ImageConfiguration())
+            .addListener(ImageStreamListener((ImageInfo info, bool _) async {
+          // put the compressed file to firebaseStorage
+          String _compressedUrl = await _authController.getImageUrl(
+              compressedFile, _authController.user!.uid);
+          // we set our _compressed FirebaseStorage Url in our controller.
+          widget.userProfileController.compressedImgUrl = _compressedUrl;
+          // once uploaded we need to remove the temporary compressed version from user's device
+          compressedFile.delete();
+          // put the original file to firebaseStorage
+          String _originalUrl = await _authController.getImageUrl(
+              io.File(widget.userProfileController.userImg.value!.path),
+              _authController.user!.uid);
+          // we set our original FirebaseStorage Url in our controller.
+          widget.userProfileController.originalImgUrl = _originalUrl;
+          // after the uploading of the image is done, we set back this to false.
+          isUploadingImg.value = false;
+        }));
+      }
+    }
+  }
+
+  /// this compresses the Original Image using jpeg format Since it's much ligher.
+  ///
+  /// and reduce the quality down to [qualityCompressionOfUserImage = 25%].
+  Future<Uint8List> compressImageBytes(Uint8List originalImg) async {
+    final ByteData data = ByteData.sublistView(originalImg);
+    final beforeCompress = data.lengthInBytes;
+    mezDbgPrint("s@s:beforeCompress =>s $beforeCompress");
+    final result = await FlutterImageCompress.compressWithList(
+        data.buffer.asUint8List(),
+        quality: qualityCompressionOfUserImage);
+    mezDbgPrint("after => ${result.length}");
+    return result;
+  }
+
+  // -------------------------------------------------------- View-related Widgets --------------------------------------------------------
+
+  Widget topViewLayerWhenUploading() {
+    return Container(
+        height: Get.height,
+        width: Get.width,
+        color: Colors.black54,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              child: Icon(
-                Icons.add_a_photo,
-                size: 50,
-              ),
+            Text(
+              "Uploading ...",
+              style: TextStyle(color: Colors.white),
             ),
             SizedBox(
               height: 20,
             ),
-            TextButton(
-                onPressed: () {
-                  Get.back();
-                },
-                child: Container(
-                    width: Get.width,
-                    child: Center(
-                        child: Text(
-                            "${lang.strings["shared"]["userInfo"]["cancel"]}"))))
+            Container(
+              height: 40,
+              width: 40,
+              child: CircularProgressIndicator(),
+            ),
           ],
         ));
   }
 
-  bool checkNameValidation() {
-    if (_formKey.currentState!.validate()) {
-      return false;
+  /// this holds the Main body parts.
+  List<Widget> bodyContent() {
+    return [
+      userInfoTitle(),
+      Flexible(
+        flex: 1,
+        // fit: FlexFit.tight,
+        child: Stack(
+          fit: StackFit.passthrough,
+          children: pictureContainerWidget(),
+        ),
+      ),
+      Flexible(flex: 1, child: showUserNameOrTextField()),
+      Flexible(
+          flex: 1,
+          child: Container(
+              margin: EdgeInsets.only(bottom: 50, left: 50, right: 50),
+              child: showEditOrSaveAndCancelButton())),
+    ];
+  }
+
+  /// this Holds the Circled Container in the middle of the screen that has the user Image
+  List<Widget> pictureContainerWidget() {
+    return [
+      Center(
+        child: GestureDetector(
+          onTap: widget.userProfileController.stateMode == UserProfileMode.Edit
+              ? onBrowsImageClick
+              : () {},
+          child: Container(
+            height: 150.h,
+            width: 150.w,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: showDefaultOrUserImg(
+                            memoryImg:
+                                widget.userProfileController.userImgBytes.value)
+                        .image)),
+            child:
+                widget.userProfileController.stateMode == UserProfileMode.Edit
+                    ? browsImageButton()
+                    : SizedBox(),
+          ),
+        ),
+      ),
+    ];
+  }
+
+  /// this is the brows button inside  [pictureContainerWidget] When on [UserProfileMode.Edit] mode it shows up.
+  Center browsImageButton() {
+    return Center(
+      child: Container(
+        height: 150.h,
+        width: 150.w,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.black45,
+        ),
+        padding: EdgeInsets.all(5),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.photo_library_outlined,
+              color: Colors.white,
+            ),
+            SizedBox(height: 5),
+            Text(
+              ' select ',
+              style: TextStyle(color: Colors.white),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  /// this is the top title of the userProfileScreen
+  Flexible userInfoTitle() {
+    return Flexible(
+      flex: 1,
+      child: Center(
+          child: Text(
+        "User Information",
+        style: TextStyle(fontSize: 30),
+      )),
+    );
+  }
+
+  /// This gets the appBar depending on if the user has already set his infos or not.
+  ///
+  /// In case the user hasn't his image and name set , the back arrow of the appbar won't work,
+  ///
+  /// and the user can't go out of the screen unless he sets up his infos.
+  AppBar getRightAppBar() {
+    if (widget.userProfileController.checkIfUserHasAllInfosSet() &&
+        !isUploadingImg.value) {
+      // return popable button
+      return mezcalmosAppBar(AppBarLeftButtonType.Back,
+          onClick: () => Get.back(closeOverlays: true));
     } else {
+      // none popable buttom
+      return mezcalmosAppBar(AppBarLeftButtonType.Back);
+    }
+  }
+
+  /// this return an onWillPopScope bool, defining if user can pop the scope or not depending on the [UserProfileMode]
+  bool onWillPopScopeFunction() {
+    if (widget.userProfileController.checkIfUserHasAllInfosSet()) {
+      widget.userProfileController.disposeController();
       return true;
+    } else
+      return false;
+  }
+
+  /// this basically either shows the UserName or shows the textField depending on [UserProfileMode].
+  Widget showUserNameOrTextField() {
+    if (widget.userProfileController.stateMode == UserProfileMode.Show) {
+      return Text(
+        _authController.user!.name!,
+        style: TextStyle(fontSize: 30),
+      );
+    } else {
+      return Column(
+        children: [
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 55),
+            child: TextField(
+                style: TextStyle(color: Colors.purple.shade400, fontSize: 15),
+                controller: widget.userProfileController.textEditingController,
+                onChanged: (value) {
+                  widget.userProfileController.userName.value = value;
+                }),
+          ),
+          if (widget.userProfileController.errorReport.value != null)
+            Container(
+              // height: 20,
+              margin: EdgeInsets.only(top: 10, left: 50, right: 50),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.error_outline_rounded,
+                    color: Colors.red,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Flexible(
+                    child: Text(
+                      widget.userProfileController.errorReport.value!,
+                      overflow: TextOverflow.visible,
+                      style: TextStyle(color: Colors.red),
+                      softWrap: true,
+                      maxLines: 4,
+                    ),
+                  ),
+                ],
+              ),
+            )
+        ],
+      );
+    }
+  }
+
+  /// this shows either the edit infos Button or the Save button,
+  ///
+  /// depending on [UserProfileMode] , and in case the user has already his infos set up , a cancel button will shows up.
+  Widget showEditOrSaveAndCancelButton() {
+    if (widget.userProfileController.stateMode == UserProfileMode.Show) {
+      return TextButton(onPressed: onStartEdit, child: Text("Edit User Info"));
+    } else {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          // save button---
+          Expanded(
+            flex: 2,
+            child: InkWell(
+                onTap: widget.userProfileController.didUserChangedInfos() &&
+                        !clickedSave.value
+                    ? () async {
+                        await onSaveChangesClick();
+                      }
+                    : () {
+                        MezSnackbar("Oops", "No Changes to be applied!",
+                            position: SnackPosition.TOP);
+                      },
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 10),
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.blueGrey.shade100),
+                      color:
+                          widget.userProfileController.didUserChangedInfos() &&
+                                  !clickedSave.value
+                              ? Colors.purple.shade400
+                              : Colors.grey.shade300,
+                      borderRadius: BorderRadius.circular(15)),
+                  height: 50,
+                  // width: Get.width - 100,
+                  child: Center(
+                      child: !clickedSave.value
+                          ? Text(
+                              "Save",
+                              style: TextStyle(
+                                  color: widget.userProfileController
+                                          .didUserChangedInfos()
+                                      ? Colors.white
+                                      : Colors.grey.shade400),
+                            )
+                          : CircularProgressIndicator(
+                              strokeWidth: 1,
+                              color: Colors.black,
+                            )),
+                )),
+          ),
+          // cancel button
+          if (widget.userProfileController.checkIfUserHasAllInfosSet() &&
+              widget.userProfileController.stateMode == UserProfileMode.Edit &&
+              !clickedSave.value)
+            Expanded(
+                flex: 2,
+                child: InkWell(
+                  onTap: () {
+                    widget.userProfileController.reset();
+                    widget.userProfileController
+                        .setUserProfileMode(UserProfileMode.Show);
+                  },
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.purple.shade400),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(15)),
+                    height: 50,
+                    // width: Get.width - 100,
+                    child: Center(
+                        child: Text(
+                      "Cancel",
+                      style: TextStyle(color: Colors.purple.shade400),
+                    )),
+                  ),
+                )),
+        ],
+      );
     }
   }
 }

@@ -1,10 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 
@@ -12,10 +9,10 @@ enum AppBarLeftButtonType { Back, Menu }
 
 AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
     {dynamic bgColor = Colors.white,
-    Function? function,
+    Function? onClick,
     List<Widget> actionIcons = const <Widget>[]}) {
   Widget btn_icon;
-  Function onTapFunction;
+
   switch (leftBtnType) {
     case AppBarLeftButtonType.Back:
       btn_icon = Center(
@@ -25,30 +22,18 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
           size: getSizeRelativeToScreen(35, Get.width, Get.height),
         ),
       );
-      onTapFunction = () {
-        if (function != null) {
-          function();
-        } else {
-          Get.back();
-        }
-      };
       break;
     case AppBarLeftButtonType.Menu:
+      if (onClick == null) {
+        onClick = Get.find<SideMenuDrawerController>().openMenu;
+      }
       btn_icon = Icon(
         MezcalmosIcons.stream,
         color: Colors.white,
         size: 16,
       );
-      onTapFunction = () {
-        if (function != null) {
-          function();
-        }
-        Get.find<SideMenuDrawerController>().openMenu();
-      };
       break;
   }
-  mezDbgPrint(
-      "Getx => ScreenSize ========> ${Get.width} x ${Get.height}  the length of actionIcons is ${actionIcons.length}!!");
   return AppBar(
     toolbarHeight: 80,
     elevation: 0,
@@ -64,8 +49,7 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
             width: 30,
             child: GestureDetector(
               onTap: () {
-                mezDbgPrint("Taped Drawer btn !");
-                if (onTapFunction != null) onTapFunction();
+                onClick?.call();
               },
               child: Container(
                 height: 30,
@@ -81,7 +65,7 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
                     ),
                   ],
                   gradient: LinearGradient(
-                      colors: onTapFunction != null
+                      colors: onClick != null
                           ? [
                               Color.fromARGB(255, 97, 127, 255),
                               Color.fromARGB(255, 198, 90, 252),
@@ -94,20 +78,10 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
               ),
             ),
           ),
-          // Positioned(
-          //     right: getSizeRelativeToScreen(40, Get.height, Get.width),
-          //     child: fillTitle())
-          //SizedBox(width: getSizeRelativeToScreen(20, Get.height, Get.width)),
           Spacer(),
           MezcalmosSharedWidgets.fillTitle(actionIcons.length),
           Spacer(),
-          for (var i = 0; i < actionIcons.length; i++) ...[
-            //SizedBox(width: 5),
-            actionIcons[i]
-          ]
-          //  actionIcons==null?Spacer():(actionIcons!.map((e) {
-          //    return <Widget>[Spacer(),e];
-          //  }))
+          for (var i = 0; i < actionIcons.length; i++) ...[actionIcons[i]]
         ],
       ),
     ),

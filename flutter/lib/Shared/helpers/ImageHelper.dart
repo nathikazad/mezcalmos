@@ -1,14 +1,127 @@
 // Usefull when trying to make Sizes adptable!
 import 'dart:async';
+import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'dart:ui' as ui;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:image_picker/image_picker.dart' as imPicker;
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+
+Future<File> writeCompressedFileFromBytes(
+    {required String filePath, required Uint8List compressedImageBytes}) async {
+  // compressed Image
+  List<String> splittedPath = filePath.split('.');
+  String pathWithoutExtension =
+      splittedPath.sublist(0, splittedPath.length - 1).join('.');
+  mezDbgPrint("PATH WITHOUT EXTENSION $pathWithoutExtension");
+  mezDbgPrint("PATH WITH EXTENSION ${filePath}");
+
+  return await File('${pathWithoutExtension}.compressed.${splittedPath.last}')
+      .writeAsBytes(compressedImageBytes);
+}
+
+Image showDefaultOrUserImg({Uint8List? memoryImg}) {
+  if (memoryImg != null) {
+    return mLoadImage(
+        url: null, memoryImage: memoryImg, assetInCaseFailed: aLogoPath);
+  }
+  return mLoadImage(
+      url: Get.find<AuthController>().user!.image,
+      assetInCaseFailed: aLogoPath);
+}
+
+Future<imPicker.ImageSource?> imagePickerChoiceDialog(
+    BuildContext context) async {
+  imPicker.ImageSource? _result;
+
+  await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          contentPadding: EdgeInsets.all(40),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 10.h,
+              ),
+              TextButton(
+                  onPressed: () {
+                    _result = imPicker.ImageSource.camera;
+                    Get.back();
+                  },
+                  style: TextButton.styleFrom(
+                      backgroundColor: Colors.purple.shade400,
+                      padding: EdgeInsets.all(12)),
+                  child: Container(
+                      alignment: Alignment.center,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.camera_enhance,
+                            color: Colors.white,
+                          ),
+                          Text('Camera')
+                        ],
+                      ))),
+              SizedBox(
+                height: 10,
+              ),
+              TextButton(
+                  onPressed: () {
+                    _result = imPicker.ImageSource.gallery;
+                    Get.back();
+                  },
+                  style: TextButton.styleFrom(
+                      backgroundColor: Colors.deepPurple,
+                      padding: EdgeInsets.all(12)),
+                  child: Container(
+                      alignment: Alignment.center,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.photo_library_outlined,
+                            color: Colors.white,
+                          ),
+                          Text('Gallery')
+                        ],
+                      ))),
+            ],
+          ),
+        );
+      });
+
+  return _result;
+}
+
+Future<imPicker.XFile?> imagePicker(
+    {required imPicker.ImagePicker picker,
+    imPicker.ImageSource source = imPicker.ImageSource.gallery}) async {
+  try {
+    return await picker.pickImage(
+      source: source,
+      preferredCameraDevice: imPicker.CameraDevice.front,
+      imageQuality: 10,
+    );
+  } on PlatformException catch (_) {
+    return null;
+  }
+}
 
 Image mLoadImage(
     {required String? url,
+    Uint8List? memoryImage,
     double? height,
     double? width,
     fit: BoxFit.cover,
@@ -19,12 +132,21 @@ Image mLoadImage(
       url.toLowerCase().contains('.svg') ||
       !url.startsWith('http')) {
     try {
-      _img = Image.asset(
-        url!,
-        height: height,
-        width: width,
-        fit: BoxFit.contain,
-      );
+      if (memoryImage != null) {
+        _img = Image.memory(
+          memoryImage,
+          height: height,
+          width: width,
+          fit: BoxFit.contain,
+        );
+      } else {
+        _img = Image.asset(
+          url!,
+          height: height,
+          width: width,
+          fit: BoxFit.contain,
+        );
+      }
     } catch (e) {
       _img = Image.asset(
         assetInCaseFailed,

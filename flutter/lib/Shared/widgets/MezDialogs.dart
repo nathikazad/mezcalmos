@@ -69,7 +69,7 @@ Future<void> oneButtonDialog(
   );
 }
 
-Future<TwoButtonDialogButton> twoButtonDialog(
+Future<TwoButtonDialogButton?> twoButtonDialog(
     {required String title,
     required String body,
     //required String leftButtonText,
@@ -82,8 +82,12 @@ Future<TwoButtonDialogButton> twoButtonDialog(
     Widget? buttonRightStyle,
     Function? rightButtonCallback}) async {
   LanguageController lang = Get.find<LanguageController>();
-  late TwoButtonDialogButton twoButtonDialogButton;
+  TwoButtonDialogButton? twoButtonDialogButton;
   await Get.defaultDialog<TwoButtonDialogButton>(
+    onWillPop: () async {
+      twoButtonDialogButton = null;
+      return true;
+    },
     radius: 4,
     title: (titleUp!) ? "$title" : "",
     content: Container(
@@ -183,27 +187,35 @@ Future<YesNoDialogButton> yesNoDialog(
   // TODO: @Saad use two button dialog
   // OLD CODE BELOW
 
-  return (await twoButtonDialog(
+  TwoButtonDialogButton? _res = (await twoButtonDialog(
     title: text,
     body: body,
     titleUp: titleUp,
     dailogIcon: icon,
     buttonLeftStyle: buttonLeftStyle,
     buttonRightStyle: buttonRightStyle,
-  ))
-      .toYesNo(right: YesNoDialogButton.No, left: YesNoDialogButton.Yes);
+  ));
+  if (_res != null) {
+    return _res.toYesNo(
+        right: YesNoDialogButton.No, left: YesNoDialogButton.Yes);
+  } else
+    return YesNoDialogButton.No;
 }
 
 Future<YesNoDialogButton> cancelAlertDialog(
     {required String title, required String body, Widget? icon}) async {
-  return (await twoButtonDialog(
+  TwoButtonDialogButton? _res = (await twoButtonDialog(
     title: title,
     body: body,
     dailogIcon: icon,
     buttonRightStyle: NoButtonComponetStyle(),
     buttonLeftStyle: YesButtonComponetStyle(),
-  ))
-      .toYesNo(right: YesNoDialogButton.No, left: YesNoDialogButton.Yes);
+  ));
+  if (_res != null) {
+    return _res.toYesNo(
+        right: YesNoDialogButton.No, left: YesNoDialogButton.Yes);
+  } else
+    return YesNoDialogButton.No;
 }
 
 class MezDialogButtonStyle extends StatelessWidget {
