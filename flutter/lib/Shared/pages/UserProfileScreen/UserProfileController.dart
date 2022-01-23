@@ -1,11 +1,8 @@
-import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 enum UserProfileMode { Edit, Show }
 
