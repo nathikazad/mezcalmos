@@ -213,6 +213,21 @@ class _StartingPointState extends State<StartingPoint> {
     };
   }
 
+  Future<void> setRightPrivacyPolicyLink(AppType type) async {
+    switch (type) {
+      case AppType.CustomerApp:
+        await GetStorage()
+            .write(getxPrivacyPolicyLink, tPrivacyPolicyCustomerApp);
+        break;
+      case AppType.TaxiApp:
+        await GetStorage().write(getxPrivacyPolicyLink, tPrivacyPolicyTaxiApp);
+        break;
+      default:
+        await GetStorage()
+            .write(getxPrivacyPolicyLink, tPrivacyPolicyCustomerApp);
+    }
+  }
+
   Widget mainApp(
       {required AppType appType,
       required ThemeData appTheme,
@@ -223,6 +238,7 @@ class _StartingPointState extends State<StartingPoint> {
           ImageConfiguration(), 'assets/images/shared/purpleCircle.png');
 
       await GetStorage().write('markerCircle', desc);
+      await setRightPrivacyPolicyLink(appType);
       print("[+] InitializedConfig -- the ${appType.toShortString()} !");
     }
 

@@ -158,7 +158,8 @@ class MezSideMenu extends GetWidget<AuthController> {
                         ))
                     : SizedBox()),
                 ListTile(
-                    onTap: () async => await launch(tPrivacyPolicy),
+                    onTap: () async =>
+                        await launch(GetStorage().read(getxPrivacyPolicyLink)),
                     leading: Icon(
                       Icons.lock_sharp,
                       color: Color.fromARGB(255, 103, 121, 254),
