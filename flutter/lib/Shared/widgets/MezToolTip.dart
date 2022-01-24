@@ -31,18 +31,26 @@ class MezToolTipHint {
   }
 }
 
-class MezToolTip extends StatelessWidget {
+class MezToolTip extends StatefulWidget {
   final List<MezToolTipHint> hintWidgetsList;
   final bool applyCacheIncrementing;
-  MezToolTip(
-      {this.hintWidgetsList = const [], this.applyCacheIncrementing: true});
+  const MezToolTip(
+      {Key? key,
+      this.hintWidgetsList = const [],
+      this.applyCacheIncrementing: true})
+      : super(key: key);
 
+  @override
+  _MezToolTipState createState() => _MezToolTipState();
+}
+
+class _MezToolTipState extends State<MezToolTip> {
   RxInt currentHintIndex = 0.obs;
 
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => currentHintIndex.value >= hintWidgetsList.length
+      () => currentHintIndex.value >= widget.hintWidgetsList.length
           ? SizedBox()
           : blackTopOverlay(),
     );
@@ -87,7 +95,7 @@ class MezToolTip extends StatelessWidget {
             width: 1,
           ),
         ),
-        child: hintWidgetsList[this.currentHintIndex.value].hintWidget);
+        child: widget.hintWidgetsList[this.currentHintIndex.value].hintWidget);
   }
 
   /// This is the Triangle that points on an [x1, y1, x2, y2] Coords on the screen
@@ -96,10 +104,10 @@ class MezToolTip extends StatelessWidget {
   AnimatedPositioned toolTipTriangle() {
     return AnimatedPositioned(
         duration: Duration(milliseconds: 500),
-        left: hintWidgetsList[currentHintIndex.value].left,
-        top: hintWidgetsList[currentHintIndex.value].top,
-        right: hintWidgetsList[currentHintIndex.value].right,
-        bottom: hintWidgetsList[currentHintIndex.value].bottom,
+        left: widget.hintWidgetsList[currentHintIndex.value].left,
+        top: widget.hintWidgetsList[currentHintIndex.value].top,
+        right: widget.hintWidgetsList[currentHintIndex.value].right,
+        bottom: widget.hintWidgetsList[currentHintIndex.value].bottom,
         child: CustomPaint(
             painter: ToolTipTrianglePainter(backGroundColor: Colors.white)));
   }
@@ -111,12 +119,12 @@ class MezToolTip extends StatelessWidget {
         right: 5,
         child: InkWell(
           onTap: () {
-            if (currentHintIndex.value == hintWidgetsList.length - 1 &&
-                applyCacheIncrementing) {
+            if (currentHintIndex.value == widget.hintWidgetsList.length - 1 &&
+                widget.applyCacheIncrementing) {
               Get.find<TaxiController>().increaseNumOfTimesToolTipShownToUser();
             }
             // this is user in case we want some advanced stuff later on , on each hint close.
-            hintWidgetsList[currentHintIndex.value].onHintClose?.call();
+            widget.hintWidgetsList[currentHintIndex.value].onHintClose?.call();
 
             currentHintIndex.value += 1;
           },
