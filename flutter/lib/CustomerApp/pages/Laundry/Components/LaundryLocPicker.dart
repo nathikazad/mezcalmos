@@ -1,33 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
-import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Location.dart';
 
 typedef OnDropDownNewValue = void Function({String? newValue});
 
-class DropDownListCartView extends StatefulWidget {
+class LaundryLocPicker extends StatefulWidget {
   final OnDropDownNewValue? onValueChangeCallback;
-  final Location? defaultLocation;
-  final bool isRestaurant;
 
-  DropDownListCartView(
-      {this.onValueChangeCallback,
-      this.defaultLocation,
-      this.isRestaurant = true,
-      Key? key})
-      : super(key: key);
+  LaundryLocPicker({this.onValueChangeCallback, Key? key}) : super(key: key);
 
   @override
-  _DropDownListCartViewState createState() => _DropDownListCartViewState();
+  _LaundryLocPickerState createState() => _LaundryLocPickerState();
 }
 
-class _DropDownListCartViewState extends State<DropDownListCartView> {
-  RestaurantController controller = Get.find<RestaurantController>();
+class _LaundryLocPickerState extends State<LaundryLocPicker> {
   LanguageController lang = Get.find<LanguageController>();
 
   CustomerAuthController customerAuthController =
@@ -38,37 +28,26 @@ class _DropDownListCartViewState extends State<DropDownListCartView> {
 
   @override
   void initState() {
-    // default ID: _pick_ , stands for our  Pick From Map
-    mezDbgPrint('"""""""""""""""""""""""""""log"""""""""""""""""""""""""""');
-    getSavedLocation();
-    loc = SavedLocation(
-        name: lang.strings["customer"]["restaurant"]["cart"]["pickLocation"],
-        id: "_pick_");
+    setState(() {
+      // default ID: _pick_ , stands for our  Pick From Map
+      loc = SavedLocation(
+          name: lang.strings["customer"]["restaurant"]["cart"]["pickLocation"],
+          id: "_pick_");
 
-    listOfSavedLoacations.add(loc!);
+      listOfSavedLoacations.add(loc!);
 
-    if (widget.defaultLocation == null) {
-      dropDownListValue = loc;
-    } else {
-      SavedLocation newLoc = SavedLocation(
-          name: widget.defaultLocation!.address,
-          location: widget.defaultLocation,
-          id: 'new');
+      setState(() {
+        dropDownListValue = loc;
+      });
 
-      dropDownListValue = newLoc;
-      listOfSavedLoacations.add(newLoc);
-    }
+      // customerAuthController.customerRxn.value?.savedLocations
+      //     .forEach((element) {
+      //   listOfSavedLoacations.add(element);
+      // });
 
-    // dropDownListValue = listOfSavedLoacations[0];
-
-    super.initState();
-  }
-
-  getSavedLocation() {
-    customerAuthController.customerRxn.value?.savedLocations.forEach((element) {
-      mezDbgPrint("###################### $element");
-      listOfSavedLoacations.add(element);
+      // dropDownListValue = listOfSavedLoacations[0];
     });
+    super.initState();
   }
 
   @override
@@ -161,11 +140,9 @@ class _DropDownListCartViewState extends State<DropDownListCartView> {
                     listOfSavedLoacations.add(saveLocation);
                     dropDownListValue =
                         listOfSavedLoacations[listOfSavedLoacations.length - 1];
-                    if (widget.isRestaurant) {
-                      controller.cart.value.toLocation = saveLocation.location;
-                      controller.saveCart();
-                      controller.refresh();
-                    }
+                    // controller.cart.value.toLocation = saveLocation.location;
+                    // controller.saveCart();
+                    // controller.refresh();
                   });
                 }
                 widget.onValueChangeCallback
@@ -173,11 +150,9 @@ class _DropDownListCartViewState extends State<DropDownListCartView> {
               } else {
                 widget.onValueChangeCallback?.call(newValue: newValue?.name);
 
-                if (widget.isRestaurant) {
-                  controller.cart.value.toLocation = newValue!.location!;
-                  controller.saveCart();
-                  controller.refresh();
-                }
+                // controller.cart.value.toLocation = newValue!.location!;
+                // controller.saveCart();
+                // controller.refresh();
               }
             },
           );

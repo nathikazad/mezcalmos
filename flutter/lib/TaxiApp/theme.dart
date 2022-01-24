@@ -57,6 +57,7 @@ class TaxiAppTheme {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         primary: Colors.white,
         backgroundColor: Color(0xFFAC59FC),
+        
         padding: EdgeInsets.all(2),
         textStyle: TextStyle(
           fontFamily: "Montserrat",
