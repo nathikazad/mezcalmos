@@ -75,7 +75,6 @@ class OrderController extends GetxController {
           .listen((event) async {
         List<Order> orders = [];
 
-        // mezDbgPrint("~~~~~~+++++++====== ${event.snapshot.value.toString()}");
         if (event.snapshot.value != null) {
           mezDbgPrint("my data hhhh ${event.snapshot.value.toString()}");
           for (var orderId in event.snapshot.value.keys) {

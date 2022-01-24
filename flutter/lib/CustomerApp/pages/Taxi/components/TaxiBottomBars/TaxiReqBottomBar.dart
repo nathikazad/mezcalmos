@@ -19,8 +19,8 @@ class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
   Widget build(BuildContext context) {
     return Positioned(
       bottom: 25,
-      right: 25,
-      left: 25,
+      right: 15,
+      left: 15,
       child: Container(
         padding: const EdgeInsets.all(8),
         margin: const EdgeInsets.only(bottom: 45),

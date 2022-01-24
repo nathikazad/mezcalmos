@@ -115,17 +115,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
           key: Get.find<SideMenuDrawerController>().getNewKey(),
           drawer: MezSideMenu(),
           backgroundColor: Colors.white,
-          appBar: taxiAppBar(
-              (order!.status == TaxiOrdersStatus.CancelledByCustomer)
-                  ? AppBarLeftButtonType.Back
-                  : AppBarLeftButtonType.Menu, function: () async {
-            mezDbgPrint('take me back');
-
-            controller.cancelTaxi(null).then((_) {
-              Get.offNamedUntil(
-                  kIncomingOrdersListRoute, ModalRoute.withName(kHomeRoute));
-            });
-          }),
+          appBar: getRightAppBar(order!.status),
           body:
               order != null && this.mGoogleMapController.location.value != null
                   ? Stack(alignment: Alignment.topCenter, children: [
@@ -214,6 +204,21 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
         mGoogleMapController.addOrUpdateTaxiDriverMarker(
             orderStreamEvent.driver!.id, orderStreamEvent.driver!.location!);
       }
+    }
+  }
+
+  PreferredSizeWidget getRightAppBar(TaxiOrdersStatus status) {
+    if (status == TaxiOrdersStatus.CancelledByCustomer) {
+      return taxiAppBar(AppBarLeftButtonType.Back, function: () => Get.back());
+    } else {
+      return taxiAppBar(AppBarLeftButtonType.Menu, function: () async {
+        mezDbgPrint('take me back');
+
+        controller.cancelTaxi(null).then((_) {
+          Get.offNamedUntil(
+              kIncomingOrdersListRoute, ModalRoute.withName(kHomeRoute));
+        });
+      });
     }
   }
 

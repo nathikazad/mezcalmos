@@ -201,7 +201,7 @@ class _StartingPointState extends State<StartingPoint> {
   }
 
   Future<void> waitForInitialization() async {
-    await Get.find<AuthController>().authStateChange.first;
+    await Get.find<AuthController>().authStateStream.first;
     return;
   }
 
@@ -211,6 +211,21 @@ class _StartingPointState extends State<StartingPoint> {
         mezDbgPrint(item);
       }
     };
+  }
+
+  Future<void> setRightPrivacyPolicyLink(AppType type) async {
+    switch (type) {
+      case AppType.CustomerApp:
+        await GetStorage()
+            .write(getxPrivacyPolicyLink, tPrivacyPolicyCustomerApp);
+        break;
+      case AppType.TaxiApp:
+        await GetStorage().write(getxPrivacyPolicyLink, tPrivacyPolicyTaxiApp);
+        break;
+      default:
+        await GetStorage()
+            .write(getxPrivacyPolicyLink, tPrivacyPolicyCustomerApp);
+    }
   }
 
   Widget mainApp(
@@ -223,6 +238,7 @@ class _StartingPointState extends State<StartingPoint> {
           ImageConfiguration(), 'assets/images/shared/purpleCircle.png');
 
       await GetStorage().write('markerCircle', desc);
+      await setRightPrivacyPolicyLink(appType);
       print("[+] InitializedConfig -- the ${appType.toShortString()} !");
     }
 

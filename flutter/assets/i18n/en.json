@@ -140,7 +140,8 @@
             "rideCancelledByTaxi": "Ride cancelled by taxi",
             "rideCancelledByCustomer": "You have cancelled your ride",
             "ride": "ride",
-            "taxiRideCheckedTooltip" : "This shows how many Taxi drivers have seen your order but not accepted.\n\nMake use of that in order to controll your ride price.",
+            "taxiRideCheckedTooltip" : "This shows how many drivers have received your offer \nbut did not find the offer acceptable.",
+            "taxiRequestPriceTooltip" : "How much are you willing to offer for this ride?\n We will broadcast your offer to all taxi drivers near you,\n they will accept your order only if they find \nthe offered price acceptable.",
             "taxiRidePriceTooltip" : " Click - to decrease your price by 5.\n Click + to increase your price by 5.\n\n If you see your order not being accepted try them out."
         },
         "cancelOrder": {
@@ -370,6 +371,8 @@
             "viewOrder": "View Order"
         },
         "userInfo": {
+            "snackMsg":"Please be patient while your photo is uploaded",
+            "snackTxt":"Uploading Image",
             "choosePic":"Choose a photo",
             "saveTxt":"Please save the changes you made",
             "hintTxt":"Enter your full name",

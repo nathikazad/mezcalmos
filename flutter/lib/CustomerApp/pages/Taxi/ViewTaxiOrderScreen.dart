@@ -6,7 +6,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
-import 'package:mezcalmos/CustomerApp/pages/Taxi/components/MezToolTips.dart';
+import 'package:mezcalmos/CustomerApp/pages/Taxi/components/Hints/RidePriceControllHint.dart';
+import 'package:mezcalmos/CustomerApp/pages/Taxi/components/Hints/RideReadByTaxisHint.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/TaxiBottomBars/TaxiOrderBottomBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/TopBar.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -15,6 +16,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezToolTip.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
@@ -121,7 +123,8 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: mezcalmosAppBar(AppBarLeftButtonType.Back),
+        appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
+            onClick: () => Get.back()),
         // appBar: AppBar(),
         backgroundColor: Colors.white,
         body: Container(
@@ -142,23 +145,33 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
                                   this.widget.mGoogleMapController,
                               periodicRerendering: true,
                             )),
-                        TaxiOrderBottomBar(order: order),
-
-                        cancelButton(order.value!.status),
                         TopBar(order: order.value!),
-                        // only if not marker as read more than 4 times or status isLookingForTaxi
-                        if (order.value!.status ==
-                                TaxiOrdersStatus.LookingForTaxi &&
-                            Get.find<TaxiController>()
-                                    .numOfTimesToolTipShownToUser() <=
-                                4)
-                          MezToolTips()
+                        cancelButton(order.value!.status),
+                        TaxiOrderBottomBar(order: order),
+                        getToolTip(),
                       ])
                 : MezLogoAnimation(
                     centered: true,
                   ),
           ),
         ));
+  }
+
+  /// this builds [MezToolTip] with the given [getHints()],
+  ///
+  /// if [Get.find<TaxiController>().numOfTimesToolTipShownToUser()] has already set to 5+,
+  ///
+  /// we won't show it, instead we simply return an empty box.
+  Widget getToolTip() {
+    // only if not marker as read more than 4 times or status isLookingForTaxi
+    if (order.value!.status == TaxiOrdersStatus.LookingForTaxi &&
+        Get.find<TaxiController>().numOfTimesToolTipShownToUser() <=
+            nMaxTimesToShowTTipsOnCustomerApp)
+      return MezToolTip(
+        hintWidgetsList: getHints(),
+      );
+    else
+      return SizedBox();
   }
 
   /// This gets invoked when the order is moved to [inProcess] db node
@@ -280,5 +293,19 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
         ),
       );
     }
+  }
+
+  /// the hints [MezToolTipHint] that are related to this view !
+  List<MezToolTipHint> getHints() {
+    return [
+      MezToolTipHint(
+          hintWidget: RidePriceControllHint(
+              hintText: Get.find<LanguageController>().strings['customer']
+                  ['taxiView']['taxiRidePriceTooltip']),
+          left: 80,
+          bottom: 150.5),
+      MezToolTipHint(
+          hintWidget: RideReadByTaxisHint(), left: 210, bottom: 150.5)
+    ];
   }
 }
