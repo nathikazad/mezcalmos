@@ -1,4 +1,6 @@
 // Example of the View
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -44,72 +46,15 @@ class _PickLocationViewState extends State<PickLocationView> {
         "${_lang.strings['shared']['pickLocation']['address']} : ${pickedLocation.latitude}, ${pickedLocation.longitude}";
   }
 
-  void onPickButtonClick(BuildContext context) async {
-    String? _result;
-    LatLng _pickedLoc = await locationPickerController.getMapCenter();
-    locationPickerController.moveToNewLatLng(
-        _pickedLoc.latitude, _pickedLoc.longitude);
-
-    setState(() {
-      showScreenLoading = true;
-    });
-    if (widget.pickLocationMode == PickLocationMode.AddNewLocation) {
-      _result = await savedLocationDailog(
-        context: context,
-        comingFromCart: Get.arguments,
-      );
-      if (_result != null && _result != "") {
-        await geoCodeAndSetNewAddress(_pickedLoc);
-        savedLocation = SavedLocation(
-            name: _result, location: locationPickerController.location.value!);
-        customerAuthController.saveNewLocation(savedLocation!);
-      } else {
-        await geoCodeAndSetNewAddress(_pickedLoc);
-        savedLocation = SavedLocation(
-            name: locationPickerController.location.value!.address,
-            location: locationPickerController.location.value!);
-      }
-    } else {
-      _result = await savedLocationDailog(
-          comingFromCart: Get.arguments,
-          context: context,
-          nameVal: savedLocation!.name,
-          mode: PickLocationMode.EditLocation);
-      if (_result != null && _result != "") {
-        await geoCodeAndSetNewAddress(_pickedLoc);
-        savedLocation = SavedLocation(
-            id: savedLocation!.id,
-            name: _result,
-            location: locationPickerController.location.value!);
-
-        customerAuthController.editLocation(savedLocation!);
-      }
-    }
-    setState(() {
-      locationPickerController
-          .setLocation(locationPickerController.location.value!);
-    });
-
-    Get.back<SavedLocation?>(result: savedLocation);
-  }
-
   @override
   void initState() {
     if (widget.pickLocationMode == PickLocationMode.AddNewLocation) {
       GeoLoc.Location().getLocation().then((locData) {
-        getAdressFromLatLng(LatLng(locData.latitude!, locData.latitude!))
-            .then((addrss) {
-          setState(() {
-            locationPickerController.setLocation(Location.fromFirebaseData({
-              "address": addrss ??
-                  locData.latitude.toString() +
-                      ', ' +
-                      locData.longitude.toString(),
-              "lat": locData.latitude,
-              "lng": locData.longitude,
-            }));
-          });
-        });
+        // first we set Location without GeoCoding the address
+        setNewLocationOnController(
+            latlng: LatLng(locData.latitude!, locData.longitude!));
+        // then we try to get the address
+        geoCodeLocation(LatLng(locData.latitude!, locData.longitude!));
       });
     } else {
       var x = Get.parameters["id"];
@@ -167,7 +112,77 @@ class _PickLocationViewState extends State<PickLocationView> {
         ),
         body: mezPickLocationViewBody());
   }
+  // ------------------------------------------- Functions -------------------------------------------
 
+  void geoCodeLocation(LatLng latLng) {
+    getAdressFromLatLng(latLng).then((addrs) {
+      mezDbgPrint("+ Done resolving user's Address $addrs !");
+      setNewLocationOnController(latlng: latLng, address: addrs);
+    }).catchError((e) {
+      mezDbgPrint("Failed to get address of User's Lat Lng $latLng");
+    });
+  }
+
+  void setNewLocationOnController({required LatLng latlng, String? address}) {
+    locationPickerController.setLocation(Location.fromFirebaseData({
+      "address": address ??
+          latlng.latitude.toString() + ', ' + latlng.longitude.toString(),
+      "lat": latlng.latitude,
+      "lng": latlng.longitude,
+    }));
+    setState(() {});
+  }
+
+  void onPickButtonClick(BuildContext context) async {
+    String? _result;
+    LatLng _pickedLoc = await locationPickerController.getMapCenter();
+    locationPickerController.moveToNewLatLng(
+        _pickedLoc.latitude, _pickedLoc.longitude);
+
+    setState(() {
+      showScreenLoading = true;
+    });
+    if (widget.pickLocationMode == PickLocationMode.AddNewLocation) {
+      _result = await savedLocationDailog(
+        context: context,
+        comingFromCart: Get.arguments,
+      );
+      if (_result != null && _result != "") {
+        await geoCodeAndSetNewAddress(_pickedLoc);
+        savedLocation = SavedLocation(
+            name: _result, location: locationPickerController.location.value!);
+        customerAuthController.saveNewLocation(savedLocation!);
+      } else {
+        await geoCodeAndSetNewAddress(_pickedLoc);
+        savedLocation = SavedLocation(
+            name: locationPickerController.location.value!.address,
+            location: locationPickerController.location.value!);
+      }
+    } else {
+      _result = await savedLocationDailog(
+          comingFromCart: Get.arguments,
+          context: context,
+          nameVal: savedLocation!.name,
+          mode: PickLocationMode.EditLocation);
+      if (_result != null && _result != "") {
+        await geoCodeAndSetNewAddress(_pickedLoc);
+        savedLocation = SavedLocation(
+            id: savedLocation!.id,
+            name: _result,
+            location: locationPickerController.location.value!);
+
+        customerAuthController.editLocation(savedLocation!);
+      }
+    }
+    setState(() {
+      locationPickerController
+          .setLocation(locationPickerController.location.value!);
+    });
+
+    Get.back<SavedLocation?>(result: savedLocation);
+  }
+
+  // ------------------------------------------- WIDGETS -------------------------------------------
   Container mezPickLocationViewBody() {
     return Container(
       child: Column(
