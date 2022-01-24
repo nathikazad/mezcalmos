@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/components/CustomerHomeFooterButtons.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
+import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
@@ -49,6 +50,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   @override
   void initState() {
     Get.put(TaxiController(), permanent: true);
+    Get.put(LaundryController(), permanent: true);
     Get.put(RestaurantController(), permanent: true);
     Get.put(RestaurantsInfoController(), permanent: true);
     WidgetsBinding.instance!.addObserver(this);

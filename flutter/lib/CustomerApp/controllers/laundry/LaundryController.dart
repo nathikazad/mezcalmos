@@ -3,11 +3,8 @@ import 'dart:async';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/LaundryRequest.dart';
-import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
-import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
-import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 
 class LaundryController extends GetxController {
   Future<ServerResponse> cancelTaxi(String orderId) async {
@@ -33,6 +30,7 @@ class LaundryController extends GetxController {
         mezDbgPrint(laundryRequest.asCloudFunctionParam());
         HttpsCallableResult response = await requestTaxiFunction
             .call(laundryRequest.asCloudFunctionParam());
+        mezDbgPrint(response.data);
 
         return ServerResponse.fromJson(response.data);
       } catch (e) {

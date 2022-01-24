@@ -1,5 +1,6 @@
 import 'package:get/get.dart'; // getX
 import 'package:mezcalmos/CustomerApp/pages/CustomerWrapper.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/LaundryCurrentOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryPickLocView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryRequestView/LaundryOrderRequestView.dart';
 import 'package:mezcalmos/CustomerApp/pages/ListOrdersScreen/ListOrdersScreen.dart';
@@ -34,6 +35,7 @@ const String kSavedLocations = '/savedLocations';
 
 const String kLaundryOrderRequest = '/laundryOrderRequest';
 const String kLaundryPickLoc = '/laundryPickLock';
+const String kLaundryCurrentOrder = '/laundryCurrentOrderLock';
 
 String getRestaurantRoute(String restaurantId) {
   return kRestaurantRoute.replaceFirst(":restaurantId", restaurantId);
@@ -126,9 +128,15 @@ class XRouter {
             name: kLaundryOrderRequest,
             page: () => LaundryOrderRequestView(),
             transitionDuration: Duration(milliseconds: 500),
-            transition: Transition.rightToLeft),  GetPage(
+            transition: Transition.rightToLeft),
+        GetPage(
             name: kLaundryPickLoc,
             page: () => LaundryPickLocView(),
+            transitionDuration: Duration(milliseconds: 500),
+            transition: Transition.rightToLeft),
+        GetPage(
+            name: kLaundryCurrentOrder,
+            page: () => LaundryCurrentOrderView(),
             transitionDuration: Duration(milliseconds: 500),
             transition: Transition.rightToLeft),
       ] +

@@ -12,12 +12,14 @@ typedef OnDropDownNewValue = void Function({String? newValue});
 
 class DropDownListCartView extends StatefulWidget {
   final OnDropDownNewValue? onValueChangeCallback;
-  final Location? defaultLocation;
+  final Function(Location? location)? callBack;
+  Location? defaultLocation;
   final bool isRestaurant;
 
   DropDownListCartView(
       {this.onValueChangeCallback,
       this.defaultLocation,
+      this.callBack,
       this.isRestaurant = true,
       Key? key})
       : super(key: key);
@@ -149,7 +151,10 @@ class _DropDownListCartViewState extends State<DropDownListCartView> {
 
               setState(() {
                 dropDownListValue = newValue;
+
+                widget.defaultLocation = dropDownListValue!.location;
               });
+              mezDbgPrint(widget.defaultLocation);
               // we will route the user back to the Map
               if (newValue?.id == "_pick_") {
                 SavedLocation? saveLocation =
@@ -168,6 +173,7 @@ class _DropDownListCartViewState extends State<DropDownListCartView> {
                     }
                   });
                 }
+
                 widget.onValueChangeCallback
                     ?.call(newValue: saveLocation?.name);
               } else {
@@ -179,6 +185,8 @@ class _DropDownListCartViewState extends State<DropDownListCartView> {
                   controller.refresh();
                 }
               }
+              widget.defaultLocation = dropDownListValue!.location;
+              widget.callBack!.call(dropDownListValue!.location);
             },
           );
         }),
