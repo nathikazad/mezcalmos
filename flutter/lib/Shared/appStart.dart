@@ -14,7 +14,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get/route_manager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -150,7 +149,8 @@ class _StartingPointState extends State<StartingPoint> {
       await FirebaseDatabase.instance.setPersistenceEnabled(true);
       await FirebaseDatabase.instance.setPersistenceCacheSizeBytes(10000000);
       await FirebaseAuth.instance.useEmulator(_host + authPort);
-      FirebaseFunctions.instance.useFunctionsEmulator(_host, functionPort);
+      FirebaseFunctions.instance
+          .useFunctionsEmulator(_host.replaceAll('http://', ''), functionPort);
     } else if (_launchMode == "stage") {
       mezDbgPrint("[+] Entered Staging check ----.");
       firebaseDb = FirebaseDatabase(app: _app, databaseURL: stagingDb);
