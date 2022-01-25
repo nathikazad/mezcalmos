@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:mezcalmos/CustomerApp/models/OnlineTaxiDriver.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
@@ -19,6 +21,24 @@ const int nMaxTimesToShowTTipsOnCustomerApp = 4;
 class TaxiController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   AuthController _authController = Get.find<AuthController>();
+
+  Future<List<OnlineTaxiDriver>> fecthOnlineTaxiDrivers() async {
+    List<OnlineTaxiDriver> _temp = [];
+    DataSnapshot _onlineTaxiDrivers = await _databaseHelper.firebaseDatabase
+        .reference()
+        .child(onlineTaxiDrivers())
+        .once();
+
+    _onlineTaxiDrivers.value.keys.forEach((taxiId) {
+      // _temp.add(value)
+      mezDbgPrint("-----------==== @saad@ox ===-----------");
+      _temp.add(OnlineTaxiDriver.fromData(
+          taxiId: taxiId, data: _onlineTaxiDrivers.value[taxiId]));
+      mezDbgPrint("-----------==== @saad@ox ===-----------");
+    });
+
+    return _temp;
+  }
 
   Future<ServerResponse> cancelTaxi(String orderId) async {
     HttpsCallable cancelTaxiFunction =

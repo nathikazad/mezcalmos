@@ -48,3 +48,7 @@ String customerInProcessOrderDriverLocationNode(
     String orderId, String customerId) {
   return 'customers/inProcessOrders/$customerId/$orderId/driver/location';
 }
+
+String onlineTaxiDrivers() {
+  return 'online/taxi';
+}

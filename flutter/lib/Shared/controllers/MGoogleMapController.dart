@@ -8,6 +8,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
+import 'package:geocoding/geocoding.dart' as Geo;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
@@ -25,7 +26,34 @@ class MGoogleMapController {
   Function? onMapTap;
   final double mapZoomLvl = 12 / 10;
 
+  /// Instead of going over the cropping rounded process everytime we update Taxi Markers,
+  ///
+  /// We save it in _taxiDriverImgDescruptorCopy.
+  List<int>? _taxiDriverImgDescruptorCopy;
   RxDouble markersDefaultSize = (Get.height * 0.055).w.obs;
+
+  /// calling this of every single Taxi Driver nearBy and add it / update it / delete it
+  ///
+  /// depending if he has new data / out of raduis's range
+  void checkIfInRangeAndUpdateMarkersAccordingly(
+      {required LatLng latLng,
+      required String markerId,
+      double distanceInKm = 5}) {
+    bool isWithinRange = MapHelper.calculateDistance(
+            Location.buildLocationData(latLng.latitude, latLng.longitude),
+            Location.buildLocationData(
+                location.value!.latitude, location.value!.longitude)) <=
+        distanceInKm;
+
+    // we update the TaxiDriver marker
+    if (isWithinRange) {
+      this.addOrUpdateTaxiDriverMarker(markerId, latLng);
+    }
+    // we remove if there is already
+    else {
+      this.removeMarkerById(markerId);
+    }
+  }
 
   void setOnMapTap({required Function onTap}) {
     this.onMapTap = onTap;
@@ -37,9 +65,8 @@ class MGoogleMapController {
     markers.add(marker);
   }
 
-  void updateMarkersIconOnZoomChange({required double zoom}) {
-    ///
-  }
+  /// In Case we needed it
+  void updateMarkersIconOnZoomChange({required double zoom}) {}
 
   Future<void> addOrUpdateCircleMarker(LatLng latLng,
       {String markerId = "default"}) async {
@@ -92,12 +119,17 @@ class MGoogleMapController {
 
   Future<void> addOrUpdateTaxiDriverMarker(
       String markerId, LatLng latLng) async {
+    // this check so we keep one single copy of the asset Bytes instead of re-croping again n again
+    if (this._taxiDriverImgDescruptorCopy == null) {
+      _taxiDriverImgDescruptorCopy = await cropRonded(
+          (await rootBundle.load(taxi_driver_marker_asset))
+              .buffer
+              .asUint8List());
+    }
     this._addOrUpdateMarker(Marker(
         markerId: MarkerId(markerId),
         icon: await BitmapDescriptorLoader(
-            (await cropRonded((await rootBundle.load(taxi_driver_marker_asset))
-                .buffer
-                .asUint8List())),
+            _taxiDriverImgDescruptorCopy,
             markersDefaultSize.value * mapZoomLvl,
             markersDefaultSize.value * mapZoomLvl,
             isBytes: true),

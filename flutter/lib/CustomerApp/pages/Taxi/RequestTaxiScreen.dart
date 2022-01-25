@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -39,10 +41,22 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
   final LocationSearchBarController locationSearchBarController =
       LocationSearchBarController();
   bool _pickedFromTo = false;
+
   /******************************  Init and build function ************************************/
 
   @override
   void initState() {
+    Timer.periodic(Duration(seconds: 10), (Timer timer) {
+      controller.fecthOnlineTaxiDrivers().then((drivers) {
+        // Weo loop throught each driver and we call the mgoogleMap refresh from withing the controller
+        drivers.forEach((driver) {
+          locationPickerController.checkIfInRangeAndUpdateMarkersAccordingly(
+              latLng: LatLng(driver.latLng['lat'], driver.latLng['lng']),
+              markerId: driver.taxiId);
+        });
+      });
+    });
+
     if (Get.arguments != null) {
       taxiRequest.value = Get.arguments as TaxiRequest;
 
@@ -99,6 +113,8 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
       locationPickerController.blackScreenBottomTextMargin.value = 80;
 
       GeoLoc.Location().getLocation().then((GeoLoc.LocationData locData) {
+        mezDbgPrint("@saad@ox : my loc => ${locData.toString()}");
+
         taxiRequest.value.from = Location("", locData);
         updateModelAndMarker(SearchComponentType.From, taxiRequest.value.from!);
         locationPickerController.setLocation(taxiRequest.value.from!);
