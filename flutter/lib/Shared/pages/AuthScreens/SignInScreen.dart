@@ -48,7 +48,7 @@ class SignIn extends GetWidget<AuthController> {
                     SizedBox(
                       height: 35,
                     ),
-                    (mode == SignInMode.OptionalSignIn)
+                    (mode == SignInMode.OptionalSignIn && !clickedLogin.value)
                         ? Container(
                             // padding: const EdgeInsets.only(top: 5),
                             alignment: Alignment.centerRight,
@@ -125,8 +125,10 @@ class SignIn extends GetWidget<AuthController> {
       child: TextButton(
           onPressed: () async {
             clickedLogin.value = true;
-            await controller.signInWithApple();
-            clickedLogin.value = false;
+            controller
+                .signInWithApple()
+                .onError((error, stackTrace) => clickedLogin.value = false);
+            // clickedLogin.value = false;
           },
           style: TextButton.styleFrom(
               backgroundColor: Colors.black,
@@ -186,7 +188,9 @@ class SignIn extends GetWidget<AuthController> {
           onPressed: () async {
             clickedLogin.value = true;
             lmode != "dev"
-                ? await controller.signInWithFacebook()
+                ? controller
+                    .signInWithFacebook()
+                    .onError((error, stackTrace) => clickedLogin.value = false)
                 : await Get.defaultDialog(
                     title: "Choose Test User",
                     content: Column(
@@ -215,7 +219,7 @@ class SignIn extends GetWidget<AuthController> {
                       ],
                     ));
 
-            clickedLogin.value = false;
+            // clickedLogin.value = false;
           },
           style: TextButton.styleFrom(
               backgroundColor: Color.fromARGB(255, 58, 85, 159),

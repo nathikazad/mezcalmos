@@ -321,6 +321,7 @@ class AuthController extends GetxController {
           .signInWithCredential(facebookAuthCredential);
     } else {
       MezSnackbar("Notice ~", "Failed SignIn with Facebook !");
+      throw Exception("Failed SignIn with Facebook !");
     }
   }
 
@@ -342,7 +343,7 @@ class AuthController extends GetxController {
         nonce: nonce,
       );
 
-      print(appleCredential.authorizationCode);
+      mezDbgPrint(appleCredential.authorizationCode);
 
       // Create an `OAuthCredential` from the credential returned by Apple.
       final oauthCredential = fireAuth.OAuthProvider("apple.com").credential(
@@ -354,8 +355,9 @@ class AuthController extends GetxController {
       // not match the nonce in `appleCredential.identityToken`, sign in will fail.
       fireAuth.FirebaseAuth.instance.signInWithCredential(oauthCredential);
     } catch (exception) {
-      print(exception);
+      mezDbgPrint(exception);
       MezSnackbar("Notice ~", "Failed SignIn with Apple !");
+      throw exception;
     }
   }
 
@@ -364,7 +366,7 @@ class AuthController extends GetxController {
     _userNodeListener?.cancel();
     _userNodeListener = null;
     super.dispose();
-    print("--------------------> AuthController Auto Disposed !");
+    mezDbgPrint("--------------------> AuthController Auto Disposed !");
   }
 }
 
