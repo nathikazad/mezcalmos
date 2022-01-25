@@ -272,8 +272,8 @@
             }
           },
           "state": {
-            "open": {
-              ".write": "$uid === auth.uid"
+            "available": {
+              ".write": "root.child('deliveryAdmins/' + auth.uid + '/authorized').val() === true"
             }
           }
         }
