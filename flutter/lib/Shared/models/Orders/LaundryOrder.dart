@@ -45,7 +45,7 @@ class LaundryOrder extends Order {
             orderTime: orderTime,
             orderId: orderId,
             paymentType: paymentType,
-            orderType: OrderType.Taxi,
+            orderType: OrderType.Laundry,
             cost: cost,
             customer: customer,
             to: to);
@@ -53,6 +53,7 @@ class LaundryOrder extends Order {
   factory LaundryOrder.fromData(dynamic id, dynamic data) {
     LaundryOrder laundryOrder = LaundryOrder(
         orderId: id,
+        
         customer: UserInfo.fromData(data["customer"]),
         status: data['status'].toString().toLaundryOrderStatus(),
         cost: data['cost'],

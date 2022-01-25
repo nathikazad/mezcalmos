@@ -35,7 +35,7 @@ const String kSavedLocations = '/savedLocations';
 
 const String kLaundryOrderRequest = '/laundryOrderRequest';
 const String kLaundryPickLoc = '/laundryPickLock';
-const String kLaundryCurrentOrder = '/laundryCurrentOrderLock';
+const String kLaundryCurrentOrder = '/laundryCurrentOrder/:orderId';
 
 String getRestaurantRoute(String restaurantId) {
   return kRestaurantRoute.replaceFirst(":restaurantId", restaurantId);
@@ -57,6 +57,10 @@ String getRestaurantOrderRoute(String orderId) {
 
 String getTaxiOrderRoute(String orderId) {
   return kTaxiOrderRoute.replaceFirst(":orderId", orderId);
+}
+
+String getLaundyOrderRoute(String orderId) {
+  return kLaundryCurrentOrder.replaceFirst(":orderId", orderId);
 }
 
 String getRestaurantMessagesRoute(

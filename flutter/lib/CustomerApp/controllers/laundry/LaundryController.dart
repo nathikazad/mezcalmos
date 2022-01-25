@@ -7,12 +7,12 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 
 class LaundryController extends GetxController {
-  Future<ServerResponse> cancelTaxi(String orderId) async {
-    HttpsCallable cancelTaxiFunction =
+  Future<ServerResponse> cancelOrder(String orderId) async {
+    HttpsCallable cancelLaundryFunction =
         FirebaseFunctions.instance.httpsCallable('laundry-cancelFromCustomer');
     try {
       HttpsCallableResult response =
-          await cancelTaxiFunction.call({"orderId": orderId});
+          await cancelLaundryFunction.call({"orderId": orderId});
       return ServerResponse.fromJson(response.data);
     } catch (e) {
       return ServerResponse(ResponseStatus.Error,

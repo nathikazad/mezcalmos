@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:rive/rive.dart';
@@ -103,7 +102,7 @@ Widget getOrderWidget(LaundryOrdersStatus status) {
       return Padding(
         padding: const EdgeInsets.only(right: 5.0),
         child: Icon(
-          Ionicons.bag_remove,
+          Icons.cancel,
           size: 50,
           color: Colors.red,
         ),
@@ -113,7 +112,7 @@ Widget getOrderWidget(LaundryOrdersStatus status) {
       return Padding(
         padding: const EdgeInsets.only(right: 5.0),
         child: Icon(
-          Ionicons.bag_remove,
+          Icons.cancel,
           size: 50,
           color: Colors.red,
         ),
@@ -133,11 +132,39 @@ Widget getOrderWidget(LaundryOrdersStatus status) {
         height: 50,
         width: 60,
         child: RiveAnimation.asset(
-          "assets/animation/cooking.riv",
+          "assets/animation/motorbikeWithSmokeAnimation.riv",
           fit: BoxFit.cover,
         ),
       );
     case LaundryOrdersStatus.PickedUp:
+      return Padding(
+        padding: const EdgeInsets.only(right: 5),
+        child: Icon(
+          Icons.check_circle,
+          size: 50,
+          color: Colors.grey,
+        ),
+      );
+    case LaundryOrdersStatus.AtLaundry:
+      return Padding(
+        padding: const EdgeInsets.only(right: 5.0),
+        child: Icon(
+          Icons.local_laundry_service_rounded,
+          size: 50,
+          color: Color(0xFFAC59FC),
+        ),
+      );
+
+    case LaundryOrdersStatus.ReadyForDelivery:
+      return Padding(
+        padding: const EdgeInsets.only(right: 5.0),
+        child: Icon(
+          Icons.dry_cleaning_rounded,
+          size: 50,
+          color: Color(0xFFAC59FC),
+        ),
+      );
+    case LaundryOrdersStatus.OtwDelivery:
       return Container(
         height: 50,
         width: 60,
@@ -146,39 +173,11 @@ Widget getOrderWidget(LaundryOrdersStatus status) {
           fit: BoxFit.cover,
         ),
       );
-    case LaundryOrdersStatus.AtLaundry:
-      return Padding(
-        padding: const EdgeInsets.only(right: 5.0),
-        child: Icon(
-          Ionicons.bag,
-          size: 50,
-          color: Colors.grey,
-        ),
-      );
-
-    case LaundryOrdersStatus.ReadyForDelivery:
-      return Padding(
-        padding: const EdgeInsets.only(right: 5.0),
-        child: Icon(
-          Ionicons.bag_check,
-          size: 50,
-          color: Colors.green,
-        ),
-      );
-    case LaundryOrdersStatus.OtwDelivery:
-      return Padding(
-        padding: const EdgeInsets.only(right: 5.0),
-        child: Icon(
-          Ionicons.bag_check,
-          size: 50,
-          color: Colors.green,
-        ),
-      );
     case LaundryOrdersStatus.Delivered:
       return Padding(
         padding: const EdgeInsets.only(right: 5.0),
         child: Icon(
-          Ionicons.bag_check,
+          Icons.check_circle,
           size: 50,
           color: Colors.green,
         ),
@@ -216,25 +215,25 @@ String getOrderStatus(LaundryOrdersStatus status) {
 String getOrderHelperText(LaundryOrdersStatus status) {
   switch (status) {
     case LaundryOrdersStatus.CancelledByAdmin:
-      return '';
+      return 'Order canceled by the admin';
 
     case LaundryOrdersStatus.CancelledByCustomer:
-      return '';
+      return 'you canceled the order';
 
     case LaundryOrdersStatus.OrderReceieved:
-      return '';
+      return 'Order received and will be procceed as soon as possible';
     case LaundryOrdersStatus.OtwPickup:
-      return '';
+      return 'Our driver is on the way to pick up your order from your location';
     case LaundryOrdersStatus.PickedUp:
-      return '';
+      return 'order picked up from your location successfully';
     case LaundryOrdersStatus.AtLaundry:
-      return '';
+      return 'the laundry is processing your order';
     case LaundryOrdersStatus.ReadyForDelivery:
-      return '';
+      return 'your order is ready for delivery';
     case LaundryOrdersStatus.OtwDelivery:
-      return '';
+      return 'Our driver is on the way to deliver back your order';
     case LaundryOrdersStatus.Delivered:
-      return '';
+      return ' Order has been successfully deliverd';
     default:
       return 'Unknown Status';
   }

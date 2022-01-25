@@ -99,6 +99,7 @@ flutter:
     - assets/images/deliveryAdmin/
     - assets/images/customer/restaurants/
     - assets/images/customer/taxi/
+    - assets/images/customer/laundry/
     - assets/fonts/
     - assets/i18n/
     - assets/animation/

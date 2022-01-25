@@ -30,7 +30,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
   LaundryController laundryController = Get.find<LaundryController>();
   LanguageController lang = Get.find<LanguageController>();
   Location? defaultLoc;
-
+  RxBool clicked = false.obs;
   @override
   Widget build(BuildContext context) {
     mezDbgPrint(defaultLoc);
@@ -216,17 +216,22 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                 ),
                 onPressed: (defaultLoc == null)
                     ? null
-                    : () async {
-                        await laundryController
+                    : () {
+                        clicked.value = true;
+                        laundryController
                             .requestLaundryService(LaundryRequest(
                                 to: defaultLoc,
                                 notes: 'hhhh',
                                 paymentType: PaymentType.Cash))
-                            .whenComplete(
-                                () => Get.toNamed(kLaundryCurrentOrder));
+                            .then((response) => popEverythingAndNavigateTo(
+                                getLaundyOrderRoute(response.data['orderId'])));
                       },
-                child: Container(
-                    padding: EdgeInsets.all(8), child: Text('Order Now')),
+                child: (clicked.value)
+                    ? CircularProgressIndicator(
+                        color: Colors.white,
+                      )
+                    : Container(
+                        padding: EdgeInsets.all(8), child: Text('Order Now')),
               )
             : TextButton(
                 onPressed: () async {

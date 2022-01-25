@@ -24,15 +24,9 @@ class RestaurantOngoingOrderCard extends StatelessWidget {
     return Card(
       child: InkWell(
         onTap: () {
-          switch (order.orderType) {
-            case OrderType.Restaurant:
+       
               Get.toNamed(getRestaurantOrderRoute(order.orderId));
-              break;
-            case OrderType.Taxi:
-              Get.toNamed(getTaxiOrderRoute(order.orderId));
-              break;
-            default:
-          }
+          
         },
         borderRadius: BorderRadius.circular(10),
         child: Ink(

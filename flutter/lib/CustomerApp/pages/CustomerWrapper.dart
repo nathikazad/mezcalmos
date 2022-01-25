@@ -295,6 +295,9 @@ class _CustomerWrapperState extends State<CustomerWrapper>
       // Taxi
       else if (currentOrders[0].orderType == OrderType.Taxi) {
         popEverythingAndNavigateTo(getTaxiOrderRoute(currentOrders[0].orderId));
+      } else if (currentOrders[0].orderType == OrderType.Laundry) {
+        popEverythingAndNavigateTo(
+            getLaundyOrderRoute(currentOrders[0].orderId));
       }
     } else if (currentOrders.length > 1) {
       popEverythingAndNavigateTo(kOrdersRoute);
