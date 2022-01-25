@@ -50,7 +50,7 @@
                 },
                 "dailog":{
                     "title":"Warning",
-                    "subtitle":"You already have some items in your cart, Would you like to discard to them ?",
+                    "subtitle": "You already have some items in your cart from another restaurant, do you want to check them out first or overwrite them?",
                     "leftBtn":"Checkout",
                     "rightBtn":"Overwrite"
                 }

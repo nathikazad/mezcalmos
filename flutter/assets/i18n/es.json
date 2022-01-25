@@ -50,8 +50,8 @@
                 },
                 "dailog":{
                     "title":"Advertencia",
-                    "subtitle":"Ya tienes algunos artículos en tu carrito, te gustaría descartarlos?",
-                    "leftBtn":"Verificar",
+                    "subtitle": "Ya tiene algunos artículos en su carrito de otro restaurante, ¿quiere revisarlos primero o sobrescribirlos?",
+                    "leftBtn": "Revisar",
                     "rightBtn":"Sobrescribir"
                 }
             },
