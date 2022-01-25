@@ -114,7 +114,7 @@ class OrderSummaryCard extends StatelessWidget {
                       child: Container(
                     alignment: Alignment.centerRight,
                     child: Text(
-                      "\$4",
+                      "\$$deliveryCost",
                       style: txt.headline3!.copyWith(
                         fontWeight: FontWeight.w500,
                         decoration: TextDecoration.lineThrough,

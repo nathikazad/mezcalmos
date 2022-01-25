@@ -6,6 +6,7 @@ import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoCont
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 
@@ -23,7 +24,9 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
   _ListRestaurantsScreenState() {
     _restaurantsInfoController.getRestaurants().then((value) {
       setState(() {
-        restaurants = value;
+        restaurants = value
+            .where((resto) => resto.restaurantState.available == true)
+            .toList(growable: true);
       });
     });
   }

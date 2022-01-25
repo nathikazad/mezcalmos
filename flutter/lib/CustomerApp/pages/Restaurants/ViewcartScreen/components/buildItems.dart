@@ -24,8 +24,17 @@ Widget buildItems(List<CartItem> cartItems, BuildContext context) {
   return Column(
     children: cartItems.fold<List<Widget>>(<Widget>[], (children, element) {
       var counter = element.totalCost().obs;
-      print("${element.toFirebaseFunctionFormattedJson()}");
+      mezDbgPrint("${element.toFirebaseFunctionFormattedJson()}");
       mezDbgPrint("${element.id}");
+
+      element.chosenOneOptions.keys.forEach((e) {
+        element.item.chooseOneOptions.forEach((r) {
+          mezDbgPrint(r.toJson());
+        });
+
+        mezDbgPrint("key $e | val : ${element.chosenOneOptions[e]}");
+      });
+
       children.add(Container(
         margin: const EdgeInsets.all(5),
         child: MyExpensionPanelComponent(
@@ -36,11 +45,11 @@ Widget buildItems(List<CartItem> cartItems, BuildContext context) {
               itemName:
                   element.item.name[lang.userLanguageKey]![0].toUpperCase() +
                       element.item.name[lang.userLanguageKey]!.substring(1),
-              restaurantName: "Basic food",
+              restaurantName: controller.associatedRestaurant!.name,
               itemsPrice: counter.value.toStringAsFixed(0),
             ),
           )),
-          children: choosenOneOption(element.item.chooseOneOptions, context) +
+          children: choosenOneOption(element.chosenOneOptions, context) +
               choosenMannyOption(element.item.chooseManyOptions, context) +
               [
                 SizedBox(

@@ -32,7 +32,7 @@ class Restaurant {
                 ?.toString()
                 .toAuthorizationStatus() ??
             AuthorizationStatus.Unauthorized,
-        restaurantData["state"]?["open"] ?? false);
+        restaurantData["state"]?["available"] ?? false);
     String name = restaurantData["info"]["name"];
     String photo = restaurantData["info"]["image"];
     Map<LanguageType, String> description = {
@@ -74,11 +74,11 @@ class Restaurant {
 
 class RestaurantState {
   AuthorizationStatus authorizationStatus = AuthorizationStatus.Unauthorized;
-  bool open = false;
-  RestaurantState(this.authorizationStatus, this.open);
+  bool available = false;
+  RestaurantState(this.authorizationStatus, this.available);
   Map<String, dynamic> toJson() => {
         "authorizationStatus": authorizationStatus.toFirebaseFormatString(),
-        "open": open
+        "available": available
       };
 
   bool get authorized =>

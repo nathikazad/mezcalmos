@@ -35,7 +35,10 @@ class _ViewCartBodyState extends State<ViewCartBody> {
 
   @override
   Widget build(BuildContext context) {
-    mezDbgPrint(controller.cart.value.items[0].chosenOneOptions);
+    controller.cart.value.items.forEach((e) {
+      mezDbgPrint("==> One : ${e.chosenOneOptions}");
+      mezDbgPrint("==> Many : ${e.chosenManyOptions}");
+    });
     return Container(
       child: Column(
         children: [
@@ -56,7 +59,7 @@ class _ViewCartBodyState extends State<ViewCartBody> {
           ),
           Obx(() => OrderSummaryCard(
                 onValueChangeCallback: widget.onValueChangeCallback,
-                deliveryCost: " 4",
+                deliveryCost: "4̶0̶",
                 orderCost: controller.cart.value.totalCost().toStringAsFixed(0),
                 totalCost: controller.cart.value.totalCost().toStringAsFixed(0),
               )),

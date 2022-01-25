@@ -33,7 +33,8 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
   LanguageController lang = Get.find<LanguageController>();
   AuthController auth = Get.find<AuthController>();
   Rxn<CartItem> cartItem = Rxn();
-  late RestaurantController restaurantCartController;
+  RestaurantController restaurantCartController =
+      Get.find<RestaurantController>();
   RestaurantsInfoController controller = Get.find<RestaurantsInfoController>();
   Restaurant? currentRestaurant;
   TextEditingController _noteTextEdittingController = TextEditingController();
@@ -48,7 +49,6 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
   void initState() {
     mezDbgPrint("Args : ${Get.arguments.toString()}");
     mezDbgPrint("params : ${Get.parameters.toString()}");
-    restaurantCartController = Get.find<RestaurantController>();
     mezDbgPrint("widget.viewItemScreenMode => ${widget.viewItemScreenMode}");
     if (widget.viewItemScreenMode == ViewItemScreenMode.AddItemMode) {
       String? restaurantId = Get.parameters['restaurantId'];
@@ -107,15 +107,16 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                 children: [
                   Container(
                     padding: const EdgeInsets.only(
-                      top: 10,
+                      top: 5,
                     ),
                     alignment: Alignment.center,
                     child: CachedNetworkImage(
                       imageUrl: cartItem.value!.item.image!,
                       imageBuilder: (context, imageProvider) {
                         return Container(
-                          width: 150,
-                          height: 150,
+                          margin: EdgeInsets.only(top: 10),
+                          width: Get.width / 1.5,
+                          height: Get.width / 1.5,
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               image: DecorationImage(
@@ -125,16 +126,16 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                       fit: BoxFit.cover,
                       placeholder: (context, url) {
                         return Container(
-                          width: 150,
-                          height: 150,
+                          width: Get.width / 1.5,
+                          height: Get.width / 1.5,
                           child: Center(
                             child: CircularProgressIndicator(),
                           ),
                         );
                       },
                       errorWidget: (context, url, error) => Container(
-                          height: 150,
-                          width: 150,
+                          height: Get.width / 1.5,
+                          width: Get.width / 1.5,
                           child: Container(
                               decoration: BoxDecoration(
                                   shape: BoxShape.circle,

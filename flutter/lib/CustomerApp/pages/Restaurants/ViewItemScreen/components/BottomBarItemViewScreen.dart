@@ -160,7 +160,9 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                       Get.offNamed(kCartRoute);
                     }
                   } else {
+                    // restaurantCartController.cart
                     restaurantCartController.addItem(widget.cartItem.value!);
+                    setState(() {});
                     Get.back();
                   }
                 } else {
