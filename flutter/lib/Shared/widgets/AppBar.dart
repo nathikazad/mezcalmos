@@ -2,17 +2,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/constants/MezIcons.dart';
-import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 
 enum AppBarLeftButtonType { Back, Menu }
 
 AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
     {dynamic bgColor = Colors.white,
     Function? function,
+    PreferredSizeWidget? tabbar,
     List<Widget> actionIcons = const <Widget>[]}) {
   Widget btn_icon;
   Function onTapFunction;
@@ -52,6 +53,7 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
   return AppBar(
     toolbarHeight: 80,
     elevation: 0,
+    bottom: tabbar,
     automaticallyImplyLeading: false,
     title: Container(
       // width: Get.width,
@@ -65,7 +67,7 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
             child: GestureDetector(
               onTap: () {
                 mezDbgPrint("Taped Drawer btn !");
-                if (onTapFunction != null) onTapFunction();
+                onTapFunction();
               },
               child: Container(
                 height: 30,

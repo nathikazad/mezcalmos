@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/actionIconsComponents.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 
 AppBar deliveryAdminAppBar(AppBarLeftButtonType leftBtnType,
-    {bool withOrder = false, Function? function}) {
+    {bool withOrder = false, Function? function, PreferredSizeWidget? tabbar}) {
   return mezcalmosAppBar(leftBtnType,
+      tabbar: tabbar,
       actionIcons: [
         Get.find<ForegroundNotificationsController>()
                     .notifications
