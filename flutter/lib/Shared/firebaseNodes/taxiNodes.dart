@@ -6,6 +6,10 @@ String taxiStateNode(String uid) {
   return 'taxis/info/$uid/state';
 }
 
+String onlineTaxiStateNode(String uid) {
+  return 'online/taxi/$uid/';
+}
+
 String taxiDriverAppVersionNode(String uid) {
   return taxiAuthNode(uid) + '/versionNumber';
 }

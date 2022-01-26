@@ -292,6 +292,14 @@
     "notificationQueue": {
       ".write": "true",
       ".read": "false"
+    },
+    "online": {
+      ".read": "auth.uid != null",
+      "$transporterType": {
+        "$transporterId": {
+          ".write": "auth.uid == $transporterId"
+        }
+      }
     }
   }
 }
