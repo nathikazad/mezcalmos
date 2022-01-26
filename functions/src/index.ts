@@ -56,7 +56,7 @@ export const laundry = {
   otwDeliveryOrder: laundryStatusChange.otwDeliveryOrder,
   cancelFromCustomer: require("./laundry/cancelLaundryFromCustomer"),
   cancelFromAdmin: laundryStatusChange.cancelOrder,
-  finishRide: laundryStatusChange.deliveredOrder,
+  deliveredOrder: laundryStatusChange.deliveredOrder,
 }
 
 // exports.submitAuthorizationRequest = functions.https.onCall(async (data, context) => {
