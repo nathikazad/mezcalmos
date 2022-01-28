@@ -1,18 +1,7 @@
 import 'dart:async';
-
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:location/location.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/controllers/themeContoller.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
-import 'package:soundpool/soundpool.dart';
 
 class LocationController extends GetxController {
   StreamController<bool> _hasLocationPermissionStreamController =
@@ -28,6 +17,23 @@ class LocationController extends GetxController {
     startPeriodicLocationPermissionsListener();
   }
 
+  /// this Calls [requestPermission] on [package:location/location.dart] , and emmit a new event to
+  ///
+  /// [this._hasLocationPermissionStreamController] if Permissions were given.
+  ///
+  /// the return of this is  Future of [PermissionStatus].
+  Future<PermissionStatus> requestLocationPermissions() async {
+    PermissionStatus status = await Location().requestPermission();
+    if (status == PermissionStatus.granted ||
+        status == PermissionStatus.grantedLimited) {
+      // send new event to LocationStreamController saying that the location permissions has been given Successfully!
+      _hasLocationPermissionStreamController.add(true);
+    } else {
+      _hasLocationPermissionStreamController.add(false);
+    }
+    return status;
+  }
+
   void startPeriodicLocationPermissionsListener() {
     _locationListenerTimer =
         Timer.periodic(Duration(milliseconds: 500), (Timer t) async {
@@ -35,12 +41,9 @@ class LocationController extends GetxController {
       _locationListenerTimer = null;
       bool locationPermission = await _getLocationPermission();
       if (!locationPermission && Get.currentRoute != kLocationPermissionPage) {
-        PermissionStatus _status = await Location().requestPermission();
-        if (_status != PermissionStatus.granted) {
-          Future.delayed(Duration.zero, () {
-            Get.toNamed(kLocationPermissionPage);
-          });
-        }
+        Future.delayed(Duration.zero, () {
+          Get.toNamed(kLocationPermissionPage);
+        });
       }
       _hasLocationPermissionStreamController.add(locationPermission);
       startPeriodicLocationPermissionsListener();
