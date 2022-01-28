@@ -1,5 +1,3 @@
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-
 enum AuthorizationStatus { InReview, Authorized, Unauthorized }
 
 extension ParseAuthorizationStatusToString on AuthorizationStatus {
@@ -11,8 +9,9 @@ extension ParseAuthorizationStatusToString on AuthorizationStatus {
 
 extension ParseStringToAuthorizationStatus on String {
   AuthorizationStatus toAuthorizationStatus() {
-    return AuthorizationStatus.values
-        .firstWhere((e) => e.toFirebaseFormatString() == this);
+    return AuthorizationStatus.values.firstWhere(
+        (e) => e.toFirebaseFormatString() == this,
+        orElse: () => AuthorizationStatus.Unauthorized);
   }
 }
 
@@ -27,8 +26,9 @@ extension ParseLanugaugeTypeToString on LanguageType {
 
 extension ParseStringToLanugaugeType on String {
   LanguageType toLanguageType() {
-    return LanguageType.values
-        .firstWhere((e) => e.toFirebaseFormatString().toLowerCase() == this);
+    return LanguageType.values.firstWhere(
+        (e) => e.toFirebaseFormatString().toLowerCase() == this,
+        orElse: () => LanguageType.ES);
   }
 }
 
