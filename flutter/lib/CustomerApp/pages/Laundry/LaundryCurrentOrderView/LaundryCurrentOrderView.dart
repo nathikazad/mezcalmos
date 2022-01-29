@@ -11,6 +11,7 @@ import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Comp
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 class LaundryCurrentOrderView extends StatefulWidget {
   const LaundryCurrentOrderView({Key? key}) : super(key: key);
@@ -32,8 +33,6 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
 
     order.value = controller.getOrder(orderId!) as LaundryOrder?;
     if (order.value == null) {
-      mezDbgPrint('ORDER NULLLLLLLLLLLLLL');
-
       controller.currentOrders.stream.first
           .then((value) => order.value = value as LaundryOrder?);
     } else {
@@ -50,10 +49,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
             _orderListener = null;
             controller.getPastOrderStream(orderId!).listen((event) {
               if (event != null) {
-                mezDbgPrint("the past order is ========== $event ==========");
                 order.value = event as LaundryOrder;
-              } else {
-                mezDbgPrint("the past order is ========== 'empty' ==========");
               }
             });
             order.value = controller.getOrder(orderId!) as LaundryOrder?;
@@ -67,7 +63,6 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
 
   final LocationPickerController locationPickerController =
       LocationPickerController();
-  // final AuthController authController = Get.find<AuthController>();
 
   LaundryController laundryController = Get.find<LaundryController>();
   LanguageController lang = Get.find<LanguageController>();
@@ -78,7 +73,8 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
     return Scaffold(
       appBar: CustomerAppBar(
         autoBack: true,
-        title: 'Order',
+        title:
+            '${lang.strings["customer"]["restaurant"]["orderStatus"]["orderStatus"]}',
       ),
       body: Obx(
         () => order.value != null
@@ -109,7 +105,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
                 ),
               )
             : Center(
-                child: CircularProgressIndicator(),
+                child: MezLogoAnimation(),
               ),
       ),
     );
@@ -215,7 +211,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
         child: Column(
           children: [
             Text(
-              "Laundry Prcing",
+              lang.strings['customer']['laundry']['laundryPricing'],
               style: Theme.of(context).textTheme.headline3,
             ),
             Divider(
@@ -225,7 +221,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Fixed Rate:",
+                  lang.strings['deliveryAdminApp']['laundry']['fixedRate'],
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
@@ -243,7 +239,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Order weight:",
+                  lang.strings['deliveryAdminApp']['laundry']['orderWeight'],
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
@@ -290,7 +286,8 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
                 ),
                 Flexible(
                     child: Text(
-                        'Order weight and total cost will be updated once the laundry service receive your order.',
+                        lang.strings['customer']['laundry']
+                            ['laundryPricingNote'],
                         maxLines: 3)),
               ],
             )

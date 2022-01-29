@@ -157,7 +157,10 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                   width: 5,
                 ),
                 Flexible(
-                    child: Text(defaultLoc?.address ?? 'No location selected',
+                    child: Text(
+                        defaultLoc?.address ??
+                            lang.strings['customer']['pickLocation']
+                                ['noLocation'],
                         maxLines: 1)),
               ],
             )
@@ -196,8 +199,11 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
               width: 5,
             ),
             Flexible(
-                child:
-                    Text(defaultLoc?.address ?? 'Pick Location', maxLines: 1)),
+                child: Text(
+                    defaultLoc?.address ??
+                        lang.strings['customer']["pickLocation"]
+                            ['pickLocation'],
+                    maxLines: 1)),
           ],
         ),
       ),
@@ -231,7 +237,9 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                         color: Colors.white,
                       )
                     : Container(
-                        padding: EdgeInsets.all(8), child: Text('Order Now')),
+                        padding: EdgeInsets.all(8),
+                        child: Text(lang.strings['customer']['restaurant']
+                            ['cart']['orderNow'])),
               )
             : TextButton(
                 onPressed: () async {
@@ -239,7 +247,8 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                 },
                 child: Container(
                     padding: EdgeInsets.all(8),
-                    child: Text('Sign in to make an order')),
+                    child: Text(
+                        lang.strings["shared"]["login"]["signInToMakeOrder"])),
               ),
       ),
     );

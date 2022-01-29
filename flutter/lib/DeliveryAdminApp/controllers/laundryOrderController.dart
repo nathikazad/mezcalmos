@@ -130,7 +130,8 @@ class LaundryOrderController extends GetxController {
   }
 
   Future<ServerResponse> cancelOrder(String orderId) async {
-    return _callLaundryCloudFunction("laundry-cancelFromAdmin", orderId);
+    mezDbgPrint('CAnceling oooooooooooooooooooooooorrrrderrrr');
+    return _callLaundryCloudFunction("cancelFromAdmin", orderId);
   }
 
   Future<ServerResponse> otwPickupOrder(String orderId) async {

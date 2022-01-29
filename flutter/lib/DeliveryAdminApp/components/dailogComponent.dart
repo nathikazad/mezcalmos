@@ -11,16 +11,13 @@ Future<bool> dailogComponent(
   LinearGradient onConformBGColor,
 ) async {
   return await Get.defaultDialog(
-    radius: 4,
+    radius: 10,
     title: "",
     content: Container(
       color: const Color(0xffffffff),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
-            height: 10,
-          ),
           (icon == null)
               ? Container(
                   child: Icon(
@@ -31,7 +28,7 @@ Future<bool> dailogComponent(
                 )
               : icon,
           SizedBox(
-            height: 15,
+            height: 10,
           ),
           Text("$title",
               style: const TextStyle(
@@ -145,7 +142,7 @@ Future<num> orderWeightDialog(
 ) async {
   num orderWeight = 0;
   return await Get.defaultDialog(
-    radius: 4,
+    radius: 10,
     title: "",
     content: Container(
       color: const Color(0xffffffff),
@@ -194,7 +191,15 @@ Future<num> orderWeightDialog(
             onChanged: (value) {
               orderWeight = num.parse(value);
             },
-            decoration: InputDecoration(label: Text('Order weight')),
+            decoration: InputDecoration(
+                label: Text('Order weight'),
+                filled: true,
+                isDense: true,
+                border:
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
+          ),
+          SizedBox(
+            height: 5,
           ),
           Container(
             child: Row(
@@ -227,7 +232,11 @@ Future<num> orderWeightDialog(
                     ),
                   ),
                   onTap: () {
-                    Get.back(result: orderWeight);
+                    if (orderWeight != 0) {
+                      Get.back(result: orderWeight);
+                    } else {
+                      Get.snackbar('Error', 'Please Provide a valid weight ');
+                    }
                   },
                 ),
                 SizedBox(

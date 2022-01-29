@@ -175,6 +175,7 @@
         },
         "pickLocation":{
         "pickLocation":"Pick Location",
+        "noLocation" : "No location selected",
         "pickLabele":"Search for location or move map and pick location"
         },
         "orders": {
@@ -186,6 +187,27 @@
             "inProcess": "In Process",
             "searching": "Searching",
             "noOrders": "No orders found"
+        },
+
+        "laundry" :{
+            "firstStep" : "First step is creating an order once you create an order one of our drivers will be reaching your location to pickup your things",
+            "secondStep" : "Second step our laundry service provider will recieve your order and start doing his work and we will inform you about price changes depending on the order weight",
+            "thirdStep" : "Final step once your order is ready one of our drivers will pickup the order from the laundry and get it to your location as soon as possible",
+            "laundryPricing" : "Laundry Pricing",
+            "laundryPricingNote" : "Order weight and total cost will be updated once the laundry service receive your order.",
+            "orderHelper" : {
+                "cancelByAdmin": " Order Canceled by the admin",
+                "cancelByUser": " You canceled the order",
+                "received": " Order received and will be procceed as soon as possible",
+                "otwPickup": "Our driver is on the way to pick up your order from your location ",
+                "pickedUp": " order picked up from your location successfully",
+                "atLaundry": " the laundry is processing your order",
+                "ready": " your order is ready for delivery",
+                "otwDelivery": " Our driver is on the way to deliver back your order",
+                "delivered": "Order has been successfully deliverd"
+            },
+            "How it works" : "How it works"
+              
         }
     },
     "taxi": {
@@ -261,6 +283,7 @@
             "alreadyMember": "Already a member?",
             "yes": "YES"
         }
+     
     },
     "shared": {
         "unauthorizedScreen":{
@@ -499,6 +522,49 @@
         "cancelAlert": {
             "title": "Cancel",
             "subTitle": "Are you sure you want\nto cancel the order?"
+        } ,
+        "laundry": {
+            "laundry": "Laundry",
+            "laundryOrders": "Laundry orders",
+            "restaurantOrders" : "Restaurant Orders",
+            "noOrders":"No orders found",
+            "currentOrders": "Orders",
+            "pastOrders": "Past orders",
+            "customer": "Customer",
+            "orderWeight": "Order Weight",
+            "orderCost": "Order cost",
+            "fixedRate": "Fixed Rate",
+            "deliveryCost" :"Delivery Cost",
+            "totalCost": "Total cost",
+            "orderReceived" :"Order Received",
+            "otwPickUp" : "Pick-up on the way",
+            "pickedUp" : "Order Picked-up",
+            "atLaundry": "At laundry",
+            "readyForDelivery" : "Ready for Delivery",
+            "otwDelivery": "Delivery on the way",
+            "delivered" :"Order Delivered",
+            "startPickUp" : "Start pickup",
+            "confirmPickUp" : "Confirm pickup",
+            "startPickUpTitle" : "Start order Pickup",
+            "startPickUpText" : "The driver should be notified to pick up the order",
+            "pickedUpTitle" : "Order Picked up",
+            "pickedUpText" : "Confirm order picked up from the customer",
+            "atLaundryTitle" : "Order at laundry",
+            "atLaundryText" : "Confirm the order received by the laundry by setting the order weight ",
+            "orderWeightError" :" Error, please insert a valid order weight",
+            "readyForDeliveryTitle" :"Order ready for delivery",
+            "readyForDeliveryText" : "Confirm that the order is ready for delivery",
+            "otwDeliveryTitle" : "Delivery On the way",
+            "otwDeliveryText" : "Confirm that the order is being deliverd to the customer",
+            "deliveredTitle" : "Order delivered", 
+            "deliveredText" : "Confirm that the order is delivered to the customer" 
+
+
+
+
+            
+            
         }
+
     }
 }

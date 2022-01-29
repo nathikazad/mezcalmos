@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:rive/rive.dart';
 
@@ -39,6 +41,8 @@ class LaundryOrderStatusCard extends StatelessWidget {
     );
   }
 }
+
+LanguageController lang = Get.find<LanguageController>();
 
 Widget getOrderWidget(LaundryOrdersStatus status) {
   switch (status) {
@@ -138,46 +142,19 @@ String getOrderStatus(LaundryOrdersStatus status) {
       return 'Order Canceled';
 
     case LaundryOrdersStatus.OrderReceieved:
-      return 'Order Received';
+      return lang.strings['deliveryAdminApp']['laundry']['orderReceived'];
     case LaundryOrdersStatus.OtwPickup:
-      return 'Pick-up On the way';
+      return lang.strings['deliveryAdminApp']['laundry']['otwPickUp'];
     case LaundryOrdersStatus.PickedUp:
-      return 'Order picked-up';
+      return lang.strings['deliveryAdminApp']['laundry']['pickedUp'];
     case LaundryOrdersStatus.AtLaundry:
-      return 'Order at laundry';
+      return lang.strings['deliveryAdminApp']['laundry']['atLaundry'];
     case LaundryOrdersStatus.ReadyForDelivery:
-      return 'Ready For Delivery';
+      return lang.strings['deliveryAdminApp']['laundry']['readyForDelivery'];
     case LaundryOrdersStatus.OtwDelivery:
-      return 'Delivery on the way';
+      return lang.strings['deliveryAdminApp']['laundry']['otwDelivery'];
     case LaundryOrdersStatus.Delivered:
-      return 'Order Delivered';
-    default:
-      return 'Unknown Status';
-  }
-}
-
-String getOrderHelperText(LaundryOrdersStatus status) {
-  switch (status) {
-    case LaundryOrdersStatus.CancelledByCustomer:
-      return 'Order canceled by the customer';
-
-    case LaundryOrdersStatus.CancelledByAdmin:
-      return 'you canceled the order';
-
-    case LaundryOrdersStatus.OrderReceieved:
-      return 'Order received and will be procceed as soon as possible';
-    case LaundryOrdersStatus.OtwPickup:
-      return 'Our driver is on the way to pick up your order from your location';
-    case LaundryOrdersStatus.PickedUp:
-      return 'order picked up from your location successfully';
-    case LaundryOrdersStatus.AtLaundry:
-      return 'the laundry is processing your order';
-    case LaundryOrdersStatus.ReadyForDelivery:
-      return 'your order is ready for delivery';
-    case LaundryOrdersStatus.OtwDelivery:
-      return 'Our driver is on the way to deliver back your order';
-    case LaundryOrdersStatus.Delivered:
-      return ' Order has been successfully deliverd';
+      return lang.strings['deliveryAdminApp']['laundry']['delivered'];
     default:
       return 'Unknown Status';
   }

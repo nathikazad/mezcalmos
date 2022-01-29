@@ -38,4 +38,8 @@ class Location {
   String toString() {
     return "{address : $address , position : ${toLatLng()}}";
   }
+
+  static fromMap(map) {}
+
+  toMap() {}
 }

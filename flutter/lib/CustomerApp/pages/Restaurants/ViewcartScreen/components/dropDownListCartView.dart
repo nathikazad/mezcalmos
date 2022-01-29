@@ -41,7 +41,7 @@ class _DropDownListCartViewState extends State<DropDownListCartView> {
   @override
   void initState() {
     // default ID: _pick_ , stands for our  Pick From Map
-    mezDbgPrint('"""""""""""""""""""""""""""log"""""""""""""""""""""""""""');
+
     getSavedLocation();
     loc = SavedLocation(
         name: lang.strings["customer"]["restaurant"]["cart"]["pickLocation"],
@@ -68,7 +68,6 @@ class _DropDownListCartViewState extends State<DropDownListCartView> {
 
   getSavedLocation() {
     customerAuthController.customerRxn.value?.savedLocations.forEach((element) {
-      mezDbgPrint("###################### $element");
       listOfSavedLoacations.add(element);
     });
   }

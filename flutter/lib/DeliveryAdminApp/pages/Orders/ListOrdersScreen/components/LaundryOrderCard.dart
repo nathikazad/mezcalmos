@@ -1,14 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:rive/rive.dart';
 
-class LaundryInProcessCard extends StatelessWidget {
+class LaundryOrderCard extends StatelessWidget {
   final LaundryOrder order;
-  const LaundryInProcessCard({Key? key, required this.order}) : super(key: key);
+  const LaundryOrderCard({Key? key, required this.order}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +52,10 @@ class LaundryInProcessCard extends StatelessWidget {
                         Text("\$${order.cost}"),
                         Row(
                           children: [
-                            Icon(Icons.timelapse_rounded),
+                            Icon(
+                              Icons.timelapse_rounded,
+                              size: 16.sp,
+                            ),
                             Text(
                               DateFormat(' hh:mm a').format(order.orderTime),
                             ),

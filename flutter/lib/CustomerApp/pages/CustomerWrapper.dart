@@ -252,14 +252,18 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             subtitle: "${lang.strings['customer']['home']['food']["subtitle"]}",
             ontap: () {
               if (auth.fireAuthUser != null) {
-                if (Get.find<OrderController>().currentOrders.isEmpty) {
-                  Get.toNamed(kRestaurantsRoute);
+                List<Order> restaurantOrders = Get.find<OrderController>()
+                    .currentOrders
+                    .where((p0) => p0.orderType == OrderType.Restaurant)
+                    .toList();
+
+                if (restaurantOrders.length == 1) {
+                  Get.toNamed(
+                      getRestaurantOrderRoute(restaurantOrders[0].orderId));
+                } else if (restaurantOrders.length > 1) {
+                  Get.toNamed(kOrdersRoute);
                 } else {
-                  Get.toNamed(getRestaurantOrderRoute(
-                      Get.find<OrderController>()
-                          .currentOrders
-                          .value[0]
-                          .orderId));
+                  Get.toNamed(kRestaurantsRoute);
                 }
               } else {
                 Get.toNamed(kRestaurantsRoute);
@@ -275,7 +279,22 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             url: "assets/images/customer/laundryService.png",
             subtitle: 'Laundry description',
             ontap: () {
-              Get.toNamed(kLaundryOrderRequest);
+              if (auth.fireAuthUser != null) {
+                List<Order> laundryOrders = Get.find<OrderController>()
+                    .currentOrders
+                    .where((p0) => p0.orderType == OrderType.Laundry)
+                    .toList();
+
+                if (laundryOrders.length == 1) {
+                  Get.toNamed(getLaundyOrderRoute(laundryOrders[0].orderId));
+                } else if (laundryOrders.length > 1) {
+                  Get.toNamed(kOrdersRoute);
+                } else {
+                  Get.toNamed(kLaundryOrderRequest);
+                }
+              } else {
+                Get.toNamed(kLaundryOrderRequest);
+              }
             },
           ),
         ),

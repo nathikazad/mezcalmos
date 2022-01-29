@@ -5,6 +5,7 @@ import 'package:mezcalmos/DeliveryAdminApp/components/buttonComponent.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/dailogComponent.dart';
 import 'package:mezcalmos/DeliveryAdminApp/constants/global.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/laundryOrderController.dart';
+import 'package:mezcalmos/DeliveryAdminApp/models/Driver.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
 // the styles of status buttons inside the order screen
@@ -52,45 +53,54 @@ class OrderButtons {
   }
 
   // this button for startPickUp
-  static Widget startPickUp(String orderId) {
+  static Widget startPickUp(String orderId, Driver? driver) {
     LaundryOrderController controller = Get.find<LaundryOrderController>();
     LanguageController lang = Get.find<LanguageController>();
     return ButtonComponent(
-        widget: Text("Start Pick-up",
+        widget: Text(lang.strings['deliveryAdminApp']['laundry']['startPickUp'],
             style: TextStyle(
                 color: const Color(0xffffffff),
                 fontFamily: "psb",
                 fontSize: 16.0.sp),
             textAlign: TextAlign.center),
-        gradient: LinearGradient(
-            begin: Alignment(-0.10374055057764053, 0),
-            end: Alignment(1.1447703838348389, 1.1694844961166382),
-            colors: [
-              // const Color(0xede29211),
-              const Color(0xffd3bc0b),
-              const Color(0xdbd17c18)
-            ]),
-        function: () async {
-          var res = await dailogComponent('Start order Pickup',
-              "The driver should be notified to pick up the order", () {
-            Get.back(result: true);
-          }, () {
-            Get.back(result: false);
-          },
-              Container(height: 70, width: 70, child: Image.asset(box)),
-              LinearGradient(
-                  begin: Alignment(-0.10374055057764053, 0),
-                  end: Alignment(1.1447703838348389, 1.1694844961166382),
-                  colors: [
-                    // const Color(0xede29211),
-                    const Color(0xffd3bc0b),
-                    const Color(0xdbd17c18)
-                  ]));
-          if (res) {
-            Get.snackbar("Loading", "");
-            controller.otwPickupOrder(orderId);
-          }
-        });
+        gradient: (driver != null && driver.available)
+            ? LinearGradient(
+                begin: Alignment(-0.10374055057764053, 0),
+                end: Alignment(1.1447703838348389, 1.1694844961166382),
+                colors: [const Color(0xffd3bc0b), const Color(0xdbd17c18)])
+            : LinearGradient(colors: [Colors.grey, Colors.grey]),
+        function: (driver != null && driver.available)
+            ? () async {
+                var res = await dailogComponent(
+                    lang.strings['deliveryAdminApp']['laundry']
+                        ['startPickUpTitle'],
+                    lang.strings['deliveryAdminApp']['laundry']
+                        ['startPickUpText'], () {
+                  Get.back(result: true);
+                }, () {
+                  Get.back(result: false);
+                },
+                    Icon(
+                      Icons.local_shipping_rounded,
+                      size: 70,
+                      color: Colors.purple,
+                    ),
+                    LinearGradient(
+                        begin: Alignment(-0.10374055057764053, 0),
+                        end: Alignment(1.1447703838348389, 1.1694844961166382),
+                        colors: [
+                          // const Color(0xede29211),
+                          const Color(0xffd3bc0b),
+                          const Color(0xdbd17c18)
+                        ]));
+                if (res) {
+                  Get.snackbar("Loading", "");
+                  controller.otwPickupOrder(orderId);
+                }
+              }
+            : () {
+                Get.snackbar('Error', 'Please select an available driver');
+              });
   }
 
   // this button for pickedUp
@@ -98,7 +108,7 @@ class OrderButtons {
     LaundryOrderController controller = Get.find<LaundryOrderController>();
     LanguageController lang = Get.find<LanguageController>();
     return ButtonComponent(
-      widget: Text("Picked-up",
+      widget: Text(lang.strings['deliveryAdminApp']['laundry']['pickedUp'],
           style: TextStyle(
               color: const Color(0xffffffff),
               fontFamily: "psb",
@@ -110,12 +120,17 @@ class OrderButtons {
           colors: [const Color(0xffff9300), const Color(0xdbd15f18)]),
       function: () async {
         var res = await dailogComponent(
-            "Order Picked up", "Confirm order picked up from the customer", () {
+            lang.strings['deliveryAdminApp']['laundry']['pickedUpTitle'],
+            lang.strings['deliveryAdminApp']['laundry']['pickedUpText'], () {
           Get.back(result: true);
         }, () {
           Get.back(result: false);
         },
-            Container(height: 70, width: 70, child: Image.asset(truck)),
+            Icon(
+              Icons.check_circle,
+              size: 70,
+              color: Colors.grey,
+            ),
             LinearGradient(
                 begin: Alignment(-0.10374055057764053, 0),
                 end: Alignment(1.1447703838348389, 1.1694844961166382),
@@ -134,7 +149,7 @@ class OrderButtons {
     LanguageController lang = Get.find<LanguageController>();
 
     return ButtonComponent(
-        widget: Text('At laundry',
+        widget: Text(lang.strings['deliveryAdminApp']['laundry']['atLaundry'],
             style: TextStyle(
                 color: const Color(0xffffffff),
                 fontFamily: "psb",
@@ -147,8 +162,8 @@ class OrderButtons {
             colors: [const Color(0xff5572ea), const Color(0xdb1f18d1)]),
         function: () async {
           var res = await orderWeightDialog(
-              'Order at laundry',
-              'Confirm the order received by the laundry',
+              lang.strings['deliveryAdminApp']['laundry']['atLaundryTitle'],
+              lang.strings['deliveryAdminApp']['laundry']['atLaundryText'],
               () {},
               () {},
               Icon(
@@ -165,7 +180,10 @@ class OrderButtons {
             Get.snackbar("Loading", "");
             controller.atLaundryOrder(orderId, res);
           } else {
-            Get.snackbar('Error', "You must set the order weight");
+            Get.snackbar(
+                'Error',
+                lang.strings['deliveryAdminApp']['laundry']
+                    ['orderWeightError']);
           }
         });
   }
@@ -175,7 +193,8 @@ class OrderButtons {
     LaundryOrderController controller = Get.find<LaundryOrderController>();
     LanguageController lang = Get.find<LanguageController>();
     return ButtonComponent(
-        widget: Text('Ready for delivery',
+        widget: Text(
+            lang.strings['deliveryAdminApp']['laundry']['readyForDelivery'],
             style: TextStyle(
                 color: const Color(0xffffffff),
                 fontFamily: "psb",
@@ -187,14 +206,19 @@ class OrderButtons {
             colors: [const Color(0xffff9300), const Color(0xdbd15f18)]),
         function: () async {
           var res = await dailogComponent(
-              lang.strings["deliveryAdminApp"]["deliveredAlert"]["title"],
-              lang.strings["deliveryAdminApp"]["deliveredAlert"]["subTitle"],
-              () {
+              lang.strings["deliveryAdminApp"]["laundry"]
+                  ["readyForDeliveryTitle"],
+              lang.strings["deliveryAdminApp"]["laundry"]
+                  ["readyForDeliveryText"], () {
             Get.back(result: true);
           }, () {
             Get.back(result: false);
           },
-              Container(height: 70, width: 70, child: Image.asset(tick)),
+              Icon(
+                Icons.dry_cleaning_rounded,
+                size: 70,
+                color: Colors.purple,
+              ),
               LinearGradient(
                   begin: Alignment(-0.10374055057764053, 0),
                   end: Alignment(1.1447703838348389, 1.1694844961166382),
@@ -212,7 +236,7 @@ class OrderButtons {
     LaundryOrderController controller = Get.find<LaundryOrderController>();
     LanguageController lang = Get.find<LanguageController>();
     return ButtonComponent(
-        widget: Text('Delivery on the way',
+        widget: Text(lang.strings['deliveryAdminApp']['laundry']['otwDelivery'],
             style: TextStyle(
                 color: const Color(0xffffffff),
                 fontFamily: "psb",
@@ -224,14 +248,18 @@ class OrderButtons {
             colors: [const Color(0xff5572ea), const Color(0xdb1f18d1)]),
         function: () async {
           var res = await dailogComponent(
-              lang.strings["deliveryAdminApp"]["deliveredAlert"]["title"],
-              lang.strings["deliveryAdminApp"]["deliveredAlert"]["subTitle"],
+              lang.strings["deliveryAdminApp"]["laundry"]["otwDeliveryTitle"],
+              lang.strings["deliveryAdminApp"]["laundry"]["otwDeliveryText"],
               () {
             Get.back(result: true);
           }, () {
             Get.back(result: false);
           },
-              Container(height: 70, width: 70, child: Image.asset(tick)),
+              Icon(
+                Icons.local_shipping_rounded,
+                size: 70,
+                color: Colors.purple,
+              ),
               LinearGradient(
                   begin: Alignment(-0.10374055057764053, 0),
                   end: Alignment(1.1447703838348389, 1.1694844961166382),
@@ -249,7 +277,7 @@ class OrderButtons {
     LaundryOrderController controller = Get.find<LaundryOrderController>();
     LanguageController lang = Get.find<LanguageController>();
     return ButtonComponent(
-        widget: Text("Delivered",
+        widget: Text(lang.strings['deliveryAdminApp']['laundry']['delivered'],
             style: TextStyle(
                 color: const Color(0xffffffff),
                 fontFamily: "psb",
@@ -261,9 +289,8 @@ class OrderButtons {
             colors: [const Color(0xff13cb29), const Color(0xdb219125)]),
         function: () async {
           var res = await dailogComponent(
-              lang.strings["deliveryAdminApp"]["deliveredAlert"]["title"],
-              lang.strings["deliveryAdminApp"]["deliveredAlert"]["subTitle"],
-              () {
+              lang.strings["deliveryAdminApp"]["laundry"]["deliveredTitle"],
+              lang.strings["deliveryAdminApp"]["laundry"]["deliveredText"], () {
             Get.back(result: true);
           }, () {
             Get.back(result: false);

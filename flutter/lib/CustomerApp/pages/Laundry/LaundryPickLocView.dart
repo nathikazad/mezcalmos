@@ -56,10 +56,7 @@ class _LaundryPickLocViewState extends State<LaundryPickLocView> {
             onPressed: () async {
               LatLng mapCenter = await locationPickerController.getMapCenter();
 
-              if (mapCenter == locationPickerController.location.value) {
-                mezDbgPrint(
-                    'mapCenter : $mapCenter  ##### ${locationPickerController.location.value}');
-              } else {
+              if (mapCenter != locationPickerController.location.value) {
                 await geoCodeAndSetLocation(mapCenter);
                 mezDbgPrint(
                     'Else mapCenter : $mapCenter  ##### ${locationPickerController.location.value}');
@@ -72,76 +69,74 @@ class _LaundryPickLocViewState extends State<LaundryPickLocView> {
               child: Text('Pick Location'),
             )),
       ),
-      body: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              margin: const EdgeInsets.all(8),
-              child:
-                  Text(lang.strings["customer"]["pickLocation"]["pickLabele"]),
-            ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            margin: const EdgeInsets.all(8),
+            child:
+                Text(lang.strings["customer"]["pickLocation"]["pickLabele"]),
+          ),
 
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 8),
-              child: LocationSearchComponent(
-                  hintPadding: EdgeInsets.only(left: 10),
-                  suffixPadding: EdgeInsets.only(right: 10),
-                  useBorders: false,
-                  showSearchIcon: true,
-                  text: locationPickerController.location.value?.address,
-                  onClear: () {},
-                  notifyParent: (Location? location) {
-                    mezDbgPrint(
-                        "Ontap on suggestion  => ${location?.toJson()} ");
-                    setState(() {
-                      locationPickerController.setLocation(location!);
-                      locationPickerController.moveToNewLatLng(
-                          location.latitude, location.longitude);
-                      currentLoc = location;
-                    });
-                  }),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            // stack
-            Obx(
-              () => Expanded(
-                  child: Container(
-                width: Get.width,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: Colors.grey.shade200),
-                child: locationPickerController.location.value != null
-                    ? LocationPicker(
-                        showBottomButton: false,
-                        locationPickerMapController:
-                            this.locationPickerController,
-                        notifyParentOfConfirm: (_) {},
-                        notifyParentOfLocationFinalized: (Location location) {
-                          mezDbgPrint(
-                              '#############SETTing location ${location}');
-                          setState(() {
-                            locationPickerController.setLocation(location);
-                            currentLoc = location;
-                          });
-                        },
-                      )
-                    : Center(
-                        child: CircularProgressIndicator(
-                          color: Colors.black,
-                          strokeWidth: 1,
-                        ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 8),
+            child: LocationSearchComponent(
+                hintPadding: EdgeInsets.only(left: 10),
+                suffixPadding: EdgeInsets.only(right: 10),
+                useBorders: false,
+                showSearchIcon: true,
+                text: locationPickerController.location.value?.address,
+                onClear: () {},
+                notifyParent: (Location? location) {
+                  mezDbgPrint(
+                      "Ontap on suggestion  => ${location?.toJson()} ");
+                  setState(() {
+                    locationPickerController.setLocation(location!);
+                    locationPickerController.moveToNewLatLng(
+                        location.latitude, location.longitude);
+                    currentLoc = location;
+                  });
+                }),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          // stack
+          Obx(
+            () => Expanded(
+                child: Container(
+              width: Get.width,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: Colors.grey.shade200),
+              child: locationPickerController.location.value != null
+                  ? LocationPicker(
+                      showBottomButton: false,
+                      locationPickerMapController:
+                          this.locationPickerController,
+                      notifyParentOfConfirm: (_) {},
+                      notifyParentOfLocationFinalized: (Location location) {
+                        mezDbgPrint(
+                            '#############SETTing location ${location}');
+                        setState(() {
+                          locationPickerController.setLocation(location);
+                          currentLoc = location;
+                        });
+                      },
+                    )
+                  : Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.black,
+                        strokeWidth: 1,
                       ),
-              )),
-            ),
-          ],
-        ),
+                    ),
+            )),
+          ),
+        ],
       ),
     );
   }

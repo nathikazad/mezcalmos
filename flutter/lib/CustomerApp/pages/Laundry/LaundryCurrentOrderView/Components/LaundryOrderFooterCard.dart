@@ -47,95 +47,7 @@ class _LaundryOrderFooterCardState extends State<LaundryOrderFooterCard> {
                                       : '${lang.strings["customer"]["restaurant"]["checkout"]["orderCanceled"]}',
                                   textAlign: TextAlign.center,
                                 ),
-                                content: !_clickedCancel.value
-                                    ? Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                              '${lang.strings["customer"]["restaurant"]["checkout"]["cancelOrderConfirm"]}'),
-                                          SizedBox(
-                                            height: 10.h,
-                                          ),
-                                          TextButton(
-                                              onPressed: () async {
-                                                _clickedCancel.value = true;
-                                                // to get back to the main view.
-                                                ServerResponse resp =
-                                                    await laundryController
-                                                        .cancelOrder(widget
-                                                            .order.orderId);
-                                                mezDbgPrint(
-                                                    resp.data.toString());
-                                                if (resp.success) {
-                                                  Get.until((route) =>
-                                                      route.settings.name ==
-                                                      kHomeRoute);
-                                                  MezSnackbar(
-                                                      lang.strings["shared"]
-                                                              ["snackbars"]
-                                                          ["titleSuccess"],
-                                                      lang.strings["shared"]
-                                                              ["snackbars"][
-                                                          "orderCancelSuccess"],
-                                                      position:
-                                                          SnackPosition.TOP);
-                                                } else {
-                                                  _clickedCancel.value = false;
-                                                  MezSnackbar(
-                                                      lang.strings["shared"]
-                                                              ["snackbars"]
-                                                          ["titleFailed"],
-                                                      lang.strings["shared"]
-                                                              ["snackbars"]
-                                                          ["orderCancelFailed"],
-                                                      position:
-                                                          SnackPosition.TOP);
-                                                }
-                                              },
-                                              style: TextButton.styleFrom(
-                                                  backgroundColor:
-                                                      Colors.redAccent,
-                                                  padding: EdgeInsets.all(12)),
-                                              child: Container(
-                                                  alignment: Alignment.center,
-                                                  child: Text(lang.strings[
-                                                                  "customer"]
-                                                              ["restaurant"]
-                                                          ["cancelOrderDialog"]
-                                                      ["yes"]))),
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-                                          TextButton(
-                                              onPressed: () {
-                                                Get.back();
-                                              },
-                                              style: TextButton.styleFrom(
-                                                  backgroundColor: Colors.black,
-                                                  padding: EdgeInsets.all(12)),
-                                              child: Container(
-                                                  alignment: Alignment.center,
-                                                  child: Text(lang.strings[
-                                                                  "customer"]
-                                                              ["restaurant"]
-                                                          ["cancelOrderDialog"]
-                                                      ["no"]))),
-                                        ],
-                                      )
-                                    : Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Center(
-                                              child: CircularProgressIndicator(
-                                            strokeWidth: 1.2,
-                                            color: Colors.purpleAccent.shade700,
-                                          ))
-                                        ],
-                                      ),
+                                content: alertDialogContent(),
                               ),
                             );
                           });
@@ -149,54 +61,12 @@ class _LaundryOrderFooterCardState extends State<LaundryOrderFooterCard> {
                     )),
               )
             : (widget.order.status == LaundryOrdersStatus.Delivered)
-                ? Card(
-                    child: Container(
-                      alignment: Alignment.center,
-                      margin: EdgeInsets.all(16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.check_circle,
-                            color: Colors.green,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            '${lang.strings["customer"]["restaurant"]["orderStatus"]["orderDeliverd"]}',
-                            style: txt.headline3,
-                          )
-                        ],
-                      ),
-                    ),
-                  )
+                ? orderDeliverdComponent(txt)
                 : (widget.order.status ==
                             LaundryOrdersStatus.CancelledByCustomer ||
                         widget.order.status ==
                             LaundryOrdersStatus.CancelledByAdmin)
-                    ? Card(
-                        child: Container(
-                          alignment: Alignment.center,
-                          margin: EdgeInsets.all(16),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.cancel,
-                                color: Colors.red,
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                '${lang.strings["customer"]["restaurant"]["orderStatus"]["orderCanceled"]}',
-                                style: txt.headline3,
-                              )
-                            ],
-                          ),
-                        ),
-                      )
+                    ? orderCanceledComponent(txt)
                     : TextButton(
                         onPressed: null,
                         style:
@@ -206,5 +76,124 @@ class _LaundryOrderFooterCardState extends State<LaundryOrderFooterCard> {
                           child: Text(
                               '${lang.strings["customer"]["restaurant"]["checkout"]["cancelOrder"]}'),
                         )));
+  }
+
+  Card orderCanceledComponent(TextTheme txt) {
+    return Card(
+      child: Container(
+        alignment: Alignment.center,
+        margin: EdgeInsets.all(16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.cancel,
+              color: Colors.red,
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Text(
+              '${lang.strings["customer"]["restaurant"]["orderStatus"]["orderCanceled"]}',
+              style: txt.headline3,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Card orderDeliverdComponent(TextTheme txt) {
+    return Card(
+      child: Container(
+        alignment: Alignment.center,
+        margin: EdgeInsets.all(16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.check_circle,
+              color: Colors.green,
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Text(
+              '${lang.strings["customer"]["restaurant"]["orderStatus"]["orderDeliverd"]}',
+              style: txt.headline3,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget alertDialogContent() {
+    if (!_clickedCancel.value) {
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+              '${lang.strings["customer"]["restaurant"]["checkout"]["cancelOrderConfirm"]}'),
+          SizedBox(
+            height: 10.h,
+          ),
+          TextButton(
+              onPressed: () async {
+                _clickedCancel.value = true;
+                // to get back to the main view.
+                ServerResponse resp =
+                    await laundryController.cancelOrder(widget.order.orderId);
+                mezDbgPrint(resp.data.toString());
+                if (resp.success) {
+                  Get.until((route) => route.settings.name == kHomeRoute);
+                  MezSnackbar(
+                      lang.strings["shared"]["snackbars"]["titleSuccess"],
+                      lang.strings["shared"]["snackbars"]["orderCancelSuccess"],
+                      position: SnackPosition.TOP);
+                } else {
+                  _clickedCancel.value = false;
+                  MezSnackbar(
+                      lang.strings["shared"]["snackbars"]["titleFailed"],
+                      lang.strings["shared"]["snackbars"]["orderCancelFailed"],
+                      position: SnackPosition.TOP);
+                }
+              },
+              style: TextButton.styleFrom(
+                  backgroundColor: Colors.redAccent,
+                  padding: EdgeInsets.all(12)),
+              child: Container(
+                  alignment: Alignment.center,
+                  child: Text(lang.strings["customer"]["restaurant"]
+                      ["cancelOrderDialog"]["yes"]))),
+          SizedBox(
+            height: 10,
+          ),
+          TextButton(
+              onPressed: () {
+                Get.back();
+              },
+              style: TextButton.styleFrom(
+                  backgroundColor: Colors.black, padding: EdgeInsets.all(12)),
+              child: Container(
+                  alignment: Alignment.center,
+                  child: Text(lang.strings["customer"]["restaurant"]
+                      ["cancelOrderDialog"]["no"]))),
+        ],
+      );
+    } else {
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Center(
+              child: CircularProgressIndicator(
+            strokeWidth: 1.2,
+            color: Colors.purpleAccent.shade700,
+          ))
+        ],
+      );
+    }
   }
 }

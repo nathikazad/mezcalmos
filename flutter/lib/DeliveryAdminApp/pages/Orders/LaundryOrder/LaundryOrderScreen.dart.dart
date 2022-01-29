@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/DeliveryAdminAppbar.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/laundryOrderController.dart';
+import 'package:mezcalmos/DeliveryAdminApp/models/Driver.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/Components/DriverCard.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/BuildOrderButtons.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/LaundryOrderStatusCard.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -22,15 +24,23 @@ class LaundryOrderScreen extends StatefulWidget {
 }
 
 class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
+  ///--------------- Controllers ------------------------//
   LanguageController lang = Get.find<LanguageController>();
   AuthController auth = Get.find<AuthController>();
-  // Since we have alot of buttons we check loading by name
-
-  Rxn<LaundryOrder> order = Rxn();
   LaundryOrderController controller = Get.find<LaundryOrderController>();
+
+  ///--------------- Controllers ------------------------//
+
+  /// ------------------ variables ------------------//
+  Rxn<LaundryOrder> order = Rxn();
+
   late String orderId;
   Rx<bool> hasNewMessage = false.obs;
   StreamSubscription? _orderListener;
+  Driver? driver;
+
+  /// ------------------ variables ------------------//
+
   @override
   void initState() {
     super.initState();
@@ -79,230 +89,284 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    //====================Restaurant Info=======================
-
                     LaundryOrderStatusCard(
                       order: order.value!,
                     ),
-                    Container(
-                      margin: const EdgeInsets.all(8),
-                      child: Text(
-                        'Customer',
-                        style: txt.headline3,
-                      ),
+                    SizedBox(
+                      height: 10,
                     ),
-                    Card(
-                      child: Container(
-                        padding: const EdgeInsets.all(8),
-                        width: double.infinity,
-                        child: Row(
-                          children: [
-                            CircleAvatar(
-                              radius: 25,
-                              backgroundImage: CachedNetworkImageProvider(
-                                  order.value!.customer.image),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              order.value!.customer.name,
-                              style: txt.bodyText1,
-                            ),
-                            Spacer(),
-                            Material(
-                              color: Theme.of(context).primaryColorLight,
-                              shape: CircleBorder(),
-                              child: InkWell(
-                                onTap: () {
-                                  // Get.toNamed(getRestaurantMessagesRoute(order.orderId));
-                                },
-                                customBorder: CircleBorder(),
-                                child: Stack(
-                                  children: [
-                                    Container(
-                                      margin: EdgeInsets.all(12),
-                                      child: Icon(
-                                        Icons.textsms,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    Obx(
-                                      () => controller
-                                              .orderHaveNewMessageNotifications(
-                                                  orderId)
-                                          ? Positioned(
-                                              left: 27,
-                                              top: 10,
-                                              child: Container(
-                                                width: 13,
-                                                height: 13,
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                    border: Border.all(
-                                                        color: const Color(
-                                                            0xfff6efff),
-                                                        width: 2),
-                                                    color: const Color(
-                                                        0xffff0000)),
-                                              ),
-                                            )
-                                          : Container(),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    orderCustomer(txt, context),
                     if (order.value?.inProcess() ?? false)
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
-                          children: buildOrderButtons(order),
+                          children: buildOrderButtons(order, driver),
                         ),
                       ),
-                    Container(
-                      margin: const EdgeInsets.all(8),
-                      child: Text(
-                        '${lang.strings['customer']['restaurant']['cart']['orderSummary']}',
-                        style: txt.headline3,
-                      ),
+                    SizedBox(
+                      height: 10,
                     ),
-                    Card(
-                      child: Container(
-                        padding: const EdgeInsets.all(8),
-                        width: double.infinity,
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Order weight:",
-                                  style: Theme.of(context).textTheme.bodyText1,
-                                ),
-                                Text(
-                                  (order.value!.weight != null)
-                                      ? order.value!.weight.toString() + ' kg'
-                                      : '-',
-                                  style: Theme.of(context).textTheme.bodyText1,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "${lang.strings["customer"]["restaurant"]["cart"]["orderCost"]} :",
-                                  style: Theme.of(context).textTheme.bodyText1,
-                                ),
-                                Text(
-                                  (order.value!.cost != 0)
-                                      ? '\$' +
-                                          order.value!.cost.toStringAsFixed(0)
-                                      : '-',
-                                  style: Theme.of(context).textTheme.bodyText1,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "${lang.strings["customer"]["restaurant"]["cart"]["deliveryCost"]} :",
-                                  style: Theme.of(context).textTheme.bodyText1,
-                                ),
-                                Text(
-                                  "\$5",
-                                  style: Theme.of(context).textTheme.bodyText1,
-                                ),
-                              ],
-                            ),
-                            Divider(
-                              height: 25,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "${lang.strings["customer"]["restaurant"]["cart"]["totalCost"]} :",
-                                  style: Theme.of(context).textTheme.bodyText1,
-                                ),
-                                Text(
-                                  (order.value!.cost != 0)
-                                      ? '\$' +
-                                          (order.value!.cost + 5).toString()
-                                      : '-',
-                                  style: Theme.of(context).textTheme.bodyText1,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 10,
-                            )
-                          ],
-                        ),
-                      ),
+                    DriverCard(
+                      driver: driver,
+                      callBack: (newDriver) {
+                        setState(() {
+                          driver = newDriver;
+                        });
+                      },
                     ),
-                    Container(
-                      margin: const EdgeInsets.all(8),
-                      child: Text(
-                        '${lang.strings['customer']['restaurant']['cart']['deliveryLocation']}',
-                        style: txt.headline3,
-                      ),
+                    SizedBox(
+                      height: 10,
                     ),
-                    Card(
-                      child: Container(
-                        padding: const EdgeInsets.all(8),
-                        width: double.infinity,
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.place_rounded,
-                              color: Theme.of(context).primaryColorLight,
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Flexible(
-                                child:
-                                    Text(order.value!.to.address, maxLines: 1)),
-                          ],
-                        ),
-                      ),
+                    orderSummary(txt, context),
+                    SizedBox(
+                      height: 10,
                     ),
-                    Container(
-                      margin: const EdgeInsets.all(8),
-                      child: Text(
-                        '${lang.strings['customer']['restaurant']['menu']['notes']}',
-                        style: txt.headline3,
-                      ),
+                    deliveryLocation(txt, context),
+                    SizedBox(
+                      height: 10,
                     ),
-                    Card(
-                      child: Container(
-                        padding: const EdgeInsets.all(16),
-                        width: double.infinity,
-                        child: Text(
-                          order.value!.notes!,
-                        ),
-                      ),
-                    )
+                    orderNotes(txt)
                   ],
                 ),
               ),
             );
           }
         }));
+  }
+
+//  Card shows the customer image and name and message button
+//
+  Column orderCustomer(TextTheme txt, BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          margin: const EdgeInsets.all(8),
+          child: Text(
+            lang.strings['deliveryAdminApp']['laundry']['customer'],
+            style: txt.headline3,
+          ),
+        ),
+        Card(
+          child: Container(
+            padding: const EdgeInsets.all(8),
+            width: double.infinity,
+            child: Row(
+              children: [
+                CircleAvatar(
+                  radius: 25,
+                  backgroundImage:
+                      CachedNetworkImageProvider(order.value!.customer.image),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  order.value!.customer.name,
+                  style: txt.bodyText1,
+                ),
+                Spacer(),
+                Material(
+                  color: Theme.of(context).primaryColorLight,
+                  shape: CircleBorder(),
+                  child: InkWell(
+                    onTap: () {
+                      // Get.toNamed(getRestaurantMessagesRoute(order.orderId));
+                    },
+                    customBorder: CircleBorder(),
+                    child: Stack(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.all(12),
+                          child: Icon(
+                            Icons.textsms,
+                            color: Colors.white,
+                          ),
+                        ),
+                        Obx(
+                          () => controller
+                                  .orderHaveNewMessageNotifications(orderId)
+                              ? Positioned(
+                                  left: 27,
+                                  top: 10,
+                                  child: Container(
+                                    width: 13,
+                                    height: 13,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(
+                                            color: const Color(0xfff6efff),
+                                            width: 2),
+                                        color: const Color(0xffff0000)),
+                                  ),
+                                )
+                              : Container(),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+// Card that shows the notes assigned with the orders
+  Column orderNotes(TextTheme txt) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          margin: const EdgeInsets.all(8),
+          child: Text(
+            '${lang.strings['customer']['restaurant']['menu']['notes']}',
+            style: txt.headline3,
+          ),
+        ),
+        Card(
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            width: double.infinity,
+            child: Text(
+              order.value!.notes!,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+// Card that shows the delivery location of the order
+  Column deliveryLocation(TextTheme txt, BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          margin: const EdgeInsets.all(8),
+          child: Text(
+            '${lang.strings['customer']['restaurant']['cart']['deliveryLocation']}',
+            style: txt.headline3,
+          ),
+        ),
+        Card(
+          child: Container(
+            padding: const EdgeInsets.all(8),
+            width: double.infinity,
+            child: Row(
+              children: [
+                Icon(
+                  Icons.place_rounded,
+                  color: Theme.of(context).primaryColorLight,
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Flexible(child: Text(order.value!.to.address, maxLines: 1)),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+// Card that shows the order summary (prices and total costs)
+  Column orderSummary(TextTheme txt, BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          margin: const EdgeInsets.all(8),
+          child: Text(
+            '${lang.strings['customer']['restaurant']['cart']['orderSummary']}',
+            style: txt.headline3,
+          ),
+        ),
+        Card(
+          child: Container(
+            padding: const EdgeInsets.all(8),
+            width: double.infinity,
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      lang.strings['deliveryAdminApp']['laundry']
+                          ['orderWeight'],
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                    Text(
+                      (order.value!.weight != null)
+                          ? order.value!.weight.toString() + ' kg'
+                          : '-',
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "${lang.strings["customer"]["restaurant"]["cart"]["orderCost"]} :",
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                    Text(
+                      (order.value!.cost != 0)
+                          ? '\$' + order.value!.cost.toStringAsFixed(0)
+                          : '-',
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "${lang.strings["customer"]["restaurant"]["cart"]["deliveryCost"]} :",
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                    Text(
+                      "\$5",
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                  ],
+                ),
+                Divider(
+                  height: 25,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "${lang.strings["customer"]["restaurant"]["cart"]["totalCost"]} :",
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                    Text(
+                      (order.value!.cost != 0)
+                          ? '\$' + (order.value!.cost + 5).toString()
+                          : '-',
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                )
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }

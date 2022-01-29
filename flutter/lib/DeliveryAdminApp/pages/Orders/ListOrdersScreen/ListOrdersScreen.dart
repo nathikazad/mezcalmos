@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/DeliveryAdminAppbar.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/laundryOrderController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/restaurantOrderController.dart';
-import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ListOrdersScreen/components/LaundryInProcessCard.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ListOrdersScreen/components/LaundryOrderCard.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
@@ -115,64 +115,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
               key: Get.find<SideMenuDrawerController>().getNewKey(),
               appBar: deliveryAdminAppBar(AppBarLeftButtonType.Menu,
                   withOrder: false,
-                  tabbar: TabBar(tabs: [
-                    Obx(
-                      () => Tab(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Flexible(
-                                child: Text(
-                              'Restaurant orders',
-                              style: Theme.of(context).textTheme.bodyText1,
-                            )),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            if (inProcessOrders.isNotEmpty)
-                              CircleAvatar(
-                                radius: 10,
-                                child: Text(
-                                  '${inProcessOrders.length}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText2!
-                                      .copyWith(color: Colors.white),
-                                ),
-                              )
-                          ],
-                        ),
-                      ),
-                    ),
-                    Obx(
-                      () => Tab(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Flexible(
-                                child: Text(
-                              'Laundry orders',
-                              style: Theme.of(context).textTheme.bodyText1,
-                            )),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            if (laundryInProcessOrders.isNotEmpty)
-                              CircleAvatar(
-                                radius: 10,
-                                child: Text(
-                                  '${laundryInProcessOrders.length}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText2!
-                                      .copyWith(color: Colors.white),
-                                ),
-                              )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ]),
+                  tabbar: deliveryAdminTabbar(context),
                   function: () =>
                       Get.find<SideMenuDrawerController>().openMenu()),
               // appBar: mezcalmosAppBar(
@@ -180,6 +123,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
               drawer: MezSideMenu(),
               body: Obx(() {
                 return TabBarView(children: [
+                  // Restaurant orders list view
                   SingleChildScrollView(
                     child: Column(
                       children: [
@@ -198,13 +142,16 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                           child: inProcessOrders.value.length > 0
                               ? buildOrders(inProcessOrders)
                               : Center(
-                                  child: Text("No orders"),
+                                  child: Text(lang.strings['deliveryAdminApp']
+                                      ['laundry']['noOrders']),
                                 ),
                         ),
                         Container(
                           margin: const EdgeInsets.all(8),
                           alignment: Alignment.centerLeft,
-                          child: Text('Past orders',
+                          child: Text(
+                              lang.strings['deliveryAdminApp']['laundry']
+                                  ['pastOrders'],
                               style: Theme.of(context).textTheme.headline1,
                               textAlign: TextAlign.left),
                         ),
@@ -215,12 +162,14 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                           child: controller.pastOrders.value.length > 0
                               ? buildOrders(controller.pastOrders)
                               : Center(
-                                  child: Text("No orders"),
+                                  child: Text(lang.strings['deliveryAdminApp']
+                                      ['laundry']['noOrders']),
                                 ),
                         ),
                       ],
                     ),
                   ),
+                    // Laundry orders list view
                   SingleChildScrollView(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -242,18 +191,21 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                                 ? Column(
                                     children: List.generate(
                                         laundryInProcessOrders.length,
-                                        (index) => LaundryInProcessCard(
+                                        (index) => LaundryOrderCard(
                                             order: laundryInProcessOrders[index]
                                                 as LaundryOrder)),
                                   )
                                 : Center(
-                                    child: Text("No orders"),
+                                    child: Text(lang.strings['deliveryAdminApp']
+                                        ['laundry']['noOrders']),
                                   ),
                           ),
                           Container(
                             margin: const EdgeInsets.all(8),
                             alignment: Alignment.centerLeft,
-                            child: Text('Past orders',
+                            child: Text(
+                                lang.strings['deliveryAdminApp']['laundry']
+                                    ['pastOrders'],
                                 style: Theme.of(context).textTheme.headline1,
                                 textAlign: TextAlign.left),
                           ),
@@ -265,12 +217,13 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                                 ? Column(
                                     children: List.generate(
                                         laundryPastOrders.length,
-                                        (index) => LaundryInProcessCard(
+                                        (index) => LaundryOrderCard(
                                             order: laundryPastOrders[index]
                                                 as LaundryOrder)),
                                   )
                                 : Center(
-                                    child: Text("No orders"),
+                                    child: Text(lang.strings['deliveryAdminApp']
+                                        ['laundry']['noOrders']),
                                   ),
                           ),
                         ],
@@ -280,5 +233,66 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                 ]);
               })),
         ));
+  }
+
+  TabBar deliveryAdminTabbar(BuildContext context) {
+    return TabBar(tabs: [
+      Obx(
+        () => Tab(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Flexible(
+                  child: Text(
+                lang.strings['deliveryAdminApp']['laundry']['restaurantOrders'],
+                style: Theme.of(context).textTheme.bodyText2,
+              )),
+              SizedBox(
+                width: 5,
+              ),
+              if (inProcessOrders.isNotEmpty)
+                CircleAvatar(
+                  radius: 8,
+                  child: Text(
+                    '${inProcessOrders.length}',
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1!
+                        .copyWith(color: Colors.white),
+                  ),
+                )
+            ],
+          ),
+        ),
+      ),
+      Obx(
+        () => Tab(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Flexible(
+                  child: Text(
+                lang.strings['deliveryAdminApp']['laundry']['laundryOrders'],
+                style: Theme.of(context).textTheme.bodyText2,
+              )),
+              SizedBox(
+                width: 5,
+              ),
+              if (laundryInProcessOrders.isNotEmpty)
+                CircleAvatar(
+                  radius: 8,
+                  child: Text(
+                    '${laundryInProcessOrders.length}',
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1!
+                        .copyWith(color: Colors.white),
+                  ),
+                )
+            ],
+          ),
+        ),
+      ),
+    ]);
   }
 }
