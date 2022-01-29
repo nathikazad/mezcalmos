@@ -70,12 +70,6 @@ class _UserProfileState extends State<UserProfile> {
                   direction: Axis.vertical,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-                  // fit: StackFit.expand,
-                  // alignment: Alignment.topCenter,
-                  // direction: Axis.vertical,
-                  // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  // crossAxisAlignment: CrossAxisAlignment.center,
                   children: widget.userProfileWidgets.bodyContent(
                       onBrowsImageClick: onBrowsImageClick,
                       onSaveClick: onSaveChangesClick,

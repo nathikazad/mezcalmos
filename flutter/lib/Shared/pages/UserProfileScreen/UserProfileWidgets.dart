@@ -234,9 +234,8 @@ class UserProfileWidgetsClass {
         dotsColor: Colors.purple.shade400,
       );
     } else {
-      if (userProfileController.stateMode == UserProfileMode.Show) {
-        return TextButton(
-            onPressed: onStartEdit, child: Text("Edit User Info"));
+      if (userProfileController.stateMode.value == UserProfileMode.Show) {
+        return editButton(onStartEdit: onStartEdit);
       } else {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -245,35 +244,58 @@ class UserProfileWidgetsClass {
             saveButton(onSaveClick, clickedSave),
             // cancel button
             if (userProfileController.checkIfUserHasAllInfosSet() &&
-                userProfileController.stateMode == UserProfileMode.Edit &&
+                userProfileController.stateMode.value == UserProfileMode.Edit &&
                 !clickedSave)
-              Expanded(
-                  flex: 2,
-                  child: InkWell(
-                    onTap: () {
-                      userProfileController.reset();
-                      userProfileController
-                          .setUserProfileMode(UserProfileMode.Show);
-                    },
-                    child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 10),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.purple.shade400),
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(15)),
-                      height: 50,
-                      // width: Get.width - 100,
-                      child: Center(
-                          child: Text(
-                        "Cancel",
-                        style: TextStyle(color: Colors.purple.shade400),
-                      )),
-                    ),
-                  )),
+              cancelButton(),
           ],
         );
       }
     }
+  }
+
+  Expanded cancelButton() {
+    return Expanded(
+        flex: 2,
+        child: InkWell(
+          onTap: () {
+            userProfileController.reset();
+            userProfileController.setUserProfileMode(UserProfileMode.Show);
+          },
+          child: Container(
+            margin: EdgeInsets.symmetric(horizontal: 10),
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.purple.shade400),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15)),
+            height: 50,
+            // width: Get.width - 100,
+            child: Center(
+                child: Text(
+              "Cancel",
+              style: TextStyle(fontSize: 15.sp, color: Colors.purple.shade400),
+            )),
+          ),
+        ));
+  }
+
+  Widget editButton({required Function() onStartEdit}) {
+    return InkWell(
+      onTap: onStartEdit,
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 10),
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.purple.shade500),
+            color: Colors.purple.shade400,
+            borderRadius: BorderRadius.circular(8.sp)),
+        height: 50,
+        // width: Get.width - 100,
+        child: Center(
+            child: Text(
+          "Edit User Profile",
+          style: TextStyle(color: Colors.white, fontSize: 15.sp),
+        )),
+      ),
+    );
   }
 
   Expanded saveButton(Function onSaveChangesClick, bool clickedSave) {
@@ -304,6 +326,7 @@ class UserProfileWidgetsClass {
                     ? Text(
                         "Save",
                         style: TextStyle(
+                            fontSize: 15.sp,
                             color: userProfileController.didUserChangedInfos()
                                 ? Colors.white
                                 : Colors.grey.shade400),
