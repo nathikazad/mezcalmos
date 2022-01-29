@@ -10,7 +10,6 @@ import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileWidgets.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileController.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 
 class UserProfile extends StatefulWidget {
   final AuthController authController = Get.find<AuthController>();

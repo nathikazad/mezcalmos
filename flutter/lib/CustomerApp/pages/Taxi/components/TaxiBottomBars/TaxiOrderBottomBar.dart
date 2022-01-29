@@ -8,7 +8,6 @@ import 'package:mezcalmos/CustomerApp/pages/Taxi/components/RecreateOrderBtn.dar
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
@@ -40,7 +39,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
                       TaxiOrdersStatus.LookingForTaxi)
                   ? 45
                   : 0),
-          height: getSizeRelativeToScreen(30, Get.height, Get.width),
+          height: getSizeRelativeToScreen(45, Get.height, Get.width),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
               border: Border.all(
