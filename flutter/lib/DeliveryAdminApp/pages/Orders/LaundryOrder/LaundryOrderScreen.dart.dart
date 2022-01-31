@@ -9,6 +9,7 @@ import 'package:mezcalmos/DeliveryAdminApp/models/Driver.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/Components/DriverCard.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/BuildOrderButtons.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/LaundryOrderStatusCard.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/OrderMapTracking.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -95,6 +96,9 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
                     SizedBox(
                       height: 10,
                     ),
+                    OrderMapTracking(
+                      order: order.value!,
+                    ),
                     orderCustomer(txt, context),
                     if (order.value?.inProcess() ?? false)
                       Padding(
@@ -136,7 +140,7 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
 
 //  Card shows the customer image and name and message button
 //
-  Column orderCustomer(TextTheme txt, BuildContext context) {
+  Widget orderCustomer(TextTheme txt, BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -215,7 +219,7 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
   }
 
 // Card that shows the notes assigned with the orders
-  Column orderNotes(TextTheme txt) {
+  Widget orderNotes(TextTheme txt) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -240,7 +244,7 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
   }
 
 // Card that shows the delivery location of the order
-  Column deliveryLocation(TextTheme txt, BuildContext context) {
+  Widget deliveryLocation(TextTheme txt, BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -274,7 +278,7 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
   }
 
 // Card that shows the order summary (prices and total costs)
-  Column orderSummary(TextTheme txt, BuildContext context) {
+  Widget orderSummary(TextTheme txt, BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
