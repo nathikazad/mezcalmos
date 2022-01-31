@@ -1,6 +1,5 @@
 import 'package:get/get.dart'; // getX
 import 'package:mezcalmos/DeliveryAdminApp/pages/AdminWrapper.dart';
-import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/Drivers/DriverListScreen.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/LaundryOrderScreen.dart.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ListOrdersScreen/ListOrdersScreen.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/ViewRestaurantOrderScreen.dart';
@@ -12,7 +11,6 @@ const String kRestaurantOrderRoute = '/orders/:orderId';
 const String kLaundryOrderRoute = '/orders/laundry/:orderId';
 const String kRestaurantsRoute = '/restaurants';
 const String kRestaurantRoute = '/restaurants/:restaurantId';
-const String kDriversListRoute = '/drivers';
 
 String getRestaurantRoute(String restaurantId) {
   return kRestaurantRoute.replaceFirst(":restaurantId", restaurantId);
@@ -35,7 +33,6 @@ class XRouter {
             name: kRestaurantOrderRoute,
             page: () => ViewRestaurantOrderScreen()),
         GetPage(name: kLaundryOrderRoute, page: () => LaundryOrderScreen()),
-        GetPage(name: kDriversListRoute, page: () => DriversListScreen())
       ] +
       SharedRouter.sharedRoutes;
 }

@@ -5,8 +5,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/DeliveryAdminAppbar.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/restaurantOrderController.dart';
-import 'package:mezcalmos/DeliveryAdminApp/models/Driver.dart';
-import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/Components/DriverCard.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/OrderInfoCard.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/OrderNoteCard.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/OrderTotalCostCard.dart';
@@ -67,8 +65,6 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
     super.dispose();
   }
 
-  Driver? driver;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,9 +89,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                       : PastOrderInfo(order: order.value!),
 
                   //============================= Customer info====================
-                  // DriverCard(
-                  //   driver: driver,
-                  // ),
+
                   //getCustomerInfoCart(),
                   OrderInfoCard(order: order),
                   //==========================>total cost=====================================

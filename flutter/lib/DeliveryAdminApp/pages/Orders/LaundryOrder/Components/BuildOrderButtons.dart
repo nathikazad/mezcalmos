@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryAdminApp/models/Driver.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/orderButtons.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 
 // Change status of the order compnent inside the order view screen
 
-List<Widget> buildOrderButtons(Rxn<LaundryOrder> order,Driver? driver) {
+List<Widget> buildOrderButtons(Rxn<LaundryOrder> order,) {
   if (order.value?.inProcess() ?? false)
     return [
       Expanded(
-        child: changeStatusButton(order,driver)!,
+        child: changeStatusButton(order)!,
       ),
       OrderButtons.cancelButtonWidget(order.value!.orderId,)
     ];
@@ -18,10 +17,10 @@ List<Widget> buildOrderButtons(Rxn<LaundryOrder> order,Driver? driver) {
     return [];
 }
 
-Widget? changeStatusButton(Rxn<LaundryOrder> order,Driver? driver) {
+Widget? changeStatusButton(Rxn<LaundryOrder> order,) {
   switch (order.value!.status) {
     case (LaundryOrdersStatus.OrderReceieved):
-      return OrderButtons.startPickUp(order.value!.orderId,driver);
+      return OrderButtons.startPickUp(order.value!.orderId);
     case (LaundryOrdersStatus.OtwPickup):
       return OrderButtons.pickedUp(order.value!.orderId);
     case (LaundryOrdersStatus.PickedUp):

@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/DeliveryAdminAppbar.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/laundryOrderController.dart';
-import 'package:mezcalmos/DeliveryAdminApp/models/Driver.dart';
-import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/Components/DriverCard.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/BuildOrderButtons.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/LaundryOrderStatusCard.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/OrderMapTracking.dart';
@@ -38,7 +36,6 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
   late String orderId;
   Rx<bool> hasNewMessage = false.obs;
   StreamSubscription? _orderListener;
-  Driver? driver;
 
   /// ------------------ variables ------------------//
 
@@ -96,28 +93,14 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
                     SizedBox(
                       height: 10,
                     ),
-                    OrderMapTracking(
-                      order: order.value!,
-                    ),
                     orderCustomer(txt, context),
                     if (order.value?.inProcess() ?? false)
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
-                          children: buildOrderButtons(order, driver),
+                          children: buildOrderButtons(order),
                         ),
                       ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    DriverCard(
-                      driver: driver,
-                      callBack: (newDriver) {
-                        setState(() {
-                          driver = newDriver;
-                        });
-                      },
-                    ),
                     SizedBox(
                       height: 10,
                     ),

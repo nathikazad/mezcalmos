@@ -5,7 +5,6 @@ import 'package:mezcalmos/DeliveryAdminApp/components/buttonComponent.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/dailogComponent.dart';
 import 'package:mezcalmos/DeliveryAdminApp/constants/global.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/laundryOrderController.dart';
-import 'package:mezcalmos/DeliveryAdminApp/models/Driver.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
 // the styles of status buttons inside the order screen
@@ -53,7 +52,9 @@ class OrderButtons {
   }
 
   // this button for startPickUp
-  static Widget startPickUp(String orderId, Driver? driver) {
+  static Widget startPickUp(
+    String orderId,
+  ) {
     LaundryOrderController controller = Get.find<LaundryOrderController>();
     LanguageController lang = Get.find<LanguageController>();
     return ButtonComponent(
@@ -63,44 +64,37 @@ class OrderButtons {
                 fontFamily: "psb",
                 fontSize: 16.0.sp),
             textAlign: TextAlign.center),
-        gradient: (driver != null && driver.available)
-            ? LinearGradient(
-                begin: Alignment(-0.10374055057764053, 0),
-                end: Alignment(1.1447703838348389, 1.1694844961166382),
-                colors: [const Color(0xffd3bc0b), const Color(0xdbd17c18)])
-            : LinearGradient(colors: [Colors.grey, Colors.grey]),
-        function: (driver != null && driver.available)
-            ? () async {
-                var res = await dailogComponent(
-                    lang.strings['deliveryAdminApp']['laundry']
-                        ['startPickUpTitle'],
-                    lang.strings['deliveryAdminApp']['laundry']
-                        ['startPickUpText'], () {
-                  Get.back(result: true);
-                }, () {
-                  Get.back(result: false);
-                },
-                    Icon(
-                      Icons.local_shipping_rounded,
-                      size: 70,
-                      color: Colors.purple,
-                    ),
-                    LinearGradient(
-                        begin: Alignment(-0.10374055057764053, 0),
-                        end: Alignment(1.1447703838348389, 1.1694844961166382),
-                        colors: [
-                          // const Color(0xede29211),
-                          const Color(0xffd3bc0b),
-                          const Color(0xdbd17c18)
-                        ]));
-                if (res) {
-                  Get.snackbar("Loading", "");
-                  controller.otwPickupOrder(orderId);
-                }
-              }
-            : () {
-                Get.snackbar('Error', 'Please select an available driver');
-              });
+        gradient: LinearGradient(
+            begin: Alignment(-0.10374055057764053, 0),
+            end: Alignment(1.1447703838348389, 1.1694844961166382),
+            colors: [const Color(0xffd3bc0b), const Color(0xdbd17c18)]),
+        function: () async {
+          var res = await dailogComponent(
+              lang.strings['deliveryAdminApp']['laundry']['startPickUpTitle'],
+              lang.strings['deliveryAdminApp']['laundry']['startPickUpText'],
+              () {
+            Get.back(result: true);
+          }, () {
+            Get.back(result: false);
+          },
+              Icon(
+                Icons.local_shipping_rounded,
+                size: 70,
+                color: Colors.purple,
+              ),
+              LinearGradient(
+                  begin: Alignment(-0.10374055057764053, 0),
+                  end: Alignment(1.1447703838348389, 1.1694844961166382),
+                  colors: [
+                    // const Color(0xede29211),
+                    const Color(0xffd3bc0b),
+                    const Color(0xdbd17c18)
+                  ]));
+          if (res) {
+            Get.snackbar("Loading", "");
+            controller.otwPickupOrder(orderId);
+          }
+        });
   }
 
   // this button for pickedUp
