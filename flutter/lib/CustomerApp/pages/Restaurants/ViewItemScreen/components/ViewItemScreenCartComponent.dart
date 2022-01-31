@@ -5,13 +5,13 @@ class ViewItemScreenCartComponent extends StatefulWidget {
   final String? price;
   final GestureTapCallback? ontab;
   final ValueChanged<bool?>? onValueChanged;
-  final bool? intailVal;
+  final bool? initialVal;
   ViewItemScreenCartComponent(
       {this.ontab,
       this.onValueChanged,
       this.title,
       this.price,
-      this.intailVal = false});
+      this.initialVal = false});
 
   @override
   _ViewItemScreenCartComponentState createState() =>
@@ -23,7 +23,7 @@ class _ViewItemScreenCartComponentState
   bool? isTure;
   @override
   void initState() {
-    isTure = widget.intailVal != null ? widget.intailVal : false;
+    isTure = widget.initialVal != null ? widget.initialVal : false;
     super.initState();
   }
 
@@ -31,7 +31,7 @@ class _ViewItemScreenCartComponentState
   Widget build(BuildContext context) {
     final txt = Theme.of(context).textTheme;
 
-    isTure = widget.intailVal != null ? widget.intailVal : false;
+    isTure = widget.initialVal != null ? widget.initialVal : false;
     return Container(
       margin: const EdgeInsets.only(bottom: 5, left: 10, right: 10),
       child: InkWell(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/titlesComponent.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/TitlesComponent.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
@@ -27,13 +27,13 @@ Widget chooseOneCheckBoxes(
       }
       chooseOneWidgetOptionsArray.add(ViewItemScreenCartComponent(
         title: name,
-        intailVal:
+        initialVal:
             cartItem.value!.findChooseOneItemById(chooseOneOption.id) != null &&
                 cartItem.value!
                         .findChooseOneItemById(chooseOneOption.id)!
                         .chosenOptionDetails
                         .id ==
-            chooseOneOptionListItem.id,
+                    chooseOneOptionListItem.id,
         price: price,
         onValueChanged: (val) {
           cartItem.value!.setNewChooseOneItem(

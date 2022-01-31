@@ -6,7 +6,7 @@ import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/textFieldComponent.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/TextFieldComponent.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -14,8 +14,8 @@ import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 
 import 'components/BottomBarItemViewScreen.dart';
-import 'components/chooseOneCheckBox.dart';
-import 'components/choosenManyCheckBox.dart';
+import 'components/ChooseOneCheckBox.dart';
+import 'components/ChoosenManyCheckBox.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
 enum ViewItemScreenMode { AddItemMode, EditItemMode }

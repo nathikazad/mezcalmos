@@ -5,15 +5,15 @@ import 'package:mezcalmos/CustomerApp/components/IncrementalComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/MyExpensionPanelComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/choosenMannyOption.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/ChoosenManyOption.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 
-import 'choosenOneOption.dart';
-import 'itemInformationCart.dart';
+import 'ChoosenOneOption.dart';
+import 'ItemInformationCart.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
 

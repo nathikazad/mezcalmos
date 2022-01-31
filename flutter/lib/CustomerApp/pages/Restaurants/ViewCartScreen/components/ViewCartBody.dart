@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/dropDownListCartView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/textFieldComponent.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/DropDownListCartView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/TextFieldComponent.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
-import 'buildCart.dart';
-import 'buildItems.dart';
-import 'orderSummaryCard.dart';
+import 'BuildCart.dart';
+import 'BuildItems.dart';
+import 'OrderSummaryCard.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
 
