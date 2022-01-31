@@ -22,18 +22,18 @@ Widget buildItems(List<CartItem> cartItems, BuildContext context) {
   LanguageController lang = Get.find<LanguageController>();
 
   return Column(
-    children: cartItems.fold<List<Widget>>(<Widget>[], (children, element) {
-      var counter = element.totalCost().obs;
-      mezDbgPrint("${element.toFirebaseFunctionFormattedJson()}");
-      mezDbgPrint("${element.id}");
+    children: cartItems.fold<List<Widget>>(<Widget>[], (children, cartItem) {
+      var counter = cartItem.totalCost().obs;
+      mezDbgPrint("${cartItem.toFirebaseFunctionFormattedJson()}");
+      mezDbgPrint("${cartItem.id}");
 
-      element.chosenOneOptions.keys.forEach((e) {
-        element.item.chooseOneOptions.forEach((r) {
-          mezDbgPrint(r.toJson());
-        });
+      // cartItem.chosenOneOptions.keys.forEach((e) {
+      //   cartItem.item.chooseOneOptions.forEach((r) {
+      //     mezDbgPrint(r.toJson());
+      //   });
 
-        mezDbgPrint("key $e | val : ${element.chosenOneOptions[e]}");
-      });
+      //   mezDbgPrint("key $e | val : ${cartItem.chosenOneOptions[e]}");
+      // });
 
       children.add(Container(
         margin: const EdgeInsets.all(5),
@@ -41,16 +41,16 @@ Widget buildItems(List<CartItem> cartItems, BuildContext context) {
           child: Flexible(
               child: Obx(
             () => ItemInformationCart(
-              imageUrl: element.item.image!,
+              imageUrl: cartItem.item.image!,
               itemName:
-                  element.item.name[lang.userLanguageKey]![0].toUpperCase() +
-                      element.item.name[lang.userLanguageKey]!.substring(1),
+                  cartItem.item.name[lang.userLanguageKey]![0].toUpperCase() +
+                      cartItem.item.name[lang.userLanguageKey]!.substring(1),
               restaurantName: controller.associatedRestaurant!.name,
               itemsPrice: counter.value.toStringAsFixed(0),
             ),
           )),
-          children: choosenOneOption(element.chosenOneOptions, context) +
-              choosenMannyOption(element.item.chooseManyOptions, context) +
+          children: choosenOneOption(cartItem.cartChooseOneItems, context) +
+              choosenManyOption(cartItem.cartChooseManyItems, context) +
               [
                 SizedBox(
                   height: 10,
@@ -73,9 +73,9 @@ Widget buildItems(List<CartItem> cartItems, BuildContext context) {
                             minVal: 0,
                             increment: () {
                               counter.value =
-                                  counter.value + element.costPerOne();
-                              print("${element.item.id}");
-                              controller.incrementItem(element.id!, 1);
+                                  counter.value + cartItem.costPerOne();
+                              print("${cartItem.item.id}");
+                              controller.incrementItem(cartItem.id!, 1);
                               controller.refresh();
                             },
                             onChangedToZero: (isZero) async {
@@ -99,7 +99,7 @@ Widget buildItems(List<CartItem> cartItems, BuildContext context) {
                                 mezDbgPrint(
                                     " the returend value from the dailog $yesNoResult");
                                 if (yesNoResult == YesNoDialogButton.Yes) {
-                                  controller.deleteItem(element.id!);
+                                  controller.deleteItem(cartItem.id!);
                                   if (controller.cart.value.quantity() == 0) {
                                     controller.clearCart();
                                     Get.until((route) =>
@@ -109,13 +109,13 @@ Widget buildItems(List<CartItem> cartItems, BuildContext context) {
                                 }
                               }
                             },
-                            value: element.quantity,
+                            value: cartItem.quantity,
                             decrement: () {
-                              if (element.quantity <= 1) {
+                              if (cartItem.quantity <= 1) {
                               } else {
                                 counter.value =
-                                    counter.value + element.costPerOne();
-                                controller.incrementItem(element.id!, -1);
+                                    counter.value + cartItem.costPerOne();
+                                controller.incrementItem(cartItem.id!, -1);
                                 controller.refresh();
                               }
                             }),
@@ -124,8 +124,8 @@ Widget buildItems(List<CartItem> cartItems, BuildContext context) {
               ],
           onEdit: () {
             mezDbgPrint(
-                " the data inside the expansion ${element.toFirebaseFunctionFormattedJson()}");
-            Get.toNamed(editCartItemRoute("${element.id}"));
+                " the data inside the expansion ${cartItem.toFirebaseFunctionFormattedJson()}");
+            Get.toNamed(editCartItemRoute("${cartItem.id}"));
           },
         ),
       ));

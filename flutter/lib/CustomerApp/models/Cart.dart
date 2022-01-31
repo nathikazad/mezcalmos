@@ -1,116 +1,8 @@
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'dart:math';
-
-class CartItem {
-  String restaurantId;
-  String? id;
-  Item item;
-  Map<String, String> _chosenOneOptions = {};
-  Map<String, bool> _chosenManyOptions = {};
-  int quantity;
-  String? notes;
-  Map<String, String> get chosenOneOptions => _chosenOneOptions;
-  Map<String, bool> get chosenManyOptions => _chosenManyOptions;
-
-  CartItem(this.item, this.restaurantId, {this.quantity = 1}) {
-    this.item.chooseOneOptions.forEach((chooseOneOption) {
-      _chosenOneOptions[chooseOneOption.id] =
-          chooseOneOption.chooseOneOptionListItems[0].id;
-    });
-    this.item.chooseManyOptions.forEach((chooseManyOption) {
-      _chosenManyOptions[chooseManyOption.id] =
-          chooseManyOption.selectedByDefault;
-    });
-  }
-  CartItem.withData(this.item, this.restaurantId, this.id, this.quantity,
-      this.notes, this._chosenOneOptions, this._chosenManyOptions);
-
-  factory CartItem.clone(CartItem cartItem) {
-    return CartItem.withData(
-      cartItem.item,
-      cartItem.restaurantId,
-      cartItem.id,
-      cartItem.quantity,
-      cartItem.notes,
-      cartItem._chosenOneOptions,
-      cartItem._chosenManyOptions,
-    );
-  }
-
-  num costPerOne() {
-    num costPerOne = this.item.cost;
-    this.item.chooseOneOptions.forEach((chooseOneOption) {
-      String chosenId = _chosenOneOptions[chooseOneOption.id]!;
-      costPerOne += chooseOneOption.findChooseOneOptionListItem(chosenId)!.cost;
-    });
-    this.item.chooseManyOptions.forEach((chooseManyOption) {
-      if (_chosenManyOptions[chooseManyOption.id] ?? false)
-        costPerOne += chooseManyOption.cost;
-    });
-    return costPerOne;
-  }
-
-  num totalCost() {
-    // return 0;
-    return this.quantity * costPerOne();
-  }
-
-  Map<String, dynamic> toFirebaseFunctionFormattedJson() {
-    Map<String, dynamic> json = <String, dynamic>{
-      "id": this.item.id,
-      "quantity": this.quantity,
-      "totalCost": this.totalCost(),
-      "costPerOne": this.costPerOne(),
-      "name": {
-        "en": this.item.name[LanguageType.EN],
-        "es": this.item.name[LanguageType.ES],
-      },
-      "image": this.item.image,
-      "options": {"chosenOneOptions": {}, "chosenManyOptions": {}},
-      "notes": notes
-    };
-    this.item.chooseOneOptions.forEach((e) {
-      ChooseOneOption? chooseOneOption = this.item.findChooseOneOption(e.id);
-      ChooseOneOptionListItem? chooseOneOptionListItem = chooseOneOption
-          ?.findChooseOneOptionListItem(this._chosenOneOptions[e.id]!);
-      json["options"]["chosenOneOptions"][e.id] = {
-        "chosenOptionId": this._chosenOneOptions[e.id],
-        "chosenOptionName": {
-          "en": chooseOneOptionListItem?.name[LanguageType.EN],
-          "es": chooseOneOptionListItem?.name[LanguageType.ES],
-        },
-        // chooseOneOptionListItem?.name,
-        "name": {
-          "en": chooseOneOption?.name[LanguageType.EN],
-          "es": chooseOneOption?.name[LanguageType.ES],
-        },
-        // chooseOneOption?.name,
-        "chosenOptionCost": chooseOneOptionListItem?.cost ?? 0
-      };
-    });
-
-    this.item.chooseManyOptions.forEach((e) {
-      ChooseManyOption? chooseManyOption = this.item.findChooseManyOption(e.id);
-      if (this.chosenManyOptions[e.id] ?? false) {
-        json["options"]["chosenManyOptions"][e.id] = {
-          "chosenValue": this.chosenManyOptions[e.id],
-          "name": {
-            "en": chooseManyOption?.name[LanguageType.EN],
-            "es": chooseManyOption?.name[LanguageType.ES],
-          },
-          // chooseManyOption?.name,
-          "chosenValueCost": chooseManyOption?.cost ?? 0
-        };
-      }
-    });
-
-    return json;
-  }
-}
 
 class Cart {
   List<CartItem> items = [];
@@ -121,32 +13,36 @@ class Cart {
   Cart({this.restaurant});
 
   Cart.fromCartData(dynamic cartData, this.restaurant) {
-    cartData["items"]?.forEach((dynamic itemId, dynamic itemData) {
-      Map<String, String> chosenOneOptions = {};
-      itemData["options"]?["chosenOneOptions"]
-          .forEach((dynamic id, dynamic data) {
-        chosenOneOptions[id] = data["chosenOptionId"];
+    if (this.restaurant != null) {
+      cartData["items"]?.forEach((dynamic itemId, dynamic itemData) {
+        Item? item = this.restaurant!.findItemById(itemData["id"]);
+        if (item == null) return;
+        CartItem cartItem = CartItem(item, restaurant!.id,
+            id: itemId,
+            quantity: itemData["quantity"],
+            notes: itemData["notes"]);
+        itemData["options"]?["chosenOneOptions"]
+            .forEach((dynamic id, dynamic data) {
+          cartItem.setNewChooseOneItem(
+              chooseOneOptionId: id,
+              newChooseOneOptionListItem: ChooseOneOptionListItem(
+                  data["chosenOptionId"],
+                  convertToLanguageMap(data["chosenOptionName"]),
+                  data["chosenOptionCost"]));
+        });
+
+        itemData["options"]?["chosenManyOptions"]
+            ?.forEach((dynamic id, dynamic data) {
+          cartItem.setNewChooseManyItem(
+              chooseManyOptionId: id, newVal: data["chosenValue"]);
+        });
+        this.items.add(cartItem);
       });
-      Map<String, bool> chosenManyOptions = {};
-      itemData["options"]?["chosenManyOptions"]
-          ?.forEach((dynamic id, dynamic data) {
-        chosenManyOptions[id] = data["chosenValue"];
-      });
-      Item item = this.restaurant!.findItemById(itemData["id"]);
-      CartItem cartItem = CartItem.withData(
-          item,
-          restaurant!.id,
-          itemId,
-          itemData["quantity"],
-          itemData["notes"],
-          chosenOneOptions,
-          chosenManyOptions);
-      this.items.add(cartItem);
-    });
-    this.toLocation = cartData["to"] != null
-        ? Location.fromFirebaseData(cartData["to"])
-        : null;
-    this.notes = cartData["notes"];
+      this.toLocation = cartData["to"] != null
+          ? Location.fromFirebaseData(cartData["to"])
+          : null;
+      this.notes = cartData["notes"];
+    }
   }
   int quantity() {
     if (this.items.length == 0) return 0;
@@ -198,6 +94,155 @@ class Cart {
       "to": this.toLocation?.toFirebaseFormattedJson(),
       "paymentType": paymentType.toFirebaseFormatString()
     };
+  }
+}
+
+class CartChooseOneItem {
+  ChooseOneOption optionDetails;
+  ChooseOneOptionListItem chosenOptionDetails;
+
+  CartChooseOneItem({
+    required this.optionDetails,
+    required this.chosenOptionDetails,
+  });
+}
+
+class CartChooseManyItem {
+  ChooseManyOption optionDetails;
+  bool chosen;
+  CartChooseManyItem({required this.optionDetails, required this.chosen});
+}
+
+class CartItem {
+  String restaurantId;
+  String? id;
+  Item item;
+  int quantity;
+  String? notes;
+  List<CartChooseOneItem> cartChooseOneItems = [];
+  List<CartChooseManyItem> cartChooseManyItems = [];
+
+  CartItem(this.item, this.restaurantId,
+      {this.id, this.quantity = 1, this.notes}) {
+    this.item.chooseOneOptions.forEach((chooseOneOption) {
+      cartChooseOneItems.add(CartChooseOneItem(
+          optionDetails: chooseOneOption,
+          chosenOptionDetails: chooseOneOption.chooseOneOptionListItems[0]));
+    });
+    this.item.chooseManyOptions.forEach((chooseManyOption) {
+      cartChooseManyItems.add(CartChooseManyItem(
+          optionDetails: chooseManyOption,
+          chosen: chooseManyOption.selectedByDefault));
+    });
+  }
+  CartItem.fromData(this.item, this.restaurantId, this.id, this.quantity,
+      this.notes, this.cartChooseOneItems, this.cartChooseManyItems);
+
+  factory CartItem.clone(CartItem cartItem) {
+    CartItem newCartItem = CartItem(
+      cartItem.item,
+      cartItem.restaurantId,
+      id: cartItem.id,
+      quantity: cartItem.quantity,
+      notes: cartItem.notes,
+    );
+    cartItem.cartChooseOneItems.forEach((cartChooseOneItem) {
+      newCartItem.setNewChooseOneItem(
+          chooseOneOptionId: cartChooseOneItem.optionDetails.id,
+          newChooseOneOptionListItem: cartChooseOneItem.chosenOptionDetails);
+    });
+    cartItem.cartChooseManyItems.forEach((cartChooseManyItem) {
+      newCartItem.setNewChooseManyItem(
+          chooseManyOptionId: cartChooseManyItem.optionDetails.id,
+          newVal: cartChooseManyItem.chosen);
+    });
+    return newCartItem;
+  }
+
+  void setNewChooseOneItem(
+      {required String chooseOneOptionId,
+      required ChooseOneOptionListItem newChooseOneOptionListItem}) {
+    int index = cartChooseOneItems.indexWhere(
+        (chooseOneItem) => chooseOneItem.optionDetails.id == chooseOneOptionId);
+    cartChooseOneItems[index].chosenOptionDetails = newChooseOneOptionListItem;
+  }
+
+  void setNewChooseManyItem(
+      {required String chooseManyOptionId, required bool newVal}) {
+    int index = cartChooseManyItems.indexWhere((cartChooseManyItem) =>
+        cartChooseManyItem.optionDetails.id == chooseManyOptionId);
+    cartChooseManyItems[index].chosen = newVal;
+  }
+
+  CartChooseOneItem? findChooseOneItemById(String id) {
+    try {
+      return cartChooseOneItems
+          .firstWhere((chooseOneItem) => chooseOneItem.optionDetails.id == id);
+    } finally {
+      return null;
+    }
+  }
+
+  CartChooseManyItem? findChooseManyItemById(String id) {
+    try {
+      return cartChooseManyItems
+          .firstWhere((chooseManyItem) => chooseManyItem.optionDetails == id);
+    } finally {
+      return null;
+    }
+  }
+
+  num costPerOne() {
+    num costPerOne = this.item.cost;
+    this.cartChooseOneItems.forEach((cartChooseOneItem) {
+      costPerOne += cartChooseOneItem.chosenOptionDetails.cost;
+    });
+    this.cartChooseManyItems.forEach((cartChooseManyItem) {
+      if (cartChooseManyItem.chosen)
+        costPerOne += cartChooseManyItem.optionDetails.cost;
+    });
+    return costPerOne;
+  }
+
+  num totalCost() {
+    // return 0;
+    return this.quantity * costPerOne();
+  }
+
+  Map<String, dynamic> toFirebaseFunctionFormattedJson() {
+    Map<String, dynamic> json = <String, dynamic>{
+      "id": this.item.id,
+      "quantity": this.quantity,
+      "totalCost": this.totalCost(),
+      "costPerOne": this.costPerOne(),
+      "name": this.item.name,
+      "image": this.item.image,
+      "options": {"chosenOneOptions": {}, "chosenManyOptions": {}},
+      "notes": notes
+    };
+    this.cartChooseOneItems.forEach((cartChooseOneItem) {
+      json["options"]["chosenOneOptions"]
+          [cartChooseOneItem.optionDetails.id] = {
+        "chosenOptionId": cartChooseOneItem.chosenOptionDetails.id,
+        "chosenOptionName": cartChooseOneItem.chosenOptionDetails.name,
+        "name": cartChooseOneItem.optionDetails.name,
+        "chosenOptionCost": cartChooseOneItem.chosenOptionDetails.cost
+      };
+    });
+
+    this.cartChooseManyItems.forEach((cartChooseManyItem) {
+      if (cartChooseManyItem.chosen) {
+        json["options"]["chosenManyOptions"]
+            [cartChooseManyItem.optionDetails.id] = {
+          "chosenValue": cartChooseManyItem.chosen,
+          "name": cartChooseManyItem.optionDetails.name,
+          // chooseManyOption?.name,
+          "chosenValueCost": cartChooseManyItem.optionDetails.cost
+        };
+      }
+    });
+
+    return json;
   }
 }
 

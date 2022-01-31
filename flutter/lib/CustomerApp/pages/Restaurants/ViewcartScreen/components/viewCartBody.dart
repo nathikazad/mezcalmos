@@ -35,10 +35,10 @@ class _ViewCartBodyState extends State<ViewCartBody> {
 
   @override
   Widget build(BuildContext context) {
-    controller.cart.value.items.forEach((e) {
-      mezDbgPrint("==> One : ${e.chosenOneOptions}");
-      mezDbgPrint("==> Many : ${e.chosenManyOptions}");
-    });
+    // controller.cart.value.items.forEach((e) {
+    //   mezDbgPrint("==> One : ${e.chosenOneOptions}");
+    //   mezDbgPrint("==> Many : ${e.chosenManyOptions}");
+    // });
     return Container(
       child: Column(
         children: [

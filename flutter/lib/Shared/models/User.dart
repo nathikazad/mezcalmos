@@ -45,9 +45,7 @@ class User {
         bigImage = snapshot.value['bigImage'],
         language = snapshot.value['language'] == null
             ? LanguageType.ES
-            : LanguageType.values.firstWhere((element) =>
-                element.toFirebaseFormatString().toLowerCase() ==
-                snapshot.value['language']),
+            : snapshot.value['language'].toString().toLanguageType(),
         phone = snapshot.value['phone'],
         data = snapshot.value;
 

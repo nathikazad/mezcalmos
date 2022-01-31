@@ -34,9 +34,11 @@ Widget chooseManyCheckBoxes(
     chooseManyWidgetArray.add(ViewItemScreenCartComponent(
       title: name,
       price: price,
-      intailVal: cartItem.value!.chosenManyOptions[chooseManyOption.id],
+      intailVal:
+          cartItem.value!.findChooseManyItemById(chooseManyOption.id)?.chosen,
       onValueChanged: (val) {
-        cartItem.value!.chosenManyOptions[chooseManyOption.id] = val ?? false;
+        cartItem.value!.setNewChooseManyItem(
+            chooseManyOptionId: chooseManyOption.id, newVal: val ?? false);
         cartItem.refresh();
       },
     ));

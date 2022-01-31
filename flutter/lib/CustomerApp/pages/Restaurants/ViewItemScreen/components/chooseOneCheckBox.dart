@@ -27,12 +27,18 @@ Widget chooseOneCheckBoxes(
       }
       chooseOneWidgetOptionsArray.add(ViewItemScreenCartComponent(
         title: name,
-        intailVal: cartItem.value!.chosenOneOptions[chooseOneOption.id] ==
+        intailVal:
+            cartItem.value!.findChooseOneItemById(chooseOneOption.id) != null &&
+                cartItem.value!
+                        .findChooseOneItemById(chooseOneOption.id)!
+                        .chosenOptionDetails
+                        .id ==
             chooseOneOptionListItem.id,
         price: price,
         onValueChanged: (val) {
-          cartItem.value!.chosenOneOptions[chooseOneOption.id] =
-              chooseOneOptionListItem.id;
+          cartItem.value!.setNewChooseOneItem(
+              chooseOneOptionId: chooseOneOption.id,
+              newChooseOneOptionListItem: chooseOneOptionListItem);
           cartItem.refresh();
         },
       ));
