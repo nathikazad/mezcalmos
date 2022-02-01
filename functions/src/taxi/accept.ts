@@ -9,7 +9,7 @@ import { AuthorizationStatus, ServerResponseStatus } from "../shared/models/Gene
 import { OrderType } from "../shared/models/Order";
 import { UserInfo } from "../shared/models/User";
 import { Taxi } from "../shared/models/taxi/Taxi";
-import { TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "../shared/models/taxi/TaxiOrder";
+import { CounterOfferStatus, TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "../shared/models/taxi/TaxiOrder";
 import { buildChatForOrder } from "../shared/helper/chat";
 import { ParticipantType } from "../shared/models/Chat";
 import { push } from "../shared/notification/notifyUser";
@@ -29,7 +29,7 @@ export = functions.https.onCall(async (data, context) => {
       errorMessage: "Required orderId"
     }
   }
-  let taxiId: string = context.auth!.uid;
+  let taxiId: string = data.counterOfferDriverId || context.auth!.uid;
   let orderId: string = data.orderId;
   let taxi: Taxi = (await getTaxi(taxiId));
   console.log(`Got taxi ${taxi}`);
@@ -91,6 +91,17 @@ export = functions.https.onCall(async (data, context) => {
         status: ServerResponseStatus.Error,
         errorMessage: `${data.orderId} status is not lookingForTaxi but ${order.status}`
       };
+    }
+
+    if (data.counterOfferDriverId) {
+      if (!order.counterOffers || !order.counterOffers![data.counterOfferDriverId]
+        || order.counterOffers![data.counterOfferDriverId].status != CounterOfferStatus.Accepted) {
+        return {
+          status: ServerResponseStatus.Error,
+          errorMessage: `No valid counter offer from driver ${data.counterOfferDriverId} found`
+        }
+      }
+      order.cost = order.counterOffers![data.counterOfferDriverId].price
     }
 
     order.status = TaxiOrderStatus.OnTheWay;

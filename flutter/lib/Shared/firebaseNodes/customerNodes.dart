@@ -49,6 +49,4 @@ String customerInProcessOrderDriverLocationNode(
   return 'customers/inProcessOrders/$customerId/$orderId/driver/location';
 }
 
-String onlineTaxiDrivers() {
-  return 'online/taxi';
-}
+

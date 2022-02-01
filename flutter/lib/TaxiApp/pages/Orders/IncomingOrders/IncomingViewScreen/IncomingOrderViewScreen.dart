@@ -83,6 +83,13 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
             }
           }
         });
+
+        // check if order is in negotiation
+        if (taxiAuthController.taxiState?.inNegotationOrderId ==
+            order!.orderId) {
+          // start the listener
+          controller.counterOfferEvent(order!.orderId);
+        }
       }
     }
     super.initState();

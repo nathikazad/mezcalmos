@@ -19,6 +19,7 @@ export interface TaxiOrder extends Order {
   finishRideTime?: string,
   driver: TaxiInfo;
   notificationStatus?: Record<string, NotificationStatus>;
+  counterOffers?: Record<string, CounterOffer>;
   lock?: boolean;
 }
 
@@ -70,4 +71,19 @@ export interface NotificationStatus {
   readTime?: string,
   received?: boolean,
   receievedTime?: string
+}
+
+export interface CounterOffer {
+  price: number,
+  offerValidTime: string,
+  offerValidTimeEpoch: number,
+  status: CounterOfferStatus
+}
+
+export enum CounterOfferStatus {
+  Submitted = "submitted",
+  Accepted = "accepted",
+  Rejected = "rejected",
+  Expired = "expired",
+  Cancelled = "cancelled",
 }

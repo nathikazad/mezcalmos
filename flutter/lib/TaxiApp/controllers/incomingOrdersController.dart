@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/taxiNodes.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/ordersNode.dart';
@@ -13,6 +14,7 @@ import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
+import 'package:mezcalmos/TaxiApp/models/CounterOffer.dart';
 
 class IncomingOrdersController extends GetxController {
   RxList<TaxiOrder> orders = <TaxiOrder>[]
@@ -160,6 +162,54 @@ class IncomingOrdersController extends GetxController {
     _incomingOrdersListener?.cancel();
     _updateOrderDistanceToClient?.dispose();
     // _appLifeCycleController.cleanAllCallbacks();
+  }
+
+  /// submit counter offer for a particular order
+  Future<void> submitCounterOffer(
+      String orderId, CounterOffer counterOffer) async {
+    await _databaseHelper.firebaseDatabase
+        .reference()
+        .child(taxiCounterOfferNode(orderId, _authController.fireAuthUser!.uid))
+        .set(counterOffer.toFirebaseFormattedJson());
+    await _databaseHelper.firebaseDatabase
+        .reference()
+        .child(inNegotationNode(_authController.fireAuthUser!.uid))
+        .set(orderId);
+  }
+
+  /// the first counter offer event from customer
+  /// a listener(or alarm at counter offer expiry time) should be
+  /// started after submitting counter offer
+  Future<CounterOffer> counterOfferEvent(String orderId) {
+    return _databaseHelper.firebaseDatabase
+        .reference()
+        .child(taxiCounterOfferNode(orderId, _authController.fireAuthUser!.uid))
+        .onChildChanged
+        .where((event) {
+          CounterOffer counterOffer =
+              CounterOffer.fromData(event.snapshot.value);
+          return counterOffer.counterOfferStatus !=
+              CounterOfferStatus.Submitted;
+        })
+        .first
+        .then((value) => CounterOffer.fromData(value.snapshot));
+  }
+
+  /// to remove taxi form counter offer mode
+  /// either after customer responds or a timer runs out
+  /// if expired is set then the status in db is set to expired as well
+  Future<void> removeFromNegotiationMode(String orderId,
+      {bool expired = false}) async {
+    await _databaseHelper.firebaseDatabase
+        .reference()
+        .child(inNegotationNode(_authController.fireAuthUser!.uid))
+        .set(false);
+    if (expired)
+      await _databaseHelper.firebaseDatabase
+          .reference()
+          .child(
+              taxiCounterOfferNode(orderId, _authController.fireAuthUser!.uid))
+          .set(CounterOfferStatus.Expired);
   }
 
   Future<ServerResponse> acceptTaxi(String orderId) async {

@@ -5,7 +5,9 @@ class TaxiState {
   bool isAuthorized;
   bool isLooking;
   String? currentOrder;
-  TaxiState(this.isAuthorized, this.isLooking, [this.currentOrder]);
+  String? inNegotationOrderId;
+  TaxiState(this.isAuthorized, this.isLooking,
+      [this.currentOrder, this.inNegotationOrderId]);
 
   factory TaxiState.fromSnapshot(dynamic data) {
     mezDbgPrint("TaxiDriver ${data}");
@@ -13,7 +15,9 @@ class TaxiState {
         data == null ? false : data['authorizationStatus'] == "authorized";
     bool isLooking = data == null ? false : data['isLooking'] == true;
     String? currentOrder = data == null ? null : data['currentOrderId'];
-    return TaxiState(isAuthorized, isLooking, currentOrder);
+    String? inNegotationOrderId = data == null ? null : data['inNegotiation'];
+    return TaxiState(
+        isAuthorized, isLooking, currentOrder, inNegotationOrderId);
   }
 
   Map<String, dynamic> toJson() => {

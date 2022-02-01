@@ -9,9 +9,11 @@ import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/ordersNode.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/taxiNodes.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
+import 'package:mezcalmos/TaxiApp/models/CounterOffer.dart';
 
 enum OrdersStates { Null, Finished, Cancelled, Expired, InProccess, IsLooking }
 const String numOfToolTipsShownStorageAddress =
@@ -101,6 +103,38 @@ class TaxiController extends GetxController {
   void increaseNumOfTimesToolTipShownToUser() {
     GetStorage().write(
         numOfToolTipsShownStorageAddress, numOfTimesToolTipShownToUser() + 1);
+  }
+
+  Future<ServerResponse> acceptCounterOffer(
+      String orderId, String driverId) async {
+    await _databaseHelper.firebaseDatabase
+        .reference()
+        .child(taxiCounterOfferNode(orderId, driverId))
+        .set(CounterOfferStatus.Accepted.toFirebaseFormatString());
+
+    mezDbgPrint("Accept Taxi Called");
+    HttpsCallable acceptTaxiFunction =
+        FirebaseFunctions.instance.httpsCallable('taxi-acceptRide');
+    try {
+      HttpsCallableResult response = await acceptTaxiFunction
+          .call(<String, dynamic>{
+        'orderId': orderId,
+        'counterOfferDriverId': driverId
+      });
+      mezDbgPrint(response.data.toString());
+      return ServerResponse.fromJson(response.data);
+    } catch (e) {
+      mezDbgPrint(e.toString());
+      return ServerResponse(ResponseStatus.Error,
+          errorMessage: "Server Error", errorCode: "serverError");
+    }
+  }
+
+  Future<void> rejectCounterOffer(String orderId, String driverId) async {
+    await _databaseHelper.firebaseDatabase
+        .reference()
+        .child(taxiCounterOfferNode(orderId, driverId))
+        .set(CounterOfferStatus.Rejected.toFirebaseFormatString());
   }
 
   @override

@@ -6,6 +6,14 @@ String taxiStateNode(String uid) {
   return 'taxis/info/$uid/state';
 }
 
+String inNegotationNode(String uid) {
+  return taxiStateNode(uid) + "/inNegotiation";
+}
+
+String onlineTaxiDrivers() {
+  return 'online/taxi';
+}
+
 String onlineTaxiStateNode(String uid) {
   return 'online/taxi/$uid/';
 }

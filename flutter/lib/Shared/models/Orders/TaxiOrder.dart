@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/TaxiApp/models/CounterOffer.dart';
 
 enum TaxiOrdersStatus {
   DroppedOff,
@@ -65,6 +68,7 @@ class TaxiOrder extends Order {
   double distanceToClient = 0;
   TaxiUserInfo? get driver => this.serviceProvider as TaxiUserInfo?;
   List<TaxiNotificationStatus> notificationStatuses = [];
+  List<CounterOffer> counterOffers = [];
   TaxiOrder(
       {required String orderId,
       required this.cost,
@@ -78,8 +82,7 @@ class TaxiOrder extends Order {
       required this.rideFinishTime,
       required this.rideStartTime,
       required this.status,
-      required UserInfo customer,
-      dynamic cancelledBy})
+      required UserInfo customer})
       : super(
             orderTime: orderTime,
             orderId: orderId,
@@ -148,6 +151,16 @@ class TaxiOrder extends Order {
       }
     });
 
+    data["counterOffers"]
+        ?.forEach((dynamic driverId, dynamic counterOfferData) {
+      try {
+        taxiOrder.counterOffers
+            .add(CounterOffer.fromData(counterOfferData, driverId.toString()));
+      } on NoSuchMethodError catch (_) {
+        // DO NOTHING
+      }
+    });
+
     return taxiOrder;
   }
 
@@ -188,6 +201,21 @@ class TaxiOrder extends Order {
     return this.notificationStatuses.fold<int>(0, (previousValue, element) {
       return (element.read ? 1 : 0) + previousValue;
     });
+  }
+
+  List<CounterOffer> getValidCounterOffers() {
+    return this.counterOffers.where((counterOffer) =>
+        counterOffer.counterOfferStatus == CounterOfferStatus.Submitted).toList();
+  }
+
+  CounterOffer? findCounterOfferByDriverId(String driverId) {
+    try {
+      return this
+          .counterOffers
+          .firstWhere((counterOffer) => counterOffer.driverId == driverId);
+    } catch (e) {
+      return null;
+    }
   }
 }
 

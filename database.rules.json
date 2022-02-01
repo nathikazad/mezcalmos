@@ -151,6 +151,11 @@
                   ".write": "root.child('orders/open/taxi/' + $orderId).exists() && $driverId === auth.uid"
                 }
               }
+            },
+            "counterOffers": {
+              "$driverId": {
+                ".write": "(auth.uid == $driverId && (!data.hasChild('status') || data.child('status').val() == 'submitted')) || (auth.uid == data.parent().parent().child('customer').child('id').val() && data.child('status').val() == 'submitted' && data.child('offerValidTimeEpoch').val() > now)"
+              }
             }
           }
         }
