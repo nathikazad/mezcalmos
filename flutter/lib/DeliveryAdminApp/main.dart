@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/route_manager.dart';
 import 'package:mezcalmos/DeliveryAdminApp/authHooks.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
@@ -16,7 +15,6 @@ Function signOutCallback = AuthHooks.onSignOutHook;
 List<GetPage<dynamic>> routes = XRouter.mainRoutes;
 
 void main() {
-  ScreenUtil.init(BoxConstraints(maxHeight: Get.height, maxWidth: Get.width));
   runMainGuarded(() => runApp(
         StartingPoint(
             appType: AppType.DeliveryAdminApp,

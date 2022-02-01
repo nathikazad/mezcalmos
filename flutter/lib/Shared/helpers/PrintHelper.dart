@@ -1,5 +1,8 @@
 // Usefull when trying to make Sizes adptable!
 import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 void mezDbgPrint(dynamic log) {
@@ -20,6 +23,8 @@ void mezcalmosLogger(String text, {bool isError = false}) =>
 
 // This is to get all kind of exception in our code!
 runMainGuarded(Function runMain) {
+  ScreenUtil.init(BoxConstraints(maxHeight: Get.height, maxWidth: Get.width),
+      splitScreenMode: false, minTextAdapt: true);
   runZonedGuarded(() async {
     runMain();
   }, (error, stacktrace) {

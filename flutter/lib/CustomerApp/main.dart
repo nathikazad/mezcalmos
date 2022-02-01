@@ -33,16 +33,18 @@ List<SideMenuItem> sideMenuItems = <SideMenuItem>[
 ];
 
 void main() {
-  ScreenUtil.init(BoxConstraints(maxHeight: Get.height, maxWidth: Get.width));
-  runMainGuarded(() => runApp(
-        StartingPoint(
-          appType: AppType.CustomerApp,
-          appTheme: CustomerAppTheme.lightTheme,
-          signInCallback: signInCallback,
-          signOutCallback: signOutCallback,
-          routes: routes,
-          sideMenuItems: sideMenuItems,
-          locationOn: true,
-        ),
-      ));
+  runMainGuarded(() {
+    mezDbgPrint("sTh3me@1: ${CustomerAppTheme.lightTheme}");
+    runApp(
+      StartingPoint(
+        appType: AppType.CustomerApp,
+        appTheme: CustomerAppTheme.lightTheme,
+        signInCallback: signInCallback,
+        signOutCallback: signOutCallback,
+        routes: routes,
+        sideMenuItems: sideMenuItems,
+        locationOn: true,
+      ),
+    );
+  });
 }

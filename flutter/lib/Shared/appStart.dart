@@ -36,24 +36,24 @@ final ThemeData _defaultAppTheme = ThemeData(
 
 class StartingPoint extends StatefulWidget {
   final AppType appType;
-  final ThemeData? _appTheme;
+  final ThemeData? appTheme;
   final Function signInCallback;
   final Function signOutCallback;
   final List<GetPage<dynamic>> routes;
   final List<SideMenuItem>? sideMenuItems;
   final bool locationOn;
-  ThemeData get appTheme => _appTheme ?? _defaultAppTheme;
+
+  ThemeData get appThemeGetter => appTheme ?? _defaultAppTheme;
 
   //  Sideminu
   StartingPoint(
       {required this.appType,
-      ThemeData? appTheme,
+      this.appTheme = null,
       required this.signInCallback,
       required this.signOutCallback,
       required this.routes,
       this.sideMenuItems,
-      this.locationOn = true})
-      : _appTheme = appTheme;
+      this.locationOn = true});
 
   @override
   _StartingPointState createState() => _StartingPointState();
@@ -74,6 +74,7 @@ class _StartingPointState extends State<StartingPoint> {
 
   @override
   Widget build(BuildContext context) {
+    // ScreenUtil().context = context;
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     SystemChrome.setSystemUIOverlayStyle(
@@ -97,7 +98,7 @@ class _StartingPointState extends State<StartingPoint> {
       mezDbgPrint("====> PreviewMode ===> ${GetStorage().read('previewMode')}");
       return mainApp(
           appType: widget.appType,
-          appTheme: widget.appTheme,
+          appTheme: widget.appThemeGetter,
           routes: widget.routes);
     }
   }
