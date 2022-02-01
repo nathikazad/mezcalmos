@@ -250,15 +250,19 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             url: "assets/images/customer/restaurants/restaurantService.png",
             subtitle: "${lang.strings['customer']['home']['food']["subtitle"]}",
             ontap: () {
-              if (auth.fireAuthUser != null) {
-                if (Get.find<OrderController>().currentOrders.isEmpty) {
-                  Get.toNamed(kRestaurantsRoute);
+               if (auth.fireAuthUser != null) {
+                List<Order> restaurantOrders = Get.find<OrderController>()
+                    .currentOrders
+                    .where((p0) => p0.orderType == OrderType.Restaurant)
+                    .toList();
+
+                if (restaurantOrders.length == 1) {
+                  Get.toNamed(
+                      getRestaurantOrderRoute(restaurantOrders[0].orderId));
+                } else if (restaurantOrders.length > 1) {
+                  Get.toNamed(kOrdersRoute);
                 } else {
-                  Get.toNamed(getRestaurantOrderRoute(
-                      Get.find<OrderController>()
-                          .currentOrders
-                          .value[0]
-                          .orderId));
+                  Get.toNamed(kRestaurantsRoute);
                 }
               } else {
                 Get.toNamed(kRestaurantsRoute);
