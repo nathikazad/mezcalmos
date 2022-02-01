@@ -3,11 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:mezcalmos/DeliveryAdminApp/models/Driver.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
 class DriverCard extends StatelessWidget {
+  final Order order;
   Driver? driver;
   Function(Driver?) callBack;
-  DriverCard({Key? key, required this.driver, required this.callBack})
+  DriverCard(
+      {Key? key,
+      required this.driver,
+      required this.callBack,
+      required this.order})
       : super(key: key);
 
   @override
@@ -27,7 +33,8 @@ class DriverCard extends StatelessWidget {
         onTap: (driver == null)
             ? () async {
                 Driver? newDriver =
-                    await Get.toNamed(kDriversListRoute) as Driver;
+                    await Get.toNamed(kDriversListRoute, arguments: order)
+                        as Driver;
                 callBack(newDriver);
               }
             : null,
@@ -99,8 +106,9 @@ class DriverCard extends StatelessWidget {
                         onPressed: () {}, icon: Icon(Icons.message_outlined)),
                     IconButton(
                         onPressed: () async {
-                          Driver? newDriver =
-                              await Get.toNamed(kDriversListRoute) as Driver;
+                          Driver? newDriver = await Get.toNamed(
+                              kDriversListRoute,
+                              arguments: order) as Driver;
                           callBack(newDriver);
                         },
                         icon: Icon(Icons.edit_rounded)),

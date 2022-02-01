@@ -114,9 +114,7 @@ class MGoogleMapState extends State<MGoogleMap> {
                   padding: EdgeInsets.all(20),
                   mapToolbarEnabled: false,
                   minMaxZoomPreference:
-                      widget.mGoogleMapController.polylines.isNotEmpty
-                          ? MinMaxZoomPreference.unbounded
-                          : MinMaxZoomPreference(16, 17),
+                      widget.mGoogleMapController.getMapMinMaxZommPrefs(),
                   onCameraMove: (camMove) {
                     widget.mGoogleMapController
                         .updateMarkersIconOnZoomChange(zoom: camMove.zoom);

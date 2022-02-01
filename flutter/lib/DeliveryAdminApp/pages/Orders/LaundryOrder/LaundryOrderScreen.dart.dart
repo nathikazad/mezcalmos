@@ -96,12 +96,15 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
                     SizedBox(
                       height: 10,
                     ),
-                    OrderMapTracking(
-                      order: order.value!,
-                    ),
+                    // OrderMapTracking(
+                    //   order: order.value!,
+                    // ),
+                    Obx(() =>
+                        OrderMapTracking(driver: driver, order: order.value!)),
                     orderCustomer(txt, context),
+
                     if (order.value?.inProcess() ?? false)
-                      Padding(
+                      Container(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
                           children: buildOrderButtons(order, driver),
@@ -112,6 +115,7 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
                     ),
                     DriverCard(
                       driver: driver,
+                      order: order.value!,
                       callBack: (newDriver) {
                         setState(() {
                           driver = newDriver;

@@ -2,9 +2,26 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/models/Driver.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/Drivers/DriversMapComponent.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
-class DriversListScreen extends StatelessWidget {
-  const DriversListScreen({Key? key}) : super(key: key);
+class DriversListScreen extends StatefulWidget {
+  const DriversListScreen({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<DriversListScreen> createState() => _DriversListScreenState();
+}
+
+class _DriversListScreenState extends State<DriversListScreen> {
+  Order? order;
+  @override
+  void initState() {
+    order = Get.arguments;
+    
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +34,10 @@ class DriversListScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            DriversMapCompnonet(
+              drivers: Driver.dummyDrivers,
+              order: order!,
+            ),
             Container(
               padding: const EdgeInsets.all(8.0),
               child: Column(

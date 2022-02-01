@@ -21,13 +21,13 @@ class Driver {
         name: 'Montassare Driver',
         imageUrl:
             'https://totaljobshub.in/wp-content/uploads/5350f78bac94c48e0792a288cdf36006_delivery-driver_SOCIAL.jpg',
-        location: LatLng(33.10, 11.20)),
+        location: LatLng(17.0732, 96.7266)),
     Driver(
         available: false,
         name: 'Saad Driver',
         imageUrl:
             'http://deliveryexpressinc.com/wp-content/uploads/2015/11/Driver.jpg',
-        location: LatLng(30.30, 10.20))
+        location: LatLng(17.0732, 96.7196))
   ];
 
   Map<String, dynamic> toMap() {
