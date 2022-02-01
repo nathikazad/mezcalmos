@@ -11,7 +11,7 @@ from termcolor import colored
 
 
 # GLOBAL CONSTANTS !
-VERSION = "1.0.10"
+VERSION = "1.0.11"
 XOR_VALUE = 100
 CONFIG_FILE = "config.json"
 ACTIVE_DEBUG = True
@@ -196,12 +196,14 @@ class Launcher:
         # IOS ----
         # TODO : Handle Versioning !
         # Patching info.plist & project.pbxproj for IOS!
+        _ios_app_folder_name = self.user_args["app"].lower().replace("app" , "")
+
         _project_pbxproj_path = "../ios/Runner.xcodeproj/project.pbxproj"
         _info_plist_path = "../ios/Runner/Info.plist"
-        _cloned = open('patches/ios/project.pbxproj').read().replace('<mez-package>', _appPackageName)
+        _cloned = open('patches/ios/project.pbxproj').read().replace('<mez-package>', _appPackageName).replace('<mez-app-type>' , _ios_app_folder_name)
         open(_project_pbxproj_path , 'w+').write(_cloned)
         PRINTLN(f"[+] Patched ios/project.pbxproj => {_appPackageName}")
-        _cloned = open(f'patches/ios/{self.user_args["app"].lower().replace("app" , "")}/Info.plist').read().replace('<mez-output-name>', _outputAppName)
+        _cloned = open(f'patches/ios/{_ios_app_folder_name}/Info.plist').read().replace('<mez-output-name>', _outputAppName).replace('<mez-app-type>' , _ios_app_folder_name)
         open(_info_plist_path , 'w+').write(_cloned)
         PRINTLN(f"[+] Patched ios/Runner/Info.plist => {_outputAppName}!")
 	    # Getting rid of 8.0
@@ -564,14 +566,14 @@ class Config:
                 print("[+] Checking Podfile ..")
 
                 for index , line in enumerate(pod_lines):
-                    print(line)
+                    #print(line)
                     if 'platform :ios,' in line:
                         patch_line_index = index
-                        exit()
+                        #exit()
                 # min required now is 10.0
                 if patch_line_index != None:
                     print("[+] Fixing Podfile ..")
-                    pod_lines[patch_line_index] = "platform :ios, '10.0'"
+                    pod_lines[patch_line_index] = "platform :ios, '13.0'"
                 open('../ios/Podfile' , 'w+').write('\n'.join(pod_lines))    
                 print("[+] Installing Pods ..")
                 os.system('cd .. && flutter pub get && cd ios && arch -x86_64 pod install && cd ../launcher')
