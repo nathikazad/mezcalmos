@@ -11,6 +11,7 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
@@ -68,17 +69,9 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
               // specify type as Controller
               init: RestaurantController(), // intialize with the Controller
               builder: (_) => SingleChildScrollView(child: ViewCartBody(
-                    onValueChangeCallback: ({String? newValue}) {
-                      mezDbgPrint("onValueChangeCallback :: $newValue");
-                      if (newValue == null) {
-                        setState(() {
-                          ddResult = DropDownResult.Null;
-                        });
-                      } else {
-                        setState(() {
-                          ddResult = DropDownResult.String;
-                        });
-                      }
+                    onValueChangeCallback: ({Location? location}) {
+                      controller.cart.value.toLocation = location;
+                      controller.saveCart();
                     },
                   )));
         } else {

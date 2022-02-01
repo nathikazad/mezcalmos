@@ -5,7 +5,7 @@ import 'package:mezcalmos/CustomerApp/components/LocationPicker.dart';
 import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
 import 'package:mezcalmos/CustomerApp/models/LaundryRequest.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryRequestView/Components/LaundryStepsComponent.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/dropDownListCartView.dart';
+import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -68,12 +68,11 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
               Obx(
                 () => Card(
                   child: authController.user != null
-                      ? DropDownListCartView(
-                          isRestaurant: false,
-                          defaultLocation: defaultLoc,
-                          callBack: (loc) {
+                      ? DropDownLocationList(
+                          passedInLocation: defaultLoc,
+                          onValueChangeCallback: ({Location? location}) {
                             setState(() {
-                              defaultLoc = loc;
+                              defaultLoc = location;
                             });
                           },
                         )

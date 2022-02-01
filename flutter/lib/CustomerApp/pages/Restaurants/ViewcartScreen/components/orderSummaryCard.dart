@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
-import 'dropDownListCartView.dart';
+import '../../../../components/DropDownLocationList.dart';
 
 class OrderSummaryCard extends StatelessWidget {
   final String? orderCost;
@@ -174,7 +174,7 @@ class OrderSummaryCard extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            DropDownListCartView(
+            DropDownLocationList(
               onValueChangeCallback: this.onValueChangeCallback,
             ),
           ],
