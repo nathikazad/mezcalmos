@@ -279,7 +279,7 @@ class Launcher:
             exit(DW_EXIT_REASONS.NO_APP_SPECIFIED)
 
         if self.user_args['build'] == 'ios' :
-            os.system(f'flutter build {self.user_args["build"]} --target lib/{self.user_args["app"]}/main.dart {isVerbose}')
+            os.system(f'flutter build ipa --target lib/{self.user_args["app"]}/main.dart {isVerbose}')
         else:
             os.system(f'flutter build {self.user_args["build"]} -t lib/{self.user_args["app"]}/main.dart {isVerbose}')
 
@@ -411,6 +411,7 @@ class Config:
                     
             # PRINTLN("[+] Config file validated !")
     
+
     def __patch_version__(self, v):
         '''v=Version , Patch the version!'''
         PRINTLN("------------------- [ VERSION PATCHING ] -------------------")

@@ -72,18 +72,11 @@
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
-	<key>UISupportedInterfaceOrientations~ipad</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 
 
- 		<key>CFBundlePrimaryIcon</key>
+ 	<key>CFBundlePrimaryIcon</key>
 	<dict>
 		<key>CFBundleIconFiles</key>
 		<array>
@@ -92,26 +85,5 @@
 		<key>UIPrerenderedIcon</key>
 		<false/>
 	</dict>
-	<!-- <key>CFBundleAlternateIcons</key>
-	<dict>
-		<key>AppIcon-2</key>
-		<dict>
-			<key>CFBundleIconFiles</key>
-			<array>
-				<string>Icon-2</string>
-			</array>
-			<key>UIPrerenderedIcon</key>
-			<false/>
-		</dict>
-		<key>AppIcon-3</key>
-		<dict>
-			<key>CFBundleIconFiles</key>
-			<array>
-				<string>Icon-3</string>
-			</array>
-			<key>UIPrerenderedIcon</key>
-			<false/>
-		</dict>
-	</dict> -->
  </dict>
 </plist>
