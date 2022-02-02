@@ -12,6 +12,7 @@ class Cart {
   Restaurant? restaurant;
   String? notes;
   PaymentType paymentType = PaymentType.Cash;
+  final num shippingCost = 40;
   Cart({this.restaurant});
 
   Cart.fromCartData(dynamic cartData, this.restaurant) {
@@ -54,13 +55,15 @@ class Cart {
     return this.cartItems.fold(0, (sum, cartItem) => sum + cartItem.quantity);
   }
 
-  num totalCost({bool withDeliveryCost = false}) {
-    // 40 is the default delivery cost.
+  num itemsCost() {
     if (this.cartItems.length == 0) return 0;
-    num res = this
+    return this
         .cartItems
         .fold<num>(0, (sum, cartItem) => sum + cartItem.totalCost());
-    return withDeliveryCost ? res + 40 : res;
+  }
+
+  num totalCost() {
+    return itemsCost() + shippingCost;
   }
 
   void addItem(CartItem cartItem) {
@@ -98,7 +101,9 @@ class Cart {
       "orderType": OrderType.Restaurant.toFirebaseFormatString(),
       "serviceProviderId": restaurant?.id,
       "quantity": this.quantity(),
-      "cost": this.totalCost(),
+      "cost": this.totalCost().toInt(),
+      "itemsCost": this.itemsCost().toInt(),
+      "shippingCost": this.shippingCost,
       "items": items,
       "notes": notes,
       "to": this.toLocation?.toFirebaseFormattedJson(),
@@ -192,7 +197,6 @@ class CartItem {
       {required String chooseManyOptionId, required bool newVal}) {
     int index = cartChooseManyItems.indexWhere((cartChooseManyItem) =>
         cartChooseManyItem.optionDetails.id == chooseManyOptionId);
-
     if (index != -1) {
       cartChooseManyItems[index].chosen = newVal;
     }
@@ -250,14 +254,12 @@ class CartItem {
     });
 
     this.cartChooseManyItems.forEach((cartChooseManyItem) {
-      if (cartChooseManyItem.chosen) {
-        json["options"]["chosenManyOptions"]
-            [cartChooseManyItem.optionDetails.id] = {
-          "chosenValue": cartChooseManyItem.chosen,
-          "name": cartChooseManyItem.optionDetails.name.toFirebaseFormat(),
-          "chosenValueCost": cartChooseManyItem.optionDetails.cost
-        };
-      }
+      json["options"]["chosenManyOptions"]
+          [cartChooseManyItem.optionDetails.id] = {
+        "chosenValue": cartChooseManyItem.chosen,
+        "name": cartChooseManyItem.optionDetails.name.toFirebaseFormat(),
+        "chosenValueCost": cartChooseManyItem.optionDetails.cost
+      };
     });
     return json;
   }

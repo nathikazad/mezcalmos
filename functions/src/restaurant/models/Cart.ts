@@ -32,6 +32,8 @@ export interface Item {
 export interface Cart {
   quantity: number;
   cost: number;
+  itemsCost: number;
+  shippingCost: number;
   notes?: number;
   paymentType: PaymentType;
   serviceProviderId: string;

@@ -6,6 +6,8 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 class RestaurantOrder extends Order {
   RestaurantOrderStatus status;
   int quantity;
+  num itemsCost;
+  num shippingCost;
   List<RestaurantOrderItem> items = [];
   String? notes;
   UserInfo get restaurant => this.serviceProvider!;
@@ -20,6 +22,8 @@ class RestaurantOrder extends Order {
       required UserInfo restaurant,
       required UserInfo customer,
       required Location to,
+      required this.itemsCost,
+      required this.shippingCost,
       this.notes})
       : super(
             orderId: orderId,
@@ -43,7 +47,9 @@ class RestaurantOrder extends Order {
         notes: data["notes"],
         to: Location.fromFirebaseData(data['to']),
         restaurant: UserInfo.fromData(data["restaurant"]),
-        customer: UserInfo.fromData(data["customer"]));
+        customer: UserInfo.fromData(data["customer"]),
+        itemsCost: data['itemsCost'],
+        shippingCost: data['shippingCost']);
 
     data["items"].forEach((dynamic itemId, dynamic itemData) {
       RestaurantOrderItem restaurantOrderItem = RestaurantOrderItem(
@@ -70,8 +76,7 @@ class RestaurantOrder extends Order {
             optionName: convertToLanguageMap(data["name"]),
             chosenOptionId: data["chosenOptionId"],
             chosenOptionCost: data["chosenOptionCost"],
-            chosenOptionName: convertToLanguageMap(data["chosenOptionName"])
-            ));
+            chosenOptionName: convertToLanguageMap(data["chosenOptionName"])));
       });
       restaurantOrder.items.add(restaurantOrderItem);
     });

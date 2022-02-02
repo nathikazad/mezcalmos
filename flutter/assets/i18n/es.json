@@ -166,7 +166,7 @@
                 "title": "ingrese el nombre de la ubicación, si desea guardar para uso futuro, de lo contrario, puede omitir",
                 "button": "OK",
                 "textHint": "Nombre del lugar",
-                "skip":"Saltar"
+                "skip": "Omitir"
             },
             "editLocationDialog": {
                 "title": "Ingrese el nombre de la ubicación",
