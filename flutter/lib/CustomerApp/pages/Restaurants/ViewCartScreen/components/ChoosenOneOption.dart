@@ -29,7 +29,7 @@ List<Widget> choosenOneOption(
         width: Get.width,
         alignment: Alignment.centerLeft,
         padding: const EdgeInsets.only(left: 25, top: 5),
-        child: Text(
+        child: Obx(() => Text(
             // oneOption.name
             cartChooseOneItem
                 .chosenOptionDetails.name[lang.userLanguageKey]!.inCaps,
@@ -39,7 +39,7 @@ List<Widget> choosenOneOption(
                 fontFamily: "psr",
                 fontStyle: FontStyle.normal,
                 fontSize: 17.0.sp),
-            textAlign: TextAlign.left),
+            textAlign: TextAlign.left)),
       ),
       // THEN WE ADD THE CHOSED NAME
       // Container(

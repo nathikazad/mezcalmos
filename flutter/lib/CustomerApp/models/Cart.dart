@@ -7,7 +7,7 @@ import 'dart:math';
 import 'package:collection/collection.dart';
 
 class Cart {
-  List<CartItem> items = [];
+  List<CartItem> cartItems = [];
   Location? toLocation;
   Restaurant? restaurant;
   String? notes;
@@ -18,33 +18,22 @@ class Cart {
     mezDbgPrint("@sa@d@: Cart.fromCartData ===> $cartData");
     if (this.restaurant != null) {
       cartData["items"]?.forEach((dynamic itemId, dynamic itemData) {
-        mezDbgPrint(
-            "@sa@d@: Item from cartData['items'] ===> $itemId - $itemData");
-
         Item? item = this.restaurant!.findItemById(itemData["id"]);
-        mezDbgPrint("@sa@d@: Item from resto ===> ${item?.name}");
         if (item == null) return;
         CartItem cartItem = CartItem(item, restaurant!.id,
             id: itemId,
             quantity: itemData["quantity"],
             notes: itemData["notes"]);
         itemData["options"]?["chosenOneOptions"]
-            .forEach((dynamic id, dynamic data) {
-          mezDbgPrint(
-              "@sa@d@: itemData[options][chosenOneOptions] ===> $id | $data");
-
-          CartChooseOneItem? _oneItem =
-              getItem(id)?.findChooseOneItemById(data["chosenOptionId"]);
-          mezDbgPrint(
-              "@sa@d@: getItem(id)?.findChooseOneItemById ===> $_oneItem ");
-          if (_oneItem != null) {
+            .forEach((dynamic chooseOneOptionId, dynamic data) {
+          ChooseOneOptionListItem? chosenOneOptionListItem = item
+              .findChooseOneOption(chooseOneOptionId)
+              ?.findChooseOneOptionListItem(data["chosenOptionId"]);
+          mezDbgPrint(chosenOneOptionListItem?.toJson());
+          if (chosenOneOptionListItem != null)
             cartItem.setNewChooseOneItem(
-                chooseOneOptionId: id,
-                newChooseOneOptionListItem: ChooseOneOptionListItem(
-                    _oneItem.chosenOptionDetails.id,
-                    _oneItem.chosenOptionDetails.name,
-                    data["chosenOptionCost"]));
-          }
+                chooseOneOptionId: chooseOneOptionId,
+                newChooseOneOptionListItem: chosenOneOptionListItem); //id
         });
 
         itemData["options"]?["chosenManyOptions"]
@@ -52,7 +41,7 @@ class Cart {
           cartItem.setNewChooseManyItem(
               chooseManyOptionId: id, newVal: data["chosenValue"]);
         });
-        this.items.add(cartItem);
+        this.cartItems.add(cartItem);
       });
       this.toLocation = cartData["to"] != null
           ? Location.fromFirebaseData(cartData["to"])
@@ -61,15 +50,16 @@ class Cart {
     }
   }
   int quantity() {
-    if (this.items.length == 0) return 0;
-    return this.items.fold(0, (sum, cartItem) => sum + cartItem.quantity);
+    if (this.cartItems.length == 0) return 0;
+    return this.cartItems.fold(0, (sum, cartItem) => sum + cartItem.quantity);
   }
 
   num totalCost({bool withDeliveryCost = false}) {
     // 40 is the default delivery cost.
-    if (this.items.length == 0) return 0;
-    num res =
-        this.items.fold<num>(0, (sum, cartItem) => sum + cartItem.totalCost());
+    if (this.cartItems.length == 0) return 0;
+    num res = this
+        .cartItems
+        .fold<num>(0, (sum, cartItem) => sum + cartItem.totalCost());
     return withDeliveryCost ? res + 40 : res;
   }
 
@@ -77,10 +67,11 @@ class Cart {
     if (cartItem.id == null) {
       cartItem.id = getRandomString(5);
     } else {
-      int index = this.items.indexWhere((element) => element.id == cartItem.id);
-      this.items.removeAt(index);
+      int index =
+          this.cartItems.indexWhere((element) => element.id == cartItem.id);
+      this.cartItems.removeAt(index);
     }
-    this.items.add(CartItem.clone(cartItem));
+    this.cartItems.add(CartItem.clone(cartItem));
   }
 
   void incrementItem(String id, int quantity) {
@@ -89,17 +80,17 @@ class Cart {
   }
 
   void deleteItem(String itemId) {
-    int index = this.items.indexWhere((element) => element.id == itemId);
-    this.items.removeAt(index);
+    int index = this.cartItems.indexWhere((element) => element.id == itemId);
+    this.cartItems.removeAt(index);
   }
 
   CartItem? getItem(String id) {
-    return this.items.firstWhereOrNull((element) => element.id == id);
+    return this.cartItems.firstWhereOrNull((element) => element.id == id);
   }
 
   Map<String, dynamic> toFirebaseFormattedJson() {
     Map<String, dynamic> items = {};
-    this.items.forEach((element) {
+    this.cartItems.forEach((element) {
       items[element.id!] = element.toFirebaseFunctionFormattedJson();
     });
 
@@ -236,14 +227,13 @@ class CartItem {
     return this.quantity * costPerOne();
   }
 
-  Map<String, dynamic> toFirebaseFunctionFormattedJson(
-      {LanguageType languageType = LanguageType.ES}) {
+  Map<String, dynamic> toFirebaseFunctionFormattedJson() {
     Map<String, dynamic> json = <String, dynamic>{
       "id": this.item.id,
       "quantity": this.quantity,
       "totalCost": this.totalCost(),
       "costPerOne": this.costPerOne(),
-      "name": this.item.name[languageType],
+      "name": this.item.name.toFirebaseFormat(),
       "image": this.item.image,
       "options": {"chosenOneOptions": {}, "chosenManyOptions": {}},
       "notes": notes
@@ -253,8 +243,8 @@ class CartItem {
           [cartChooseOneItem.optionDetails.id] = {
         "chosenOptionId": cartChooseOneItem.chosenOptionDetails.id,
         "chosenOptionName":
-            cartChooseOneItem.chosenOptionDetails.name[languageType],
-        "name": cartChooseOneItem.optionDetails.name[languageType],
+            cartChooseOneItem.chosenOptionDetails.name.toFirebaseFormat(),
+        "name": cartChooseOneItem.optionDetails.name.toFirebaseFormat(),
         "chosenOptionCost": cartChooseOneItem.chosenOptionDetails.cost
       };
     });
@@ -264,7 +254,7 @@ class CartItem {
         json["options"]["chosenManyOptions"]
             [cartChooseManyItem.optionDetails.id] = {
           "chosenValue": cartChooseManyItem.chosen,
-          "name": cartChooseManyItem.optionDetails.name[languageType],
+          "name": cartChooseManyItem.optionDetails.name.toFirebaseFormat(),
           "chosenValueCost": cartChooseManyItem.optionDetails.cost
         };
       }

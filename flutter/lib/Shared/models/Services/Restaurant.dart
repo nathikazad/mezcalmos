@@ -139,7 +139,7 @@ class ChooseOneOption {
     if (this.chooseOneOptionListItems.length == 0) return null;
     return this
         .chooseOneOptionListItems
-        .firstWhere((element) => element.id == id);
+        .firstWhereOrNull((element) => element.id == id);
   }
 
   Map<String, dynamic> toJson() => {
@@ -219,11 +219,15 @@ class Item {
 
   ChooseOneOption? findChooseOneOption(String id) {
     if (this.chooseOneOptions.length == 0) return null;
-    return this.chooseOneOptions.firstWhere((element) => element.id == id);
+    return this
+        .chooseOneOptions
+        .firstWhereOrNull((element) => element.id == id);
   }
 
   ChooseManyOption? findChooseManyOption(String id) {
     if (this.chooseOneOptions.length == 0) return null;
-    return this.chooseManyOptions.firstWhere((element) => element.id == id);
+    return this
+        .chooseManyOptions
+        .firstWhereOrNull((element) => element.id == id);
   }
 }

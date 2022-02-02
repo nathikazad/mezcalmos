@@ -23,7 +23,7 @@ class CartItemsBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: controller.cart.value.items.fold<List<Widget>>(<Widget>[],
+      children: controller.cart.value.cartItems.fold<List<Widget>>(<Widget>[],
           (children, cartItem) {
         var counter = cartItem.totalCost().obs;
         children.add(Container(
@@ -115,7 +115,7 @@ class CartItemsBuilder extends StatelessWidget {
                 ],
             onEdit: () {
               mezDbgPrint(
-                  " the data inside the expansion ${cartItem.toFirebaseFunctionFormattedJson(languageType: lang.userLanguageKey)}");
+                  " the data inside the expansion ${cartItem.toFirebaseFunctionFormattedJson()}");
               Get.toNamed(editCartItemRoute("${cartItem.id}"));
             },
           ),

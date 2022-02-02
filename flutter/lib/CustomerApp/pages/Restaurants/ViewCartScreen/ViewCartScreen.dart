@@ -40,7 +40,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
     super.initState();
     // check if cart empty
     // if yes redirect to home page
-    controller.cart.value.items.map((item) {
+    controller.cart.value.cartItems.map((item) {
       mezDbgPrint(
           "+++ From ViewCartScreen ==> ${item.id} <= notes => ${item.notes}");
     });
@@ -63,8 +63,8 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         title: "${lang.strings["customer"]["restaurant"]["cart"]["myCart"]}",
       ),
       body: Obx(() {
-        mezDbgPrint("@sa@d@: ${controller.cart.value.items.length}");
-        if (controller.cart.value.items.length > 0) {
+        mezDbgPrint("@sa@d@: ${controller.cart.value.cartItems.length}");
+        if (controller.cart.value.cartItems.length > 0) {
           return SingleChildScrollView(child: ViewCartBody(
             onValueChangeCallback: ({String? newValue}) {
               mezDbgPrint("@sa@d@: onValueChangeCallback :: $newValue");
