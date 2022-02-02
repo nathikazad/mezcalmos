@@ -63,24 +63,22 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         title: "${lang.strings["customer"]["restaurant"]["cart"]["myCart"]}",
       ),
       body: Obx(() {
+        mezDbgPrint("@sa@d@: ${controller.cart.value.items.length}");
         if (controller.cart.value.items.length > 0) {
-          return GetBuilder<RestaurantController>(
-              // specify type as Controller
-              init: RestaurantController(), // intialize with the Controller
-              builder: (_) => SingleChildScrollView(child: ViewCartBody(
-                    onValueChangeCallback: ({String? newValue}) {
-                      mezDbgPrint("onValueChangeCallback :: $newValue");
-                      if (newValue == null) {
-                        setState(() {
-                          ddResult = DropDownResult.Null;
-                        });
-                      } else {
-                        setState(() {
-                          ddResult = DropDownResult.String;
-                        });
-                      }
-                    },
-                  )));
+          return SingleChildScrollView(child: ViewCartBody(
+            onValueChangeCallback: ({String? newValue}) {
+              mezDbgPrint("@sa@d@: onValueChangeCallback :: $newValue");
+              if (newValue == null) {
+                setState(() {
+                  ddResult = DropDownResult.Null;
+                });
+              } else {
+                setState(() {
+                  ddResult = DropDownResult.String;
+                });
+              }
+            },
+          ));
         } else {
           return CartIsEmptyScreen();
         }

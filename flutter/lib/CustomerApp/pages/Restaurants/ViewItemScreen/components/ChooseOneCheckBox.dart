@@ -1,59 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/components/ViewItemScreenCartComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/TitlesComponent.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:intl/intl.dart';
 
-import '../ViewItemScreen.dart';
-import 'ViewItemScreenCartComponent.dart';
-
 final currency = new NumberFormat("#,##0.00", "en_US");
 
-Widget chooseOneCheckBoxes(
-    List<ChooseOneOption> chooseOneOptions, Rxn<CartItem> cartItem) {
-  LanguageController lang = Get.find<LanguageController>();
-  // print(this.itemWithOptions.value?.chosenOneOptions.toString());
-  List<Widget> chooseOneWidgetArray = [];
-  chooseOneOptions.forEach((chooseOneOption) {
-    List<Widget> chooseOneWidgetOptionsArray = [];
-    chooseOneOption.chooseOneOptionListItems.forEach((chooseOneOptionListItem) {
-      String? name = chooseOneOptionListItem.name[lang.userLanguageKey];
+class ChooseOneCheckBox extends StatelessWidget {
+  final List<ChooseOneOption> chooseOneOptions;
+  final Rxn<CartItem> cartItem;
+  final LanguageController lang = Get.find<LanguageController>();
+  ChooseOneCheckBox({required this.chooseOneOptions, required this.cartItem});
 
-      String? price;
-      if (chooseOneOptionListItem.cost > 0) {
-        price = "\$${currency.format(chooseOneOptionListItem.cost)}";
-      }
-      chooseOneWidgetOptionsArray.add(ViewItemScreenCartComponent(
-        title: name,
-        initialVal:
-            cartItem.value!.findChooseOneItemById(chooseOneOption.id) != null &&
-                cartItem.value!
-                        .findChooseOneItemById(chooseOneOption.id)!
-                        .chosenOptionDetails
-                        .id ==
-                    chooseOneOptionListItem.id,
-        price: price,
-        onValueChanged: (val) {
-          cartItem.value!.setNewChooseOneItem(
-              chooseOneOptionId: chooseOneOption.id,
-              newChooseOneOptionListItem: chooseOneOptionListItem);
-          cartItem.refresh();
-        },
-      ));
-    });
-    chooseOneWidgetArray.add(Column(
-        children: <Widget>[
-              MenuTitles(
-                title: chooseOneOption
-                    .name[lang.userLanguageKey]!.capitalizeFirstofEach,
-              ),
-              SizedBox(
-                height: 15,
-              )
-            ] +
-            chooseOneWidgetOptionsArray));
-  });
-  return Column(children: chooseOneWidgetArray);
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: [
+      ...chooseOneOptions.map((oneOption) {
+        return Column(
+          children: [
+            // head Category Title ie: Meat
+            MenuTitles(
+              title: oneOption.name[lang.userLanguageKey]!.capitalizeFirst,
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            // then comes out options ie : Beef, Veggie , Chicken
+            ...oneOption.chooseOneOptionListItems.map((oneOptionItem) {
+              return Obx(
+                () => ViewItemScreenCartComponent(
+                  title: oneOptionItem.name[lang.userLanguageKey],
+                  initialVal: cartItem.value
+                          ?.findChooseOneItemById(oneOptionItem.id)
+                          ?.chosenOptionDetails
+                          .id !=
+                      null,
+                  price: oneOptionItem.cost > 1
+                      ? "\$${currency.format(oneOptionItem.cost)}"
+                      : null,
+                  onValueChanged: (val) {
+                    cartItem.value!.setNewChooseOneItem(
+                        chooseOneOptionId: oneOption.id,
+                        newChooseOneOptionListItem: oneOptionItem);
+                    cartItem.refresh();
+                  },
+                ),
+              );
+            })
+          ],
+        );
+      })
+    ]);
+  }
 }

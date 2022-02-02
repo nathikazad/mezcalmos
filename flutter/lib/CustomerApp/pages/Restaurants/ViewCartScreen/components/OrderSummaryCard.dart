@@ -117,7 +117,7 @@ class OrderSummaryCard extends StatelessWidget {
                       "\$$deliveryCost",
                       style: txt.headline3!.copyWith(
                         fontWeight: FontWeight.w500,
-                        decoration: TextDecoration.lineThrough,
+                        decoration: TextDecoration.none,
                         fontSize: 14.75.sp,
                       ),
                     ),

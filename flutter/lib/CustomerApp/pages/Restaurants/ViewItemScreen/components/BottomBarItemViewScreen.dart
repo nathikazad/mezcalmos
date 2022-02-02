@@ -70,9 +70,6 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
               widget.cartItem.refresh();
             },
             decrement: () {
-              // if(widget.cartItem.value!.quantity<=1){
-
-              // }
               widget.cartItem.value!.quantity--;
               widget.cartItem.refresh();
             },
@@ -160,9 +157,8 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                       Get.offNamed(kCartRoute);
                     }
                   } else {
-                    // restaurantCartController.cart
-                    restaurantCartController.addItem(widget.cartItem.value!);
-                    setState(() {});
+                    await restaurantCartController
+                        .addItem(widget.cartItem.value!);
                     Get.back();
                   }
                 } else {

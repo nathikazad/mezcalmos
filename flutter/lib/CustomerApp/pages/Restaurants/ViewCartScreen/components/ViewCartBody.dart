@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/BuildCart.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/BuildItems.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/DropDownListCartView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/OrderSummaryCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/TextFieldComponent.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-
-import 'BuildCart.dart';
-import 'BuildItems.dart';
-import 'OrderSummaryCard.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
 
@@ -35,60 +33,61 @@ class _ViewCartBodyState extends State<ViewCartBody> {
 
   @override
   Widget build(BuildContext context) {
-    // controller.cart.value.items.forEach((e) {
-    //   mezDbgPrint("==> One : ${e.chosenOneOptions}");
-    //   mezDbgPrint("==> Many : ${e.chosenManyOptions}");
-    // });
     return Container(
-      child: Column(
-        children: [
-          (controller.cart.value.quantity() >= 1)
-              ? Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    buildCart(controller.cart.value, context),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    buildItems(controller.cart.value.items, context),
-                  ],
-                )
-              : Container(),
-          SizedBox(
-            height: 10,
-          ),
-          Obx(() => OrderSummaryCard(
-                onValueChangeCallback: widget.onValueChangeCallback,
-                deliveryCost: "4̶0̶",
-                orderCost: controller.cart.value.totalCost().toStringAsFixed(0),
-                totalCost: controller.cart.value.totalCost().toStringAsFixed(0),
-              )),
-          SizedBox(
-            height: 20,
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            alignment: Alignment.centerLeft,
-            child: Text(
-                "${lang.strings['customer']['restaurant']['menu']['notes']}",
-                style: const TextStyle(
-                    color: const Color(0xff000f1c),
-                    fontFamily: "psb",
-                    fontStyle: FontStyle.normal,
-                    fontSize: 14.0),
-                textAlign: TextAlign.left),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          TextFieldComponent(
-            textController: textcontoller,
-            hint: lang.strings["customer"]["restaurant"]["menu"]["notes"],
-          ),
-          SizedBox(
-            height: 25,
-          ),
-        ],
+      child: Obx(
+        () => Column(
+          children: [
+            (controller.cart.value.quantity() >= 1)
+                ? Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      CartBuilder(),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      CartItemsBuilder()
+                    ],
+                  )
+                : Container(),
+            SizedBox(
+              height: 10,
+            ),
+            Obx(() => OrderSummaryCard(
+                  onValueChangeCallback: widget.onValueChangeCallback,
+                  deliveryCost: "40",
+                  orderCost:
+                      controller.cart.value.totalCost().toStringAsFixed(0),
+                  totalCost: controller.cart.value
+                      .totalCost(withDeliveryCost: true)
+                      .toStringAsFixed(0),
+                )),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              alignment: Alignment.centerLeft,
+              child: Text(
+                  "${lang.strings['customer']['restaurant']['menu']['notes']}",
+                  style: const TextStyle(
+                      color: const Color(0xff000f1c),
+                      fontFamily: "psb",
+                      fontStyle: FontStyle.normal,
+                      fontSize: 14.0),
+                  textAlign: TextAlign.left),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            TextFieldComponent(
+              textController: textcontoller,
+              hint: lang.strings["customer"]["restaurant"]["menu"]["notes"],
+            ),
+            SizedBox(
+              height: 25,
+            ),
+          ],
+        ),
       ),
     );
   }

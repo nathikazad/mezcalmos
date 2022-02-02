@@ -33,9 +33,13 @@ class RestaurantController extends GetxController {
         dynamic cartData = event.snapshot.value;
         // check if cart has data
         if (cartData != null) {
+          mezDbgPrint("@sa@d@: DATA ===> $cartData");
+
           // check if cart data is for restaurant
           if (cartData["orderType"] ==
               OrderType.Restaurant.toFirebaseFormatString()) {
+            mezDbgPrint("@sa@d@: DATA  FOR RESTAU ===> $cartData");
+
             // check if already associated restaurant with cart is the same as current restaurant,
             // if not clear the old associated restaurant
             if (associatedRestaurant != null) {
@@ -43,7 +47,6 @@ class RestaurantController extends GetxController {
                 associatedRestaurant = null;
               }
             }
-            mezDbgPrint(" =====> $cartData \n");
 
             // if no associated restaurant data is saved, then fetch it from database
             if (associatedRestaurant == null) {
@@ -55,6 +58,8 @@ class RestaurantController extends GetxController {
             }
 
             cart.value = Cart.fromCartData(cartData, associatedRestaurant!);
+            mezDbgPrint(
+                "@sa@d@: DATA : cart.value  ===> ${cart.value.toFirebaseFormattedJson()} ");
           }
         } else {
           cart.value = Cart();
@@ -73,27 +78,35 @@ class RestaurantController extends GetxController {
         restaurantId: restaurantId, restaurantData: snapshot.value);
   }
 
-  void saveCart() {
-    _databaseHelper.firebaseDatabase
+  Future<void> saveCart() async {
+    await _databaseHelper.firebaseDatabase
         .reference()
         .child(customerCart(_authController.fireAuthUser!.uid))
         .set(cart.value.toFirebaseFormattedJson());
   }
 
-  void addItem(CartItem cartItem) async {
+  Future<void> addItem(CartItem cartItem) async {
     String restaurantId = cartItem.restaurantId;
     if (associatedRestaurant == null) {
+      mezDbgPrint(
+          "@@saadf@@ restaurantController::addItem ---> associatedRestaurant == null !");
       associatedRestaurant = await getAssociatedRestaurant(restaurantId);
       cart.value = Cart(restaurant: associatedRestaurant!);
     } else if (associatedRestaurant!.id != restaurantId) {
+      mezDbgPrint(
+          "@@saadf@@ restaurantController::addItem ---> associatedRestaurant!.id != restaurantId!");
+
       // In future, throw items from another restaurant in cart error
       // for now clear cart and associate new restaurant
       associatedRestaurant = await getAssociatedRestaurant(restaurantId);
       cart.value = Cart(restaurant: associatedRestaurant!);
     }
 
+    mezDbgPrint(
+        "@@saadf@@ restaurantController::addItem ---> addingItem and saving card !");
+
     cart.value.addItem(cartItem);
-    saveCart();
+    await saveCart();
   }
 
   void incrementItem(String itemId, int quantity) {

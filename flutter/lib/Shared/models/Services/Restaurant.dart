@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
+import 'package:collection/collection.dart';
 
 class Restaurant {
   String id;
@@ -56,11 +57,10 @@ class Restaurant {
   }
 
   Item? findItemById(String id) {
-    try {
-      return this.items.firstWhere((item) => item.id == id);
-    } finally {
-      return null;
-    }
+    return this.items.firstWhereOrNull((item) {
+      mezDbgPrint("@sa@d@: findItemById:: item Id ${item.id} == $id ");
+      return item.id == id;
+    });
   }
 
   Map<String, dynamic> toJson() {
@@ -156,7 +156,7 @@ class ChooseOneOptionListItem {
   Map<LanguageType, String> name;
   ChooseOneOptionListItem(this.id, this.name, this.cost);
   Map<String, dynamic> toJson() =>
-      {"id": id, "cost": cost, "name": convertToLanguageMap(name)};
+      {"id": id, "cost": cost, "name": name.toFirebaseFormat()};
 }
 
 class Item {
@@ -201,9 +201,6 @@ class Item {
             .add(ChooseManyOption.fromData(optionId, optionData));
       });
     }
-    // if (itemData["options"]["sides"] != null) {
-    //   item.sides = Sides.fromData(itemData["options"]["sides"], language);
-    // }
     return item;
   }
 

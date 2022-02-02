@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 class ViewItemScreenCartComponent extends StatefulWidget {
   final String? title;
   final String? price;
-  final GestureTapCallback? ontab;
+  final GestureTapCallback? onTap;
   final ValueChanged<bool?>? onValueChanged;
   final bool? initialVal;
   ViewItemScreenCartComponent(
-      {this.ontab,
+      {this.onTap,
       this.onValueChanged,
       this.title,
       this.price,

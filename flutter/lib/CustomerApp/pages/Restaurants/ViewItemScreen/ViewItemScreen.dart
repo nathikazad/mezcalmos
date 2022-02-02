@@ -75,7 +75,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
         });
       });
     }
-    controller.refresh();
+    cartItem.refresh();
     super.initState();
   }
 
@@ -160,13 +160,16 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                   SizedBox(
                     height: 20,
                   ),
-                  chooseOneCheckBoxes(
-                      cartItem.value!.item.chooseOneOptions, cartItem),
+                  ChooseOneCheckBox(
+                    chooseOneOptions: cartItem.value!.item.chooseOneOptions,
+                    cartItem: cartItem,
+                  ),
                   SizedBox(
                     height: 20,
                   ),
-                  chooseManyCheckBoxes(
-                      cartItem.value!.item.chooseManyOptions, cartItem),
+                  ChooseManyCheckBoxes(
+                      chooseManyOptions: cartItem.value!.item.chooseManyOptions,
+                      cartItem: cartItem),
                   TextFieldComponent(
                     textController: _noteTextEdittingController,
                     hint: lang.strings["customer"]["restaurant"]["menu"]

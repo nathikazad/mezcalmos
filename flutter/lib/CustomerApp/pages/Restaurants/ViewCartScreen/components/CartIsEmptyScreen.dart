@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class CartIsEmptyScreen extends StatelessWidget {
   const CartIsEmptyScreen({Key? key}) : super(key: key);

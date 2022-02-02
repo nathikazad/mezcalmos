@@ -1,8 +1,10 @@
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'dart:math';
+import 'package:collection/collection.dart';
 
 class Cart {
   List<CartItem> items = [];
@@ -13,9 +15,14 @@ class Cart {
   Cart({this.restaurant});
 
   Cart.fromCartData(dynamic cartData, this.restaurant) {
+    mezDbgPrint("@sa@d@: Cart.fromCartData ===> $cartData");
     if (this.restaurant != null) {
       cartData["items"]?.forEach((dynamic itemId, dynamic itemData) {
+        mezDbgPrint(
+            "@sa@d@: Item from cartData['items'] ===> $itemId - $itemData");
+
         Item? item = this.restaurant!.findItemById(itemData["id"]);
+        mezDbgPrint("@sa@d@: Item from resto ===> ${item?.name}");
         if (item == null) return;
         CartItem cartItem = CartItem(item, restaurant!.id,
             id: itemId,
@@ -23,12 +30,21 @@ class Cart {
             notes: itemData["notes"]);
         itemData["options"]?["chosenOneOptions"]
             .forEach((dynamic id, dynamic data) {
-          cartItem.setNewChooseOneItem(
-              chooseOneOptionId: id,
-              newChooseOneOptionListItem: ChooseOneOptionListItem(
-                  data["chosenOptionId"],
-                  convertToLanguageMap(data["chosenOptionName"]),
-                  data["chosenOptionCost"]));
+          mezDbgPrint(
+              "@sa@d@: itemData[options][chosenOneOptions] ===> $id | $data");
+
+          CartChooseOneItem? _oneItem =
+              getItem(id)?.findChooseOneItemById(data["chosenOptionId"]);
+          mezDbgPrint(
+              "@sa@d@: getItem(id)?.findChooseOneItemById ===> $_oneItem ");
+          if (_oneItem != null) {
+            cartItem.setNewChooseOneItem(
+                chooseOneOptionId: id,
+                newChooseOneOptionListItem: ChooseOneOptionListItem(
+                    _oneItem.chosenOptionDetails.id,
+                    _oneItem.chosenOptionDetails.name,
+                    data["chosenOptionCost"]));
+          }
         });
 
         itemData["options"]?["chosenManyOptions"]
@@ -49,9 +65,12 @@ class Cart {
     return this.items.fold(0, (sum, cartItem) => sum + cartItem.quantity);
   }
 
-  num totalCost() {
+  num totalCost({bool withDeliveryCost = false}) {
+    // 40 is the default delivery cost.
     if (this.items.length == 0) return 0;
-    return this.items.fold(0, (sum, cartItem) => sum + cartItem.totalCost());
+    num res =
+        this.items.fold<num>(0, (sum, cartItem) => sum + cartItem.totalCost());
+    return withDeliveryCost ? res + 40 : res;
   }
 
   void addItem(CartItem cartItem) {
@@ -65,8 +84,8 @@ class Cart {
   }
 
   void incrementItem(String id, int quantity) {
-    CartItem item = getItem(id);
-    item.quantity += quantity;
+    CartItem? item = getItem(id);
+    if (item != null) item.quantity += quantity;
   }
 
   void deleteItem(String itemId) {
@@ -74,8 +93,8 @@ class Cart {
     this.items.removeAt(index);
   }
 
-  CartItem getItem(String id) {
-    return this.items.firstWhere((element) => element.id == id);
+  CartItem? getItem(String id) {
+    return this.items.firstWhereOrNull((element) => element.id == id);
   }
 
   Map<String, dynamic> toFirebaseFormattedJson() {
@@ -111,6 +130,13 @@ class CartChooseManyItem {
   ChooseManyOption optionDetails;
   bool chosen;
   CartChooseManyItem({required this.optionDetails, required this.chosen});
+
+  Map toJson() {
+    return {
+      "optionDetails": this.optionDetails.toJson(),
+      "chosen": this.chosen
+    };
+  }
 }
 
 class CartItem {
@@ -164,32 +190,33 @@ class CartItem {
       required ChooseOneOptionListItem newChooseOneOptionListItem}) {
     int index = cartChooseOneItems.indexWhere(
         (chooseOneItem) => chooseOneItem.optionDetails.id == chooseOneOptionId);
-    cartChooseOneItems[index].chosenOptionDetails = newChooseOneOptionListItem;
+
+    if (index != -1) {
+      cartChooseOneItems[index].chosenOptionDetails =
+          newChooseOneOptionListItem;
+    }
   }
 
   void setNewChooseManyItem(
       {required String chooseManyOptionId, required bool newVal}) {
     int index = cartChooseManyItems.indexWhere((cartChooseManyItem) =>
         cartChooseManyItem.optionDetails.id == chooseManyOptionId);
-    cartChooseManyItems[index].chosen = newVal;
+
+    if (index != -1) {
+      cartChooseManyItems[index].chosen = newVal;
+    }
   }
 
   CartChooseOneItem? findChooseOneItemById(String id) {
-    try {
-      return cartChooseOneItems
-          .firstWhere((chooseOneItem) => chooseOneItem.optionDetails.id == id);
-    } finally {
-      return null;
-    }
+    return cartChooseOneItems.firstWhereOrNull(
+      (chooseOneItem) => chooseOneItem.chosenOptionDetails.id == id,
+    );
   }
 
   CartChooseManyItem? findChooseManyItemById(String id) {
-    try {
-      return cartChooseManyItems
-          .firstWhere((chooseManyItem) => chooseManyItem.optionDetails == id);
-    } finally {
-      return null;
-    }
+    return cartChooseManyItems.firstWhereOrNull((chooseManyItem) {
+      return chooseManyItem.optionDetails.id == id;
+    });
   }
 
   num costPerOne() {
@@ -209,13 +236,14 @@ class CartItem {
     return this.quantity * costPerOne();
   }
 
-  Map<String, dynamic> toFirebaseFunctionFormattedJson() {
+  Map<String, dynamic> toFirebaseFunctionFormattedJson(
+      {LanguageType languageType = LanguageType.ES}) {
     Map<String, dynamic> json = <String, dynamic>{
       "id": this.item.id,
       "quantity": this.quantity,
       "totalCost": this.totalCost(),
       "costPerOne": this.costPerOne(),
-      "name": this.item.name,
+      "name": this.item.name[languageType],
       "image": this.item.image,
       "options": {"chosenOneOptions": {}, "chosenManyOptions": {}},
       "notes": notes
@@ -224,8 +252,9 @@ class CartItem {
       json["options"]["chosenOneOptions"]
           [cartChooseOneItem.optionDetails.id] = {
         "chosenOptionId": cartChooseOneItem.chosenOptionDetails.id,
-        "chosenOptionName": cartChooseOneItem.chosenOptionDetails.name,
-        "name": cartChooseOneItem.optionDetails.name,
+        "chosenOptionName":
+            cartChooseOneItem.chosenOptionDetails.name[languageType],
+        "name": cartChooseOneItem.optionDetails.name[languageType],
         "chosenOptionCost": cartChooseOneItem.chosenOptionDetails.cost
       };
     });
@@ -235,13 +264,11 @@ class CartItem {
         json["options"]["chosenManyOptions"]
             [cartChooseManyItem.optionDetails.id] = {
           "chosenValue": cartChooseManyItem.chosen,
-          "name": cartChooseManyItem.optionDetails.name,
-          // chooseManyOption?.name,
+          "name": cartChooseManyItem.optionDetails.name[languageType],
           "chosenValueCost": cartChooseManyItem.optionDetails.cost
         };
       }
     });
-
     return json;
   }
 }
