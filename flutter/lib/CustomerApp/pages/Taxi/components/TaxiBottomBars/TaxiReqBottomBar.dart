@@ -24,7 +24,7 @@ class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
       child: Container(
         padding: const EdgeInsets.all(8),
         margin: const EdgeInsets.only(bottom: 45),
-        height: getSizeRelativeToScreen(25, Get.height, Get.width),
+        height: 60, // getSizeRelativeToScreen(25, Get.height, Get.width),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
             border: Border.all(
@@ -111,7 +111,7 @@ class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
               children: [
                 Icon(
                   MezcalmosIcons.route,
-                  size: (Get.height * 0.015).sp,
+                  size: 14,
                 ),
                 SizedBox(
                   width: 2.w,
@@ -129,7 +129,7 @@ class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
               children: [
                 Icon(
                   MezcalmosIcons.stopwatch,
-                  size: (Get.height * 0.015).sp,
+                  size: 14,
                 ),
                 SizedBox(
                   width: 2.w,

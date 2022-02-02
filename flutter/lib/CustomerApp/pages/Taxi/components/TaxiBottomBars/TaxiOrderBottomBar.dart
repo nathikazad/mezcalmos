@@ -39,7 +39,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
                       TaxiOrdersStatus.LookingForTaxi)
                   ? 45
                   : 0),
-          height: getSizeRelativeToScreen(45, Get.height, Get.width),
+          height: 60,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
               border: Border.all(
@@ -145,7 +145,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
               children: [
                 Icon(
                   MezcalmosIcons.route,
-                  size: (Get.height * 0.015).sp,
+                  size: 14,
                 ),
                 SizedBox(
                   width: 2.w,
@@ -160,7 +160,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
             children: [
               Icon(
                 MezcalmosIcons.stopwatch,
-                size: (Get.height * 0.015).sp,
+                size: 14,
               ),
               SizedBox(
                 width: 2.w,

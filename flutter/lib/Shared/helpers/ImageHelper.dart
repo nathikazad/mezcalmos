@@ -13,7 +13,9 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 String generateRandomString(int len) {
   var r = Random();
@@ -135,10 +137,30 @@ Future<imPicker.XFile?> imagePicker(
     return await picker.pickImage(
       source: source,
       preferredCameraDevice: imPicker.CameraDevice.front,
-      // maxWidth: 100,
       imageQuality: nQualityCompressionOfUserImage,
     );
-  } on PlatformException catch (_) {
+  } on PlatformException catch (exception) {
+    if (exception.code == 'camera_access_denied') {
+      MezSnackbar(
+          Get.find<LanguageController>().strings['shared']['permissions']
+              ['cameraAccessOffTitle'],
+          Get.find<LanguageController>().strings['shared']['permissions']
+              ['cameraAccessOffBody'],
+          position: SnackPosition.TOP);
+    } else if (exception.code == 'photo_access_denied') {
+      MezSnackbar(
+          Get.find<LanguageController>().strings['shared']['permissions']
+              ['photoAccessOffTitle'],
+          Get.find<LanguageController>().strings['shared']['permissions']
+              ['photoAccessOffBody'],
+          position: SnackPosition.TOP);
+    } else {
+      return await picker.pickImage(
+        source: source,
+        preferredCameraDevice: imPicker.CameraDevice.front,
+        imageQuality: nQualityCompressionOfUserImage,
+      );
+    }
     return null;
   }
 }
