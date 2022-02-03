@@ -155,7 +155,7 @@ class AuthController extends GetxController {
       await _databaseHelper.firebaseDatabase
           .reference()
           .child(userInfo(fireAuthUser!.uid))
-          .child('bigImaage')
+          .child('bigImage')
           .set(originalImageUrl);
     }
   }

@@ -142,7 +142,11 @@
             "ride": "ride",
             "taxiRideCheckedTooltip" : "This shows how many drivers have received your offer \nbut did not find the offer acceptable.",
             "taxiRequestPriceTooltip" : "How much are you willing to offer for this ride?\n We will broadcast your offer to all taxi drivers near you,\n they will accept your order only if they find \nthe offered price acceptable.",
-            "taxiRidePriceTooltip" : " Click - to decrease your price by 5.\n Click + to increase your price by 5.\n\n If you see your order not being accepted try them out."
+            "taxiRidePriceTooltip" : " Click - to decrease your price by 5.\n Click + to increase your price by 5.\n\n If you see your order not being accepted try them out.",
+            "failedToRequestTaxi" : "Failed to request a taxi !",
+            "increasePrice" : "Increase the price",
+            "decreasePrice" : "Decrease the price"
+
         },
         "cancelOrder": {
             "title":"Confirm Cancelation.",
@@ -273,7 +277,8 @@
             "titleSuccess" : "Success :)",
             "titleFailed" : "Oops :(",
             "orderCancelSuccess": "Order cancelled successfully.",
-            "orderCancelFailed": "Failed to cancel the order."
+            "orderCancelFailed": "Failed to cancel the order.",
+            "serverCommunicationError" : "Failed to communicate with the server :("
         },
         "permissions": {
             "cameraAccessOffTitle" : "App can't access Camera.",
@@ -375,9 +380,11 @@
             "viewOrder": "View Order"
         },
         "userInfo": {
+            "noChangesToApply" : "No Changes to be applied!",
             "snackMsg":"Please be patient while your photo is uploaded",
             "snackTxt":"Uploading Image",
             "choosePic":"Choose a photo",
+            "uploadPic" :"Upload Image",
             "saveTxt":"Please save the changes you made",
             "hintTxt":"Enter your full name",
             "validationTxtOne":"Please enter your full name",
@@ -394,7 +401,8 @@
             "fullName": "Full Name",
             "phoneNumber": "Phone Number",
             "clickToUploadImg": "clickToUpdate",
-            "addPhoneNumber": "Add phone number"
+            "addPhoneNumber": "Add phone number",
+            "wrongName" : "Name must only contains at least 4 letters and spaces."
         },
         "navDrawer": {
             "userInfo": "User Information",
@@ -446,10 +454,15 @@
             "yes" : "Yes",
             "no" : "No"
         },
-        
         "conenctionStatus" : {
             "noInternetConnection" : "No internet connection",
             "reconnecting" : "Reconnecting"
+        },
+        "buttonsTexts": {
+            "confirm" : "confirm",
+            "camera" : "Camera",
+            "gallery" : "Gallery",
+            "failedMapLaunch" : "Failed to launch that on Map!"
         }
     },
     "admin": {

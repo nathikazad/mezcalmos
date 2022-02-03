@@ -46,8 +46,6 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
     if (Get.arguments != null) {
       taxiRequest.value = Get.arguments as TaxiRequest;
 
-      // mezDbgPrint(
-      //     "============ the older requist is ${(Get.arguments as TaxiRequest).status} ===========");
       locationPickerController.setOnMapTap(onTap: () {
         locationSearchBarController.unfocusAllFocusNodes.call();
         setState(() {});
@@ -232,13 +230,14 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
       // in case the widget is still mounted , then make dart scheduale this delayed call as soon as possible ,
       // so we don't fall into assertion error ('!_debugLocked': is not true.)
       await Future.delayed(Duration.zero, () {
-        mezDbgPrint("Goung tooooo route >>>>  ${getTaxiOrderRoute(orderId)}");
         popEverythingAndNavigateTo(getTaxiOrderRoute(orderId));
       });
     } else {
-      MezSnackbar("Error :(", "Failed to request a taxi !",
+      MezSnackbar(
+          "Oops :(",
+          Get.find<LanguageController>().strings['customer']['taxiView']
+              ['failedToRequestTaxi'],
           position: SnackPosition.TOP);
-      mezDbgPrint("Error requesting the taxi : ${response.toString()}");
       this.locationPickerController.showConfirmButton();
     }
   }
@@ -268,8 +267,6 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
   Future<void> updateRouteInformation() async {
     MapHelper.Route? route = await MapHelper.getDurationAndDistance(
         taxiRequest.value.from!, taxiRequest.value.to!);
-
-    mezDbgPrint("updateRouteInformation::Route => ${route?.polylineList}");
     if (route != null) {
       setState(() {
         int estimatedPrice =
@@ -281,8 +278,6 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
             distance: route.distance,
             duration: route.duration));
       });
-      mezDbgPrint("Polyliiines ====> ${route.polylineList}");
-      mezDbgPrint("Polyliiines ====> ${taxiRequest.value.toString()}");
     } else {
       // TODO:handle route error
     }

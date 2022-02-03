@@ -166,8 +166,7 @@ Widget messageBtn({required TaxiOrder order, EdgeInsets? margin}) {
       child: Center(
         child: Stack(
           children: [
-            Get.find<OrderController>()
-                    .hasNewMessageNotification(order.orderId)
+            Get.find<OrderController>().hasNewMessageNotification(order.orderId)
                 ? Positioned(
                     top: 5,
                     right: 5,
@@ -210,7 +209,8 @@ Widget cancelBtn(TaxiOrder order) {
               await Get.find<TaxiController>().cancelTaxi(order.orderId);
 
           if (!resp.success) {
-            MezSnackbar("Oops", "Failed to communicate with the server :(.",
+            MezSnackbar("Oops",
+                lang.strings['shared']['snackbars']['serverCommunicationError'],
                 position: SnackPosition.TOP);
           }
           // no need for else here , because we are handling UI changes already upon CanceledbyCustomer.

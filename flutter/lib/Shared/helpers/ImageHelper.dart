@@ -42,10 +42,10 @@ Future<File> writeFileFromBytesAndReturnIt(
   String pathWithoutExtension =
       splittedPath.sublist(0, splittedPath.length - 1).join('.');
   mezDbgPrint("PATH WITHOUT EXTENSION $pathWithoutExtension");
-  mezDbgPrint("PATH WITH EXTENSION ${filePath}");
+  mezDbgPrint("PATH WITH EXTENSION $filePath");
 
   return (await File(
-          '${pathWithoutExtension}.${DateTime.now().millisecondsSinceEpoch}.${splittedPath.last}')
+          '$pathWithoutExtension.${DateTime.now().millisecondsSinceEpoch}.${splittedPath.last}')
       .writeAsBytes(imgBytes));
 }
 
@@ -95,7 +95,8 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
                             Icons.camera_enhance,
                             color: Colors.white,
                           ),
-                          Text('Camera')
+                          Text(Get.find<LanguageController>().strings['shared']
+                              ['buttonsTexts']['camera'])
                         ],
                       ))),
               SizedBox(
@@ -119,7 +120,8 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
                             Icons.photo_library_outlined,
                             color: Colors.white,
                           ),
-                          Text('Gallery')
+                          Text(Get.find<LanguageController>().strings['shared']
+                              ['buttonsTexts']['camera'])
                         ],
                       ))),
             ],
@@ -215,7 +217,7 @@ Image mLoadImage(
 
 // BitmapLoading stuff -------------------
 
-Future<BitmapDescriptor> BitmapDescriptorLoader(
+Future<BitmapDescriptor> bitmapDescriptorLoader(
     dynamic asset, num width, num height,
     {bool isBytes = false}) async {
   return BitmapDescriptor.fromBytes(

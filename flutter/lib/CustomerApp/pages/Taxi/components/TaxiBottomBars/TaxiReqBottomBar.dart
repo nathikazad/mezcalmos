@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
-import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
 class TaxiReqBottomBar extends StatefulWidget {
   final TaxiRequest taxiRequest;
@@ -15,6 +15,7 @@ class TaxiReqBottomBar extends StatefulWidget {
 }
 
 class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
+  final LanguageController _lang = Get.find<LanguageController>();
   @override
   Widget build(BuildContext context) {
     return Positioned(
@@ -56,7 +57,7 @@ class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
               child: IconButton(
                 iconSize: 18,
                 splashRadius: 18,
-                tooltip: 'Decrease the price',
+                tooltip: _lang.strings['customer']['taxiView']['decreasePrice'],
                 padding: EdgeInsets.zero,
                 onPressed: () {
                   widget.taxiRequest.decrementPrice();
@@ -79,7 +80,7 @@ class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
               child: IconButton(
                 iconSize: 18,
                 splashRadius: 18,
-                tooltip: 'Increase the price',
+                tooltip: _lang.strings['customer']['taxiView']['increasePrice'],
                 padding: EdgeInsets.zero,
                 onPressed: () {
                   widget.taxiRequest.incrementPrice();

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileController.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,8 +11,9 @@ import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
 
 class UserProfileWidgetsClass {
   // Singleton
-  UserProfileController userProfileController;
-  UserProfileWidgetsClass(this.userProfileController);
+  final UserProfileController userProfileController;
+  final LanguageController _lang = Get.find<LanguageController>();
+  UserProfileWidgetsClass({required this.userProfileController});
 
   /// this holds the Main body parts.
   List<Widget> bodyContent(
@@ -56,10 +58,11 @@ class UserProfileWidgetsClass {
     return [
       Center(
         child: GestureDetector(
-          onTap: userProfileController.stateMode == UserProfileMode.Edit &&
-                  !isImageBeingUploaded
-              ? onBrowsImageClick
-              : () {},
+          onTap:
+              userProfileController.stateMode.value == UserProfileMode.Edit &&
+                      !isImageBeingUploaded
+                  ? onBrowsImageClick
+                  : () {},
           child: Container(
             height: 150,
             width: 150,
@@ -71,7 +74,7 @@ class UserProfileWidgetsClass {
                     image: showDefaultOrUserImg(
                             memoryImg: userProfileController.userImgBytes.value)
                         .image)),
-            child: userProfileController.stateMode == UserProfileMode.Edit
+            child: userProfileController.stateMode.value == UserProfileMode.Edit
                 ? browsImageButton(isImageBeingUploaded: isImageBeingUploaded)
                 : SizedBox(),
           ),
@@ -102,7 +105,7 @@ class UserProfileWidgetsClass {
                   ),
                   SizedBox(height: 5),
                   Text(
-                    ' select ',
+                    _lang.strings['shared']['userInfo']['uploadPic'],
                     style: TextStyle(color: Colors.white),
                   )
                 ],
@@ -127,7 +130,7 @@ class UserProfileWidgetsClass {
       flex: 1,
       child: Center(
           child: Text(
-        "User Information",
+        _lang.strings['shared']['userInfo']['title'],
         style: TextStyle(fontSize: 30),
       )),
     );
@@ -163,7 +166,7 @@ class UserProfileWidgetsClass {
 
   /// this basically either shows the UserName or shows the textField depending on [UserProfileMode].
   Widget showUserNameOrTextField({required bool isImageBeingUploaded}) {
-    if (userProfileController.stateMode == UserProfileMode.Show) {
+    if (userProfileController.stateMode.value == UserProfileMode.Show) {
       return Text(
         Get.find<AuthController>().user!.name!,
         style: TextStyle(fontSize: 30),
@@ -271,7 +274,7 @@ class UserProfileWidgetsClass {
             // width: Get.width - 100,
             child: Center(
                 child: Text(
-              "Cancel",
+              _lang.strings['shared']['userInfo']['cancel'],
               style: TextStyle(fontSize: 15.sp, color: Colors.purple.shade400),
             )),
           ),
@@ -291,7 +294,7 @@ class UserProfileWidgetsClass {
         // width: Get.width - 100,
         child: Center(
             child: Text(
-          "Edit User Profile",
+          _lang.strings['shared']['userInfo']['editInfo'],
           style: TextStyle(color: Colors.white, fontSize: 15.sp),
         )),
       ),
@@ -307,7 +310,8 @@ class UserProfileWidgetsClass {
                   await onSaveChangesClick();
                 }
               : () {
-                  MezSnackbar("Oops", "No Changes to be applied!",
+                  MezSnackbar("Oops",
+                      _lang.strings['shared']['userInfo']['noChangesToApply'],
                       position: SnackPosition.TOP);
                 },
           child: Container(
@@ -324,7 +328,7 @@ class UserProfileWidgetsClass {
             child: Center(
                 child: !clickedSave
                     ? Text(
-                        "Save",
+                        _lang.strings['shared']['userInfo']['saveBtn'],
                         style: TextStyle(
                             fontSize: 15.sp,
                             color: userProfileController.didUserChangedInfos()

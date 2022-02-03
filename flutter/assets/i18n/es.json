@@ -142,7 +142,10 @@
             "ride": "viaje",
             "taxiRideCheckedTooltip" : "Esto muestra cuántos conductores recibieron su oferta \npero no encontraron aceptable la oferta" ,
             "taxiRequestPriceTooltip" : "¿Cuánto está dispuesto a ofrecer por este viaje?\n Transmitiremos su oferta a todos los taxistas cerca de usted,\n aceptarán su pedido solo si encuentran \nque el precio ofrecido es aceptable.",
-            "taxiRidePriceTooltip" : " Haga clic en - para reducir el precio en 5.\n Haga clic en + para aumentar el precio en 5.\n\n Si ve que su pedido no se acepta, pruébelo."
+            "taxiRidePriceTooltip" : " Haga clic en - para reducir el precio en 5.\n Haga clic en + para aumentar el precio en 5.\n\n Si ve que su pedido no se acepta, pruébelo.",
+            "failedToRequestTaxi" : "¡Error al solicitar un taxi!",
+            "increasePrice" : "Aumentar el precio",
+            "decreasePrice" : "disminuir el precio"
         },
         "cancelOrder": {
             "title":"Confirmar cancelación.",
@@ -273,7 +276,9 @@
             "titleSuccess": "Éxito :)",
             "titleFailed": "Vaya :(",
             "orderCancelSuccess": "El pedido se canceló correctamente.",
-            "orderCancelFailed": "No se pudo cancelar el pedido."
+            "orderCancelFailed": "No se pudo cancelar el pedido.",
+            "serverCommunicationError" : "No se pudo comunicar con el servidor :("
+
         },
         "permissions": {
             "cameraAccessOffTitle" : "La aplicación no puede acceder a la cámara.",
@@ -375,9 +380,11 @@
             "viewOrder": "Ver Pedido"
         },
         "userInfo": {
+            "noChangesToApply" : "¡No hay cambios que aplicar!",
             "snackMsg":"Ten paciencia mientras se carga tu foto.",
             "snackTxt":"Uploading Image",
             "choosePic":"Elige una foto",
+            "uploadPic" :"Cargar imagen",
             "saveTxt":"Guarda los cambios que hiciste",
             "hintTxt":"Ingresa tu nombre completo",
             "validationTxtOne":"Por favor ingresa tu nombre completo",
@@ -394,7 +401,8 @@
             "fullName": "Nombre completo",
             "phoneNumber": "Número de teléfono",
             "clickToUploadImg": "clickToUpdateEs",
-            "addPhoneNumber": "Agregar el número de teléfono"
+            "addPhoneNumber": "Agregar el número de teléfono",
+            "wrongName" : "El nombre solo debe contener al menos 4 letras y espacios."
         },
         "navDrawer": {
             "userInfo": "Información del usuario",
@@ -449,6 +457,11 @@
         "conenctionStatus" : {
             "noInternetConnection" : "Sin conexión a Internet",
             "reconnecting": "Reconectando"
+        },
+        "buttonsTexts": {
+            "confirm" : "confirmar",
+            "camera" : "Cámara",
+            "gallery" : "Galería"
         }
     },
     "admin": {

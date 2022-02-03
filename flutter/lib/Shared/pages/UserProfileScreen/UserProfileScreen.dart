@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileWidgets.dart';
@@ -23,7 +24,8 @@ class UserProfile extends StatefulWidget {
   UserProfile({Key? key, this.pageInitMode = UserProfileMode.Show})
       : super(key: key) {
     userProfileController.setUserProfileMode(this.pageInitMode);
-    userProfileWidgets = UserProfileWidgetsClass(this.userProfileController);
+    userProfileWidgets = UserProfileWidgetsClass(
+        userProfileController: this.userProfileController);
   }
 
   @override
@@ -98,23 +100,20 @@ class _UserProfileState extends State<UserProfile> {
   /// As for the compressed Image it is being Set to db right after it gets selected By user and uploaded to fbStorage.
   Future<void> onSaveChangesClick() async {
     if (widget.userProfileController.nameIsValidString()) {
-      mezDbgPrint("Started onSaveChangesClick");
       clickedSave.value = true;
       if (_authController.user!.name !=
           widget.userProfileController.userName.value) {
         await _authController.editUserProfile(
             widget.userProfileController.userName.value, null);
-        mezDbgPrint("Set new compressed image and user name done!");
       }
-      mezDbgPrint("Set Original image done!");
       await Future.delayed(Duration(milliseconds: 500));
-      mezDbgPrint("Delay done!");
       widget.userProfileController.reset();
       widget.userProfileController.setUserProfileMode(UserProfileMode.Show);
       clickedSave.value = false;
     } else {
       widget.userProfileController.setErrorTextForXDuration(
-          "Name must only contains at least 4 letters and spaces",
+          Get.find<LanguageController>().strings['shared']['userInfo']
+              ['wrongName'],
           duration: Duration(seconds: 5));
     }
   }
@@ -126,13 +125,11 @@ class _UserProfileState extends State<UserProfile> {
   /// And once the user actually selects something , it start uploading the compressed version first along with the original one.
   void onBrowsImageClick() async {
     imPicker.ImageSource? _from = await imagePickerChoiceDialog(context);
-    mezDbgPrint("rESULT ===> $_from");
     if (_from != null) {
       widget.userProfileController.reset();
-
       var _res = await imagePicker(
           picker: widget.userProfileController.picker, source: _from);
-      mezDbgPrint("res ==> imagePicker ===> $_res");
+
       try {
         // this check is needed in case user presses back button without picking any image
         if (_res != null) {
@@ -176,7 +173,6 @@ class _UserProfileState extends State<UserProfile> {
             // we right away set it in database
             _authController.editUserProfile(
                 null, widget.userProfileController.compressedImgUrl);
-            mezDbgPrint("Set of new user compressed image !");
             // once uploaded we need to remove the temporary compressed version from user's device
             compressedFile.delete();
             // after the uploading of the image is done, we set back this to false.
@@ -188,16 +184,5 @@ class _UserProfileState extends State<UserProfile> {
             "[+] MEZEXCEPTION => ERROR HAPPEND WHILE BROWING - SELECTING THE IMAGE !\nMore Details :\n$e ");
       }
     }
-  }
-
-  Future<void> getStoragePermission() async {
-    // Permission.camera.req
-    // if (await Permission.photos.request()
-    //   setState(() {});
-    // } else if (await Permission.storage.request().isPermanentlyDenied) {
-    //   await openAppSettings();
-    // } else if (await Permission.storage.request().isDenied) {
-    //   setState(() {});
-    // }
   }
 }

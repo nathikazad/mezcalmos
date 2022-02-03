@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -406,7 +405,8 @@ class CurrentPositionedBottomBar extends StatelessWidget {
     if (await canLaunch(url))
       await launch(url);
     else {
-      MezSnackbar("Error", "Failed to launch that on Map!");
+      MezSnackbar(
+          "Oops :(", lang.strings['shared']['buttonsTexts']['failedMapLaunch']);
     }
   }
 }
