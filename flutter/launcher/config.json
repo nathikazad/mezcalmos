@@ -102,8 +102,8 @@
             "packages": {
                 "stage": {
                     "name": "com.meztaxi.stagingDriver",
-                    "googe-service-file": "services/staging-android-taxi.google-services.json",
-                    "apple-service-file": "services/staging.GoogleService-Info.plist"
+                    "googe-service-file": "services/stage/android/delivery.json",
+                    "apple-service-file": "services/stage/ios/delivery.plist"
                 }
             }
         },

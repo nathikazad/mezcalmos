@@ -68,7 +68,13 @@ const String aOrderUnavailable = "assets/images/shared/circularCancel.png";
 const String aTaxiRidePriceController =
     "assets/images/customer/taxi/taxiRidePriceController.png";
 
-enum AppType { CustomerApp, TaxiApp, TaxiAdminApp, DeliveryAdminApp }
+enum AppType {
+  CustomerApp,
+  TaxiApp,
+  TaxiAdminApp,
+  DeliveryAdminApp,
+  DeliveryApp
+}
 
 extension ParseOrderTypeToString on AppType {
   String toShortString() {

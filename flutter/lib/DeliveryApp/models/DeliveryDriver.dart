@@ -2,37 +2,35 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
-class TaxiState {
+class DeliveryDriverState {
   bool isAuthorized;
-  bool isLooking;
-  String? currentOrder;
-  TaxiState(this.isAuthorized, this.isLooking, [this.currentOrder]);
+  bool isOnline;
+  DeliveryDriverState({required this.isAuthorized, required this.isOnline});
 
-  factory TaxiState.fromSnapshot(dynamic data) {
+  factory DeliveryDriverState.fromSnapshot(dynamic data) {
     mezDbgPrint("TaxiDriver ${data}");
     bool isAuthorized =
         data == null ? false : data['authorizationStatus'] == "authorized";
-    bool isLooking = data == null ? false : data['isLooking'] == true;
-    String? currentOrder = data == null ? null : data['currentOrderId'];
-    return TaxiState(isAuthorized, isLooking, currentOrder);
+    bool isOnline = data == null ? false : data['isOnline'] == true;
+    // String? currentOrder = data == null ? null : data['currentOrderId'];
+    return DeliveryDriverState(isAuthorized: isAuthorized, isOnline: isOnline);
   }
 
-  Map<String, dynamic> toJson() => {
-        "authorizationStatus": this.isAuthorized,
-        "isLooking": this.isLooking,
-        "currentOrderId": this.currentOrder,
-      };
+  Map<String, dynamic> toJson() =>
+      {"authorizationStatus": this.isAuthorized, "isOnline": this.isOnline};
 }
 
-class TaxiDriver {
-  TaxiState taxiState;
+class DeliveryDriver {
+  DeliveryDriverState taxiState;
   LatLng driverLocation;
   DateTime? lastLocationUpdateTime;
 
-  TaxiDriver(this.taxiState, this.driverLocation, this.lastLocationUpdateTime);
+  DeliveryDriver(
+      this.taxiState, this.driverLocation, this.lastLocationUpdateTime);
 
-  factory TaxiDriver.fromSnapshot(DataSnapshot snapshot) {
-    TaxiState taxiState = TaxiState.fromSnapshot(snapshot.value['state']);
+  factory DeliveryDriver.fromSnapshot(DataSnapshot snapshot) {
+    DeliveryDriverState taxiState =
+        DeliveryDriverState.fromSnapshot(snapshot.value['state']);
     dynamic driverLocation = snapshot.value['location'] == null
         ? null
         : LatLng(snapshot.value["location"]["position"]["lat"],
@@ -40,14 +38,13 @@ class TaxiDriver {
     DateTime? lastLocationUpdateTime = snapshot.value['location'] == null
         ? null
         : DateTime.parse(snapshot.value['location']['lastUpdateTime']);
-    return TaxiDriver(taxiState, driverLocation, lastLocationUpdateTime);
+    return DeliveryDriver(taxiState, driverLocation, lastLocationUpdateTime);
   }
 
   // Added for Debugging Perposes - Don't delete for now
   Map<String, dynamic> toJson() => {
         "authorizationStatus": this.taxiState.isAuthorized,
-        "isLooking": this.taxiState.isLooking,
-        "currentOrder": this.taxiState.currentOrder,
+        "isOnline": this.taxiState.isOnline,
         "driverLocation": driverLocation.toJson(),
         "lastLocationUpdateTime":
             lastLocationUpdateTime?.toUtc().toIso8601String()

@@ -9,6 +9,10 @@ String rootOpenOrderReceivedNode(String orderId, String uid) {
       '/$orderId/notificationStatus/$uid/received';
 }
 
-String rootInProcessOrderDriverLocationNode(String orderId) {
+String rootTaxiInProcessOrderDriverLocationNode(String orderId) {
   return 'orders/inProcess/taxi/$orderId/driver/location';
 }
+
+// String rootTaxiInProcessOrderDriverLocationNode(String orderId) {
+//   return 'orders/inProcess/deliveryDriver/$orderId/driver/location';
+// }

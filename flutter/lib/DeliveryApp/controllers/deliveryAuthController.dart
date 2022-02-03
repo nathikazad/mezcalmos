@@ -1,29 +1,26 @@
 import 'dart:async';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:mezcalmos/DeliveryApp/models/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
-import 'package:mezcalmos/Shared/firebaseNodes/ordersNode.dart';
-import 'package:mezcalmos/Shared/firebaseNodes/taxiNodes.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/deliveryNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
-import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
-import 'package:mezcalmos/TaxiApp/models/TaxiDriver.dart';
 import 'package:location/location.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
-class TaxiAuthController extends GetxController {
-  Rxn<TaxiState> _state = Rxn();
+class DeliveryAuthController extends GetxController {
+  Rxn<DeliveryDriverState> _state = Rxn();
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   AuthController _authController = Get.find<AuthController>();
   BackgroundNotificationsController _notificationsController =
       Get.find<BackgroundNotificationsController>();
 
-  TaxiState? get taxiState => _state.value;
-  Stream<TaxiState?> get stateStream => _state.stream;
+  DeliveryDriverState? get deliveryDriverState => _state.value;
+  Stream<DeliveryDriverState?> get stateStream => _state.stream;
 
   Rx<LocationData> _currentLocation = LocationData.fromMap(
       <String, dynamic>{"latitude": 15.851385, "longitude": -97.046429}).obs;
@@ -32,7 +29,7 @@ class TaxiAuthController extends GetxController {
   Rx<LocationData> get currentLocationRx => _currentLocation;
 
   StreamSubscription<LocationData>? _locationListener;
-  StreamSubscription? _taxiStateNodeListener;
+  StreamSubscription? _DeliveryDriverStateNodeListener;
 
   bool _checkedAppVersion = false;
   String? _previousStateValue = "init";
@@ -40,53 +37,55 @@ class TaxiAuthController extends GetxController {
   @override
   void onInit() {
     // ------------------------------------------------------------------------
-    mezDbgPrint("TaxiAuthController: init ${this.hashCode}");
-    mezDbgPrint("TaxiAuthController: calling handle state change first time");
-    setupTaxi(Get.find<AuthController>().fireAuthUser!);
+    mezDbgPrint("DeliveryAuthController: init ${this.hashCode}");
+    mezDbgPrint(
+        "DeliveryAuthController: calling handle state change first time");
+    setupDeliveryDriver(Get.find<AuthController>().fireAuthUser!);
     super.onInit();
   }
 
-  void setupTaxi(User user) async {
-    mezDbgPrint("TaxiAuthController: handle state change user value");
+  void setupDeliveryDriver(User user) async {
+    mezDbgPrint("DeliveryAuthController: handle state change user value");
     mezDbgPrint(user);
     // mezDbgPrint(_authController.fireAuthUser);
 
     mezDbgPrint(
-        "TaxiAuthController: _taxiStateNodeListener init ${taxiStateNode(user.uid)}");
-    _taxiStateNodeListener?.cancel();
-    _taxiStateNodeListener = null;
-    _taxiStateNodeListener = _databaseHelper.firebaseDatabase
+        "DeliveryAuthController: _DeliveryDriverStateNodeListener init ${deliveryDriverStateNode(user.uid)}");
+    _DeliveryDriverStateNodeListener?.cancel();
+    _DeliveryDriverStateNodeListener = null;
+    _DeliveryDriverStateNodeListener = _databaseHelper.firebaseDatabase
         .reference()
-        .child(taxiStateNode(user.uid))
+        .child(deliveryDriverStateNode(user.uid))
         .onValue
         .listen((event) async {
       mezDbgPrint(
-          "[++++++ = === ==] TaxiAuthController${this.hashCode}: _taxiStateNodeListener event => ${event.snapshot.value}");
+          "[++++++ = === ==] DeliveryAuthController${this.hashCode}: _DeliveryDriverStateNodeListener event => ${event.snapshot.value}");
       if (event.snapshot.value.toString() == _previousStateValue) {
         mezDbgPrint(
-            'TaxiAuthController:: same state event fired again, skipping it');
+            'DeliveryAuthController:: same state event fired again, skipping it');
         return;
       }
       _previousStateValue = event.snapshot.value.toString();
       if (event.snapshot.value != null) {
         mezDbgPrint(event.snapshot.value);
-        _state.value = TaxiState.fromSnapshot(event.snapshot.value);
-        if ((_state.value!.currentOrder == null &&
-            _state.value!.isLooking == false)) {
-          await Location().enableBackgroundMode(enable: false);
-          _locationListener?.pause();
-        }
+        _state.value = DeliveryDriverState.fromSnapshot(event.snapshot.value);
       } else {
-        _state.value = TaxiState(false, false);
-        if (!(await Location().isBackgroundModeEnabled()))
-          await Location().enableBackgroundMode(enable: true);
-        _locationListener?.resume();
+        _state.value =
+            DeliveryDriverState(isAuthorized: false, isOnline: false);
       }
       mezDbgPrint(
           "/////////////////////////////////////////////${_state.value?.toJson()}////////////////////////////////////////////////////");
       if (_state.value?.isAuthorized ?? false) {
         saveAppVersionIfNecessary();
         saveNotificationToken();
+      }
+
+      if (_state.value!.isOnline == false) {
+        await Location().enableBackgroundMode(enable: false);
+        _locationListener?.pause();
+      } else {
+        await Location().enableBackgroundMode(enable: true);
+        _locationListener?.resume();
       }
     });
     await _locationListener?.cancel();
@@ -95,13 +94,13 @@ class TaxiAuthController extends GetxController {
 
   void saveNotificationToken() async {
     mezDbgPrint(
-        "TaxiAuthController  Messaging Token>> ${await _notificationsController.getToken()}");
+        "DeliveryAuthController  Messaging Token>> ${await _notificationsController.getToken()}");
     String? deviceNotificationToken = await _notificationsController.getToken();
     if (deviceNotificationToken != null)
       _databaseHelper.firebaseDatabase
           .reference()
           .child(
-              '${taxiAuthNode(_authController.fireAuthUser?.uid ?? '')}/notificationInfo/')
+              '${deliveryDriverAuthNode(_authController.fireAuthUser?.uid ?? '')}/notificationInfo/')
           .set(<String, String>{
         'deviceNotificationToken': deviceNotificationToken
       });
@@ -113,7 +112,8 @@ class TaxiAuthController extends GetxController {
       mezDbgPrint("[+] TaxiDriver Currently using App v$VERSION");
       _databaseHelper.firebaseDatabase
           .reference()
-          .child(taxiDriverAppVersionNode(_authController.fireAuthUser!.uid))
+          .child(
+              deliveryDriverAppVersionNode(_authController.fireAuthUser!.uid))
           .set(VERSION);
       _checkedAppVersion = true;
     }
@@ -142,37 +142,39 @@ class TaxiAuthController extends GetxController {
           // mezDbgPrint(positionUpdate);
           _databaseHelper.firebaseDatabase
               .reference()
-              .child(taxiAuthNode(_authController.fireAuthUser!.uid))
+              .child(deliveryDriverAuthNode(_authController.fireAuthUser!.uid))
               .child('location')
               .set(positionUpdate);
-          if (_state.value?.currentOrder != null) {
-            // updating driver location in taxis/inProcessOrders
-            _databaseHelper.firebaseDatabase
-                .reference()
-                .child(taxiInProcessOrderDriverLocationNode(
-                    orderId: _state.value!.currentOrder!,
-                    taxiId: _authController.fireAuthUser!.uid))
-                .set(positionUpdate);
+          // if ((_state.value?.currentOrders.length ?? 0) > 0) {
+          //   _state.value?.currentOrders.forEach((currentOrderId) {
+          // updating driver location in taxis/inProcessOrders
+          // _databaseHelper.firebaseDatabase
+          //     .reference()
+          //     .child(deliveryDriverInProcessOrderDriverLocationNode(
+          //         orderId: currentOrderId,
+          //         deliveryDriverId: _authController.fireAuthUser!.uid))
+          //     .set(positionUpdate);
 
-            // updating driver location in root orders/inProcess/taxi
-            _databaseHelper.firebaseDatabase
-                .reference()
-                .child(rootTaxiInProcessOrderDriverLocationNode(
-                    _state.value!.currentOrder!))
-                .set(positionUpdate);
+          // // updating driver location in root orders/inProcess/taxi
+          // _databaseHelper.firebaseDatabase
+          //     .reference()
+          //     .child(rootTaxiInProcessOrderDriverLocationNode(
+          //         _state.value!.currentOrder!))
+          //     .set(positionUpdate);
 
-            // updating driver location in customers/inProcessOrders
-            String? currentOrderCustomerId = Get.find<OrderController>()
-                .getOrder(_state.value!.currentOrder!)
-                ?.customer
-                .id;
-            if (currentOrderCustomerId != null)
-              _databaseHelper.firebaseDatabase
-                  .reference()
-                  .child(customerInProcessOrderDriverLocationNode(
-                      _state.value!.currentOrder!, currentOrderCustomerId))
-                  .set(positionUpdate);
-          }
+          // // updating driver location in customers/inProcessOrders
+          // String? currentOrderCustomerId = Get.find<OrderController>()
+          //     .getOrder(_state.value!.currentOrder!)
+          //     ?.customer
+          //     .id;
+          //   if (currentOrderCustomerId != null)
+          //     _databaseHelper.firebaseDatabase
+          //         .reference()
+          //         .child(customerInProcessOrderDriverLocationNode(
+          //             _state.value!.currentOrder!, currentOrderCustomerId))
+          //         .set(positionUpdate);
+          // });
+          // }
         } catch (e) {
           mezDbgPrint("Write driver position to db error");
         }
@@ -183,10 +185,10 @@ class TaxiAuthController extends GetxController {
   @override
   void onClose() {
     mezDbgPrint(
-        "[+] TaxiAuthController::dispose ---------> Was invoked ! ${this.hashCode}");
+        "[+] DeliveryAuthController::dispose ---------> Was invoked ! ${this.hashCode}");
 
-    _taxiStateNodeListener?.cancel();
-    _taxiStateNodeListener = null;
+    _DeliveryDriverStateNodeListener?.cancel();
+    _DeliveryDriverStateNodeListener = null;
 
     _locationListener?.cancel();
     _locationListener = null;
@@ -196,7 +198,7 @@ class TaxiAuthController extends GetxController {
   void turnOff() {
     _databaseHelper.firebaseDatabase
         .reference()
-        .child(taxiIsLookingField(_authController.fireAuthUser!.uid))
+        .child(deliveryDriverIsOnlineField(_authController.fireAuthUser!.uid))
         .set(false)
         .catchError((err) {
       mezDbgPrint("Error turning [ isLooking = false ] -> $err");
@@ -207,7 +209,7 @@ class TaxiAuthController extends GetxController {
   void turnOn() {
     _databaseHelper.firebaseDatabase
         .reference()
-        .child(taxiIsLookingField(_authController.fireAuthUser!.uid))
+        .child(deliveryDriverIsOnlineField(_authController.fireAuthUser!.uid))
         .set(true)
         .catchError((err) {
       mezDbgPrint("Error turning [ isLooking = true ] -> $err");
