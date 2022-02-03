@@ -33,7 +33,6 @@
     },
 
     "apps": {
-
         "TaxiApp":
         {
             "folderName": "TaxiApp",
@@ -96,7 +95,6 @@
                 }
             }
         },
-
         "DeliveryApp":{
             "folderName": "DeliveryApp",
             "packages": {
