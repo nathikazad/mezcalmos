@@ -209,9 +209,10 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
 
   PreferredSizeWidget getRightAppBar(TaxiOrdersStatus status) {
     if (status == TaxiOrdersStatus.CancelledByCustomer) {
-      return taxiAppBar(AppBarLeftButtonType.Back, function: () => Get.back());
+      return mezcalmosAppBar(AppBarLeftButtonType.Back,
+          onClick: () => Get.back());
     } else {
-      return taxiAppBar(AppBarLeftButtonType.Menu, function: () async {
+      return mezcalmosAppBar(AppBarLeftButtonType.Menu, onClick: () async {
         mezDbgPrint('take me back');
 
         controller.cancelTaxi(null).then((_) {

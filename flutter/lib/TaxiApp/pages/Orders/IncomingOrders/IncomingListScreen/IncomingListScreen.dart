@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -9,7 +8,6 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
-import 'package:mezcalmos/TaxiApp/components/taxiAppBar.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
@@ -46,7 +44,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
             key: Get.find<SideMenuDrawerController>().getNewKey(),
             drawer: MezSideMenu(),
             backgroundColor: Colors.white,
-            appBar: taxiAppBar(AppBarLeftButtonType.Menu),
+            appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu),
             body: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,

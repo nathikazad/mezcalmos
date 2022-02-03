@@ -97,8 +97,10 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: taxiAppBar(AppBarLeftButtonType.Back,
-          function: cancelOrderSubscription),
+      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: () {
+        cancelOrderSubscription();
+        Get.back();
+      }),
       body: order != null
           ? Stack(
               alignment: Alignment.topCenter,
