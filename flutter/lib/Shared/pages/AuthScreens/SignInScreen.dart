@@ -18,11 +18,9 @@ enum SignInMode {
 }
 
 class SignIn extends GetWidget<AuthController> {
-  // final TextEditingController emailController = TextEditingController();
-  // final TextEditingController passwordController = TextEditingController();
   final SignInMode mode;
   SignIn({required this.mode});
-  LanguageController lang = Get.find<LanguageController>();
+  final LanguageController lang = Get.find<LanguageController>();
   RxBool clickedLogin = false.obs;
 
   @override
@@ -197,21 +195,21 @@ class SignIn extends GetWidget<AuthController> {
                       children: [
                         TextButton(
                             onPressed: () {
-                              Get.back();
+                              // Get.back();
                               controller.signIn(
                                   tTestCustomerValue, tEmailTestPassword);
                             },
                             child: Text(tTestCustomerValue)),
                         TextButton(
                             onPressed: () {
-                              Get.back();
+                              // Get.back();
                               controller.signIn(
                                   tTestTaxiValue, tEmailTestPassword);
                             },
                             child: Text(tTestTaxiValue)),
                         TextButton(
                             onPressed: () {
-                              Get.back();
+                              // Get.back();
                               controller.signIn(
                                   tTestAdminValue, tEmailTestPassword);
                             },
