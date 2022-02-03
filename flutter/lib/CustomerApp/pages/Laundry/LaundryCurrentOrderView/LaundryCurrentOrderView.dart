@@ -8,6 +8,8 @@ import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderFooterCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderStatusCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryPricingComponent.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/OrderSummaryComponent.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
@@ -26,6 +28,12 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
   Rxn<LaundryOrder> order = Rxn();
   StreamSubscription? _orderListener;
   OrderController controller = Get.find<OrderController>();
+  final LocationPickerController locationPickerController =
+      LocationPickerController();
+
+  LaundryController laundryController = Get.find<LaundryController>();
+  LanguageController lang = Get.find<LanguageController>();
+
   @override
   void initState() {
     super.initState();
@@ -61,11 +69,12 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
     super.initState();
   }
 
-  final LocationPickerController locationPickerController =
-      LocationPickerController();
-
-  LaundryController laundryController = Get.find<LaundryController>();
-  LanguageController lang = Get.find<LanguageController>();
+  @override
+  void dispose() {
+    _orderListener?.cancel();
+    _orderListener = null;
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,11 +100,13 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
                       SizedBox(
                         height: 20,
                       ),
-                      laundryPricingCard(context, order.value!),
+                      LaundryPricingCompnent(order: order.value!),
                       SizedBox(
                         height: 20,
                       ),
-                      orderSummaryCard(context, order.value!),
+                      OrderSummaryComponent(
+                        order: order.value!,
+                      ),
                       SizedBox(
                         height: 20,
                       ),
@@ -107,192 +118,6 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
             : Center(
                 child: MezLogoAnimation(),
               ),
-      ),
-    );
-  }
-
-  orderSummaryCard(BuildContext context, LaundryOrder order) {
-    return Card(
-      child: Container(
-        width: double.infinity,
-        padding: EdgeInsets.all(16),
-        child: Column(
-          children: [
-            Text(
-              "${lang.strings["customer"]["restaurant"]["cart"]["orderSummary"]}",
-              style: Theme.of(context).textTheme.headline3,
-            ),
-            Divider(
-              height: 15,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "${lang.strings["customer"]["restaurant"]["cart"]["orderCost"]} :",
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                Text(
-                  (order.cost != 0)
-                      ? '\$' + order.cost.toStringAsFixed(0)
-                      : '-',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "${lang.strings["customer"]["restaurant"]["cart"]["deliveryCost"]} :",
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                Text(
-                  "\$5",
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "${lang.strings["customer"]["restaurant"]["cart"]["totalCost"]} :",
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                Text(
-                  (order.cost != 0) ? '\$' + (order.cost + 5).toString() : '-',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ],
-            ),
-            Divider(
-              height: 25,
-            ),
-            Container(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "${lang.strings["customer"]["restaurant"]["cart"]["deliveryLocation"]} :",
-                style: Theme.of(context).textTheme.bodyText1,
-              ),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Row(
-              children: [
-                Icon(
-                  Icons.place_rounded,
-                  color: Theme.of(context).primaryColorLight,
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                Flexible(child: Text(order.to.address, maxLines: 1)),
-              ],
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  laundryPricingCard(BuildContext context, LaundryOrder order) {
-    return Card(
-      child: Container(
-        width: double.infinity,
-        padding: EdgeInsets.all(16),
-        child: Column(
-          children: [
-            Text(
-              lang.strings['customer']['laundry']['laundryPricing'],
-              style: Theme.of(context).textTheme.headline3,
-            ),
-            Divider(
-              height: 15,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  lang.strings['deliveryAdminApp']['laundry']['fixedRate'],
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                Text(
-                  (order.cost != 0)
-                      ? '\$' + order.cost.toStringAsFixed(0)
-                      : '-',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  lang.strings['deliveryAdminApp']['laundry']['orderWeight'],
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                Text(
-                  (order.weight != null)
-                      ? order.weight.toString() + '/kg'
-                      : '-',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "${lang.strings["customer"]["restaurant"]["cart"]["totalCost"]} :",
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                Text(
-                  (order.cost != 0)
-                      ? '\$' + order.cost.toStringAsFixed(0)
-                      : '-',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ],
-            ),
-            if (order.weight == null)
-              Column(
-                children: [
-                  Divider(
-                    height: 25,
-                  ),
-                ],
-              ),
-            Row(
-              children: [
-                Icon(
-                  Icons.help_outline_rounded,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Flexible(
-                    child: Text(
-                        lang.strings['customer']['laundry']
-                            ['laundryPricingNote'],
-                        maxLines: 3)),
-              ],
-            )
-          ],
-        ),
       ),
     );
   }

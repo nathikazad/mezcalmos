@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
-import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
@@ -21,7 +20,6 @@ class LaundryOrderFooterCard extends StatefulWidget {
 }
 
 class _LaundryOrderFooterCardState extends State<LaundryOrderFooterCard> {
-  OrderController controller = Get.find<OrderController>();
   LaundryController laundryController = Get.find<LaundryController>();
   LanguageController lang = Get.find<LanguageController>();
   RxBool _clickedCancel = false.obs;
