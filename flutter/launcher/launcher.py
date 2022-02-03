@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from dataclasses import replace
 import os , json
 from sys import argv, stderr, platform
 from enum import Enum
@@ -7,11 +8,11 @@ import subprocess as proc
 from termcolor import colored
 
 # LAST UPDATE INFOS : 
-# ADDED A FIX FOR  warning: The iOS Simulator deployment target 'IPHONEOS_DEPLOYMENT_TARGET' is set to 8.0, but the range of supported deployment target versions is 9.0 to 14.5.99. (in target 'leveldb-library' from project 'Pods'
+# ADDED .ipa support with versioning and removed auto IOS_TARGETED_DEVICES = 1,2 TO 1 only.
 
 
 # GLOBAL CONSTANTS !
-VERSION = "1.0.11"
+VERSION = "1.1.11"
 XOR_VALUE = 100
 CONFIG_FILE = "config.json"
 ACTIVE_DEBUG = True
@@ -200,7 +201,17 @@ class Launcher:
 
         _project_pbxproj_path = "../ios/Runner.xcodeproj/project.pbxproj"
         _info_plist_path = "../ios/Runner/Info.plist"
-        _cloned = open('patches/ios/project.pbxproj').read().replace('<mez-package>', _appPackageName).replace('<mez-app-type>' , _ios_app_folder_name)
+        
+        _cloned = open('patches/ios/project.pbxproj').read()
+        _cloned = _cloned.replace('<mez-package>', _appPackageName).replace('<mez-app-type>' , _ios_app_folder_name)
+        # this is for ios versioning
+        if self.user_args['build'] == 'ios':
+            if self.user_args['version_code'] and self.user_args['version_name']:
+                _cloned = _cloned.replace('<mez-version-name>' , self.user_args['version_name']).replace('<mez-version-code>' , self.user_args['version_code'])
+            else:
+                PRINTLN("[!] When running --build=ios , Specify the version=x.x.x+x please !")
+                exit(DW_EXIT_REASONS.WRONG_VERSION_GIVEN)
+
         open(_project_pbxproj_path , 'w+').write(_cloned)
         PRINTLN(f"[+] Patched ios/project.pbxproj => {_appPackageName}")
         _cloned = open(f'patches/ios/{_ios_app_folder_name}/Info.plist').read().replace('<mez-output-name>', _outputAppName).replace('<mez-app-type>' , _ios_app_folder_name)
@@ -270,7 +281,8 @@ class Launcher:
     
     def __build_temp(self):
         # TODO : Auto versioning checks.
-        isVerbose = "--verbose" if self.user_args['verbose'] else ""
+        isVerbose = " --verbose" if self.user_args['verbose'] else ""
+        
         if not self.user_args['lmode']:
             PRINTLN("In order to build you have to specify env=<stage, dev, prod>")
             exit(DW_EXIT_REASONS.WRONG_ENV_USED)
@@ -279,7 +291,13 @@ class Launcher:
             exit(DW_EXIT_REASONS.NO_APP_SPECIFIED)
 
         if self.user_args['build'] == 'ios' :
-            os.system(f'flutter build ipa --target lib/{self.user_args["app"]}/main.dart {isVerbose}')
+            ios_export_options_plist_path = "patches/ios/ExportOptions.plist"
+            ios_export_options_plist_arg = f" --export-options-plist='{os.path.abspath(ios_export_options_plist_path)}'" if os.path.exists(ios_export_options_plist_path) else ""
+            if ios_export_options_plist_arg == "":
+                PRINTLN("[+] Detected a first time xcarchive build , thus can't generate an ipa file you either wait for the build to finish and relaunch or do it from xcode once build is done !")
+            else:
+                PRINTLN("[+] Generating .ipa from xcarchive file for you ..")
+            os.system(f'flutter build ipa --target lib/{self.user_args["app"]}/main.dart{ios_export_options_plist_arg}{isVerbose}')
         else:
             os.system(f'flutter build {self.user_args["build"]} -t lib/{self.user_args["app"]}/main.dart {isVerbose}')
 
@@ -474,6 +492,11 @@ class Config:
         
         open(localProperties , 'w+').write(''.join(_localProperties))
         PRINTLN("[+] Checked and Patched local.properties successfully !")
+
+        # these are used later in Launcher for building IOS:IPA
+        self.user_args['version_name'] = __v[0]
+        self.user_args['version_code'] = __v[-1]
+
 
         PRINTLN("------------------- [ VERSION PATCHING] -------------------")
 
