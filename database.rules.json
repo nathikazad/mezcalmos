@@ -293,5 +293,47 @@
       ".write": "true",
       ".read": "false"
     }
+  },
+  "deliveryDrivers": {
+    ".read": "root.child('deliveryAdmins/' + auth.uid + '/authorized').val() === true",
+    "info": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        "notificationInfo": {
+          ".write": "$uid === auth.uid"
+        },
+        "details": {
+          ".write": "root.child('deliveryAdmins/' + auth.uid + '/authorized').val() === true"
+        },
+        "state": {
+          "isLooking": {
+            ".write": "$uid === auth.uid"
+          }
+        },
+        "versionNumber": {
+          ".write": "$uid === auth.uid"
+        },
+        "location": {
+          ".write": "data.parent().exists() && $uid === auth.uid"
+        }
+      }
+    },
+    "inProcessOrders": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        "$orderId": {
+          "driver": {
+            "location": {
+              ".write": "data.parent().parent().exists() && $uid === auth.uid"
+            }
+          }
+        }
+      }
+    },
+    "pastOrders": {
+      "$uid": {
+        ".read": "$uid === auth.uid"
+      }
+    }
   }
 }
