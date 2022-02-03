@@ -4,12 +4,12 @@ import 'dart:typed_data';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileWidgets.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileController.dart';
+// import 'package:permission_handler/permission_handler.dart';
 
 class UserProfile extends StatefulWidget {
   final AuthController authController = Get.find<AuthController>();
@@ -17,7 +17,7 @@ class UserProfile extends StatefulWidget {
   final UserProfileMode pageInitMode;
   // UserProfileController
   final UserProfileController userProfileController = UserProfileController();
-  late UserProfileWidgetsClass userProfileWidgets;
+  late final UserProfileWidgetsClass userProfileWidgets;
 
   // Constructor!
   UserProfile({Key? key, this.pageInitMode = UserProfileMode.Show})
@@ -130,10 +130,10 @@ class _UserProfileState extends State<UserProfile> {
     if (_from != null) {
       widget.userProfileController.reset();
 
+      var _res = await imagePicker(
+          picker: widget.userProfileController.picker, source: _from);
+      mezDbgPrint("res ==> imagePicker ===> $_res");
       try {
-        var _res = await imagePicker(
-            picker: widget.userProfileController.picker, source: _from);
-
         // this check is needed in case user presses back button without picking any image
         if (_res != null) {
           isUploadingImg.value = true;
@@ -188,5 +188,16 @@ class _UserProfileState extends State<UserProfile> {
             "[+] MEZEXCEPTION => ERROR HAPPEND WHILE BROWING - SELECTING THE IMAGE !\nMore Details :\n$e ");
       }
     }
+  }
+
+  Future<void> getStoragePermission() async {
+    // Permission.camera.req
+    // if (await Permission.photos.request()
+    //   setState(() {});
+    // } else if (await Permission.storage.request().isPermanentlyDenied) {
+    //   await openAppSettings();
+    // } else if (await Permission.storage.request().isDenied) {
+    //   setState(() {});
+    // }
   }
 }

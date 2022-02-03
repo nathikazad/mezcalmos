@@ -12,7 +12,6 @@ class CartBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final txt = Theme.of(context).textTheme;
-
     return Column(
       children: [
         SizedBox(

@@ -276,6 +276,10 @@
             "orderCancelFailed": "Failed to cancel the order."
         },
         "permissions": {
+            "cameraAccessOffTitle" : "App can't access Camera.",
+            "cameraAccessOffBody" : "Apparently you denied the app from Camera access, go to General > APP > Allow Camera!",
+            "photoAccessOffTitle" : "App can't access Photos.",
+            "photoAccessOffBody" : "Apparently you denied the app from Photo Library access, go to General > APP > Photos and change None to something else.",
             "locationIsOff": "Location Service Turned Off",
             "permissionBtn": "GIVE PERMISSION",
             "askForNotif": "The app collects your location Data to match you with the best rides and share your location with customers, even when the app is in background.",

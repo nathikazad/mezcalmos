@@ -276,6 +276,10 @@
             "orderCancelFailed": "No se pudo cancelar el pedido."
         },
         "permissions": {
+            "cameraAccessOffTitle" : "La aplicación no puede acceder a la cámara.",
+            "cameraAccessOffBody" : "Aparentemente, denegó el acceso a la aplicación desde la cámara, vaya a General > Aplicación > ¡Permitir cámara!",
+            "photoAccessOffTitle" : "La aplicación no puede acceder a Fotos.",
+            "photoAccessOffBody" : "Aparentemente, le negó el acceso a la aplicación desde la biblioteca de fotos, vaya a General > Aplicación > Fotos y cambie Ninguno a otra cosa.",
             "locationIsOff": "Servicio de ubicación desactivado",
             "askForNotif": "La aplicación recopila los datos de su ubicación para emparejarlo con los mejores viajes y compartir su ubicación con los clientes, incluso cuando la aplicación está en segundo plano.",
             "permissionBtn": "ACTIVAR AHORA",
