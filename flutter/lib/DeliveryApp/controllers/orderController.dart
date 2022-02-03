@@ -144,7 +144,7 @@ class OrderController extends GetxController {
     });
   }
 
-  Future<ServerResponse> cancelTaxi(String? reason) async {
+  Future<ServerResponse> cancelOrder(String? reason) async {
     HttpsCallable cancelTaxiFunction =
         FirebaseFunctions.instance.httpsCallable('taxi-cancelFromDriver');
     mezDbgPrint("Cancel Taxi Called");
@@ -164,7 +164,7 @@ class OrderController extends GetxController {
     }
   }
 
-  Future<ServerResponse> startRide() async {
+  Future<ServerResponse> onTheWayPickup() async {
     mezDbgPrint("Start Taxi Called");
     HttpsCallable startRideFunction =
         FirebaseFunctions.instance.httpsCallable('taxi-startRide');
@@ -181,7 +181,7 @@ class OrderController extends GetxController {
     }
   }
 
-  Future<ServerResponse> finishRide() async {
+  Future<ServerResponse> pickedUp() async {
     mezDbgPrint("Finish Taxi Called");
     HttpsCallable finishRideFunction =
         FirebaseFunctions.instance.httpsCallable('taxi-finishRide');

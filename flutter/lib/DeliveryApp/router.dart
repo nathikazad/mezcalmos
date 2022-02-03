@@ -5,10 +5,10 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/DeliveryApp/pages/DeliveryWrapper.dart';
 
 const String kCurrentOrdersListRoute = '/currentOrders';
-const String kCurrentOrdersViewRoute = '/currentOrders/:orderId';
+const String kCurrentOrderViewRoute = '/currentOrders/:orderId';
 
 String getCurrentOrderRoute(String orderId) {
-  return kCurrentOrdersViewRoute.replaceFirst(":orderId", orderId);
+  return kCurrentOrderViewRoute.replaceFirst(":orderId", orderId);
 }
 
 // GetX based Router (For navigating)
@@ -18,7 +18,7 @@ class XRouter {
             name: kCurrentOrdersListRoute,
             page: () => CurrentOrdersListScreen()),
         GetPage(
-            name: kCurrentOrdersViewRoute,
+            name: kCurrentOrderViewRoute,
             page: () => CurrentOrderViewScreen()),
         GetPage(name: kHomeRoute, page: () => DeliveryWrapper()),
       ] +

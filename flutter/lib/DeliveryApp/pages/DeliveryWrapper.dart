@@ -14,7 +14,7 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/DeliveryApp/components/DeliveryAppBar.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
-import 'package:mezcalmos/DeliveryApp/models/DeliveryDriver.dart';
+import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as MezNotification;
 import 'package:mezcalmos/DeliveryApp/notificationHandler.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';

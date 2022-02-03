@@ -21,12 +21,12 @@ String deliveryDriversPastOrdersNode(String uid) {
   return 'deliveryDrivers/pastOrders/$uid';
 }
 
-String deliveryDriversInProcessOrderNode(String uid) {
+String deliveryDriversInProcessOrdersNode(String uid) {
   return 'deliveryDrivers/inProcessOrders/$uid';
 }
 
 String deliveryDriverInProcessOrderDriverLocationNode(
     {required String orderId, required String deliveryDriverId}) {
-  return deliveryDriversInProcessOrderNode(deliveryDriverId) +
+  return deliveryDriversInProcessOrdersNode(deliveryDriverId) +
       '/$orderId/driver/location';
 }

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:mezcalmos/DeliveryApp/models/DeliveryDriver.dart';
+import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -175,6 +175,7 @@ class DeliveryAuthController extends GetxController {
           //         .set(positionUpdate);
           // });
           // }
+          
         } catch (e) {
           mezDbgPrint("Write driver position to db error");
         }
