@@ -204,13 +204,21 @@ class Launcher:
         
         _cloned = open('patches/ios/project.pbxproj').read()
         _cloned = _cloned.replace('<mez-package>', _appPackageName).replace('<mez-app-type>' , _ios_app_folder_name)
-        # this is for ios versioning
-        if self.user_args['build'] == 'ios':
-            if self.user_args['version_code'] and self.user_args['version_name']:
-                _cloned = _cloned.replace('<mez-version-name>' , self.user_args['version_name']).replace('<mez-version-code>' , self.user_args['version_code'])
-            else:
-                PRINTLN("[!] When running --build=ios , Specify the version=x.x.x+x please !")
-                exit(DW_EXIT_REASONS.WRONG_VERSION_GIVEN)
+        # Safe check for launching.
+        if not self.user_args.get('version_name'):
+            self.user_args['version_name'] = '1.0.1'
+        if not self.user_args.get('version_code'):
+            self.user_args['version_code'] = '1'
+        _continue = input(f"[~] Please Confirm Launching/building with version {self.user_args['version_name']}+{self.user_args['version_code']} ?")
+        if not (_continue.__len__() == 0 or _continue.lower() == "y" or _continue.lower() == "yes"):
+            exit(DW_EXIT_REASONS.WRONG_VERSION_GIVEN)
+
+        # patching versions in project.pbxproj
+        if self.user_args['version_code'] and self.user_args['version_name']:
+            _cloned = _cloned.replace('<mez-version-name>' , self.user_args['version_name']).replace('<mez-version-code>' , self.user_args['version_code'])
+        else:
+            PRINTLN("[!] When running --build=ios , Specify the version=x.x.x+x please !")
+            exit(DW_EXIT_REASONS.WRONG_VERSION_GIVEN)
 
         open(_project_pbxproj_path , 'w+').write(_cloned)
         PRINTLN(f"[+] Patched ios/project.pbxproj => {_appPackageName}")
