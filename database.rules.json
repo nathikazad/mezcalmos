@@ -140,7 +140,7 @@
         "taxi": {
           "$orderId": {
             "cost": {
-              ".write": "data.parent().exists() && data.parent().child($orderId + '/customer/id').val() === auth.uid"
+              ".write": "data.parent().exists() && data.parent().child('/customer/id').val() === auth.uid"
             },
             "notificationStatus": {
               "$driverId": {
