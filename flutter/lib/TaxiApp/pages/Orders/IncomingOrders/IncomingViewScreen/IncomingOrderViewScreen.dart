@@ -67,19 +67,30 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
         // start Listening for the vailability of the order
         _orderListener =
             controller.getIncomingOrderStream(orderId).listen((order) {
-          if (order != null) {
-            // keep updating our Order
-            setState(() {
-              this.order = order;
-            });
+          mezDbgPrint(" @adsad@ : Inside listener ");
+          mezDbgPrint(" @adsad@ : order != null : ${order != null} ");
+
+          if (order != null && !_clickedButton) {
+            mezDbgPrint(" @adsad@ : Inside listener:: if ");
+
+            // keep updating our Order only when neeeded
+            if (order.cost != this.order?.cost ||
+                order.distanceToClient != this.order?.distanceToClient) {
+              setState(() {
+                this.order = order;
+              });
+            }
           } else {
             // if the Order is no more available , Show a pop up while poping back back !
             if (_clickedButton == false) {
               cancelOrderSubscription();
               Get.back();
               oneButtonDialog(
+                  title: 'Oop...',
                   body: lang.strings['taxi']['cancelOrder']['rideUnavailble'],
-                  imagUrl: aOrderUnavailable);
+                  bodyTextColor: Colors.black,
+                  fontSize: 18,
+                  imagUrl: a404);
             }
           }
         });

@@ -297,7 +297,8 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
               ['taxiView']['taxiRequestPriceTooltip'],
         ),
         left: 80.1,
-        bottom: 150.5,
+        // bottom: 150.5,
+        bodyBottom: 150.5,
       ),
     ];
   }

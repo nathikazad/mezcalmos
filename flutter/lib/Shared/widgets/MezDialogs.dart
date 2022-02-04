@@ -24,6 +24,8 @@ Future<void> oneButtonDialog(
     {String? title,
     required String body,
     required String imagUrl,
+    Color? bodyTextColor,
+    double fontSize = 20,
     String buttonText = "Ok"}) async {
   await Get.defaultDialog(
     backgroundColor: Colors.grey.shade100,
@@ -58,8 +60,8 @@ Future<void> oneButtonDialog(
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontFamily: 'psr',
-                    fontSize: 20,
-                    color: Colors.grey.shade700),
+                    fontSize: fontSize,
+                    color: bodyTextColor ?? Colors.grey.shade700),
               ),
             ))
       ],
