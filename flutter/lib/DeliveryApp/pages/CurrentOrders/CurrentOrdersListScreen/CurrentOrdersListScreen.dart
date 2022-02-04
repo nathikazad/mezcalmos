@@ -1,24 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
-import 'package:mezcalmos/DeliveryApp/router.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/constants/MezIcons.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/DeliveryApp/components/DeliveryAppBar.dart';
 import 'package:mezcalmos/DeliveryApp/constants/assets.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
+import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
+import 'package:mezcalmos/DeliveryApp/router.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+
+import 'Components/DriverOrderCard.dart';
 import 'Components/MezSwitch.dart';
 import 'Components/NoScrollGlowBehaviour.dart';
-import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 
 class CurrentOrdersListScreen extends StatefulWidget {
   @override
@@ -27,7 +24,7 @@ class CurrentOrdersListScreen extends StatefulWidget {
 }
 
 class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
-  OrderController orderController = Get.put<OrderController>(OrderController());
+  OrderController orderController = Get.find<OrderController>();
   LanguageController lang = Get.find<LanguageController>();
   DeliveryAuthController _deliveryAuthController =
       Get.find<DeliveryAuthController>();
@@ -55,7 +52,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                   // Header that has the title + ON-OFF toggler!
                   viewHeader(),
                   //the rest of the View Body
-                  viewBody()
+                  viewBody(),
                 ])));
   }
 
@@ -107,7 +104,8 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                       itemBuilder: (ctx, i) {
                         return Padding(
                             padding: const EdgeInsets.symmetric(vertical: 2),
-                            child: orderCard(orderController.currentOrders[i]));
+                            child: DriverOrderCard(
+                                order: orderController.currentOrders[i]));
                       }));
                 } else {
                   // if there are No Orders

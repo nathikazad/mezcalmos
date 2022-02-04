@@ -98,17 +98,17 @@ class DeliveryAppTheme {
       textTheme: TextTheme(
         headline1: TextStyle(
             fontFamily: "Poppins",
-            fontWeight: FontWeight.w400,
+            fontWeight: FontWeight.w700,
             fontSize: 20.sp,
             color: Colors.black),
         headline2: TextStyle(
             fontFamily: "Poppins",
-            fontWeight: FontWeight.w400,
+            fontWeight: FontWeight.w600,
             fontSize: 18.sp,
             color: Colors.black),
         headline3: TextStyle(
           fontFamily: "Montserrat",
-          fontWeight: FontWeight.w400,
+          fontWeight: FontWeight.w500,
           fontSize: 16.sp,
           color: Colors.black,
         ),

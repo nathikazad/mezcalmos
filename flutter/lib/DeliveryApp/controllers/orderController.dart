@@ -1,17 +1,17 @@
 import 'dart:async';
+
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
+import 'package:location/location.dart';
+import 'package:mezcalmos/DeliveryApp/models/fakeOrder.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
-import 'package:mezcalmos/Shared/firebaseNodes/deliveryNodes.dart';
+import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Location.dart' as loc;
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/firebaseNodes/taxiNodes.dart';
-import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
-import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
-import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class OrderController extends GetxController {
@@ -27,53 +27,101 @@ class OrderController extends GetxController {
 
   @override
   void onInit() {
-    print("--------------------> RestaurantsOrderController Initialized !");
-    _pastOrdersListener?.cancel();
-    _pastOrdersListener = _databaseHelper.firebaseDatabase
-        .reference()
-        .child(deliveryDriversPastOrdersNode(_authController.fireAuthUser!.uid))
-        .onValue
-        .listen((event) {
-      mezDbgPrint("[][][][][ got new past Order ]]");
-      List<Order> orders = [];
-      if (event.snapshot.value != null) {
-        event.snapshot.value.keys.forEach((orderId) {
-          // for (var orderId in event.snapshot.value.keys) {
-          dynamic orderData = event.snapshot.value[orderId];
-          orders.add(TaxiOrder.fromData(orderId, orderData));
-        });
-      }
-      pastOrders.value = orders;
-    });
+    currentOrders.value = [
+      FakeOrder(
+        orderId: 'RestaurantorderID',
+        cost: 33,
+        serviceProviderId: 'serviceID',
+        customer: UserInfo('id', 'Restaurant name', ''),
+        orderTime: DateTime.now(),
+        orderType: OrderType.Restaurant,
+        paymentType: PaymentType.Cash,
+        to: loc.Location('hhhh',
+            LocationData.fromMap({'latitude': 33.10, 'longitude': 19.60})),
+      ),
+      FakeOrder(
+        orderId: 'LaundryOrderID',
+        cost: 12,
+        serviceProviderId: 'serviceID',
+        customer: UserInfo('id', 'Laundry name', ''),
+        orderTime: DateTime.now(),
+        orderType: OrderType.Laundry,
+        paymentType: PaymentType.Cash,
+        to: loc.Location('hhhh',
+            LocationData.fromMap({'latitude': 33.10, 'longitude': 19.60})),
+      )
+    ];
+    pastOrders.value = [
+      FakeOrder(
+        orderId: 'RestaurantorderID',
+        cost: 33,
+        serviceProviderId: 'serviceID',
+        customer: UserInfo('id', 'Restaurant name', ''),
+        orderTime: DateTime.now(),
+        orderType: OrderType.Restaurant,
+        paymentType: PaymentType.Cash,
+        to: loc.Location('hhhh',
+            LocationData.fromMap({'latitude': 33.10, 'longitude': 19.60})),
+      ),
+      FakeOrder(
+        orderId: 'LaundryOrderID',
+        cost: 12,
+        serviceProviderId: 'serviceID',
+        customer: UserInfo('id', 'Laundry name', ''),
+        orderTime: DateTime.now(),
+        orderType: OrderType.Laundry,
+        paymentType: PaymentType.Cash,
+        to: loc.Location('hhhh',
+            LocationData.fromMap({'latitude': 33.10, 'longitude': 19.60})),
+      )
+    ];
+    // print("--------------------> RestaurantsOrderController Initialized !");
+    // _pastOrdersListener?.cancel();
+    // _pastOrdersListener = _databaseHelper.firebaseDatabase
+    //     .reference()
+    //     .child(deliveryDriversPastOrdersNode(_authController.fireAuthUser!.uid))
+    //     .onValue
+    //     .listen((event) {
+    //   mezDbgPrint("[][][][][ got new past Order ]]");
+    //   List<Order> orders = [];
+    //   if (event.snapshot.value != null) {
+    //     event.snapshot.value.keys.forEach((orderId) {
+    //       // for (var orderId in event.snapshot.value.keys) {
+    //       dynamic orderData = event.snapshot.value[orderId];
+    //       orders.add(TaxiOrder.fromData(orderId, orderData));
+    //     });
+    //   }
+    //   pastOrders.value = orders;
+    // });
 
-    mezDbgPrint(
-        "Starting listening on inProcess : ${taxiInProcessOrderNode(_authController.fireAuthUser!.uid)}");
-    _currentOrdersListener?.cancel();
-    _currentOrdersListener = _databaseHelper.firebaseDatabase
-        .reference()
-        .child(deliveryDriversInProcessOrdersNode(
-            _authController.fireAuthUser!.uid))
-        .onValue
-        .listen((event) {
-      // mezDbgPrint("[][][][][ got new inProcess Order ]]");
+    // mezDbgPrint(
+    //     "Starting listening on inProcess : ${taxiInProcessOrderNode(_authController.fireAuthUser!.uid)}");
+    // _currentOrdersListener?.cancel();
+    // _currentOrdersListener = _databaseHelper.firebaseDatabase
+    //     .reference()
+    //     .child(deliveryDriversInProcessOrdersNode(
+    //         _authController.fireAuthUser!.uid))
+    //     .onValue
+    //     .listen((event) {
+    //   // mezDbgPrint("[][][][][ got new inProcess Order ]]");
 
-      List<TaxiOrder> orders = [];
-      if (event.snapshot.value != null) {
-        // mezDbgPrint("orderController: new incoming order data");
-        event.snapshot.value.keys?.forEach((orderId) {
-          // mezDbgPrint("Hndling Order : $orderId");
-          dynamic orderData = event.snapshot.value[orderId];
-          // mezDbgPrint("Order Data => $orderData");
-          orders.add(TaxiOrder.fromData(orderId, orderData));
-          // try {
-          // } catch (e) {
-          //   mezDbgPrint(e);
-          // }
-        });
-      }
-      currentOrders.value = orders;
-    });
-    super.onInit();
+    //   List<TaxiOrder> orders = [];
+    //   if (event.snapshot.value != null) {
+    //     // mezDbgPrint("orderController: new incoming order data");
+    //     event.snapshot.value.keys?.forEach((orderId) {
+    //       // mezDbgPrint("Hndling Order : $orderId");
+    //       dynamic orderData = event.snapshot.value[orderId];
+    //       // mezDbgPrint("Order Data => $orderData");
+    //       orders.add(TaxiOrder.fromData(orderId, orderData));
+    //       // try {
+    //       // } catch (e) {
+    //       //   mezDbgPrint(e);
+    //       // }
+    //     });
+    //   }
+    //   currentOrders.value = orders;
+    // });
+    // super.onInit();
   }
 
   Order? getOrder(String orderId) {
