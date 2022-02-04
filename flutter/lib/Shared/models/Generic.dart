@@ -1,3 +1,4 @@
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 enum AuthorizationStatus { InReview, Authorized, Unauthorized }
@@ -26,9 +27,9 @@ extension ParseLanugaugeTypeToString on LanguageType {
 }
 
 extension ParseStringToLanugaugeType on String {
-  LanguageType toLanguageType() {
+  LanguageType? toLanguageType() {
     return LanguageType.values
-        .firstWhere((e) => e.toFirebaseFormatString().toLowerCase() == this);
+        .firstWhereOrNull((e) => e.toFirebaseFormatString().toLowerCase() == this);
   }
 }
 
@@ -37,7 +38,7 @@ Map<LanguageType, String> convertToLanguageMap(dynamic data) {
   data.forEach((dynamic language, dynamic string) {
     if (language == LanguageType.EN.toFirebaseFormatString() ||
         language == LanguageType.ES.toFirebaseFormatString()) {
-      map[language.toString().toLanguageType()] = string;
+      map[language.toString().toLanguageType()!] = string;
     }
   });
   return map;
