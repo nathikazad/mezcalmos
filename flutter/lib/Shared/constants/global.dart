@@ -54,9 +54,13 @@ const String getxDestinationDescriptor = "destination_descriptor";
 const String getxUserId = "userid";
 const String getxVersion = "version";
 const String defaultUserImgUrl =
-    "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d"; // ----------------- Assets Strings ----------------- //
+    "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d";
+
+// ----------------- Assets Strings ----------------- //
 const String aDefaultNotificationsSound = 'assets/sounds/notif-alert.mp3';
 const String aLogoPath = "assets/images/shared/logo.png";
+const String aDefaultDbUserImgAsset =
+    "assets/images/shared/defaultUserLogo.png";
 const String aDefaultAvatar = "assets/images/shared/noUserImage.jpg";
 const String aNoImgAsset = "assets/images/shared/noImg.png";
 const String aNoInternetAsset = "assets/images/shared/offline.png";

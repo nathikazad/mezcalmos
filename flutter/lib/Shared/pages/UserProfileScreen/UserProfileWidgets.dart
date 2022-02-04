@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/Taxi/components/Hints/RidePriceControllHint.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
@@ -7,6 +8,7 @@ import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileController.d
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/Shared/widgets/MezToolTip.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
 
 class UserProfileWidgetsClass {
@@ -27,12 +29,9 @@ class UserProfileWidgetsClass {
       Flexible(
         flex: 2,
         // fit: FlexFit.tight,
-        child: Stack(
-          fit: StackFit.passthrough,
-          children: pictureContainerWidget(
-              onBrowsImageClick: onBrowsImageClick,
-              isImageBeingUploaded: isImageBeingUploaded),
-        ),
+        child: pictureContainerWidget(
+            onBrowsImageClick: onBrowsImageClick,
+            isImageBeingUploaded: isImageBeingUploaded),
       ),
       Flexible(
           flex: 1,
@@ -52,35 +51,32 @@ class UserProfileWidgetsClass {
   }
 
   /// this Holds the Circled Container in the middle of the screen that has the user Image
-  List<Widget> pictureContainerWidget(
+  Widget pictureContainerWidget(
       {required Function() onBrowsImageClick,
       required bool isImageBeingUploaded}) {
-    return [
-      Center(
-        child: GestureDetector(
-          onTap:
-              userProfileController.stateMode.value == UserProfileMode.Edit &&
-                      !isImageBeingUploaded
-                  ? onBrowsImageClick
-                  : () {},
-          child: Container(
-            height: 150,
-            width: 150,
-            decoration: BoxDecoration(
-                color: Colors.white,
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: showDefaultOrUserImg(
-                            memoryImg: userProfileController.userImgBytes.value)
-                        .image)),
-            child: userProfileController.stateMode.value == UserProfileMode.Edit
-                ? browsImageButton(isImageBeingUploaded: isImageBeingUploaded)
-                : SizedBox(),
-          ),
+    return Center(
+      child: GestureDetector(
+        onTap: userProfileController.stateMode.value == UserProfileMode.Edit &&
+                !isImageBeingUploaded
+            ? onBrowsImageClick
+            : () {},
+        child: Container(
+          height: 150,
+          width: 150,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: showDefaultOrUserImg(
+                          memoryImg: userProfileController.userImgBytes.value)
+                      .image)),
+          child: userProfileController.stateMode.value == UserProfileMode.Edit
+              ? browsImageButton(isImageBeingUploaded: isImageBeingUploaded)
+              : SizedBox(),
         ),
       ),
-    ];
+    );
   }
 
   /// this is the brows button inside  [pictureContainerWidget] When on [UserProfileMode.Edit] mode it shows up.
@@ -91,7 +87,7 @@ class UserProfileWidgetsClass {
         width: 150,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.black45,
+          color: Colors.black.withOpacity(.66),
         ),
         padding: EdgeInsets.all(5),
         child: !isImageBeingUploaded

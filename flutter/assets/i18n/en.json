@@ -402,7 +402,9 @@
             "phoneNumber": "Phone Number",
             "clickToUploadImg": "clickToUpdate",
             "addPhoneNumber": "Add phone number",
-            "wrongName" : "Name must only contains at least 4 letters and spaces."
+            "wrongName" : "Name must only contains at least 4 letters and spaces.",
+            "mustSetUserNameHint" : "Please enter a name\nto keep using the app.",
+            "mustSetUserImgHint" : "Please upload an image\nby clicking 'Upload Image'\nto keep using the app."
         },
         "navDrawer": {
             "userInfo": "User Information",

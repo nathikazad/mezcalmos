@@ -9,12 +9,20 @@ typedef void OnToolTipCloseNotifier();
 /// This is a class Helper where we specify the Hint Widget.
 ///
 /// Along with the Coords of the Hint Triangle [left] , [top] , [right] , [bottom] , basically Positioned(left, top , right , bottom)
+/// And the Body's Positioned values [left] , [top] , [right] , [bottom]
 class MezToolTipHint {
   Widget hintWidget;
+  // triangle's
   double? left;
   double? top;
   double? right;
   double? bottom;
+  // body's
+  double? bodyLeft;
+  double? bodyTop;
+  double? bodyRight;
+  double? bodyBottom;
+
   OnToolTipCloseNotifier? onHintClose;
 
   MezToolTipHint(
@@ -23,6 +31,10 @@ class MezToolTipHint {
       this.top,
       this.right,
       this.bottom,
+      this.bodyLeft,
+      this.bodyTop,
+      this.bodyRight,
+      this.bodyBottom,
       this.onHintClose});
 
   @override
@@ -67,9 +79,10 @@ class _MezToolTipState extends State<MezToolTip> {
         fit: StackFit.passthrough,
         children: [
           Positioned(
-              bottom: 150,
-              left: 25,
-              right: 50,
+              bottom: widget.hintWidgetsList[currentHintIndex.value].bodyBottom,
+              left: widget.hintWidgetsList[currentHintIndex.value].bodyLeft,
+              right: widget.hintWidgetsList[currentHintIndex.value].bodyRight,
+              top: widget.hintWidgetsList[currentHintIndex.value].bodyTop,
               child: Stack(
                 fit: StackFit.passthrough,
                 children: [

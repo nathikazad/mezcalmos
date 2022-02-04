@@ -402,7 +402,9 @@
             "phoneNumber": "Número de teléfono",
             "clickToUploadImg": "clickToUpdateEs",
             "addPhoneNumber": "Agregar el número de teléfono",
-            "wrongName" : "El nombre solo debe contener al menos 4 letras y espacios."
+            "wrongName" : "El nombre solo debe contener al menos 4 letras y espacios.",
+            "mustSetUserNameHint" : "Introduce un nombre\npara seguir usando la aplicación.",
+            "mustSetUserImgHint" : "Cargue una imagen\nhaciendo clic en 'Subir imagen'\npara seguir usando la aplicación."
         },
         "navDrawer": {
             "userInfo": "Información del usuario",

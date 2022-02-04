@@ -66,14 +66,14 @@ class MGoogleMapController {
         Get.find<AuthController>().user?.bigImage;
 
     if (uImg == null) {
-      icon = await BitmapDescriptorLoader(
+      icon = await bitmapDescriptorLoader(
           (await cropRonded(
               (await rootBundle.load(aDefaultAvatar)).buffer.asUint8List())),
           markersDefaultSize.value * mapZoomLvl,
           markersDefaultSize.value * mapZoomLvl,
           isBytes: true);
     } else {
-      icon = await BitmapDescriptorLoader(
+      icon = await bitmapDescriptorLoader(
           (await cropRonded(
               (await http.get(Uri.parse(customImgHttpUrl ?? uImg)))
                   .bodyBytes) as Uint8List),
@@ -94,7 +94,7 @@ class MGoogleMapController {
       String markerId, LatLng latLng) async {
     this._addOrUpdateMarker(Marker(
         markerId: MarkerId(markerId),
-        icon: await BitmapDescriptorLoader(
+        icon: await bitmapDescriptorLoader(
             (await cropRonded((await rootBundle.load(taxi_driver_marker_asset))
                 .buffer
                 .asUint8List())),
@@ -107,7 +107,7 @@ class MGoogleMapController {
 
   Future<void> addOrUpdatePurpleDestinationMarker(
       {String markerId = "dest", required LatLng latLng}) async {
-    BitmapDescriptor icon = await BitmapDescriptorLoader(
+    BitmapDescriptor icon = await bitmapDescriptorLoader(
         (await cropRonded(
             (await rootBundle.load(purple_destination_marker_asset))
                 .buffer
