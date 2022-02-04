@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/DeliveryAdminAppbar.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/laundryOrderController.dart';
+import 'package:mezcalmos/DeliveryAdminApp/models/Driver.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/Components/DriverCard.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/BuildOrderButtons.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/LaundryOrderCustomer.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/LaundryOrderStatusCard.dart';
@@ -14,6 +16,8 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+
+import 'Components/OrderMapTracking.dart';
 
 class LaundryOrderScreen extends StatefulWidget {
   const LaundryOrderScreen({Key? key}) : super(key: key);
@@ -38,7 +42,7 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
   StreamSubscription? _orderListener;
 
   /// ------------------ variables ------------------//
-
+  Driver? driver;
   @override
   void initState() {
     super.initState();
@@ -93,9 +97,17 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
                     SizedBox(
                       height: 10,
                     ),
-                    LaundryOrderCustomer(order: order.value!),
+                    // OrderMapTracking(
+                    //   order: order.value!,
+                    // ),
+                    Obx(() =>
+                        OrderMapTracking(driver: driver, order: order.value!)),
+                    LaundryOrderCustomer(
+                      order: order.value!,
+                    ),
+
                     if (order.value?.inProcess() ?? false)
-                      Padding(
+                      Container(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
                           children: buildOrderButtons(order),
@@ -104,7 +116,21 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
                     SizedBox(
                       height: 10,
                     ),
-                    LaundryOrderSummary(order: order.value!),
+                    DriverCard(
+                      driver: driver,
+                      order: order.value!,
+                      callBack: (newDriver) {
+                        setState(() {
+                          driver = newDriver;
+                        });
+                      },
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    LaundryOrderSummary(
+                      order: order.value!,
+                    ),
                     SizedBox(
                       height: 10,
                     ),
