@@ -234,7 +234,7 @@
             "trafficJam": "Traffic jam",
             "other": "Other",
             "customerCancelled": "Sorry to inform you the customer cancelled the ride.",
-            "rideUnavailble": "Sorry to inform you the the ride is not available any more."
+            "rideUnavailble": "Sorry to inform you that the ride is not available any more."
         },
         "orders": {
             "orderStatus":{

@@ -283,13 +283,23 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
   List<MezToolTipHint> getHints() {
     return [
       MezToolTipHint(
-          hintWidget: RidePriceControllHint(
-              hintText: Get.find<LanguageController>().strings['customer']
-                  ['taxiView']['taxiRidePriceTooltip']),
-          left: 80,
-          bottom: 150.5),
+        hintWidget: RidePriceControllHint(
+            hintText: Get.find<LanguageController>().strings['customer']
+                ['taxiView']['taxiRidePriceTooltip']),
+        left: 80.1,
+        bottom: 150.5,
+        bodyLeft: 20,
+        bodyRight: 20,
+        bodyBottom: 150.5,
+      ),
       MezToolTipHint(
-          hintWidget: RideReadByTaxisHint(), left: 210, bottom: 150.5)
+        hintWidget: RideReadByTaxisHint(),
+        left: 210,
+        bottom: 150.5,
+        bodyLeft: 20,
+        bodyRight: 20,
+        bodyBottom: 150.5,
+      )
     ];
   }
 }
