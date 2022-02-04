@@ -92,6 +92,7 @@ class AuthController extends GetxController {
             .child(userInfo(user.uid))
             .onValue
             .listen((event) {
+          if (event.snapshot.value == null) return;
           if (event.snapshot.value['language'] == null) {
             event.snapshot.value['language'] =
                 Get.find<LanguageController>().userLanguageKey;
