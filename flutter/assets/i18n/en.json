@@ -1,570 +1,560 @@
 {
+    "admin": {
+        "appVersion": "App Version",
+        "notifs": {
+            "notifications": "Notifications",
+            "read": "Read",
+            "received": "Received",
+            "sent": "Sent"
+        },
+        "orders": {
+            "cancelled": "Cancelled",
+            "cumulative": "Cumulative",
+            "cust": "Cust",
+            "driver": "Driver",
+            "droppedOff": "Dropped Off",
+            "expired": "Expired",
+            "finished": "Finished",
+            "firstOrder": "First Order",
+            "inProcess": "In Process",
+            "isLooking": "Is Looking",
+            "lastOrder": "Last Order",
+            "orderFR": "Order Fulfillment Ratio",
+            "orderId": "Order Id",
+            "orders": "Orders",
+            "orderT": "Order Time",
+            "price": "Price",
+            "rideEnd": "Ride End Time",
+            "rideStart": "Ride Start Time",
+            "status": "Status",
+            "time": "Time",
+            "totalOrders": "Total Orders"
+        }
+    },
     "customer": {
+        "cancelOrder": {
+            "cancelRide": "Cancel ride",
+            "mistake": "Mistake",
+            "noShow": "No show",
+            "orderExpired": "Sorry to inform your taxi request is expired.",
+            "other": "Other",
+            "postAgain": "Post again",
+            "question": "Are you sure you want to cancel your Order ?",
+            "taxiCancelled": "Sorry to inform you the taxi cancelled the ride.",
+            "title": "Confirm Cancelation."
+        },
         "home": {
-            "supportText":"need help ? Contact our support team",
-            "welcomeText":"Welcome to MEZCALMOS 👋",
-            "appDescription":"Your one stop palce to find all your needed local services and where you can enjoy fast and hight quality services.",
-            "taxi": {
-                "title":"Taxi",
-                "subtitle":"Get the nearest taxi arrount and get your destinatiion asap ."
+            "appDescription": "Your one stop palce to find all your needed local services and where you can enjoy fast and hight quality services.",
+            "food": {
+                "subtitle": "Discover most delicious dishes from the nearest restaurants .",
+                "title": "Food"
             },
             "groceries": "Groceries",
-            "services": "Services",
-            "food": {
-                "title":"Food",
-                "subtitle":"Discover most delicious dishes from the nearest restaurants ."
+            "laundry": {
+                "subtitle": "Comming soon ...",
+                "title": "Laundry"
             },
-            "laundry":{
-                "title":"Laundry",
-                "subtitle":"Comming soon ..."
-            }
+            "services": "Services",
+            "supportText": "need help ? Contact our support team",
+            "taxi": {
+                "subtitle": "Get the nearest taxi arrount and get your destinatiion asap .",
+                "title": "Taxi"
+            },
+            "welcomeText": "Welcome to MEZCALMOS 👋"
+        },
+        "inviteCode": {
+            "confirm": "Confirm",
+            "inviteCodQuestion": "Do You Have An Invite Code?",
+            "no": "No"
+        },
+        "laundry": {
+            "firstStep": "First step is creating an order once you create an order one of our drivers will be reaching your location to pickup your things",
+            "How it works": "How it works",
+            "laundryPricing": "Laundry Pricing",
+            "laundryPricingNote": "Order weight and total cost will be updated once the laundry service receive your order.",
+            "orderHelper": {
+                "atLaundry": " the laundry is processing your order",
+                "cancelByAdmin": " Order Canceled by the admin",
+                "cancelByUser": " You canceled the order",
+                "delivered": "Order has been successfully deliverd",
+                "otwDelivery": " Our driver is on the way to deliver back your order",
+                "otwPickup": "Our driver is on the way to pick up your order from your location ",
+                "pickedUp": " order picked up from your location successfully",
+                "ready": " your order is ready for delivery",
+                "received": " Order received and will be procceed as soon as possible"
+            },
+            "secondStep": "Second step our laundry service provider will recieve your order and start doing his work and we will inform you about price changes depending on the order weight",
+            "thirdStep": "Final step once your order is ready one of our drivers will pickup the order from the laundry and get it to your location as soon as possible"
+        },
+        "orders": {
+            "inProcess": "In Process",
+            "inTransit": "In Transit",
+            "item": "Item|Items",
+            "noOrders": "No orders found",
+            "onGoingOrders": "Ongoing Orders",
+            "onTheWay": "On the way",
+            "searching": "Searching",
+            "title": "Orders"
+        },
+        "pickLocation": {
+            "noLocation": "No location selected",
+            "pickLabele": "Search for location or move map and pick location",
+            "pickLocation": "Pick Location"
         },
         "restaurant": {
-            "emptRestaurantList" : "There are no registered restaurants yet.",
-            "restaurants": "Restaurants",
-            "notAvailable": "This restaurant is closed",
-            "menu": {
-                "myCart":"My Cart",
-                "items":"Items",
-                "menu": "Menu",
-                "info":"Informations",
-                "description": "Description",
-                "location":"Location",
-                "notes": "Notes",
-                "quantity": "Quantity",
-                "addToCart": "ADD TO CART",
-                "modifyItem": "Modify item",
-                "workingHours":{
-                    "workingHours":"Working Hours",
-                    "open":"Open",
-                    "closed":"Closed",
-                    "weekDays":{
-                        "monday":"Monday",
-                        "tuesday":"Tuesday",
-                        "wednesday":"Wednesday",
-                        "thursday":"Thursday",
-                        "friday":"Friday",
-                        "saturday":"Saturday",
-                        "sunday":"Sanday"
-                    }
-                },
-                "dailog":{
-                    "title":"Warning",
-                    "subtitle":"You already have some items in your cart, Would you like to discard to them ?",
-                    "leftBtn":"Checkout",
-                    "rightBtn":"Overwrite"
-                }
+            "cancelOrderDialog": {
+                "no": "No",
+                "yes": "Yes, I'm sure!"
             },
             "cart": {
-                "myCart":"My Cart",
                 "cart": "Cart",
-                "inCart": "In Cart",
-                "orderSummary":"Order Summary",
-                "orderCost":"Order Cost",
                 "clear": "Clear",
                 "clearCart": "Clear Cart",
                 "clearCartConfirm": "Are you sure you want to clear the cart ?",
                 "deleteItem": "Delete This Item.",
                 "deleteItemConfirm": "Would you like to delete this item?",
-                "totalCost": "Total Cost",
                 "deliveryCost": "Delivery Cost",
-                "total": "Total",
                 "deliveryLocation": "Delivery Location",
-                "pickLocation": "Pick from map",
+                "inCart": "In Cart",
+                "myCart": "My Cart",
+                "options": "Options",
+                "orderCost": "Order Cost",
                 "orderNow": "ORDER NOW",
-                "options": "Options"
+                "orderSummary": "Order Summary",
+                "pickLocation": "Pick from map",
+                "total": "Total",
+                "totalCost": "Total Cost"
             },
             "checkout": {
-                "orderItems": "Order Items",
                 "cancel": "Cancel",
                 "cancelOrder": "Cancel Order",
+                "cancelOrderConfirm": "Are you sure you want to\ncancel this order?",
                 "orderCanceled": "Order is being cancelled ...",
-                "cancelOrderConfirm": "Are you sure you want to\ncancel this order?"
+                "orderItems": "Order Items"
             },
-            "orderStatus": {
-                "orderCanceled": "Order Cancelled",
-                "orderDeliverd":"Order Delivered",
-                "helperText":{
-                "preparing": "Your order is being prepared by the restaurant",
-                "readyForPickUp": "Your order is prepared and ready for pickup by the delivery driver'",
-                "onTheWay": "Your order is on the way",
-                "delivered": "Your order has been successfully delivered",
-                "canceledByAdmin": "Your order has been cancelled by the restaurant",
-                "canceledByCustomer": "Your order has been cancelled",
-                "recievied": "Your order is recieved by the restaurant"
+            "emptRestaurantList": "There are no registered restaurants yet.",
+            "menu": {
+                "addToCart": "ADD TO CART",
+                "dailog": {
+                    "leftBtn": "Checkout",
+                    "rightBtn": "Overwrite",
+                    "subtitle": "You already have some items in your cart, Would you like to discard to them ?",
+                    "title": "Warning"
                 },
-                "orderStatus":"Order Status",
-                "preparing": "Preparing the order",
-                "readyForPickUp": "Ready For Pickup",
-                "onTheWay": "On The Way",
-                "delivered": "Order Delivered",
-                "canceledByAdmin": "Order Cancelled",
-                "canceledByCustomer": "Order Cancelled",
-                "recievied": "Order Recieved"
-            },
-            "cancelOrderDialog": {
-                "yes": "Yes, I'm sure!",
-                "no": "No"
-            }
-        },
-        "inviteCode": {
-            "inviteCodQuestion": "Do You Have An Invite Code?",
-            "no": "No",
-            "confirm": "Confirm"
-        },
-        "signInAlert":{
-            "title":"You need to be signed in to add items to your cart",
-            "signBtn":"Sign me in",
-            "notNowBtn": "Not now ?"
-        },
-        "taxiView": {
-            "taxi": "Taxi",
-            "currentLocation":"Current location",
-            "pickFromMap":"Pick from map",
-            "searching": "Searching for Taxi",
-            "cancel": "Cancel",
-            "arrival": "Arrival",
-            "message": "Message",
-            "rideStarted": "Ride started",
-            "droppedOff": "Dropped off",
-            "review": "Review",
-            "loading": "Loading",
-            "confirm": "CONFIRM",
-            "cancelled": "Cancelled",
-            "logIn": "Login To Make This Order",
-            "outOfPuerto": "You are too far out of puerto",
-            "priceEstimate": "Estimated price for the ride is $",
-            "noRide": "Sorry to inform you this ride does not exist anymore.",
-            "rideFinished": "Ride finished",
-            "rideExpired": "Your ride has been expired",
-            "rideCancelledByTaxi": "Ride cancelled by taxi",
-            "rideCancelledByCustomer": "You have cancelled your ride",
-            "ride": "ride",
-            "taxiRideCheckedTooltip" : "This shows how many Taxi drivers have seen your order but not accepted.\n\nMake use of that in order to controll your ride price.",
-            "taxiRidePriceTooltip" : " Click - to decrease your price by 5.\n Click + to increase your price by 5.\n\n If you see your order not being accepted try them out."
-        },
-        "cancelOrder": {
-            "title":"Confirm Cancelation.",
-            "question": "Are you sure you want to cancel your Order ?",
-            "cancelRide": "Cancel ride",
-            "postAgain": "Post again",
-            "noShow": "No show",
-            "mistake": "Mistake",
-            "other": "Other",
-            "taxiCancelled": "Sorry to inform you the taxi cancelled the ride.",
-            "orderExpired": "Sorry to inform your taxi request is expired."
-        },
-        "savedLocations": {
-            "title": "Saved Locations",
-            "location": "Location",
-            "addNewLoc": "Add New Location",
-            "editLocation": "Edit Location",
-            "deleteLocation":"Delete Location",
-            "locations":"Locations",
-            "addLocationDialog":{
-                "title":"enter location name, if you want to save for future use, else you may skip",
-                "button":"OK",
-                "textHint":"location name",
-                "skip":"Skip"
-            },
-            "editLocationDialog":{
-                "title":"Enter location name",
-                "button":"EDIT",
-                "textHint":"Location Name"
-            }
-        },
-        "pickLocation":{
-        "pickLocation":"Pick Location",
-        "noLocation" : "No location selected",
-        "pickLabele":"Search for location or move map and pick location"
-        },
-        "orders": {
-            "title": "Orders",
-            "onGoingOrders":"Ongoing Orders",
-            "item": "Item|Items",
-            "onTheWay": "On the way",
-            "inTransit": "In Transit",
-            "inProcess": "In Process",
-            "searching": "Searching",
-            "noOrders": "No orders found"
-        },
-
-        "laundry" :{
-            "firstStep" : "First step is creating an order once you create an order one of our drivers will be reaching your location to pickup your things",
-            "secondStep" : "Second step our laundry service provider will recieve your order and start doing his work and we will inform you about price changes depending on the order weight",
-            "thirdStep" : "Final step once your order is ready one of our drivers will pickup the order from the laundry and get it to your location as soon as possible",
-            "laundryPricing" : "Laundry Pricing",
-            "laundryPricingNote" : "Order weight and total cost will be updated once the laundry service receive your order.",
-            "orderHelper" : {
-                "cancelByAdmin": " Order Canceled by the admin",
-                "cancelByUser": " You canceled the order",
-                "received": " Order received and will be procceed as soon as possible",
-                "otwPickup": "Our driver is on the way to pick up your order from your location ",
-                "pickedUp": " order picked up from your location successfully",
-                "atLaundry": " the laundry is processing your order",
-                "ready": " your order is ready for delivery",
-                "otwDelivery": " Our driver is on the way to deliver back your order",
-                "delivered": "Order has been successfully deliverd"
-            },
-            "How it works" : "How it works"
-              
-        }
-    },
-    "taxi": {
-        "incoming": {
-            "title": "Incoming  Orders",
-            "loading": "Loading",
-            "services": "All Services",
-            "isInTax": "Please finish|your ride|to accept new orders",
-            "far": "far",
-            "toggleTitle": "Turn On Incoming Orders",
-            "toggleDesc": "Turn on to see new orders",
-            "noOrdersTitle": "No Orders Found",
-            "noOrdersDesc": "Try again later"
-        },
-        "taxiView": {
-            "taxi": "Taxi",
-            "searching": "Searching for Taxi",
-            "acceptOrders": "Accept Order",
-            "startRide": "Start Ride",
-            "finishRide": "Finish Ride",
-            "message": "Message",
-            "droppedOff": "Dropped off",
-            "droppedOffMessage": "Your ride has ended",
-            "review": "Review",
-            "loading": "Loading",
-            "cancelled": "Cancelled",
-            "tooFarFromstartRide": "Click start ride after the customer has reached your vehicle. Based on your GPS it seems you are still far from customer location, are you sure you still want to start the ride?",
-            "tooFarFromfinishRide": "Click Finish after the customer has exited your vehicle. Based on your GPS it seems you are still far from customer's end location, are you sure you still want to end the ride?",
-            "no": "No",
-            "yes": "Yes",
-            "noRide": "Sorry to inform you this ride does not exist anymore."
-        },
-        "cancelOrder": {
-            "question": "Why do you want to cancel the ride?",
-            "confirmation_header": "Please confirm",
-            "confirmation_text": "Are you sure you want to cancel the current ride?",
-            "cancelRide": "Cancel ride",
-            "backToIncoming": "Back to incoming",
-            "noShow": "No show",
-            "otherRide": "Other ride",
-            "trafficJam": "Traffic jam",
-            "other": "Other",
-            "customerCancelled": "Sorry to inform you the customer cancelled the ride.",
-            "rideUnavailble": "Sorry to inform you the the ride is not available any more."
-        },
-        "orders": {
-            "orderStatus":{
-                "canceledByTaxi": "Cancelled",
-                "canceledByCustomer": "Cancelled",
-                "onTheWay":"Taxi on the way",
-                "lookingForTaxi":"Looking for Taxi",
-                "inTransit":"Taxi in transit",
-                "droppedOff":"Dropped off",
-                "expired":"Order expired"
-            },
-            "title": "Orders",
-            "item": "Item|Items",
-            "onTheWay": "On the way",
-            "onTheWayMessage": "is on the way now to pick you up",
-            "inTransit": "In Transit",
-            "inTransitMessage": "Your ride is on the way",
-            "searching": "Searching for taxi",
-            "searchingMessage": "You are being matched with a taxi",
-            "noOrders": "No orders found",
-            "cancelled": "Taxi Cancelled",
-            "cancelledMessage": "Your ride has been cancelled"
-        },
-        "introduction": {
-            "howToTaxi": "Do You Want To Use  The Mezcalmos App To  Give Rides To Customers In   <span class='text_blue'>Puerto Escondido?</span> ",
-            "signUpTaxi": "Click Sign Up, Show Us Proof  Of Your Taxi Authorization  And Start Giving Rides    Right Away.",
-            "confirmation": "Your Application Is Under Review. We Will Contact You Shortly",
-            "logIn": " Sign Up |Login",
-            "alreadyMember": "Already a member?",
-            "yes": "YES"
-        }
-     
-    },
-    "shared": {
-        "unauthorizedScreen":{
-            "unauthorized":"Unauthorized",
-            "subTitle1":"You are not authorized, please contact Alejandro ",
-            "subTitle2":" ,to get authorization."
-        },
-        "snackbars" : {
-            "titleSuccess" : "Success :)",
-            "titleFailed" : "Oops :(",
-            "orderCancelSuccess": "Order cancelled successfully.",
-            "orderCancelFailed": "Failed to cancel the order."
-        },
-        "permissions": {
-            "locationIsOff": "Location Service Turned Off",
-            "permissionBtn": "GIVE PERMISSION",
-            "askForNotif": "The app uses your location to match you with the best rides and share your location with customers, even when the app is in background.",
-            "locationPermissionDenied": "Oops, Sadly without location permissions you can not use our application!",
-            "locationPermissionDeniedForever" : "Location permissions are denied forever! Please change that."
-        },
-        "login": {
-            "title": "Connect using Facebook or using SMS ! ",
-            "owner": "Login To    Make An Order ",
-            "customer": "Login To    Make An Order ",
-            "fbBtn": "LOGIN WITH FACEBOOK",
-            "loginWithSms": "LOGIN WITH SMS",
-            "whatsAppLogin": " LOGIN WITH WHATSAPP",
-            "loginWithApple": " LOGIN WITH APPLE",
-            "verifyCountryCode": "Please verify your country code",
-            "verifyPhoneNumber": "Please verify your phone number",
-            "OtpConfirmation": "OTP Code Confirmation",
-            "otpDidnReciveTxt":"You have'nt recieve the text ?",
-            "confirmation":"Confirmation",
-            "enterOtpCode": "Enter OTP code sent to",
-            "resend": "Resend",
-            "resendAfter": "Resend after",
-            "seconds": "seconds",
-            "welcomeTitle": "Welcome Back :D",
-            "hello": "Hello",
-            "welcomeDesc2": "We are glad you're back!",
-            "confirm": "Confirm",
-            "otpCode": "OTP Code",
-            "enterPhoneNumber": "Enter phone number to recieve OTP code",
-            "otpSubtitleNumber": "Enter Phone Number",
-            "submit": "SUBMIT",
-            "twilioNote": "By continuing you will receive a verification code to your phone number by SMS. Message and data rates may apply.",
-            "signInToMakeOrder": "Sign in to make order"
-        },
-        "messages": {
-            "title": "Messages",
-            "available": "Available",
-            "orderLink": "Order page",
-            "newMessage": "New message from",
-            "writeMsgPlaceholder": "Write your message here ..."
-        },
-        "notification": {
-            "latest":"Latest",
-            "title": "Notifications",
-            "today": "Today",
-            "yesterday": "Yesterday",
-            "older": "Older",
-            "item": "Item|Items",
-            "clear": "Clear",
-            "alertClearNotification": {
-                "title":"Clear All Notifications",
-                "subTitle":"Are you sure  you want to clear the notifications"
-            },
-            "notificationType": {
-                "preparingOrder": {
-                    "title": "Preparing Order",
-                    "body": "Your order is being prepared"
-                },
-                "readyForPickup": {
-                    "title": "Ready For Pickup",
-                    "body": "Your order is ready for pickup"
-                },
-                "onTheWayRestaurant": {
-                    "title": "On the Way",
-                    "body": "Your order is on the way"
-                },
-                "delivered": {
-                    "title": "Delivered",
-                    "body": "Your order has been delivered"
-                },
-                "cancelled": {
-                    "title": "Order Cancelled",
-                    "body": "Your order has been cancelled"
-                },
-                "onTheWayTaxi": {
-                    "title": "On the Way",
-                    "body": "Your taxi is on the way"
-                },
-                "inTransit": {
-                    "title": "In Transit",
-                    "body": "You are on the way to your destination"
-                },
-                "droppedOff": {
-                    "title": "Reached",
-                    "body": "Your have reached your destination"
-                },
-                "expired": {
-                    "title": "No taxis available",
-                    "body": "Unfortunately, we could not find a taxi for you. Please try again later"
+                "description": "Description",
+                "info": "Informations",
+                "items": "Items",
+                "location": "Location",
+                "menu": "Menu",
+                "modifyItem": "Modify item",
+                "myCart": "My Cart",
+                "notes": "Notes",
+                "quantity": "Quantity",
+                "workingHours": {
+                    "closed": "Closed",
+                    "open": "Open",
+                    "weekDays": {
+                        "friday": "Friday",
+                        "monday": "Monday",
+                        "saturday": "Saturday",
+                        "sunday": "Sanday",
+                        "thursday": "Thursday",
+                        "tuesday": "Tuesday",
+                        "wednesday": "Wednesday"
+                    },
+                    "workingHours": "Working Hours"
                 }
             },
-            "view": "View",
-            "viewOrder": "View Order"
+            "notAvailable": "This restaurant is closed",
+            "orderStatus": {
+                "canceledByAdmin": "Order Cancelled",
+                "canceledByCustomer": "Order Cancelled",
+                "delivered": "Order Delivered",
+                "helperText": {
+                    "canceledByAdmin": "Your order has been cancelled by the restaurant",
+                    "canceledByCustomer": "Your order has been cancelled",
+                    "delivered": "Your order has been successfully delivered",
+                    "onTheWay": "Your order is on the way",
+                    "preparing": "Your order is being prepared by the restaurant",
+                    "readyForPickUp": "Your order is prepared and ready for pickup by the delivery driver'",
+                    "recievied": "Your order is recieved by the restaurant"
+                },
+                "onTheWay": "On The Way",
+                "orderCanceled": "Order Cancelled",
+                "orderDeliverd": "Order Delivered",
+                "orderStatus": "Order Status",
+                "preparing": "Preparing the order",
+                "readyForPickUp": "Ready For Pickup",
+                "recievied": "Order Recieved"
+            },
+            "restaurants": "Restaurants"
         },
-        "userInfo": {
-            "choosePic":"Choose a photo",
-            "saveTxt":"Please save the changes you made",
-            "hintTxt":"Enter your full name",
-            "validationTxtOne":"Please enter your full name",
-            "validationTxtTwo":"Please enter a valid name",
-            "title": " User Information",
-            "editInfo": "Edit Information",
-            "editPhoneNumber": "Change Phone Number",
-            "addInfo": "Add Information",
-            "editBtn": "EDIT INFORMATION",
-            "deleteBtn": "Delete Account",
-            "saveBtn": "SAVE",
+        "savedLocations": {
+            "addLocationDialog": {
+                "button": "OK",
+                "skip": "Skip",
+                "textHint": "location name",
+                "title": "enter location name, if you want to save for future use, else you may skip"
+            },
+            "addNewLoc": "Add New Location",
+            "deleteLocation": "Delete Location",
+            "editLocation": "Edit Location",
+            "editLocationDialog": {
+                "button": "EDIT",
+                "textHint": "Location Name",
+                "title": "Enter location name"
+            },
+            "location": "Location",
+            "locations": "Locations",
+            "title": "Saved Locations"
+        },
+        "signInAlert": {
+            "notNowBtn": "Not now ?",
+            "signBtn": "Sign me in",
+            "title": "You need to be signed in to add items to your cart"
+        },
+        "taxiView": {
+            "arrival": "Arrival",
             "cancel": "Cancel",
-            "editImgMsg": "Click on image to change it",
-            "fullName": "Full Name",
-            "phoneNumber": "Phone Number",
-            "clickToUploadImg": "clickToUpdate",
-            "addPhoneNumber": "Add phone number"
+            "cancelled": "Cancelled",
+            "confirm": "CONFIRM",
+            "currentLocation": "Current location",
+            "droppedOff": "Dropped off",
+            "loading": "Loading",
+            "logIn": "Login To Make This Order",
+            "message": "Message",
+            "noRide": "Sorry to inform you this ride does not exist anymore.",
+            "outOfPuerto": "You are too far out of puerto",
+            "pickFromMap": "Pick from map",
+            "priceEstimate": "Estimated price for the ride is $",
+            "review": "Review",
+            "ride": "ride",
+            "rideCancelledByCustomer": "You have cancelled your ride",
+            "rideCancelledByTaxi": "Ride cancelled by taxi",
+            "rideExpired": "Your ride has been expired",
+            "rideFinished": "Ride finished",
+            "rideStarted": "Ride started",
+            "searching": "Searching for Taxi",
+            "taxi": "Taxi",
+            "taxiRideCheckedTooltip": "This shows how many Taxi drivers have seen your order but not accepted.\n\nMake use of that in order to controll your ride price.",
+            "taxiRidePriceTooltip": " Click - to decrease your price by 5.\n Click + to increase your price by 5.\n\n If you see your order not being accepted try them out."
+        }
+    },
+    "deliveryAdminApp": {
+        "cancelAlert": {
+            "subTitle": "Are you sure you want\nto cancel the order?",
+            "title": "Cancel"
         },
-        "navDrawer": {
-            "userInfo": "User Information",
-            "myOrders": "My Orders",
-            "savedLocations": "Saved Locations",
-            "logout": "Logout",
-            "login": "Login",
-            "contactAdmin": "Contact Admin",
-            "legal": "Privacy policy"
+        "deliveredAlert": {
+            "subTitle": "Are you sure you want\nto deliver the order?",
+            "title": "Deliver"
+        },
+        "laundry": {
+            "atLaundry": "At laundry",
+            "atLaundryText": "Confirm the order received by the laundry by setting the order weight ",
+            "atLaundryTitle": "Order at laundry",
+            "confirmPickUp": "Confirm pickup",
+            "currentOrders": "Orders",
+            "customer": "Customer",
+            "delivered": "Order Delivered",
+            "deliveredText": "Confirm that the order is delivered to the customer",
+            "deliveredTitle": "Order delivered",
+            "deliveryCost": "Delivery Cost",
+            "fixedRate": "Fixed Rate",
+            "laundry": "Laundry",
+            "laundryOrders": "Laundry orders",
+            "noOrders": "No orders found",
+            "orderCost": "Order cost",
+            "orderReceived": "Order Received",
+            "orderWeight": "Order Weight",
+            "orderWeightError": " Error, please insert a valid order weight",
+            "otwDelivery": "Delivery on the way",
+            "otwDeliveryText": "Confirm that the order is being deliverd to the customer",
+            "otwDeliveryTitle": "Delivery On the way",
+            "otwPickUp": "Pick-up on the way",
+            "pastOrders": "Past orders",
+            "pickedUp": "Order Picked-up",
+            "pickedUpText": "Confirm order picked up from the customer",
+            "pickedUpTitle": "Order Picked up",
+            "readyForDelivery": "Ready for Delivery",
+            "readyForDeliveryText": "Confirm that the order is ready for delivery",
+            "readyForDeliveryTitle": "Order ready for delivery",
+            "restaurantOrders": "Restaurant Orders",
+            "startPickUp": "Start pickup",
+            "startPickUpText": "The driver should be notified to pick up the order",
+            "startPickUpTitle": "Start order Pickup",
+            "totalCost": "Total cost"
+        },
+        "onTheWayAlert": {
+            "subTitle": "Are you sure you want\nto start the order delivery?",
+            "title": "On the Way"
+        },
+        "ordersButton": {
+            "canceled": "CANCEL",
+            "deliver": "START DELIVERY",
+            "preparing": "PREPARE",
+            "readyForPickUp": "FOOD READY",
+            "received": "DROPPED"
+        },
+        "prepareAlert": {
+            "subTitle": "Are you sure you want\nto prepare order?",
+            "title": "Prepare Order"
+        },
+        "readyAlert": {
+            "subTitle": "Are you sure you want\nto mark the order as ready?",
+            "title": "READY"
+        }
+    },
+    "shared": {
+        "addItem": {
+            "addItemBtn": "Add Item",
+            "name": "Name",
+            "note": "note|notes",
+            "title": " Add New Item"
         },
         "header": {
             "alert": "Order status changed"
         },
-        "addItem": {
-            "title": " Add New Item",
-            "name": "Name",
-            "note": "note|notes",
-            "addItemBtn": "Add Item"
-        },
         "inputLocation": {
-            "from": "From",
-            "to": "To",
-            "optional": "Optional",
             "currentLoc": "Current location",
-            "searching": "Searching",
+            "from": "From",
+            "moveMapIfNotPrecise": "You can move the map.",
+            "moveMapToPick": "Move the map to pick location",
+            "optional": "Optional",
             "pick": "PICK",
             "pickFromMap": "Pick from map",
-            "moveMapIfNotPrecise" : "You can move the map.",
-            "moveMapToPick": "Move the map to pick location"
+            "searching": "Searching",
+            "to": "To"
+        },
+        "login": {
+            "confirm": "Confirm",
+            "confirmation": "Confirmation",
+            "customer": "Login To    Make An Order ",
+            "enterOtpCode": "Enter OTP code sent to",
+            "enterPhoneNumber": "Enter phone number to recieve OTP code",
+            "fbBtn": "LOGIN WITH FACEBOOK",
+            "hello": "Hello",
+            "loginWithApple": " LOGIN WITH APPLE",
+            "loginWithSms": "LOGIN WITH SMS",
+            "otpCode": "OTP Code",
+            "OtpConfirmation": "OTP Code Confirmation",
+            "otpDidnReciveTxt": "You have'nt recieve the text ?",
+            "otpSubtitleNumber": "Enter Phone Number",
+            "owner": "Login To    Make An Order ",
+            "resend": "Resend",
+            "resendAfter": "Resend after",
+            "seconds": "seconds",
+            "signInToMakeOrder": "Sign in to make order",
+            "submit": "SUBMIT",
+            "title": "Connect using Facebook or using SMS ! ",
+            "twilioNote": "By continuing you will receive a verification code to your phone number by SMS. Message and data rates may apply.",
+            "verifyCountryCode": "Please verify your country code",
+            "verifyPhoneNumber": "Please verify your phone number",
+            "welcomeDesc2": "We are glad you're back!",
+            "welcomeTitle": "Welcome Back :D",
+            "whatsAppLogin": " LOGIN WITH WHATSAPP"
+        },
+        "messages": {
+            "available": "Available",
+            "newMessage": "New message from",
+            "orderLink": "Order page",
+            "title": "Messages",
+            "writeMsgPlaceholder": "Write your message here ..."
+        },
+        "navDrawer": {
+            "contactAdmin": "Contact Admin",
+            "legal": "Privacy policy",
+            "login": "Login",
+            "logout": "Logout",
+            "myOrders": "My Orders",
+            "savedLocations": "Saved Locations",
+            "userInfo": "User Information"
+        },
+        "notification": {
+            "alertClearNotification": {
+                "subTitle": "Are you sure  you want to clear the notifications",
+                "title": "Clear All Notifications"
+            },
+            "clear": "Clear",
+            "item": "Item|Items",
+            "latest": "Latest",
+            "notificationType": {
+                "cancelled": {
+                    "body": "Your order has been cancelled",
+                    "title": "Order Cancelled"
+                },
+                "delivered": {
+                    "body": "Your order has been delivered",
+                    "title": "Delivered"
+                },
+                "droppedOff": {
+                    "body": "Your have reached your destination",
+                    "title": "Reached"
+                },
+                "expired": {
+                    "body": "Unfortunately, we could not find a taxi for you. Please try again later",
+                    "title": "No taxis available"
+                },
+                "inTransit": {
+                    "body": "You are on the way to your destination",
+                    "title": "In Transit"
+                },
+                "onTheWayRestaurant": {
+                    "body": "Your order is on the way",
+                    "title": "On the Way"
+                },
+                "onTheWayTaxi": {
+                    "body": "Your taxi is on the way",
+                    "title": "On the Way"
+                },
+                "preparingOrder": {
+                    "body": "Your order is being prepared",
+                    "title": "Preparing Order"
+                },
+                "readyForPickup": {
+                    "body": "Your order is ready for pickup",
+                    "title": "Ready For Pickup"
+                }
+            },
+            "older": "Older",
+            "title": "Notifications",
+            "today": "Today",
+            "view": "View",
+            "viewOrder": "View Order",
+            "yesterday": "Yesterday"
+        },
+        "permissions": {
+            "askForNotif": "The app uses your location to match you with the best rides and share your location with customers, even when the app is in background.",
+            "locationIsOff": "Location Service Turned Off",
+            "locationPermissionDenied": "Oops, Sadly without location permissions you can not use our application!",
+            "locationPermissionDeniedForever": "Location permissions are denied forever! Please change that.",
+            "permissionBtn": "GIVE PERMISSION"
         },
         "pickLocation": {
-            "name": "Name",
             "address": "Address",
-            "searching": "Searching",
+            "location": "Location",
+            "name": "Name",
             "pick": "PICK",
-            "location": "Location"
+            "searching": "Searching"
         },
         "placeHolders": {
-            "home": "Home",
             "address": "Enter Address",
-            "name": "Enter Name",
-            "search": "Search",
-            "writeHere": "Write here",
             "displayName": "Enter Display Name",
+            "home": "Home",
+            "name": "Enter Name",
             "phone": "Enter Phone Number",
-            "phoneNumber": "+52123456.."
+            "phoneNumber": "+52123456..",
+            "search": "Search",
+            "writeHere": "Write here"
         },
         "popUps": {
-            "yes" : "Yes",
-            "no" : "No"
+            "no": "No",
+            "yes": "Yes"
+        },
+        "snackbars": {
+            "orderCancelFailed": "Failed to cancel the order.",
+            "orderCancelSuccess": "Order cancelled successfully.",
+            "titleFailed": "Oops :(",
+            "titleSuccess": "Success :)"
+        },
+        "unauthorizedScreen": {
+            "subTitle1": "You are not authorized, please contact Alejandro ",
+            "subTitle2": " ,to get authorization.",
+            "unauthorized": "Unauthorized"
+        },
+        "userInfo": {
+            "addInfo": "Add Information",
+            "addPhoneNumber": "Add phone number",
+            "cancel": "Cancel",
+            "choosePic": "Choose a photo",
+            "clickToUploadImg": "clickToUpdate",
+            "deleteBtn": "Delete Account",
+            "editBtn": "EDIT INFORMATION",
+            "editImgMsg": "Click on image to change it",
+            "editInfo": "Edit Information",
+            "editPhoneNumber": "Change Phone Number",
+            "fullName": "Full Name",
+            "hintTxt": "Enter your full name",
+            "phoneNumber": "Phone Number",
+            "saveBtn": "SAVE",
+            "saveTxt": "Please save the changes you made",
+            "title": " User Information",
+            "validationTxtOne": "Please enter your full name",
+            "validationTxtTwo": "Please enter a valid name"
         }
     },
-    "admin": {
+    "taxi": {
+        "cancelOrder": {
+            "backToIncoming": "Back to incoming",
+            "cancelRide": "Cancel ride",
+            "confirmation_header": "Please confirm",
+            "confirmation_text": "Are you sure you want to cancel the current ride?",
+            "customerCancelled": "Sorry to inform you the customer cancelled the ride.",
+            "noShow": "No show",
+            "other": "Other",
+            "otherRide": "Other ride",
+            "question": "Why do you want to cancel the ride?",
+            "rideUnavailble": "Sorry to inform you the the ride is not available any more.",
+            "trafficJam": "Traffic jam"
+        },
+        "incoming": {
+            "far": "far",
+            "isInTax": "Please finish|your ride|to accept new orders",
+            "loading": "Loading",
+            "noOrdersDesc": "Try again later",
+            "noOrdersTitle": "No Orders Found",
+            "services": "All Services",
+            "title": "Incoming  Orders",
+            "toggleDesc": "Turn on to see new orders",
+            "toggleTitle": "Turn On Incoming Orders"
+        },
+        "introduction": {
+            "alreadyMember": "Already a member?",
+            "confirmation": "Your Application Is Under Review. We Will Contact You Shortly",
+            "howToTaxi": "Do You Want To Use  The Mezcalmos App To  Give Rides To Customers In   <span class='text_blue'>Puerto Escondido?</span> ",
+            "logIn": " Sign Up |Login",
+            "signUpTaxi": "Click Sign Up, Show Us Proof  Of Your Taxi Authorization  And Start Giving Rides    Right Away.",
+            "yes": "YES"
+        },
         "orders": {
-            "cumulative": "Cumulative",
-            "totalOrders": "Total Orders",
-            "finished": "Finished",
+            "cancelled": "Taxi Cancelled",
+            "cancelledMessage": "Your ride has been cancelled",
+            "inTransit": "In Transit",
+            "inTransitMessage": "Your ride is on the way",
+            "item": "Item|Items",
+            "noOrders": "No orders found",
+            "onTheWay": "On the way",
+            "onTheWayMessage": "is on the way now to pick you up",
+            "orderStatus": {
+                "canceledByCustomer": "Cancelled",
+                "canceledByTaxi": "Cancelled",
+                "droppedOff": "Dropped off",
+                "expired": "Order expired",
+                "inTransit": "Taxi in transit",
+                "lookingForTaxi": "Looking for Taxi",
+                "onTheWay": "Taxi on the way"
+            },
+            "searching": "Searching for taxi",
+            "searchingMessage": "You are being matched with a taxi",
+            "title": "Orders"
+        },
+        "taxiView": {
+            "acceptOrders": "Accept Order",
             "cancelled": "Cancelled",
-            "expired": "Expired",
-            "inProcess": "In Process",
-            "isLooking": "Is Looking",
-            "orders": "Orders",
-            "time": "Time",
-            "driver": "Driver",
-            "cust": "Cust",
-            "orderFR": "Order Fulfillment Ratio",
-            "orderId": "Order Id",
-            "orderT": "Order Time",
-            "status": "Status",
-            "price": "Price",
-            "rideEnd": "Ride End Time",
-            "rideStart": "Ride Start Time",
-            "droppedOff": "Dropped Off",
-            "firstOrder": "First Order",
-            "lastOrder": "Last Order"
-        },
-        "notifs": {
-            "notifications": "Notifications",
-            "sent": "Sent",
-            "received": "Received",
-            "read": "Read"
-        },
-        "appVersion": "App Version"
-    },
-    "deliveryAdminApp": {
-        "ordersButton": {
-            "preparing": "PREPARE",
-            "readyForPickUp": "FOOD READY",
-            "deliver": "START DELIVERY",
-            "canceled": "CANCEL",
-            "received": "DROPPED"
-        },
-        "prepareAlert": {
-            "title": "Prepare Order",
-            "subTitle": "Are you sure you want\nto prepare order?"
-        },
-        "readyAlert": {
-            "title": "READY",
-            "subTitle": "Are you sure you want\nto mark the order as ready?"
-        },
-        "onTheWayAlert": {
-            "title": "On the Way",
-            "subTitle": "Are you sure you want\nto start the order delivery?"
-        },
-        "deliveredAlert": {
-            "title": "Deliver",
-            "subTitle": "Are you sure you want\nto deliver the order?"
-        },
-        "cancelAlert": {
-            "title": "Cancel",
-            "subTitle": "Are you sure you want\nto cancel the order?"
-        } ,
-        "laundry": {
-            "laundry": "Laundry",
-            "laundryOrders": "Laundry orders",
-            "restaurantOrders" : "Restaurant Orders",
-            "noOrders":"No orders found",
-            "currentOrders": "Orders",
-            "pastOrders": "Past orders",
-            "customer": "Customer",
-            "orderWeight": "Order Weight",
-            "orderCost": "Order cost",
-            "fixedRate": "Fixed Rate",
-            "deliveryCost" :"Delivery Cost",
-            "totalCost": "Total cost",
-            "orderReceived" :"Order Received",
-            "otwPickUp" : "Pick-up on the way",
-            "pickedUp" : "Order Picked-up",
-            "atLaundry": "At laundry",
-            "readyForDelivery" : "Ready for Delivery",
-            "otwDelivery": "Delivery on the way",
-            "delivered" :"Order Delivered",
-            "startPickUp" : "Start pickup",
-            "confirmPickUp" : "Confirm pickup",
-            "startPickUpTitle" : "Start order Pickup",
-            "startPickUpText" : "The driver should be notified to pick up the order",
-            "pickedUpTitle" : "Order Picked up",
-            "pickedUpText" : "Confirm order picked up from the customer",
-            "atLaundryTitle" : "Order at laundry",
-            "atLaundryText" : "Confirm the order received by the laundry by setting the order weight ",
-            "orderWeightError" :" Error, please insert a valid order weight",
-            "readyForDeliveryTitle" :"Order ready for delivery",
-            "readyForDeliveryText" : "Confirm that the order is ready for delivery",
-            "otwDeliveryTitle" : "Delivery On the way",
-            "otwDeliveryText" : "Confirm that the order is being deliverd to the customer",
-            "deliveredTitle" : "Order delivered", 
-            "deliveredText" : "Confirm that the order is delivered to the customer" 
-
-
-
-
-            
-            
+            "droppedOff": "Dropped off",
+            "droppedOffMessage": "Your ride has ended",
+            "finishRide": "Finish Ride",
+            "loading": "Loading",
+            "message": "Message",
+            "no": "No",
+            "noRide": "Sorry to inform you this ride does not exist anymore.",
+            "review": "Review",
+            "searching": "Searching for Taxi",
+            "startRide": "Start Ride",
+            "taxi": "Taxi",
+            "tooFarFromfinishRide": "Click Finish after the customer has exited your vehicle. Based on your GPS it seems you are still far from customer's end location, are you sure you still want to end the ride?",
+            "tooFarFromstartRide": "Click start ride after the customer has reached your vehicle. Based on your GPS it seems you are still far from customer location, are you sure you still want to start the ride?",
+            "yes": "Yes"
         }
-
     }
 }
