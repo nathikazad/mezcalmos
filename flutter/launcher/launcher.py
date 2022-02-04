@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 
+from ast import Str
 from dataclasses import replace
 import os , json
 from sys import argv, stderr, platform
 from enum import Enum
 import subprocess as proc
+from tokenize import String
 from termcolor import colored
 
 # LAST UPDATE INFOS : 
@@ -12,11 +14,11 @@ from termcolor import colored
 
 
 # GLOBAL CONSTANTS !
-VERSION = "1.1.11"
+VERSION = "1.1.12"
 XOR_VALUE = 100
 CONFIG_FILE = "config.json"
 ACTIVE_DEBUG = True
-PRINTLN = lambda x : print(x) if ACTIVE_DEBUG else None
+PRINTLN = lambda x,end='\n' : print(x , end=end) if ACTIVE_DEBUG else None
 
 VALID_CONFIG_KEYS_LEN = 2
 rm_lambda = lambda path : 'rm -rf {path}*'
@@ -70,6 +72,7 @@ class DW_EXIT_REASONS(Enum):
     FILTER_FILE_NOT_FOUND = -36
     FLUTTER_STDERR = -37
     NO_APP_SPECIFIED = -38
+    INVALID_PERMISSION_LEN_OR_NULL = -39
 
     REACH_THE_LAZY_SAAD = -10000
 
@@ -78,8 +81,8 @@ class Launcher:
         self.user_args = user_args
         self.conf = conf
         # self.last_app = Config.chSum(user_args['app'])
-        self.__launch__()
         try:
+            self.__launch__()
             PRINTLN(f"\n[~] Launching with : {user_args} \n\n")
             f_args = self.flutter_setup.split(' ')
             ff = None
@@ -99,7 +102,7 @@ class Launcher:
 
             Config.launch_flutter_app(binary=binary , filter_file=ff , filter_mode=fmd)
         except KeyboardInterrupt:
-            print("Exiting the launcher .... bye bye!")
+            PRINTLN("\n\nExiting the launcher .... bye bye!")
     
     # def __f_checker__(self):
     #     if not os.path.exists('flutter_hooks/pre-main'):
@@ -160,10 +163,18 @@ class Launcher:
             open(main_activity_kt_path , 'w+').write(_cloned)
             PRINTLN(f"[+] Set up of : {main_activity_kt_path} .. done!")
 
+        # Manifest Permissions
+        # Shared Permissions are already stored in self.conf['gen::permissions'] as String
+
+        _app_specific_permissions = self.conf['apps'][self.user_args['app']].get('appPermissions')
+        if _app_specific_permissions:
+            PRINTLN(f"[~] Validating {self.user_args['app']} Permissions ... ")
+            self.conf['gen::permissions'] += Config.validate_manifest_permissions(_app_specific_permissions)
+
         #  main ManifestXml:
         _project_main_manifest = "../android/app/src/main/AndroidManifest.xml"
         os.system('mv ../android/app/src/main/AndroidManifest.xml ../android/app/src/main/AndroidManifest.xml.backup')
-        _cloned = open('patches/android/main/AndroidManifest.xml').read().replace('<mez-package-name>', _appPackageName)
+        _cloned = open('patches/android/main/AndroidManifest.xml').read().replace('<mez-package-name>', _appPackageName).replace('<mez-permissions>' , self.conf['gen::permissions'])
         open(_project_main_manifest , 'w+').write(_cloned)
 
         # profile :
@@ -174,7 +185,7 @@ class Launcher:
         if os.path.exists(_project_profile_manifest):
             os.system('mv ../android/app/src/profile/AndroidManifest.xml ../android/app/src/profile/AndroidManifest.xml.backup')
         
-        _cloned = open('patches/android/profile/AndroidManifest.xml').read().replace('<mez-package-name>', _appPackageName)
+        _cloned = open('patches/android/profile/AndroidManifest.xml').read().replace('<mez-package-name>', _appPackageName).replace('<mez-permissions>' , self.conf['gen::permissions'])
         open(_project_profile_manifest , 'w+').write(_cloned)
 
 
@@ -187,7 +198,7 @@ class Launcher:
         if os.path.exists(_project_debug_manifest):
             os.system('mv ../android/app/src/debug/AndroidManifest.xml ../android/app/src/debug/AndroidManifest.xml.backup')
         
-        _cloned = open('patches/android/debug/AndroidManifest.xml').read().replace('<mez-package-name>', _appPackageName)
+        _cloned = open('patches/android/debug/AndroidManifest.xml').read().replace('<mez-package-name>', _appPackageName).replace('<mez-permissions>' , self.conf['gen::permissions'])
         open(_project_debug_manifest , 'w+').write(_cloned)
         
         # Done !
@@ -380,30 +391,18 @@ class Config:
             PRINTLN("[!] Error happend in calling launch_flutter_app with null binary :( ")
             exit(DW_EXIT_REASONS.LAUNCH_PROC_WITH_NONE_BINARY)
 
-    # @staticmethod
-    # def chSum(app , isLaunch=True):
-    #     last_ch_sum = "flutter_hooks/" + ("launch" if isLaunch else "build") + "/.chsum"
-    #     f = open(last_ch_sum , 'r+').read().replace('\n' , '')
-        
-    #     PRINTLN(f"[+] Generating new checkSum for __app__[{app}]")
-    #     fp = open(last_ch_sum , 'w+')
-    #     fp.write(app)
-    #     fp.close()
-    #     # return last app
-    #     return f
-
-        # last_ch_sum = "flutter_hooks/" + ("launch" if isLaunch else "build") + "/.chsum"
-        # f = open(last_ch_sum , 'r+').read().replace('\n' , '')
-        # if not f or f != app:
-        #     PRINTLN(f"[+] Generating new checkSum for __app__[{app}]")
-        #     fp = open(last_ch_sum , 'w+')
-        #     fp.write(app)
-        #     fp.close()
-        #     # return last app
-        #     return f
-        # else: 
-        #     PRINTLN(f"[+] Detected Same checkSum for __app__[{app}] , Skipping Generation !")
-        #     return None
+    @staticmethod
+    def validate_manifest_permissions(permissionsList) -> Str:
+        _permissionsString = ''
+        for shPerm in permissionsList:
+            _shSplitted = shPerm.split('\'')
+            if shPerm and _shSplitted.__len__() >= 3:
+                PRINTLN(f"\t- ✅ {_shSplitted[1]}")
+                _permissionsString += shPerm+'\n'
+            else :
+                PRINTLN(f"\t- ❌ {shPerm}")
+                exit(DW_EXIT_REASONS.INVALID_PERMISSION_LEN_OR_NULL)
+        return _permissionsString
 
     def __preinit__(self):
         if not os.path.exists(CONFIG_FILE):
@@ -420,23 +419,14 @@ class Config:
             # we checkk the validity of the rest of confs !
             if 'settings' not in self.conf.keys() or 'apps' not in self.conf.keys():
                 exit(DW_EXIT_REASONS.CONF_FILE_KEYS_VALUES_WRONG)
-
-            # # Build first !
-            # for k in self.conf['build']:
-            #     _ = self.conf['build'][k]
-            #     if 'database' not in _ or 'launchMode' not in _ or 'path' not in _:
-            #         exit(DW_EXIT_REASONS.CONF_FILE_APP_VALUES_WRONG)
-            #     else:
-            #         # null checks 
-            #         if _['database'] == None or _['database'] == "":
-            #             exit(DW_EXIT_REASONS.CONF_FILE_APP_DB_EMPTY)
-            #         if _['path'] == None or _['path'] == "":
-            #             exit(DW_EXIT_REASONS.CONF_FILE_APP_PATH_EMPTY)
-            #         if _['launchMode'] == None or _['launchMode'] == "":
-            #             exit(DW_EXIT_REASONS.CONF_FILE_APP_LMODE_EMPTY)
-                    
-            # PRINTLN("[+] Config file validated !")
-    
+            
+            _shared_permissions = self.conf['settings'].get('sharedPermissions')
+            if not _shared_permissions:
+                PRINTLN("[!] WARNING : No permissions were found at conf.settings.sharedPermissions.")
+                self.conf['gen::permissions'] = ''
+            else:
+                PRINTLN("[~] Validating shared Permissions ... ")
+                self.conf['gen::permissions'] = Config.validate_manifest_permissions(_shared_permissions)
 
     def __patch_version__(self, v):
         '''v=Version , Patch the version!'''
@@ -662,44 +652,7 @@ class Config:
             exit(DW_EXIT_REASONS.WRONG_ENV_USED)
 
         self.user_args['lmode'] = self.__get_arg_value__('env=')
-        # if _:
-        #     if _ not in self.conf['settings']['envs'].keys():
-        #         PRINTLN(f'[!] env={_} : Invalid environment used !')
-        #         exit(DW_EXIT_REASONS.WRONG_ENV_USED)
-
-        #      = self.conf['settings']['envs'][_]['lmode']
-
-        #     # check if lmode was tampered
-        #     if self.user_args['lmode'] not in POSSIBLE_LMODES:
-        #         PRINTLN(f'[!] lmode={self.user_args["lmode"]} : Error This launch mode is wrong !')
-        #         exit(DW_EXIT_REASONS.CONF_FILE_LMODENAME_WRONG)
-
-        
-        #     PRINTLN(f"[+] You are using globals::{_} with :")
-        #     PRINTLN(f"\t\t|_ Lmode => {self.user_args['lmode']}")
-
-        # Else get default lmode / db if not given by user.
-        # else:
-        #     self.user_args['lmode'] = DEFAULTS['LMODE']
-            # _ = self.__get_arg_value__('lmode=')
-            # if _:
-            #     if _ not in POSSIBLE_LMODES:
-            #         PRINTLN(f'[!] lmode={_} : Error This launch mode is wrong !')
-            #         exit(DW_EXIT_REASONS.CONF_FILE_LMODENAME_WRONG)
-
-            #     self.user_args['lmode'] = _
-            # else:
-            #     self.user_args['lmode'] = self.conf[self.user_args['pymode']][self.user_args['app']]['launchMode']
-
-            # _ = self.__get_arg_value__('db=')
-            # if _:
-            #     if _ not in POSSIBLE_DBS:
-            #         PRINTLN(f'[!] db={_} : Error This database is wrong !')
-            #         exit(DW_EXIT_REASONS.CONF_FILE_DBNAME_WRONG)
-            #     self.user_args['db'] = _
-            # else:
-            #     self.user_args['db'] = self.conf[self.user_args['pymode']][self.user_args['app']]['database']
-        
+               
         # THIS IS LAUNCHER BASED BUILD
         # TODO : Implement that using class:Builder
         _ = self.__get_arg_value__('--build=')
@@ -707,16 +660,6 @@ class Config:
             if str(_).lower() not in ['apk' , 'appbundle' , 'ios']:
                 PRINTLN(f'[!] --build={_} : Error Platform unsupported yet!')
                 exit(DW_EXIT_REASONS.PLATFORM_NOT_SUPPORTED_YET)
-
-            # this is to force building with the  lmode::stage & db::test cuz that's the defaultValue Sat in flutterApp
-            # This is why i marked TODO above.
-
-            # if self.user_args['lmode'] != 'stage' and self.user_args['db'] != 'test':
-            #     PRINTLN(f'[!] --build={_} : Error - One of Lmode::{self.user_args["lmode"]} | Db::{self.user_args["db"] } not supported yet!')
-            #     exit(DW_EXIT_REASONS.BUILDING_LMODE_DB_NOT_SUPPORTED_YET)
-            # r = input("[!] Did you change the defaultLaunchMode and defaultDb in global.dart to the right ones ? y/n : ")
-            # if r.lower() != 'y':
-            #     exit(DW_EXIT_REASONS.NORMAL)
 
             v_ = self.__get_arg_value__('version=')
             if v_:
