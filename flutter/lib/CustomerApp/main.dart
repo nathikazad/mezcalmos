@@ -33,13 +33,16 @@ List<SideMenuItem> sideMenuItems = <SideMenuItem>[
 ];
 
 void main() {
-  runMainGuarded(() => runApp(StartingPoint(
-        appType: AppType.CustomerApp,
-        appTheme: CustomerAppTheme.lightTheme,
-        signInCallback: signInCallback,
-        signOutCallback: signOutCallback,
-        routes: routes,
-        sideMenuItems: sideMenuItems,
-        locationOn: true,
-      )));
+  runMainGuarded(
+      () => runApp(Sizer(builder: (context, orientation, deviceType) {
+            return StartingPoint(
+              appType: AppType.CustomerApp,
+              appTheme: CustomerAppTheme.lightTheme,
+              signInCallback: signInCallback,
+              signOutCallback: signOutCallback,
+              routes: routes,
+              sideMenuItems: sideMenuItems,
+              locationOn: true,
+            );
+          })));
 }
