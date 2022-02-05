@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:sizer/sizer.dart';
 
 class ServicesCard extends StatelessWidget {
   ServicesCard(
@@ -71,8 +71,8 @@ class ServicesCard extends StatelessWidget {
                 width: 15,
               ),
               Container(
-                width: 80.h,
-                height: 80.h,
+                width: 8.h,
+                height: 8.h,
                 child: Image.asset(
                   url,
                   fit: BoxFit.fill,

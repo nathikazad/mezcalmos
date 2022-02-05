@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/components/workinHoursCart.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
-import 'package:get/get.dart';
+import 'package:sizer/sizer.dart';
 
 final f = new DateFormat('hh:mma');
 
@@ -30,7 +30,7 @@ class RestaurantInfoTab extends StatelessWidget {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 15.h),
+              margin: EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 15),
               child: Text(restaurant.description[lang.userLanguageKey]!),
             ),
             (restaurant.location != null)
@@ -44,12 +44,12 @@ class RestaurantInfoTab extends StatelessWidget {
                       ),
                       Card(
                         child: Container(
-                          height: 250.h,
+                          height: 250,
                           width: double.infinity,
                         ),
                       ),
                       SizedBox(
-                        height: 10.h,
+                        height: 10,
                       ),
                     ],
                   )

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:sizer/sizer.dart';
 
 import 'DropDownListCartView.dart';
 
@@ -50,7 +50,7 @@ class OrderSummaryCard extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 9.h,
+              height:  10,
             ),
             //================Divider=======================
             Container(
@@ -60,11 +60,11 @@ class OrderSummaryCard extends StatelessWidget {
               color: Color.fromRGBO(229, 229, 229, 1),
             ),
             SizedBox(
-              height: 17.5.h,
+              height: 15,
             ),
             //==================Order cost :==================
             Container(
-              padding: EdgeInsets.only(bottom: 10.h),
+              padding: const EdgeInsets.only(bottom: 10),
               width: Get.width,
               child: Row(
                 children: [
@@ -157,7 +157,7 @@ class OrderSummaryCard extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 16.h,
+              height: 16,
             ),
             //=======================Delivery location :===========
             Container(

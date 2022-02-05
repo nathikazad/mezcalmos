@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sizer/sizer.dart';
 
 class IncrementalComponent extends StatefulWidget {
   final GestureTapCallback increment;

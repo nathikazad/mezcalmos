@@ -13,8 +13,7 @@ import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:http/http.dart' as http;
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:sizer/sizer.dart';
 class MGoogleMapController {
   RxSet<Polyline> polylines = <Polyline>{}.obs;
   RxList<Marker> markers = <Marker>[].obs;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:sizer/sizer.dart';
 
 class OrderDetailsCard extends StatelessWidget {
   const OrderDetailsCard({
@@ -38,7 +38,7 @@ class OrderDetailsCard extends StatelessWidget {
               style: txt.bodyText1,
             ),
             SizedBox(
-              height: 10.h,
+              height: 10,
             ),
             Row(
               children: [

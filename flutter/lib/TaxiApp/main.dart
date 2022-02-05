@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/route_manager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/appStart.dart';
@@ -10,22 +9,23 @@ import 'package:mezcalmos/TaxiApp/authHooks.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
 import 'package:mezcalmos/TaxiApp/theme.dart';
+import 'package:sizer/sizer.dart';
 
 Function signInCallback = AuthHooks.onSignInHook;
 Function signOutCallback = AuthHooks.onSignOutHook;
 List<GetPage<dynamic>> routes = XRouter.mainRoutes;
 
 void main() {
-  ScreenUtil.init(BoxConstraints(maxHeight: Get.height, maxWidth: Get.width));
+ 
   loadBitmaps();
-  runMainGuarded(() => runApp(
-        StartingPoint(
-            appType: AppType.TaxiApp,
-            signInCallback: signInCallback,
-            appTheme: TaxiAppTheme.lightTheme,
-            signOutCallback: signOutCallback,
-            routes: routes),
-      ));
+  runApp(
+    StartingPoint(
+        appType: AppType.TaxiApp,
+        signInCallback: signInCallback,
+        appTheme: TaxiAppTheme.lightTheme,
+        signOutCallback: signOutCallback,
+        routes: routes),
+  );
 }
 
 void loadBitmaps() async {
