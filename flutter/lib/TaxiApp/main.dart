@@ -9,23 +9,21 @@ import 'package:mezcalmos/TaxiApp/authHooks.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
 import 'package:mezcalmos/TaxiApp/theme.dart';
-import 'package:sizer/sizer.dart';
 
 Function signInCallback = AuthHooks.onSignInHook;
 Function signOutCallback = AuthHooks.onSignOutHook;
 List<GetPage<dynamic>> routes = XRouter.mainRoutes;
 
 void main() {
- 
   loadBitmaps();
-  runApp(
-    StartingPoint(
-        appType: AppType.TaxiApp,
-        signInCallback: signInCallback,
-        appTheme: TaxiAppTheme.lightTheme,
-        signOutCallback: signOutCallback,
-        routes: routes),
-  );
+  runMainGuarded(() => runApp(
+        StartingPoint(
+            appType: AppType.TaxiApp,
+            signInCallback: signInCallback,
+            appTheme: TaxiAppTheme.lightTheme,
+            signOutCallback: signOutCallback,
+            routes: routes),
+      ));
 }
 
 void loadBitmaps() async {

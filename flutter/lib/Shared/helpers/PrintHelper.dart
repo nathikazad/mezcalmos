@@ -1,7 +1,6 @@
 // Usefull when trying to make Sizes adptable!
 import 'dart:async';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 import 'package:intl/intl.dart';
 
 void mezDbgPrint(dynamic log) {
@@ -21,21 +20,19 @@ void mezcalmosLogger(String text, {bool isError = false}) =>
     mezDbgPrint("[MZL][ GETX ] $text");
 
 // This is to get all kind of exception in our code!
-// runMainGuarded(Function runMain) {
-//   ScreenUtil.init(BoxConstraints(maxHeight: Get.height, maxWidth: Get.width),
-//       splitScreenMode: false, minTextAdapt: true);
-//   runZonedGuarded(() async {
-//     runMain();
-//   }, (error, stacktrace) {
-//     mezDbgPrint("========== [ START MEZ EXCEPTION ] ==========");
-//     mezDbgPrint("\tError :\n");
-//     for (var line in error.toString().split("\n")) {
-//       mezDbgPrint(line);
-//     }
-//     mezDbgPrint("\tStackTrace :\n");
-//     for (var line in stacktrace.toString().split("\n")) {
-//       mezDbgPrint(line);
-//     }
-//     mezDbgPrint("========== [ END MEZ EXCEPTION ] ==========");
-//   });
-// }
+runMainGuarded(Function runMain) {
+  runZonedGuarded(() async {
+    runMain();
+  }, (error, stacktrace) {
+    mezDbgPrint("========== [ START MEZ EXCEPTION ] ==========");
+    mezDbgPrint("\tError :\n");
+    for (var line in error.toString().split("\n")) {
+      mezDbgPrint(line);
+    }
+    mezDbgPrint("\tStackTrace :\n");
+    for (var line in stacktrace.toString().split("\n")) {
+      mezDbgPrint(line);
+    }
+    mezDbgPrint("========== [ END MEZ EXCEPTION ] ==========");
+  });
+}
