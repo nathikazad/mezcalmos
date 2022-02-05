@@ -7,6 +7,7 @@ import 'package:mezcalmos/CustomerApp/theme.dart';
 import 'package:mezcalmos/Shared/appStart.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:sizer/sizer.dart';
 
@@ -32,16 +33,13 @@ List<SideMenuItem> sideMenuItems = <SideMenuItem>[
 ];
 
 void main() {
-  // mezDbgPrint("sTh3me@1: ${CustomerAppTheme.lightTheme}");
-  runApp(Sizer(builder: (context, orientation, deviceType) {
-    return StartingPoint(
-      appType: AppType.CustomerApp,
-      appTheme: CustomerAppTheme.lightTheme,
-      signInCallback: signInCallback,
-      signOutCallback: signOutCallback,
-      routes: routes,
-      sideMenuItems: sideMenuItems,
-      locationOn: true,
-    );
-  }));
+  runMainGuarded(() => runApp(StartingPoint(
+        appType: AppType.CustomerApp,
+        appTheme: CustomerAppTheme.lightTheme,
+        signInCallback: signInCallback,
+        signOutCallback: signOutCallback,
+        routes: routes,
+        sideMenuItems: sideMenuItems,
+        locationOn: true,
+      )));
 }
