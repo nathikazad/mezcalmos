@@ -42,25 +42,11 @@ class OrderSummaryCard extends StatelessWidget {
               alignment: Alignment.center,
               width: Get.width,
               child: Text(
-                "${lang.strings["customer"]["restaurant"]["cart"]["orderSummary"]}",
-                style: txt.headline2!.copyWith(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 16.sp,
-                ),
-              ),
+                  "${lang.strings["customer"]["restaurant"]["cart"]["orderSummary"]}",
+                  style: txt.headline3),
             ),
-            SizedBox(
-              height:  10,
-            ),
-            //================Divider=======================
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 10),
-              height: 1.5,
-              width: Get.width,
-              color: Color.fromRGBO(229, 229, 229, 1),
-            ),
-            SizedBox(
-              height: 15,
+            Divider(
+              height: 20,
             ),
             //==================Order cost :==================
             Container(
@@ -71,63 +57,42 @@ class OrderSummaryCard extends StatelessWidget {
                   Expanded(
                     child: Container(
                       child: Text(
-                        "${lang.strings["customer"]["restaurant"]["cart"]["orderCost"]} :",
-                        style: txt.headline3!.copyWith(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14.75.sp,
-                        ),
-                      ),
+                          "${lang.strings["customer"]["restaurant"]["cart"]["orderCost"]} :",
+                          style: txt.bodyText2),
                     ),
                   ),
                   Expanded(
                       child: Container(
                     alignment: Alignment.centerRight,
-                    child: Text(
-                      "\$$orderCost",
-                      style: txt.headline3!.copyWith(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14.75.sp,
-                      ),
-                    ),
+                    child: Text("\$$orderCost", style: txt.bodyText1),
                   ))
                 ],
               ),
             ),
             //=======================Delivery cost :===============
             Container(
-              padding: EdgeInsets.only(bottom: 10.h),
+              padding: EdgeInsets.only(bottom: 10),
               width: Get.width,
               child: Row(
                 children: [
                   Expanded(
                     child: Container(
                       child: Text(
-                        "${lang.strings["customer"]["restaurant"]["cart"]["deliveryCost"]} :",
-                        style: txt.headline3!.copyWith(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14.75.sp,
-                        ),
-                      ),
+                          "${lang.strings["customer"]["restaurant"]["cart"]["deliveryCost"]} :",
+                          style: txt.bodyText2),
                     ),
                   ),
                   Expanded(
                       child: Container(
                     alignment: Alignment.centerRight,
-                    child: Text(
-                      "\$$deliveryCost",
-                      style: txt.headline3!.copyWith(
-                        fontWeight: FontWeight.w500,
-                        decoration: TextDecoration.none,
-                        fontSize: 14.75.sp,
-                      ),
-                    ),
+                    child: Text("\$$deliveryCost", style: txt.bodyText1),
                   ))
                 ],
               ),
             ),
             //=======================Total cost : ==================
             Container(
-              padding: EdgeInsets.only(bottom: 10.h),
+              padding: EdgeInsets.only(bottom: 10),
               width: Get.width,
               child: Row(
                 children: [

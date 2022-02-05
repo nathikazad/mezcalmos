@@ -29,7 +29,7 @@ class ServicesCard extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.all(8),
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
                 width: 5,
@@ -42,8 +42,7 @@ class ServicesCard extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.all(3),
                       alignment: Alignment.centerLeft,
-                      child: Text("${title}",
-                          style: txt.headline1!.copyWith(fontSize: 20.sp)),
+                      child: Text("${title}", style: txt.headline2),
                     ),
                     //================ subtitle============
                     Container(
@@ -53,10 +52,8 @@ class ServicesCard extends StatelessWidget {
                       // padding:
                       //     subtitle == null ? EdgeInsets.only(left: 10) : null,
                       child: subtitle != null
-                          ? Text(
-                              "${subtitle}",
-                              style: txt.subtitle1!.copyWith(fontSize: 13.7.sp),
-                            )
+                          ? Text("${subtitle}",
+                              style: txt.subtitle1!.copyWith(fontSize: 12.sp))
                           : Text(
                               "${lang.strings['customer']['home']['laundry']["subtitle"]}",
                               style: txt.subtitle1!.copyWith(
@@ -71,8 +68,8 @@ class ServicesCard extends StatelessWidget {
                 width: 15,
               ),
               Container(
-                width: 8.h,
-                height: 8.h,
+                width: 20.w,
+                height: 20.w,
                 child: Image.asset(
                   url,
                   fit: BoxFit.fill,

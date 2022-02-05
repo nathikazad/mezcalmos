@@ -23,10 +23,8 @@ class _RestaurantsListItemsOfComponentState
     LanguageController lang = Get.find<LanguageController>();
     return InkWell(
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        margin: const EdgeInsets.symmetric(
-          horizontal: 15,
-        ),
+        padding: const EdgeInsets.all(8),
+        margin: const EdgeInsets.all(5),
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(8)),
         child: Row(
@@ -87,7 +85,7 @@ class _RestaurantsListItemsOfComponentState
                   ),
                   Container(
                     alignment: Alignment.centerLeft,
-                    child: Text("\$${widget.item.cost}", style: txt.headline1),
+                    child: Text("\$${widget.item.cost}", style: txt.headline2),
                   )
                 ],
               ),

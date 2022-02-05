@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-import 'package:sizer/sizer.dart';
 
 import 'components/RestaurantSliverAppbar.dart';
 import 'components/buildRestaurantsItems.dart';
@@ -66,14 +65,17 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
           body: TabBarView(children: [
             // -----------------------------FIRST TAB (MENU) --------------------------------------------//
             SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 20,
-                  ),
-                  buildResturantItems(restaurant!.items, restaurant!.id),
-                ],
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 10,
+                    ),
+                    buildResturantItems(restaurant!.items, restaurant!.id),
+                  ],
+                ),
               ),
             ),
             // -----------------------------SECOND TAB (INFOS) --------------------------------------------//
