@@ -123,7 +123,7 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
                             color: Colors.white,
                           ),
                           Text(Get.find<LanguageController>().strings['shared']
-                              ['buttonsTexts']['camera'])
+                              ['buttonsTexts']['gallery'])
                         ],
                       ))),
             ],
