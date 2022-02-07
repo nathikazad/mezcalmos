@@ -2,16 +2,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/constants/MezIcons.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MezSideMenu extends GetWidget<AuthController> {
   SideMenuDrawerController _drawerController =
@@ -51,49 +51,58 @@ class MezSideMenu extends GetWidget<AuthController> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
-                  height: 120.sp,
-                  width: 120.sp,
-                  child: ClipOval(
-                    clipBehavior: Clip.antiAlias,
-                    child: controller.user?.image == null ||
-                            controller.user?.image == ""
-                        ? Icon(
-                            Icons.account_circle_outlined,
-                            size: getSizeRelativeToScreen(285, sw, sh).sp,
-                          )
-                        // Image.asset(
-                        //     aDefaultAvatar,
-                        //     width: getSizeRelativeToScreen(300, sw, sh).sp,
-                        //     height: getSizeRelativeToScreen(300, sw, sh).sp,
-                        //     fit: BoxFit.contain,
-                        //   )
-                        : CachedNetworkImage(
-                            imageUrl: controller.user!.image!,
-                            fit: BoxFit.cover,
-                            imageBuilder: (context, imageProvider) => Container(
-                              width: getSizeRelativeToScreen(300, sw, sh).sp,
-                              height: getSizeRelativeToScreen(300, sw, sh).sp,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                    image: imageProvider, fit: BoxFit.cover),
-                              ),
-                            ),
-                            placeholder: (context, url) => Container(
-                              width: getSizeRelativeToScreen(300, sw, sh).sp,
-                              height: getSizeRelativeToScreen(300, sw, sh).sp,
-                              child: Center(
-                                child: CircularProgressIndicator(),
-                              ),
-                            ),
-                            errorWidget: (context, url, error) => Container(
-                                width: getSizeRelativeToScreen(300, sw, sh).sp,
-                                height: getSizeRelativeToScreen(300, sw, sh).sp,
-                                child: Center(child: Icon(Icons.error))),
-                          ),
-                  ),
+                CircleAvatar(
+                  radius: 60,
+                  backgroundImage: (controller.user?.image != null ||
+                          controller.user?.image != "")
+                      ? CachedNetworkImageProvider(
+                          controller.user!.image!,
+                        )
+                      : AssetImage(aDefaultAvatar) as ImageProvider,
                 ),
+                // Container(
+                //   height: 120.sp,
+                //   width: 120.sp,
+                //   child: ClipOval(
+                //     clipBehavior: Clip.antiAlias,
+                //     child: controller.user?.image == null ||
+                //             controller.user?.image == ""
+                //         ? Icon(
+                //             Icons.account_circle_outlined,
+                //             size: getSizeRelativeToScreen(285, sw, sh).sp,
+                //           )
+                //         // Image.asset(
+                //         //     aDefaultAvatar,
+                //         //     width: getSizeRelativeToScreen(300, sw, sh).sp,
+                //         //     height: getSizeRelativeToScreen(300, sw, sh).sp,
+                //         //     fit: BoxFit.contain,
+                //         //   )
+                //         : CachedNetworkImage(
+                //             imageUrl: controller.user!.image!,
+                //             fit: BoxFit.cover,
+                //             imageBuilder: (context, imageProvider) => Container(
+                //               width: getSizeRelativeToScreen(300, sw, sh).sp,
+                //               height: getSizeRelativeToScreen(300, sw, sh).sp,
+                //               decoration: BoxDecoration(
+                //                 shape: BoxShape.circle,
+                //                 image: DecorationImage(
+                //                     image: imageProvider, fit: BoxFit.cover),
+                //               ),
+                //             ),
+                //             placeholder: (context, url) => Container(
+                //               width: getSizeRelativeToScreen(300, sw, sh).sp,
+                //               height: getSizeRelativeToScreen(300, sw, sh).sp,
+                //               child: Center(
+                //                 child: CircularProgressIndicator(),
+                //               ),
+                //             ),
+                //             errorWidget: (context, url, error) => Container(
+                //                 width: getSizeRelativeToScreen(300, sw, sh).sp,
+                //                 height: getSizeRelativeToScreen(300, sw, sh).sp,
+                //                 child: Center(child: Icon(Icons.error))),
+                //           ),
+                //   ),
+                // ),
                 SizedBox(
                   height: 30.sp,
                 ),

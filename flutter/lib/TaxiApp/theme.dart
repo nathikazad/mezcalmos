@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sizer/sizer.dart';
 
 class TaxiAppTheme {
   static ThemeData get lightTheme {
@@ -57,7 +57,6 @@ class TaxiAppTheme {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         primary: Colors.white,
         backgroundColor: Color(0xFFAC59FC),
-        
         padding: EdgeInsets.all(2),
         textStyle: TextStyle(
           fontFamily: "Montserrat",

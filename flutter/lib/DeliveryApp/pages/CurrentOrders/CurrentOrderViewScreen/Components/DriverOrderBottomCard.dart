@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:sizer/sizer.dart';
 
 class DriverBottomOrderCard extends StatelessWidget {
   final Order order;
@@ -12,130 +12,154 @@ class DriverBottomOrderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
-    return Card(
-      child: Container(
-        width: double.infinity,
-        height: 100,
-        padding: const EdgeInsets.all(8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Order status',
-              style: textTheme.bodyText2,
-            ),
-            Divider(),
-            Row(
-              children: [
-                _getOrderWidget(context),
-                Flexible(
-                  flex: 2,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        _getOrderTitle(),
-                        style: textTheme.bodyText1,
-                      ),
-                      Row(
-                        children: [
-                          Icon(Icons.timelapse_outlined),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text(DateFormat('dd MMM yy h:m')
-                              .format(order.orderTime))
-                        ],
-                      )
-                    ],
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'Order status',
+                style: textTheme.bodyText2,
+              ),
+              Divider(),
+              Row(
+                children: [
+                  _getOrderWidget(context),
+                  Flexible(
+                    flex: 4,
+                    fit: FlexFit.tight,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          _getOrderTitle(),
+                          style: textTheme.headline3,
+                        ),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.schedule,
+                              size: 15,
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              DateFormat('dd MMM yy h:m')
+                                  .format(order.orderTime),
+                              style: textTheme.subtitle1,
+                            )
+                          ],
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                Spacer(),
-                IconButton(onPressed: () {}, icon: Icon(Icons.chat_bubble)),
-              ],
-            ),
-            Divider(),
-            // From to component
-            _orderFromToComponent(textTheme),
-            Divider(),
-            // Order bottom card footer component (to be refactored)
-            Flex(
-              direction: Axis.horizontal,
-              children: [
-                Flexible(
-                    flex: 2,
-                    child: TextButton(
-                        onPressed: () {}, child: Text('Confirm Pick-up'))),
-                Flexible(
-                  flex: 1,
-                  child: TextButton(
+                  Spacer(),
+                  IconButton(
                       onPressed: () {},
-                      style: TextButton.styleFrom(
-                          backgroundColor: Colors.redAccent),
-                      child: Text('Cancel')),
+                      icon: Icon(
+                        Icons.textsms_rounded,
+                        color: Theme.of(context).primaryColorLight,
+                      )),
+                ],
+              ),
+              Divider(),
+              // From to component
+              _orderFromToComponent(textTheme),
+              Divider(),
+              // Order bottom card footer component (to be refactored)
+              Flex(
+                direction: Axis.horizontal,
+                children: [
+                  Flexible(
+                      flex: 3,
+                      child: TextButton(
+                          onPressed: () {},
+                          child: Container(
+                              alignment: Alignment.center,
+                              padding: EdgeInsets.all(10),
+                              child: Text('Confirm Pick-up')))),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Flexible(
+                    flex: 1,
+                    child: TextButton(
+                        onPressed: () {},
+                        style: TextButton.styleFrom(
+                            backgroundColor: Colors.redAccent),
+                        child: Container(
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.all(10),
+                            child: Text('Cancel'))),
+                  ),
+                ],
+              ),
+              if (1 == 5)
+                Row(
+                  children: [
+                    Icon(
+                      Icons.check_circle,
+                      color: Colors.greenAccent,
+                      size: 30.sp,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Flexible(
+                        child: Column(
+                      children: [
+                        Text(
+                          'Order deliverd',
+                          style: textTheme.bodyText1,
+                        ),
+                        Text(
+                          DateFormat('dd MMM yy h:m').format(order.orderTime),
+                          style: textTheme.subtitle1,
+                        )
+                      ],
+                    ))
+                  ],
                 ),
-              ],
-            ),
-            if (1 == 5)
-              Row(
-                children: [
-                  Icon(
-                    Icons.check_circle,
-                    color: Colors.greenAccent,
-                    size: 30.sp,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Flexible(
-                      child: Column(
-                    children: [
-                      Text(
-                        'Order deliverd',
-                        style: textTheme.bodyText1,
-                      ),
-                      Text(
-                        DateFormat('dd MMM yy h:m').format(order.orderTime),
-                        style: textTheme.subtitle1,
-                      )
-                    ],
-                  ))
-                ],
-              ),
-            if (1 == 5)
-              Row(
-                children: [
-                  Icon(
-                    Icons.cancel,
-                    color: Colors.redAccent,
-                    size: 30.sp,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Flexible(
-                      child: Column(
-                    children: [
-                      Text(
-                        'Order canceled',
-                        style: textTheme.bodyText1,
-                      ),
-                      Text(
-                        DateFormat('dd MMM yy h:m').format(order.orderTime),
-                        style: textTheme.subtitle1,
-                      )
-                    ],
-                  ))
-                ],
-              ),
-            if (1 == 5)
-              TextButton(
-                  onPressed: () {},
-                  child: Container(
-                    alignment: Alignment.center,
-                    child: Text('Confirm delivery'),
-                  ))
-          ],
+              if (1 == 5)
+                Row(
+                  children: [
+                    Icon(
+                      Icons.cancel,
+                      color: Colors.redAccent,
+                      size: 30.sp,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Flexible(
+                        child: Column(
+                      children: [
+                        Text(
+                          'Order canceled',
+                          style: textTheme.bodyText1,
+                        ),
+                        Text(
+                          DateFormat('dd MMM yy h:m').format(order.orderTime),
+                          style: textTheme.subtitle1,
+                        )
+                      ],
+                    ))
+                  ],
+                ),
+              if (1 == 5)
+                TextButton(
+                    onPressed: () {},
+                    child: Container(
+                      alignment: Alignment.center,
+                      child: Text('Confirm delivery'),
+                    ))
+            ],
+          ),
         ),
       ),
     );
@@ -145,28 +169,28 @@ class DriverBottomOrderCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (order.serviceProvider != null)
-          Row(
-            children: [
-              CircleAvatar(
-                radius: 20,
-                backgroundImage:
-                    CachedNetworkImageProvider(order.serviceProvider!.image),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Column(
-                children: [
-                  Text(order.serviceProvider!.name),
-                ],
-              )
-            ],
-          ),
+        Row(
+          children: [
+            CircleAvatar(
+              radius: 20,
+              backgroundImage:
+                  CachedNetworkImageProvider(order.serviceProvider!.image),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Column(
+              children: [
+                Text(order.serviceProvider!.name),
+              ],
+            )
+          ],
+        ),
         Container(
           height: 30,
-          width: 10,
-          color: Colors.grey.shade300,
+          width: 3,
+          margin: EdgeInsets.only(left: 16),
+          color: Colors.grey.shade500,
         ),
         Row(
           children: [
@@ -179,8 +203,12 @@ class DriverBottomOrderCard extends StatelessWidget {
             ),
             Flexible(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(order.customer.name),
+                  Text(
+                    order.customer.name,
+                    style: textTheme.bodyText1,
+                  ),
                   Text(
                     order.to.address,
                     style: textTheme.subtitle1,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:sizer/sizer.dart';
 
 class OrderDetailsCard extends StatelessWidget {
   const OrderDetailsCard({

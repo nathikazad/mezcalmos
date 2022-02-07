@@ -1,7 +1,6 @@
 // Usefull when trying to make Sizes adptable!
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 Widget emptyOrWidgetSmallPhones({Widget? empty, required Widget child}) {
   if (Get.width > 320) {
@@ -17,12 +16,12 @@ Widget emptyOrWidgetSmallPhones({Widget? empty, required Widget child}) {
 }
 
 void responsiveSize(BuildContext context) {
-  ScreenUtil.init(
-      BoxConstraints(
-          maxWidth: MediaQuery.of(context).size.width,
-          maxHeight: MediaQuery.of(context).size.height),
-      designSize: Size(375, 667),
-      orientation: Orientation.portrait);
+  // ScreenUtil.init(
+  //     BoxConstraints(
+  //         maxWidth: MediaQuery.of(context).size.width,
+  //         maxHeight: MediaQuery.of(context).size.height),
+  //     designSize: Size(375, 667),
+  //     orientation: Orientation.portrait);
 }
 
 double getSizeRelativeToScreen(

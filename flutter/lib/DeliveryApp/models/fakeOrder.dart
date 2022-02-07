@@ -4,6 +4,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 class FakeOrder extends Order {
   FakeOrder({
     required String orderId,
+    required UserInfo serviceProvider,
     required String serviceProviderId,
     required PaymentType paymentType,
     required DateTime orderTime,
@@ -14,6 +15,7 @@ class FakeOrder extends Order {
   }) : super(
             orderId: orderId,
             orderType: orderType,
+            serviceProvider: serviceProvider,
             serviceProviderId: serviceProviderId,
             paymentType: paymentType,
             orderTime: orderTime,

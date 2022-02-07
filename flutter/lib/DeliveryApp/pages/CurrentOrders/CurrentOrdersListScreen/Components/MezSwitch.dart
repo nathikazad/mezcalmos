@@ -18,7 +18,7 @@ class MezSwitch extends StatefulWidget {
     required this.values,
     required this.onToggleCallback,
     required this.buttonSize,
-    this.backgroundColor = const Color(0xFFe7e7e8),
+    required this.backgroundColor,
     this.buttonColor = const Color(0xFFFFFFFF),
     this.textColor = const Color(0xFF000000),
   });
@@ -58,13 +58,7 @@ class _MezSwitchState extends State<MezSwitch> {
             child: Container(
               height: 80,
               decoration: ShapeDecoration(
-                // color: Colors.black,
-                gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    colors: <Color>[
-                      Color.fromARGB(10, 81, 133, 255),
-                      Color.fromARGB(10, 207, 73, 252)
-                    ]),
+                color: widget.backgroundColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(Get.width * 0.1),
                 ),

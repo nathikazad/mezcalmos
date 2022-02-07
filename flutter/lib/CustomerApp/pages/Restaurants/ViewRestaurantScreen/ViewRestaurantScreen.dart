@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:sizer/sizer.dart';
 
 import 'components/RestaurantSliverAppbar.dart';
 import 'components/buildRestaurantsItems.dart';
-import 'package:intl/intl.dart';
-
 import 'components/restaurantInfoTab.dart';
 
 final f = new DateFormat('hh:mm a');

@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:sizer/sizer.dart';
 
 class DriverOrderCard extends StatelessWidget {
   final Order order;
@@ -14,7 +16,9 @@ class DriverOrderCard extends StatelessWidget {
     return Card(
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
-        onTap: () {},
+        onTap: () {
+          Get.toNamed(getCurrentOrderRoute(order.orderId));
+        },
         child: Ink(
           width: double.infinity,
           padding: const EdgeInsets.all(8),

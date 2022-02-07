@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sizer/sizer.dart';
 
 class DeliveryAppTheme {
   static ThemeData get lightTheme {
@@ -60,7 +60,7 @@ class DeliveryAppTheme {
         padding: EdgeInsets.all(2),
         textStyle: TextStyle(
           fontFamily: "Montserrat",
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w600,
           fontSize: 14.sp,
           color: Colors.white,
         ),
