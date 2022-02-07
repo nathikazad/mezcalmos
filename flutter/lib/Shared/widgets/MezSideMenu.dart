@@ -12,6 +12,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:sizer/sizer.dart';
+
 class MezSideMenu extends GetWidget<AuthController> {
   SideMenuDrawerController _drawerController =
       Get.find<SideMenuDrawerController>();
@@ -51,8 +52,8 @@ class MezSideMenu extends GetWidget<AuthController> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  height: 120.sp,
-                  width: 120.sp,
+                  height: 100.sp,
+                  width: 100.sp,
                   child: ClipOval(
                     clipBehavior: Clip.antiAlias,
                     child: controller.user?.image == null ||
@@ -94,18 +95,16 @@ class MezSideMenu extends GetWidget<AuthController> {
                   ),
                 ),
                 SizedBox(
-                  height: 30.sp,
+                  height: 30,
                 ),
                 Container(
                   child: Text(
                     controller.user?.name ?? tDefaultUserName,
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontFamily: 'psb', fontSize: 25.5.sp),
+                    style: TextStyle(fontFamily: 'psb', fontSize: 18.5.sp),
                   ),
                 ),
-                SizedBox(
-                  height: 50.sp,
-                )
+                SizedBox(height: 50)
               ],
             ),
             Column(
@@ -121,12 +120,12 @@ class MezSideMenu extends GetWidget<AuthController> {
                         leading: Icon(
                           Icons.account_circle_outlined,
                           color: Color.fromARGB(255, 103, 121, 254),
-                          size: 25.sp,
+                          size: 22.sp,
                         ),
                         title: Text(
                             lang.strings['shared']['navDrawer']["userInfo"],
                             style:
-                                TextStyle(fontFamily: 'psb', fontSize: 16.sp)),
+                                TextStyle(fontFamily: 'psb', fontSize: 13.sp)),
                       )
                     : SizedBox()),
 
@@ -146,13 +145,13 @@ class MezSideMenu extends GetWidget<AuthController> {
                         leading: Icon(
                           MezcalmosIcons.power_off,
                           color: Color.fromARGB(255, 103, 121, 254),
-                          size: 25.sp,
+                          size: 22.sp,
                         ),
                         title: Obx(
                           () => Text(
                             lang.strings['shared']['navDrawer']["logout"],
                             style:
-                                TextStyle(fontFamily: 'psb', fontSize: 16.sp),
+                                TextStyle(fontFamily: 'psb', fontSize: 13.sp),
                           ),
                         ))
                     : SizedBox()),
@@ -162,12 +161,12 @@ class MezSideMenu extends GetWidget<AuthController> {
                     leading: Icon(
                       Icons.lock_sharp,
                       color: Color.fromARGB(255, 103, 121, 254),
-                      size: 25.sp,
+                      size: 22.sp,
                     ),
                     title: Obx(
                       () => Text(
                         lang.strings['shared']['navDrawer']["legal"],
-                        style: TextStyle(fontFamily: 'psb', fontSize: 16.sp),
+                        style: TextStyle(fontFamily: 'psb', fontSize: 13.sp),
                       ),
                     )),
                 Obx(() => ListTile(
@@ -176,15 +175,15 @@ class MezSideMenu extends GetWidget<AuthController> {
                       _drawerController.closeMenu();
                     },
                     leading: Container(
-                      height: 31.sp,
-                      width: 31.sp,
+                      height: 22.sp,
+                      width: 22.sp,
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           image: DecorationImage(
                               image: AssetImage(lang.oppositFlag))),
                     ),
                     title: Text(lang.oppositToLang,
-                        style: TextStyle(fontFamily: 'psb', fontSize: 16.sp)))),
+                        style: TextStyle(fontFamily: 'psb', fontSize: 13.sp)))),
               ],
             ),
           ],

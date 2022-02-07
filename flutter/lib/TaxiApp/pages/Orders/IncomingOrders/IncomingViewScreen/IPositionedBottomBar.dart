@@ -19,7 +19,6 @@ class IncomingPositionedBottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    responsiveSize(context);
     return Positioned(
         left: 10,
         right: 10,
@@ -61,7 +60,7 @@ class IncomingPositionedBottomBar extends StatelessWidget {
                             scale: 1.5.sp,
                             child: Container(
                               height: 10.sp,
-                              width: 20.sp,
+                              width: 10.sp,
                               decoration: BoxDecoration(
                                   image: DecorationImage(
                                 image: AssetImage(money_asset),
@@ -72,9 +71,9 @@ class IncomingPositionedBottomBar extends StatelessWidget {
                         width: 10,
                       ),
                       Text(
-                        order.cost.toString(),
+                        " \$${order.cost.toString()}",
                         style: TextStyle(
-                            fontSize: 16.sp,
+                            fontSize: 13.sp,
                             fontFamily: 'psb',
                             color: Colors.black),
                       ),
@@ -100,7 +99,7 @@ class IncomingPositionedBottomBar extends StatelessWidget {
                         children: [
                           Icon(
                             MezcalmosIcons.stopwatch,
-                            size: 16,
+                            size: 12.sp,
                           ),
                           SizedBox(
                             width: 10.sp,
@@ -111,7 +110,7 @@ class IncomingPositionedBottomBar extends StatelessWidget {
                             softWrap: false,
                             maxLines: 1,
                             style: TextStyle(
-                                fontSize: 14.sp,
+                                fontSize: 11.sp,
                                 fontFamily: 'psr',
                                 color: Colors.black),
                           ),
@@ -122,7 +121,7 @@ class IncomingPositionedBottomBar extends StatelessWidget {
                         children: [
                           Icon(
                             MezcalmosIcons.route,
-                            size: 16,
+                            size: 12.sp,
                           ),
                           SizedBox(
                             width: 10.sp,
@@ -133,7 +132,7 @@ class IncomingPositionedBottomBar extends StatelessWidget {
                             softWrap: false,
                             maxLines: 1,
                             style: TextStyle(
-                                fontSize: 14.sp,
+                                fontSize: 11.sp,
                                 fontFamily: 'psr',
                                 color: Colors.black),
                           ),
@@ -168,7 +167,7 @@ class IncomingPositionedBottomBar extends StatelessWidget {
           // radius: 1,
         ),
         SizedBox(
-          width: 5.sp,
+          width: 5,
         ),
         Expanded(
           child: Column(
@@ -180,7 +179,7 @@ class IncomingPositionedBottomBar extends StatelessWidget {
                   child: Text(
                     order.customer.name,
                     style: TextStyle(
-                      fontSize: 16.sp,
+                      fontSize: 12.sp,
                       fontFamily: 'psb',
                     ),
                     overflow: TextOverflow.ellipsis,
@@ -194,7 +193,7 @@ class IncomingPositionedBottomBar extends StatelessWidget {
                   softWrap: false,
                   maxLines: 1,
                   style: TextStyle(
-                      fontSize: 14.sp, fontFamily: 'psr', color: Colors.grey),
+                      fontSize: 10.sp, fontFamily: 'psb', color: Colors.grey),
                 ),
               ]),
         )

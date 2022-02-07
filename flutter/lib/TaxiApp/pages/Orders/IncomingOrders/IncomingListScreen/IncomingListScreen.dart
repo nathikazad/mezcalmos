@@ -75,7 +75,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
                   lang.strings['taxi']['incoming']["title"],
                   style: TextStyle(
                       // fontSize: getSizeRelativeToScreen(70, sw, sh),
-                      fontSize: 38.5.sp,
+                      fontSize: 25.5.sp,
                       fontFamily: 'psr'),
                 ),
               ),
@@ -151,8 +151,6 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
     return [
       ..._userAvatarAndName(order),
       Positioned(
-        // bottom: 0,
-        // left: Get.width - 150,
         right: 10,
         top: 5,
         child: Row(
@@ -160,7 +158,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
           // direction: Axis.horizontal,
           children: [
             Transform.scale(
-                scale: 1.8,
+                scale: 1.9,
                 child: Container(
                   height: 10,
                   width: 50,
@@ -170,8 +168,8 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
                   )),
                 )),
             Text(
-              order.cost.toString(),
-              style: TextStyle(fontFamily: 'psb', fontSize: 16),
+              "\$${order.cost.toString()}",
+              style: TextStyle(fontFamily: 'psb', fontSize: 12.sp),
             )
           ],
         ),
@@ -199,7 +197,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
           top: 10,
           child: Text(
             order.customer.name,
-            style: TextStyle(fontFamily: 'psb', fontSize: 16),
+            style: TextStyle(fontFamily: 'psb', fontSize: 12.sp),
           )),
     ];
   }
@@ -214,19 +212,16 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
         runSpacing: 4.0, // gap between lines
         children: <Widget>[
           emptyOrWidgetSmallPhones(
-              child: Icon(MezcalmosIcons.map_marker,
-                  size: getSizeRelativeToScreen(32, Get.width.w, Get.height.h)
-                      .w)),
+              child: Icon(MezcalmosIcons.map_marker, size: 2.h)),
           emptyOrWidgetSmallPhones(
               child: Text(
             order.from.address.substring(0, 5) + "... ",
             overflow: TextOverflow.ellipsis,
             maxLines: 1,
             softWrap: false,
-            style: TextStyle(fontFamily: 'psr', fontSize: 14.sp),
+            style: TextStyle(fontFamily: 'psr', fontSize: 10.sp),
           )),
-          Icon(MezcalmosIcons.map_pin,
-              size: getSizeRelativeToScreen(32, Get.width.w, Get.height.h).w),
+          Icon(MezcalmosIcons.map_pin, size: 2.h),
           SizedBox(
             width: 2,
           ),
@@ -235,13 +230,12 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
             overflow: TextOverflow.ellipsis,
             maxLines: 1,
             softWrap: false,
-            style: TextStyle(fontFamily: 'psr', fontSize: 14.sp),
+            style: TextStyle(fontFamily: 'psr', fontSize: 10.sp),
           ),
           SizedBox(
             width: 5,
           ),
-          Icon(MezcalmosIcons.route,
-              size: getSizeRelativeToScreen(32, Get.width.w, Get.height.h).w),
+          Icon(MezcalmosIcons.route, size: 2.h),
           SizedBox(
             width: 2.w,
           ),
@@ -250,20 +244,19 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
             overflow: TextOverflow.ellipsis,
             maxLines: 1,
             softWrap: false,
-            style: TextStyle(fontFamily: 'psr', fontSize: 14.sp),
+            style: TextStyle(fontFamily: 'psr', fontSize: 10.sp),
           ),
           SizedBox(
             width: 5,
           ),
-          Icon(MezcalmosIcons.stopwatch,
-              size: getSizeRelativeToScreen(32, Get.width.w, Get.height.h).w),
+          Icon(MezcalmosIcons.stopwatch, size: 2.h),
           SizedBox(width: 2.w),
           Text(
             order.routeInformation.duration.shortTextVersion,
             overflow: TextOverflow.ellipsis,
             maxLines: 1,
             softWrap: false,
-            style: TextStyle(fontFamily: 'psr', fontSize: 14.sp),
+            style: TextStyle(fontFamily: 'psr', fontSize: 10.sp),
           )
         ],
       ),
@@ -296,7 +289,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
                 () => Text(
                   lang.strings['taxi']['incoming']["noOrdersTitle"],
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 25.5.sp, fontFamily: 'psr'),
+                  style: TextStyle(fontSize: 20.5.sp, fontFamily: 'psr'),
                 ),
               ),
               SizedBox(
@@ -307,7 +300,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
                   lang.strings['taxi']['incoming']["noOrdersDesc"],
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      fontSize: 16.sp,
+                      fontSize: 14.sp,
                       fontFamily: 'psr',
                       color: Color.fromARGB(255, 168, 168, 168)),
                 ),
@@ -345,7 +338,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
                 () => Text(
                   lang.strings['taxi']['incoming']["toggleTitle"],
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 25.5.sp, fontFamily: 'psr'),
+                  style: TextStyle(fontSize: 20.5.sp, fontFamily: 'psr'),
                 ),
               ),
               SizedBox(
@@ -356,7 +349,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
                   lang.strings['taxi']['incoming']["toggleDesc"],
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      fontSize: 16.sp,
+                      fontSize: 14.sp,
                       fontFamily: 'psr',
                       color: Color.fromARGB(255, 168, 168, 168)),
                 ),
@@ -374,10 +367,10 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
         child: Obx(() => Container(
               // color: Colors.black87,
               // height: Get.height * 0.33,
-              height: 50.sp,
-              width: 115.sp,
+              height: 41.sp,
+              width: 100.sp,
               child: MezSwitch(
-                buttonSize: Size(60.sp, 50.sp),
+                buttonSize: Size(55.sp, 55.sp),
                 initialPosition:
                     _taxiAuthController.taxiState?.isLooking ?? false,
                 values: ['ON', 'OFF'],
