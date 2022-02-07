@@ -6,6 +6,7 @@ import 'package:mezcalmos/DeliveryAdminApp/theme.dart';
 import 'package:mezcalmos/Shared/appStart.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:sizer/sizer.dart';
 
 const String defaultDb = "test";
 const String defaultLaunchMode = "stage";
@@ -16,12 +17,14 @@ List<GetPage<dynamic>> routes = XRouter.mainRoutes;
 
 void main() {
   runMainGuarded(() => runApp(
-        StartingPoint(
-            appType: AppType.DeliveryAdminApp,
-            appTheme: DeliveryAdminTheme.lightTheme,
-            signInCallback: signInCallback,
-            signOutCallback: signOutCallback,
-            routes: routes,
-            locationOn: false),
+        Sizer(builder: (context, orientation, deviceType) {
+          return StartingPoint(
+              appType: AppType.DeliveryAdminApp,
+              appTheme: DeliveryAdminTheme.lightTheme,
+              signInCallback: signInCallback,
+              signOutCallback: signOutCallback,
+              routes: routes,
+              locationOn: false);
+        }),
       ));
 }
