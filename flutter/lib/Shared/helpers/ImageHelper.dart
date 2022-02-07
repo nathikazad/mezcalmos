@@ -11,7 +11,8 @@ import 'dart:ui' as ui;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
-import 'package:sizer/sizer.dart';import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
@@ -122,7 +123,7 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
                             color: Colors.white,
                           ),
                           Text(Get.find<LanguageController>().strings['shared']
-                              ['buttonsTexts']['camera'])
+                              ['buttonsTexts']['gallery'])
                         ],
                       ))),
             ],
