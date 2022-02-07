@@ -14,6 +14,7 @@ import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:http/http.dart' as http;
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:sizer/sizer.dart';
+
 class MGoogleMapController {
   RxSet<Polyline> polylines = <Polyline>{}.obs;
   RxList<Marker> markers = <Marker>[].obs;
@@ -22,9 +23,9 @@ class MGoogleMapController {
   GoogleMapController? controller;
   LatLngBounds? bounds;
   Function? onMapTap;
-  final double mapZoomLvl = 12 / 10;
+  final double mapZoomLvl = 1.4;
 
-  RxDouble markersDefaultSize = (Get.height * 0.055).w.obs;
+  RxDouble markersDefaultSize = 16.w.obs;
 
   void setOnMapTap({required Function onTap}) {
     this.onMapTap = onTap;

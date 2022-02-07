@@ -212,7 +212,7 @@ class LocationPickerState extends State<LocationPicker> {
                       style: TextStyle(
                         fontFamily: 'psr',
                         color: Colors.white,
-                        fontSize: 18.sp,
+                        fontSize: 14.sp,
                       ))
                   : Container(
                       height: 20,
@@ -240,7 +240,7 @@ class LocationPickerState extends State<LocationPicker> {
             bottom: widget.locationPickerMapController
                     .blackScreenBottomTextMargin.value +
                 35,
-            left: (Get.width / 5.5).sp,
+            left: Get.width / 5.5,
             right: 10),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -263,7 +263,7 @@ class LocationPickerState extends State<LocationPicker> {
                 softWrap: true,
                 textAlign: TextAlign.start,
                 style: TextStyle(
-                    color: Colors.white, fontFamily: 'psb', fontSize: 20.sp),
+                    color: Colors.white, fontFamily: 'psb', fontSize: 15.sp),
               ),
             )
           ],

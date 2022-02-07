@@ -29,7 +29,7 @@ Widget rideCost(String estimatedPrice) {
                   fontFamily: "psr",
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
-                  fontSize: 15))));
+                  fontSize: 13.5.sp))));
 }
 
 Widget rightRouteInfos(TaxiRequest taxiRequest) {
@@ -86,7 +86,7 @@ Widget taxiAvatarAndName(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           CircleAvatar(
-            radius: 18.sp,
+            radius: 14.sp,
             child: ClipOval(
                 clipBehavior: Clip.antiAlias,
                 child: mLoadImage(
@@ -115,7 +115,7 @@ Widget taxiAvatarAndName(
                     child: Text(
                       name ?? order?.serviceProvider?.name ?? "Taxi",
                       style: TextStyle(
-                        fontSize: 16.sp,
+                        fontSize: 13.sp,
                         fontFamily: 'psb',
                       ),
                       overflow: TextOverflow.ellipsis,
@@ -130,7 +130,7 @@ Widget taxiAvatarAndName(
                           softWrap: false,
                           maxLines: 1,
                           style: TextStyle(
-                              fontSize: 14.sp,
+                              fontSize: 10.sp,
                               fontFamily: 'psr',
                               color: Colors.grey),
                         )

@@ -67,7 +67,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
               child: Material(
                 shape: CircleBorder(),
                 child: IconButton(
-                  iconSize: 18,
+                  iconSize: 13.sp,
                   splashRadius: 18,
                   tooltip: 'Decrease the price',
                   padding: EdgeInsets.zero,
@@ -95,13 +95,13 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
               '\$' +
                   widget.order.value!.toTaxiRequest().estimatedPrice.toString(),
               style: TextStyle(
-                  color: Colors.black, fontFamily: 'psb', fontSize: 20),
+                  color: Colors.black, fontFamily: 'psb', fontSize: 13.sp),
             ),
             Flexible(
               child: Material(
                 shape: CircleBorder(),
                 child: IconButton(
-                  iconSize: 18,
+                  iconSize: 13.sp,
                   splashRadius: 18,
                   tooltip: 'Increase the price',
                   padding: EdgeInsets.zero,
@@ -144,14 +144,16 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
               children: [
                 Icon(
                   MezcalmosIcons.route,
-                  size: 14,
+                  size: 11.sp,
                 ),
                 SizedBox(
                   width: 2.w,
                 ),
                 Text(
-                    taxiRequest.routeInformation?.distance.distanceStringInKm ??
-                        "-"),
+                  taxiRequest.routeInformation?.distance.distanceStringInKm ??
+                      "-",
+                  style: TextStyle(fontSize: 11.sp),
+                ),
               ],
             ),
           ),
@@ -159,13 +161,15 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
             children: [
               Icon(
                 MezcalmosIcons.stopwatch,
-                size: 14,
+                size: 11.sp,
               ),
               SizedBox(
                 width: 2.w,
               ),
-              Text(taxiRequest.routeInformation?.duration.longTextVersion ??
-                  "-"),
+              Text(
+                taxiRequest.routeInformation?.duration.longTextVersion ?? "-",
+                style: TextStyle(fontSize: 11.sp),
+              ),
             ],
           ),
         ],
@@ -180,14 +184,14 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Icon(Icons.mark_email_read, size: 19.sp),
+          Icon(Icons.mark_email_read, size: 14.sp),
           SizedBox(
             width: 10,
           ),
           Obx(
             () => Text(
               widget.order.value!.numberOfTaxiReadNotification().toString(),
-              style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
             ),
           )
         ],
