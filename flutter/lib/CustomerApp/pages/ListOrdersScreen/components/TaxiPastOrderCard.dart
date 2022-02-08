@@ -110,8 +110,7 @@ class TaxiPastOrderCard extends StatelessWidget {
                         ? Flexible(
                             child: Text(
                               getTaxiOrderStatus(order.status) +
-                                  ' at :' +
-                                  DateFormat(' hh:mm a')
+                                  DateFormat(': hh:mm a')
                                       .format(order.orderTime.toLocal()),
                               style: txt.bodyText1!.copyWith(fontSize: 11.sp),
                               overflow: TextOverflow.ellipsis,

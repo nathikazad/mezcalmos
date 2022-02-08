@@ -21,7 +21,7 @@ class OrderSummaryCard extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: Text(
             '${lang.strings["customer"]["restaurant"]["cart"]["totalCost"]}',
-            style: txt.headline3,
+            style: txt.bodyText1,
           ),
         ),
         Card(
@@ -35,10 +35,10 @@ class OrderSummaryCard extends StatelessWidget {
                   children: [
                     Text(
                       '${lang.strings["customer"]["restaurant"]["cart"]["deliveryCost"]}',
-                      style: txt.headline3,
+                      style: txt.bodyText1,
                     ),
                     Text('\$' + order.shippingCost.toString(),
-                        style: txt.headline2!),
+                        style: txt.bodyText1!),
                   ],
                 ),
                 Divider(
@@ -49,11 +49,11 @@ class OrderSummaryCard extends StatelessWidget {
                   children: [
                     Text(
                       '${lang.strings["customer"]["restaurant"]["cart"]["total"]}',
-                      style: txt.headline3,
+                      style: txt.bodyText1,
                     ),
                     Text(
                       '\$' + (order.cost).toStringAsFixed(0),
-                      style: txt.headline2,
+                      style: txt.bodyText1!.copyWith(fontSize: 14.sp),
                     ),
                   ],
                 ),
@@ -69,7 +69,7 @@ class OrderSummaryCard extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: Text(
             '${lang.strings["customer"]["restaurant"]["cart"]["deliveryLocation"]}',
-            style: txt.headline3,
+            style: txt.bodyText1,
           ),
         ),
         Card(

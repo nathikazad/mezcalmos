@@ -114,7 +114,7 @@ class CustomerAppTheme {
         ),
         bodyText1: TextStyle(
             fontFamily: "Montserrat",
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w600,
             fontSize: 12.sp,
             color: Colors.black),
         bodyText2: TextStyle(

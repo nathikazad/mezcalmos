@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:sizer/sizer.dart';
 
 class RestaurantsListItemsOfComponent extends StatefulWidget {
   RestaurantsListItemsOfComponent({Key? key, required this.item, this.function})
@@ -77,15 +78,14 @@ class _RestaurantsListItemsOfComponentState
                     alignment: Alignment.centerLeft,
                     child: Text(
                         "${widget.item.name[lang.userLanguageKey]!.capitalizeFirstofEach}",
-                        style: txt.headline3!
-                            .copyWith(color: Colors.grey.shade800)),
+                        style: txt.headline3!.copyWith(fontSize: 13.sp)),
                   ),
                   SizedBox(
                     height: 7,
                   ),
                   Container(
                     alignment: Alignment.centerLeft,
-                    child: Text("\$${widget.item.cost}", style: txt.headline2),
+                    child: Text("\$${widget.item.cost}", style: txt.headline3),
                   )
                 ],
               ),

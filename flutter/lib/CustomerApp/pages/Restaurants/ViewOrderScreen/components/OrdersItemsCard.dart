@@ -25,7 +25,7 @@ class OrderItemsCard extends StatelessWidget {
             margin: EdgeInsets.symmetric(horizontal: 8),
             child: Text(
               '${lang.strings["customer"]["restaurant"]["checkout"]["orderItems"]}',
-              style: txt.headline3,
+              style: txt.bodyText1,
             ),
           ),
           ListView.builder(
