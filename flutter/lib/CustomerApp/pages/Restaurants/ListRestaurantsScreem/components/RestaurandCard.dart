@@ -30,7 +30,7 @@ class RestaurantCard extends StatelessWidget {
         onTap: onClick,
         child: Container(
           width: double.infinity,
-          height: 120,
+          height: 145,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
