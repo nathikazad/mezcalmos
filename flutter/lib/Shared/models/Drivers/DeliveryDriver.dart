@@ -92,7 +92,7 @@ extension ParseDeliveryDriverTypeToString on DeliveryDriverType {
 }
 
 extension ParseStringToDeliveryDriverType on String {
-  DeliveryDriverType toLaundryOrderStatus() {
+  DeliveryDriverType toDeliveryDriverType() {
     return DeliveryDriverType.values.firstWhere(
         (e) => e.toFirebaseFormatString().toLowerCase() == this.toLowerCase());
   }

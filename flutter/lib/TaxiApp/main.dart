@@ -15,7 +15,6 @@ Function signOutCallback = AuthHooks.onSignOutHook;
 List<GetPage<dynamic>> routes = XRouter.mainRoutes;
 
 void main() {
-  ScreenUtil.init(BoxConstraints(maxHeight: Get.height, maxWidth: Get.width));
   loadBitmaps();
   runMainGuarded(() => runApp(
         StartingPoint(

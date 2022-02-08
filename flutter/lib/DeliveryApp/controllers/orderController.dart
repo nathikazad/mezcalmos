@@ -1,20 +1,15 @@
 import 'dart:async';
 
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
-import 'package:location/location.dart';
-import 'package:mezcalmos/DeliveryApp/models/fakeOrder.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/deliveryNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Location.dart' as loc;
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Shared/models/ServerResponse.dart';
-import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class OrderController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
@@ -54,7 +49,7 @@ class OrderController extends GetxController {
     });
 
     mezDbgPrint(
-        "Starting listening on inProcess : ${taxiInProcessOrderNode(_authController.fireAuthUser!.uid)}");
+        "Starting listening on inProcess : ${deliveryDriversInProcessOrdersNode(_authController.fireAuthUser!.uid)}");
     _currentOrdersListener?.cancel();
     _currentOrdersListener = _databaseHelper.firebaseDatabase
         .reference()
@@ -149,56 +144,6 @@ class OrderController extends GetxController {
         .forEach((notification) {
       _foregroundNotificationsController.removeNotification(notification.id);
     });
-  }
-
-  Future<ServerResponse> cancelOrder(String? reason) async {
-    HttpsCallable cancelTaxiFunction =
-        FirebaseFunctions.instance.httpsCallable('taxi-cancelFromDriver');
-    mezDbgPrint("Cancel Taxi Called");
-    try {
-      HttpsCallableResult response =
-          await cancelTaxiFunction.call(<String, dynamic>{'reason': reason});
-      var res = ServerResponse.fromJson(response.data);
-      mezDbgPrint(res.data);
-      mezDbgPrint(res.errorMessage);
-      mezDbgPrint(res.errorCode);
-      return res;
-    } catch (e) {
-      MezSnackbar("Notice ~", "Failed to Cancel the Taxi Request :( ");
-      mezDbgPrint("Exception happend in cancelTaxi : $e");
-      return ServerResponse(ResponseStatus.Error,
-          errorMessage: "Server Error", errorCode: "serverError");
-    }
-  }
-
-  Future<ServerResponse> onTheWayPickup() async {
-    mezDbgPrint("Start Taxi Called");
-    HttpsCallable startRideFunction =
-        FirebaseFunctions.instance.httpsCallable('taxi-startRide');
-    try {
-      HttpsCallableResult response = await startRideFunction.call({});
-      var res = ServerResponse.fromJson(response.data);
-      mezDbgPrint(res.data);
-      mezDbgPrint(res.errorMessage);
-      mezDbgPrint(res.errorCode);
-      return res;
-    } catch (e) {
-      return ServerResponse(ResponseStatus.Error,
-          errorMessage: "Server Error", errorCode: "serverError");
-    }
-  }
-
-  Future<ServerResponse> pickedUp() async {
-    mezDbgPrint("Finish Taxi Called");
-    HttpsCallable finishRideFunction =
-        FirebaseFunctions.instance.httpsCallable('taxi-finishRide');
-    try {
-      HttpsCallableResult response = await finishRideFunction.call();
-      return ServerResponse.fromJson(response.data);
-    } catch (e) {
-      return ServerResponse(ResponseStatus.Error,
-          errorMessage: "Server Error", errorCode: "serverError");
-    }
   }
 
   @override

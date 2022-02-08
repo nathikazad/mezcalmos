@@ -10,7 +10,6 @@ import 'package:mezcalmos/Shared/firebaseNodes/taxiNodes.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
-import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class OrderController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
@@ -156,7 +155,6 @@ class OrderController extends GetxController {
       mezDbgPrint(res.errorCode);
       return res;
     } catch (e) {
-      MezSnackbar("Notice ~", "Failed to Cancel the Taxi Request :( ");
       mezDbgPrint("Exception happend in cancelTaxi : $e");
       return ServerResponse(ResponseStatus.Error,
           errorMessage: "Server Error", errorCode: "serverError");
