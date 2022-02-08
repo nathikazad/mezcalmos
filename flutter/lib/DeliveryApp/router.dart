@@ -1,8 +1,8 @@
 import 'package:get/get.dart'; // getX
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/CurrentOrderViewScreen.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/CurrentOrdersListScreen.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/DeliveryApp/pages/DeliveryWrapper.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 const String kCurrentOrdersListRoute = '/currentOrders';
 const String kCurrentOrderViewRoute = '/currentOrders/:orderId';
@@ -18,8 +18,7 @@ class XRouter {
             name: kCurrentOrdersListRoute,
             page: () => CurrentOrdersListScreen()),
         GetPage(
-            name: kCurrentOrderViewRoute,
-            page: () => CurrentOrderViewScreen()),
+            name: kCurrentOrderViewRoute, page: () => CurrentOrderViewScreen()),
         GetPage(name: kHomeRoute, page: () => DeliveryWrapper()),
       ] +
       SharedRouter.sharedRoutes;

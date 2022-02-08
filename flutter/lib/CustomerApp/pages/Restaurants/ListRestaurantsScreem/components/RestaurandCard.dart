@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:intl/intl.dart';
+import 'package:sizer/sizer.dart';
 
 class RestaurantCard extends StatelessWidget {
   final Restaurant restaurant;

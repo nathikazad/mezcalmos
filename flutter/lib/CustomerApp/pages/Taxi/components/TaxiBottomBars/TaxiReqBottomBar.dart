@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:sizer/sizer.dart';
 
 class TaxiReqBottomBar extends StatefulWidget {
   final TaxiRequest taxiRequest;

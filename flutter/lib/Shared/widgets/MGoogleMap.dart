@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -7,10 +8,10 @@ import 'package:mezcalmos/Shared/constants/mapConstants.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
-import 'package:mezcalmos/Shared/models/Location.dart' as LocationModel;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/models/Location.dart' as LocationModel;
+import 'package:sizer/sizer.dart';
 
 class MGoogleMap extends StatefulWidget {
   final MapHelper.LocationChangesNotifier? notifyParentOfNewLocation;
@@ -163,8 +164,8 @@ class MGoogleMapState extends State<MGoogleMap> {
                     }
                   },
                   child: Container(
-                    height: 50.sp,
-                    width: 50.sp,
+                    height: 10.sp,
+                    width: 10.sp,
                     decoration: BoxDecoration(
                       color: Color(0xffffffff),
                       boxShadow: <BoxShadow>[

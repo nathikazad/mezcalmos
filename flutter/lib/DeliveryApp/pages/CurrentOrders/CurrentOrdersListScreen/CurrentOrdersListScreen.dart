@@ -1,24 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
-import 'package:mezcalmos/DeliveryApp/router.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/constants/MezIcons.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/DeliveryApp/components/DeliveryAppBar.dart';
 import 'package:mezcalmos/DeliveryApp/constants/assets.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
+import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
+import 'package:mezcalmos/DeliveryApp/router.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+import 'package:sizer/sizer.dart';
+
+import 'Components/DriverOrderCard.dart';
 import 'Components/MezSwitch.dart';
 import 'Components/NoScrollGlowBehaviour.dart';
-import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 
 class CurrentOrdersListScreen extends StatefulWidget {
   @override
@@ -27,7 +24,7 @@ class CurrentOrdersListScreen extends StatefulWidget {
 }
 
 class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
-  OrderController orderController = Get.put<OrderController>(OrderController());
+  OrderController orderController = Get.find<OrderController>();
   LanguageController lang = Get.find<LanguageController>();
   DeliveryAuthController _deliveryAuthController =
       Get.find<DeliveryAuthController>();
@@ -46,7 +43,6 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
         child: Scaffold(
             key: Get.find<SideMenuDrawerController>().getNewKey(),
             drawer: MezSideMenu(),
-            backgroundColor: Colors.white,
             appBar: DeliveryAppBar(AppBarLeftButtonType.Menu),
             body: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -55,69 +51,56 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                   // Header that has the title + ON-OFF toggler!
                   viewHeader(),
                   //the rest of the View Body
-                  viewBody()
+
+                  viewBody(),
                 ])));
   }
 
   Widget viewHeader() {
     return Container(
-      margin: EdgeInsets.only(
-          top: 15.sp,
-          left: getSizeRelativeToScreen(40.w, Get.width.w, Get.height.h),
-          right: getSizeRelativeToScreen(40.w, Get.width.w, Get.height.h)),
-      child: Container(
-        height: 100.sp,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Flexible(
-              child: Obx(
-                () => Text(
-                  lang.strings['taxi']['incoming']["title"],
-                  style: TextStyle(
-                      // fontSize: getSizeRelativeToScreen(70, sw, sh),
-                      fontSize: 38.5.sp,
-                      fontFamily: 'psr'),
-                ),
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Flexible(
+            flex: 2,
+            child: Obx(
+              () => Text(
+                lang.strings['taxi']['incoming']["title"],
+                style: Theme.of(context).textTheme.headline2,
               ),
             ),
-            onOffSwitcher()
-          ],
-        ),
+          ),
+          onOffSwitcher()
+        ],
       ),
     );
   }
 
   Widget viewBody() {
-    return Expanded(
-        child: Container(
-            margin: EdgeInsets.only(
-                top: 25.sp,
-                left: getSizeRelativeToScreen(40, Get.width.w, Get.height.h),
-                right: getSizeRelativeToScreen(40, Get.width.w, Get.height.h)),
-            child: Obx(() {
-              // if isLooking
-              if (_deliveryAuthController.deliveryDriverState?.isOnline ==
-                  true) {
-                // if there are Orders
-                if (orderController.currentOrders.length >= 1) {
-                  return MezcalmosNoGlowScrollConfiguration(ListView.builder(
-                      itemCount: orderController.currentOrders.length,
-                      itemBuilder: (ctx, i) {
-                        return Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 2),
-                            child: orderCard(orderController.currentOrders[i]));
-                      }));
-                } else {
-                  // if there are No Orders
-                  return noOrdersScreen();
-                }
-              } else {
-                // if not isLooking
-                return isNotLooking();
-              }
-            })));
+    return Expanded(child: Container(child: Obx(() {
+      // if isLooking
+      if (_deliveryAuthController.deliveryDriverState?.isOnline == true) {
+        // if there are Orders
+        if (orderController.currentOrders.length >= 1) {
+          return MezcalmosNoGlowScrollConfiguration(ListView.builder(
+              itemCount: orderController.currentOrders.length,
+              itemBuilder: (ctx, i) {
+                return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 2),
+                    child: DriverOrderCard(
+                        order: orderController.currentOrders[i]));
+              }));
+        } else {
+          // if there are No Orders
+          return noOrdersScreen();
+        }
+      } else {
+        // if not isLooking
+        return isNotLooking();
+      }
+    })));
   }
 
   /*   -------  [ Order Card ]  -------  */
@@ -249,6 +232,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
         child: Obx(() => Container(
               // color: Colors.black87,
               // height: Get.height * 0.33,
+
               height: 50.sp,
               width: 115.sp,
               child: MezSwitch(
@@ -265,12 +249,12 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                     _deliveryAuthController.turnOff();
                   }
                 },
+                backgroundColor: Colors.white,
                 buttonColor:
                     _deliveryAuthController.deliveryDriverState?.isOnline ==
                             true
                         ? Colors.green
                         : Colors.red,
-                backgroundColor: Colors.transparent,
                 textColor: const Color(0xFFFFFFFF),
               ),
             )));

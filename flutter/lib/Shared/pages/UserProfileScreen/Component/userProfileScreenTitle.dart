@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:sizer/sizer.dart';
 
 Widget userProfileScreenTitle() {
   LanguageController lang = Get.find<LanguageController>();

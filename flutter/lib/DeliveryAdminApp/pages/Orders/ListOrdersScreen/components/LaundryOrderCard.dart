@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:rive/rive.dart';
+import 'package:sizer/sizer.dart';
 
 class LaundryOrderCard extends StatelessWidget {
   final LaundryOrder order;

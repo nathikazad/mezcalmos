@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
@@ -9,6 +8,7 @@ import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
+import 'package:sizer/sizer.dart';
 
 class IncomingPositionedBottomBar extends StatelessWidget {
   // IncomingOrdersController controller = Get.find<IncomingOrdersController>();

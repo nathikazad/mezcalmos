@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
@@ -9,6 +8,7 @@ import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:sizer/sizer.dart';
 
 class LaundryOrderFooterCard extends StatefulWidget {
   const LaundryOrderFooterCard({Key? key, required this.order})

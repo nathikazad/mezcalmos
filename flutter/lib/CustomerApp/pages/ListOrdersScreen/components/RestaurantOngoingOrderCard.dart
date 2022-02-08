@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/OrderStatusCard.dart';
@@ -8,6 +7,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:sizer/sizer.dart';
 
 class RestaurantOngoingOrderCard extends StatelessWidget {
   const RestaurantOngoingOrderCard({
@@ -24,9 +24,7 @@ class RestaurantOngoingOrderCard extends StatelessWidget {
     return Card(
       child: InkWell(
         onTap: () {
-       
-              Get.toNamed(getRestaurantOrderRoute(order.orderId));
-          
+          Get.toNamed(getRestaurantOrderRoute(order.orderId));
         },
         borderRadius: BorderRadius.circular(10),
         child: Ink(

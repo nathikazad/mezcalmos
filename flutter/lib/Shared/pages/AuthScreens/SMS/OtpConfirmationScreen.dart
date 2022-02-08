@@ -1,17 +1,15 @@
 import 'dart:async';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:sizer/sizer.dart';
 
 class OtpConfirmationScreen extends GetView<AuthController> {
   LanguageController lang = Get.find<LanguageController>();

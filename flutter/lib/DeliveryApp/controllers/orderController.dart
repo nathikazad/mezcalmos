@@ -1,19 +1,19 @@
 import 'dart:async';
+
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
+import 'package:location/location.dart';
+import 'package:mezcalmos/DeliveryApp/models/fakeOrder.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
-import 'package:mezcalmos/Shared/firebaseNodes/deliveryNodes.dart';
+import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Location.dart' as loc;
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/firebaseNodes/taxiNodes.dart';
-import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
-import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
-import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class OrderController extends GetxController {
