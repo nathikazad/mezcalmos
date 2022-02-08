@@ -58,7 +58,6 @@ class MGoogleMapController {
 
   double _calculateMarkersSize() {
     var res = markersDefaultSize.value;
-    MezSnackbar("SizerUtils height", SizerUtil.height.toString());
 
     if (SizerUtil.height <= 868) {
       mezDbgPrint(

@@ -80,12 +80,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
               autoBack: false,
             ),
             body: LayoutBuilder(builder: (context, constraints) {
-              if (constraints.maxWidth != 0) {
-                // ScreenUtil.init(
-                //   constraints,
-                //   designSize: Size(375, 812),
-                // );
-              }
               return SingleChildScrollView(
                   child: ConstrainedBox(
                       constraints: BoxConstraints(
