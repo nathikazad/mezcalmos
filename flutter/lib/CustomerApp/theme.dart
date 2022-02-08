@@ -24,7 +24,7 @@ class CustomerAppTheme {
           titleTextStyle: TextStyle(
               fontFamily: "Poppins",
               fontWeight: FontWeight.w600,
-              fontSize: 18.sp,
+              fontSize: 17.sp,
               color: Colors.black),
           elevation: 0.2,
           centerTitle: true,
@@ -98,13 +98,13 @@ class CustomerAppTheme {
       textTheme: TextTheme(
         headline1: TextStyle(
             fontFamily: "Poppins",
-            fontWeight: FontWeight.w600,
-            fontSize: 20.sp,
+            fontWeight: FontWeight.w700,
+            fontSize: 18.sp,
             color: Colors.black),
         headline2: TextStyle(
             fontFamily: "Poppins",
             fontWeight: FontWeight.w600,
-            fontSize: 18.sp,
+            fontSize: 17.sp,
             color: Colors.black),
         headline3: TextStyle(
           fontFamily: "Montserrat",
@@ -114,16 +114,16 @@ class CustomerAppTheme {
         ),
         bodyText1: TextStyle(
             fontFamily: "Montserrat",
-            fontWeight: FontWeight.w600,
-            fontSize: 14.sp,
+            fontWeight: FontWeight.w500,
+            fontSize: 12.sp,
             color: Colors.black),
         bodyText2: TextStyle(
             fontFamily: "Nunito",
-            fontWeight: FontWeight.w600,
-            fontSize: 13.sp,
+            fontWeight: FontWeight.w400,
+            fontSize: 11.sp,
             color: Colors.black),
         subtitle1: TextStyle(
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w400,
             fontFamily: "Nunito",
             fontSize: 10.sp,
             color: Colors.black.withOpacity(0.8)),

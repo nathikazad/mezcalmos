@@ -37,7 +37,7 @@ class TaxiOngoingOrderCard extends StatelessWidget {
                   Stack(
                     children: [
                       CircleAvatar(
-                          radius: 30,
+                          radius: 25,
                           backgroundImage: mLoadImage(
                                   assetInCaseFailed:
                                       'assets/images/customer/taxi/taxiDriverImg.png',
@@ -48,7 +48,7 @@ class TaxiOngoingOrderCard extends StatelessWidget {
                           top: 0,
                           right: 0,
                           child: CircleAvatar(
-                              radius: 14,
+                              radius: 12,
                               backgroundColor: Colors.amber.shade500,
                               child: Icon(
                                 Icons.local_taxi_rounded,
@@ -163,13 +163,13 @@ Widget getTaxiOrderWidget(TaxiOrdersStatus status) {
     case TaxiOrdersStatus.CancelledByCustomer:
       return Icon(
         Icons.block,
-        size: 40.w,
+        size: 50,
         color: Colors.red,
       );
     case TaxiOrdersStatus.CancelledByCustomer:
       return Icon(
         Icons.block,
-        size: 40.w,
+        size: 50,
         color: Colors.red,
       );
     case TaxiOrdersStatus.LookingForTaxi:
@@ -207,14 +207,14 @@ Widget getTaxiOrderWidget(TaxiOrdersStatus status) {
     case TaxiOrdersStatus.Expired:
       return Icon(
         Icons.hourglass_disabled_sharp,
-        size: 40.w,
+        size: 50,
         color: Colors.grey,
       );
 
     default:
       return Icon(
         Ionicons.help,
-        size: 40.w,
+        size: 50,
         color: Colors.grey,
       );
   }

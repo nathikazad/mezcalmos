@@ -62,7 +62,7 @@ class OrderSummaryCard extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 10.h,
+          height: 10,
         ),
         Container(
           margin: EdgeInsets.all(8),

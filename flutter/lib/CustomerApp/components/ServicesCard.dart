@@ -18,7 +18,7 @@ class ServicesCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
+    final textTheme = Theme.of(context).textTheme;
     LanguageController lang = Get.find<LanguageController>();
     return Card(
       margin: EdgeInsets.all(5),
@@ -42,7 +42,7 @@ class ServicesCard extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.all(3),
                       alignment: Alignment.centerLeft,
-                      child: Text("${title}", style: txt.headline2),
+                      child: Text("${title}", style: textTheme.headline3),
                     ),
                     //================ subtitle============
                     Container(
@@ -52,13 +52,10 @@ class ServicesCard extends StatelessWidget {
                       // padding:
                       //     subtitle == null ? EdgeInsets.only(left: 10) : null,
                       child: subtitle != null
-                          ? Text("${subtitle}",
-                              style: txt.subtitle1!.copyWith(fontSize: 12.sp))
+                          ? Text("${subtitle}", style: textTheme.subtitle1)
                           : Text(
                               "${lang.strings['customer']['home']['laundry']["subtitle"]}",
-                              style: txt.subtitle1!.copyWith(
-                                  fontSize: 13.7.sp,
-                                  fontWeight: FontWeight.w700),
+                              style: textTheme.subtitle1,
                             ),
                     )
                   ],

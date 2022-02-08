@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:get/get.dart';
 
 import 'OrderItemsItemCard.dart';
 
@@ -29,6 +29,7 @@ class OrderItemsCard extends StatelessWidget {
             ),
           ),
           ListView.builder(
+            padding: EdgeInsets.zero,
             physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: items.length,

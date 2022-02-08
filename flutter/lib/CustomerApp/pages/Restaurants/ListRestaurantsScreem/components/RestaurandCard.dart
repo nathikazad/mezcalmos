@@ -30,7 +30,7 @@ class RestaurantCard extends StatelessWidget {
         onTap: onClick,
         child: Container(
           width: double.infinity,
-          height: 150,
+          height: 120,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,9 +54,6 @@ class RestaurantCard extends StatelessWidget {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
                       Spacer(),
                       Container(
                         alignment: Alignment.bottomLeft,
@@ -66,14 +63,17 @@ class RestaurantCard extends StatelessWidget {
                             Icon(
                               Icons.restaurant_menu,
                               color: Colors.deepPurple,
+                              size: 15,
                             ),
                             SizedBox(
                               width: 5,
                             ),
-                            Text(
-                              restaurant.items.length.toStringAsFixed(0) +
-                                  ' ${lang.strings["customer"]["restaurant"]["menu"]["items"]}',
-                              style: txt.bodyText2,
+                            Flexible(
+                              child: Text(
+                                restaurant.items.length.toStringAsFixed(0) +
+                                    ' ${lang.strings["customer"]["restaurant"]["menu"]["items"]}',
+                                style: txt.bodyText2,
+                              ),
                             )
                           ],
                         ),
