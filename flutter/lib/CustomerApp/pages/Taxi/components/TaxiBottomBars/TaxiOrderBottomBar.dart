@@ -242,7 +242,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
               description: lang.strings?['customer']?['taxiView']
                   ?['rideExpired'],
               order: widget.order.value!),
-          reCreateOrderBtn(widget.order.value!.toTaxiRequest())
+          RecreateOrderButton(taxiRequest: widget.order.value!.toTaxiRequest())
         ]);
         // widget.bottomPadding = 10.0;
         break;
@@ -257,7 +257,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
           messageBtn(
               order: widget.order.value!,
               margin: EdgeInsets.symmetric(horizontal: 6)),
-          reCreateOrderBtn(widget.order.value!.toTaxiRequest()),
+          RecreateOrderButton(taxiRequest: widget.order.value!.toTaxiRequest()),
         ]);
         // widget.bottomPadding = 10.0;
         break;
@@ -272,7 +272,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
                   "${Get.find<AuthController>().fireAuthUser!.displayName}'s ${lang.strings?['customer']?['taxiView']?['ride']}.",
               description: lang.strings?['customer']?['taxiView']
                   ?['rideCancelledByCustomer']),
-          reCreateOrderBtn(widget.order.value!.toTaxiRequest())
+          RecreateOrderButton(taxiRequest: widget.order.value!.toTaxiRequest())
         ]);
         // widget.bottomPadding = 10.0;
         break;

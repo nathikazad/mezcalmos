@@ -59,28 +59,25 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
       // set blackScreenBottom 110
       locationPickerController.blackScreenBottomTextMargin.value = 80;
 
-      GeoLoc.Location().getLocation().then((GeoLoc.LocationData locData) {
-        //taxiRequest.value.from = Location("", locData);
-        updateModelAndMarker(SearchComponentType.From, taxiRequest.value.from!);
-        locationPickerController.setLocation(taxiRequest.value.from!);
-        locationPickerController.addOrUpdateUserMarker(
-            markerId: SearchComponentType.From.toShortString(),
-            latLng: LatLng(taxiRequest.value.from!.latitude,
-                taxiRequest.value.from!.longitude));
+      updateModelAndMarker(SearchComponentType.From, taxiRequest.value.from!);
+      locationPickerController.setLocation(taxiRequest.value.from!);
+      locationPickerController.addOrUpdateUserMarker(
+          markerId: SearchComponentType.From.toShortString(),
+          latLng: LatLng(taxiRequest.value.from!.latitude,
+              taxiRequest.value.from!.longitude));
 
-        updateModelAndMarker(SearchComponentType.To, taxiRequest.value.to!);
-        locationPickerController.addOrUpdatePurpleDestinationMarker(
-            latLng: LatLng(taxiRequest.value.to!.position.latitude!,
-                taxiRequest.value.to!.position.longitude!));
-        locationPickerController.hideFakeMarker();
-        locationPickerController.setAnimateMarkersPolyLinesBounds(true);
-        locationPickerController.animateAndUpdateBounds();
-        updateRouteInformation()
-            .then((value) => locationPickerController.showConfirmButton());
+      updateModelAndMarker(SearchComponentType.To, taxiRequest.value.to!);
+      locationPickerController.addOrUpdatePurpleDestinationMarker(
+          latLng: LatLng(taxiRequest.value.to!.position.latitude!,
+              taxiRequest.value.to!.position.longitude!));
+      locationPickerController.hideFakeMarker();
+      locationPickerController.setAnimateMarkersPolyLinesBounds(true);
+      locationPickerController.animateAndUpdateBounds();
+      updateRouteInformation()
+          .then((value) => locationPickerController.showConfirmButton());
 
-        setState(() {
-          _pickedFromTo = true;
-        });
+      setState(() {
+        _pickedFromTo = true;
       });
     } else {
       locationPickerController.setOnMapTap(onTap: () {
