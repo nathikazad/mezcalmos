@@ -31,7 +31,6 @@ List<SideMenuItem> sideMenuItems = <SideMenuItem>[
 ];
 
 void main() {
-  ScreenUtil.init(BoxConstraints(maxHeight: Get.height, maxWidth: Get.width));
   runMainGuarded(() => runApp(
         StartingPoint(
           appType: AppType.CustomerApp,

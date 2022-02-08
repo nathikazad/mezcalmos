@@ -1,8 +1,8 @@
 import * as fcm from "../../utilities/senders/fcm"
 import { DeliveryAdmin } from "../models/DeliveryAdmin";
-import { ParticipantType } from "../models/Chat";
 import * as foreground from "../../utilities/senders/foreground";
-import { OrderNotification } from "../models/Notification";
+import { OrderNotification } from "../models/Generic/Notification";
+import { ParticipantType } from "../models/Generic/Chat";
 
 
 export async function notifyDeliveryAdmins(
