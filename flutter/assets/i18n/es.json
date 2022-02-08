@@ -82,8 +82,8 @@
                 "cancelOrderConfirm": "¿Estás segura de que deseas cancelar este pedido?"
             },
             "orderStatus": {
-                "orderCanceled":"Orden cancelada",
-                "orderDeliverd":"Pedido entregado",
+                "orderCanceled":"cancelada",
+                "orderDeliverd":"entregado",
                 "helperText":{
                     "preparing": "Tu pedido está siendo preparado por el restaurante.",
                     "readyForPickUp": "Su pedido está preparado y listo para ser recogido por el conductor de la entrega.",
@@ -98,8 +98,8 @@
                 "readyForPickUp": "Lista para recoger",
                 "onTheWay": "En camino",
                 "delivered": "Entregado",
-                "canceledByAdmin": "Cancelada Por Admin",
-                "canceledByCustomer": "Cancelada Por Cliente",
+                "canceledByAdmin": "Cancelada",
+                "canceledByCustomer": "Cancelada",
                 "recievied": "Recibida"
             },
             "cancelOrderDialog": {
@@ -243,7 +243,7 @@
                 "lookingForTaxi":"Buscando Taxi",
                 "inTransit":"Taxi en tránsito",
                 "droppedOff":"Dejado",
-                "expired":"Orden caducada"
+                "expired":"caducada"
             },
             "title": "Pedidos",
             "item": "Artículo|Artículos",

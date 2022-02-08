@@ -12,6 +12,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:sizer/sizer.dart';
 
 import 'components/BottomBarItemViewScreen.dart';
 import 'components/ChooseOneCheckBox.dart';
@@ -155,7 +156,10 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                     child: Text(
                         "${cartItem.value!.item.description![lang.userLanguageKey]!.inCaps}",
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyText2),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText2!
+                            .copyWith(fontSize: 12.sp)),
                   ),
                   SizedBox(
                     height: 20,
