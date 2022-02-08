@@ -229,8 +229,19 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                       "${Get.arguments ?? _phonePassed} -------------- $otpCode ");
                   ServerResponse? _resp = await controller.signInUsingOTP(
                       Get.arguments ?? _phonePassed, otpCode);
+                  switch (_resp?.success) {
+                    case null:
+                      clickedSignInOtp.value = false;
+                      break;
 
-                  clickedSignInOtp.value = false;
+                    case false:
+                      MezSnackbar(
+                          "Oops ..",
+                          Get.find<LanguageController>().strings['shared']
+                              ['login']['wrongOTPCode']);
+                      clickedSignInOtp.value = false;
+                      break;
+                  }
                 }
               : null,
           style: TextButton.styleFrom(
