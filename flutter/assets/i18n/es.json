@@ -317,7 +317,9 @@
             "otpSubtitleNumber": "Ingresa número telefónico",
             "submit": "ENVIAR",
             "twilioNote": "Al continuar, recibirá un código de verificación a su número de teléfono por SMS. Se pueden aplicar tarifas por mensajes y datos.",
-            "signInToMakeOrder": "Iniciar sesión para hacer el pedido"
+            "signInToMakeOrder": "Iniciar sesión para hacer el pedido",
+            "wrongOTPCode" :  "El código de confirmación es incorrecto, inténtelo de nuevo.",
+            "failedOTPConfirmRequest" : "La confirmación del código OTP falló :("
         },
         "messages": {
             "title": "Mensajes",

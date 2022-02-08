@@ -57,7 +57,8 @@ Notification newMessageNotification(String key, dynamic value) {
       title: value['sender']['name'],
       timestamp: DateTime.parse(value['time']),
       notificationType: NotificationType.NewMessage,
-      notificationAction: value["notificationAction"]?.toNotificationAction() ??
-          NotificationAction.ShowSnackbarOnlyIfNotOnPage,
+      notificationAction:
+          value["notificationAction"]?.toString().toNotificationAction() ??
+              NotificationAction.ShowSnackbarOnlyIfNotOnPage,
       variableParams: value);
 }
