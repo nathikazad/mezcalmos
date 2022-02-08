@@ -193,7 +193,8 @@ Notification newMessageNotification(String key, dynamic value) {
       timestamp: DateTime.parse(value['time']),
       notificationType: NotificationType.NewMessage,
       notificationAction:
-          value["notificationAction"].toString().toNotificationAction(),
+          value["notificationAction"]?.toString().toNotificationAction() ??
+              NotificationAction.ShowSnackbarOnlyIfNotOnPage,
       variableParams: value);
 }
 

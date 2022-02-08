@@ -40,13 +40,12 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
     TaxiOrdersStatus taxiOrderStatus) {
   LanguageController lang = Get.find<LanguageController>();
   return <String, dynamic>{
-        "title":
+    "title":
         "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["title"]}",
     "body":
         "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["body"]}",
-    "imgUrl":
-         "assets/images/cancel.png",
-      };
+    "imgUrl": "assets/images/cancel.png",
+  };
 }
 
 Notification newMessageNotification(String key, dynamic value) {
@@ -58,7 +57,7 @@ Notification newMessageNotification(String key, dynamic value) {
       title: value['sender']['name'],
       timestamp: DateTime.parse(value['time']),
       notificationType: NotificationType.NewMessage,
-      notificationAction:
-          (value["notificationAction"] as String).toNotificationAction(),
+      notificationAction: value["notificationAction"]?.toNotificationAction() ??
+          NotificationAction.ShowSnackbarOnlyIfNotOnPage,
       variableParams: value);
 }

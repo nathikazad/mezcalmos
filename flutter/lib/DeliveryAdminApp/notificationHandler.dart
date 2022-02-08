@@ -62,5 +62,6 @@ Notification newMessageNotification(String key, dynamic value) {
       notificationType: NotificationType.NewMessage,
       variableParams: value,
       notificationAction:
-          value["notificationAction"].toString().toNotificationAction());
+          value["notificationAction"]?.toString().toNotificationAction() ??
+              NotificationAction.ShowSnackbarOnlyIfNotOnPage);
 }

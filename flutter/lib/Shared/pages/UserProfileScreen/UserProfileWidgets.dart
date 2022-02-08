@@ -100,7 +100,7 @@ class UserProfileWidgetsClass {
                   SizedBox(height: 5),
                   Text(
                     _lang.strings['shared']['userInfo']['uploadPic'],
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.white, fontSize: 11.sp),
                   )
                 ],
               )
@@ -269,7 +269,7 @@ class UserProfileWidgetsClass {
             child: Center(
                 child: Text(
               _lang.strings['shared']['userInfo']['cancel'],
-              style: TextStyle(fontSize: 15.sp, color: Colors.purple.shade400),
+              style: TextStyle(fontSize: 12.sp, color: Colors.purple.shade400),
             )),
           ),
         ));
@@ -324,7 +324,7 @@ class UserProfileWidgetsClass {
                     ? Text(
                         _lang.strings['shared']['userInfo']['saveBtn'],
                         style: TextStyle(
-                            fontSize: 15.sp,
+                            fontSize: 12.sp,
                             color: userProfileController.didUserChangedInfos()
                                 ? Colors.white
                                 : Colors.grey.shade400),

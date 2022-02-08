@@ -57,14 +57,14 @@ class NotificationCard extends StatelessWidget {
                       children: [
                         Text(
                           notification.title,
-                          style: txt.bodyText1,
+                          style: txt.bodyText1!.copyWith(fontSize: 12.8.sp),
                         ),
                         SizedBox(
                           height: 5,
                         ),
                         Text(
                           notification.body,
-                          style: txt.bodyText2,
+                          style: txt.bodyText2!.copyWith(fontSize: 11.sp),
                         ),
                       ],
                     ),
@@ -79,14 +79,14 @@ class NotificationCard extends StatelessWidget {
                 children: [
                   Icon(
                     Ionicons.time_outline,
-                    size: 14.sp,
+                    size: 12.sp,
                   ),
                   SizedBox(
                     width: 5,
                   ),
                   Text(
                     "${f.format(notification.timestamp.toLocal())}",
-                    style: txt.subtitle1,
+                    style: txt.subtitle1!.copyWith(fontSize: 10.sp),
                   ),
                   Spacer(),
                   Icon(
