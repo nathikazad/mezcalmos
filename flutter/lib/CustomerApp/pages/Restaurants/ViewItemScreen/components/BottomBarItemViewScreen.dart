@@ -80,18 +80,21 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
           Container(
             child: Center(
                 child: Text(
-              "\$${widget.cartItem.value!.totalCost().toStringAsFixed(0)} ",
+              "\$${widget.cartItem.value!.totalCost().toInt()} ",
               style: txt.headline3,
             )),
           ),
           Spacer(),
           Flexible(
-            flex: 6,
+            flex: 5,
             fit: FlexFit.tight,
             child: TextButton(
-              style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                      Color.fromRGBO(172, 89, 252, 1))),
+              style: TextButton.styleFrom(
+                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                  textStyle: Theme.of(context)
+                      .textTheme
+                      .bodyText1!
+                      .copyWith(fontWeight: FontWeight.bold)),
               onPressed: () async {
                 if (auth.fireAuthUser != null) {
                   if (ViewItemScreenMode.AddItemMode == widget.mode) {

@@ -60,8 +60,8 @@ class CustomerAppTheme {
         padding: EdgeInsets.all(12),
         textStyle: TextStyle(
           fontFamily: "Montserrat",
-          fontWeight: FontWeight.w700,
-          fontSize: 15.sp,
+          fontWeight: FontWeight.w600,
+          fontSize: 14.sp,
           color: Colors.white,
         ),
       )),

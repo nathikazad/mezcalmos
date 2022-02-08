@@ -35,7 +35,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       // bottomNavigationBar: BottomAppBar(
       //   child: TextButton(
       //     child: Text('Click'),
@@ -84,9 +84,10 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
             ),
           ),
           Positioned(
-            bottom: MediaQuery.of(context).viewInsets.bottom,
+            // bottom: MediaQuery.of(context).viewInsets.bottom,
             left: 0,
             right: 0,
+            bottom: 0,
             child: SubmitButton(context),
           ),
         ],
