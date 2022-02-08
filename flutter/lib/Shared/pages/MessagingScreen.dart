@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
 import 'package:get/get.dart';
 // Extends GetView<MessagingController> after Nathik implements the controller
 import 'package:intl/intl.dart' as intl;
@@ -15,7 +14,7 @@ import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:sizer/sizer.dart';
 
 DateTime now = DateTime.now();
-String formattedDate = intl.DateFormat('dd-MM-yyyy').format(now);
+String formattedDate = intl.DateFormat('dd-MM-yyyy').format(now.toLocal());
 
 class MessagingScreen extends StatefulWidget {
   @override

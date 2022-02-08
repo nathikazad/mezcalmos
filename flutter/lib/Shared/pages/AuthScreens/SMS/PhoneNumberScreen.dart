@@ -36,6 +36,12 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      // bottomNavigationBar: BottomAppBar(
+      //   child: TextButton(
+      //     child: Text('Click'),
+      //     onPressed: () {},
+      //   ),
+      // ),
       appBar: AppBar(
         title: Text(
           'Sign in',
@@ -46,8 +52,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: ListView(
               children: [
                 SizedBox(
                   height: 5,
