@@ -142,10 +142,12 @@ class RestaurantOrderController extends GetxController {
     return _callRestaurantCloudFunction("readyForOrderPickup", orderId);
   }
 
+  // Need to be removed
   Future<ServerResponse> deliverOrder(String orderId) async {
     return _callRestaurantCloudFunction("deliverOrder", orderId);
   }
 
+  // Need to be removed
   Future<ServerResponse> dropOrder(String orderId) async {
     return _callRestaurantCloudFunction("dropOrder", orderId);
   }

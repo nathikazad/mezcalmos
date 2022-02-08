@@ -1,10 +1,10 @@
 
-import { Order, OrderType, PaymentType } from '../../shared/models/Order';
-import { UserInfo } from '../../shared/models/User';
-import { OrderNotification } from '../../shared/models/Notification';
-import { Location } from "../../shared/models/Generic";
+import { OrderType, PaymentType, TwoWayDeliverableOrder } from '../../Generic/Order';
+import { UserInfo } from '../../Generic/User';
+import { OrderNotification } from '../../Generic/Notification';
+import { Location } from "../../Generic/Generic";
 
-export interface LaundryOrder extends Order {
+export interface LaundryOrder extends TwoWayDeliverableOrder {
   notes?: string;
   weight?: number;
   status: LaundryOrderStatus;

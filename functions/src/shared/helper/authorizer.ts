@@ -1,6 +1,6 @@
 // async function 
 import { deliveryAdmins } from "../databaseNodes/deliveryAdmin";
-import { ServerResponse, ServerResponseStatus } from "../models/Generic";
+import { ServerResponse, ServerResponseStatus } from "../models/Generic/Generic";
 
 export async function checkDeliveryAdmin(adminId: string): Promise<ServerResponse | undefined> {
   let admin = (await deliveryAdmins(adminId).once('value')).val();

@@ -1,5 +1,5 @@
-import { AuthorizationStatus, Language } from "../../shared/models/Generic";
-import { UserInfo } from "../../shared/models/User";
+import { AuthorizationStatus, Language } from "../../Generic/Generic";
+import { UserInfo } from "../../Generic/User";
 
 export interface Details {
   description: Record<Language, string>;

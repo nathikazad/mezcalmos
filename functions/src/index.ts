@@ -30,8 +30,6 @@ export const restaurant = {
   checkoutCart: require("./restaurant/checkoutCart"),
   prepareOrder: restaurantStatusChange.prepareOrder,
   readyForOrderPickup: restaurantStatusChange.readyForPickupOrder,
-  deliverOrder: restaurantStatusChange.deliverOrder,
-  dropOrder: restaurantStatusChange.dropOrder,
   cancelOrderFromAdmin: restaurantStatusChange.cancelOrder,
   cancelOrderFromCustomer: require("./restaurant/cancelOrderFromCustomer")
 }
@@ -49,14 +47,22 @@ export const taxi = {
 import * as laundryStatusChange from './laundry/adminStatusChanges'
 export const laundry = {
   requestLaundry: require("./laundry/laundryRequest"),
-  otwPickupOrder: laundryStatusChange.otwPickupOrder,
-  pickedUpOrder: laundryStatusChange.pickedUpOrder,
-  atLaundryOrder: laundryStatusChange.atLaundryOrder,
   readyForDeliveryOrder: laundryStatusChange.readyForDeliveryOrder,
-  otwDeliveryOrder: laundryStatusChange.otwDeliveryOrder,
   cancelFromCustomer: require("./laundry/cancelLaundryFromCustomer"),
   cancelFromAdmin: laundryStatusChange.cancelOrder,
-  deliveredOrder: laundryStatusChange.deliveredOrder,
+}
+
+import * as laundryDelivery from './delivery/laundryStatusChange'
+import * as restaurantDelivery from './delivery/restaurantStatusChange'
+export const delivery = {
+  assignDriver: require("./delivery/assignDriver"),
+  restaurantStartDelivery: restaurantDelivery.startDelivery,
+  restaurantFinishDelivery: restaurantDelivery.finishDelivery,
+  laundryStartPickup: laundryDelivery.startPickup,
+  laundryFinishPickup: laundryDelivery.finishPickup,
+  laundryAtFacility: laundryDelivery.atFacility,
+  laundryStartDropoff: laundryDelivery.startDropoff,
+  laundryFinishDropoff: laundryDelivery.finishDropoff
 }
 
 // exports.submitAuthorizationRequest = functions.https.onCall(async (data, context) => {

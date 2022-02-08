@@ -1,4 +1,4 @@
-import { AuthorizationStatus, NotificationInfo } from "../Generic";
+import { AuthorizationStatus, NotificationInfo } from "../Generic/Generic";
 
 export interface State {
   authorizationStatus: AuthorizationStatus;

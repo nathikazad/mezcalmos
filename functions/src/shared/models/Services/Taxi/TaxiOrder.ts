@@ -1,8 +1,8 @@
-import { Order, OrderType } from "../Order"
-import { UserInfo } from "../User"
-import { OrderRequest } from "./OrderRequest"
-import { Location } from '../Generic';
-import { OrderNotification } from "../Notification";
+import { Order, OrderType } from "../../Generic/Order"
+import { UserInfo } from "../../Generic/User"
+import { TaxiOrderRequest } from "./TaxiOrderRequest"
+import { Location } from '../../Generic/Generic';
+import { OrderNotification } from "../../Generic/Notification";
 
 export interface TaxiOrder extends Order {
   from: Location,
@@ -16,9 +16,9 @@ export interface TaxiOrder extends Order {
   acceptRideTime?: string,
   startRideTime?: string,
   finishRideTime?: string,
-  driver: TaxiInfo;
   notificationStatus?: Record<string, NotificationStatus>;
   lock?: boolean;
+  driver?: TaxiInfo;
 }
 
 export interface TaxiInfo extends UserInfo {
@@ -43,7 +43,7 @@ export function orderInProcess(status: TaxiOrderStatus): boolean {
 }
 
 export function constructTaxiOrder(
-  orderRequest: OrderRequest,
+  orderRequest: TaxiOrderRequest,
   customer: UserInfo): TaxiOrder {
   let requestCopy: any = orderRequest;
   requestCopy.cost = orderRequest.estimatedPrice;

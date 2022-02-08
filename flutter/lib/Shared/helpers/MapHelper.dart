@@ -14,6 +14,18 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 typedef LocationChangesNotifier = void Function(LocModel.Location location);
 
+class RouteInformation {
+  String polyline;
+  RideDistance distance;
+  RideDuration duration;
+  RouteInformation(
+      {required this.polyline, required this.distance, required this.duration});
+
+  Map<String, dynamic> toJson() {
+    return {...distance.toJson(), ...duration.toJson(), "polyline": polyline};
+  }
+}
+
 class RideDistance {
   String distanceStringInKm;
   int distanceInMeters;

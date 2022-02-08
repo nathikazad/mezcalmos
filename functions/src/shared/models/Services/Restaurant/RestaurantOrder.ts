@@ -1,10 +1,10 @@
 
 import { Item, Cart } from './Cart';
-import { Order, OrderType } from '../../shared/models/Order';
-import { UserInfo } from '../../shared/models/User';
-import { OrderNotification } from '../../shared/models/Notification';
+import { DeliverableOrder, OrderType } from '../../Generic/Order';
+import { UserInfo } from '../../Generic/User';
+import { OrderNotification } from '../../Generic/Notification';
 
-export interface RestaurantOrder extends Order {
+export interface RestaurantOrder extends DeliverableOrder {
   quantity: number;
   notes?: number;
   status: RestaurantOrderStatus;

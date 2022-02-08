@@ -1,15 +1,15 @@
 import * as functions from "firebase-functions";
 import { isSignedIn } from "../shared/helper/authorizer";
-import { orderInProcess, LaundryOrder, LaundryOrderStatus, LaundryOrderStatusChangeNotification } from "./models/LaundryOrder";
+import { orderInProcess, LaundryOrder, LaundryOrderStatus, LaundryOrderStatusChangeNotification } from "../shared/models/Services/Laundry/LaundryOrder";
 import *  as rootDbNodes from "../shared/databaseNodes/root";
-import { OrderType } from "../shared/models/Order";
-import { ServerResponseStatus } from "../shared/models/Generic";
+import { OrderType } from "../shared/models/Generic/Order";
+import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { finishOrder } from "./helper";
 import { notifyDeliveryAdmins } from "../shared/notification/notifyDeliveryAdmin";
 import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
 import * as fcm from "../utilities/senders/fcm"
 import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
-import { NotificationAction, NotificationType } from "../shared/models/Notification";
+import { NotificationAction, NotificationType } from "../shared/models/Generic/Notification";
 
 // Customer Canceling
 export = functions.https.onCall(async (data, context) => {

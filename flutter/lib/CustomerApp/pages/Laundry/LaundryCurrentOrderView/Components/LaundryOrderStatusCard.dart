@@ -98,9 +98,9 @@ class LaundryOrderStatusCard extends StatelessWidget {
 }
 
 LanguageController lang = Get.find<LanguageController>();
-Widget getOrderWidget(LaundryOrdersStatus status) {
+Widget getOrderWidget(LaundryOrderStatus status) {
   switch (status) {
-    case LaundryOrdersStatus.CancelledByAdmin:
+    case LaundryOrderStatus.CancelledByAdmin:
       return Padding(
         padding: const EdgeInsets.only(right: 5.0),
         child: Icon(
@@ -110,7 +110,7 @@ Widget getOrderWidget(LaundryOrdersStatus status) {
         ),
       );
 
-    case LaundryOrdersStatus.CancelledByCustomer:
+    case LaundryOrderStatus.CancelledByCustomer:
       return Padding(
         padding: const EdgeInsets.only(right: 5.0),
         child: Icon(
@@ -120,7 +120,7 @@ Widget getOrderWidget(LaundryOrdersStatus status) {
         ),
       );
 
-    case LaundryOrdersStatus.OrderReceieved:
+    case LaundryOrderStatus.OrderReceieved:
       return Padding(
         padding: const EdgeInsets.only(right: 5.0),
         child: Icon(
@@ -129,7 +129,7 @@ Widget getOrderWidget(LaundryOrdersStatus status) {
           color: Colors.grey,
         ),
       );
-    case LaundryOrdersStatus.OtwPickup:
+    case LaundryOrderStatus.OtwPickup:
       return Container(
         height: 50,
         width: 60,
@@ -138,7 +138,7 @@ Widget getOrderWidget(LaundryOrdersStatus status) {
           fit: BoxFit.cover,
         ),
       );
-    case LaundryOrdersStatus.PickedUp:
+    case LaundryOrderStatus.PickedUp:
       return Padding(
         padding: const EdgeInsets.only(right: 5),
         child: Icon(
@@ -147,7 +147,7 @@ Widget getOrderWidget(LaundryOrdersStatus status) {
           color: Colors.grey,
         ),
       );
-    case LaundryOrdersStatus.AtLaundry:
+    case LaundryOrderStatus.AtLaundry:
       return Padding(
         padding: const EdgeInsets.only(right: 5.0),
         child: Icon(
@@ -157,7 +157,7 @@ Widget getOrderWidget(LaundryOrdersStatus status) {
         ),
       );
 
-    case LaundryOrdersStatus.ReadyForDelivery:
+    case LaundryOrderStatus.ReadyForDelivery:
       return Padding(
         padding: const EdgeInsets.only(right: 5.0),
         child: Icon(
@@ -166,7 +166,7 @@ Widget getOrderWidget(LaundryOrdersStatus status) {
           color: Color(0xFFAC59FC),
         ),
       );
-    case LaundryOrdersStatus.OtwDelivery:
+    case LaundryOrderStatus.OtwDelivery:
       return Container(
         height: 50,
         width: 60,
@@ -175,7 +175,7 @@ Widget getOrderWidget(LaundryOrdersStatus status) {
           fit: BoxFit.cover,
         ),
       );
-    case LaundryOrdersStatus.Delivered:
+    case LaundryOrderStatus.Delivered:
       return Padding(
         padding: const EdgeInsets.only(right: 5.0),
         child: Icon(
@@ -187,55 +187,55 @@ Widget getOrderWidget(LaundryOrdersStatus status) {
   }
 }
 
-String getOrderStatus(LaundryOrdersStatus status) {
+String getOrderStatus(LaundryOrderStatus status) {
   switch (status) {
-    case LaundryOrdersStatus.CancelledByAdmin:
+    case LaundryOrderStatus.CancelledByAdmin:
       return 'Order Canceled';
 
-    case LaundryOrdersStatus.CancelledByCustomer:
+    case LaundryOrderStatus.CancelledByCustomer:
       return 'Order Canceled';
 
-    case LaundryOrdersStatus.OrderReceieved:
+    case LaundryOrderStatus.OrderReceieved:
       return lang.strings['deliveryAdminApp']['laundry']['orderReceived'];
-    case LaundryOrdersStatus.OtwPickup:
+    case LaundryOrderStatus.OtwPickup:
       return lang.strings['deliveryAdminApp']['laundry']['otwPickUp'];
-    case LaundryOrdersStatus.PickedUp:
+    case LaundryOrderStatus.PickedUp:
       return lang.strings['deliveryAdminApp']['laundry']['pickedUp'];
-    case LaundryOrdersStatus.AtLaundry:
+    case LaundryOrderStatus.AtLaundry:
       return lang.strings['deliveryAdminApp']['laundry']['atLaundry'];
-    case LaundryOrdersStatus.ReadyForDelivery:
+    case LaundryOrderStatus.ReadyForDelivery:
       return lang.strings['deliveryAdminApp']['laundry']['readyForDelivery'];
-    case LaundryOrdersStatus.OtwDelivery:
+    case LaundryOrderStatus.OtwDelivery:
       return lang.strings['deliveryAdminApp']['laundry']['otwDelivery'];
-    case LaundryOrdersStatus.Delivered:
+    case LaundryOrderStatus.Delivered:
       return lang.strings['deliveryAdminApp']['laundry']['delivered'];
     default:
       return 'Unknown Status';
   }
 }
 
-String getOrderHelperText(LaundryOrdersStatus status) {
+String getOrderHelperText(LaundryOrderStatus status) {
   switch (status) {
-    case LaundryOrdersStatus.CancelledByAdmin:
+    case LaundryOrderStatus.CancelledByAdmin:
       return lang.strings['customer']['laundry']['orderHelper']
           ['cancelByAdmin'];
 
-    case LaundryOrdersStatus.CancelledByCustomer:
+    case LaundryOrderStatus.CancelledByCustomer:
       return lang.strings['customer']['laundry']['orderHelper']['cancelByUser'];
 
-    case LaundryOrdersStatus.OrderReceieved:
+    case LaundryOrderStatus.OrderReceieved:
       return lang.strings['customer']['laundry']['orderHelper']['received'];
-    case LaundryOrdersStatus.OtwPickup:
+    case LaundryOrderStatus.OtwPickup:
       return lang.strings['customer']['laundry']['orderHelper']['otwPickup'];
-    case LaundryOrdersStatus.PickedUp:
+    case LaundryOrderStatus.PickedUp:
       return lang.strings['customer']['laundry']['orderHelper']['pickedUp'];
-    case LaundryOrdersStatus.AtLaundry:
+    case LaundryOrderStatus.AtLaundry:
       return lang.strings['customer']['laundry']['orderHelper']['atLaundry'];
-    case LaundryOrdersStatus.ReadyForDelivery:
+    case LaundryOrderStatus.ReadyForDelivery:
       return lang.strings['customer']['laundry']['orderHelper']['ready'];
-    case LaundryOrdersStatus.OtwDelivery:
+    case LaundryOrderStatus.OtwDelivery:
       return lang.strings['customer']['laundry']['orderHelper']['otwDelivery'];
-    case LaundryOrdersStatus.Delivered:
+    case LaundryOrderStatus.Delivered:
       return lang.strings['customer']['laundry']['orderHelper']['delivered'];
     default:
       return 'Unknown Status';

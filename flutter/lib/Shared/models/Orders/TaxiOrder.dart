@@ -1,6 +1,8 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Drivers/TaxiDriver.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
@@ -27,18 +29,6 @@ extension ParseStringToOrderStatus on String {
   }
 }
 
-class RouteInformation {
-  String polyline;
-  RideDistance distance;
-  RideDuration duration;
-  RouteInformation(
-      {required this.polyline, required this.distance, required this.duration});
-
-  Map<String, dynamic> toJson() {
-    return {...distance.toJson(), ...duration.toJson(), "polyline": polyline};
-  }
-}
-
 class TaxiNotificationStatus {
   bool sent = true;
   num sentCount = 1;
@@ -55,7 +45,6 @@ class TaxiNotificationStatus {
 
 class TaxiOrder extends Order {
   Location from;
-  RouteInformation routeInformation;
   String? acceptRideTime;
   String? rideFinishTime;
   String? rideStartTime;
@@ -70,7 +59,7 @@ class TaxiOrder extends Order {
       required Location to,
       required DateTime orderTime,
       required PaymentType paymentType,
-      required this.routeInformation,
+      required RouteInformation routeInformation,
       TaxiUserInfo? driver,
       required this.acceptRideTime,
       required this.rideFinishTime,
@@ -85,10 +74,11 @@ class TaxiOrder extends Order {
             cost: cost,
             customer: customer,
             serviceProvider: driver,
-            to: to);
+            to: to,
+            routeInformation:routeInformation);
   // Get props as list.
   List<Object> get props =>
-      [orderId, from, to, orderTime, paymentType, routeInformation];
+      [orderId, from, to, orderTime, paymentType, routeInformation!];
 
   /// Convert [TaxiOrder] object to [TaxiRequest] object.
   TaxiRequest toTaxiRequest() {
@@ -128,7 +118,7 @@ class TaxiOrder extends Order {
 
     data["notificationStatus"]
         ?.forEach((dynamic uid, dynamic notificationStatus) {
-     try {
+      try {
         taxiOrder.notificationStatuses.add(TaxiNotificationStatus(
             sent: notificationStatus["sent"] ?? false,
             sentCount: notificationStatus["sentCount"] ?? 0,
@@ -180,35 +170,5 @@ class TaxiOrder extends Order {
     return this
         .notificationStatuses
         .fold<num>(0, (previousValue, element) => element.read ? 1 : 0);
-  }
-}
-
-class TaxiUserInfo extends UserInfo {
-  String taxiNumber;
-  String? sitio;
-  LatLng? location;
-
-  TaxiUserInfo(
-      {required String id,
-      required String name,
-      required String image,
-      required this.taxiNumber,
-      this.sitio,
-      required this.location})
-      : super(id, name, image);
-
-  factory TaxiUserInfo.fromData(dynamic data) {
-    // mezDbgPrint(" TaxiUserInfo.fromData ====> $data");
-    LatLng? location = data["location"] != null
-        ? LatLng(data["location"]["position"]["lat"],
-            data["location"]["position"]["lng"])
-        : null;
-    return TaxiUserInfo(
-        id: data["id"],
-        name: data["name"],
-        image: data["image"],
-        taxiNumber: data["taxiNumber"].toString(),
-        sitio: data["sitio"],
-        location: location);
   }
 }

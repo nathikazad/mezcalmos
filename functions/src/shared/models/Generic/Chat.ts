@@ -18,7 +18,8 @@ export enum ParticipantType {
   Taxi = "taxi",
   // TaxiAdmin = "taxiAdmin",
   DeliveryAdmin = "deliveryAdmin",
-  Restaurant = "restaurant"
+  Restaurant = "restaurant",
+  DeliveryDriver = "deliveryDriver"
 }
 
 export interface Participant extends UserInfo {

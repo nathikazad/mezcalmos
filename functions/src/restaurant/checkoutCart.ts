@@ -4,13 +4,13 @@
 // const hasura = new hasuraModule.Hasura(keys.hasura)
 
 import * as functions from "firebase-functions";
-import { Cart } from './models/Cart';
-import { constructRestaurantOrder, NewRestaurantOrderNotification, RestaurantOrder } from './models/RestaurantOrder';
-import { buildChatForOrder, Chat, ParticipantType } from "../shared/models/Chat";
-import { OrderType } from "../shared/models/Order";
-import { Restaurant } from "./models/Restaurant";
-import { UserInfo } from "../shared/models/User";
-import { ServerResponseStatus } from "../shared/models/Generic";
+import { Cart } from '../shared/models/Services/Restaurant/Cart';
+import { constructRestaurantOrder, NewRestaurantOrderNotification, RestaurantOrder } from '../shared/models/Services/Restaurant/RestaurantOrder';
+import { buildChatForOrder, Chat, ParticipantType } from "../shared/models/Generic/Chat";
+import { OrderType } from "../shared/models/Generic/Order";
+import { Restaurant } from "../shared/models/Services/Restaurant/Restaurant";
+import { UserInfo } from "../shared/models/Generic/User";
+import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 import * as restaurantNodes from "../shared/databaseNodes/restaurant";
 import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
 import * as customerNodes from "../shared/databaseNodes/customer";
@@ -21,7 +21,7 @@ import { isSignedIn } from "../shared/helper/authorizer";
 import { getRestaurant } from "./restaurantController";
 import { getUserInfo } from "../shared/controllers/rootController";
 import * as chatController from "../shared/controllers/chatController";
-import { NotificationAction, NotificationType } from "../shared/models/Notification";
+import { NotificationAction, NotificationType } from "../shared/models/Generic/Notification";
 import * as fcm from "../utilities/senders/fcm"
 
 export = functions.https.onCall(async (data, context) => {
@@ -52,42 +52,68 @@ export = functions.https.onCall(async (data, context) => {
     }
   }
 
-  let customerInfo: UserInfo = await getUserInfo(customerId);
-  const order: RestaurantOrder = constructRestaurantOrder({
-    cart: cart,
-    customer: customerInfo,
-    restaurant: restaurant.info,
+  let transactionResponse = await customerNodes.lock(customerId).transaction(function (lock) {
+    if (lock == true) {
+      return
+    } else {
+      return true
+    }
   })
 
-  let orderId: string = (await customerNodes.inProcessOrders(customerId).push(order)).key!;
-  restaurantNodes.inProcessOrders(cart.serviceProviderId, orderId).set(order);
-  rootNodes.inProcessOrders(OrderType.Restaurant, orderId).set(order);
-  await customerNodes.cart(customerId).remove();
+  if (!transactionResponse.committed) {
+    return {
+      status: ServerResponseStatus.Error,
+      errorMessage: 'Customer lock not available'
+    }
+  }
+
+  try {
+    let customerInfo: UserInfo = await getUserInfo(customerId);
+    const order: RestaurantOrder = constructRestaurantOrder({
+      cart: cart,
+      customer: customerInfo,
+      restaurant: restaurant.info,
+    })
+
+    let orderId: string = (await customerNodes.inProcessOrders(customerId).push(order)).key!;
+    restaurantNodes.inProcessOrders(cart.serviceProviderId, orderId).set(order);
+    rootNodes.inProcessOrders(OrderType.Restaurant, orderId).set(order);
+    await customerNodes.cart(customerId).remove();
 
 
-  let chat: Chat = await buildChatForOrder(customerId,
-    {
-      ...customerInfo,
-      particpantType: ParticipantType.Customer
-    },
-    cart.serviceProviderId,
-    {
-      ...restaurant.info,
-      particpantType: ParticipantType.Restaurant
-    },
-    OrderType.Restaurant);
+    let chat: Chat = await buildChatForOrder(customerId,
+      {
+        ...customerInfo,
+        particpantType: ParticipantType.Customer
+      },
+      cart.serviceProviderId,
+      {
+        ...restaurant.info,
+        particpantType: ParticipantType.Restaurant
+      },
+      OrderType.Restaurant);
 
-  await chatController.setChat(orderId, chat);
+    await chatController.setChat(orderId, chat);
 
-  deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
-    let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
-    addDeliveryAdminsToChat(deliveryAdmins, chat, orderId)
-    notifyDeliveryAdminsNewOrder(deliveryAdmins, orderId, restaurant.info)
-  })
+    deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
+      let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
+      addDeliveryAdminsToChat(deliveryAdmins, chat, orderId)
+      notifyDeliveryAdminsNewOrder(deliveryAdmins, orderId, restaurant.info)
+    })
 
-  return {
-    status: ServerResponseStatus.Success,
-    orderId: orderId
+    return {
+      status: ServerResponseStatus.Success,
+      orderId: orderId
+    }
+  } catch (e) {
+    functions.logger.error(e);
+    functions.logger.error(`Order request error ${customerId}`);
+    return {
+      status: ServerResponseStatus.Error,
+      orderId: "Order request error"
+    }
+  } finally {
+    await customerNodes.lock(customerId).remove();
   }
 })
 

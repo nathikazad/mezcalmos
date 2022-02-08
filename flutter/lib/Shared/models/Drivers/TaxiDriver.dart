@@ -1,6 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
 class TaxiState {
   bool isAuthorized;
@@ -52,4 +53,36 @@ class TaxiDriver {
         "lastLocationUpdateTime":
             lastLocationUpdateTime?.toUtc().toIso8601String()
       };
+}
+
+
+// Used by taxi order
+class TaxiUserInfo extends UserInfo {
+  String taxiNumber;
+  String? sitio;
+  LatLng? location;
+
+  TaxiUserInfo(
+      {required String id,
+      required String name,
+      required String image,
+      required this.taxiNumber,
+      this.sitio,
+      required this.location})
+      : super(id, name, image);
+
+  factory TaxiUserInfo.fromData(dynamic data) {
+    // mezDbgPrint(" TaxiUserInfo.fromData ====> $data");
+    LatLng? location = data["location"] != null
+        ? LatLng(data["location"]["position"]["lat"],
+            data["location"]["position"]["lng"])
+        : null;
+    return TaxiUserInfo(
+        id: data["id"],
+        name: data["name"],
+        image: data["image"],
+        taxiNumber: data["taxiNumber"].toString(),
+        sitio: data["sitio"],
+        location: location);
+  }
 }

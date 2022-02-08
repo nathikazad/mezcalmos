@@ -1,4 +1,4 @@
-import { fcmNotification } from "../../utilities/senders/fcm";
+import { fcmNotification } from "../../../utilities/senders/fcm";
 import { Language } from "./Generic";
 import { OrderType } from "./Order";
 import { UserInfo } from "./User";

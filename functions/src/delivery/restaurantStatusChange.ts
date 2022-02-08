@@ -2,38 +2,30 @@ import * as functions from "firebase-functions";
 import { AuthData } from "firebase-functions/lib/common/providers/https";
 import { ServerResponse, ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { OrderType } from "../shared/models/Generic/Order";
-import { orderInProcess, RestaurantOrderStatusChangeNotification, RestaurantOrder, RestaurantOrderStatus } from "../shared/models/Services/Restaurant/RestaurantOrder";
+import { RestaurantOrderStatusChangeNotification, RestaurantOrder, RestaurantOrderStatus } from "../shared/models/Services/Restaurant/RestaurantOrder";
 import * as restaurantNodes from "../shared/databaseNodes/restaurant";
 import * as customerNodes from "../shared/databaseNodes/customer";
 import *  as rootDbNodes from "../shared/databaseNodes/root";
-import { checkDeliveryAdmin, isSignedIn } from "../shared/helper/authorizer";
-import { finishOrder } from "./helper";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Generic/Notification";
 import { pushNotification } from "../shared/notification/notifyUser";
-import { restaurantOrderStatusChangeMessages } from "./bgNotificationMessages";
+import { isSignedIn } from "../shared/helper/authorizer";
+import { restaurantOrderStatusChangeMessages } from "../restaurant/bgNotificationMessages";
+import { finishOrder } from "../restaurant/helper";
 
 let statusArrayInSeq: Array<RestaurantOrderStatus> =
-  [RestaurantOrderStatus.OrderReceieved,
-  RestaurantOrderStatus.PreparingOrder,
-  RestaurantOrderStatus.ReadyForPickup,
-  RestaurantOrderStatus.OnTheWay,
-  RestaurantOrderStatus.Delivered
+  [
+    RestaurantOrderStatus.ReadyForPickup,
+    RestaurantOrderStatus.OnTheWay,
+    RestaurantOrderStatus.Delivered
   ]
 
-export const prepareOrder =
-  functions.https.onCall(async (data, context) => {
-    let response: ServerResponse = await changeStatus(data, RestaurantOrderStatus.PreparingOrder, context.auth)
-    return response;
-  });
+export const startDelivery = functions.https.onCall(async (data, context) => {
+  let response: ServerResponse = await changeStatus(data, RestaurantOrderStatus.OnTheWay, context.auth)
+  return response
+});
 
-export const cancelOrder =
-  functions.https.onCall(async (data, context) => {
-    let response: ServerResponse = await changeStatus(data, RestaurantOrderStatus.CancelledByAdmin, context.auth)
-    return response;
-  });
-
-export const readyForPickupOrder = functions.https.onCall(async (data, context) => {
-  let response: ServerResponse = await changeStatus(data, RestaurantOrderStatus.ReadyForPickup, context.auth)
+export const finishDelivery = functions.https.onCall(async (data, context) => {
+  let response: ServerResponse = await changeStatus(data, RestaurantOrderStatus.Delivered, context.auth)
   return response
 });
 
@@ -44,11 +36,6 @@ function expectedPreviousStatus(status: RestaurantOrderStatus): RestaurantOrderS
 async function changeStatus(data: any, newStatus: RestaurantOrderStatus, auth?: AuthData): Promise<ServerResponse> {
 
   let response = await isSignedIn(auth)
-  if (response != undefined) {
-    return response;
-  }
-
-  response = await checkDeliveryAdmin(auth!.uid)
   if (response != undefined) {
     return response;
   }
@@ -71,14 +58,14 @@ async function changeStatus(data: any, newStatus: RestaurantOrderStatus, auth?: 
     }
   }
 
-  if (newStatus == RestaurantOrderStatus.CancelledByAdmin) {
-    if (!orderInProcess(order.status))
-      return {
-        status: ServerResponseStatus.Error,
-        errorMessage: `Order cannot be cancelled because it is not in process`,
-        errorCode: "orderNotInProcess"
-      }
-  } else if (expectedPreviousStatus(newStatus) != order.status) {
+  if (order.dropoffDriver.id != auth!.uid) {
+    return {
+      status: ServerResponseStatus.Error,
+      errorMessage: `Order does not belong to this delivery driver`,
+    }
+  }
+
+  if (expectedPreviousStatus(newStatus) != order.status) {
     return {
       status: ServerResponseStatus.Error,
       errorMessage: `Status is not ${expectedPreviousStatus(newStatus)} but ${order.status}`,

@@ -5,7 +5,9 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/deliveryNodes.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
+import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/taxiNodes.dart';
@@ -20,8 +22,8 @@ class OrderController extends GetxController {
   ForegroundNotificationsController _foregroundNotificationsController =
       Get.find<ForegroundNotificationsController>();
 
-  RxList<Order> currentOrders = <Order>[].obs;
-  RxList<Order> pastOrders = <Order>[].obs;
+  RxList<DeliverableOrder> currentOrders = <DeliverableOrder>[].obs;
+  RxList<DeliverableOrder> pastOrders = <DeliverableOrder>[].obs;
   StreamSubscription? _currentOrdersListener;
   StreamSubscription? _pastOrdersListener;
 
@@ -35,12 +37,17 @@ class OrderController extends GetxController {
         .onValue
         .listen((event) {
       mezDbgPrint("[][][][][ got new past Order ]]");
-      List<Order> orders = [];
+      List<DeliverableOrder> orders = [];
       if (event.snapshot.value != null) {
         event.snapshot.value.keys.forEach((orderId) {
           // for (var orderId in event.snapshot.value.keys) {
           dynamic orderData = event.snapshot.value[orderId];
-          orders.add(TaxiOrder.fromData(orderId, orderData));
+          if (orderData["orderType"] ==
+              OrderType.Restaurant.toFirebaseFormatString())
+            orders.add(RestaurantOrder.fromData(orderId, orderData));
+          else if (orderData["orderType"] ==
+              OrderType.Laundry.toFirebaseFormatString())
+            orders.add(LaundryOrder.fromData(orderId, orderData));
         });
       }
       pastOrders.value = orders;
@@ -57,18 +64,18 @@ class OrderController extends GetxController {
         .listen((event) {
       // mezDbgPrint("[][][][][ got new inProcess Order ]]");
 
-      List<TaxiOrder> orders = [];
+      List<DeliverableOrder> orders = [];
       if (event.snapshot.value != null) {
         // mezDbgPrint("orderController: new incoming order data");
         event.snapshot.value.keys?.forEach((orderId) {
           // mezDbgPrint("Hndling Order : $orderId");
           dynamic orderData = event.snapshot.value[orderId];
-          // mezDbgPrint("Order Data => $orderData");
-          orders.add(TaxiOrder.fromData(orderId, orderData));
-          // try {
-          // } catch (e) {
-          //   mezDbgPrint(e);
-          // }
+          if (orderData["orderType"] ==
+              OrderType.Restaurant.toFirebaseFormatString())
+            orders.add(RestaurantOrder.fromData(orderId, orderData));
+          else if (orderData["orderType"] ==
+              OrderType.Laundry.toFirebaseFormatString())
+            orders.add(LaundryOrder.fromData(orderId, orderData));
         });
       }
       currentOrders.value = orders;
@@ -76,7 +83,7 @@ class OrderController extends GetxController {
     super.onInit();
   }
 
-  Order? getOrder(String orderId) {
+  DeliverableOrder? getOrder(String orderId) {
     try {
       return currentOrders.firstWhere((order) {
         // mezDbgPrint(

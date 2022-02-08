@@ -3,13 +3,13 @@ import { isSignedIn } from "../shared/helper/authorizer";
 import * as rootNodes from "../shared/databaseNodes/root";
 import * as taxiNodes from "../shared/databaseNodes/taxi";
 import * as customerNodes from "../shared/databaseNodes/customer";
-import { push } from "../shared/notification/notifyUser";
-import { OrderType } from "../shared/models/Order";
-import { ServerResponseStatus } from "../shared/models/Generic";
-import { orderInProcess, TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "../shared/models/taxi/TaxiOrder";
-import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
+import { pushNotification } from "../shared/notification/notifyUser";
+import { OrderType } from "../shared/models/Generic/Order";
+import { ServerResponseStatus } from "../shared/models/Generic/Generic";
+import { orderInProcess, TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "../shared/models/Services/Taxi/TaxiOrder";
+import { Notification, NotificationAction, NotificationType } from "../shared/models/Generic/Notification";
 import { taxiOrderStatusChangeMessages } from "./bgNotificationMessages";
-import { ParticipantType } from "../shared/models/Chat";
+import { ParticipantType } from "../shared/models/Generic/Chat";
 
 
 export = functions.https.onCall(async (data, context) => {
@@ -116,7 +116,7 @@ export = functions.https.onCall(async (data, context) => {
         background: taxiOrderStatusChangeMessages[TaxiOrderStatus.CancelledByCustomer]
       }
       
-      push(order.driver.id, notification, ParticipantType.Taxi);
+      pushNotification(order.driver.id, notification, ParticipantType.Taxi);
   
     }
 

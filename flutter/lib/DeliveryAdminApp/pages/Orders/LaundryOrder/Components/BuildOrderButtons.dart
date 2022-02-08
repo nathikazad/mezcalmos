@@ -19,17 +19,17 @@ List<Widget> buildOrderButtons(Rxn<LaundryOrder> order,) {
 
 Widget? changeStatusButton(Rxn<LaundryOrder> order,) {
   switch (order.value!.status) {
-    case (LaundryOrdersStatus.OrderReceieved):
+    case (LaundryOrderStatus.OrderReceieved):
       return OrderButtons.startPickUp(order.value!.orderId);
-    case (LaundryOrdersStatus.OtwPickup):
+    case (LaundryOrderStatus.OtwPickup):
       return OrderButtons.pickedUp(order.value!.orderId);
-    case (LaundryOrdersStatus.PickedUp):
+    case (LaundryOrderStatus.PickedUp):
       return OrderButtons.atTheLaundry(order.value!.orderId);
-    case (LaundryOrdersStatus.AtLaundry):
+    case (LaundryOrderStatus.AtLaundry):
       return OrderButtons.readyForDeliveryButton(order.value!.orderId);
-    case (LaundryOrdersStatus.ReadyForDelivery):
+    case (LaundryOrderStatus.ReadyForDelivery):
       return OrderButtons.otwDeliveryButton(order.value!.orderId);
-    case (LaundryOrdersStatus.OtwDelivery):
+    case (LaundryOrderStatus.OtwDelivery):
       return OrderButtons.deliverdButton(order.value!.orderId);
 
     default:

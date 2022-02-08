@@ -1,13 +1,12 @@
-import *  as rootDbNodes from "../databaseNodes/root";
-import { ParticipantType } from "../models/Chat";
-import { Language, NotificationInfo } from "../models/Generic";
+import { ParticipantType } from "../models/Generic/Chat";
+import { Language, NotificationInfo } from "../models/Generic/Generic";
 import * as fcm from "../../utilities/senders/fcm";
-import { Notification } from "../models/Notification";
+import { Notification } from "../models/Generic/Notification";
 import * as foreground from "../../utilities/senders/foreground";
-import { getUserInfo } from "../controllers/rootController";
+import { getNotificationInfo, getUserInfo } from "../controllers/rootController";
 
 
-export async function push(
+export async function pushNotification(
   userId: string,
   notification: Notification,
   particpantType: ParticipantType = ParticipantType.Customer,
@@ -18,7 +17,7 @@ export async function push(
     notification: notification.foreground
   });
   let subscription: NotificationInfo;
-  subscription = await rootDbNodes.getNotificationInfo(particpantType, userId);
+  subscription = await getNotificationInfo(particpantType, userId);
   if (subscription != null && subscription.deviceNotificationToken) {
     let language: Language = (await getUserInfo(userId)).language ?? Language.ES;
     let fcmMessage: fcm.fcmPayload = {

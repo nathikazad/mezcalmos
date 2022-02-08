@@ -4,11 +4,11 @@ import * as rootNodes from "../shared/databaseNodes/root";
 import * as taxiNodes from "../shared/databaseNodes/taxi";
 import * as customerNodes from "../shared/databaseNodes/customer";
 import { currentOrderIdNode } from "../shared/databaseNodes/taxi";
-import { ServerResponse, ServerResponseStatus } from "../shared/models/Generic";
-import { OrderType } from "../shared/models/Order";
-import { push } from "../shared/notification/notifyUser";
-import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
-import { orderInProcess, TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "../shared/models/taxi/TaxiOrder";
+import { ServerResponse, ServerResponseStatus } from "../shared/models/Generic/Generic";
+import { OrderType } from "../shared/models/Generic/Order";
+import { pushNotification } from "../shared/notification/notifyUser";
+import { Notification, NotificationAction, NotificationType } from "../shared/models/Generic/Notification";
+import { orderInProcess, TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "../shared/models/Services/Taxi/TaxiOrder";
 import { taxiOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { AuthData } from "firebase-functions/lib/common/providers/https";
 
@@ -122,7 +122,7 @@ async function changeStatus(data: any, newStatus: TaxiOrderStatus, auth?: AuthDa
       background: taxiOrderStatusChangeMessages[newStatus]
     }
 
-    push(order.customer.id!, notification);
+    pushNotification(order.customer.id!, notification);
 
     return {
       status: ServerResponseStatus.Success,

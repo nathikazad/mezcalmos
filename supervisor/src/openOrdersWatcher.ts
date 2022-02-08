@@ -1,11 +1,11 @@
 import * as taxiNodes from "../../functions/src/shared/databaseNodes/taxi";
 import * as customerNodes from "../../functions/src/shared/databaseNodes/customer";
-import { Taxi } from "../../functions/src/shared/models/taxi/Taxi";
-import { TaxiOrder } from "../../functions/src/shared/models/taxi/TaxiOrder";
 import { expireOrder } from "../../functions/src/taxi/expire";
 import { NotificationPriority, push } from "../../functions/src/utilities/senders/fcm";
 import * as rootNodes from "../../functions/src/shared/databaseNodes/root";
-import { OrderType } from "../../functions/src/shared/models/Order";
+import { OrderType } from "../../functions/src/shared/models/Generic/Order";
+import { TaxiOrder } from "../../functions/src/shared/models/Services/Taxi/TaxiOrder";
+import { Taxi } from "../../functions/src/shared/models/drivers/Taxi";
 
 
 const checkOpenOrdersInterval: number = 10 //seconds

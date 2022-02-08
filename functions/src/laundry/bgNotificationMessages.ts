@@ -1,6 +1,6 @@
-import { Language } from "../shared/models/Generic";
-import { BackgroundNotification } from "../shared/models/Notification";
-import { LaundryOrderStatus } from "./models/LaundryOrder";
+import { Language } from "../shared/models/Generic/Generic";
+import { BackgroundNotification } from "../shared/models/Generic/Notification";
+import { LaundryOrderStatus } from "../shared/models/Services/Laundry/LaundryOrder";
 
 export const LaundryOrderStatusChangeMessages:
   { [id in LaundryOrderStatus]: BackgroundNotification } = {

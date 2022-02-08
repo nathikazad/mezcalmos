@@ -1,7 +1,8 @@
+import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
-enum LaundryOrdersStatus {
+enum LaundryOrderStatus {
   OrderReceieved,
   OtwPickup,
   PickedUp,
@@ -13,24 +14,23 @@ enum LaundryOrdersStatus {
   CancelledByCustomer
 }
 
-extension ParseOrderStatusToString on LaundryOrdersStatus {
+extension ParseOrderStatusToString on LaundryOrderStatus {
   String toFirebaseFormatString() {
     return this.toString().split('.').last;
   }
 }
 
 extension ParseStringToOrderStatus on String {
-  LaundryOrdersStatus toLaundryOrderStatus() {
-    return LaundryOrdersStatus.values.firstWhere(
+  LaundryOrderStatus toLaundryOrderStatus() {
+    return LaundryOrderStatus.values.firstWhere(
         (e) => e.toFirebaseFormatString().toLowerCase() == this.toLowerCase());
   }
 }
 
-class LaundryOrder extends Order {
-  LaundryOrdersStatus status;
+class LaundryOrder extends TwoWayDeliverableOrder {
   num? weight;
   String? notes;
-
+  LaundryOrderStatus status;
   LaundryOrder(
       {required String orderId,
       required num cost,
@@ -39,6 +39,8 @@ class LaundryOrder extends Order {
       required PaymentType paymentType,
       required this.status,
       required UserInfo customer,
+      DeliveryDriverUserInfo? dropoffDriver,
+      DeliveryDriverUserInfo? pickupDriver,
       this.weight,
       this.notes})
       : super(
@@ -48,12 +50,13 @@ class LaundryOrder extends Order {
             orderType: OrderType.Laundry,
             cost: cost,
             customer: customer,
-            to: to);
+            to: to,
+            dropoffDriver: dropoffDriver,
+            pickupDriver: pickupDriver);
 
   factory LaundryOrder.fromData(dynamic id, dynamic data) {
     LaundryOrder laundryOrder = LaundryOrder(
         orderId: id,
-        
         customer: UserInfo.fromData(data["customer"]),
         status: data['status'].toString().toLaundryOrderStatus(),
         cost: data['cost'],
@@ -61,7 +64,13 @@ class LaundryOrder extends Order {
         orderTime: DateTime.parse(data["orderTime"]),
         paymentType: data["paymentType"].toString().toPaymentType(),
         weight: data["weight"],
-        notes: data["notes"]);
+        notes: data["notes"],
+        dropoffDriver: (data["dropoffDriver"] != null)
+            ? DeliveryDriverUserInfo.fromData(data["dropoffDriver"])
+            : null,
+        pickupDriver: (data["pickupDriver"] != null)
+            ? DeliveryDriverUserInfo.fromData(data["pickupDriver"])
+            : null);
     return laundryOrder;
   }
 
@@ -80,17 +89,17 @@ class LaundryOrder extends Order {
   @override
   bool isCanceled() {
     // all of them are in /past node
-    return status == LaundryOrdersStatus.CancelledByCustomer ||
-        status == LaundryOrdersStatus.CancelledByAdmin;
+    return status == LaundryOrderStatus.CancelledByCustomer ||
+        status == LaundryOrderStatus.CancelledByAdmin;
   }
 
   @override
   bool inProcess() {
-    return status == LaundryOrdersStatus.OrderReceieved ||
-        status == LaundryOrdersStatus.OtwPickup ||
-        status == LaundryOrdersStatus.PickedUp ||
-        status == LaundryOrdersStatus.AtLaundry ||
-        status == LaundryOrdersStatus.ReadyForDelivery ||
-        status == LaundryOrdersStatus.OtwDelivery;
+    return status == LaundryOrderStatus.OrderReceieved ||
+        status == LaundryOrderStatus.OtwPickup ||
+        status == LaundryOrderStatus.PickedUp ||
+        status == LaundryOrderStatus.AtLaundry ||
+        status == LaundryOrderStatus.ReadyForDelivery ||
+        status == LaundryOrderStatus.OtwDelivery;
   }
 }

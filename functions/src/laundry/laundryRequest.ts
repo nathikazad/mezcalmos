@@ -4,11 +4,11 @@
 // const hasura = new hasuraModule.Hasura(keys.hasura)
 
 import * as functions from "firebase-functions";
-import { constructLaundryOrder, ConstructLaundryOrderParameters, LaundryOrder, NewLaundryOrderNotification } from './models/LaundryOrder';
-import { Chat, ChatType, ParticipantType } from "../shared/models/Chat";
-import { OrderType } from "../shared/models/Order";
-import { UserInfo } from "../shared/models/User";
-import { ServerResponseStatus } from "../shared/models/Generic";
+import { constructLaundryOrder, ConstructLaundryOrderParameters, LaundryOrder, NewLaundryOrderNotification } from '../shared/models/Services/Laundry/LaundryOrder';
+import { Chat, ChatType, ParticipantType } from "../shared/models/Generic/Chat";
+import { OrderType } from "../shared/models/Generic/Order";
+import { UserInfo } from "../shared/models/Generic/User";
+import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
 import * as customerNodes from "../shared/databaseNodes/customer";
 import *  as rootNodes from "../shared/databaseNodes/root";
@@ -18,7 +18,7 @@ import { isSignedIn } from "../shared/helper/authorizer";
 import * as chatController from "../shared/controllers/chatController";
 import { getUserInfo } from "../shared/controllers/rootController";
 import { setChat } from "../shared/controllers/chatController";
-import { NotificationAction, NotificationType } from "../shared/models/Notification";
+import { NotificationAction, NotificationType } from "../shared/models/Generic/Notification";
 import * as fcm from "../utilities/senders/fcm";
 
 export = functions.https.onCall(async (data, context) => {
@@ -38,34 +38,59 @@ export = functions.https.onCall(async (data, context) => {
   //   }
   // }
 
-
-  let customerInfo: UserInfo = await getUserInfo(customerId);
-  const order: LaundryOrder = constructLaundryOrder(orderParams, customerInfo);
-
-  let orderId: string = (await customerNodes.inProcessOrders(customerId).push(order)).key!;
-  rootNodes.inProcessOrders(OrderType.Laundry, orderId).set(order);
-
-  let chat: Chat = {
-    chatType: ChatType.Order,
-    orderType: OrderType.Laundry,
-    participants: {
-      [customerId]: {
-        ...customerInfo,
-        particpantType: ParticipantType.Customer
-      },
+  let transactionResponse = await customerNodes.lock(customerId).transaction(function (lock) {
+    if (lock == true) {
+      return
+    } else {
+      return true
     }
-  }
-  await chatController.setChat(orderId, chat);
-
-  deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
-    let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
-    addDeliveryAdminsToChat(deliveryAdmins, chat, orderId)
-    notifyDeliveryAdminsNewOrder(deliveryAdmins, orderId)
   })
 
-  return {
-    status: ServerResponseStatus.Success,
-    orderId: orderId
+  if (!transactionResponse.committed) {
+    return {
+      status: ServerResponseStatus.Error,
+      errorMessage: 'Customer lock not available'
+    }
+  }
+
+  try {
+    let customerInfo: UserInfo = await getUserInfo(customerId);
+    const order: LaundryOrder = constructLaundryOrder(orderParams, customerInfo);
+
+    let orderId: string = (await customerNodes.inProcessOrders(customerId).push(order)).key!;
+    rootNodes.inProcessOrders(OrderType.Laundry, orderId).set(order);
+
+    let chat: Chat = {
+      chatType: ChatType.Order,
+      orderType: OrderType.Laundry,
+      participants: {
+        [customerId]: {
+          ...customerInfo,
+          particpantType: ParticipantType.Customer
+        },
+      }
+    }
+    await chatController.setChat(orderId, chat);
+
+    deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
+      let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
+      addDeliveryAdminsToChat(deliveryAdmins, chat, orderId)
+      notifyDeliveryAdminsNewOrder(deliveryAdmins, orderId)
+    })
+
+    return {
+      status: ServerResponseStatus.Success,
+      orderId: orderId
+    }
+  } catch (e) {
+    functions.logger.error(e);
+    functions.logger.error(`Order request error ${customerId}`);
+    return {
+      status: ServerResponseStatus.Error,
+      orderId: "Order request error"
+    }
+  } finally {
+    await customerNodes.lock(customerId).remove();
   }
 })
 

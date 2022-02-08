@@ -1,13 +1,13 @@
 import * as functions from "firebase-functions";
 import { isSignedIn } from "../shared/helper/authorizer";
-import { orderInProcess, RestaurantOrder, RestaurantOrderStatus, RestaurantOrderStatusChangeNotification } from "./models/RestaurantOrder";
+import { orderInProcess, RestaurantOrder, RestaurantOrderStatus, RestaurantOrderStatusChangeNotification } from "../shared/models/Services/Restaurant/RestaurantOrder";
 import *  as rootDbNodes from "../shared/databaseNodes/root";
-import { OrderType } from "../shared/models/Order";
-import { ServerResponseStatus } from "../shared/models/Generic";
+import { OrderType } from "../shared/models/Generic/Order";
+import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { finishOrder } from "./helper";
 import { notifyDeliveryAdmins } from "../shared/notification/notifyDeliveryAdmin";
 import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
-import { NotificationAction, NotificationType } from "../shared/models/Notification";
+import { NotificationAction, NotificationType } from "../shared/models/Generic/Notification";
 import * as fcm from "../utilities/senders/fcm"
 import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
 

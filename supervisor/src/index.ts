@@ -1,5 +1,5 @@
 import * as firebase from "firebase-admin";
-import { Keys } from "../../functions/src/shared/models/Keys";
+import { Keys } from "../../functions/src/shared/models/Generic/Keys";
 import { setKeys } from "../../functions/src/shared/keys";
 import * as functions from "firebase-functions";
 import * as fs from 'fs';

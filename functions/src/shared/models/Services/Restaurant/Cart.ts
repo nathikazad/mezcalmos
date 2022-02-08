@@ -1,5 +1,5 @@
-import { OrderType, PaymentType } from '../../shared/models/Order';
-import { Location } from '../../shared/models/Generic';
+import { OrderType, PaymentType } from '../../Generic/Order';
+import { Location } from '../../Generic/Generic';
 export interface ChosenOneOption {
   chosenOptionName: string;
   chosenOptionId: string;

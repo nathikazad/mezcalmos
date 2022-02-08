@@ -137,9 +137,9 @@ class LaundryOngoigOrderCard extends StatelessWidget {
   }
 }
 
-Widget getLaundryOrderWidget(LaundryOrdersStatus status) {
+Widget getLaundryOrderWidget(LaundryOrderStatus status) {
   switch (status) {
-    case LaundryOrdersStatus.CancelledByAdmin:
+    case LaundryOrderStatus.CancelledByAdmin:
       return Padding(
         padding: const EdgeInsets.only(right: 5.0),
         child: Icon(
@@ -149,7 +149,7 @@ Widget getLaundryOrderWidget(LaundryOrdersStatus status) {
         ),
       );
 
-    case LaundryOrdersStatus.CancelledByCustomer:
+    case LaundryOrderStatus.CancelledByCustomer:
       return Padding(
         padding: const EdgeInsets.only(right: 5.0),
         child: Icon(
@@ -159,7 +159,7 @@ Widget getLaundryOrderWidget(LaundryOrdersStatus status) {
         ),
       );
 
-    case LaundryOrdersStatus.OrderReceieved:
+    case LaundryOrderStatus.OrderReceieved:
       return Padding(
         padding: const EdgeInsets.only(right: 5.0),
         child: Icon(
@@ -168,7 +168,7 @@ Widget getLaundryOrderWidget(LaundryOrdersStatus status) {
           color: Colors.grey,
         ),
       );
-    case LaundryOrdersStatus.OtwPickup:
+    case LaundryOrderStatus.OtwPickup:
       return Container(
         height: 50,
         width: 60,
@@ -177,7 +177,7 @@ Widget getLaundryOrderWidget(LaundryOrdersStatus status) {
           fit: BoxFit.cover,
         ),
       );
-    case LaundryOrdersStatus.PickedUp:
+    case LaundryOrderStatus.PickedUp:
       return Padding(
         padding: const EdgeInsets.only(right: 5),
         child: Icon(
@@ -186,7 +186,7 @@ Widget getLaundryOrderWidget(LaundryOrdersStatus status) {
           color: Colors.grey,
         ),
       );
-    case LaundryOrdersStatus.AtLaundry:
+    case LaundryOrderStatus.AtLaundry:
       return Padding(
         padding: const EdgeInsets.only(right: 5.0),
         child: Icon(
@@ -196,7 +196,7 @@ Widget getLaundryOrderWidget(LaundryOrdersStatus status) {
         ),
       );
 
-    case LaundryOrdersStatus.ReadyForDelivery:
+    case LaundryOrderStatus.ReadyForDelivery:
       return Padding(
         padding: const EdgeInsets.only(right: 5.0),
         child: Icon(
@@ -205,7 +205,7 @@ Widget getLaundryOrderWidget(LaundryOrdersStatus status) {
           color: Color(0xFFAC59FC),
         ),
       );
-    case LaundryOrdersStatus.OtwDelivery:
+    case LaundryOrderStatus.OtwDelivery:
       return Container(
         height: 50,
         width: 60,
@@ -214,7 +214,7 @@ Widget getLaundryOrderWidget(LaundryOrdersStatus status) {
           fit: BoxFit.cover,
         ),
       );
-    case LaundryOrdersStatus.Delivered:
+    case LaundryOrderStatus.Delivered:
       return Padding(
         padding: const EdgeInsets.only(right: 5.0),
         child: Icon(
@@ -226,27 +226,27 @@ Widget getLaundryOrderWidget(LaundryOrdersStatus status) {
   }
 }
 
-String getLaundryOrderStatus(LaundryOrdersStatus status) {
+String getLaundryOrderStatus(LaundryOrderStatus status) {
   switch (status) {
-    case LaundryOrdersStatus.CancelledByAdmin:
+    case LaundryOrderStatus.CancelledByAdmin:
       return 'Order Canceled';
 
-    case LaundryOrdersStatus.CancelledByCustomer:
+    case LaundryOrderStatus.CancelledByCustomer:
       return 'Order Canceled';
 
-    case LaundryOrdersStatus.OrderReceieved:
+    case LaundryOrderStatus.OrderReceieved:
       return 'Order Received';
-    case LaundryOrdersStatus.OtwPickup:
+    case LaundryOrderStatus.OtwPickup:
       return 'Pick-up On the way';
-    case LaundryOrdersStatus.PickedUp:
+    case LaundryOrderStatus.PickedUp:
       return 'Order picked-up';
-    case LaundryOrdersStatus.AtLaundry:
+    case LaundryOrderStatus.AtLaundry:
       return 'Order at laundry';
-    case LaundryOrdersStatus.ReadyForDelivery:
+    case LaundryOrderStatus.ReadyForDelivery:
       return 'Ready For Delivery';
-    case LaundryOrdersStatus.OtwDelivery:
+    case LaundryOrderStatus.OtwDelivery:
       return 'Delivery on the way';
-    case LaundryOrdersStatus.Delivered:
+    case LaundryOrderStatus.Delivered:
       return 'Order Delivered';
     default:
       return 'Unknown Status';

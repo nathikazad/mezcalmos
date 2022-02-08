@@ -247,7 +247,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
             width: 2.w,
           ),
           Text(
-            order.routeInformation.distance.distanceStringInKm,
+            order.routeInformation!.distance.distanceStringInKm,
             overflow: TextOverflow.ellipsis,
             maxLines: 1,
             softWrap: false,
@@ -260,7 +260,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
               size: getSizeRelativeToScreen(32, Get.width.w, Get.height.h).w),
           SizedBox(width: 2.w),
           Text(
-            order.routeInformation.duration.shortTextVersion,
+            order.routeInformation!.duration.shortTextVersion,
             overflow: TextOverflow.ellipsis,
             maxLines: 1,
             softWrap: false,

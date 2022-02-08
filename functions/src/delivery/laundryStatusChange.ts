@@ -2,14 +2,14 @@ import * as functions from "firebase-functions";
 import { AuthData } from "firebase-functions/lib/common/providers/https";
 import { ServerResponse, ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { OrderType } from "../shared/models/Generic/Order";
-import { orderInProcess, LaundryOrderStatus, LaundryOrder, LaundryOrderStatusChangeNotification } from "../shared/models/Services/Laundry/LaundryOrder";
+import { LaundryOrderStatus, LaundryOrder, LaundryOrderStatusChangeNotification } from "../shared/models/Services/Laundry/LaundryOrder";
 import * as customerNodes from "../shared/databaseNodes/customer";
 import *  as rootDbNodes from "../shared/databaseNodes/root";
-import { checkDeliveryAdmin, isSignedIn } from "../shared/helper/authorizer";
-import { finishOrder } from "./helper";
+import { isSignedIn } from "../shared/helper/authorizer";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Generic/Notification";
 import { pushNotification } from "../shared/notification/notifyUser";
-import { LaundryOrderStatusChangeMessages } from "./bgNotificationMessages";
+import { LaundryOrderStatusChangeMessages } from "../laundry/bgNotificationMessages";
+import { finishOrder } from "../laundry/helper";
 
 let statusArrayInSeq: Array<LaundryOrderStatus> =
   [LaundryOrderStatus.OrderReceieved,
@@ -21,14 +21,30 @@ let statusArrayInSeq: Array<LaundryOrderStatus> =
   LaundryOrderStatus.Delivered
   ]
 
-export const cancelOrder =
+export const startPickup =
   functions.https.onCall(async (data, context) => {
-    let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.CancelledByAdmin, context.auth)
+    let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.OtwPickup, context.auth)
     return response;
   });
 
-export const readyForDeliveryOrder = functions.https.onCall(async (data, context) => {
-  let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.ReadyForDelivery, context.auth)
+
+export const finishPickup = functions.https.onCall(async (data, context) => {
+  let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.PickedUp, context.auth)
+  return response
+});
+
+export const atFacility = functions.https.onCall(async (data, context) => {
+  let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.AtLaundry, context.auth)
+  return response
+});
+
+export const startDropoff = functions.https.onCall(async (data, context) => {
+  let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.OtwDelivery, context.auth)
+  return response
+});
+
+export const finishDropoff = functions.https.onCall(async (data, context) => {
+  let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.Delivered, context.auth)
   return response
 });
 
@@ -43,10 +59,6 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
     return response;
   }
 
-  response = await checkDeliveryAdmin(auth!.uid)
-  if (response != undefined) {
-    return response;
-  }
 
   if (data.orderId == null) {
     return {
@@ -66,19 +78,43 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
     }
   }
 
-  if (newStatus == LaundryOrderStatus.CancelledByAdmin) {
-    if (!orderInProcess(order.status))
-      return {
-        status: ServerResponseStatus.Error,
-        errorMessage: `Order cannot be cancelled because it is not in process`,
-        errorCode: "orderNotInProcess"
-      }
-  } else if (expectedPreviousStatus(newStatus) != order.status) {
+  if (expectedPreviousStatus(newStatus) != order.status) {
     return {
       status: ServerResponseStatus.Error,
       errorMessage: `Status is not ${expectedPreviousStatus(newStatus)} but ${order.status}`,
       errorCode: "invalidOrderStatus"
     }
+  }
+
+
+  if (newStatus == LaundryOrderStatus.OtwPickup || newStatus == LaundryOrderStatus.PickedUp
+    || newStatus == LaundryOrderStatus.AtLaundry) {
+    if (order.pickupDriver.id != auth!.uid) {
+      return {
+        status: ServerResponseStatus.Error,
+        errorMessage: `Order does not belong to this delivery driver`,
+      }
+    }
+  }
+
+  if (newStatus == LaundryOrderStatus.OtwDelivery || newStatus == LaundryOrderStatus.Delivered) {
+    if (order.dropoffDriver.id != auth!.uid) {
+      return {
+        status: ServerResponseStatus.Error,
+        errorMessage: `Order does not belong to this delivery driver`,
+      }
+    }
+  }
+
+  if (newStatus == LaundryOrderStatus.AtLaundry) {
+    if (!data.weight) {
+      return {
+        status: ServerResponseStatus.Error,
+        errorMessage: `When at laundry, need to give weight`,
+        errorCode: "weightNotGiven"
+      }
+    }
+    order.weight = data.weight
   }
 
   order.status = newStatus

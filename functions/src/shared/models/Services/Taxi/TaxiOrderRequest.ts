@@ -1,7 +1,7 @@
-import { Location } from '../Generic';
-import { PaymentType } from '../Order';
+import { Location } from '../../Generic/Generic';
+import { PaymentType } from '../../Generic/Order';
 
-export interface OrderRequest {
+export interface TaxiOrderRequest {
   from: Location,
   to: Location,
   estimatedPrice: number,

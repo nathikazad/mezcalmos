@@ -60,12 +60,12 @@ class _LaundryOrderFooterCardState extends State<LaundryOrderFooterCard> {
                           '${lang.strings["customer"]["restaurant"]["checkout"]["cancelOrder"]}'),
                     )),
               )
-            : (widget.order.status == LaundryOrdersStatus.Delivered)
+            : (widget.order.status == LaundryOrderStatus.Delivered)
                 ? orderDeliverdComponent(txt)
                 : (widget.order.status ==
-                            LaundryOrdersStatus.CancelledByCustomer ||
+                            LaundryOrderStatus.CancelledByCustomer ||
                         widget.order.status ==
-                            LaundryOrdersStatus.CancelledByAdmin)
+                            LaundryOrderStatus.CancelledByAdmin)
                     ? orderCanceledComponent(txt)
                     : TextButton(
                         onPressed: null,

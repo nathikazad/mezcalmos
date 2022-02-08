@@ -1,8 +1,8 @@
-import { RestaurantOrder } from "./models/RestaurantOrder";
+import { RestaurantOrder } from "../shared/models/Services/Restaurant/RestaurantOrder";
 import * as restaurantNodes from "../shared/databaseNodes/restaurant";
 import * as customerNodes from "../shared/databaseNodes/customer";
 import *  as rootDbNodes from "../shared/databaseNodes/root";
-import { OrderType } from "../shared/models/Order";
+import { OrderType } from "../shared/models/Generic/Order";
 
 export async function finishOrder(
   order: RestaurantOrder,

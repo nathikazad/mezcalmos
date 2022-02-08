@@ -22,3 +22,14 @@ export enum PaymentType {
   Cash = "cash",
   Card = "card"
 }
+
+export interface DeliverableOrder extends Order {
+  dropoffDriver: DeliveryDriverInfo
+}
+
+export interface TwoWayDeliverableOrder extends DeliverableOrder {
+  pickupDriver: DeliveryDriverInfo
+}
+
+export interface DeliveryDriverInfo extends UserInfo {
+}
