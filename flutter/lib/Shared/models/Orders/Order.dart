@@ -1,7 +1,9 @@
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
 
 abstract class Order {
   String orderId;
@@ -60,20 +62,6 @@ extension ParseStringToPaymentType on String {
   PaymentType toPaymentType() {
     return PaymentType.values.firstWhere(
         (e) => e.toFirebaseFormatString().toLowerCase() == this.toLowerCase());
-  }
-}
-
-class UserInfo {
-  String id;
-  String name;
-  String image;
-
-  UserInfo(this.id, this.name, this.image);
-
-  factory UserInfo.fromData(dynamic data) {
-    mezDbgPrint("User info");
-    mezDbgPrint(data);
-    return UserInfo(data["id"], data["name"], data["image"]);
   }
 }
 

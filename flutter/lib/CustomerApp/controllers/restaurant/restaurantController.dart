@@ -109,7 +109,7 @@ class RestaurantController extends GetxController {
   void clearCart() {
     _databaseHelper.firebaseDatabase
         .reference()
-        .child(customerCart(_authController.user!.uid))
+        .child(customerCart(_authController.user!.id))
         .remove()
         .then((value) {
       mezDbgPrint("============= /// :your cart is deleted \\\ ============= ");

@@ -151,7 +151,7 @@ class _UserImageProfileState extends State<UserImageProfile> {
                                       child: Stack(
                                         children: [
                                           CachedNetworkImage(
-                                            imageUrl: auth.user!.image!,
+                                            imageUrl: auth.user!.image,
                                             fit: BoxFit.fill,
                                             imageBuilder:
                                                 (context, imageProvider) =>

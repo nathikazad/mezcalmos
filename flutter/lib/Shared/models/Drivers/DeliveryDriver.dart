@@ -1,7 +1,9 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
 
 class DeliveryDriverState {
   bool isAuthorized;
@@ -24,6 +26,7 @@ class DeliveryDriverState {
 // used by delivery admin app
 class DeliveryDriver {
   DeliveryDriverState deliveryDriverState;
+  DeliveryDriverUserInfo driverInfo;
   LatLng driverLocation;
   DateTime? lastLocationUpdateTime;
   String deliveryDriverId;
@@ -32,12 +35,15 @@ class DeliveryDriver {
       {required this.deliveryDriverState,
       required this.driverLocation,
       required this.lastLocationUpdateTime,
-      required this.deliveryDriverId});
+      required this.deliveryDriverId,
+      required this.driverInfo});
 
   factory DeliveryDriver.fromData(
       String deliveryDriverId, dynamic deliveryDriverData) {
     DeliveryDriverState deliveryDriverState =
         DeliveryDriverState.fromSnapshot(deliveryDriverData['state']);
+    DeliveryDriverUserInfo deliveryDriverUserInfo =
+        DeliveryDriverUserInfo.fromData(deliveryDriverData['info']);
     dynamic driverLocation = deliveryDriverData['location'] == null
         ? null
         : LatLng(deliveryDriverData["location"]["position"]["lat"],
@@ -49,7 +55,8 @@ class DeliveryDriver {
         deliveryDriverId: deliveryDriverId,
         deliveryDriverState: deliveryDriverState,
         driverLocation: driverLocation,
-        lastLocationUpdateTime: lastLocationUpdateTime);
+        lastLocationUpdateTime: lastLocationUpdateTime,
+        driverInfo: deliveryDriverUserInfo);
   }
 
   // Added for Debugging Perposes - Don't delete for now
@@ -69,8 +76,9 @@ class DeliveryDriverUserInfo extends UserInfo {
       {required String id,
       required String name,
       required String image,
-      required this.location})
-      : super(id, name, image);
+      this.location,
+      LanguageType? language})
+      : super(id: id, name: name, image: image, language: language);
 
   factory DeliveryDriverUserInfo.fromData(dynamic data) {
     // mezDbgPrint(" TaxiUserInfo.fromData ====> $data");
@@ -78,11 +86,15 @@ class DeliveryDriverUserInfo extends UserInfo {
         ? LatLng(data["location"]["position"]["lat"],
             data["location"]["position"]["lng"])
         : null;
+    LanguageType? language = data["language"] != null
+        ? data["language"].toString().toLanguageType()
+        : null;
     return DeliveryDriverUserInfo(
         id: data["id"],
         name: data["name"],
         image: data["image"],
-        location: location);
+        location: location,
+        language: language);
   }
 }
 

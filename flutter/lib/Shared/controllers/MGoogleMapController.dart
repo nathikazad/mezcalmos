@@ -84,7 +84,7 @@ class MGoogleMapController {
     // default userId is authenticated's
     this._addOrUpdateMarker(Marker(
         markerId: MarkerId(
-            markerId ?? Get.find<AuthController>().user?.uid ?? 'ANONYMOUS'),
+            markerId ?? Get.find<AuthController>().user?.id ?? 'ANONYMOUS'),
         icon: icon,
         position: latLng));
   }
@@ -137,7 +137,7 @@ class MGoogleMapController {
   void removerAuthenticatedUserMarker() {
     markers.removeWhere((element) =>
         element.markerId.value ==
-        (Get.find<AuthController>().user?.uid ?? 'ANONYMOUS'));
+        (Get.find<AuthController>().user?.id ?? 'ANONYMOUS'));
   }
 
   void addPolyline(List<PointLatLng> latLngPoints) {

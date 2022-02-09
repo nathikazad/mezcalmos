@@ -169,7 +169,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
             // parentContext: context,
             message: e.message,
             time: e.formatedTime,
-            isMe: e.userId == _authController.user!.uid,
+            isMe: e.userId == _authController.user!.id,
             userImage: controller.value!.participants[e.userId]?.image,
           );
         },
@@ -178,7 +178,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
       scrollDown();
     }
 
-    controller.loadChat(_authController.user!.uid, orderId!,
+    controller.loadChat(_authController.user!.id, orderId!,
         onValueCallBack: _fillCallBack);
 
     return Scaffold(

@@ -1,7 +1,9 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
 
 class TaxiState {
   bool isAuthorized;
@@ -68,8 +70,9 @@ class TaxiUserInfo extends UserInfo {
       required String image,
       required this.taxiNumber,
       this.sitio,
+      LanguageType? language,
       required this.location})
-      : super(id, name, image);
+      : super(id: id, name: name, image: image, language: language);
 
   factory TaxiUserInfo.fromData(dynamic data) {
     // mezDbgPrint(" TaxiUserInfo.fromData ====> $data");
@@ -77,12 +80,16 @@ class TaxiUserInfo extends UserInfo {
         ? LatLng(data["location"]["position"]["lat"],
             data["location"]["position"]["lng"])
         : null;
+    LanguageType? language = data["language"] != null
+        ? data["language"].toString().toLanguageType()
+        : null;
     return TaxiUserInfo(
         id: data["id"],
         name: data["name"],
         image: data["image"],
         taxiNumber: data["taxiNumber"].toString(),
         sitio: data["sitio"],
+        language: language,
         location: location);
   }
 }
