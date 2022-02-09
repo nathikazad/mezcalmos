@@ -59,10 +59,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
 
   Widget viewHeader() {
     return Container(
-      margin: EdgeInsets.only(
-          top: 15.sp,
-          left: getSizeRelativeToScreen(40.w, Get.width.w, Get.height.h),
-          right: getSizeRelativeToScreen(40.w, Get.width.w, Get.height.h)),
+      margin: EdgeInsets.only(top: 1.h, left: 24, right: 24),
       child: Container(
         height: 100.sp,
         child: Row(
@@ -90,10 +87,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
   Widget viewBody() {
     return Expanded(
         child: Container(
-            margin: EdgeInsets.only(
-                top: 25.sp,
-                left: getSizeRelativeToScreen(40, Get.width.w, Get.height.h),
-                right: getSizeRelativeToScreen(40, Get.width.w, Get.height.h)),
+            margin: EdgeInsets.only(top: 3.h, left: 24, right: 24),
             child: Obx(() {
               // if isLooking
               if (_taxiAuthController.taxiState?.isLooking == true) {
@@ -148,23 +142,24 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
 
             // user img
 
-            Container(
-              padding: EdgeInsets.only(left: 10),
-              // width: 81.w,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // TopHalf widgets of the Card Info :
-                  orderCardTopHalf(order),
-                  // Spacer(),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  // bottom half widgets of the Card Info :
-                  orderCardBottomHalf(order),
-                ],
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.only(left: 10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // TopHalf widgets of the Card Info :
+                    orderCardTopHalf(order),
+                    // Spacer(),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    // bottom half widgets of the Card Info :
+                    orderCardBottomHalf(order),
+                  ],
+                ),
               ),
             ),
           ],
@@ -176,34 +171,31 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
   /*   -------  [ Top Half Related widgets ]  -------  */
   /// this holds [_userAvatarAndName] and [order.cost]
   Widget orderCardTopHalf(TaxiOrder order) {
-    return Row(
+    return Flex(
+      direction: Axis.horizontal,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           order.customer.name,
           style: TextStyle(fontFamily: 'psb', fontSize: 11.sp),
         ),
-        Padding(
-          padding: EdgeInsets.only(left: 14.w),
-          child: Row(
-            children: [
-              Transform.scale(
-                  scale: 1.5,
-                  child: Container(
-                    height: 10,
-                    width: 50,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                      image: AssetImage(money_asset),
-                    )),
+        Row(
+          children: [
+            Transform.scale(
+                scale: 1.5,
+                child: Container(
+                  height: 10,
+                  width: 50,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                    image: AssetImage(money_asset),
                   )),
-              Text(
-                "\$${order.cost.toString()}",
-                style: TextStyle(fontFamily: 'psb', fontSize: 12.sp),
-              ),
-            ],
-          ),
+                )),
+            Text(
+              "\$${order.cost.toString()}",
+              style: TextStyle(fontFamily: 'psb', fontSize: 12.sp),
+            ),
+          ],
         ),
       ],
     );

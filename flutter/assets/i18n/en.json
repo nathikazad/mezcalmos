@@ -140,9 +140,9 @@
             "rideCancelledByTaxi": "Ride cancelled by taxi",
             "rideCancelledByCustomer": "You have cancelled your ride",
             "ride": "ride",
-            "taxiRideCheckedTooltip" : "This shows how many drivers have received your offer \nbut did not find the offer acceptable.",
-            "taxiRequestPriceTooltip" : "How much are you willing to offer for this ride?\n We will broadcast your offer to all taxi drivers near you,\n they will accept your order only if they find \nthe offered price acceptable.",
-            "taxiRidePriceTooltip" : " Click - to decrease your price by 5.\n Click + to increase your price by 5.\n\n If you see your order not being accepted try them out.",
+            "taxiRideCheckedTooltip" : "This shows how many drivers have received your offer but did not find the offer acceptable.",
+            "taxiRequestPriceTooltip" : "How much are you willing to offer for this ride? We will broadcast your offer to all taxi drivers near you, they will accept your order only if they find the offered price acceptable.",
+            "taxiRidePriceTooltip" : "Click + - to increase/decrease your price by 5. If you see your order not being accepted try them out.",
             "failedToRequestTaxi" : "Failed to request a taxi !",
             "increasePrice" : "Increase the price",
             "decreasePrice" : "Decrease the price"
@@ -176,7 +176,10 @@
                 "title":"Enter location name",
                 "button":"EDIT",
                 "textHint":"Location Name"
-            }
+            },
+            "savedLocationsListEmpty" : "Your Saved locations list is empty",
+            "clickBtnToAddNewLocation" : "Add new location by clicking the button below"
+
         },
         "pickLocation":{
         "pickLocation":"Pick Location",

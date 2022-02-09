@@ -15,7 +15,7 @@ class RidePriceControllHint extends StatelessWidget {
         Center(
           child: Text(
             hintText,
-            style: Theme.of(context).textTheme.subtitle2,
+            // style: Theme.of(context).textTheme.subtitle2,
             textAlign: TextAlign.center,
             softWrap: true,
             maxLines: 10,

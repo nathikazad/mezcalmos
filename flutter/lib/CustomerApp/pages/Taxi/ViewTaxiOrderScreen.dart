@@ -294,7 +294,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
       ),
       MezToolTipHint(
         hintWidget: RideReadByTaxisHint(),
-        left: 210,
+        left: 199,
         bottom: 150.5,
         bodyLeft: 20,
         bodyRight: 20,
