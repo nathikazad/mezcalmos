@@ -119,6 +119,7 @@
         },
         "taxiView": {
             "taxi": "Taxi",
+            "taxiOrder" : "Taxi order",
             "currentLocation":"Current location",
             "pickFromMap":"Pick from map",
             "searching": "Searching for Taxi",

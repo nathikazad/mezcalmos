@@ -68,7 +68,8 @@ class TaxiPastOrderCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          order.serviceProvider?.name ?? "Taxi order",
+                          order.serviceProvider?.name ??
+                              "${lang.strings['customer']['taxiView']['taxiOrder']}",
                           overflow: TextOverflow.ellipsis,
                           style: txt.headline3,
                           maxLines: 2,

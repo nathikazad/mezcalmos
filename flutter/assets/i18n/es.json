@@ -119,6 +119,7 @@
         },
         "taxiView": {
             "taxi": "Taxi",
+            "taxiOrder" : "Orden de taxi",
             "currentLocation":"Ubicación actual",
             "pickFromMap":"Elegir del mapa",
             "searching": "Buscando taxi",

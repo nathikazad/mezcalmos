@@ -66,7 +66,8 @@ class TaxiOngoingOrderCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          order.serviceProvider?.name ?? "Taxi order",
+                          order.serviceProvider?.name ??
+                              "${lang.strings['customer']['taxiView']['taxiOrder']}",
                           style: txt.headline3,
                         ),
                         if (MediaQuery.of(context).size.width > 320)
