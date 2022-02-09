@@ -228,11 +228,28 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             url: "assets/images/customer/taxi/taxiService.png",
             subtitle: "${lang.strings['customer']['home']['taxi']["subtitle"]}",
             ontap: () {
-              if (Get.find<AuthController>().fireAuthUser == null) {
-                Get.toNamed(kTaxiRequestRoute);
-              } else {
-                checkTaxiCurrentOrdersAndNavigate();
-              }
+              serviceRouting(
+                  orderType: OrderType.Taxi,
+                  singleOrderRoute: (orderId) {
+                    getTaxiOrderRoute(orderId);
+                  },
+                  serviceRoute: Get.toNamed(kTaxiRequestRoute));
+              // if (auth.fireAuthUser != null) {
+              //   List<Order> taxiOrders = Get.find<OrderController>()
+              //       .currentOrders
+              //       .where((p0) => p0.orderType == OrderType.Taxi)
+              //       .toList();
+
+              //   if (taxiOrders.length == 1) {
+              //     Get.toNamed(getTaxiOrderRoute(taxiOrders[0].orderId));
+              //   } else if (taxiOrders.length > 1) {
+              //     Get.toNamed(kOrdersRoute);
+              //   } else {
+              //     Get.toNamed(kTaxiRequestRoute);
+              //   }
+              // } else {
+              //   Get.toNamed(kTaxiRequestRoute);
+              // }
             },
           ),
         ),
@@ -326,5 +343,23 @@ class _CustomerWrapperState extends State<CustomerWrapper>
         Get.toNamed(kLocationPermissionPage);
       }
     });
+  }
+
+  serviceRouting(
+      {required OrderType orderType,
+      required Function(String) singleOrderRoute,
+      required Future<dynamic>? serviceRoute}) {
+    List<Order> orders = Get.find<OrderController>()
+        .currentOrders
+        .where((p0) => p0.orderType == orderType)
+        .toList();
+
+    if (orders.length == 1) {
+      singleOrderRoute(orders[0].orderId);
+    } else if (orders.length > 1) {
+      Get.toNamed(kOrdersRoute);
+    } else {
+      serviceRoute;
+    }
   }
 }

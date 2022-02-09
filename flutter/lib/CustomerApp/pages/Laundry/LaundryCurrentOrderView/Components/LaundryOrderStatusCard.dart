@@ -40,47 +40,7 @@ class LaundryOrderStatusCard extends StatelessWidget {
                   ),
                 ),
                 Spacer(),
-                Material(
-                  color: Theme.of(context).primaryColorLight,
-                  shape: CircleBorder(),
-                  child: InkWell(
-                    onTap: () {
-                      // Get.toNamed(getRestaurantMessagesRoute(order.orderId));
-                    },
-                    customBorder: CircleBorder(),
-                    child: Stack(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.all(12),
-                          child: Icon(
-                            Icons.textsms,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Obx(
-                          () => Get.find<OrderController>()
-                                  .orderHaveNewMessageNotifications(
-                                      order.orderId)
-                              ? Positioned(
-                                  left: 27,
-                                  top: 10,
-                                  child: Container(
-                                    width: 13,
-                                    height: 13,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        border: Border.all(
-                                            color: const Color(0xfff6efff),
-                                            width: 2),
-                                        color: const Color(0xffff0000)),
-                                  ),
-                                )
-                              : Container(),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
+                messageButton(context),
               ],
             ),
           ),
@@ -93,6 +53,48 @@ class LaundryOrderStatusCard extends StatelessWidget {
               textAlign: TextAlign.center,
             ))
       ],
+    );
+  }
+
+  Widget messageButton(BuildContext context) {
+    return Material(
+      color: Theme.of(context).primaryColorLight,
+      shape: CircleBorder(),
+      child: InkWell(
+        onTap: () {
+          // Get.toNamed(getRestaurantMessagesRoute(order.orderId));
+        },
+        customBorder: CircleBorder(),
+        child: Stack(
+          children: [
+            Container(
+              margin: EdgeInsets.all(12),
+              child: Icon(
+                Icons.textsms,
+                color: Colors.white,
+              ),
+            ),
+            Obx(
+              () => Get.find<OrderController>()
+                      .orderHaveNewMessageNotifications(order.orderId)
+                  ? Positioned(
+                      left: 27,
+                      top: 10,
+                      child: Container(
+                        width: 13,
+                        height: 13,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                                color: const Color(0xfff6efff), width: 2),
+                            color: const Color(0xffff0000)),
+                      ),
+                    )
+                  : Container(),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
