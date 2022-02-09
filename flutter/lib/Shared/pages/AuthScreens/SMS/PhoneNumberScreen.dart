@@ -30,36 +30,57 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
   @override
   void initState() {
     _prefixTextFieldController..text = "+52";
+
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _prefixTextFieldController.dispose();
+    _numberTextFieldController.dispose();
+
+    super.dispose();
   }
 
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      // bottomNavigationBar: BottomAppBar(
-      //   child: TextButton(
-      //     child: Text('Click'),
-      //     onPressed: () {},
-      //   ),
-      // ),
       appBar: AppBar(
         title: Text(
           'Sign in',
           style: Theme.of(context).textTheme.headline2,
         ),
       ),
+      bottomSheet: BottomSheet(
+          enableDrag: false,
+          backgroundColor: Colors.transparent,
+          onClosing: () {},
+          builder: (context) {
+            return SubmitButton(context);
+          }),
+      // bottomSheet: Theme(
+      //     data: Theme.of(context).copyWith(
+
+      //         bottomSheetTheme: BottomSheetThemeData(
+      //             backgroundColor: Colors.red,
+      //             modalBackgroundColor: Colors.red),
+      //         backgroundColor: Colors.transparent,
+      //         scaffoldBackgroundColor: Colors.transparent,
+      //         canvasColor: Colors.transparent),
+      //     child: SubmitButton(context)),
       body: Stack(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ListView(
+          SingleChildScrollView(
+            reverse: true,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
               children: [
                 SizedBox(
                   height: 5,
                 ),
                 Obx(
                   () => Container(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(8),
                     child: Text(
 
                         ///****add ths to lan file */
@@ -82,13 +103,6 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                 ),
               ],
             ),
-          ),
-          Positioned(
-            // bottom: MediaQuery.of(context).viewInsets.bottom,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: SubmitButton(context),
           ),
         ],
       ),
@@ -179,7 +193,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                           .textTheme
                           .headline1!
                           .copyWith(fontSize: 14, fontWeight: FontWeight.w500),
-                      autofocus: true,
+                      autofocus: false,
                       onChanged: (s) {
                         if (_prefixTextFieldController.text.length > 0 &&
                             _numberTextFieldController.text.length >= 8) {
@@ -247,12 +261,5 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
             )),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _prefixTextFieldController.dispose();
-    _numberTextFieldController.dispose();
-    super.dispose();
   }
 }
