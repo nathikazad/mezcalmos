@@ -87,7 +87,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
   Widget viewBody() {
     return Expanded(
         child: Container(
-            margin: EdgeInsets.only(top: 3.h, left: 24, right: 24),
+            margin: EdgeInsets.only(top: 1.h, left: 24, right: 24),
             child: Obx(() {
               // if isLooking
               if (_taxiAuthController.taxiState?.isLooking == true) {
