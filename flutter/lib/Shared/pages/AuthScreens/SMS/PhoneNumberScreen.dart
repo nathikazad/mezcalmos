@@ -68,43 +68,40 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
       //         scaffoldBackgroundColor: Colors.transparent,
       //         canvasColor: Colors.transparent),
       //     child: SubmitButton(context)),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            reverse: true,
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                SizedBox(
-                  height: 5,
-                ),
-                Obx(
-                  () => Container(
-                    padding: const EdgeInsets.all(8),
-                    child: Text(
-
-                        ///****add ths to lan file */
-                        lang.strings['shared']['login']["otpCode"],
-                        style: Theme.of(context).textTheme.headline1),
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                NumberInputCard(context),
-                Obx(
-                  () => Container(
-                    padding: EdgeInsets.only(left: 15, right: 15, top: 15),
-                    child: Text(
-                      lang.strings['shared']['login']["twilioNote"],
-                      style: Theme.of(context).textTheme.bodyText2,
-                    ),
-                  ),
-                ),
-              ],
+      body: SingleChildScrollView(
+        reverse: true,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            SizedBox(
+              height: 5,
             ),
-          ),
-        ],
+            Obx(
+              () => Container(
+                padding: const EdgeInsets.all(10),
+                child: Text(
+
+                    ///****add ths to lan file */
+                    lang.strings['shared']['login']["otpCode"],
+                    style: Theme.of(context).textTheme.headline1),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            NumberInputCard(context),
+            Obx(
+              () => Container(
+                padding: EdgeInsets.only(left: 15, right: 15, top: 15),
+                child: Text(
+                  lang.strings['shared']['login']["twilioNote"],
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
