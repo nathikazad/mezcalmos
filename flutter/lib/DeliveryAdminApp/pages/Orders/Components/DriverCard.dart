@@ -1,14 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
-import 'package:mezcalmos/DeliveryAdminApp/models/Driver.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
+import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
 class DriverCard extends StatelessWidget {
   final Order order;
-  Driver? driver;
-  Function(Driver?) callBack;
+  DeliveryDriverUserInfo? driver;
+  Function(DeliveryDriver?) callBack;
   DriverCard(
       {Key? key,
       required this.driver,
@@ -32,9 +32,9 @@ class DriverCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         onTap: (driver == null)
             ? () async {
-                Driver? newDriver =
+                DeliveryDriver? newDriver =
                     await Get.toNamed(kDriversListRoute, arguments: order)
-                        as Driver;
+                        as DeliveryDriver;
                 callBack(newDriver);
               }
             : null,
@@ -46,8 +46,7 @@ class DriverCard extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       radius: 25,
-                      backgroundImage:
-                          CachedNetworkImageProvider(driver!.imageUrl),
+                      backgroundImage: CachedNetworkImageProvider(''),
                     ),
                     SizedBox(
                       width: 10,
@@ -65,7 +64,7 @@ class DriverCard extends StatelessWidget {
                           SizedBox(
                             height: 5,
                           ),
-                          (driver!.available)
+                          (1 == 5)
                               ? Row(
                                   children: [
                                     Icon(
@@ -106,9 +105,9 @@ class DriverCard extends StatelessWidget {
                         onPressed: () {}, icon: Icon(Icons.message_outlined)),
                     IconButton(
                         onPressed: () async {
-                          Driver? newDriver = await Get.toNamed(
+                          DeliveryDriver? newDriver = await Get.toNamed(
                               kDriversListRoute,
-                              arguments: order) as Driver;
+                              arguments: order) as DeliveryDriver;
                           callBack(newDriver);
                         },
                         icon: Icon(Icons.edit_rounded)),

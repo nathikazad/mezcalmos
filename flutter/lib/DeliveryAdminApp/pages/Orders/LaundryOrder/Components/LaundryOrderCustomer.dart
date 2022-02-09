@@ -38,9 +38,13 @@ class LaundryOrderCustomer extends StatelessWidget {
                 SizedBox(
                   width: 10,
                 ),
-                Text(
-                  order.customer.name,
-                  style: txt.bodyText1,
+                Flexible(
+                  flex: 4,
+                  fit: FlexFit.tight,
+                  child: Text(
+                    order.customer.name,
+                    style: txt.bodyText1,
+                  ),
                 ),
                 Spacer(),
                 Material(

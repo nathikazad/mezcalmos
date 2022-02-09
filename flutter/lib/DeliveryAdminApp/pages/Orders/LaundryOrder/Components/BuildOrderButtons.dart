@@ -5,34 +5,34 @@ import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 
 // Change status of the order compnent inside the order view screen
 
-List<Widget> buildOrderButtons(Rxn<LaundryOrder> order,) {
-  if (order.value?.inProcess() ?? false)
+List<Widget> buildOrderButtons(
+  Rxn<LaundryOrder> order,
+) {
+  if (order.value!.inProcess()) {
     return [
-      Expanded(
-        child: changeStatusButton(order)!,
-      ),
-      OrderButtons.cancelButtonWidget(order.value!.orderId,)
+      changeStatusButton(order)!,
+      OrderButtons.cancelButtonWidget(
+        order.value!.orderId,
+      )
     ];
-  else
+  } else
     return [];
 }
 
-Widget? changeStatusButton(Rxn<LaundryOrder> order,) {
+Widget? changeStatusButton(
+  Rxn<LaundryOrder> order,
+) {
   switch (order.value!.status) {
-    case (LaundryOrderStatus.OrderReceieved):
-      return OrderButtons.startPickUp(order.value!.orderId);
-    case (LaundryOrderStatus.OtwPickup):
-      return OrderButtons.pickedUp(order.value!.orderId);
-    case (LaundryOrderStatus.PickedUp):
-      return OrderButtons.atTheLaundry(order.value!.orderId);
     case (LaundryOrderStatus.AtLaundry):
-      return OrderButtons.readyForDeliveryButton(order.value!.orderId);
+      return Expanded(
+          child: OrderButtons.readyForDeliveryButton(order.value!.orderId));
     case (LaundryOrderStatus.ReadyForDelivery):
-      return OrderButtons.otwDeliveryButton(order.value!.orderId);
+      return Expanded(
+          child: OrderButtons.otwDeliveryButton(order.value!.orderId));
     case (LaundryOrderStatus.OtwDelivery):
-      return OrderButtons.deliverdButton(order.value!.orderId);
+      return Expanded(child: OrderButtons.deliverdButton(order.value!.orderId));
 
     default:
-      return null;
+      return SizedBox();
   }
 }

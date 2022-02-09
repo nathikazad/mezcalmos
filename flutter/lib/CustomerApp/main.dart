@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+import 'package:sizer/sizer.dart';
 
 const String defaultDb = "test";
 const String defaultLaunchMode = "stage";
@@ -32,14 +33,16 @@ List<SideMenuItem> sideMenuItems = <SideMenuItem>[
 
 void main() {
   runMainGuarded(() => runApp(
-        StartingPoint(
-          appType: AppType.CustomerApp,
-          appTheme: CustomerAppTheme.lightTheme,
-          signInCallback: signInCallback,
-          signOutCallback: signOutCallback,
-          routes: routes,
-          sideMenuItems: sideMenuItems,
-          locationOn: true,
-        ),
+        Sizer(builder: (context, orientation, deviceType) {
+          return StartingPoint(
+            appType: AppType.CustomerApp,
+            appTheme: CustomerAppTheme.lightTheme,
+            signInCallback: signInCallback,
+            signOutCallback: signOutCallback,
+            routes: routes,
+            sideMenuItems: sideMenuItems,
+            locationOn: true,
+          );
+        }),
       ));
 }

@@ -37,15 +37,19 @@ class DeliveryDriverController extends GetxController {
     });
   }
 
-  Future<ServerResponse> assignDeliveryDriver(String deliveryDriverId,
+  Future<ServerResponse> assignDeliveryDriver(
+      String orderId, String deliveryDriverId,
       {DeliveryDriverType deliveryDriverType =
           DeliveryDriverType.DropOff}) async {
+    mezDbgPrint(
+        "---------- $orderId ----------- $deliveryDriverId -------- $deliveryDriverType");
     HttpsCallable dropOrderFunction =
         FirebaseFunctions.instance.httpsCallable('delivery-assignDriver');
     try {
       HttpsCallableResult response = await dropOrderFunction.call({
+        "orderId": orderId,
+        "deliveryDriverType": deliveryDriverType.toFirebaseFormatString(),
         "deliveryDriverId": deliveryDriverId,
-        "deliveryDriverType": deliveryDriverType.toFirebaseFormatString()
       });
       return ServerResponse.fromJson(response.data);
     } catch (e) {
