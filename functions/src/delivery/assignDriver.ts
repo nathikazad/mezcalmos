@@ -51,7 +51,7 @@ export = functions.https.onCall(async (data, context) => {
   }
 
   if (data.deliveryDriverType != DeliveryDriverType.Pickup
-    || data.deliveryDriverType != DeliveryDriverType.DropOff) {
+    && data.deliveryDriverType != DeliveryDriverType.DropOff) {
     return {
       status: ServerResponseStatus.Error,
       errorMessage: "Invalid delivery driver type"

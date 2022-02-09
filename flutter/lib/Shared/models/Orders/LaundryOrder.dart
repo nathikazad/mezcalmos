@@ -17,7 +17,8 @@ enum LaundryOrderStatus {
 
 extension ParseOrderStatusToString on LaundryOrderStatus {
   String toFirebaseFormatString() {
-    return this.toString().split('.').last;
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1).toLowerCase();
   }
 }
 

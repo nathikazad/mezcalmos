@@ -102,7 +102,8 @@ enum DeliveryDriverType { Pickup, DropOff }
 
 extension ParseDeliveryDriverTypeToString on DeliveryDriverType {
   String toFirebaseFormatString() {
-    return this.toString().split('.').last;
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1).toLowerCase();
   }
 }
 

@@ -19,7 +19,8 @@ enum TaxiOrdersStatus {
 
 extension ParseOrderStatusToString on TaxiOrdersStatus {
   String toFirebaseFormatString() {
-    return this.toString().split('.').last;
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1).toLowerCase();
   }
 }
 
