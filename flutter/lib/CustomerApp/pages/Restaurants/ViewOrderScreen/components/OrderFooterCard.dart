@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
@@ -9,6 +8,7 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:sizer/sizer.dart';
 
 class OrderFooterCard extends StatefulWidget {
   const OrderFooterCard({Key? key, required this.order}) : super(key: key);
@@ -57,7 +57,7 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                                           Text(
                                               '${lang.strings["customer"]["restaurant"]["checkout"]["cancelOrderConfirm"]}'),
                                           SizedBox(
-                                            height: 10.h,
+                                            height: 10,
                                           ),
                                           TextButton(
                                               onPressed: () async {
@@ -102,8 +102,7 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                                                   padding: EdgeInsets.all(12)),
                                               child: Container(
                                                   alignment: Alignment.center,
-                                                  child:
-                                                      Text(lang.strings[
+                                                  child: Text(lang.strings[
                                                                   "customer"]
                                                               ["restaurant"]
                                                           ["cancelOrderDialog"]

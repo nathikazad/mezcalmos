@@ -22,6 +22,7 @@ import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/IPositionedBottomBar.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/IPositionedFromToBar.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
+import 'package:sizer/sizer.dart';
 
 class IncomingOrderViewScreen extends StatefulWidget {
   @override
@@ -86,10 +87,10 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
               cancelOrderSubscription();
               Get.back();
               oneButtonDialog(
-                  title: 'Oop...',
+                  title: 'Oops...',
                   body: lang.strings['taxi']['cancelOrder']['rideUnavailble'],
                   bodyTextColor: Colors.black,
-                  fontSize: 18,
+                  fontSize: 14.sp,
                   imagUrl: a404);
             }
           }
@@ -132,6 +133,7 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
                               lang.strings['taxi']['taxiView']["acceptOrders"],
                               style: TextStyle(
                                 color: Colors.white,
+                                fontSize: 12.sp,
                                 fontWeight: FontWeight.w700,
                               ),
                             )

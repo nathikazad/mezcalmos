@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:mezcalmos/CustomerApp/authHooks.dart';
@@ -10,6 +9,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+import 'package:sizer/sizer.dart';
 
 const String defaultDb = "test";
 const String defaultLaunchMode = "stage";
@@ -33,18 +33,16 @@ List<SideMenuItem> sideMenuItems = <SideMenuItem>[
 ];
 
 void main() {
-  runMainGuarded(() {
-    mezDbgPrint("sTh3me@1: ${CustomerAppTheme.lightTheme}");
-    runApp(
-      StartingPoint(
-        appType: AppType.CustomerApp,
-        appTheme: CustomerAppTheme.lightTheme,
-        signInCallback: signInCallback,
-        signOutCallback: signOutCallback,
-        routes: routes,
-        sideMenuItems: sideMenuItems,
-        locationOn: true,
-      ),
-    );
-  });
+  runMainGuarded(
+      () => runApp(Sizer(builder: (context, orientation, deviceType) {
+            return StartingPoint(
+              appType: AppType.CustomerApp,
+              appTheme: CustomerAppTheme.lightTheme,
+              signInCallback: signInCallback,
+              signOutCallback: signOutCallback,
+              routes: routes,
+              sideMenuItems: sideMenuItems,
+              locationOn: true,
+            );
+          })));
 }

@@ -299,7 +299,10 @@ class AuthController extends GetxController {
             .signInWithCustomToken(response.data["token"]);
       }
     } catch (e) {
-      MezSnackbar("Error", "OTP Code confirmation failed :(");
+      MezSnackbar(
+          "Oops ..",
+          Get.find<LanguageController>().strings['shared']['login']
+              ['failedOTPConfirmRequest']);
       print("Exception happend in GetAuthUsingOTP : $e");
     }
 

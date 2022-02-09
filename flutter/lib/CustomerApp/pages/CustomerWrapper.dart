@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/components/CustomerHomeFooterButtons.dart';
@@ -81,12 +80,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
               autoBack: false,
             ),
             body: LayoutBuilder(builder: (context, constraints) {
-              if (constraints.maxWidth != 0) {
-                ScreenUtil.init(
-                  constraints,
-                  designSize: Size(375, 812),
-                );
-              }
               return SingleChildScrollView(
                   child: ConstrainedBox(
                       constraints: BoxConstraints(

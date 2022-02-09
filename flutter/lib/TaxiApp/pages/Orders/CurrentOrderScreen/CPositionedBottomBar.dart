@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
@@ -18,6 +17,7 @@ import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
+import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CurrentPositionedBottomBar extends StatelessWidget {
@@ -59,7 +59,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                 children: [
                   Flexible(
                       child: CircleAvatar(
-                    radius: 15,
+                    radius: 18.sp,
                     backgroundImage:
                         CachedNetworkImageProvider(order.customer.image),
                   )),
@@ -73,14 +73,21 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('${order.customer.name} Ride ',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText2!
-                                  .copyWith(fontWeight: FontWeight.bold)),
+                          Text(
+                            '${order.customer.name} Ride ',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText2!
+                                .copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12.sp),
+                          ),
                           Text(
                             'Order Canceled by the Customer ',
-                            style: Theme.of(context).textTheme.bodyText2,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText2!
+                                .copyWith(fontSize: 10.sp),
                           ),
                         ],
                       )),
@@ -128,7 +135,8 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               color: Colors.white,
-                                              fontFamily: 'psr'),
+                                              fontFamily: 'psr',
+                                              fontSize: 10.sp),
                                         )
                                       : SizedBox(
                                           child: CircularProgressIndicator(
@@ -149,7 +157,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                   Flexible(
                     flex: 2,
                     child: Text('\$' + (order.cost.toString()),
-                        style: TextStyle(fontFamily: "psb", fontSize: 17.sp)),
+                        style: TextStyle(fontFamily: "psb", fontSize: 14.sp)),
                   ),
                   Flexible(
                       child: SizedBox(

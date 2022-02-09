@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as notifs;
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
+import 'package:sizer/sizer.dart';
 
 class NotificationCard extends StatelessWidget {
   const NotificationCard({
@@ -57,14 +57,14 @@ class NotificationCard extends StatelessWidget {
                       children: [
                         Text(
                           notification.title,
-                          style: txt.bodyText1,
+                          style: txt.bodyText1!.copyWith(fontSize: 12.8.sp),
                         ),
                         SizedBox(
                           height: 5,
                         ),
                         Text(
                           notification.body,
-                          style: txt.bodyText2,
+                          style: txt.bodyText2!.copyWith(fontSize: 11.sp),
                         ),
                       ],
                     ),
@@ -79,14 +79,14 @@ class NotificationCard extends StatelessWidget {
                 children: [
                   Icon(
                     Ionicons.time_outline,
-                    size: 14.sp,
+                    size: 12.sp,
                   ),
                   SizedBox(
                     width: 5,
                   ),
                   Text(
                     "${f.format(notification.timestamp.toLocal())}",
-                    style: txt.subtitle1,
+                    style: txt.subtitle1!.copyWith(fontSize: 10.sp),
                   ),
                   Spacer(),
                   Icon(

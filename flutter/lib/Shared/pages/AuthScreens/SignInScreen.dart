@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:ionicons/ionicons.dart';
@@ -11,6 +10,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
+import 'package:sizer/sizer.dart';
 
 enum SignInMode {
   OptionalSignIn,
@@ -27,8 +27,8 @@ class SignIn extends GetWidget<AuthController> {
   Widget build(BuildContext context) {
     responsiveSize(context);
 
-    final sw = MediaQuery.of(context).size.width.w;
-    final sh = MediaQuery.of(context).size.height.h;
+    final sw = MediaQuery.of(context).size.width;
+    final sh = MediaQuery.of(context).size.height;
     final lmode = GetStorage().read(getxLmodeKey);
 
     return WillPopScope(
@@ -65,19 +65,18 @@ class SignIn extends GetWidget<AuthController> {
                           ),
                     Padding(
                       padding: const EdgeInsets.only(top: 50),
-                      child: MezcalmosSharedWidgets.logo(
-                          size: getSizeRelativeToScreen(60.w, sh, sw)),
+                      child: MezcalmosSharedWidgets.logo(size: 15.h),
                     ),
                     SizedBox(height: 10),
                     MezcalmosSharedWidgets.mezcalmosTitle(
-                        textSize: 40.sp, isBold: true),
+                        textSize: 35.sp, isBold: true),
                     Spacer(),
                     Text(lang.strings['shared']['login']["title"],
                         overflow: TextOverflow.visible,
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
                             .textTheme
-                            .headline1
+                            .headline2
                             ?.copyWith(fontWeight: FontWeight.w600)),
                     Spacer(),
                     ...buildSignInButtons(lmode),

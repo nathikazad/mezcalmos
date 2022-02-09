@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/OrderStatusCard.dart';
@@ -8,6 +7,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:sizer/sizer.dart';
 
 class RestaurantOngoingOrderCard extends StatelessWidget {
   const RestaurantOngoingOrderCard({
@@ -45,7 +45,7 @@ class RestaurantOngoingOrderCard extends StatelessWidget {
                   Stack(
                     children: [
                       CircleAvatar(
-                          radius: 30,
+                          radius: 25,
                           backgroundImage: mLoadImage(
                                   assetInCaseFailed:
                                       'assets/images/customer/DeliveryAdmin/restaurant.png',
@@ -55,7 +55,7 @@ class RestaurantOngoingOrderCard extends StatelessWidget {
                           top: 0,
                           right: 0,
                           child: CircleAvatar(
-                              radius: 14,
+                              radius: 12,
                               backgroundColor: Colors.green.shade400,
                               child: Icon(
                                 Icons.food_bank,

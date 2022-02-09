@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -11,6 +10,7 @@ import 'package:mezcalmos/Shared/models/Notification.dart' as notifs;
 import 'package:mezcalmos/Shared/pages/Notifications/components/ClearNotificationButton.dart';
 import 'package:mezcalmos/Shared/pages/Notifications/components/NotificationCard.dart';
 import 'package:mezcalmos/Shared/widgets/DateTitleComponent.dart';
+import 'package:sizer/sizer.dart';
 
 class ViewNotifications extends StatefulWidget {
   ViewNotifications({Key? key}) : super(key: key);

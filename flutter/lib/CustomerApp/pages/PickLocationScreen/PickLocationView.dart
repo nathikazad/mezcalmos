@@ -10,14 +10,14 @@ import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/components/ButtonComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/SaveLocationDailog.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
-
-import '../Restaurants/ViewcartScreen/components/saveLocationDailog.dart';
+import 'package:sizer/sizer.dart';
 
 enum PickLocationMode { AddNewLocation, EditLocation }
 
@@ -96,7 +96,7 @@ class _PickLocationViewState extends State<PickLocationView> {
                         style: Theme.of(context)
                             .textTheme
                             .headline2!
-                            .copyWith(color: Colors.white))),
+                            .copyWith(color: Colors.white, fontSize: 12.sp))),
               )
             : ButtonComponent(
                 bgColor: Colors.grey.shade400,

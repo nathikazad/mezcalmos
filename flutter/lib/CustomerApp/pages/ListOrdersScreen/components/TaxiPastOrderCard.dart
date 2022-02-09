@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/route_manager.dart';
 import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/CustomerApp/pages/ListOrdersScreen/components/TaxiOrderOngoingCard.dart';
+import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
-
-import '../../../router.dart';
+import 'package:sizer/sizer.dart';
 
 class TaxiPastOrderCard extends StatelessWidget {
   TaxiPastOrderCard({
@@ -38,7 +37,7 @@ class TaxiPastOrderCard extends StatelessWidget {
                   Stack(
                     children: [
                       CircleAvatar(
-                          radius: 30,
+                          radius: 25,
                           backgroundImage: mLoadImage(
                                   assetInCaseFailed:
                                       'assets/images/customer/taxi/taxiDriverImg.png',
@@ -49,7 +48,7 @@ class TaxiPastOrderCard extends StatelessWidget {
                           top: 0,
                           right: 0,
                           child: CircleAvatar(
-                              radius: 14,
+                              radius: 12,
                               backgroundColor: Colors.amber.shade500,
                               child: Icon(
                                 Icons.local_taxi_rounded,
@@ -89,12 +88,12 @@ class TaxiPastOrderCard extends StatelessWidget {
                       ? Icon(
                           Ionicons.checkmark_circle,
                           color: Colors.green,
-                          size: 50,
+                          size: 40,
                         )
                       : Icon(
                           Ionicons.close_circle,
                           color: Colors.red,
-                          size: 50,
+                          size: 40,
                         ),
                 ],
               ),
@@ -111,17 +110,16 @@ class TaxiPastOrderCard extends StatelessWidget {
                         ? Flexible(
                             child: Text(
                               getTaxiOrderStatus(order.status) +
-                                  ' at :' +
-                                  DateFormat(' hh:mm a')
-                                      .format(order.orderTime),
-                              style: txt.bodyText2,
+                                  DateFormat(': hh:mm a')
+                                      .format(order.orderTime.toLocal()),
+                              style: txt.bodyText1!.copyWith(fontSize: 11.sp),
                               overflow: TextOverflow.ellipsis,
                               softWrap: true,
                             ),
                           )
                         : Text(
                             getTaxiOrderStatus(order.status),
-                            style: txt.bodyText2,
+                            style: txt.bodyText1!.copyWith(fontSize: 11.sp),
                           ),
                   ],
                 ),

@@ -82,8 +82,8 @@
                 "cancelOrderConfirm": "¿Estás segura de que deseas cancelar este pedido?"
             },
             "orderStatus": {
-                "orderCanceled":"Orden cancelada",
-                "orderDeliverd":"Pedido entregado",
+                "orderCanceled":"cancelada",
+                "orderDeliverd":"entregado",
                 "helperText":{
                     "preparing": "Tu pedido está siendo preparado por el restaurante.",
                     "readyForPickUp": "Su pedido está preparado y listo para ser recogido por el conductor de la entrega.",
@@ -98,8 +98,8 @@
                 "readyForPickUp": "Lista para recoger",
                 "onTheWay": "En camino",
                 "delivered": "Entregado",
-                "canceledByAdmin": "Cancelada Por Admin",
-                "canceledByCustomer": "Cancelada Por Cliente",
+                "canceledByAdmin": "Cancelada",
+                "canceledByCustomer": "Cancelada",
                 "recievied": "Recibida"
             },
             "cancelOrderDialog": {
@@ -243,7 +243,7 @@
                 "lookingForTaxi":"Buscando Taxi",
                 "inTransit":"Taxi en tránsito",
                 "droppedOff":"Dejado",
-                "expired":"Orden caducada"
+                "expired":"caducada"
             },
             "title": "Pedidos",
             "item": "Artículo|Artículos",
@@ -317,7 +317,9 @@
             "otpSubtitleNumber": "Ingresa número telefónico",
             "submit": "ENVIAR",
             "twilioNote": "Al continuar, recibirá un código de verificación a su número de teléfono por SMS. Se pueden aplicar tarifas por mensajes y datos.",
-            "signInToMakeOrder": "Iniciar sesión para hacer el pedido"
+            "signInToMakeOrder": "Iniciar sesión para hacer el pedido",
+            "wrongOTPCode" :  "El código de confirmación es incorrecto, inténtelo de nuevo.",
+            "failedOTPConfirmRequest" : "La confirmación del código OTP falló :("
         },
         "messages": {
             "title": "Mensajes",
@@ -384,7 +386,7 @@
             "snackMsg":"Ten paciencia mientras se carga tu foto.",
             "snackTxt":"Uploading Image",
             "choosePic":"Elige una foto",
-            "uploadPic": "Subir imagen",
+            "uploadPic" :"Subir imagen",
             "saveTxt":"Guarda los cambios que hiciste",
             "hintTxt":"Ingresa tu nombre completo",
             "validationTxtOne":"Por favor ingresa tu nombre completo",
@@ -395,7 +397,7 @@
             "addInfo": "Agregar Información",
             "editBtn": "EDITAR INFORMACION",
             "deleteBtn": "Borrar cuenta",
-            "saveBtn": "GUARDAR",
+            "saveBtn": "Guardar",
             "cancel": "Cancelar",
             "editImgMsg": "Click on image to change it",
             "fullName": "Nombre completo",

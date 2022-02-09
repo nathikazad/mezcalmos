@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/Taxi/components/Hints/RidePriceControllHint.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileController.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
-import 'package:mezcalmos/Shared/widgets/MezToolTip.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
+import 'package:sizer/sizer.dart';
 
 class UserProfileWidgetsClass {
   // Singleton
@@ -102,7 +100,7 @@ class UserProfileWidgetsClass {
                   SizedBox(height: 5),
                   Text(
                     _lang.strings['shared']['userInfo']['uploadPic'],
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.white, fontSize: 11.sp),
                   )
                 ],
               )
@@ -271,7 +269,7 @@ class UserProfileWidgetsClass {
             child: Center(
                 child: Text(
               _lang.strings['shared']['userInfo']['cancel'],
-              style: TextStyle(fontSize: 15.sp, color: Colors.purple.shade400),
+              style: TextStyle(fontSize: 12.sp, color: Colors.purple.shade400),
             )),
           ),
         ));
@@ -326,7 +324,7 @@ class UserProfileWidgetsClass {
                     ? Text(
                         _lang.strings['shared']['userInfo']['saveBtn'],
                         style: TextStyle(
-                            fontSize: 15.sp,
+                            fontSize: 12.sp,
                             color: userProfileController.didUserChangedInfos()
                                 ? Colors.white
                                 : Colors.grey.shade400),

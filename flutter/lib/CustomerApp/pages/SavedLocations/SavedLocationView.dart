@@ -8,7 +8,7 @@ import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-
+import 'package:sizer/sizer.dart';
 import 'components/SavedLocationBody.dart';
 import 'components/SavedLocationIsEmpty.dart';
 
@@ -81,7 +81,8 @@ class _SavedLocationViewState extends State<SavedLocationView> {
           widget: Center(
             child: Text(
               "${lang.strings["customer"]["savedLocations"]["addNewLoc"]}",
-              style: txt.headline1!.copyWith(color: Colors.white),
+              style:
+                  txt.headline1!.copyWith(color: Colors.white, fontSize: 12.sp),
             ),
           ),
           function: () {

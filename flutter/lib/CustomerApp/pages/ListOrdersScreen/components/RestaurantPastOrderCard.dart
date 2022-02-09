@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/route_manager.dart';
 import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/OrderStatusCard.dart';
@@ -8,6 +7,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:sizer/sizer.dart';
 
 import '../../../router.dart';
 
@@ -39,7 +39,7 @@ class RestaurantPastOrderCard extends StatelessWidget {
                   Stack(
                     children: [
                       CircleAvatar(
-                          radius: 30,
+                          radius: 25,
                           backgroundImage:
                               mLoadImage(url: order.serviceProvider?.image)
                                   .image),
@@ -47,7 +47,7 @@ class RestaurantPastOrderCard extends StatelessWidget {
                           top: 0,
                           right: 0,
                           child: CircleAvatar(
-                              radius: 14,
+                              radius: 12,
                               backgroundColor: Colors.green.shade400,
                               child: Icon(
                                 Icons.food_bank,
@@ -87,12 +87,12 @@ class RestaurantPastOrderCard extends StatelessWidget {
                       ? Icon(
                           Ionicons.bag_check,
                           color: Colors.green,
-                          size: 50,
+                          size: 40,
                         )
                       : Icon(
                           Ionicons.bag_remove,
                           color: Colors.red,
-                          size: 50,
+                          size: 40,
                         ),
                 ],
               ),
@@ -110,16 +110,16 @@ class RestaurantPastOrderCard extends StatelessWidget {
                             child: Text(
                               getOrderStatus(
                                       (order as RestaurantOrder).status) +
-                                  ' at :' +
-                                  DateFormat(' hh:m a').format(order.orderTime),
-                              style: txt.bodyText2,
+                                  DateFormat(': hh:mm a')
+                                      .format(order.orderTime.toLocal()),
+                              style: txt.bodyText1!.copyWith(fontSize: 11.sp),
                               overflow: TextOverflow.ellipsis,
                               softWrap: true,
                             ),
                           )
                         : Text(
                             getOrderStatus((order as RestaurantOrder).status),
-                            style: txt.bodyText2,
+                            style: txt.bodyText1,
                           ),
                   ],
                 ),

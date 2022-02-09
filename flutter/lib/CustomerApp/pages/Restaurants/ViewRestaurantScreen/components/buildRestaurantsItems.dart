@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemScreen.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-import 'RestaurantListItemComponent.dart';
 
 import '../../../../router.dart';
+import 'RestaurantListItemComponent.dart';
 
 Widget buildResturantItems(List<Item> items, String restaurantId) {
   return Column(
@@ -18,7 +18,7 @@ Widget buildResturantItems(List<Item> items, String restaurantId) {
             );
           }));
       children.add(SizedBox(
-        height: 20,
+        height: 1,
       ));
       return children;
     }),

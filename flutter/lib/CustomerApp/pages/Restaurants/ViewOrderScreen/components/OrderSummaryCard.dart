@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:sizer/sizer.dart';
 
 class OrderSummaryCard extends StatelessWidget {
   const OrderSummaryCard({
@@ -21,7 +21,7 @@ class OrderSummaryCard extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: Text(
             '${lang.strings["customer"]["restaurant"]["cart"]["totalCost"]}',
-            style: txt.headline3,
+            style: txt.bodyText1,
           ),
         ),
         Card(
@@ -35,10 +35,10 @@ class OrderSummaryCard extends StatelessWidget {
                   children: [
                     Text(
                       '${lang.strings["customer"]["restaurant"]["cart"]["deliveryCost"]}',
-                      style: txt.headline3,
+                      style: txt.bodyText1,
                     ),
                     Text('\$' + order.shippingCost.toString(),
-                        style: txt.headline2!),
+                        style: txt.bodyText1!),
                   ],
                 ),
                 Divider(
@@ -49,11 +49,11 @@ class OrderSummaryCard extends StatelessWidget {
                   children: [
                     Text(
                       '${lang.strings["customer"]["restaurant"]["cart"]["total"]}',
-                      style: txt.headline3,
+                      style: txt.bodyText1,
                     ),
                     Text(
                       '\$' + (order.cost).toStringAsFixed(0),
-                      style: txt.headline2,
+                      style: txt.bodyText1!.copyWith(fontSize: 14.sp),
                     ),
                   ],
                 ),
@@ -62,14 +62,14 @@ class OrderSummaryCard extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 10.h,
+          height: 10,
         ),
         Container(
           margin: EdgeInsets.all(8),
           alignment: Alignment.centerLeft,
           child: Text(
             '${lang.strings["customer"]["restaurant"]["cart"]["deliveryLocation"]}',
-            style: txt.headline3,
+            style: txt.bodyText1,
           ),
         ),
         Card(

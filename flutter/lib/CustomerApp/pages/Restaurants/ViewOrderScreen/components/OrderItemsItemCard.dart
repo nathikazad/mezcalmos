@@ -1,8 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:get/get.dart';
+import 'package:sizer/sizer.dart';
 
 class OrderItemsItemCard extends StatelessWidget {
   const OrderItemsItemCard({
@@ -62,8 +63,8 @@ class OrderItemsItemCard extends StatelessWidget {
             ),
             Container(
               alignment: Alignment.bottomRight,
-              child: Text('\$' + item.totalCost.toStringAsFixed(0),
-                  style: txt.headline2!),
+              child: Text('\$' + item.totalCost.toInt().toString(),
+                  style: txt.bodyText1!.copyWith(fontSize: 14.sp)),
             )
           ],
         ),

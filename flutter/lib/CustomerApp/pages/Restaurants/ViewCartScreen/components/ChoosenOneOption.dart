@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/TitlesComponent.dart';
@@ -33,12 +32,12 @@ List<Widget> choosenOneOption(
             // oneOption.name
             cartChooseOneItem
                 .chosenOptionDetails.name[lang.userLanguageKey]!.inCaps,
-            style: TextStyle(
+            style: const TextStyle(
                 color: const Color(0xff000000),
                 fontWeight: FontWeight.w400,
-                fontFamily: "psr",
+                fontFamily: "ProductSans",
                 fontStyle: FontStyle.normal,
-                fontSize: 17.0.sp),
+                fontSize: 17.0),
             textAlign: TextAlign.left)),
       ),
       // THEN WE ADD THE CHOSED NAME

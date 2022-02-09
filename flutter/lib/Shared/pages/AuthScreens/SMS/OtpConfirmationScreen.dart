@@ -1,7 +1,7 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:sizer/sizer.dart';
 
 class OtpConfirmationScreen extends GetView<AuthController> {
   LanguageController lang = Get.find<LanguageController>();
@@ -228,8 +229,19 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                       "${Get.arguments ?? _phonePassed} -------------- $otpCode ");
                   ServerResponse? _resp = await controller.signInUsingOTP(
                       Get.arguments ?? _phonePassed, otpCode);
+                  switch (_resp?.success) {
+                    case null:
+                      clickedSignInOtp.value = false;
+                      break;
 
-                  clickedSignInOtp.value = false;
+                    case false:
+                      MezSnackbar(
+                          "Oops ..",
+                          Get.find<LanguageController>().strings['shared']
+                              ['login']['wrongOTPCode']);
+                      clickedSignInOtp.value = false;
+                      break;
+                  }
                 }
               : null,
           style: TextButton.styleFrom(

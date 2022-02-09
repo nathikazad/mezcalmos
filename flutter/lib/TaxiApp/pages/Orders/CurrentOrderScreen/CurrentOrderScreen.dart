@@ -17,7 +17,6 @@ import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
-import 'package:mezcalmos/TaxiApp/components/taxiAppBar.dart';
 import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/CurrentOrderScreen/CPositionedBottomBar.dart';
@@ -210,15 +209,11 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
   PreferredSizeWidget getRightAppBar(TaxiOrdersStatus status) {
     if (status == TaxiOrdersStatus.CancelledByCustomer) {
       return mezcalmosAppBar(AppBarLeftButtonType.Back,
-          onClick: () => Get.back());
+          onClick: () => Get.offNamedUntil(
+              kIncomingOrdersListRoute, ModalRoute.withName(kHomeRoute)));
     } else {
       return mezcalmosAppBar(AppBarLeftButtonType.Menu, onClick: () async {
-        mezDbgPrint('take me back');
-
-        controller.cancelTaxi(null).then((_) {
-          Get.offNamedUntil(
-              kIncomingOrdersListRoute, ModalRoute.withName(kHomeRoute));
-        });
+        Get.find<SideMenuDrawerController>().openMenu();
       });
     }
   }

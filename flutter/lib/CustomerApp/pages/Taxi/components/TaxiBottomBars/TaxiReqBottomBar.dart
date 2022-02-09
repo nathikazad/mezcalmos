@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:sizer/sizer.dart';
 
 class TaxiReqBottomBar extends StatefulWidget {
   final TaxiRequest taxiRequest;
@@ -55,7 +55,7 @@ class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
             Material(
               shape: CircleBorder(),
               child: IconButton(
-                iconSize: 18,
+                iconSize: 13.sp,
                 splashRadius: 18,
                 tooltip: _lang.strings['customer']['taxiView']['decreasePrice'],
                 padding: EdgeInsets.zero,
@@ -73,12 +73,12 @@ class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
             Text(
               '\$' + widget.taxiRequest.estimatedPrice.toString(),
               style: TextStyle(
-                  color: Colors.black, fontFamily: 'psb', fontSize: 20),
+                  color: Colors.black, fontFamily: 'psb', fontSize: 13.sp),
             ),
             Material(
               shape: CircleBorder(),
               child: IconButton(
-                iconSize: 18,
+                iconSize: 13.sp,
                 splashRadius: 18,
                 tooltip: _lang.strings['customer']['taxiView']['increasePrice'],
                 padding: EdgeInsets.zero,
@@ -112,7 +112,7 @@ class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
               children: [
                 Icon(
                   MezcalmosIcons.route,
-                  size: 14,
+                  size: 11.sp,
                 ),
                 SizedBox(
                   width: 2.w,
@@ -121,6 +121,7 @@ class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
                   taxiRequest.routeInformation?.distance.distanceStringInKm ??
                       "-",
                   overflow: TextOverflow.visible,
+                  style: TextStyle(fontSize: 11.sp),
                 ),
               ],
             ),
@@ -130,15 +131,16 @@ class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
               children: [
                 Icon(
                   MezcalmosIcons.stopwatch,
-                  size: 14,
+                  size: 11.sp,
                 ),
                 SizedBox(
                   width: 2.w,
                 ),
                 Text(
-                    taxiRequest.routeInformation?.duration.longTextVersion ??
-                        "-",
-                    overflow: TextOverflow.visible),
+                  taxiRequest.routeInformation?.duration.longTextVersion ?? "-",
+                  overflow: TextOverflow.visible,
+                  style: TextStyle(fontSize: 11.sp),
+                ),
               ],
             ),
           ),

@@ -28,7 +28,8 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:package_info/package_info.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sizer/sizer.dart';
+// import 'package:sizer/sizer.dart';import 'package:sizer/sizer.dart';
 
 final ThemeData _defaultAppTheme = ThemeData(
     primaryColor: Colors.white,
@@ -74,32 +75,35 @@ class _StartingPointState extends State<StartingPoint> {
 
   @override
   Widget build(BuildContext context) {
-    // ScreenUtil().context = context;
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     if (_error) {
       MezSnackbar("Error", "Server connection failed !");
-      return GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          body: Center(
-            child: Icon(Icons.signal_wifi_bad,
-                color: Colors.red.shade200,
-                size: getSizeRelativeToScreen(50, Get.height, Get.width)),
-          ),
-        ),
-      );
+      return Sizer(
+          builder: (context, orientation, deviceType) => GetMaterialApp(
+                debugShowCheckedModeBanner: false,
+                home: Scaffold(
+                  body: Center(
+                    child: Icon(Icons.signal_wifi_bad,
+                        color: Colors.red.shade200,
+                        size:
+                            getSizeRelativeToScreen(50, Get.height, Get.width)),
+                  ),
+                ),
+              ));
     }
     if (!_initialized) {
-      return SplashScreen();
+      return Sizer(
+          builder: (context, orientation, deviceType) => SplashScreen());
     } else {
       mezDbgPrint("====> PreviewMode ===> ${GetStorage().read('previewMode')}");
-      return mainApp(
-          appType: widget.appType,
-          appTheme: widget.appThemeGetter,
-          routes: widget.routes);
+      return Sizer(
+          builder: (context, orientation, deviceType) => mainApp(
+              appType: widget.appType,
+              appTheme: widget.appThemeGetter,
+              routes: widget.routes));
     }
   }
 
