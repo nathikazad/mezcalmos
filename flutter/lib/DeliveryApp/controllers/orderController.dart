@@ -29,23 +29,17 @@ class OrderController extends GetxController {
     _pastOrdersListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(deliveryDriversPastOrdersNode(_authController.fireAuthUser!.uid))
-        .onValue
+        .limitToLast(10)
+        .onChildAdded
         .listen((event) {
-      mezDbgPrint("[][][][][ got new past Order ]]");
-      List<DeliverableOrder> orders = [];
-      if (event.snapshot.value != null) {
-        event.snapshot.value.keys.forEach((orderId) {
-          // for (var orderId in event.snapshot.value.keys) {
+      String orderId = event.snapshot.key!;
           dynamic orderData = event.snapshot.value[orderId];
           if (orderData["orderType"] ==
               OrderType.Restaurant.toFirebaseFormatString())
-            orders.add(RestaurantOrder.fromData(orderId, orderData));
+        pastOrders.add(RestaurantOrder.fromData(orderId, orderData));
           else if (orderData["orderType"] ==
               OrderType.Laundry.toFirebaseFormatString())
-            orders.add(LaundryOrder.fromData(orderId, orderData));
-        });
-      }
-      pastOrders.value = orders;
+        pastOrders.add(LaundryOrder.fromData(orderId, orderData));
     });
 
     mezDbgPrint(

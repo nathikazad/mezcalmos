@@ -1,3 +1,7 @@
+String deliveryDriversNode() {
+  return 'deliveryDrivers/info/';
+}
+
 String deliveryDriverAuthNode(String uid) {
   return 'deliveryDrivers/info/$uid';
 }

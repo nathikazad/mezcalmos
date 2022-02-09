@@ -26,23 +26,30 @@ class DeliveryDriver {
   DeliveryDriverState deliveryDriverState;
   LatLng driverLocation;
   DateTime? lastLocationUpdateTime;
+  String deliveryDriverId;
 
   DeliveryDriver(
-      this.deliveryDriverState, this.driverLocation,
-      this.lastLocationUpdateTime);
+      {required this.deliveryDriverState,
+      required this.driverLocation,
+      required this.lastLocationUpdateTime,
+      required this.deliveryDriverId});
 
-  factory DeliveryDriver.fromSnapshot(DataSnapshot snapshot) {
+  factory DeliveryDriver.fromData(
+      String deliveryDriverId, dynamic deliveryDriverData) {
     DeliveryDriverState deliveryDriverState =
-        DeliveryDriverState.fromSnapshot(snapshot.value['state']);
-    dynamic driverLocation = snapshot.value['location'] == null
+        DeliveryDriverState.fromSnapshot(deliveryDriverData['state']);
+    dynamic driverLocation = deliveryDriverData['location'] == null
         ? null
-        : LatLng(snapshot.value["location"]["position"]["lat"],
-            snapshot.value["location"]["position"]["lng"]);
-    DateTime? lastLocationUpdateTime = snapshot.value['location'] == null
+        : LatLng(deliveryDriverData["location"]["position"]["lat"],
+            deliveryDriverData["location"]["position"]["lng"]);
+    DateTime? lastLocationUpdateTime = deliveryDriverData['location'] == null
         ? null
-        : DateTime.parse(snapshot.value['location']['lastUpdateTime']);
+        : DateTime.parse(deliveryDriverData['location']['lastUpdateTime']);
     return DeliveryDriver(
-        deliveryDriverState, driverLocation, lastLocationUpdateTime);
+        deliveryDriverId: deliveryDriverId,
+        deliveryDriverState: deliveryDriverState,
+        driverLocation: driverLocation,
+        lastLocationUpdateTime: lastLocationUpdateTime);
   }
 
   // Added for Debugging Perposes - Don't delete for now
@@ -55,8 +62,7 @@ class DeliveryDriver {
       };
 }
 
-
-class DeliveryDriverUserInfo extends UserInfo { 
+class DeliveryDriverUserInfo extends UserInfo {
   LatLng? location;
 
   DeliveryDriverUserInfo(
@@ -80,10 +86,7 @@ class DeliveryDriverUserInfo extends UserInfo {
   }
 }
 
-enum DeliveryDriverType {
-  Pickup,
-  DropOff
-}
+enum DeliveryDriverType { Pickup, DropOff }
 
 extension ParseDeliveryDriverTypeToString on DeliveryDriverType {
   String toFirebaseFormatString() {

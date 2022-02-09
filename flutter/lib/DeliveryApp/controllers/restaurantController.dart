@@ -47,11 +47,11 @@ class RestaurantOrderController extends GetxController {
   //   });
   // }
 
-  Future<ServerResponse> deliverOrder(String orderId) async {
+  Future<ServerResponse> startRestaurantDelivery(String orderId) async {
     return _callRestaurantCloudFunction("restaurantStartDelivery", orderId);
   }
 
-  Future<ServerResponse> dropOrder(String orderId) async {
+  Future<ServerResponse> finishRestaurantDelivery(String orderId) async {
     return _callRestaurantCloudFunction("restaurantFinishDelivery", orderId);
   }
 
