@@ -248,7 +248,7 @@
                 "lookingForTaxi":"Looking for Taxi",
                 "inTransit":"Taxi in transit",
                 "droppedOff":"Dropped off",
-                "expired":"Order expired"
+                "expired": "Expired"
             },
             "title": "Orders",
             "item": "Item|Items",

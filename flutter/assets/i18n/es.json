@@ -247,7 +247,7 @@
                 "lookingForTaxi":"Buscando Taxi",
                 "inTransit":"Taxi en tránsito",
                 "droppedOff":"Dejado",
-                "expired":"caducada"
+                "expired": "Caducado"
             },
             "title": "Pedidos",
             "item": "Artículo|Artículos",
