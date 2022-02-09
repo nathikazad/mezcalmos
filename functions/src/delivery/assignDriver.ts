@@ -22,7 +22,7 @@ import { Notification, NotificationAction, NotificationType } from "../shared/mo
 import { deliveryNewOrderMessage } from "./bgNotificationMessages";
 
 export = functions.https.onCall(async (data, context) => {
-  if (!data.orderId || !data.orderType || !data.deliveryDriverId) {
+  if (!data.orderId || !data.orderType || !data.deliveryDriverId || !data.deliveryDriverType) {
     return {
       status: ServerResponseStatus.Error,
       errorMessage: "Required orderId, orderType and deliveryDriverId"

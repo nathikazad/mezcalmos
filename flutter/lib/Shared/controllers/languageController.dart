@@ -69,7 +69,7 @@ class LanguageController extends GetxController {
     }
   }
 
-  void userLanguageChanged(LanguageType language) {
+  void setLanguage(LanguageType language) {
     _userLanguageKey.value = language;
   }
 
