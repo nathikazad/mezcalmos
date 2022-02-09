@@ -122,18 +122,18 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
                     SizedBox(
                       height: 10,
                     ),
-                    DriverCard(
-                      driver: driver,
-                      order: order.value!,
-                      callBack: (newDriver) {
-                        setState(() {
+                    Obx(
+                      () => DriverCard(
+                        driver: driver,
+                        order: order.value!,
+                        callBack: (newDriver) {
                           deliveryDriverController.assignDeliveryDriver(
                               deliveryDriverId: newDriver!.deliveryDriverId,
                               orderId: order.value!.orderId,
                               orderType: OrderType.Laundry,
                               deliveryDriverType: DeliveryDriverType.Pickup);
-                        });
-                      },
+                        },
+                      ),
                     ),
                     SizedBox(
                       height: 10,

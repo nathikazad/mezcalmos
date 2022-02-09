@@ -53,8 +53,6 @@ class DeliveryDriverController extends GetxController {
         "orderId": orderId,
         "deliveryDriverType": deliveryDriverType.toFirebaseFormatString(),
         "deliveryDriverId": deliveryDriverId,
-        "deliveryDriverType": deliveryDriverType.toFirebaseFormatString(),
-        "orderId": orderId,
         "orderType": orderType.toFirebaseFormatString()
       });
       return ServerResponse.fromJson(response.data);
