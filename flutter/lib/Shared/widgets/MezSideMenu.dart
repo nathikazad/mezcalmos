@@ -56,7 +56,7 @@ class MezSideMenu extends GetWidget<AuthController> {
                   backgroundImage: (controller.user?.image != null ||
                           controller.user?.image != "")
                       ? CachedNetworkImageProvider(
-                          controller.user!.image!,
+                          controller.user!.image,
                         )
                       : AssetImage(aDefaultAvatar) as ImageProvider,
                 ),

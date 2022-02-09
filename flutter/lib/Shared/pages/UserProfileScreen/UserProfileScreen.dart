@@ -46,7 +46,7 @@ class _UserProfileState extends State<UserProfile> {
       isEditing.value = true;
     }
 
-    textController.text = auth.user?.name == null ? "" : auth.user!.name!;
+    textController.text = auth.user?.name == null ? "" : auth.user!.name;
     imageFile = File("${auth.user?.image}");
   }
 
@@ -104,11 +104,12 @@ class _UserProfileState extends State<UserProfile> {
                                     onPressed: () async {
                                       if (imageFile?.path != defaultPic) {
                                         var xUrl = await auth.getImageUrl(
-                                            imageFile!, auth.user!.uid);
+                                            imageFile!, auth.user!.id);
                                         mezDbgPrint(xUrl);
                                         auth.user!.image = xUrl;
                                         auth.editUserProfile(
-                                            textController.text.trim(), xUrl);
+                                            name: textController.text.trim(),
+                                            image: xUrl);
                                         isEditing.value = true;
                                       } else {
                                         if (auth.user!.image == defaultPic) {
@@ -120,8 +121,8 @@ class _UserProfileState extends State<UserProfile> {
                                           mezDbgPrint("the path is empty");
 
                                           auth.editUserProfile(
-                                              textController.text.trim(),
-                                              auth.user!.image);
+                                              name: textController.text.trim(),
+                                              image: auth.user!.image);
                                           isEditing.value = !isEditing.value;
                                           Get.back();
                                           Get.back();
@@ -201,12 +202,13 @@ class _UserProfileState extends State<UserProfile> {
                                           auth.user!.name = textController.text;
                                           if (imageFile?.path != defaultPic) {
                                             var xUrl = await auth.getImageUrl(
-                                                imageFile!, auth.user!.uid);
+                                                imageFile!, auth.user!.id);
                                             mezDbgPrint(xUrl);
                                             auth.user!.image = xUrl;
                                             auth.editUserProfile(
-                                                textController.text.trim(),
-                                                xUrl);
+                                                name:
+                                                    textController.text.trim(),
+                                                image: xUrl);
                                             isEditing.value = !isEditing.value;
                                           } else {
                                             if (auth.user!.image ==
@@ -218,8 +220,9 @@ class _UserProfileState extends State<UserProfile> {
                                               mezDbgPrint("the path is empty");
 
                                               auth.editUserProfile(
-                                                  textController.text.trim(),
-                                                  auth.user!.image);
+                                                  name: textController.text
+                                                      .trim(),
+                                                  image: auth.user!.image);
                                               isEditing.value =
                                                   !isEditing.value;
                                             }

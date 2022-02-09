@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
@@ -127,7 +128,9 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
                       callBack: (newDriver) {
                         setState(() {
                           deliveryDriverController.assignDeliveryDriver(
-                              order.value!.orderId, newDriver!.deliveryDriverId,
+                              deliveryDriverId: newDriver!.deliveryDriverId,
+                              orderId: order.value!.orderId,
+                              orderType: OrderType.Laundry,
                               deliveryDriverType: DeliveryDriverType.Pickup);
                         });
                       },

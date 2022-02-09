@@ -58,7 +58,7 @@ class MessageController extends GetxController {
 
     messageNode.set(<String, dynamic>{
       "message": message,
-      "userId": _authController.user!.uid,
+      "userId": _authController.user!.id,
       "timestamp": DateTime.now().toUtc().toString(),
       "orderId": _model.value.orderId
     });
@@ -68,14 +68,14 @@ class MessageController extends GetxController {
         .child('notificationQueue/${messageNode.key}')
         .set(<String, dynamic>{
       "message": message,
-      "userId": _authController.user!.uid,
+      "userId": _authController.user!.id,
       "timestamp": DateTime.now().toUtc().toString(),
       "orderId": _model.value.orderId
     });
   }
 
   Participant? sender() {
-    return _model.value.participants[_authController.user!.uid];
+    return _model.value.participants[_authController.user!.id];
   }
 
   Participant? recipient({ParticipantType? participantType}) {
@@ -95,7 +95,7 @@ class MessageController extends GetxController {
 
     for (String key in _model.value.participants.keys.toList()) {
       Participant recipient = _model.value.participants[key]!;
-      if (key != _authController.user!.uid) {
+      if (key != _authController.user!.id) {
         return recipient;
       }
     }

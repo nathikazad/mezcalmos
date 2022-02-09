@@ -1,5 +1,6 @@
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
 
 class FakeOrder extends Order {
   FakeOrder({
