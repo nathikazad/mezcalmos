@@ -34,7 +34,7 @@ class MezClearButton extends StatelessWidget {
                 color: Color(0xffdb2846),
               ),
               Text(
-                lang.strings['customer']['restaurant']['cart']['clear'],
+                i18n.strings['customer']['restaurant']['cart']['clear'],
                 style: TextStyle(
                     color: const Color(0xffdb2846),
                     fontWeight: FontWeight.w500,

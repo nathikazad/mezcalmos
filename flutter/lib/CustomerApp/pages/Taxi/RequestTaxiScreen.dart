@@ -233,7 +233,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
     } else {
       MezSnackbar(
           "Oops :(",
-          lang.strings['customer']['taxiView']
+          i18n.strings['customer']['taxiView']
               ['failedToRequestTaxi'],
           position: SnackPosition.TOP);
       this.locationPickerController.showConfirmButton();
@@ -291,7 +291,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
     return [
       MezToolTipHint(
         hintWidget: RidePriceControllHint(
-          hintText: lang.strings['customer']
+          hintText: i18n.strings['customer']
               ['taxiView']['taxiRequestPriceTooltip'],
         ),
         left: 80.1,

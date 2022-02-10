@@ -25,7 +25,7 @@ class RestaurantInfoTab extends StatelessWidget {
           children: [
             Container(
               child: Text(
-                '${lang.strings["customer"]["restaurant"]["menu"]["description"]} :',
+                '${i18n.strings["customer"]["restaurant"]["menu"]["description"]} :',
                 style: Theme.of(context).textTheme.bodyText1,
               ),
             ),
@@ -38,7 +38,7 @@ class RestaurantInfoTab extends StatelessWidget {
                     children: [
                       Container(
                         child: Text(
-                          '${lang.strings["customer"]["restaurant"]["menu"]["location"]} :',
+                          '${i18n.strings["customer"]["restaurant"]["menu"]["location"]} :',
                           style: Theme.of(context).textTheme.bodyText1,
                         ),
                       ),
@@ -70,7 +70,7 @@ class RestaurantInfoTab extends StatelessWidget {
       Container(
         alignment: Alignment.centerLeft,
         child: Text(
-          "${lang.strings["customer"]["restaurant"]["menu"]["workingHours"]["workingHours"]}",
+          "${i18n.strings["customer"]["restaurant"]["menu"]["workingHours"]["workingHours"]}",
           style: Theme.of(context).textTheme.bodyText1,
         ),
       ),
@@ -84,7 +84,7 @@ class RestaurantInfoTab extends StatelessWidget {
         if (key.index == i) {
           widgets.add(WorkingHoursCart(
             day:
-                "${lang.strings["customer"]["restaurant"]["menu"]["workingHours"]["weekDays"]["${key.toFirebaseFormatString()}"]}",
+                "${i18n.strings["customer"]["restaurant"]["menu"]["workingHours"]["weekDays"]["${key.toFirebaseFormatString()}"]}",
             isOpen: value.isOpen,
             openHour:
                 "${f.format(DateTime(xDate.year, xDate.month, xDate.day, value.from[0], value.from[1]))}",

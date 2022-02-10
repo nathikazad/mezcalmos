@@ -40,8 +40,8 @@ class WorkingHoursCart extends StatelessWidget {
                   : Color.fromRGBO(252, 89, 99, 0.6),
               child: Center(
                   child: Text(isOpen!
-                      ? "${lang.strings["customer"]["restaurant"]["menu"]["workingHours"]["open"]}"
-                      : "${lang.strings["customer"]["restaurant"]["menu"]["workingHours"]["closed"]}")),
+                      ? "${i18n.strings["customer"]["restaurant"]["menu"]["workingHours"]["open"]}"
+                      : "${i18n.strings["customer"]["restaurant"]["menu"]["workingHours"]["closed"]}")),
             ),
           ),
           Flexible(

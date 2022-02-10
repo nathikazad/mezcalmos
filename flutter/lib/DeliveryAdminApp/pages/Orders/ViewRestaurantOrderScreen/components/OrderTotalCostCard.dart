@@ -18,7 +18,7 @@ Widget orderTotalCostCard(Rxn<RestaurantOrder> order) {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         alignment: Alignment.centerLeft,
         child: Text(
-            "${lang.strings['customer']['restaurant']['cart']['totalCost']}",
+            "${i18n.strings['customer']['restaurant']['cart']['totalCost']}",
             style: TextStyle(
                 color: const Color(0xff000f1c),
                 fontFamily: "psb",
@@ -49,7 +49,7 @@ Widget orderTotalCostCard(Rxn<RestaurantOrder> order) {
                 child: Row(
                   children: [
                     Text(
-                        "${lang.strings['customer']['restaurant']['cart']['deliveryCost']}",
+                        "${i18n.strings['customer']['restaurant']['cart']['deliveryCost']}",
                         style: const TextStyle(
                             color: const Color(0xff000f1c),
                             fontFamily: "psr",
@@ -80,7 +80,7 @@ Widget orderTotalCostCard(Rxn<RestaurantOrder> order) {
                   children: [
                     // Total
                     Text(
-                        "${lang.strings['customer']['restaurant']['cart']['total']}",
+                        "${i18n.strings['customer']['restaurant']['cart']['total']}",
                         style: const TextStyle(
                             color: const Color(0xff000f1c),
                             fontFamily: "psr",

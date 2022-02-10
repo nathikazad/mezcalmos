@@ -26,7 +26,7 @@ class NoInternetConnectionScreen extends StatelessWidget {
               children: [
                 Obx(
                   () => Text(
-                    lang.strings['shared']
+                    i18n.strings['shared']
                         ['conenctionStatus']['noInternetConnection'],
                     style: TextStyle(color: Colors.purple.shade900),
                   ),
@@ -44,7 +44,7 @@ class NoInternetConnectionScreen extends StatelessWidget {
                 ),
                 Obx(
                   () => Text(
-                    lang.strings['shared']
+                    i18n.strings['shared']
                         ['conenctionStatus']['reconnecting'],
                     style: TextStyle(color: Colors.purple.shade900),
                   ),

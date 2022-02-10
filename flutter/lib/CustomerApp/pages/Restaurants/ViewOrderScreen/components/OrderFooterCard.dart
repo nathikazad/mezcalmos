@@ -43,8 +43,8 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
 
                                 title: Text(
                                   !_clickedCancel.value
-                                      ? '${lang.strings["customer"]["restaurant"]["checkout"]["cancelOrder"]}'
-                                      : '${lang.strings["customer"]["restaurant"]["checkout"]["orderCanceled"]}',
+                                      ? '${i18n.strings["customer"]["restaurant"]["checkout"]["cancelOrder"]}'
+                                      : '${i18n.strings["customer"]["restaurant"]["checkout"]["orderCanceled"]}',
                                   textAlign: TextAlign.center,
                                 ),
 
@@ -55,7 +55,7 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                                             CrossAxisAlignment.center,
                                         children: [
                                           Text(
-                                              '${lang.strings["customer"]["restaurant"]["checkout"]["cancelOrderConfirm"]}'),
+                                              '${i18n.strings["customer"]["restaurant"]["checkout"]["cancelOrderConfirm"]}'),
                                           SizedBox(
                                             height: 10,
                                           ),
@@ -75,10 +75,10 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                                                       route.settings.name ==
                                                       kHomeRoute);
                                                   MezSnackbar(
-                                                      lang.strings["shared"]
+                                                      i18n.strings["shared"]
                                                               ["snackbars"]
                                                           ["titleSuccess"],
-                                                      lang.strings["shared"]
+                                                      i18n.strings["shared"]
                                                               ["snackbars"][
                                                           "orderCancelSuccess"],
                                                       position:
@@ -86,10 +86,10 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                                                 } else {
                                                   _clickedCancel.value = false;
                                                   MezSnackbar(
-                                                      lang.strings["shared"]
+                                                      i18n.strings["shared"]
                                                               ["snackbars"]
                                                           ["titleFailed"],
-                                                      lang.strings["shared"]
+                                                      i18n.strings["shared"]
                                                               ["snackbars"]
                                                           ["orderCancelFailed"],
                                                       position:
@@ -102,7 +102,7 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                                                   padding: EdgeInsets.all(12)),
                                               child: Container(
                                                   alignment: Alignment.center,
-                                                  child: Text(lang.strings[
+                                                  child: Text(i18n.strings[
                                                                   "customer"]
                                                               ["restaurant"]
                                                           ["cancelOrderDialog"]
@@ -119,7 +119,7 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                                                   padding: EdgeInsets.all(12)),
                                               child: Container(
                                                   alignment: Alignment.center,
-                                                  child: Text(lang.strings[
+                                                  child: Text(i18n.strings[
                                                                   "customer"]
                                                               ["restaurant"]
                                                           ["cancelOrderDialog"]
@@ -155,7 +155,7 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                     child: Container(
                       alignment: Alignment.center,
                       child: Text(
-                          '${lang.strings["customer"]["restaurant"]["checkout"]["cancelOrder"]}'),
+                          '${i18n.strings["customer"]["restaurant"]["checkout"]["cancelOrder"]}'),
                     )),
               )
             : (widget.order.status == RestaurantOrderStatus.Delivered)
@@ -174,7 +174,7 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                             width: 10,
                           ),
                           Text(
-                            '${lang.strings["customer"]["restaurant"]["orderStatus"]["orderDeliverd"]}',
+                            '${i18n.strings["customer"]["restaurant"]["orderStatus"]["orderDeliverd"]}',
                             style: txt.headline3,
                           )
                         ],
@@ -200,7 +200,7 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                                 width: 10,
                               ),
                               Text(
-                                '${lang.strings["customer"]["restaurant"]["orderStatus"]["orderCanceled"]}',
+                                '${i18n.strings["customer"]["restaurant"]["orderStatus"]["orderCanceled"]}',
                                 style: txt.headline3,
                               )
                             ],
@@ -214,7 +214,7 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                         child: Container(
                           alignment: Alignment.center,
                           child: Text(
-                              '${lang.strings["customer"]["restaurant"]["checkout"]["cancelOrder"]}'),
+                              '${i18n.strings["customer"]["restaurant"]["checkout"]["cancelOrder"]}'),
                         )));
   }
 }

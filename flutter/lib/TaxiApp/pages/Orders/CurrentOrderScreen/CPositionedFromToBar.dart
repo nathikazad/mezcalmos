@@ -47,7 +47,7 @@ class CurrentPositionedFromToTopBar extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Obx(() => Text(
-                              lang.strings['shared']['inputLocation']["from"],
+                              i18n.strings['shared']['inputLocation']["from"],
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 fontSize: 16,
@@ -56,7 +56,7 @@ class CurrentPositionedFromToTopBar extends StatelessWidget {
                             )),
                         GestureDetector(
                           onTap: () => MezSnackbar(
-                              lang.strings['shared']['inputLocation']["from"],
+                              i18n.strings['shared']['inputLocation']["from"],
                               order.from.address),
                           child: Text(
                             order.from.address,
@@ -124,7 +124,7 @@ class CurrentPositionedFromToTopBar extends StatelessWidget {
                       children: [
                         Obx(
                           () => Text(
-                            lang.strings['shared']['inputLocation']["to"],
+                            i18n.strings['shared']['inputLocation']["to"],
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -133,7 +133,7 @@ class CurrentPositionedFromToTopBar extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: () => MezSnackbar(
-                              lang.strings['shared']['inputLocation']["to"],
+                              i18n.strings['shared']['inputLocation']["to"],
                               order.to.address),
                           child: Text(
                             order.to.address, //13+..

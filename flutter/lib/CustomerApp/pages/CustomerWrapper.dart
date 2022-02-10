@@ -174,7 +174,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
       alignment: Alignment.centerLeft,
       child: Obx(
         () => Text(
-          "${i18n.strings['pages']['customerApp']['customerWrapper']['welcomeText']}",
+          "${i18n.strings['pages']['customerApp']['CustomerWrapper']['welcomeText']}",
           style: textStyle,
           textAlign: TextAlign.left,
         ),
@@ -187,7 +187,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
       margin: EdgeInsets.all(5),
       child: Obx(
         () => Text(
-            "${i18n.strings['pages']['customerApp']['customerWrapper']['appDescription']}",
+            "${i18n.strings['pages']['customerApp']['CustomerWrapper']['appDescription']}",
             style: textStyle),
       ),
     );
@@ -199,7 +199,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
       margin: const EdgeInsets.all(5),
       child: Obx(
         () => Text(
-          "${i18n.strings['pages']['customerApp']['customerWrapper']['services']}",
+          "${i18n.strings['pages']['customerApp']['CustomerWrapper']['services']}",
           style: textStyle,
           textAlign: TextAlign.left,
         ),
@@ -214,10 +214,10 @@ class _CustomerWrapperState extends State<CustomerWrapper>
         Obx(
           () => ServicesCard(
             title:
-                "${i18n.strings['pages']['customerApp']['customerWrapper']['taxi']["title"]}",
+                "${i18n.strings['pages']['customerApp']['CustomerWrapper']['taxi']["title"]}",
             url: "assets/images/customer/taxi/taxiService.png",
             subtitle:
-                "${i18n.strings['pages']['customerApp']['customerWrapper']['taxi']["subtitle"]}",
+                "${i18n.strings['pages']['customerApp']['CustomerWrapper']['taxi']["subtitle"]}",
             ontap: () {
               if (Get.find<AuthController>().fireAuthUser == null) {
                 Get.toNamed(kTaxiRequestRoute);
@@ -232,10 +232,10 @@ class _CustomerWrapperState extends State<CustomerWrapper>
         Obx(
           () => ServicesCard(
             title:
-                "${i18n.strings['pages']['customerApp']['customerWrapper']['food']["title"]}",
+                "${i18n.strings['pages']['customerApp']['CustomerWrapper']['food']["title"]}",
             url: "assets/images/customer/restaurants/restaurantService.png",
             subtitle:
-                "${i18n.strings['pages']['customerApp']['customerWrapper']['food']["subtitle"]}",
+                "${i18n.strings['pages']['customerApp']['CustomerWrapper']['food']["subtitle"]}",
             ontap: () {
               if (auth.fireAuthUser != null) {
                 List<Order> restaurantOrders = Get.find<OrderController>()
@@ -262,7 +262,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
         Obx(
           () => ServicesCard(
             title:
-                "${i18n.strings['pages']['customerApp']['customerWrapper']['laundry']["title"]}",
+                "${i18n.strings['pages']['customerApp']['CustomerWrapper']['laundry']["title"]}",
             url: "assets/images/customer/laundryService.png",
           ),
         ),

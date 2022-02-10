@@ -14,7 +14,7 @@ class RideReadByTaxisHint extends StatelessWidget {
         ),
         Center(
           child: Text(
-            lang.strings['customer']['taxiView']['taxiRideCheckedTooltip'],
+            i18n.strings['customer']['taxiView']['taxiRideCheckedTooltip'],
             textAlign: TextAlign.center,
             softWrap: true,
             maxLines: 10,

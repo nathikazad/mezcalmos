@@ -71,7 +71,7 @@ class RestaurantCard extends StatelessWidget {
                             Flexible(
                               child: Text(
                                 restaurant.items.length.toStringAsFixed(0) +
-                                    ' ${lang.strings["customer"]["restaurant"]["menu"]["items"]}',
+                                    ' ${i18n.strings["customer"]["restaurant"]["menu"]["items"]}',
                                 style: txt.bodyText2,
                               ),
                             )
@@ -127,7 +127,7 @@ class RestaurantCard extends StatelessWidget {
                   ? null
                   : Center(
                       child: Text(
-                        "${lang.strings["customer"]["restaurant"]["menu"]["workingHours"]["closed"]}",
+                        "${i18n.strings["customer"]["restaurant"]["menu"]["workingHours"]["closed"]}",
                         style: TextStyle(color: Colors.white),
                       ),
                     ),

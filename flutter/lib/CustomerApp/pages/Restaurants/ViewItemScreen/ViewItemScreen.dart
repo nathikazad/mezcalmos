@@ -176,7 +176,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                       cartItem: cartItem),
                   TextFieldComponent(
                     textController: _noteTextEdittingController,
-                    hint: lang.strings["customer"]["restaurant"]["menu"]
+                    hint: i18n.strings["customer"]["restaurant"]["menu"]
                         ["notes"],
                     onChangeCallback: (String value) {
                       cartItem.value?.notes = value;

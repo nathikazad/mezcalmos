@@ -216,7 +216,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
       case TaxiOrdersStatus.DroppedOff:
         _widgies.assignAll([
           taxiAvatarAndName(
-              description: lang.strings?['customer']?['taxiView']
+              description: i18n.strings?['customer']?['taxiView']
                   ?['rideFinished'],
               pContext: pContext,
               order: widget.order.value!),
@@ -238,8 +238,8 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
               pContext: pContext,
               asset: taxi_driver_marker_asset,
               name:
-                  "${Get.find<AuthController>().fireAuthUser!.displayName}'s ${lang.strings?['customer']?['taxiView']?['ride']}.",
-              description: lang.strings?['customer']?['taxiView']
+                  "${Get.find<AuthController>().fireAuthUser!.displayName}'s ${i18n.strings?['customer']?['taxiView']?['ride']}.",
+              description: i18n.strings?['customer']?['taxiView']
                   ?['rideExpired'],
               order: widget.order.value!),
           RecreateOrderButton(taxiRequest: widget.order.value!.toTaxiRequest())
@@ -252,7 +252,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
           taxiAvatarAndName(
               order: widget.order.value!,
               pContext: pContext,
-              description: lang.strings?['customer']?['taxiView']
+              description: i18n.strings?['customer']?['taxiView']
                   ?['rideCancelledByTaxi']),
           messageBtn(
               order: widget.order.value!,
@@ -269,8 +269,8 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
               pContext: pContext,
               asset: taxi_driver_marker_asset,
               name:
-                  "${Get.find<AuthController>().fireAuthUser!.displayName}'s ${lang.strings?['customer']?['taxiView']?['ride']}.",
-              description: lang.strings?['customer']?['taxiView']
+                  "${Get.find<AuthController>().fireAuthUser!.displayName}'s ${i18n.strings?['customer']?['taxiView']?['ride']}.",
+              description: i18n.strings?['customer']?['taxiView']
                   ?['rideCancelledByCustomer']),
           RecreateOrderButton(taxiRequest: widget.order.value!.toTaxiRequest())
         ]);

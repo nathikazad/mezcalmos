@@ -41,9 +41,9 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
   LanguageController lang = Get.find<LanguageController>();
   return <String, dynamic>{
     "title":
-        "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["title"]}",
+        "${i18n.strings["shared"]["notification"]["notificationType"]["cancelled"]["title"]}",
     "body":
-        "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["body"]}",
+        "${i18n.strings["shared"]["notification"]["notificationType"]["cancelled"]["body"]}",
     "imgUrl": "assets/images/cancel.png",
   };
 }

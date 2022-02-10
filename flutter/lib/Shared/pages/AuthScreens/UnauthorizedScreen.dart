@@ -72,7 +72,7 @@ class _UnauthorizedScreenState extends State<UnauthorizedScreen> {
                   height: 20,
                 ),
                 Text(
-                  '${lang.strings['shared']['unauthorizedScreen']['unauthorized']}',
+                  '${i18n.strings['shared']['unauthorizedScreen']['unauthorized']}',
                   style: TextStyle(
                       color: Colors.black38, fontSize: 20, fontFamily: 'psr'),
                 ),
@@ -98,7 +98,7 @@ class _UnauthorizedScreenState extends State<UnauthorizedScreen> {
                           children: <TextSpan>[
                             TextSpan(
                                 text:
-                                    '${lang.strings['shared']['unauthorizedScreen']['subTitle1']} ',
+                                    '${i18n.strings['shared']['unauthorizedScreen']['subTitle1']} ',
                                 style: TextStyle(
                                     fontSize: 14,
                                     fontFamily: 'psr',
@@ -113,7 +113,7 @@ class _UnauthorizedScreenState extends State<UnauthorizedScreen> {
                                     fontWeight: FontWeight.bold)),
                             TextSpan(
                                 text:
-                                    '${lang.strings['shared']['unauthorizedScreen']['subTitle2']}',
+                                    '${i18n.strings['shared']['unauthorizedScreen']['subTitle2']}',
                                 style: TextStyle(
                                     fontSize: 14,
                                     fontFamily: 'psr',

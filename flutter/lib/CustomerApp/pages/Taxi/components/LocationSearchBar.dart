@@ -159,7 +159,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
         leftTopRadius: 5,
         leftBotRaduis: 5,
         bgColor: Colors.white,
-        label: lang.strings['shared']['inputLocation']['from'],
+        label: i18n.strings['shared']['inputLocation']['from'],
         text: widget.request.value.from?.address ?? "",
         onClear: () => textFieldOnClear(SearchComponentType.From),
         onTextChange: textFieldOnTextChanged,
@@ -224,7 +224,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
         // to Controll where to start our dropDown DX (Distance on X axis)
         dropDownDxOffset: -(Get.width / 2.1),
         dropDownWidth: Get.width - 20,
-        label: lang.strings['shared']['inputLocation']['to'],
+        label: i18n.strings['shared']['inputLocation']['to'],
         text: widget.request.value.to?.address ?? "",
         onClear: () => textFieldOnClear(SearchComponentType.To),
         onTextChange: textFieldOnTextChanged,
@@ -362,7 +362,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
             widget.newLocationChosenEvent(await MapHelper.getCurrentLocation(),
                 locationSearchBarController.focusedTextField.value);
           },
-          title: "${lang.strings["customer"]["taxiView"]["currentLocation"]}",
+          title: "${i18n.strings["customer"]["taxiView"]["currentLocation"]}",
           icon:
               Icon(MezcalmosIcons.crosshairs, size: 20, color: Colors.purple)),
       LocationDropDownItem(
@@ -370,7 +370,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
             widget.newLocationChosenEvent(await MapHelper.getCurrentLocation(),
                 locationSearchBarController.focusedTextField.value);
           },
-          title: "${lang.strings["customer"]["taxiView"]["pickFromMap"]}",
+          title: "${i18n.strings["customer"]["taxiView"]["pickFromMap"]}",
           icon: Icon(MezcalmosIcons.crosshairs, size: 20, color: Colors.purple))
     ]);
     if (Get.find<AuthController>().fireAuthUser != null) {

@@ -34,7 +34,7 @@ class OrdersCumOnDayPage extends GetView<OrderStatsController> {
                     Expanded(
                       child: InkWell(
                         child: Text(
-                          lang.strings["admin"]["orders"]["cumulative"],
+                          i18n.strings["admin"]["orders"]["cumulative"],
                           style: TextStyle(
                               fontSize: 29, fontWeight: FontWeight.bold),
                         ),
@@ -150,7 +150,7 @@ class OrdersCumOnDayPage extends GetView<OrderStatsController> {
                                   padding: const EdgeInsets.only(
                                       top: 0, bottom: 0, right: 8, left: 10),
                                   child: Text(
-                                    lang.strings["admin"]["orders"]
+                                    i18n.strings["admin"]["orders"]
                                         ["totalOrders"],
                                     style: GoogleFonts.lato(
                                       textStyle: TextStyle(
@@ -200,35 +200,35 @@ class OrdersCumOnDayPage extends GetView<OrderStatsController> {
               ),
               MezAdminOrdersComponents.ordersCumOnDayComponent(
                   OrdersStates.Finished,
-                  lang.strings["admin"]["orders"]["finished"],
+                  i18n.strings["admin"]["orders"]["finished"],
                   "${snapshot.data!['finished']}"),
               SizedBox(
                 height: 12,
               ),
               MezAdminOrdersComponents.ordersCumOnDayComponent(
                   OrdersStates.Cancelled,
-                  lang.strings["admin"]["orders"]["cancelled"],
+                  i18n.strings["admin"]["orders"]["cancelled"],
                   "${snapshot.data!['cancelled']}"),
               SizedBox(
                 height: 12,
               ),
               MezAdminOrdersComponents.ordersCumOnDayComponent(
                   OrdersStates.Expired,
-                  lang.strings["admin"]["orders"]["expired"],
+                  i18n.strings["admin"]["orders"]["expired"],
                   "${snapshot.data!['expired']}"),
               SizedBox(
                 height: 12,
               ),
               MezAdminOrdersComponents.ordersCumOnDayComponent(
                   OrdersStates.InProccess,
-                  lang.strings["admin"]["orders"]["inProcess"],
+                  i18n.strings["admin"]["orders"]["inProcess"],
                   "${snapshot.data!['inProcess']}"),
               SizedBox(
                 height: 12,
               ),
               MezAdminOrdersComponents.ordersCumOnDayComponent(
                   OrdersStates.IsLooking,
-                  lang.strings["admin"]["orders"]["isLooking"],
+                  i18n.strings["admin"]["orders"]["isLooking"],
                   "${snapshot.data!['isLooking']}"),
             ];
           } else if (snapshot.hasError) {

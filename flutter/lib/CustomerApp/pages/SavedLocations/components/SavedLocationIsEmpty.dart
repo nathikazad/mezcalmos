@@ -28,7 +28,7 @@ class SavedlocationISEmpty extends StatelessWidget {
           Container(
             child: Text(
               //customer.savedLocations.savedLocationsListEmpty
-              lang.strings['customer']
+              i18n.strings['customer']
                   ['savedLocations']['savedLocationsListEmpty'],
               textAlign: TextAlign.center,
               style: txt.headline2!.copyWith(
@@ -42,7 +42,7 @@ class SavedlocationISEmpty extends StatelessWidget {
           ),
           Container(
             child: Text(
-              lang.strings['customer']
+              i18n.strings['customer']
                   ['savedLocations']['clickBtnToAddNewLocation'],
               textAlign: TextAlign.center,
               style: txt.subtitle1!

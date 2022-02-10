@@ -99,7 +99,7 @@ class UserProfileWidgetsClass {
                   ),
                   SizedBox(height: 5),
                   Text(
-                    lang.strings['shared']['userInfo']['uploadPic'],
+                    i18n.strings['shared']['userInfo']['uploadPic'],
                     style: TextStyle(color: Colors.white, fontSize: 11.sp),
                   )
                 ],
@@ -124,7 +124,7 @@ class UserProfileWidgetsClass {
       flex: 1,
       child: Center(
           child: Text(
-        lang.strings['shared']['userInfo']['title'],
+        i18n.strings['shared']['userInfo']['title'],
         style: TextStyle(fontSize: 30),
       )),
     );
@@ -268,7 +268,7 @@ class UserProfileWidgetsClass {
             // width: Get.width - 100,
             child: Center(
                 child: Text(
-              lang.strings['shared']['userInfo']['cancel'],
+              i18n.strings['shared']['userInfo']['cancel'],
               style: TextStyle(fontSize: 12.sp, color: Colors.purple.shade400),
             )),
           ),
@@ -288,7 +288,7 @@ class UserProfileWidgetsClass {
         // width: Get.width - 100,
         child: Center(
             child: Text(
-          lang.strings['shared']['userInfo']['editInfo'],
+          i18n.strings['shared']['userInfo']['editInfo'],
           style: TextStyle(color: Colors.white, fontSize: 15.sp),
         )),
       ),
@@ -305,7 +305,7 @@ class UserProfileWidgetsClass {
                 }
               : () {
                   MezSnackbar("Oops",
-                      lang.strings['shared']['userInfo']['noChangesToApply'],
+                      i18n.strings['shared']['userInfo']['noChangesToApply'],
                       position: SnackPosition.TOP);
                 },
           child: Container(
@@ -322,7 +322,7 @@ class UserProfileWidgetsClass {
             child: Center(
                 child: !clickedSave
                     ? Text(
-                        lang.strings['shared']['userInfo']['saveBtn'],
+                        i18n.strings['shared']['userInfo']['saveBtn'],
                         style: TextStyle(
                             fontSize: 12.sp,
                             color: userProfileController.didUserChangedInfos()

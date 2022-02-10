@@ -258,7 +258,7 @@ class YesButtonComponetStyle extends StatelessWidget {
   Widget build(BuildContext context) {
     LanguageController lang = Get.find<LanguageController>();
     return MezDialogButtonStyle(
-        buttonText: lang.strings["taxi"]["taxiView"]
+        buttonText: i18n.strings["taxi"]["taxiView"]
             ["yes"],
         buttonColor: Color(0xffdb2846),
         buttonShadowColor: Color(0x2eff0000));
@@ -272,7 +272,7 @@ class NoButtonComponetStyle extends StatelessWidget {
   Widget build(BuildContext context) {
     LanguageController lang = Get.find<LanguageController>();
     return MezDialogButtonStyle(
-        buttonText: lang.strings["taxi"]["taxiView"]
+        buttonText: i18n.strings["taxi"]["taxiView"]
             ["no"],
         buttonColor: Color(0xfffdfdfd),
         buttonShadowColor: Color(0x334c504a));

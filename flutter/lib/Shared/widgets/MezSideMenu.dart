@@ -123,7 +123,7 @@ class MezSideMenu extends GetWidget<AuthController> {
                           size: 22.sp,
                         ),
                         title: Text(
-                            lang.strings['shared']['navDrawer']["userInfo"],
+                            i18n.strings['shared']['navDrawer']["userInfo"],
                             style:
                                 TextStyle(fontFamily: 'psb', fontSize: 13.sp)),
                       )
@@ -149,7 +149,7 @@ class MezSideMenu extends GetWidget<AuthController> {
                         ),
                         title: Obx(
                           () => Text(
-                            lang.strings['shared']['navDrawer']["logout"],
+                            i18n.strings['shared']['navDrawer']["logout"],
                             style:
                                 TextStyle(fontFamily: 'psb', fontSize: 13.sp),
                           ),
@@ -165,7 +165,7 @@ class MezSideMenu extends GetWidget<AuthController> {
                     ),
                     title: Obx(
                       () => Text(
-                        lang.strings['shared']['navDrawer']["legal"],
+                        i18n.strings['shared']['navDrawer']["legal"],
                         style: TextStyle(fontFamily: 'psb', fontSize: 13.sp),
                       ),
                     )),

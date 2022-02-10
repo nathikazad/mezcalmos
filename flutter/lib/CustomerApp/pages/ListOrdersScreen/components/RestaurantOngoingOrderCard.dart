@@ -97,7 +97,7 @@ class RestaurantOngoingOrderCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      "${lang.strings["customer"]["restaurant"]["cart"]["totalCost"]} : \$${order.cost.toStringAsFixed(0)} ",
+                      "${i18n.strings["customer"]["restaurant"]["cart"]["totalCost"]} : \$${order.cost.toStringAsFixed(0)} ",
                     ),
                     Spacer(),
                     Icon(

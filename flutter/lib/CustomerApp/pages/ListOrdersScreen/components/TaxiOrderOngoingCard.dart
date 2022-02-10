@@ -67,7 +67,7 @@ class TaxiOngoingOrderCard extends StatelessWidget {
                       children: [
                         Text(
                           order.serviceProvider?.name ??
-                              "${lang.strings['customer']['taxiView']['taxiOrder']}",
+                              "${i18n.strings['customer']['taxiView']['taxiOrder']}",
                           style: txt.headline3,
                         ),
                         if (MediaQuery.of(context).size.width > 320)
@@ -110,7 +110,7 @@ class TaxiOngoingOrderCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(
-            "${lang.strings["customer"]["restaurant"]["cart"]["totalCost"]} : \$${order.cost}",
+            "${i18n.strings["customer"]["restaurant"]["cart"]["totalCost"]} : \$${order.cost}",
           ),
           Spacer(),
           Icon(
@@ -140,19 +140,19 @@ String getTaxiOrderStatus(TaxiOrdersStatus status) {
   LanguageController lang = Get.find<LanguageController>();
   switch (status) {
     case TaxiOrdersStatus.CancelledByTaxi:
-      return '${lang.strings["taxi"]["orders"]["orderStatus"]["canceledByTaxi"]}';
+      return '${i18n.strings["taxi"]["orders"]["orderStatus"]["canceledByTaxi"]}';
     case TaxiOrdersStatus.CancelledByCustomer:
-      return '${lang.strings["taxi"]["orders"]["orderStatus"]["canceledByCustomer"]}';
+      return '${i18n.strings["taxi"]["orders"]["orderStatus"]["canceledByCustomer"]}';
     case TaxiOrdersStatus.LookingForTaxi:
-      return '${lang.strings["taxi"]["orders"]["orderStatus"]["lookingForTaxi"]}';
+      return '${i18n.strings["taxi"]["orders"]["orderStatus"]["lookingForTaxi"]}';
     case TaxiOrdersStatus.OnTheWay:
-      return '${lang.strings["taxi"]["orders"]["orderStatus"]["onTheWay"]}';
+      return '${i18n.strings["taxi"]["orders"]["orderStatus"]["onTheWay"]}';
     case TaxiOrdersStatus.InTransit:
-      return '${lang.strings["taxi"]["orders"]["orderStatus"]["inTransit"]}';
+      return '${i18n.strings["taxi"]["orders"]["orderStatus"]["inTransit"]}';
     case TaxiOrdersStatus.DroppedOff:
-      return '${lang.strings["taxi"]["orders"]["orderStatus"]["droppedOff"]}';
+      return '${i18n.strings["taxi"]["orders"]["orderStatus"]["droppedOff"]}';
     case TaxiOrdersStatus.Expired:
-      return '${lang.strings["taxi"]["orders"]["orderStatus"]["expired"]}';
+      return '${i18n.strings["taxi"]["orders"]["orderStatus"]["expired"]}';
 
     default:
       return 'Unknown status';

@@ -198,10 +198,10 @@ Widget cancelBtn(TaxiOrder order) {
     child: GestureDetector(
       onTap: () async {
         YesNoDialogButton res = await yesNoDialog(
-            text: lang.strings?['taxi']?['cancelOrder']
+            text: i18n.strings?['taxi']?['cancelOrder']
                     ?['confirmation_header'] ??
                 "Por favor confirmar",
-            body: lang.strings?['taxi']?['cancelOrder']?['confirmation_text'] ??
+            body: i18n.strings?['taxi']?['cancelOrder']?['confirmation_text'] ??
                 "¿Cancelar el viaje actual?");
 
         if (res == YesNoDialogButton.Yes) {
@@ -210,7 +210,7 @@ Widget cancelBtn(TaxiOrder order) {
 
           if (!resp.success) {
             MezSnackbar("Oops",
-                lang.strings['shared']['snackbars']['serverCommunicationError'],
+                i18n.strings['shared']['snackbars']['serverCommunicationError'],
                 position: SnackPosition.TOP);
           }
           // no need for else here , because we are handling UI changes already upon CanceledbyCustomer.

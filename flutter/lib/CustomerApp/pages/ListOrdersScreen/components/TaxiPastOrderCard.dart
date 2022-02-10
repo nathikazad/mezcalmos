@@ -69,7 +69,7 @@ class TaxiPastOrderCard extends StatelessWidget {
                       children: [
                         Text(
                           order.serviceProvider?.name ??
-                              "${lang.strings['customer']['taxiView']['taxiOrder']}",
+                              "${i18n.strings['customer']['taxiView']['taxiOrder']}",
                           overflow: TextOverflow.ellipsis,
                           style: txt.headline3,
                           maxLines: 2,
@@ -105,7 +105,7 @@ class TaxiPastOrderCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      " ${lang.strings["customer"]["restaurant"]["cart"]["totalCost"]} : \$${order.cost.toStringAsFixed(0)}",
+                      " ${i18n.strings["customer"]["restaurant"]["cart"]["totalCost"]} : \$${order.cost.toStringAsFixed(0)}",
                     ),
                     (MediaQuery.of(context).size.width > 320)
                         ? Flexible(

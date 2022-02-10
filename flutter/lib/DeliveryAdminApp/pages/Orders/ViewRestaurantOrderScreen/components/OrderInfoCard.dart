@@ -101,7 +101,7 @@ class _OrderInfoCardState extends State<OrderInfoCard> {
           padding: const EdgeInsets.symmetric(horizontal: 10),
           alignment: Alignment.centerLeft,
           child: Text(
-              "${lang.strings["customer"]["restaurant"]["checkout"]["orderItems"]}",
+              "${i18n.strings["customer"]["restaurant"]["checkout"]["orderItems"]}",
               style: Theme.of(context).textTheme.bodyText2,
               textAlign: TextAlign.left),
         ),

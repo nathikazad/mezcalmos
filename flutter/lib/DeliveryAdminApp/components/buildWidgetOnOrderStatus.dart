@@ -30,7 +30,7 @@ Widget buildWigetOnOrderStatus(
           ),
           Container(
             child: Text(
-                "${lang.strings["customer"]["restaurant"]["orderStatus"]["preparing"]}",
+                "${i18n.strings["customer"]["restaurant"]["orderStatus"]["preparing"]}",
                 style: const TextStyle(
                     color: const Color(0xff7e7a7a),
                     fontFamily: "psr",
@@ -49,7 +49,7 @@ Widget buildWigetOnOrderStatus(
         children: [
           Container(
             child: Text(
-                "${lang.strings["customer"]["restaurant"]["orderStatus"]["readyForPickUp"]}",
+                "${i18n.strings["customer"]["restaurant"]["orderStatus"]["readyForPickUp"]}",
                 style: const TextStyle(
                     color: const Color(0xff7e7a7a),
                     fontFamily: "psr",
@@ -69,7 +69,7 @@ Widget buildWigetOnOrderStatus(
         children: [
           Container(
             child: Text(
-                "${lang.strings["customer"]["restaurant"]["orderStatus"]["onTheWay"]}",
+                "${i18n.strings["customer"]["restaurant"]["orderStatus"]["onTheWay"]}",
                 style: const TextStyle(
                     color: const Color(0xff7e7a7a),
                     fontWeight: FontWeight.w400,
@@ -106,7 +106,7 @@ Widget buildWigetOnOrderStatus(
           ),
           Container(
             child: Text(
-                "${lang.strings["customer"]["restaurant"]["orderStatus"]["delivered"]} ${f.format(orderTime.toLocal()).toString()}",
+                "${i18n.strings["customer"]["restaurant"]["orderStatus"]["delivered"]} ${f.format(orderTime.toLocal()).toString()}",
                 style: const TextStyle(
                     color: const Color(0xff7e7a7a),
                     fontFamily: "prs",
@@ -134,7 +134,7 @@ Widget buildWigetOnOrderStatus(
           ),
           Container(
             child: Text(
-                "${lang.strings["customer"]["restaurant"]["orderStatus"]["recievied"]} ${f.format(orderTime.toLocal()).toString()}",
+                "${i18n.strings["customer"]["restaurant"]["orderStatus"]["recievied"]} ${f.format(orderTime.toLocal()).toString()}",
                 style: const TextStyle(
                     color: const Color(0xff7e7a7a),
                     fontFamily: "prs",
@@ -161,7 +161,7 @@ Widget buildWigetOnOrderStatus(
               )),
           Container(
             child: Text(
-                "${lang.strings["customer"]["restaurant"]["orderStatus"]["canceledByCustomer"]} ",
+                "${i18n.strings["customer"]["restaurant"]["orderStatus"]["canceledByCustomer"]} ",
                 style: const TextStyle(
                     color: const Color(0xff7e7a7a),
                     fontFamily: "psr",
@@ -188,7 +188,7 @@ Widget buildWigetOnOrderStatus(
               )),
           Container(
             child: Text(
-                "${lang.strings["customer"]["restaurant"]["orderStatus"]["canceledByAdmin"]} ",
+                "${i18n.strings["customer"]["restaurant"]["orderStatus"]["canceledByAdmin"]} ",
                 style: const TextStyle(
                     color: const Color(0xff7e7a7a),
                     fontFamily: "psr",

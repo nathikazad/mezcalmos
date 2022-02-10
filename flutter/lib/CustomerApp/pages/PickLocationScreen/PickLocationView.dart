@@ -43,7 +43,7 @@ class _PickLocationViewState extends State<PickLocationView> {
   //   String? address = await getAdressFromLatLng(
   //       LatLng(pickedLocation.latitude, pickedLocation.longitude));
   //   locationPickerController.location.value!.address = address ??
-  //       "${_lang.strings['shared']['pickLocation']['address']} : ${pickedLocation.latitude}, ${pickedLocation.longitude}";
+  //       "${_i18n.strings['shared']['pickLocation']['address']} : ${pickedLocation.latitude}, ${pickedLocation.longitude}";
   // }
 
   @override
@@ -91,7 +91,7 @@ class _PickLocationViewState extends State<PickLocationView> {
                 function: () async => await onPickButtonClick(context),
                 widget: Center(
                     child: Text(
-                        lang.strings["customer"]["pickLocation"]
+                        i18n.strings["customer"]["pickLocation"]
                             ["pickLocation"],
                         style: Theme.of(context)
                             .textTheme
@@ -109,7 +109,7 @@ class _PickLocationViewState extends State<PickLocationView> {
         resizeToAvoidBottomInset: false,
         appBar: CustomerAppBar(
           autoBack: true,
-          title: lang.strings["customer"]["pickLocation"]["pickLocation"],
+          title: i18n.strings["customer"]["pickLocation"]["pickLocation"],
         ),
         body: mezPickLocationViewBody());
   }
@@ -209,7 +209,7 @@ class _PickLocationViewState extends State<PickLocationView> {
           Container(
             margin: const EdgeInsets.all(8),
             child:
-                Text(lang.strings["customer"]["pickLocation"]["pickLabele"]),
+                Text(i18n.strings["customer"]["pickLocation"]["pickLabele"]),
           ),
 
           Container(

@@ -29,7 +29,7 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomerAppBar(
-        title: "${lang.strings['customer']['restaurant']['restaurants']}",
+        title: "${i18n.strings['customer']['restaurant']['restaurants']}",
         autoBack: true,
       ),
       body: FutureBuilder<List<Restaurant>>(
@@ -90,7 +90,7 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
                           child: Image.asset(aComingSoon))),
                   Expanded(
                     child: Text(
-                      lang.strings['customer']['restaurant']
+                      i18n.strings['customer']['restaurant']
                           ['emptRestaurantList'],
                       style: Theme.of(context).textTheme.bodyText1!.copyWith(),
                     ),

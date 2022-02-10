@@ -301,7 +301,7 @@ class AuthController extends GetxController {
     } catch (e) {
       MezSnackbar(
           "Oops ..",
-          lang.strings['shared']['login']
+          i18n.strings['shared']['login']
               ['failedOTPConfirmRequest']);
       print("Exception happend in GetAuthUsingOTP : $e");
     }

@@ -27,7 +27,7 @@ class OrdersFulfillmentOnMonthPage extends GetView<OrderStatsController> {
         ),
         Container(
           child: Text(
-            lang.strings["admin"]["orders"]["orderFR"],
+            i18n.strings["admin"]["orders"]["orderFR"],
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
           ),

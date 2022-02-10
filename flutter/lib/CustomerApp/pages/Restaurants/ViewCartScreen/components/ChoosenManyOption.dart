@@ -14,7 +14,7 @@ List<Widget> choosenManyOption(
       height: 5,
     ),
     MenuTitles(
-      title: lang.strings["customer"]["restaurant"]["cart"]["options"],
+      title: i18n.strings["customer"]["restaurant"]["cart"]["options"],
       textTheme: txt.subtitle1!
           .copyWith(fontSize: 13, color: Color.fromRGBO(33, 33, 33, 0.8)),
     ),

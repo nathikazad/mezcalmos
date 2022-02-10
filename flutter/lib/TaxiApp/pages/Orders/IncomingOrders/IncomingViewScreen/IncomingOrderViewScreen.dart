@@ -87,7 +87,7 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
               Get.back();
               oneButtonDialog(
                   title: 'Oops...',
-                  body: lang.strings['taxi']['cancelOrder']['rideUnavailble'],
+                  body: i18n.strings['taxi']['cancelOrder']['rideUnavailble'],
                   bodyTextColor: Colors.black,
                   fontSize: 14.sp,
                   imagUrl: a404);
@@ -129,7 +129,7 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
                     child: acceptOrderButton(
                       child: !_clickedButton
                           ? Text(
-                              lang.strings['taxi']['taxiView']["acceptOrders"],
+                              i18n.strings['taxi']['taxiView']["acceptOrders"],
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 12.sp,

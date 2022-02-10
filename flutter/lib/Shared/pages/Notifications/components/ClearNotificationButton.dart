@@ -26,7 +26,7 @@ class ClearNotificationButton extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: Text(
-                  lang.strings["shared"]["notification"]["latest"],
+                  i18n.strings["shared"]["notification"]["latest"],
                   style: Theme.of(context).textTheme.headline3,
                 ),
               ),
@@ -34,9 +34,9 @@ class ClearNotificationButton extends StatelessWidget {
                   iconSize: 20,
                   onPressed: () async {
                     YesNoDialogButton yesNoRes = await cancelAlertDialog(
-                        title: lang.strings["shared"]["notification"]
+                        title: i18n.strings["shared"]["notification"]
                             ["alertClearNotification"]["title"],
-                        body: lang.strings["shared"]["notification"]
+                        body: i18n.strings["shared"]["notification"]
                             ["alertClearNotification"]["title"],
                         icon: Container(
                           child: Icon(

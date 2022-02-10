@@ -45,7 +45,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
     return Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
-          title: Text('${lang.strings["shared"]["login"]["confirmation"]}'),
+          title: Text('${i18n.strings["shared"]["login"]["confirmation"]}'),
         ),
         bottomSheet: BottomSheet(
             enableDrag: false,
@@ -70,7 +70,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                   () => Container(
                     margin: const EdgeInsets.all(5),
                     child: Text(
-                        lang.strings['shared']['login']["OtpConfirmation"],
+                        i18n.strings['shared']['login']["OtpConfirmation"],
                         overflow: TextOverflow.visible,
                         style: txt.headline1),
                   ),
@@ -84,7 +84,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                   margin: const EdgeInsets.all(8),
                   child: Obx(
                     () => Text(
-                      lang.strings['shared']['login']["twilioNote"],
+                      i18n.strings['shared']['login']["twilioNote"],
                       style: txt.bodyText2,
                     ),
                   ),
@@ -111,7 +111,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                   style: txt.bodyText2,
                   children: <TextSpan>[
                     new TextSpan(
-                        text: lang.strings['shared']['login']["enterOtpCode"],
+                        text: i18n.strings['shared']['login']["enterOtpCode"],
                         style: txt.bodyText2),
                     new TextSpan(
                         text: "  ${Get.arguments ?? _phonePassed}",
@@ -170,7 +170,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "${lang.strings["shared"]["login"]["otpDidnReciveTxt"]}",
+                  "${i18n.strings["shared"]["login"]["otpDidnReciveTxt"]}",
                   style: txt.bodyText2,
                 ),
                 Obx(
@@ -203,8 +203,8 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                                 : Colors.grey),
                         child: Text(
                           _timeBetweenResending.value == 0
-                              ? lang.strings['shared']['login']["resend"]
-                              : "${lang.strings['shared']['login']["resendAfter"]} ${_timeBetweenResending.value} ${lang.strings['shared']['login']["seconds"]}",
+                              ? i18n.strings['shared']['login']["resend"]
+                              : "${i18n.strings['shared']['login']["resendAfter"]} ${_timeBetweenResending.value} ${i18n.strings['shared']['login']["seconds"]}",
                         )),
                   ),
                 ),
@@ -237,7 +237,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                     case false:
                       MezSnackbar(
                           "Oops ..",
-                          lang.strings['shared']
+                          i18n.strings['shared']
                               ['login']['wrongOTPCode']);
                       clickedSignInOtp.value = false;
                       break;
@@ -253,7 +253,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
             alignment: Alignment.center,
             child: (clickedSignInOtp.value)
                 ? CircularProgressIndicator()
-                : Text(lang.strings['shared']['login']["confirm"]),
+                : Text(i18n.strings['shared']['login']["confirm"]),
           )),
     );
   }

@@ -92,7 +92,7 @@ class SavedLocationComponent extends StatelessWidget {
                       ),
                       iconColor: Colors.black,
                       title:
-                          "${lang.strings["customer"]["savedLocations"]["editLocation"]}",
+                          "${i18n.strings["customer"]["savedLocations"]["editLocation"]}",
                       ontap: () {
                         mezDbgPrint("edit saved lovation item");
                         Get.toNamed(kPickLocationEditRoute,
@@ -109,7 +109,7 @@ class SavedLocationComponent extends StatelessWidget {
                       ),
                       iconColor: Colors.red,
                       title:
-                          "${lang.strings["customer"]["savedLocations"]["deleteLocation"]}",
+                          "${i18n.strings["customer"]["savedLocations"]["deleteLocation"]}",
                       ontap: () {
                         mezDbgPrint("delete saved location item");
                         _customerAuthController.deleteLocation(savelocation);

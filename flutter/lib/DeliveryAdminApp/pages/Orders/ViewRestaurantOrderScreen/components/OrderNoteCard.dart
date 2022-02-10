@@ -12,7 +12,7 @@ Widget orderNoteCard(Rxn<RestaurantOrder> order) {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         alignment: Alignment.centerLeft,
         child: Text(
-            "${lang.strings['customer']['restaurant']['menu']['notes']}",
+            "${i18n.strings['customer']['restaurant']['menu']['notes']}",
             style: const TextStyle(
                 color: const Color(0xff000f1c),
                 fontFamily: "psb",

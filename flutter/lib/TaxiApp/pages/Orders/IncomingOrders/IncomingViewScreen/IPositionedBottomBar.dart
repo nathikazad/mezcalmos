@@ -188,7 +188,7 @@ class IncomingPositionedBottomBar extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "${order.distanceToClient.toStringAsFixed(1)} km ${lang.strings['taxi']['incoming']["far"]}",
+                  "${order.distanceToClient.toStringAsFixed(1)} km ${i18n.strings['taxi']['incoming']["far"]}",
                   overflow: TextOverflow.ellipsis,
                   softWrap: false,
                   maxLines: 1,

@@ -38,7 +38,7 @@ class _ViewNotificationsState extends State<ViewNotifications> {
     final txt = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
-        title: Text(lang.strings['shared']['notification']['title']),
+        title: Text(i18n.strings['shared']['notification']['title']),
         automaticallyImplyLeading: true,
       ),
       body: SingleChildScrollView(

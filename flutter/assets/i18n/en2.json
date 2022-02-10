@@ -1,6 +1,9 @@
 {
   "customerApp": {
     "components": {
+      "Menu": {
+        "UserMenuComponent": {}
+      },
       "CustomerHomeFooterButtons": {
         "privacyPolicy": "Privacy policy"
       },
@@ -15,16 +18,48 @@
       },
       "ServicesCard": {
         "comingSoon": "Comming soon ..."
-      },
-      "UserMenuComponent": {}
+      }
     },
     "pages": {
-      "Laundry": {
-        "Components": {
-          "LaundryLocPicker": {}
+      "ListOrdersScreen": {
+        "components": {
+          "RestaurantOngoingOrderCard": {},
+          "RestaurantPastOrderCard": {},
+          "TaxiOrderOngoingCard": {},
+          "TaxiPastOrderCard": {}
+        },
+        "ListOrdersScreen": {}
+      },
+      "PickLocationScreen": {
+        "PickLocationView": {}
+      },
+      "Restaurants": {
+        "ListRestaurantsScreen": {
+          "components": {
+            "RestaurantCard": {},
+            "searchField": {}
+          },
+          "ListRestaurantScreen": {}
+        },
+        "ViewCartScreen": {
+          "components": {},
+          "ViewCartScreen": {}
+        },
+        "ViewItemScreen": {},
+        "ViewOrderScreen": {},
+        "ViewRestauarantScreen": {}
+      },
+      "SavedLocations": {
+        "components": {},
+        "SavedLocationView": {}
+      },
+      "Taxi": {
+        "components": {},
+        "RequestTaxiScreen": {},
+        "ViewTaxiOrdersScreen": {
         }
       },
-      "customerWrapper": {
+      "CustomerWrapper": {
         "welcomeText": "Welcome to MEZCALMOS 👋",
         "appDescription": "Your one stop palce to find all your needed local services and where you can enjoy fast and hight quality services.",
         "services": "Services",

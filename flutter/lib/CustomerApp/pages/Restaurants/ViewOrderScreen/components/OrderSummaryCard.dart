@@ -20,7 +20,7 @@ class OrderSummaryCard extends StatelessWidget {
           margin: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
           alignment: Alignment.centerLeft,
           child: Text(
-            '${lang.strings["customer"]["restaurant"]["cart"]["totalCost"]}',
+            '${i18n.strings["customer"]["restaurant"]["cart"]["totalCost"]}',
             style: txt.bodyText1,
           ),
         ),
@@ -34,7 +34,7 @@ class OrderSummaryCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '${lang.strings["customer"]["restaurant"]["cart"]["deliveryCost"]}',
+                      '${i18n.strings["customer"]["restaurant"]["cart"]["deliveryCost"]}',
                       style: txt.bodyText1,
                     ),
                     Text('\$' + order.shippingCost.toString(),
@@ -48,7 +48,7 @@ class OrderSummaryCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '${lang.strings["customer"]["restaurant"]["cart"]["total"]}',
+                      '${i18n.strings["customer"]["restaurant"]["cart"]["total"]}',
                       style: txt.bodyText1,
                     ),
                     Text(
@@ -68,7 +68,7 @@ class OrderSummaryCard extends StatelessWidget {
           margin: EdgeInsets.all(8),
           alignment: Alignment.centerLeft,
           child: Text(
-            '${lang.strings["customer"]["restaurant"]["cart"]["deliveryLocation"]}',
+            '${i18n.strings["customer"]["restaurant"]["cart"]["deliveryLocation"]}',
             style: txt.bodyText1,
           ),
         ),

@@ -37,7 +37,7 @@ void _displayNotification(notifs.Notification notification) async {
             buttonShadowColor: Color(0xfffdfdfd)),
         buttonRightStyle: MezDialogButtonStyle(
             buttonText: notification.linkText ??
-                lang.strings['shared']['notification']
+                i18n.strings['shared']['notification']
                     ['view'],
             buttonColor: Color(0xffffffff),
             buttonShadowColor: Color(0xfffdfdfd)),

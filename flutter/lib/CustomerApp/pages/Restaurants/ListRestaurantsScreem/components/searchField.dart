@@ -15,7 +15,7 @@ class SearchField extends StatelessWidget {
       child: TextField(
         style: Theme.of(context).textTheme.bodyText2,
         decoration: InputDecoration(
-            labelText: '${lang.strings["shared"]["placeHolders"]["search"]}',
+            labelText: '${i18n.strings["shared"]["placeHolders"]["search"]}',
             floatingLabelBehavior: FloatingLabelBehavior.never,
             filled: true,
             fillColor: Colors.white,

@@ -50,7 +50,7 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
       color: Colors.red,
       child: Center(
           child: Text(
-              "${lang.strings["customer"]["restaurant"]["notAvailable"]}")),
+              "${i18n.strings["customer"]["restaurant"]["notAvailable"]}")),
     );
   }
 
@@ -112,7 +112,7 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                             "not true ${restaurantCartController.associatedRestaurant?.id} and the other is ${widget.currentRestaurantId}");
 
                         YesNoDialogButton clickedYes = await yesNoDialog(
-                            text: lang.strings['customer']['restaurant']['menu']
+                            text: i18n.strings['customer']['restaurant']['menu']
                                 ["dailog"]["title"],
                             titleUp: true,
                             icon: Container(
@@ -128,7 +128,7 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                                   borderRadius: BorderRadius.circular(8),
                                   color: Colors.grey[300]),
                               height: 30,
-                              child: Text(lang.strings['customer']['restaurant']
+                              child: Text(i18n.strings['customer']['restaurant']
                                   ['menu']["dailog"]["leftBtn"]),
                             ),
                             buttonRightStyle: Container(
@@ -138,12 +138,12 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                                   color: Colors.blue[800]),
                               height: 30,
                               child: Text(
-                                lang.strings['customer']['restaurant']['menu']
+                                i18n.strings['customer']['restaurant']['menu']
                                     ["dailog"]["rightBtn"],
                                 style: TextStyle(color: Colors.white),
                               ),
                             ),
-                            body: lang.strings['customer']['restaurant']['menu']
+                            body: i18n.strings['customer']['restaurant']['menu']
                                 ["dailog"]["subtitle"]);
                         if (clickedYes == YesNoDialogButton.Yes) {
                           Get.back();
@@ -170,9 +170,9 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
               },
               child: Text(
                 widget.mode == ViewItemScreenMode.AddItemMode
-                    ? lang.strings['customer']['restaurant']['menu']
+                    ? i18n.strings['customer']['restaurant']['menu']
                         ['addToCart']
-                    : lang.strings['customer']['restaurant']['menu']
+                    : i18n.strings['customer']['restaurant']['menu']
                         ['modifyItem'],
                 textAlign: TextAlign.center,
               ),

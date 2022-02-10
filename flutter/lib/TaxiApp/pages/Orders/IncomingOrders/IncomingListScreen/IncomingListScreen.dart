@@ -69,7 +69,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
             Flexible(
               child: Obx(
                 () => Text(
-                  lang.strings['taxi']['incoming']["title"],
+                  i18n.strings['taxi']['incoming']["title"],
                   style: TextStyle(
                       // fontSize: getSizeRelativeToScreen(70, sw, sh),
                       fontSize: 25.5.sp,
@@ -282,7 +282,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
             children: [
               Obx(
                 () => Text(
-                  lang.strings['taxi']['incoming']["noOrdersTitle"],
+                  i18n.strings['taxi']['incoming']["noOrdersTitle"],
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 20.5.sp, fontFamily: 'psr'),
                 ),
@@ -292,7 +292,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
               ),
               Obx(
                 () => Text(
-                  lang.strings['taxi']['incoming']["noOrdersDesc"],
+                  i18n.strings['taxi']['incoming']["noOrdersDesc"],
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: 14.sp,
@@ -331,7 +331,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
             children: [
               Obx(
                 () => Text(
-                  lang.strings['taxi']['incoming']["toggleTitle"],
+                  i18n.strings['taxi']['incoming']["toggleTitle"],
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 20.5.sp, fontFamily: 'psr'),
                 ),
@@ -341,7 +341,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
               ),
               Obx(
                 () => Text(
-                  lang.strings['taxi']['incoming']["toggleDesc"],
+                  i18n.strings['taxi']['incoming']["toggleDesc"],
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: 14.sp,

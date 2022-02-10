@@ -34,7 +34,7 @@ class _DropDownListCartViewState extends State<DropDownListCartView> {
     setState(() {
       // default ID: _pick_ , stands for our  Pick From Map
       loc = SavedLocation(
-          name: lang.strings["customer"]["restaurant"]["cart"]["pickLocation"],
+          name: i18n.strings["customer"]["restaurant"]["cart"]["pickLocation"],
           id: "_pick_");
 
       listOfSavedLoacations.add(loc!);
@@ -89,7 +89,7 @@ class _DropDownListCartViewState extends State<DropDownListCartView> {
             isExpanded: true,
             hint: Center(
               child: Text(
-                  lang.strings["customer"]["restaurant"]["cart"]
+                  i18n.strings["customer"]["restaurant"]["cart"]
                       ["pickLocation"],
                   style: Theme.of(context).textTheme.bodyText2),
             ),

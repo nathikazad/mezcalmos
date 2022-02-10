@@ -33,7 +33,7 @@ class OrdersOnDayPage extends GetView<OrderStatsController> {
                     Expanded(
                       child: InkWell(
                         child: Text(
-                          lang.strings["admin"]["orders"]["orders"],
+                          i18n.strings["admin"]["orders"]["orders"],
                           style: TextStyle(
                               fontSize: 29, fontWeight: FontWeight.bold),
                         ),
@@ -129,7 +129,7 @@ class OrdersOnDayPage extends GetView<OrderStatsController> {
                       flex: 2,
                       child: Container(
                         child: Text(
-                          lang.strings["admin"]["orders"]["time"],
+                          i18n.strings["admin"]["orders"]["time"],
                           style: adminAppTextStyle1,
                           textAlign: TextAlign.center,
                           overflow: TextOverflow.ellipsis,
@@ -140,7 +140,7 @@ class OrdersOnDayPage extends GetView<OrderStatsController> {
                       flex: 2,
                       child: Container(
                         child: Text(
-                          lang.strings["admin"]["orders"]["driver"],
+                          i18n.strings["admin"]["orders"]["driver"],
                           style: adminAppTextStyle1,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,
@@ -151,7 +151,7 @@ class OrdersOnDayPage extends GetView<OrderStatsController> {
                       flex: 2,
                       child: Container(
                         child: Text(
-                          lang.strings["admin"]["orders"]["cust"],
+                          i18n.strings["admin"]["orders"]["cust"],
                           style: adminAppTextStyle1,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,

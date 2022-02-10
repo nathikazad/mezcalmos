@@ -57,7 +57,7 @@ class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
               child: IconButton(
                 iconSize: 13.sp,
                 splashRadius: 18,
-                tooltip: lang.strings['customer']['taxiView']['decreasePrice'],
+                tooltip: i18n.strings['customer']['taxiView']['decreasePrice'],
                 padding: EdgeInsets.zero,
                 onPressed: () {
                   widget.taxiRequest.decrementPrice();
@@ -80,7 +80,7 @@ class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
               child: IconButton(
                 iconSize: 13.sp,
                 splashRadius: 18,
-                tooltip: lang.strings['customer']['taxiView']['increasePrice'],
+                tooltip: i18n.strings['customer']['taxiView']['increasePrice'],
                 padding: EdgeInsets.zero,
                 onPressed: () {
                   widget.taxiRequest.incrementPrice();

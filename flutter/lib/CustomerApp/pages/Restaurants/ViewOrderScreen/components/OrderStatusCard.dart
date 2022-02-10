@@ -176,19 +176,19 @@ String getOrderStatus(RestaurantOrderStatus status) {
   LanguageController lang = Get.find<LanguageController>();
   switch (status) {
     case RestaurantOrderStatus.CancelledByAdmin:
-      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["canceledByAdmin"]}';
+      return '${i18n.strings["customer"]["restaurant"]["orderStatus"]["canceledByAdmin"]}';
     case RestaurantOrderStatus.CancelledByCustomer:
-      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["canceledByCustomer"]}';
+      return '${i18n.strings["customer"]["restaurant"]["orderStatus"]["canceledByCustomer"]}';
     case RestaurantOrderStatus.OrderReceieved:
-      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["recievied"]}';
+      return '${i18n.strings["customer"]["restaurant"]["orderStatus"]["recievied"]}';
     case RestaurantOrderStatus.PreparingOrder:
-      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["preparing"]}';
+      return '${i18n.strings["customer"]["restaurant"]["orderStatus"]["preparing"]}';
     case RestaurantOrderStatus.OnTheWay:
-      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["onTheWay"]}';
+      return '${i18n.strings["customer"]["restaurant"]["orderStatus"]["onTheWay"]}';
     case RestaurantOrderStatus.ReadyForPickup:
-      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["readyForPickUp"]}';
+      return '${i18n.strings["customer"]["restaurant"]["orderStatus"]["readyForPickUp"]}';
     case RestaurantOrderStatus.Delivered:
-      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["delivered"]}';
+      return '${i18n.strings["customer"]["restaurant"]["orderStatus"]["delivered"]}';
 
     default:
       return 'Unknown status';
@@ -199,19 +199,19 @@ String getOrderHelperText(RestaurantOrderStatus status) {
   LanguageController lang = Get.find<LanguageController>();
   switch (status) {
     case RestaurantOrderStatus.CancelledByAdmin:
-      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["helperText"]["canceledByAdmin"]}';
+      return '${i18n.strings["customer"]["restaurant"]["orderStatus"]["helperText"]["canceledByAdmin"]}';
     case RestaurantOrderStatus.CancelledByCustomer:
-      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["helperText"]["canceledByCustomer"]}';
+      return '${i18n.strings["customer"]["restaurant"]["orderStatus"]["helperText"]["canceledByCustomer"]}';
     case RestaurantOrderStatus.OrderReceieved:
-      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["helperText"]["recievied"]}';
+      return '${i18n.strings["customer"]["restaurant"]["orderStatus"]["helperText"]["recievied"]}';
     case RestaurantOrderStatus.PreparingOrder:
-      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["helperText"]["preparing"]}';
+      return '${i18n.strings["customer"]["restaurant"]["orderStatus"]["helperText"]["preparing"]}';
     case RestaurantOrderStatus.OnTheWay:
-      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["helperText"]["onTheWay"]}';
+      return '${i18n.strings["customer"]["restaurant"]["orderStatus"]["helperText"]["onTheWay"]}';
     case RestaurantOrderStatus.ReadyForPickup:
-      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["helperText"]["readyForPickUp"]}';
+      return '${i18n.strings["customer"]["restaurant"]["orderStatus"]["helperText"]["readyForPickUp"]}';
     case RestaurantOrderStatus.Delivered:
-      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["helperText"]["delivered"]}';
+      return '${i18n.strings["customer"]["restaurant"]["orderStatus"]["helperText"]["delivered"]}';
 
     default:
       return 'Unknown status';

@@ -83,7 +83,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                 child: Text(
 
                     ///****add ths to lan file */
-                    lang.strings['shared']['login']["otpCode"],
+                    i18n.strings['shared']['login']["otpCode"],
                     style: Theme.of(context).textTheme.headline1),
               ),
             ),
@@ -95,7 +95,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
               () => Container(
                 padding: EdgeInsets.only(left: 15, right: 15, top: 15),
                 child: Text(
-                  lang.strings['shared']['login']["twilioNote"],
+                  i18n.strings['shared']['login']["twilioNote"],
                   style: Theme.of(context).textTheme.bodyText2,
                 ),
               ),
@@ -116,7 +116,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              child: Text(lang.strings['shared']['login']["enterPhoneNumber"],
+              child: Text(i18n.strings['shared']['login']["enterPhoneNumber"],
                   // "Enter Phone To Recieve OPT Code",
                   style: Theme.of(context).textTheme.bodyText1),
             ),
@@ -254,7 +254,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
               alignment: Alignment.center,
               child: (clickedSendOtp.value)
                   ? CircularProgressIndicator()
-                  : Text(lang.strings['shared']['login']["submit"]),
+                  : Text(i18n.strings['shared']['login']["submit"]),
             )),
       ),
     );

@@ -49,7 +49,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
     final txt = Theme.of(context).textTheme;
     return Scaffold(
       appBar: CustomerAppBar(
-        title: '${lang.strings["customer"]["orders"]["title"]}',
+        title: '${i18n.strings["customer"]["orders"]["title"]}',
         autoBack: true,
       ),
       body: Obx(
@@ -76,7 +76,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
         children: [
           Icon(Icons.error, color: Colors.black, size: 30),
           Text(
-            lang.strings['customer']['orders']['noOrders'],
+            i18n.strings['customer']['orders']['noOrders'],
             textAlign: TextAlign.center,
             style: TextStyle(
                 color: Colors.black, fontWeight: FontWeight.w300, fontSize: 14),
@@ -127,9 +127,9 @@ class PastOrderList extends StatelessWidget {
               margin: const EdgeInsets.all(8),
               child: Text(
                 (calculateDifference(element.orderTime) == 0)
-                    ? ' ${lang.strings["shared"]["notification"]["today"]} '
+                    ? ' ${i18n.strings["shared"]["notification"]["today"]} '
                     : (calculateDifference(element.orderTime) == -1)
-                        ? ' ${lang.strings["shared"]["notification"]["yesterday"]} '
+                        ? ' ${i18n.strings["shared"]["notification"]["yesterday"]} '
                         : DateFormat('dd MMM yyyy').format(element.orderTime),
                 style: txt.headline3,
               ),
@@ -162,7 +162,7 @@ class PastOrderList extends StatelessWidget {
         children: [
           Icon(Icons.error, color: Colors.white),
           Text(
-            lang.strings['customer']['orders']['noOrders'],
+            i18n.strings['customer']['orders']['noOrders'],
             textAlign: TextAlign.center,
             style: Theme.of(context)
                 .textTheme
@@ -196,7 +196,7 @@ class OngoingOrderList extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(8),
             child: Text(
-              '${lang.strings["customer"]["orders"]["onGoingOrders"]}',
+              '${i18n.strings["customer"]["orders"]["onGoingOrders"]}',
               style: txt.headline3,
             ),
           ),

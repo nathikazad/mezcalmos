@@ -71,7 +71,7 @@ class SignIn extends GetWidget<AuthController> {
                     MezcalmosSharedWidgets.mezcalmosTitle(
                         textSize: 35.sp, isBold: true),
                     Spacer(),
-                    Text(lang.strings['shared']['login']["title"],
+                    Text(i18n.strings['shared']['login']["title"],
                         overflow: TextOverflow.visible,
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
@@ -140,7 +140,7 @@ class SignIn extends GetWidget<AuthController> {
                     child: Icon(Ionicons.logo_apple)),
                 Spacer(),
                 Text(
-                  lang.strings['shared']['login']["loginWithApple"],
+                  i18n.strings['shared']['login']["loginWithApple"],
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Spacer()
@@ -168,7 +168,7 @@ class SignIn extends GetWidget<AuthController> {
                     child: Icon(Ionicons.chatbox)),
                 Spacer(),
                 Text(
-                  lang.strings['shared']['login']["loginWithSms"],
+                  i18n.strings['shared']['login']["loginWithSms"],
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Spacer(),
@@ -234,7 +234,7 @@ class SignIn extends GetWidget<AuthController> {
                 Spacer(),
                 Text(
                   lmode != "dev"
-                      ? lang.strings['shared']['login']["fbBtn"]
+                      ? i18n.strings['shared']['login']["fbBtn"]
                       : "test mode login",
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),

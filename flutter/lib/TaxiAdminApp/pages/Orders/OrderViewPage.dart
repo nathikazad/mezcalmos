@@ -127,31 +127,31 @@ class OrderViewPage extends GetView<OrderStatsController> {
               "${data["orders"][0]["dropOffLocation"]["crs"]["properties"]["name"]}",
             ),
             InfoCardComponent(
-              title_0: lang.strings["admin"]["orders"]["orderId"],
+              title_0: i18n.strings["admin"]["orders"]["orderId"],
               subTitle_0: "${data["orders"][0]["orderId"]}",
-              title_0_1: lang.strings["admin"]["orders"]["orderT"],
+              title_0_1: i18n.strings["admin"]["orders"]["orderT"],
               subTitle_0_1:
                   "${f.format(DateTime.parse("${data["orders"][0]["orderTime"]}"))}",
-              title_1_0: lang.strings["admin"]["orders"]["status"],
+              title_1_0: i18n.strings["admin"]["orders"]["status"],
               subTitle_1_0:
                   "${data["orders"][0]["finalStatus"].toString().toUpperCase()}",
-              title_1_1: lang.strings["admin"]["orders"]["price"],
+              title_1_1: i18n.strings["admin"]["orders"]["price"],
               subTitle_1_1: "\$${data["orders"][0]["finalPrice"]}",
-              title_2_0: lang.strings["admin"]["orders"]["rideStart"],
+              title_2_0: i18n.strings["admin"]["orders"]["rideStart"],
               subTitle_2_0: (data["orders"][0]["rideStartTime"] == null)
                   ? "--:-- "
                   : "${ff.format(DateTime.parse("${data["orders"][0]["rideStartTime"]}"))}",
-              title_2_1: lang.strings["admin"]["orders"]["rideEnd"],
+              title_2_1: i18n.strings["admin"]["orders"]["rideEnd"],
               subTitle_2_1: (data["orders"][0]['rideFinishTime'] != null)
                   ? "${ff.format(DateTime.parse("${data["orders"][0]["rideFinishTime"]}"))}"
                   : "--:--",
-              title_3_0: lang.strings["admin"]["notifs"]["notifications"],
+              title_3_0: i18n.strings["admin"]["notifs"]["notifications"],
               subTitle_3_0:
-                  "${lang.strings["admin"]["notifs"]["sent"]}:${data["orders"][0]["notifications_sent"]}",
+                  "${i18n.strings["admin"]["notifs"]["sent"]}:${data["orders"][0]["notifications_sent"]}",
               subTitle_3_1:
-                  "${lang.strings["admin"]["notifs"]["received"]}:${data["orders"][0]["notifications_received"]}",
+                  "${i18n.strings["admin"]["notifs"]["received"]}:${data["orders"][0]["notifications_received"]}",
               subTitle_3_2:
-                  "${lang.strings["admin"]["notifs"]["read"]}:${data["orders"][0]["notifications_read"]}",
+                  "${i18n.strings["admin"]["notifs"]["read"]}:${data["orders"][0]["notifications_read"]}",
             ),
           ],
         ),

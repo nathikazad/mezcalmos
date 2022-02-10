@@ -128,7 +128,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
         appBar: CustomerAppBar(
           autoBack: true,
           title:
-              '${lang.strings["customer"]["restaurant"]["orderStatus"]["orderStatus"]}',
+              '${i18n.strings["customer"]["restaurant"]["orderStatus"]["orderStatus"]}',
         ),
         body: Obx(
           () {

@@ -40,7 +40,7 @@ class OrdersCumOnMonthPage extends GetView<OrderStatsController> {
                     children: [
                       Expanded(
                         child: Text(
-                          lang.strings["admin"]["orders"]["orders"],
+                          i18n.strings["admin"]["orders"]["orders"],
                           style: TextStyle(
                               fontSize: 28, fontWeight: FontWeight.bold),
                         ),

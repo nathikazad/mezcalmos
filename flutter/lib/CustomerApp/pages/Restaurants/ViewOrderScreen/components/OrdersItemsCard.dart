@@ -24,7 +24,7 @@ class OrderItemsCard extends StatelessWidget {
             alignment: Alignment.centerLeft,
             margin: EdgeInsets.symmetric(horizontal: 8),
             child: Text(
-              '${lang.strings["customer"]["restaurant"]["checkout"]["orderItems"]}',
+              '${i18n.strings["customer"]["restaurant"]["checkout"]["orderItems"]}',
               style: txt.bodyText1,
             ),
           ),

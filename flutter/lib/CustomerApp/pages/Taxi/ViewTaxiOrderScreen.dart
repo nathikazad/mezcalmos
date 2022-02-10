@@ -72,7 +72,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
               if (order.value!.status == TaxiOrdersStatus.CancelledByCustomer) {
                 Get.back();
                 oneButtonDialog(
-                    body: lang.strings['shared']['snackbars']
+                    body: i18n.strings['shared']['snackbars']
                         ['orderCancelSuccess'],
                     imagUrl: _order!.customer.image);
               }
@@ -252,8 +252,8 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
         child: InkWell(
           onTap: () async {
             YesNoDialogButton res = await yesNoDialog(
-                text: lang.strings['customer']['cancelOrder']['title'],
-                body: lang.strings['customer']['cancelOrder']['question']);
+                text: i18n.strings['customer']['cancelOrder']['title'],
+                body: i18n.strings['customer']['cancelOrder']['question']);
             if (res == YesNoDialogButton.Yes) {
               await Get.find<TaxiController>().cancelTaxi(order.value!.orderId);
             }
@@ -265,7 +265,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
                   borderRadius: BorderRadius.circular(10)),
               child: Center(
                 child: Text(
-                  lang.strings['customer']['taxiView']['cancel'],
+                  i18n.strings['customer']['taxiView']['cancel'],
                   style: TextStyle(
                       fontFamily: "psr",
                       color: Colors.white,
@@ -284,7 +284,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
     return [
       MezToolTipHint(
         hintWidget: RidePriceControllHint(
-            hintText: lang.strings['customer']
+            hintText: i18n.strings['customer']
                 ['taxiView']['taxiRidePriceTooltip']),
         left: 80.1,
         bottom: 150.5,

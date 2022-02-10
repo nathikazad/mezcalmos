@@ -34,7 +34,7 @@ class NotifCountOnDayPage extends GetView<NotificationsController> {
                     Expanded(
                       child: InkWell(
                         child: Text(
-                          lang.strings["admin"]["notifs"]["notifications"],
+                          i18n.strings["admin"]["notifs"]["notifications"],
                           style: TextStyle(
                               fontSize: 28, fontWeight: FontWeight.bold),
                         ),
@@ -166,7 +166,7 @@ class NotifCountOnDayPage extends GetView<NotificationsController> {
                       child: Container(
                         padding: const EdgeInsets.only(left: 10),
                         child: Text(
-                          lang.strings["admin"]["orders"]["driver"],
+                          i18n.strings["admin"]["orders"]["driver"],
                           style: adminAppTextStyle1,
                           textAlign: TextAlign.left,
                         ),

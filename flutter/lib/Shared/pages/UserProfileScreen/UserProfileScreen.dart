@@ -90,7 +90,7 @@ class _UserProfileState extends State<UserProfile> {
     if (!Get.find<AuthController>().isDisplayNameSet()) {
       _hints.add(MezToolTipHint(
         hintWidget: NoUserNameSetHint(
-          hintText: lang.strings['shared']['userInfo']
+          hintText: i18n.strings['shared']['userInfo']
               ['mustSetUserNameHint'],
         ),
         left: Get.width / 2,
@@ -103,7 +103,7 @@ class _UserProfileState extends State<UserProfile> {
     if (!Get.find<AuthController>().isUserImgSet()) {
       _hints.add(MezToolTipHint(
         hintWidget: NoUserImageSetHint(
-          hintText: lang.strings['shared']['userInfo']
+          hintText: i18n.strings['shared']['userInfo']
               ['mustSetUserImgHint'],
         ),
         left: Get.width / 2,
@@ -143,7 +143,7 @@ class _UserProfileState extends State<UserProfile> {
       clickedSave.value = false;
     } else {
       widget.userProfileController.setErrorTextForXDuration(
-          lang.strings['shared']['userInfo']
+          i18n.strings['shared']['userInfo']
               ['wrongName'],
           duration: Duration(seconds: 5));
     }

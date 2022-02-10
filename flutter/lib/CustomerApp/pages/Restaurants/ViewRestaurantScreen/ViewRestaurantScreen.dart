@@ -49,11 +49,11 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
                     tabs: [
                       Tab(
                         text:
-                            '${lang.strings["customer"]["restaurant"]["menu"]["menu"]}',
+                            '${i18n.strings["customer"]["restaurant"]["menu"]["menu"]}',
                       ),
                       Tab(
                         text:
-                            '${lang.strings["customer"]["restaurant"]["menu"]["info"]}',
+                            '${i18n.strings["customer"]["restaurant"]["menu"]["info"]}',
                       ),
                     ],
                   ),

@@ -11,7 +11,7 @@ Future<void>
     mezcalmosDialogOrderNoMoreAvailable() async {
   LanguageController lang = Get.find<LanguageController>();
   return mezcalmosDialogWithTaxi(
-      message: lang.strings['taxi']['cancelOrder']
+      message: i18n.strings['taxi']['cancelOrder']
             ['rideUnavailble']);
 }
 
@@ -19,7 +19,7 @@ Future<void>
 Future<void> mezcalmosDialogOrderCancelled() {
   LanguageController lang = Get.find<LanguageController>();
   return mezcalmosDialogWithTaxi(
-      message: lang.strings['taxi']['cancelOrder']
+      message: i18n.strings['taxi']['cancelOrder']
         ['customerCancelled']);
 }
 

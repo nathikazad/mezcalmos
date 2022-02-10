@@ -98,7 +98,7 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
                             Icons.camera_enhance,
                             color: Colors.white,
                           ),
-                          Text(lang.strings['shared']
+                          Text(i18n.strings['shared']
                               ['buttonsTexts']['camera'])
                         ],
                       ))),
@@ -124,7 +124,7 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
                             color: Colors.white,
                           ),
                           Text(
-                              lang.strings['shared']
+                              i18n.strings['shared']
                               ['buttonsTexts']['gallery'])
                         ],
                       ))),
@@ -149,16 +149,16 @@ Future<imPicker.XFile?> imagePicker(
   } on PlatformException catch (exception) {
     if (exception.code == 'camera_access_denied') {
       MezSnackbar(
-          lang.strings['shared']['permissions']
+          i18n.strings['shared']['permissions']
               ['cameraAccessOffTitle'],
-          lang.strings['shared']['permissions']
+          i18n.strings['shared']['permissions']
               ['cameraAccessOffBody'],
           position: SnackPosition.TOP);
     } else if (exception.code == 'photo_access_denied') {
       MezSnackbar(
-          lang.strings['shared']['permissions']
+          i18n.strings['shared']['permissions']
               ['photoAccessOffTitle'],
-          lang.strings['shared']['permissions']
+          i18n.strings['shared']['permissions']
               ['photoAccessOffBody'],
           position: SnackPosition.TOP);
     } else {

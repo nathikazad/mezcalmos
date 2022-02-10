@@ -53,7 +53,7 @@ class _UserMenuState extends State<UserMenu> {
                   width: 10,
                 ),
                 Text(
-                  lang.strings['customer']['savedLocations']['title'],
+                  i18n.strings['customer']['savedLocations']['title'],
                 ),
               ],
             ),
@@ -67,7 +67,7 @@ class _UserMenuState extends State<UserMenu> {
                   width: 10,
                 ),
                 Text(
-                  lang.strings['shared']['navDrawer']["userInfo"],
+                  i18n.strings['shared']['navDrawer']["userInfo"],
                 ),
               ],
             ),
@@ -81,7 +81,7 @@ class _UserMenuState extends State<UserMenu> {
                   width: 10,
                 ),
                 Text(
-                  lang.strings['shared']['navDrawer']["logout"],
+                  i18n.strings['shared']['navDrawer']["logout"],
                 ),
               ],
             ),
@@ -131,7 +131,7 @@ class _UserMenuState extends State<UserMenu> {
         SizedBox(
           width: 10,
         ),
-        Text(" ${lang.strings['admin']['notifs']['notifications']}"),
+        Text(" ${i18n.strings['admin']['notifs']['notifications']}"),
       ],
     );
   }
@@ -154,7 +154,7 @@ class _UserMenuState extends State<UserMenu> {
         SizedBox(
           width: 10,
         ),
-        Text(" ${lang.strings['admin']['orders']['orders']}"),
+        Text(" ${i18n.strings['admin']['orders']['orders']}"),
       ],
     );
   }

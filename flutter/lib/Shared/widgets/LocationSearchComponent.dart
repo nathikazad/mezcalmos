@@ -172,7 +172,7 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
                   },
                   tfTextDecoration: InputDecoration(
                       contentPadding: widget.hintPadding,
-                      hintText: lang.strings["shared"]
+                      hintText: i18n.strings["shared"]
                           ["placeHolders"]["address"],
                       hintStyle: TextStyle(
                           color: Color.fromRGBO(141, 141, 141, 1),

@@ -19,8 +19,8 @@ class ButtonsStyle {
         function: () async {
           var res = await dailogComponent(
               lang.strings["deliveryAdminApp"]["cancelAlert"]["title"],
-              lang.strings["deliveryAdminApp"]["cancelAlert"]["subTitle"], () {
-            Get.back(result: true);
+              i18n.strings["deliveryAdminApp"]["cancelAlert"]["subTitle"], () {
+            Gei18n.stresult: true);
           }, () {
             Get.back(result: false);
           },
@@ -36,7 +36,7 @@ class ButtonsStyle {
         },
         widget: Text(
             lang.strings["customer"]["restaurant"]["checkout"]["cancel"]
-                .toUpperCase(),
+            i18n.stUpperCase(),
             style: TextStyle(
                 color: const Color(0xffffffff),
                 fontFamily: "psb",
@@ -59,7 +59,7 @@ class ButtonsStyle {
         widget: Text(
             lang.strings["deliveryAdminApp"]["ordersButton"]["readyForPickUp"],
             style: TextStyle(
-                color: const Color(0xffffffff),
+            i18n.stor: const Color(0xffffffff),
                 fontFamily: "psb",
                 fontSize: 16.0.sp),
             textAlign: TextAlign.center),
@@ -75,8 +75,8 @@ class ButtonsStyle {
           var res = await dailogComponent(
               lang.strings["deliveryAdminApp"]["readyAlert"]["title"],
               lang.strings["deliveryAdminApp"]["readyAlert"]["subTitle"], () {
-            Get.back(result: true);
-          }, () {
+            Gei18n.stresult: true);
+          }, (i18n.st
             Get.back(result: false);
           },
               Container(height: 70, width: 70, child: Image.asset(box)),
@@ -103,7 +103,7 @@ class ButtonsStyle {
       widget: Text(lang.strings["deliveryAdminApp"]["ordersButton"]["deliver"],
           style: TextStyle(
               color: const Color(0xffffffff),
-              fontFamily: "psb",
+              fontFi18n.st"psb",
               fontSize: 16.0.sp),
           textAlign: TextAlign.center),
       gradient: LinearGradient(
@@ -115,8 +115,8 @@ class ButtonsStyle {
             lang.strings["deliveryAdminApp"]["onTheWayAlert"]["title"],
             lang.strings["deliveryAdminApp"]["onTheWayAlert"]["subTitle"], () {
           Get.back(result: true);
-        }, () {
-          Get.back(result: false);
+        }, (i18n.st
+          Gei18n.stresult: false);
         },
             Container(height: 70, width: 70, child: Image.asset(truck)),
             LinearGradient(
@@ -141,7 +141,7 @@ class ButtonsStyle {
             style: TextStyle(
                 color: const Color(0xffffffff),
                 fontFamily: "psb",
-                fontStyle: FontStyle.normal,
+            i18n.sttStyle: FontStyle.normal,
                 fontSize: 16.0.sp),
             textAlign: TextAlign.center),
         gradient: LinearGradient(
@@ -154,8 +154,8 @@ class ButtonsStyle {
               lang.strings["deliveryAdminApp"]["prepareAlert"]["subTitle"], () {
             Get.back(result: true);
           }, () {
-            Get.back(result: false);
-          },
+            Gei18n.stresult: false);
+          },i18n.st
               Container(height: 70, width: 70, child: Image.asset(stoveIcon)),
               LinearGradient(
                   begin: Alignment(-0.10374055057764053, 0),
@@ -180,7 +180,7 @@ class ButtonsStyle {
                 color: const Color(0xffffffff),
                 fontFamily: "psb",
                 fontSize: 16.0.sp),
-            textAlign: TextAlign.center),
+            i18n.stgn: TextAlign.center),
         gradient: LinearGradient(
             begin: Alignment(-0.10374055057764053, 0),
             end: Alignment(1.1447703838348389, 1.1694844961166382),
@@ -192,8 +192,8 @@ class ButtonsStyle {
               () {
             Get.back(result: true);
           }, () {
-            Get.back(result: false);
-          },
+            Gei18n.stresult: false);
+          },i18n.st
               Container(height: 70, width: 70, child: Image.asset(tick)),
               LinearGradient(
                   begin: Alignment(-0.10374055057764053, 0),
