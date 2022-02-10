@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/DeliveryAdminAppbar.dart';
+import 'package:mezcalmos/DeliveryAdminApp/controllers/deliveryDriverController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/restaurantOrderController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/OrderInfoCard.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/OrderNoteCard.dart';
@@ -15,6 +16,9 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
+import '../../../../Shared/models/Drivers/DeliveryDriver.dart';
+import '../../../../Shared/models/Orders/Order.dart';
+import '../Components/DriverCard.dart';
 import 'components/CurrentOrderInfo.dart';
 import 'components/PastOrderInfo.dart';
 
@@ -29,13 +33,15 @@ class ViewRestaurantOrderScreen extends StatefulWidget {
 class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
   LanguageController lang = Get.find<LanguageController>();
   AuthController auth = Get.find<AuthController>();
-  // Since we have alot of buttons we check loading by name
+  DeliveryDriverController deliveryDriverController = Get.find<
+      DeliveryDriverController>(); // Since we have alot of buttons we check loading by name
 
   Rxn<RestaurantOrder> order = Rxn();
   RestaurantOrderController controller = Get.find<RestaurantOrderController>();
   late String orderId;
   Rx<bool> hasNewMessage = false.obs;
   StreamSubscription? _orderListener;
+  DeliveryDriverUserInfo? driver;
   @override
   void initState() {
     super.initState();
@@ -51,6 +57,9 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
           controller.getCurrentOrderStream(orderId).listen((newOrder) {
         if (newOrder != null) {
           order.value = controller.getOrder(orderId);
+          if (order.value!.dropoffDriver != null) {
+            driver = order.value!.dropoffDriver;
+          }
         } else {
           Get.back();
         }
@@ -89,7 +98,19 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                       : PastOrderInfo(order: order.value!),
 
                   //============================= Customer info====================
-
+                  Obx(
+                    () => DriverCard(
+                      driver: driver,
+                      order: order.value!,
+                      callBack: (newDriver) {
+                        deliveryDriverController.assignDeliveryDriver(
+                            deliveryDriverId: newDriver!.deliveryDriverId,
+                            orderId: order.value!.orderId,
+                            orderType: OrderType.Restaurant,
+                            deliveryDriverType: DeliveryDriverType.DropOff);
+                      },
+                    ),
+                  ),
                   //getCustomerInfoCart(),
                   OrderInfoCard(order: order),
                   //==========================>total cost=====================================

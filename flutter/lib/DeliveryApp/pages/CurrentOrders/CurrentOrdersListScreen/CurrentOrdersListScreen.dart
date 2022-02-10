@@ -24,6 +24,7 @@ class CurrentOrdersListScreen extends StatefulWidget {
 }
 
 class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
+  RxList<Order> orders = RxList.empty();
   OrderController orderController = Get.find<OrderController>();
   LanguageController lang = Get.find<LanguageController>();
   DeliveryAuthController _deliveryAuthController =
@@ -33,6 +34,13 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
   void dispose() {
     orderController.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    orders.value = orderController.currentOrders;
+    // TODO: implement initState
+    super.initState();
   }
 
   @override
