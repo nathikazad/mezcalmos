@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:rive/rive.dart';
+import 'package:sizer/sizer.dart';
 
 class LaundryOrderCard extends StatelessWidget {
   final LaundryOrder order;

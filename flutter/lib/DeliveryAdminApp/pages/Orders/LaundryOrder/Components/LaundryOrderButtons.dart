@@ -6,6 +6,7 @@ import 'package:mezcalmos/DeliveryAdminApp/components/dailogComponent.dart';
 import 'package:mezcalmos/DeliveryAdminApp/constants/global.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/laundryOrderController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:sizer/sizer.dart';
 
 // the styles of status buttons inside the order screen
 class OrderButtons {

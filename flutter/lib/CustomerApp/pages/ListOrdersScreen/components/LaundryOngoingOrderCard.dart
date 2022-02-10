@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:rive/rive.dart';
+import 'package:sizer/sizer.dart';
 
 class LaundryOngoigOrderCard extends StatelessWidget {
   LaundryOngoigOrderCard({
