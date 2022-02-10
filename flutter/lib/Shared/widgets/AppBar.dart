@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 
@@ -50,7 +49,7 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
             width: 30,
             child: GestureDetector(
               onTap: () {
-                onClick?.call();
+                onClick?.call() ?? Get.back();
               },
               child: Container(
                 height: 30,
