@@ -6,16 +6,17 @@ import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/textFieldComponent.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/TextFieldComponent.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:sizer/sizer.dart';
 
 import 'components/BottomBarItemViewScreen.dart';
-import 'components/chooseOneCheckBox.dart';
-import 'components/choosenManyCheckBox.dart';
+import 'components/ChooseOneCheckBox.dart';
+import 'components/ChoosenManyCheckBox.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
 enum ViewItemScreenMode { AddItemMode, EditItemMode }
@@ -33,7 +34,8 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
   LanguageController lang = Get.find<LanguageController>();
   AuthController auth = Get.find<AuthController>();
   Rxn<CartItem> cartItem = Rxn();
-  late RestaurantController restaurantCartController;
+  RestaurantController restaurantCartController =
+      Get.find<RestaurantController>();
   RestaurantsInfoController controller = Get.find<RestaurantsInfoController>();
   Restaurant? currentRestaurant;
   TextEditingController _noteTextEdittingController = TextEditingController();
@@ -48,7 +50,6 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
   void initState() {
     mezDbgPrint("Args : ${Get.arguments.toString()}");
     mezDbgPrint("params : ${Get.parameters.toString()}");
-    restaurantCartController = Get.find<RestaurantController>();
     mezDbgPrint("widget.viewItemScreenMode => ${widget.viewItemScreenMode}");
     if (widget.viewItemScreenMode == ViewItemScreenMode.AddItemMode) {
       String? restaurantId = Get.parameters['restaurantId'];
@@ -75,7 +76,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
         });
       });
     }
-    controller.refresh();
+    cartItem.refresh();
     super.initState();
   }
 
@@ -107,15 +108,16 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                 children: [
                   Container(
                     padding: const EdgeInsets.only(
-                      top: 10,
+                      top: 5,
                     ),
                     alignment: Alignment.center,
                     child: CachedNetworkImage(
                       imageUrl: cartItem.value!.item.image!,
                       imageBuilder: (context, imageProvider) {
                         return Container(
-                          width: 150,
-                          height: 150,
+                          margin: EdgeInsets.only(top: 10),
+                          width: Get.width / 1.5,
+                          height: Get.width / 1.5,
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               image: DecorationImage(
@@ -125,16 +127,16 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                       fit: BoxFit.cover,
                       placeholder: (context, url) {
                         return Container(
-                          width: 150,
-                          height: 150,
+                          width: Get.width / 1.5,
+                          height: Get.width / 1.5,
                           child: Center(
                             child: CircularProgressIndicator(),
                           ),
                         );
                       },
                       errorWidget: (context, url, error) => Container(
-                          height: 150,
-                          width: 150,
+                          height: Get.width / 1.5,
+                          width: Get.width / 1.5,
                           child: Container(
                               decoration: BoxDecoration(
                                   shape: BoxShape.circle,
@@ -154,18 +156,24 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                     child: Text(
                         "${cartItem.value!.item.description![lang.userLanguageKey]!.inCaps}",
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyText2),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText2!
+                            .copyWith(fontSize: 12.sp)),
                   ),
                   SizedBox(
                     height: 20,
                   ),
-                  chooseOneCheckBoxes(
-                      cartItem.value!.item.chooseOneOptions, cartItem),
+                  ChooseOneCheckBox(
+                    chooseOneOptions: cartItem.value!.item.chooseOneOptions,
+                    cartItem: cartItem,
+                  ),
                   SizedBox(
                     height: 20,
                   ),
-                  chooseManyCheckBoxes(
-                      cartItem.value!.item.chooseManyOptions, cartItem),
+                  ChooseManyCheckBoxes(
+                      chooseManyOptions: cartItem.value!.item.chooseManyOptions,
+                      cartItem: cartItem),
                   TextFieldComponent(
                     textController: _noteTextEdittingController,
                     hint: lang.strings["customer"]["restaurant"]["menu"]

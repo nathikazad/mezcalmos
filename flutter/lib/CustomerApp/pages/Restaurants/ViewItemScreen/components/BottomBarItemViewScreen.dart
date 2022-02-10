@@ -4,7 +4,7 @@ import 'package:mezcalmos/CustomerApp/components/IncrementalComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemScreen.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/components/dialogRequiredSignIn.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/components/DialogRequiredSignIn.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -70,9 +70,6 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
               widget.cartItem.refresh();
             },
             decrement: () {
-              // if(widget.cartItem.value!.quantity<=1){
-
-              // }
               widget.cartItem.value!.quantity--;
               widget.cartItem.refresh();
             },
@@ -83,18 +80,21 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
           Container(
             child: Center(
                 child: Text(
-              "\$${widget.cartItem.value!.totalCost().toStringAsFixed(0)} ",
+              "\$${widget.cartItem.value!.totalCost().toInt()} ",
               style: txt.headline3,
             )),
           ),
           Spacer(),
           Flexible(
-            flex: 6,
+            flex: 5,
             fit: FlexFit.tight,
             child: TextButton(
-              style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                      Color.fromRGBO(172, 89, 252, 1))),
+              style: TextButton.styleFrom(
+                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                  textStyle: Theme.of(context)
+                      .textTheme
+                      .bodyText1!
+                      .copyWith(fontWeight: FontWeight.bold)),
               onPressed: () async {
                 if (auth.fireAuthUser != null) {
                   if (ViewItemScreenMode.AddItemMode == widget.mode) {
@@ -160,7 +160,8 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                       Get.offNamed(kCartRoute);
                     }
                   } else {
-                    restaurantCartController.addItem(widget.cartItem.value!);
+                    await restaurantCartController
+                        .addItem(widget.cartItem.value!);
                     Get.back();
                   }
                 } else {

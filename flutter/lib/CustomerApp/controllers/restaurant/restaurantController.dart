@@ -80,7 +80,7 @@ class RestaurantController extends GetxController {
         .set(cart.value.toFirebaseFormattedJson());
   }
 
-  void addItem(CartItem cartItem) async {
+  Future<void> addItem(CartItem cartItem) async {
     String restaurantId = cartItem.restaurantId;
     if (associatedRestaurant == null) {
       associatedRestaurant = await getAssociatedRestaurant(restaurantId);
