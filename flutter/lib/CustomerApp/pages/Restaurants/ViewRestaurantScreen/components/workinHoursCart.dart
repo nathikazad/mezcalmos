@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
 class WorkingHoursCart extends StatelessWidget {
   final String? day;
@@ -17,7 +17,7 @@ class WorkingHoursCart extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(5)),
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       margin: const EdgeInsets.symmetric(vertical: 5),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -25,43 +25,45 @@ class WorkingHoursCart extends StatelessWidget {
         children: [
           Flexible(
             flex: 4,
+            fit: FlexFit.tight,
             child: Container(
-              width: 80,
+              margin: const EdgeInsets.symmetric(horizontal: 5),
               child: Text(day!),
             ),
           ),
           Flexible(
             flex: 3,
-            child: Row(
-              children: [
-                Spacer(),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  color: isOpen!
-                      ? Color.fromRGBO(101, 225, 137, 0.6)
-                      : Color.fromRGBO(252, 89, 99, 0.6),
-                  child: Center(
-                      child: Text(isOpen!
-                          ? "${lang.strings["customer"]["restaurant"]["menu"]["workingHours"]["open"]}"
-                          : "${lang.strings["customer"]["restaurant"]["menu"]["workingHours"]["closed"]}")),
-                ),
-                Spacer(),
-              ],
+            child: Container(
+              //  padding: const EdgeInsets.symmetric(horizontal: 8),
+              color: isOpen!
+                  ? Color.fromRGBO(101, 225, 137, 0.6)
+                  : Color.fromRGBO(252, 89, 99, 0.6),
+              child: Center(
+                  child: Text(isOpen!
+                      ? "${lang.strings["customer"]["restaurant"]["menu"]["workingHours"]["open"]}"
+                      : "${lang.strings["customer"]["restaurant"]["menu"]["workingHours"]["closed"]}")),
             ),
           ),
           Flexible(
-              flex: 6,
-              child: Row(children: [
-                Spacer(),
-                isOpen!
-                    ? Container(
-                        alignment: Alignment.centerRight,
-                        child: Row(
-                          children: [Text("$openHour -"), Text(" $closeHour")],
-                        ),
-                      )
-                    : Container(),
-              ])),
+              flex: 4,
+              fit: FlexFit.tight,
+              child: isOpen!
+                  ? Column(children: [
+                      Text(
+                        "$openHour",
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "$closeHour",
+                        textAlign: TextAlign.center,
+                      ),
+                    ])
+                  : Container(
+                      height: 40,
+                    )),
         ],
       ),
     );

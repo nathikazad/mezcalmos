@@ -14,7 +14,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get/route_manager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -29,7 +28,8 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:package_info/package_info.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sizer/sizer.dart';
+// import 'package:sizer/sizer.dart';import 'package:sizer/sizer.dart';
 
 final ThemeData _defaultAppTheme = ThemeData(
     primaryColor: Colors.white,
@@ -37,24 +37,24 @@ final ThemeData _defaultAppTheme = ThemeData(
 
 class StartingPoint extends StatefulWidget {
   final AppType appType;
-  final ThemeData? _appTheme;
+  final ThemeData? appTheme;
   final Function signInCallback;
   final Function signOutCallback;
   final List<GetPage<dynamic>> routes;
   final List<SideMenuItem>? sideMenuItems;
   final bool locationOn;
-  ThemeData get appTheme => _appTheme ?? _defaultAppTheme;
+
+  ThemeData get appThemeGetter => appTheme ?? _defaultAppTheme;
 
   //  Sideminu
   StartingPoint(
       {required this.appType,
-      ThemeData? appTheme,
+      this.appTheme = null,
       required this.signInCallback,
       required this.signOutCallback,
       required this.routes,
       this.sideMenuItems,
-      this.locationOn = true})
-      : _appTheme = appTheme;
+      this.locationOn = true});
 
   @override
   _StartingPointState createState() => _StartingPointState();
@@ -81,25 +81,29 @@ class _StartingPointState extends State<StartingPoint> {
         SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     if (_error) {
       MezSnackbar("Error", "Server connection failed !");
-      return GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          body: Center(
-            child: Icon(Icons.signal_wifi_bad,
-                color: Colors.red.shade200,
-                size: getSizeRelativeToScreen(50, Get.height, Get.width)),
-          ),
-        ),
-      );
+      return Sizer(
+          builder: (context, orientation, deviceType) => GetMaterialApp(
+                debugShowCheckedModeBanner: false,
+                home: Scaffold(
+                  body: Center(
+                    child: Icon(Icons.signal_wifi_bad,
+                        color: Colors.red.shade200,
+                        size:
+                            getSizeRelativeToScreen(50, Get.height, Get.width)),
+                  ),
+                ),
+              ));
     }
     if (!_initialized) {
-      return SplashScreen();
+      return Sizer(
+          builder: (context, orientation, deviceType) => SplashScreen());
     } else {
       mezDbgPrint("====> PreviewMode ===> ${GetStorage().read('previewMode')}");
-      return mainApp(
-          appType: widget.appType,
-          appTheme: widget.appTheme,
-          routes: widget.routes);
+      return Sizer(
+          builder: (context, orientation, deviceType) => mainApp(
+              appType: widget.appType,
+              appTheme: widget.appThemeGetter,
+              routes: widget.routes));
     }
   }
 
@@ -150,7 +154,8 @@ class _StartingPointState extends State<StartingPoint> {
       await FirebaseDatabase.instance.setPersistenceEnabled(true);
       await FirebaseDatabase.instance.setPersistenceCacheSizeBytes(10000000);
       await FirebaseAuth.instance.useEmulator(_host + authPort);
-      FirebaseFunctions.instance.useFunctionsEmulator(_host, functionPort);
+      FirebaseFunctions.instance
+          .useFunctionsEmulator(_host.replaceAll('http://', ''), functionPort);
     } else if (_launchMode == "stage") {
       mezDbgPrint("[+] Entered Staging check ----.");
       firebaseDb = FirebaseDatabase(app: _app, databaseURL: stagingDb);
@@ -201,7 +206,7 @@ class _StartingPointState extends State<StartingPoint> {
   }
 
   Future<void> waitForInitialization() async {
-    await Get.find<AuthController>().authStateChange.first;
+    await Get.find<AuthController>().authStateStream.first;
     return;
   }
 
@@ -211,6 +216,21 @@ class _StartingPointState extends State<StartingPoint> {
         mezDbgPrint(item);
       }
     };
+  }
+
+  Future<void> setRightPrivacyPolicyLink(AppType type) async {
+    switch (type) {
+      case AppType.CustomerApp:
+        await GetStorage()
+            .write(getxPrivacyPolicyLink, tPrivacyPolicyCustomerApp);
+        break;
+      case AppType.TaxiApp:
+        await GetStorage().write(getxPrivacyPolicyLink, tPrivacyPolicyTaxiApp);
+        break;
+      default:
+        await GetStorage()
+            .write(getxPrivacyPolicyLink, tPrivacyPolicyCustomerApp);
+    }
   }
 
   Widget mainApp(
@@ -223,6 +243,7 @@ class _StartingPointState extends State<StartingPoint> {
           ImageConfiguration(), 'assets/images/shared/purpleCircle.png');
 
       await GetStorage().write('markerCircle', desc);
+      await setRightPrivacyPolicyLink(appType);
       print("[+] InitializedConfig -- the ${appType.toShortString()} !");
     }
 

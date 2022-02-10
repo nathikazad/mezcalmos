@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 
 import 'components/RestaurantSliverAppbar.dart';
 import 'components/buildRestaurantsItems.dart';
-import 'package:intl/intl.dart';
-
 import 'components/restaurantInfoTab.dart';
 
 final f = new DateFormat('hh:mm a');
@@ -67,14 +65,17 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
           body: TabBarView(children: [
             // -----------------------------FIRST TAB (MENU) --------------------------------------------//
             SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  buildResturantItems(restaurant!.items, restaurant!.id),
-                ],
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 10,
+                    ),
+                    buildResturantItems(restaurant!.items, restaurant!.id),
+                  ],
+                ),
               ),
             ),
             // -----------------------------SECOND TAB (INFOS) --------------------------------------------//

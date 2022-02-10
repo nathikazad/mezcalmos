@@ -102,9 +102,40 @@
             "pickLocation": "Pick Location"
         },
         "restaurant": {
-            "cancelOrderDialog": {
-                "no": "No",
-                "yes": "Yes, I'm sure!"
+            "emptRestaurantList" : "There are no registered restaurants yet.",
+            "restaurants": "Restaurants",
+            "notAvailable": "This restaurant is closed",
+            "menu": {
+                "myCart":"My Cart",
+                "items":"Items",
+                "menu": "Menu",
+                "info":"Informations",
+                "description": "Description",
+                "location":"Location",
+                "notes": "Notes",
+                "quantity": "Quantity",
+                "addToCart": "ADD TO CART",
+                "modifyItem": "Modify item",
+                "workingHours":{
+                    "workingHours":"Working Hours",
+                    "open":"Open",
+                    "closed":"Closed",
+                    "weekDays":{
+                        "monday":"Monday",
+                        "tuesday":"Tuesday",
+                        "wednesday":"Wednesday",
+                        "thursday":"Thursday",
+                        "friday":"Friday",
+                        "saturday":"Saturday",
+                        "sunday":"Sanday"
+                    }
+                },
+                "dailog":{
+                    "title":"Warning",
+                    "subtitle": "You already have some items in your cart from another restaurant, do you want to check them out first or overwrite them?",
+                    "leftBtn":"Checkout",
+                    "rightBtn":"Overwrite"
+                }
             },
             "cart": {
                 "cart": "Cart",
@@ -214,6 +245,12 @@
             "title": "You need to be signed in to add items to your cart"
         },
         "taxiView": {
+            "taxi": "Taxi",
+            "taxiOrder" : "Taxi order",
+            "currentLocation":"Current location",
+            "pickFromMap":"Pick from map",
+            "searching": "Searching for Taxi",
+            "cancel": "Cancel",
             "arrival": "Arrival",
             "cancel": "Cancel",
             "cancelled": "Cancelled",
@@ -229,15 +266,60 @@
             "priceEstimate": "Estimated price for the ride is $",
             "review": "Review",
             "ride": "ride",
-            "rideCancelledByCustomer": "You have cancelled your ride",
-            "rideCancelledByTaxi": "Ride cancelled by taxi",
-            "rideExpired": "Your ride has been expired",
-            "rideFinished": "Ride finished",
-            "rideStarted": "Ride started",
-            "searching": "Searching for Taxi",
-            "taxi": "Taxi",
-            "taxiRideCheckedTooltip": "This shows how many Taxi drivers have seen your order but not accepted.\n\nMake use of that in order to controll your ride price.",
-            "taxiRidePriceTooltip": " Click - to decrease your price by 5.\n Click + to increase your price by 5.\n\n If you see your order not being accepted try them out."
+            "taxiRideCheckedTooltip" : "This shows how many drivers have received your offer but did not find the offer acceptable.",
+            "taxiRequestPriceTooltip" : "How much are you willing to offer for this ride? We will broadcast your offer to all taxi drivers near you, they will accept your order only if they find the offered price acceptable.",
+            "taxiRidePriceTooltip" : "Click + - to increase/decrease your price by 5. If you see your order not being accepted try them out.",
+            "failedToRequestTaxi" : "Failed to request a taxi !",
+            "increasePrice" : "Increase the price",
+            "decreasePrice" : "Decrease the price"
+
+        },
+        "cancelOrder": {
+            "title":"Confirm Cancelation.",
+            "question": "Are you sure you want to cancel your Order ?",
+            "cancelRide": "Cancel ride",
+            "postAgain": "Post again",
+            "noShow": "No show",
+            "mistake": "Mistake",
+            "other": "Other",
+            "taxiCancelled": "Sorry to inform you the taxi cancelled the ride.",
+            "orderExpired": "Sorry to inform your taxi request is expired."
+        },
+        "savedLocations": {
+            "title": "Saved Locations",
+            "location": "Location",
+            "addNewLoc": "Add New Location",
+            "editLocation": "Edit Location",
+            "deleteLocation":"Delete Location",
+            "locations":"Locations",
+            "addLocationDialog":{
+                "title":"enter location name, if you want to save for future use, else you may skip",
+                "button":"OK",
+                "textHint":"location name",
+                "skip":"Skip"
+            },
+            "editLocationDialog":{
+                "title":"Enter location name",
+                "button":"EDIT",
+                "textHint":"Location Name"
+            },
+            "savedLocationsListEmpty" : "Your Saved locations list is empty",
+            "clickBtnToAddNewLocation" : "Add new location by clicking the button below"
+
+        },
+        "pickLocation":{
+        "pickLocation":"Pick Location",
+        "pickLabele":"Search for location or move map and pick location"
+        },
+        "orders": {
+            "title": "Orders",
+            "onGoingOrders":"Ongoing Orders",
+            "item": "Item|Items",
+            "onTheWay": "On the way",
+            "inTransit": "In Transit",
+            "inProcess": "In Process",
+            "searching": "Searching",
+            "noOrders": "No orders found"
         }
     },
     "deliveryAdminApp": {
@@ -285,16 +367,40 @@
             "startPickUpTitle": "Start order Pickup",
             "totalCost": "Total cost"
         },
-        "onTheWayAlert": {
-            "subTitle": "Are you sure you want\nto start the order delivery?",
-            "title": "On the Way"
+        "cancelOrder": {
+            "question": "Why do you want to cancel the ride?",
+            "confirmation_header": "Please confirm",
+            "confirmation_text": "Are you sure you want to cancel the current ride?",
+            "cancelRide": "Cancel ride",
+            "backToIncoming": "Back to incoming",
+            "noShow": "No show",
+            "otherRide": "Other ride",
+            "trafficJam": "Traffic jam",
+            "other": "Other",
+            "customerCancelled": "Sorry to inform you the customer cancelled the ride.",
+            "rideUnavailble": "Sorry to inform you that the ride is not available any more."
         },
-        "ordersButton": {
-            "canceled": "CANCEL",
-            "deliver": "START DELIVERY",
-            "preparing": "PREPARE",
-            "readyForPickUp": "FOOD READY",
-            "received": "DROPPED"
+        "orders": {
+            "orderStatus":{
+                "canceledByTaxi": "Cancelled",
+                "canceledByCustomer": "Cancelled",
+                "onTheWay":"Taxi on the way",
+                "lookingForTaxi":"Looking for Taxi",
+                "inTransit":"Taxi in transit",
+                "droppedOff":"Dropped off",
+                "expired": "Expired"
+            },
+            "title": "Orders",
+            "item": "Item|Items",
+            "onTheWay": "On the way",
+            "onTheWayMessage": "is on the way now to pick you up",
+            "inTransit": "In Transit",
+            "inTransitMessage": "Your ride is on the way",
+            "searching": "Searching for taxi",
+            "searchingMessage": "You are being matched with a taxi",
+            "noOrders": "No orders found",
+            "cancelled": "Taxi Cancelled",
+            "cancelledMessage": "Your ride has been cancelled"
         },
         "prepareAlert": {
             "subTitle": "Are you sure you want\nto prepare order?",
@@ -306,25 +412,28 @@
         }
     },
     "shared": {
-        "addItem": {
-            "addItemBtn": "Add Item",
-            "name": "Name",
-            "note": "note|notes",
-            "title": " Add New Item"
+        "unauthorizedScreen":{
+            "unauthorized":"Unauthorized",
+            "subTitle1":"You are not authorized, please contact Alejandro ",
+            "subTitle2":" ,to get authorization."
         },
-        "header": {
-            "alert": "Order status changed"
+        "snackbars" : {
+            "titleSuccess" : "Success :)",
+            "titleFailed" : "Oops :(",
+            "orderCancelSuccess": "Order cancelled successfully.",
+            "orderCancelFailed": "Failed to cancel the order.",
+            "serverCommunicationError" : "Failed to communicate with the server :("
         },
-        "inputLocation": {
-            "currentLoc": "Current location",
-            "from": "From",
-            "moveMapIfNotPrecise": "You can move the map.",
-            "moveMapToPick": "Move the map to pick location",
-            "optional": "Optional",
-            "pick": "PICK",
-            "pickFromMap": "Pick from map",
-            "searching": "Searching",
-            "to": "To"
+        "permissions": {
+            "cameraAccessOffTitle" : "App can't access Camera.",
+            "cameraAccessOffBody" : "Apparently you denied the app from Camera access, go to General > APP > Allow Camera!",
+            "photoAccessOffTitle" : "App can't access Photos.",
+            "photoAccessOffBody" : "Apparently you denied the app from Photo Library access, go to General > APP > Photos and change None to something else.",
+            "locationIsOff": "Location Service Turned Off",
+            "permissionBtn": "GIVE PERMISSION",
+            "askForNotif": "The app collects your location Data to match you with the best rides and share your location with customers, even when the app is in background.",
+            "locationPermissionDenied": "Oops, Sadly without location permissions you can not use our application!",
+            "locationPermissionDeniedForever" : "Location permissions are denied forever! Please change that."
         },
         "login": {
             "confirm": "Confirm",
@@ -348,11 +457,9 @@
             "submit": "SUBMIT",
             "title": "Connect using Facebook or using SMS ! ",
             "twilioNote": "By continuing you will receive a verification code to your phone number by SMS. Message and data rates may apply.",
-            "verifyCountryCode": "Please verify your country code",
-            "verifyPhoneNumber": "Please verify your phone number",
-            "welcomeDesc2": "We are glad you're back!",
-            "welcomeTitle": "Welcome Back :D",
-            "whatsAppLogin": " LOGIN WITH WHATSAPP"
+            "signInToMakeOrder": "Sign in to make order",
+            "wrongOTPCode" :  "The Confirmation code is Wrong, please try again.",
+            "failedOTPConfirmRequest" : "OTP Code confirmation failed :("
         },
         "messages": {
             "available": "Available",
@@ -420,8 +527,46 @@
             "title": "Notifications",
             "today": "Today",
             "view": "View",
-            "viewOrder": "View Order",
-            "yesterday": "Yesterday"
+            "viewOrder": "View Order"
+        },
+        "userInfo": {
+            "noChangesToApply" : "No Changes to be applied!",
+            "snackMsg":"Please be patient while your photo is uploaded",
+            "snackTxt":"Uploading Image",
+            "choosePic":"Choose a photo",
+            "uploadPic" :"Upload Image",
+            "saveTxt":"Please save the changes you made",
+            "hintTxt":"Enter your full name",
+            "validationTxtOne":"Please enter your full name",
+            "validationTxtTwo":"Please enter a valid name",
+            "title": " User Information",
+            "editInfo": "Edit Information",
+            "editPhoneNumber": "Change Phone Number",
+            "addInfo": "Add Information",
+            "editBtn": "EDIT INFORMATION",
+            "deleteBtn": "Delete Account",
+            "saveBtn": "Save",
+            "cancel": "Cancel",
+            "editImgMsg": "Click on image to change it",
+            "fullName": "Full Name",
+            "phoneNumber": "Phone Number",
+            "clickToUploadImg": "clickToUpdate",
+            "addPhoneNumber": "Add phone number",
+            "wrongName" : "Name must only contains at least 4 letters and spaces.",
+            "mustSetUserNameHint" : "Please enter a name\nto keep using the app.",
+            "mustSetUserImgHint" : "Please upload an image\nby clicking 'Upload Image'\nto keep using the app."
+        },
+        "navDrawer": {
+            "userInfo": "User Information",
+            "myOrders": "My Orders",
+            "savedLocations": "Saved Locations",
+            "logout": "Logout",
+            "login": "Login",
+            "contactAdmin": "Contact Admin",
+            "legal": "Privacy policy"
+        },
+        "header": {
+            "alert": "Order status changed"
         },
         "permissions": {
             "askForNotif": "The app uses your location to match you with the best rides and share your location with customers, even when the app is in background.",
@@ -448,8 +593,43 @@
             "writeHere": "Write here"
         },
         "popUps": {
-            "no": "No",
-            "yes": "Yes"
+            "yes" : "Yes",
+            "no" : "No"
+        },
+        "conenctionStatus" : {
+            "noInternetConnection" : "No internet connection",
+            "reconnecting" : "Reconnecting"
+        },
+        "buttonsTexts": {
+            "confirm" : "confirm",
+            "camera" : "Camera",
+            "gallery" : "Gallery",
+            "failedMapLaunch" : "Failed to launch that on Map!"
+        }
+    },
+    "admin": {
+        "orders": {
+            "cumulative": "Cumulative",
+            "totalOrders": "Total Orders",
+            "finished": "Finished",
+            "cancelled": "Cancelled",
+            "expired": "Expired",
+            "inProcess": "In Process",
+            "isLooking": "Is Looking",
+            "orders": "Orders",
+            "time": "Time",
+            "driver": "Driver",
+            "cust": "Cust",
+            "orderFR": "Order Fulfillment Ratio",
+            "orderId": "Order Id",
+            "orderT": "Order Time",
+            "status": "Status",
+            "price": "Price",
+            "rideEnd": "Ride End Time",
+            "rideStart": "Ride Start Time",
+            "droppedOff": "Dropped Off",
+            "firstOrder": "First Order",
+            "lastOrder": "Last Order"
         },
         "snackbars": {
             "orderCancelFailed": "Failed to cancel the order.",

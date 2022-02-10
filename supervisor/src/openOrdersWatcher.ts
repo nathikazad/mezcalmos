@@ -158,7 +158,7 @@ function notifyDrivers(driversToNotify: Record<string, NotifyDriver>) {
       token: driverToNotify.info.notificationInfo.deviceNotificationToken,
       payload: {
         notification: {
-          title: "Nueva Pedido",
+          title: "Nuevo Pedido",
           body: `Hay una nueva orden de taxi, vea si puede aceptarla.`,
           tag: "newOrder"
         },

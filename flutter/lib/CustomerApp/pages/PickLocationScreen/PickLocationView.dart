@@ -1,4 +1,6 @@
 // Example of the View
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -8,14 +10,14 @@ import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/components/ButtonComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/SaveLocationDailog.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
-
-import '../Restaurants/ViewcartScreen/components/saveLocationDailog.dart';
+import 'package:sizer/sizer.dart';
 
 enum PickLocationMode { AddNewLocation, EditLocation }
 
@@ -37,71 +39,23 @@ class _PickLocationViewState extends State<PickLocationView> {
   CustomerAuthController customerAuthController =
       Get.find<CustomerAuthController>();
 
-  Future<String?> geoCode() async {
-    String? address = await getAdressFromLatLng(LatLng(
-        locationPickerController.location.value!.latitude!,
-        locationPickerController.location.value!.longitude!));
-    locationPickerController.location.value!.address = address ??
-        "${_lang.strings['shared']['pickLocation']['address']} : ${locationPickerController.location.value!.latitude}, ${locationPickerController.location.value!.longitude}";
-
-    return address;
-  }
-
-  void onPickButtonClick(BuildContext context) async {
-    String? _result;
-
-    setState(() {
-      showScreenLoading = true;
-    });
-    if (widget.pickLocationMode == PickLocationMode.AddNewLocation) {
-      _result = await savedLocationDailog(
-        context: context,
-        comingFromCart: Get.arguments,
-      );
-      if (_result != null && _result != "") {
-        mezDbgPrint("the choosen name is $_result");
-        await geoCode();
-        savedLocation = SavedLocation(
-            name: _result, location: locationPickerController.location.value!);
-        customerAuthController.saveNewLocation(savedLocation!);
-      } else {
-        await geoCode();
-        savedLocation = SavedLocation(
-            name: locationPickerController.location.value!.address,
-            location: locationPickerController.location.value!);
-      }
-    } else {
-      _result = await savedLocationDailog(
-          comingFromCart: Get.arguments,
-          context: context,
-          nameVal: savedLocation!.name,
-          mode: PickLocationMode.EditLocation);
-      if (_result != null && _result != "") {
-        mezDbgPrint("the choosen name is $_result");
-        await geoCode();
-        savedLocation = SavedLocation(
-            id: savedLocation!.id,
-            name: _result,
-            location: locationPickerController.location.value!);
-
-        customerAuthController.editLocation(savedLocation!);
-      }
-    }
-    Get.back<SavedLocation?>(result: savedLocation);
-  }
+  // Future<void> geoCodeAndSetNewAddress(LatLng pickedLocation) async {
+  //   String? address = await getAdressFromLatLng(
+  //       LatLng(pickedLocation.latitude, pickedLocation.longitude));
+  //   locationPickerController.location.value!.address = address ??
+  //       "${_lang.strings['shared']['pickLocation']['address']} : ${pickedLocation.latitude}, ${pickedLocation.longitude}";
+  // }
 
   @override
   void initState() {
     if (widget.pickLocationMode == PickLocationMode.AddNewLocation) {
       GeoLoc.Location().getLocation().then((locData) {
-        mezDbgPrint("Sat to current Location $locData!");
-        setState(() {
-          locationPickerController.setLocation(Location.fromFirebaseData({
-            "address": "",
-            "lat": locData.latitude,
-            "lng": locData.longitude,
-          }));
-        });
+        // first we set Location without GeoCoding the address
+        setNewLocationOnController(
+            latlng: LatLng(locData.latitude!, locData.longitude!));
+        // then we try to get the address
+        geoCodeAndSetControllerLocation(
+            LatLng(locData.latitude!, locData.longitude!));
       });
     } else {
       var x = Get.parameters["id"];
@@ -109,14 +63,10 @@ class _PickLocationViewState extends State<PickLocationView> {
           .customerRxn()!
           .savedLocations
           .firstWhere((saved) => saved.id == x);
-
-      mezDbgPrint(
-          "the value sanded is ${savedLocation!.toFirebaseFormattedJson()}");
       GeoLoc.Location().getLocation().then((locData) {
-        mezDbgPrint("Sat to current Location $locData!");
         setState(() {
           locationPickerController.location.value = Location.fromFirebaseData({
-            "address": "${savedLocation!.location?.address}",
+            "address": savedLocation!.location?.address,
             "lat": savedLocation?.location?.latitude,
             "lng": savedLocation?.location?.longitude,
           });
@@ -138,7 +88,7 @@ class _PickLocationViewState extends State<PickLocationView> {
     return Scaffold(
         bottomNavigationBar: this.showScreenLoading == false
             ? ButtonComponent(
-                function: () => onPickButtonClick(context),
+                function: () async => await onPickButtonClick(context),
                 widget: Center(
                     child: Text(
                         _lang.strings["customer"]["pickLocation"]
@@ -146,7 +96,7 @@ class _PickLocationViewState extends State<PickLocationView> {
                         style: Theme.of(context)
                             .textTheme
                             .headline2!
-                            .copyWith(color: Colors.white))),
+                            .copyWith(color: Colors.white, fontSize: 12.sp))),
               )
             : ButtonComponent(
                 bgColor: Colors.grey.shade400,
@@ -163,7 +113,90 @@ class _PickLocationViewState extends State<PickLocationView> {
         ),
         body: mezPickLocationViewBody());
   }
+  // ------------------------------------------- Functions -------------------------------------------
 
+  /// Get the related Address to a given [latLng], without awaiting the GeoCoding , mainly used onInit
+  ///
+  /// To not make the Map dependable on awaiting it to finish and onDone , it sets it to the controller::location.
+  void geoCodeAndSetControllerLocation(LatLng latLng) {
+    getAdressFromLatLng(latLng).then((addrs) {
+      mezDbgPrint("+ Done resolving user's Address $addrs !");
+      setNewLocationOnController(latlng: latLng, address: addrs);
+    }).catchError((e) {
+      mezDbgPrint("Failed to get address of User's Lat Lng $latLng");
+    });
+  }
+
+  /// Get the related Address to a given [latLng],
+  /// This is the Same As [geoCodeAndSetControllerLocation] , the only diffrene that this is
+  ///
+  /// an Awaitable method, wheres the other is not, we use this when user clicks Save/Add new Saved Location
+  Future<void> awaitGeoCodeAndSetControllerLocation(LatLng latLng) async {
+    String? addrs = await getAdressFromLatLng(latLng);
+    setNewLocationOnController(latlng: latLng, address: addrs);
+  }
+
+  void setNewLocationOnController({required LatLng latlng, String? address}) {
+    locationPickerController.setLocation(Location.fromFirebaseData({
+      "address": address ??
+          latlng.latitude.toString() + ', ' + latlng.longitude.toString(),
+      "lat": latlng.latitude,
+      "lng": latlng.longitude,
+    }));
+    setState(() {});
+  }
+
+  Future<void> onPickButtonClick(BuildContext context) async {
+    String? _result;
+    LatLng _pickedLoc = await locationPickerController.getMapCenter();
+
+    locationPickerController.moveToNewLatLng(
+        _pickedLoc.latitude, _pickedLoc.longitude);
+
+    setState(() {
+      showScreenLoading = true;
+    });
+    if (widget.pickLocationMode == PickLocationMode.AddNewLocation) {
+      _result = await savedLocationDailog(
+        context: context,
+        comingFromCart: Get.arguments,
+      );
+      if (_result != null && _result != "") {
+        await awaitGeoCodeAndSetControllerLocation(_pickedLoc);
+        savedLocation = SavedLocation(
+            name: _result, location: locationPickerController.location.value!);
+        customerAuthController.saveNewLocation(savedLocation!);
+      } else {
+        await awaitGeoCodeAndSetControllerLocation(_pickedLoc);
+        savedLocation = SavedLocation(
+            name: locationPickerController.location.value!.address,
+            location: locationPickerController.location.value!);
+      }
+    } else {
+      _result = await savedLocationDailog(
+          comingFromCart: Get.arguments,
+          context: context,
+          nameVal: savedLocation!.name,
+          mode: PickLocationMode.EditLocation);
+      if (_result != null && _result != "") {
+        await awaitGeoCodeAndSetControllerLocation(_pickedLoc);
+        savedLocation = SavedLocation(
+            id: savedLocation!.id,
+            name: _result,
+            location: locationPickerController.location.value!);
+
+        customerAuthController.editLocation(savedLocation!);
+      }
+    }
+    setState(() {
+      locationPickerController
+          .setLocation(locationPickerController.location.value!);
+    });
+
+    Get.back<SavedLocation?>(result: savedLocation);
+  }
+
+  // ------------------------------------------- WIDGETS -------------------------------------------
   Container mezPickLocationViewBody() {
     return Container(
       child: Column(
@@ -189,7 +222,6 @@ class _PickLocationViewState extends State<PickLocationView> {
                 text: locationPickerController.location.value?.address,
                 onClear: () {},
                 notifyParent: (Location? location) {
-                  mezDbgPrint("Ontap on suggestion  => ${location?.toJson()} ");
                   setState(() {
                     locationPickerController.setLocation(location!);
                     locationPickerController.moveToNewLatLng(

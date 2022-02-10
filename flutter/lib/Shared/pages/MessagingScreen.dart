@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 // Extends GetView<MessagingController> after Nathik implements the controller
 import 'package:intl/intl.dart' as intl;
@@ -12,8 +11,9 @@ import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
+import 'package:sizer/sizer.dart';
 
-DateTime now = DateTime.now();
+DateTime now = DateTime.now().toLocal();
 String formattedDate = intl.DateFormat('dd-MM-yyyy').format(now);
 
 class MessagingScreen extends StatefulWidget {
@@ -168,7 +168,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
           return singleChatComponent(
             // parentContext: context,
             message: e.message,
-            time: e.formatedTime,
+            time: intl.DateFormat('hh:mm a').format(e.timeStamp!.toLocal()),
             isMe: e.userId == _authController.user!.uid,
             userImage: controller.value!.participants[e.userId]?.image,
           );

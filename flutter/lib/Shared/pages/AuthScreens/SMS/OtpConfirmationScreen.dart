@@ -1,17 +1,15 @@
 import 'dart:async';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:sizer/sizer.dart';
 
 class OtpConfirmationScreen extends GetView<AuthController> {
   LanguageController lang = Get.find<LanguageController>();
@@ -45,55 +43,55 @@ class OtpConfirmationScreen extends GetView<AuthController> {
     final txt = Theme.of(context).textTheme;
 
     return Scaffold(
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         appBar: AppBar(
           title: Text('${lang.strings["shared"]["login"]["confirmation"]}'),
         ),
-        body: Stack(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Obx(
-                    () => Container(
-                      margin: const EdgeInsets.all(5),
-                      child: Text(
-                          lang.strings['shared']['login']["OtpConfirmation"],
-                          overflow: TextOverflow.visible,
-                          style: txt.headline1),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  otpConfimCard(
-                      txt, _phonePassed, context, _otpCodeTextController),
-                  Container(
-                    margin: const EdgeInsets.all(8),
-                    child: Obx(
-                      () => Text(
-                        lang.strings['shared']['login']["twilioNote"],
-                        style: txt.bodyText2,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Positioned(
-              bottom: MediaQuery.of(context).viewInsets.bottom,
-              left: 0,
-              right: 0,
-              child: Obx(
+        bottomSheet: BottomSheet(
+            enableDrag: false,
+            backgroundColor: Colors.transparent,
+            onClosing: () {},
+            builder: (context) {
+              return Obx(
                 () => confirmButton(_phonePassed, otpCode, context),
-              ),
+              );
+            }),
+        body: SingleChildScrollView(
+          reverse: true,
+          child: Container(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 5,
+                ),
+                Obx(
+                  () => Container(
+                    margin: const EdgeInsets.all(5),
+                    child: Text(
+                        lang.strings['shared']['login']["OtpConfirmation"],
+                        overflow: TextOverflow.visible,
+                        style: txt.headline1),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                otpConfimCard(
+                    txt, _phonePassed, context, _otpCodeTextController),
+                Container(
+                  margin: const EdgeInsets.all(8),
+                  child: Obx(
+                    () => Text(
+                      lang.strings['shared']['login']["twilioNote"],
+                      style: txt.bodyText2,
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ));
   }
 
@@ -231,8 +229,19 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                       "${Get.arguments ?? _phonePassed} -------------- $otpCode ");
                   ServerResponse? _resp = await controller.signInUsingOTP(
                       Get.arguments ?? _phonePassed, otpCode);
+                  switch (_resp?.success) {
+                    case null:
+                      clickedSignInOtp.value = false;
+                      break;
 
-                  clickedSignInOtp.value = false;
+                    case false:
+                      MezSnackbar(
+                          "Oops ..",
+                          Get.find<LanguageController>().strings['shared']
+                              ['login']['wrongOTPCode']);
+                      clickedSignInOtp.value = false;
+                      break;
+                  }
                 }
               : null,
           style: TextButton.styleFrom(

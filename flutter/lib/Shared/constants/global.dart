@@ -14,8 +14,7 @@ const String localhost = "http://127.0.0.1";
 const String authPort = ":9099";
 const String dbRoot = ":9000/?ns=$db";
 const int functionPort = 5001;
-const String placesApikey =
-    "AIzaSyACS-jr0KWCzCN0WFqbltolpX1dqhB2OjY"; //"AIzaSyACS-jr0KWCzCN0WFqbltolpX1dqhB2OjY";
+const String placesApikey = "AIzaSyACS-jr0KWCzCN0WFqbltolpX1dqhB2OjY";
 // can be dev / prod
 
 // ----------------- TEST STRINGS ----------------- //
@@ -29,9 +28,11 @@ const String tEmailTestPassword = "password";
 
 const double nDefaultMezcalmosTextSize = 30.5;
 const int nSplashScreenTimer = 1;
+const int nQualityCompressionOfUserImage = 10;
 // ----------------- Costants Strings ----------------- //
-
-const String tPrivacyPolicy = "https://meztaxi.com/privacy-policy.html";
+const String tPrivacyPolicyCustomerApp =
+    "https://www.mezcalmos.com/privacy-policy.html";
+const String tPrivacyPolicyTaxiApp = "https://meztaxi.com/privacy-policy.html";
 
 const LanguageType tDefaultLanguage = LanguageType.ES;
 const String tDefaultTheme = "light";
@@ -44,6 +45,7 @@ const String tDefaultUserName = "Unknown";
 const String tDefaultCustomerName = "Unknown";
 
 // ----------------- GetStorage Strings ----------------- //
+const String getxPrivacyPolicyLink = "ppLink";
 const String getxLmodeKey = "lmod";
 const String getxGmapBottomPaddingKey = "gmap_bottom_padding";
 const String getxUserDescriptionPlaceHolder = "user_descriptor_placeholder";
@@ -51,11 +53,18 @@ const String getxTaxiDescriptor = "taxi_descriptor";
 const String getxDestinationDescriptor = "destination_descriptor";
 const String getxUserId = "userid";
 const String getxVersion = "version";
+const String defaultUserImgUrl =
+    "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d";
+
 // ----------------- Assets Strings ----------------- //
 const String aDefaultNotificationsSound = 'assets/sounds/notif-alert.mp3';
 const String aLogoPath = "assets/images/shared/logo.png";
+const String a404 = "assets/images/shared/404.png";
+const String aDefaultDbUserImgAsset =
+    "assets/images/shared/defaultUserLogo.png";
 const String aDefaultAvatar = "assets/images/shared/noUserImage.jpg";
 const String aNoImgAsset = "assets/images/shared/noImg.png";
+const String aNoInternetAsset = "assets/images/shared/offline.png";
 const String enLang = "assets/i18n/en.json";
 const String esLang = "assets/i18n/es.json";
 const String aLocationPermissionAsset =

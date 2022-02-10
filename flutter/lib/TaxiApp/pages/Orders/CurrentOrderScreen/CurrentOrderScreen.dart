@@ -17,7 +17,6 @@ import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
-import 'package:mezcalmos/TaxiApp/components/taxiAppBar.dart';
 import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/CurrentOrderScreen/CPositionedBottomBar.dart';
@@ -115,17 +114,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
           key: Get.find<SideMenuDrawerController>().getNewKey(),
           drawer: MezSideMenu(),
           backgroundColor: Colors.white,
-          appBar: taxiAppBar(
-              (order!.status == TaxiOrdersStatus.CancelledByCustomer)
-                  ? AppBarLeftButtonType.Back
-                  : AppBarLeftButtonType.Menu, function: () async {
-            mezDbgPrint('take me back');
-
-            controller.cancelTaxi(null).then((_) {
-              Get.offNamedUntil(
-                  kIncomingOrdersListRoute, ModalRoute.withName(kHomeRoute));
-            });
-          }),
+          appBar: getRightAppBar(order!.status),
           body:
               order != null && this.mGoogleMapController.location.value != null
                   ? Stack(alignment: Alignment.topCenter, children: [
@@ -214,6 +203,18 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
         mGoogleMapController.addOrUpdateTaxiDriverMarker(
             orderStreamEvent.driver!.id, orderStreamEvent.driver!.location!);
       }
+    }
+  }
+
+  PreferredSizeWidget getRightAppBar(TaxiOrdersStatus status) {
+    if (status == TaxiOrdersStatus.CancelledByCustomer) {
+      return mezcalmosAppBar(AppBarLeftButtonType.Back,
+          onClick: () => Get.offNamedUntil(
+              kIncomingOrdersListRoute, ModalRoute.withName(kHomeRoute)));
+    } else {
+      return mezcalmosAppBar(AppBarLeftButtonType.Menu, onClick: () async {
+        Get.find<SideMenuDrawerController>().openMenu();
+      });
     }
   }
 

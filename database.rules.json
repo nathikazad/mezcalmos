@@ -13,10 +13,10 @@
           "language": {
             ".write": "$uid === auth.uid"
           },
-          "photo": {
+          "image": {
             ".write": "$uid === auth.uid"
           },
-          "displayName": {
+          "name": {
             ".write": "$uid === auth.uid"
           },
           "phone": {
@@ -140,7 +140,7 @@
         "taxi": {
           "$orderId": {
             "cost": {
-              ".write": "data.parent().exists() && data.parent().child($orderId + '/customer/id').val() === auth.uid"
+              ".write": "data.parent().exists() && data.parent().child('/customer/id').val() === auth.uid"
             },
             "notificationStatus": {
               "$driverId": {
@@ -272,8 +272,8 @@
             }
           },
           "state": {
-            "open": {
-              ".write": "$uid === auth.uid"
+            "available": {
+              ".write": "root.child('deliveryAdmins/' + auth.uid + '/authorized').val() === true"
             }
           }
         }

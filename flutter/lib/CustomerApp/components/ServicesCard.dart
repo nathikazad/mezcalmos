@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:sizer/sizer.dart';
 
 class ServicesCard extends StatelessWidget {
   ServicesCard(
@@ -18,7 +18,7 @@ class ServicesCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
+    final textTheme = Theme.of(context).textTheme;
     LanguageController lang = Get.find<LanguageController>();
     return Card(
       margin: EdgeInsets.all(5),
@@ -29,7 +29,7 @@ class ServicesCard extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.all(8),
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
                 width: 5,
@@ -42,8 +42,7 @@ class ServicesCard extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.all(3),
                       alignment: Alignment.centerLeft,
-                      child: Text("${title}",
-                          style: txt.headline1!.copyWith(fontSize: 20.sp)),
+                      child: Text("${title}", style: textTheme.headline3),
                     ),
                     //================ subtitle============
                     Container(
@@ -53,15 +52,10 @@ class ServicesCard extends StatelessWidget {
                       // padding:
                       //     subtitle == null ? EdgeInsets.only(left: 10) : null,
                       child: subtitle != null
-                          ? Text(
-                              "${subtitle}",
-                              style: txt.subtitle1!.copyWith(fontSize: 13.7.sp),
-                            )
+                          ? Text("${subtitle}", style: textTheme.subtitle1)
                           : Text(
                               "${lang.strings['customer']['home']['laundry']["subtitle"]}",
-                              style: txt.subtitle1!.copyWith(
-                                  fontSize: 13.7.sp,
-                                  fontWeight: FontWeight.w700),
+                              style: textTheme.subtitle1,
                             ),
                     )
                   ],
@@ -71,8 +65,8 @@ class ServicesCard extends StatelessWidget {
                 width: 15,
               ),
               Container(
-                width: 80.h,
-                height: 80.h,
+                width: 20.w,
+                height: 20.w,
                 child: Image.asset(
                   url,
                   fit: BoxFit.fill,

@@ -11,6 +11,8 @@ export interface RestaurantOrder extends Order {
   orderTime: string;
   items: Record<string, Item>;
   restaurant: UserInfo;
+  itemsCost: number;
+  shippingCost: number;
 }
 
 export enum RestaurantOrderStatus {

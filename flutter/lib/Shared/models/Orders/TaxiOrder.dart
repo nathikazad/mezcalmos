@@ -128,15 +128,20 @@ class TaxiOrder extends Order {
 
     data["notificationStatus"]
         ?.forEach((dynamic uid, dynamic notificationStatus) {
-     try {
+      dynamic recievedIsBool =
+          notificationStatus["received"].runtimeType == bool;
+      bool isRecieved =
+          recievedIsBool && notificationStatus["received"] == true;
+
+      try {
         taxiOrder.notificationStatuses.add(TaxiNotificationStatus(
             sent: notificationStatus["sent"] ?? false,
             sentCount: notificationStatus["sentCount"] ?? 0,
             read: notificationStatus["read"] ?? false,
-            received: notificationStatus["received"]?["value"] ?? false,
+            received: isRecieved,
             uid: uid));
-      } on NoSuchMethodError {
-        // TODO
+      } on NoSuchMethodError catch (_) {
+        // DO NOTHING
       }
     });
 
@@ -176,10 +181,10 @@ class TaxiOrder extends Order {
     return this.notificationStatuses.length;
   }
 
-  num numberOfTaxiReadNotification() {
-    return this
-        .notificationStatuses
-        .fold<num>(0, (previousValue, element) => element.read ? 1 : 0);
+  int numberOfTaxiReadNotification() {
+    return this.notificationStatuses.fold<int>(0, (previousValue, element) {
+      return (element.read ? 1 : 0) + previousValue;
+    });
   }
 }
 

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomeFooterButtons extends StatelessWidget {
@@ -50,7 +51,8 @@ class HomeFooterButtons extends StatelessWidget {
             flex: 1,
             fit: FlexFit.loose,
             child: InkWell(
-              onTap: () async => await launch(tPrivacyPolicy),
+              onTap: () async =>
+                  await launch(GetStorage().read(getxPrivacyPolicyLink)),
               child: Ink(
                 padding: EdgeInsets.all(12),
                 child: Row(

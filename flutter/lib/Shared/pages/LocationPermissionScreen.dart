@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -12,6 +13,8 @@ import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class LocationPermissionScreen extends StatelessWidget {
   final SettingsController _settingsController = Get.find<SettingsController>();
+  final LocationController _locationController = Get.find<LocationController>();
+
   final SideMenuDrawerController _sideMenuDraweController =
       Get.find<SideMenuDrawerController>();
 
@@ -81,7 +84,8 @@ class LocationPermissionScreen extends StatelessWidget {
                       // if Location Service is enabled!
                       if (_serviceEnabled) {
                         PermissionStatus _permissionStatus =
-                            await location.requestPermission();
+                            await _locationController
+                                .requestLocationPermissions();
                         mezDbgPrint(_permissionStatus);
                         switch (_permissionStatus) {
                           // on denied forever User must know cuz it needs manual change in IOS!!
@@ -98,7 +102,9 @@ class LocationPermissionScreen extends StatelessWidget {
                           case PermissionStatus.granted:
                             Get.back(closeOverlays: true);
                             break;
-
+                          case PermissionStatus.grantedLimited:
+                            Get.back(closeOverlays: true);
+                            break;
                           // Default
                           default:
                             MezSnackbar(

@@ -11,8 +11,9 @@ extension ParseAuthorizationStatusToString on AuthorizationStatus {
 
 extension ParseStringToAuthorizationStatus on String {
   AuthorizationStatus toAuthorizationStatus() {
-    return AuthorizationStatus.values
-        .firstWhere((e) => e.toFirebaseFormatString() == this);
+    return AuthorizationStatus.values.firstWhere(
+        (e) => e.toFirebaseFormatString() == this,
+        orElse: () => AuthorizationStatus.Unauthorized);
   }
 }
 
@@ -27,12 +28,14 @@ extension ParseLanugaugeTypeToString on LanguageType {
 
 extension ParseStringToLanugaugeType on String {
   LanguageType toLanguageType() {
-    return LanguageType.values
-        .firstWhere((e) => e.toFirebaseFormatString().toLowerCase() == this);
+    return LanguageType.values.firstWhere(
+        (e) => e.toFirebaseFormatString().toLowerCase() == this,
+        orElse: () => LanguageType.ES);
   }
 }
 
-Map<LanguageType, String> convertToLanguageMap(dynamic data) {
+Map<LanguageType, String> convertToLanguageMap(Map data) {
+  mezDbgPrint("@sa@d@: Trying to convert $data convertToLanguageMap !");
   Map<LanguageType, String> map = {};
   data.forEach((dynamic language, dynamic string) {
     if (language == LanguageType.EN.toFirebaseFormatString() ||
@@ -41,4 +44,14 @@ Map<LanguageType, String> convertToLanguageMap(dynamic data) {
     }
   });
   return map;
+}
+
+extension LanguageMapToFirebaseFormat on Map<LanguageType, String> {
+  Map<String, String> toFirebaseFormat() {
+    Map<String, String> _tempMap = {};
+    this.keys.forEach((key) {
+      _tempMap[key.toFirebaseFormatString()] = this[key]!;
+    });
+    return _tempMap;
+  }
 }

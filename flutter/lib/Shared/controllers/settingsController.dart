@@ -1,14 +1,15 @@
 import 'dart:async';
-
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/controllers/themeContoller.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:soundpool/soundpool.dart';
 
@@ -26,6 +27,8 @@ class SettingsController extends GetxController {
   ThemeController get appTheme => _appTheme;
   LanguageController get appLanguage => _appLanguage;
   SettingsController(this.appType, this.sideMenuItems, this.locationOn);
+  StreamSubscription<InternetConnectionStatus>?
+      _internetConnectionStatusListener;
 
   @override
   void onInit() async {
@@ -49,13 +52,34 @@ class SettingsController extends GetxController {
       _selectedNotificationsSoundId =
           await _userNotificationsSoundPool.load(_soundData);
     }
-
-    
+    // start Listening on Internet Connectivity !
+    startListeningForConnectivity();
   }
 
   Future playNotificationSound({int? soundId}) async {
     if (_selectedNotificationsSoundId != null)
       await _userNotificationsSoundPool.play(_selectedNotificationsSoundId!);
+  }
+
+  void startListeningForConnectivity() {
+    // actively listen for status updates
+    _internetConnectionStatusListener =
+        InternetConnectionChecker().onStatusChange.listen(
+      (InternetConnectionStatus status) {
+        if (status == InternetConnectionStatus.disconnected &&
+            Get.currentRoute != kNoInternetConnectionPage) {
+          Future.delayed(Duration.zero, () {
+            Get.toNamed(kNoInternetConnectionPage);
+          });
+        } else {
+          if (Get.currentRoute == kNoInternetConnectionPage) {
+            Future.delayed(Duration.zero, () {
+              Get.back();
+            });
+          }
+        }
+      },
+    );
   }
 
   @override

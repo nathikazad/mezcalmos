@@ -7,9 +7,10 @@ import 'package:mezcalmos/Shared/pages/MessagingScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/OtpConfirmationScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/PhoneNumberScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
+import 'package:mezcalmos/Shared/pages/NoInternetConnectionScreen.dart';
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileScreen.dart';
-import 'package:mezcalmos/Shared/pages/ViewNotifications.dart';
+import 'package:mezcalmos/Shared/pages/Notifications/ViewNotifications.dart';
 import 'package:mezcalmos/Shared/pages/Wrapper.dart';
 
 // Routes Keys.
@@ -19,6 +20,7 @@ const String kSplashRoute = '/splash';
 const String kSignInRouteRequired = '/sign_in/required';
 const String kSignInRouteOptional = '/sign_in/optional';
 const String kLocationPermissionPage = '/location_permission';
+const String kNoInternetConnectionPage = '/offline';
 const String kOtpRoute = '/sign_in_otp';
 const String kOtpConfirmRoute = '/sign_in_otp_confirm';
 const String kMessagesRoute = '/messages/:orderId';
@@ -71,6 +73,9 @@ class SharedRouter {
     GetPage(name: kUnauthorizedRoute, page: () => UnauthorizedScreen()),
     GetPage(
         name: kLocationPermissionPage, page: () => LocationPermissionScreen()),
+    GetPage(
+        name: kNoInternetConnectionPage,
+        page: () => NoInternetConnectionScreen()),
     GetPage(name: kNotificationsRoute, page: () => ViewNotifications())
   ];
 }
