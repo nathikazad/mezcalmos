@@ -6,7 +6,7 @@ import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/textFieldComponent.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/textFieldComponent.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -66,7 +66,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
       });
     } else {
       this.cartItem.value = CartItem.clone(
-          restaurantCartController.cart.value.items.firstWhere((item) {
+          restaurantCartController.cart.value.cartItems.firstWhere((item) {
         return item.id == Get.parameters["cartItemId"];
       }));
       controller.getRestaurant(this.cartItem.value!.restaurantId).then((value) {

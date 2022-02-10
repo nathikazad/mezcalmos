@@ -15,7 +15,7 @@ import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
 
-import '../Restaurants/ViewcartScreen/components/saveLocationDailog.dart';
+import '../Restaurants/ViewCartScreen/components/saveLocationDailog.dart';
 
 enum PickLocationMode { AddNewLocation, EditLocation }
 
