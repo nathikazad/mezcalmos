@@ -93,7 +93,7 @@ class _StaticMapState extends State<StaticMap> {
                     // flat: true,
                     // anchor: ui.Offset(0.5, 1),
                     markerId: MarkerId("from"),
-                    icon: await BitmapDescriptorLoader(
+                    icon: await bitmapDescriptorLoader(
                       await cropRonded(
                           (await http.get(Uri.parse("${widget.imgUrl}")))
                               .bodyBytes) as Uint8List,

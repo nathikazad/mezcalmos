@@ -52,7 +52,6 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
 
   @override
   Widget build(BuildContext context) {
-    mezDbgPrint(1.sp);
     LanguageController lang = Get.find<LanguageController>();
     final txt = Theme.of(context).textTheme;
     return Scaffold(

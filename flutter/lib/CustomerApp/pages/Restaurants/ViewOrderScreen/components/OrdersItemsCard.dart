@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:get/get.dart';
 
 import 'OrderItemsItemCard.dart';
 
@@ -25,10 +25,11 @@ class OrderItemsCard extends StatelessWidget {
             margin: EdgeInsets.symmetric(horizontal: 8),
             child: Text(
               '${lang.strings["customer"]["restaurant"]["checkout"]["orderItems"]}',
-              style: txt.headline3,
+              style: txt.bodyText1,
             ),
           ),
           ListView.builder(
+            padding: EdgeInsets.zero,
             physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: items.length,

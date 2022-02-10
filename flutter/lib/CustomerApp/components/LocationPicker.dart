@@ -17,7 +17,6 @@ import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:sizer/sizer.dart';
 
 class LocationPickerController extends MGoogleMapController {
-  RxBool _showLoading = false.obs;
   RxBool _showFakeMarker = true.obs;
   RxBool _showBlackScreen = false.obs;
   Rx<BottomButtomToShow> _bottomButtomToShow = BottomButtomToShow.Pick.obs;
@@ -133,7 +132,6 @@ class LocationPickerState extends State<LocationPicker> {
   Widget bottomButton() {
     switch (widget.locationPickerMapController._bottomButtomToShow.value) {
       case BottomButtomToShow.Pick:
-        mezDbgPrint("0000000000  ===> returning Pick");
         return buildBottomButton(
           _lang.strings["shared"]["pickLocation"]["pick"],
           notifier: widget.notifyParentOfLocationFinalized,
@@ -141,7 +139,10 @@ class LocationPickerState extends State<LocationPicker> {
         );
       case BottomButtomToShow.Confirm:
         if (Get.find<AuthController>().fireAuthUser != null) {
-          return buildBottomButton("CONFIRM",
+          return buildBottomButton(
+              _lang.strings['shared']['buttonsTexts']['confirm']
+                  .toString()
+                  .capitalize,
               notifier: widget.notifyParentOfConfirm);
         } else {
           return buildBottomButton(
@@ -158,9 +159,10 @@ class LocationPickerState extends State<LocationPicker> {
           null,
         );
       case BottomButtomToShow.GrayedOut:
-        mezDbgPrint("0000000000  ===> returning GrayedOut");
         return buildBottomButton(
-          "CONFIRM",
+          _lang.strings['shared']['buttonsTexts']['confirm']
+              .toString()
+              .capitalize,
         );
     }
   }
@@ -209,7 +211,7 @@ class LocationPickerState extends State<LocationPicker> {
                       style: TextStyle(
                         fontFamily: 'psr',
                         color: Colors.white,
-                        fontSize: 18.sp,
+                        fontSize: 14.sp,
                       ))
                   : Container(
                       height: 20,
@@ -237,7 +239,7 @@ class LocationPickerState extends State<LocationPicker> {
             bottom: widget.locationPickerMapController
                     .blackScreenBottomTextMargin.value +
                 35,
-            left: (Get.width / 5.5).sp,
+            left: Get.width / 5.5,
             right: 10),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -260,7 +262,7 @@ class LocationPickerState extends State<LocationPicker> {
                 softWrap: true,
                 textAlign: TextAlign.start,
                 style: TextStyle(
-                    color: Colors.white, fontFamily: 'psb', fontSize: 20.sp),
+                    color: Colors.white, fontFamily: 'psb', fontSize: 15.sp),
               ),
             )
           ],
@@ -283,8 +285,6 @@ class LocationPickerState extends State<LocationPicker> {
             widget.locationPickerMapController.location.value!.latitude,
             widget.locationPickerMapController.location.value!.longitude));
 
-    mezDbgPrint("@===> old location : ${location.toString()}");
-
     String formattedAddress =
         widget.locationPickerMapController.location.value!.address;
     if (kmDistance > 0.5 || formattedAddress == "") {
@@ -293,9 +293,6 @@ class LocationPickerState extends State<LocationPicker> {
       formattedAddress = await MapHelper.getAdressFromLatLng(LatLng(
               _newLocationData.latitude!, _newLocationData.longitude!)) ??
           widget.locationPickerMapController.location.value!.address;
-    } else {
-      mezDbgPrint(
-          "%&****************************  DISTANCE LESS THAN 0.5 %%%%%%%%%%%%%%");
     }
 
     Location finalResult = Location(formattedAddress, _newLocationData);

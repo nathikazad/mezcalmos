@@ -7,7 +7,6 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 AppBar deliveryAdminAppBar(AppBarLeftButtonType leftBtnType,
     {bool withOrder = false, Function? function, PreferredSizeWidget? tabbar}) {
   return mezcalmosAppBar(leftBtnType,
-      tabbar: tabbar,
       actionIcons: [
         Get.find<ForegroundNotificationsController>()
                     .notifications
@@ -18,5 +17,5 @@ AppBar deliveryAdminAppBar(AppBarLeftButtonType leftBtnType,
                 hasNewNotif: true, margin: EdgeInsets.all(0))
             : SizedBox(),
       ],
-      function: (function != null) ? function() : null);
+      onClick: () => function?.call());
 }

@@ -32,6 +32,7 @@ List<SideMenuItem> sideMenuItems = <SideMenuItem>[
 ];
 
 void main() {
+<<<<<<< HEAD
   runMainGuarded(() => runApp(
         Sizer(builder: (context, orientation, deviceType) {
           return StartingPoint(
@@ -45,4 +46,18 @@ void main() {
           );
         }),
       ));
+=======
+  runMainGuarded(
+      () => runApp(Sizer(builder: (context, orientation, deviceType) {
+            return StartingPoint(
+              appType: AppType.CustomerApp,
+              appTheme: CustomerAppTheme.lightTheme,
+              signInCallback: signInCallback,
+              signOutCallback: signOutCallback,
+              routes: routes,
+              sideMenuItems: sideMenuItems,
+              locationOn: true,
+            );
+          })));
+>>>>>>> laundryWithMaster
 }

@@ -31,6 +31,8 @@ extension ParseStringToRestaurantOrderStatus on String {
 
 class RestaurantOrder extends DeliverableOrder {
   int quantity;
+  num itemsCost;
+  num shippingCost;
   List<RestaurantOrderItem> items = [];
   String? notes;
   RestaurantOrderStatus status;
@@ -47,6 +49,8 @@ class RestaurantOrder extends DeliverableOrder {
       required UserInfo customer,
       required Location to,
       DeliveryDriverUserInfo? dropoffDriver,
+      required this.itemsCost,
+      required this.shippingCost,
       this.notes})
       : super(
             orderId: orderId,
@@ -72,6 +76,8 @@ class RestaurantOrder extends DeliverableOrder {
         to: Location.fromFirebaseData(data['to']),
         restaurant: UserInfo.fromData(data["restaurant"]),
         customer: UserInfo.fromData(data["customer"]),
+        itemsCost: data['itemsCost'],
+        shippingCost: data['shippingCost'],
         dropoffDriver: (data["dropoffDriver"] != null)
             ? DeliveryDriverUserInfo.fromData(data["dropoffDriver"])
             : null);
@@ -90,12 +96,7 @@ class RestaurantOrder extends DeliverableOrder {
           ?.forEach((dynamic id, dynamic data) {
         restaurantOrderItem.chooseManyOptions.add(ChooseManyOption(
             optionId: id,
-            optionName: {
-              LanguageType.EN: data["name"]
-                  ["${LanguageType.EN.toFirebaseFormatString()}"],
-              LanguageType.ES: data["name"]
-                  ["${LanguageType.ES.toFirebaseFormatString()}"]
-            },
+            optionName: convertToLanguageMap(data["name"]),
             chosenValueCost: data["chosenValueCost"],
             chosenOptionValue: data["chosenValue"]));
       });
@@ -103,22 +104,10 @@ class RestaurantOrder extends DeliverableOrder {
           ?.forEach((dynamic id, dynamic data) {
         restaurantOrderItem.chooseOneOptions.add(ChooseOneOption(
             optionId: id,
-            optionName: {
-              LanguageType.EN: data["name"]
-                  ["${LanguageType.EN.toFirebaseFormatString()}"],
-              LanguageType.ES: data["name"]
-                  ["${LanguageType.ES.toFirebaseFormatString()}"]
-            },
+            optionName: convertToLanguageMap(data["name"]),
             chosenOptionId: data["chosenOptionId"],
             chosenOptionCost: data["chosenOptionCost"],
-            chosenOptionName: {
-              LanguageType.EN: data["chosenOptionName"]
-                  ["${LanguageType.EN.toFirebaseFormatString()}"],
-              LanguageType.ES: data["chosenOptionName"]
-                  ["${LanguageType.ES.toFirebaseFormatString()}"]
-            }
-            // data["chosenOptionName"]
-            ));
+            chosenOptionName: convertToLanguageMap(data["chosenOptionName"])));
       });
       restaurantOrder.items.add(restaurantOrderItem);
     });

@@ -6,7 +6,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
-import 'package:mezcalmos/CustomerApp/pages/Taxi/components/MezToolTips.dart';
+import 'package:mezcalmos/CustomerApp/pages/Taxi/components/Hints/RidePriceControllHint.dart';
+import 'package:mezcalmos/CustomerApp/pages/Taxi/components/Hints/RideReadByTaxisHint.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/TaxiBottomBars/TaxiOrderBottomBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/TopBar.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -15,6 +16,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezToolTip.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
@@ -33,7 +35,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
   Rxn<TaxiOrder> order = Rxn();
   StreamSubscription? _orderListener;
   final String toMarkerId = "to";
-  LanguageController lang = Get.find<LanguageController>();
+  LanguageController _lang = Get.find<LanguageController>();
   RxDouble bottomPadding =
       ((GetStorage().read(getxGmapBottomPaddingKey) as double) + 15.0).obs;
 
@@ -43,7 +45,6 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
     String orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId) as TaxiOrder?;
-    mezDbgPrint("ViewTaxiscreen :: Order :: ${order.value}");
     if (order.value != null) {
       // set initial location
       widget.mGoogleMapController.setLocation(order.value!.from);
@@ -53,38 +54,26 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
       widget.mGoogleMapController.setAnimateMarkersPolyLinesBounds(true);
       widget.mGoogleMapController.animateAndUpdateBounds();
 
-      mezDbgPrint("order not null !");
       if (order.value!.inProcess()) {
-        mezDbgPrint("order is in process!");
         inProcessOrderStatusHandler(order.value!.status);
-        // widget.mGoogleMapController.setAnimateMarkersPolyLinesBounds(false);
-
         _orderListener = controller
             .getCurrentOrderStream(orderId)
             .listen((currentOrder) async {
           if (currentOrder != null) {
-            // setState(() {
-            //   mezDbgPrint("SetState First time !");
-            // });
-            mezDbgPrint(
-                "currentOrder is not null! ======= == = = == =>>> $currentOrder.");
-
             order.value = currentOrder as TaxiOrder;
             inProcessOrderStatusHandler(order.value!.status);
             setState(() {});
           } else {
-            mezDbgPrint("currentOrder is null!");
             _orderListener?.cancel();
             _orderListener = null;
             TaxiOrder? _order = controller.getOrder(orderId) as TaxiOrder?;
             // this else clause gets executed when the order becomes /pastOrders.
-
-            mezDbgPrint("+++ GOT PAST OORDER ----- >>> ${order.value}");
             if (_order == null) {
               if (order.value!.status == TaxiOrdersStatus.CancelledByCustomer) {
                 Get.back();
                 oneButtonDialog(
-                    body: "Order Canceled Successfully !",
+                    body: _lang.strings['shared']['snackbars']
+                        ['orderCancelSuccess'],
                     imagUrl: _order!.customer.image);
               }
               _order = (await controller.getPastOrderStream(orderId).first)
@@ -121,7 +110,8 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: mezcalmosAppBar(AppBarLeftButtonType.Back),
+        appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
+            onClick: () => Get.back()),
         // appBar: AppBar(),
         backgroundColor: Colors.white,
         body: Container(
@@ -142,17 +132,10 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
                                   this.widget.mGoogleMapController,
                               periodicRerendering: true,
                             )),
-                        TaxiOrderBottomBar(order: order),
-
-                        cancelButton(order.value!.status),
                         TopBar(order: order.value!),
-                        // only if not marker as read more than 4 times or status isLookingForTaxi
-                        if (order.value!.status ==
-                                TaxiOrdersStatus.LookingForTaxi &&
-                            Get.find<TaxiController>()
-                                    .numOfTimesToolTipShownToUser() <=
-                                4)
-                          MezToolTips()
+                        cancelButton(order.value!.status),
+                        TaxiOrderBottomBar(order: order),
+                        getToolTip(),
                       ])
                 : MezLogoAnimation(
                     centered: true,
@@ -161,10 +144,25 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
         ));
   }
 
+  /// this builds [MezToolTip] with the given [getHints()],
+  ///
+  /// if [Get.find<TaxiController>().numOfTimesToolTipShownToUser()] has already set to 5+,
+  ///
+  /// we won't show it, instead we simply return an empty box.
+  Widget getToolTip() {
+    // only if not marker as read more than 4 times or status isLookingForTaxi
+    if (order.value!.status == TaxiOrdersStatus.LookingForTaxi &&
+        Get.find<TaxiController>().numOfTimesToolTipShownToUser() <=
+            nMaxTimesToShowTTipsOnCustomerApp)
+      return MezToolTip(
+        hintWidgetsList: getHints(),
+      );
+    else
+      return SizedBox();
+  }
+
   /// This gets invoked when the order is moved to [inProcess] db node
   void inProcessOrderStatusHandler(TaxiOrdersStatus status) {
-    mezDbgPrint(
-        "[[[[[[[[[[[[[[[[[[[[[[[[[[[[[ $status ]]]]]]]]]]]]]]]]]]]]]]]]]]]]]");
     switch (status) {
       case TaxiOrdersStatus.OnTheWay:
         bottomPadding.value = 10.0;
@@ -253,10 +251,9 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
         right: 15,
         child: InkWell(
           onTap: () async {
-            mezDbgPrint("Canceling order ===> ${order.value!.orderId}");
             YesNoDialogButton res = await yesNoDialog(
-                text: "Confirm Cancelation.",
-                body: "Are you sure you want to cancel your Order ?");
+                text: _lang.strings['customer']['cancelOrder']['title'],
+                body: _lang.strings['customer']['cancelOrder']['question']);
             if (res == YesNoDialogButton.Yes) {
               await Get.find<TaxiController>().cancelTaxi(order.value!.orderId);
             }
@@ -268,7 +265,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
                   borderRadius: BorderRadius.circular(10)),
               child: Center(
                 child: Text(
-                  "CANCEL",
+                  _lang.strings['customer']['taxiView']['cancel'],
                   style: TextStyle(
                       fontFamily: "psr",
                       color: Colors.white,
@@ -280,5 +277,29 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
         ),
       );
     }
+  }
+
+  /// the hints [MezToolTipHint] that are related to this view !
+  List<MezToolTipHint> getHints() {
+    return [
+      MezToolTipHint(
+        hintWidget: RidePriceControllHint(
+            hintText: Get.find<LanguageController>().strings['customer']
+                ['taxiView']['taxiRidePriceTooltip']),
+        left: 80.1,
+        bottom: 150.5,
+        bodyLeft: 20,
+        bodyRight: 20,
+        bodyBottom: 150.5,
+      ),
+      MezToolTipHint(
+        hintWidget: RideReadByTaxisHint(),
+        left: 199,
+        bottom: 150.5,
+        bodyLeft: 20,
+        bodyRight: 20,
+        bodyBottom: 150.5,
+      )
+    ];
   }
 }

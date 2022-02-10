@@ -1,6 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
-import 'package:firebase_database/firebase_database.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 
 
@@ -10,6 +7,9 @@ class UserInfo {
   String image;
   LanguageType? language;
   String? email;
+  /// Original version of image that was uploaded by the user with some light compression.
+  String? bigImage;
+
   String? phone;
   UserInfo({
     required this.id, 
@@ -20,8 +20,6 @@ class UserInfo {
     this.phone});
 
   factory UserInfo.fromData(dynamic data) {
-    mezDbgPrint("User info");
-    mezDbgPrint(data);
     return UserInfo(
       id: data["id"], 
       name: data["name"], 
@@ -41,6 +39,7 @@ class UserInfo {
         "name": name,
         "image": image,
         "language": language.toString(),
-        "phone": phone
+        "phone": phone,
+        "bigImage": bigImage,
       };
 }

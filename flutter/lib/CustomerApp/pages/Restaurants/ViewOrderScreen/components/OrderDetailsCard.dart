@@ -38,7 +38,7 @@ class OrderDetailsCard extends StatelessWidget {
               style: txt.bodyText1,
             ),
             SizedBox(
-              height: 10.h,
+              height: 10,
             ),
             Row(
               children: [

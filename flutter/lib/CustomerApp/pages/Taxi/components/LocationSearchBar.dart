@@ -301,12 +301,10 @@ class LocationSearchBarState extends State<LocationSearchBar> {
     setState(() {
       if (_type == SearchComponentType.From) {
         locationSearchBarController.fromTextFieldFocusNode.requestFocus();
-        mezDbgPrint("Cleared From TF !");
         widget.request.value.from = null;
       }
       if (_type == SearchComponentType.To) {
         locationSearchBarController.fromTextFieldFocusNode.requestFocus();
-        mezDbgPrint("Cleared From TF !");
         widget.request.value.to = null;
       }
       locationSearchBarController.focusedTextField.value = _type;

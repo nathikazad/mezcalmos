@@ -6,11 +6,13 @@ import 'package:location/location.dart' as GeoLoc;
 import 'package:mezcalmos/CustomerApp/components/LocationPicker.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
+import 'package:mezcalmos/CustomerApp/pages/Taxi/components/Hints/RidePriceControllHint.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/LocationSearchBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/TaxiBottomBars/TaxiReqBottomBar.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
@@ -18,14 +20,8 @@ import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezToolTip.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
-
-/*
-  - TaxiReqScreen -
-    - From , to picked > Construct TaxiRequest Model.
-      - onConfirm  -> ViewTaxiRequest.
-
-*/
 
 class RequestTaxiScreen extends StatefulWidget {
   @override
@@ -42,7 +38,6 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
       LocationPickerController();
   final LocationSearchBarController locationSearchBarController =
       LocationSearchBarController();
-  //TaxiRequest? orderRequest;
   bool _pickedFromTo = false;
   /******************************  Init and build function ************************************/
 
@@ -51,8 +46,6 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
     if (Get.arguments != null) {
       taxiRequest.value = Get.arguments as TaxiRequest;
 
-      // mezDbgPrint(
-      //     "============ the older requist is ${(Get.arguments as TaxiRequest).status} ===========");
       locationPickerController.setOnMapTap(onTap: () {
         locationSearchBarController.unfocusAllFocusNodes.call();
         setState(() {});
@@ -66,28 +59,25 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
       // set blackScreenBottom 110
       locationPickerController.blackScreenBottomTextMargin.value = 80;
 
-      GeoLoc.Location().getLocation().then((GeoLoc.LocationData locData) {
-        //taxiRequest.value.from = Location("", locData);
-        updateModelAndMarker(SearchComponentType.From, taxiRequest.value.from!);
-        locationPickerController.setLocation(taxiRequest.value.from!);
-        locationPickerController.addOrUpdateUserMarker(
-            markerId: SearchComponentType.From.toShortString(),
-            latLng: LatLng(taxiRequest.value.from!.latitude,
-                taxiRequest.value.from!.longitude));
+      updateModelAndMarker(SearchComponentType.From, taxiRequest.value.from!);
+      locationPickerController.setLocation(taxiRequest.value.from!);
+      locationPickerController.addOrUpdateUserMarker(
+          markerId: SearchComponentType.From.toShortString(),
+          latLng: LatLng(taxiRequest.value.from!.latitude,
+              taxiRequest.value.from!.longitude));
 
-        updateModelAndMarker(SearchComponentType.To, taxiRequest.value.to!);
-        locationPickerController.addOrUpdatePurpleDestinationMarker(
-            latLng: LatLng(taxiRequest.value.to!.position.latitude!,
-                taxiRequest.value.to!.position.longitude!));
-        locationPickerController.hideFakeMarker();
-        locationPickerController.setAnimateMarkersPolyLinesBounds(true);
-        locationPickerController.animateAndUpdateBounds();
-        updateRouteInformation()
-            .then((value) => locationPickerController.showConfirmButton());
+      updateModelAndMarker(SearchComponentType.To, taxiRequest.value.to!);
+      locationPickerController.addOrUpdatePurpleDestinationMarker(
+          latLng: LatLng(taxiRequest.value.to!.position.latitude!,
+              taxiRequest.value.to!.position.longitude!));
+      locationPickerController.hideFakeMarker();
+      locationPickerController.setAnimateMarkersPolyLinesBounds(true);
+      locationPickerController.animateAndUpdateBounds();
+      updateRouteInformation()
+          .then((value) => locationPickerController.showConfirmButton());
 
-        setState(() {
-          _pickedFromTo = true;
-        });
+      setState(() {
+        _pickedFromTo = true;
       });
     } else {
       locationPickerController.setOnMapTap(onTap: () {
@@ -119,7 +109,8 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back),
+      appBar:
+          mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: () => Get.back()),
       backgroundColor: Colors.white,
       body: Container(
         color: Colors.white,
@@ -160,10 +151,20 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                   ? TaxiReqBottomBar(
                       taxiRequest: taxiRequest.value,
                     )
-                  : SizedBox()
+                  : SizedBox(),
+              if (_pickedFromTo) getToolTip(),
             ]),
       ),
     );
+  }
+
+  Widget getToolTip() {
+    if (Get.find<TaxiController>().numOfTimesToolTipShownToUser() <=
+        nMaxTimesToShowTTipsOnCustomerApp)
+      return MezToolTip(
+          hintWidgetsList: getHints(), applyCacheIncrementing: false);
+    else
+      return SizedBox();
   }
 
 /******************************  EVENT HANDLERS ************************************/
@@ -226,13 +227,14 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
       // in case the widget is still mounted , then make dart scheduale this delayed call as soon as possible ,
       // so we don't fall into assertion error ('!_debugLocked': is not true.)
       await Future.delayed(Duration.zero, () {
-        mezDbgPrint("Goung tooooo route >>>>  ${getTaxiOrderRoute(orderId)}");
         popEverythingAndNavigateTo(getTaxiOrderRoute(orderId));
       });
     } else {
-      MezSnackbar("Error :(", "Failed to request a taxi !",
+      MezSnackbar(
+          "Oops :(",
+          Get.find<LanguageController>().strings['customer']['taxiView']
+              ['failedToRequestTaxi'],
           position: SnackPosition.TOP);
-      mezDbgPrint("Error requesting the taxi : ${response.toString()}");
       this.locationPickerController.showConfirmButton();
     }
   }
@@ -262,8 +264,6 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
   Future<void> updateRouteInformation() async {
     MapHelper.Route? route = await MapHelper.getDurationAndDistance(
         taxiRequest.value.from!, taxiRequest.value.to!);
-
-    mezDbgPrint("updateRouteInformation::Route => ${route?.polylineList}");
     if (route != null) {
       setState(() {
         int estimatedPrice =
@@ -275,8 +275,6 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
             distance: route.distance,
             duration: route.duration));
       });
-      mezDbgPrint("Polyliiines ====> ${route.polylineList}");
-      mezDbgPrint("Polyliiines ====> ${taxiRequest.value.toString()}");
     } else {
       // TODO:handle route error
     }
@@ -285,5 +283,22 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
   int getEstimatedRidePriceInPesos(int distanceInMeteres) {
     int roundedKm = (distanceInMeteres / 1000).round();
     return roundedKm <= 1 ? 35 : roundedKm * 15;
+  }
+
+  /// the hints  [MezToolTipHint] that are related to this view !
+  List<MezToolTipHint> getHints() {
+    return [
+      MezToolTipHint(
+        hintWidget: RidePriceControllHint(
+          hintText: Get.find<LanguageController>().strings['customer']
+              ['taxiView']['taxiRequestPriceTooltip'],
+        ),
+        left: 80.1,
+        bottom: 150.5,
+        bodyLeft: 20,
+        bodyRight: 20,
+        bodyBottom: 150.5,
+      ),
+    ];
   }
 }

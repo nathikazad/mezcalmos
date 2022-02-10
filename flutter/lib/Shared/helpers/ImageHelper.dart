@@ -1,14 +1,177 @@
 // Usefull when trying to make Sizes adptable!
 import 'dart:async';
+import 'dart:io';
+import 'dart:math';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:get/get.dart';
 import 'dart:ui' as ui;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:image_picker/image_picker.dart' as imPicker;
+import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+
+String generateRandomString(int len) {
+  var r = Random();
+  const _chars =
+      'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  return List.generate(len, (index) => _chars[r.nextInt(_chars.length)]).join();
+}
+
+/// this compresses the Original Image using jpeg format Since it's much ligher.
+///
+/// and reduce the quality down to [qualityCompressionOfUserImage = 25%].
+Future<Uint8List> compressImageBytes(Uint8List originalImg) async {
+  mezDbgPrint("s@s:beforeCompress => ${originalImg.lengthInBytes}");
+  final result = await FlutterImageCompress.compressWithList(originalImg,
+      quality: nQualityCompressionOfUserImage);
+  mezDbgPrint("s@s:after => ${result.lengthInBytes}");
+  return result;
+}
+
+Future<File> writeFileFromBytesAndReturnIt(
+    {required String filePath, required Uint8List imgBytes}) async {
+  // compressed Image
+  List<String> splittedPath = filePath.split('.');
+  String pathWithoutExtension =
+      splittedPath.sublist(0, splittedPath.length - 1).join('.');
+  mezDbgPrint("PATH WITHOUT EXTENSION $pathWithoutExtension");
+  mezDbgPrint("PATH WITH EXTENSION $filePath");
+
+  return (await File(
+          '$pathWithoutExtension.${DateTime.now().millisecondsSinceEpoch}.${splittedPath.last}')
+      .writeAsBytes(imgBytes));
+}
+
+/// this is only used for UserProfilePicture whereever we show bigImage [User.bigImage]
+Image showDefaultOrUserImg({Uint8List? memoryImg}) {
+  if (memoryImg != null) {
+    return mLoadImage(
+        url: null,
+        memoryImage: memoryImg,
+        assetInCaseFailed: aDefaultDbUserImgAsset);
+  }
+  return mLoadImage(
+      url: Get.find<AuthController>().user!.bigImage ??
+          Get.find<AuthController>().user!.image,
+      assetInCaseFailed: aDefaultDbUserImgAsset);
+}
+
+Future<imPicker.ImageSource?> imagePickerChoiceDialog(
+    BuildContext context) async {
+  imPicker.ImageSource? _result;
+
+  await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          contentPadding: EdgeInsets.all(40),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 10,
+              ),
+              TextButton(
+                  onPressed: () {
+                    _result = imPicker.ImageSource.camera;
+                    Get.back();
+                  },
+                  style: TextButton.styleFrom(
+                      backgroundColor: Colors.purple.shade400,
+                      padding: EdgeInsets.all(12)),
+                  child: Container(
+                      alignment: Alignment.center,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.camera_enhance,
+                            color: Colors.white,
+                          ),
+                          Text(Get.find<LanguageController>().strings['shared']
+                              ['buttonsTexts']['camera'])
+                        ],
+                      ))),
+              SizedBox(
+                height: 10,
+              ),
+              TextButton(
+                  onPressed: () {
+                    _result = imPicker.ImageSource.gallery;
+                    Get.back();
+                  },
+                  style: TextButton.styleFrom(
+                      backgroundColor: Colors.deepPurple,
+                      padding: EdgeInsets.all(12)),
+                  child: Container(
+                      alignment: Alignment.center,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.photo_library_outlined,
+                            color: Colors.white,
+                          ),
+                          Text(Get.find<LanguageController>().strings['shared']
+                              ['buttonsTexts']['gallery'])
+                        ],
+                      ))),
+            ],
+          ),
+        );
+      });
+
+  return _result;
+}
+
+Future<imPicker.XFile?> imagePicker(
+    {required imPicker.ImagePicker picker,
+    imPicker.ImageSource source = imPicker.ImageSource.gallery}) async {
+  try {
+    return await picker.pickImage(
+      source: source,
+      preferredCameraDevice: imPicker.CameraDevice.front,
+      imageQuality: nQualityCompressionOfUserImage,
+    );
+  } on PlatformException catch (exception) {
+    if (exception.code == 'camera_access_denied') {
+      MezSnackbar(
+          Get.find<LanguageController>().strings['shared']['permissions']
+              ['cameraAccessOffTitle'],
+          Get.find<LanguageController>().strings['shared']['permissions']
+              ['cameraAccessOffBody'],
+          position: SnackPosition.TOP);
+    } else if (exception.code == 'photo_access_denied') {
+      MezSnackbar(
+          Get.find<LanguageController>().strings['shared']['permissions']
+              ['photoAccessOffTitle'],
+          Get.find<LanguageController>().strings['shared']['permissions']
+              ['photoAccessOffBody'],
+          position: SnackPosition.TOP);
+    } else {
+      return await picker.pickImage(
+        source: source,
+        preferredCameraDevice: imPicker.CameraDevice.front,
+        imageQuality: nQualityCompressionOfUserImage,
+      );
+    }
+    return null;
+  }
+}
 
 Image mLoadImage(
     {required String? url,
+    Uint8List? memoryImage,
     double? height,
     double? width,
     fit: BoxFit.cover,
@@ -19,12 +182,21 @@ Image mLoadImage(
       url.toLowerCase().contains('.svg') ||
       !url.startsWith('http')) {
     try {
-      _img = Image.asset(
-        url!,
-        height: height,
-        width: width,
-        fit: BoxFit.contain,
-      );
+      if (memoryImage != null) {
+        _img = Image.memory(
+          memoryImage,
+          height: height,
+          width: width,
+          fit: BoxFit.contain,
+        );
+      } else {
+        _img = Image.asset(
+          url!,
+          height: height,
+          width: width,
+          fit: BoxFit.contain,
+        );
+      }
     } catch (e) {
       _img = Image.asset(
         assetInCaseFailed,
@@ -47,7 +219,7 @@ Image mLoadImage(
 
 // BitmapLoading stuff -------------------
 
-Future<BitmapDescriptor> BitmapDescriptorLoader(
+Future<BitmapDescriptor> bitmapDescriptorLoader(
     dynamic asset, num width, num height,
     {bool isBytes = false}) async {
   return BitmapDescriptor.fromBytes(

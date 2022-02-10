@@ -16,12 +16,12 @@ import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
-import 'package:mezcalmos/TaxiApp/components/taxiAppBar.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/IPositionedBottomBar.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/IPositionedFromToBar.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
+import 'package:sizer/sizer.dart';
 
 class IncomingOrderViewScreen extends StatefulWidget {
   @override
@@ -67,19 +67,30 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
         // start Listening for the vailability of the order
         _orderListener =
             controller.getIncomingOrderStream(orderId).listen((order) {
-          if (order != null) {
-            // keep updating our Order
-            setState(() {
-              this.order = order;
-            });
+          mezDbgPrint(" @adsad@ : Inside listener ");
+          mezDbgPrint(" @adsad@ : order != null : ${order != null} ");
+
+          if (order != null && !_clickedButton) {
+            mezDbgPrint(" @adsad@ : Inside listener:: if ");
+
+            // keep updating our Order only when neeeded
+            if (order.cost != this.order?.cost ||
+                order.distanceToClient != this.order?.distanceToClient) {
+              setState(() {
+                this.order = order;
+              });
+            }
           } else {
             // if the Order is no more available , Show a pop up while poping back back !
             if (_clickedButton == false) {
               cancelOrderSubscription();
               Get.back();
               oneButtonDialog(
+                  title: 'Oops...',
                   body: lang.strings['taxi']['cancelOrder']['rideUnavailble'],
-                  imagUrl: aOrderUnavailable);
+                  bodyTextColor: Colors.black,
+                  fontSize: 14.sp,
+                  imagUrl: a404);
             }
           }
         });
@@ -97,8 +108,10 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: taxiAppBar(AppBarLeftButtonType.Back,
-          function: cancelOrderSubscription),
+      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: () {
+        cancelOrderSubscription();
+        Get.back();
+      }),
       body: order != null
           ? Stack(
               alignment: Alignment.topCenter,
@@ -119,6 +132,7 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
                               lang.strings['taxi']['taxiView']["acceptOrders"],
                               style: TextStyle(
                                 color: Colors.white,
+                                fontSize: 12.sp,
                                 fontWeight: FontWeight.w700,
                               ),
                             )
@@ -172,10 +186,6 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
                 Get.offNamedUntil(
                     kCurrentOrderRoute, ModalRoute.withName(kHomeRoute));
                 // Notice the User !
-                mezDbgPrint(
-                    "s@ad:IncommingOrderViewScreen::acceptOrderButton::response::data:: ${serverResponse.data}");
-                mezDbgPrint(
-                    "s@ad:IncommingOrderViewScreen::acceptOrderButton::response::status:: ${serverResponse.status.toShortString()}");
               } else {
                 // in case Taxi User failed accepting the order.
                 setState(() {

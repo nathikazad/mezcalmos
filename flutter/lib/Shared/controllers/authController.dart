@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
-
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
@@ -15,6 +14,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
+import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
@@ -37,9 +37,15 @@ class AuthController extends GetxController {
   StreamSubscription? _userNodeListener;
 
   // Rxn<fireAuth.User> _userRx = Rxn();
-  StreamController<fireAuth.User?> authStateChangeStream =
+  StreamController<fireAuth.User?> _authStateStreamController =
       StreamController.broadcast();
-  Stream<fireAuth.User?> get authStateChange => authStateChangeStream.stream;
+
+  StreamController<UserInfo?> _userInfoStreamController =
+      StreamController.broadcast();
+
+  Stream<fireAuth.User?> get authStateStream =>
+      _authStateStreamController.stream;
+  Stream<UserInfo?> get userInfoStream => _userInfoStreamController.stream;
 
   bool get isUserSignedIn => _fireAuthUser.value != null;
   FirebaseDb _databaseHelper =
@@ -68,7 +74,9 @@ class AuthController extends GetxController {
 
       if (user == null) {
         await _onSignOutCallback();
-        authStateChangeStream.add(null);
+        _authStateStreamController.add(null);
+        _userInfoStreamController.add(null);
+
         mezDbgPrint('AuthController: User is currently signed out!');
         _userNodeListener?.cancel();
         _userNodeListener = null;
@@ -76,7 +84,7 @@ class AuthController extends GetxController {
       } else {
         mezDbgPrint('AuthController: User is currently signed in!');
         _onSignInCallback();
-        authStateChangeStream.add(user);
+        _authStateStreamController.add(user);
         GetStorage().write(getxUserId, user.uid);
         _userNodeListener?.cancel();
         _userNodeListener = _databaseHelper.firebaseDatabase
@@ -84,6 +92,7 @@ class AuthController extends GetxController {
             .child(userInfo(user.uid))
             .onValue
             .listen((event) {
+          if (event.snapshot.value == null) return;
           if (event.snapshot.value['language'] == null) {
             event.snapshot.value['language'] =
                 Get.find<LanguageController>().userLanguageKey;
@@ -105,65 +114,67 @@ class AuthController extends GetxController {
   }
 
   bool isDisplayNameSet() {
-    return fireAuthUser?.displayName != null;
+    return _user.value?.name != null;
   }
 
-  Future<String> getImageUrl(File imageFile, String uid) async {
-    String x;
+  bool isUserImgSet() {
+    return _user.value?.image != null &&
+        _user.value?.image != defaultUserImgUrl;
+  }
 
+  /// This Functions takes a File (Image) and an optional [isCompressed]
+  ///
+  /// And Upload it to firebaseStorage with at users/[uid]/avatar/[uid].[isCompressed ? 'cmpressed' : 'original'].[extension]
+  Future<String> uploadUserImgToFbStorage(
+      {required File imageFile, bool isCompressed = false}) async {
+    String _uploadedImgUrl;
+    var splitted = imageFile.path.split('.');
+    String imgPath =
+        "users/${this._fireAuthUser.value!.uid}/avatar/${this._fireAuthUser.value!.uid}.${isCompressed ? 'compressed' : 'original'}.${splitted[splitted.length - 1]}";
     try {
       await firebase_storage.FirebaseStorage.instance
-          .ref("users/$uid/avatar/${imageFile.path}")
+          .ref(imgPath)
           .putFile(imageFile);
     } on firebase_core.FirebaseException catch (e) {
-      print("{{{{{{{{{{{{{{{{{{{{" +
-          e.message.toString() +
-          "}}}}}}}}}}}}}}}}}}}}}}}}}}}}");
+      mezDbgPrint(e.message.toString());
     } finally {
-      x = await firebase_storage.FirebaseStorage.instance
-          .ref('users/$uid/avatar/${imageFile.path}')
+      _uploadedImgUrl = await firebase_storage.FirebaseStorage.instance
+          .ref(imgPath)
           .getDownloadURL();
     }
 
-    return x;
+    return _uploadedImgUrl;
   }
 
-  // Future<ServerResponse> changeUserName(String? name) {}
+  /// this is for setting the Original size of the image that was picked by the user,
+  ///
+  /// Made as a seprated function and not along with [editUserProfile]'s parameteres,
+  ///
+  /// because that was we won't need to wait for them both to get uploaded.
+  Future<void> setOriginalUserImage(String? originalImageUrl) async {
+    if (originalImageUrl != null) {
+      await _databaseHelper.firebaseDatabase
+          .reference()
+          .child(userInfo(fireAuthUser!.uid))
+          .child('bigImage')
+          .set(originalImageUrl);
+    }
+  }
 
-  Future<void> editUserProfile({String? name, String? image}) async {
+  Future<void> editUserProfile(String? name, String? compressedImageUrl) async {
     if (name != null) {
       await _databaseHelper.firebaseDatabase
           .reference()
           .child(userInfo(fireAuthUser!.uid))
           .child('name')
           .set(name);
-      // dont need to do this because the other listener will fire
-      //   .then((value) {
-      // _user.value = UserInfo(
-      //   id: _user.value!.id,
-      //   email: _user.value!.email,
-      //   image: _user.value!.image,
-      //   language: _user.value!.language,
-      //   name: name,
-      // );
-      // });
     }
-    if (image != null && image.isURL) {
+    if (compressedImageUrl != null && compressedImageUrl.isURL) {
       await _databaseHelper.firebaseDatabase
           .reference()
           .child(userInfo(fireAuthUser!.uid))
           .child('image')
-          .set(image);
-      // dont need to do this because the other listener will fire
-      //     .then((value) {
-      //   _user.value = UserInfo(
-      //     id: _user.value!.id,
-      //     email: _user.value?.email,
-      //     image: image,
-      //     language: _user.value!.language,
-      //     name: _user.value!.name,
-      //   );
-      // });
+          .set(compressedImageUrl);
     }
   }
 
@@ -278,7 +289,10 @@ class AuthController extends GetxController {
             .signInWithCustomToken(response.data["token"]);
       }
     } catch (e) {
-      MezSnackbar("Error", "OTP Code confirmation failed :(");
+      MezSnackbar(
+          "Oops ..",
+          Get.find<LanguageController>().strings['shared']['login']
+              ['failedOTPConfirmRequest']);
       print("Exception happend in GetAuthUsingOTP : $e");
     }
 
@@ -301,6 +315,7 @@ class AuthController extends GetxController {
           .signInWithCredential(facebookAuthCredential);
     } else {
       MezSnackbar("Notice ~", "Failed SignIn with Facebook !");
+      throw Exception("Failed SignIn with Facebook !");
     }
   }
 
@@ -322,7 +337,7 @@ class AuthController extends GetxController {
         nonce: nonce,
       );
 
-      print(appleCredential.authorizationCode);
+      mezDbgPrint(appleCredential.authorizationCode);
 
       // Create an `OAuthCredential` from the credential returned by Apple.
       final oauthCredential = fireAuth.OAuthProvider("apple.com").credential(
@@ -334,8 +349,9 @@ class AuthController extends GetxController {
       // not match the nonce in `appleCredential.identityToken`, sign in will fail.
       fireAuth.FirebaseAuth.instance.signInWithCredential(oauthCredential);
     } catch (exception) {
-      print(exception);
+      mezDbgPrint(exception);
       MezSnackbar("Notice ~", "Failed SignIn with Apple !");
+      throw exception;
     }
   }
 
@@ -344,7 +360,7 @@ class AuthController extends GetxController {
     _userNodeListener?.cancel();
     _userNodeListener = null;
     super.dispose();
-    print("--------------------> AuthController Auto Disposed !");
+    mezDbgPrint("--------------------> AuthController Auto Disposed !");
   }
 }
 

@@ -4,7 +4,11 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/components/IncrementalComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/MyExpensionPanelComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
+<<<<<<< HEAD
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/ChoosenManyOption.dart';
+=======
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/ChoosenManyOption.dart';
+>>>>>>> laundryWithMaster
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';

@@ -7,7 +7,10 @@ import 'package:mezcalmos/CustomerApp/pages/Taxi/components/RecreateOrderBtn.dar
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+<<<<<<< HEAD
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+=======
+>>>>>>> laundryWithMaster
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
@@ -29,8 +32,8 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
   Widget build(BuildContext context) {
     return Positioned(
       bottom: 25,
-      right: 25,
-      left: 25,
+      right: 15,
+      left: 15,
       child: Obx(
         () => Container(
           padding: const EdgeInsets.all(8),
@@ -39,7 +42,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
                       TaxiOrdersStatus.LookingForTaxi)
                   ? 45
                   : 0),
-          height: getSizeRelativeToScreen(30, Get.height, Get.width),
+          height: 60,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
               border: Border.all(
@@ -68,7 +71,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
               child: Material(
                 shape: CircleBorder(),
                 child: IconButton(
-                  iconSize: 18,
+                  iconSize: 13.sp,
                   splashRadius: 18,
                   tooltip: 'Decrease the price',
                   padding: EdgeInsets.zero,
@@ -96,13 +99,13 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
               '\$' +
                   widget.order.value!.toTaxiRequest().estimatedPrice.toString(),
               style: TextStyle(
-                  color: Colors.black, fontFamily: 'psb', fontSize: 20),
+                  color: Colors.black, fontFamily: 'psb', fontSize: 13.sp),
             ),
             Flexible(
               child: Material(
                 shape: CircleBorder(),
                 child: IconButton(
-                  iconSize: 18,
+                  iconSize: 13.sp,
                   splashRadius: 18,
                   tooltip: 'Increase the price',
                   padding: EdgeInsets.zero,
@@ -145,14 +148,16 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
               children: [
                 Icon(
                   MezcalmosIcons.route,
-                  size: (Get.height * 0.015).sp,
+                  size: 11.sp,
                 ),
                 SizedBox(
                   width: 2.w,
                 ),
                 Text(
-                    taxiRequest.routeInformation?.distance.distanceStringInKm ??
-                        "-"),
+                  taxiRequest.routeInformation?.distance.distanceStringInKm ??
+                      "-",
+                  style: TextStyle(fontSize: 11.sp),
+                ),
               ],
             ),
           ),
@@ -160,13 +165,15 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
             children: [
               Icon(
                 MezcalmosIcons.stopwatch,
-                size: (Get.height * 0.015).sp,
+                size: 11.sp,
               ),
               SizedBox(
                 width: 2.w,
               ),
-              Text(taxiRequest.routeInformation?.duration.longTextVersion ??
-                  "-"),
+              Text(
+                taxiRequest.routeInformation?.duration.longTextVersion ?? "-",
+                style: TextStyle(fontSize: 11.sp),
+              ),
             ],
           ),
         ],
@@ -181,14 +188,14 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Icon(Icons.mark_email_read, size: 19.sp),
+          Icon(Icons.mark_email_read, size: 14.sp),
           SizedBox(
             width: 10,
           ),
           Obx(
             () => Text(
               widget.order.value!.numberOfTaxiReadNotification().toString(),
-              style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
             ),
           )
         ],
@@ -239,7 +246,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
               description: lang.strings?['customer']?['taxiView']
                   ?['rideExpired'],
               order: widget.order.value!),
-          reCreateOrderBtn(widget.order.value!.toTaxiRequest())
+          RecreateOrderButton(taxiRequest: widget.order.value!.toTaxiRequest())
         ]);
         // widget.bottomPadding = 10.0;
         break;
@@ -254,7 +261,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
           messageBtn(
               order: widget.order.value!,
               margin: EdgeInsets.symmetric(horizontal: 6)),
-          reCreateOrderBtn(widget.order.value!.toTaxiRequest()),
+          RecreateOrderButton(taxiRequest: widget.order.value!.toTaxiRequest()),
         ]);
         // widget.bottomPadding = 10.0;
         break;
@@ -269,7 +276,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
                   "${Get.find<AuthController>().fireAuthUser!.displayName}'s ${lang.strings?['customer']?['taxiView']?['ride']}.",
               description: lang.strings?['customer']?['taxiView']
                   ?['rideCancelledByCustomer']),
-          reCreateOrderBtn(widget.order.value!.toTaxiRequest())
+          RecreateOrderButton(taxiRequest: widget.order.value!.toTaxiRequest())
         ]);
         // widget.bottomPadding = 10.0;
         break;

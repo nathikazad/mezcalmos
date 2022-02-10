@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
+<<<<<<< HEAD
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+=======
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+>>>>>>> laundryWithMaster
 import 'package:sizer/sizer.dart';
 
 class TaxiReqBottomBar extends StatefulWidget {
@@ -15,16 +19,17 @@ class TaxiReqBottomBar extends StatefulWidget {
 }
 
 class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
+  final LanguageController _lang = Get.find<LanguageController>();
   @override
   Widget build(BuildContext context) {
     return Positioned(
       bottom: 25,
-      right: 25,
-      left: 25,
+      right: 15,
+      left: 15,
       child: Container(
         padding: const EdgeInsets.all(8),
         margin: const EdgeInsets.only(bottom: 45),
-        height: getSizeRelativeToScreen(25, Get.height, Get.width),
+        height: 60, // getSizeRelativeToScreen(25, Get.height, Get.width),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
             border: Border.all(
@@ -54,9 +59,9 @@ class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
             Material(
               shape: CircleBorder(),
               child: IconButton(
-                iconSize: 18,
+                iconSize: 13.sp,
                 splashRadius: 18,
-                tooltip: 'Decrease the price',
+                tooltip: _lang.strings['customer']['taxiView']['decreasePrice'],
                 padding: EdgeInsets.zero,
                 onPressed: () {
                   widget.taxiRequest.decrementPrice();
@@ -72,14 +77,14 @@ class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
             Text(
               '\$' + widget.taxiRequest.estimatedPrice.toString(),
               style: TextStyle(
-                  color: Colors.black, fontFamily: 'psb', fontSize: 20),
+                  color: Colors.black, fontFamily: 'psb', fontSize: 13.sp),
             ),
             Material(
               shape: CircleBorder(),
               child: IconButton(
-                iconSize: 18,
+                iconSize: 13.sp,
                 splashRadius: 18,
-                tooltip: 'Increase the price',
+                tooltip: _lang.strings['customer']['taxiView']['increasePrice'],
                 padding: EdgeInsets.zero,
                 onPressed: () {
                   widget.taxiRequest.incrementPrice();
@@ -111,7 +116,7 @@ class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
               children: [
                 Icon(
                   MezcalmosIcons.route,
-                  size: (Get.height * 0.015).sp,
+                  size: 11.sp,
                 ),
                 SizedBox(
                   width: 2.w,
@@ -120,6 +125,7 @@ class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
                   taxiRequest.routeInformation?.distance.distanceStringInKm ??
                       "-",
                   overflow: TextOverflow.visible,
+                  style: TextStyle(fontSize: 11.sp),
                 ),
               ],
             ),
@@ -129,15 +135,16 @@ class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
               children: [
                 Icon(
                   MezcalmosIcons.stopwatch,
-                  size: (Get.height * 0.015).sp,
+                  size: 11.sp,
                 ),
                 SizedBox(
                   width: 2.w,
                 ),
                 Text(
-                    taxiRequest.routeInformation?.duration.longTextVersion ??
-                        "-",
-                    overflow: TextOverflow.visible),
+                  taxiRequest.routeInformation?.duration.longTextVersion ?? "-",
+                  overflow: TextOverflow.visible,
+                  style: TextStyle(fontSize: 11.sp),
+                ),
               ],
             ),
           ),

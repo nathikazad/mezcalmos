@@ -30,7 +30,7 @@ class RestaurantCard extends StatelessWidget {
         onTap: onClick,
         child: Container(
           width: double.infinity,
-          height: 125,
+          height: 145,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,14 +63,17 @@ class RestaurantCard extends StatelessWidget {
                             Icon(
                               Icons.restaurant_menu,
                               color: Colors.deepPurple,
+                              size: 15,
                             ),
                             SizedBox(
                               width: 5,
                             ),
-                            Text(
-                              restaurant.items.length.toStringAsFixed(0) +
-                                  ' ${lang.strings["customer"]["restaurant"]["menu"]["items"]}',
-                              style: txt.bodyText2,
+                            Flexible(
+                              child: Text(
+                                restaurant.items.length.toStringAsFixed(0) +
+                                    ' ${lang.strings["customer"]["restaurant"]["menu"]["items"]}',
+                                style: txt.bodyText2,
+                              ),
                             )
                           ],
                         ),
@@ -90,7 +93,7 @@ class RestaurantCard extends StatelessWidget {
   Container mezRestuarntCardImage(LanguageController lang) {
     ///responsible for the image of restaurant
     return Container(
-      width: 150.w,
+      width: 35.w,
       height: double.infinity,
       child: ClipRRect(
         borderRadius: BorderRadius.only(
@@ -100,7 +103,7 @@ class RestaurantCard extends StatelessWidget {
         child: Stack(
           children: [
             Container(
-              height: 125,
+              height: double.infinity,
               width: 150.w,
               child: CachedNetworkImage(
                 imageUrl: restaurant.photo,
@@ -115,7 +118,7 @@ class RestaurantCard extends StatelessWidget {
               ),
             ),
             Container(
-              height: 125,
+              height: double.infinity,
               width: 150.w,
               color: checkRestaurantAvailability(schedule: restaurant.schedule)
                   ? null

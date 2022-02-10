@@ -30,7 +30,7 @@ class SavedLocationBody extends StatelessWidget {
                       lang.strings["customer"]["savedLocations"]["title"],
                       style: txt.headline1!
                           .copyWith(fontWeight: FontWeight.w700, fontSize: 12),
-                      textAlign: TextAlign.left),
+                      textAlign: TextAlign.center),
                 ),
                 Spacer(),
                 Container(
@@ -38,7 +38,7 @@ class SavedLocationBody extends StatelessWidget {
                       "${getLocationNumbers()} ${lang.strings["customer"]["savedLocations"]["location"]}${getLocationNumbers() > 1 ? 's' : ''}",
                       style: txt.headline4!
                           .copyWith(fontWeight: FontWeight.w700, fontSize: 12),
-                      textAlign: TextAlign.right),
+                      textAlign: TextAlign.center),
                 )
               ],
             ),

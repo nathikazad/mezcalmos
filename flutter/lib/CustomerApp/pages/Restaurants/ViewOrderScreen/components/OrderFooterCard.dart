@@ -57,7 +57,7 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                                           Text(
                                               '${lang.strings["customer"]["restaurant"]["checkout"]["cancelOrderConfirm"]}'),
                                           SizedBox(
-                                            height: 10.h,
+                                            height: 10,
                                           ),
                                           TextButton(
                                               onPressed: () async {

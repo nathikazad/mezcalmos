@@ -1,9 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/src/extension_instance.dart';
-import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/CustomerApp/components/Menu/UserMenuIcon.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
@@ -134,7 +131,7 @@ class _UserMenuState extends State<UserMenu> {
         SizedBox(
           width: 10,
         ),
-        Text(" Notification"),
+        Text(" ${lang.strings['admin']['notifs']['notifications']}"),
       ],
     );
   }
@@ -157,7 +154,7 @@ class _UserMenuState extends State<UserMenu> {
         SizedBox(
           width: 10,
         ),
-        Text(" Orders"),
+        Text(" ${lang.strings['admin']['orders']['orders']}"),
       ],
     );
   }

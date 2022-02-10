@@ -56,6 +56,8 @@
 	<string>App needs location when in use to update your Taxi Driver about your location</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>App need access to PhotoLibrary in order to change User's profile pictures.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>App Needs camera access in case the user wanted to change his/her profile picture directly using his iPhone's camera.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
@@ -70,14 +72,18 @@
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
-	<key>UISupportedInterfaceOrientations~ipad</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-</dict>
+
+
+ 	<key>CFBundlePrimaryIcon</key>
+	<dict>
+		<key>CFBundleIconFiles</key>
+		<array>
+			<string>AppIcon-<mez-app-type></string>
+		</array>
+		<key>UIPrerenderedIcon</key>
+		<false/>
+	</dict>
+ </dict>
 </plist>

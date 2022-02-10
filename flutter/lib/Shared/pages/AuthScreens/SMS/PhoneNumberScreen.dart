@@ -30,61 +30,78 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
   @override
   void initState() {
     _prefixTextFieldController..text = "+52";
+
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _prefixTextFieldController.dispose();
+    _numberTextFieldController.dispose();
+
+    super.dispose();
   }
 
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: Text(
           'Sign in',
           style: Theme.of(context).textTheme.headline2,
         ),
       ),
-      body: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 5,
-                ),
-                Obx(
-                  () => Container(
-                    padding: const EdgeInsets.all(16),
-                    child: Text(
+      bottomSheet: BottomSheet(
+          enableDrag: false,
+          backgroundColor: Colors.transparent,
+          onClosing: () {},
+          builder: (context) {
+            return SubmitButton(context);
+          }),
+      // bottomSheet: Theme(
+      //     data: Theme.of(context).copyWith(
 
-                        ///****add ths to lan file */
-                        lang.strings['shared']['login']["otpCode"],
-                        style: Theme.of(context).textTheme.headline1),
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                NumberInputCard(context),
-                Obx(
-                  () => Container(
-                    padding: EdgeInsets.only(left: 15, right: 15, top: 15),
-                    child: Text(
-                      lang.strings['shared']['login']["twilioNote"],
-                      style: Theme.of(context).textTheme.bodyText2,
-                    ),
-                  ),
-                ),
-              ],
+      //         bottomSheetTheme: BottomSheetThemeData(
+      //             backgroundColor: Colors.red,
+      //             modalBackgroundColor: Colors.red),
+      //         backgroundColor: Colors.transparent,
+      //         scaffoldBackgroundColor: Colors.transparent,
+      //         canvasColor: Colors.transparent),
+      //     child: SubmitButton(context)),
+      body: SingleChildScrollView(
+        reverse: true,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            SizedBox(
+              height: 5,
             ),
-          ),
-          Positioned(
-            bottom: MediaQuery.of(context).viewInsets.bottom,
-            left: 0,
-            right: 0,
-            child: SubmitButton(context),
-          ),
-        ],
+            Obx(
+              () => Container(
+                padding: const EdgeInsets.all(10),
+                child: Text(
+
+                    ///****add ths to lan file */
+                    lang.strings['shared']['login']["otpCode"],
+                    style: Theme.of(context).textTheme.headline1),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            NumberInputCard(context),
+            Obx(
+              () => Container(
+                padding: EdgeInsets.only(left: 15, right: 15, top: 15),
+                child: Text(
+                  lang.strings['shared']['login']["twilioNote"],
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -173,7 +190,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                           .textTheme
                           .headline1!
                           .copyWith(fontSize: 14, fontWeight: FontWeight.w500),
-                      autofocus: true,
+                      autofocus: false,
                       onChanged: (s) {
                         if (_prefixTextFieldController.text.length > 0 &&
                             _numberTextFieldController.text.length >= 8) {
@@ -241,12 +258,5 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
             )),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _prefixTextFieldController.dispose();
-    _numberTextFieldController.dispose();
-    super.dispose();
   }
 }
