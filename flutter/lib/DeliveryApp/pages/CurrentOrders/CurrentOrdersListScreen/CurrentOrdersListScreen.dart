@@ -24,7 +24,8 @@ class CurrentOrdersListScreen extends StatefulWidget {
 }
 
 class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
-  RxList<Order> orders = RxList.empty();
+  RxList<Order> currentOrders = RxList.empty();
+  RxList<Order> pastOrders = RxList.empty();
   OrderController orderController = Get.find<OrderController>();
   LanguageController lang = Get.find<LanguageController>();
   DeliveryAuthController _deliveryAuthController =
@@ -38,7 +39,13 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
 
   @override
   void initState() {
-    orders.value = orderController.currentOrders;
+    orderController.currentOrders.stream.listen((value) {
+      currentOrders.value = value;
+    });
+
+    orderController.pastOrders.stream.listen((value) {
+      pastOrders.value = value;
+    });
     // TODO: implement initState
     super.initState();
   }
@@ -61,6 +68,8 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                   //the rest of the View Body
 
                   viewBody(),
+                  Text('Past order ${orderController.pastOrders.length}'),
+                  Text('Current order ${orderController.currentOrders.length}'),
                 ])));
   }
 

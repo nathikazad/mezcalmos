@@ -24,7 +24,7 @@ class DeliveryAppTheme {
           titleTextStyle: TextStyle(
               fontFamily: "Poppins",
               fontWeight: FontWeight.w600,
-              fontSize: 18.sp,
+              fontSize: 17.sp,
               color: Colors.black),
           elevation: 0.2,
           centerTitle: true,
@@ -57,7 +57,7 @@ class DeliveryAppTheme {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         primary: Colors.white,
         backgroundColor: Color(0xFFAC59FC),
-        padding: EdgeInsets.all(2),
+        padding: EdgeInsets.all(5),
         textStyle: TextStyle(
           fontFamily: "Montserrat",
           fontWeight: FontWeight.w600,
@@ -99,28 +99,28 @@ class DeliveryAppTheme {
         headline1: TextStyle(
             fontFamily: "Poppins",
             fontWeight: FontWeight.w700,
-            fontSize: 20.sp,
+            fontSize: 18.sp,
             color: Colors.black),
         headline2: TextStyle(
             fontFamily: "Poppins",
             fontWeight: FontWeight.w600,
-            fontSize: 18.sp,
+            fontSize: 17.sp,
             color: Colors.black),
         headline3: TextStyle(
           fontFamily: "Montserrat",
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w600,
           fontSize: 16.sp,
           color: Colors.black,
         ),
         bodyText1: TextStyle(
             fontFamily: "Montserrat",
-            fontWeight: FontWeight.w400,
-            fontSize: 14.sp,
+            fontWeight: FontWeight.w600,
+            fontSize: 12.sp,
             color: Colors.black),
         bodyText2: TextStyle(
             fontFamily: "Nunito",
             fontWeight: FontWeight.w400,
-            fontSize: 13.sp,
+            fontSize: 11.sp,
             color: Colors.black),
         subtitle1: TextStyle(
             fontWeight: FontWeight.w400,

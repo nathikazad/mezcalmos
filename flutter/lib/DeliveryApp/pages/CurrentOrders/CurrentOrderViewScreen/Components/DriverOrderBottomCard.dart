@@ -1,14 +1,19 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/DeliveryApp/controllers/restaurantController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:sizer/sizer.dart';
 
-class DriverBottomOrderCard extends StatelessWidget {
-  final Order order;
-  const DriverBottomOrderCard({Key? key, required this.order})
-      : super(key: key);
+import '../../../../../Shared/models/Orders/RestaurantOrder.dart';
 
+class DriverBottomRestaurantOrderCard extends StatelessWidget {
+  final RestaurantOrder order;
+  DriverBottomRestaurantOrderCard({Key? key, required this.order})
+      : super(key: key);
+  RestaurantOrderController restaurantOrderController =
+      Get.find<RestaurantOrderController>();
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
@@ -22,7 +27,7 @@ class DriverBottomOrderCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                'Order status',
+                '${(order).status.toFirebaseFormatString()}',
                 style: textTheme.bodyText2,
               ),
               Divider(),
@@ -37,7 +42,7 @@ class DriverBottomOrderCard extends StatelessWidget {
                       children: [
                         Text(
                           _getOrderTitle(),
-                          style: textTheme.headline3,
+                          style: textTheme.headline3!.copyWith(fontSize: 13.sp),
                         ),
                         Row(
                           children: [
@@ -72,34 +77,40 @@ class DriverBottomOrderCard extends StatelessWidget {
               _orderFromToComponent(textTheme),
               Divider(),
               // Order bottom card footer component (to be refactored)
-              Flex(
-                direction: Axis.horizontal,
-                children: [
-                  Flexible(
-                      flex: 3,
+              if (order.inProcess())
+                Flex(
+                  direction: Axis.horizontal,
+                  children: [
+                    Flexible(
+                        flex: 3,
+                        child: TextButton(
+                            onPressed: () {
+                              restaurantOrderController
+                                  .finishRestaurantDelivery(order.orderId);
+                            },
+                            child: Container(
+                                alignment: Alignment.center,
+                                padding: EdgeInsets.all(8),
+                                child: Text('Confirm Pick-up')))),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Flexible(
+                      flex: 2,
                       child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            // TODO implement cancel function
+                          },
+                          style: TextButton.styleFrom(
+                              backgroundColor: Colors.redAccent),
                           child: Container(
                               alignment: Alignment.center,
-                              padding: EdgeInsets.all(10),
-                              child: Text('Confirm Pick-up')))),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Flexible(
-                    flex: 1,
-                    child: TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                            backgroundColor: Colors.redAccent),
-                        child: Container(
-                            alignment: Alignment.center,
-                            padding: EdgeInsets.all(10),
-                            child: Text('Cancel'))),
-                  ),
-                ],
-              ),
-              if (1 == 5)
+                              padding: EdgeInsets.all(8),
+                              child: Text('Cancel'))),
+                    ),
+                  ],
+                ),
+              if (order.status == RestaurantOrderStatus.Delivered)
                 Row(
                   children: [
                     Icon(
@@ -125,7 +136,7 @@ class DriverBottomOrderCard extends StatelessWidget {
                     ))
                   ],
                 ),
-              if (1 == 5)
+              if (order.status == RestaurantOrderStatus.CancelledByAdmin)
                 Row(
                   children: [
                     Icon(
@@ -151,7 +162,7 @@ class DriverBottomOrderCard extends StatelessWidget {
                     ))
                   ],
                 ),
-              if (1 == 5)
+              if (order.status == RestaurantOrderStatus.OnTheWay)
                 TextButton(
                     onPressed: () {},
                     child: Container(
@@ -165,7 +176,7 @@ class DriverBottomOrderCard extends StatelessWidget {
     );
   }
 
-  Column _orderFromToComponent(TextTheme textTheme) {
+  Widget _orderFromToComponent(TextTheme textTheme) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -173,15 +184,18 @@ class DriverBottomOrderCard extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 20,
-              backgroundImage:
-                  CachedNetworkImageProvider(order.serviceProvider!.image),
+              backgroundImage: CachedNetworkImageProvider(
+                  order.serviceProvider?.image ?? ''),
             ),
             SizedBox(
               width: 10,
             ),
             Column(
               children: [
-                Text(order.serviceProvider!.name),
+                Text(
+                  order.serviceProvider?.name ?? 'Restaunat',
+                  style: textTheme.bodyText1,
+                ),
               ],
             )
           ],
@@ -227,13 +241,13 @@ class DriverBottomOrderCard extends StatelessWidget {
       case OrderType.Restaurant:
         return Icon(
           Icons.food_bank,
-          size: 30.sp,
+          size: 40.sp,
           color: Theme.of(context).primaryColorLight,
         );
       case OrderType.Laundry:
         return Icon(
           Icons.food_bank,
-          size: 30.sp,
+          size: 40.sp,
           color: Theme.of(context).primaryColorLight,
         );
 

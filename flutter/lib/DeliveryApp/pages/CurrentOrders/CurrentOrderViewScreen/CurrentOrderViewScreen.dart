@@ -12,6 +12,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 
@@ -25,7 +26,7 @@ class CurrentOrderViewScreen extends StatefulWidget {
 class _ViewCurrentOrderScreenState extends State<CurrentOrderViewScreen> {
   MGoogleMapController mGoogleMapController = MGoogleMapController();
   LanguageController lang = Get.find<LanguageController>();
-  Order? order;
+  Rxn<Order> order = Rxn();
   OrderController controller = Get.find<OrderController>();
   StreamSubscription? _orderListener;
   DeliveryAuthController deliveryAuthAuthController =
@@ -33,32 +34,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderViewScreen> {
 
   @override
   void initState() {
-    // String orderId = Get.parameters['orderId']!;
-    // order = controller.currentOrders
-    //     .firstWhere((element) => element.orderId == orderId);
-
-    //   if (_orderSnapshot.inProcess()) {
-    //     // // populate the LatLngPoints from the encoded PolyLine String + SetState!
-    //     // mGoogleMapController.decodeAndAddPolyline(
-    //     //     encodedPolylineString: _orderSnapshot.routeInformation.polyline);
-    //     // mGoogleMapController.setLocation(_orderSnapshot.from);
-    //     // // mGoogleMapController.setLocation(Location(
-    //     // //     "CurrentLocation",
-    //     // //     LocationLibrary.LocationData.fromMap({
-    //     // //       "latitude": _orderSnapshot.driver!.location!.latitude,
-    //     // //       "longitude": _orderSnapshot.driver!.location!.longitude
-    //     // //     })));
-    //     // // handle OrderStatus first time (since this.order will be null)!
-    //     // updateOrder(orderStreamEvent: _orderSnapshot);
-    //     // // set InitialPosition
-    //     // if (order?.driver?.location != null)
-    //     //   mGoogleMapController.moveToNewLatLng(
-    //     //       order!.driver!.location!.latitude,
-    //     //       order!.driver!.location!.longitude);
-
-    mezDbgPrint("Inside _ViewCurrentOrderScreenState::InitState");
     String orderId = Get.parameters['orderId']!;
-    mezDbgPrint("orderId :: $orderId");
 
     controller.clearOrderNotifications(orderId);
     // we need the first snapshot seprated !
@@ -69,41 +45,32 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderViewScreen> {
       // TODO ORDERNOTAVAILABLEANYMORE DIALOGUE
       Get.back();
     } else {
-      if (_orderSnapshot.inProcess()) {
-        // // populate the LatLngPoints from the encoded PolyLine String + SetState!
-        // mGoogleMapController.decodeAndAddPolyline(
-        //     encodedPolylineString: _orderSnapshot.routeInformation.polyline);
-        // mGoogleMapController.setLocation(_orderSnapshot.from);
-        // // mGoogleMapController.setLocation(Location(
-        // //     "CurrentLocation",
-        // //     LocationLibrary.LocationData.fromMap({
-        // //       "latitude": _orderSnapshot.driver!.location!.latitude,
-        // //       "longitude": _orderSnapshot.driver!.location!.longitude
-        // //     })));
-        // // handle OrderStatus first time (since this.order will be null)!
-        // updateOrder(orderStreamEvent: _orderSnapshot);
-        // // set InitialPosition
-        // if (order?.driver?.location != null)
-        //   mGoogleMapController.moveToNewLatLng(
-        //       order!.driver!.location!.latitude,
-        //       order!.driver!.location!.longitude);
-
-        // Listener
-        _orderListener =
-            controller.getCurrentOrderStream(orderId).listen((event) {
-          if (event != null) {
-            order = event;
-            // updateOrder(orderStreamEvent: order);
-          } else {
-            cancelOrderSubscription();
-            controller.getPastOrderStream(orderId).listen((order) {
-              if (order != null) {
-                // updateOrder(orderStreamEvent: order);
-              }
-            });
-            // this will get the order inCase it moved to /past
-          }
-        });
+      order.value = controller.getOrder(orderId);
+      if (order.value == null) {
+        Get.back();
+      } else {
+        if (true) {
+          _orderListener =
+              controller.getCurrentOrderStream(orderId).listen((event) {
+            mezDbgPrint('Eveent eveent =======>   ${event}');
+            if (event != null) {
+            } else {
+              _orderListener?.cancel();
+              _orderListener = null;
+              controller.getPastOrderStream(orderId).listen((event) {
+                if (event != null) {
+                  mezDbgPrint("the past order is ========== $event ==========");
+                  order.value = event;
+                } else {
+                  mezDbgPrint(
+                      "the past order is ========== 'empty' ==========");
+                }
+              });
+              //order.value = controller.getOrder(orderId);
+            }
+          });
+        }
+        mezDbgPrint("=========> ${order.value}");
       }
     }
     super.initState();
@@ -111,7 +78,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderViewScreen> {
 
   @override
   void dispose() {
-    // cancelOrderSubscription();
+    cancelOrderSubscription();
     super.dispose();
   }
 
@@ -122,29 +89,42 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderViewScreen> {
     return WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
-          key: Get.find<SideMenuDrawerController>().getNewKey(),
-          drawer: MezSideMenu(),
-          backgroundColor: Colors.white,
-          appBar: DeliveryAppBar(AppBarLeftButtonType.Back),
-          body: Obx(
-            () => order != null
-                //  && this.mGoogleMapController.location.value != null
-                ? Stack(alignment: Alignment.topCenter, children: [
-                    DriverOrderMapComponent(order: order!),
-                    DriverBottomOrderCard(order: order!)
-                    // MGoogleMap(
-                    //   mGoogleMapController: this.mGoogleMapController,
-                    //   myLocationButtonEnabled: false,
-                    //   debugString: "CurrentOrderScreen",
-                    // ),
-                    // CurrentPositionedBottomBar(order!),
-                    // CurrentPositionedFromToTopBar(order!),
-                  ])
-                : MezLogoAnimation(
+            key: Get.find<SideMenuDrawerController>().getNewKey(),
+            drawer: MezSideMenu(),
+            backgroundColor: Colors.white,
+            appBar: DeliveryAppBar(AppBarLeftButtonType.Back),
+            body: Obx(
+              () {
+                if (order != null
+                    //  && this.mGoogleMapController.location.value != null
+                    ) {
+                  return Stack(alignment: Alignment.topCenter, children: [
+                    DriverOrderMapComponent(order: order.value!),
+                    (order.value!.orderType == OrderType.Restaurant)
+                        ? DriverBottomRestaurantOrderCard(
+                            order: order.value as RestaurantOrder)
+                        : SizedBox()
+                  ]);
+                } else {
+                  return MezLogoAnimation(
                     centered: true,
-                  ),
-          ),
-        )); // no need for obx here.
+                  );
+                }
+                // return Stack(alignment: Alignment.topCenter, children: [
+                // DriverOrderMapComponent(order: order.value!),
+                // (order.value!.orderType == OrderType.Restaurant)
+                //     ? DriverBottomRestaurantOrderCard(
+                //         order: order.value as RestaurantOrder)
+                //     : SizedBox()
+                // MGoogleMap(
+                //   mGoogleMapController: this.mGoogleMapController,
+                //   myLocationButtonEnabled: false,
+                //   debugString: "CurrentOrderScreen",
+                // ),
+                // CurrentPositionedBottomBar(order!),
+                // CurrentPositionedFromToTopBar(order!),
+              },
+            ))); // no need for obx here.
   }
 
   void cancelOrderSubscription() {

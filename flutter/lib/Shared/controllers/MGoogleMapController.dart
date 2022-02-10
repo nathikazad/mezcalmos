@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:sizer/sizer.dart';
+//import 'package:sizer/sizer.dart';
 
 class MGoogleMapController {
   RxSet<Polyline> polylines = <Polyline>{}.obs;
