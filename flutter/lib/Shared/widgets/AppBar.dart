@@ -38,7 +38,6 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
   return AppBar(
     toolbarHeight: 80,
     elevation: 0,
-    bottom: tabbar,
     automaticallyImplyLeading: false,
     title: Container(
       // width: Get.width,
