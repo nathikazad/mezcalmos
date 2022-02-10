@@ -11,8 +11,9 @@ class HomeFooterButtons extends StatelessWidget {
   HomeFooterButtons({
     Key? key,
   }) : super(key: key);
-  LanguageController i18n = Get.find<LanguageController>();
-
+  LanguageController langController = Get.find<LanguageController>();
+  dynamic _i18n = Get.find<LanguageController>().strings['CustomerApp']
+      ['components']['CustomerHomeFooterButtons'];
   @override
   Widget build(BuildContext context) {
     final txt = Theme.of(context).textTheme;
@@ -23,7 +24,7 @@ class HomeFooterButtons extends StatelessWidget {
           Flexible(
             child: InkWell(
               onTap: () {
-                i18n.changeUserLanguage();
+                langController.changeUserLanguage();
               },
               child: Ink(
                 padding: EdgeInsets.all(12),
@@ -36,12 +37,12 @@ class HomeFooterButtons extends StatelessWidget {
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           image: DecorationImage(
-                              image: AssetImage(i18n.oppositFlag))),
+                              image: AssetImage(langController.oppositFlag))),
                     ),
                     SizedBox(
                       width: 10,
                     ),
-                    Text(i18n.oppositToLang, style: txt.bodyText2),
+                    Text(langController.oppositToLang, style: txt.bodyText2),
                   ],
                 ),
               ),
@@ -70,8 +71,7 @@ class HomeFooterButtons extends StatelessWidget {
                       flex: 1,
                       fit: FlexFit.loose,
                       child: Text(
-                        i18n.strings['customerApp']['components']
-                            ['CustomerHomeFooterButtons']["privacyPolicy"],
+                        _i18n["privacyPolicy"],
                         style: txt.bodyText2,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,

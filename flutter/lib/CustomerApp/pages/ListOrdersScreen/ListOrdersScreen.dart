@@ -20,6 +20,9 @@ import 'components/TaxiOrderOngoingCard.dart';
 final f = new DateFormat('MM.dd.yyyy');
 final currency = new NumberFormat("#,##0.00", "en_US");
 
+dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+    ["ListOrdersScreen"]["ListOrdersScreen"];
+
 class ListOrdersScreen extends StatefulWidget {
   @override
   _ListOrdersScreen createState() => _ListOrdersScreen();
@@ -49,7 +52,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
     final txt = Theme.of(context).textTheme;
     return Scaffold(
       appBar: CustomerAppBar(
-        title: '${i18n.strings["customer"]["orders"]["title"]}',
+        title: '${_i18n["title"]}',
         autoBack: true,
       ),
       body: Obx(
@@ -187,7 +190,6 @@ class OngoingOrderList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LanguageController lang = Get.find<LanguageController>();
     return Container(
       color: Colors.green.withOpacity(0.3),
       padding: const EdgeInsets.symmetric(horizontal: 8),

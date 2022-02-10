@@ -1,8 +1,14 @@
 {
-  "customerApp": {
+  "CustomerApp": {
     "components": {
       "Menu": {
-        "UserMenuComponent": {}
+        "UserMenuComponent": {
+          "savedLocations": "Saved Locations",
+          "userInfo": "User Information",
+          "logout": "Logout",
+          "notifications": "Notifications",
+          "orders": "Orders"
+        }
       },
       "CustomerHomeFooterButtons": {
         "privacyPolicy": "Privacy policy"
@@ -23,12 +29,33 @@
     "pages": {
       "ListOrdersScreen": {
         "components": {
-          "RestaurantOngoingOrderCard": {},
-          "RestaurantPastOrderCard": {},
-          "TaxiOrderOngoingCard": {},
-          "TaxiPastOrderCard": {}
+          "RestaurantOngoingOrderCard": {
+            "totalCost": "Total Cost"
+          },
+          "RestaurantPastOrderCard": {
+            "totalCost": "Total Cost"
+          },
+          "TaxiOrderOngoingCard": {
+            "taxiOrder": "Taxi order",
+            "totalCost": "Total Cost",
+            "orderStatus": {
+              "canceledByTaxi": "Cancelled",
+              "canceledByCustomer": "Cancelled",
+              "onTheWay": "Taxi on the way",
+              "lookingForTaxi": "Looking for Taxi",
+              "inTransit": "Taxi in transit",
+              "droppedOff": "Dropped off",
+              "expired": "Expired"
+            }
+          },
+          "TaxiPastOrderCard": {
+            "taxiOrder": "Taxi order",
+            "totalCost": "Total Cost"
+          }
         },
-        "ListOrdersScreen": {}
+        "ListOrdersScreen": {
+          "title": "Orders"
+        }
       },
       "PickLocationScreen": {
         "PickLocationView": {}
