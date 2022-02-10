@@ -26,11 +26,8 @@ class ListOrdersScreen extends StatefulWidget {
 }
 
 class _ListOrdersScreen extends State<ListOrdersScreen> {
-  LanguageController _lang = Get.find<LanguageController>();
-  OrderController controller = Get.put(OrderController());
-
   LanguageController lang = Get.find<LanguageController>();
-
+  OrderController controller = Get.put(OrderController());
   AuthController auth = Get.find<AuthController>();
 
   @override

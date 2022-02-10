@@ -34,6 +34,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
       SearchComponentType.From.obs;
   Rx<TaxiRequest> taxiRequest = TaxiRequest().obs;
   TaxiController controller = Get.put<TaxiController>(TaxiController());
+  LanguageController lang = Get.find<LanguageController>();
   final LocationPickerController locationPickerController =
       LocationPickerController();
   final LocationSearchBarController locationSearchBarController =
@@ -232,7 +233,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
     } else {
       MezSnackbar(
           "Oops :(",
-          Get.find<LanguageController>().strings['customer']['taxiView']
+          lang.strings['customer']['taxiView']
               ['failedToRequestTaxi'],
           position: SnackPosition.TOP);
       this.locationPickerController.showConfirmButton();
@@ -290,7 +291,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
     return [
       MezToolTipHint(
         hintWidget: RidePriceControllHint(
-          hintText: Get.find<LanguageController>().strings['customer']
+          hintText: lang.strings['customer']
               ['taxiView']['taxiRequestPriceTooltip'],
         ),
         left: 80.1,

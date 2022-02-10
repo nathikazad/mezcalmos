@@ -30,7 +30,7 @@ class CustomerWrapper extends StatefulWidget {
 
 class _CustomerWrapperState extends State<CustomerWrapper>
     with WidgetsBindingObserver {
-  LanguageController lang = Get.find<LanguageController>();
+  LanguageController i18n = Get.find<LanguageController>();
   AuthController auth = Get.find<AuthController>();
   OrderController? _orderController;
   DateTime? appClosedTime;
@@ -174,7 +174,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
       alignment: Alignment.centerLeft,
       child: Obx(
         () => Text(
-          "${lang.strings['customer']['home']['welcomeText']}",
+          "${i18n.strings['pages']['customerApp']['customerWrapper']['welcomeText']}",
           style: textStyle,
           textAlign: TextAlign.left,
         ),
@@ -186,7 +186,8 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     return Container(
       margin: EdgeInsets.all(5),
       child: Obx(
-        () => Text("${lang.strings['customer']['home']['appDescription']}",
+        () => Text(
+            "${i18n.strings['pages']['customerApp']['customerWrapper']['appDescription']}",
             style: textStyle),
       ),
     );
@@ -198,7 +199,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
       margin: const EdgeInsets.all(5),
       child: Obx(
         () => Text(
-          "${lang.strings['customer']['home']['services']}",
+          "${i18n.strings['pages']['customerApp']['customerWrapper']['services']}",
           style: textStyle,
           textAlign: TextAlign.left,
         ),
@@ -212,9 +213,11 @@ class _CustomerWrapperState extends State<CustomerWrapper>
         //====================Taxi===================
         Obx(
           () => ServicesCard(
-            title: "${lang.strings['customer']['home']['taxi']["title"]}",
+            title:
+                "${i18n.strings['pages']['customerApp']['customerWrapper']['taxi']["title"]}",
             url: "assets/images/customer/taxi/taxiService.png",
-            subtitle: "${lang.strings['customer']['home']['taxi']["subtitle"]}",
+            subtitle:
+                "${i18n.strings['pages']['customerApp']['customerWrapper']['taxi']["subtitle"]}",
             ontap: () {
               if (Get.find<AuthController>().fireAuthUser == null) {
                 Get.toNamed(kTaxiRequestRoute);
@@ -228,9 +231,11 @@ class _CustomerWrapperState extends State<CustomerWrapper>
         //==================Food====================
         Obx(
           () => ServicesCard(
-            title: "${lang.strings['customer']['home']['food']["title"]}",
+            title:
+                "${i18n.strings['pages']['customerApp']['customerWrapper']['food']["title"]}",
             url: "assets/images/customer/restaurants/restaurantService.png",
-            subtitle: "${lang.strings['customer']['home']['food']["subtitle"]}",
+            subtitle:
+                "${i18n.strings['pages']['customerApp']['customerWrapper']['food']["subtitle"]}",
             ontap: () {
               if (auth.fireAuthUser != null) {
                 List<Order> restaurantOrders = Get.find<OrderController>()
@@ -256,7 +261,8 @@ class _CustomerWrapperState extends State<CustomerWrapper>
         //==================Laundry=================
         Obx(
           () => ServicesCard(
-            title: "${lang.strings['customer']['home']['laundry']["title"]}",
+            title:
+                "${i18n.strings['pages']['customerApp']['customerWrapper']['laundry']["title"]}",
             url: "assets/images/customer/laundryService.png",
           ),
         ),

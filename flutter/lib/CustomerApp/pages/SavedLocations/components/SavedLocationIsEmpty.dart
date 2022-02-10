@@ -5,9 +5,10 @@ import 'package:sizer/sizer.dart';
 
 class SavedlocationISEmpty extends StatelessWidget {
   const SavedlocationISEmpty({Key? key}) : super(key: key);
-
+  
   @override
   Widget build(BuildContext context) {
+    LanguageController lang = Get.find<LanguageController>();
     final txt = Theme.of(context).textTheme;
     return Container(
       child: Column(
@@ -27,7 +28,7 @@ class SavedlocationISEmpty extends StatelessWidget {
           Container(
             child: Text(
               //customer.savedLocations.savedLocationsListEmpty
-              Get.find<LanguageController>().strings['customer']
+              lang.strings['customer']
                   ['savedLocations']['savedLocationsListEmpty'],
               textAlign: TextAlign.center,
               style: txt.headline2!.copyWith(
@@ -41,7 +42,7 @@ class SavedlocationISEmpty extends StatelessWidget {
           ),
           Container(
             child: Text(
-              Get.find<LanguageController>().strings['customer']
+              lang.strings['customer']
                   ['savedLocations']['clickBtnToAddNewLocation'],
               textAlign: TextAlign.center,
               style: txt.subtitle1!

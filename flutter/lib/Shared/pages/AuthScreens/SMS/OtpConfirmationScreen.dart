@@ -237,7 +237,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                     case false:
                       MezSnackbar(
                           "Oops ..",
-                          Get.find<LanguageController>().strings['shared']
+                          lang.strings['shared']
                               ['login']['wrongOTPCode']);
                       clickedSignInOtp.value = false;
                       break;

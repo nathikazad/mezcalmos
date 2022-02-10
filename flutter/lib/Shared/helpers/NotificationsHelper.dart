@@ -24,6 +24,7 @@ StreamSubscription<notifs.Notification> initializeShowNotificationsListener() {
 }
 
 void _displayNotification(notifs.Notification notification) async {
+  LanguageController lang = Get.find<LanguageController>();
   await Get.find<SettingsController>().playNotificationSound();
   // mezDbgPrint(notification.imgUrl);
   if (notification.notificationAction == notifs.NotificationAction.ShowPopUp) {
@@ -36,7 +37,7 @@ void _displayNotification(notifs.Notification notification) async {
             buttonShadowColor: Color(0xfffdfdfd)),
         buttonRightStyle: MezDialogButtonStyle(
             buttonText: notification.linkText ??
-                Get.find<LanguageController>().strings['shared']['notification']
+                lang.strings['shared']['notification']
                     ['view'],
             buttonColor: Color(0xffffffff),
             buttonShadowColor: Color(0xfffdfdfd)),

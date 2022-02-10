@@ -75,7 +75,7 @@ class LocationPicker extends StatefulWidget {
 enum BottomButtomToShow { Pick, Confirm, GrayedOut, Loading }
 
 class LocationPickerState extends State<LocationPicker> {
-  final LanguageController _lang = Get.find<LanguageController>();
+  final LanguageController i18n = Get.find<LanguageController>();
   Location? location;
   bool userTaped = false;
 
@@ -134,20 +134,22 @@ class LocationPickerState extends State<LocationPicker> {
     switch (widget.locationPickerMapController._bottomButtomToShow.value) {
       case BottomButtomToShow.Pick:
         return buildBottomButton(
-          _lang.strings["shared"]["pickLocation"]["pick"],
+          i18n.strings["customerApp"]["components"]["LocationPicker"]["pick"],
           notifier: widget.notifyParentOfLocationFinalized,
           // onPress: showGrayedOutButton
         );
       case BottomButtomToShow.Confirm:
         if (Get.find<AuthController>().fireAuthUser != null) {
           return buildBottomButton(
-              _lang.strings['shared']['buttonsTexts']['confirm']
+              i18n.strings["customerApp"]["components"]["LocationPicker"]
+                      ['confirm']
                   .toString()
                   .capitalize,
               notifier: widget.notifyParentOfConfirm);
         } else {
           return buildBottomButton(
-              _lang.strings["shared"]["login"]["signInToMakeOrder"],
+              i18n.strings["customerApp"]["components"]["LocationPicker"]
+                  ["signInToMakeOrder"],
               notifier: (_) async {
             await Get.toNamed(kSignInRouteOptional);
             // call back in case User was signedOut and he signedIn before confirming his Order Successfully!
@@ -161,7 +163,7 @@ class LocationPickerState extends State<LocationPicker> {
         );
       case BottomButtomToShow.GrayedOut:
         return buildBottomButton(
-          _lang.strings['shared']['buttonsTexts']['confirm']
+          i18n.strings["customerApp"]["components"]["LocationPicker"]['confirm']
               .toString()
               .capitalize,
         );
@@ -256,7 +258,8 @@ class LocationPickerState extends State<LocationPicker> {
             ),
             Expanded(
               child: Text(
-                _lang.strings["shared"]["inputLocation"]["moveMapIfNotPrecise"],
+                i18n.strings["customerApp"]["components"]["LocationPicker"]
+                    ["moveMapIfNotPrecise"],
                 // "You can move the map if position is not precise.",
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,

@@ -65,7 +65,7 @@ class LocationSearchComponent extends StatefulWidget {
 
 class LocationSearchComponentState extends State<LocationSearchComponent> {
   TextEditingController _controller = TextEditingController();
-  final LanguageController _lang = Get.find<LanguageController>();
+  final LanguageController lang = Get.find<LanguageController>();
 
   // bool isTfEnabled = true;
   bool _showClearBtn = false;
@@ -172,7 +172,7 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
                   },
                   tfTextDecoration: InputDecoration(
                       contentPadding: widget.hintPadding,
-                      hintText: Get.find<LanguageController>().strings["shared"]
+                      hintText: lang.strings["shared"]
                           ["placeHolders"]["address"],
                       hintStyle: TextStyle(
                           color: Color.fromRGBO(141, 141, 141, 1),

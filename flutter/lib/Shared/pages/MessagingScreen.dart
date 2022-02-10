@@ -45,7 +45,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
   }
 
   AuthController _authController = Get.find<AuthController>();
-  LanguageController _languageController = Get.find<LanguageController>();
+  LanguageController lang = Get.find<LanguageController>();
 
   TextEditingController _textEditingController = new TextEditingController();
   ScrollController _listViewScrollController = new ScrollController();
@@ -212,7 +212,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
               SendMessageBox(
                   typedMsg: _typedMsg,
                   textEditingController: _textEditingController,
-                  languageController: _languageController,
+                  languageController: lang,
                   controller: controller,
                   orderId: orderId)
             ],

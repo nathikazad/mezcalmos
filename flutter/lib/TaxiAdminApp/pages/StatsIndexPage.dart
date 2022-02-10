@@ -16,7 +16,7 @@ import 'package:mezcalmos/TaxiAdminApp/pages/Orders/OrdersFulfillmentOnMonthPage
 import 'Orders/OrderViewPage.dart';
 
 class StatsIndexPage extends GetView {
-  LanguageController lng = Get.find<LanguageController>();
+  LanguageController lang = Get.find<LanguageController>();
   AuthController authController = Get.find<AuthController>();
   @override
   Widget build(BuildContext context) {
@@ -82,7 +82,7 @@ class StatsIndexPage extends GetView {
             OutlinedButton(
                 child: Text("Langauge"),
                 onPressed: () {
-                  lng.changeUserLanguage();
+                  lang.changeUserLanguage();
                 }),
           ],
         ),

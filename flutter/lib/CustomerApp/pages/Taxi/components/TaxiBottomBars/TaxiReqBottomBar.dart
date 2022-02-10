@@ -15,7 +15,7 @@ class TaxiReqBottomBar extends StatefulWidget {
 }
 
 class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
-  final LanguageController _lang = Get.find<LanguageController>();
+  final LanguageController lang = Get.find<LanguageController>();
   @override
   Widget build(BuildContext context) {
     return Positioned(
@@ -57,7 +57,7 @@ class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
               child: IconButton(
                 iconSize: 13.sp,
                 splashRadius: 18,
-                tooltip: _lang.strings['customer']['taxiView']['decreasePrice'],
+                tooltip: lang.strings['customer']['taxiView']['decreasePrice'],
                 padding: EdgeInsets.zero,
                 onPressed: () {
                   widget.taxiRequest.decrementPrice();
@@ -80,7 +80,7 @@ class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
               child: IconButton(
                 iconSize: 13.sp,
                 splashRadius: 18,
-                tooltip: _lang.strings['customer']['taxiView']['increasePrice'],
+                tooltip: lang.strings['customer']['taxiView']['increasePrice'],
                 padding: EdgeInsets.zero,
                 onPressed: () {
                   widget.taxiRequest.incrementPrice();

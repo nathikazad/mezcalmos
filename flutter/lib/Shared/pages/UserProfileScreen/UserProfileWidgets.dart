@@ -12,7 +12,7 @@ import 'package:sizer/sizer.dart';
 class UserProfileWidgetsClass {
   // Singleton
   final UserProfileController userProfileController;
-  final LanguageController _lang = Get.find<LanguageController>();
+  final LanguageController lang = Get.find<LanguageController>();
   UserProfileWidgetsClass({required this.userProfileController});
 
   /// this holds the Main body parts.
@@ -99,7 +99,7 @@ class UserProfileWidgetsClass {
                   ),
                   SizedBox(height: 5),
                   Text(
-                    _lang.strings['shared']['userInfo']['uploadPic'],
+                    lang.strings['shared']['userInfo']['uploadPic'],
                     style: TextStyle(color: Colors.white, fontSize: 11.sp),
                   )
                 ],
@@ -124,7 +124,7 @@ class UserProfileWidgetsClass {
       flex: 1,
       child: Center(
           child: Text(
-        _lang.strings['shared']['userInfo']['title'],
+        lang.strings['shared']['userInfo']['title'],
         style: TextStyle(fontSize: 30),
       )),
     );
@@ -268,7 +268,7 @@ class UserProfileWidgetsClass {
             // width: Get.width - 100,
             child: Center(
                 child: Text(
-              _lang.strings['shared']['userInfo']['cancel'],
+              lang.strings['shared']['userInfo']['cancel'],
               style: TextStyle(fontSize: 12.sp, color: Colors.purple.shade400),
             )),
           ),
@@ -288,7 +288,7 @@ class UserProfileWidgetsClass {
         // width: Get.width - 100,
         child: Center(
             child: Text(
-          _lang.strings['shared']['userInfo']['editInfo'],
+          lang.strings['shared']['userInfo']['editInfo'],
           style: TextStyle(color: Colors.white, fontSize: 15.sp),
         )),
       ),
@@ -305,7 +305,7 @@ class UserProfileWidgetsClass {
                 }
               : () {
                   MezSnackbar("Oops",
-                      _lang.strings['shared']['userInfo']['noChangesToApply'],
+                      lang.strings['shared']['userInfo']['noChangesToApply'],
                       position: SnackPosition.TOP);
                 },
           child: Container(
@@ -322,7 +322,7 @@ class UserProfileWidgetsClass {
             child: Center(
                 child: !clickedSave
                     ? Text(
-                        _lang.strings['shared']['userInfo']['saveBtn'],
+                        lang.strings['shared']['userInfo']['saveBtn'],
                         style: TextStyle(
                             fontSize: 12.sp,
                             color: userProfileController.didUserChangedInfos()

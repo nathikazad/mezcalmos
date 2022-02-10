@@ -35,7 +35,7 @@ class _PickLocationViewState extends State<PickLocationView> {
   SavedLocation? savedLocation;
   bool showScreenLoading = false;
 
-  LanguageController _lang = Get.find<LanguageController>();
+  LanguageController lang = Get.find<LanguageController>();
   CustomerAuthController customerAuthController =
       Get.find<CustomerAuthController>();
 
@@ -91,7 +91,7 @@ class _PickLocationViewState extends State<PickLocationView> {
                 function: () async => await onPickButtonClick(context),
                 widget: Center(
                     child: Text(
-                        _lang.strings["customer"]["pickLocation"]
+                        lang.strings["customer"]["pickLocation"]
                             ["pickLocation"],
                         style: Theme.of(context)
                             .textTheme
@@ -109,7 +109,7 @@ class _PickLocationViewState extends State<PickLocationView> {
         resizeToAvoidBottomInset: false,
         appBar: CustomerAppBar(
           autoBack: true,
-          title: _lang.strings["customer"]["pickLocation"]["pickLocation"],
+          title: lang.strings["customer"]["pickLocation"]["pickLocation"],
         ),
         body: mezPickLocationViewBody());
   }
@@ -209,7 +209,7 @@ class _PickLocationViewState extends State<PickLocationView> {
           Container(
             margin: const EdgeInsets.all(8),
             child:
-                Text(_lang.strings["customer"]["pickLocation"]["pickLabele"]),
+                Text(lang.strings["customer"]["pickLocation"]["pickLabele"]),
           ),
 
           Container(

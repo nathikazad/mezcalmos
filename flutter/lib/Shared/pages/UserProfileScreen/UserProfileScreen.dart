@@ -42,7 +42,7 @@ class _UserProfileState extends State<UserProfile> {
   AuthController _authController = Get.find<AuthController>();
   RxBool isUploadingImg = false.obs;
   RxBool clickedSave = false.obs;
-
+  LanguageController lang = Get.find<LanguageController>();
   @override
   void initState() {
     widget.userProfileController.initSetup();
@@ -90,7 +90,7 @@ class _UserProfileState extends State<UserProfile> {
     if (!Get.find<AuthController>().isDisplayNameSet()) {
       _hints.add(MezToolTipHint(
         hintWidget: NoUserNameSetHint(
-          hintText: Get.find<LanguageController>().strings['shared']['userInfo']
+          hintText: lang.strings['shared']['userInfo']
               ['mustSetUserNameHint'],
         ),
         left: Get.width / 2,
@@ -103,7 +103,7 @@ class _UserProfileState extends State<UserProfile> {
     if (!Get.find<AuthController>().isUserImgSet()) {
       _hints.add(MezToolTipHint(
         hintWidget: NoUserImageSetHint(
-          hintText: Get.find<LanguageController>().strings['shared']['userInfo']
+          hintText: lang.strings['shared']['userInfo']
               ['mustSetUserImgHint'],
         ),
         left: Get.width / 2,
@@ -143,7 +143,7 @@ class _UserProfileState extends State<UserProfile> {
       clickedSave.value = false;
     } else {
       widget.userProfileController.setErrorTextForXDuration(
-          Get.find<LanguageController>().strings['shared']['userInfo']
+          lang.strings['shared']['userInfo']
               ['wrongName'],
           duration: Duration(seconds: 5));
     }

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
 class RideReadByTaxisHint extends StatelessWidget {
-  final LanguageController _lang = Get.find<LanguageController>();
+  final LanguageController lang = Get.find<LanguageController>();
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class RideReadByTaxisHint extends StatelessWidget {
         ),
         Center(
           child: Text(
-            _lang.strings['customer']['taxiView']['taxiRideCheckedTooltip'],
+            lang.strings['customer']['taxiView']['taxiRideCheckedTooltip'],
             textAlign: TextAlign.center,
             softWrap: true,
             maxLines: 10,

@@ -23,7 +23,7 @@ class DriverPage extends GetView<DriverStatsController> {
 
   var notifsSwitcherIndex = 0.obs;
   final String idOrder;
-  LanguageController lng = Get.find<LanguageController>();
+  LanguageController lang = Get.find<LanguageController>();
 
   DriverPage(this.idOrder);
   Widget getDriverInfo(String driverId, int nbDays) {
@@ -108,28 +108,28 @@ class DriverPage extends GetView<DriverStatsController> {
               height: 25,
             ),
             InfoCardComponent(
-              title_0: lng.strings["admin"]["orders"]["orderId"],
+              title_0: lang.strings["admin"]["orders"]["orderId"],
               subTitle_0: "$idOrder",
-              title_0_1: lng.strings["admin"]["appVersion"],
+              title_0_1: lang.strings["admin"]["appVersion"],
               subTitle_0_1: (data[1]["appVersionNumber"] == null)
                   ? "Unknown"
                   : "${data[1]["appVersionNumber"]}",
-              title_1_0: lng.strings["admin"]["orders"]["totalOrders"],
+              title_1_0: lang.strings["admin"]["orders"]["totalOrders"],
               subTitle_1_0: "${data[2]["totalOrders"]}",
-              title_1_1: lng.strings["admin"]["orders"]["droppedOff"],
+              title_1_1: lang.strings["admin"]["orders"]["droppedOff"],
               subTitle_1_1: "${data[2]["droppedOff"]}",
-              title_2_0: lng.strings["admin"]["orders"]["firstOrder"],
+              title_2_0: lang.strings["admin"]["orders"]["firstOrder"],
               subTitle_2_0:
                   "${f.format(DateTime.parse("${data[2]["firstOrderTime"]}"))}",
-              title_2_1: lng.strings["admin"]["orders"]["lastOrder"],
+              title_2_1: lang.strings["admin"]["orders"]["lastOrder"],
               subTitle_2_1:
                   "${f.format(DateTime.parse("${data[2]["lastOrderTime"]}"))}",
-              title_3_0: lng.strings["admin"]["notifs"]["notifications"],
+              title_3_0: lang.strings["admin"]["notifs"]["notifications"],
               subTitle_3_0:
-                  "${lng.strings["admin"]["notifs"]["sent"]}:${data[2]["sentNotifications"]}",
-              subTitle_3_1: "${lng.strings["admin"]["notifs"]["received"]}:0",
+                  "${lang.strings["admin"]["notifs"]["sent"]}:${data[2]["sentNotifications"]}",
+              subTitle_3_1: "${lang.strings["admin"]["notifs"]["received"]}:0",
               subTitle_3_2:
-                  "${lng.strings["admin"]["notifs"]["read"]}:${data[2]["readNotifications"]}",
+                  "${lang.strings["admin"]["notifs"]["read"]}:${data[2]["readNotifications"]}",
             ),
             SizedBox(
               height: 25,
@@ -173,7 +173,7 @@ class DriverPage extends GetView<DriverStatsController> {
                               Container(
                                 padding: EdgeInsets.only(left: 10),
                                 child: Text(
-                                  lng.strings["admin"]["orders"]["orders"],
+                                  lang.strings["admin"]["orders"]["orders"],
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w700),
@@ -282,7 +282,7 @@ class DriverPage extends GetView<DriverStatsController> {
                               Container(
                                 padding: EdgeInsets.only(left: 10),
                                 child: Text(
-                                  lng.strings["admin"]["notifs"]
+                                  lang.strings["admin"]["notifs"]
                                       ["notifications"],
                                   style: TextStyle(
                                       fontSize: 16,

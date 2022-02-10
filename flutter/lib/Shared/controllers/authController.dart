@@ -24,7 +24,7 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class AuthController extends GetxController {
   fireAuth.FirebaseAuth _auth = fireAuth.FirebaseAuth.instance;
-
+  LanguageController lang = Get.find<LanguageController>();
   Function _onSignOutCallback;
   Function _onSignInCallback;
 
@@ -95,7 +95,7 @@ class AuthController extends GetxController {
           if (event.snapshot.value == null) return;
           if (event.snapshot.value['language'] == null) {
             event.snapshot.value['language'] =
-                Get.find<LanguageController>().userLanguageKey;
+                lang.userLanguageKey;
             _databaseHelper.firebaseDatabase
                 .reference()
                 .child(userLanguage(user.uid))
@@ -301,7 +301,7 @@ class AuthController extends GetxController {
     } catch (e) {
       MezSnackbar(
           "Oops ..",
-          Get.find<LanguageController>().strings['shared']['login']
+          lang.strings['shared']['login']
               ['failedOTPConfirmRequest']);
       print("Exception happend in GetAuthUsingOTP : $e");
     }

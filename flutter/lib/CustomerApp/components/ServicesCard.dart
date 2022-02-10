@@ -19,7 +19,7 @@ class ServicesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    LanguageController lang = Get.find<LanguageController>();
+    LanguageController i18n = Get.find<LanguageController>();
     return Card(
       margin: EdgeInsets.all(5),
       color: subtitle != null ? Colors.white : Colors.grey.shade300,
@@ -54,7 +54,7 @@ class ServicesCard extends StatelessWidget {
                       child: subtitle != null
                           ? Text("${subtitle}", style: textTheme.subtitle1)
                           : Text(
-                              "${lang.strings['customer']['home']['laundry']["subtitle"]}",
+                              "${i18n.strings["customerApp"]["components"]["ServicesCard"]["comingSoon"]}",
                               style: textTheme.subtitle1,
                             ),
                     )

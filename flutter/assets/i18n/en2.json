@@ -1,0 +1,94 @@
+{
+  "customerApp": {
+    "components": {
+      "CustomerHomeFooterButtons": {
+        "privacyPolicy": "Privacy policy"
+      },
+      "DropDownLocationList": {
+        "pickLocationPlaceHolder": "Pick from map"
+      },
+      "LocationPicker": {
+        "pick": "PICK",
+        "confirm": "confirm",
+        "signInToMakeOrder": "Sign in to make order",
+        "moveMapIfNotPrecise": "You can move the map if the location is not exact."
+      },
+      "ServicesCard": {
+        "comingSoon": "Comming soon ..."
+      },
+      "UserMenuComponent": {}
+    },
+    "pages": {
+      "Laundry": {
+        "Components": {
+          "LaundryLocPicker": {}
+        }
+      },
+      "customerWrapper": {
+        "welcomeText": "Welcome to MEZCALMOS 👋",
+        "appDescription": "Your one stop palce to find all your needed local services and where you can enjoy fast and hight quality services.",
+        "services": "Services",
+        "taxi": {
+          "subtitle": "Get the nearest taxi arrount and get your destinatiion asap .",
+          "title": "Taxi"
+        },
+        "food": {
+          "subtitle": "Discover most delicious dishes from the nearest restaurants .",
+          "title": "Food"
+        },
+        "laundry": {
+          "subtitle": "Comming soon ...",
+          "title": "Laundry"
+        },
+        "supportText": "need help ? Contact our support team"
+      }
+    },
+    "notificationHandler": {
+      "viewOrder": "View Order",
+      "restaurant": {
+        "preparingOrder": {
+          "body": "Your order is being prepared",
+          "title": "Preparing Order"
+        },
+        "readyForPickup": {
+          "body": "Your order is ready for pickup",
+          "title": "Ready For Pickup"
+        },
+        "onTheWay": {
+          "body": "Your order is on the way",
+          "title": "On the Way"
+        },
+        "delivered": {
+          "body": "Your order has been delivered",
+          "title": "Delivered"
+        },
+        "cancelled": {
+          "body": "Your order has been cancelled",
+          "title": "Order Cancelled"
+        }
+      },
+      "taxi": {
+        "onTheWay": {
+          "body": "Your taxi is on the way",
+          "title": "On the Way"
+        },
+        "inTransit": {
+          "body": "You are on the way to your destination",
+          "title": "In Transit"
+        },
+        "droppedOff": {
+          "body": "Your have reached your destination",
+          "title": "Reached"
+        },
+        "cancelled": {
+          "body": "Your order has been cancelled",
+          "title": "Order Cancelled"
+        },
+        "expired": {
+          "body": "Unfortunately, we could not find a taxi for you. Please try again later",
+          "title": "No taxis available"
+        }
+      }
+    }
+  }
+}

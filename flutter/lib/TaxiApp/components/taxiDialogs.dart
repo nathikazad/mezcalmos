@@ -8,13 +8,19 @@ Future<void> mezcalmosDialogWithTaxi({required String message}) =>
     oneButtonDialog(body: message, imagUrl: taxiImageAsset);
 
 Future<void>
-    mezcalmosDialogOrderNoMoreAvailable() async => mezcalmosDialogWithTaxi(
-        message: Get.find<LanguageController>().strings['taxi']['cancelOrder']
+    mezcalmosDialogOrderNoMoreAvailable() async {
+  LanguageController lang = Get.find<LanguageController>();
+  return mezcalmosDialogWithTaxi(
+      message: lang.strings['taxi']['cancelOrder']
             ['rideUnavailble']);
+}
 
 // THIS BELONGS TO TAXI
-Future<void> mezcalmosDialogOrderCancelled() async => mezcalmosDialogWithTaxi(
-    message: Get.find<LanguageController>().strings['taxi']['cancelOrder']
+Future<void> mezcalmosDialogOrderCancelled() {
+  LanguageController lang = Get.find<LanguageController>();
+  return mezcalmosDialogWithTaxi(
+      message: lang.strings['taxi']['cancelOrder']
         ['customerCancelled']);
+}
 
 

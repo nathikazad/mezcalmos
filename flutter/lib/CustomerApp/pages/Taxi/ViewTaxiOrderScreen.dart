@@ -35,7 +35,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
   Rxn<TaxiOrder> order = Rxn();
   StreamSubscription? _orderListener;
   final String toMarkerId = "to";
-  LanguageController _lang = Get.find<LanguageController>();
+  LanguageController lang = Get.find<LanguageController>();
   RxDouble bottomPadding =
       ((GetStorage().read(getxGmapBottomPaddingKey) as double) + 15.0).obs;
 
@@ -72,7 +72,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
               if (order.value!.status == TaxiOrdersStatus.CancelledByCustomer) {
                 Get.back();
                 oneButtonDialog(
-                    body: _lang.strings['shared']['snackbars']
+                    body: lang.strings['shared']['snackbars']
                         ['orderCancelSuccess'],
                     imagUrl: _order!.customer.image);
               }
@@ -252,8 +252,8 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
         child: InkWell(
           onTap: () async {
             YesNoDialogButton res = await yesNoDialog(
-                text: _lang.strings['customer']['cancelOrder']['title'],
-                body: _lang.strings['customer']['cancelOrder']['question']);
+                text: lang.strings['customer']['cancelOrder']['title'],
+                body: lang.strings['customer']['cancelOrder']['question']);
             if (res == YesNoDialogButton.Yes) {
               await Get.find<TaxiController>().cancelTaxi(order.value!.orderId);
             }
@@ -265,7 +265,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
                   borderRadius: BorderRadius.circular(10)),
               child: Center(
                 child: Text(
-                  _lang.strings['customer']['taxiView']['cancel'],
+                  lang.strings['customer']['taxiView']['cancel'],
                   style: TextStyle(
                       fontFamily: "psr",
                       color: Colors.white,
@@ -284,7 +284,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
     return [
       MezToolTipHint(
         hintWidget: RidePriceControllHint(
-            hintText: Get.find<LanguageController>().strings['customer']
+            hintText: lang.strings['customer']
                 ['taxiView']['taxiRidePriceTooltip']),
         left: 80.1,
         bottom: 150.5,

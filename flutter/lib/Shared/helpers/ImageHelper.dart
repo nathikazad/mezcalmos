@@ -65,6 +65,7 @@ Image showDefaultOrUserImg({Uint8List? memoryImg}) {
 
 Future<imPicker.ImageSource?> imagePickerChoiceDialog(
     BuildContext context) async {
+  LanguageController lang = Get.find<LanguageController>();
   imPicker.ImageSource? _result;
 
   await showDialog(
@@ -97,7 +98,7 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
                             Icons.camera_enhance,
                             color: Colors.white,
                           ),
-                          Text(Get.find<LanguageController>().strings['shared']
+                          Text(lang.strings['shared']
                               ['buttonsTexts']['camera'])
                         ],
                       ))),
@@ -122,7 +123,8 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
                             Icons.photo_library_outlined,
                             color: Colors.white,
                           ),
-                          Text(Get.find<LanguageController>().strings['shared']
+                          Text(
+                              lang.strings['shared']
                               ['buttonsTexts']['gallery'])
                         ],
                       ))),
@@ -137,6 +139,7 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
 Future<imPicker.XFile?> imagePicker(
     {required imPicker.ImagePicker picker,
     imPicker.ImageSource source = imPicker.ImageSource.gallery}) async {
+  LanguageController lang = Get.find<LanguageController>();
   try {
     return await picker.pickImage(
       source: source,
@@ -146,16 +149,16 @@ Future<imPicker.XFile?> imagePicker(
   } on PlatformException catch (exception) {
     if (exception.code == 'camera_access_denied') {
       MezSnackbar(
-          Get.find<LanguageController>().strings['shared']['permissions']
+          lang.strings['shared']['permissions']
               ['cameraAccessOffTitle'],
-          Get.find<LanguageController>().strings['shared']['permissions']
+          lang.strings['shared']['permissions']
               ['cameraAccessOffBody'],
           position: SnackPosition.TOP);
     } else if (exception.code == 'photo_access_denied') {
       MezSnackbar(
-          Get.find<LanguageController>().strings['shared']['permissions']
+          lang.strings['shared']['permissions']
               ['photoAccessOffTitle'],
-          Get.find<LanguageController>().strings['shared']['permissions']
+          lang.strings['shared']['permissions']
               ['photoAccessOffBody'],
           position: SnackPosition.TOP);
     } else {
