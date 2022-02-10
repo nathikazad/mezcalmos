@@ -103,10 +103,9 @@ class AuthController extends GetxController {
                     .userLanguageKey
                     .toFirebaseFormatString());
           }
-          _user.value = UserInfo.fromData(event.snapshot);
+          _user.value = UserInfo.fromData(event.snapshot.value);
           if (_user.value!.language != null)
-            Get.find<LanguageController>()
-                .setLanguage(_user.value!.language!);
+            Get.find<LanguageController>().setLanguage(_user.value!.language!);
         });
       }
     });
