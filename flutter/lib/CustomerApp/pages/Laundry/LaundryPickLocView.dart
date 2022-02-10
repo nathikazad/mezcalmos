@@ -66,7 +66,8 @@ class _LaundryPickLocViewState extends State<LaundryPickLocView> {
               }
             },
             child: Container(
-              child: Text('Pick Location'),
+              child: Text(
+                  '${lang.strings['customer']['pickLocation']['pickLocation']}'),
             )),
       ),
       body: Column(
@@ -78,8 +79,7 @@ class _LaundryPickLocViewState extends State<LaundryPickLocView> {
           ),
           Container(
             margin: const EdgeInsets.all(8),
-            child:
-                Text(lang.strings["customer"]["pickLocation"]["pickLabele"]),
+            child: Text(lang.strings["customer"]["pickLocation"]["pickLabele"]),
           ),
 
           Container(
@@ -92,8 +92,7 @@ class _LaundryPickLocViewState extends State<LaundryPickLocView> {
                 text: locationPickerController.location.value?.address,
                 onClear: () {},
                 notifyParent: (Location? location) {
-                  mezDbgPrint(
-                      "Ontap on suggestion  => ${location?.toJson()} ");
+                  mezDbgPrint("Ontap on suggestion  => ${location?.toJson()} ");
                   setState(() {
                     locationPickerController.setLocation(location!);
                     locationPickerController.moveToNewLatLng(

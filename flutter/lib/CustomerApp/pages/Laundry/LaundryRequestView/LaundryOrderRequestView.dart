@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
+import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
 import 'package:mezcalmos/CustomerApp/components/LocationPicker.dart';
 import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
 import 'package:mezcalmos/CustomerApp/models/LaundryRequest.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryRequestView/Components/LaundryStepsComponent.dart';
-import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -50,7 +50,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
               Container(
                 margin: const EdgeInsets.all(8),
                 child: Text(
-                  'How it works',
+                  '${lang.strings['customer']['laundry']['howItWorks']}',
                   style: Theme.of(context).textTheme.headline3,
                 ),
               ),
@@ -158,7 +158,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                 Flexible(
                     child: Text(
                         defaultLoc?.address ??
-                            lang.strings['customer']['pickLocation']
+                            lang.strings['shared']['pickLocation']
                                 ['noLocation'],
                         maxLines: 1)),
               ],
@@ -200,7 +200,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
             Flexible(
                 child: Text(
                     defaultLoc?.address ??
-                        lang.strings['customer']["pickLocation"]
+                        lang.strings['customer']['restaurant']['cart']
                             ['pickLocation'],
                     maxLines: 1)),
           ],
