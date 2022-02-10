@@ -89,8 +89,8 @@ class DriverSelectCard extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 30,
-              backgroundImage: CachedNetworkImageProvider(
-                  'https://img.search.brave.com/vGHu8Kl0WuK8nGfF9Mv7IT8S9qtZTNqB7QWXhO4pPo4/rs:fit:1000:667:1/g:ce/aHR0cHM6Ly9ibG9n/Lm1hc3MuZ292L3dw/LWNvbnRlbnQvdXBs/b2Fkcy8yMDE0LzA3/L0hhcHB5LURyaXZl/ci5qcGc'),
+              backgroundImage:
+                  CachedNetworkImageProvider(driver.driverInfo.image),
             ),
             SizedBox(
               width: 10,
@@ -102,7 +102,7 @@ class DriverSelectCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    driver.deliveryDriverId,
+                    driver.driverInfo.name,
                     style: txt.bodyText1,
                   ),
                   SizedBox(

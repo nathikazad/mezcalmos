@@ -46,7 +46,8 @@ class DriverCard extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       radius: 25,
-                      backgroundImage: CachedNetworkImageProvider(''),
+                      backgroundImage:
+                          CachedNetworkImageProvider(driver!.image),
                     ),
                     SizedBox(
                       width: 10,
@@ -64,39 +65,6 @@ class DriverCard extends StatelessWidget {
                           SizedBox(
                             height: 5,
                           ),
-                          (1 == 5)
-                              ? Row(
-                                  children: [
-                                    Icon(
-                                      Icons.circle,
-                                      color: Colors.green,
-                                      size: 15,
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      'Available',
-                                      style: txt.bodyText2,
-                                    )
-                                  ],
-                                )
-                              : Row(
-                                  children: [
-                                    Icon(
-                                      Icons.circle,
-                                      color: Colors.redAccent,
-                                      size: 15,
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      'Unavailable',
-                                      style: txt.bodyText2,
-                                    )
-                                  ],
-                                )
                         ],
                       ),
                     ),
