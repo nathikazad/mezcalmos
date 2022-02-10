@@ -117,6 +117,25 @@
             "signBtn":"Sign me in",
             "notNowBtn": "Not now ?"
         },
+        "laundry": {
+            "firstStep": "First step is creating an order once you create an order one of our drivers will be reaching your location to pickup your things",
+            "How it works": "How it works",
+            "laundryPricing": "Laundry Pricing",
+            "laundryPricingNote": "Order weight and total cost will be updated once the laundry service receive your order.",
+            "orderHelper": {
+                "atLaundry": " the laundry is processing your order",
+                "cancelByAdmin": " Order Canceled by the admin",
+                "cancelByUser": " You canceled the order",
+                "delivered": "Order has been successfully deliverd",
+                "otwDelivery": " Our driver is on the way to deliver back your order",
+                "otwPickup": "Our driver is on the way to pick up your order from your location ",
+                "pickedUp": " order picked up from your location successfully",
+                "ready": " your order is ready for delivery",
+                "received": " Order received and will be procceed as soon as possible"
+            },
+            "secondStep": "Second step our laundry service provider will recieve your order and start doing his work and we will inform you about price changes depending on the order weight",
+            "thirdStep": "Final step once your order is ready one of our drivers will pickup the order from the laundry and get it to your location as soon as possible"
+        },
         "taxiView": {
             "taxi": "Taxi",
             "taxiOrder" : "Taxi order",
@@ -532,6 +551,42 @@
         "cancelAlert": {
             "title": "Cancel",
             "subTitle": "Are you sure you want\nto cancel the order?"
+        },
+        "laundry": {
+            "atLaundry": "At laundry",
+            "atLaundryText": "Confirm the order received by the laundry by setting the order weight ",
+            "atLaundryTitle": "Order at laundry",
+            "confirmPickUp": "Confirm pickup",
+            "currentOrders": "Orders",
+            "customer": "Customer",
+            "delivered": "Order Delivered",
+            "deliveredText": "Confirm that the order is delivered to the customer",
+            "deliveredTitle": "Order delivered",
+            "deliveryCost": "Delivery Cost",
+            "fixedRate": "Fixed Rate",
+            "laundry": "Laundry",
+            "laundryOrders": "Laundry orders",
+            "noOrders": "No orders found",
+            "orderCost": "Order cost",
+            "orderReceived": "Order Received",
+            "orderWeight": "Order Weight",
+            "orderWeightError": " Error, please insert a valid order weight",
+            "otwDelivery": "Delivery on the way",
+            "otwDeliveryText": "Confirm that the order is being deliverd to the customer",
+            "otwDeliveryTitle": "Delivery On the way",
+            "otwPickUp": "Pick-up on the way",
+            "pastOrders": "Past orders",
+            "pickedUp": "Order Picked-up",
+            "pickedUpText": "Confirm order picked up from the customer",
+            "pickedUpTitle": "Order Picked up",
+            "readyForDelivery": "Ready for Delivery",
+            "readyForDeliveryText": "Confirm that the order is ready for delivery",
+            "readyForDeliveryTitle": "Order ready for delivery",
+            "restaurantOrders": "Restaurant Orders",
+            "startPickUp": "Start pickup",
+            "startPickUpText": "The driver should be notified to pick up the order",
+            "startPickUpTitle": "Start order Pickup",
+            "totalCost": "Total cost"
         }
     }
 }

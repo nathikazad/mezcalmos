@@ -148,6 +148,25 @@
             "increasePrice" : "Aumentar el precio",
             "decreasePrice" : "disminuir el precio"
         },
+        "laundry": {
+            "firstStep": "El primer paso es crear un pedido una vez que crea un pedido, uno de nuestros conductores llegará a su ubicación para recoger sus cosas",
+            "How it works": "Cómo funciona",
+            "laundryPricing": "Precios de lavandería",
+            "laundryPricingNote": "El peso del pedido y el costo total se actualizarán una vez que el servicio de lavandería reciba su pedido.",
+            "orderHelper": {
+                "atLaundry": " La lavandería está procesando su pedido.",
+                "cancelByAdmin": " Orden cancelado por el administrador.",
+                "cancelByUser": " Usted canceló el pedido",
+                "delivered": "El pedido ha sido entregado con éxito",
+                "otwDelivery": " Nuestro conductor está en camino de entregar su pedido.",
+                "otwPickup": "Nuestro conductor está en camino de recoger su pedido de su ubicación ",
+                "pickedUp": " Orden recogido de su ubicación con éxito",
+                "ready": " Su pedido está listo para la entrega.",
+                "received": " El pedido recibido y se procederá tan pronto como sea posible."
+            },
+            "secondStep": "Segundo paso Nuestro proveedor de servicios de lavandería recibirá su pedido y comenzará a hacer su trabajo y le informaremos sobre los cambios en los precios según el peso del pedido",
+            "thirdStep": "Paso final Una vez que su pedido esté listo, uno de nuestros conductores recogerá el pedido de la lavandería y lo conseguirá a su ubicación lo antes posible."
+        },
         "cancelOrder": {
             "title":"Confirmar cancelación.",
             "question": "Estás seguro de que deseas cancelar tu pedido?",
@@ -531,6 +550,42 @@
         "cancelAlert": {
             "title": "Cancelar",
             "subTitle": "Estás seguro de que cancelar\nentregar el pedido?"
+        },
+        "laundry": {
+            "atLaundry": "En la lavandería",
+            "atLaundryText": "Confirme el pedido recibido por la lavandería configurando el peso del pedido. ",
+            "atLaundryTitle": "Orden en la lavandería",
+            "confirmPickUp": "Confirmar la recogida",
+            "currentOrders": "órdenes actuales",
+            "customer": "Cliente",
+            "delivered": "Orden entregado",
+            "deliveredText": "Confirme que el pedido se entrega al cliente.",
+            "deliveredTitle": "Orden entregado",
+            "deliveryCost": "Coste de envío",
+            "fixedRate": "Tipo de interés fijo",
+            "laundry": "Lavandería",
+            "laundryOrders": "Órdenes de lavandería",
+            "noOrders": "Sin pedidos",
+            "orderCost": "Costo de la orden",
+            "orderReceived": "orden recibida",
+            "orderWeight": "Peso de pedido",
+            "orderWeightError": " Error, por favor inserte un peso de pedido válido",
+            "otwDelivery": "Entrega en el camino",
+            "otwDeliveryText": "Confirme que el pedido se está entregando al cliente.",
+            "otwDeliveryTitle": "Entrega en el camino",
+            "otwPickUp": "Recoger en el camino",
+            "pastOrders": "Órdenes pasadas",
+            "pickedUp": "Pedido recogido",
+            "pickedUpText": "Confirmar la orden recogida del cliente",
+            "pickedUpTitle": "Orden recogido",
+            "readyForDelivery": "Listo para la entrega",
+            "readyForDeliveryText": "Confirme que el pedido está listo para la entrega.",
+            "readyForDeliveryTitle": "Orden listo para la entrega",
+            "restaurantOrders": "Órdenes de restaurantes",
+            "startPickUp": "Iniciar recogida",
+            "startPickUpText": "El conductor debe ser notificado a recoger el pedido.",
+            "startPickUpTitle": "Iniciar orden de recogida",
+            "totalCost": "Coste total"
         }
     }
 }
