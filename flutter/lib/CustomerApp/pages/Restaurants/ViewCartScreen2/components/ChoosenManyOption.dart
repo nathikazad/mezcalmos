@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/titlesComponent.dart';
+import 'package:mezcalmos/CustomerApp/models/Cart.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/TitlesComponent.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 
-List<Widget> choosenMannyOption(
-    List<ChooseManyOption> data, BuildContext context) {
+List<Widget> choosenManyOption(
+    List<CartChooseManyItem> cartChooseManyItems, BuildContext context) {
   LanguageController lang = Get.find<LanguageController>();
   final txt = Theme.of(context).textTheme;
 
@@ -20,14 +20,16 @@ List<Widget> choosenMannyOption(
     ),
   ];
 
-  data.forEach((value) {
-    if (value.selectedByDefault) {
+  cartChooseManyItems.forEach((cartChooseManyItem) {
+    if (cartChooseManyItem.chosen) {
       myWidgets.add(
         Container(
           width: Get.width,
           alignment: Alignment.centerLeft,
           padding: const EdgeInsets.only(left: 25, top: 5),
-          child: Text("${value.name[lang.userLanguageKey]}".inCaps,
+          child: Text(
+              "${cartChooseManyItem.optionDetails.name[lang.userLanguageKey]}"
+                  .inCaps,
               style: const TextStyle(
                   color: const Color(0xff000000),
                   fontWeight: FontWeight.w400,
@@ -39,7 +41,7 @@ List<Widget> choosenMannyOption(
       );
     }
   });
-  if (data.isEmpty) {
+  if (cartChooseManyItems.length == 0) {
     return [];
   } else {
     return myWidgets;

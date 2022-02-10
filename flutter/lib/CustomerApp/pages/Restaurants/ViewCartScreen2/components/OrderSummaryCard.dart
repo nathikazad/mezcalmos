@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
-
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:sizer/sizer.dart';
 
-import '../../../../components/DropDownLocationList.dart';
+import 'DropDownListCartView.dart';
 
 class OrderSummaryCard extends StatelessWidget {
   final String? orderCost;
@@ -43,92 +42,57 @@ class OrderSummaryCard extends StatelessWidget {
               alignment: Alignment.center,
               width: Get.width,
               child: Text(
-                "${lang.strings["customer"]["restaurant"]["cart"]["orderSummary"]}",
-                style: txt.headline2!.copyWith(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 16.sp,
-                ),
-              ),
+                  "${lang.strings["customer"]["restaurant"]["cart"]["orderSummary"]}",
+                  style: txt.headline3),
             ),
-            SizedBox(
-              height: 9.h,
-            ),
-            //================Divider=======================
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 10),
-              height: 1.5,
-              width: Get.width,
-              color: Color.fromRGBO(229, 229, 229, 1),
-            ),
-            SizedBox(
-              height: 17.5.h,
+            Divider(
+              height: 20,
             ),
             //==================Order cost :==================
             Container(
-              padding: EdgeInsets.only(bottom: 10.h),
+              padding: const EdgeInsets.only(bottom: 10),
               width: Get.width,
               child: Row(
                 children: [
                   Expanded(
                     child: Container(
                       child: Text(
-                        "${lang.strings["customer"]["restaurant"]["cart"]["orderCost"]} :",
-                        style: txt.headline3!.copyWith(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14.75.sp,
-                        ),
-                      ),
+                          "${lang.strings["customer"]["restaurant"]["cart"]["orderCost"]} :",
+                          style: txt.bodyText2),
                     ),
                   ),
                   Expanded(
                       child: Container(
                     alignment: Alignment.centerRight,
-                    child: Text(
-                      "\$$orderCost",
-                      style: txt.headline3!.copyWith(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14.75.sp,
-                      ),
-                    ),
+                    child: Text("\$$orderCost", style: txt.bodyText1),
                   ))
                 ],
               ),
             ),
             //=======================Delivery cost :===============
             Container(
-              padding: EdgeInsets.only(bottom: 10.h),
+              padding: EdgeInsets.only(bottom: 10),
               width: Get.width,
               child: Row(
                 children: [
                   Expanded(
                     child: Container(
                       child: Text(
-                        "${lang.strings["customer"]["restaurant"]["cart"]["deliveryCost"]} :",
-                        style: txt.headline3!.copyWith(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14.75.sp,
-                        ),
-                      ),
+                          "${lang.strings["customer"]["restaurant"]["cart"]["deliveryCost"]} :",
+                          style: txt.bodyText2),
                     ),
                   ),
                   Expanded(
                       child: Container(
                     alignment: Alignment.centerRight,
-                    child: Text(
-                      "\$4",
-                      style: txt.headline3!.copyWith(
-                        fontWeight: FontWeight.w500,
-                        decoration: TextDecoration.lineThrough,
-                        fontSize: 14.75.sp,
-                      ),
-                    ),
+                    child: Text("\$$deliveryCost", style: txt.bodyText1),
                   ))
                 ],
               ),
             ),
             //=======================Total cost : ==================
             Container(
-              padding: EdgeInsets.only(bottom: 10.h),
+              padding: EdgeInsets.only(bottom: 10),
               width: Get.width,
               child: Row(
                 children: [
@@ -158,7 +122,7 @@ class OrderSummaryCard extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 16.h,
+              height: 16,
             ),
             //=======================Delivery location :===========
             Container(
@@ -175,7 +139,7 @@ class OrderSummaryCard extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            DropDownLocationList(
+            DropDownListCartView(
               onValueChangeCallback: this.onValueChangeCallback,
             ),
           ],

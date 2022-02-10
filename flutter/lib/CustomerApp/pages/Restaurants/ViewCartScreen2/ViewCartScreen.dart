@@ -6,16 +6,15 @@ import 'package:mezcalmos/CustomerApp/components/ButtonComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/viewCartBody.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/ViewCartBody.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
-import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
-import 'components/cartIsEmptyScreen.dart';
+import 'components/CartIsEmptyScreen.dart';
 
 enum DropDownResult { Null, String }
 
@@ -41,7 +40,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
     super.initState();
     // check if cart empty
     // if yes redirect to home page
-    controller.cart.value.items.map((item) {
+    controller.cart.value.cartItems.map((item) {
       mezDbgPrint(
           "+++ From ViewCartScreen ==> ${item.id} <= notes => ${item.notes}");
     });
@@ -64,16 +63,22 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         title: "${lang.strings["customer"]["restaurant"]["cart"]["myCart"]}",
       ),
       body: Obx(() {
-        if (controller.cart.value.items.length > 0) {
-          return GetBuilder<RestaurantController>(
-              // specify type as Controller
-              init: RestaurantController(), // intialize with the Controller
-              builder: (_) => SingleChildScrollView(child: ViewCartBody(
-                    onValueChangeCallback: ({Location? location}) {
-                      controller.cart.value.toLocation = location;
-                      controller.saveCart();
-                    },
-                  )));
+        mezDbgPrint("@sa@d@: ${controller.cart.value.cartItems.length}");
+        if (controller.cart.value.cartItems.length > 0) {
+          return SingleChildScrollView(child: ViewCartBody(
+            onValueChangeCallback: ({String? newValue}) {
+              mezDbgPrint("@sa@d@: onValueChangeCallback :: $newValue");
+              if (newValue == null) {
+                setState(() {
+                  ddResult = DropDownResult.Null;
+                });
+              } else {
+                setState(() {
+                  ddResult = DropDownResult.String;
+                });
+              }
+            },
+          ));
         } else {
           return CartIsEmptyScreen();
         }
