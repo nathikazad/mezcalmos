@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/route_manager.dart';
 import 'package:mezcalmos/CustomerApp/authHooks.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/CustomerApp/theme.dart';
@@ -32,21 +33,6 @@ List<SideMenuItem> sideMenuItems = <SideMenuItem>[
 ];
 
 void main() {
-<<<<<<< HEAD
-  runMainGuarded(() => runApp(
-        Sizer(builder: (context, orientation, deviceType) {
-          return StartingPoint(
-            appType: AppType.CustomerApp,
-            appTheme: CustomerAppTheme.lightTheme,
-            signInCallback: signInCallback,
-            signOutCallback: signOutCallback,
-            routes: routes,
-            sideMenuItems: sideMenuItems,
-            locationOn: true,
-          );
-        }),
-      ));
-=======
   runMainGuarded(
       () => runApp(Sizer(builder: (context, orientation, deviceType) {
             return StartingPoint(
@@ -59,5 +45,4 @@ void main() {
               locationOn: true,
             );
           })));
->>>>>>> laundryWithMaster
 }

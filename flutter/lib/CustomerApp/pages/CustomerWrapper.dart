@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/components/CustomerHomeFooterButtons.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
-import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
@@ -45,7 +44,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   @override
   void initState() {
     Get.put(TaxiController(), permanent: true);
-    Get.put(LaundryController(), permanent: true);
     Get.put(RestaurantController(), permanent: true);
     Get.put(RestaurantsInfoController(), permanent: true);
     WidgetsBinding.instance!.addObserver(this);
@@ -218,28 +216,11 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             url: "assets/images/customer/taxi/taxiService.png",
             subtitle: "${lang.strings['customer']['home']['taxi']["subtitle"]}",
             ontap: () {
-              serviceRouting(
-                  orderType: OrderType.Taxi,
-                  singleOrderRoute: (orderId) {
-                    getTaxiOrderRoute(orderId);
-                  },
-                  serviceRoute: Get.toNamed(kTaxiRequestRoute));
-              // if (auth.fireAuthUser != null) {
-              //   List<Order> taxiOrders = Get.find<OrderController>()
-              //       .currentOrders
-              //       .where((p0) => p0.orderType == OrderType.Taxi)
-              //       .toList();
-
-              //   if (taxiOrders.length == 1) {
-              //     Get.toNamed(getTaxiOrderRoute(taxiOrders[0].orderId));
-              //   } else if (taxiOrders.length > 1) {
-              //     Get.toNamed(kOrdersRoute);
-              //   } else {
-              //     Get.toNamed(kTaxiRequestRoute);
-              //   }
-              // } else {
-              //   Get.toNamed(kTaxiRequestRoute);
-              // }
+              if (Get.find<AuthController>().fireAuthUser == null) {
+                Get.toNamed(kTaxiRequestRoute);
+              } else {
+                checkTaxiCurrentOrdersAndNavigate();
+              }
             },
           ),
         ),
@@ -277,25 +258,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
           () => ServicesCard(
             title: "${lang.strings['customer']['home']['laundry']["title"]}",
             url: "assets/images/customer/laundryService.png",
-            subtitle: 'Laundry description',
-            ontap: () {
-              if (auth.fireAuthUser != null) {
-                List<Order> laundryOrders = Get.find<OrderController>()
-                    .currentOrders
-                    .where((p0) => p0.orderType == OrderType.Laundry)
-                    .toList();
-
-                if (laundryOrders.length == 1) {
-                  Get.toNamed(getLaundyOrderRoute(laundryOrders[0].orderId));
-                } else if (laundryOrders.length > 1) {
-                  Get.toNamed(kOrdersRoute);
-                } else {
-                  Get.toNamed(kLaundryOrderRequest);
-                }
-              } else {
-                Get.toNamed(kLaundryOrderRequest);
-              }
-            },
           ),
         ),
       ],
@@ -312,9 +274,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
         // Taxi
       } else if (currentOrders[0].orderType == OrderType.Taxi) {
         popEverythingAndNavigateTo(getTaxiOrderRoute(currentOrders[0].orderId));
-      } else if (currentOrders[0].orderType == OrderType.Laundry) {
-        popEverythingAndNavigateTo(
-            getLaundyOrderRoute(currentOrders[0].orderId));
       }
     } else if (currentOrders.length > 1) {
       popEverythingAndNavigateTo(kOrdersRoute);
@@ -331,23 +290,5 @@ class _CustomerWrapperState extends State<CustomerWrapper>
         Get.toNamed(kLocationPermissionPage);
       }
     });
-  }
-
-  serviceRouting(
-      {required OrderType orderType,
-      required Function(String) singleOrderRoute,
-      required Future<dynamic>? serviceRoute}) {
-    List<Order> orders = Get.find<OrderController>()
-        .currentOrders
-        .where((p0) => p0.orderType == orderType)
-        .toList();
-
-    if (orders.length == 1) {
-      singleOrderRoute(orders[0].orderId);
-    } else if (orders.length > 1) {
-      Get.toNamed(kOrdersRoute);
-    } else {
-      serviceRoute;
-    }
   }
 }

@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
-<<<<<<< HEAD:flutter/lib/CustomerApp/pages/Restaurants/ViewCartScreen/components/ChoosenManyOption.dart
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/TitlesComponent.dart';
-=======
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/TitlesComponent.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
->>>>>>> laundryWithMaster:flutter/lib/CustomerApp/pages/Restaurants/ViewcartScreen/components/choosenMannyOption.dart
 List<Widget> choosenManyOption(
     List<CartChooseManyItem> cartChooseManyItems, BuildContext context) {
   LanguageController lang = Get.find<LanguageController>();

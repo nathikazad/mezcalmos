@@ -167,47 +167,6 @@ class CartItem {
       id: cartItem.id,
       quantity: cartItem.quantity,
       notes: cartItem.notes,
-<<<<<<< HEAD
-    );
-    cartItem.cartChooseOneItems.forEach((cartChooseOneItem) {
-      newCartItem.setNewChooseOneItem(
-          chooseOneOptionId: cartChooseOneItem.optionDetails.id,
-          newChooseOneOptionListItem: cartChooseOneItem.chosenOptionDetails);
-    });
-    cartItem.cartChooseManyItems.forEach((cartChooseManyItem) {
-      newCartItem.setNewChooseManyItem(
-          chooseManyOptionId: cartChooseManyItem.optionDetails.id,
-          newVal: cartChooseManyItem.chosen);
-    });
-    return newCartItem;
-  }
-
-  void setNewChooseOneItem(
-      {required String chooseOneOptionId,
-      required ChooseOneOptionListItem newChooseOneOptionListItem}) {
-    int index = cartChooseOneItems.indexWhere(
-        (chooseOneItem) => chooseOneItem.optionDetails.id == chooseOneOptionId);
-
-    if (index != -1) {
-      cartChooseOneItems[index].chosenOptionDetails =
-          newChooseOneOptionListItem;
-    }
-  }
-
-  void setNewChooseManyItem(
-      {required String chooseManyOptionId, required bool newVal}) {
-    int index = cartChooseManyItems.indexWhere((cartChooseManyItem) =>
-        cartChooseManyItem.optionDetails.id == chooseManyOptionId);
-    if (index != -1) {
-      cartChooseManyItems[index].chosen = newVal;
-    }
-  }
-
-  CartChooseOneItem? findChooseOneItemById(String id) {
-    return cartChooseOneItems.firstWhereOrNull(
-      (chooseOneItem) => chooseOneItem.chosenOptionDetails.id == id,
-=======
->>>>>>> laundryWithMaster
     );
     cartItem.cartChooseOneItems.forEach((cartChooseOneItem) {
       newCartItem.setNewChooseOneItem(
@@ -247,12 +206,6 @@ class CartItem {
     return cartChooseOneItems.firstWhereOrNull(
       (chooseOneItem) => chooseOneItem.chosenOptionDetails.id == id,
     );
-  }
-
-  CartChooseManyItem? findChooseManyItemById(String id) {
-    return cartChooseManyItems.firstWhereOrNull((chooseManyItem) {
-      return chooseManyItem.optionDetails.id == id;
-    });
   }
 
   CartChooseManyItem? findChooseManyItemById(String id) {
@@ -284,11 +237,7 @@ class CartItem {
       "quantity": this.quantity,
       "totalCost": this.totalCost(),
       "costPerOne": this.costPerOne(),
-<<<<<<< HEAD
-      // "name": this.item.name.toFirebaseFormat(),
-=======
       "name": this.item.name.toFirebaseFormat(),
->>>>>>> laundryWithMaster
       "image": this.item.image,
       "options": {"chosenOneOptions": {}, "chosenManyOptions": {}},
       "notes": notes

@@ -7,10 +7,6 @@ import 'package:mezcalmos/CustomerApp/pages/Taxi/components/RecreateOrderBtn.dar
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-<<<<<<< HEAD
-import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
-=======
->>>>>>> laundryWithMaster
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';

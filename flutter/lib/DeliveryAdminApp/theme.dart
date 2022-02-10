@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-<<<<<<< HEAD
 
-=======
->>>>>>> laundryWithMaster
 class DeliveryAdminTheme {
   static ThemeData get lightTheme {
     return ThemeData(

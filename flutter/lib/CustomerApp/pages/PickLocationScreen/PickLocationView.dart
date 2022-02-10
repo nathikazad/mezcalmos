@@ -17,12 +17,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
-<<<<<<< HEAD
-
-import '../Restaurants/ViewCartScreen/components/saveLocationDailog.dart';
-=======
 import 'package:sizer/sizer.dart';
->>>>>>> laundryWithMaster
 
 enum PickLocationMode { AddNewLocation, EditLocation }
 

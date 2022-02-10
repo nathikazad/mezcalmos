@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
-<<<<<<< HEAD
-import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
-=======
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
->>>>>>> laundryWithMaster
 import 'package:sizer/sizer.dart';
 
 class TaxiReqBottomBar extends StatefulWidget {

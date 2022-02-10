@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-<<<<<<< HEAD
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-=======
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
->>>>>>> laundryWithMaster
 import 'package:sizer/sizer.dart';
 
 class OrderSummaryCard extends StatelessWidget {
