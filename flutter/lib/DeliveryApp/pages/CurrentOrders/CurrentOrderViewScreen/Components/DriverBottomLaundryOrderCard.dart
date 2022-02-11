@@ -2,38 +2,41 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/DeliveryApp/controllers/restaurantController.dart';
+import 'package:mezcalmos/DeliveryApp/controllers/laundryController.dart';
+import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../../../../Shared/models/Orders/RestaurantOrder.dart';
-
-class DriverBottomRestaurantOrderCard extends StatelessWidget {
-  final RestaurantOrder order;
-  DriverBottomRestaurantOrderCard({Key? key, required this.order})
+class DriverBottomLaundryOrderCard extends StatelessWidget {
+  final LaundryOrder order;
+  DriverBottomLaundryOrderCard({Key? key, required this.order})
       : super(key: key);
-  RestaurantOrderController restaurantOrderController =
-      Get.find<RestaurantOrderController>();
+  LaundryOrderController restaurantOrderController =
+      Get.find<LaundryOrderController>();
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
-    return Align(
-      alignment: Alignment.bottomCenter,
+    return Padding(
+      padding: const EdgeInsets.all(5.0),
       child: Card(
-        child: Padding(
+        child: Container(
           padding: const EdgeInsets.all(8),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                '${(order).status.toFirebaseFormatString()}',
+                _getOrderStatus(),
                 style: textTheme.bodyText2,
               ),
               Divider(),
               Row(
                 children: [
-                  _getOrderWidget(context),
+                  Icon(
+                    Icons.food_bank,
+                    size: 40.sp,
+                    color: Theme.of(context).primaryColorLight,
+                  ),
                   Flexible(
                     flex: 4,
                     fit: FlexFit.tight,
@@ -41,7 +44,7 @@ class DriverBottomRestaurantOrderCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          _getOrderTitle(),
+                          'Laundry Order',
                           style: textTheme.headline3!.copyWith(fontSize: 13.sp),
                         ),
                         Row(
@@ -77,7 +80,7 @@ class DriverBottomRestaurantOrderCard extends StatelessWidget {
               _orderFromToComponent(textTheme),
               Divider(),
               // Order bottom card footer component (to be refactored)
-              if (order.inProcess())
+              if (order.status == LaundryOrderStatus.OrderReceieved)
                 Flex(
                   direction: Axis.horizontal,
                   children: [
@@ -86,13 +89,9 @@ class DriverBottomRestaurantOrderCard extends StatelessWidget {
                         child: TextButton(
                             onPressed: () {
                               if (order.status ==
-                                  RestaurantOrderStatus.ReadyForPickup) {
+                                  LaundryOrderStatus.OrderReceieved) {
                                 restaurantOrderController
-                                    .startRestaurantDelivery(order.orderId);
-                              } else if (order.status ==
-                                  RestaurantOrderStatus.OnTheWay) {
-                                restaurantOrderController
-                                    .finishRestaurantDelivery(order.orderId);
+                                    .otwPickupOrder(order.orderId);
                               }
                             },
                             child: Container(
@@ -117,7 +116,7 @@ class DriverBottomRestaurantOrderCard extends StatelessWidget {
                     ),
                   ],
                 ),
-              if (order.status == RestaurantOrderStatus.Delivered)
+              if (order.status == LaundryOrderStatus.Delivered)
                 Row(
                   children: [
                     Icon(
@@ -143,7 +142,8 @@ class DriverBottomRestaurantOrderCard extends StatelessWidget {
                     ))
                   ],
                 ),
-              if (order.status == RestaurantOrderStatus.CancelledByAdmin)
+              if (order.status == LaundryOrderStatus.CancelledByAdmin ||
+                  order.status == LaundryOrderStatus.CancelledByCustomer)
                 Row(
                   children: [
                     Icon(
@@ -169,13 +169,6 @@ class DriverBottomRestaurantOrderCard extends StatelessWidget {
                     ))
                   ],
                 ),
-              if (order.status == RestaurantOrderStatus.OnTheWay)
-                TextButton(
-                    onPressed: () {},
-                    child: Container(
-                      alignment: Alignment.center,
-                      child: Text('Confirm delivery'),
-                    ))
             ],
           ),
         ),
@@ -241,6 +234,28 @@ class DriverBottomRestaurantOrderCard extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  String _getOrderStatus() {
+    switch (order.status) {
+      case LaundryOrderStatus.OrderReceieved:
+        return 'Ready for pick-up';
+      case LaundryOrderStatus.OtwPickup:
+        return 'Pick-up on the way';
+      case LaundryOrderStatus.PickedUp:
+        return 'Order Picked up';
+      case LaundryOrderStatus.AtLaundry:
+        return 'Order at laundry';
+      case LaundryOrderStatus.ReadyForDelivery:
+        return 'Order ready for delivery';
+      case LaundryOrderStatus.OtwDelivery:
+        return 'Delivery on the way';
+      case LaundryOrderStatus.Delivered:
+        return 'Order Delivered';
+
+      default:
+        return '';
+    }
   }
 
   _getOrderWidget(context) {

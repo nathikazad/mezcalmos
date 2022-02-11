@@ -5,7 +5,8 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/components/DeliveryAppBar.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
-import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Components/DriverOrderBottomCard.dart';
+import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Components/DriverBottomLaundryOrderCard.dart';
+import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Components/DriverBottomRestaurantOrderCard.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Components/DriverOrderMapComponent.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -16,6 +17,7 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 
+import '../../../../Shared/models/Orders/LaundryOrder.dart';
 import '../../../../Shared/widgets/MezLogoAnimation.dart';
 
 class CurrentOrderViewScreen extends StatefulWidget {
@@ -69,39 +71,44 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderViewScreen> {
         child: Scaffold(
             key: Get.find<SideMenuDrawerController>().getNewKey(),
             drawer: MezSideMenu(),
-            backgroundColor: Colors.white,
+            //  backgroundColor: Colors.white,
             appBar: DeliveryAppBar(AppBarLeftButtonType.Back),
-            body: Obx(
-              () {
-                if (order != null
-                    //  && this.mGoogleMapController.location.value != null
-                    ) {
-                  return Stack(alignment: Alignment.topCenter, children: [
-                    DriverOrderMapComponent(order: order.value!),
-                    (order.value!.orderType == OrderType.Restaurant)
-                        ? DriverBottomRestaurantOrderCard(
-                            order: order.value as RestaurantOrder)
-                        : SizedBox()
-                  ]);
-                } else {
-                  return MezLogoAnimation(
-                    centered: true,
-                  );
-                }
-                // return Stack(alignment: Alignment.topCenter, children: [
-                // DriverOrderMapComponent(order: order.value!),
-                // (order.value!.orderType == OrderType.Restaurant)
-                //     ? DriverBottomRestaurantOrderCard(
-                //         order: order.value as RestaurantOrder)
-                //     : SizedBox()
-                // MGoogleMap(
-                //   mGoogleMapController: this.mGoogleMapController,
-                //   myLocationButtonEnabled: false,
-                //   debugString: "CurrentOrderScreen",
-                // ),
-                // CurrentPositionedBottomBar(order!),
-                // CurrentPositionedFromToTopBar(order!),
-              },
+            body: SingleChildScrollView(
+              child: Obx(
+                () {
+                  if (order != null
+                      //  && this.mGoogleMapController.location.value != null
+                      ) {
+                    return Column(children: [
+                      DriverOrderMapComponent(order: order.value!),
+                      (order.value!.orderType == OrderType.Restaurant)
+                          ? DriverBottomRestaurantOrderCard(
+                              order: order.value as RestaurantOrder)
+                          : (order.value!.orderType == OrderType.Laundry)
+                              ? DriverBottomLaundryOrderCard(
+                                  order: order.value as LaundryOrder)
+                              : SizedBox()
+                    ]);
+                  } else {
+                    return MezLogoAnimation(
+                      centered: true,
+                    );
+                  }
+                  // return Stack(alignment: Alignment.topCenter, children: [
+                  // DriverOrderMapComponent(order: order.value!),
+                  // (order.value!.orderType == OrderType.Restaurant)
+                  //     ? DriverBottomRestaurantOrderCard(
+                  //         order: order.value as RestaurantOrder)
+                  //     : SizedBox()
+                  // MGoogleMap(
+                  //   mGoogleMapController: this.mGoogleMapController,
+                  //   myLocationButtonEnabled: false,
+                  //   debugString: "CurrentOrderScreen",
+                  // ),
+                  // CurrentPositionedBottomBar(order!),
+                  // CurrentPositionedFromToTopBar(order!),
+                },
+              ),
             ))); // no need for obx here.
   }
 
