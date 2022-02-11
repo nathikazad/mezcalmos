@@ -14,7 +14,7 @@ export function startWatchingMessageNotificationQueue() {
 
 async function notifyOtherParticipants(messageId: string, message: Message) {
   let chat: Chat = await getChat(message.orderId);
-  if (chat.messages && chat.messages![messageId].notified) {
+  if (chat.messages && chat.messages![messageId]?.notified) {
     return
   }
   let senderInfo = chat.participants[message.userId]

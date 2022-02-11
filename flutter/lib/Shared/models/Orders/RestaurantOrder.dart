@@ -99,19 +99,20 @@ class RestaurantOrder extends Order {
         status == RestaurantOrderStatus.OnTheWay;
   }
 
-  String get clipBoardText {
+  String clipBoardText(LanguageType languageType) {
     String text = "";
     text += "${this.restaurant.name}\n";
     text += this.items.fold<String>("", (mainString, item) {
-      mainString += "  ${item.name} x${item.quantity} ${item.totalCost}\n";
+      mainString +=
+          "  ${item.name[languageType]} x${item.quantity} ${item.totalCost}\n";
       mainString +=
           item.chooseOneOptions.fold("", (secondString, chooseOneOption) {
-        return "${secondString}    ${chooseOneOption.optionName}: ${chooseOneOption.chosenOptionName}\n";
+        return "${secondString}    ${chooseOneOption.optionName[languageType]}: ${chooseOneOption.chosenOptionName[languageType]}\n";
       });
       mainString +=
           item.chooseManyOptions.fold("", (secondString, chooseManyOption) {
-        mezDbgPrint(chooseManyOption.optionName);
-        return "${secondString}    ${chooseManyOption.optionName}\n";
+        mezDbgPrint(chooseManyOption.optionName[languageType]);
+        return "${secondString}    ${chooseManyOption.optionName[languageType]}\n";
       });
       mainString += "    ${item.notes}\n";
       return mainString;
@@ -121,7 +122,7 @@ class RestaurantOrder extends Order {
     text += "${this.customer.name}\n";
     text += "${this.to.address}\n";
     text +=
-        "https://www.google.com/maps/@${this.to.latitude},${this.to.longitude},15z";
+        "https://www.google.com/maps/dir/?api=1&destination=${this.to.latitude},${this.to.longitude}";
     mezDbgPrint(text);
     return text;
   }

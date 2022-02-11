@@ -1,13 +1,13 @@
 String adminNode(String uid) {
-  return 'deliveryAdmins/$uid';
+  return 'deliveryAdmins/info/$uid';
 }
 
 String adminNotificationInfoNode(String uid) {
-  return 'deliveryAdmins/$uid/info/notificationInfo';
+  return 'deliveryAdmins/info/$uid/notificationInfo';
 }
 
 String adminAppVersionNode(String uid) {
-  return 'deliveryAdmins/$uid/info/versionNumber';
+  return 'deliveryAdmins/info/$uid/versionNumber';
 }
 
 String notificationsNode(String uid) {

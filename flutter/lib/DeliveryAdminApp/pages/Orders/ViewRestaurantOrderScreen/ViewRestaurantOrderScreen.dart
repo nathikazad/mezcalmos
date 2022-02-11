@@ -77,7 +77,8 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
           backgroundColor: Colors.grey.shade100,
           foregroundColor: Colors.purple.shade700,
           onPressed: () {
-            Clipboard.setData(ClipboardData(text: order.value?.clipBoardText))
+            Clipboard.setData(ClipboardData(
+                    text: order.value?.clipBoardText(lang.userLanguageKey)))
                 .then((value) => MezSnackbar("Done :D", "Copied to clipboard.",
                     position: SnackPosition.TOP));
           },
