@@ -58,13 +58,6 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
         mGoogleMapController.decodeAndAddPolyline(
             encodedPolylineString: _orderSnapshot.routeInformation.polyline);
         mGoogleMapController.setLocation(_orderSnapshot.from);
-        // mGoogleMapController.setLocation(Location(
-        //     "CurrentLocation",
-        //     LocationLibrary.LocationData.fromMap({
-        //       "latitude": _orderSnapshot.driver!.location!.latitude,
-        //       "longitude": _orderSnapshot.driver!.location!.longitude
-        //     })));
-        // handle OrderStatus first time (since this.order will be null)!
         updateOrder(orderStreamEvent: _orderSnapshot);
         // set InitialPosition
         if (order?.driver?.location != null)

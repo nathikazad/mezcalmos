@@ -155,6 +155,20 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
     );
   }
 
+  /// Call this right after accept order
+  /// Uses : Make sure that the orderId has been written to the taxiState since we do not await it in backend.
+  Future<void> avoidAcceptRideRaceCondition(String orderId) async {
+    if (Get.find<TaxiAuthController>().taxiState?.currentOrder == null) {
+      mezDbgPrint(
+          "[+] s@@d ==> [ ACCEPT TAXI ORDER ]  RACING CONDITION HAPPENING ... ");
+      await Get.find<TaxiAuthController>()
+          .stateStream
+          .firstWhere((taxiState) => taxiState?.currentOrder != null);
+    } else
+      mezDbgPrint(
+          "[+] s@@d ==> [ ACCEPT TAXI ORDER ] NO RACING CONDITION HAPPEND ! ");
+  }
+
   void cancelOrderSubscription() {
     _orderListener?.cancel();
     _orderListener = null;
@@ -170,16 +184,16 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
       ),
       onPressed: !_clickedButton
           ? () async {
+              String _orderId = order!.orderId;
               setState(() {
                 _clickedButton = true;
               });
-              mezDbgPrint(
-                  '-----------------ORDER PRINT-------------' + order!.orderId);
 
               ServerResponse serverResponse =
-                  await controller.acceptTaxi(order!.orderId);
+                  await controller.acceptTaxi(_orderId);
 
               if (serverResponse.success) {
+                await avoidAcceptRideRaceCondition(_orderId);
                 // canceling Subscription Just to Avoid possible Racing Conditions
                 cancelOrderSubscription();
                 // Go to CurrentOrder View !
@@ -192,7 +206,7 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
                   _clickedButton = false;
                 });
                 Get.back();
-                MezSnackbar("Failed", serverResponse.errorMessage!);
+                MezSnackbar("Oops..", serverResponse.errorMessage!);
               }
             }
           : () => null,
