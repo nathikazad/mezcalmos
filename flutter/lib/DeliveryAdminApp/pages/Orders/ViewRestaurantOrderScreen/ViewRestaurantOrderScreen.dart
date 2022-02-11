@@ -15,7 +15,8 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
-
+import 'package:flutter/services.dart' show Clipboard, ClipboardData;
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'components/CurrentOrderInfo.dart';
 import 'components/PastOrderInfo.dart';
 
@@ -69,6 +70,20 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        floatingActionButton: new FloatingActionButton(
+          focusColor: Colors.grey.shade100,
+          hoverColor: Colors.grey.shade100,
+          splashColor: Colors.grey.shade100,
+          backgroundColor: Colors.grey.shade100,
+          foregroundColor: Colors.purple.shade700,
+          onPressed: () {
+            Clipboard.setData(ClipboardData(text: order.value?.clipBoardText))
+                .then((value) => MezSnackbar("Done :D", "Copied to clipboard.",
+                    position: SnackPosition.TOP));
+          },
+          tooltip: 'Copy',
+          child: new Icon(Icons.copy),
+        ),
         appBar: deliveryAdminAppBar(AppBarLeftButtonType.Back,
             withOrder: true, function: Get.back),
         backgroundColor: Colors.white,
