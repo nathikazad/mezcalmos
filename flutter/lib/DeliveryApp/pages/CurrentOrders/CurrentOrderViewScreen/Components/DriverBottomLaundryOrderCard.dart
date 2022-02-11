@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/laundryController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:sizer/sizer.dart';
 
 class DriverBottomLaundryOrderCard extends StatelessWidget {
@@ -33,7 +32,7 @@ class DriverBottomLaundryOrderCard extends StatelessWidget {
               Row(
                 children: [
                   Icon(
-                    Icons.food_bank,
+                    Icons.local_laundry_service,
                     size: 40.sp,
                     color: Theme.of(context).primaryColorLight,
                   ),
@@ -255,41 +254,6 @@ class DriverBottomLaundryOrderCard extends StatelessWidget {
 
       default:
         return '';
-    }
-  }
-
-  _getOrderWidget(context) {
-    switch (order.orderType) {
-      case OrderType.Restaurant:
-        return Icon(
-          Icons.food_bank,
-          size: 40.sp,
-          color: Theme.of(context).primaryColorLight,
-        );
-      case OrderType.Laundry:
-        return Icon(
-          Icons.food_bank,
-          size: 40.sp,
-          color: Theme.of(context).primaryColorLight,
-        );
-
-      default:
-        return CircleAvatar(
-          radius: 30,
-          backgroundImage: CachedNetworkImageProvider(order.customer.image),
-        );
-    }
-  }
-
-  String _getOrderTitle() {
-    switch (order.orderType) {
-      case OrderType.Restaurant:
-        return 'Restaurant Delivery';
-
-      case OrderType.Laundry:
-        return 'Laundry Delivery';
-      default:
-        return 'Order';
     }
   }
 }
