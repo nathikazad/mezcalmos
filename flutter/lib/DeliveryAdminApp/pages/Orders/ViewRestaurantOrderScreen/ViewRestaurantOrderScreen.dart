@@ -7,6 +7,7 @@ import 'package:mezcalmos/DeliveryAdminApp/components/DeliveryAdminAppbar.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/orderController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/OrderInfoCard.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/OrderNoteCard.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/OrderShippingLocation.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/OrderTotalCostCard.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -68,7 +69,8 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: deliveryAdminAppBar(AppBarLeftButtonType.Back, withOrder: true),
+        appBar: deliveryAdminAppBar(AppBarLeftButtonType.Back,
+            withOrder: true, function: Get.back),
         backgroundColor: Colors.white,
         body: Obx(() {
           if (order.value == null) {
@@ -92,9 +94,9 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                   //getCustomerInfoCart(),
                   OrderInfoCard(order: order),
                   //==========================>total cost=====================================
-
-                  //=========== location========================
                   orderTotalCostCard(order),
+                  //=========== location========================
+                  orderShippingLocation(order),
                   //===============================>notes========================>
                   orderNoteCard(order)
                 ],
