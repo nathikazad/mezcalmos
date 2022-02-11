@@ -5,6 +5,7 @@ import { OrderType } from "../shared/models/Generic/Order";
 import { orderInProcess, LaundryOrderStatus, LaundryOrder, LaundryOrderStatusChangeNotification } from "../shared/models/Services/Laundry/LaundryOrder";
 import * as customerNodes from "../shared/databaseNodes/customer";
 import *  as rootDbNodes from "../shared/databaseNodes/root";
+import * as deliveryDriverNodes from "../shared/databaseNodes/deliveryDriver";
 import { checkDeliveryAdmin, isSignedIn } from "../shared/helper/authorizer";
 import { finishOrder } from "./helper";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Generic/Notification";
@@ -81,6 +82,13 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
     }
   }
 
+  if (newStatus == LaundryOrderStatus.ReadyForDelivery && order.dropoffDriver == null) {
+    return {
+      status: ServerResponseStatus.Error,
+      errorMessage: `Order cannot be ready for delivery when drop off driver is null`,
+    }
+  }
+
   order.status = newStatus
 
   let notification: Notification = {
@@ -98,12 +106,12 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
 
   pushNotification(order.customer.id!, notification);
 
-  if (newStatus == LaundryOrderStatus.Delivered
-    || newStatus == LaundryOrderStatus.CancelledByAdmin)
+  if (newStatus == LaundryOrderStatus.CancelledByAdmin)
     await finishOrder(order, orderId);
-  else {
+  else if (newStatus == LaundryOrderStatus.ReadyForDelivery) {
     customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
-    rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).update(order);
+    await rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).update(order);
+    deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id, orderId).update(order);
   }
   return { status: ServerResponseStatus.Success }
 }

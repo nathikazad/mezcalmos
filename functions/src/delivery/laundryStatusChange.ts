@@ -4,6 +4,7 @@ import { ServerResponse, ServerResponseStatus } from "../shared/models/Generic/G
 import { OrderType } from "../shared/models/Generic/Order";
 import { LaundryOrderStatus, LaundryOrder, LaundryOrderStatusChangeNotification } from "../shared/models/Services/Laundry/LaundryOrder";
 import * as customerNodes from "../shared/databaseNodes/customer";
+import * as deliveryDriverNodes from "../shared/databaseNodes/deliveryDriver";
 import *  as rootDbNodes from "../shared/databaseNodes/root";
 import { isSignedIn } from "../shared/helper/authorizer";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Generic/Notification";
@@ -69,6 +70,7 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
   }
 
   let orderId: string = data.orderId;
+  let deliveryDriverId: string = auth!.uid;
   let order: LaundryOrder = (await rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).once('value')).val();
   if (order == null) {
     return {
@@ -89,7 +91,7 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
 
   if (newStatus == LaundryOrderStatus.OtwPickup || newStatus == LaundryOrderStatus.PickedUp
     || newStatus == LaundryOrderStatus.AtLaundry) {
-    if (order.pickupDriver.id != auth!.uid) {
+    if (order.pickupDriver.id != deliveryDriverId) {
       return {
         status: ServerResponseStatus.Error,
         errorMessage: `Order does not belong to this delivery driver`,
@@ -98,7 +100,7 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
   }
 
   if (newStatus == LaundryOrderStatus.OtwDelivery || newStatus == LaundryOrderStatus.Delivered) {
-    if (order.dropoffDriver.id != auth!.uid) {
+    if (order.dropoffDriver.id != deliveryDriverId) {
       return {
         status: ServerResponseStatus.Error,
         errorMessage: `Order does not belong to this delivery driver`,
@@ -125,8 +127,7 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
       time: (new Date()).toISOString(),
       notificationType: NotificationType.OrderStatusChange,
       orderType: OrderType.Laundry,
-      notificationAction: newStatus != LaundryOrderStatus.CancelledByAdmin
-        ? NotificationAction.ShowSnackBarAlways : NotificationAction.ShowPopUp,
+      notificationAction: NotificationAction.ShowPopUp,
       orderId: orderId
     },
     background: LaundryOrderStatusChangeMessages[newStatus]
@@ -134,12 +135,17 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
 
   pushNotification(order.customer.id!, notification);
 
-  if (newStatus == LaundryOrderStatus.Delivered
-    || newStatus == LaundryOrderStatus.CancelledByAdmin)
+  if (newStatus == LaundryOrderStatus.Delivered) {
     await finishOrder(order, orderId);
-  else {
+  } else {
     customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
     rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).update(order);
+    if (newStatus == LaundryOrderStatus.AtLaundry) {
+      await deliveryDriverNodes.inProcessOrders(deliveryDriverId, orderId).remove();
+      await deliveryDriverNodes.pastOrders(deliveryDriverId, orderId).update(order)
+    } else {
+      await deliveryDriverNodes.inProcessOrders(deliveryDriverId, orderId).update(order);
+    }
   }
   return { status: ServerResponseStatus.Success }
 }
