@@ -34,46 +34,24 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderViewScreen> {
 
   @override
   void initState() {
+    super.initState();
+
+    mezDbgPrint("ViewOrderScreen");
     String orderId = Get.parameters['orderId']!;
-
     controller.clearOrderNotifications(orderId);
-    // we need the first snapshot seprated !
-    Order? _orderSnapshot = controller.getOrder(orderId);
-    mezDbgPrint("_orderSnapshot :: $_orderSnapshot");
-
-    if (_orderSnapshot == null) {
-      // TODO ORDERNOTAVAILABLEANYMORE DIALOGUE
+    order.value = controller.getOrder(orderId);
+    if (order.value == null) {
       Get.back();
     } else {
-      order.value = controller.getOrder(orderId);
-      if (order.value == null) {
-        Get.back();
-      } else {
-        if (true) {
-          _orderListener =
-              controller.getCurrentOrderStream(orderId).listen((event) {
-            mezDbgPrint('Eveent eveent =======>   ${event}');
-            if (event != null) {
-            } else {
-              _orderListener?.cancel();
-              _orderListener = null;
-              controller.getPastOrderStream(orderId).listen((event) {
-                if (event != null) {
-                  mezDbgPrint("the past order is ========== $event ==========");
-                  order.value = event;
-                } else {
-                  mezDbgPrint(
-                      "the past order is ========== 'empty' ==========");
-                }
-              });
-              //order.value = controller.getOrder(orderId);
-            }
-          });
+      _orderListener =
+          controller.getCurrentOrderStream(orderId).listen((newOrder) {
+        if (newOrder != null) {
+          order.value = controller.getOrder(orderId);
+        } else {
+          Get.back();
         }
-        mezDbgPrint("=========> ${order.value}");
-      }
+      });
     }
-    super.initState();
   }
 
   @override

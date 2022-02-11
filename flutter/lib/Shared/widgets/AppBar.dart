@@ -15,6 +15,11 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
 
   switch (leftBtnType) {
     case AppBarLeftButtonType.Back:
+      if (onClick == null) {
+        onClick = () {
+          Get.back();
+        };
+      }
       btn_icon = Center(
         child: Icon(
           MezcalmosIcons.chevron_left,
@@ -49,7 +54,7 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
             width: 30,
             child: GestureDetector(
               onTap: () {
-                onClick?.call() ?? Get.back();
+                onClick?.call();
               },
               child: Container(
                 height: 30,

@@ -85,8 +85,15 @@ class DriverBottomRestaurantOrderCard extends StatelessWidget {
                         flex: 3,
                         child: TextButton(
                             onPressed: () {
-                              restaurantOrderController
-                                  .finishRestaurantDelivery(order.orderId);
+                              if (order.status ==
+                                  RestaurantOrderStatus.ReadyForPickup) {
+                                restaurantOrderController
+                                    .startRestaurantDelivery(order.orderId);
+                              } else if (order.status ==
+                                  RestaurantOrderStatus.OnTheWay) {
+                                restaurantOrderController
+                                    .finishRestaurantDelivery(order.orderId);
+                              }
                             },
                             child: Container(
                                 alignment: Alignment.center,
@@ -115,7 +122,7 @@ class DriverBottomRestaurantOrderCard extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.check_circle,
-                      color: Colors.greenAccent,
+                      color: Colors.green,
                       size: 30.sp,
                     ),
                     SizedBox(
