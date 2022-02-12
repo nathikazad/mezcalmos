@@ -5,6 +5,7 @@ import { OrderType } from "../shared/models/Generic/Order";
 import { orderInProcess, RestaurantOrderStatusChangeNotification, RestaurantOrder, RestaurantOrderStatus } from "../shared/models/Services/Restaurant/RestaurantOrder";
 import * as restaurantNodes from "../shared/databaseNodes/restaurant";
 import * as customerNodes from "../shared/databaseNodes/customer";
+import * as deliveryDriverNodes from "../shared/databaseNodes/deliveryDriver";
 import *  as rootDbNodes from "../shared/databaseNodes/root";
 import { checkDeliveryAdmin, isSignedIn } from "../shared/helper/authorizer";
 import { finishOrder } from "./helper";
@@ -86,6 +87,13 @@ async function changeStatus(data: any, newStatus: RestaurantOrderStatus, auth?: 
     }
   }
 
+  if (newStatus == RestaurantOrderStatus.ReadyForPickup && order.dropoffDriver == null) {
+    return {
+      status: ServerResponseStatus.Error,
+      errorMessage: `Order cannot be ready for pick up when drop off driver is null`,
+    }
+  }
+
   order.status = newStatus
 
   let notification: Notification = {
@@ -109,7 +117,9 @@ async function changeStatus(data: any, newStatus: RestaurantOrderStatus, auth?: 
   else {
     customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
     restaurantNodes.inProcessOrders(order.customer.id!, orderId).update(order);
-    rootDbNodes.inProcessOrders(OrderType.Restaurant, orderId).update(order);
+    await rootDbNodes.inProcessOrders(OrderType.Restaurant, orderId).update(order);
+    if (order.dropoffDriver)
+      deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id, orderId).update(order);
   }
   return { status: ServerResponseStatus.Success }
 }

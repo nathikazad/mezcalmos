@@ -6,6 +6,7 @@ import { RestaurantOrderStatusChangeNotification, RestaurantOrder, RestaurantOrd
 import * as restaurantNodes from "../shared/databaseNodes/restaurant";
 import * as customerNodes from "../shared/databaseNodes/customer";
 import *  as rootDbNodes from "../shared/databaseNodes/root";
+import * as deliveryDriverNodes from "../shared/databaseNodes/deliveryDriver";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Generic/Notification";
 import { pushNotification } from "../shared/notification/notifyUser";
 import { isSignedIn } from "../shared/helper/authorizer";
@@ -49,6 +50,7 @@ async function changeStatus(data: any, newStatus: RestaurantOrderStatus, auth?: 
   }
 
   let orderId: string = data.orderId;
+  let deliveryDriverId: string = auth!.uid;
   let order: RestaurantOrder = (await rootDbNodes.inProcessOrders(OrderType.Restaurant, orderId).once('value')).val();
   if (order == null) {
     return {
@@ -58,7 +60,7 @@ async function changeStatus(data: any, newStatus: RestaurantOrderStatus, auth?: 
     }
   }
 
-  if (order.dropoffDriver.id != auth!.uid) {
+  if (order.dropoffDriver.id != deliveryDriverId) {
     return {
       status: ServerResponseStatus.Error,
       errorMessage: `Order does not belong to this delivery driver`,
@@ -81,8 +83,7 @@ async function changeStatus(data: any, newStatus: RestaurantOrderStatus, auth?: 
       time: (new Date()).toISOString(),
       notificationType: NotificationType.OrderStatusChange,
       orderType: OrderType.Restaurant,
-      notificationAction: newStatus != RestaurantOrderStatus.CancelledByAdmin
-        ? NotificationAction.ShowSnackBarAlways : NotificationAction.ShowPopUp,
+      notificationAction: NotificationAction.ShowPopUp,
       orderId: orderId
     },
     background: restaurantOrderStatusChangeMessages[newStatus]
@@ -90,13 +91,13 @@ async function changeStatus(data: any, newStatus: RestaurantOrderStatus, auth?: 
 
   pushNotification(order.customer.id!, notification);
 
-  if (newStatus == RestaurantOrderStatus.Delivered
-    || newStatus == RestaurantOrderStatus.CancelledByAdmin)
+  if (newStatus == RestaurantOrderStatus.Delivered) {
     await finishOrder(order, orderId);
-  else {
+  } else {
     customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
     restaurantNodes.inProcessOrders(order.customer.id!, orderId).update(order);
     rootDbNodes.inProcessOrders(OrderType.Restaurant, orderId).update(order);
+    await deliveryDriverNodes.inProcessOrders(deliveryDriverId, orderId).update(order)
   }
   return { status: ServerResponseStatus.Success }
 }
