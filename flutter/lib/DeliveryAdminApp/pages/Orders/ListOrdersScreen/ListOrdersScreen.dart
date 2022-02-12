@@ -7,7 +7,6 @@ import 'package:mezcalmos/DeliveryAdminApp/components/DeliveryAdminAppbar.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/laundryOrderController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/restaurantOrderController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ListOrdersScreen/components/LaundryOrderCard.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
@@ -170,7 +169,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                       ],
                     ),
                   ),
-                    // Laundry orders list view
+                  // Laundry orders list view
                   SingleChildScrollView(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),

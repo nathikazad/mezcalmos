@@ -124,14 +124,15 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
                     ),
                     Obx(
                       () => DriverCard(
-                        driver: driver,
+                        driver: getRightDriver(),
                         order: order.value!,
+                        canChangeDriver: canChangeDriver(),
                         callBack: (newDriver) {
                           deliveryDriverController.assignDeliveryDriver(
                               deliveryDriverId: newDriver!.deliveryDriverId,
                               orderId: order.value!.orderId,
                               orderType: OrderType.Laundry,
-                              deliveryDriverType: DeliveryDriverType.Pickup);
+                              deliveryDriverType: getRightDeliveryDriverType());
                         },
                       ),
                     ),
@@ -214,6 +215,67 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
         ),
       ],
     );
+  }
+
+  DeliveryDriverUserInfo? getRightDriver() {
+    switch (order.value!.status) {
+      case (LaundryOrderStatus.AtLaundry):
+        return order.value!.dropoffDriver;
+      case (LaundryOrderStatus.ReadyForDelivery):
+        return order.value!.dropoffDriver;
+      case (LaundryOrderStatus.OtwDelivery):
+        return order.value!.dropoffDriver;
+      case (LaundryOrderStatus.Delivered):
+        return order.value!.dropoffDriver;
+
+      case (LaundryOrderStatus.OrderReceieved):
+        return order.value!.pickupDriver;
+      case (LaundryOrderStatus.OtwPickup):
+        return order.value!.pickupDriver;
+      case (LaundryOrderStatus.PickedUp):
+        return order.value!.pickupDriver;
+
+      default:
+        return null;
+    }
+  }
+
+  DeliveryDriverType getRightDeliveryDriverType() {
+    switch (order.value!.status) {
+      case (LaundryOrderStatus.AtLaundry):
+        return DeliveryDriverType.DropOff;
+      case (LaundryOrderStatus.ReadyForDelivery):
+        return DeliveryDriverType.DropOff;
+      case (LaundryOrderStatus.OtwDelivery):
+        return DeliveryDriverType.DropOff;
+      case (LaundryOrderStatus.Delivered):
+        return DeliveryDriverType.DropOff;
+
+      case (LaundryOrderStatus.OrderReceieved):
+        return DeliveryDriverType.Pickup;
+      case (LaundryOrderStatus.OtwPickup):
+        return DeliveryDriverType.Pickup;
+      case (LaundryOrderStatus.PickedUp):
+        return DeliveryDriverType.Pickup;
+
+      default:
+        return DeliveryDriverType.Pickup;
+    }
+  }
+
+  bool canChangeDriver() {
+    switch (order.value!.status) {
+      case (LaundryOrderStatus.AtLaundry):
+        return true;
+      case (LaundryOrderStatus.ReadyForDelivery):
+        return true;
+
+      case (LaundryOrderStatus.OrderReceieved):
+        return true;
+
+      default:
+        return false;
+    }
   }
 
 // Card that shows the order summary (prices and total costs)

@@ -100,6 +100,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                   //============================= Customer info====================
                   Obx(
                     () => DriverCard(
+                      canChangeDriver: true,
                       driver: driver,
                       order: order.value!,
                       callBack: (newDriver) {

@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 AppBar deliveryAdminAppBar(AppBarLeftButtonType leftBtnType,
     {bool withOrder = false, Function? function, PreferredSizeWidget? tabbar}) {
   return mezcalmosAppBar(leftBtnType,
+      tabbar: tabbar,
       actionIcons: [
         Get.find<ForegroundNotificationsController>()
                     .notifications

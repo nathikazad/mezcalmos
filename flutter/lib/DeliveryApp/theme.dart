@@ -54,7 +54,7 @@ class DeliveryAppTheme {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
       textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         primary: Colors.white,
         backgroundColor: Color(0xFFAC59FC),
         padding: EdgeInsets.all(5),

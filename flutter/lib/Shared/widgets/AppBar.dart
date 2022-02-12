@@ -10,6 +10,7 @@ enum AppBarLeftButtonType { Back, Menu }
 AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
     {dynamic bgColor = Colors.white,
     Function? onClick,
+    PreferredSizeWidget? tabbar,
     List<Widget> actionIcons = const <Widget>[]}) {
   Widget btn_icon;
 
@@ -42,6 +43,7 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
   return AppBar(
     toolbarHeight: 80,
     elevation: 0,
+    bottom: tabbar,
     automaticallyImplyLeading: false,
     title: Container(
       // width: Get.width,

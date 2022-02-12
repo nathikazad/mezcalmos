@@ -9,9 +9,11 @@ class DriverCard extends StatelessWidget {
   final Order order;
   DeliveryDriverUserInfo? driver;
   Function(DeliveryDriver?) callBack;
+  bool canChangeDriver;
   DriverCard(
       {Key? key,
       required this.driver,
+      required this.canChangeDriver,
       required this.callBack,
       required this.order})
       : super(key: key);
@@ -35,9 +37,11 @@ class DriverCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
                 side: BorderSide(
                   width: 1.5,
-                  color: (driver != null)
+                  color: (driver != null && canChangeDriver)
                       ? Theme.of(context).primaryColorLight
-                      : Colors.redAccent,
+                      : (driver != null && !canChangeDriver)
+                          ? Colors.green
+                          : Colors.redAccent,
                 )),
             child: InkWell(
               borderRadius: BorderRadius.circular(10),
@@ -84,13 +88,21 @@ class DriverCard extends StatelessWidget {
                               onPressed: () {},
                               icon: Icon(Icons.message_outlined)),
                           IconButton(
-                              onPressed: () async {
-                                DeliveryDriver? newDriver = await Get.toNamed(
-                                    kDriversListRoute,
-                                    arguments: order) as DeliveryDriver;
-                                callBack(newDriver);
-                              },
-                              icon: Icon(Icons.edit_rounded)),
+                              onPressed: (canChangeDriver)
+                                  ? () async {
+                                      DeliveryDriver? newDriver =
+                                          await Get.toNamed(kDriversListRoute,
+                                                  arguments: order)
+                                              as DeliveryDriver;
+                                      callBack(newDriver);
+                                    }
+                                  : null,
+                              icon: Icon(
+                                Icons.edit_rounded,
+                                color: (canChangeDriver)
+                                    ? Theme.of(context).primaryColorLight
+                                    : Colors.grey.shade400,
+                              )),
                         ],
                       )
                     : Row(

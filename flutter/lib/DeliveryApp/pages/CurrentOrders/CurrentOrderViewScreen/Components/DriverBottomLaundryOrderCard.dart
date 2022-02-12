@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/laundryController.dart';
+import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Components/LaundryControllButtons.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:sizer/sizer.dart';
 
@@ -10,8 +12,9 @@ class DriverBottomLaundryOrderCard extends StatelessWidget {
   final LaundryOrder order;
   DriverBottomLaundryOrderCard({Key? key, required this.order})
       : super(key: key);
-  LaundryOrderController restaurantOrderController =
+  LaundryOrderController laundryOrderController =
       Get.find<LaundryOrderController>();
+  AuthController _authController = Get.find<AuthController>();
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
@@ -79,43 +82,11 @@ class DriverBottomLaundryOrderCard extends StatelessWidget {
               _orderFromToComponent(textTheme),
               Divider(),
               // Order bottom card footer component (to be refactored)
-              if (order.status == LaundryOrderStatus.OrderReceieved)
-                Flex(
-                  direction: Axis.horizontal,
-                  children: [
-                    Flexible(
-                        flex: 3,
-                        child: TextButton(
-                            onPressed: () {
-                              if (order.status ==
-                                  LaundryOrderStatus.OrderReceieved) {
-                                restaurantOrderController
-                                    .otwPickupOrder(order.orderId);
-                              }
-                            },
-                            child: Container(
-                                alignment: Alignment.center,
-                                padding: EdgeInsets.all(8),
-                                child: Text('Confirm Pick-up')))),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Flexible(
-                      flex: 2,
-                      child: TextButton(
-                          onPressed: () {
-                            // TODO implement cancel function
-                          },
-                          style: TextButton.styleFrom(
-                              backgroundColor: Colors.redAccent),
-                          child: Container(
-                              alignment: Alignment.center,
-                              padding: EdgeInsets.all(8),
-                              child: Text('Cancel'))),
-                    ),
-                  ],
-                ),
-              if (order.status == LaundryOrderStatus.Delivered)
+              if (order.inProcess() &&
+                  order.status != LaundryOrderStatus.AtLaundry)
+                LaundryControllButtons(order: order),
+              if (order.status == LaundryOrderStatus.Delivered ||
+                  order.status == LaundryOrderStatus.AtLaundry)
                 Row(
                   children: [
                     Icon(
@@ -128,9 +99,10 @@ class DriverBottomLaundryOrderCard extends StatelessWidget {
                     ),
                     Flexible(
                         child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Order deliverd',
+                          'Order Deliverd',
                           style: textTheme.bodyText1,
                         ),
                         Text(
@@ -155,6 +127,7 @@ class DriverBottomLaundryOrderCard extends StatelessWidget {
                     ),
                     Flexible(
                         child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           'Order canceled',
@@ -176,63 +149,67 @@ class DriverBottomLaundryOrderCard extends StatelessWidget {
   }
 
   Widget _orderFromToComponent(TextTheme textTheme) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            CircleAvatar(
-              radius: 20,
-              backgroundImage: CachedNetworkImageProvider(
-                  order.serviceProvider?.image ?? ''),
+    List<Widget> fromToWidgets = [
+      Row(
+        children: [
+          CircleAvatar(
+            radius: 20,
+            child: Icon(
+              Icons.local_laundry_service,
+              color: Colors.white,
             ),
-            SizedBox(
-              width: 10,
-            ),
-            Column(
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Column(
+            children: [
+              Text(
+                order.serviceProvider?.name ?? 'Laundry Agency',
+                style: textTheme.bodyText1,
+              ),
+            ],
+          )
+        ],
+      ),
+      Container(
+        height: 30,
+        width: 3,
+        margin: EdgeInsets.only(left: 16),
+        color: Colors.grey.shade500,
+      ),
+      Row(
+        children: [
+          CircleAvatar(
+            radius: 20,
+            backgroundImage: CachedNetworkImageProvider(order.customer.image),
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Flexible(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  order.serviceProvider?.name ?? 'Restaunat',
+                  order.customer.name,
                   style: textTheme.bodyText1,
                 ),
+                Text(
+                  order.to.address,
+                  style: textTheme.subtitle1,
+                ),
               ],
-            )
-          ],
-        ),
-        Container(
-          height: 30,
-          width: 3,
-          margin: EdgeInsets.only(left: 16),
-          color: Colors.grey.shade500,
-        ),
-        Row(
-          children: [
-            CircleAvatar(
-              radius: 20,
-              backgroundImage: CachedNetworkImageProvider(order.customer.image),
             ),
-            SizedBox(
-              width: 10,
-            ),
-            Flexible(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    order.customer.name,
-                    style: textTheme.bodyText1,
-                  ),
-                  Text(
-                    order.to.address,
-                    style: textTheme.subtitle1,
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
-      ],
-    );
+          )
+        ],
+      ),
+    ];
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: ((order).dropoffDriver?.id == _authController.user!.id)
+            ? fromToWidgets
+            : fromToWidgets.reversed.toList());
   }
 
   String _getOrderStatus() {
@@ -251,6 +228,29 @@ class DriverBottomLaundryOrderCard extends StatelessWidget {
         return 'Delivery on the way';
       case LaundryOrderStatus.Delivered:
         return 'Order Delivered';
+      case LaundryOrderStatus.CancelledByAdmin:
+        return 'Order Canceled';
+      case LaundryOrderStatus.CancelledByCustomer:
+        return 'Order Canceled';
+
+      default:
+        return '';
+    }
+  }
+
+  String _getActionButtonText() {
+    switch (order.status) {
+      case LaundryOrderStatus.OrderReceieved:
+        return 'Pick-up Order';
+      case LaundryOrderStatus.OtwPickup:
+        return 'Confirm Pick-up';
+      case LaundryOrderStatus.PickedUp:
+        return 'At laundry';
+
+      case LaundryOrderStatus.ReadyForDelivery:
+        return 'Deliver order';
+      case LaundryOrderStatus.OtwDelivery:
+        return 'Confirm Delivery';
 
       default:
         return '';
