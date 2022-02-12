@@ -29,11 +29,11 @@ class _WrapperState extends State<Wrapper> {
   @override
   void initState() {
     Future.delayed(Duration.zero, () {
-      handleAppVersionUpdatesAndStartListener();
       handleAuthStateChange(Get.find<AuthController>().fireAuthUser);
       Get.find<AuthController>().authStateStream.listen((user) {
         handleAuthStateChange(user);
       });
+      handleAppVersionUpdatesAndStartListener();
     });
     super.initState();
   }
