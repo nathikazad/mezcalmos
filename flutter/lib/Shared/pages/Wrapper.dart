@@ -55,7 +55,10 @@ class _WrapperState extends State<Wrapper> {
   }
 
   void checkIfNotInUpdateScreenAndPush(AppUpdate? appVersionInfos) {
-    if (Get.currentRoute != kAppNeedsUpdate && appVersionInfos != null) {
+    bool _diff = appVersionInfos?.areLocalAndRemoteVersionsDiffrent() == true;
+    if (Get.currentRoute == kAppNeedsUpdate && !_diff) {
+      Get.back();
+    } else if (Get.currentRoute != kAppNeedsUpdate && _diff) {
       Get.toNamed(kAppNeedsUpdate);
     }
   }
