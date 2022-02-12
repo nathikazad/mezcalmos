@@ -13,7 +13,7 @@ render(
   <BrowserRouter>
   <Routes>
     <Route path="/" element={<App />} />
-    <Route path="privacy-policies" element={<PrivacyPolicy />} />
+      <Route path="privacy-policy" element={<PrivacyPolicy />} />
     
   </Routes>
 </BrowserRouter>,
