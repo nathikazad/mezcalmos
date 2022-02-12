@@ -241,7 +241,7 @@ function PrivacyPoliciesComponent() {
 <p>The security of Your Personal Data is important to Us, but remember that no method of transmission over the Internet,
     or method of electronic storage is 100% secure. While We strive to use commercially acceptable means to protect Your
     Personal Data, We cannot guarantee its absolute security.</p>
-<h2><strong>Deletion of Your Personal Data</strong></h2>
+<h2 id="deleteData"><strong>Deletion of Your Personal Data</strong></h2>
 <p>If you desire to erase your personal data, you can contact us</p>
 <ul>
     <li>By email: admin@mezcalmos.com</li>
