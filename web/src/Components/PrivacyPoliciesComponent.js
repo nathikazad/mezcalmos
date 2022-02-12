@@ -111,6 +111,7 @@ function PrivacyPoliciesComponent() {
     Media Services:</p>
 <ul>
     <li>Apple</li>
+            <li>SMS</li>
     <li>Facebook</li>
 </ul>
 <p>If You decide to register through or otherwise grant us access to a Third-Party Social Media Service, We may collect
@@ -240,6 +241,11 @@ function PrivacyPoliciesComponent() {
 <p>The security of Your Personal Data is important to Us, but remember that no method of transmission over the Internet,
     or method of electronic storage is 100% secure. While We strive to use commercially acceptable means to protect Your
     Personal Data, We cannot guarantee its absolute security.</p>
+<h2><strong>Deletion of Your Personal Data</strong></h2>
+<p>If you desire to erase your personal data, you can contact us</p>
+<ul>
+    <li>By email: admin@mezcalmos.com</li>
+</ul>
 <div className="font-medium leading-tight text-4xl mt-0 mb-2">Children's Privacy</div>
 <p>Our Service does not address anyone under the age of 13. We do not knowingly collect personally identifiable
     information from anyone under the age of 13. If You are a parent or guardian and You are aware that Your child has
