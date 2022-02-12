@@ -52,7 +52,8 @@ const String getxUserDescriptionPlaceHolder = "user_descriptor_placeholder";
 const String getxTaxiDescriptor = "taxi_descriptor";
 const String getxDestinationDescriptor = "destination_descriptor";
 const String getxUserId = "userid";
-const String getxVersion = "version";
+const String getxAppVersion = "version";
+const String getxPackageName = "packageName";
 const String defaultUserImgUrl =
     "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d";
 
@@ -60,6 +61,7 @@ const String defaultUserImgUrl =
 const String aDefaultNotificationsSound = 'assets/sounds/notif-alert.mp3';
 const String aLogoPath = "assets/images/shared/logo.png";
 const String a404 = "assets/images/shared/404.png";
+const String aUpdate = "assets/images/shared/update.png";
 const String aDefaultDbUserImgAsset =
     "assets/images/shared/defaultUserLogo.png";
 const String aDefaultAvatar = "assets/images/shared/noUserImage.jpg";
