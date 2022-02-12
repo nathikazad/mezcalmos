@@ -47,15 +47,15 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>App needs location always and when in use to update your customer about your location!</string>
+	<string>App needs to access your location informations always and when in use to keep your customer updated about your exact location on the map!</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>App needs location always and when in use to update your customer about your location, so can the app have location always?</string>
+	<string>App needs to access your location informations always and when in use to update your customer about your exact location on the map!</string>
 	<key>NSLocationUsageDescription</key>
 	<string>Older devices need location.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>App needs location when in use to update your customer about your location</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This app require PhotoLibrary Access</string>
+	<string>This app require PhotoLibrary Access in order to be able to pick a picture.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
