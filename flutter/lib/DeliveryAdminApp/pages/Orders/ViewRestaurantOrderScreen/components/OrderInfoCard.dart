@@ -6,8 +6,8 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
-import 'OrderItemsCard.dart';
 import 'ChangeStatusButtons.dart';
+import 'OrderItemsCard.dart';
 
 //Display the order customer and items
 
@@ -89,7 +89,7 @@ class _OrderInfoCardState extends State<OrderInfoCard> {
               ),
               if (widget.order.value?.inProcess() ?? false)
                 Row(
-                  children: changebuttonsDepandesOnStatus(widget.order),
+                  children: buildRestOrderButtons(widget.order),
                 )
             ],
           ),

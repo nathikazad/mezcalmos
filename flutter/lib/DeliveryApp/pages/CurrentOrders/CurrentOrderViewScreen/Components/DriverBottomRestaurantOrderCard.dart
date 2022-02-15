@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/restaurantController.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../../Shared/models/Orders/RestaurantOrder.dart';
@@ -33,7 +32,11 @@ class DriverBottomRestaurantOrderCard extends StatelessWidget {
               Divider(),
               Row(
                 children: [
-                  _getOrderWidget(context),
+                  Icon(
+                    Icons.food_bank,
+                    size: 40.sp,
+                    color: Theme.of(context).primaryColorLight,
+                  ),
                   Flexible(
                     flex: 4,
                     fit: FlexFit.tight,
@@ -41,7 +44,7 @@ class DriverBottomRestaurantOrderCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          _getOrderTitle(),
+                          'Restaurant Delivery',
                           style: textTheme.headline3!.copyWith(fontSize: 13.sp),
                         ),
                         Row(
@@ -89,10 +92,6 @@ class DriverBottomRestaurantOrderCard extends StatelessWidget {
                                   RestaurantOrderStatus.ReadyForPickup) {
                                 restaurantOrderController
                                     .startRestaurantDelivery(order.orderId);
-                              } else if (order.status ==
-                                  RestaurantOrderStatus.OnTheWay) {
-                                restaurantOrderController
-                                    .finishRestaurantDelivery(order.orderId);
                               }
                             },
                             child: Container(
@@ -130,6 +129,7 @@ class DriverBottomRestaurantOrderCard extends StatelessWidget {
                     ),
                     Flexible(
                         child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           'Order deliverd',
@@ -157,6 +157,7 @@ class DriverBottomRestaurantOrderCard extends StatelessWidget {
                     ),
                     Flexible(
                         child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           'Order canceled',
@@ -262,41 +263,6 @@ class DriverBottomRestaurantOrderCard extends StatelessWidget {
 
       default:
         return '';
-    }
-  }
-
-  _getOrderWidget(context) {
-    switch (order.orderType) {
-      case OrderType.Restaurant:
-        return Icon(
-          Icons.food_bank,
-          size: 40.sp,
-          color: Theme.of(context).primaryColorLight,
-        );
-      case OrderType.Laundry:
-        return Icon(
-          Icons.food_bank,
-          size: 40.sp,
-          color: Theme.of(context).primaryColorLight,
-        );
-
-      default:
-        return CircleAvatar(
-          radius: 30,
-          backgroundImage: CachedNetworkImageProvider(order.customer.image),
-        );
-    }
-  }
-
-  String _getOrderTitle() {
-    switch (order.orderType) {
-      case OrderType.Restaurant:
-        return 'Restaurant Delivery';
-
-      case OrderType.Laundry:
-        return 'Laundry Delivery';
-      default:
-        return 'Order';
     }
   }
 }

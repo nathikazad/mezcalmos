@@ -98,20 +98,21 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                       : PastOrderInfo(order: order.value!),
 
                   //============================= Customer info====================
-                  Obx(
-                    () => DriverCard(
-                      canChangeDriver: true,
-                      driver: driver,
-                      order: order.value!,
-                      callBack: (newDriver) {
-                        deliveryDriverController.assignDeliveryDriver(
-                            deliveryDriverId: newDriver!.deliveryDriverId,
-                            orderId: order.value!.orderId,
-                            orderType: OrderType.Restaurant,
-                            deliveryDriverType: DeliveryDriverType.DropOff);
-                      },
+                  if (order.value?.inProcess() ?? false)
+                    Obx(
+                      () => DriverCard(
+                        canChangeDriver: true,
+                        driver: driver,
+                        order: order.value!,
+                        callBack: (newDriver) {
+                          deliveryDriverController.assignDeliveryDriver(
+                              deliveryDriverId: newDriver!.deliveryDriverId,
+                              orderId: order.value!.orderId,
+                              orderType: OrderType.Restaurant,
+                              deliveryDriverType: DeliveryDriverType.DropOff);
+                        },
+                      ),
                     ),
-                  ),
                   //getCustomerInfoCart(),
                   OrderInfoCard(order: order),
                   //==========================>total cost=====================================

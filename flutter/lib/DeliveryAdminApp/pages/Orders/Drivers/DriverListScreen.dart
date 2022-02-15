@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/deliveryDriverController.dart';
-import 'package:mezcalmos/DeliveryAdminApp/models/Driver.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/Drivers/DriversMapComponent.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -28,7 +27,7 @@ class _DriversListScreenState extends State<DriversListScreen> {
   @override
   void initState() {
     order = Get.arguments;
-    deliveryDrivers.value = deliveryDriverController.deliveryDrivers.value;
+    deliveryDrivers.value = deliveryDriverController.deliveryDrivers;
 
     super.initState();
   }
@@ -45,20 +44,26 @@ class _DriversListScreenState extends State<DriversListScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             DriversMapCompnonet(
-              drivers: Driver.dummyDrivers,
+              drivers: deliveryDrivers.value,
               order: order!,
             ),
-            Container(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: List.generate(
-                    deliveryDrivers.length,
-                    (index) => DriverSelectCard(
-                          driver: deliveryDrivers[index],
-                          function: () {
-                            Get.back(result: deliveryDrivers[index]);
-                          },
-                        )),
+            Obx(
+              () => Container(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: List.generate(
+                      deliveryDrivers.length,
+                      (index) => DriverSelectCard(
+                            driver: deliveryDrivers[index],
+                            function: (deliveryDrivers[index]
+                                    .deliveryDriverState
+                                    .isOnline)
+                                ? () {
+                                    Get.back(result: deliveryDrivers[index]);
+                                  }
+                                : null,
+                          )),
+                ),
               ),
             )
           ],
@@ -75,7 +80,7 @@ class DriverSelectCard extends StatelessWidget {
     required this.function,
   }) : super(key: key);
   final DeliveryDriver driver;
-  final Function() function;
+  final Function()? function;
   @override
   Widget build(BuildContext context) {
     final txt = Theme.of(context).textTheme;

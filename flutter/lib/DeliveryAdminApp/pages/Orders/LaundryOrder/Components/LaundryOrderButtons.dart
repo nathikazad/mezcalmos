@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/buttonComponent.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/dailogComponent.dart';
 import 'package:mezcalmos/DeliveryAdminApp/constants/global.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/laundryOrderController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:sizer/sizer.dart';
 
 // the styles of status buttons inside the order screen
@@ -184,7 +184,7 @@ class OrderButtons {
   }
 
   //this button for readyforDelivery
-  static Widget readyForDeliveryButton(String orderId) {
+  static Widget readyForDeliveryButton(LaundryOrder order) {
     LaundryOrderController controller = Get.find<LaundryOrderController>();
     LanguageController lang = Get.find<LanguageController>();
     return ButtonComponent(
@@ -199,31 +199,38 @@ class OrderButtons {
             begin: Alignment(-0.10374055057764053, 0),
             end: Alignment(1.1447703838348389, 1.1694844961166382),
             colors: [const Color(0xffff9300), const Color(0xdbd15f18)]),
-        function: () async {
-          var res = await dailogComponent(
-              lang.strings["deliveryAdminApp"]["laundry"]
-                  ["readyForDeliveryTitle"],
-              lang.strings["deliveryAdminApp"]["laundry"]
-                  ["readyForDeliveryText"], () {
-            Get.back(result: true);
-          }, () {
-            Get.back(result: false);
-          },
-              Icon(
-                Icons.dry_cleaning_rounded,
-                size: 70,
-                color: Colors.purple,
-              ),
-              LinearGradient(
-                  begin: Alignment(-0.10374055057764053, 0),
-                  end: Alignment(1.1447703838348389, 1.1694844961166382),
-                  colors: [const Color(0xffff9300), const Color(0xdbd15f18)]));
-          if (res) {
-            Get.snackbar("Loading", "");
-            controller.readyForDeliveryOrder(orderId);
-            Get.back();
-          }
-        });
+        function: (order.dropoffDriver != null)
+            ? () async {
+                var res = await dailogComponent(
+                    lang.strings["deliveryAdminApp"]["laundry"]
+                        ["readyForDeliveryTitle"],
+                    lang.strings["deliveryAdminApp"]["laundry"]
+                        ["readyForDeliveryText"], () {
+                  Get.back(result: true);
+                }, () {
+                  Get.back(result: false);
+                },
+                    Icon(
+                      Icons.dry_cleaning_rounded,
+                      size: 70,
+                      color: Colors.purple,
+                    ),
+                    LinearGradient(
+                        begin: Alignment(-0.10374055057764053, 0),
+                        end: Alignment(1.1447703838348389, 1.1694844961166382),
+                        colors: [
+                          const Color(0xffff9300),
+                          const Color(0xdbd15f18)
+                        ]));
+                if (res) {
+                  Get.snackbar("Loading", "");
+                  controller.readyForDeliveryOrder(order.orderId);
+                  Get.back();
+                }
+              }
+            : () {
+                Get.snackbar("Please select a driver ", "");
+              });
   }
 
   //this button for otwDelivery
