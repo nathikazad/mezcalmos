@@ -9,6 +9,8 @@ import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 
+import '../../Shared/helpers/PrintHelper.dart';
+
 class DeliveryDriverController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   ForegroundNotificationsController _fbNotificationsController =
@@ -19,7 +21,9 @@ class DeliveryDriverController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    //  mezDbgPrint("--------------------> DeliveryDriverController Initialized !");
+    mezDbgPrint("--------------------> DeliveryDriverController Initialized !");
+
+    _deliveryDriversListener?.cancel();
     _deliveryDriversListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(deliveryDriversNode())

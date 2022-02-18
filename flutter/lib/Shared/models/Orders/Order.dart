@@ -67,6 +67,7 @@ extension ParseStringToPaymentType on String {
 
 abstract class DeliverableOrder extends Order {
   DeliveryDriverUserInfo? dropoffDriver;
+  String? dropOffDriverChatId;
   DeliverableOrder(
       {required String orderId,
       String? serviceProviderId,
@@ -78,6 +79,7 @@ abstract class DeliverableOrder extends Order {
       required Location to,
       required OrderType orderType,
       this.dropoffDriver,
+      required this.dropOffDriverChatId,
       RouteInformation? routeInformation})
       : super(
             orderId: orderId,
@@ -94,7 +96,7 @@ abstract class DeliverableOrder extends Order {
 
 abstract class TwoWayDeliverableOrder extends DeliverableOrder {
   DeliveryDriverUserInfo? pickupDriver;
-  DeliveryDriverUserInfo? dropoffDriver;
+  String? pickupDriverChatId;
   TwoWayDeliverableOrder(
       {required String orderId,
       String? serviceProviderId,
@@ -106,8 +108,10 @@ abstract class TwoWayDeliverableOrder extends DeliverableOrder {
       required Location to,
       required OrderType orderType,
       RouteInformation? routeInformation,
+      DeliveryDriverUserInfo? dropoffDriver,
+      required dropOffDriverChatId,
       this.pickupDriver,
-      this.dropoffDriver})
+      required this.pickupDriverChatId})
       : super(
             orderId: orderId,
             orderType: orderType,
@@ -118,5 +122,7 @@ abstract class TwoWayDeliverableOrder extends DeliverableOrder {
             customer: customer,
             serviceProvider: serviceProvider,
             to: to,
-            routeInformation: routeInformation);
+            routeInformation: routeInformation,
+            dropoffDriver: dropoffDriver,
+            dropOffDriverChatId: dropOffDriverChatId);
 }

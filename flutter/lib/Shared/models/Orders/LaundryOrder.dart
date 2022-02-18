@@ -47,7 +47,9 @@ class LaundryOrder extends TwoWayDeliverableOrder {
       required this.status,
       required UserInfo customer,
       DeliveryDriverUserInfo? dropoffDriver,
+      String? dropOffDriverChatId,
       DeliveryDriverUserInfo? pickupDriver,
+      String? pickupDriverChatId,
       this.weight,
       this.notes})
       : super(
@@ -59,7 +61,9 @@ class LaundryOrder extends TwoWayDeliverableOrder {
             customer: customer,
             to: to,
             dropoffDriver: dropoffDriver,
-            pickupDriver: pickupDriver);
+            dropOffDriverChatId: dropOffDriverChatId,
+            pickupDriver: pickupDriver,
+            pickupDriverChatId: pickupDriverChatId);
 
   factory LaundryOrder.fromData(dynamic id, dynamic data) {
     LaundryOrder laundryOrder = LaundryOrder(
@@ -75,9 +79,13 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         dropoffDriver: (data["dropoffDriver"] != null)
             ? DeliveryDriverUserInfo.fromData(data["dropoffDriver"])
             : null,
+        dropOffDriverChatId: data['secondaryChats']
+            ?['deliveryAdminDropOffDriver'],
         pickupDriver: (data["pickupDriver"] != null)
             ? DeliveryDriverUserInfo.fromData(data["pickupDriver"])
-            : null);
+            : null,
+        pickupDriverChatId: data['secondaryChats']
+            ?['deliveryAdminPickupDriver']);
     return laundryOrder;
   }
 
