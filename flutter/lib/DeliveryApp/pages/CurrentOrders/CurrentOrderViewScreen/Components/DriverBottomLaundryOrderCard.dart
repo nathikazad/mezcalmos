@@ -32,51 +32,7 @@ class DriverBottomLaundryOrderCard extends StatelessWidget {
                 style: textTheme.bodyText2,
               ),
               Divider(),
-              Row(
-                children: [
-                  Icon(
-                    Icons.local_laundry_service,
-                    size: 40.sp,
-                    color: Theme.of(context).primaryColorLight,
-                  ),
-                  Flexible(
-                    flex: 4,
-                    fit: FlexFit.tight,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Laundry Order',
-                          style: textTheme.headline3!.copyWith(fontSize: 13.sp),
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.schedule,
-                              size: 15,
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              DateFormat('dd MMM yy h:m')
-                                  .format(order.orderTime),
-                              style: textTheme.subtitle1,
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                  Spacer(),
-                  IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.textsms_rounded,
-                        color: Theme.of(context).primaryColorLight,
-                      )),
-                ],
-              ),
+              _orderHeaderInfo(context, textTheme),
               Divider(),
               // From to component
               _orderFromToComponent(textTheme),
@@ -87,65 +43,121 @@ class DriverBottomLaundryOrderCard extends StatelessWidget {
                 LaundryControllButtons(order: order),
               if (order.status == LaundryOrderStatus.Delivered ||
                   order.status == LaundryOrderStatus.AtLaundry)
-                Row(
-                  children: [
-                    Icon(
-                      Icons.check_circle,
-                      color: Colors.green,
-                      size: 30.sp,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Flexible(
-                        child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Order Deliverd',
-                          style: textTheme.bodyText1,
-                        ),
-                        Text(
-                          DateFormat('dd MMM yy h:m').format(order.orderTime),
-                          style: textTheme.subtitle1,
-                        )
-                      ],
-                    ))
-                  ],
-                ),
+                _orderDeliveredBottomComponent(textTheme),
               if (order.status == LaundryOrderStatus.CancelledByAdmin ||
                   order.status == LaundryOrderStatus.CancelledByCustomer)
-                Row(
-                  children: [
-                    Icon(
-                      Icons.cancel,
-                      color: Colors.redAccent,
-                      size: 30.sp,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Flexible(
-                        child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Order canceled',
-                          style: textTheme.bodyText1,
-                        ),
-                        Text(
-                          DateFormat('dd MMM yy h:m').format(order.orderTime),
-                          style: textTheme.subtitle1,
-                        )
-                      ],
-                    ))
-                  ],
-                ),
+                _orderBottomCanceledComponent(textTheme),
             ],
           ),
         ),
       ),
     );
+  }
+
+  Widget _orderBottomCanceledComponent(TextTheme textTheme) {
+    return Row(
+                children: [
+                  Icon(
+                    Icons.cancel,
+                    color: Colors.redAccent,
+                    size: 30.sp,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Flexible(
+                      child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Order canceled',
+                        style: textTheme.bodyText1,
+                      ),
+                      Text(
+                        DateFormat('dd MMM yy h:m').format(order.orderTime),
+                        style: textTheme.subtitle1,
+                      )
+                    ],
+                  ))
+                ],
+              );
+  }
+
+  Widget _orderDeliveredBottomComponent(TextTheme textTheme) {
+    return Row(
+                children: [
+                  Icon(
+                    Icons.check_circle,
+                    color: Colors.green,
+                    size: 30.sp,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Flexible(
+                      child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Order Deliverd',
+                        style: textTheme.bodyText1,
+                      ),
+                      Text(
+                        DateFormat('dd MMM yy h:m').format(order.orderTime),
+                        style: textTheme.subtitle1,
+                      )
+                    ],
+                  ))
+                ],
+              );
+  }
+
+  Widget _orderHeaderInfo(BuildContext context, TextTheme textTheme) {
+    return Row(
+              children: [
+                Icon(
+                  Icons.local_laundry_service,
+                  size: 40.sp,
+                  color: Theme.of(context).primaryColorLight,
+                ),
+                Flexible(
+                  flex: 4,
+                  fit: FlexFit.tight,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Laundry Order',
+                        style: textTheme.headline3!.copyWith(fontSize: 13.sp),
+                      ),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.schedule,
+                            size: 15,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            DateFormat('dd MMM yy h:m')
+                                .format(order.orderTime),
+                            style: textTheme.subtitle1,
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                Spacer(),
+                IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.textsms_rounded,
+                      color: Theme.of(context).primaryColorLight,
+                    )),
+              ],
+            );
   }
 
   Widget _orderFromToComponent(TextTheme textTheme) {
@@ -207,7 +219,7 @@ class DriverBottomLaundryOrderCard extends StatelessWidget {
     ];
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: ((order).dropoffDriver?.id == _authController.user!.id)
+        children: (order.getCurrentPhase() == LaundryOrderPhase.Dropoff)
             ? fromToWidgets
             : fromToWidgets.reversed.toList());
   }
@@ -232,25 +244,6 @@ class DriverBottomLaundryOrderCard extends StatelessWidget {
         return 'Order Canceled';
       case LaundryOrderStatus.CancelledByCustomer:
         return 'Order Canceled';
-
-      default:
-        return '';
-    }
-  }
-
-  String _getActionButtonText() {
-    switch (order.status) {
-      case LaundryOrderStatus.OrderReceieved:
-        return 'Pick-up Order';
-      case LaundryOrderStatus.OtwPickup:
-        return 'Confirm Pick-up';
-      case LaundryOrderStatus.PickedUp:
-        return 'At laundry';
-
-      case LaundryOrderStatus.ReadyForDelivery:
-        return 'Deliver order';
-      case LaundryOrderStatus.OtwDelivery:
-        return 'Confirm Delivery';
 
       default:
         return '';

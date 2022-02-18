@@ -23,7 +23,7 @@ class _DriversMapCompnonetState extends State<DriversMapCompnonet> {
     widget.mapController.setAnimateMarkersPolyLinesBounds(true);
     widget.mapController.setLocation(widget.order.to);
 
-    showDrivers();
+    getDriversMarkers();
     widget.mapController.addOrUpdatePurpleDestinationMarker(
         latLng: LatLng(widget.order.to.latitude, widget.order.to.longitude));
     super.initState();
@@ -41,7 +41,7 @@ class _DriversMapCompnonetState extends State<DriversMapCompnonet> {
     );
   }
 
-  showDrivers() {
+  getDriversMarkers() {
     widget.drivers.forEach((element) {
       widget.mapController.addOrUpdateUserMarker(
           latLng: element.driverLocation,

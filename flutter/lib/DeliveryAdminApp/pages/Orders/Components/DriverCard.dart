@@ -57,77 +57,81 @@ class DriverCard extends StatelessWidget {
                 width: double.infinity,
                 padding: const EdgeInsets.all(8),
                 child: (driver != null)
-                    ? Row(
-                        children: [
-                          CircleAvatar(
-                            radius: 25,
-                            backgroundImage:
-                                CachedNetworkImageProvider(driver!.image),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Flexible(
-                            flex: 3,
-                            fit: FlexFit.tight,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  driver!.name,
-                                  style: txt.bodyText2,
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                              ],
-                            ),
-                          ),
-                          Spacer(),
-                          IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.message_outlined)),
-                          IconButton(
-                              onPressed: (canChangeDriver)
-                                  ? () async {
-                                      DeliveryDriver? newDriver =
-                                          await Get.toNamed(kDriversListRoute,
-                                                  arguments: order)
-                                              as DeliveryDriver;
-                                      callBack(newDriver);
-                                    }
-                                  : null,
-                              icon: Icon(
-                                Icons.edit_rounded,
-                                color: (canChangeDriver)
-                                    ? Theme.of(context).primaryColorLight
-                                    : Colors.grey.shade400,
-                              )),
-                        ],
-                      )
-                    : Row(
-                        children: [
-                          Icon(
-                            Icons.moped_rounded,
-                            color: Theme.of(context).primaryColorLight,
-                            size: 50,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'Pick a driver',
-                            style: txt.bodyText1,
-                          ),
-                          Spacer(),
-                          Icon(Icons.arrow_forward)
-                        ],
-                      ),
+                    ? driverInfoComponent(txt, context)
+                    : noDriverComponent(context, txt),
               ),
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget noDriverComponent(BuildContext context, TextTheme txt) {
+    return Row(
+      children: [
+        Icon(
+          Icons.moped_rounded,
+          color: Theme.of(context).primaryColorLight,
+          size: 50,
+        ),
+        SizedBox(
+          width: 10,
+        ),
+        Text(
+          'Pick a driver',
+          style: txt.bodyText1,
+        ),
+        Spacer(),
+        Icon(Icons.arrow_forward)
+      ],
+    );
+  }
+
+  Widget driverInfoComponent(TextTheme txt, BuildContext context) {
+    return Row(
+      children: [
+        CircleAvatar(
+          radius: 25,
+          backgroundImage: CachedNetworkImageProvider(driver!.image),
+        ),
+        SizedBox(
+          width: 10,
+        ),
+        Flexible(
+          flex: 3,
+          fit: FlexFit.tight,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                driver!.name,
+                style: txt.bodyText2,
+              ),
+              SizedBox(
+                height: 5,
+              ),
+            ],
+          ),
+        ),
+        Spacer(),
+        IconButton(onPressed: () {}, icon: Icon(Icons.message_outlined)),
+        IconButton(
+            onPressed: (canChangeDriver)
+                ? () async {
+                    DeliveryDriver? newDriver =
+                        await Get.toNamed(kDriversListRoute, arguments: order)
+                            as DeliveryDriver;
+                    callBack(newDriver);
+                  }
+                : null,
+            icon: Icon(
+              Icons.edit_rounded,
+              color: (canChangeDriver)
+                  ? Theme.of(context).primaryColorLight
+                  : Colors.grey.shade400,
+            )),
+      ],
     );
   }
 }

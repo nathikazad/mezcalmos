@@ -14,6 +14,11 @@ enum LaundryOrderStatus {
   CancelledByAdmin,
   CancelledByCustomer
 }
+enum LaundryOrderPhase {
+  Pickup,
+  Dropoff,
+  Neither,
+}
 
 extension ParseOrderStatusToString on LaundryOrderStatus {
   String toFirebaseFormatString() {
@@ -103,5 +108,23 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         status == LaundryOrderStatus.AtLaundry ||
         status == LaundryOrderStatus.ReadyForDelivery ||
         status == LaundryOrderStatus.OtwDelivery;
+  }
+
+  @override
+  LaundryOrderPhase getCurrentPhase() {
+    switch (this.status) {
+      case LaundryOrderStatus.OrderReceieved:
+      case LaundryOrderStatus.PickedUp:
+      case LaundryOrderStatus.OtwPickup:
+      case LaundryOrderStatus.AtLaundry:
+        return LaundryOrderPhase.Pickup;
+      case LaundryOrderStatus.ReadyForDelivery:
+      case LaundryOrderStatus.OtwDelivery:
+        return LaundryOrderPhase.Dropoff;
+      case LaundryOrderStatus.Delivered:
+        return LaundryOrderPhase.Dropoff;
+      default:
+        return LaundryOrderPhase.Neither;
+    }
   }
 }

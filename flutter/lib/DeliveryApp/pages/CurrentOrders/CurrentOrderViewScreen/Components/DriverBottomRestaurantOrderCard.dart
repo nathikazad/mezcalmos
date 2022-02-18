@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/restaurantController.dart';
+import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Components/RestaurantControllButtons.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../../Shared/models/Orders/RestaurantOrder.dart';
@@ -30,157 +31,13 @@ class DriverBottomRestaurantOrderCard extends StatelessWidget {
                 style: textTheme.bodyText2,
               ),
               Divider(),
-              Row(
-                children: [
-                  Icon(
-                    Icons.food_bank,
-                    size: 40.sp,
-                    color: Theme.of(context).primaryColorLight,
-                  ),
-                  Flexible(
-                    flex: 4,
-                    fit: FlexFit.tight,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Restaurant Delivery',
-                          style: textTheme.headline3!.copyWith(fontSize: 13.sp),
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.schedule,
-                              size: 15,
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              DateFormat('dd MMM yy h:m')
-                                  .format(order.orderTime),
-                              style: textTheme.subtitle1,
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                  Spacer(),
-                  IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.textsms_rounded,
-                        color: Theme.of(context).primaryColorLight,
-                      )),
-                ],
-              ),
+              _orderHeaderInfo(context, textTheme),
               Divider(),
               // From to component
               _orderFromToComponent(textTheme),
               Divider(),
               // Order bottom card footer component (to be refactored)
-              if (order.status == RestaurantOrderStatus.ReadyForPickup)
-                Flex(
-                  direction: Axis.horizontal,
-                  children: [
-                    Flexible(
-                        flex: 3,
-                        child: TextButton(
-                            onPressed: () {
-                              if (order.status ==
-                                  RestaurantOrderStatus.ReadyForPickup) {
-                                restaurantOrderController
-                                    .startRestaurantDelivery(order.orderId);
-                              }
-                            },
-                            child: Container(
-                                alignment: Alignment.center,
-                                padding: EdgeInsets.all(8),
-                                child: Text('Confirm Pick-up')))),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Flexible(
-                      flex: 2,
-                      child: TextButton(
-                          onPressed: () {
-                            // TODO implement cancel function
-                          },
-                          style: TextButton.styleFrom(
-                              backgroundColor: Colors.redAccent),
-                          child: Container(
-                              alignment: Alignment.center,
-                              padding: EdgeInsets.all(8),
-                              child: Text('Cancel'))),
-                    ),
-                  ],
-                ),
-              if (order.status == RestaurantOrderStatus.Delivered)
-                Row(
-                  children: [
-                    Icon(
-                      Icons.check_circle,
-                      color: Colors.green,
-                      size: 30.sp,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Flexible(
-                        child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Order deliverd',
-                          style: textTheme.bodyText1,
-                        ),
-                        Text(
-                          DateFormat('dd MMM yy h:m').format(order.orderTime),
-                          style: textTheme.subtitle1,
-                        )
-                      ],
-                    ))
-                  ],
-                ),
-              if (order.status == RestaurantOrderStatus.CancelledByAdmin ||
-                  order.status == RestaurantOrderStatus.CancelledByCustomer)
-                Row(
-                  children: [
-                    Icon(
-                      Icons.cancel,
-                      color: Colors.redAccent,
-                      size: 30.sp,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Flexible(
-                        child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Order canceled',
-                          style: textTheme.bodyText1,
-                        ),
-                        Text(
-                          DateFormat('dd MMM yy h:m').format(order.orderTime),
-                          style: textTheme.subtitle1,
-                        )
-                      ],
-                    ))
-                  ],
-                ),
-              if (order.status == RestaurantOrderStatus.OnTheWay)
-                TextButton(
-                    onPressed: () {
-                      restaurantOrderController
-                          .finishRestaurantDelivery(order.orderId);
-                    },
-                    child: Container(
-                      alignment: Alignment.center,
-                      child: Text('Confirm delivery'),
-                    ))
+              RestaurantControllButtons(order: order),
             ],
           ),
         ),
@@ -188,6 +45,55 @@ class DriverBottomRestaurantOrderCard extends StatelessWidget {
     );
   }
 
+// Order info (order type and time and chat icon)
+  Widget _orderHeaderInfo(BuildContext context, TextTheme textTheme) {
+    return Row(
+      children: [
+        Icon(
+          Icons.food_bank,
+          size: 40.sp,
+          color: Theme.of(context).primaryColorLight,
+        ),
+        Flexible(
+          flex: 4,
+          fit: FlexFit.tight,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Restaurant Delivery',
+                style: textTheme.headline3!.copyWith(fontSize: 13.sp),
+              ),
+              Row(
+                children: [
+                  Icon(
+                    Icons.schedule,
+                    size: 15,
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text(
+                    DateFormat('dd MMM yy h:m').format(order.orderTime),
+                    style: textTheme.subtitle1,
+                  )
+                ],
+              )
+            ],
+          ),
+        ),
+        Spacer(),
+        IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.textsms_rounded,
+              color: Theme.of(context).primaryColorLight,
+            )),
+      ],
+    );
+  }
+
+// Order start point and destination component
   Widget _orderFromToComponent(TextTheme textTheme) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -248,6 +154,7 @@ class DriverBottomRestaurantOrderCard extends StatelessWidget {
     );
   }
 
+// get order status readable title
   String _getOrderStatus() {
     switch (order.status) {
       case RestaurantOrderStatus.OrderReceieved:

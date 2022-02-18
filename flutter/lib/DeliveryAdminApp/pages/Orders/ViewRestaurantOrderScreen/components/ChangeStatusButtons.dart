@@ -17,17 +17,6 @@ List<Widget> buildRestOrderButtons(
 
 // Change status of the order compnent inside the order view screen
 
-List<Widget> changebuttonsDepandesOnStatus(Rxn<RestaurantOrder> order) {
-  if (order.value?.inProcess() ?? false)
-    return [
-      Expanded(
-        child: changeStatusButton(order)!,
-      ),
-      ButtonsStyle.cancelButtonWidget(order.value!.orderId)
-    ];
-  else
-    return [];
-}
 
 Widget? changeStatusButton(Rxn<RestaurantOrder> order) {
   switch (order.value!.status) {
@@ -35,7 +24,7 @@ Widget? changeStatusButton(Rxn<RestaurantOrder> order) {
       return ButtonsStyle.orderReceievedButtonWidget(order.value!.orderId);
 
     case RestaurantOrderStatus.PreparingOrder:
-      return ButtonsStyle.preparingOrderButtonWidget(order.value!.orderId);
+      return ButtonsStyle.preparingOrderButtonWidget(order.value!);
 
     default:
       return SizedBox();

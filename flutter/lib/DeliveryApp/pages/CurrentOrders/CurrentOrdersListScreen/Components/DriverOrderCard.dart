@@ -31,7 +31,7 @@ class DriverOrderCard extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _getOrderWidget(context),
+                  _getOrderIcon(context),
                   Flexible(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,15 +87,15 @@ class DriverOrderCard extends StatelessWidget {
     );
   }
 
-  Widget _getOrderWidget(context) {
+  Widget _getOrderIcon(context) {
     if (order.orderType == OrderType.Restaurant) {
       return Icon(
         Icons.food_bank,
         size: 45.sp,
         color: Theme.of(context).primaryColorLight,
       );
-    } else if ((order as LaundryOrder).dropoffDriver?.id ==
-        _authController.user!.id) {
+    } else if ((order as LaundryOrder).getCurrentPhase() ==
+        LaundryOrderPhase.Dropoff) {
       return Icon(
         Icons.local_laundry_service_rounded,
         size: 45.sp,
@@ -112,8 +112,8 @@ class DriverOrderCard extends StatelessWidget {
   String _getOrderTitle() {
     if (order.orderType == OrderType.Restaurant) {
       return 'Restaurant Delivery';
-    } else if ((order as LaundryOrder).dropoffDriver?.id ==
-        _authController.user!.id) {
+    } else if ((order as LaundryOrder).getCurrentPhase() ==
+        LaundryOrderPhase.Dropoff) {
       return 'Laundry Delivery';
     } else {
       return 'Laundry pick-up';

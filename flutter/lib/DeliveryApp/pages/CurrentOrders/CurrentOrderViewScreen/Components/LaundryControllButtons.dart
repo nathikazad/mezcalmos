@@ -5,12 +5,12 @@ import 'package:mezcalmos/DeliveryApp/controllers/laundryController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 
 class LaundryControllButtons extends StatelessWidget {
-  ///
+ 
   /// UI : shows two buttons one to controll the order status and other to cancel the order
   /// PARAMETER : Deliverable order as laundry order
   /// LOGIC : first button text and onPressed function depends on order status
 
-  ///
+
 
   final LaundryOrder order;
   LaundryControllButtons({Key? key, required this.order}) : super(key: key);

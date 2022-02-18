@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/deliveryNodes.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
@@ -20,7 +19,7 @@ class DeliveryDriverController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    mezDbgPrint("--------------------> DeliveryDriverController Initialized !");
+    //  mezDbgPrint("--------------------> DeliveryDriverController Initialized !");
     _deliveryDriversListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(deliveryDriversNode())
@@ -44,8 +43,6 @@ class DeliveryDriverController extends GetxController {
       required OrderType orderType,
       DeliveryDriverType deliveryDriverType =
           DeliveryDriverType.DropOff}) async {
-    mezDbgPrint(
-        "---------- $orderId ----------- $deliveryDriverId -------- $deliveryDriverType");
     HttpsCallable dropOrderFunction =
         FirebaseFunctions.instance.httpsCallable('delivery-assignDriver');
     try {

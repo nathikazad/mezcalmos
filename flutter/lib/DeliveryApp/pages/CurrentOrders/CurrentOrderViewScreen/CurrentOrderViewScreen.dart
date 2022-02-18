@@ -63,53 +63,42 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderViewScreen> {
   }
 
   Widget build(BuildContext context) {
-    // make sure can't be poped, unless we do.
-    mezDbgPrint("***************************************");
-
     return WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
             key: Get.find<SideMenuDrawerController>().getNewKey(),
             drawer: MezSideMenu(),
-            //  backgroundColor: Colors.white,
             appBar: DeliveryAppBar(AppBarLeftButtonType.Back),
             body: SingleChildScrollView(
               child: Obx(
                 () {
-                  if (order != null
-                      //  && this.mGoogleMapController.location.value != null
-                      ) {
+                  if (order != null) {
                     return Column(children: [
                       DriverOrderMapComponent(order: order.value!),
-                      (order.value!.orderType == OrderType.Restaurant)
-                          ? DriverBottomRestaurantOrderCard(
-                              order: order.value as RestaurantOrder)
-                          : (order.value!.orderType == OrderType.Laundry)
-                              ? DriverBottomLaundryOrderCard(
-                                  order: order.value as LaundryOrder)
-                              : SizedBox()
+                      getOrderBottomComponent()
                     ]);
                   } else {
                     return MezLogoAnimation(
                       centered: true,
                     );
                   }
-                  // return Stack(alignment: Alignment.topCenter, children: [
-                  // DriverOrderMapComponent(order: order.value!),
-                  // (order.value!.orderType == OrderType.Restaurant)
-                  //     ? DriverBottomRestaurantOrderCard(
-                  //         order: order.value as RestaurantOrder)
-                  //     : SizedBox()
-                  // MGoogleMap(
-                  //   mGoogleMapController: this.mGoogleMapController,
-                  //   myLocationButtonEnabled: false,
-                  //   debugString: "CurrentOrderScreen",
-                  // ),
-                  // CurrentPositionedBottomBar(order!),
-                  // CurrentPositionedFromToTopBar(order!),
                 },
               ),
-            ))); // no need for obx here.
+            )));
+  }
+
+  Widget getOrderBottomComponent() {
+    switch (order.value!.orderType) {
+      case OrderType.Restaurant:
+        return DriverBottomRestaurantOrderCard(
+            order: order.value as RestaurantOrder);
+
+      case OrderType.Laundry:
+        return DriverBottomLaundryOrderCard(order: order.value as LaundryOrder);
+
+      default:
+        return SizedBox();
+    }
   }
 
   void cancelOrderSubscription() {
