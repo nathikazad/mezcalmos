@@ -184,9 +184,11 @@
       }
     },
     "deliveryAdmins": {
-      "$uid": {
-        ".read": "$uid === auth.uid",
-        ".write": "$uid === auth.uid && root.child('deliveryAdmins/' + $uid).exists()"
+      "info": {
+        "$uid": {
+          ".read": "$uid === auth.uid",
+          ".write": "$uid === auth.uid && root.child('deliveryAdmins/info/' + $uid).exists()"
+        }
       }
     },
     "adminChat": {
@@ -292,11 +294,10 @@
     "notificationQueue": {
       ".write": "true",
       ".read": "false"
-    }
-  },
-  "deliveryDrivers": {
-    ".read": "root.child('deliveryAdmins/' + auth.uid + '/authorized').val() === true",
-    "info": {
+    },
+    "deliveryDrivers": {
+      ".read": "root.child('deliveryAdmins/' + auth.uid + '/authorized').val() === true",
+      "info": {
       "$uid": {
         ".read": "$uid === auth.uid",
         "notificationInfo": {
@@ -317,14 +318,15 @@
           ".write": "data.parent().exists() && $uid === auth.uid"
         }
       }
-    },
-    "inProcessOrders": {
-      "$uid": {
-        ".read": "$uid === auth.uid",
-        "$orderId": {
-          "driver": {
-            "location": {
-              ".write": "data.parent().parent().exists() && $uid === auth.uid"
+      },
+      "inProcessOrders": {
+        "$uid": {
+          ".read": "$uid === auth.uid",
+          "$orderId": {
+            "driver": {
+              "location": {
+                ".write": "data.parent().parent().exists() && $uid === auth.uid"
+              }
             }
           }
         }

@@ -58,8 +58,8 @@ class _OrderInfoCardState extends State<OrderInfoCard> {
                         color: Color(0xff5c7fff),
                       ),
                       onPressed: () {
-                        Get.toNamed(getCustomerMessagesRoute(
-                            widget.order.value!.orderId));
+                        Get.toNamed(getMessagesRoute(
+                            chatId: widget.order.value!.orderId));
                       },
                     ),
                     Positioned(

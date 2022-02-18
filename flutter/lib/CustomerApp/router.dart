@@ -66,15 +66,26 @@ String getLaundyOrderRoute(String orderId) {
 String getRestaurantMessagesRoute(
   String orderId,
 ) {
-  return kMessagesRoute.replaceFirst(":orderId", orderId) +
-      "?recipientType=${ParticipantType.Restaurant.toFirebaseFormattedString()}";
+  return getMessagesRoute(
+      chatId: orderId,
+      recipientType: ParticipantType.Restaurant,
+      orderId: orderId);
 }
 
 String getTaxiMessagesRoute(
   String orderId,
 ) {
-  return kMessagesRoute.replaceFirst(":orderId", orderId) +
-      "?recipientType=${ParticipantType.Taxi.toFirebaseFormattedString()}";
+  return getMessagesRoute(
+      chatId: orderId, recipientType: ParticipantType.Taxi, orderId: orderId);
+}
+
+String getLaundryMessagesRoute(
+  String orderId,
+) {
+  return getMessagesRoute(
+      chatId: orderId,
+      recipientType: ParticipantType.Laundry,
+      orderId: orderId);
 }
 
 // GetX based Router (For navigating)

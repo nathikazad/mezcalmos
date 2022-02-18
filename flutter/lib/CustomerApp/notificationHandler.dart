@@ -185,8 +185,10 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
 Notification newMessageNotification(String key, dynamic value) {
   return Notification(
       id: key,
-      linkUrl: getMessageUrl(
-          value['orderId'])!, // in future make dependent on order type
+      linkUrl: (value['chatId'] == null)
+          ? getMessageUrl(value['orderId']!)
+          : getMessageUrl(value[
+              'chatId']!), // just for backwards compatibility, future make it just value['orderId']
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],
@@ -198,12 +200,15 @@ Notification newMessageNotification(String key, dynamic value) {
       variableParams: value);
 }
 
-String? getMessageUrl(String orderId) {
+String getMessageUrl(String orderId) {
   switch (Get.find<OrderController>().getOrder(orderId)!.orderType) {
     case OrderType.Restaurant:
       return getRestaurantMessagesRoute(orderId);
     case OrderType.Taxi:
       return getTaxiMessagesRoute(orderId);
+    case OrderType.Laundry:
+      return getTaxiMessagesRoute(orderId);
     default:
+      throw Exception('Invalid OrderType');
   }
 }

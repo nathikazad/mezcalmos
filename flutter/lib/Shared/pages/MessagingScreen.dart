@@ -1,5 +1,10 @@
-import 'dart:async';
+// input: chatId
+// chat between chatId = orderId  customer<->deliveryAdmin
+//              chatId != orderId deliveryAdmin<->dropOffDeliveryDriver
+//              chatId != orderId deliveryAdmin<->pickupDeliveryDriver
 
+// chat: {deliveryAdminDropOffDriver: 'dsfdsf', deliveryAdminPickupDriver: 'dsfs'}
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:get/get.dart';
@@ -24,23 +29,27 @@ class MessagingScreen extends StatefulWidget {
 // TODO : REFACTORING !
 class _MessagingScreenState extends State<MessagingScreen> {
   String? orderId;
-  ParticipantType? recipientType;
+  late String chatId;
+  ParticipantType recipientType = ParticipantType.Customer;
+  String? recipientId;
   MessageController controller =
       Get.put<MessageController>(MessageController());
   @override
   void initState() {
     super.initState();
     print("inside messaginScreen onInitState !");
-    this.orderId = Get.parameters['orderId'];
-    this.recipientType =
-        Get.parameters['recipientType']?.toString().toParticipantType();
-    // we make sure that the orderId is never null somehow.
-    // because we depend on it , on the controller side!
-    if (this.orderId == null) {
-      Get.snackbar("Error", "Failed retrieving this Order's messages!");
+    if (Get.parameters['chatId'] == null) {
+      Get.snackbar("Error", "Does not have a valid chatId!");
       Get.back();
     }
-    controller.clearMessageNotifications(this.orderId!);
+    this.chatId = Get.parameters['chatId']!;
+    this.orderId = Get.parameters['orderId'];
+    if (Get.parameters['recipientId'] != null)
+      this.recipientId = Get.parameters['recipientId'];
+    else if (Get.parameters['recipientType'] != null)
+      this.recipientType =
+          Get.parameters['recipientType']!.toString().toParticipantType();
+    controller.clearMessageNotifications(chatId: this.chatId);
     mezDbgPrint(Get.parameters);
   }
 
@@ -160,8 +169,8 @@ class _MessagingScreenState extends State<MessagingScreen> {
     // controller.loadChat(_authController.user!.uid, orderId);
     void _fillCallBack() {
       mezDbgPrint(
-          "--------------------- >>>>> FillCallback Executed  >> Messages Count >> ${controller.value?.messages.length}!");
-      chatLines.assignAll(controller.value!.messages.map(
+          "--------------------- >>>>> FillCallback Executed  >> Messages Count >> ${controller.chat.value?.messages.length}!");
+      chatLines.assignAll(controller.chat.value!.messages.map(
         (e) {
           // mezDbgPrint(
           //     " \t\t ${controller.value!.participants[e.userId]?.image}");
@@ -170,7 +179,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
             message: e.message,
             time: intl.DateFormat('hh:mm a').format(e.timeStamp!.toLocal()),
             isMe: e.userId == _authController.user!.id,
-            userImage: controller.value!.participants[e.userId]?.image,
+            userImage: controller.chat.value!.participants[e.userId]?.image,
           );
         },
       ));
@@ -178,14 +187,13 @@ class _MessagingScreenState extends State<MessagingScreen> {
       scrollDown();
     }
 
-    controller.loadChat(_authController.user!.id, orderId!,
-        onValueCallBack: _fillCallBack);
+    controller.loadChat(chatId: chatId, onValueCallBack: _fillCallBack);
 
     return Scaffold(
         appBar: AppBar(
           title: Obx(
             () => Text(
-              controller.recipient(participantType: recipientType)?.name ??
+              controller.recipient(recipientType: recipientType)?.name ??
                   "User",
             ),
           ),
@@ -214,6 +222,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
                   textEditingController: _textEditingController,
                   languageController: _languageController,
                   controller: controller,
+                  chatId: chatId,
                   orderId: orderId)
             ],
           ),
@@ -222,14 +231,15 @@ class _MessagingScreenState extends State<MessagingScreen> {
 }
 
 class SendMessageBox extends StatelessWidget {
-  const SendMessageBox({
-    Key? key,
-    required RxString typedMsg,
-    required TextEditingController textEditingController,
-    required LanguageController languageController,
-    required this.controller,
-    required this.orderId,
-  })  : _typedMsg = typedMsg,
+  const SendMessageBox(
+      {Key? key,
+      required RxString typedMsg,
+      required TextEditingController textEditingController,
+      required LanguageController languageController,
+      required this.controller,
+      this.orderId,
+      required this.chatId})
+      : _typedMsg = typedMsg,
         _textEditingController = textEditingController,
         _languageController = languageController,
         super(key: key);
@@ -239,7 +249,7 @@ class SendMessageBox extends StatelessWidget {
   final LanguageController _languageController;
   final MessageController controller;
   final String? orderId;
-
+  final String chatId;
   @override
   Widget build(BuildContext context) {
     return TextField(
@@ -269,7 +279,8 @@ class SendMessageBox extends StatelessWidget {
                       _textEditingController.text.replaceAll(' ', '').length >
                           0;
                   if (msgReady2Send) {
-                    controller.sendMessage(_typedMsg.value, this.orderId!);
+                    controller.sendMessage(
+                        message: _typedMsg.value, chatId: this.chatId);
                     _textEditingController.clear();
                     _typedMsg.value = "";
                   } else {

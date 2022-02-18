@@ -13,7 +13,10 @@ export function startWatchingMessageNotificationQueue() {
 }
 
 async function notifyOtherParticipants(messageId: string, message: Message) {
-  let chat: Chat = await getChat(message.orderId);
+  // TO BE REMOVED, added for backwards compatibility in cases where message does not have chatId field
+  message.chatId = message.chatId ?? message.orderId;
+  // TILL HERE
+  let chat: Chat = await getChat(message.chatId);
   if (chat.messages && chat.messages![messageId].notified) {
     return
   }
@@ -24,6 +27,7 @@ async function notifyOtherParticipants(messageId: string, message: Message) {
     let participant = chat.participants[participantId]
     let notification: Notification = {
       foreground: <NewMessageNotification>{
+        chatId: message.chatId,
         sender: senderInfo,
         message: message.message,
         orderId: message.orderId,
@@ -44,5 +48,5 @@ async function notifyOtherParticipants(messageId: string, message: Message) {
     }
     notifyUser.pushNotification(participantId, notification, participant.particpantType);
   }
-  setChatMessageNotifiedAsTrue(message.orderId, messageId);
+  setChatMessageNotifiedAsTrue(message.chatId, messageId);
 }

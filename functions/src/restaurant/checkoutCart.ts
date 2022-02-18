@@ -23,6 +23,7 @@ import { getUserInfo } from "../shared/controllers/rootController";
 import * as chatController from "../shared/controllers/chatController";
 import { NotificationAction, NotificationType } from "../shared/models/Generic/Notification";
 import * as fcm from "../utilities/senders/fcm"
+import { addDeliveryAdminsToChat } from "../shared/helper/deliveryAdmin";
 
 export = functions.https.onCall(async (data, context) => {
 
@@ -81,7 +82,9 @@ export = functions.https.onCall(async (data, context) => {
     await customerNodes.cart(customerId).remove();
 
 
-    let chat: Chat = await buildChatForOrder(customerId,
+    let chat: Chat = await buildChatForOrder(
+      orderId,
+      customerId,
       {
         ...customerInfo,
         particpantType: ParticipantType.Customer
@@ -116,23 +119,6 @@ export = functions.https.onCall(async (data, context) => {
     await customerNodes.lock(customerId).remove();
   }
 })
-
-
-async function addDeliveryAdminsToChat(
-  deliveryAdmins: Record<string, DeliveryAdmin>,
-  chat: Chat,
-  orderId: string) {
-  for (var deliveryAdminId in deliveryAdmins) {
-    var userInfo: UserInfo = await getUserInfo(deliveryAdminId);
-    chat.participants[deliveryAdminId] = {
-      ...userInfo,
-      particpantType: ParticipantType.DeliveryAdmin
-    }
-  }
-
-  chatController.setChat(orderId, chat);
-}
-
 
 async function notifyDeliveryAdminsNewOrder(
   deliveryAdmins: Record<string, DeliveryAdmin>,

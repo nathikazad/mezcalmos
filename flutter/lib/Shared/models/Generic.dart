@@ -35,7 +35,7 @@ extension ParseStringToLanugaugeType on String {
 }
 
 Map<LanguageType, String> convertToLanguageMap(Map data) {
-  mezDbgPrint("@sa@d@: Trying to convert $data convertToLanguageMap !");
+  // mezDbgPrint("@sa@d@: Trying to convert $data convertToLanguageMap !");
   Map<LanguageType, String> map = {};
   data.forEach((dynamic language, dynamic string) {
     if (language == LanguageType.EN.toFirebaseFormatString() ||

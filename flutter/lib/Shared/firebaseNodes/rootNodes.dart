@@ -1,5 +1,5 @@
-String orderChatNode(String orderId) {
-  return 'chat/$orderId';
+String chatNode(String chatId) {
+  return 'chat/$chatId';
 }
 
 String userLanguage(String? userId) {
