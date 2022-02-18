@@ -84,7 +84,7 @@ class RestaurantOngoingOrderCard extends StatelessWidget {
                     ),
                   ),
                   Spacer(),
-                  getOrderWidget((order as RestaurantOrder).status),
+                  OrderStatusImage((order as RestaurantOrder).status),
                   SizedBox(
                     width: 10,
                   )

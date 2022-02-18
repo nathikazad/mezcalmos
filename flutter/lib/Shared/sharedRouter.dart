@@ -23,17 +23,24 @@ const String kLocationPermissionPage = '/location_permission';
 const String kNoInternetConnectionPage = '/offline';
 const String kOtpRoute = '/sign_in_otp';
 const String kOtpConfirmRoute = '/sign_in_otp_confirm';
-const String kMessagesRoute = '/messages/:orderId';
+const String kMessagesRoute = '/messages/:chatId';
 const String kUnauthorizedRoute = '/unauthorized';
 const String kUserProfile = '/user_profile';
 const String kPickToLocation = '/pick_to_location';
 const String kNotificationsRoute = '/notifications';
 
-String getCustomerMessagesRoute(
-  String orderId,
-) {
-  return kMessagesRoute.replaceFirst(":orderId", orderId) +
-      "?recipientType=${ParticipantType.Customer.toFirebaseFormattedString()}";
+String getMessagesRoute(
+    {required String chatId,
+    String? orderId,
+    ParticipantType recipientType = ParticipantType.Customer,
+    String? recipientId}) {
+  String mainUrl = kMessagesRoute.replaceFirst(":chatId", chatId);
+  if (recipientId != null)
+    mainUrl += "?recipientId=$recipientId";
+  else
+    mainUrl += "?recipientType=${recipientType.toFirebaseFormattedString()}";
+  if (orderId != null) mainUrl += "?orderId=$orderId&";
+  return mainUrl;
 }
 
 void popEverythingAndNavigateTo(dynamic route, {dynamic args}) {

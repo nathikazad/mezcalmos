@@ -113,7 +113,9 @@ export = functions.https.onCall(async (data, context) => {
 
 
 
-    let chat: Chat = await buildChatForOrder(order.customer.id,
+    let chat: Chat = await buildChatForOrder(
+      orderId,
+      order.customer.id,
       {
         ...order.customer,
         particpantType: ParticipantType.Customer

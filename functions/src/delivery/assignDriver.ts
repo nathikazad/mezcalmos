@@ -14,12 +14,15 @@ import { checkDeliveryAdmin, isSignedIn } from "../shared/helper/authorizer";
 import { getInProcessOrder, getUserInfo } from "../shared/controllers/rootController";
 import { getDeliveryDriver } from "../shared/controllers/deliveryController";
 import { DeliveryDriver, DeliveryDriverType } from "../shared/models/Drivers/DeliveryDriver";
-import { getChat, updateChat } from "../shared/controllers/chatController";
-import { Chat, ParticipantType } from "../shared/models/Generic/Chat";
+import { pushChat } from "../shared/controllers/chatController";
+import { Chat, ChatType, ParticipantType } from "../shared/models/Generic/Chat";
 import { pushNotification } from "../shared/notification/notifyUser";
 import { NewDeliveryOrderNotification } from "../shared/models/Notifications/DeliveryDriver";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Generic/Notification";
 import { deliveryNewOrderMessage } from "./bgNotificationMessages";
+import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
+import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
+import { addDeliveryAdminsToChat } from "../shared/helper/deliveryAdmin";
 
 export = functions.https.onCall(async (data, context) => {
   if (!data.orderId || !data.orderType || !data.deliveryDriverId || !data.deliveryDriverType) {
@@ -71,13 +74,15 @@ export = functions.https.onCall(async (data, context) => {
   let deliveryDriverType: DeliveryDriverType = data.deliveryDriverType;
   let driverInfo: UserInfo = await getUserInfo(deliveryDriverId);
   let order: TwoWayDeliverableOrder = await getInProcessOrder(data.orderType, orderId);
-
+  let chatId: string = await pushChat();
   switch (deliveryDriverType) {
     case DeliveryDriverType.DropOff:
       order.dropoffDriver = driverInfo;
+      order.secondaryChats.deliveryAdminDropOffDriver = chatId
       break;
     case DeliveryDriverType.Pickup:
       order.pickupDriver = driverInfo;
+      order.secondaryChats.deliveryAdminPickupDriver = chatId
       break;
   }
 
@@ -85,12 +90,23 @@ export = functions.https.onCall(async (data, context) => {
   rootNodes.inProcessOrders(data.orderType, orderId).update(order);
   deliveryDriverNodes.inProcessOrders(deliveryDriverId, orderId).update(order);
 
-  let chat: Chat = await getChat(orderId)
-  chat.participants[deliveryDriverId] = {
-    ...driverInfo,
-    particpantType: ParticipantType.DeliveryDriver
+
+  let chat: Chat = {
+    chatType: ChatType.Order,
+    orderType: data.orderType,
+    chatId: chatId,
+    participants: {
+      [deliveryDriverId]: {
+        ...driverInfo,
+        particpantType: ParticipantType.DeliveryDriver
+      },
+    }
   }
-  updateChat(orderId, chat);
+
+  deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
+    let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
+    addDeliveryAdminsToChat(deliveryAdmins, chat, chatId)
+  })
 
   let notification: Notification = {
     foreground: <NewDeliveryOrderNotification>{

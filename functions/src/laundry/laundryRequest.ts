@@ -63,6 +63,7 @@ export = functions.https.onCall(async (data, context) => {
     let chat: Chat = {
       chatType: ChatType.Order,
       orderType: OrderType.Laundry,
+      chatId: orderId,
       participants: {
         [customerId]: {
           ...customerInfo,

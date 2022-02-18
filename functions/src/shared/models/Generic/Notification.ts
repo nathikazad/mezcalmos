@@ -29,6 +29,7 @@ export interface ForegroundNotification {
 export type BackgroundNotification = Record<Language, fcmNotification>
 
 export interface NewMessageNotification extends ForegroundNotification {
+  chatId: string,
   sender: UserInfo,
   message: string,
   orderId: string

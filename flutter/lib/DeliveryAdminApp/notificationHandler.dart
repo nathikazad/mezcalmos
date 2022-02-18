@@ -54,7 +54,8 @@ Notification newOrderNotification(String key, dynamic value) {
 Notification newMessageNotification(String key, dynamic value) {
   return Notification(
       id: key,
-      linkUrl: getCustomerMessagesRoute(value['orderId']),
+      linkUrl: getMessagesRoute(
+          chatId: value['chatId'], recipientId: value['sender']['id']),
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],

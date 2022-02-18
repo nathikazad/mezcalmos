@@ -1,7 +1,16 @@
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
-enum ParticipantType { Customer, Taxi, TaxiAdmin, DeliveryAdmin, Restaurant }
+enum ParticipantType {
+  Customer,
+  Taxi,
+  TaxiAdmin,
+  Laundry,
+  DeliveryAdmin,
+  Restaurant,
+  DeliveryDriver
+}
 
 extension ParseParticipantTypeToString on ParticipantType {
   String toFirebaseFormattedString() {
@@ -22,8 +31,13 @@ extension ParseStringToParticipantType on String {
 class Participant {
   String image;
   String name;
+  String id;
   ParticipantType participantType;
-  Participant(this.image, this.name, this.participantType);
+  Participant(
+      {required this.image,
+      required this.name,
+      required this.participantType,
+      required this.id});
 }
 
 class Message {
@@ -42,9 +56,10 @@ class Message {
 }
 
 class Chat {
+  late String chatId;
   late String chatType;
-  late String orderType;
-  late String orderId;
+  OrderType? orderType;
+  String? orderId;
   late Map<String, Participant> participants;
   List<Message> messages = <Message>[];
 
@@ -58,8 +73,11 @@ class Chat {
     List<Message> _messages = [];
 
     value['participants']?.forEach((key, p) {
-      _participants[key] = Participant(p['image'], p['name'],
-          p['particpantType'].toString().toParticipantType());
+      _participants[key] = Participant(
+          image: p['image'],
+          name: p['name'],
+          participantType: p['particpantType'].toString().toParticipantType(),
+          id: key);
     });
 
     value['messages']?.forEach((key, m) {
@@ -79,8 +97,9 @@ class Chat {
     });
 
     this.chatType = value['chatType'];
-    this.orderId = key;
-    this.orderType = value['orderType'];
+    this.chatId = key;
+    this.orderId = value['orderId'];
+    this.orderType = value['orderType']?.toString().toOrderType();
     this.participants = _participants;
     this.messages = _messages;
   }

@@ -16,8 +16,7 @@ import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class MessageController extends GetxController {
-  Rx<Chat> _model = Chat("", "", {}, [], "").obs;
-  Chat? get value => _model.value;
+  Rxn<Chat> chat = Rxn();
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   AuthController _authController = Get.find<AuthController>();
   StreamSubscription? chatListener;
@@ -30,19 +29,16 @@ class MessageController extends GetxController {
     this.appType = Get.find<SettingsController>().appType;
   }
 
-  void loadChat(String userId, String orderId,
-      {VoidCallback? onValueCallBack}) {
+  void loadChat({required String chatId, VoidCallback? onValueCallBack}) {
     chatListener?.cancel();
     chatListener = _databaseHelper.firebaseDatabase
         .reference()
-        .child(orderChatNode(orderId))
+        .child(chatNode(chatId))
         .onValue
         .listen((event) {
       if (event.snapshot.value != null) {
         // mezDbgPrint("\n\n\n ${event.snapshot.value} \n\n\n");
-        Chat res = Chat.fromJson(event.snapshot.key, event.snapshot.value);
-
-        _model.value = res;
+        chat.value = Chat.fromJson(event.snapshot.key, event.snapshot.value);
         if (onValueCallBack != null) onValueCallBack();
         // mezDbgPrint(
         //     "--------------------> messageController Listener Invoked with Messages > ${_model.value.messages} ");
@@ -50,17 +46,21 @@ class MessageController extends GetxController {
     });
   }
 
-  void sendMessage(String message, String orderId) async {
+  void sendMessage(
+      {required String message,
+      required String chatId,
+      String? orderId}) async {
     DatabaseReference messageNode = _databaseHelper.firebaseDatabase
         .reference()
-        .child('${orderChatNode(orderId)}/messages')
+        .child('${chatNode(chatId)}/messages')
         .push();
 
     messageNode.set(<String, dynamic>{
       "message": message,
       "userId": _authController.user!.id,
       "timestamp": DateTime.now().toUtc().toString(),
-      "orderId": _model.value.orderId
+      "chatId": chatId,
+      "orderId": orderId
     });
 
     _databaseHelper.firebaseDatabase
@@ -70,38 +70,35 @@ class MessageController extends GetxController {
       "message": message,
       "userId": _authController.user!.id,
       "timestamp": DateTime.now().toUtc().toString(),
-      "orderId": _model.value.orderId
+      "chatId": chatId
     });
   }
 
   Participant? sender() {
-    return _model.value.participants[_authController.user!.id];
+    return chat.value?.participants[_authController.user!.id];
   }
 
-  Participant? recipient({ParticipantType? participantType}) {
-    if (participantType != null) {
-      for (String key in _model.value.participants.keys.toList()) {
-        mezDbgPrint("Recipient ===>$key");
-        Participant recipient = _model.value.participants[key]!;
-        mezDbgPrint(recipient.name);
-        mezDbgPrint(recipient.participantType);
-        if (recipient.participantType == participantType) {
-          mezDbgPrint(
-              "the user name is ${recipient.name} and the type is ${recipient.participantType.toString()}");
-          return recipient;
-        }
+  Participant? recipient(
+      {required ParticipantType recipientType, String? recipientId}) {
+    if (chat.value == null) return null;
+    if (recipientId != null) {
+      for (String key in chat.value!.participants.keys.toList()) {
+        Participant participant = chat.value!.participants[key]!;
+        if (participant.id == recipientId) return participant;
       }
     }
-
-    for (String key in _model.value.participants.keys.toList()) {
-      Participant recipient = _model.value.participants[key]!;
-      if (key != _authController.user!.id) {
-        return recipient;
+    for (String key in chat.value!.participants.keys.toList()) {
+      Participant participant = chat.value!.participants[key]!;
+      if (participant.participantType == recipientType) {
+        mezDbgPrint(
+            "the user name is ${participant.name} and the type is ${participant.participantType.toString()}");
+        return participant;
       }
     }
+    return null;
   }
 
-  void clearMessageNotifications(String orderId) {
+  void clearMessageNotifications({required String chatId}) {
     mezDbgPrint("Clearing message notifications");
     ForegroundNotificationsController fbNotificationsController =
         Get.find<ForegroundNotificationsController>();
@@ -109,7 +106,7 @@ class MessageController extends GetxController {
         .notifications()
         .where((notification) =>
             notification.notificationType == NotificationType.NewMessage &&
-            notification.orderId! == orderId)
+            notification.chatId! == chatId)
         .forEach((notification) {
       fbNotificationsController.removeNotification(notification.id);
     });

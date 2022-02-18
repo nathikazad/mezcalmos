@@ -9,6 +9,7 @@ export interface Order {
   to: Location,
   customer: UserInfo,
   orderTime: string;
+  secondaryChats: Record<SecondaryChat, string>;
 }
 
 export enum OrderType {
@@ -21,6 +22,11 @@ export enum OrderType {
 export enum PaymentType {
   Cash = "cash",
   Card = "card"
+}
+
+export enum SecondaryChat {
+  DeliveryAdminDropOffDriverChat = "deliveryAdminDropOffDriver",
+  DeliveryAdminPickupDriverChat = "deliveryAdminPickupDriver",
 }
 
 export interface DeliverableOrder extends Order {

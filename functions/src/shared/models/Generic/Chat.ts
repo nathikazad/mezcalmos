@@ -5,6 +5,8 @@ import { UserInfo } from "./User";
 export interface Chat {
   chatType: ChatType;
   orderType?: OrderType;
+  chatId: string;
+  orderId?: string;
   messages?: Record<string, Message>;
   participants: Record<string, Participant>;
 }
@@ -27,6 +29,7 @@ export interface Participant extends UserInfo {
 }
 
 export interface Message {
+  chatId: string;
   orderId: string;
   userId: string;
   notified?: boolean;
@@ -35,12 +38,15 @@ export interface Message {
 }
 
 export async function buildChatForOrder(
+  orderId: string,
   customerId: string,
   customerInfo: Participant,
   serviceProviderId: string,
   serviceProviderInfo: Participant,
   orderType: OrderType): Promise<Chat> {
   let chat: Chat = {
+    orderId: orderId,
+    chatId: orderId,
     chatType: ChatType.Order,
     orderType: orderType,
     participants: {

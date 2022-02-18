@@ -1,4 +1,5 @@
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -51,7 +52,8 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
 Notification newMessageNotification(String key, dynamic value) {
   return Notification(
       id: key,
-      linkUrl: getCustomerMessagesRoute(value['orderId']),
+      linkUrl: getMessagesRoute(
+          chatId: value['chatId'], recipientType: ParticipantType.Customer),
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],

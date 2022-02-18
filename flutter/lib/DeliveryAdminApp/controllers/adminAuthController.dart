@@ -32,22 +32,28 @@ class AdminAuthController extends GetxController {
 
     mezDbgPrint(
         "Admin from AdminAuthController >> ${_authController.fireAuthUser!.uid}");
+    _databaseHelper.firebaseDatabase
+        .reference()
+        .child(adminNode(_authController.fireAuthUser!.uid))
+        .once()
+        .then((snap) => mezDbgPrint(snap.value));
     _adminNodeListener?.cancel();
     mezDbgPrint(userInfo(_authController.fireAuthUser!.uid));
+    mezDbgPrint((adminNode(_authController.fireAuthUser!.uid)));
     _adminNodeListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(adminNode(_authController.fireAuthUser!.uid))
         .onValue
         .listen((event) async {
-      // mezDbgPrint("=====================================");
-      // mezDbgPrint("=====================================");
-      // mezDbgPrint("=====================================");
-      // mezDbgPrint("=====================================");
-      // mezDbgPrint(event.snapshot.value);
-      // mezDbgPrint("=====================================");
-      // mezDbgPrint("=====================================");
-      // mezDbgPrint("=====================================");
-      // mezDbgPrint("=====================================");
+      mezDbgPrint("=====================================");
+      mezDbgPrint("=====================================");
+      mezDbgPrint("=====================================");
+      mezDbgPrint("=====================================");
+      mezDbgPrint(event.snapshot.value);
+      mezDbgPrint("=====================================");
+      mezDbgPrint("=====================================");
+      mezDbgPrint("=====================================");
+      mezDbgPrint("=====================================");
 
       _admin.value = Admin.fromSnapshot(event.snapshot.value);
       if (_admin.value?.authorized ?? false) {
