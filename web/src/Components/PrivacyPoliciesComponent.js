@@ -3,7 +3,7 @@ import React from 'react';
 function PrivacyPoliciesComponent() {
     return <div className="m-7">
       <div className="font-medium leading-tight text-4xl mt-0 mb-2">Privacy Policy</div>
-<p>Last updated: July 27, 2021</p>
+        <p>Last updated: Feb 16, 2022</p>
 <p>This Privacy Policy describes Our policies and procedures on the collection, use and disclosure of Your information
     when You use the Service and tells You about Your privacy rights and how the law protects You.</p>
 <p>We use Your Personal data to provide and improve the Service. By using the Service, You agree to the collection and
@@ -106,6 +106,7 @@ function PrivacyPoliciesComponent() {
     and other diagnostic data.</p>
 <p>We may also collect information that Your browser sends whenever You visit our Service or when You access the Service
     by or through a mobile device.</p>
+        <p>We may collect the number of orders you have placed on the platform including the from address, the to address, the cost and the contents of your order.</p>
 <h3>Information from Third-Party Social Media Services</h3>
 <p>The Company allows You to create an account and log in to use the Service through the following Third-party Social
     Media Services:</p>
