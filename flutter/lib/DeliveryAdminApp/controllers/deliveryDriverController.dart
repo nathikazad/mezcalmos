@@ -21,6 +21,8 @@ class DeliveryDriverController extends GetxController {
   void onInit() {
     super.onInit();
     mezDbgPrint("--------------------> DeliveryDriverController Initialized !");
+
+    _deliveryDriversListener?.cancel();
     _deliveryDriversListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(deliveryDriversNode())

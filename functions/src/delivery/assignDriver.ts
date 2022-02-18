@@ -60,6 +60,7 @@ export = functions.https.onCall(async (data, context) => {
       errorMessage: "Invalid delivery driver type"
     }
   }
+
   // let orderParams: ConstructLaundryOrderParameters = <ConstructLaundryOrderParameters>data;
   // TODO limit number of active orders
   // let deliveryDriverOrders = (await customerNodes.inProcessOrders(customerId).once('value')).val();
@@ -75,12 +76,24 @@ export = functions.https.onCall(async (data, context) => {
   let driverInfo: UserInfo = await getUserInfo(deliveryDriverId);
   let order: TwoWayDeliverableOrder = await getInProcessOrder(data.orderType, orderId);
   let chatId: string = await pushChat();
+
+  order.secondaryChats = order.secondaryChats ?? {};
   switch (deliveryDriverType) {
     case DeliveryDriverType.DropOff:
+      if (order.dropoffDriver != null)
+        return {
+          status: ServerResponseStatus.Error,
+          errorMessage: "dropoffDriver is already set"
+        }
       order.dropoffDriver = driverInfo;
       order.secondaryChats.deliveryAdminDropOffDriver = chatId
       break;
     case DeliveryDriverType.Pickup:
+      if (order.pickupDriver != null)
+        return {
+          status: ServerResponseStatus.Error,
+          errorMessage: "pickupDriver is already set"
+        }
       order.pickupDriver = driverInfo;
       order.secondaryChats.deliveryAdminPickupDriver = chatId
       break;

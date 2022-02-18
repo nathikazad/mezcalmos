@@ -162,7 +162,7 @@ class UserProfileWidgetsClass {
   Widget showUserNameOrTextField({required bool isImageBeingUploaded}) {
     if (userProfileController.stateMode.value == UserProfileMode.Show) {
       return Text(
-        Get.find<AuthController>().user!.name,
+        Get.find<AuthController>().user!.name ?? "No Name",
         style: TextStyle(fontSize: 30),
       );
     } else {

@@ -49,6 +49,7 @@ class RestaurantOrder extends DeliverableOrder {
       required UserInfo customer,
       required Location to,
       DeliveryDriverUserInfo? dropoffDriver,
+      String? dropOffDriverChatId,
       required this.itemsCost,
       required this.shippingCost,
       this.notes})
@@ -62,7 +63,8 @@ class RestaurantOrder extends DeliverableOrder {
             customer: customer,
             serviceProvider: restaurant,
             to: to,
-            dropoffDriver: dropoffDriver);
+            dropoffDriver: dropoffDriver,
+            dropOffDriverChatId: dropOffDriverChatId);
   factory RestaurantOrder.fromData(dynamic id, dynamic data) {
     RestaurantOrder restaurantOrder = RestaurantOrder(
         orderId: id,
@@ -80,7 +82,9 @@ class RestaurantOrder extends DeliverableOrder {
         shippingCost: data['shippingCost'],
         dropoffDriver: (data["dropoffDriver"] != null)
             ? DeliveryDriverUserInfo.fromData(data["dropoffDriver"])
-            : null);
+            : null,
+        dropOffDriverChatId: data['secondaryChats']
+            ?['deliveryAdminDropOffDriver']);
 
     data["items"].forEach((dynamic itemId, dynamic itemData) {
       RestaurantOrderItem restaurantOrderItem = RestaurantOrderItem(

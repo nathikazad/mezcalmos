@@ -1,5 +1,6 @@
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -38,24 +39,43 @@ Notification orderStatusChangeNotification(String key, dynamic value) {
 }
 
 Notification newOrderNotification(String key, dynamic value) {
-  return Notification(
-      id: key,
-      linkUrl: getRestaurantOrderRoute(value['orderId']),
-      body: 'New order from restaurant ${value['restaurant']['name']}',
-      imgUrl: value['restaurant']['image'],
-      title: "New Order",
-      timestamp: DateTime.parse(value['time']),
-      notificationType: NotificationType.NewOrder,
-      variableParams: value,
-      notificationAction:
-          value["notificationAction"].toString().toNotificationAction());
+  OrderType orderType = value['orderType'].toString().toOrderType();
+  switch (orderType) {
+    case OrderType.Restaurant:
+      return Notification(
+          id: key,
+          linkUrl: getRestaurantOrderRoute(value['orderId']),
+          body: 'New order from restaurant ${value['restaurant']['name']}',
+          imgUrl: value['restaurant']['image'],
+          title: "New Restaurant Order",
+          timestamp: DateTime.parse(value['time']),
+          notificationType: NotificationType.NewOrder,
+          variableParams: value,
+          notificationAction:
+              value["notificationAction"].toString().toNotificationAction());
+    case OrderType.Laundry:
+      return Notification(
+          id: key,
+          linkUrl: getLaundryOrderRoute(value['orderId']),
+          body: 'New order from laundry',
+          imgUrl: 'assets/images/customer/laundry/laundryMachine.png',
+          title: "New Laundry Order",
+          timestamp: DateTime.parse(value['time']),
+          notificationType: NotificationType.NewOrder,
+          variableParams: value,
+          notificationAction:
+              value["notificationAction"].toString().toNotificationAction());
+    default:
+      throw Exception("Invalid order type");
+  }
 }
 
 Notification newMessageNotification(String key, dynamic value) {
   return Notification(
       id: key,
       linkUrl: getMessagesRoute(
-          chatId: value['chatId'], recipientId: value['sender']['id']),
+          chatId: value['chatId'] ?? value['orderId'],
+          recipientId: value['sender']['id']),
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],
