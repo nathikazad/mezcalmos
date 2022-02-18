@@ -4,16 +4,16 @@ import 'dart:async';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
+import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
-import 'package:mezcalmos/Shared/models/Chat.dart';
-import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/models/Notification.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Chat.dart';
+import 'package:mezcalmos/Shared/models/Notification.dart';
 
 class MessageController extends GetxController {
   Rxn<Chat> chat = Rxn();
@@ -106,7 +106,7 @@ class MessageController extends GetxController {
         .notifications()
         .where((notification) =>
             notification.notificationType == NotificationType.NewMessage &&
-            notification.chatId! == chatId)
+            notification.chatId == chatId)
         .forEach((notification) {
       fbNotificationsController.removeNotification(notification.id);
     });

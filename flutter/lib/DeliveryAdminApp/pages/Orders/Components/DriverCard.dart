@@ -4,6 +4,7 @@ import 'package:get/route_manager.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 class DriverCard extends StatelessWidget {
   final Order order;
@@ -115,7 +116,9 @@ class DriverCard extends StatelessWidget {
           ),
         ),
         Spacer(),
-        IconButton(onPressed: () {}, icon: Icon(Icons.message_outlined)),
+        IconButton(onPressed: () {
+         // getMessagesRoute(chatId: (order as DeliverableOrder))
+        }, icon: Icon(Icons.message_outlined)),
         IconButton(
             onPressed: (canChangeDriver)
                 ? () async {

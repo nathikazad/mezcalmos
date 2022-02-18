@@ -1,8 +1,8 @@
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 Notification deliveryAdminNotificationHandler(String key, dynamic value) {
   NotificationType notificationType =
@@ -55,7 +55,8 @@ Notification newMessageNotification(String key, dynamic value) {
   return Notification(
       id: key,
       linkUrl: getMessagesRoute(
-          chatId: value['chatId'], recipientId: value['sender']['id']),
+          chatId: value['chatId'] ?? value['orderId'],
+          recipientId: value['sender']['id']),
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],

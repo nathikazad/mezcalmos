@@ -1,9 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:rive/rive.dart';
 
 class LaundryOrderStatusCard extends StatelessWidget {
@@ -62,7 +63,8 @@ class LaundryOrderStatusCard extends StatelessWidget {
       shape: CircleBorder(),
       child: InkWell(
         onTap: () {
-          // Get.toNamed(getRestaurantMessagesRoute(order.orderId));
+          Get.toNamed(getMessagesRoute(
+              chatId: order.orderId, recipientType: ParticipantType.Laundry));
         },
         customBorder: CircleBorder(),
         child: Stack(

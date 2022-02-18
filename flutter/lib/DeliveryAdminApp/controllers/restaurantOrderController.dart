@@ -34,10 +34,11 @@ class RestaurantOrderController extends GetxController {
           dynamic orderData = event.snapshot.value[orderId];
           orders.add(RestaurantOrder.fromData(orderId, orderData));
         }
-      }
+      } else {}
       inProcessOrders.value = orders;
+    }, onError: (error) {
+      mezDbgPrint('EROOOOOOR +++++++++++++++++ $error');
     });
-
     _pastOrdersListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(restaurantPastOrdersNode())

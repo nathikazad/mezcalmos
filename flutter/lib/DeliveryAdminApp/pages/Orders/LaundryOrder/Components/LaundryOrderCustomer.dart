@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/laundryOrderController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 class LaundryOrderCustomer extends StatelessWidget {
   final LaundryOrder order;
@@ -52,7 +54,9 @@ class LaundryOrderCustomer extends StatelessWidget {
                   shape: CircleBorder(),
                   child: InkWell(
                     onTap: () {
-                      // Get.toNamed(getRestaurantMessagesRoute(order.orderId));
+                      Get.toNamed(getMessagesRoute(
+                          chatId: order.orderId,
+                          recipientType: ParticipantType.Customer));
                     },
                     customBorder: CircleBorder(),
                     child: Stack(
