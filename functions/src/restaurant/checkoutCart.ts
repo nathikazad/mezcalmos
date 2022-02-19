@@ -10,20 +10,20 @@ import { buildChatForOrder, Chat, ParticipantType } from "../shared/models/Gener
 import { OrderType } from "../shared/models/Generic/Order";
 import { Restaurant } from "../shared/models/Services/Restaurant/Restaurant";
 import { UserInfo } from "../shared/models/Generic/User";
-import { ServerResponseStatus } from "../shared/models/Generic/Generic";
+import { Language, ServerResponseStatus } from "../shared/models/Generic/Generic";
 import * as restaurantNodes from "../shared/databaseNodes/restaurant";
 import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
 import * as customerNodes from "../shared/databaseNodes/customer";
 import *  as rootNodes from "../shared/databaseNodes/root";
-import { notifyDeliveryAdmins } from "../shared/notification/notifyDeliveryAdmin";
 import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
 import { isSignedIn } from "../shared/helper/authorizer";
 import { getRestaurant } from "./restaurantController";
 import { getUserInfo } from "../shared/controllers/rootController";
 import * as chatController from "../shared/controllers/chatController";
-import { NotificationAction, NotificationType } from "../shared/models/Generic/Notification";
-import * as fcm from "../utilities/senders/fcm"
+import { Notification, NotificationAction, NotificationType } from "../shared/models/Generic/Notification";
+
 import { addDeliveryAdminsToChat } from "../shared/helper/deliveryAdmin";
+import { pushNotification } from "../shared/notification/notifyUser";
 
 export = functions.https.onCall(async (data, context) => {
 
@@ -120,31 +120,31 @@ export = functions.https.onCall(async (data, context) => {
   }
 })
 
-async function notifyDeliveryAdminsNewOrder(
-  deliveryAdmins: Record<string, DeliveryAdmin>,
-  orderId: string,
-  restaurant: UserInfo) {
-  let foregroundNotificaiton: NewRestaurantOrderNotification = {
-    time: (new Date()).toISOString(),
-    notificationType: NotificationType.NewOrder,
-    orderType: OrderType.Restaurant,
-    orderId: orderId,
-    notificationAction: NotificationAction.ShowSnackBarAlways,
-    restaurant: restaurant
+async function notifyDeliveryAdminsNewOrder(deliveryAdmins: Record<string, DeliveryAdmin>,
+  orderId: string, restaurant: UserInfo) {
+
+  let notification: Notification = {
+    foreground: <NewRestaurantOrderNotification>{
+      time: (new Date()).toISOString(),
+      notificationType: NotificationType.NewOrder,
+      orderType: OrderType.Restaurant,
+      orderId: orderId,
+      notificationAction: NotificationAction.ShowSnackBarAlways,
+      restaurant: restaurant
+    },
+    background: {
+      [Language.ES]: {
+        title: "Nueva Pedido",
+        body: `Hay una nueva orden de alimento`
+      },
+      [Language.EN]: {
+        title: "New Order",
+        body: `There is a new restaurant order`
+      }
+    }
   }
 
-  let fcmNotification: fcm.fcmPayload = {
-    token: [],
-    payload: {
-      notification: {
-        title: "Nueva Pedido",
-        body: `Hay una nueva orden de alimento`,
-        tag: NotificationType.NewOrder
-      }
-    },
-    options: {
-      priority: fcm.NotificationPriority.High
-    }
-  };
-  notifyDeliveryAdmins(deliveryAdmins, foregroundNotificaiton, fcmNotification);
+  for (let adminId in deliveryAdmins) {
+    pushNotification(adminId!, notification, ParticipantType.DeliveryAdmin);
+  }
 }

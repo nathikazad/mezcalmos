@@ -11,6 +11,7 @@ import { finishOrder } from "./helper";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Generic/Notification";
 import { pushNotification } from "../shared/notification/notifyUser";
 import { LaundryOrderStatusChangeMessages } from "./bgNotificationMessages";
+import { ParticipantType } from "../shared/models/Generic/Chat";
 
 let statusArrayInSeq: Array<LaundryOrderStatus> =
   [LaundryOrderStatus.OrderReceieved,
@@ -105,6 +106,11 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
   }
 
   pushNotification(order.customer.id!, notification);
+
+  if (order.dropoffDriver)
+    pushNotification(order.dropoffDriver.id!, notification, ParticipantType.DeliveryDriver);
+  else if (order.pickupDriver)
+    pushNotification(order.pickupDriver.id!, notification, ParticipantType.DeliveryDriver);
 
   if (newStatus == LaundryOrderStatus.CancelledByAdmin)
     await finishOrder(order, orderId);
