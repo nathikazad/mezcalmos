@@ -5,11 +5,12 @@ import *  as rootDbNodes from "../shared/databaseNodes/root";
 import { OrderType } from "../shared/models/Generic/Order";
 import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { finishOrder } from "./helper";
-import { notifyDeliveryAdmins } from "../shared/notification/notifyDeliveryAdmin";
 import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
-import * as fcm from "../utilities/senders/fcm"
 import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
-import { NotificationAction, NotificationType } from "../shared/models/Generic/Notification";
+import { Notification, NotificationAction, NotificationType } from "../shared/models/Generic/Notification";
+import { LaundryOrderStatusChangeMessages } from "./bgNotificationMessages";
+import { ParticipantType } from "../shared/models/Generic/Chat";
+import { pushNotification } from "../shared/notification/notifyUser";
 
 // Customer Canceling
 export = functions.https.onCall(async (data, context) => {
@@ -56,36 +57,34 @@ export = functions.https.onCall(async (data, context) => {
   await finishOrder(order, orderId);
 
   deliveryAdminNodes.deliveryAdmins().once('value', (snapshot) => {
-    notifyDeliveryAdminsCancelledOrder(snapshot.val(), orderId);
+    notifyOthersCancelledOrder(snapshot.val(), orderId, order);
   });
 
   return { status: ServerResponseStatus.Success, orderId: data.orderId }
 });
 
 
-async function notifyDeliveryAdminsCancelledOrder(deliveryAdmins: Record<string, DeliveryAdmin>,
-  orderId: string) {
-  let foregroundNotificaiton: LaundryOrderStatusChangeNotification = {
-    status: LaundryOrderStatus.CancelledByCustomer,
-    time: (new Date()).toISOString(),
-    notificationType: NotificationType.OrderStatusChange,
-    orderType: OrderType.Laundry,
-    notificationAction: NotificationAction.ShowPopUp,
-    orderId: orderId,
+async function notifyOthersCancelledOrder(deliveryAdmins: Record<string, DeliveryAdmin>,
+  orderId: string, order: LaundryOrder) {
+
+  let notification: Notification = {
+    foreground: <LaundryOrderStatusChangeNotification>{
+      status: LaundryOrderStatus.CancelledByCustomer,
+      time: (new Date()).toISOString(),
+      notificationType: NotificationType.OrderStatusChange,
+      orderType: OrderType.Restaurant,
+      notificationAction: NotificationAction.ShowPopUp,
+      orderId: orderId
+    },
+    background: LaundryOrderStatusChangeMessages[LaundryOrderStatus.CancelledByCustomer]
   }
 
-  let fcmNotification: fcm.fcmPayload = {
-    token: [],
-    payload: {
-      notification: {
-        title: "Pedido Cancellado",
-        body: `Hay un pedido que es cancelado`,
-        tag: NotificationType.OrderStatusChange
-      }
-    },
-    options: {
-      priority: fcm.NotificationPriority.High
-    }
-  };
-  notifyDeliveryAdmins(deliveryAdmins, foregroundNotificaiton, fcmNotification);
+  for (let adminId in deliveryAdmins) {
+    pushNotification(adminId!, notification, ParticipantType.DeliveryAdmin);
+  }
+
+  if (order.dropoffDriver)
+    pushNotification(order.dropoffDriver.id, notification, ParticipantType.DeliveryDriver);
+  else if (order.pickupDriver)
+    pushNotification(order.pickupDriver.id, notification, ParticipantType.DeliveryDriver);
 }

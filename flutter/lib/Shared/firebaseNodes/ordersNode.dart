@@ -1,3 +1,5 @@
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+
 String rootTaxiOpenOrdersNode() => "orders/open/taxi";
 
 String rootOpenOrderReadNode(String orderId, String uid) {
@@ -10,9 +12,10 @@ String rootOpenOrderReceivedNode(String orderId, String uid) {
 }
 
 String rootTaxiInProcessOrderDriverLocationNode(String orderId) {
-  return 'orders/inProcess/taxi/$orderId/driver/location';
+  return rootInProcessOrderDriverLocationNode(orderId, OrderType.Taxi);
 }
 
-// String rootTaxiInProcessOrderDriverLocationNode(String orderId) {
-//   return 'orders/inProcess/deliveryDriver/$orderId/driver/location';
-// }
+String rootInProcessOrderDriverLocationNode(
+    String orderId, OrderType orderType) {
+  return 'orders/inProcess/${orderType.toFirebaseFormatString()}/$orderId/driver/location';
+}

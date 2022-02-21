@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/ordersNode.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
@@ -109,7 +112,6 @@ class DeliveryAuthController extends GetxController {
   void saveAppVersionIfNecessary() {
     if (_checkedAppVersion == false) {
       String VERSION = GetStorage().read(getxVersion);
-      mezDbgPrint("[+] TaxiDriver Currently using App v$VERSION");
       _databaseHelper.firebaseDatabase
           .reference()
           .child(
@@ -125,7 +127,7 @@ class DeliveryAuthController extends GetxController {
     await location.changeSettings(interval: 1000);
     // location.enableBackgroundMode(enable: true);
     return location.onLocationChanged.listen((LocationData currentLocation) {
-      // mezDbgPrint("\t\t [TAXI AUTH CONTROLLER] LOCATION GOT UPDAAAATED !!");
+      // mezDbgPrint("\t\t [DELIVERY AUTH CONTROLLER] LOCATION GOT UPDAAAATED !!");
       DateTime currentTime = DateTime.now();
       if (currentLocation.latitude != null &&
           currentLocation.longitude != null) {
@@ -145,36 +147,32 @@ class DeliveryAuthController extends GetxController {
               .child(deliveryDriverAuthNode(_authController.fireAuthUser!.uid))
               .child('location')
               .set(positionUpdate);
-          // if ((_state.value?.currentOrders.length ?? 0) > 0) {
-          //   _state.value?.currentOrders.forEach((currentOrderId) {
-          // updating driver location in taxis/inProcessOrders
-          // _databaseHelper.firebaseDatabase
-          //     .reference()
-          //     .child(deliveryDriverInProcessOrderDriverLocationNode(
-          //         orderId: currentOrderId,
-          //         deliveryDriverId: _authController.fireAuthUser!.uid))
-          //     .set(positionUpdate);
+          OrderController _orderController = Get.find<OrderController>();
 
-          // // updating driver location in root orders/inProcess/taxi
-          // _databaseHelper.firebaseDatabase
-          //     .reference()
-          //     .child(rootTaxiInProcessOrderDriverLocationNode(
-          //         _state.value!.currentOrder!))
-          //     .set(positionUpdate);
+          _orderController.currentOrders.forEach((order) {
+            // updating driver location in deliveryDrivers/inProcessOrders
+            _databaseHelper.firebaseDatabase
+                .reference()
+                .child(deliveryDriverInProcessOrderDriverLocationNode(
+                    orderId: order.orderId,
+                    deliveryDriverId: _authController.fireAuthUser!.uid))
+                .set(positionUpdate);
 
-          // // updating driver location in customers/inProcessOrders
-          // String? currentOrderCustomerId = Get.find<OrderController>()
-          //     .getOrder(_state.value!.currentOrder!)
-          //     ?.customer
-          //     .id;
-          //   if (currentOrderCustomerId != null)
-          //     _databaseHelper.firebaseDatabase
-          //         .reference()
-          //         .child(customerInProcessOrderDriverLocationNode(
-          //             _state.value!.currentOrder!, currentOrderCustomerId))
-          //         .set(positionUpdate);
-          // });
-          // }
+            // updating driver location in root orders/inProcess/<OrderType>
+            _databaseHelper.firebaseDatabase
+                .reference()
+                .child(rootInProcessOrderDriverLocationNode(
+                    order.orderId, order.orderType))
+                .set(positionUpdate);
+
+
+            _databaseHelper.firebaseDatabase
+                .reference()
+                .child(customerInProcessOrderDriverLocationNode(
+                    order.orderId, order.customer.id))
+                .set(positionUpdate);
+          });
+          
           
         } catch (e) {
           mezDbgPrint("Write driver position to db error");

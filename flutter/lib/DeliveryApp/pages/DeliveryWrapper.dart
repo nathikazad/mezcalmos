@@ -10,7 +10,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/firebaseNodes/taxiNodes.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/deliveryNodes.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
@@ -34,20 +34,23 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
     mezDbgPrint("DeliveryWrapper::init state");
     Future.microtask(() {
       mezDbgPrint("DeliveryWrapper::microtask handleState first time");
-      DeliveryDriverState? taxiState =
+      DeliveryDriverState? deliveryDriverState =
           Get.find<DeliveryAuthController>().deliveryDriverState;
-      mezDbgPrint("taxiState = $taxiState");
-      if (taxiState != null) {
-        mezDbgPrint("inside if  = $taxiState");
+      mezDbgPrint("deliveryDriverState = $deliveryDriverState");
+      if (deliveryDriverState != null) {
+        mezDbgPrint("inside if  = $deliveryDriverState");
 
-        handleState(taxiState);
+        handleState(deliveryDriverState);
       } else {
-        mezDbgPrint("inside else  = $taxiState");
+        mezDbgPrint("inside else  = $deliveryDriverState");
         mezDbgPrint("${Get.find<DeliveryAuthController>().stateStream.first}");
 
-        Get.find<DeliveryAuthController>().stateStream.first.then((_taxiState) {
-          mezDbgPrint("inside else -> then  = $_taxiState");
-          handleState(_taxiState);
+        Get.find<DeliveryAuthController>()
+            .stateStream
+            .first
+            .then((_deliveryDriverState) {
+          mezDbgPrint("inside else -> then  = $_deliveryDriverState");
+          handleState(_deliveryDriverState);
         });
       }
     });
@@ -57,7 +60,8 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
     listenForLocationPermissions();
     Get.find<ForegroundNotificationsController>()
         .startListeningForNotificationsFromFirebase(
-            taxiNotificationsNode(userId), taxiNotificationHandler);
+            deliveryDriverNotificationsNode(userId),
+            deliveryDriverNotificationHandler);
     super.initState();
   }
 
