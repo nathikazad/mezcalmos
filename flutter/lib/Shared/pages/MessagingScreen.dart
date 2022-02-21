@@ -5,8 +5,8 @@
 
 // chat: {deliveryAdminDropOffDriver: 'dsfdsf', deliveryAdminPickupDriver: 'dsfs'}
 import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
 import 'package:get/get.dart';
 // Extends GetView<MessagingController> after Nathik implements the controller
 import 'package:intl/intl.dart' as intl;
@@ -17,6 +17,7 @@ import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
+import 'package:sizer/sizer.dart';
 
 DateTime now = DateTime.now().toLocal();
 String formattedDate = intl.DateFormat('dd-MM-yyyy').format(now);
@@ -46,9 +47,12 @@ class _MessagingScreenState extends State<MessagingScreen> {
     this.orderId = Get.parameters['orderId'];
     if (Get.parameters['recipientId'] != null)
       this.recipientId = Get.parameters['recipientId'];
-    else if (Get.parameters['recipientType'] != null)
+    else if (Get.parameters['recipientType'] != null) {
+      mezDbgPrint(
+          " PRINTING RECPIENT TYPE =========> ${Get.parameters['recipientType']}");
       this.recipientType =
           Get.parameters['recipientType']!.toString().toParticipantType();
+    }
     controller.clearMessageNotifications(chatId: this.chatId);
     mezDbgPrint(Get.parameters);
   }

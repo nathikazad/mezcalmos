@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/restaurantController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Components/RestaurantControllButtons.dart';
+import 'package:mezcalmos/Shared/models/Chat.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../../Shared/models/Orders/RestaurantOrder.dart';
@@ -84,7 +86,13 @@ class DriverBottomRestaurantOrderCard extends StatelessWidget {
         ),
         Spacer(),
         IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Get.toNamed(getMessagesRoute(
+                  orderId: order.orderId,
+                  chatId: order.dropOffDriverChatId!,
+                  // recipientId: order.serviceProviderId,
+                  recipientType: ParticipantType.DeliveryAdmin));
+            },
             icon: Icon(
               Icons.textsms_rounded,
               color: Theme.of(context).primaryColorLight,

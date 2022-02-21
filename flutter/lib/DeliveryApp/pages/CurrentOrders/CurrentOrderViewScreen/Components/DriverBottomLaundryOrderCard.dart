@@ -5,7 +5,9 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/laundryController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Components/LaundryControllButtons.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:sizer/sizer.dart';
 
 class DriverBottomLaundryOrderCard extends StatelessWidget {
@@ -56,108 +58,115 @@ class DriverBottomLaundryOrderCard extends StatelessWidget {
 
   Widget _orderBottomCanceledComponent(TextTheme textTheme) {
     return Row(
-                children: [
-                  Icon(
-                    Icons.cancel,
-                    color: Colors.redAccent,
-                    size: 30.sp,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Flexible(
-                      child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Order canceled',
-                        style: textTheme.bodyText1,
-                      ),
-                      Text(
-                        DateFormat('dd MMM yy h:m').format(order.orderTime),
-                        style: textTheme.subtitle1,
-                      )
-                    ],
-                  ))
-                ],
-              );
+      children: [
+        Icon(
+          Icons.cancel,
+          color: Colors.redAccent,
+          size: 30.sp,
+        ),
+        SizedBox(
+          width: 10,
+        ),
+        Flexible(
+            child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Order canceled',
+              style: textTheme.bodyText1,
+            ),
+            Text(
+              DateFormat('dd MMM yy h:m').format(order.orderTime),
+              style: textTheme.subtitle1,
+            )
+          ],
+        ))
+      ],
+    );
   }
 
   Widget _orderDeliveredBottomComponent(TextTheme textTheme) {
     return Row(
-                children: [
-                  Icon(
-                    Icons.check_circle,
-                    color: Colors.green,
-                    size: 30.sp,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Flexible(
-                      child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Order Deliverd',
-                        style: textTheme.bodyText1,
-                      ),
-                      Text(
-                        DateFormat('dd MMM yy h:m').format(order.orderTime),
-                        style: textTheme.subtitle1,
-                      )
-                    ],
-                  ))
-                ],
-              );
+      children: [
+        Icon(
+          Icons.check_circle,
+          color: Colors.green,
+          size: 30.sp,
+        ),
+        SizedBox(
+          width: 10,
+        ),
+        Flexible(
+            child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Order Deliverd',
+              style: textTheme.bodyText1,
+            ),
+            Text(
+              DateFormat('dd MMM yy h:m').format(order.orderTime),
+              style: textTheme.subtitle1,
+            )
+          ],
+        ))
+      ],
+    );
   }
 
   Widget _orderHeaderInfo(BuildContext context, TextTheme textTheme) {
     return Row(
-              children: [
-                Icon(
-                  Icons.local_laundry_service,
-                  size: 40.sp,
-                  color: Theme.of(context).primaryColorLight,
-                ),
-                Flexible(
-                  flex: 4,
-                  fit: FlexFit.tight,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Laundry Order',
-                        style: textTheme.headline3!.copyWith(fontSize: 13.sp),
-                      ),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.schedule,
-                            size: 15,
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            DateFormat('dd MMM yy h:m')
-                                .format(order.orderTime),
-                            style: textTheme.subtitle1,
-                          )
-                        ],
-                      )
-                    ],
+      children: [
+        Icon(
+          Icons.local_laundry_service,
+          size: 40.sp,
+          color: Theme.of(context).primaryColorLight,
+        ),
+        Flexible(
+          flex: 4,
+          fit: FlexFit.tight,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Laundry Order',
+                style: textTheme.headline3!.copyWith(fontSize: 13.sp),
+              ),
+              Row(
+                children: [
+                  Icon(
+                    Icons.schedule,
+                    size: 15,
                   ),
-                ),
-                Spacer(),
-                IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.textsms_rounded,
-                      color: Theme.of(context).primaryColorLight,
-                    )),
-              ],
-            );
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text(
+                    DateFormat('dd MMM yy h:m').format(order.orderTime),
+                    style: textTheme.subtitle1,
+                  )
+                ],
+              )
+            ],
+          ),
+        ),
+        Spacer(),
+        IconButton(
+            onPressed: () {
+              Get.toNamed(getMessagesRoute(
+                  orderId: order.orderId,
+                  chatId: (order.getCurrentPhase() == LaundryOrderPhase.Pickup)
+                      ? order.pickupDriverChatId!
+                      : order.dropOffDriverChatId!,
+                  // recipientId: order.dropoffDriver!.id,
+                  recipientType: ParticipantType.DeliveryAdmin));
+            },
+            icon: Icon(
+              Icons.textsms_rounded,
+              color: Theme.of(context).primaryColorLight,
+            )),
+      ],
+    );
   }
 
   Widget _orderFromToComponent(TextTheme textTheme) {

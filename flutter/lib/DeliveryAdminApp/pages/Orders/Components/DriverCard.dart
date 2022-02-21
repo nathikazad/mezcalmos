@@ -2,7 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
+import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
+import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
@@ -21,7 +23,7 @@ class DriverCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
+    final textTheme = Theme.of(context).textTheme;
     return Container(
       padding: const EdgeInsets.all(8),
       child: Column(
@@ -30,7 +32,7 @@ class DriverCard extends StatelessWidget {
           Container(
             child: Text(
               'Driver',
-              style: txt.bodyText1,
+              style: textTheme.bodyText1,
             ),
           ),
           Card(
@@ -38,11 +40,7 @@ class DriverCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
                 side: BorderSide(
                   width: 1.5,
-                  color: (driver != null && canChangeDriver)
-                      ? Theme.of(context).primaryColorLight
-                      : (driver != null && !canChangeDriver)
-                          ? Colors.green
-                          : Colors.redAccent,
+                  color: (driver != null) ? Colors.green : Colors.redAccent,
                 )),
             child: InkWell(
               borderRadius: BorderRadius.circular(10),
@@ -58,8 +56,8 @@ class DriverCard extends StatelessWidget {
                 width: double.infinity,
                 padding: const EdgeInsets.all(8),
                 child: (driver != null)
-                    ? driverInfoComponent(txt, context)
-                    : noDriverComponent(context, txt),
+                    ? driverInfoComponent(textTheme, context)
+                    : noDriverComponent(context, textTheme),
               ),
             ),
           ),
@@ -68,7 +66,10 @@ class DriverCard extends StatelessWidget {
     );
   }
 
-  Widget noDriverComponent(BuildContext context, TextTheme txt) {
+  // ------ LOCAL COMPONENTS ---------//
+
+// CARD CONTENT WHEN THERE IS NO DRIVER (DRIVER == NULL)
+  Widget noDriverComponent(BuildContext context, TextTheme textTheme) {
     return Row(
       children: [
         Icon(
@@ -81,7 +82,7 @@ class DriverCard extends StatelessWidget {
         ),
         Text(
           'Pick a driver',
-          style: txt.bodyText1,
+          style: textTheme.bodyText1,
         ),
         Spacer(),
         Icon(Icons.arrow_forward)
@@ -89,7 +90,8 @@ class DriverCard extends StatelessWidget {
     );
   }
 
-  Widget driverInfoComponent(TextTheme txt, BuildContext context) {
+// CARD CONTENT WHEN THERE IS DRIVER ASSIGNED, DRIVER INFO AND MESSAGE BUTTON (DRIVER != NULL)
+  Widget driverInfoComponent(TextTheme textTheme, BuildContext context) {
     return Row(
       children: [
         CircleAvatar(
@@ -107,7 +109,7 @@ class DriverCard extends StatelessWidget {
             children: [
               Text(
                 driver!.name,
-                style: txt.bodyText2,
+                style: textTheme.bodyText2,
               ),
               SizedBox(
                 height: 5,
@@ -116,25 +118,65 @@ class DriverCard extends StatelessWidget {
           ),
         ),
         Spacer(),
-        IconButton(onPressed: () {
-         // getMessagesRoute(chatId: (order as DeliverableOrder))
-        }, icon: Icon(Icons.message_outlined)),
         IconButton(
-            onPressed: (canChangeDriver)
-                ? () async {
-                    DeliveryDriver? newDriver =
-                        await Get.toNamed(kDriversListRoute, arguments: order)
-                            as DeliveryDriver;
-                    callBack(newDriver);
-                  }
-                : null,
-            icon: Icon(
-              Icons.edit_rounded,
-              color: (canChangeDriver)
-                  ? Theme.of(context).primaryColorLight
-                  : Colors.grey.shade400,
-            )),
+            onPressed: () {
+              if (order.orderType == OrderType.Laundry) {
+                Get.toNamed(getMessagesRoute(
+                    orderId: order.orderId,
+                    chatId:
+                        (order as TwoWayDeliverableOrder).pickupDriverChatId!,
+                    recipientType: ParticipantType.DeliveryDriver));
+              } else if (order.orderType == OrderType.Restaurant) {
+                Get.toNamed(getMessagesRoute(
+                    orderId: order.orderId,
+                    chatId: (order as DeliverableOrder).dropOffDriverChatId!,
+                    recipientType: ParticipantType.DeliveryDriver));
+              }
+            },
+            icon: Icon(Icons.message_outlined)),
       ],
     );
+  }
+
+// ------ FUNCTIONS ---------//
+// function to assign the right routing function depending on order type and order phase
+  getRightMessageRoute() {
+    if (order.orderType == OrderType.Laundry) {
+      // START OF LAUNDRY ORDER LOGIC (PHASES)
+      if (((order as LaundryOrder).getCurrentPhase() ==
+          LaundryOrderPhase.Pickup)) {
+        _laundryPickupDriverMessageRoute();
+      } else {
+        _laundryDropOffDriverMessageRoute();
+      }
+      // END OF LAUNDRY ORDER LOGIC
+    } else if (order.orderType == OrderType.Restaurant) {
+      // RESTAURANT  ORDER LOGIC
+      restaurantDriverMessageRoute();
+    }
+  }
+
+// restaurant order driver message route function
+  restaurantDriverMessageRoute() {
+    Get.toNamed(getMessagesRoute(
+        orderId: order.orderId,
+        chatId: (order as DeliverableOrder).dropOffDriverChatId!,
+        recipientType: ParticipantType.DeliveryDriver));
+  }
+
+// laundry order  dropoff driver message route function
+  _laundryDropOffDriverMessageRoute() {
+    Get.toNamed(getMessagesRoute(
+        orderId: order.orderId,
+        chatId: (order as DeliverableOrder).dropOffDriverChatId!,
+        recipientType: ParticipantType.DeliveryDriver));
+  }
+
+// laundry order pickup driver message route function
+  _laundryPickupDriverMessageRoute() {
+    Get.toNamed(getMessagesRoute(
+        orderId: order.orderId,
+        chatId: (order as TwoWayDeliverableOrder).pickupDriverChatId!,
+        recipientType: ParticipantType.DeliveryDriver));
   }
 }

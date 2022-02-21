@@ -63,6 +63,8 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
           order.value = controller.getOrder(orderId);
           if (order.value?.pickupDriver != null) {
             driver = order.value!.pickupDriver;
+          } else if (order.value!.dropoffDriver != null) {
+            driver = order.value!.dropoffDriver;
           }
         } else {
           Get.back();

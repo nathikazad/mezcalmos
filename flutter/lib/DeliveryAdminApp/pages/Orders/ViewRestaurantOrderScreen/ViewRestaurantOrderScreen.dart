@@ -55,9 +55,11 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
     } else {
       _orderListener =
           controller.getCurrentOrderStream(orderId).listen((newOrder) {
+        mezDbgPrint("PRIIIIIIIINT ${order.value!.dropoffDriver}");
         if (newOrder != null) {
           order.value = controller.getOrder(orderId);
-          if (order.value!.dropoffDriver != null) {
+          mezDbgPrint("PRIIIIIIIINT ${order.value!.dropoffDriver}");
+          if (order.value?.dropoffDriver != null) {
             driver = order.value!.dropoffDriver;
           }
         } else {
@@ -101,8 +103,8 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                   if (order.value?.inProcess() ?? false)
                     Obx(
                       () => DriverCard(
-                        canChangeDriver: true,
-                        driver: driver,
+                        canChangeDriver: false,
+                        driver: order.value!.dropoffDriver,
                         order: order.value!,
                         callBack: (newDriver) {
                           deliveryDriverController.assignDeliveryDriver(

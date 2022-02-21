@@ -24,14 +24,15 @@ class OrderController extends GetxController {
 
   @override
   void onInit() {
-    print("--------------------> Start listening on past orders !");
+    mezDbgPrint(
+        "--------------------> Start listening on past orders  ${deliveryDriversPastOrdersNode(_authController.fireAuthUser!.uid)}");
+
     _pastOrdersListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(deliveryDriversPastOrdersNode(_authController.fireAuthUser!.uid))
-        .orderByChild('orderTime')
-        .limitToLast(5)
         .onValue
         .listen((event) {
+      mezDbgPrint("-----------------Paaast evvvvveeeeent ${event}");
       List<DeliverableOrder> orders = [];
       if (event.snapshot.value != null) {
         event.snapshot.value.keys.forEach((orderId) {
@@ -45,34 +46,10 @@ class OrderController extends GetxController {
             orders.add(LaundryOrder.fromData(orderId, orderData));
         });
       }
-
       pastOrders.value = orders;
-      // pastOrders.add(
-      //     RestaurantOrder.fromData(event.snapshot.key, event.snapshot.value));
+    }, onError: (error) {
+      mezDbgPrint('EROOOOOOR +++++++++++++++++ $error');
     });
-    // _pastOrdersListener?.cancel();
-    // _pastOrdersListener = _databaseHelper.firebaseDatabase
-    //     .reference()
-    //     .child(deliveryDriversPastOrdersNode(_authController.fireAuthUser!.uid))
-    //     .limitToLast(10)
-    //     .onChildAdded
-    //     .listen((event) {
-    //   List<DeliverableOrder> orders = [];
-    //   if (event.snapshot.value != null) {
-    //     mezDbgPrint("orderController: PAST ORDERS  ------------ $event");
-    //     event.snapshot.value.keys?.forEach((orderId) {
-    //       // mezDbgPrint("Hndling Order : $orderId");
-    //       dynamic orderData = event.snapshot.value[orderId];
-    //       if (orderData["orderType"] ==
-    //           OrderType.Restaurant.toFirebaseFormatString())
-    //         orders.add(RestaurantOrder.fromData(orderId, orderData));
-    //       else if (orderData["orderType"] ==
-    //           OrderType.Laundry.toFirebaseFormatString())
-    //         orders.add(LaundryOrder.fromData(orderId, orderData));
-    //     });
-    //   }
-    //   pastOrders.value = orders;
-    // });
 
     mezDbgPrint(
         "Starting listening on inProcess : ${deliveryDriversInProcessOrdersNode(_authController.fireAuthUser!.uid)}");

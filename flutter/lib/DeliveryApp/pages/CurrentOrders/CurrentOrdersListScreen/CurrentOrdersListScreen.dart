@@ -72,6 +72,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                         ),
                       ),
                       Divider(),
+                      Text(orderController.pastOrders.length.toString()),
                       Obx(() => _pastOrdersList(context)),
                     ]),
               ),
@@ -83,6 +84,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Text(orderController.pastOrders.length.toString()),
           Container(
             padding: const EdgeInsets.all(5),
             child: Text(
@@ -121,9 +123,11 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
           ),
           Column(
             children: List.generate(
-                orderController.currentOrders.length,
-                (index) => DriverOrderCard(
-                    order: orderController.currentOrders[index])),
+                    orderController.currentOrders.length,
+                    (index) => DriverOrderCard(
+                        order: orderController.currentOrders[index]))
+                .reversed
+                .toList(),
           ),
         ],
       );
