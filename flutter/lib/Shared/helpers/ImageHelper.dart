@@ -17,6 +17,8 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
+dynamic _i18n = Get.find<LanguageController>().strings['Shared']['helpers']['ImageHelper'];
+
 String generateRandomString(int len) {
   var r = Random();
   const _chars =
@@ -65,7 +67,6 @@ Image showDefaultOrUserImg({Uint8List? memoryImg}) {
 
 Future<imPicker.ImageSource?> imagePickerChoiceDialog(
     BuildContext context) async {
-  LanguageController lang = Get.find<LanguageController>();
   imPicker.ImageSource? _result;
 
   await showDialog(
@@ -98,8 +99,7 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
                             Icons.camera_enhance,
                             color: Colors.white,
                           ),
-                          Text(i18n.strings['shared']
-                              ['buttonsTexts']['camera'])
+                          Text(_i18n['camera'])
                         ],
                       ))),
               SizedBox(
@@ -124,8 +124,7 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
                             color: Colors.white,
                           ),
                           Text(
-                              i18n.strings['shared']
-                              ['buttonsTexts']['gallery'])
+                              _i18n['gallery'])
                         ],
                       ))),
             ],
@@ -139,7 +138,7 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
 Future<imPicker.XFile?> imagePicker(
     {required imPicker.ImagePicker picker,
     imPicker.ImageSource source = imPicker.ImageSource.gallery}) async {
-  LanguageController lang = Get.find<LanguageController>();
+  //LanguageController lang = Get.find<LanguageController>();
   try {
     return await picker.pickImage(
       source: source,
@@ -149,17 +148,13 @@ Future<imPicker.XFile?> imagePicker(
   } on PlatformException catch (exception) {
     if (exception.code == 'camera_access_denied') {
       MezSnackbar(
-          i18n.strings['shared']['permissions']
-              ['cameraAccessOffTitle'],
-          i18n.strings['shared']['permissions']
-              ['cameraAccessOffBody'],
+          _i18n['cameraAccessOffTitle'],
+          _i18n['cameraAccessOffBody'],
           position: SnackPosition.TOP);
     } else if (exception.code == 'photo_access_denied') {
       MezSnackbar(
-          i18n.strings['shared']['permissions']
-              ['photoAccessOffTitle'],
-          i18n.strings['shared']['permissions']
-              ['photoAccessOffBody'],
+          _i18n['photoAccessOffTitle'],
+          _i18n['photoAccessOffBody'],
           position: SnackPosition.TOP);
     } else {
       return await picker.pickImage(

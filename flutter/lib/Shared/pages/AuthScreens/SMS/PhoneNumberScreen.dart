@@ -9,6 +9,10 @@ import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 const mypadding = EdgeInsets.only(left: 15, right: 15);
 
+dynamic _i18n = Get.find<LanguageController>().strings['Shared']['pages']
+["AuthScreens"]["SMS"]["PhoneNumberScreen"];
+
+
 class PhoneNumberScreen extends StatefulWidget {
   @override
   State<PhoneNumberScreen> createState() {
@@ -17,7 +21,6 @@ class PhoneNumberScreen extends StatefulWidget {
 }
 
 class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
-  LanguageController lang = Get.find<LanguageController>();
   AuthController controller = Get.find<AuthController>();
 
   TextEditingController _prefixTextFieldController = TextEditingController();
@@ -83,7 +86,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                 child: Text(
 
                     ///****add ths to lan file */
-                    i18n.strings['shared']['login']["otpCode"],
+                    _i18n["otpCode"],
                     style: Theme.of(context).textTheme.headline1),
               ),
             ),
@@ -95,7 +98,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
               () => Container(
                 padding: EdgeInsets.only(left: 15, right: 15, top: 15),
                 child: Text(
-                  i18n.strings['shared']['login']["twilioNote"],
+                  _i18n["twilioNote"],
                   style: Theme.of(context).textTheme.bodyText2,
                 ),
               ),
@@ -116,7 +119,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              child: Text(i18n.strings['shared']['login']["enterPhoneNumber"],
+              child: Text(_i18n["enterPhoneNumber"],
                   // "Enter Phone To Recieve OPT Code",
                   style: Theme.of(context).textTheme.bodyText1),
             ),
@@ -254,7 +257,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
               alignment: Alignment.center,
               child: (clickedSendOtp.value)
                   ? CircularProgressIndicator()
-                  : Text(i18n.strings['shared']['login']["submit"]),
+                  : Text(_i18n["submit"]),
             )),
       ),
     );

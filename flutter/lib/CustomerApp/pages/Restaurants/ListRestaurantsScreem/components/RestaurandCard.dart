@@ -8,6 +8,9 @@ import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:sizer/sizer.dart';
 
+dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+    ["Restaurants"]["ListRestaurantsScreem"]["components"]["RestaurandCard"];
+
 class RestaurantCard extends StatelessWidget {
   final Restaurant restaurant;
 
@@ -71,7 +74,7 @@ class RestaurantCard extends StatelessWidget {
                             Flexible(
                               child: Text(
                                 restaurant.items.length.toStringAsFixed(0) +
-                                    ' ${i18n.strings["customer"]["restaurant"]["menu"]["items"]}',
+                                    ' ${_i18n["items"]}',
                                 style: txt.bodyText2,
                               ),
                             )
@@ -127,7 +130,7 @@ class RestaurantCard extends StatelessWidget {
                   ? null
                   : Center(
                       child: Text(
-                        "${i18n.strings["customer"]["restaurant"]["menu"]["workingHours"]["closed"]}",
+                        "${_i18n["closed"]}",
                         style: TextStyle(color: Colors.white),
                       ),
                     ),

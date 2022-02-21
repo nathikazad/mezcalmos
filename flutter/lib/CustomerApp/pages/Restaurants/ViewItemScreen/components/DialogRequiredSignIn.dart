@@ -4,7 +4,8 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 void dialogRequiredSignIn() {
-  LanguageController lang = Get.find<LanguageController>();
+  dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+    ["Restaurants"]["ViewItemScreen"]["components"]["DialogRequiredSignIn"];
   Get.dialog(
     Container(
       padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
@@ -31,7 +32,7 @@ void dialogRequiredSignIn() {
               Container(
                 width: Get.width,
                 child: Text(
-                  "${lang.strings["customer"]["signInAlert"]["title"]}",
+                  "${_i18n["title"]}",
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -55,7 +56,7 @@ void dialogRequiredSignIn() {
                     width: Get.width,
                     alignment: Alignment.center,
                     child: Text(
-                      "${lang.strings["customer"]["signInAlert"]["signBtn"]}",
+                      "${_i18n["signBtn"]}",
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
@@ -73,7 +74,7 @@ void dialogRequiredSignIn() {
                     alignment: Alignment.center,
                     height: 15,
                     child: Text(
-                        "${lang.strings["customer"]["signInAlert"]["notNowBtn"]}",
+                        "${_i18n["notNowBtn"]}",
                         style: TextStyle(color: Colors.grey)),
                   ),
                 ),

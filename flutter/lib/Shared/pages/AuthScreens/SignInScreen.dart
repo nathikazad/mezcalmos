@@ -17,10 +17,11 @@ enum SignInMode {
   RequiredSignIn,
 }
 
+dynamic _i18n = Get.find<LanguageController>().strings['Shared']['pages']["AuthScreens"]["SignInScreen"];
+
 class SignIn extends GetWidget<AuthController> {
   final SignInMode mode;
   SignIn({required this.mode});
-  final LanguageController lang = Get.find<LanguageController>();
   RxBool clickedLogin = false.obs;
 
   @override
@@ -71,7 +72,7 @@ class SignIn extends GetWidget<AuthController> {
                     MezcalmosSharedWidgets.mezcalmosTitle(
                         textSize: 35.sp, isBold: true),
                     Spacer(),
-                    Text(i18n.strings['shared']['login']["title"],
+                    Text(_i18n["title"],
                         overflow: TextOverflow.visible,
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
@@ -140,7 +141,7 @@ class SignIn extends GetWidget<AuthController> {
                     child: Icon(Ionicons.logo_apple)),
                 Spacer(),
                 Text(
-                  i18n.strings['shared']['login']["loginWithApple"],
+                  _i18n["loginWithApple"],
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Spacer()
@@ -168,7 +169,7 @@ class SignIn extends GetWidget<AuthController> {
                     child: Icon(Ionicons.chatbox)),
                 Spacer(),
                 Text(
-                  i18n.strings['shared']['login']["loginWithSms"],
+                  _i18n["loginWithSms"],
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Spacer(),
@@ -234,7 +235,7 @@ class SignIn extends GetWidget<AuthController> {
                 Spacer(),
                 Text(
                   lmode != "dev"
-                      ? i18n.strings['shared']['login']["fbBtn"]
+                      ? _i18n["fbBtn"]
                       : "test mode login",
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),

@@ -3,16 +3,19 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 
+dynamic _i18n = Get.find<LanguageController>().strings["DeliveryAdminApp"]["pages"]
+["Orders"]["ViewRestaurantOrderScreen"]["components"]["OrderNoteCard"];
+
 // Display the notte of the order inside the order view
 Widget orderNoteCard(Rxn<RestaurantOrder> order) {
-  LanguageController lang = Get.find<LanguageController>();
+
   return Column(
     children: [
       Container(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         alignment: Alignment.centerLeft,
         child: Text(
-            "${i18n.strings['customer']['restaurant']['menu']['notes']}",
+            "${_i18n['notes']}",
             style: const TextStyle(
                 color: const Color(0xff000f1c),
                 fontFamily: "psb",

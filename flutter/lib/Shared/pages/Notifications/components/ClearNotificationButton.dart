@@ -5,6 +5,9 @@ import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.d
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 
+dynamic _i18n = Get.find<LanguageController>().strings['Shared']['pages']
+["Notifications"]["components"]["ClearNotificationButton"];
+
 class ClearNotificationButton extends StatelessWidget {
   ClearNotificationButton({
     Key? key,
@@ -12,7 +15,6 @@ class ClearNotificationButton extends StatelessWidget {
 
   final ForegroundNotificationsController controller =
       Get.find<ForegroundNotificationsController>();
-  final LanguageController lang = Get.find<LanguageController>();
   @override
   Widget build(BuildContext context) {
     return Obx(() => (controller.notifications.length <= 0)
@@ -26,7 +28,7 @@ class ClearNotificationButton extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: Text(
-                  i18n.strings["shared"]["notification"]["latest"],
+                  _i18n["latest"],
                   style: Theme.of(context).textTheme.headline3,
                 ),
               ),
@@ -34,10 +36,8 @@ class ClearNotificationButton extends StatelessWidget {
                   iconSize: 20,
                   onPressed: () async {
                     YesNoDialogButton yesNoRes = await cancelAlertDialog(
-                        title: i18n.strings["shared"]["notification"]
-                            ["alertClearNotification"]["title"],
-                        body: i18n.strings["shared"]["notification"]
-                            ["alertClearNotification"]["title"],
+                        title: _i18n["alertClearNotificationTitle"],
+                        body: _i18n["alertClearNotificationTitle"],
                         icon: Container(
                           child: Icon(
                             Icons.highlight_off,

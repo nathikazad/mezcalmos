@@ -12,11 +12,13 @@ import 'package:month_picker_dialog/month_picker_dialog.dart';
 
 const mypadding = const EdgeInsets.symmetric(horizontal: 10);
 
+dynamic _i18n =  Get.find<LanguageController>().strings["TaxiAdminApp"]["pages"]
+["Orders"]["OrdersFulfillmentOnMonthPage"];
+
 class OrdersFulfillmentOnMonthPage extends GetView<OrderStatsController> {
   final f = new DateFormat('MMMM');
   var selectedtime = DateTime.now().obs;
   var dayValue = DateTime.now().day.obs;
-  LanguageController lang = Get.find<LanguageController>();
   Widget getFulfillmentRatioOnMonth(BuildContext context) {
     return getFutureData(
         controller.getFulfillmentRatioOnMonth(selectedtime.value.month),
@@ -27,7 +29,7 @@ class OrdersFulfillmentOnMonthPage extends GetView<OrderStatsController> {
         ),
         Container(
           child: Text(
-            i18n.strings["admin"]["orders"]["orderFR"],
+            _i18n["orderFR"],
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
           ),

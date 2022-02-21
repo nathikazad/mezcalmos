@@ -83,7 +83,7 @@
             },
             "orderStatus": {
                 "orderCanceled": "Order Cancelled",
-                "orderDeliverd":"Order Delivered",
+                "orderDelivered":"Order Delivered",
                 "helperText":{
                 "preparing": "Your order is being prepared by the restaurant",
                 "readyForPickUp": "Your order is prepared and ready for pickup by the delivery driver'",
@@ -100,7 +100,7 @@
                 "delivered": "Order Delivered",
                 "canceledByAdmin": "Order Cancelled",
                 "canceledByCustomer": "Order Cancelled",
-                "recievied": "Order Recieved"
+                "received": "Order Received"
             },
             "cancelOrderDialog": {
                 "yes": "Yes, I'm sure!",
@@ -238,7 +238,7 @@
             "trafficJam": "Traffic jam",
             "other": "Other",
             "customerCancelled": "Sorry to inform you the customer cancelled the ride.",
-            "rideUnavailble": "Sorry to inform you that the ride is not available any more."
+            "rideUnavailable": "Sorry to inform you that the ride is not available any more."
         },
         "orders": {
             "orderStatus":{
@@ -306,7 +306,7 @@
             "verifyCountryCode": "Please verify your country code",
             "verifyPhoneNumber": "Please verify your phone number",
             "OtpConfirmation": "OTP Code Confirmation",
-            "otpDidnReciveTxt":"You have'nt recieve the text ?",
+            "otpDidnReceiveTxt":"You have'nt recieve the text ?",
             "confirmation":"Confirmation",
             "enterOtpCode": "Enter OTP code sent to",
             "resend": "Resend",

@@ -5,8 +5,11 @@ import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 
+dynamic _i18n = Get.find<LanguageController>().strings["TaxiApp"]["pages"]
+["Orders"]["IncomingOrders"]["IncomingViewScreen"]["IPositionedFromToBar"];
+
 class IncomingPositionedFromToTopBar extends StatelessWidget {
-  LanguageController lang = Get.find<LanguageController>();
+  
   TaxiOrder order;
   IncomingPositionedFromToTopBar({required this.order});
 
@@ -46,7 +49,7 @@ class IncomingPositionedFromToTopBar extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Obx(() => Text(
-                              i18n.strings['shared']['inputLocation']["from"],
+                              _i18n["from"],
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 fontSize: 16,
@@ -55,7 +58,7 @@ class IncomingPositionedFromToTopBar extends StatelessWidget {
                             )),
                         GestureDetector(
                           onTap: () => MezSnackbar(
-                              i18n.strings['shared']['inputLocation']["from"],
+                              _i18n["from"],
                               order.from.address),
                           child: Text(
                             order.from.address,
@@ -122,7 +125,7 @@ class IncomingPositionedFromToTopBar extends StatelessWidget {
                     children: [
                       Obx(
                         () => Text(
-                          i18n.strings['shared']['inputLocation']["to"],
+                          _i18n["to"],
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
@@ -131,7 +134,7 @@ class IncomingPositionedFromToTopBar extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () => MezSnackbar(
-                            i18n.strings['shared']['inputLocation']["to"],
+                            _i18n["to"],
                             order.to.address),
                         child: Text(
                           order.to.address,

@@ -11,6 +11,9 @@ import 'components/restaurantInfoTab.dart';
 
 final f = new DateFormat('hh:mm a');
 
+dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+["Restaurants"]["ViewRestaurantScreen"]["ViewRestaurantScreen"];
+
 class ViewRestaurantScreen extends StatefulWidget {
   // final Restaurant restaurant;
   const ViewRestaurantScreen({
@@ -34,7 +37,6 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
 
   @override
   Widget build(BuildContext context) {
-    LanguageController lang = Get.find<LanguageController>();
     return Scaffold(
       body: DefaultTabController(
         length: 2,
@@ -49,11 +51,11 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
                     tabs: [
                       Tab(
                         text:
-                            '${i18n.strings["customer"]["restaurant"]["menu"]["menu"]}',
+                            '${_i18n["menu"]}',
                       ),
                       Tab(
                         text:
-                            '${i18n.strings["customer"]["restaurant"]["menu"]["info"]}',
+                            '${_i18n["info"]}',
                       ),
                     ],
                   ),

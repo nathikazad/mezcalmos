@@ -15,6 +15,9 @@ import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
 
+dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+["Taxi"]["components"]["BottomBarComponents"];
+
 Widget verticalSeparator() {
   return VerticalDivider(width: 1, color: Colors.grey.shade300);
 }
@@ -192,16 +195,14 @@ Widget messageBtn({required TaxiOrder order, EdgeInsets? margin}) {
 }
 
 Widget cancelBtn(TaxiOrder order) {
-  LanguageController lang = Get.find<LanguageController>();
   return Container(
     margin: EdgeInsets.only(right: 6),
     child: GestureDetector(
       onTap: () async {
         YesNoDialogButton res = await yesNoDialog(
-            text: i18n.strings?['taxi']?['cancelOrder']
-                    ?['confirmation_header'] ??
+            text: _i18n?['confirmation_header'] ??
                 "Por favor confirmar",
-            body: i18n.strings?['taxi']?['cancelOrder']?['confirmation_text'] ??
+            body: _i18n?['confirmation_text'] ??
                 "¿Cancelar el viaje actual?");
 
         if (res == YesNoDialogButton.Yes) {
@@ -210,7 +211,7 @@ Widget cancelBtn(TaxiOrder order) {
 
           if (!resp.success) {
             MezSnackbar("Oops",
-                i18n.strings['shared']['snackbars']['serverCommunicationError'],
+                _i18n['serverCommunicationError'],
                 position: SnackPosition.TOP);
           }
           // no need for else here , because we are handling UI changes already upon CanceledbyCustomer.

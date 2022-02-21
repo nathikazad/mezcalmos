@@ -9,10 +9,13 @@ import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
 import 'package:sizer/sizer.dart';
 
+dynamic _i18n = Get.find<LanguageController>().strings['Shared']['pages']
+["UserProfileScreen"]["UserProfileWidgets"];
+
 class UserProfileWidgetsClass {
   // Singleton
   final UserProfileController userProfileController;
-  final LanguageController lang = Get.find<LanguageController>();
+  //final LanguageController lang = Get.find<LanguageController>();
   UserProfileWidgetsClass({required this.userProfileController});
 
   /// this holds the Main body parts.
@@ -99,7 +102,7 @@ class UserProfileWidgetsClass {
                   ),
                   SizedBox(height: 5),
                   Text(
-                    i18n.strings['shared']['userInfo']['uploadPic'],
+                    _i18n['uploadPic'],
                     style: TextStyle(color: Colors.white, fontSize: 11.sp),
                   )
                 ],
@@ -124,7 +127,7 @@ class UserProfileWidgetsClass {
       flex: 1,
       child: Center(
           child: Text(
-        i18n.strings['shared']['userInfo']['title'],
+        _i18n['title'],
         style: TextStyle(fontSize: 30),
       )),
     );
@@ -268,7 +271,7 @@ class UserProfileWidgetsClass {
             // width: Get.width - 100,
             child: Center(
                 child: Text(
-              i18n.strings['shared']['userInfo']['cancel'],
+              _i18n['cancel'],
               style: TextStyle(fontSize: 12.sp, color: Colors.purple.shade400),
             )),
           ),
@@ -288,7 +291,7 @@ class UserProfileWidgetsClass {
         // width: Get.width - 100,
         child: Center(
             child: Text(
-          i18n.strings['shared']['userInfo']['editInfo'],
+          _i18n['editInfo'],
           style: TextStyle(color: Colors.white, fontSize: 15.sp),
         )),
       ),
@@ -305,7 +308,7 @@ class UserProfileWidgetsClass {
                 }
               : () {
                   MezSnackbar("Oops",
-                      i18n.strings['shared']['userInfo']['noChangesToApply'],
+                      _i18n['noChangesToApply'],
                       position: SnackPosition.TOP);
                 },
           child: Container(
@@ -322,7 +325,7 @@ class UserProfileWidgetsClass {
             child: Center(
                 child: !clickedSave
                     ? Text(
-                        i18n.strings['shared']['userInfo']['saveBtn'],
+                        _i18n['saveBtn'],
                         style: TextStyle(
                             fontSize: 12.sp,
                             color: userProfileController.didUserChangedInfos()

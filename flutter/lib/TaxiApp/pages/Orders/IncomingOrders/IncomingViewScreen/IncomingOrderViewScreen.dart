@@ -23,6 +23,10 @@ import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen
 import 'package:mezcalmos/TaxiApp/router.dart';
 import 'package:sizer/sizer.dart';
 
+
+dynamic _i18n = Get.find<LanguageController>().strings["TaxiApp"]["pages"]
+["Orders"]["IncomingOrders"]["IncomingViewScreen"]["IncomingOrderViewScreen"];
+
 class IncomingOrderViewScreen extends StatefulWidget {
   @override
   _IncomingOrderViewScreenState createState() =>
@@ -30,7 +34,6 @@ class IncomingOrderViewScreen extends StatefulWidget {
 }
 
 class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
-  LanguageController lang = Get.find<LanguageController>();
   TaxiOrder? order;
   IncomingOrdersController controller = Get.find<IncomingOrdersController>();
   StreamSubscription? _orderListener;
@@ -87,7 +90,7 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
               Get.back();
               oneButtonDialog(
                   title: 'Oops...',
-                  body: i18n.strings['taxi']['cancelOrder']['rideUnavailble'],
+                  body: _i18n['rideUnavailable'],
                   bodyTextColor: Colors.black,
                   fontSize: 14.sp,
                   imagUrl: a404);
@@ -129,7 +132,7 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
                     child: acceptOrderButton(
                       child: !_clickedButton
                           ? Text(
-                              i18n.strings['taxi']['taxiView']["acceptOrders"],
+                              _i18n["acceptOrders"],
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 12.sp,

@@ -10,6 +10,10 @@ import 'package:mezcalmos/TaxiAdminApp/controller/ordersController.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
+
+dynamic _i18n =  Get.find<LanguageController>().strings["TaxiAdminApp"]["pages"]
+["Orders"]["OrdersCumOnMonthPage"];
+
 const mypadding = const EdgeInsets.symmetric(horizontal: 10);
 var hasSize = true.obs;
 
@@ -18,7 +22,6 @@ class OrdersCumOnMonthPage extends GetView<OrderStatsController> {
   var lastDay = DateTime.now().day - 1;
   var selectedtime = DateTime.now().obs;
   var nbday = 0.obs;
-  LanguageController lang = Get.find<LanguageController>();
   FutureBuilder<Map<String, dynamic>> getOrderscumulativeOnMonth() {
     return FutureBuilder<Map<String, dynamic>>(
         future: controller.getOrderscumulativeOnMonth(selectedtime
@@ -40,7 +43,7 @@ class OrdersCumOnMonthPage extends GetView<OrderStatsController> {
                     children: [
                       Expanded(
                         child: Text(
-                          i18n.strings["admin"]["orders"]["orders"],
+                          _i18n["orders"],
                           style: TextStyle(
                               fontSize: 28, fontWeight: FontWeight.bold),
                         ),

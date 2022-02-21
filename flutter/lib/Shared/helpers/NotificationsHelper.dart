@@ -9,6 +9,8 @@ import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:flutter/material.dart';
 
+dynamic _i18n = Get.find<LanguageController>().strings['Shared']['helpers']["NotificationsHelper"];
+
 StreamSubscription<notifs.Notification> initializeShowNotificationsListener() {
   return Get.find<ForegroundNotificationsController>()
       .displayNotificationsStream
@@ -24,7 +26,6 @@ StreamSubscription<notifs.Notification> initializeShowNotificationsListener() {
 }
 
 void _displayNotification(notifs.Notification notification) async {
-  LanguageController lang = Get.find<LanguageController>();
   await Get.find<SettingsController>().playNotificationSound();
   // mezDbgPrint(notification.imgUrl);
   if (notification.notificationAction == notifs.NotificationAction.ShowPopUp) {
@@ -37,8 +38,7 @@ void _displayNotification(notifs.Notification notification) async {
             buttonShadowColor: Color(0xfffdfdfd)),
         buttonRightStyle: MezDialogButtonStyle(
             buttonText: notification.linkText ??
-                i18n.strings['shared']['notification']
-                    ['view'],
+                _i18n['view'],
             buttonColor: Color(0xffffffff),
             buttonShadowColor: Color(0xfffdfdfd)),
         rightButtonCallback: () {

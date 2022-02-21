@@ -8,6 +8,9 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:sizer/sizer.dart';
 
 final f = new DateFormat('hh:mma');
+dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+["Restaurants"]["ViewRestaurantScreen"]["components"]["restaurantInfoTab"];
+
 
 class RestaurantInfoTab extends StatelessWidget {
   final Restaurant restaurant;
@@ -16,7 +19,7 @@ class RestaurantInfoTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LanguageController lang = Get.find<LanguageController>();
+   LanguageController lang = Get.find<LanguageController>();
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -25,7 +28,7 @@ class RestaurantInfoTab extends StatelessWidget {
           children: [
             Container(
               child: Text(
-                '${i18n.strings["customer"]["restaurant"]["menu"]["description"]} :',
+                '${_i18n["description"]} :',
                 style: Theme.of(context).textTheme.bodyText1,
               ),
             ),
@@ -38,7 +41,7 @@ class RestaurantInfoTab extends StatelessWidget {
                     children: [
                       Container(
                         child: Text(
-                          '${i18n.strings["customer"]["restaurant"]["menu"]["location"]} :',
+                          '${_i18n["location"]} :',
                           style: Theme.of(context).textTheme.bodyText1,
                         ),
                       ),
@@ -70,7 +73,7 @@ class RestaurantInfoTab extends StatelessWidget {
       Container(
         alignment: Alignment.centerLeft,
         child: Text(
-          "${i18n.strings["customer"]["restaurant"]["menu"]["workingHours"]["workingHours"]}",
+          "${_i18n["workingHours"]}",
           style: Theme.of(context).textTheme.bodyText1,
         ),
       ),
@@ -84,7 +87,7 @@ class RestaurantInfoTab extends StatelessWidget {
         if (key.index == i) {
           widgets.add(WorkingHoursCart(
             day:
-                "${i18n.strings["customer"]["restaurant"]["menu"]["workingHours"]["weekDays"]["${key.toFirebaseFormatString()}"]}",
+                "${_i18n["weekDays"]["${key.toFirebaseFormatString()}"]}",
             isOpen: value.isOpen,
             openHour:
                 "${f.format(DateTime(xDate.year, xDate.month, xDate.day, value.from[0], value.from[1]))}",

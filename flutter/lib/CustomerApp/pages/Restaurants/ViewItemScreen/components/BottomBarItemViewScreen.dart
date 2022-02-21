@@ -11,6 +11,9 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 
+dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+    ["Restaurants"]["ViewItemScreen"]["components"]["BottomBarItemViewScreen"];
+
 class BottomBarItemViewScreen extends StatefulWidget {
   BottomBarItemViewScreen(
       {Key? key,
@@ -30,7 +33,6 @@ class BottomBarItemViewScreen extends StatefulWidget {
 }
 
 class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
-  LanguageController lang = Get.find<LanguageController>();
   RestaurantController restaurantCartController =
       Get.find<RestaurantController>();
   AuthController auth = Get.find<AuthController>();
@@ -50,7 +52,7 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
       color: Colors.red,
       child: Center(
           child: Text(
-              "${i18n.strings["customer"]["restaurant"]["notAvailable"]}")),
+              "${_i18n["notAvailable"]}")),
     );
   }
 
@@ -112,8 +114,7 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                             "not true ${restaurantCartController.associatedRestaurant?.id} and the other is ${widget.currentRestaurantId}");
 
                         YesNoDialogButton clickedYes = await yesNoDialog(
-                            text: i18n.strings['customer']['restaurant']['menu']
-                                ["dailog"]["title"],
+                            text: _i18n["title"],
                             titleUp: true,
                             icon: Container(
                               child: Icon(
@@ -128,8 +129,7 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                                   borderRadius: BorderRadius.circular(8),
                                   color: Colors.grey[300]),
                               height: 30,
-                              child: Text(i18n.strings['customer']['restaurant']
-                                  ['menu']["dailog"]["leftBtn"]),
+                              child: Text(_i18n["leftBtn"]),
                             ),
                             buttonRightStyle: Container(
                               alignment: Alignment.center,
@@ -138,13 +138,11 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                                   color: Colors.blue[800]),
                               height: 30,
                               child: Text(
-                                i18n.strings['customer']['restaurant']['menu']
-                                    ["dailog"]["rightBtn"],
+                                _i18n["rightBtn"],
                                 style: TextStyle(color: Colors.white),
                               ),
                             ),
-                            body: i18n.strings['customer']['restaurant']['menu']
-                                ["dailog"]["subtitle"]);
+                            body: _i18n["subtitle"]);
                         if (clickedYes == YesNoDialogButton.Yes) {
                           Get.back();
                           Get.toNamed(kCartRoute);
@@ -170,10 +168,8 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
               },
               child: Text(
                 widget.mode == ViewItemScreenMode.AddItemMode
-                    ? i18n.strings['customer']['restaurant']['menu']
-                        ['addToCart']
-                    : i18n.strings['customer']['restaurant']['menu']
-                        ['modifyItem'],
+                    ? _i18n['addToCart']
+                    : _i18n['modifyItem'],
                 textAlign: TextAlign.center,
               ),
             ),

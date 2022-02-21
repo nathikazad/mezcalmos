@@ -79,7 +79,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
         children: [
           Icon(Icons.error, color: Colors.black, size: 30),
           Text(
-            i18n.strings['customer']['orders']['noOrders'],
+            _i18n['noOrders'],
             textAlign: TextAlign.center,
             style: TextStyle(
                 color: Colors.black, fontWeight: FontWeight.w300, fontSize: 14),
@@ -130,9 +130,9 @@ class PastOrderList extends StatelessWidget {
               margin: const EdgeInsets.all(8),
               child: Text(
                 (calculateDifference(element.orderTime) == 0)
-                    ? ' ${i18n.strings["shared"]["notification"]["today"]} '
+                    ? ' ${_i18n.strings["shared"]["notification"]["today"]} '
                     : (calculateDifference(element.orderTime) == -1)
-                        ? ' ${i18n.strings["shared"]["notification"]["yesterday"]} '
+                        ? ' ${_i18n.strings["shared"]["notification"]["yesterday"]} '
                         : DateFormat('dd MMM yyyy').format(element.orderTime),
                 style: txt.headline3,
               ),
@@ -165,7 +165,8 @@ class PastOrderList extends StatelessWidget {
         children: [
           Icon(Icons.error, color: Colors.white),
           Text(
-            i18n.strings['customer']['orders']['noOrders'],
+            // i18n.strings['customer']['orders']['noOrders'],
+            _i18n.strings['orders']['noOrders'],
             textAlign: TextAlign.center,
             style: Theme.of(context)
                 .textTheme
@@ -198,7 +199,7 @@ class OngoingOrderList extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(8),
             child: Text(
-              '${i18n.strings["customer"]["orders"]["onGoingOrders"]}',
+              '${_i18n.strings["orders"]["onGoingOrders"]}',
               style: txt.headline3,
             ),
           ),

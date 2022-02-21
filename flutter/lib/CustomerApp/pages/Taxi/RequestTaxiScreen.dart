@@ -23,6 +23,10 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezToolTip.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
+
+dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+["Taxi"]["RequestTaxiScreen"];
+
 class RequestTaxiScreen extends StatefulWidget {
   @override
   _RequestTaxiScreenState createState() => _RequestTaxiScreenState();
@@ -34,7 +38,6 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
       SearchComponentType.From.obs;
   Rx<TaxiRequest> taxiRequest = TaxiRequest().obs;
   TaxiController controller = Get.put<TaxiController>(TaxiController());
-  LanguageController lang = Get.find<LanguageController>();
   final LocationPickerController locationPickerController =
       LocationPickerController();
   final LocationSearchBarController locationSearchBarController =
@@ -233,8 +236,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
     } else {
       MezSnackbar(
           "Oops :(",
-          i18n.strings['customer']['taxiView']
-              ['failedToRequestTaxi'],
+          _i18n['failedToRequestTaxi'],
           position: SnackPosition.TOP);
       this.locationPickerController.showConfirmButton();
     }
@@ -291,8 +293,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
     return [
       MezToolTipHint(
         hintWidget: RidePriceControllHint(
-          hintText: i18n.strings['customer']
-              ['taxiView']['taxiRequestPriceTooltip'],
+          hintText: _i18n['taxiRequestPriceTooltip'],
         ),
         left: 80.1,
         bottom: 150.5,

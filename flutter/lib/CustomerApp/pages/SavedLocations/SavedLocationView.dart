@@ -12,6 +12,9 @@ import 'package:sizer/sizer.dart';
 import 'components/SavedLocationBody.dart';
 import 'components/SavedLocationIsEmpty.dart';
 
+dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+["SavedLocations"]["SavedLocationView"];
+
 class SavedLocationView extends StatefulWidget {
   SavedLocationView({
     Key? key,
@@ -22,7 +25,6 @@ class SavedLocationView extends StatefulWidget {
 }
 
 class _SavedLocationViewState extends State<SavedLocationView> {
-  LanguageController lang = Get.find<LanguageController>();
   CustomerAuthController _customerAuthController =
       Get.find<CustomerAuthController>();
   List<SavedLocation> savedLocations = <SavedLocation>[];
@@ -74,13 +76,13 @@ class _SavedLocationViewState extends State<SavedLocationView> {
     final txt = Theme.of(context).textTheme;
     return Scaffold(
         appBar: CustomerAppBar(
-          title: "${i18n.strings["customer"]["savedLocations"]["title"]}",
+          title: "${_i18n["title"]}",
           autoBack: true,
         ),
         bottomNavigationBar: ButtonComponent(
           widget: Center(
             child: Text(
-              "${i18n.strings["customer"]["savedLocations"]["addNewLoc"]}",
+              "${_i18n["addNewLoc"]}",
               style:
                   txt.headline1!.copyWith(color: Colors.white, fontSize: 12.sp),
             ),

@@ -6,7 +6,7 @@ import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/TextFieldComponent.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/TextFieldComponent.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -20,6 +20,9 @@ import 'components/ChoosenManyCheckBox.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
 enum ViewItemScreenMode { AddItemMode, EditItemMode }
+
+dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+    ["Restaurants"]["ViewItemScreen"]["ViewItemScreen"];
 
 class ViewItemScreen extends StatefulWidget {
   ViewItemScreen({Key? key, required this.viewItemScreenMode})
@@ -176,8 +179,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                       cartItem: cartItem),
                   TextFieldComponent(
                     textController: _noteTextEdittingController,
-                    hint: i18n.strings["customer"]["restaurant"]["menu"]
-                        ["notes"],
+                    hint: _i18n["notes"],
                     onChangeCallback: (String value) {
                       cartItem.value?.notes = value;
                     },

@@ -9,6 +9,9 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import '../../../router.dart';
 import 'components/RestaurandCard.dart';
 
+dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+    ["Restaurants"]["ListRestaurantsScreem"]["ListRestaurantsScreen"];
+
 class ListRestaurantsScreen extends StatefulWidget {
   @override
   _ListRestaurantsScreenState createState() => _ListRestaurantsScreenState();
@@ -29,7 +32,7 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomerAppBar(
-        title: "${i18n.strings['customer']['restaurant']['restaurants']}",
+        title: "${_i18n['restaurants']}",
         autoBack: true,
       ),
       body: FutureBuilder<List<Restaurant>>(
@@ -90,8 +93,7 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
                           child: Image.asset(aComingSoon))),
                   Expanded(
                     child: Text(
-                      i18n.strings['customer']['restaurant']
-                          ['emptRestaurantList'],
+                      _i18n['emptRestaurantList'],
                       style: Theme.of(context).textTheme.bodyText1!.copyWith(),
                     ),
                   )

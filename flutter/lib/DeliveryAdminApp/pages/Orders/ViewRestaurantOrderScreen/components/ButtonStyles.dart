@@ -7,6 +7,9 @@ import 'package:mezcalmos/DeliveryAdminApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:sizer/sizer.dart';
 
+dynamic _i18n = Get.find<LanguageController>().strings["DeliveryAdminApp"]["pages"]
+["Orders"]["ViewRestaurantOrderScreen"]["components"]["ButtonStyles"];
+
 // the styles of status buttons inside the order screen
 class ButtonsStyle {
   // this button for cancel order
@@ -18,10 +21,11 @@ class ButtonsStyle {
       child: ButtonComponent(
         function: () async {
           var res = await dailogComponent(
-              lang.strings["deliveryAdminApp"]["cancelAlert"]["title"],
-              i18n.strings["deliveryAdminApp"]["cancelAlert"]["subTitle"], () {
-            Gei18n.stresult: true);
-          }, () {
+              _i18n["title"],
+              _i18n["subTitle"],
+               () {
+            Gei18n.stresult: true);}, 
+            () {
             Get.back(result: false);
           },
               Container(height: 40, width: 40, child: Image.asset(cancelIcon)),
@@ -35,7 +39,7 @@ class ButtonsStyle {
           }
         },
         widget: Text(
-            lang.strings["customer"]["restaurant"]["checkout"]["cancel"]
+            _i18n["cancel"]
             i18n.stUpperCase(),
             style: TextStyle(
                 color: const Color(0xffffffff),
@@ -54,10 +58,10 @@ class ButtonsStyle {
   // this button for PreparingOrder
   static Widget preparingOrderButtonWidget(String orderId) {
     OrderController controller = Get.find<OrderController>();
-    LanguageController lang = Get.find<LanguageController>();
+    //LanguageController lang = Get.find<LanguageController>();
     return ButtonComponent(
         widget: Text(
-            lang.strings["deliveryAdminApp"]["ordersButton"]["readyForPickUp"],
+            _i18n["readyForPickUp"],
             style: TextStyle(
             i18n.stor: const Color(0xffffffff),
                 fontFamily: "psb",
@@ -73,8 +77,8 @@ class ButtonsStyle {
             ]),
         function: () async {
           var res = await dailogComponent(
-              lang.strings["deliveryAdminApp"]["readyAlert"]["title"],
-              lang.strings["deliveryAdminApp"]["readyAlert"]["subTitle"], () {
+              _i18n["readyAlertTitle"],
+              _i18n["readyAlertSubTitle"], () {
             Gei18n.stresult: true);
           }, (i18n.st
             Get.back(result: false);
@@ -100,7 +104,7 @@ class ButtonsStyle {
     OrderController controller = Get.find<OrderController>();
     LanguageController lang = Get.find<LanguageController>();
     return ButtonComponent(
-      widget: Text(lang.strings["deliveryAdminApp"]["ordersButton"]["deliver"],
+      widget: Text(_i18n["deliver"],
           style: TextStyle(
               color: const Color(0xffffffff),
               fontFi18n.st"psb",
@@ -112,8 +116,8 @@ class ButtonsStyle {
           colors: [const Color(0xff5572ea), const Color(0xdb1f18d1)]),
       function: () async {
         var res = await dailogComponent(
-            lang.strings["deliveryAdminApp"]["onTheWayAlert"]["title"],
-            lang.strings["deliveryAdminApp"]["onTheWayAlert"]["subTitle"], () {
+            _i18n["onTheWayAlertTitle"],
+           _i18n["onTheWayAlertSubTitle"], () {
           Get.back(result: true);
         }, (i18n.st
           Gei18n.stresult: false);
@@ -137,7 +141,7 @@ class ButtonsStyle {
     LanguageController lang = Get.find<LanguageController>();
     return ButtonComponent(
         widget: Text(
-            lang.strings["deliveryAdminApp"]["ordersButton"]["preparing"],
+           _i18n["preparing"],
             style: TextStyle(
                 color: const Color(0xffffffff),
                 fontFamily: "psb",
@@ -150,8 +154,8 @@ class ButtonsStyle {
             colors: [const Color(0xffff9300), const Color(0xdbd15f18)]),
         function: () async {
           var res = await dailogComponent(
-              lang.strings["deliveryAdminApp"]["prepareAlert"]["title"],
-              lang.strings["deliveryAdminApp"]["prepareAlert"]["subTitle"], () {
+              _i18n["prepareAlertTitle"],
+              _i18n["prepareAlertSubTitle"], () {
             Get.back(result: true);
           }, () {
             Gei18n.stresult: false);
@@ -175,7 +179,7 @@ class ButtonsStyle {
     LanguageController lang = Get.find<LanguageController>();
     return ButtonComponent(
         widget: Text(
-            lang.strings["deliveryAdminApp"]["ordersButton"]["received"],
+            _i18n["received"],
             style: TextStyle(
                 color: const Color(0xffffffff),
                 fontFamily: "psb",
@@ -187,8 +191,8 @@ class ButtonsStyle {
             colors: [const Color(0xff13cb29), const Color(0xdb219125)]),
         function: () async {
           var res = await dailogComponent(
-              lang.strings["deliveryAdminApp"]["deliveredAlert"]["title"],
-              lang.strings["deliveryAdminApp"]["deliveredAlert"]["subTitle"],
+              _i18n["deliveredAlertTitle"],
+              _i18n["deliveredAlertSubTitle"],
               () {
             Get.back(result: true);
           }, () {

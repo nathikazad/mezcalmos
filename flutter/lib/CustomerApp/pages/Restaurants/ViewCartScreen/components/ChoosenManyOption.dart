@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/TitlesComponent.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/TitlesComponent.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+
+dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+    ["Restaurants"]["ViewCartScreen"]["components"]["ChoosenManyOption"];
 
 List<Widget> choosenManyOption(
     List<CartChooseManyItem> cartChooseManyItems, BuildContext context) {
@@ -14,7 +17,7 @@ List<Widget> choosenManyOption(
       height: 5,
     ),
     MenuTitles(
-      title: i18n.strings["customer"]["restaurant"]["cart"]["options"],
+      title: _i18n["options"],
       textTheme: txt.subtitle1!
           .copyWith(fontSize: 13, color: Color.fromRGBO(33, 33, 33, 0.8)),
     ),

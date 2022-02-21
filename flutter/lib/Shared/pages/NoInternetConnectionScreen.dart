@@ -5,12 +5,14 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
 
+dynamic _i18n = Get.find<LanguageController>().strings['Shared']['pages']
+["NoInternetConnectionScreen"];
+
 class NoInternetConnectionScreen extends StatelessWidget {
   const NoInternetConnectionScreen({Key? key}) : super(key: key);
   
   @override
   Widget build(BuildContext context) {
-    LanguageController lang = Get.find<LanguageController>();
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -26,8 +28,7 @@ class NoInternetConnectionScreen extends StatelessWidget {
               children: [
                 Obx(
                   () => Text(
-                    i18n.strings['shared']
-                        ['conenctionStatus']['noInternetConnection'],
+                    _i18n['noInternetConnection'],
                     style: TextStyle(color: Colors.purple.shade900),
                   ),
                 ),
@@ -44,8 +45,7 @@ class NoInternetConnectionScreen extends StatelessWidget {
                 ),
                 Obx(
                   () => Text(
-                    i18n.strings['shared']
-                        ['conenctionStatus']['reconnecting'],
+                    _i18n['reconnecting'],
                     style: TextStyle(color: Colors.purple.shade900),
                   ),
                 ),

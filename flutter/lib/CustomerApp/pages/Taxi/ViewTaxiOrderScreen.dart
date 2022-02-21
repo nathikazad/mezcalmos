@@ -21,6 +21,10 @@ import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
+
+dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+["Taxi"]["ViewTaxiOrderScreen"];
+
 class ViewTaxiOrderScreen extends StatefulWidget {
   final MGoogleMapController mGoogleMapController = MGoogleMapController();
 
@@ -35,7 +39,6 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
   Rxn<TaxiOrder> order = Rxn();
   StreamSubscription? _orderListener;
   final String toMarkerId = "to";
-  LanguageController lang = Get.find<LanguageController>();
   RxDouble bottomPadding =
       ((GetStorage().read(getxGmapBottomPaddingKey) as double) + 15.0).obs;
 
@@ -72,8 +75,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
               if (order.value!.status == TaxiOrdersStatus.CancelledByCustomer) {
                 Get.back();
                 oneButtonDialog(
-                    body: i18n.strings['shared']['snackbars']
-                        ['orderCancelSuccess'],
+                    body: _i18n['orderCancelSuccess'],
                     imagUrl: _order!.customer.image);
               }
               _order = (await controller.getPastOrderStream(orderId).first)
@@ -252,8 +254,8 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
         child: InkWell(
           onTap: () async {
             YesNoDialogButton res = await yesNoDialog(
-                text: i18n.strings['customer']['cancelOrder']['title'],
-                body: i18n.strings['customer']['cancelOrder']['question']);
+                text: _i18n['title'],
+                body: _i18n['question']);
             if (res == YesNoDialogButton.Yes) {
               await Get.find<TaxiController>().cancelTaxi(order.value!.orderId);
             }
@@ -265,7 +267,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
                   borderRadius: BorderRadius.circular(10)),
               child: Center(
                 child: Text(
-                  i18n.strings['customer']['taxiView']['cancel'],
+                  _i18n['cancel'],
                   style: TextStyle(
                       fontFamily: "psr",
                       color: Colors.white,
@@ -284,8 +286,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
     return [
       MezToolTipHint(
         hintWidget: RidePriceControllHint(
-            hintText: i18n.strings['customer']
-                ['taxiView']['taxiRidePriceTooltip']),
+            hintText: _i18n['taxiRidePriceTooltip']),
         left: 80.1,
         bottom: 150.5,
         bodyLeft: 20,

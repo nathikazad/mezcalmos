@@ -12,6 +12,7 @@ FROM firstMonthDrivers
 GROUP BY month
 ),
 
+
 allDriversPerMonth AS (SELECT
 extract(month FROM "orderTime") AS month,
 count(DISTINCT "driverId") AS totalDrivers

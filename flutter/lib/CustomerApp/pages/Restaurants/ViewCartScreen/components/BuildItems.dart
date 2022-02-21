@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/components/IncrementalComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/MyExpensionPanelComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/ChoosenManyOption.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/ChoosenManyOption.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -15,6 +15,10 @@ import 'ChoosenOneOption.dart';
 import 'ItemInformationCart.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
+
+ dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+    ["Restaurants"]["ViewCartScreen"]["components"]["BuildItems"];
+
 
 class CartItemsBuilder extends StatelessWidget {
   final RestaurantController controller = Get.find<RestaurantController>();
@@ -74,12 +78,8 @@ class CartItemsBuilder extends StatelessWidget {
                                   controller.refresh();
                                   YesNoDialogButton yesNoResult =
                                       await cancelAlertDialog(
-                                          title: lang.strings["customer"]
-                                                  ["restaurant"]["cart"]
-                                              ["deleteItem"],
-                                          body: lang.strings["customer"]
-                                                  ["restaurant"]["cart"]
-                                              ["deleteItemConfirm"],
+                                          title: _i18n["deleteItem"],
+                                          body: _i18n["deleteItemConfirm"],
                                           icon: Container(
                                             child: Icon(
                                               Icons.highlight_off,

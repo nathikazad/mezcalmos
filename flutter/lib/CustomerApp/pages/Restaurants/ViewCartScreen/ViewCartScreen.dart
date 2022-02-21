@@ -6,14 +6,13 @@ import 'package:mezcalmos/CustomerApp/components/ButtonComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/ViewCartBody.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/ViewCartBody.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-
 import 'components/CartIsEmptyScreen.dart';
 
 enum DropDownResult { Null, String }
@@ -23,8 +22,11 @@ class ViewCartScreen extends StatefulWidget {
   _ViewCartScreenState createState() => _ViewCartScreenState();
 }
 
+ dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+    ["Restaurants"]["ViewCartScreen"]["ViewCartScreen"];
+
 class _ViewCartScreenState extends State<ViewCartScreen> {
-  LanguageController lang = Get.find<LanguageController>();
+ 
   RestaurantController controller = Get.find<RestaurantController>();
   bool _clickedOrderNow = false;
   DropDownResult ddResult = DropDownResult.Null;
@@ -60,7 +62,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
     return Scaffold(
       appBar: CustomerAppBar(
         autoBack: true,
-        title: "${lang.strings["customer"]["restaurant"]["cart"]["myCart"]}",
+        title: "${_i18n["myCart"]}",
       ),
       body: Obx(() {
         mezDbgPrint("@sa@d@: ${controller.cart.value.cartItems.length}");
@@ -106,7 +108,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   Widget getTheRightWidgetForOrderNowButton(bool clicked) {
     if (!checkRestaurantAvailability(
         schedule: controller.associatedRestaurant?.schedule)) {
-      return Text("${lang.strings["customer"]["restaurant"]["notAvailable"]}",
+      return Text("${_i18n["notAvailable"]}",
           style: Theme.of(context)
               .textTheme
               .headline2!
@@ -123,7 +125,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
       );
     } else {
       return Text(
-          "${lang.strings['customer']['restaurant']['cart']['orderNow']}",
+          "${_i18n['orderNow']}",
           style: Theme.of(context)
               .textTheme
               .headline2!
