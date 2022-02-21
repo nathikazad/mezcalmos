@@ -49,9 +49,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderViewScreen> {
           controller.getCurrentOrderStream(orderId).listen((newOrder) {
         if (newOrder != null) {
           order.value = controller.getOrder(orderId);
-        } else {
-          Get.back();
-        }
+        } else {}
       });
     }
   }
