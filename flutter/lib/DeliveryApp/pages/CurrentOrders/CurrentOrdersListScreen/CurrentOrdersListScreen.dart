@@ -84,7 +84,6 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(orderController.pastOrders.length.toString()),
           Container(
             padding: const EdgeInsets.all(5),
             child: Text(
