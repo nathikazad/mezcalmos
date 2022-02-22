@@ -610,22 +610,32 @@
         "ViewRestaurantOrderScreen":{
           "components":{
             "ButtonStyles":{
-              "title": "Cancel",
-              "subTitle": "Are you sure you want\nto cancel the order?",
+              "cancelAlert": {
+                "title": "Cancel",
+                "subTitle": "Are you sure you want\nto cancel the order?"
+              },
               "cancel": "Cancel",
               "readyForPickUp": "FOOD READY",
-              "readyAlertTitle": "READY",
-              "readyAlertSubTitle": "Are you sure you want\nto mark the order as ready?",
-              "deliver": "START DELIVERY",
-              "onTheWayAlertTitle": "On the Way",
-              "onTheWayAlertSubTitle": "Are you sure you want\nto start the order delivery?",
-              "preparing": "PREPARE",
-              "prepareAlertTitle": "Prepare Order",
-              "prepareAlertSubTitle": "Are you sure you want\nto prepare order?",
-              "received": "DROPPED",
-              "deliveredAlertTitle": "Deliver",
-              "deliveredAlertSubTitle": "Are you sure you want\nto deliver the order?"
+              "readyAlert": {
+                "title": "READY",
+                "subTitle": "Are you sure you want\nto mark the order as ready?"
               },
+              "deliver": "START DELIVERY",
+              "onTheWayAlert": {
+                "title": "On the Way",
+                "subTitle": "Are you sure you want\nto start the order delivery?"
+              },
+              "preparing": "PREPARE",
+              "prepareAlert": {
+                "title": "Prepare Order",
+                "subTitle": "Are you sure you want\nto prepare order?"
+              },
+              "received": "DROPPED",
+              "deliveredAlert": {
+                "title": "Deliver",
+                "subTitle": "Are you sure you want\nto deliver the order?"
+              }
+            },
             
             "OrderInfoCard":{
               "orderItems": "Order Items"

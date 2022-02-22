@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-Future<bool> dailogComponent(
+Future<bool> dialogComponent(
   String title,
   String subTitle,
   Function onConfirm,

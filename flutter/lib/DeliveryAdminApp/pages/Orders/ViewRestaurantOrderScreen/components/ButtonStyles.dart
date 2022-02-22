@@ -1,31 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/buttonComponent.dart';
-import 'package:mezcalmos/DeliveryAdminApp/components/dailogComponent.dart';
+import 'package:mezcalmos/DeliveryAdminApp/components/DialogComponent.dart';
 import 'package:mezcalmos/DeliveryAdminApp/constants/global.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n = Get.find<LanguageController>().strings["DeliveryAdminApp"]["pages"]
-["Orders"]["ViewRestaurantOrderScreen"]["components"]["ButtonStyles"];
-
+["Orders"]["ViewRestaurantOrderScreen"]["components"]
+    ["ButtonStyles"];
 // the styles of status buttons inside the order screen
 class ButtonsStyle {
   // this button for cancel order
   static Widget cancelButtonWidget(String orderId) {
     OrderController controller = Get.find<OrderController>();
-    LanguageController lang = Get.find<LanguageController>();
+
 
     return Expanded(
       child: ButtonComponent(
         function: () async {
-          var res = await dailogComponent(
-              _i18n["title"],
-              _i18n["subTitle"],
-               () {
-            Gei18n.stresult: true);}, 
-            () {
+          var res = await dialogComponent(
+              _i18n["cancelAlert"]["title"],
+              _i18n["cancelAlert"]["subTitle"], () {
+            Get.back(result: true);
+          }, () {
             Get.back(result: false);
           },
               Container(height: 40, width: 40, child: Image.asset(cancelIcon)),
@@ -40,7 +39,7 @@ class ButtonsStyle {
         },
         widget: Text(
             _i18n["cancel"]
-            i18n.stUpperCase(),
+                .toUpperCase(),
             style: TextStyle(
                 color: const Color(0xffffffff),
                 fontFamily: "psb",
@@ -58,12 +57,11 @@ class ButtonsStyle {
   // this button for PreparingOrder
   static Widget preparingOrderButtonWidget(String orderId) {
     OrderController controller = Get.find<OrderController>();
-    //LanguageController lang = Get.find<LanguageController>();
     return ButtonComponent(
         widget: Text(
             _i18n["readyForPickUp"],
             style: TextStyle(
-            i18n.stor: const Color(0xffffffff),
+                color: const Color(0xffffffff),
                 fontFamily: "psb",
                 fontSize: 16.0.sp),
             textAlign: TextAlign.center),
@@ -76,11 +74,11 @@ class ButtonsStyle {
               const Color(0xdbd17c18)
             ]),
         function: () async {
-          var res = await dailogComponent(
-              _i18n["readyAlertTitle"],
-              _i18n["readyAlertSubTitle"], () {
-            Gei18n.stresult: true);
-          }, (i18n.st
+          var res = await dialogComponent(
+              _i18n["readyAlert"]["title"],
+              _i18n["readyAlert"]["subTitle"], () {
+            Get.back(result: true);
+          }, () {
             Get.back(result: false);
           },
               Container(height: 70, width: 70, child: Image.asset(box)),
@@ -102,12 +100,11 @@ class ButtonsStyle {
   // this button for ReadyForPickup
   static Widget readyForPickupButtonWidget(String orderId) {
     OrderController controller = Get.find<OrderController>();
-    LanguageController lang = Get.find<LanguageController>();
     return ButtonComponent(
       widget: Text(_i18n["deliver"],
           style: TextStyle(
               color: const Color(0xffffffff),
-              fontFi18n.st"psb",
+              fontFamily: "psb",
               fontSize: 16.0.sp),
           textAlign: TextAlign.center),
       gradient: LinearGradient(
@@ -115,12 +112,12 @@ class ButtonsStyle {
           end: Alignment(1.1447703838348389, 1.1694844961166382),
           colors: [const Color(0xff5572ea), const Color(0xdb1f18d1)]),
       function: () async {
-        var res = await dailogComponent(
-            _i18n["onTheWayAlertTitle"],
-           _i18n["onTheWayAlertSubTitle"], () {
+        var res = await dialogComponent(
+            _i18n["onTheWayAlert"]["title"],
+            _i18n["onTheWayAlert"]["subTitle"], () {
           Get.back(result: true);
-        }, (i18n.st
-          Gei18n.stresult: false);
+        }, () {
+          Get.back(result: false);
         },
             Container(height: 70, width: 70, child: Image.asset(truck)),
             LinearGradient(
@@ -138,14 +135,13 @@ class ButtonsStyle {
   // this button for OrderReceieved
   static Widget orderReceievedButtonWidget(String orderId) {
     OrderController controller = Get.find<OrderController>();
-    LanguageController lang = Get.find<LanguageController>();
     return ButtonComponent(
         widget: Text(
-           _i18n["preparing"],
+            _i18n["preparing"],
             style: TextStyle(
                 color: const Color(0xffffffff),
                 fontFamily: "psb",
-            i18n.sttStyle: FontStyle.normal,
+                fontStyle: FontStyle.normal,
                 fontSize: 16.0.sp),
             textAlign: TextAlign.center),
         gradient: LinearGradient(
@@ -153,13 +149,13 @@ class ButtonsStyle {
             end: Alignment(1.1447703838348389, 1.1694844961166382),
             colors: [const Color(0xffff9300), const Color(0xdbd15f18)]),
         function: () async {
-          var res = await dailogComponent(
-              _i18n["prepareAlertTitle"],
-              _i18n["prepareAlertSubTitle"], () {
+          var res = await dialogComponent(
+              _i18n["prepareAlert"]["title"],
+              _i18n["prepareAlert"]["subTitle"], () {
             Get.back(result: true);
           }, () {
-            Gei18n.stresult: false);
-          },i18n.st
+            Get.back(result: false);
+          },
               Container(height: 70, width: 70, child: Image.asset(stoveIcon)),
               LinearGradient(
                   begin: Alignment(-0.10374055057764053, 0),
@@ -176,7 +172,6 @@ class ButtonsStyle {
   //this button for OnTheWay
   static Widget onTheWayButtonWidget(String orderId) {
     OrderController controller = Get.find<OrderController>();
-    LanguageController lang = Get.find<LanguageController>();
     return ButtonComponent(
         widget: Text(
             _i18n["received"],
@@ -184,20 +179,20 @@ class ButtonsStyle {
                 color: const Color(0xffffffff),
                 fontFamily: "psb",
                 fontSize: 16.0.sp),
-            i18n.stgn: TextAlign.center),
+            textAlign: TextAlign.center),
         gradient: LinearGradient(
             begin: Alignment(-0.10374055057764053, 0),
             end: Alignment(1.1447703838348389, 1.1694844961166382),
             colors: [const Color(0xff13cb29), const Color(0xdb219125)]),
         function: () async {
-          var res = await dailogComponent(
-              _i18n["deliveredAlertTitle"],
-              _i18n["deliveredAlertSubTitle"],
+          var res = await dialogComponent(
+              _i18n["deliveredAlert"]["title"],
+              _i18n["deliveredAlert"]["subTitle"],
               () {
             Get.back(result: true);
           }, () {
-            Gei18n.stresult: false);
-          },i18n.st
+            Get.back(result: false);
+          },
               Container(height: 70, width: 70, child: Image.asset(tick)),
               LinearGradient(
                   begin: Alignment(-0.10374055057764053, 0),
