@@ -1,7 +1,5 @@
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/TaxiDriver.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -14,7 +12,10 @@ enum TaxiOrdersStatus {
   Expired,
   OnTheWay,
   InTransit,
-  LookingForTaxi
+  LookingForTaxi,
+  ForwardingToLocalCompany,
+  ForwardingSuccessful,
+  ForwardingUnsuccessful
 }
 
 extension ParseOrderStatusToString on TaxiOrdersStatus {
