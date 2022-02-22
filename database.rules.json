@@ -307,7 +307,7 @@
           ".write": "root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true"
         },
         "state": {
-          "isLooking": {
+          "isOnline": {
             ".write": "$uid === auth.uid"
           }
         },
@@ -330,11 +330,11 @@
             }
           }
         }
-      }
-    },
-    "pastOrders": {
-      "$uid": {
-        ".read": "$uid === auth.uid"
+      },
+      "pastOrders": {
+        "$uid": {
+          ".read": "$uid === auth.uid"
+        }
       }
     }
   }
