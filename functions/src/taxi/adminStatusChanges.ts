@@ -47,8 +47,11 @@ async function changeStatus(data: any, newStatus: TaxiOrderStatus, auth?: AuthDa
   }
 
   let orderId: string = data.orderId;
-  let order: TaxiOrder = (await rootDbNodes.inProcessOrders(OrderType.Taxi, orderId).once('value')).val();
-  order.status
+  let order: TaxiOrder;
+  if (newStatus == TaxiOrderStatus.ForwardingToLocalCompany)
+    order = (await rootDbNodes.openOrders(OrderType.Taxi, orderId).once('value')).val();
+  else
+    order = (await rootDbNodes.inProcessOrders(OrderType.Taxi, orderId).once('value')).val();
   if (order == null) {
     return {
       status: ServerResponseStatus.Error,
