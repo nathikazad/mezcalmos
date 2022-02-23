@@ -3,6 +3,7 @@ import 'package:mezcalmos/DeliveryAdminApp/pages/AdminWrapper.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/DriversListView/DriverListScreen.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/LaundryOrderScreen.dart.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ListOrdersScreen/ListOrdersScreen.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/TaxiOrder/TaxiOrderView.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/ViewRestaurantOrderScreen.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
@@ -10,6 +11,7 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 const String kOrdersRoute = '/orders';
 const String kRestaurantOrderRoute = '/orders/:orderId';
 const String kLaundryOrderRoute = '/orders/laundry/:orderId';
+const String kTaxiOrderRoute = '/orders/taxi/:orderId';
 const String kRestaurantsRoute = '/restaurants';
 const String kRestaurantRoute = '/restaurants/:restaurantId';
 const String kDriversListRoute = '/drivers';
@@ -26,6 +28,10 @@ String getLaundryOrderRoute(String orderId) {
   return kLaundryOrderRoute.replaceFirst(":orderId", orderId);
 }
 
+String getTaxiOrderRoute(String orderId) {
+  return kTaxiOrderRoute.replaceFirst(":orderId", orderId);
+}
+
 // GetX based Router (For navigating)
 class XRouter {
   static List<GetPage<dynamic>> mainRoutes = [
@@ -35,6 +41,7 @@ class XRouter {
             name: kRestaurantOrderRoute,
             page: () => ViewRestaurantOrderScreen()),
         GetPage(name: kLaundryOrderRoute, page: () => LaundryOrderScreen()),
+        GetPage(name: kTaxiOrderRoute, page: () => TaxiOrderView()),
         GetPage(name: kDriversListRoute, page: () => DriversListScreen())
       ] +
       SharedRouter.sharedRoutes;

@@ -127,7 +127,8 @@ class TaxiOrderController extends GetxController {
   }
 
   Future<ServerResponse> forwardToLocalCompany(String orderId) async {
-    mezDbgPrint('CAnceling oooooooooooooooooooooooorrrrderrrr');
+    mezDbgPrint('Function called');
+
     return _callTaxiCloudFunction("forwardToLocalCompany", orderId);
   }
 
@@ -135,6 +136,7 @@ class TaxiOrderController extends GetxController {
       {required String orderId,
       required bool forwardSuccessful,
       String? taxiNumber}) async {
+    mezDbgPrint('Function called');
     return _callTaxiCloudFunction("forwardResult", orderId,
         optionalParams: <String, dynamic>{
           "forwardSuccessful": forwardSuccessful,
@@ -145,6 +147,7 @@ class TaxiOrderController extends GetxController {
   Future<ServerResponse> _callTaxiCloudFunction(
       String functionName, String orderId,
       {Map<String, dynamic>? optionalParams}) async {
+    mezDbgPrint('Function called');
     HttpsCallable dropOrderFunction =
         FirebaseFunctions.instance.httpsCallable('taxi-$functionName');
     try {
