@@ -136,8 +136,7 @@ class TaxiOrderController extends GetxController {
       {required String orderId,
       required bool forwardSuccessful,
       String? taxiNumber}) async {
-    mezDbgPrint('Function called');
-    return _callTaxiCloudFunction("forwardResult", orderId,
+    return _callTaxiCloudFunction("submitForwardResult", orderId,
         optionalParams: <String, dynamic>{
           "forwardSuccessful": forwardSuccessful,
           "taxiNumber": taxiNumber
