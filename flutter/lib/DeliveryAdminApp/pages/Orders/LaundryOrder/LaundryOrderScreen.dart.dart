@@ -105,15 +105,9 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
                     SizedBox(
                       height: 10,
                     ),
-                    // OrderMapTracking(
-                    //   order: order.value!,
-                    // ),
-                    // Obx(() =>
-                    //     OrderMapTracking(driver: driver, order: order.value!)),
                     LaundryOrderCustomer(
                       order: order.value!,
                     ),
-
                     if (order.value?.inProcess() ?? false)
                       Container(
                         padding: const EdgeInsets.all(8.0),

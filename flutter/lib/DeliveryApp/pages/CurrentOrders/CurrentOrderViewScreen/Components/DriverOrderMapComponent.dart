@@ -9,8 +9,6 @@ import 'package:sizer/sizer.dart';
 import '../../../../controllers/deliveryAuthController.dart';
 
 class DriverOrderMapComponent extends StatefulWidget {
-  final MGoogleMapController mapController = MGoogleMapController();
-
   final Order order;
   DriverOrderMapComponent({Key? key, required this.order}) : super(key: key);
 
@@ -20,22 +18,23 @@ class DriverOrderMapComponent extends StatefulWidget {
 }
 
 class _DriverOrderMapComponentState extends State<DriverOrderMapComponent> {
+  final MGoogleMapController mapController = MGoogleMapController();
   DeliveryAuthController deliveryAuthController =
       Get.find<DeliveryAuthController>();
   @override
   void initState() {
-    widget.mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded;
+    mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded;
     if (widget.order.routeInformation != null) {
-      widget.mapController.decodeAndAddPolyline(
+      mapController.decodeAndAddPolyline(
           encodedPolylineString: widget.order.routeInformation!.polyline);
     }
-    widget.mapController.setAnimateMarkersPolyLinesBounds(true);
-    widget.mapController.setLocation(widget.order.to);
-    widget.mapController.addOrUpdateUserMarker(
+    mapController.setAnimateMarkersPolyLinesBounds(true);
+    mapController.setLocation(widget.order.to);
+    mapController.addOrUpdateUserMarker(
         latLng: LatLng(deliveryAuthController.currentLocation.latitude!,
             deliveryAuthController.currentLocation.longitude!));
 
-    widget.mapController.addOrUpdatePurpleDestinationMarker(
+    mapController.addOrUpdatePurpleDestinationMarker(
         latLng: LatLng(widget.order.to.latitude, widget.order.to.longitude));
     super.initState();
   }
@@ -45,7 +44,7 @@ class _DriverOrderMapComponentState extends State<DriverOrderMapComponent> {
     return Container(
       height: 45.h,
       child: MGoogleMap(
-        mGoogleMapController: widget.mapController,
+        mGoogleMapController: mapController,
       ),
     );
   }

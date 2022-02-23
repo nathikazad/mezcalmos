@@ -6,7 +6,6 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 
 class DriversMapCompnonet extends StatefulWidget {
-  final MGoogleMapController mapController = MGoogleMapController();
   List<DeliveryDriver> drivers = [];
   final Order order;
   DriversMapCompnonet({Key? key, required this.drivers, required this.order})
@@ -17,14 +16,15 @@ class DriversMapCompnonet extends StatefulWidget {
 }
 
 class _DriversMapCompnonetState extends State<DriversMapCompnonet> {
+  final MGoogleMapController mapController = MGoogleMapController();
   @override
   void initState() {
-    widget.mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded;
-    widget.mapController.setAnimateMarkersPolyLinesBounds(true);
-    widget.mapController.setLocation(widget.order.to);
+    mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded;
+    mapController.setAnimateMarkersPolyLinesBounds(true);
+    mapController.setLocation(widget.order.to);
 
     getDriversMarkers();
-    widget.mapController.addOrUpdatePurpleDestinationMarker(
+    mapController.addOrUpdatePurpleDestinationMarker(
         latLng: LatLng(widget.order.to.latitude, widget.order.to.longitude));
     super.initState();
   }
@@ -35,7 +35,7 @@ class _DriversMapCompnonetState extends State<DriversMapCompnonet> {
       child: Container(
         height: 300,
         child: MGoogleMap(
-          mGoogleMapController: widget.mapController,
+          mGoogleMapController: mapController,
         ),
       ),
     );
@@ -43,7 +43,7 @@ class _DriversMapCompnonetState extends State<DriversMapCompnonet> {
 
   getDriversMarkers() {
     widget.drivers.forEach((element) {
-      widget.mapController.addOrUpdateUserMarker(
+      mapController.addOrUpdateUserMarker(
           latLng: element.driverLocation,
           customImgHttpUrl: element.driverInfo.image,
           markerId: element.driverInfo.id);
